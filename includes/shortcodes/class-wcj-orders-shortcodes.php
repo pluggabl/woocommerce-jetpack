@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function __construct() {
 
@@ -230,7 +230,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_custom_meta_field.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 * @since   2.2.9
 	 * @depreciated
 	 */
@@ -241,7 +241,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_checkout_field.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function wcj_order_checkout_field( $atts ) {
 		if ( '' == $atts['field_id'] ) return '';

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exchange Rates Crons class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function __construct() {
 
@@ -46,7 +46,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * On an early action hook, check if the hook is scheduled - if not, schedule it.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function schedule_the_events() {
 		$selected_interval = get_option( 'wcj_currency_exchange_rates_auto', 'daily' );
@@ -88,8 +88,8 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * get_currency_pair.
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 */
 	function get_currency_pair( $currency_pairs, $currency_to, $option_name ) {
 
@@ -110,7 +110,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * On the scheduled action hook, run a function.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function update_the_exchange_rates( $interval ) {
 

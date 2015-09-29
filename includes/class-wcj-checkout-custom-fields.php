@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function __construct() {
 
@@ -42,10 +42,10 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 			add_action( 'woocommerce_checkout_update_order_meta',       array( $this, 'update_custom_checkout_fields_order_meta' ) );
 
-			add_action( 'wp_enqueue_scripts',                           array( $this, 'enqueue_scripts' ) );
+/* 			add_action( 'wp_enqueue_scripts',                           array( $this, 'enqueue_scripts' ) );
 //			add_action( 'wp_head',                                      array( $this, 'add_datepicker_script' ) );
 			add_action( 'init',                                         array( $this, 'register_script' ) );
-
+ */
 //			add_action( 'woocommerce_order_formatted_shipping_address', array( $this, 'add_custom_shipping_fields_to_formatted_address' ), PHP_INT_MAX, 2 );
 
 //			add_filter( 'woocommerce_form_field_' . 'number',           array( $this, 'woocommerce_form_field_type_number' ), PHP_INT_MAX, 4 );
@@ -56,8 +56,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * woocommerce_form_field_type_number.
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 */
 	function woocommerce_form_field_type_number( $field, $key, $args, $value ) {
 		/* $args['input_class'] = array();
@@ -74,7 +74,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_admin_emails.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function add_custom_fields_to_emails( $order, $sent_to_admin ) {
 		if (
@@ -88,7 +88,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_store_exporter_order.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 * @since   2.2.7
 	 */
 	function add_custom_fields_to_store_exporter_order( $order, $order_id ) {
@@ -125,8 +125,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.2.10
-	 */
+	 * @version 2.3.0
+	 *
 	function enqueue_scripts() {
 		wp_enqueue_script( 'jquery-ui-datepicker' );
 		wp_enqueue_script( 'jquery-ui-timepicker' );
@@ -142,9 +142,9 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * register_script.
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
-	 */
+	 * @version 2.3.0
+	 * @since   2.3.0
+	 *
 	public function register_script() {
 		wp_register_script(
 			'jquery-ui-timepicker',
@@ -171,7 +171,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_datepicker_script.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 *
 	public function add_datepicker_script() {
 		?>
@@ -209,7 +209,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * update_custom_checkout_fields_order_meta.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function update_custom_checkout_fields_order_meta( $order_id ) {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
@@ -228,8 +228,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 */
 	function add_custom_fields_to_order_display( $order ) {
 		$post_meta = get_post_meta( $order->id );
@@ -263,7 +263,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 				$the_meta = get_post_meta( get_the_ID(), '_' . $section . '_' . $the_key, true );
 				if ( is_array( $the_meta ) ) {
-					// Converting from before v2.2.10
+					// Converting from before v2.3.0
 					if ( isset( $the_meta['value'] ) ) update_post_meta( get_the_ID(), '_' . $section . '_' . $the_key,       $the_meta['value'] );
 					if ( isset( $the_meta['label'] ) ) update_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, $the_meta['label'] );
 				}
@@ -304,7 +304,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function add_custom_checkout_fields( $fields ) {
 
@@ -372,7 +372,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
     public function get_settings() {
 

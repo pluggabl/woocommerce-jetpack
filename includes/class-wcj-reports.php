@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Reports class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -217,8 +217,8 @@ class WCJ_Reports {
 	/**
 	 * Add reports to WooCommerce > Reports > Sales
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 */
 	public function add_sales_reports( $reports ) {
 

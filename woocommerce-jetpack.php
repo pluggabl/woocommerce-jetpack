@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: http://BoostWoo.com
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.2.10.beta.9
+Version: 2.3.0-dev
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Copyright: © 2015 Algoritmika Ltd.
@@ -99,11 +99,53 @@ final class WC_Jetpack {
 			}
 		}
 
+		if (
+			'yes' === get_option( 'wcj_product_input_fields_enabled' ) ||
+			'yes' === get_option( 'wcj_checkout_custom_fields_enabled' )
+		){
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ) );
+			add_action( 'init',               array( $this, 'register_frontend_scripts' ) );
+		}
+
 		// Loaded action
 		do_action( 'wcj_loaded' );
 
 		/* echo 'Constructor End: memory_get_usage( false )' . number_format( memory_get_usage( false ), 0, '.', ',' );
 		echo 'Constructor End: memory_get_usage( true )' . number_format( memory_get_usage( true ), 0, '.', ',' ); */
+	}
+
+	/**
+	 * enqueue_frontend_scripts.
+	 *
+	 * @version 2.3.0
+	 * @since   2.3.0
+	 */
+	function enqueue_frontend_scripts() {
+		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_script( 'jquery-ui-timepicker' );
+		wp_enqueue_script( 'wcj-datepicker', wcj_plugin_url() . '/includes/js/wcj-datepicker.js',
+			array( 'jquery' ),
+			false,
+			true );
+
+		wp_enqueue_style( 'jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
+		wp_enqueue_style( 'wcj-timepicker', wcj_plugin_url() . '/includes/css/jquery.timepicker.min.css' );
+	}
+
+	/**
+	 * register_frontend_scripts.
+	 *
+	 * @version 2.3.0
+	 * @since   2.3.0
+	 */
+	public function register_frontend_scripts() {
+		wp_register_script(
+			'jquery-ui-timepicker',
+			wcj_plugin_url() . '/includes/js/jquery.timepicker.min.js',
+			array( 'jquery' ),
+			false,
+			true
+		);
 	}
 
 	/**

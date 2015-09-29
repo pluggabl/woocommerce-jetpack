@@ -65,7 +65,7 @@
  */
 //define ('K_PATH_IMAGES', '');
 //define ( 'K_PATH_IMAGES', $_SERVER['DOCUMENT_ROOT'] );
-define ( 'K_PATH_IMAGES', ABSPATH ); // Algoritmika - WCJ version 2.2.10
+define ( 'K_PATH_IMAGES', ABSPATH ); // Algoritmika - WCJ version 2.3.0
 
 /**
  * Deafult image logo used be the default Header() method.

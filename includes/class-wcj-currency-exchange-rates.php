@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Currency Exchange Rates class.
  *
- * @version 2.2.10
- * @since   2.2.10
+ * @version 2.3.0
+ * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
 

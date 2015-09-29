@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Display class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function __construct() {
 
@@ -59,7 +59,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	 * Ouput custom columns for products
 	 *
 	 * @param   string $column
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function render_order_columns( $column ) {
 

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Fees class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -18,12 +18,12 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.0
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_fees';
-		$this->short_desc = __( 'Payment Gateways Fees and Discounts', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Gateways Fees and Discounts', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Enable extra fees or discounts for WooCommerce payment gateways.', 'woocommerce-jetpack' );
 		parent::__construct();
 
@@ -73,7 +73,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * gateways_fees.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function gateways_fees() {
 		global $woocommerce;
@@ -123,7 +123,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * add_fees_settings.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function add_fees_settings( $settings ) {
 		// Gateway's Extra Fees

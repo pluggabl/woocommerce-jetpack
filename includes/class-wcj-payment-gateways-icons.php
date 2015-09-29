@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Icons class.
  *
- * @version 2.2.2
+ * @version 2.3.0
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -17,11 +17,13 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.3.0
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_icons';
-		$this->short_desc = __( 'Payment Gateways Icons', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Gateways Icons', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Change icons (images) for all default WooCommerce payment gateways.', 'woocommerce-jetpack' );
 		parent::__construct();
 

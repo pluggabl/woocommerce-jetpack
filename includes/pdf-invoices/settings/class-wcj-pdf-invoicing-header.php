@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Header class.
  *
- * @version  2.2.10
+ * @version  2.3.0
  * @author   Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing_Header extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function __construct() {
 		$this->id         = 'pdf_invoicing_header';
@@ -30,7 +30,7 @@ class WCJ_PDF_Invoicing_Header extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function get_settings() {
 

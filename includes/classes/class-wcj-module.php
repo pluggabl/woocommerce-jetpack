@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -63,7 +63,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * add_meta_box.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 * @since   2.2.6
 	 */
 	function add_meta_box() {
@@ -139,7 +139,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * settings_section.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function settings_section( $sections ) {
 		$sections[ $this->id ] = isset( $this->section_title ) ? $this->section_title : $this->short_desc;

@@ -4,15 +4,15 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
 /*
  * wcj_get_select_options()
  *
- * @version  2.2.10
- * @since    2.2.10
+ * @version  2.3.0
+ * @since    2.3.0
  * @return   array
  */
 if ( ! function_exists( 'wcj_get_select_options' ) ) {
@@ -278,7 +278,7 @@ if ( ! function_exists( 'convert_number_to_words' ) ) {
 /**
  * wcj_plugin_url.
  *
- * @version 2.2.10
+ * @version 2.3.0
  */
 if ( ! function_exists( 'wcj_plugin_url' ) ) {
 	function wcj_plugin_url() {

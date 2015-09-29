@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack TCPDF class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 

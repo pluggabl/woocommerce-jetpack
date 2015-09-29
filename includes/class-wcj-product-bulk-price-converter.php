@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Bulk Price Converter class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function __construct() {
 
@@ -49,7 +49,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * change_price_by_type.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function change_price_by_type( $product_id, $multiply_price_by, $price_type, $is_preview ) {
 		$the_price = get_post_meta( $product_id, '_' . $price_type, true );
@@ -129,7 +129,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * create_bulk_price_converter_tool.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function create_bulk_price_converter_tool() {
 
@@ -245,7 +245,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function get_settings() {
 		$settings = array();

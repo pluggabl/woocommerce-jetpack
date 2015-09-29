@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Payment Gateway class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -312,7 +312,7 @@ function init_wc_gateway_wcj_custom_class() {
 		/**
 		 * init.
 		 *
-		 * @version 2.2.10
+		 * @version 2.3.0
 		 */
 		public function init( $id_count ) {
 			$this->id 					    = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;

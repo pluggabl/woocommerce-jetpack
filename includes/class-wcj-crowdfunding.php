@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Crowdfunding class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @since   2.2.6
  * @author  Algoritmika Ltd.
  */
@@ -37,7 +37,7 @@ class WCJ_Crowdfunding extends WCJ_Module {
 	/**
 	 * check_dates.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function check_dates( $purchasable, $_product ) {
 		$goal = get_post_meta( $_product->id, '_' . 'wcj_crowdfunding_goal_sum', true );

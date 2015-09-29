@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways per Category class.
  *
- * @version 2.2.2
+ * @version 2.3.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -15,13 +15,15 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Per_Category' ) ) :
 
 class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 
-    /**
-     * Constructor.
-     */
-    function __construct() {
+	/**
+	 * Constructor.
+	 *
+	 * @version 2.3.0
+	 */
+	function __construct() {
 
 		$this->id         = 'payment_gateways_per_category';
-		$this->short_desc = __( 'Payment Gateways per Category', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Gateways per Category', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Show gateway only if there is product of selected category in WooCommerce cart.', 'woocommerce-jetpack' );
 		parent::__construct();
 
@@ -44,17 +46,17 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 		return $this->add_enable_module_setting( $settings );
 	}
 
-    /**
-     * add_hooks.
-     */
-    function add_hooks() {
+	/**
+	 * add_hooks.
+	 */
+	function add_hooks() {
 		add_filter( 'wcj_payment_gateways_per_category_settings',  array( $this, 'add_per_category_settings' ) );
 	}
 
-    /**
-     * filter_available_payment_gateways_per_category.
-     */
-    function filter_available_payment_gateways_per_category( $available_gateways ) {
+	/**
+	 * filter_available_payment_gateways_per_category.
+	 */
+	function filter_available_payment_gateways_per_category( $available_gateways ) {
 		//if ( ! is_checkout() ) return $available_gateways;
 		foreach ( $available_gateways as $gateway_id => $gateway ) {
 			$categories_in = get_option( 'wcj_gateways_per_category_' . $gateway_id );
@@ -84,10 +86,10 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 		return $available_gateways;
 	}
 
-    /**
-     * add_per_category_settings.
-     */
-    function add_per_category_settings( $settings ) {
+	/**
+	 * add_per_category_settings.
+	 */
+	function add_per_category_settings( $settings ) {
 
 		$settings[] = array(
 			'title' => __( 'WooCommerce Jetpack: Payment Gateways per Category Options', 'woocommerce-jetpack' ),
@@ -121,7 +123,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_gateways_per_category_options' );
 
 		return $settings;
-    }
+	}
 }
 
 endif;

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Sales Reports class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,8 +17,8 @@ class WCJ_Reports_Sales {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 */
 	public function __construct( $args = null ) {
 
@@ -27,8 +27,8 @@ class WCJ_Reports_Sales {
 	/**
 	 * get_report.
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 */
 	public function get_report() {
 
@@ -44,8 +44,8 @@ class WCJ_Reports_Sales {
 	/*
 	 * sort_by_total_sales.
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 */
 	function sort_by_total_sales( $a, $b ) {
 		if ( $a['sales'] == $b['sales'] ) {
@@ -57,8 +57,8 @@ class WCJ_Reports_Sales {
 	/*
 	 * get_products_sales.
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 */
 	function get_products_sales() {
 

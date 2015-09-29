@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Invoice class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -35,7 +35,7 @@ class WCJ_Invoice {
 	/**
 	 * delete.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function delete() {
 		update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', 0 );
@@ -52,7 +52,7 @@ class WCJ_Invoice {
 	/**
 	 * create.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function create( $date = '' ) {
 		$order_id = $this->order_id;

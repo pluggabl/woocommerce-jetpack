@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Renumerate Tool class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -61,7 +61,7 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 	/**
 	 * Add Renumerate Invoices tool to WooCommerce menu (the content).
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function create_renumerate_invoices_tool() {
 		$result_message = '';

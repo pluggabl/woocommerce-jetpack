@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Payment Gateways Currency class.
  *
- * @version 2.2.10
- * @since   2.2.10
+ * @version 2.3.0
+ * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -21,7 +21,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'payment_gateways_currency';
-		$this->short_desc = __( 'Payment Gateways Currency', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Gateways Currency', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Currency per WooCommerce payment gateway.', 'woocommerce-jetpack' );
 		parent::__construct();
 

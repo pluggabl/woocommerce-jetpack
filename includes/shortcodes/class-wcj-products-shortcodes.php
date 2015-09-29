@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -162,7 +162,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_time_remaining.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_time_remaining( $atts ) {

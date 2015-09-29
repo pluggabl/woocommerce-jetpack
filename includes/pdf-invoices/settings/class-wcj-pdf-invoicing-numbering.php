@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Numbering class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing_Numbering extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function __construct() {
 
@@ -33,7 +33,7 @@ class WCJ_PDF_Invoicing_Numbering extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function get_settings() {
 

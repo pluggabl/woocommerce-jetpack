@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exchange Rates class.
  *
- * @version  2.2.10
+ * @version  2.3.0
  * @author   Algoritmika Ltd.
  */
 
@@ -28,7 +28,7 @@ class WCJ_Exchange_Rates {
 	/**
 	 * register_script.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function register_script() {
 		if ( isset( $_GET['section'] ) && in_array( $_GET['section'], array( 'price_by_country', 'payment_gateways_currency', 'currency_exchange_rates', ) ) ) {
@@ -39,7 +39,7 @@ class WCJ_Exchange_Rates {
 	/**
 	 * enqueue_exchange_rates_script.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function enqueue_exchange_rates_script() {
 	    if ( isset( $_GET['section'] ) && in_array( $_GET['section'], array( 'price_by_country', 'payment_gateways_currency', 'currency_exchange_rates', ) ) ) {

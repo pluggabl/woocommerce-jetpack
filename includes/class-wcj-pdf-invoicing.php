@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing class.
  *
- * @version 2.2.10
+ * @version 2.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	public function __construct() {
 
@@ -55,8 +55,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 *
 	public function create_meta_box() {
 
@@ -153,8 +153,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * delete_document.
 	 *
-	 * @version 2.2.10
-	 * @since   2.2.10
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 */
 	function delete_document( $order_id, $invoice_type ) {
 		if ( true == wcj_is_invoice_created( $order_id, $invoice_type ) ) {
@@ -164,7 +164,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * catch_args.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
     function catch_args() {
 		$this->order_id        = ( isset( $_GET['order_id'] ) )                                             ? $_GET['order_id'] : 0;
@@ -201,7 +201,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.2.10
+	 * @version 2.3.0
 	 */
 	function get_settings() {
 
