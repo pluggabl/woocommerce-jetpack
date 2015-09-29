@@ -111,7 +111,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.2.10 - 26/09/2015 =
+= 2.2.10 - 29/09/2015 =
 * Dev - PDF Invoicing - Manual invoice creation option added (in invoicing display).
 * Dev - PDF Invoicing - Code refactoring.
 * Dev - PDF Invoicing - "powered by" removed in invoicing header.
