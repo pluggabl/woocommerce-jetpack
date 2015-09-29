@@ -1,0 +1,31 @@
+.pdf_invoice_heading_table {
+	width: 50%;
+}
+
+.pdf_invoice_seller_buyer_table th {
+	font-weight: bold;
+}
+/* pdf_invoice_items_table */
+.pdf_invoice_items_table {
+	padding: 5px;
+}
+.pdf_invoice_items_table th {
+	font-weight: bold;
+	border: 1px solid #F0F0F0;
+}
+.pdf_invoice_items_table td {
+	border: 1px solid #F0F0F0;
+}
+/* pdf_invoice_totals_table */
+.pdf_invoice_totals_table {
+	padding: 5px;
+}
+.pdf_invoice_totals_table th {
+	width: 85%;
+	text-align: right;
+}
+.pdf_invoice_totals_table td {
+	width: 15%;
+	text-align: right;
+	border: 1px solid #F0F0F0;
+}

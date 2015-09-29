@@ -1,0 +1,6033 @@
+# Copyright (C) 2014 WooCommerce Jetpack
+# This file is distributed under the same license as the WooCommerce Jetpack package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WooCommerce Jetpack 2.2.5\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-jetpack\n"
+"POT-Creation-Date: 2015-08-10 21:16+0300\n"
+"PO-Revision-Date: 2015-08-14 16:50+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && "
+"(n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: includes/add-to-cart/class-wcj-add-to-cart-per-product.php:80
+msgid "WooCommerce Jetpack: Custom Add to Cart"
+msgstr "Booster для ﻿WooCommerce: Добавление в корзину (пользовательская настройка)"
+
+#: includes/add-to-cart/class-wcj-add-to-cart-per-product.php:91
+msgid "Single product view"
+msgstr "Вид одиночного продукта"
+
+#: includes/add-to-cart/class-wcj-add-to-cart-per-product.php:92
+msgid "Product category (archive) view"
+msgstr "Вид категория продукта"
+
+#: includes/admin/class-wc-settings-jetpack.php:26
+#: includes/admin/class-wc-settings-jetpack.php:223
+msgid "Booster"
+msgstr "Booster"
+
+#: includes/admin/class-wc-settings-jetpack.php:84
+msgid "Save changes"
+msgstr "Сохранить изменения"
+
+#: includes/admin/class-wc-settings-jetpack.php:121
+msgid "Alphabetically"
+msgstr "В Алфавитном Порядке"
+
+#: includes/admin/class-wc-settings-jetpack.php:122
+msgid "By Category"
+msgstr "По Категории"
+
+#: includes/admin/class-wc-settings-jetpack.php:123
+msgid "Active"
+msgstr "Активныe"
+
+#: includes/admin/class-wc-settings-jetpack.php:190
+#: includes/admin/wcj-modules-cats.php:15
+msgid "Dashboard"
+msgstr "Панель управления"
+
+#: includes/admin/class-wc-settings-jetpack.php:219
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+#: includes/admin/class-wc-settings-jetpack.php:221 woocommerce-jetpack.php:197
+msgid "Settings"
+msgstr "Настройки"
+
+#: includes/admin/class-wc-settings-jetpack.php:301
+#: includes/admin/class-wc-settings-jetpack.php:308
+msgid "Select All"
+msgstr "Выделить все"
+
+#: includes/admin/class-wc-settings-jetpack.php:302
+#: includes/admin/class-wc-settings-jetpack.php:309
+msgid "Module"
+msgstr "Модуль"
+
+#: includes/admin/class-wc-settings-jetpack.php:303
+#: includes/admin/class-wc-settings-jetpack.php:310
+#: includes/admin/class-wcj-tools.php:80
+#: includes/gateways/class-wc-gateway-wcj-custom.php:61
+msgid "Description"
+msgstr "Описание"
+
+#: includes/admin/class-wc-settings-jetpack.php:360
+msgid "Total Modules:"
+msgstr "Всего модулей:"
+
+#: includes/admin/class-wc-settings-jetpack.php:388
+msgid "Booster for WooCommerce - Dashboard"
+msgstr "Booster  для WooCommerce - Панель управления"
+
+#: includes/admin/class-wc-settings-jetpack.php:390
+msgid ""
+"This dashboard lets you enable/disable any Booster's module. Each checkbox comes "
+"with short module's description. Please visit <a href=\"http://boostwoo.com\" "
+"target=\"_blank\">BoostWoo.com</a> for detailed info on each feature."
+msgstr ""
+"Эта панель управления позволяет включить/отключить любой модуль Booster  для "
+"WooCommerce. Каждый флажок предоставляется с кратким описанием модуля. Пожалуйста, "
+"посетите <a href=\"http://boostwoo.com\" target=\"_blank\">BoostWoo.com</a> для "
+"более подробной информации о каждой функции."
+
+#: includes/admin/class-wcj-tools.php:32
+msgid "Booster for WooCommerce Tools"
+msgstr "Booster для WooCommerce - Панель управления"
+
+#: includes/admin/class-wcj-tools.php:32
+msgid "Booster Tools"
+msgstr "Booster инструменты"
+
+#: includes/admin/class-wcj-tools.php:45
+msgid "Tools Dashboard"
+msgstr "Панель управления инструментами"
+
+#: includes/admin/class-wcj-tools.php:74
+msgid "Booster for WooCommerce Tools - Dashboard"
+msgstr "Booster для WooCommerce Инструменты - Панель управления"
+
+#: includes/admin/class-wcj-tools.php:75
+msgid ""
+"This dashboard lets you check statuses and short descriptions of all available "
+"Booster for WooCommerce tools. Tools can be enabled through WooCommerce > Settings "
+"> Booster. Enabled tools will appear in the tabs menu above."
+msgstr ""
+"﻿Эта панель управления позволяет проверить статусы и прочесть краткие описания всех "
+"доступных инструментов Booster for WooCommerce. Инструменты можно включить с "
+"помощью WooCommerce > Настройки > Booster. Включеный инструмент появится в меню "
+"вкладки выше."
+
+#: includes/admin/class-wcj-tools.php:78
+msgid "Tool"
+msgstr "Инструмент"
+
+#: includes/admin/class-wcj-tools.php:79
+msgid "Status"
+msgstr "Статус"
+
+#: includes/admin/wcj-modules-cats.php:25
+msgid "Prices & Currencies"
+msgstr "Цены и Валюты"
+
+#: includes/admin/wcj-modules-cats.php:37
+msgid "Button & Price Labels"
+msgstr "Ценовые и Кнопочные Этикетки"
+
+#: includes/admin/wcj-modules-cats.php:48
+msgid "Products"
+msgstr "Товары"
+
+#: includes/admin/wcj-modules-cats.php:65
+msgid "Cart & Checkout"
+msgstr "Корзина и Оформление заказа"
+
+#: includes/admin/wcj-modules-cats.php:82
+msgid "Shipping & Orders"
+msgstr "Доставка и Заказы"
+
+#: includes/admin/wcj-modules-cats.php:95
+msgid "PDF Invoicing & Packing Slips"
+msgstr " PDF счета фактуры и отборочных накладные"
+
+#: includes/admin/wcj-modules-cats.php:111
+msgid "Emails & Misc."
+msgstr "Письма и Разное."
+
+#: includes/class-wcj-add-to-cart.php:51
+msgid "Per Product Type Options"
+msgstr "Параметры по типу продукта"
+
+#: includes/class-wcj-add-to-cart.php:54 includes/class-wcj-add-to-cart.php:195
+msgid "Per Product Labels"
+msgstr "По-продуктовые этикетки"
+
+#: includes/class-wcj-add-to-cart.php:55 includes/class-wcj-add-to-cart.php:196
+#: includes/class-wcj-add-to-cart.php:220 includes/class-wcj-product-images.php:115
+#: includes/class-wcj-product-images.php:165
+msgid "Enable Section"
+msgstr "Включить раздел"
+
+#: includes/class-wcj-add-to-cart.php:65
+msgid "Simple product"
+msgstr "Простой продукт"
+
+#: includes/class-wcj-add-to-cart.php:70
+msgid "Variable product"
+msgstr "Переменный продукт"
+
+#: includes/class-wcj-add-to-cart.php:75
+msgid "External product"
+msgstr "Внешний продукт"
+
+#: includes/class-wcj-add-to-cart.php:80
+msgid "Grouped product"
+msgstr "Группированный продукт"
+
+#: includes/class-wcj-add-to-cart.php:85
+msgid "Other product"
+msgstr "Другой продукт"
+
+#: includes/class-wcj-add-to-cart.php:96
+msgid "Single product view."
+msgstr "Вид одиночного продукта."
+
+#: includes/class-wcj-add-to-cart.php:97 includes/class-wcj-add-to-cart.php:108
+#: includes/class-wcj-add-to-cart.php:154 includes/class-wcj-add-to-cart.php:167
+#: includes/class-wcj-payment-gateways-fees.php:149
+msgid "Leave blank to disable."
+msgstr "Оставьте пустым, чтобы отключить."
+
+#: includes/class-wcj-add-to-cart.php:97 includes/class-wcj-add-to-cart.php:108
+#: includes/class-wcj-add-to-cart.php:156 includes/class-wcj-add-to-cart.php:169
+#: includes/class-wcj-sorting.php:213 includes/class-wcj-sorting.php:223
+#: includes/class-wcj-sorting.php:233 includes/class-wcj-sorting.php:243
+#: includes/class-wcj-sorting.php:264 includes/class-wcj-sorting.php:274
+msgid "Default: "
+msgstr "По умолчанию:"
+
+#: includes/class-wcj-add-to-cart.php:107
+msgid "Product category (archive) view."
+msgstr "Вид категория продукта."
+
+#: includes/class-wcj-add-to-cart.php:119
+msgid "Products with price set to 0 (i.e. free). Single product view."
+msgstr "Продукты с ценой установлен на 0 (т.е. бесплатно). Вид одиночного продукта."
+
+#: includes/class-wcj-add-to-cart.php:120 includes/class-wcj-add-to-cart.php:129
+msgid "Leave blank to disable. Default: Add to cart"
+msgstr "Оставьте пустым, чтобы отключить. По умолчанию: Добавить в корзину"
+
+#: includes/class-wcj-add-to-cart.php:122 includes/class-wcj-add-to-cart.php:131
+#: includes/class-wcj-add-to-cart.php:156 includes/class-wcj-add-to-cart.php:157
+#: includes/class-wcj-add-to-cart.php:169 includes/class-wcj-add-to-cart.php:170
+msgid "Add to cart"
+msgstr "В корзину"
+
+#: includes/class-wcj-add-to-cart.php:128
+msgid "Products with price set to 0 (i.e. free). Product category (archive) view."
+msgstr "Продукты с ценой установлен на 0 (т.е. бесплатно). Вид: категории продуктов."
+
+#: includes/class-wcj-add-to-cart.php:138
+msgid "Products with empty price. Product category (archive) view."
+msgstr "Продукты с пустой ценой. Вид: категории продуктов."
+
+#: includes/class-wcj-add-to-cart.php:139
+msgid "Leave blank to disable. Default: Read More"
+msgstr "Оставьте пустым, чтобы отключить. По умолчанию: Подробнее"
+
+#: includes/class-wcj-add-to-cart.php:141
+msgid "Read More"
+msgstr "Читать далее"
+
+#: includes/class-wcj-add-to-cart.php:153
+msgid "Already in cart. Single product view."
+msgstr "Уже в корзине. Вид одиночного продукта."
+
+#: includes/class-wcj-add-to-cart.php:155 includes/class-wcj-add-to-cart.php:168
+msgid "Try: "
+msgstr "Попытаться:"
+
+#: includes/class-wcj-add-to-cart.php:155 includes/class-wcj-add-to-cart.php:168
+msgid "Already in cart - Add Again?"
+msgstr "Уже в корзине - Добавить Снова?"
+
+#: includes/class-wcj-add-to-cart.php:166
+msgid "Already in cart. Product category (archive) view."
+msgstr "Уже в корзине. Вид: категории продукта."
+
+#: includes/class-wcj-add-to-cart.php:189
+msgid "Per Product Options"
+msgstr "Параметры По Продукту"
+
+#: includes/class-wcj-add-to-cart.php:191
+msgid ""
+"This section lets you set Add to Cart button text on per product basis. When "
+"enabled, label for each product can be changed in \"Edit Product\"."
+msgstr ""
+"В этом разделе можно изменить текст кнопки \"Добавить в корзину\", это можно "
+"сделать для каждого товара. Когда включено, текст для каждого продукта можно "
+"изменить \"Товары > Изменить\"."
+
+#: includes/class-wcj-add-to-cart.php:216
+msgid "Per Category Options"
+msgstr "Параметры По Категории"
+
+#: includes/class-wcj-add-to-cart.php:216
+msgid "This sections lets you set Add to Cart button text on per category basis."
+msgstr ""
+"В этом разделе можно изменить текст кнопки \"Добавить в корзину\", это можно "
+"сделать по категории товара."
+
+#: includes/class-wcj-add-to-cart.php:219
+msgid "Per Category Labels"
+msgstr "Этикетки По Категории "
+
+#: includes/class-wcj-add-to-cart.php:228
+msgid "Category Groups Number"
+msgstr "Количество Групп по Категории"
+
+#: includes/class-wcj-add-to-cart.php:229
+#: includes/class-wcj-checkout-custom-fields.php:321
+#: includes/class-wcj-product-input-fields.php:193
+#: includes/class-wcj-product-tabs.php:327
+msgid "Click \"Save changes\" after you change this number."
+msgstr "Нажмите кнопку «Сохранить изменения», после того, как вы измените это число."
+
+#: includes/class-wcj-add-to-cart.php:266 includes/class-wcj-price-by-country.php:132
+#: includes/class-wcj-price-by-country.php:198
+msgid "Group"
+msgstr "Группа"
+
+#: includes/class-wcj-add-to-cart.php:267 includes/class-wcj-admin-tools.php:109
+#: includes/class-wcj-admin-tools.php:117
+#: includes/class-wcj-checkout-custom-fields.php:297
+#: includes/class-wcj-checkout-custom-fields.php:305
+#: includes/class-wcj-general.php:74 includes/class-wcj-order-numbers.php:176
+#: includes/class-wcj-orders.php:245 includes/class-wcj-price-by-country.php:105
+#: includes/class-wcj-price-labels.php:632
+#: includes/class-wcj-product-add-to-cart.php:56
+#: includes/class-wcj-product-add-to-cart.php:78
+#: includes/class-wcj-product-info.php:618 includes/class-wcj-product-info.php:737
+#: includes/class-wcj-product-info.php:774
+#: includes/class-wcj-product-input-fields.php:152
+#: includes/class-wcj-product-input-fields.php:184
+#: includes/class-wcj-product-input-fields.php:230
+#: includes/class-wcj-shipping-calculator.php:129
+#: includes/class-wcj-shipping-calculator.php:137
+#: includes/class-wcj-shipping-calculator.php:145
+#: includes/class-wcj-shipping-calculator.php:153 includes/class-wcj-sorting.php:205
+#: includes/class-wcj-wholesale-price.php:159
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php:177
+msgid "Enable"
+msgstr "Включить"
+
+#: includes/class-wcj-add-to-cart.php:283
+#: includes/class-wcj-checkout-custom-fields.php:460
+msgid "categories"
+msgstr "категории"
+
+#: includes/class-wcj-add-to-cart.php:294
+msgid "Button text - single product view"
+msgstr "Текст кнопки - Вид: одного продукта"
+
+#: includes/class-wcj-add-to-cart.php:302
+msgid "Button text - product archive (category) view"
+msgstr "Текст кнопки - Вид: категории продуктов."
+
+#: includes/class-wcj-add-to-cart.php:327
+msgid "Add to Cart Options"
+msgstr "Добавить в корзину (Настройки)"
+
+#: includes/class-wcj-add-to-cart.php:330 includes/class-wcj-add-to-cart.php:354
+msgid "Add to Cart Labels"
+msgstr "Добавить в корзину (Ярлыки)"
+
+#: includes/class-wcj-add-to-cart.php:331 includes/class-wcj-call-for-price.php:89
+#: includes/class-wcj-checkout-core-fields.php:165
+#: includes/class-wcj-checkout-custom-fields.php:288
+#: includes/class-wcj-currencies.php:113
+#: includes/class-wcj-currency-external-products.php:72
+#: includes/class-wcj-emails.php:131 includes/class-wcj-old-slugs.php:95
+#: includes/class-wcj-order-numbers.php:167 includes/class-wcj-pdf-invoices.php:926
+#: includes/class-wcj-pdf-invoicing.php:147
+#: includes/class-wcj-price-by-country.php:69 includes/class-wcj-price-labels.php:535
+#: includes/class-wcj-product-bulk-price-converter.php:262
+#: includes/class-wcj-product-info.php:709
+#: includes/class-wcj-product-input-fields.php:132
+#: includes/class-wcj-product-listings.php:60 includes/class-wcj-product-tabs.php:314
+#: includes/class-wcj-reports.php:278 includes/class-wcj-shipping-calculator.php:120
+#: includes/class-wcj-shipping.php:156 includes/classes/class-wcj-module.php:170
+msgid "Enable Module"
+msgstr "Включить модуль"
+
+#: includes/class-wcj-add-to-cart.php:332
+msgid ""
+"Change text for Add to Cart button by WooCommerce product type, by product "
+"category or for individual products."
+msgstr ""
+"Изменить текст для кнопки \"Добавить в корзину\" от WooCommerce по типу товара, по "
+"категории продукта или для отдельных продуктов."
+
+#: includes/class-wcj-address-formats.php:24
+msgid "Address Formats"
+msgstr "Форматы адресов"
+
+#: includes/class-wcj-address-formats.php:25
+msgid ""
+"Set address format in WooCommerce orders on per country basis. Force base country "
+"display."
+msgstr ""
+"Установить формат адреса в заказах WooCommerce на каждую страну. Отображение "
+"страны которая указана WooCommerce > Основные настройки > Базовое местоположение"
+
+#: includes/class-wcj-address-formats.php:125
+#: includes/class-wcj-address-formats.php:131
+msgid "Force Base Country Display"
+msgstr "Отображение страны."
+
+#: includes/class-wcj-address-formats.php:127
+msgid "Force Base Country Display Options."
+msgstr "Отображение страны (Hастройки)."
+
+#: includes/class-wcj-address-formats.php:143
+msgid "Address Formats by Country"
+msgstr "Форматы адресов по странам"
+
+#: includes/class-wcj-address-formats.php:145
+msgid "Address Formats by Country Options."
+msgstr "Форматы адресов по странам (Hастройки)."
+
+#: includes/class-wcj-admin-tools.php:25 includes/class-wcj-admin-tools.php:29
+#: includes/class-wcj-admin-tools.php:48
+msgid "Admin Tools"
+msgstr "Инструменты администратора"
+
+#: includes/class-wcj-admin-tools.php:26
+msgid "Booster for WooCommerce debug and log tools."
+msgstr "Booster для WooCommerce отладка и лог инструменты."
+
+#: includes/class-wcj-admin-tools.php:45
+#: includes/class-wcj-checkout-custom-fields.php:351
+#: includes/class-wcj-old-slugs.php:49
+#: includes/class-wcj-order-custom-statuses.php:135
+#: includes/class-wcj-order-numbers.php:66 includes/class-wcj-price-labels.php:114
+#: includes/class-wcj-product-bulk-price-converter.php:228
+#: includes/class-wcj-sku.php:193
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:32
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:33
+msgid "enabled"
+msgstr "включено"
+
+#: includes/class-wcj-admin-tools.php:47 includes/class-wcj-old-slugs.php:51
+#: includes/class-wcj-order-custom-statuses.php:136
+#: includes/class-wcj-order-numbers.php:68 includes/class-wcj-price-labels.php:116
+#: includes/class-wcj-product-bulk-price-converter.php:230
+#: includes/class-wcj-sku.php:195
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:34
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:35
+msgid "disabled"
+msgstr "отключен"
+
+#: includes/class-wcj-admin-tools.php:50
+msgid "Log."
+msgstr "Журнал."
+
+#: includes/class-wcj-admin-tools.php:60
+msgid "Log"
+msgstr "Журнал"
+
+#: includes/class-wcj-admin-tools.php:75
+msgid "Log deleted successfully."
+msgstr "Журнал успешно удален."
+
+#: includes/class-wcj-admin-tools.php:81
+msgid "Delete Log"
+msgstr "Удалить Журнал"
+
+#: includes/class-wcj-admin-tools.php:105
+msgid "Admin Tools Options"
+msgstr "Инструменты администратора (Hастройки)"
+
+#: includes/class-wcj-admin-tools.php:108
+msgid "Logging"
+msgstr "Ведение журнала"
+
+#: includes/class-wcj-admin-tools.php:116
+msgid "Debug"
+msgstr "Отладка"
+
+#: includes/class-wcj-call-for-price.php:81
+msgid "Call for Price Options"
+msgstr "Позвоните Насчет Цены (Hастройки)"
+
+#: includes/class-wcj-call-for-price.php:83
+msgid "Leave price empty when adding or editing products. Then set the options here."
+msgstr ""
+"Оставить цену пустой при добавлении или редактировании товаров. Затем установите "
+"параметры здесь."
+
+#: includes/class-wcj-call-for-price.php:88 includes/class-wcj-call-for-price.php:175
+msgid "Call for Price"
+msgstr "Позвоните Насчет Цены"
+
+#: includes/class-wcj-call-for-price.php:90
+msgid "Create any custom price label for all WooCommerce products with empty price."
+msgstr ""
+"Создание любого пользовательского ценника для всех WooCommerce продуктов с пустой "
+"ценой."
+
+#: includes/class-wcj-call-for-price.php:97
+msgid "Label to Show on Single"
+msgstr "Этикетка чтобы показывать на странице одиночного продукта."
+
+#: includes/class-wcj-call-for-price.php:98 includes/class-wcj-call-for-price.php:110
+#: includes/class-wcj-call-for-price.php:122
+#: includes/class-wcj-call-for-price.php:134
+msgid "This sets the html to output on empty price. Leave blank to disable."
+msgstr ""
+"Это устанавливает HTML для вывода на пустой цене. Оставьте пустым, чтобы отключить."
+
+#: includes/class-wcj-call-for-price.php:109
+msgid "Label to Show on Archives"
+msgstr "Этикетка чтобы показывать на странице категории продуктов."
+
+#: includes/class-wcj-call-for-price.php:121
+msgid "Label to Show on Homepage"
+msgstr "Этикетка чтобы показывать на главной странице"
+
+#: includes/class-wcj-call-for-price.php:133
+msgid "Label to Show on Related"
+msgstr "Этикетка чтобы показывать на Похожих "
+
+#: includes/class-wcj-call-for-price.php:145
+msgid "Hide Sale! Tag"
+msgstr "Скрыть Тег Распродажа! "
+
+#: includes/class-wcj-call-for-price.php:146
+msgid "Hide the tag"
+msgstr "Скрыть тег"
+
+#: includes/class-wcj-cart.php:23
+msgid "Cart"
+msgstr "Корзина"
+
+#: includes/class-wcj-cart.php:24
+msgid "Add custom info to WooCommerce cart page. Add empty cart button."
+msgstr ""
+"Добавить пользовательские данные на странице корзины WooCommerce. Добавить кнопку "
+"Очистить корзину."
+
+#: includes/class-wcj-cart.php:83
+msgid "Cart Custom Info Blocks"
+msgstr "Корзина - Пользовательские Информационные Блоки"
+
+#: includes/class-wcj-cart.php:86 includes/class-wcj-checkout-custom-info.php:51
+#: includes/class-wcj-mini-cart.php:48
+msgid "Total Blocks"
+msgstr "Всего Блоков"
+
+#: includes/class-wcj-cart.php:103 includes/class-wcj-checkout-custom-info.php:68
+#: includes/class-wcj-mini-cart.php:66
+msgid "Info Block"
+msgstr "Информационный Блок"
+
+#: includes/class-wcj-cart.php:106 includes/class-wcj-checkout-custom-info.php:71
+#: includes/class-wcj-mini-cart.php:69 includes/class-wcj-product-tabs.php:248
+#: includes/class-wcj-product-tabs.php:357
+msgid "Content"
+msgstr "Содержимое"
+
+#: includes/class-wcj-cart.php:114 includes/class-wcj-checkout-custom-info.php:79
+#: includes/class-wcj-mini-cart.php:78 includes/class-wcj-product-info.php:626
+#: includes/class-wcj-product-info.php:754 includes/class-wcj-product-info.php:794
+msgid "Position"
+msgstr "Расположение"
+
+#: includes/class-wcj-cart.php:120
+msgid "Before cart"
+msgstr "Перед корзиной"
+
+#: includes/class-wcj-cart.php:121
+msgid "Before cart table"
+msgstr "Перед таблицей корзины"
+
+#: includes/class-wcj-cart.php:122
+msgid "Before cart contents"
+msgstr "Перед содержимым корзины"
+
+#: includes/class-wcj-cart.php:123
+msgid "Cart contents"
+msgstr "Корзина - Содержимое "
+
+#: includes/class-wcj-cart.php:124
+msgid "Cart coupon"
+msgstr "Корзина - Купон "
+
+#: includes/class-wcj-cart.php:125
+msgid "Cart actions"
+msgstr "Корзина - действия"
+
+#: includes/class-wcj-cart.php:126
+msgid "After cart contents"
+msgstr "После содержимого корзины"
+
+#: includes/class-wcj-cart.php:127
+msgid "After cart table"
+msgstr "После таблицы корзины"
+
+#: includes/class-wcj-cart.php:128
+msgid "Cart collaterals"
+msgstr ""
+
+#: includes/class-wcj-cart.php:129
+msgid "After cart"
+msgstr "После корзины"
+
+#: includes/class-wcj-cart.php:131
+msgid "Before cart totals"
+msgstr "Перед итогами корзины"
+
+#: includes/class-wcj-cart.php:132
+msgid "Cart totals: Before shipping"
+msgstr "Корзина итоги: Перед доставкой"
+
+#: includes/class-wcj-cart.php:133
+msgid "Cart totals: After shipping"
+msgstr "Корзина итоги: После доставки"
+
+#: includes/class-wcj-cart.php:134
+msgid "Cart totals: Before order total"
+msgstr "Корзина итоги: Перед итогом заказа"
+
+#: includes/class-wcj-cart.php:135
+msgid "Cart totals: After order total"
+msgstr "Корзина итоги: после итога заказа"
+
+#: includes/class-wcj-cart.php:136
+msgid "Proceed to checkout"
+msgstr "Оформить заказ"
+
+#: includes/class-wcj-cart.php:137
+msgid "After cart totals"
+msgstr "После итогов корзины"
+
+#: includes/class-wcj-cart.php:139
+msgid "Before shipping calculator"
+msgstr "Перед калькулятором доставки"
+
+#: includes/class-wcj-cart.php:140
+msgid "After shipping calculator"
+msgstr "После калькулятором доставки"
+
+#: includes/class-wcj-cart.php:142
+msgid "If cart is empty"
+msgstr "Если корзина пуста"
+
+#: includes/class-wcj-cart.php:148 includes/class-wcj-mini-cart.php:92
+#: includes/class-wcj-product-tabs.php:243
+msgid "Priority"
+msgstr "Приоритет"
+
+#: includes/class-wcj-checkout-core-fields.php:161
+msgid "Checkout Core Fields Options"
+msgstr "Оформление Заказа Основные Поля (Hастройки)"
+
+#: includes/class-wcj-checkout-core-fields.php:164
+#: includes/class-wcj-checkout-core-fields.php:282
+msgid "Checkout Core Fields"
+msgstr "Оформление Заказа Основные Поля"
+
+#: includes/class-wcj-checkout-core-fields.php:166
+msgid ""
+"Customize WooCommerce core checkout fields. Disable/enable fields, set required, "
+"change labels and/or placeholders."
+msgstr ""
+"Настроить WooCommerce основные поля оформление заказа. Отключить / включить поля, "
+"включить необходимые, изменить этикетки и / или заполнители."
+
+#: includes/class-wcj-checkout-core-fields.php:244
+msgid "Leave blank for WooCommerce defaults."
+msgstr "Оставьте пустым для WooCommerce по умолчанию."
+
+#: includes/class-wcj-checkout-custom-fields.php:280
+msgid "Checkout Custom Fields Options"
+msgstr "Оформление Заказа Пользовательские Поля (Hастройки)"
+
+#: includes/class-wcj-checkout-custom-fields.php:287
+#: includes/class-wcj-checkout-custom-fields.php:492
+msgid "Checkout Custom Fields"
+msgstr "Оформление Заказа Пользовательские Поля"
+
+#: includes/class-wcj-checkout-custom-fields.php:289
+msgid "Add custom fields to WooCommerce checkout page."
+msgstr "Добавить пользовательские поля на страницу оформление заказа WooCommerce."
+
+#: includes/class-wcj-checkout-custom-fields.php:296
+msgid "Add All Fields to Admin Emails"
+msgstr "Добавить все поля к Админ Письмам"
+
+#: includes/class-wcj-checkout-custom-fields.php:304
+msgid "Add All Fields to Customers Emails"
+msgstr "Добавить все поля к Клиентским Письмам"
+
+#: includes/class-wcj-checkout-custom-fields.php:314
+msgid "The Fields"
+msgstr "Поля"
+
+#: includes/class-wcj-checkout-custom-fields.php:320
+msgid "Custom Fields Number"
+msgstr "Количество Пользовательских Полей"
+
+#: includes/class-wcj-checkout-custom-fields.php:350
+msgid "Custom Field"
+msgstr "Пользовательское Поле"
+
+#: includes/class-wcj-checkout-custom-fields.php:358
+msgid "type"
+msgstr "тип"
+
+#: includes/class-wcj-checkout-custom-fields.php:363
+#: includes/class-wcj-more-button-labels.php:49
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:44
+msgid "Text"
+msgstr "Текст"
+
+#: includes/class-wcj-checkout-custom-fields.php:364
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:45
+msgid "Textarea"
+msgstr "Текстовая область"
+
+#: includes/class-wcj-checkout-custom-fields.php:366
+msgid "Datepicker"
+msgstr "Формат даты/времени в селекторе"
+
+#: includes/class-wcj-checkout-custom-fields.php:367
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:47
+msgid "Checkbox"
+msgstr "Чекбокс"
+
+#: includes/class-wcj-checkout-custom-fields.php:369
+msgid "Password"
+msgstr "Пароль"
+
+#: includes/class-wcj-checkout-custom-fields.php:375
+msgid "required"
+msgstr "обязательно"
+
+#: includes/class-wcj-checkout-custom-fields.php:382
+msgid "label"
+msgstr "этикетка"
+
+#: includes/class-wcj-checkout-custom-fields.php:404
+msgid "placeholder"
+msgstr "заполнитель"
+
+#: includes/class-wcj-checkout-custom-fields.php:413
+msgid "section"
+msgstr "раздел"
+
+#: includes/class-wcj-checkout-custom-fields.php:418
+#: includes/class-wcj-checkout-custom-info.php:86
+msgid "Billing"
+msgstr "Тарификация"
+
+#: includes/class-wcj-checkout-custom-fields.php:419
+#: includes/class-wcj-checkout-custom-info.php:87
+#: includes/class-wcj-pdf-invoices.php:1255 includes/class-wcj-shipping.php:155
+#: includes/class-wcj-shipping.php:200
+msgid "Shipping"
+msgstr "Доставка"
+
+#: includes/class-wcj-checkout-custom-fields.php:420
+msgid "Order Notes"
+msgstr "Коментарии к заказу"
+
+#: includes/class-wcj-checkout-custom-fields.php:421
+msgid "Account"
+msgstr "Счёт"
+
+#: includes/class-wcj-checkout-custom-fields.php:428
+msgid "class"
+msgstr "класс"
+
+#: includes/class-wcj-checkout-custom-fields.php:433
+msgid "Wide"
+msgstr "Разширенный"
+
+#: includes/class-wcj-checkout-custom-fields.php:434
+msgid "First"
+msgstr ""
+
+#: includes/class-wcj-checkout-custom-fields.php:435
+msgid "Last"
+msgstr ""
+
+#: includes/class-wcj-checkout-custom-fields.php:442
+msgid "clear"
+msgstr "очистить"
+
+#: includes/class-wcj-checkout-custom-info.php:24
+msgid "Checkout Custom Info"
+msgstr "Оформление Заказа Настраиваемая Информация"
+
+#: includes/class-wcj-checkout-custom-info.php:25
+msgid "Add custom info to WooCommerce checkout page."
+msgstr "Добавить пользовательскиe данные на странице оформления заказа WooCommerce."
+
+#: includes/class-wcj-checkout-custom-info.php:48
+msgid "Checkout Custom Info Blocks"
+msgstr "Блоки для Оформление Заказа Настраиваемой Информации"
+
+#: includes/class-wcj-checkout-custom-info.php:84
+msgid "Before checkout form"
+msgstr ""
+
+#: includes/class-wcj-checkout-custom-info.php:85
+msgid "Before customer details"
+msgstr ""
+
+#: includes/class-wcj-checkout-custom-info.php:88
+msgid "After customer details"
+msgstr ""
+
+#: includes/class-wcj-checkout-custom-info.php:89
+msgid "Before order review"
+msgstr ""
+
+#: includes/class-wcj-checkout-custom-info.php:90
+msgid "Order review"
+msgstr ""
+
+#: includes/class-wcj-checkout-custom-info.php:91
+msgid "After order review"
+msgstr ""
+
+#: includes/class-wcj-checkout-custom-info.php:92
+msgid "After checkout form"
+msgstr ""
+
+#: includes/class-wcj-checkout-custom-info.php:115
+msgid "Order (i.e. Priority)"
+msgstr ""
+
+#: includes/class-wcj-currencies.php:75
+#: includes/class-wcj-currency-external-products.php:80
+msgid "Currency Symbol"
+msgstr ""
+
+#: includes/class-wcj-currencies.php:76
+msgid "This sets the currency symbol."
+msgstr ""
+
+#: includes/class-wcj-currencies.php:109
+msgid "Currencies Options"
+msgstr ""
+
+#: includes/class-wcj-currencies.php:112 includes/class-wcj-currencies.php:154
+msgid "Currencies"
+msgstr "Валюты"
+
+#: includes/class-wcj-currencies.php:114
+msgid "Add all world currencies to your WooCommerce store; change currency symbol."
+msgstr ""
+
+#: includes/class-wcj-currencies.php:122
+msgid "Currency Symbol Options"
+msgstr ""
+
+#: includes/class-wcj-currencies.php:125
+msgid "Hide Currency Symbol"
+msgstr ""
+
+#: includes/class-wcj-currencies.php:126 includes/class-wcj-product-images.php:123
+#: includes/class-wcj-product-images.php:131
+#: includes/class-wcj-product-images.php:139
+#: includes/class-wcj-product-images.php:147
+#: includes/class-wcj-related-products.php:132
+#: includes/class-wcj-shipping-calculator.php:167
+msgid "Hide"
+msgstr "Скрыть"
+
+#: includes/class-wcj-currencies.php:127
+msgid "Default: no."
+msgstr ""
+
+#: includes/class-wcj-currency-external-products.php:68
+msgid "Currency for External Products Options"
+msgstr "Валюта для внешних товаров (Hастройки)"
+
+#: includes/class-wcj-currency-external-products.php:71
+#: includes/class-wcj-currency-external-products.php:99
+msgid "Currency for External Products"
+msgstr "Валюта для внешних товаров"
+
+#: includes/class-wcj-currency-external-products.php:73
+msgid "Set different currency for external WooCommerce products."
+msgstr ""
+
+#: includes/class-wcj-currency-external-products.php:81
+#: includes/class-wcj-currency-external-products.php:82
+msgid "Set currency symbol for all external products."
+msgstr ""
+
+#: includes/class-wcj-emails.php:69
+msgid "WooCommerce Jetpack: Email Forwarding Options"
+msgstr ""
+
+#: includes/class-wcj-emails.php:69 includes/class-wcj-emails.php:148
+msgid ""
+"This section lets you add another email recipient(s) to all WooCommerce emails. "
+"Leave blank to disable."
+msgstr ""
+
+#: includes/class-wcj-emails.php:73 includes/class-wcj-emails.php:151
+msgid "Cc Email"
+msgstr ""
+
+#: includes/class-wcj-emails.php:75 includes/class-wcj-emails.php:153
+msgid "Cc to email, e.g. youremail@yourdomain.com. Leave blank to disable."
+msgstr ""
+
+#: includes/class-wcj-emails.php:85 includes/class-wcj-emails.php:162
+msgid "Bcc Email"
+msgstr ""
+
+#: includes/class-wcj-emails.php:87 includes/class-wcj-emails.php:164
+msgid "Bcc to email, e.g. youremail@yourdomain.com. Leave blank to disable."
+msgstr ""
+
+#: includes/class-wcj-emails.php:127
+msgid "Emails Options"
+msgstr ""
+
+#: includes/class-wcj-emails.php:130 includes/class-wcj-emails.php:182
+msgid "Emails"
+msgstr "Электронная почта"
+
+#: includes/class-wcj-emails.php:132
+msgid "Add another email recipient(s) to all WooCommerce emails."
+msgstr ""
+
+#: includes/class-wcj-emails.php:148
+msgid "Email Forwarding Options"
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:24
+msgid "Empty Cart Button"
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:25
+msgid "Add and customize \"Empty Cart\" button to cart page."
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:96
+msgid "Empty Cart Options"
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:96
+msgid "This section lets you add and customize \"Empty Cart\" button to cart page."
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:107
+msgid "Empty Cart Button Text"
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:117
+msgid "Wrapping DIV style"
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:118
+msgid "Style for the button's div. Default is \"float: right;\""
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:128
+msgid "Button position on the Cart page"
+msgstr "Нижняе Положение на Странице Корзины"
+
+#: includes/class-wcj-empty-cart-button.php:133
+msgid "After Cart"
+msgstr "После Корзины"
+
+#: includes/class-wcj-empty-cart-button.php:134
+msgid "Before Cart"
+msgstr "Перед Корзиной"
+
+#: includes/class-wcj-empty-cart-button.php:135
+msgid "After Proceed to Checkout button"
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:136
+msgid "After Cart Totals"
+msgstr "После Итогов Корзины"
+
+#: includes/class-wcj-empty-cart-button.php:144
+msgid "Confirmation"
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:149
+msgid "No confirmation"
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:150
+msgid "Confirm by pop up box"
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:158
+msgid "Confirmation Text (if enabled)"
+msgstr ""
+
+#: includes/class-wcj-empty-cart-button.php:160
+msgid "Are you sure?"
+msgstr ""
+
+#: includes/class-wcj-general.php:23 includes/class-wcj-pdf-invoicing.php:189
+msgid "General"
+msgstr "Основные"
+
+#: includes/class-wcj-general.php:24
+msgid ""
+"Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets."
+msgstr ""
+"Отделите настраиваемый CSS для передней и задней части. Shortcode`ы в текстовых "
+"виджетов Wordpress."
+
+#: includes/class-wcj-general.php:66 includes/class-wcj-shortcodes.php:61
+msgid "Shortcodes Options"
+msgstr ""
+
+#: includes/class-wcj-general.php:73
+msgid "Enable Shortcodes in WordPress Text Widgets"
+msgstr ""
+
+#: includes/class-wcj-general.php:86
+msgid "Custom CSS Options"
+msgstr "Пользовательские CSS Опции"
+
+#: includes/class-wcj-general.php:88
+msgid "Another custom CSS, if you need one."
+msgstr "Другой Пользовательский CSS, если вам нужен дополнительный."
+
+#: includes/class-wcj-general.php:93
+msgid "Custom CSS - Front end (Customers)"
+msgstr "Пользовательский CSS - Передняя часть (Клиенты)"
+
+#: includes/class-wcj-general.php:101
+msgid "Custom CSS - Back end (Admin)"
+msgstr "Пользовательскией CSS - Задняя часть (Администратор)"
+
+#: includes/class-wcj-mini-cart.php:24
+msgid "Mini Cart"
+msgstr "Мини Корзина"
+
+#: includes/class-wcj-mini-cart.php:25
+msgid "Customize WooCommerce mini cart widget."
+msgstr "Настроить виджет WooCommerce мини корзина."
+
+#: includes/class-wcj-mini-cart.php:45
+msgid "Mini Cart Custom Info Blocks"
+msgstr "Пользовательские Информационные Блоки в Мини Корзине "
+
+#: includes/class-wcj-mini-cart.php:84
+msgid "Before mini cart"
+msgstr "Перед мини корзиной"
+
+#: includes/class-wcj-mini-cart.php:85
+msgid "Before buttons"
+msgstr ""
+
+#: includes/class-wcj-mini-cart.php:86
+msgid "After mini cart"
+msgstr "После мини корзины"
+
+#: includes/class-wcj-more-button-labels.php:24
+msgid "More Button Labels"
+msgstr "Другие надписи на кнопках"
+
+#: includes/class-wcj-more-button-labels.php:25
+msgid "Set WooCommerce \"Place order\" button label."
+msgstr "Установите на кнопку WooCommerce  \"Оформить заказ\" другую этикетку."
+
+#: includes/class-wcj-more-button-labels.php:43
+msgid "Place order (Order now) Button"
+msgstr ""
+
+#: includes/class-wcj-more-button-labels.php:50
+msgid "leave blank for WooCommerce default"
+msgstr ""
+
+#: includes/class-wcj-more-button-labels.php:51
+msgid "Button on the checkout page."
+msgstr ""
+
+#: includes/class-wcj-old-slugs.php:52 includes/class-wcj-old-slugs.php:64
+msgid "Remove Old Slugs"
+msgstr ""
+
+#: includes/class-wcj-old-slugs.php:54 includes/class-wcj-old-slugs.php:170
+msgid "Tool removes old slugs/permalinks from database."
+msgstr ""
+
+#: includes/class-wcj-old-slugs.php:87
+msgid "Old Slugs Options"
+msgstr ""
+
+#: includes/class-wcj-old-slugs.php:89
+msgid ""
+"When enabled, the tool is accessible through <a href=\"%sadmin.php?page=wcj-"
+"tools&tab=old_slugs\">WooCommerce > Jetpack Tools > Remove Old Slugs</a>."
+msgstr ""
+
+#: includes/class-wcj-old-slugs.php:94 includes/class-wcj-old-slugs.php:114
+msgid "Old Slugs"
+msgstr ""
+
+#: includes/class-wcj-old-slugs.php:96
+msgid "Remove old WooCommerce products slugs."
+msgstr ""
+
+#: includes/class-wcj-old-slugs.php:169
+msgid "WooCommerce Jetpack - Remove Old Product Slugs"
+msgstr ""
+
+#: includes/class-wcj-old-slugs.php:175
+msgid "Old products slugs found:"
+msgstr ""
+
+#: includes/class-wcj-old-slugs.php:183
+msgid "None-products slugs found:"
+msgstr ""
+
+#: includes/class-wcj-old-slugs.php:190
+msgid "No old slugs found."
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:24
+msgid "Order Custom Statuses"
+msgstr "Пользовательские Статусы Заказа"
+
+#: includes/class-wcj-order-custom-statuses.php:25
+msgid "Custom statuses for WooCommerce orders."
+msgstr "Пользовательские статусы для заказов WooCommerce ."
+
+#: includes/class-wcj-order-custom-statuses.php:30
+msgctxt "Order status"
+msgid "Pending payment"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:31
+#: includes/functions/wcj-functions.php:344
+msgctxt "Order status"
+msgid "Processing"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:32
+msgctxt "Order status"
+msgid "On hold"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:33
+#: includes/functions/wcj-functions.php:346
+msgctxt "Order status"
+msgid "Completed"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:34
+#: includes/functions/wcj-functions.php:347
+msgctxt "Order status"
+msgid "Cancelled"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:35
+#: includes/functions/wcj-functions.php:348
+msgctxt "Order status"
+msgid "Refunded"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:36
+#: includes/functions/wcj-functions.php:349
+msgctxt "Order status"
+msgid "Failed"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:137
+#: includes/class-wcj-order-custom-statuses.php:149
+#: includes/class-wcj-order-custom-statuses.php:278
+msgid "Custom Statuses"
+msgstr "Пользовательские Статусы"
+
+#: includes/class-wcj-order-custom-statuses.php:139
+msgid "Tool lets you add or delete any custom status for WooCommerce orders."
+msgstr ""
+"Инструмент позволяет добавлять или удалять любые пользовательские статусы для "
+"заказов WooCommerce ."
+
+#: includes/class-wcj-order-custom-statuses.php:179
+msgid "Status slug is empty. Status not added."
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:181
+msgid "The length of status slug must be 17 or less characters."
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:183
+msgid "Status label is empty. Status not added."
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:189
+msgid "Duplicate slug. Status not added."
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:195
+msgid "New status have been successfully added!"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:197
+msgid "Status was not added."
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:213
+msgid "Status have been successfully deleted."
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:215
+msgid "Delete failed."
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:218
+msgid "WooCommerce Jetpack - Custom Statuses"
+msgstr "Booster для WooCommerce - Пользовательские Статусы"
+
+#: includes/class-wcj-order-custom-statuses.php:219
+msgid "The tool lets you add or delete any custom status for WooCommerce orders."
+msgstr ""
+"Этот инструмент позволяет добавлять или удалять любые пользовательские статусы для "
+"заказов WooCommerce ."
+
+#: includes/class-wcj-order-custom-statuses.php:221
+msgid "Statuses"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:224
+msgid "Slug"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:225
+#: includes/class-wcj-order-custom-statuses.php:250
+msgid "Label"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:227
+#: includes/class-wcj-order-custom-statuses.php:237
+msgid "Delete"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:249
+msgid "Slug (without wc- prefix)"
+msgstr ""
+
+#: includes/class-wcj-order-custom-statuses.php:278
+msgid "This section lets you enable custom statuses tool."
+msgstr "Этот раздел позволяет включить инструмент пользовательских статусов."
+
+#: includes/class-wcj-order-custom-statuses.php:290
+#: includes/gateways/class-wc-gateway-wcj-custom.php:119
+msgid "Default Order Status"
+msgstr "Статус заказа по умолчанию "
+
+#: includes/class-wcj-order-custom-statuses.php:291
+#: includes/gateways/class-wc-gateway-wcj-custom.php:120
+msgid "Enable Custom Statuses feature to add custom statuses to the list."
+msgstr ""
+"Включить Пользовательские Статусы чтобы добавлять пользовательские статусы в "
+"список."
+
+#: includes/class-wcj-order-custom-statuses.php:292
+msgid ""
+"You can change the default order status here. However payment gateways can change "
+"this status immediatelly on order creation. E.g. BACS gateway will change status "
+"to On-hold."
+msgstr ""
+"Вы можете изменить статус заказа по умолчанию здесь. Однако платежные шлюзы могут "
+"изменить этот статус немедленно на создание заказа. Например BACS шлюз будет "
+"изменить статус на удержание."
+
+#: includes/class-wcj-order-numbers.php:69
+msgid "Orders Renumerate"
+msgstr "Перенумеровать Заказы"
+
+#: includes/class-wcj-order-numbers.php:71
+msgid "Tool renumerates all orders."
+msgstr "Инструмент позволяет перенумеровать все заказы."
+
+#: includes/class-wcj-order-numbers.php:81
+msgid "Renumerate orders"
+msgstr "Перенумеровать заказы"
+
+#: includes/class-wcj-order-numbers.php:93
+msgid "Orders successfully renumerated!"
+msgstr "Заказы успешно перенумерованы!"
+
+#: includes/class-wcj-order-numbers.php:96
+msgid "WooCommerce Jetpack - Renumerate Orders"
+msgstr "Booster для WooCommerce - Перенумеровать Заказы"
+
+#: includes/class-wcj-order-numbers.php:97
+msgid ""
+"The tool renumerates all orders. Press the button below to renumerate all existing "
+"orders starting from order counter settings in WooCommerce > Settings > Jetpack > "
+"Order Numbers."
+msgstr ""
+"Этот инструмент перенумерует все заказы. Нажмите на кнопку ниже, чтобы "
+"перенумеровать все существующие заказы, начиная от счетчика номера заказов "
+"WooCommerce > параметры > Booster > ДОСТАВКА И ЗАКАЗЫ > Нумерация заказов."
+
+#: includes/class-wcj-order-numbers.php:163 includes/class-wcj-order-numbers.php:166
+#: includes/class-wcj-order-numbers.php:262
+msgid "Order Numbers"
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:163
+msgid ""
+"This section lets you enable sequential order numbering, set custom number prefix, "
+"suffix and width."
+msgstr ""
+"Этот раздел позволяет включить последовательность нумерации заказов, "
+"пользовательский префикс, суффикс и ширину."
+
+#: includes/class-wcj-order-numbers.php:168
+msgid ""
+"WooCommerce sequential order numbering, custom order number prefix, suffix and "
+"number width."
+msgstr ""
+"WooCommerсe последовательная нумерация заказов, пользовательский префикс, суффикс "
+"и ширина."
+
+#: includes/class-wcj-order-numbers.php:175
+msgid "Make Order Numbers Sequential"
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:183
+msgid "Next Order Number"
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:184
+msgid "Next new order will be given this number."
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:184
+msgid "Use Renumerate Orders tool for existing orders."
+msgstr ""
+"Используйте инструмент \"Перенумеровать Заказы\" чтобы перенумеровать существующие "
+"заказы."
+
+#: includes/class-wcj-order-numbers.php:185
+msgid "This will be ignored if sequential order numbering is disabled."
+msgstr "Это будет игнорироваться, если последовательная нумерация заказов отключена."
+
+#: includes/class-wcj-order-numbers.php:192
+msgid "Order Number Custom Prefix"
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:194
+msgid ""
+"Prefix before order number (optional). This will change the prefixes for all "
+"existing orders."
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:204
+msgid "Order Number Date Prefix"
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:206
+msgid ""
+"Date prefix before order number (optional). This will change the prefixes for all "
+"existing orders. Value is passed directly to PHP `date` function, so most of PHP "
+"date formats can be used. The only exception is using `\\` symbol in date format, "
+"as this symbol will be excluded from date. Try: Y-m-d- or mdy."
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:216
+msgid "Order Number Width"
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:218
+msgid ""
+"Minimum width of number without prefix (zeros will be added to the left side). "
+"This will change the minimum width of order number for all existing orders. E.g. "
+"set to 5 to have order number displayed as 00001 instead of 1. Leave zero to "
+"disable."
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:228
+msgid "Order Number Custom Suffix"
+msgstr "Настраиваемый Суффикс для Номера Заказа"
+
+#: includes/class-wcj-order-numbers.php:230
+msgid ""
+"Suffix after order number (optional). This will change the suffixes for all "
+"existing orders."
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:240
+msgid "Order Number Date Suffix"
+msgstr ""
+
+#: includes/class-wcj-order-numbers.php:242
+msgid ""
+"Date suffix after order number (optional). This will change the suffixes for all "
+"existing orders. Value is passed directly to PHP `date` function, so most of PHP "
+"date formats can be used. The only exception is using `\\` symbol in date format, "
+"as this symbol will be excluded from date. Try: Y-m-d- or mdy."
+msgstr ""
+
+#: includes/class-wcj-orders.php:23
+msgid "Orders"
+msgstr "Заказы"
+
+#: includes/class-wcj-orders.php:24
+msgid "Minimum WooCommerce order amount; orders auto-complete."
+msgstr ""
+
+#: includes/class-wcj-orders.php:77
+msgid "All countries"
+msgstr ""
+
+#: includes/class-wcj-orders.php:90 includes/class-wcj-orders.php:262
+msgid "Country"
+msgstr ""
+
+#: includes/class-wcj-orders.php:185
+msgid "Order Minimum Amount"
+msgstr "Минимальная сумма заказа"
+
+#: includes/class-wcj-orders.php:185
+msgid "This section lets you set minimum order amount."
+msgstr ""
+
+#: includes/class-wcj-orders.php:188
+msgid "Amount"
+msgstr "Сумма"
+
+#: includes/class-wcj-orders.php:189
+msgid "Minimum order amount. Set to 0 to disable."
+msgstr ""
+
+#: includes/class-wcj-orders.php:200
+msgid "Error message"
+msgstr ""
+
+#: includes/class-wcj-orders.php:202 includes/class-wcj-orders.php:222
+msgid ""
+"Message to customer if order is below minimum amount. Default: You must have an "
+"order with a minimum of %s to place your order, your current order total is %s."
+msgstr ""
+
+#: includes/class-wcj-orders.php:212
+msgid "Add notice to cart page also"
+msgstr "Добавить уведомление на странице корзины также"
+
+#: includes/class-wcj-orders.php:213 includes/class-wcj-orders.php:263
+#: includes/class-wcj-purchase-data.php:321
+msgid "Add"
+msgstr "Добавить"
+
+#: includes/class-wcj-orders.php:220
+msgid "Message on cart page"
+msgstr "Сообщение на странице корзины"
+
+#: includes/class-wcj-orders.php:232
+msgid "Stop customer from seeing the Checkout page if minimum amount not reached."
+msgstr ""
+
+#: includes/class-wcj-orders.php:233
+msgid "Redirect back to Cart page"
+msgstr "Перенаправить обратно на страницу Корзины"
+
+#: includes/class-wcj-orders.php:241
+msgid "Orders Auto-Complete"
+msgstr ""
+
+#: includes/class-wcj-orders.php:241
+msgid "This section lets you enable orders auto-complete function."
+msgstr ""
+
+#: includes/class-wcj-orders.php:244
+msgid "Auto-complete all WooCommerce orders"
+msgstr ""
+
+#: includes/class-wcj-orders.php:246
+msgid ""
+"E.g. if you sell digital products then you are not shipping anything and you may "
+"want auto-complete all your orders."
+msgstr ""
+
+#: includes/class-wcj-orders.php:255 includes/class-wcj-purchase-data.php:314
+msgid "Orders List Custom Columns"
+msgstr "Список Заказов Настраиваемые Колонки"
+
+#: includes/class-wcj-orders.php:257 includes/class-wcj-purchase-data.php:316
+msgid "This section lets you add custom columns to WooCommerce orders list."
+msgstr ""
+"В этом разделе можно добавлять пользовательские столбцы в списке заказов "
+"WooCommerce ."
+
+#: includes/class-wcj-payment-gateways-fees.php:24
+msgid "Payment Gateways Fees"
+msgstr "Тарификация Шлюзных Платежей (Настройки)"
+
+#: includes/class-wcj-payment-gateways-fees.php:25
+msgid "Enable extra fees for WooCommerce payment gateways."
+msgstr "Включите дополнительную плату за WooCommerce платежные шлюзы."
+
+#: includes/class-wcj-payment-gateways-fees.php:127
+msgid "Payment Gateways Fees Options"
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:129
+msgid "This section lets you set extra fees for payment gateways."
+msgstr "Этот раздел позволяет установить дополнительные тарифы для платежных шлюзов."
+
+#: includes/class-wcj-payment-gateways-fees.php:148
+msgid "Fee title to show to customer."
+msgstr "Показать клиенту название дополнительной платы."
+
+#: includes/class-wcj-payment-gateways-fees.php:157
+msgid "Fee type."
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:158
+msgid "Percent or fixed value."
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:165
+msgid "Fixed"
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:166
+msgid "Percent"
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:172
+msgid "Fee value."
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:173
+msgid "The value."
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:185
+msgid "Minimum cart amount for adding the fee."
+msgstr "Минимальная сумма корзины для добавления платы."
+
+#: includes/class-wcj-payment-gateways-fees.php:186
+#: includes/class-wcj-payment-gateways-fees.php:199
+msgid "Set 0 to disable."
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:198
+msgid "Maximum cart amount for adding the fee."
+msgstr "Максимальная сумма корзины для добавления платы."
+
+#: includes/class-wcj-payment-gateways-fees.php:211
+msgid "Round the fee value before adding to the cart."
+msgstr "Округлить плату перед добавлением в корзину."
+
+#: includes/class-wcj-payment-gateways-fees.php:220
+msgid "If rounding is enabled, set precision here."
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:233
+msgid "Is taxable?"
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:244
+msgid "Tax Class (only if Taxable selected)."
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-fees.php:249
+msgid "Standard Rate"
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-icons.php:24
+msgid "Payment Gateways Icons"
+msgstr "Иконки Шлюзных Платежей"
+
+#: includes/class-wcj-payment-gateways-icons.php:25
+msgid "Change icons (images) for all default WooCommerce payment gateways."
+msgstr ""
+"Изменить иконки (изображения) для всех шлюзов оплаты WooCommerce по умолчанию."
+
+#: includes/class-wcj-payment-gateways-icons.php:69
+msgid "Default WooCommerce Payment Gateways Icons"
+msgstr "Иконки платежных шлюзов WooCommerce по умолчанию"
+
+#: includes/class-wcj-payment-gateways-icons.php:71
+#: includes/gateways/class-wc-gateway-wcj-custom.php:84
+msgid ""
+"If you want to show an image next to the gateway's name on the frontend, enter a "
+"URL to an image."
+msgstr ""
+
+#: includes/class-wcj-payment-gateways-per-category.php:24
+msgid "Payment Gateways per Category"
+msgstr "Платежные Шлюзы По Категориям"
+
+#: includes/class-wcj-payment-gateways-per-category.php:25
+msgid ""
+"Show gateway only if there is product of selected category in WooCommerce cart."
+msgstr ""
+"Показать шлюз, только если есть товар в выбранной категории корзины WooCommerce."
+
+#: includes/class-wcj-payment-gateways-per-category.php:93
+msgid "WooCommerce Jetpack: Payment Gateways per Category Options"
+msgstr "Booster для WooCommerсe: Платежные Шлюзы По Категориям (Настройки)"
+
+#: includes/class-wcj-payment-gateways-per-category.php:111
+msgid "Show gateway only if there is product of selected category in cart."
+msgstr "Показать шлюз, только если в корзине есть товар выбранной категории."
+
+#: includes/class-wcj-payment-gateways.php:25
+msgid "Custom Payment Gateways"
+msgstr "Пользовательские Платежные Шлюзы"
+
+#: includes/class-wcj-payment-gateways.php:26
+msgid "Add multiple custom payment gateways to WooCommerce."
+msgstr "Добавьте пользовательские платежные шлюзы в WooCommerce."
+
+#: includes/class-wcj-payment-gateways.php:42
+msgid "Custom Payment Gateways Options"
+msgstr "Пользовательские Платежные Шлюзы (Настройки)"
+
+#: includes/class-wcj-payment-gateways.php:45
+msgid "Number of Gateways"
+msgstr "Количество Шлюзов"
+
+#: includes/class-wcj-payment-gateways.php:47
+msgid ""
+"Number of custom payments gateways to be added. All settings for each new gateway "
+"are in WooCommerce > Settings > Checkout."
+msgstr ""
+"Количество таможенные платежи шлюзов быть добавлены. Все настройки для каждого "
+"нового шлюза в WooCommerce> Настройки> Checkout."
+
+#: includes/class-wcj-pdf-invoices.php:66
+msgid "Payment Gateways Attach PDF Invoice V1 Options"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:66
+msgid "This section lets you choose when to attach PDF invoice to customers emails."
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:76
+msgid "Attach PDF invoice."
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:208 includes/class-wcj-pdf-invoices.php:213
+#: includes/functions/wcj-invoicing-functions.php:10
+msgid "Invoice"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:371
+#: includes/classes/class-wcj-pdf-invoice.php:287
+msgid "Unexpected error"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:891 includes/class-wcj-pdf-invoices.php:897
+msgid "PDF Invoice"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:922
+msgid "PDF Invoices Options"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:925 includes/class-wcj-pdf-invoices.php:1437
+msgid "PDF Invoices"
+msgstr "PDF-фактуры"
+
+#: includes/class-wcj-pdf-invoices.php:925
+msgid "depreciated"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:927
+msgid "Add PDF invoices for the WooCommerce store owners and for the customers."
+msgstr ""
+"Добавить WooCommerce счета-фактуры PDF для владельца магазина и  для клиентов."
+
+#: includes/class-wcj-pdf-invoices.php:935
+msgid "Invoice Header"
+msgstr "Header счета"
+
+#: includes/class-wcj-pdf-invoices.php:935
+msgid ""
+"This section lets you set texts for required invoice number and date, and optional "
+"logo, header text, invoice due and fulfillment dates."
+msgstr ""
+"Этот раздел позволяет задать тексты для требуемых: номера и даты счета, логотип "
+"(необязательно), header текст, даты оплаты и даты исполнения."
+
+#: includes/class-wcj-pdf-invoices.php:938
+msgid "Your Logo URL"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:939
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:54
+msgid ""
+"Enter a URL to an image you want to show in the invoice's header. Upload your "
+"image using the <a href=\"/wp-admin/media-new.php\">media uploader</a>."
+msgstr ""
+"Введите URL-адрес изображения, который вы хотите показать в header счета-фактуры. "
+"Загрузите изображение с помощью <a href=\"/wp-admin/media-new.php\">Медиа "
+"загрузчик</a>."
+
+#: includes/class-wcj-pdf-invoices.php:940 includes/class-wcj-pdf-invoices.php:949
+#: includes/class-wcj-pdf-invoices.php:969 includes/class-wcj-pdf-invoices.php:979
+#: includes/class-wcj-pdf-invoices.php:998 includes/class-wcj-pdf-invoices.php:1018
+#: includes/class-wcj-pdf-invoices.php:1091 includes/class-wcj-pdf-invoices.php:1126
+#: includes/class-wcj-pdf-invoices.php:1177 includes/class-wcj-pdf-invoices.php:1186
+#: includes/class-wcj-pdf-invoices.php:1195 includes/class-wcj-pdf-invoices.php:1204
+#: includes/class-wcj-pdf-invoices.php:1213 includes/class-wcj-pdf-invoices.php:1222
+#: includes/class-wcj-pdf-invoices.php:1302 includes/class-wcj-pdf-invoices.php:1311
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:55
+msgid "Leave blank to disable"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:948
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:74
+msgid "Header Text"
+msgstr "Header Текст"
+
+#: includes/class-wcj-pdf-invoices.php:950
+msgid "Default: INVOICE"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:952
+msgid "INVOICE"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:958
+msgid "Invoice Number"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:959
+msgid "Default: Invoice number"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:961
+msgid "Invoice number"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:967
+msgid "Order Date"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:968
+msgid "Default: Order date"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:971
+msgid "Order date"
+msgstr "Дата Заказа"
+
+#: includes/class-wcj-pdf-invoices.php:977
+msgid "Order Time"
+msgstr "Время Заказа"
+
+#: includes/class-wcj-pdf-invoices.php:978
+msgid "Default: Order time"
+msgstr "По умолчанию: Время заказа"
+
+#: includes/class-wcj-pdf-invoices.php:981
+msgid "Order time"
+msgstr "Время заказа"
+
+#: includes/class-wcj-pdf-invoices.php:987
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:110
+msgid "Invoice Date"
+msgstr "Дата счёта"
+
+#: includes/class-wcj-pdf-invoices.php:988
+msgid "Default: Invoice date"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:990
+msgid "Invoice date"
+msgstr "Дата счета-фактуры"
+
+#: includes/class-wcj-pdf-invoices.php:997
+msgid "Default: Invoice due date"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1000
+msgid "Invoice due date"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1007 includes/class-wcj-pdf-invoices.php:1027
+msgid "days"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1017
+msgid "Default: Invoice fulfillment date"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1020
+msgid "Invoice fulfillment date"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1036
+msgid "Additional Header"
+msgstr "Дополнительный Header"
+
+#: includes/class-wcj-pdf-invoices.php:1037
+msgid ""
+"Additional header - will be displayed above all data on invoice. You can use html "
+"and/or shortcodes here."
+msgstr ""
+"Дополнительный Header - будет отображаться над всеми данными  в счете-фактуре. Вы "
+"можете использовать HTML и/или shortcode здесь."
+
+#: includes/class-wcj-pdf-invoices.php:1046
+msgid "Seller and Buyer Info"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1049 includes/class-wcj-pdf-invoices.php:1052
+#: includes/class-wcj-purchase-data.php:177
+msgid "Seller"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1058
+msgid "Your business information"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1060
+msgid "New lines are added automatically."
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1062
+msgid "<strong>Company Name</strong>"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1068 includes/class-wcj-pdf-invoices.php:1071
+msgid "Buyer"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1078 includes/class-wcj-pdf-invoices.php:1084
+msgid "Items"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1081
+msgid "Items Table Heading Text"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1090
+msgid "Shipping as Item"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1092
+msgid "Display shipping as item"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1110 includes/class-wcj-pdf-invoices.php:1118
+msgid "Add shipping method info"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1117
+msgid "Do not add shipping method info"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1119
+msgid "Replace with shipping method info"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1125
+msgid "Discount as Item"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1127
+msgid "Display discount as item"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1137
+msgid "Items Columns"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1137
+msgid ""
+"This section lets you set column names in invoice items table. You can disable "
+"some columns by leaving blank column name."
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1140 includes/class-wcj-pdf-invoices.php:1143
+msgid "Nr."
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1149 includes/class-wcj-pdf-invoices.php:1152
+msgid "Item Name"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1158
+msgid "Item Name Additional Info"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1159
+msgid ""
+"Here you can add more info to item's name column (e.g. sku). Default is (SKU: %sku"
+"%)"
+msgstr ""
+"Здесь можно добавить больше информации к столбцу имя товара (например, sku). "
+"Значение по умолчанию — (SKU: sku %)"
+
+#: includes/class-wcj-pdf-invoices.php:1161
+msgid "(SKU: %sku%)"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1167 includes/class-wcj-pdf-invoices.php:1170
+msgid "Qty"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1176
+msgid "Single Item Price (TAX excl.)"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1179
+msgid "Price (TAX excl.)"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1185
+msgid "Single Item TAX"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1188
+msgid "TAX"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1194
+msgid "Single Item Price (TAX incl.)"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1197
+msgid "Price (TAX incl.)"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1203 includes/class-wcj-pdf-invoices.php:1206
+msgid "Sum (TAX excl.)"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1212
+msgid "Tax Percent"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1215
+msgid "Taxes %"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1221 includes/class-wcj-pdf-invoices.php:1224
+#: includes/class-wcj-pdf-invoices.php:1282
+msgid "Taxes"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1230 includes/class-wcj-pdf-invoices.php:1233
+msgid "Sum (TAX incl.)"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1240
+msgid "Totals"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1240
+msgid "This section lets you set texts for totals table."
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1243 includes/class-wcj-pdf-invoices.php:1246
+msgid "Order Subtotal"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1244
+msgid "Order Subtotal = Total - Taxes - Shipping - Discounts"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1252
+msgid "Order Shipping Price"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1261
+msgid "Total Discount"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1264
+msgid "Discount"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1270 includes/class-wcj-pdf-invoices.php:1273
+msgid "Order Total (TAX excl.)"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1271
+msgid ""
+"Order Total (TAX excl.) = Total - Taxes. Shown only if discount or shipping is not "
+"equal to zero. In other words: if \"Order Total (TAX excl.)\" not equal to \"Order "
+"Subtotal\""
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1279
+msgid "Order Total Taxes"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1288 includes/class-wcj-pdf-invoices.php:1291
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:116
+msgid "Order Total"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1298
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-footer.php:24
+msgid "Footer"
+msgstr "Footer"
+
+#: includes/class-wcj-pdf-invoices.php:1301 includes/class-wcj-pdf-invoices.php:1304
+msgid "Payment Method"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1310 includes/class-wcj-pdf-invoices.php:1313
+msgid "Shipping Method"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1319 includes/class-wcj-pdf-invoices.php:1322
+msgid "Shipping Address"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1320
+msgid ""
+"Will be displayed only if customer's shipping address differs from billing "
+"address. Leave blank to disable"
+msgstr ""
+"Будет отображаться только если адрес доставки клиента отличается от адреса "
+"выставления счета. Оставьте пустым, чтобы отключить"
+
+#: includes/class-wcj-pdf-invoices.php:1328
+msgid "Additional Footer"
+msgstr "Дополнительные Footer"
+
+#: includes/class-wcj-pdf-invoices.php:1329
+msgid ""
+"Additional footer - will be displayed below all other data on invoice. You can use "
+"html and/or shortcodes here."
+msgstr ""
+"Дополнительный Footer - будет отображаться ниже всех других данных на счете-"
+"фактуре. Вы можете использовать HTML и/или shortcode здесь."
+
+#: includes/class-wcj-pdf-invoices.php:1338
+msgid "General Options"
+msgstr "Общие настррйки"
+
+#: includes/class-wcj-pdf-invoices.php:1341
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-styling.php:54
+msgid "Font Family"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1357
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-styling.php:70
+msgid "Font Size"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1358
+msgid "Default: 8"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1365
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-styling.php:79
+msgid "Make Font Shadowed"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1366
+msgid "Default: Yes"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1373
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-styling.php:46
+msgid "CSS"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1387
+msgid "PDF Invoices for Customers (in My Account)"
+msgstr "PDF Счета-фактуры Для Клиентов (Мой Счет)"
+
+#: includes/class-wcj-pdf-invoices.php:1388
+msgid "Enable the PDF Invoices in customers account"
+msgstr "Включить PDF счета-фактуры на счете клиентов"
+
+#: includes/class-wcj-pdf-invoices.php:1397
+msgid "PDF Invoices for Customers (Email attachment)"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1398
+msgid ""
+"Enable the PDF Invoices attachment files in customers email on order completed"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1417
+msgid "Enable Save as"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoices.php:1418
+msgid "Enable save as pdf instead of view pdf"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoicing.php:143
+msgid "PDF Invoicing General Options"
+msgstr "PDF счета общие настройки"
+
+#: includes/class-wcj-pdf-invoicing.php:146
+msgid "PDF Invoicing"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoicing.php:148
+msgid "WooCommerce Invoices, Proforma Invoices, Credit Notes and Packing Slips."
+msgstr ""
+
+#: includes/class-wcj-pdf-invoicing.php:157
+msgid "Disabled"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoicing.php:158
+msgid "Create on New Order"
+msgstr ""
+
+#: includes/class-wcj-pdf-invoicing.php:161
+msgid "Create on Order Status"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:62
+msgid "Price by Country Options"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:64
+msgid ""
+"Change product's price and currency by customer's country. Customer's country is "
+"detected automatically by IP, or selected by customer manually."
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:68
+#: includes/class-wcj-price-by-country.php:295
+msgid "Prices and Currencies by Country"
+msgstr "Цены и валюты по странам"
+
+#: includes/class-wcj-price-by-country.php:70
+msgid ""
+"Change WooCommerce product price and currency automatically by customer's country."
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:77
+msgid "Customer Country Detection Method"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:79
+msgid ""
+"If you choose \"by user selection\", use [wcj_country_select_drop_down_list] "
+"shortcode to display country selection list on frontend."
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:83
+msgid "by IP"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:84
+msgid "by user selection"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:90
+msgid "Price Rounding"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:91
+msgid "If you choose to multiply price, set rounding options here."
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:96
+msgid "No rounding"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:97
+msgid "Round"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:98
+msgid "Round down"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:99
+msgid "Round up"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:104
+msgid "Price by Country on per Product Basis"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:106
+msgid "This will add meta boxes in product edit."
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:114
+msgid "Country Groups"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:117
+msgid "Groups Number"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:133
+msgid ""
+"Countries. List of comma separated country codes.<br>For country codes and "
+"predifined sets visit <a href=\"http://woojetpack.com/features/prices-and-"
+"currencies-by-customers-country\">WooJetpack.com</a>"
+msgstr ""
+"Страны. Список кодов стран, которые разделены запятыми.<br>Для кодов стран и "
+"эталонных наборов, посетите <a href=\"http://boostwoo.com/features/prices-and-"
+"currencies-by-customers-country/\">BoostWoo.com/</a>"
+
+#: includes/class-wcj-price-by-country.php:154
+msgid "Currency"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:164
+msgid "Exchange Rates"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:167
+msgid "Exchange Rates Updates"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:172
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:23
+msgid "Enter Rates Manually"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:173
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:24
+msgid "Automatically: Update Hourly"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:174
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:25
+msgid "Automatically: Update Twice Daily"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:175
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:26
+msgid "Automatically: Update Daily"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:176
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:27
+msgid "Automatically: Update Weekly"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:177
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:28
+msgid "Automatically: Update Every Minute"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:199
+msgid "Multiply Price by"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:207
+msgid "Grab %s rate from Yahoo.com"
+msgstr ""
+
+#: includes/class-wcj-price-by-country.php:222
+#: includes/price-by-country/class-wcj-price-by-country-local.php:141
+msgid "Make empty price"
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:117
+msgid "Migrate from Custom Price Labels (Pro)"
+msgstr "Миграция с Пользовательских ценников (Pro)"
+
+#: includes/class-wcj-price-labels.php:119
+msgid ""
+"Tool lets you copy all the data (that is labels) from Custom Price labels (Pro) "
+"plugin to WooCommerce Jetpack."
+msgstr ""
+"Этот инструмент позволяет копировать все данные (то есть этикетки) из плагина "
+"Booster для WooCommerce Пользовательских Ценников (Pro)."
+
+#: includes/class-wcj-price-labels.php:129
+msgid "Migrate from Custom Price Labels"
+msgstr "Миграция с Пользовательских Ценников (Pro)"
+
+#: includes/class-wcj-price-labels.php:141
+msgid "WooCommerce Jetpack - Migrate from Custom Price Labels (Pro)"
+msgstr "Booster для WooCommerce - Миграция из Пользовательских Ценников (Pro)"
+
+#: includes/class-wcj-price-labels.php:189
+msgid "Migrating (product ID "
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:190
+msgid "Result: "
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:212
+msgid "Found data to migrate (product ID "
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:226
+msgid "No data to migrate found"
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:230
+msgid "No products found"
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:235
+msgid ""
+"Press button below to copy all labels from Custom Price Labels (Pro) plugin. Old "
+"labels will NOT be deleted. New labels will be overwritten."
+msgstr ""
+"Нажмите кнопку ниже, чтобы скопировать все этикетки плагина Пользовательских "
+"Ценников (Pro). Старые этикетки не будут удалены. Новые этикетки будут "
+"перезаписаны."
+
+#: includes/class-wcj-price-labels.php:236
+msgid "Migrate data"
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:531
+msgid "Custom Price Labels Options"
+msgstr "Пользовательские Ценники (Настройки)"
+
+#: includes/class-wcj-price-labels.php:534 includes/class-wcj-price-labels.php:647
+msgid "Custom Price Labels"
+msgstr "Пользовательские Ценники"
+
+#: includes/class-wcj-price-labels.php:536
+msgid "Create any custom price label for any WooCommerce product."
+msgstr "Создание любого пользовательского ценника для любого товара WooCommerce."
+
+#: includes/class-wcj-price-labels.php:545
+msgid "Global Custom Price Labels"
+msgstr "Глобальные Пользовательские Ценники"
+
+#: includes/class-wcj-price-labels.php:547
+msgid "This section lets you set price labels for all products globally."
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:552
+msgid "Add before the price"
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:553
+msgid "Enter text to add before all products prices. Leave blank to disable."
+msgstr ""
+"Введите текст для добавления до цены на все товары. Оставьте пустым, чтобы "
+"отключить."
+
+#: includes/class-wcj-price-labels.php:564
+msgid "Add after the price"
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:565
+msgid "Enter text to add after all products prices. Leave blank to disable."
+msgstr ""
+"Введите текст для добавления после цены на все товары. Оставьте пустым, чтобы "
+"отключить."
+
+#: includes/class-wcj-price-labels.php:576
+msgid "Add between regular and sale prices"
+msgstr "Добавить между регулярной и акционной ценой"
+
+#: includes/class-wcj-price-labels.php:577
+msgid "Enter text to add between regular and sale prices. Leave blank to disable."
+msgstr ""
+"Введите текст для добавления между регулярной и акционной ценой. Оставьте пустым, "
+"чтобы отключить."
+
+#: includes/class-wcj-price-labels.php:588
+msgid "Remove from price"
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:590
+msgid "Enter text to remove from all products prices. Leave blank to disable."
+msgstr ""
+"Введите текст, чтобы удалить из всех цен на товары. Оставьте пустым, чтобы "
+"отключить."
+
+#: includes/class-wcj-price-labels.php:601
+msgid "Replace in price"
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:602
+msgid "Enter text to replace in all products prices. Leave blank to disable."
+msgstr ""
+"Введите текст, который нужно заменить во всех ценах на товары. Оставьте пустым, "
+"чтобы отключить."
+
+#: includes/class-wcj-price-labels.php:614
+msgid "Enter text to replace with. Leave blank to disable."
+msgstr ""
+
+#: includes/class-wcj-price-labels.php:629
+msgid "Migrate from Custom Price Labels (Pro) Options"
+msgstr "Миграция из Пользовательских Ценников (Pro)"
+
+#: includes/class-wcj-price-labels.php:629
+msgid "This section lets you enable \"Migrate from Custom Price Labels (Pro)\" tool."
+msgstr ""
+"В этом разделе можно включить инструмент \"Миграция из Пользовательских Ценников "
+"(Pro)\"."
+
+#: includes/class-wcj-product-add-to-cart.php:24
+msgid "Product Add to Cart"
+msgstr "Добавить Продукт В Корзину"
+
+#: includes/class-wcj-product-add-to-cart.php:25
+msgid ""
+"Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to "
+"cart on product visit."
+msgstr ""
+"Задайте любой локальный URL для перенаправления на WooCommerce \"Добавить В Корзину"
+"\". При визите товара добавьте товар в корзину автоматически."
+
+#: includes/class-wcj-product-add-to-cart.php:48
+msgid "Add to Cart Local Redirect Options"
+msgstr ""
+
+#: includes/class-wcj-product-add-to-cart.php:50
+msgid ""
+"This section lets you set any local URL to redirect to after successfully adding "
+"product to cart. Leave empty to redirect to checkout page (skipping the cart page)."
+msgstr ""
+"В этом разделе можно задать любой локальный URL для перенаправления после "
+"успешного добавления продукта в корзину. Оставьте пустым, чтобы перенаправлять на "
+"страницу оформления заказа (пропуская страницу Корзины)."
+
+#: includes/class-wcj-product-add-to-cart.php:55
+msgid "Local Redirect"
+msgstr "Местное перенаправление"
+
+#: includes/class-wcj-product-add-to-cart.php:63
+msgid "Local Redirect URL"
+msgstr "Местное перенаправление URL"
+
+#: includes/class-wcj-product-add-to-cart.php:64
+msgid "Performs a safe (local) redirect, using wp_redirect()."
+msgstr ""
+
+#: includes/class-wcj-product-add-to-cart.php:65
+msgid "Local redirect URL. Leave empty to redirect to checkout."
+msgstr ""
+
+#: includes/class-wcj-product-add-to-cart.php:74
+#: includes/class-wcj-product-add-to-cart.php:77
+msgid "Add to Cart on Visit"
+msgstr " После Визита Добавить В Корзину"
+
+#: includes/class-wcj-product-add-to-cart.php:74
+msgid ""
+"This section lets you enable automatically adding product to cart on visiting the "
+"product page. Product is only added once, so if it is already in cart - duplicate "
+"product is not added. "
+msgstr ""
+"Этот раздел позволяет автоматически добавлять товар в корзину после посещение "
+"страницы товара. Товар будет добавлен только один раз, так что если этот товар уже "
+"в корзине - дубликат не будет добавлен."
+
+#: includes/class-wcj-product-bulk-price-converter.php:44
+#: includes/class-wcj-product-bulk-price-converter.php:231
+#: includes/class-wcj-product-bulk-price-converter.php:261
+#: includes/class-wcj-product-bulk-price-converter.php:279
+msgid "Bulk Price Converter"
+msgstr "Конвертор цен "
+
+#: includes/class-wcj-product-bulk-price-converter.php:113
+#: includes/class-wcj-sku.php:165 includes/reports/wcj-class-reports-stock.php:285
+msgid "Product"
+msgstr "Товар"
+
+#: includes/class-wcj-product-bulk-price-converter.php:114
+msgid "Price Type"
+msgstr "Тип Цены"
+
+#: includes/class-wcj-product-bulk-price-converter.php:115
+#: includes/reports/wcj-class-reports-stock.php:286
+msgid "Price"
+msgstr "Цена"
+
+#: includes/class-wcj-product-bulk-price-converter.php:116
+msgid "Modified Price"
+msgstr "Модифицированная Цена"
+
+#: includes/class-wcj-product-bulk-price-converter.php:136
+msgid "Multiply value must be above zero."
+msgstr "Значение множителя должна быть выше нуля."
+
+#: includes/class-wcj-product-bulk-price-converter.php:143
+msgid "Prices changed successfully!"
+msgstr "Цены успешно изменены!"
+
+#: includes/class-wcj-product-bulk-price-converter.php:150
+msgid "WooCommerce Jetpack - Bulk Price Converter"
+msgstr ""
+
+#: includes/class-wcj-product-bulk-price-converter.php:151
+#: includes/class-wcj-product-bulk-price-converter.php:233
+msgid "Bulk Price Converter Tool."
+msgstr ""
+
+#: includes/class-wcj-product-bulk-price-converter.php:154
+msgid "Multiply all product prices by"
+msgstr ""
+
+#: includes/class-wcj-product-bulk-price-converter.php:254
+msgid "Bulk Price Converter Options"
+msgstr ""
+
+#: includes/class-wcj-product-bulk-price-converter.php:256
+msgid ""
+"When enabled, the tool is accessible through WooCommerce > Jetpack Tools > Bulk "
+"Price Converter."
+msgstr ""
+
+#: includes/class-wcj-product-bulk-price-converter.php:263
+msgid "Multiply all WooCommerce products prices by set value."
+msgstr ""
+
+#: includes/class-wcj-product-images.php:24
+msgid "Product Images"
+msgstr "Изображения Товаров"
+
+#: includes/class-wcj-product-images.php:25
+msgid "Customize WooCommerce products images, thumbnails and sale flashes."
+msgstr ""
+
+#: includes/class-wcj-product-images.php:80 includes/class-wcj-product-images.php:174
+msgid "Sale!"
+msgstr ""
+
+#: includes/class-wcj-product-images.php:112
+msgid "Product Image and Thumbnails"
+msgstr ""
+
+#: includes/class-wcj-product-images.php:122
+msgid "Image and Thumbnails on Single"
+msgstr ""
+
+#: includes/class-wcj-product-images.php:130
+msgid "Image on Single"
+msgstr ""
+
+#: includes/class-wcj-product-images.php:138
+msgid "Thumbnails on Single"
+msgstr ""
+
+#: includes/class-wcj-product-images.php:146
+msgid "Image on Archives"
+msgstr ""
+
+#: includes/class-wcj-product-images.php:154
+msgid "Single Product Thumbnails Columns"
+msgstr ""
+
+#: includes/class-wcj-product-images.php:162
+msgid "Product Images Sale Flash"
+msgstr ""
+
+#: includes/class-wcj-product-images.php:172
+msgid "HTML"
+msgstr ""
+
+#: includes/class-wcj-product-images.php:180
+msgid "Hide on Archives (Categories)"
+msgstr ""
+
+#: includes/class-wcj-product-images.php:187
+msgid "Hide on Single"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:26
+msgid "Before product"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:27
+msgid "Before product title"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:28
+msgid "After product"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:29
+msgid "After product title"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:34
+msgid "Inside single product summary"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:35
+msgid "Before single product summary"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:36
+msgid "After single product summary"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:295
+msgid "Available shortcodes are:"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:596
+msgid "%s ago"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:638 includes/class-wcj-product-info.php:766
+#: includes/class-wcj-product-info.php:806 includes/class-wcj-product-tabs.php:350
+#: includes/class-wcj-product-tabs.php:442 includes/class-wcj-product-tabs.php:468
+#: includes/class-wcj-product-tabs.php:494
+msgid "Priority (i.e. Order)"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:646
+msgid ""
+"Number of product info fields. Click \"Save changes\" after you change this number."
+msgstr ""
+"Количество информационных полей продукта. После того, как вы измените это число, "
+"нажмите кнопку «Сохранить изменения»."
+
+#: includes/class-wcj-product-info.php:669
+msgid "You save: <strong>%you_save_formatted%</strong> (%you_save_percent%%)"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:670 includes/class-wcj-product-info.php:784
+msgid "Total sales: %total_sales%"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:673
+msgid "Default"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:675
+msgid "Field Nr. "
+msgstr ""
+
+#: includes/class-wcj-product-info.php:675
+msgid "Available short codes: "
+msgstr ""
+
+#: includes/class-wcj-product-info.php:705
+msgid "Product Info Options"
+msgstr "Информация О Товаре (Hастройки)"
+
+#: includes/class-wcj-product-info.php:708 includes/class-wcj-product-info.php:832
+msgid "Product Info"
+msgstr "Информация о продукте"
+
+#: includes/class-wcj-product-info.php:710
+msgid "Add additional info to WooCommerce category and single product pages."
+msgstr ""
+
+#: includes/class-wcj-product-info.php:719
+msgid "More Products Info"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:720
+msgid ""
+"For full list of short codes, please visit <a target=\"_blank\" href=\"http://"
+"woojetpack.com/features/product-info/\">http://woojetpack.com/features/product-"
+"info/</a>"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:725 includes/class-wcj-product-info.php:736
+msgid "Product Info on Archive Pages"
+msgstr "Информация о продукте, отображение на списке товара."
+
+#: includes/class-wcj-product-info.php:726
+msgid "Product Info on Single Pages"
+msgstr "Информация о продукте, отображение на одиночном товаре."
+
+#: includes/class-wcj-product-info.php:733
+msgid "Even More Products Info"
+msgstr "Дополнительная информация о продуктах"
+
+#: includes/class-wcj-product-info.php:745 includes/class-wcj-product-info.php:782
+msgid "HTML info."
+msgstr "HTML информация."
+
+#: includes/class-wcj-product-info.php:747
+msgid "SKU: %sku%"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:773
+msgid "Product Info on Single Product Pages"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:813
+msgid "Product IDs to exclude"
+msgstr ""
+
+#: includes/class-wcj-product-info.php:814
+msgid "Comma separated list of product IDs to exclude from product info."
+msgstr ""
+"Список кодов товаров, разделенных запятыми, исключающих из информации о продуктах."
+
+#: includes/class-wcj-product-input-fields.php:128
+msgid "Product Input Fields Options"
+msgstr "Поля продукта для ввода (Hастройки)"
+
+#: includes/class-wcj-product-input-fields.php:131
+#: includes/class-wcj-product-input-fields.php:246
+#: includes/input-fields/class-wcj-product-input-fields-per-product.php:111
+msgid "Product Input Fields"
+msgstr "Поля продукта для ввода"
+
+#: includes/class-wcj-product-input-fields.php:133
+msgid "WooCommerce product input fields."
+msgstr "Поля для ввода продукта WooCommerce."
+
+#: includes/class-wcj-product-input-fields.php:142
+msgid "Product Input Fields per Product Options"
+msgstr ""
+
+#: includes/class-wcj-product-input-fields.php:144
+#: includes/class-wcj-product-input-fields.php:178
+msgid ""
+"Add custom input fields to product's single page for customer to fill before "
+"adding product to cart."
+msgstr ""
+"Добавьте настраиваемые поля для ввода на странице одного товара, чтобы клиент мог "
+"заполнить их до добавления товара в корзину."
+
+#: includes/class-wcj-product-input-fields.php:146
+msgid ""
+"When enabled this module will add \"Product Input Fields\" tab to product's \"Edit"
+"\" page."
+msgstr ""
+"Когда включен этот модуль будет добавлена вкладка «Поля продукта для ввода» на "
+"странице редактирование продукта."
+
+#: includes/class-wcj-product-input-fields.php:151
+msgid "Product Input Fields - per Product"
+msgstr "Поля ввода для продукта - для каждого продукта"
+
+#: includes/class-wcj-product-input-fields.php:153
+msgid "Add custom input field on per product basis."
+msgstr "Добавьте настраиваемое поле для ввода для каждого товара."
+
+#: includes/class-wcj-product-input-fields.php:160
+msgid "Default Number of Product Input Fields per Product"
+msgstr "Количество полей ввода для каждого продукта по умолчанию"
+
+#: includes/class-wcj-product-input-fields.php:162
+msgid ""
+"You will be able to change this number later as well as define the fields, for "
+"each product individually, in product's \"Edit\"."
+msgstr ""
+
+#: includes/class-wcj-product-input-fields.php:176
+msgid "Product Input Fields Global Options"
+msgstr "Поля ввода для продукта (Глобальные Hастройки)"
+
+#: includes/class-wcj-product-input-fields.php:183
+msgid "Product Input Fields - All Products"
+msgstr "Поля ввода для продукта - для всех продуктов"
+
+#: includes/class-wcj-product-input-fields.php:185
+msgid "Add custom input fields to all products."
+msgstr ""
+
+#: includes/class-wcj-product-input-fields.php:192
+msgid "Product Input Fields Number"
+msgstr "Количество полей ввода для продукта"
+
+#: includes/class-wcj-product-input-fields.php:208
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:142
+msgid "Product Input Field"
+msgstr "Поле ввода для продукта"
+
+#: includes/class-wcj-product-input-fields.php:226
+msgid "Admin Order View Options"
+msgstr ""
+
+#: includes/class-wcj-product-input-fields.php:229
+msgid "Replace Field ID with Field Label"
+msgstr "Замените ID поля  этикеткой поля"
+
+#: includes/class-wcj-product-listings.php:56
+msgid "Product Listings Options"
+msgstr "Списки Товаров (Hастройки)"
+
+#: includes/class-wcj-product-listings.php:59
+#: includes/class-wcj-product-listings.php:153
+msgid "Product Listings"
+msgstr "Списки Товаров"
+
+#: includes/class-wcj-product-listings.php:61
+msgid ""
+"Change WooCommerce display options for shop and category pages: show/hide "
+"categories count, exclude categories, show/hide empty categories."
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:69
+msgid "Shop Page Display Options"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:69
+msgid ""
+"This will work only when \"Shop Page Display\" in \"WooCommerce > Settings > "
+"Products > Product Listings\" is set to \"Show subcategories\" or \"Show both\"."
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:72
+msgid "Categories Count"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:73
+#: includes/class-wcj-product-listings.php:172
+msgid "Hide categories count on shop page"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:80
+msgid "Exclude Categories"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:81
+#: includes/class-wcj-product-listings.php:180
+msgid ""
+" Excludes one or more categories from the shop page. This parameter takes a comma-"
+"separated list of categories by unique ID, in ascending order. Leave blank to "
+"disable."
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:89
+#: includes/class-wcj-product-listings.php:128
+msgid "Hide Empty"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:90
+#: includes/class-wcj-product-listings.php:189
+msgid "Hide empty categories on shop page"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:97
+#: includes/class-wcj-product-listings.php:136
+msgid "Show Products"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:98
+#: includes/class-wcj-product-listings.php:197
+msgid "Show products if no categories are displayed on shop page"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:106
+msgid "Category Display Options"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:106
+msgid ""
+"This will work only when \"Default Category Display\" in \"WooCommerce > Settings "
+"> Products > Product Listings\" is set to \"Show subcategories\" or \"Show both\"."
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:109
+msgid "Subcategories Count"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:110
+#: includes/class-wcj-product-listings.php:208
+msgid "Hide subcategories count on category pages"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:119
+msgid "Exclude Subcategories"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:120
+#: includes/class-wcj-product-listings.php:218
+msgid ""
+" Excludes one or more categories from the category (archive) pages. This parameter "
+"takes a comma-separated list of categories by unique ID, in ascending order. Leave "
+"blank to disable."
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:129
+#: includes/class-wcj-product-listings.php:227
+msgid "Hide empty subcategories on category pages"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:137
+#: includes/class-wcj-product-listings.php:235
+msgid "Show products if no categories are displayed on category page"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:171
+msgid "WooJetpack: Categories Count"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:179
+msgid "WooJetpack: Exclude Categories on Shop Page"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:188
+#: includes/class-wcj-product-listings.php:226
+msgid "WooJetpack: Hide Empty"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:196
+#: includes/class-wcj-product-listings.php:234
+msgid "WooJetpack: Show Products"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:207
+msgid "WooJetpack: Subcategories Count"
+msgstr ""
+
+#: includes/class-wcj-product-listings.php:217
+msgid "WooJetpack: Exclude Subcategories on Category Pages"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:223
+msgid "Total number of custom tabs"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:229
+#: includes/input-fields/class-wcj-product-input-fields-per-product.php:137
+msgid "Click \"Update\" product after you change this number."
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:238 includes/class-wcj-product-tabs.php:342
+#: includes/class-wcj-product-tabs.php:452 includes/class-wcj-product-tabs.php:478
+#: includes/class-wcj-product-tabs.php:504
+#: includes/class-wcj-related-products.php:100
+#: includes/gateways/class-wc-gateway-wcj-custom.php:54
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:94
+#: includes/shipping/class-wc-shipping-wcj-custom.php:62
+msgid "Title"
+msgstr "Заголовок"
+
+#: includes/class-wcj-product-tabs.php:252
+msgid "Customize the tab(s)"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:256 includes/class-wcj-product-tabs.php:341
+msgid "Custom Product Tab"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:299 includes/class-wcj-product-tabs.php:313
+msgid "Product Tabs"
+msgstr "Вкладки продуктов"
+
+#: includes/class-wcj-product-tabs.php:310
+msgid "Product Tabs Options"
+msgstr "Вкладки Товара (Hастройки)"
+
+#: includes/class-wcj-product-tabs.php:315
+msgid ""
+"Add custom product tabs - globally or per product. Customize or completely remove "
+"WooCommerce default product tabs."
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:323
+msgid "Custom Product Tabs Options"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:326
+msgid "Custom Product Tabs Number"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:358
+msgid "You can use shortcodes here..."
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:366
+msgid "Comma separated PRODUCT IDs to HIDE this tab"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:367
+msgid "To hide this tab from some products, enter product IDs here."
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:375
+msgid "Comma separated CATEGORY IDs to HIDE this tab"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:376
+msgid "To hide this tab from some categories, enter category IDs here."
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:384
+msgid "Comma separated PRODUCT IDs to SHOW this tab"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:385
+msgid "To show this tab only for some products, enter product IDs here."
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:393
+msgid "Comma separated CATEGORY IDs to SHOW this tab"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:394
+msgid "To show this tab only for some categories, enter category IDs here."
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:408
+msgid "Local Custom Product Tabs"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:411
+msgid "Enable Custom Product Tabs"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:419
+msgid "Default Local Custom Product Tabs Number"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:431
+msgid "WooCommerce Standard Product Tabs Options"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:434
+msgid "Description Tab"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:435 includes/class-wcj-product-tabs.php:461
+#: includes/class-wcj-product-tabs.php:487
+msgid "Remove tab from product page"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:453 includes/class-wcj-product-tabs.php:479
+#: includes/class-wcj-product-tabs.php:505
+msgid "Leave blank for WooCommerce defaults"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:460
+msgid "Additional Information Tab"
+msgstr ""
+
+#: includes/class-wcj-product-tabs.php:486
+msgid "Reviews Tab"
+msgstr ""
+
+#: includes/class-wcj-purchase-data.php:26
+msgid "Product Cost Price"
+msgstr "Себестоимость Товаров"
+
+#: includes/class-wcj-purchase-data.php:27
+msgid "Save WooCommerce product purchase costs data for admin reports."
+msgstr ""
+
+#: includes/class-wcj-purchase-data.php:52 includes/class-wcj-purchase-data.php:238
+#: includes/class-wcj-purchase-data.php:320
+msgid "Profit"
+msgstr ""
+
+#: includes/class-wcj-purchase-data.php:144
+msgid "WooCommerce Jetpack"
+msgstr ""
+
+#: includes/class-wcj-purchase-data.php:169
+msgid "Product cost (purchase) price"
+msgstr ""
+
+#: includes/class-wcj-purchase-data.php:173
+msgid "Extra expenses (shipping etc.)"
+msgstr ""
+
+#: includes/class-wcj-purchase-data.php:181
+msgid "(Last) Purchase date"
+msgstr ""
+
+#: includes/class-wcj-purchase-data.php:185
+msgid "Purchase info"
+msgstr ""
+
+#: includes/class-wcj-purchase-data.php:214
+msgid "Report"
+msgstr ""
+
+#: includes/class-wcj-purchase-data.php:219
+msgid "Selling"
+msgstr ""
+
+#: includes/class-wcj-purchase-data.php:228
+msgid "Buying"
+msgstr ""
+
+#: includes/class-wcj-related-products.php:23
+msgid "Related Products"
+msgstr "Похожие Tовары"
+
+#: includes/class-wcj-related-products.php:24
+msgid ""
+"Change displayed WooCommerce related products number, columns, order, relate by "
+"tag and/or category, or hide related products completely."
+msgstr ""
+"Измените Похожие Товары WooCommerce. Возможно изменить количество товаров, "
+"столбцы, порядок, связать по тегам и/или категории, или скрыть похожие продукты "
+"полностью."
+
+#: includes/class-wcj-related-products.php:79
+msgid "Related Products Number"
+msgstr "Количество Похожих Товаров"
+
+#: includes/class-wcj-related-products.php:86
+msgid "Related Products Columns"
+msgstr "Столбцы Похожих Товаров"
+
+#: includes/class-wcj-related-products.php:93
+msgid "Order by"
+msgstr ""
+
+#: includes/class-wcj-related-products.php:98
+msgid "Random"
+msgstr ""
+
+#: includes/class-wcj-related-products.php:99
+msgid "Date"
+msgstr ""
+
+#: includes/class-wcj-related-products.php:105
+msgid "Order"
+msgstr ""
+
+#: includes/class-wcj-related-products.php:106
+msgid "Ignored if order by \"Random\" is selected above."
+msgstr ""
+
+#: includes/class-wcj-related-products.php:111
+msgid "Ascending"
+msgstr ""
+
+#: includes/class-wcj-related-products.php:112
+msgid "Descending"
+msgstr ""
+
+#: includes/class-wcj-related-products.php:117
+msgid "Relate by Category"
+msgstr ""
+
+#: includes/class-wcj-related-products.php:124
+msgid "Relate by Tag"
+msgstr ""
+
+#: includes/class-wcj-related-products.php:131
+msgid "Hide Related Products"
+msgstr "Скрыть Похожие Товары"
+
+#: includes/class-wcj-reports.php:67
+msgid "WooJetpack: More Ranges - Months"
+msgstr ""
+
+#: includes/class-wcj-reports.php:69 includes/class-wcj-reports.php:104
+msgid "Select Range"
+msgstr ""
+
+#: includes/class-wcj-reports.php:102
+msgid "WooJetpack: More Ranges"
+msgstr ""
+
+#: includes/class-wcj-reports.php:112 includes/class-wcj-reports.php:114
+msgid "Last 14 Days"
+msgstr ""
+
+#: includes/class-wcj-reports.php:119 includes/class-wcj-reports.php:121
+msgid "Last 30 Days"
+msgstr ""
+
+#: includes/class-wcj-reports.php:126 includes/class-wcj-reports.php:128
+msgid "Last 3 Months"
+msgstr ""
+
+#: includes/class-wcj-reports.php:133 includes/class-wcj-reports.php:135
+msgid "Last 6 Months"
+msgstr ""
+
+#: includes/class-wcj-reports.php:140 includes/class-wcj-reports.php:142
+msgid "Last 12 Months"
+msgstr ""
+
+#: includes/class-wcj-reports.php:147 includes/class-wcj-reports.php:149
+msgid "Last 24 Months"
+msgstr ""
+
+#: includes/class-wcj-reports.php:154 includes/class-wcj-reports.php:156
+msgid "Same Days Last Month"
+msgstr ""
+
+#: includes/class-wcj-reports.php:168 includes/class-wcj-reports.php:170
+msgid "Last Year"
+msgstr ""
+
+#: includes/class-wcj-reports.php:213
+msgid "WooJetpack: All in stock"
+msgstr ""
+
+#: includes/class-wcj-reports.php:220
+msgid "WooJetpack: Understocked"
+msgstr ""
+
+#: includes/class-wcj-reports.php:227
+msgid "WooJetpack: Overstocked"
+msgstr ""
+
+#: includes/class-wcj-reports.php:242
+msgid "WooJetpack: Customers by Country"
+msgstr ""
+
+#: includes/class-wcj-reports.php:249
+msgid "WooJetpack: Customers by Country Sets"
+msgstr ""
+
+#: includes/class-wcj-reports.php:274
+msgid "Reports Options"
+msgstr ""
+
+#: includes/class-wcj-reports.php:277 includes/class-wcj-reports.php:314
+msgid "Reports"
+msgstr ""
+
+#: includes/class-wcj-reports.php:279
+msgid "WooCommerce stock, sales, customers etc. reports."
+msgstr ""
+
+#: includes/class-wcj-reports.php:288
+msgid "Available Reports"
+msgstr ""
+
+#: includes/class-wcj-reports.php:291
+msgid ""
+"WooJetpack: Customers by Country. Available in WooCommerce > Reports > Customers."
+msgstr ""
+
+#: includes/class-wcj-reports.php:293
+msgid ""
+"WooJetpack: Customers by Country Sets. Available in WooCommerce > Reports > "
+"Customers."
+msgstr ""
+
+#: includes/class-wcj-reports.php:295
+msgid ""
+"WooJetpack: All in Stock with sales data. Available in WooCommerce > Reports > "
+"Stock."
+msgstr ""
+
+#: includes/class-wcj-reports.php:297
+msgid ""
+"WooJetpack: Understocked products (calculated by sales data). Available in "
+"WooCommerce > Reports > Stock."
+msgstr ""
+
+#: includes/class-wcj-reports.php:299
+msgid ""
+"WooJetpack: Overstocked products (calculated by sales data). Available in "
+"WooCommerce > Reports > Stock."
+msgstr ""
+
+#: includes/class-wcj-shipping-calculator.php:116
+msgid "Shipping Calculator Options"
+msgstr "Калькулятор доставки (Настройки)"
+
+#: includes/class-wcj-shipping-calculator.php:119
+#: includes/class-wcj-shipping-calculator.php:196
+msgid "Shipping Calculator"
+msgstr "Калькулятор доставки"
+
+#: includes/class-wcj-shipping-calculator.php:121
+msgid "Customize WooCommerce shipping calculator on cart page."
+msgstr "Настройка калькулятора доставки WooCommerce на странице корзины."
+
+#: includes/class-wcj-shipping-calculator.php:128
+msgid "Enable City"
+msgstr ""
+
+#: includes/class-wcj-shipping-calculator.php:136
+msgid "Enable Postcode"
+msgstr ""
+
+#: includes/class-wcj-shipping-calculator.php:144
+msgid "Enable State"
+msgstr ""
+
+#: includes/class-wcj-shipping-calculator.php:152
+msgid "Force Block Open"
+msgstr ""
+
+#: includes/class-wcj-shipping-calculator.php:161
+msgid "Calculate Shipping button"
+msgstr ""
+
+#: includes/class-wcj-shipping-calculator.php:162
+msgid ""
+"When \"Force Block Open\" options is enabled, set Calculate Shipping button "
+"options."
+msgstr ""
+
+#: includes/class-wcj-shipping-calculator.php:168
+msgid "Make non clickable"
+msgstr ""
+
+#: includes/class-wcj-shipping.php:63
+msgid "WooCommerce Jetpack: Hide shipping"
+msgstr ""
+
+#: includes/class-wcj-shipping.php:64 includes/class-wcj-shipping.php:170
+msgid "Hide local delivery when free is available"
+msgstr ""
+
+#: includes/class-wcj-shipping.php:75 includes/class-wcj-shipping.php:180
+msgid "Hide all when free is available"
+msgstr ""
+
+#: includes/class-wcj-shipping.php:152
+msgid "Shipping Options"
+msgstr ""
+
+#: includes/class-wcj-shipping.php:157
+msgid "Hide WooCommerce shipping when free is available."
+msgstr ""
+
+#: includes/class-wcj-shipping.php:165
+msgid "Hide if free is available"
+msgstr ""
+
+#: includes/class-wcj-shipping.php:165
+msgid ""
+"This section lets you hide other shipping options when free shipping is available "
+"on shop frontend."
+msgstr ""
+
+#: includes/class-wcj-shipping.php:169
+msgid "Hide shipping"
+msgstr ""
+
+#: includes/class-wcj-shortcodes.php:61 includes/class-wcj-shortcodes.php:66
+msgid "Shortcodes."
+msgstr ""
+
+#: includes/class-wcj-shortcodes.php:64 includes/class-wcj-shortcodes.php:82
+msgid "Shortcodes"
+msgstr ""
+
+#: includes/class-wcj-shortcodes.php:65
+msgid "Enable the Shortcodes feature"
+msgstr ""
+
+#: includes/class-wcj-sku.php:25 includes/class-wcj-sku.php:166
+msgid "SKU"
+msgstr "АРТИКУЛ"
+
+#: includes/class-wcj-sku.php:26
+msgid "Generate WooCommerce SKUs automatically."
+msgstr "Автоматически генерировать WooCommerce SKU."
+
+#: includes/class-wcj-sku.php:29
+msgid "Autogenerate SKUs for Existing Products"
+msgstr "Автоматически генерировать WooCommerce SKU для существующих продуктов"
+
+#: includes/class-wcj-sku.php:145 includes/class-wcj-sku.php:196
+msgid "Autogenerate SKUs"
+msgstr "Автоматическое генерирование WooCommerce SKU."
+
+#: includes/class-wcj-sku.php:172
+msgid "SKUs generated and set successfully!"
+msgstr "SKU создались и установились успешно!"
+
+#: includes/class-wcj-sku.php:176
+msgid "WooCommerce Jetpack - Autogenerate SKUs"
+msgstr "Booster для WooCommerce  - автоматическая генерация  SKU"
+
+#: includes/class-wcj-sku.php:177 includes/class-wcj-sku.php:198
+msgid "The tool generates and sets product SKUs."
+msgstr "Этот инструмент генерирует и устанавливает SKU на продукты."
+
+#: includes/class-wcj-sku.php:210
+msgid "SKU Format Options"
+msgstr "Параметры формата SKU"
+
+#: includes/class-wcj-sku.php:217
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-numbering.php:49
+msgid "Prefix"
+msgstr ""
+
+#: includes/class-wcj-sku.php:224
+msgid "Minimum Number Length"
+msgstr ""
+
+#: includes/class-wcj-sku.php:231
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-numbering.php:61
+msgid "Suffix"
+msgstr ""
+
+#: includes/class-wcj-sku.php:241
+msgid "Variable Products Variations"
+msgstr ""
+
+#: includes/class-wcj-sku.php:246
+msgid "SKU same as parent's product"
+msgstr "SKU такой же как родительский продукт"
+
+#: includes/class-wcj-sku.php:247
+msgid "Generate different SKU for each variation"
+msgstr "Создание разных SKU для каждой вариации"
+
+#: includes/class-wcj-sku.php:248
+msgid "SKU same as parent's product + variation letter suffix"
+msgstr "SKU такой же как родительский продукт +суффикс буква вариации"
+
+#: includes/class-wcj-sku.php:264
+msgid ""
+"When enabled - all new products will be given (autogenerated) SKU.<br>If you wish "
+"to set SKUs for existing products, use Autogenerate SKUs Tool."
+msgstr ""
+"При включении - всем новым продуктам будет создаен SKU (автоматически).<br>Если вы "
+"хотите создать SKU для существующих продуктов, пользуйтесь инструментом "
+"автоматически заполняющим SKU."
+
+#: includes/class-wcj-sorting.php:27
+msgid "Sorting"
+msgstr "Сортировка"
+
+#: includes/class-wcj-sorting.php:28
+msgid "Add more WooCommerce sorting options or remove all sorting including default."
+msgstr ""
+"Добавьте больше параметров сортировки или удалите все сортировки, в том числе и те "
+"что установлены по умолчанию."
+
+#: includes/class-wcj-sorting.php:64
+msgid "WooJetpack: Remove All Sorting"
+msgstr "Booster для WooCommerce: Удалить Все Сортировки"
+
+#: includes/class-wcj-sorting.php:68
+msgid "Completely remove sorting from the shop front end"
+msgstr "Полностью удалить сортировку с фронтэнда магазина"
+
+#: includes/class-wcj-sorting.php:174 includes/class-wcj-sorting.php:181
+msgid "Remove All Sorting"
+msgstr "Удалить Все Сортировки"
+
+#: includes/class-wcj-sorting.php:182
+msgid "Remove all sorting (including WooCommerce default)"
+msgstr ""
+"Удалить Все Сортировки, в том числе и те что установлены WooCommerce  по умолчанию."
+
+#: includes/class-wcj-sorting.php:197 includes/class-wcj-sorting.php:204
+msgid "Add More Sorting"
+msgstr "Добавить Больше Сортировок"
+
+#: includes/class-wcj-sorting.php:212
+msgid "Sort by Name"
+msgstr ""
+
+#: includes/class-wcj-sorting.php:213 includes/class-wcj-sorting.php:216
+msgid "Sort by title: A to Z"
+msgstr ""
+
+#: includes/class-wcj-sorting.php:214 includes/class-wcj-sorting.php:224
+#: includes/class-wcj-sorting.php:234 includes/class-wcj-sorting.php:244
+#: includes/class-wcj-sorting.php:265 includes/class-wcj-sorting.php:275
+msgid "Text to show on frontend. Leave blank to disable."
+msgstr ""
+
+#: includes/class-wcj-sorting.php:223 includes/class-wcj-sorting.php:226
+msgid "Sort by title: Z to A"
+msgstr ""
+
+#: includes/class-wcj-sorting.php:232
+msgid "Sort by SKU"
+msgstr "Сортировка по SKU"
+
+#: includes/class-wcj-sorting.php:233 includes/class-wcj-sorting.php:236
+msgid "Sort by SKU: low to high"
+msgstr "Сортировать по SKU: от низкой к высокой"
+
+#: includes/class-wcj-sorting.php:243 includes/class-wcj-sorting.php:246
+msgid "Sort by SKU: high to low"
+msgstr "Сортировать по SKU: от высокой к низкой"
+
+#: includes/class-wcj-sorting.php:253
+msgid "Sort SKUs as numbers instead of as texts"
+msgstr "Сортировка SKU как чисел вместо текстов "
+
+#: includes/class-wcj-sorting.php:263
+msgid "Sort by stock quantity"
+msgstr ""
+
+#: includes/class-wcj-sorting.php:264 includes/class-wcj-sorting.php:267
+msgid "Sort by stock quantity: low to high"
+msgstr ""
+
+#: includes/class-wcj-sorting.php:274 includes/class-wcj-sorting.php:277
+msgid "Sort by stock quantity: high to low"
+msgstr ""
+
+#: includes/class-wcj-wholesale-price.php:24
+msgid "Wholesale Price"
+msgstr "Оптовая Цена"
+
+#: includes/class-wcj-wholesale-price.php:25
+msgid ""
+"Set WooCommerce wholesale pricing depending on product quantity in cart (buy more "
+"pay less)."
+msgstr ""
+"Установите WooCommerce оптовые цены в зависимости от количества продукта в корзине "
+"(купить больше - платить меньше)."
+
+#: includes/class-wcj-wholesale-price.php:151
+msgid "Wholesale Price Levels Options"
+msgstr "Уровни Оптовых Цен (Hастройки)"
+
+#: includes/class-wcj-wholesale-price.php:153
+msgid ""
+"Wholesale Price Levels Options. If you want to display prices table on frontend, "
+"use [wcj_product_wholesale_price_table] shortcode."
+msgstr ""
+"Уровни Оптовых Цен (Hастройки). Если вы хотите, отобразить цены на фронтэнде, "
+"используйте короткий код [wcj_product_wholesale_price_table]."
+
+#: includes/class-wcj-wholesale-price.php:158
+msgid "Use total cart quantity instead of product quantity"
+msgstr ""
+
+#: includes/class-wcj-wholesale-price.php:166
+msgid "Show discount info on cart page"
+msgstr ""
+
+#: includes/class-wcj-wholesale-price.php:167
+msgid "Show"
+msgstr ""
+
+#: includes/class-wcj-wholesale-price.php:174
+msgid "If show discount info on cart page is enabled, set format here"
+msgstr ""
+
+#: includes/class-wcj-wholesale-price.php:182
+msgid "Products to include"
+msgstr ""
+
+#: includes/class-wcj-wholesale-price.php:183
+msgid "Leave blank to include all products."
+msgstr ""
+
+#: includes/class-wcj-wholesale-price.php:193
+msgid "Number of levels"
+msgstr ""
+
+#: includes/class-wcj-wholesale-price.php:208
+msgid "Min quantity"
+msgstr ""
+
+#: includes/class-wcj-wholesale-price.php:209
+msgid "Minimum quantity to apply discount"
+msgstr ""
+
+#: includes/class-wcj-wholesale-price.php:217
+#: includes/class-wcj-wholesale-price.php:218
+msgid "Discount (%)"
+msgstr ""
+
+#: includes/class-wcj-wpml.php:24
+msgid "WPML"
+msgstr ""
+
+#: includes/class-wcj-wpml.php:25
+msgid "Booster for WooCommerce basic WPML support."
+msgstr ""
+
+#: includes/classes/class-wcj-module.php:92
+msgid "Back to Module Settings"
+msgstr ""
+
+#: includes/classes/class-wcj-module.php:104
+msgid "Tools"
+msgstr ""
+
+#: includes/classes/class-wcj-module.php:110
+msgid "Module Tools"
+msgstr ""
+
+#: includes/classes/class-wcj-module.php:163
+msgid "Options"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:4
+msgid "Afghan afghani"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:5
+msgid "Albanian lek"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:6
+msgid "Algerian dinar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:7
+msgid "Angolan kwanza"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:8
+msgid "Argentine peso"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:9
+msgid "Armenian dram"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:10
+msgid "Aruban florin"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:11
+msgid "Australian dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:12
+msgid "Azerbaijani manat"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:13
+msgid "Bahamian dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:14
+msgid "Bahraini dinar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:15
+msgid "Bangladeshi taka"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:16
+msgid "Barbadian dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:17
+msgid "Belarusian ruble"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:18
+msgid "Belize dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:19
+msgid "Bhutanese ngultrum"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:20
+msgid "Bolivian boliviano"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:21
+msgid "Bosnia and Herzegovina konvertibilna marka"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:22
+msgid "Botswana pula"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:23
+msgid "Brazilian real"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:24
+msgid "British pound"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:25
+msgid "Brunei dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:26
+msgid "Bulgarian lev"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:27
+msgid "Burundi franc"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:28
+msgid "Cayman Islands dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:29
+msgid "Cambodian riel"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:30
+msgid "Canadian dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:31
+msgid "Cape Verdean escudo"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:32
+#: includes/currencies/wcj-currencies.php:33
+msgid "Central African CFA franc"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:34
+msgid "CFP franc"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:35
+msgid "Chilean peso"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:36
+msgid "Chinese renminbi"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:37
+msgid "Colombian peso"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:38
+msgid "Comorian franc"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:39
+msgid "Congolese franc"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:40
+msgid "Costa Rican colon"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:41
+msgid "Croatian kuna"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:42
+msgid "Cuban peso"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:43
+msgid "Czech koruna"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:44
+msgid "Danish krone"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:45
+msgid "Djiboutian franc"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:46
+msgid "Dominican peso"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:47
+msgid "East Caribbean dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:48
+msgid "Egyptian pound"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:49
+msgid "Eritrean nakfa"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:50
+msgid "Estonian kroon"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:51
+msgid "Ethiopian birr"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:52
+msgid "European euro"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:53
+msgid "Falkland Islands pound"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:54
+msgid "Fijian dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:55
+msgid "Gambian dalasi"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:56
+msgid "Georgian lari"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:57
+msgid "Ghanaian cedi"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:58
+msgid "Gibraltar pound"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:59
+msgid "Guatemalan quetzal"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:60
+msgid "Guinean franc"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:61
+msgid "Guyanese dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:62
+msgid "Haitian gourde"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:63
+msgid "Honduran lempira"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:64
+msgid "Hong Kong dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:65
+msgid "Hungarian forint"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:66
+msgid "Icelandic krona"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:67
+msgid "Indian rupee"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:68
+msgid "Indonesian rupiah"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:69
+msgid "Iranian rial"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:70
+msgid "Iraqi dinar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:71
+msgid "Israeli new sheqel"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:72
+msgid "Yemeni rial"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:73
+msgid "Jamaican dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:74
+msgid "Japanese yen"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:75
+msgid "Jordanian dinar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:76
+msgid "Kazakhstani tenge"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:77
+msgid "Kenyan shilling"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:78
+msgid "Kyrgyzstani som"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:79
+msgid "Kuwaiti dinar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:80
+msgid "Lao kip"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:82
+msgid "Latvian lats"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:83
+msgid "Lebanese lira"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:84
+msgid "Lesotho loti"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:85
+msgid "Liberian dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:86
+msgid "Libyan dinar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:87
+msgid "Lithuanian litas"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:88
+msgid "Macanese pataca"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:89
+msgid "Macedonian denar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:90
+msgid "Malagasy ariary"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:91
+msgid "Malaysian ringgit"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:92
+msgid "Malawian kwacha"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:93
+msgid "Maldivian rufiyaa"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:94
+msgid "Mauritanian ouguiya"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:95
+msgid "Mauritian rupee"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:96
+msgid "Mexican peso"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:97
+msgid "Myanma kyat"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:98
+msgid "Moldovan leu"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:99
+msgid "Mongolian tugrik"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:100
+msgid "Moroccan dirham"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:101
+msgid "Mozambican metical"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:102
+msgid "Namibian dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:103
+msgid "Nepalese rupee"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:104
+msgid "Netherlands Antillean gulden"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:105
+msgid "New Taiwan dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:106
+msgid "New Zealand dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:107
+msgid "Nicaraguan cordoba"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:108
+msgid "Nigerian naira"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:109
+msgid "North Korean won"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:110
+msgid "Norwegian krone"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:111
+msgid "Omani rial"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:112
+msgid "Paanga"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:113
+msgid "Pakistani rupee"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:114
+msgid "Panamanian balboa"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:115
+msgid "Papua New Guinean kina"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:116
+msgid "Paraguayan guarani"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:117
+msgid "Peruvian nuevo sol"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:118
+msgid "Philippine peso"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:119
+msgid "Polish zloty"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:120
+msgid "Qatari riyal"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:121
+msgid "Romanian leu"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:122
+msgid "Russian ruble"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:123
+msgid "Rwandan franc"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:124
+msgid "Saint Helena pound"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:125
+msgid "Samoan tala"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:126
+msgid "Sao Tome and Principe dobra"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:127
+msgid "Saudi riyal"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:128
+msgid "Seychellois rupee"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:129
+msgid "Serbian dinar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:130
+msgid "Sierra Leonean leone"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:131
+msgid "Singapore dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:132
+msgid "Syrian pound"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:133
+msgid "Slovak koruna"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:134
+msgid "Solomon Islands dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:135
+msgid "Somali shilling"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:136
+msgid "South African rand"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:137
+msgid "South Korean won"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:138
+msgid "Special Drawing Rights"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:139
+msgid "Sri Lankan rupee"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:140
+msgid "Sudanese pound"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:141
+msgid "Surinamese dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:142
+msgid "Swazi lilangeni"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:143
+msgid "Swedish krona"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:144
+msgid "Swiss franc"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:145
+msgid "Tajikistani somoni"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:146
+msgid "Tanzanian shilling"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:147
+msgid "Thai baht"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:148
+msgid "Trinidad and Tobago dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:149
+msgid "Tunisian dinar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:150
+msgid "Turkish new lira"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:151
+msgid "Turkmen manat"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:152
+msgid "UAE dirham"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:153
+msgid "Ugandan shilling"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:154
+msgid "Ukrainian hryvnia"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:155
+msgid "United States dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:156
+msgid "Uruguayan peso"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:157
+msgid "Uzbekistani som"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:158
+msgid "Vanuatu vatu"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:159
+msgid "Venezuelan bolivar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:160
+msgid "Vietnamese dong"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:161
+msgid "West African CFA franc"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:162
+msgid "Zambian kwacha"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:163
+msgid "Zimbabwean dollar"
+msgstr ""
+
+#: includes/currencies/wcj-currencies.php:164
+msgid "Chinese Yuan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:97
+msgid "Afghanistan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:98
+msgid "&#197;land Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:99
+msgid "Albania"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:100
+msgid "Algeria"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:101
+msgid "Andorra"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:102
+msgid "Angola"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:103
+msgid "Anguilla"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:104
+msgid "Antarctica"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:105
+msgid "Antigua and Barbuda"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:106
+msgid "Argentina"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:107
+msgid "Armenia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:108
+msgid "Aruba"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:109
+msgid "Australia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:110
+msgid "Austria"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:111
+msgid "Azerbaijan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:112
+msgid "Bahamas"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:113
+msgid "Bahrain"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:114
+msgid "Bangladesh"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:115
+msgid "Barbados"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:116
+msgid "Belarus"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:117
+msgid "Belgium"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:118
+msgid "Belau"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:119
+msgid "Belize"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:120
+msgid "Benin"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:121
+msgid "Bermuda"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:122
+msgid "Bhutan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:123
+msgid "Bolivia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:124
+msgid "Bonaire, Saint Eustatius and Saba"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:125
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:126
+msgid "Botswana"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:127
+msgid "Bouvet Island"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:128
+msgid "Brazil"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:129
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:130
+msgid "British Virgin Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:131
+msgid "Brunei"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:132
+msgid "Bulgaria"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:133
+msgid "Burkina Faso"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:134
+msgid "Burundi"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:135
+msgid "Cambodia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:136
+msgid "Cameroon"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:137
+msgid "Canada"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:138
+msgid "Cape Verde"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:139
+msgid "Cayman Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:140
+msgid "Central African Republic"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:141
+msgid "Chad"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:142
+msgid "Chile"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:143
+msgid "China"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:144
+msgid "Christmas Island"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:145
+msgid "Cocos (Keeling) Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:146
+msgid "Colombia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:147
+msgid "Comoros"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:148
+msgid "Congo (Brazzaville)"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:149
+msgid "Congo (Kinshasa)"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:150
+msgid "Cook Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:151
+msgid "Costa Rica"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:152
+msgid "Croatia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:153
+msgid "Cuba"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:154
+msgid "Cura&Ccedil;ao"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:155
+msgid "Cyprus"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:156
+msgid "Czech Republic"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:157
+msgid "Denmark"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:158
+msgid "Djibouti"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:159
+msgid "Dominica"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:160
+msgid "Dominican Republic"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:161
+msgid "Ecuador"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:162
+msgid "Egypt"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:163
+msgid "El Salvador"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:164
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:165
+msgid "Eritrea"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:166
+msgid "Estonia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:167
+msgid "Ethiopia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:168
+msgid "Falkland Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:169
+msgid "Faroe Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:170
+msgid "Fiji"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:171
+msgid "Finland"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:172
+msgid "France"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:173
+msgid "French Guiana"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:174
+msgid "French Polynesia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:175
+msgid "French Southern Territories"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:176
+msgid "Gabon"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:177
+msgid "Gambia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:178
+msgid "Georgia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:179
+msgid "Germany"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:180
+msgid "Ghana"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:181
+msgid "Gibraltar"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:182
+msgid "Greece"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:183
+msgid "Greenland"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:184
+msgid "Grenada"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:185
+msgid "Guadeloupe"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:186
+msgid "Guatemala"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:187
+msgid "Guernsey"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:188
+msgid "Guinea"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:189
+msgid "Guinea-Bissau"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:190
+msgid "Guyana"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:191
+msgid "Haiti"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:192
+msgid "Heard Island and McDonald Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:193
+msgid "Honduras"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:194
+msgid "Hong Kong"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:195
+msgid "Hungary"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:196
+msgid "Iceland"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:197
+msgid "India"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:198
+msgid "Indonesia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:199
+msgid "Iran"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:200
+msgid "Iraq"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:201
+msgid "Republic of Ireland"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:202
+msgid "Isle of Man"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:203
+msgid "Israel"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:204
+msgid "Italy"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:205
+msgid "Ivory Coast"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:206
+msgid "Jamaica"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:207
+msgid "Japan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:208
+msgid "Jersey"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:209
+msgid "Jordan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:210
+msgid "Kazakhstan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:211
+msgid "Kenya"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:212
+msgid "Kiribati"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:213
+msgid "Kuwait"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:214
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:215
+msgid "Laos"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:216
+msgid "Latvia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:217
+msgid "Lebanon"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:218
+msgid "Lesotho"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:219
+msgid "Liberia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:220
+msgid "Libya"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:221
+msgid "Liechtenstein"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:222
+msgid "Lithuania"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:223
+msgid "Luxembourg"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:224
+msgid "Macao S.A.R., China"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:225
+msgid "Macedonia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:226
+msgid "Madagascar"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:227
+msgid "Malawi"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:228
+msgid "Malaysia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:229
+msgid "Maldives"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:230
+msgid "Mali"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:231
+msgid "Malta"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:232
+msgid "Marshall Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:233
+msgid "Martinique"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:234
+msgid "Mauritania"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:235
+msgid "Mauritius"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:236
+msgid "Mayotte"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:237
+msgid "Mexico"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:238
+msgid "Micronesia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:239
+msgid "Moldova"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:240
+msgid "Monaco"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:241
+msgid "Mongolia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:242
+msgid "Montenegro"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:243
+msgid "Montserrat"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:244
+msgid "Morocco"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:245
+msgid "Mozambique"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:246
+msgid "Myanmar"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:247
+msgid "Namibia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:248
+msgid "Nauru"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:249
+msgid "Nepal"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:250
+msgid "Netherlands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:251
+msgid "Netherlands Antilles"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:252
+msgid "New Caledonia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:253
+msgid "New Zealand"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:254
+msgid "Nicaragua"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:255
+msgid "Niger"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:256
+msgid "Nigeria"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:257
+msgid "Niue"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:258
+msgid "Norfolk Island"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:259
+msgid "North Korea"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:260
+msgid "Norway"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:261
+msgid "Oman"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:262
+msgid "Pakistan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:263
+msgid "Palestinian Territory"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:264
+msgid "Panama"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:265
+msgid "Papua New Guinea"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:266
+msgid "Paraguay"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:267
+msgid "Peru"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:268
+msgid "Philippines"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:269
+msgid "Pitcairn"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:270
+msgid "Poland"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:271
+msgid "Portugal"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:272
+msgid "Qatar"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:273
+msgid "Reunion"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:274
+msgid "Romania"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:275
+msgid "Russia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:276
+msgid "Rwanda"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:277
+msgid "Saint Barth&eacute;lemy"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:278
+msgid "Saint Helena"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:279
+msgid "Saint Kitts and Nevis"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:280
+msgid "Saint Lucia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:281
+msgid "Saint Martin (French part)"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:282
+msgid "Saint Martin (Dutch part)"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:283
+msgid "Saint Pierre and Miquelon"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:284
+msgid "Saint Vincent and the Grenadines"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:285
+msgid "San Marino"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:286
+msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:287
+msgid "Saudi Arabia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:288
+msgid "Senegal"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:289
+msgid "Serbia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:290
+msgid "Seychelles"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:291
+msgid "Sierra Leone"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:292
+msgid "Singapore"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:293
+msgid "Slovakia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:294
+msgid "Slovenia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:295
+msgid "Solomon Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:296
+msgid "Somalia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:297
+msgid "South Africa"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:298
+msgid "South Georgia/Sandwich Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:299
+msgid "South Korea"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:300
+msgid "South Sudan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:301
+msgid "Spain"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:302
+msgid "Sri Lanka"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:303
+msgid "Sudan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:304
+msgid "Suriname"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:305
+msgid "Svalbard and Jan Mayen"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:306
+msgid "Swaziland"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:307
+msgid "Sweden"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:308
+msgid "Switzerland"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:309
+msgid "Syria"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:310
+msgid "Taiwan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:311
+msgid "Tajikistan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:312
+msgid "Tanzania"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:313
+msgid "Thailand"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:314
+msgid "Timor-Leste"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:315
+msgid "Togo"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:316
+msgid "Tokelau"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:317
+msgid "Tonga"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:318
+msgid "Trinidad and Tobago"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:319
+msgid "Tunisia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:320
+msgid "Turkey"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:321
+msgid "Turkmenistan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:322
+msgid "Turks and Caicos Islands"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:323
+msgid "Tuvalu"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:324
+msgid "Uganda"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:325
+msgid "Ukraine"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:326
+msgid "United Arab Emirates"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:327
+msgid "United Kingdom (UK)"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:328
+msgid "United States (US)"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:329
+msgid "Uruguay"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:330
+msgid "Uzbekistan"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:331
+msgid "Vanuatu"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:332
+msgid "Vatican"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:333
+msgid "Venezuela"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:334
+msgid "Vietnam"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:335
+msgid "Wallis and Futuna"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:336
+msgid "Western Sahara"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:337
+msgid "Western Samoa"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:338
+msgid "Yemen"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:339
+msgid "Zambia"
+msgstr ""
+
+#: includes/functions/wcj-country-functions.php:340
+msgid "Zimbabwe"
+msgstr ""
+
+#: includes/functions/wcj-functions.php:343
+msgctxt "Order status"
+msgid "Pending Payment"
+msgstr ""
+
+#: includes/functions/wcj-functions.php:345
+msgctxt "Order status"
+msgid "On Hold"
+msgstr ""
+
+#: includes/functions/wcj-invoicing-functions.php:11
+msgid "Invoices"
+msgstr ""
+
+#: includes/functions/wcj-invoicing-functions.php:18
+msgid "Proforma Invoice"
+msgstr ""
+
+#: includes/functions/wcj-invoicing-functions.php:19
+msgid "Proforma Invoices"
+msgstr ""
+
+#: includes/functions/wcj-invoicing-functions.php:26
+msgid "Packing Slip"
+msgstr ""
+
+#: includes/functions/wcj-invoicing-functions.php:27
+msgid "Packing Slips"
+msgstr ""
+
+#: includes/functions/wcj-invoicing-functions.php:34
+msgid "Credit Note"
+msgstr ""
+
+#: includes/functions/wcj-invoicing-functions.php:35
+msgid "Credit Notes"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:48
+#: includes/shipping/class-wc-shipping-wcj-custom.php:56
+msgid "Enable/Disable"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:50
+msgid "Enable Custom Payment"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:56
+#: includes/shipping/class-wc-shipping-wcj-custom.php:64
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:57
+msgid "Custom Payment"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:63
+msgid "Payment method description that the customer will see on your checkout."
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:64
+msgid "Custom Payment Description."
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:68
+msgid "Instructions"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:70
+msgid "Instructions that will be added to the thank you page."
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:75
+msgid "Email Instructions"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:77
+msgid "Instructions that will be added to the emails."
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:82
+msgid "Icon"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:90
+msgid "Minimum order amount"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:92
+msgid ""
+"If you want to set minimum order amount to show this gateway on frontend, enter a "
+"number here. Set to 0 to disable."
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:99
+msgid "Enable for shipping methods"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:104
+msgid ""
+"If gateway is only available for certain shipping methods, set it up here. Leave "
+"blank to enable for all methods."
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:108
+msgid "Select shipping methods"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:112
+msgid "Enable for virtual orders"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:113
+msgid "Enable gateway if the order is virtual"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:127
+msgid "Send Additional Emails"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:128
+msgid "Send to Admin"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:136
+msgid "Send to Customer"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:137
+msgid ""
+"This may help if you are using pending or custom default status and not getting "
+"new order emails."
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:315
+msgid "Custom Gateway"
+msgstr ""
+
+#: includes/gateways/class-wc-gateway-wcj-custom.php:316
+msgid "WooCommerce Jetpack: Custom Payment Gateway"
+msgstr "Booster для ﻿WooCommerce: Пользовательский Платежный шлюз"
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:34
+msgid "Enabled"
+msgstr "Включено"
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:40
+msgid "Type"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:46
+msgid "Number"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:48
+msgid "File"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:64
+msgid "If checkbox is selected, set value for ON here"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:65
+msgid "Checkbox: ON"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:67
+msgid "Yes"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:71
+msgid "If checkbox is selected, set value for OFF here"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:72
+msgid "Checkbox: OFF"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:74
+msgid "No"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:80
+msgid ""
+"If file is selected, set accepted file types here. E.g.: \".jpg,.jpeg,.png\". "
+"Leave blank to accept all files"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:81
+msgid "File: Accepted types"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:83
+msgid ".jpg,.jpeg,.png"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:88
+msgid "Required"
+msgstr "Обязательно"
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:100
+msgid "Placeholder"
+msgstr "Заполнитель"
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:106
+msgid "Message on required"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:307
+msgid "Wrong file type!"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-per-product.php:102
+msgid "WooCommerce Jetpack: Product Input Fields"
+msgstr "Booster для WooCommerсe: Поля ввода для продукта"
+
+#: includes/input-fields/class-wcj-product-input-fields-per-product.php:131
+msgid "Total number of "
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:35
+msgid "Invoices Renumerate"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:37
+msgid ""
+"Tool renumerates all invoices, proforma invoices, credit notes and packing slips."
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:47
+msgid "Renumerate Invoices"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:77
+msgid "Invoices successfully renumerated!"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:79
+msgid "Please select at least one order status."
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:84
+msgid "WooCommerce Jetpack - Renumerate Invoices"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:85
+msgid ""
+"The tool renumerates invoices from choosen date. Invoice number format is set in "
+"WooCommerce > Settings > Jetpack > PDF Invoices (v2) > Numbering."
+msgstr ""
+"Этот инструмент перенумерует счета-фактуры от выбранной даты. Формат номера счета-"
+"фактуры устанавливается в WooCommerce > Параметры > Booster > PDF СЧЕТА ФАКТУРЫ И "
+"ОТБОРОЧНЫХ НАКЛАДНЫЕ > Нумерация."
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:92
+msgid "Start Date"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:94
+msgid "Date to start renumerating. Leave blank to renumerate all invoices."
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:99
+msgid "Start Number"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:101
+msgid "Counter to start renumerating. Leave 0 to continue from current counter."
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:106
+msgid "Delete All"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:108
+msgid "Clear all invoices before renumerating."
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:119
+msgid "Document Type"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:129
+msgid "Order Statuses"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:139
+msgid "Results"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:195
+msgid "Total documents created: %d"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php:196
+msgid "Total documents deleted: %d"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:36
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:48
+msgid "Invoices Report"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:38
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:72
+msgid "Invoices Monthly Reports."
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:67
+msgid "Please fill year and month values."
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:71
+msgid "WooCommerce Jetpack - Invoices Report"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:79
+msgid "Year"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:86
+msgid "Month"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:95
+msgid "Get Report"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:109
+msgid "Invoice Nr."
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:111
+msgid "Order ID"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:112
+msgid "Customer Country"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:113
+msgid "Tax %"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:114
+msgid "Order Total Tax Excl."
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:115
+msgid "Order Taxes"
+msgstr ""
+
+#: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:117
+msgid "Order Currency"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php:152
+msgid "Admin's \"Orders\" Page"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php:153
+msgid "Add Column"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php:165
+msgid "Customer's \"My Account\" Page"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php:167
+msgid "Add link"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php:176
+msgid "Enable \"Save as\""
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php:178
+msgid "Enable \"save as\" pdf instead of view pdf in browser"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php:187
+msgid "PDF File Name"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php:205
+msgid "Misc."
+msgstr "Разное"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php:24
+msgid "Email Options"
+msgstr "Параметры Электронной Почты"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php:83
+msgid "Payment gateways to include"
+msgstr "Использовать платежные шлюзы"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php:91
+msgid "Select some gateways. Leave blank to include all."
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php:110
+msgid "Admin - New Order"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php:111
+msgid "Customer - Processing Order"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php:112
+msgid "Customer - Completed Order"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php:113
+msgid "Customer - Invoice"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php:117
+msgid "Attach PDF to emails"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php:126
+msgid "Select some emails"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-footer.php:43
+msgid "Enable Footer"
+msgstr "Включить Footer"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-footer.php:50
+msgid "Footer Text"
+msgstr "Footer Текст"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-footer.php:57
+msgid ""
+"You can use HTML here, as well as any WordPress shortcodes. There is two more "
+"predefined values you can use: %page_number% and %total_pages%."
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-footer.php:63
+msgid "Footer Text Color"
+msgstr "Цвет текста Footer"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-footer.php:71
+msgid "Footer Line Color"
+msgstr "Цвет Линии Footer"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-footer.php:79
+msgid "Footer Margin"
+msgstr "Граница Footer"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:42
+msgid "Enable Header"
+msgstr "Включить Header"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:49
+msgid "Header Image"
+msgstr "Изображение Header"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:59
+msgid "Header Image Width in mm"
+msgstr "Ширина Изображения в Header в мм"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:66
+msgid "Header Title"
+msgstr "Название Header"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:76
+msgid "Company Name"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:79
+msgid "free version will add \"powered by woojetpack.com\" to heading text"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:83
+msgid "Header Text Color"
+msgstr "Цвет Текста Header"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:91
+msgid "Header Line Color"
+msgstr "Цвет Линии Header"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:99
+msgid "Header Margin"
+msgstr "Граница Header"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php:116
+msgid "Header"
+msgstr "Header"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-numbering.php:37
+msgid "Sequential"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-numbering.php:43
+msgid "Counter"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-numbering.php:55
+msgid "Counter Width"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-numbering.php:76
+msgid "Numbering"
+msgstr "Нумерация"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php:43
+msgid "Page Orientation"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php:48
+msgid "Portrait"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php:49
+msgid "Landscape"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php:56
+msgid "Page Format"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php:64
+msgid "Margin Left"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php:71
+msgid "Margin Right"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php:78
+msgid "Margin Top"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php:85
+msgid "Margin Bottom"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php:101
+msgid "Page Settings"
+msgstr "Настройки Страницы"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-styling.php:96
+msgid "Styling"
+msgstr "Стилизация"
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-templates.php:43
+msgid "HTML Template"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-templates.php:53
+msgid "Available Shortcodes"
+msgstr ""
+
+#: includes/pdf-invoices/settings/class-wcj-pdf-invoicing-templates.php:65
+msgid "Templates"
+msgstr "Шаблоны"
+
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:98
+msgid "Cron job: exchange rates successfully updated"
+msgstr ""
+
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:100
+msgid "Cron job: exchange rates not updated, as currency_from == currency_to"
+msgstr ""
+
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:103
+msgid "Cron job: exchange rates update failed"
+msgstr ""
+
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:116
+msgid "Once Weekly"
+msgstr ""
+
+#: includes/price-by-country/class-wcj-exchange-rates-crons.php:121
+msgid "Once a Minute"
+msgstr ""
+
+#: includes/price-by-country/class-wcj-price-by-country-local.php:127
+msgid "Regular Price"
+msgstr ""
+
+#: includes/price-by-country/class-wcj-price-by-country-local.php:134
+msgid "Sale Price"
+msgstr ""
+
+#: includes/price-by-country/class-wcj-price-by-country-local.php:236
+msgid "Country Group Nr."
+msgstr ""
+
+#: includes/price-by-country/class-wcj-price-by-country-reports.php:38
+msgid "Reports currency:"
+msgstr ""
+
+#: includes/price-by-country/class-wcj-price-by-country-reports.php:40
+#: includes/price-by-country/class-wcj-price-by-country-reports.php:62
+msgid "Show reports only in"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-customers.php:41
+msgid "No customers found."
+msgstr ""
+
+#: includes/reports/wcj-class-reports-customers.php:91
+msgid "Customer Name"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-customers.php:92
+msgid "Email"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-customers.php:93
+msgid "Total Spent"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-customers.php:94
+msgid "Registered"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-customers.php:133
+msgid "Total customers"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-customers.php:137
+msgid "Country Code"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-customers.php:138
+msgid "Customers Count"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-customers.php:139
+msgid "Percent of total"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-customers.php:161
+msgid "Report for:"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:30
+msgid "All Products on Stock"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:31
+msgid "Report shows all products that are on stock and some sales info."
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:35
+msgid "Understocked"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:36
+msgid ""
+"Report shows all products that are low in stock calculated on product's sales data."
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:38
+msgid ""
+"Threshold for minimum stock is equal to half of the sales in selected days range."
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:42
+msgid "Overstocked"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:43
+msgid ""
+"Report shows all products that are on stock, but have no sales in selected period. "
+"Only products added before the start date of selected period are accounted."
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:287
+msgid "Stock"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:288
+msgid "Stock price"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:289
+msgid "Total stock price"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:291
+msgid "Last sale"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:292
+msgid "Sales in last %s days"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:293
+msgid "Total sales"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:296
+msgid "Stock to minimum"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:328
+msgid "purchase price:"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:333
+msgid "stock purchase price:"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:339
+msgid "No sales yet"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:344
+msgid "profit:"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:368
+msgid "Total current stock value"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:369
+msgid "Total stock value"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:370
+msgid "Product stock value average"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:371
+msgid "Product stock average"
+msgstr ""
+
+#: includes/reports/wcj-class-reports-stock.php:375
+msgid "Report was generated in: "
+msgstr ""
+
+#: includes/shipping/class-wc-shipping-wcj-custom.php:19
+#: includes/shipping/class-wc-shipping-wcj-custom.php:65
+msgid "Custom Shipping"
+msgstr ""
+
+#: includes/shipping/class-wc-shipping-wcj-custom.php:20
+msgid "WooCommerce Jetpack: Custom Shipping Method"
+msgstr ""
+
+#: includes/shipping/class-wc-shipping-wcj-custom.php:58
+msgid "Enable Custom Shipping"
+msgstr ""
+
+#: woocommerce-jetpack.php:134
+msgid ""
+"<strong>WooCommerce Jetpack</strong> plugin changed its name to <strong>Booster "
+"for WooCommerce</strong>."
+msgstr ""
+
+#: woocommerce-jetpack.php:136
+msgid "Got it! Hide this message"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: woocommerce-jetpack.php:186
+msgid "Booster for WooCommerce"
+msgstr ""
+
+#: woocommerce-jetpack.php:186
+msgid "Booster Settings"
+msgstr ""
+
+#: woocommerce-jetpack.php:198
+msgid "Docs"
+msgstr ""
+
+#: woocommerce-jetpack.php:199
+msgid "Unlock all"
+msgstr ""
+
+#: woocommerce-jetpack.php:212
+msgid "Install Booster for WooCommerce Plus to unlock all features"
+msgstr ""
+
+#: woocommerce-jetpack.php:213
+msgid ""
+"Some settings fields are locked and you will need %s to modify all locked fields."
+msgstr ""
+
+#: woocommerce-jetpack.php:214
+msgid "Buy now"
+msgstr ""
+
+#: woocommerce-jetpack.php:214
+msgid "Visit %s"
+msgstr ""
+
+#: woocommerce-jetpack.php:218
+msgid ""
+"Get <a href=\"http://BoostWoo.com/plus/\" target=\"_blank\">Booster for "
+"WooCommerce Plus</a> to change value."
+msgstr ""
+
+#: woocommerce-jetpack.php:221
+msgid ""
+"Get <a href=\"http://BoostWoo.com/plus/\" target=\"_blank\">Booster for "
+"WooCommerce Plus</a> to change values below."
+msgstr ""
+
+#: woocommerce-jetpack.php:224
+msgid ""
+"Get <a href=\"http://BoostWoo.com/plus/\" target=\"_blank\">Booster for "
+"WooCommerce Plus</a> to change values above."
+msgstr ""
+
+#: woocommerce-jetpack.php:227
+msgid "Get Booster for WooCommerce Plus to change value."
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "http://BoostWoo.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Supercharge your WooCommerce site with these awesome powerful features."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Algoritmika Ltd"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://www.algoritmika.com"
+msgstr ""
+
+#~ msgid "Jetpack"
+#~ msgstr "Jetpack"
+
+#~ msgid "Price Labels"
+#~ msgstr "Ценовые Этикетки"
+
+#~ msgid "Checkout"
+#~ msgstr "Оформить заказ"
+
+#~ msgid "Feature"
+#~ msgstr "Возможность"
+
+#~ msgid "WooCommerce Jetpack Dashboard"
+#~ msgstr "WooCommerce Jetpack панель"
+
+#~ msgid "Add to Cart - per Category"
+#~ msgstr "﻿Добавить в корзину - по категории"
+
+#~ msgid "Product Category Name"
+#~ msgstr "Категория товара"
+
+#~ msgid "Product Category ID"
+#~ msgstr "ID категории товара"
+
+#~ msgid "Add to Cart"
+#~ msgstr "Добавить в корзину"
+
+#~ msgid "Cart Options"
+#~ msgstr "Параметры корзины"
+
+#~ msgid "Empty Cart"
+#~ msgstr "Пустая корзина"

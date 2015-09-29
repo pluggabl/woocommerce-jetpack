@@ -1,0 +1,13 @@
+.pdf_invoice_heading_table {
+	width: 50%;
+}
+.pdf_invoice_items_table {
+	padding: 5px;
+}
+.pdf_invoice_items_table th {
+	font-weight: bold;
+	border: 1px solid #F0F0F0;
+}
+.pdf_invoice_items_table td {
+	border: 1px solid #F0F0F0;
+}

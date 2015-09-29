@@ -1,0 +1,524 @@
+<?php
+/**
+ * Abstract WooCommerce Jetpack Product Input Fields
+ *
+ * The WooCommerce Jetpack Product Input Fields abstract class.
+ *
+ * @version 2.2.2
+ * @author  Algoritmika Ltd.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! class_exists( 'WCJ_Product_Input_Fields_Abstract' ) ) :
+
+class WCJ_Product_Input_Fields_Abstract {
+
+	/** @var string scope. */
+	public $scope = '';
+
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+
+	}
+
+	/**
+	 * get_options.
+	 */
+	public function get_options() {
+		$options = array(
+			array(
+				'id'				=> 'wcj_product_input_fields_enabled_' . $this->scope . '_',
+				'title'				=> __( 'Enabled', 'woocommerce-jetpack' ),
+				'type'				=> 'checkbox',
+				'default'			=> 'no',
+			),
+			array(
+				'id'				=> 'wcj_product_input_fields_type_' . $this->scope . '_',
+				'title'				=> __( 'Type', 'woocommerce-jetpack' ),
+				'type'				=> 'select',
+				'default'           => 'text',
+				'options'           => array(
+					'text'       => __( 'Text', 'woocommerce-jetpack' ),
+					'textarea'   => __( 'Textarea', 'woocommerce-jetpack' ),
+					'number'     => __( 'Number', 'woocommerce-jetpack' ),
+					'checkbox'   => __( 'Checkbox', 'woocommerce-jetpack' ),
+					'file'       => __( 'File', 'woocommerce-jetpack' ),
+					//'datepicker' => __( 'Datepicker', 'woocommerce-jetpack' ),
+					//'timepicker' => __( 'Timepicker', 'woocommerce-jetpack' ),
+					'select'     => __( 'Select', 'woocommerce-jetpack' ),
+//					'radio'      => __( 'Radio', 'woocommerce-jetpack' ),  //function woocommerce_form_field
+					'password'   => __( 'Password', 'woocommerce-jetpack' ),
+//					'country'    => __( 'Country', 'woocommerce-jetpack' ),//function woocommerce_form_field
+//					'state'      => __( 'State', 'woocommerce-jetpack' ),  //function woocommerce_form_field
+					'email'      => __( 'Email', 'woocommerce-jetpack' ),
+					'tel'        => __( 'Phone', 'woocommerce-jetpack' ),
+
+				),
+			),
+
+			/* array(
+				'id'				=> 'wcj_product_input_fields_type_checkbox_' . $this->scope . '_',
+				'title'				=> __( 'If checkbox is selected, set possible pairs here.', 'woocommerce-jetpack' ),
+				'type'				=> 'select',
+				'default'           => 'yes_no',
+				'options'           => array(
+										'yes_no' => __( 'Yes / No', 'woocommerce-jetpack' ),
+										'on_off' => __( 'On / Off', 'woocommerce-jetpack' ),
+									),
+			), */
+			array(
+				'id'				=> 'wcj_product_input_fields_type_checkbox_yes_' . $this->scope . '_',
+				'title'				=> __( 'If checkbox is selected, set value for ON here', 'woocommerce-jetpack' ),
+				'short_title'		=> __( 'Checkbox: ON', 'woocommerce-jetpack' ),
+				'type'				=> 'text',
+				'default'           => __( 'Yes', 'woocommerce-jetpack' ),
+			),
+			array(
+				'id'				=> 'wcj_product_input_fields_type_checkbox_no_' . $this->scope . '_',
+				'title'				=> __( 'If checkbox is selected, set value for OFF here', 'woocommerce-jetpack' ),
+				'short_title'		=> __( 'Checkbox: OFF', 'woocommerce-jetpack' ),
+				'type'				=> 'text',
+				'default'           => __( 'No', 'woocommerce-jetpack' ),
+			),
+
+			// TODO: http://www.w3schools.com/tags/att_input_accept.asp
+			array(
+				'id'				=> 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_',
+				'title'				=> __( 'If file is selected, set accepted file types here. E.g.: ".jpg,.jpeg,.png". Leave blank to accept all files', 'woocommerce-jetpack' ),
+				'short_title'		=> __( 'File: Accepted types', 'woocommerce-jetpack' ),
+				'type'				=> 'text',
+				'default'           => __( '.jpg,.jpeg,.png', 'woocommerce-jetpack' ),
+			),
+
+			array(
+				'id'				=> 'wcj_product_input_fields_type_select_options_' . $this->scope . '_',
+				'title'				=> __( 'If select/radio is selected, set options here. One option per line', 'woocommerce-jetpack' ),
+				'short_title'		=> __( 'Select/Radio: Options', 'woocommerce-jetpack' ),
+				'type'				=> 'textarea',
+				'default'           => '',
+			),
+
+			array(
+				'id'				=> 'wcj_product_input_fields_required_' . $this->scope . '_',
+				'title'				=> __( 'Required', 'woocommerce-jetpack' ),
+				'type'				=> 'checkbox',
+				'default'           => 'no',
+			),
+			array(
+				'id'				=> 'wcj_product_input_fields_title_' . $this->scope . '_',
+				'title'				=> __( 'Title', 'woocommerce-jetpack' ),
+				'type'				=> 'textarea',
+				'default'           => '',
+			),
+			array(
+				'id'				=> 'wcj_product_input_fields_placeholder_' . $this->scope . '_',
+				'title'				=> __( 'Placeholder', 'woocommerce-jetpack' ),
+				'type'				=> 'textarea',
+				'default'           => '',
+			),
+			array(
+				'id'				=> 'wcj_product_input_fields_required_message_' . $this->scope . '_',
+				'title'				=> __( 'Message on required', 'woocommerce-jetpack' ),
+				'type'				=> 'textarea',
+				'default'           => '',
+			),
+		);
+		return $options;
+	}
+
+	/**
+	 * hide_custom_input_fields_default_output_in_admin_order.
+	 * @todo Get actual (max) number of fields in case of local scape.
+	 */
+	function hide_custom_input_fields_default_output_in_admin_order( $hidden_metas ) {
+		$total_number = 0;
+		if ( 'global' === $this->scope ) {
+			$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', 0, 1 ) );
+		} else {
+			$max_number_of_fields_for_local = 100;
+			$total_number = $max_number_of_fields_for_local; // TODO: not the best solution!
+		}
+
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$hidden_metas[] = '_' . 'wcj_product_input_fields_' . $this->scope . '_' . $i;
+		}
+		return $hidden_metas;
+	}
+
+	/**
+	 * output_custom_input_fields_in_admin_order.
+	 */
+	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
+		echo '<table cellspacing="0" class="display_meta">';
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product->id, 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+
+			$the_nice_name = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $_product->id, '' );
+			if ( '' == $the_nice_name ) $the_nice_name = __( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #' . $i;
+
+			$the_value = isset( $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] ) ? $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] : '';
+
+			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $_product->id, '' );
+			if ( 'file' === $type ) {
+				/* $file_name = $the_value;
+				$upload_dir = wp_upload_dir();
+				$upload_url = $upload_dir['baseurl'];
+				$the_value = $upload_url . '/woocommerce_uploads/' . $file_name;
+				//$the_value = $upload_url . '/' . $the_value;
+				//$the_value = '<img style="width:50px;" src="' . $the_value . '">'; */
+				$the_value = maybe_unserialize( $the_value );
+				$the_value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '.' . pathinfo( $the_value['name'], PATHINFO_EXTENSION ) ) . '">' . $the_value['name'] . '</a>';
+			} else {
+				if ( 'no' === get_option( 'wcj_product_input_fields_make_nicer_name_enabled' ) ) {
+					continue;
+				}
+			}
+
+			if ( '' != $the_value ) {
+				echo '<tr><th>' . $the_nice_name . ':</th><td>' . $the_value . '</td></tr>';
+			}
+		}
+		echo '</table>';
+	}
+
+	/**
+	 * starts_with.
+	 *
+	function starts_with( $haystack, $needle ) {
+		// search backwards starting from haystack length characters from the end
+		//return ( '' === $needle ) || ( strpos( $haystack, $needle, strlen( $haystack ) ) !== false );
+		return $needle === substr( $haystack, 0, strlen( $needle ) );
+		//return substr( $haystack, 0, strlen( $needle ) );
+		//return strpos( $haystack, $needle ) !== false;
+	}
+
+	/**
+	 * change_woocommerce_attribute_label.
+	 *
+	function change_woocommerce_attribute_label( $label, $name ) {
+
+		if ( $this->starts_with( $label, '_wcj_product_input_fields_global_' ) ) {
+			$title_option_id = trim( $label, '_' );
+			$title_option_id = str_replace( 'wcj_product_input_fields_global_', 'wcj_product_input_fields_title_global_', $title_option_id );
+			//$the_nice_name = $this->get_value( $label, 0, '' );
+			$title = get_option( $title_option_id, '' );
+
+			$label = ( '' == $title ) ?
+				str_replace(
+					'_wcj_product_input_fields_' . $this->scope . '_',
+					__( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #',
+					$label ) :
+				$title;
+
+		} elseif ( $this->starts_with( $label, '_wcj_product_input_fields_local_' ) ) {
+
+			$title = '';//$label;
+
+			$label = ( '' == $title ) ?
+				str_replace(
+					'_wcj_product_input_fields_' . $this->scope . '_',
+					__( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #',
+					$label ) :
+				$title;
+		}
+
+		return $label;
+	}
+
+	/**
+	 * finish_making_nicer_name_for_product_input_fields.
+	 *
+	public function finish_making_nicer_name_for_product_input_fields( $item_id, $item, $_product ) {
+		$buffer = ob_get_clean();
+		$the_ugly_name = '_wcj_product_input_fields_' . $this->scope . '_';
+		$the_nice_name = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . '1', $_product->id, '' );
+		if ( '' == $the_nice_name ) $the_nice_name = __( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #';
+		$buffer = str_replace(
+			$the_ugly_name,
+			$the_nice_name,
+			$buffer
+		);
+		echo $buffer;
+	}
+
+	/**
+	 * make_nicer_name.
+	 *
+	public function make_nicer_name( $buffer ) {
+		$the_ugly_name = '_wcj_product_input_fields_' . $this->scope . '_';
+		$the_nice_name = () ? : __( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #';
+		return str_replace(
+			$the_ugly_name,
+			$the_nice_name,
+			$buffer
+		);
+	}
+
+	/**
+	 * start_making_nicer_name_for_product_input_fields.
+	 *
+	public function start_making_nicer_name_for_product_input_fields( $item_id, $item, $_product ) {
+		ob_start( array( $this, 'make_nicer_name' ) );
+	}
+
+	/**
+	 * finish_making_nicer_name_for_product_input_fields.
+	 *
+	public function finish_making_nicer_name_for_product_input_fields( $item_id, $item, $_product ) {
+		ob_end_flush();
+	}
+
+	/**
+	 * get_value.
+	 */
+	public function get_value( $option_name, $product_id, $default ) {
+		return false;
+	}
+
+	/**
+	 * validate_product_input_fields_on_add_to_cart.
+	 */
+	public function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+
+			$is_enabled  = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $product_id, 'no' );
+			if ( ! $is_enabled ) {
+				continue;
+			}
+
+			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $product_id, '' );
+			$field_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
+
+			if ( 'checkbox' === $type && ! isset( $_POST[ $field_name ] ) ) {
+				$_POST[ $field_name ] = 'off';
+			}
+
+			$is_required = $this->get_value( 'wcj_product_input_fields_required_' . $this->scope . '_' . $i, $product_id, 'no' );
+			if ( 'on' === $is_required  || 'yes' === $is_required ) {
+				if ( 'file' === $type ) {
+					$field_value = ( isset( $_FILES[ $field_name ]['name'] ) ) ? $_FILES[ $field_name ]['name'] : '';
+				} else {
+					$field_value = ( isset( $_POST[ $field_name ] ) ) ? $_POST[ $field_name ] : '';
+					if ( 'checkbox' === $type && 'off' === $field_value ) {
+						$field_value = '';
+					}
+				}
+				if ( '' == $field_value ) {
+					$passed = false;
+					wc_add_notice( $this->get_value( 'wcj_product_input_fields_required_message_' . $this->scope . '_' . $i, $product_id, '' ), 'error' );
+				}
+			}
+
+
+			if ( 'file' === $type && '' != $_FILES[ $field_name ]['name'] ) {
+				// Validate file type
+				$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product_id, '' );
+				$file_accept = explode( ',', $file_accept );
+				if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
+					$file_type = '.' . pathinfo( $_FILES[ $field_name ]['name'], PATHINFO_EXTENSION );
+					if ( ! in_array( $file_type, $file_accept ) ) {
+						$passed = false;
+						wc_add_notice( __( 'Wrong file type!', 'woocommerce-jetpack' ), 'error' );
+						//wc_add_notice( $this->get_value( 'wcj_product_input_fields_wrong_file_type_msg_' . $this->scope . '_' . $i, $product_id, '' ), 'error' );
+					}
+				}
+			}
+		}
+
+		return $passed;
+	}
+
+	/**
+	 * add_product_input_fields_to_frontend.
+	 */
+	public function add_product_input_fields_to_frontend() {
+		global $product;
+		//if ( ! $product ) // return;
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product->id, 1 ) );
+
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+
+			$type        = $this->get_value( 'wcj_product_input_fields_type_' .        $this->scope . '_' . $i, $product->id, 'text' );
+			$is_enabled  = $this->get_value( 'wcj_product_input_fields_enabled_' .     $this->scope . '_' . $i, $product->id, 'no' );
+			$is_required = $this->get_value( 'wcj_product_input_fields_required_' .    $this->scope . '_' . $i, $product->id, 'no' );
+			$title       = $this->get_value( 'wcj_product_input_fields_title_' .       $this->scope . '_' . $i, $product->id, '' );
+			$placeholder = $this->get_value( 'wcj_product_input_fields_placeholder_' . $this->scope . '_' . $i, $product->id, '' );
+
+			$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product->id, '' );
+			$custom_attributes = ( 'file' === $type ) ? ' accept="' . $file_accept . '"' : '';
+			$field_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
+
+			if ( 'on' === $is_enabled || 'yes' === $is_enabled ) {
+				switch ( $type ) {
+					case 'number':
+					case 'text':
+					case 'checkbox':
+					case 'file':
+					case 'password':
+					case 'email':
+					case 'tel':
+						echo '<p>' . $title . '<input type="' . $type . '" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						break;
+					case 'textarea':
+						echo '<p>' . $title . '<textarea name="' . $field_name . '" placeholder="' . $placeholder . '">' . '</textarea>' . '</p>';
+						break;
+					case 'select':
+						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $product->id, '' );
+						$select_options = wcj_get_select_options( $select_options_raw );
+						$select_options_html = '';
+						if ( ! empty( $select_options ) ) {
+							reset( $select_options );
+							$default_value = key( $select_options );
+							foreach ( $select_options as $select_option_key => $select_option_title ) {
+								$select_options_html .= '<option value="' . $select_option_key . '" ' . selected( $default_value, $select_option_key, false ) . '>';
+								$select_options_html .= $select_option_title;
+								$select_options_html .= '</option>';
+							}
+						}
+						echo '<p>' . $title . '<select name="' . $field_name . '">' . $select_options_html . '</select>' . '</p>';
+						break;
+				}
+			}
+		}
+	}
+
+	/**
+	 * add_product_input_fields_to_cart_item_data - from $_POST to $cart_item_data
+	 */
+	public function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $product_id, '' );
+			$value_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
+			if ( 'file' === $type ) {
+				if ( isset( $_FILES[ $value_name ] ) ) {
+					$cart_item_data[ $value_name ] = $_FILES[ $value_name ];
+					$tmp_dest_file = tempnam( sys_get_temp_dir(), 'wcj' );
+					move_uploaded_file( $cart_item_data[ $value_name ]['tmp_name'], $tmp_dest_file );
+					$cart_item_data[ $value_name ]['tmp_name'] = $tmp_dest_file;
+				}
+			} else {
+				if ( isset( $_POST[ $value_name ] ) ) {
+					$cart_item_data[ $value_name ] = $_POST[ $value_name ];
+				}
+			}
+		}
+		return $cart_item_data;
+	}
+
+	/**
+	 * get_cart_item_product_input_fields_from_session.
+	 */
+	public function get_cart_item_product_input_fields_from_session( $item, $values, $key ) {
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $values ) )
+				$item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] = $values[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ];
+		}
+		return $item;
+	}
+
+	/**
+	 * Adds product input values to order details (and emails).
+	 */
+	public function add_product_input_fields_to_order_item_name( $name, $item ) {
+
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
+		if ( $total_number < 1 )
+			return $name;
+
+		$name .= '<dl style="font-size:smaller;">';
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+
+			$is_enabled  = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $item['product_id'], 'no' );
+			if ( ! $is_enabled ) {
+				continue;
+			}
+
+			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $item['product_id'], '' );
+
+			if ( 'checkbox' === $type && ! array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $item ) ) {
+				$item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] = 'off';
+			}
+
+			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $item ) ) {
+				$title = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $item['product_id'], '' );
+
+				$value = $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ];
+
+				$yes_value = $this->get_value( 'wcj_product_input_fields_type_checkbox_yes_' . $this->scope . '_' . $i, $item['product_id'], '' );
+				$no_value  = $this->get_value( 'wcj_product_input_fields_type_checkbox_no_'  . $this->scope . '_' . $i, $item['product_id'], '' );
+				//$type    = $this->get_value( 'wcj_product_input_fields_type_'              . $this->scope . '_' . $i, $item['product_id'], '' );
+				if ( 'checkbox' === $type ) {
+					$value = ( 'on' === $value ) ? $yes_value : $no_value;
+				}
+
+				if ( 'file' === $type ) {
+					$value = maybe_unserialize( $value );
+					$value = $value['name'];
+				}
+
+				$name .= '<dt>'
+					  . $title
+					  . '</dt>'
+					  . '<dd>'
+					  . $value
+					  . '</dd>';
+			}
+		}
+		$name .= '</dl>';
+
+		return $name;
+	}
+
+	/**
+	 * Adds product input values to cart item details.
+	 */
+	public function add_product_input_fields_to_cart_item_name( $name, $cart_item, $cart_item_key  ) {
+		return $this->add_product_input_fields_to_order_item_name( $name, $cart_item );
+	}
+
+	/**
+	 * add_product_input_fields_to_order_item_meta.
+	 */
+	public function add_product_input_fields_to_order_item_meta(  $item_id, $values, $cart_item_key  ) {
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i , $values ) ) {
+				$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $values['product_id'], '' );
+				$input_field_value = $values[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ];
+
+				if ( 'file' === $type ) {
+					$tmp_name = $input_field_value['tmp_name'];
+					$ext = pathinfo( $input_field_value['name'], PATHINFO_EXTENSION );
+					$name = $item_id . '.' . $ext;//$input_field_value['name'];
+					$upload_dir = wcj_get_wcj_uploads_dir( 'input_fields_uploads' );
+					if ( ! file_exists( $upload_dir ) ) {
+						mkdir( $upload_dir, 0755, true );
+					}
+					//$upload_dir = ( wp_mkdir_p( $upload_dir['path'] ) ) ? $upload_dir['path'] : $upload_dir['basedir'];
+					$upload_dir_and_name = $upload_dir . '/' . $name;
+					//move_uploaded_file( $tmp_name, $upload_dir_and_name );
+					$file_data = file_get_contents( $tmp_name );
+					file_put_contents( $upload_dir_and_name, $file_data );
+					unlink( $tmp_name );
+					//unset( $input_field_value['tmp_name'] );
+					$input_field_value['tmp_name'] = $upload_dir_and_name;
+					$input_field_value['wcj_type'] = 'file';
+					//$orig_file_name = $input_field_value['name'];
+					//wc_add_order_item_meta( $item_id, '_wcj_product_input_fields_' . $this->scope . '_' . $i . '_orig_file_name', $orig_file_name );
+					//$input_field_value = '<a href="' . add_query_arg( 'wcj_download_file', $name ) . '">' . $orig_file_name . '</a>';
+					//$input_field_value = $orig_file_name;
+				}
+
+				wc_add_order_item_meta( $item_id, '_wcj_product_input_fields_' . $this->scope . '_' . $i, $input_field_value );
+			}
+		}
+	}
+}
+
+endif;
