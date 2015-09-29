@@ -112,6 +112,12 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.0 - 29/09/2015 =
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Exchange rates moved to new module.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Initial module release (works with Gateways Currency and Prices and Currencies by Country modules).
+* Dev - PAYMENT GATEWAYS - Gateways Currency - Initial module release.
+* Dev - PAYMENT GATEWAYS category added.
+* Dev - PRODUCTS - Product Input Fields - List of available field types extended (select, radio, datepicker, timepicker etc.).
+* Dev - CART & CHECKOUT - Checkout Custom Fields - List of available field types extended (select, radio etc.).
 * Dev - PDF Invoicing - Manual invoice creation option added (in invoicing display).
 * Dev - PDF Invoicing - Code refactoring.
 * Dev - PDF Invoicing - "powered by" removed in invoicing header.
@@ -137,8 +143,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Fix - PDF Invoicing - "Cannot redeclare class TCPDF_FONT_DATA" warning fixed.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price by Country on per Product Basis - Variable product bug fixed.
 * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Code refactoring.
-* Fix - CURRENCIES - Different Currency for External Products - additional product object validation added.
-* Dev - CURRENCIES - Different Currency for External Products - Code refactoring.
+* Fix - PRICES & CURRENCIES - Currency for External Products - Additional product object validation added.
+* Dev - PRICES & CURRENCIES - Currency for External Products - Code refactoring.
 
 = 2.2.9 - 01/09/2015 =
 * Dev - Shortcodes - Orders - `[wcj_order_meta]` shortcode added (attribute: `meta_key`).
