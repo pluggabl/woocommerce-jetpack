@@ -104,9 +104,6 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
 				'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
 			),
-			'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-			'custom_attributes'
-			           => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 		);
 
 		// Currency Pairs - Price by Country

@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: http://BoostWoo.com
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.3.0-dev
+Version: 2.3.0
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Copyright: © 2015 Algoritmika Ltd.
@@ -243,22 +243,22 @@ final class WC_Jetpack {
 
 			case 'global':
 				return	'<div class="updated">
-								<p class="main"><strong>' . __( 'Install Booster for WooCommerce Plus to unlock all features', 'woocommerce-jetpack' ) . '</strong></p>
+								<p class="main"><strong>' . __( 'Install Booster Plus to unlock all features', 'woocommerce-jetpack' ) . '</strong></p>
 								<span>' . sprintf( __('Some settings fields are locked and you will need %s to modify all locked fields.', 'woocommerce-jetpack'), '<a href="http://BoostWoo.com/plus/">Booster for WooCommerce Plus</a>' ) . '</span>
 								<p><a href="http://BoostWoo.com/plus/" target="_blank" class="button button-primary">' . __( 'Buy now', 'woocommerce-jetpack' ) . '</a> <a href="http://BoostWoo.com" target="_blank" class="button">'. sprintf( __( 'Visit %s', 'woocommerce-jetpack' ), 'BoostWoo.com' ) . '</a></p>
 						</div>';
 
 			case 'desc':
-				return __( 'Get <a href="http://BoostWoo.com/plus/" target="_blank">Booster for WooCommerce Plus</a> to change value.', 'woocommerce-jetpack' );
+				return __( 'Get <a href="http://BoostWoo.com/plus/" target="_blank">Booster Plus</a> to change value.', 'woocommerce-jetpack' );
 
 			case 'desc_below':
-				return __( 'Get <a href="http://BoostWoo.com/plus/" target="_blank">Booster for WooCommerce Plus</a> to change values below.', 'woocommerce-jetpack' );
+				return __( 'Get <a href="http://BoostWoo.com/plus/" target="_blank">Booster Plus</a> to change values below.', 'woocommerce-jetpack' );
 
 			case 'desc_above':
-				return __( 'Get <a href="http://BoostWoo.com/plus/" target="_blank">Booster for WooCommerce Plus</a> to change values above.', 'woocommerce-jetpack' );
+				return __( 'Get <a href="http://BoostWoo.com/plus/" target="_blank">Booster Plus</a> to change values above.', 'woocommerce-jetpack' );
 
 			case 'desc_no_link':
-				return __( 'Get Booster for WooCommerce Plus to change value.', 'woocommerce-jetpack' );
+				return __( 'Get Booster Plus to change value.', 'woocommerce-jetpack' );
 
 			case 'readonly':
 				return array( 'readonly' => 'readonly' );

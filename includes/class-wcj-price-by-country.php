@@ -184,9 +184,10 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				'weekly'     => __( 'Automatically: Update Weekly', 'woocommerce-jetpack' ),
 				'minutely'   => __( 'Automatically: Update Every Minute', 'woocommerce-jetpack' ), */
 			),
-			'desc'     => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
-			            . ' '
-			            . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+			'desc'     => ( '' == apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) ) ?
+				__( 'Visit', 'woocommerce-jetpack' ) . ' <a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
+				:
+	            apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 			'custom_attributes'
 			           => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 		);
