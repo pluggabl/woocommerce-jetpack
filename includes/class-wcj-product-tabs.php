@@ -29,7 +29,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_product_tabs', array( $this, 'customize_product_tabs' ), 98 );
 			if ( 'yes' === get_option( 'wcj_custom_product_tabs_local_enabled' ) ) {
-				add_action( 'add_meta_boxes', array( $this, 'add_custom_tabs_meta_box' ) );
+				add_action( 'add_meta_boxes',    array( $this, 'add_custom_tabs_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_custom_tabs_meta_box' ), 100, 2 );
 			}
 		}
