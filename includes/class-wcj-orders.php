@@ -14,17 +14,17 @@ if ( ! class_exists( 'WCJ_Orders' ) ) :
 
 class WCJ_Orders extends WCJ_Module {
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
 
 		$this->id         = 'orders';
 		$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Minimum WooCommerce order amount; orders auto-complete.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-        // Main hooks
+	    // Main hooks
 		if ( $this->is_enabled() ) {
 
 			if ( get_option( 'wcj_order_minimum_amount' ) > 0 ) {
@@ -47,7 +47,7 @@ class WCJ_Orders extends WCJ_Module {
 				add_filter( 'parse_query',           array( $this, 'orders_by_country_admin_filter_query' ) );
 			}
 		}
-    }
+	}
 
 	/**
 	 * Filter the orders in admin based on options
@@ -83,9 +83,9 @@ class WCJ_Orders extends WCJ_Module {
 		}
 	}
 
-    /**
-     * add_order_column.
-     */
+	/**
+	 * add_order_column.
+	 */
 	function add_order_column( $columns ) {
 		$columns['country'] = __( 'Country', 'woocommerce-jetpack' );
 		return $columns;
@@ -137,9 +137,9 @@ class WCJ_Orders extends WCJ_Module {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//																				MINIMUM AMOUNT																		  //
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /**
-     * order_minimum_amount.
-     */
+	/**
+	 * order_minimum_amount.
+	 */
 	public function order_minimum_amount() {
 
 		$minimum = get_option( 'wcj_order_minimum_amount' );
@@ -175,79 +175,79 @@ class WCJ_Orders extends WCJ_Module {
 			wp_safe_redirect( $woocommerce->cart->get_cart_url() );
 	}
 
-    /**
-     * Add settings arrays to Jetpack Settings.
-     */
-    function get_settings() {
+	/**
+	 * Add settings arrays to Jetpack Settings.
+	 */
+	function get_settings() {
 
-        $settings = array(
+	    $settings = array(
 
-            array( 'title' => __( 'Order Minimum Amount', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you set minimum order amount.', 'woocommerce-jetpack' ), 'id' => 'wcj_order_minimum_amount_options' ),
+	        array( 'title' => __( 'Order Minimum Amount', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you set minimum order amount.', 'woocommerce-jetpack' ), 'id' => 'wcj_order_minimum_amount_options' ),
 
-            array(
-                'title'    => __( 'Amount', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Minimum order amount. Set to 0 to disable.', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_order_minimum_amount',
-                'default'  => 0,
-                'type'     => 'number',
+	        array(
+	            'title'    => __( 'Amount', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Minimum order amount. Set to 0 to disable.', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_order_minimum_amount',
+	            'default'  => 0,
+	            'type'     => 'number',
 				'custom_attributes' => array(
 					'step' => '0.0001',
 					'min'  => '0',
 				),
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Error message', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Error message', 'woocommerce-jetpack' ),
 				'desc' 	   => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-                'desc_tip' => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %s to place your order, your current order total is %s.', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_order_minimum_amount_error_message',
-                'default'  => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
-                'type'     => 'textarea',
+	            'desc_tip' => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %s to place your order, your current order total is %s.', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_order_minimum_amount_error_message',
+	            'default'  => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
+	            'type'     => 'textarea',
 				'custom_attributes'
 						   => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 				'css'	   => 'width:50%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Add notice to cart page also', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Add', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_order_minimum_amount_cart_notice_enabled',
-                'default'  => 'no',
-                'type'     => 'checkbox',
-            ),
+	        array(
+	            'title'    => __( 'Add notice to cart page also', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_order_minimum_amount_cart_notice_enabled',
+	            'default'  => 'no',
+	            'type'     => 'checkbox',
+	        ),
 
-            array(
-                'title'    => __( 'Message on cart page', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Message on cart page', 'woocommerce-jetpack' ),
 				'desc' 	   => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-                'desc_tip' => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %s to place your order, your current order total is %s.', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_order_minimum_amount_cart_notice_message',
-                'default'  => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
-                'type'     => 'textarea',
+	            'desc_tip' => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %s to place your order, your current order total is %s.', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_order_minimum_amount_cart_notice_message',
+	            'default'  => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
+	            'type'     => 'textarea',
 				'custom_attributes'
 						   => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 				'css'	   => 'width:50%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Stop customer from seeing the Checkout page if minimum amount not reached.', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Redirect back to Cart page', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_order_minimum_amount_stop_from_seeing_checkout',
-                'default'  => 'no',
-                'type'     => 'checkbox',
-            ),
+	        array(
+	            'title'    => __( 'Stop customer from seeing the Checkout page if minimum amount not reached.', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Redirect back to Cart page', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_order_minimum_amount_stop_from_seeing_checkout',
+	            'default'  => 'no',
+	            'type'     => 'checkbox',
+	        ),
 
-            array( 'type'  => 'sectionend', 'id' => 'wcj_order_minimum_amount_options' ),
+	        array( 'type'  => 'sectionend', 'id' => 'wcj_order_minimum_amount_options' ),
 
 			array( 'title' => __( 'Orders Auto-Complete', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you enable orders auto-complete function.', 'woocommerce-jetpack' ), 'id' => 'wcj_order_auto_complete_options' ),
 
-            array(
-                'title'    => __( 'Auto-complete all WooCommerce orders', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'E.g. if you sell digital products then you are not shipping anything and you may want auto-complete all your orders.', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_order_auto_complete_enabled',
-                'default'  => 'no',
-                'type'     => 'checkbox',
-            ),
+	        array(
+	            'title'    => __( 'Auto-complete all WooCommerce orders', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'E.g. if you sell digital products then you are not shipping anything and you may want auto-complete all your orders.', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_order_auto_complete_enabled',
+	            'default'  => 'no',
+	            'type'     => 'checkbox',
+	        ),
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_order_auto_complete_options' ),
 
@@ -258,22 +258,22 @@ class WCJ_Orders extends WCJ_Module {
 				'id'    => 'wcj_orders_list_custom_columns_options',
 			),
 
-            array(
-                'title'    => __( 'Country', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Add', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_orders_list_custom_columns_country',
-                'default'  => 'no',
-                'type'     => 'checkbox',
-            ),
+	        array(
+	            'title'    => __( 'Country', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_orders_list_custom_columns_country',
+	            'default'  => 'no',
+	            'type'     => 'checkbox',
+	        ),
 
 			array(
 				'type'  => 'sectionend',
 				'id' => 'wcj_orders_list_custom_columns_options',
 			),
 
-        );
+	    );
 
-        return $this->add_enable_module_setting( $settings );
+	    return $this->add_enable_module_setting( $settings );
 	}
 }
 

@@ -24,10 +24,10 @@ class WCJ_PDF_Invoices {
 .pdf_invoice_totals_table_wcj th { width: 80%; text-align: right; }
 .pdf_invoice_totals_table_wcj td { width: 20%; text-align: right; border: 1px solid #F0F0F0; }';
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
 
 		//add_shortcode( 'wcj_order_date', 									array( $this, 'shortcode_pdf_invoices_order_date' ) );
 		//add_shortcode( 'wcj_order_billing_address',							array( $this, 'shortcode_pdf_invoices_billing_address' ) );
@@ -35,8 +35,8 @@ class WCJ_PDF_Invoices {
 		//add_shortcode( 'wcj_items_total_quantity',							array( $this, 'shortcode_pdf_invoices_items_total_quantity' ) );
 		//add_shortcode( 'wcj_items_total_number',							array( $this, 'shortcode_pdf_invoices_items_total_number' ) );
 
-        // Main hooks
-        if ( get_option( 'wcj_pdf_invoices_enabled' ) == 'yes' ) {
+	    // Main hooks
+	    if ( get_option( 'wcj_pdf_invoices_enabled' ) == 'yes' ) {
 
 			add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_pdf_invoices_link_to_order_list' ), 100, 2 );
 
@@ -51,19 +51,19 @@ class WCJ_PDF_Invoices {
 				add_filter( 'woocommerce_email_attachments', array( $this, 'add_pdf_invoice_email_attachment' ), 100, 3 );
 
 			add_filter( 'woocommerce_payment_gateways_settings', array( $this, 'add_attach_invoice_settings' ), 100 );
-        }
+	    }
 
-        // Settings hooks
-        add_filter( 'wcj_settings_sections', array( $this, 'settings_section' ) );
-        add_filter( 'wcj_settings_pdf_invoices', array( $this, 'get_settings' ), 100 );
-        add_filter( 'wcj_features_status', array( $this, 'add_enabled_option' ), 100 );
-    }
+	    // Settings hooks
+	    add_filter( 'wcj_settings_sections', array( $this, 'settings_section' ) );
+	    add_filter( 'wcj_settings_pdf_invoices', array( $this, 'get_settings' ), 100 );
+	    add_filter( 'wcj_features_status', array( $this, 'add_enabled_option' ), 100 );
+	}
 
-    /**
-     * add_attach_invoice_settings.
-     */
+	/**
+	 * add_attach_invoice_settings.
+	 */
 	function add_attach_invoice_settings( $settings ) {
-        $settings[] = array( 'title' => __( 'Payment Gateways Attach PDF Invoice V1 Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you choose when to attach PDF invoice to customers emails.', 'woocommerce-jetpack' ), 'id' => 'wcj_gateways_attach_invoice_options' );
+	    $settings[] = array( 'title' => __( 'Payment Gateways Attach PDF Invoice V1 Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you choose when to attach PDF invoice to customers emails.', 'woocommerce-jetpack' ), 'id' => 'wcj_gateways_attach_invoice_options' );
 		global $woocommerce;
 		$available_gateways = $woocommerce->payment_gateways->payment_gateways();
 		foreach ( $available_gateways as $key => $gateway ) {
@@ -81,9 +81,9 @@ class WCJ_PDF_Invoices {
 
 
 			) );
-        }
+	    }
 
-        $settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_gateways_attach_invoice_options' );
+	    $settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_gateways_attach_invoice_options' );
 
 		return $settings;
 	}
@@ -178,17 +178,17 @@ class WCJ_PDF_Invoices {
 		return $this->get_shortcode( '%items_total_quantity%', $atts );
 	}
 
-    /**
-     * do_attach_for_payment_method.
-     */
-    public function do_attach_for_payment_method( $payment_method ) {
+	/**
+	 * do_attach_for_payment_method.
+	 */
+	public function do_attach_for_payment_method( $payment_method ) {
 		return ( 'no' === get_option( 'wcj_gateways_attach_invoice_' . $payment_method, 'yes' ) ) ? false : true;
 	}
 
-    /**
-     * add_pdf_invoice_email_attachment.
-     */
-    public function add_pdf_invoice_email_attachment( $attachments, $status, $order ) {
+	/**
+	 * add_pdf_invoice_email_attachment.
+	 */
+	public function add_pdf_invoice_email_attachment( $attachments, $status, $order ) {
 		if ( isset( $status ) && 'customer_completed_order' === $status && isset( $order ) && true === $this->do_attach_for_payment_method( $order->payment_method ) ) {
 			$file_name = sys_get_temp_dir() . '/invoice-' .  $order->id . '.pdf';
 			$result = file_put_contents( $file_name, $this->generate_pdf( $order->id ) );
@@ -197,10 +197,10 @@ class WCJ_PDF_Invoices {
 		return $attachments;
 	}
 
-    /**
-     * Unlocks - PDF Invoices - add_pdf_invoices_link_to_my_account.
-     */
-    public function add_pdf_invoices_link_to_my_account( $actions, $the_order ) {
+	/**
+	 * Unlocks - PDF Invoices - add_pdf_invoices_link_to_my_account.
+	 */
+	public function add_pdf_invoices_link_to_my_account( $actions, $the_order ) {
 
 		if ( 'no' === get_option( 'wcj_pdf_invoices_save_as_enabled' ) )
 			$actions['pdf_invoice'] = array(
@@ -214,21 +214,21 @@ class WCJ_PDF_Invoices {
 			);
 
 		return $actions;
-    }
+	}
 
-    /**
-     * add_pdf_invoice_icon_css.
-     */
+	/**
+	 * add_pdf_invoice_icon_css.
+	 */
 	function add_pdf_invoice_icon_css() {
 
 		echo '<style> a.button.tips.view.pdf_invoice:after { content: "\e028" !important; } </style>';
 		echo '<style> a.button.tips.view.save_pdf_invoice:after { content: "\e028" !important; } </style>';
 	}
 
-    /**
-     * generate_pdf.
-     */
-    public function generate_pdf( $get_by_order_id = 0 ) {
+	/**
+	 * generate_pdf.
+	 */
+	public function generate_pdf( $get_by_order_id = 0 ) {
 
 		if ( ! isset( $_GET['pdf_invoice'] ) && 0 == $get_by_order_id ) return;
 
@@ -402,9 +402,9 @@ class WCJ_PDF_Invoices {
 	}
 
 
-    /**
-     * add_custom_checkout_fields_to_pdf.
-     */
+	/**
+	 * add_custom_checkout_fields_to_pdf.
+	 */
 	public function add_custom_checkout_fields_to_pdf( $order_id, $section ) {
 
 		$result = '';
@@ -425,10 +425,10 @@ class WCJ_PDF_Invoices {
 		return $result;
 	}
 
-    /**
-     * get_columns.
-     */
-    public function get_columns() {
+	/**
+	 * get_columns.
+	 */
+	public function get_columns() {
 
 		// Count optional columns number for column width calculation
 		$total_optional_columns = 0;
@@ -517,10 +517,10 @@ class WCJ_PDF_Invoices {
 		);
 	}
 
-    /**
-     * get_header.
-     */
-    public function get_header( $the_order ) {
+	/**
+	 * get_header.
+	 */
+	public function get_header( $the_order ) {
 		// Starting output
 		// Css
 		$html = '<style>' . apply_filters( 'wcj_get_option_filter', $this->default_css, get_option( 'wcj_pdf_invoices_general_css' ) ) . '</style>';
@@ -561,10 +561,10 @@ class WCJ_PDF_Invoices {
 		return $html;
 	}
 
-    /**
-     * get_items_table.
-     */
-    public function get_items_table( $the_order ) {
+	/**
+	 * get_items_table.
+	 */
+	public function get_items_table( $the_order ) {
 
 		$html = '';
 
@@ -714,9 +714,9 @@ class WCJ_PDF_Invoices {
 	}
 
 
-    /**
-     * wcj_order_get_cart_discount_tax.
-     */
+	/**
+	 * wcj_order_get_cart_discount_tax.
+	 */
 	function wcj_order_get_cart_discount_tax( $the_order ) {
 
 		$the_cart_discount = $the_order->get_cart_discount();
@@ -763,10 +763,10 @@ class WCJ_PDF_Invoices {
 		return false;
 	}
 
-    /**
-     * get_footer.
-     */
-    public function get_footer( $the_order ) {
+	/**
+	 * get_footer.
+	 */
+	public function get_footer( $the_order ) {
 
 		// ORDER TOTALS //
 
@@ -846,10 +846,10 @@ class WCJ_PDF_Invoices {
 		return $html;
 	}
 
-    /**
-     * get_invoice_html.
-     */
-    public function get_invoice_html( $order_id ) {
+	/**
+	 * get_invoice_html.
+	 */
+	public function get_invoice_html( $order_id ) {
 
 		// PREPARING DATA //
 		// General
@@ -881,10 +881,10 @@ class WCJ_PDF_Invoices {
 		return $html;
 	}
 
-    /**
-     * add_pdf_invoices_link_to_order_list.
-     */
-    public function add_pdf_invoices_link_to_order_list( $actions, $the_order ) {
+	/**
+	 * add_pdf_invoices_link_to_order_list.
+	 */
+	public function add_pdf_invoices_link_to_order_list( $actions, $the_order ) {
 		if ( 'no' === get_option( 'wcj_pdf_invoices_save_as_enabled' ) )
 			$actions['pdf_invoice'] = array(
 				'url' 		=> basename( $_SERVER['REQUEST_URI'] ) . '&pdf_invoice=' . $the_order->id,
@@ -898,212 +898,212 @@ class WCJ_PDF_Invoices {
 				'action' 	=> "view save_pdf_invoice"
 			);
 
-        return $actions;
-    }
+	    return $actions;
+	}
 
-    /**
-     * add_enabled_option.
-     */
-    public function add_enabled_option( $settings ) {
+	/**
+	 * add_enabled_option.
+	 */
+	public function add_enabled_option( $settings ) {
 
-        $all_settings = $this->get_settings();
-        $settings[] = $all_settings[1];
+	    $all_settings = $this->get_settings();
+	    $settings[] = $all_settings[1];
 
-        return $settings;
-    }
+	    return $settings;
+	}
 
-    /**
-     * get_settings.
-     */
-    function get_settings() {
+	/**
+	 * get_settings.
+	 */
+	function get_settings() {
 
-        $settings = array(
+	    $settings = array(
 
-            array( 'title' => __( 'PDF Invoices Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( '', 'woocommerce-jetpack' ), 'id' => 'wcj_pdf_invoices_options' ),
+	        array( 'title' => __( 'PDF Invoices Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( '', 'woocommerce-jetpack' ), 'id' => 'wcj_pdf_invoices_options' ),
 
-            array(
-                'title'    => __( 'PDF Invoices', 'woocommerce-jetpack' ) . ' V1 - ' . __( 'depreciated', 'woocommerce-jetpack' ),
-                'desc'     => '<strong>' . __( 'Enable Module', 'woocommerce-jetpack' ) . '</strong>',
-                'desc_tip' => __( 'Add PDF invoices for the WooCommerce store owners and for the customers.', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_enabled',
-                'default'  => 'no',
-                'type'     => 'checkbox',
-            ),
+	        array(
+	            'title'    => __( 'PDF Invoices', 'woocommerce-jetpack' ) . ' V1 - ' . __( 'depreciated', 'woocommerce-jetpack' ),
+	            'desc'     => '<strong>' . __( 'Enable Module', 'woocommerce-jetpack' ) . '</strong>',
+	            'desc_tip' => __( 'Add PDF invoices for the WooCommerce store owners and for the customers.', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_enabled',
+	            'default'  => 'no',
+	            'type'     => 'checkbox',
+	        ),
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoices_options' ),
 
 			array( 'title' => __( 'Invoice Header', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you set texts for required invoice number and date, and optional logo, header text, invoice due and fulfillment dates.', 'woocommerce-jetpack' ), 'id' => 'wcj_pdf_invoices_header_options' ),
 
-            array(
-                'title'    => __( 'Your Logo URL', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Enter a URL to an image you want to show in the invoice\'s header. Upload your image using the <a href="/wp-admin/media-new.php">media uploader</a>.', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_seller_logo_url',
-                'default'  => '',
-                'type'     => 'text',
+	        array(
+	            'title'    => __( 'Your Logo URL', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Enter a URL to an image you want to show in the invoice\'s header. Upload your image using the <a href="/wp-admin/media-new.php">media uploader</a>.', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_seller_logo_url',
+	            'default'  => '',
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Header Text', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Header Text', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
 				'desc' 	   => __( 'Default: INVOICE', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_header_text',
-                'default'  => __( 'INVOICE', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'id'       => 'wcj_pdf_invoices_header_text',
+	            'default'  => __( 'INVOICE', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Invoice Number', 'woocommerce-jetpack' ),
-                'desc' 	   => __( 'Default: Invoice number', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_invoice_number_text',
-                'default'  => __( 'Invoice number', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	        array(
+	            'title'    => __( 'Invoice Number', 'woocommerce-jetpack' ),
+	            'desc' 	   => __( 'Default: Invoice number', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_invoice_number_text',
+	            'default'  => __( 'Invoice number', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Order Date', 'woocommerce-jetpack' ),
-                'desc' 	   => __( 'Default: Order date', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Order Date', 'woocommerce-jetpack' ),
+	            'desc' 	   => __( 'Default: Order date', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_order_date_text',
-                'default'  => __( 'Order date', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'id'       => 'wcj_pdf_invoices_order_date_text',
+	            'default'  => __( 'Order date', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Order Time', 'woocommerce-jetpack' ),
-                'desc' 	   => __( 'Default: Order time', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Order Time', 'woocommerce-jetpack' ),
+	            'desc' 	   => __( 'Default: Order time', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_order_time_text',
-                'default'  => __( 'Order time', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'id'       => 'wcj_pdf_invoices_order_time_text',
+	            'default'  => __( 'Order time', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Invoice Date', 'woocommerce-jetpack' ),
-                'desc' 	   => __( 'Default: Invoice date', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_invoice_date_text',
-                'default'  => __( 'Invoice date', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	        array(
+	            'title'    => __( 'Invoice Date', 'woocommerce-jetpack' ),
+	            'desc' 	   => __( 'Default: Invoice date', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_invoice_date_text',
+	            'default'  => __( 'Invoice date', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => 'Invoice Due Date',
-                'desc' 	   => __( 'Default: Invoice due date', 'woocommerce-jetpack' ),
+	            'title'    => 'Invoice Due Date',
+	            'desc' 	   => __( 'Default: Invoice due date', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_invoice_due_date_text',
-                'default'  => __( 'Invoice due date', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'id'       => 'wcj_pdf_invoices_invoice_due_date_text',
+	            'default'  => __( 'Invoice due date', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => '',
-                'desc' 	   => __( 'days', 'woocommerce-jetpack' ),
+	            'title'    => '',
+	            'desc' 	   => __( 'days', 'woocommerce-jetpack' ),
 				//'desc_tip' => __( 'Set to 0 to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_invoice_due_date_days',
-                'default'  => 0,
-                'type'     => 'number',
+	            'id'       => 'wcj_pdf_invoices_invoice_due_date_days',
+	            'default'  => 0,
+	            'type'     => 'number',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => 'Invoice Fulfillment Date',
-                'desc' 	   => __( 'Default: Invoice fulfillment date', 'woocommerce-jetpack' ),
+	            'title'    => 'Invoice Fulfillment Date',
+	            'desc' 	   => __( 'Default: Invoice fulfillment date', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_invoice_fulfillment_date_text',
-                'default'  => __( 'Invoice fulfillment date', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'id'       => 'wcj_pdf_invoices_invoice_fulfillment_date_text',
+	            'default'  => __( 'Invoice fulfillment date', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => '',
-                'desc' 	   => __( 'days', 'woocommerce-jetpack' ),
+	            'title'    => '',
+	            'desc' 	   => __( 'days', 'woocommerce-jetpack' ),
 				//'desc_tip' => __( 'Set to 0 to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_invoice_fulfillment_date_days',
-                'default'  => 0,
-                'type'     => 'number',
+	            'id'       => 'wcj_pdf_invoices_invoice_fulfillment_date_days',
+	            'default'  => 0,
+	            'type'     => 'number',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => __( 'Additional Header', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Additional header - will be displayed above all data on invoice. You can use html and/or shortcodes here.', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_additional_header_text',
-                'default'  => '',
-                'type'     => 'textarea',
+	            'title'    => __( 'Additional Header', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Additional header - will be displayed above all data on invoice. You can use html and/or shortcodes here.', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_additional_header_text',
+	            'default'  => '',
+	            'type'     => 'textarea',
 				'css'	   => 'width:33%;min-width:300px;min-height:300px;',
-            ),
+	        ),
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoices_header_options' ),
 
 			array( 'title' => __( 'Seller and Buyer Info', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( '', 'woocommerce-jetpack' ), 'id' => 'wcj_pdf_invoices_seller_and_buyer_options' ),
 
-            array(
-                'title'    => __( 'Seller', 'woocommerce-jetpack' ),
-                //'desc_tip' => __( 'Seller text', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_seller_text',
-                'default'  => __( 'Seller', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	        array(
+	            'title'    => __( 'Seller', 'woocommerce-jetpack' ),
+	            //'desc_tip' => __( 'Seller text', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_seller_text',
+	            'default'  => __( 'Seller', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Your business information', 'woocommerce-jetpack' ),
-                //'desc_tip' => __( 'Seller information', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Your business information', 'woocommerce-jetpack' ),
+	            //'desc_tip' => __( 'Seller information', 'woocommerce-jetpack' ),
 				'desc' 	   => __( 'New lines are added automatically.', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_seller_info',
-                'default'  => __( '<strong>Company Name</strong>', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_seller_info',
+	            'default'  => __( '<strong>Company Name</strong>', 'woocommerce-jetpack' ),
 				'type'     => 'textarea',
 				'css'	   => 'width:33%;min-width:300px;min-height:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Buyer', 'woocommerce-jetpack' ),
-                //'desc_tip' => __( 'Buyer text', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_buyer_text',
-                'default'  => __( 'Buyer', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	        array(
+	            'title'    => __( 'Buyer', 'woocommerce-jetpack' ),
+	            //'desc_tip' => __( 'Buyer text', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_buyer_text',
+	            'default'  => __( 'Buyer', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoices_seller_and_buyer_options' ),
 
 			array( 'title' => __( 'Items', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( '', 'woocommerce-jetpack' ), 'id' => 'wcj_pdf_invoices_items_options' ),
 
-            array(
-                'title'    => __( 'Items Table Heading Text', 'woocommerce-jetpack' ),
-                //'desc_tip' => __( 'Items text', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_items_text',
-                'default'  => __( 'Items', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	        array(
+	            'title'    => __( 'Items Table Heading Text', 'woocommerce-jetpack' ),
+	            //'desc_tip' => __( 'Items text', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_items_text',
+	            'default'  => __( 'Items', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Shipping as Item', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Shipping as Item', 'woocommerce-jetpack' ),
 				'desc_tip'     => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Display shipping as item', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Display shipping as item', 'woocommerce-jetpack' ),
 				//'desc_tip'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-                'id'       => 'wcj_pdf_invoices_display_shipping_as_item_text',
-                'default'  => '',
-                'type'     => 'text',
+	            'id'       => 'wcj_pdf_invoices_display_shipping_as_item_text',
+	            'default'  => '',
+	            'type'     => 'text',
 				//'custom_attributes'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-            ),
+	        ),
 
-            /*array(
-                'title'    => '',
-                'desc'     => __( 'Add shipping method info', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_display_shipping_as_item_method_enabled',
-                'default'  => 'yes',
-                'type'     => 'checkbox',
-            ),*/
+	        /*array(
+	            'title'    => '',
+	            'desc'     => __( 'Add shipping method info', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_display_shipping_as_item_method_enabled',
+	            'default'  => 'yes',
+	            'type'     => 'checkbox',
+	        ),*/
 
 			array(
 				'title'    => '',
@@ -1122,118 +1122,118 @@ class WCJ_PDF_Invoices {
 			),
 
 			array(
-                'title'    => __( 'Discount as Item', 'woocommerce-jetpack' ),
+	            'title'    => __( 'Discount as Item', 'woocommerce-jetpack' ),
 				'desc_tip'     => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Display discount as item', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Display discount as item', 'woocommerce-jetpack' ),
 				//'desc_tip'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-                'id'       => 'wcj_pdf_invoices_display_discount_as_item_text',
-                'default'  => '',
-                'type'     => 'text',
+	            'id'       => 'wcj_pdf_invoices_display_discount_as_item_text',
+	            'default'  => '',
+	            'type'     => 'text',
 				//'custom_attributes'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-            ),
+	        ),
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoices_items_options' ),
 
 			array( 'title' => __( 'Items Columns', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you set column names in invoice items table. You can disable some columns by leaving blank column name.', 'woocommerce-jetpack' ), 'id' => 'wcj_pdf_invoices_items_columns_options' ),
 
-            array(
-                'title'    => __( 'Nr.', 'woocommerce-jetpack' ),
-                //'desc_tip' => __( 'Nr. text', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_nr_text',
-                'default'  => __( 'Nr.', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	        array(
+	            'title'    => __( 'Nr.', 'woocommerce-jetpack' ),
+	            //'desc_tip' => __( 'Nr. text', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_column_nr_text',
+	            'default'  => __( 'Nr.', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Item Name', 'woocommerce-jetpack' ),
-                //'desc_tip' => __( 'Item name text', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_item_name_text',
-                'default'  => __( 'Item Name', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	        array(
+	            'title'    => __( 'Item Name', 'woocommerce-jetpack' ),
+	            //'desc_tip' => __( 'Item name text', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_column_item_name_text',
+	            'default'  => __( 'Item Name', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Item Name Additional Info', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Item Name Additional Info', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Here you can add more info to item\'s name column (e.g. sku). Default is (SKU: %sku%)', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_item_name_additional_text',
-                'default'  => __( '(SKU: %sku%)', 'woocommerce-jetpack' ),
-                'type'     => 'textarea',
+	            'id'       => 'wcj_pdf_invoices_column_item_name_additional_text',
+	            'default'  => __( '(SKU: %sku%)', 'woocommerce-jetpack' ),
+	            'type'     => 'textarea',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Qty', 'woocommerce-jetpack' ),
-                //'desc_tip' => __( 'Qty text', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_qty_text',
-                'default'  => __( 'Qty', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	        array(
+	            'title'    => __( 'Qty', 'woocommerce-jetpack' ),
+	            //'desc_tip' => __( 'Qty text', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_column_qty_text',
+	            'default'  => __( 'Qty', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
-
-			array(
-                'title'    => __( 'Single Item Price (TAX excl.)', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_single_price_tax_excl_text',
-                'default'  => __( 'Price (TAX excl.)', 'woocommerce-jetpack' ),
-                'type'     => 'text',
-				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => __( 'Single Item TAX', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_single_price_tax_text',
-                'default'  => __( 'TAX', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'title'    => __( 'Single Item Price (TAX excl.)', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_column_single_price_tax_excl_text',
+	            'default'  => __( 'Price (TAX excl.)', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => __( 'Single Item Price (TAX incl.)', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_single_price_tax_incl_text',
-                'default'  => __( 'Price (TAX incl.)', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'title'    => __( 'Single Item TAX', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_column_single_price_tax_text',
+	            'default'  => __( 'TAX', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => __( 'Sum (TAX excl.)', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_price_tax_excl_text',
-                'default'  => __( 'Sum (TAX excl.)', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'title'    => __( 'Single Item Price (TAX incl.)', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_column_single_price_tax_incl_text',
+	            'default'  => __( 'Price (TAX incl.)', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => __( 'Tax Percent', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_price_tax_percent',
-                'default'  => __( 'Taxes %', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'title'    => __( 'Sum (TAX excl.)', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_column_price_tax_excl_text',
+	            'default'  => __( 'Sum (TAX excl.)', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => __( 'Taxes', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_price_tax_text',
-                'default'  => __( 'Taxes', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'title'    => __( 'Tax Percent', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_column_price_tax_percent',
+	            'default'  => __( 'Taxes %', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => __( 'Sum (TAX incl.)', 'woocommerce-jetpack' ),
-                //'desc_tip' => __( 'Price text', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_column_price_text',
-                'default'  => __( 'Sum (TAX incl.)', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'title'    => __( 'Taxes', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_column_price_tax_text',
+	            'default'  => __( 'Taxes', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
+
+			array(
+	            'title'    => __( 'Sum (TAX incl.)', 'woocommerce-jetpack' ),
+	            //'desc_tip' => __( 'Price text', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_column_price_text',
+	            'default'  => __( 'Sum (TAX incl.)', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
+				'css'	   => 'width:33%;min-width:300px;',
+	        ),
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoices_items_columns_options' ),
 
@@ -1298,52 +1298,52 @@ class WCJ_PDF_Invoices {
 			array( 'title' => __( 'Footer', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( '', 'woocommerce-jetpack' ), 'id' => 'wcj_pdf_invoices_footer_options' ),
 
 			array(
-                'title'    => __( 'Payment Method', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_order_payment_method_text',
-                'default'  => __( 'Payment Method', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'title'    => __( 'Payment Method', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_order_payment_method_text',
+	            'default'  => __( 'Payment Method', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => __( 'Shipping Method', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_order_shipping_method_text',
-                'default'  => __( 'Shipping Method', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'title'    => __( 'Shipping Method', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_order_shipping_method_text',
+	            'default'  => __( 'Shipping Method', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => __( 'Shipping Address', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Will be displayed only if customer\'s shipping address differs from billing address. Leave blank to disable', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_order_shipping_address_text',
-                'default'  => __( 'Shipping Address', 'woocommerce-jetpack' ),
-                'type'     => 'text',
+	            'title'    => __( 'Shipping Address', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Will be displayed only if customer\'s shipping address differs from billing address. Leave blank to disable', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_order_shipping_address_text',
+	            'default'  => __( 'Shipping Address', 'woocommerce-jetpack' ),
+	            'type'     => 'text',
 				'css'	   => 'width:33%;min-width:300px;',
-            ),
+	        ),
 
 			array(
-                'title'    => __( 'Additional Footer', 'woocommerce-jetpack' ),
-                'desc_tip' => __( 'Additional footer - will be displayed below all other data on invoice. You can use html and/or shortcodes here.', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_footer_text',
-                'default'  => '',
-                'type'     => 'textarea',
+	            'title'    => __( 'Additional Footer', 'woocommerce-jetpack' ),
+	            'desc_tip' => __( 'Additional footer - will be displayed below all other data on invoice. You can use html and/or shortcodes here.', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_footer_text',
+	            'default'  => '',
+	            'type'     => 'textarea',
 				'css'	   => 'width:33%;min-width:300px;min-height:300px;',
-            ),
+	        ),
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoices_footer_options' ),
 
-            array( 'title' => __( 'General Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( '', 'woocommerce-jetpack' ), 'id' => 'wcj_pdf_invoices_general_options' ),
+	        array( 'title' => __( 'General Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( '', 'woocommerce-jetpack' ), 'id' => 'wcj_pdf_invoices_general_options' ),
 
-            array(
-                'title'    => __( 'Font Family', 'woocommerce-jetpack' ),
-                //'desc'     => __( 'Default: dejavusans', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Font Family', 'woocommerce-jetpack' ),
+	            //'desc'     => __( 'Default: dejavusans', 'woocommerce-jetpack' ),
 				'desc'	   => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-                'id'       => 'wcj_pdf_invoices_general_font_family',
-                'default'  => 'dejavusans',
-                'type'     => 'select',
+	            'id'       => 'wcj_pdf_invoices_general_font_family',
+	            'default'  => 'dejavusans',
+	            'type'     => 'select',
 				'options'  => array(
 								'dejavusans' => 'DejaVu Sans',
 								'courier'    => 'Courier',
@@ -1351,92 +1351,92 @@ class WCJ_PDF_Invoices {
 								'times'      => 'Times',
 				),
 				'custom_attributes'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'Font Size', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Default: 8', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_general_font_size',
-                'default'  => 8,
-                'type'     => 'number',
-            ),
+	        array(
+	            'title'    => __( 'Font Size', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Default: 8', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_general_font_size',
+	            'default'  => 8,
+	            'type'     => 'number',
+	        ),
 
-            array(
-                'title'    => __( 'Make Font Shadowed', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Default: Yes', 'woocommerce-jetpack' ),
-                'id'       => 'wcj_pdf_invoices_general_font_shadowed',
-                'default'  => 'yes',
-                'type'     => 'checkbox',
-            ),
+	        array(
+	            'title'    => __( 'Make Font Shadowed', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Default: Yes', 'woocommerce-jetpack' ),
+	            'id'       => 'wcj_pdf_invoices_general_font_shadowed',
+	            'default'  => 'yes',
+	            'type'     => 'checkbox',
+	        ),
 
-            array(
-                'title'    => __( 'CSS', 'woocommerce-jetpack' ),
-                'desc'	   => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-                'id'       => 'wcj_pdf_invoices_general_css',
-                'default'  => $this->default_css,
-                'type'     => 'textarea',
+	        array(
+	            'title'    => __( 'CSS', 'woocommerce-jetpack' ),
+	            'desc'	   => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+	            'id'       => 'wcj_pdf_invoices_general_css',
+	            'default'  => $this->default_css,
+	            'type'     => 'textarea',
 				'css'	   => 'width:66%;min-width:300px;min-height:300px;',
 				'custom_attributes'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
-            ),
+	        ),
 
 			//array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoices_general_options' ),
 
 			//array( 'title' => __( 'More Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( '', 'woocommerce-jetpack' ), 'id' => 'wcj_pdf_invoices_more_options' ),
 
-            array(
-                'title'    => __( 'PDF Invoices for Customers (in My Account)', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Enable the PDF Invoices in customers account', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'PDF Invoices for Customers (in My Account)', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Enable the PDF Invoices in customers account', 'woocommerce-jetpack' ),
 				'desc_tip'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-                'id'       => 'wcj_pdf_invoices_enabled_for_customers',
-                'default'  => 'no',
-                'type'     => 'checkbox',
+	            'id'       => 'wcj_pdf_invoices_enabled_for_customers',
+	            'default'  => 'no',
+	            'type'     => 'checkbox',
 				'custom_attributes'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-            ),
+	        ),
 
-            array(
-                'title'    => __( 'PDF Invoices for Customers (Email attachment)', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Enable the PDF Invoices attachment files in customers email on order completed', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'PDF Invoices for Customers (Email attachment)', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Enable the PDF Invoices attachment files in customers email on order completed', 'woocommerce-jetpack' ),
 				'desc_tip'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-                'id'       => 'wcj_pdf_invoices_attach_to_email_enabled',
-                'default'  => 'no',
-                'type'     => 'checkbox',
+	            'id'       => 'wcj_pdf_invoices_attach_to_email_enabled',
+	            'default'  => 'no',
+	            'type'     => 'checkbox',
 				'custom_attributes'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-            ),
+	        ),
 
-            /* array(
-                'title'    => __( '', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Attach PDF invoice only on customer\'s request', 'woocommerce-jetpack' ),
+	        /* array(
+	            'title'    => __( '', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Attach PDF invoice only on customer\'s request', 'woocommerce-jetpack' ),
 				'desc_tip'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-                'id'       => 'wcj_pdf_invoices_attach_to_email_on_request_only',
-                'default'  => 'no',
-                'type'     => 'checkbox',
+	            'id'       => 'wcj_pdf_invoices_attach_to_email_on_request_only',
+	            'default'  => 'no',
+	            'type'     => 'checkbox',
 				'custom_attributes'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-            ), */
+	        ), */
 
-            array(
-                'title'    => __( 'Enable Save as', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Enable save as pdf instead of view pdf', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Enable Save as', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Enable save as pdf instead of view pdf', 'woocommerce-jetpack' ),
 				//'desc_tip'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-                'id'       => 'wcj_pdf_invoices_save_as_enabled',
-                'default'  => 'yes',
-                'type'     => 'checkbox',
+	            'id'       => 'wcj_pdf_invoices_save_as_enabled',
+	            'default'  => 'yes',
+	            'type'     => 'checkbox',
 				//'custom_attributes'	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-            ),
+	        ),
 
-            //array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoices_more_options' ),
+	        //array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoices_more_options' ),
 			array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoices_general_options' ),
-        );
+	    );
 
-        return $settings;
-    }
+	    return $settings;
+	}
 
-    /**
-     * settings_section.
-     */
-    function settings_section( $sections ) {
-        $sections['pdf_invoices'] = __( 'PDF Invoices', 'woocommerce-jetpack' );
-        return $sections;
-    }
+	/**
+	 * settings_section.
+	 */
+	function settings_section( $sections ) {
+	    $sections['pdf_invoices'] = __( 'PDF Invoices', 'woocommerce-jetpack' );
+	    return $sections;
+	}
 }
 
 endif;

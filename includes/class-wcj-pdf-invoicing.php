@@ -166,7 +166,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	 *
 	 * @version 2.3.0
 	 */
-    function catch_args() {
+	function catch_args() {
 		$this->order_id        = ( isset( $_GET['order_id'] ) )                                             ? $_GET['order_id'] : 0;
 		$this->invoice_type_id = ( isset( $_GET['invoice_type_id'] ) )                                      ? $_GET['invoice_type_id'] : '';
 		$this->save_as_pdf     = ( isset( $_GET['save_pdf_invoice'] ) && '1' == $_GET['save_pdf_invoice'] ) ? true : false;

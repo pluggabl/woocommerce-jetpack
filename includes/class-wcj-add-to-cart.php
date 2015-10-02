@@ -14,37 +14,37 @@ if ( ! class_exists( 'WCJ_Add_To_Cart' ) ) :
 
 class WCJ_Add_To_Cart {
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
 
-        // Main hooks
-        if ( 'yes' === get_option( 'wcj_add_to_cart_enabled' ) ) {
+	    // Main hooks
+	    if ( 'yes' === get_option( 'wcj_add_to_cart_enabled' ) ) {
 			include_once( 'add-to-cart/class-wcj-add-to-cart-per-category.php' );
 			include_once( 'add-to-cart/class-wcj-add-to-cart-per-product.php' );
 			include_once( 'add-to-cart/class-wcj-add-to-cart-per-product-type.php' );
-        }
+	    }
 
-        // Settings hooks
-        add_filter( 'wcj_settings_sections', 		array( $this, 'settings_section' ) );
-        add_filter( 'wcj_settings_add_to_cart', 	array( $this, 'get_settings' ), 100 );
-        add_filter( 'wcj_features_status', 			array( $this, 'add_enabled_option' ), 100 );
-    }
+	    // Settings hooks
+	    add_filter( 'wcj_settings_sections', 		array( $this, 'settings_section' ) );
+	    add_filter( 'wcj_settings_add_to_cart', 	array( $this, 'get_settings' ), 100 );
+	    add_filter( 'wcj_features_status', 			array( $this, 'add_enabled_option' ), 100 );
+	}
 
-    /**
-     * add_enabled_option.
-     */
-    public function add_enabled_option( $settings ) {
-        $all_settings = $this->get_settings();
-        $settings[] = $all_settings[1];
-        return $settings;
-    }
+	/**
+	 * add_enabled_option.
+	 */
+	public function add_enabled_option( $settings ) {
+	    $all_settings = $this->get_settings();
+	    $settings[] = $all_settings[1];
+	    return $settings;
+	}
 
-    /**
-     * get_per_product_type_settings.
-     */
-    function get_per_product_type_settings() {
+	/**
+	 * get_per_product_type_settings.
+	 */
+	function get_per_product_type_settings() {
 
 		$settings = array();
 
@@ -178,51 +178,51 @@ class WCJ_Add_To_Cart {
 		return $settings;
 	}
 
-    /**
-     * get_per_product_settings.
-     */
-    function get_per_product_settings() {
+	/**
+	 * get_per_product_settings.
+	 */
+	function get_per_product_settings() {
 
-        $settings = array(
+	    $settings = array(
 
-            array(
+	        array(
 				'title' => __( 'Per Product Options', 'woocommerce-jetpack' ),
 				'type' => 'title',
 				'desc' => __( 'This section lets you set Add to Cart button text on per product basis. When enabled, label for each product can be changed in "Edit Product".', 'woocommerce-jetpack' ),
 				'id' => 'wcj_add_to_cart_per_product_options' ),
 
-            array(
-                'title'    => __( 'Per Product Labels', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Per Product Labels', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
 				'desc_tip' => '',
-                'id'       => 'wcj_add_to_cart_per_product_enabled',
-                'default'  => 'yes',
-                'type'     => 'checkbox',
-            ),
+	            'id'       => 'wcj_add_to_cart_per_product_enabled',
+	            'default'  => 'yes',
+	            'type'     => 'checkbox',
+	        ),
 
-            array( 'type'  => 'sectionend', 'id' => 'wcj_add_to_cart_per_product_options' ),
-        );
+	        array( 'type'  => 'sectionend', 'id' => 'wcj_add_to_cart_per_product_options' ),
+	    );
 
 		return $settings;
 	}
 
-    /**
-     * get_per_category_settings.
-     */
-    function get_per_category_settings() {
+	/**
+	 * get_per_category_settings.
+	 */
+	function get_per_category_settings() {
 
 		$settings = array(
 
-            array( 'title' => __( 'Per Category Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This sections lets you set Add to Cart button text on per category basis.', 'woocommerce-jetpack' ), 'id' => 'wcj_add_to_cart_per_category_options' ),
+	        array( 'title' => __( 'Per Category Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This sections lets you set Add to Cart button text on per category basis.', 'woocommerce-jetpack' ), 'id' => 'wcj_add_to_cart_per_category_options' ),
 
-            array(
-                'title'    => __( 'Per Category Labels', 'woocommerce-jetpack' ),
-                'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
+	        array(
+	            'title'    => __( 'Per Category Labels', 'woocommerce-jetpack' ),
+	            'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
 				'desc_tip' => '',
-                'id'       => 'wcj_add_to_cart_per_category_enabled',
-                'default'  => 'yes',
-                'type'     => 'checkbox',
-            ),
+	            'id'       => 'wcj_add_to_cart_per_category_enabled',
+	            'default'  => 'yes',
+	            'type'     => 'checkbox',
+	        ),
 
 			array(
 				'title'    => __( 'Category Groups Number', 'woocommerce-jetpack' ),
@@ -261,7 +261,7 @@ class WCJ_Add_To_Cart {
 				//delete_option( 'wcj_add_to_cart_per_category_group_' . $i );
 			} */
 
-            $settings = array_merge( $settings, array(
+	        $settings = array_merge( $settings, array(
 				array(
 					'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
 					'desc'	   => __( 'Enable', 'woocommerce-jetpack' ),
@@ -317,10 +317,10 @@ class WCJ_Add_To_Cart {
 		return $settings;
 	}
 
-    /**
-     * get_settings.
-     */
-    function get_settings() {
+	/**
+	 * get_settings.
+	 */
+	function get_settings() {
 
 		$settings = array(
 
@@ -344,16 +344,16 @@ class WCJ_Add_To_Cart {
 
 		$settings = array_merge( $settings, $this->get_per_product_type_settings() );
 
-        return $settings;
-    }
+	    return $settings;
+	}
 
-    /**
-     * settings_section.
-     */
-    function settings_section( $sections ) {
-        $sections['add_to_cart'] = __( 'Add to Cart Labels', 'woocommerce-jetpack' );
-        return $sections;
-    }
+	/**
+	 * settings_section.
+	 */
+	function settings_section( $sections ) {
+	    $sections['add_to_cart'] = __( 'Add to Cart Labels', 'woocommerce-jetpack' );
+	    return $sections;
+	}
 }
 
 endif;

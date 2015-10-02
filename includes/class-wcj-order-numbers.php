@@ -26,7 +26,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 		$this->desc       = __( 'WooCommerce sequential order numbering, custom order number prefix, suffix and number width.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-        if ( $this->is_enabled() ) {
+	    if ( $this->is_enabled() ) {
 //			add_action( 'woocommerce_new_order',       array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 			add_action( 'wp_insert_post',              array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_order_number',    array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
@@ -57,7 +57,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			)
 		);
 		return $order_number;
-    }
+	}
 
 	/**
 	 * add_renumerate_orders_tool_info_to_tools_dashboard.

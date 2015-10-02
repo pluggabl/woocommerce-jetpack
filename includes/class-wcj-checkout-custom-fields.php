@@ -119,7 +119,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				);
 			}
 		}
-        return $fields;
+	    return $fields;
 	}
 
 	/**
@@ -374,7 +374,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 *
 	 * @version 2.3.0
 	 */
-    public function get_settings() {
+	public function get_settings() {
 
 		$settings = array(
 

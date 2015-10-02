@@ -15,31 +15,31 @@ if ( ! class_exists( 'WCJ_Mini_Cart' ) ) :
 
 class WCJ_Mini_Cart extends WCJ_Module {
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
 
 		$this->id         = 'mini_cart';
 		$this->short_desc = __( 'Mini Cart', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Customize WooCommerce mini cart widget.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-        if ( $this->is_enabled() ) {
+	    if ( $this->is_enabled() ) {
 			$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++) {
 				add_action( get_option( 'wcj_mini_cart_custom_info_hook_' . $i, 'woocommerce_after_mini_cart' ), array( $this, 'add_mini_cart_custom_info' ) );
 			}
 		}
-    }
+	}
 
-    /**
-     * get_settings.
-     */
-    function get_settings() {
+	/**
+	 * get_settings.
+	 */
+	function get_settings() {
 
 		// The Module settings
-        $settings = array();
+	    $settings = array();
 
 		// Mini Cart Custom Info Options
 		$settings[] = array( 'title' => __( 'Mini Cart Custom Info Blocks', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_mini_cart_custom_info_options' );
@@ -103,12 +103,12 @@ class WCJ_Mini_Cart extends WCJ_Module {
 
 		//$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_mini_cart_custom_info_options' );
 
-        return $this->add_enable_module_setting( $settings );
-    }
+	    return $this->add_enable_module_setting( $settings );
+	}
 
-    /**
-     * add_mini_cart_custom_info.
-     */
+	/**
+	 * add_mini_cart_custom_info.
+	 */
 	function add_mini_cart_custom_info() {
 		$current_filter = current_filter();
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );

@@ -15,10 +15,10 @@ if ( ! class_exists( 'WCJ_Product_Add_To_Cart' ) ) :
 
 class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
 
 		$this->id         = 'product_add_to_cart';
 		$this->short_desc = __( 'Product Add to Cart', 'woocommerce-jetpack' );
@@ -34,15 +34,15 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_add_to_cart_on_visit_enabled' ) ) {
 				add_action( 'woocommerce_before_single_product', array( $this, 'add_to_cart_on_visit' ), 100 );
 			}
-        }
-    }
+	    }
+	}
 
-    /**
-     * get_settings.
-     */
-    function get_settings() {
+	/**
+	 * get_settings.
+	 */
+	function get_settings() {
 
-        $settings = array(
+	    $settings = array(
 
 			array(
 				'title'    => __( 'Add to Cart Local Redirect Options', 'woocommerce-jetpack' ),
@@ -71,7 +71,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_add_to_cart_redirect_options' ),
 
-            array( 'title' => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you enable automatically adding product to cart on visiting the product page. Product is only added once, so if it is already in cart - duplicate product is not added. ', 'woocommerce-jetpack' ), 'id' => 'wcj_add_to_cart_on_visit_options' ),
+	        array( 'title' => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you enable automatically adding product to cart on visiting the product page. Product is only added once, so if it is already in cart - duplicate product is not added. ', 'woocommerce-jetpack' ), 'id' => 'wcj_add_to_cart_on_visit_options' ),
 
 			array(
 				'title'    => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ),
@@ -81,11 +81,11 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				'type'     => 'checkbox',
 			),
 
-            array( 'type'  => 'sectionend', 'id' => 'wcj_add_to_cart_on_visit_options' ),
-        );
+	        array( 'type'  => 'sectionend', 'id' => 'wcj_add_to_cart_on_visit_options' ),
+	    );
 
-        return $this->add_enable_module_setting( $settings );
-    }
+	    return $this->add_enable_module_setting( $settings );
+	}
 
 	/*
 	 * redirect_to_url.

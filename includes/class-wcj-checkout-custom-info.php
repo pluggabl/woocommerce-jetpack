@@ -15,34 +15,34 @@ if ( ! class_exists( 'WCJ_Checkout_Custom_Info' ) ) :
 
 class WCJ_Checkout_Custom_Info extends WCJ_Module {
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
 
 		$this->id         = 'checkout_custom_info';
 		$this->short_desc = __( 'Checkout Custom Info', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add custom info to WooCommerce checkout page.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-        if ( $this->is_enabled() ) {
+	    if ( $this->is_enabled() ) {
 			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_info_total_number', 1 ) ); $i++) {
 				add_action(
 					get_option( 'wcj_checkout_custom_info_hook_' . $i, 'woocommerce_checkout_after_order_review' ),
 					array( $this, 'add_checkout_custom_info' )
 				);
 			}
-        }
-    }
+	    }
+	}
 
-    /**
-     * get_settings.
-     */
-    function get_settings() {
+	/**
+	 * get_settings.
+	 */
+	function get_settings() {
 
 		//global $woocommerce;
 
-        $settings = array();
+	    $settings = array();
 
 		// Checkout Custom Info Options
 		$settings[] = array( 'title' => __( 'Checkout Custom Info Blocks', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_checkout_custom_info_blocks_options' );
@@ -91,7 +91,8 @@ class WCJ_Checkout_Custom_Info extends WCJ_Module {
 						'woocommerce_checkout_after_order_review'       => __( 'After order review', 'woocommerce-jetpack' ),
 						'woocommerce_after_checkout_form'               => __( 'After checkout form', 'woocommerce-jetpack' ),
 
-						/*'woocommerce_before_checkout_shipping_form'     => __( 'woocommerce_before_checkout_shipping_form', 'woocommerce-jetpack' ),
+						/*
+						'woocommerce_before_checkout_shipping_form'     => __( 'woocommerce_before_checkout_shipping_form', 'woocommerce-jetpack' ),
 						'woocommerce_after_checkout_shipping_form'      => __( 'woocommerce_after_checkout_shipping_form', 'woocommerce-jetpack' ),
 						'woocommerce_before_order_notes'                => __( 'woocommerce_before_order_notes', 'woocommerce-jetpack' ),
 						'woocommerce_after_order_notes'                 => __( 'woocommerce_after_order_notes', 'woocommerce-jetpack' ),
@@ -106,7 +107,8 @@ class WCJ_Checkout_Custom_Info extends WCJ_Module {
 						'woocommerce_review_order_before_shipping'      => __( 'woocommerce_review_order_before_shipping', 'woocommerce-jetpack' ),
 						'woocommerce_review_order_after_shipping'       => __( 'woocommerce_review_order_after_shipping', 'woocommerce-jetpack' ),
 						'woocommerce_review_order_before_order_total'   => __( 'woocommerce_review_order_before_order_total', 'woocommerce-jetpack' ),
-						'woocommerce_review_order_after_order_total'	=> __( 'woocommerce_review_order_after_order_total', 'woocommerce-jetpack' ),*/
+						'woocommerce_review_order_after_order_total'    => __( 'woocommerce_review_order_after_order_total', 'woocommerce-jetpack' ),
+						*/
 					),
 					'css'      => 'width:250px;',
 				),
@@ -123,12 +125,12 @@ class WCJ_Checkout_Custom_Info extends WCJ_Module {
 			) );
 		}
 
-        return $this->add_enable_module_setting( $settings );
-    }
+	    return $this->add_enable_module_setting( $settings );
+	}
 
-    /**
-     * add_checkout_custom_info.
-     */
+	/**
+	 * add_checkout_custom_info.
+	 */
 	function add_checkout_custom_info() {
 		$current_filter = current_filter();
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_info_total_number', 1 ) );

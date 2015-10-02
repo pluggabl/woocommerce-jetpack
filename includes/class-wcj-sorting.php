@@ -47,7 +47,7 @@ class WCJ_Sorting extends WCJ_Module {
 	}
 
 	/**
-	 * Unlocks - Sorting - remove_sorting.
+	 * remove_sorting.
 	 *
 	 * @version 2.2.9
 	 */
