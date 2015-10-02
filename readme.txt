@@ -60,7 +60,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Custom Payment Gateways* - Add multiple custom payment gateways to WooCommerce.
 * *Payment Gateways Currency* - Currency per WooCommerce payment gateway.
 * *Payment Gateways Fees* - Enable extra fees for WooCommerce payment gateways.
-* *Payment Gateways Icons* - Change icons (images) for all default WooCommerce payment gateways.
+* *Payment Gateways Icons* - Change or completely remove icons (images) for any (default or custom) WooCommerce payment gateway.
 * *Payment Gateways per Category* - Show gateway only if there is product of selected category in WooCommerce cart.
 
 **Shipping & Orders**
