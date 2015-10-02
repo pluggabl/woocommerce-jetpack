@@ -241,7 +241,7 @@ class WCJ_Add_To_Cart {
 							  ),
 				'css'		=> 'width:100px;',
 			),
-	    );
+		);
 
 		$product_cats = array();
 		$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
