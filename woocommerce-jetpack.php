@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: http://BoostWoo.com
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.3.2
+Version: 2.3.3
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Copyright: © 2015 Algoritmika Ltd.
@@ -20,7 +20,8 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 /**
  * Main WC_Jetpack Class
  *
- * @class WC_Jetpack
+ * @class   WC_Jetpack
+ * @version 2.3.3
  */
 
 final class WC_Jetpack {
@@ -119,7 +120,7 @@ final class WC_Jetpack {
 	/**
 	 * enqueue_frontend_scripts.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.3
 	 * @since   2.3.0
 	 */
 	function enqueue_frontend_scripts() {
@@ -129,9 +130,13 @@ final class WC_Jetpack {
 			array( 'jquery' ),
 			false,
 			true );
+		wp_enqueue_script( 'wcj-timepicker', wcj_plugin_url() . '/includes/js/wcj-timepicker.js',
+			array( 'jquery' ),
+			false,
+			true );
 
 		wp_enqueue_style( 'jquery-ui-css', '//ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/smoothness/jquery-ui.css' );
-		wp_enqueue_style( 'wcj-timepicker', wcj_plugin_url() . '/includes/css/jquery.timepicker.min.css' );
+		wp_enqueue_style( 'wcj-timepicker-css', wcj_plugin_url() . '/includes/css/jquery.timepicker.min.css' );
 	}
 
 	/**
