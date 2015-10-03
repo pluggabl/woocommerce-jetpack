@@ -4,7 +4,7 @@ Donate link: http://algoritmika.com/donate/
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack,custom price labels,call for price,currency symbol,remove sorting,remove old product slugs,add to cart text,order number,sequential order numbering,email pdf invoice,pdf invoice,pdf invoices,already in cart,empty cart,redirect to checkout,minimum order amount,customize checkout fields,checkout fields,email,customize product tabs,product tabs,related products number,empty cart,redirect add to cart,redirect to checkout,product already in cart,custom payment gateway,payment gateway icon,auto-complete all orders,custom order statuses,custom order status,remove text from price,custom css,hide categories count,hide subcategories count,hide category count,hide subcategory count,display total sales,custom product tabs,remove product tab,payment gateway fee,
 Requires at least: 3.8
 Tested up to: 4.3
-Stable tag: 2.3.1
+Stable tag: 2.3.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -57,11 +57,11 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 **Payment Gateways**
 
-* *Custom Payment Gateways* - Add multiple custom payment gateways to WooCommerce.
-* *Payment Gateways Currency* - Currency per WooCommerce payment gateway.
-* *Payment Gateways Fees* - Enable extra fees for WooCommerce payment gateways.
-* *Payment Gateways Icons* - Change or completely remove icons (images) for any (default or custom) WooCommerce payment gateway.
-* *Payment Gateways per Category* - Show gateway only if there is product of selected category in WooCommerce cart.
+* *Custom Gateways* - Add multiple custom payment gateways to WooCommerce.
+* *Gateways Currency* - Currency per WooCommerce payment gateway.
+* *Gateways Fees* - Enable extra fees for WooCommerce payment gateways.
+* *Gateways Icons* - Change or completely remove icons (images) for any (default or custom) WooCommerce payment gateway.
+* *Gateways per Category* - Show payment gateway only if there is product of selected category in WooCommerce cart.
 
 **Shipping & Orders**
 
@@ -115,6 +115,9 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 1. Plugin admin area.
 
 == Changelog ==
+
+= 2.3.2 - 03/10/2015 =
+* Fix - PAYMENT GATEWAYS - Gateways Currency - Bug, breaking some WP dashboard functions, fixed.
 
 = 2.3.1 - 02/10/2015 =
 * Dev - PAYMENT GATEWAYS - Gateways Icons - Remove Icon option added.

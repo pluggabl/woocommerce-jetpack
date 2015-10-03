@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Currency class.
  *
- * @version 2.3.0
+ * @version 2.3.2
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -17,6 +17,8 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.3.2
 	 */
 	function __construct() {
 
@@ -25,19 +27,29 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		$this->desc       = __( 'Currency per WooCommerce payment gateway.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-		add_filter( 'init', array( $this, 'add_hooks' ) );
+		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX, 2 );
-			add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ), PHP_INT_MAX, 1 );
-
-			add_filter( 'woocommerce_paypal_supported_currencies', array( $this, 'extend_paypal_supported_currencies' ), PHP_INT_MAX, 1 );
-
-			add_filter( 'woocommerce_get_price', array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
-
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_checkout_script' ) );
-			add_action( 'init',               array( $this, 'register_script' ) );
+			add_action( 'init', array( $this, 'add_hooks' ) );
 		}
+	}
+
+	/**
+	 * add_hooks.
+	 *
+	 * @version 2.3.2
+	 * @since   2.3.2
+	 */
+	function add_hooks() {
+		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX, 2 );
+		add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ), PHP_INT_MAX, 1 );
+
+		add_filter( 'woocommerce_paypal_supported_currencies', array( $this, 'extend_paypal_supported_currencies' ), PHP_INT_MAX, 1 );
+
+		add_filter( 'woocommerce_get_price', array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
+
+		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_checkout_script' ) );
+		add_action( 'init',               array( $this, 'register_script' ) );
 	}
 
 	/**
@@ -128,9 +140,11 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	}
 
 	/**
-	 * add_hooks.
+	 * add_settings_hook.
+	 *
+	 * @version 2.3.2
 	 */
-	function add_hooks() {
+	function add_settings_hook() {
 		add_filter( 'wcj_payment_gateways_currency_settings', array( $this, 'add_currency_settings' ) );
 	}
 
