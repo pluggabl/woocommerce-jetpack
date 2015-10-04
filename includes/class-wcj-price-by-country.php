@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.3.0
+ * @version 2.3.4
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.4
 	 */
 	public function __construct() {
 
@@ -28,21 +28,18 @@ class WCJ_Price_By_Country extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-//			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				// Frontend
 				include_once( 'price-by-country/class-wcj-price-by-country-core.php' );
-//			} else {
+			}
 			if ( is_admin() ) {
 				// Backend
-//				include_once( 'price-by-country/class-wcj-exchange-rates.php' );
 				include_once( 'price-by-country/class-wcj-price-by-country-reports.php' );
 				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled' ) ) {
 					include_once( 'price-by-country/class-wcj-price-by-country-local.php' );
 				}
 			}
 		}
-//		include_once( 'price-by-country/class-wcj-exchange-rates.php' );
-//		include_once( 'price-by-country/class-wcj-exchange-rates-crons.php' );
 	}
 
 	/**
