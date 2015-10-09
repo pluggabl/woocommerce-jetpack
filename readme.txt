@@ -116,6 +116,13 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
+= 2.3.7 - 09/10/2015 =
+* Dev - PAYMENT GATEWAYS - "Gateways per Category" module renamed to "Gateways per Product or Category".
+* Dev - PAYMENT GATEWAYS - Gateways per Category - "Products - Include" and "Products - Exclude" options added.
+* Dev - PAYMENT GATEWAYS - Gateways per Category - "Product Categories - Exclude" option added.
+* Dev - SHIPPING & ORDERS - Orders - Module description updated.
+* Fix - SHIPPING & ORDERS - Orders - Order Minimum Amount - Additional is_object check added (bug caused PHP Notice).
+
 = 2.3.6 - 06/10/2015 =
 * Fix - Orders Shortcodes - `[wcj_order_checkout_field]` bug fixed.
 
