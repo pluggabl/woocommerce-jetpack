@@ -116,7 +116,9 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.7 - 09/10/2015 =
+= 2.3.7 - 10/10/2015 =
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global labels - Products/Categories Include/Exclude options added.
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Code refactoring. Enable/disable *per product* labels option added.
 * Dev - PAYMENT GATEWAYS - "Gateways per Category" module renamed to "Gateways per Product or Category".
 * Dev - PAYMENT GATEWAYS - Gateways per Category - "Products - Include" and "Products - Exclude" options added.
 * Dev - PAYMENT GATEWAYS - Gateways per Category - "Product Categories - Exclude" option added.

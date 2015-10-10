@@ -176,9 +176,11 @@ class WCJ_Orders extends WCJ_Module {
 	 * @version 2.3.7
 	 */
 	public function stop_from_seeing_checkout( $wp ) {
+//		if ( is_admin() ) return;
 		global $woocommerce;
 		if ( ! isset( $woocommerce ) || ! is_object( $woocommerce ) ) return;
-		$the_cart_total = $woocommerce->cart->cart_contents_total;
+		if ( ! isset( $woocommerce->cart ) || ! is_object( $woocommerce->cart ) ) return;
+		$the_cart_total = isset( $woocommerce->cart->cart_contents_total ) ? $woocommerce->cart->cart_contents_total : 0;
 		if ( 0 != $the_cart_total && $the_cart_total < get_option( 'wcj_order_minimum_amount' ) && is_checkout() )
 			wp_safe_redirect( $woocommerce->cart->get_cart_url() );
 	}

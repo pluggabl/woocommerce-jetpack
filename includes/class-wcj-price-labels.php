@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.3.0
+ * @version 2.3.7
  * @author  Algoritmika Ltd.
  */
 
@@ -12,43 +12,49 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if ( ! class_exists( 'WCJ_Price_Labels' ) ) :
 
-class WCJ_Price_Labels {
-
-	// Custom Price Labels - fields array
-	public $custom_tab_group_name = 'wcj_price_labels';// for compatibility with Custom Price Label Pro plugin should use 'simple_is_custom_pricing_label'
-	public $custom_tab_sections = array ( '_instead', '_before', '_between', '_after', );
-	public $custom_tab_sections_titles = array (
-		'_instead'	=> 'Instead of the price',// for compatibility with Custom Price Label Pro plugin should use ''
-		'_before'	=> 'Before the price',
-		'_between'	=> 'Between regular and sale prices',
-		'_after'	=> 'After the price',
-	);
-	public $custom_tab_section_variations = array ( '_text', '_enabled', '_home', '_products', '_single', '_page', '_cart', /*'_simple',*/ '_variable', '_variation', /*'_grouped',*/ );
-	public $custom_tab_section_variations_titles = array (
-		'_text'		 => '',//'The label',
-		'_enabled'	 => 'Enable',// for compatibility with Custom Price Label Pro plugin should use ''
-		'_home'		 => 'Hide on home page',
-		'_products'	 => 'Hide on products page',
-		'_single'	 => 'Hide on single',
-		'_page'	 	 => 'Hide on all pages',
-		'_cart'	 	 => 'Hide on cart page only',
-		//'_simple'	 => 'Hide for simple product',
-		'_variable'	 => 'Hide for main price',
-		'_variation' => 'Hide for all variations',
-		//'_grouped'	 => 'Hide for grouped product',
-	);
+class WCJ_Price_Labels extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.3.7
 	 */
 	public function __construct() {
 
-		// HOOKS
-		// Main hooks
-		if ( 'yes' === get_option( 'wcj_price_labels_enabled' ) ) {
+		$this->id         = 'price_labels';
+		$this->short_desc = __( 'Custom Price Labels', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Create any custom price label for any WooCommerce product.', 'woocommerce-jetpack' );
+		parent::__construct();
+
+		// Custom Price Labels - fields array
+		$this->custom_tab_group_name = 'wcj_price_labels';// for compatibility with Custom Price Label Pro plugin should use 'simple_is_custom_pricing_label'
+		$this->custom_tab_sections = array( '_instead', '_before', '_between', '_after', );
+		$this->custom_tab_sections_titles = array(
+			'_instead' => __( 'Instead of the price', 'woocommerce-jetpack' ),// for compatibility with Custom Price Label Pro plugin should use ''
+			'_before'  => __( 'Before the price', 'woocommerce-jetpack' ),
+			'_between' => __( 'Between regular and sale prices', 'woocommerce-jetpack' ),
+			'_after'   => __( 'After the price', 'woocommerce-jetpack' ),
+		);
+		$this->custom_tab_section_variations = array( '_text', '_enabled', '_home', '_products', '_single', '_page', '_cart', /*'_simple',*/ '_variable', '_variation', /*'_grouped',*/ );
+		$this->custom_tab_section_variations_titles = array(
+			'_text'      => '',//'The label',
+			'_enabled'   => __( 'Enable', 'woocommerce-jetpack' ),// for compatibility with Custom Price Label Pro plugin should use ''
+			'_home'      => __( 'Hide on home page', 'woocommerce-jetpack' ),
+			'_products'  => __( 'Hide on products page', 'woocommerce-jetpack' ),
+			'_single'    => __( 'Hide on single', 'woocommerce-jetpack' ),
+			'_page'      => __( 'Hide on all pages', 'woocommerce-jetpack' ),
+			'_cart'      => __( 'Hide on cart page only', 'woocommerce-jetpack' ),
+//			'_simple'    => __( 'Hide for simple product', 'woocommerce-jetpack' ),
+			'_variable'  => __( 'Hide for main price', 'woocommerce-jetpack' ),
+			'_variation' => __( 'Hide for all variations', 'woocommerce-jetpack' ),
+//			'_grouped'   => __( 'Hide for grouped product', 'woocommerce-jetpack' ),
+		);
+
+		add_action( 'init', array( $this, 'add_settings_hook' ) );
+
+		if ( $this->is_enabled() ) {
 
 			if ( is_admin() ) {
-
 				if ( 'yes' === get_option( 'wcj_migrate_from_custom_price_labels_enabled' ) ) {
 					// "Migrate from Custom Price Labels (Pro)" tool
 					add_filter( 'wcj_tools_tabs', array( $this, 'add_migrate_from_custom_price_labels_tool_tab' ), 100 );
@@ -56,10 +62,11 @@ class WCJ_Price_Labels {
 				}
 			}
 
-			// Add meta box
-			add_action( 'add_meta_boxes', array( $this, 'add_price_label_meta_box' ) );
-			// Save Post
-			add_action( 'save_post_product', array( $this, 'save_custom_price_labels' ), 999, 2 );
+			if ( 'yes' === get_option( 'wcj_local_price_labels_enabled' ) ) {
+				// Meta box (admin)
+				add_action( 'add_meta_boxes', array( $this, 'add_price_label_meta_box' ) );
+				add_action( 'save_post_product', array( $this, 'save_custom_price_labels' ), 999, 2 );
+			}
 
 			// Prices Hooks
 			$this->prices_filters = array(
@@ -98,11 +105,6 @@ class WCJ_Price_Labels {
 		}
 
 		add_action( 'wcj_tools_dashboard', array( $this, 'add_migrate_tool_info_to_tools_dashboard' ), 1000 );
-
-		// Settings hooks
-		add_filter( 'wcj_settings_sections', array( $this, 'settings_section' ) );
-		add_filter( 'wcj_settings_price_labels', array( $this, 'get_settings' ), 100 );
-		add_filter( 'wcj_features_status', array( $this, 'add_enabled_option' ), 100 );
 	}
 
 	/**
@@ -125,17 +127,23 @@ class WCJ_Price_Labels {
 	 */
 	public function add_migrate_from_custom_price_labels_tool_tab( $tabs ) {
 		$tabs[] = array(
-			'id'		=> 'migrate_from_custom_price_labels',
-			'title'		=> __( 'Migrate from Custom Price Labels', 'woocommerce-jetpack' ),
+			'id'    => 'migrate_from_custom_price_labels',
+			'title' => __( 'Migrate from Custom Price Labels', 'woocommerce-jetpack' ),
 		);
 		return $tabs;
 	}
 
-	/*public function get_migration_new_meta_name( $old_meta_name ) {
+	/**
+	 * get_migration_new_meta_name.
+	 */
+	/* public function get_migration_new_meta_name( $old_meta_name ) {
 		$new_meta_name = str_replace( 'simple_is_custom_pricing_label', 'wcj_price_labels', $old_meta_name );
 		return $new_meta_name;
-	}*/
+	} */
 
+	/**
+	 * create_migrate_from_custom_price_labels_tool_tab.
+	 */
 	public function create_migrate_from_custom_price_labels_tool_tab() {
 
 		echo '<h2>' . __( 'WooCommerce Jetpack - Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ) . '</h2>';
@@ -239,25 +247,12 @@ class WCJ_Price_Labels {
 		echo $form_html . $html;
 	}
 
-	/*public function custom_price1( $price, $product ) {
-		echo '[' . $price . ']';
-		return $price;
-	}*/
-
 	/**
-	 * add_enabled_option.
+	 * save_custom_price_labels.
 	 */
-	public function add_enabled_option( $settings ) {
-
-		$all_settings = $this->get_settings();
-		$settings[] = $all_settings[1];
-
-		return $settings;
-	}
-
 	public function save_custom_price_labels( $post_id, $post ) {
 
-		//$product = get_product( $post );TODO - do I need it?
+//		$product = get_product( $post );TODO - do I need it?
 
 		if ( ! isset( $_POST['woojetpack_price_labels_save_post'] ) )
 			return;
@@ -266,12 +261,11 @@ class WCJ_Price_Labels {
 
 			foreach ( $this->custom_tab_section_variations as $custom_tab_section_variation ) {
 
-				//$option_name = $this->custom_tab_group_name;
+//				$option_name = $this->custom_tab_group_name;
 				$option_name = $this->custom_tab_group_name . $custom_tab_section . $custom_tab_section_variation;
 
 //				if ( isset( $_POST[ $option_name ] ) ) update_post_meta( $post_id, '_' . $option_name, $_POST[ $option_name ] );
 
-				/**/
 				if ( $custom_tab_section_variation == '_text' ) {
 					//$option_name .= $custom_tab_section_variation . $custom_tab_section;
 					if ( isset( $_POST[ $option_name ] ) ) update_post_meta( $post_id, '_' . $option_name, $_POST[ $option_name ] );
@@ -281,18 +275,19 @@ class WCJ_Price_Labels {
 					if ( isset( $_POST[ $option_name ] ) ) update_post_meta( $post_id, '_' . $option_name, $_POST[ $option_name ] );
 					else update_post_meta( $post_id, '_' . $option_name, 'off' );
 				}
-				/**/
 			}
 		}
 	}
 
+	/**
+	 * add_price_label_meta_box.
+	 */
 	public function add_price_label_meta_box() {
-
 		add_meta_box( 'wc-jetpack-price-labels', 'WooCommerce Jetpack: Custom Price Labels', array( $this, 'wcj_price_label' ), 'product', 'normal', 'high' );
 	}
 
 	/*
-	 * back end
+	 * wcj_price_label - back end.
 	 */
 	public function wcj_price_label() {
 
@@ -414,16 +409,13 @@ class WCJ_Price_Labels {
 	}
 
 	/*
-	 * front end.
+	 * custom_price - front end.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.7
 	 */
 	public function custom_price( $price, $product ) {
 
 		if ( ! wcj_is_frontend() ) return $price;
-
-		//if ( 'simple' === $product->product_type )
-		//	return $price;
 
 		$current_filter_name = current_filter();
 
@@ -433,117 +425,183 @@ class WCJ_Price_Labels {
 		if ( 'woocommerce_cart_item_price' === $current_filter_name )
 			$product = $product['data'];
 
-		// Global price labels - Add text before price
-		$text_to_add_before = apply_filters( 'wcj_get_option_filter', '', get_option( 'wcj_global_price_labels_add_before_text' ) );
-		if ( '' != $text_to_add_before )
-			$price = $text_to_add_before . $price;
-		// Global price labels - Add text after price
-		$text_to_add_after = get_option( 'wcj_global_price_labels_add_after_text' );
-		if ( '' != $text_to_add_after )
-			$price = $price . $text_to_add_after;
-
-		// Global price labels - Between regular and sale prices
-		$text_to_add_between_regular_and_sale = get_option( 'wcj_global_price_labels_between_regular_and_sale_text' );
-		if ( '' != $text_to_add_between_regular_and_sale )
-			$price = apply_filters( 'wcj_get_option_filter', $price, str_replace( '</del> <ins>', '</del>' . $text_to_add_between_regular_and_sale . '<ins>', $price ) );
-
-		// Global price labels - Remove text from price
-		$text_to_remove = apply_filters( 'wcj_get_option_filter', '', get_option( 'wcj_global_price_labels_remove_text' ) );
-		if ( '' != $text_to_remove )
-			$price = str_replace( $text_to_remove, '', $price );
-		// Global price labels - Remove text from price
-		$text_to_replace = apply_filters( 'wcj_get_option_filter', '', get_option( 'wcj_global_price_labels_replace_text' ) );
-		$text_to_replace_with = apply_filters( 'wcj_get_option_filter', '', get_option( 'wcj_global_price_labels_replace_with_text' ) );
-		if ( '' != $text_to_replace && '' != $text_to_replace_with )
-			$price = str_replace( $text_to_replace, $text_to_replace_with, $price );
-
-		foreach ( $this->custom_tab_sections as $custom_tab_section ) {
-
-			$labels_array = array();
-
-			foreach ( $this->custom_tab_section_variations as $custom_tab_section_variation ) {
-
-				//$option_name = $this->custom_tab_group_name;
-				$option_name = $this->custom_tab_group_name . $custom_tab_section . $custom_tab_section_variation;
-				$labels_array[ 'variation' . $custom_tab_section_variation ] = get_post_meta( $product->post->ID, '_' . $option_name, true );
-
-				/*if ( $custom_tab_section_variation == '_text' ) {
-
-					//$option_name .= $custom_tab_section_variation . $custom_tab_section;
-					$labels_array[ 'variation' . $custom_tab_section_variation ] = get_post_meta($product->post->ID, '_' . $option_name, true );
+		$do_apply_global = true;
+		$products_incl = get_option( 'wcj_global_price_labels_products_incl', array() );
+		if ( ! empty( $products_incl ) ) $do_apply_global = ( in_array( $product->id, $products_incl ) ) ? true : false;
+		$products_excl = get_option( 'wcj_global_price_labels_products_excl', array() );
+		if ( ! empty( $products_excl ) ) $do_apply_global = ( in_array( $product->id, $products_excl ) ) ? false : true;
+		$product_categories = get_the_terms( $product->id, 'product_cat' );
+		$product_categories_incl = get_option( 'wcj_global_price_labels_product_cats_incl', array() );
+		if ( ! empty( $product_categories_incl ) ) {
+			$do_apply_global = false;
+			foreach ( $product_categories as $product_category_id => $product_category ) {
+				if ( in_array( $product_category_id, $product_categories_incl ) ) {
+					$do_apply_global = true;
+					break;
 				}
-				else {
-
-					//$option_name .= $custom_tab_section . $custom_tab_section_variation;
-					$labels_array[ 'variation' . $custom_tab_section_variation ] = get_post_meta($product->post->ID, '_' . $option_name, true);
-				}*/
-
-				//$price .= print_r( $labels_array );
 			}
+		}
+		$product_categories_excl = get_option( 'wcj_global_price_labels_product_cats_excl', array() );
+		if ( ! empty( $product_categories_excl ) ) {
+			$do_apply_global = true;
+			foreach ( $product_categories as $product_category_id => $product_category ) {
+				if ( in_array( $product_category_id, $product_categories_incl ) ) {
+					$do_apply_global = false;
+					break;
+				}
+			}
+		}
+		if ( $do_apply_global ) {
+			// Global price labels - Add text before price
+			$text_to_add_before = apply_filters( 'wcj_get_option_filter', '', get_option( 'wcj_global_price_labels_add_before_text' ) );
+			if ( '' != $text_to_add_before )
+				$price = $text_to_add_before . $price;
+			// Global price labels - Add text after price
+			$text_to_add_after = get_option( 'wcj_global_price_labels_add_after_text' );
+			if ( '' != $text_to_add_after )
+				$price = $price . $text_to_add_after;
 
-			if ( 'on' === $labels_array[ 'variation_enabled' ] ) {
+			// Global price labels - Between regular and sale prices
+			$text_to_add_between_regular_and_sale = get_option( 'wcj_global_price_labels_between_regular_and_sale_text' );
+			if ( '' != $text_to_add_between_regular_and_sale )
+				$price = apply_filters( 'wcj_get_option_filter', $price, str_replace( '</del> <ins>', '</del>' . $text_to_add_between_regular_and_sale . '<ins>', $price ) );
 
-				if (
-					( ( 'off' === $labels_array['variation_home'] )     && ( is_front_page() ) ) ||
-					( ( 'off' === $labels_array['variation_products'] ) && ( is_archive() ) ) ||
-					( ( 'off' === $labels_array['variation_single'] )   && ( is_single() ) ) ||
-					( ( 'off' === $labels_array['variation_page'] )     && ( is_page() ) )
-				   )
-					{
-						//$current_filter_name = current_filter();
-						if ( 'woocommerce_cart_item_price' === $current_filter_name && 'on' === $labels_array['variation_cart'] )
-							continue;
+			// Global price labels - Remove text from price
+			$text_to_remove = apply_filters( 'wcj_get_option_filter', '', get_option( 'wcj_global_price_labels_remove_text' ) );
+			if ( '' != $text_to_remove )
+				$price = str_replace( $text_to_remove, '', $price );
+			// Global price labels - Replace in price
+			$text_to_replace = apply_filters( 'wcj_get_option_filter', '', get_option( 'wcj_global_price_labels_replace_text' ) );
+			$text_to_replace_with = apply_filters( 'wcj_get_option_filter', '', get_option( 'wcj_global_price_labels_replace_with_text' ) );
+			if ( '' != $text_to_replace && '' != $text_to_replace_with )
+				$price = str_replace( $text_to_replace, $text_to_replace_with, $price );
+		}
 
-						$variable_filters_array = array(
-							'woocommerce_variable_empty_price_html',
-							'woocommerce_variable_free_price_html',
-							'woocommerce_variable_free_sale_price_html',
-							'woocommerce_variable_price_html',
-							'woocommerce_variable_sale_price_html',
-						);
+		// Per product
+		if ( 'yes' === get_option( 'wcj_local_price_labels_enabled' ) ) {
 
-						$variation_filters_array = array(
-							'woocommerce_variation_empty_price_html',
-							'woocommerce_variation_free_price_html',
-							//woocommerce_variation_option_name
-							'woocommerce_variation_price_html',
-							'woocommerce_variation_sale_price_html',
-						);
+			foreach ( $this->custom_tab_sections as $custom_tab_section ) {
 
-						if (
-							( in_array( $current_filter_name, $variable_filters_array ) && ( $labels_array['variation_variable'] == 'off' ) ) ||
-							( in_array( $current_filter_name, $variation_filters_array ) && ( $labels_array['variation_variation'] == 'off' ) ) ||
-							( ! in_array( $current_filter_name, $variable_filters_array ) && ! in_array( $current_filter_name, $variation_filters_array ) )
-						   )
-							$price = $this->customize_price( $price, $custom_tab_section, $labels_array['variation_text'] );
+				$labels_array = array();
+
+				foreach ( $this->custom_tab_section_variations as $custom_tab_section_variation ) {
+
+					//$option_name = $this->custom_tab_group_name;
+					$option_name = $this->custom_tab_group_name . $custom_tab_section . $custom_tab_section_variation;
+					$labels_array[ 'variation' . $custom_tab_section_variation ] = get_post_meta( $product->post->ID, '_' . $option_name, true );
+
+					/* if ( $custom_tab_section_variation == '_text' ) {
+
+						//$option_name .= $custom_tab_section_variation . $custom_tab_section;
+						$labels_array[ 'variation' . $custom_tab_section_variation ] = get_post_meta($product->post->ID, '_' . $option_name, true );
 					}
-			}
+					else {
 
-			//unset( $labels_array );
+						//$option_name .= $custom_tab_section . $custom_tab_section_variation;
+						$labels_array[ 'variation' . $custom_tab_section_variation ] = get_post_meta($product->post->ID, '_' . $option_name, true);
+					} */
+
+					//$price .= print_r( $labels_array );
+				}
+
+				if ( 'on' === $labels_array[ 'variation_enabled' ] ) {
+
+					if (
+						( ( 'off' === $labels_array['variation_home'] )     && ( is_front_page() ) ) ||
+						( ( 'off' === $labels_array['variation_products'] ) && ( is_archive() ) ) ||
+						( ( 'off' === $labels_array['variation_single'] )   && ( is_single() ) ) ||
+						( ( 'off' === $labels_array['variation_page'] )     && ( is_page() ) )
+					   )
+						{
+							//$current_filter_name = current_filter();
+							if ( 'woocommerce_cart_item_price' === $current_filter_name && 'on' === $labels_array['variation_cart'] )
+								continue;
+
+							$variable_filters_array = array(
+								'woocommerce_variable_empty_price_html',
+								'woocommerce_variable_free_price_html',
+								'woocommerce_variable_free_sale_price_html',
+								'woocommerce_variable_price_html',
+								'woocommerce_variable_sale_price_html',
+							);
+
+							$variation_filters_array = array(
+								'woocommerce_variation_empty_price_html',
+								'woocommerce_variation_free_price_html',
+								//woocommerce_variation_option_name
+								'woocommerce_variation_price_html',
+								'woocommerce_variation_sale_price_html',
+							);
+
+							if (
+								( in_array( $current_filter_name, $variable_filters_array ) && ( $labels_array['variation_variable'] == 'off' ) ) ||
+								( in_array( $current_filter_name, $variation_filters_array ) && ( $labels_array['variation_variation'] == 'off' ) ) ||
+								( ! in_array( $current_filter_name, $variable_filters_array ) && ! in_array( $current_filter_name, $variation_filters_array ) )
+							   )
+								$price = $this->customize_price( $price, $custom_tab_section, $labels_array['variation_text'] );
+						}
+				}
+
+				//unset( $labels_array );
+			}
 		}
 
 		return do_shortcode( $price );
 	}
 
+	/**
+	 * get_settings.
+	 *
+	 * @version 2.3.7
+	 */
 	function get_settings() {
+		$settings = array();
+		$settings = apply_filters( 'wcj_price_labels_settings', $settings );
+		return $this->add_enable_module_setting( $settings );
+	}
+
+	/*
+	 * add_settings_hook.
+	 *
+	 * @version 2.3.7
+	 * @since   2.3.7
+	 */
+	function add_settings_hook() {
+		add_filter( 'wcj_price_labels_settings', array( $this, 'add_settings' ) );
+	}
+
+	/*
+	 * add_settings.
+	 *
+	 * @version 2.3.7
+	 * @since   2.3.7
+	 */
+	function add_settings() {
+
+		$product_cats = array();
+		$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+		foreach ( $product_categories as $product_category ) {
+			$product_cats[ $product_category->term_id ] = $product_category->name;
+		}
+
+		$products = array();
+		$args = array(
+			'post_type'      => 'product',
+			'post_status'    => 'any',
+			'posts_per_page' => -1,
+		);
+		$loop = new WP_Query( $args );
+		if ( $loop->have_posts() ) {
+			while ( $loop->have_posts() ) : $loop->the_post();
+				$products[ strval( $loop->post->ID ) ] = get_the_title( $loop->post->ID );
+			endwhile;
+			wp_reset_postdata();
+		}
 
 		$settings = array(
 
-			array(	'title' => __( 'Custom Price Labels Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_price_labels_options' ),
-
 			array(
-				'title'     => __( 'Custom Price Labels', 'woocommerce-jetpack' ),
-				'desc' 		=> '<strong>' . __( 'Enable Module', 'woocommerce-jetpack' ) . '</strong>',
-				'desc_tip'	=> __( 'Create any custom price label for any WooCommerce product.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_price_labels_enabled',
-				'default'	=> 'no',
-				'type'      => 'checkbox',
-			),
-
-			array( 'type' 	=> 'sectionend', 'id' => 'wcj_price_labels_options' ),
-
-			array(
-				'title'     => __( 'Global Custom Price Labels', 'woocommerce-jetpack' ),
+				'title'     => __( 'Custom Price Labels - Globally', 'woocommerce-jetpack' ),
 				'type'      => 'title',
 				'desc'      => __( 'This section lets you set price labels for all products globally.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_global_price_labels_options',
@@ -623,11 +681,79 @@ class WCJ_Price_Labels {
 			),
 
 			array(
+				'title'     => __( 'Product Categories - Include', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Apply global price labels only for selected product categories. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_global_price_labels_product_cats_incl',
+				'default'   => '',
+				'type'      => 'multiselect',
+				'class'     => 'chosen_select',
+				'css'       => 'width: 450px;',
+				'options'   => $product_cats,
+			),
+
+			array(
+				'title'     => __( 'Product Categories - Exclude', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Do not apply global price labels only for selected product categories. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_global_price_labels_product_cats_excl',
+				'default'   => '',
+				'type'      => 'multiselect',
+				'class'     => 'chosen_select',
+				'css'       => 'width: 450px;',
+				'options'   => $product_cats,
+			),
+
+			array(
+				'title'     => __( 'Products - Include', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Apply global price labels only for selected products. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_global_price_labels_products_incl',
+				'default'   => '',
+				'type'      => 'multiselect',
+				'class'     => 'chosen_select',
+				'css'       => 'width: 450px;',
+				'options'   => $products,
+			),
+
+			array(
+				'title'     => __( 'Products - Exclude', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Do not apply global price labels only for selected products. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_global_price_labels_products_excl',
+				'default'   => '',
+				'type'      => 'multiselect',
+				'class'     => 'chosen_select',
+				'css'       => 'width: 450px;',
+				'options'   => $products,
+			),
+
+			array(
 				'type'      => 'sectionend',
 				'id'        => 'wcj_global_price_labels_options',
 			),
 
-			array(	'title' => __( 'Migrate from Custom Price Labels (Pro) Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you enable "Migrate from Custom Price Labels (Pro)" tool.', 'woocommerce-jetpack' ), 'id' => 'wcj_migrate_from_custom_price_labels_options' ),
+			array(
+				'title'     => __( 'Custom Price Labels - Per Product', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'id'        => 'wcj_local_price_labels_options'
+			),
+
+			array(
+				'title'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc'      => __( 'This will add metaboxes to each product\'s admin edit page.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_local_price_labels_enabled',
+				'default'   => 'yes',
+				'type'      => 'checkbox',
+			),
+
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_local_price_labels_options'
+			),
+
+			array(
+				'title'     => __( 'Migrate from Custom Price Labels (Pro) Options', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'desc'      => __( 'This section lets you enable "Migrate from Custom Price Labels (Pro)" tool.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_migrate_from_custom_price_labels_options'
+			),
 
 			array(
 				'title'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -636,17 +762,15 @@ class WCJ_Price_Labels {
 				'type'      => 'checkbox',
 			),
 
-			array( 'type' 	=> 'sectionend', 'id' => 'wcj_migrate_from_custom_price_labels_options' ),
-
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_migrate_from_custom_price_labels_options'
+			),
 
 		);
 
+		//return $this->add_enable_module_setting( $settings );
 		return $settings;
-	}
-
-	function settings_section( $sections ) {
-		$sections['price_labels'] = __( 'Custom Price Labels', 'woocommerce-jetpack' );
-		return $sections;
 	}
 }
 
