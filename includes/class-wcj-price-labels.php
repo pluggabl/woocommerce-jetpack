@@ -434,20 +434,24 @@ class WCJ_Price_Labels extends WCJ_Module {
 		$product_categories_incl = get_option( 'wcj_global_price_labels_product_cats_incl', array() );
 		if ( ! empty( $product_categories_incl ) ) {
 			$do_apply_global = false;
-			foreach ( $product_categories as $product_category_id => $product_category ) {
-				if ( in_array( $product_category_id, $product_categories_incl ) ) {
-					$do_apply_global = true;
-					break;
+			if ( ! empty( $product_categories ) ) {
+				foreach ( $product_categories as $product_category ) {
+					if ( in_array( $product_category->term_id, $product_categories_incl ) ) {
+						$do_apply_global = true;
+						break;
+					}
 				}
 			}
 		}
 		$product_categories_excl = get_option( 'wcj_global_price_labels_product_cats_excl', array() );
 		if ( ! empty( $product_categories_excl ) ) {
 			$do_apply_global = true;
-			foreach ( $product_categories as $product_category_id => $product_category ) {
-				if ( in_array( $product_category_id, $product_categories_incl ) ) {
-					$do_apply_global = false;
-					break;
+			if ( ! empty( $product_categories ) ) {
+				foreach ( $product_categories as $product_category ) {
+					if ( in_array( $product_category->term_id, $product_categories_incl ) ) {
+						$do_apply_global = false;
+						break;
+					}
 				}
 			}
 		}

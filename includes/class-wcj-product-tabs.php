@@ -90,7 +90,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					$do_exclude = false;
 					$product_categories_objects = get_the_terms( $product->id, 'product_cat' );
 					if ( $product_categories_objects && ! empty( $product_categories_objects ) ) {
-						foreach ( $product_categories_objects as $product_categories_object )	{
+						foreach ( $product_categories_objects as $product_categories_object ) {
 							if ( $product && $array_to_exclude && in_array( $product_categories_object->term_id, $array_to_exclude ) ) {
 								$do_exclude = true;
 								break;
