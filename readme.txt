@@ -116,7 +116,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.7 - 10/10/2015 =
+= 2.3.7 - 14/10/2015 =
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Bug, when displaying custom order checkout fields in emails and order details, fixed.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global labels - Products/Categories Include/Exclude options added.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Code refactoring. Enable/disable *per product* labels option added.
 * Dev - PAYMENT GATEWAYS - "Gateways per Category" module renamed to "Gateways per Product or Category".

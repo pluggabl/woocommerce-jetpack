@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.3.0
+ * @version 2.3.7
  * @author  Algoritmika Ltd.
  */
 
@@ -72,7 +72,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	}
 
 	/**
-	 * add_custom_fields_to_admin_emails.
+	 * add_custom_fields_to_emails.
 	 *
 	 * @version 2.3.0
 	 */
@@ -228,20 +228,31 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.7
 	 * @since   2.3.0
 	 */
 	function add_custom_fields_to_order_display( $order ) {
 		$post_meta = get_post_meta( $order->id );
 		foreach( $post_meta as $key => $values ) {
+
 			if ( false !== strpos( $key, 'wcj_checkout_field_' ) && isset( $values[0] ) ) {
+
 				if ( false !== strpos( $key, '_label_' ) ) {
 					continue;
 				}
+
+				$output = '';
+
 				$the_label_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_label_', $key );
-				if ( isset( $post_meta[ $the_label_key ][0] ) ) echo $post_meta[ $the_label_key ][0] . ': ';
-				else if ( isset( $post_meta[ $the_label_key ][0]['label'] ) ) echo $post_meta[ $the_label_key ][0]['label'] . ': ';
-				echo isset( $values[0]['value'] ) ? $values[0]['value'] : $values[0];
+				if ( isset( $post_meta[ $the_label_key ][0] ) ) {
+					$output .= $post_meta[ $the_label_key ][0] . ': ';
+				} else if ( is_array( $post_meta[ $the_label_key ][0] ) && isset( $post_meta[ $the_label_key ][0]['label'] ) ) {
+					$output .= $post_meta[ $the_label_key ][0]['label'] . ': ';
+				}
+
+				$output .= ( is_array( $values[0] ) && isset( $values[0]['value'] ) ) ? $values[0]['value'] : $values[0];
+
+				if ( '' != $output ) echo $output . '<br>';
 			}
 		}
 	}
