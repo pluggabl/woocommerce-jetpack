@@ -448,7 +448,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 			$do_apply_global = true;
 			if ( ! empty( $product_categories ) ) {
 				foreach ( $product_categories as $product_category ) {
-					if ( in_array( $product_category->term_id, $product_categories_incl ) ) {
+					if ( in_array( $product_category->term_id, $product_categories_excl ) ) {
 						$do_apply_global = false;
 						break;
 					}
@@ -685,28 +685,6 @@ class WCJ_Price_Labels extends WCJ_Module {
 			),
 
 			array(
-				'title'     => __( 'Product Categories - Include', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Apply global price labels only for selected product categories. Leave blank to disable the option.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_global_price_labels_product_cats_incl',
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $product_cats,
-			),
-
-			array(
-				'title'     => __( 'Product Categories - Exclude', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Do not apply global price labels only for selected product categories. Leave blank to disable the option.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_global_price_labels_product_cats_excl',
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $product_cats,
-			),
-
-			array(
 				'title'     => __( 'Products - Include', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'Apply global price labels only for selected products. Leave blank to disable the option.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_global_price_labels_products_incl',
@@ -726,6 +704,28 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'class'     => 'chosen_select',
 				'css'       => 'width: 450px;',
 				'options'   => $products,
+			),
+
+			array(
+				'title'     => __( 'Product Categories - Include', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Apply global price labels only for selected product categories. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_global_price_labels_product_cats_incl',
+				'default'   => '',
+				'type'      => 'multiselect',
+				'class'     => 'chosen_select',
+				'css'       => 'width: 450px;',
+				'options'   => $product_cats,
+			),
+
+			array(
+				'title'     => __( 'Product Categories - Exclude', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Do not apply global price labels only for selected product categories. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_global_price_labels_product_cats_excl',
+				'default'   => '',
+				'type'      => 'multiselect',
+				'class'     => 'chosen_select',
+				'css'       => 'width: 450px;',
+				'options'   => $product_cats,
 			),
 
 			array(
