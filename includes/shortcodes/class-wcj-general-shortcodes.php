@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.3.0
+ * @version 2.3.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.7
 	 */
 	public function __construct() {
 
@@ -29,6 +29,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_wpml_translate',
 			'wcj_country_select_drop_down_list',
 			'wcj_text',
+			'wcj_tcpdf_pagebreak',
 		);
 
 		$this->the_atts = array(
@@ -46,6 +47,16 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_tcpdf_pagebreak.
+	 *
+	 * @version 2.3.7
+	 * @since   2.3.7
+	 */
+	function wcj_tcpdf_pagebreak( $atts, $content ) {
+		return '<tcpdf method="AddPage" />';
 	}
 
 	/**

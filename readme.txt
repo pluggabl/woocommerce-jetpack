@@ -116,7 +116,10 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.7 - 14/10/2015 =
+= 2.3.7 - 16/10/2015 =
+* Dev - General Shortcodes - `[wcj_tcpdf_pagebreak]` shortcode added.
+* Dev - PDF INVOICING & PACKING SLIPS - Templates - Code refactoring.
+* Dev - PDF INVOICING & PACKING SLIPS - Misc. - Option to customize invoice *link text on customer's account page* added.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Bug, when displaying custom order checkout fields in emails and order details, fixed.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global labels - Products/Categories Include/Exclude options added.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Code refactoring. Enable/disable *per product* labels option added.

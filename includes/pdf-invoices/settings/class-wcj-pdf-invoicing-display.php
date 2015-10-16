@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Display class.
  *
- * @version 2.3.0
+ * @version 2.3.7
  * @author  Algoritmika Ltd.
  */
 
@@ -120,6 +120,8 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 
 	/**
 	 * add_pdf_invoices_action_links.
+	 *
+	 * @version 2.3.7
 	 */
 	function add_pdf_invoices_action_links( $actions, $the_order ) {
 
@@ -147,7 +149,8 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				}
 				$the_url = add_query_arg( $query_args );
 
-				$the_name = $invoice_type['desc'];
+				$the_name = get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_link_text' );
+				if ( '' == $the_name ) $the_name = $invoice_type['title'];
 				$the_action = 'view ' . $invoice_type['id'];
 
 				/* if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
@@ -163,6 +166,8 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.3.7
 	 */
 	function get_settings() {
 
@@ -170,7 +175,11 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 		$invoice_types = wcj_get_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
 
-			$settings[] = array( 'title' => strtoupper( $invoice_type['desc'] ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_invoicing_' . $invoice_type['id'] . '_display_options' );
+			$settings[] = array(
+				'title' => strtoupper( $invoice_type['desc'] ),
+				'type'  => 'title',
+				'id'    => 'wcj_invoicing_' . $invoice_type['id'] . '_display_options',
+			);
 
 			$settings = array_merge( $settings, array(
 
@@ -189,7 +198,6 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 
 				array(
 					'title'    => __( 'Customer\'s "My Account" Page', 'woocommerce-jetpack' ),
-//					'desc'     => __( 'Enable the PDF Invoices in customers account', 'woocommerce-jetpack' ),
 					'desc'     => __( 'Add link', 'woocommerce-jetpack' ),
 					'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_enabled_for_customers',
@@ -199,14 +207,22 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				),
 
 				array(
+					'title'    => '',
+					'desc'     => __( 'Link Text', 'woocommerce-jetpack' ),
+					'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
+					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_link_text',
+					'default'  => $invoice_type['title'],
+					'type'     => 'text',
+					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				),
+
+				array(
 					'title'    => __( 'Enable "Save as"', 'woocommerce-jetpack' ),
 					'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 					'desc_tip' => __( 'Enable "save as" pdf instead of view pdf in browser', 'woocommerce-jetpack' ),
-//					'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled',
 					'default'  => 'yes',
 					'type'     => 'checkbox',
-//					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 				),
 
 				array(
@@ -218,7 +234,10 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				),
 			) );
 
-			$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_invoicing_' . $invoice_type['id'] . '_display_options' );
+			$settings[] = array(
+				'type' => 'sectionend',
+				'id'   => 'wcj_invoicing_' . $invoice_type['id'] . '_display_options',
+			);
 		}
 
 		return $settings;
