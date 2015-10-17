@@ -4,7 +4,7 @@ Donate link: http://algoritmika.com/donate/
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack,custom price labels,call for price,currency symbol,remove sorting,remove old product slugs,add to cart text,order number,sequential order numbering,email pdf invoice,pdf invoice,pdf invoices,already in cart,empty cart,redirect to checkout,minimum order amount,customize checkout fields,checkout fields,email,customize product tabs,product tabs,related products number,empty cart,redirect add to cart,redirect to checkout,product already in cart,custom payment gateway,payment gateway icon,auto-complete all orders,custom order statuses,custom order status,remove text from price,custom css,hide categories count,hide subcategories count,hide category count,hide subcategory count,display total sales,custom product tabs,remove product tab,payment gateway fee,
 Requires at least: 3.8
 Tested up to: 4.3
-Stable tag: 2.3.6
+Stable tag: 2.3.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -116,18 +116,18 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.7 - 16/10/2015 =
+= 2.3.7 - 17/10/2015 =
 * Dev - General Shortcodes - `[wcj_tcpdf_pagebreak]` shortcode added.
-* Dev - PDF INVOICING & PACKING SLIPS - Templates - Code refactoring.
-* Dev - PDF INVOICING & PACKING SLIPS - Misc. - Option to customize invoice *link text on customer's account page* added.
-* Fix - CART & CHECKOUT - Checkout Custom Fields - Bug, when displaying custom order checkout fields in emails and order details, fixed.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global labels - Products/Categories Include/Exclude options added.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Code refactoring. Enable/disable *per product* labels option added.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Bug, when displaying custom order checkout fields in emails and order details, fixed.
 * Dev - PAYMENT GATEWAYS - "Gateways per Category" module renamed to "Gateways per Product or Category".
 * Dev - PAYMENT GATEWAYS - Gateways per Category - "Products - Include" and "Products - Exclude" options added.
 * Dev - PAYMENT GATEWAYS - Gateways per Category - "Product Categories - Exclude" option added.
-* Dev - SHIPPING & ORDERS - Orders - Module description updated.
 * Fix - SHIPPING & ORDERS - Orders - Order Minimum Amount - Additional is_object check added (bug caused PHP Notice).
+* Dev - SHIPPING & ORDERS - Orders - Module description updated.
+* Dev - PDF INVOICING & PACKING SLIPS - Templates - Code refactoring.
+* Dev - PDF INVOICING & PACKING SLIPS - Misc. - Option to customize invoice *link text on customer's account page* added.
 
 = 2.3.6 - 06/10/2015 =
 * Fix - Orders Shortcodes - `[wcj_order_checkout_field]` bug fixed.
