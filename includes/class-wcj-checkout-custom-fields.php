@@ -245,9 +245,13 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 				$the_label_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_label_', $key );
 				if ( isset( $post_meta[ $the_label_key ][0] ) ) {
-					$output .= $post_meta[ $the_label_key ][0] . ': ';
-				} else if ( is_array( $post_meta[ $the_label_key ][0] ) && isset( $post_meta[ $the_label_key ][0]['label'] ) ) {
-					$output .= $post_meta[ $the_label_key ][0]['label'] . ': ';
+					if ( is_array( $post_meta[ $the_label_key ][0] ) ) {
+						if ( isset( $post_meta[ $the_label_key ][0]['label'] ) ) {
+							$output .= $post_meta[ $the_label_key ][0]['label'] . ': ';
+						}
+					} else {
+						$output .= $post_meta[ $the_label_key ][0] . ': ';
+					}
 				}
 
 				$output .= ( is_array( $values[0] ) && isset( $values[0]['value'] ) ) ? $values[0]['value'] : $values[0];
