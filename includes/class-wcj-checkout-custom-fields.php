@@ -209,7 +209,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * update_custom_checkout_fields_order_meta.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.7
 	 */
 	public function update_custom_checkout_fields_order_meta( $order_id ) {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
@@ -220,6 +220,9 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				if ( ! empty( $_POST[ $option_name ] ) ) {
 					update_post_meta( $order_id, '_' . $option_name_label, get_option( 'wcj_checkout_custom_field_label_' . $i ) );
 					update_post_meta( $order_id, '_' . $option_name,       wc_clean( $_POST[ $option_name ] ) );
+				} elseif ( 'checkbox' === get_option( 'wcj_checkout_custom_field_type_' . $i ) ) {
+					update_post_meta( $order_id, '_' . $option_name_label, get_option( 'wcj_checkout_custom_field_label_' . $i ) );
+					update_post_meta( $order_id, '_' . $option_name,       0 );
 				}
 			}
 		}
