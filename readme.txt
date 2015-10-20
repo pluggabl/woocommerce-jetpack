@@ -116,6 +116,10 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
+= 2.3.8 - 20/10/2015 =
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool link added to module settings.
+* Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom statuses now counted in admin reports (and "Add Custom Statuses to Admin Reports" option added).
+
 = 2.3.7 - 17/10/2015 =
 * Dev - General Shortcodes - `[wcj_tcpdf_pagebreak]` shortcode added.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global labels - Products/Categories Include/Exclude options added.
