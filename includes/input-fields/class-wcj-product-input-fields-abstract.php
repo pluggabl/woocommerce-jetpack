@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.2.2
+ * @version 2.3.8
  * @author  Algoritmika Ltd.
  */
 
@@ -82,6 +82,19 @@ class WCJ_Product_Input_Fields_Abstract {
 				'short_title'		=> __( 'Checkbox: OFF', 'woocommerce-jetpack' ),
 				'type'				=> 'text',
 				'default'           => __( 'No', 'woocommerce-jetpack' ),
+			),
+
+			array(
+				'title'     => '',
+				'id'        => 'wcj_product_input_fields_type_checkbox_default_' . $i,
+				'desc'      => __( 'If checkbox is selected, set default value here', 'woocommerce-jetpack' ),
+				'short_title' => __( 'Checkbox: Default', 'woocommerce-jetpack' ),
+				'type'      => 'select',
+				'default'   => 'no',
+				'options'   => array(
+					'no'  => __( 'Not Checked', 'woocommerce-jetpack' ),
+					'yes' => __( 'Checked', 'woocommerce-jetpack' ),
+				),
 			),
 
 			// TODO: http://www.w3schools.com/tags/att_input_accept.asp
@@ -334,6 +347,8 @@ class WCJ_Product_Input_Fields_Abstract {
 
 	/**
 	 * add_product_input_fields_to_frontend.
+	 *
+	 * @version 2.3.8
 	 */
 	public function add_product_input_fields_to_frontend() {
 		global $product;
@@ -357,13 +372,21 @@ class WCJ_Product_Input_Fields_Abstract {
 
 					case 'number':
 					case 'text':
-					case 'checkbox':
 					case 'file':
 					case 'password':
 					case 'email':
 					case 'tel':
 
 						echo '<p>' . $title . '<input type="' . $type . '" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						break;
+
+					case 'checkbox':
+						$checked = checked(
+							$this->get_value( 'wcj_product_input_fields_type_checkbox_default_' . $this->scope . '_' . $i, $product->id, 'no' ),
+							'yes',
+							false
+						);
+						echo '<p>' . $title . '<input type="' . $type . '" name="' . $field_name . '"' . $custom_attributes . $checked . '>' . '</p>';
 						break;
 
 					case 'datepicker':
@@ -385,6 +408,9 @@ class WCJ_Product_Input_Fields_Abstract {
 
 						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $product->id, '' );
 						$select_options = wcj_get_select_options( $select_options_raw );
+						if ( '' != $placeholder ) {
+							$select_options = array_merge( array( '' => $placeholder ), $select_options );
+						}
 						$select_options_html = '';
 						if ( ! empty( $select_options ) ) {
 							reset( $select_options );

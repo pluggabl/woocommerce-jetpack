@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.2.1
+ * @version 2.3.8
  * @author  Algoritmika Ltd.
  */
 
@@ -57,6 +57,8 @@ class WCJ_General extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.3.8
 	 */
 	function get_settings() {
 
@@ -93,7 +95,7 @@ class WCJ_General extends WCJ_Module {
 				'title'   => __( 'Custom CSS - Front end (Customers)', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_general_custom_css',
 				'default' => '',
-				'type'    => 'textarea',
+				'type'    => 'custom_textarea',
 				'css'     => 'width:66%;min-width:300px;min-height:300px;',
 			),
 
@@ -101,7 +103,7 @@ class WCJ_General extends WCJ_Module {
 				'title'   => __( 'Custom CSS - Back end (Admin)', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_general_custom_admin_css',
 				'default' => '',
-				'type'    => 'textarea',
+				'type'    => 'custom_textarea',
 				'css'     => 'width:66%;min-width:300px;min-height:300px;',
 			),
 

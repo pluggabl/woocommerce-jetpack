@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Core Fields class.
  *
- * @version 2.2.7
+ * @version 2.3.8
  * @author  Algoritmika Ltd.
  */
 
@@ -15,48 +15,9 @@ if ( ! class_exists( 'WCJ_Checkout_Core_Fields' ) ) :
 class WCJ_Checkout_Core_Fields extends WCJ_Module {
 
 	/**
-	 * @var array $sub_items
-	 */
-	public $sub_items = array(
-		'enabled'     => 'checkbox',
-		'required'    => 'checkbox',
-		'label'       => 'text',
-		'placeholder' => 'text',
-		'class'       => 'select',
-	);
-
-	/**
-	 * @var array $items
-	 */
-	public $items = array(
-		'billing_country' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'billing_first_name' 	=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'billing_last_name' 	=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'billing_company' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'no' ),
-		'billing_address_1' 	=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'billing_address_2' 	=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'no' ),
-		'billing_city' 			=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'billing_state' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'billing_postcode' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'billing_email' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'billing_phone' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'shipping_country' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'shipping_first_name' 	=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'shipping_last_name' 	=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'shipping_company' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'no' ),
-		'shipping_address_1' 	=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'shipping_address_2' 	=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'no' ),
-		'shipping_city' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'shipping_state' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'shipping_postcode' 	=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'account_password' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'yes' ),
-		'order_comments' 		=> array( 'enabled' => 'yes', 'label' => '', 'placeholder' => '', 'required' => 'no' ),
-	);
-
-	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.7
+	 * @version 2.3.8
 	 */
 	public function __construct() {
 
@@ -65,118 +26,8 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 		$this->desc       = __( 'Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_checkout_fields' , array( $this, 'custom_override_checkout_fields' ) );
-			add_filter( 'woocommerce_default_address_fields', array( $this, 'fix_required_by_default' ) );
-		}
-	}
-
-	/**
-	 * fix_required_by_default.
-	 *
-	 * @since 2.2.4
-	 * @todo  There must be a better way!
-	 */
-	function fix_required_by_default( $address_fields ) {
-		$fields_required_by_default = array(
-			'country',
-			'first_name',
-			'last_name',
-			'address_1',
-			'city',
-			'state',
-			'postcode',
-		);
-		foreach ( $fields_required_by_default as $field ) {
-			$billing_value  = get_option( 'wcj_checkout_fields_' . 'billing_'  . $field . '_required' );
-			$shipping_value = get_option( 'wcj_checkout_fields_' . 'shipping_' . $field . '_required' );
-			if ( 'no' === $billing_value && 'no' === $shipping_value ) {
-				$address_fields[ $field ]['required'] = false;
-			}
-		}
-		return $address_fields;
-	}
-
-	/**
-	 * custom_override_checkout_fields.
-	 *
-	 * @version 2.2.7
-	 */
-	function custom_override_checkout_fields( $checkout_fields ) {
-
-		foreach ( $this->items as $item_key => $default_values ) {
-
-			foreach ( $this->sub_items as $sub_item_key => $sub_item_type ) {
-
-				$item_id = 'wcj_checkout_fields_' . $item_key . '_' . $sub_item_key;
-				$the_option = get_option( $item_id );
-
-				$field_parts = explode( "_", $item_key, 2 );
-
-				if ( $sub_item_key == 'enabled' ) {
-
-					if ( $the_option == 'no' )
-						unset( $checkout_fields[$field_parts[0]][$item_key] ); // e.g. unset( $checkout_fields['billing']['billing_country'] );
-				}
-				else if ( isset( $checkout_fields[$field_parts[0]][$item_key] ) ) {
-
-					if ( $the_option != '' ) {
-
-						if ( $sub_item_key == 'required' ) {
-
-							if ( $the_option == 'yes' ) $the_option = true;
-							else {
-								$the_option = false;
-								/* $checkout_fields[$field_parts[0]][$item_key]['validate'] = array();
-								$checkout_fields[$field_parts[0]][$item_key]['class'] = array( 'woocommerce-validated' );
-								$checkout_fields[$field_parts[0]][$item_key]['custom_attributes'] = array(); */
-							}
-						}
-
-						if ( 'class' === $sub_item_key ) {
-							if ( 'default' === $the_option ) continue;
-							else $the_option = array( $the_option );
-						}
-
-						$checkout_fields[$field_parts[0]][$item_key][$sub_item_key] = $the_option;
-					}
-				}
-			}
-		}
-
-		return $checkout_fields;
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.2.7
-	 */
-	function get_settings() {
-
-		//global $woocommerce;
-
-		$settings = array(
-
-			array( 'title' => __( 'Checkout Core Fields Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( '', 'woocommerce-jetpack' ), 'id' => 'wcj_checkout_core_fields_options' ),
-
-			//array( 'type'  => 'sectionend', 'id' => 'wcj_checkout_core_fields_options' ),
-		);
-
-		// Checkout fields
-//		$settings[] = array( 'title' => __( 'Checkout Fields Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you customize the checkout fields: change label, placeholder, set required, or remove any field.', 'woocommerce-jetpack' ), 'id' => 'wcj_checkout_fields_options' );
-
-		/*$items = array(
-			'enabled'		=> 'checkbox',
-			////'type',
-			'label' 		=> 'text',
-			'placeholder'	=> 'text',
-			'required'		=> 'checkbox',
-			//'clear',
-		);
-
-		$fields = array(
-			'billing_country',// => array( 'yes', '', '', 'yes' ),
+		$this->woocommerce_core_checkout_fields = array(
+			'billing_country',
 			'billing_first_name',
 			'billing_last_name',
 			'billing_company',
@@ -198,70 +49,246 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 			'shipping_postcode',
 			'account_password',
 			'order_comments',
-		);*/
+		);
 
-		//global $woocommerce;
-		//$checkout_fields = WC()->WC_Checkout->$checkout_fields;//apply_filters( 'woocommerce_checkout_fields' , array() );
-		/*if ( is_super_admin() ) {
+		if ( $this->is_enabled() ) {
+//			$this->convert_old_settings();
+			add_filter( 'woocommerce_checkout_fields' , array( $this, 'custom_override_checkout_fields' ) );
+			add_filter( 'woocommerce_default_address_fields' , array( $this, 'custom_override_default_address_fields' ) );
+		}
+	}
 
-			global $woocommerce;
-			echo '<pre>[';
-			print_r( WC_Checkout::instance() );//->checkout()->checkout_fields;
-			echo ']</pre>';
-		}*/
+	/**
+	 * custom_override_default_address_fields.
+	 *
+	 * @version 2.3.8
+	 * @since   2.3.8
+	 */
+	function custom_override_default_address_fields( $fields ) {
 
-		//global $woocommerce;
-		//echo '<pre>'; print_r( $woocommerce->checkout()->checkout_fields ); echo '</pre>';
+		foreach ( $fields as $field_key => $field_values ) {
 
-		foreach ( $this->items as $field => $default_values) {
+			foreach ( $this->woocommerce_core_checkout_fields as $field ) {
 
-			foreach ( $this->sub_items as $item_key => $item_type ) {
+				$field_parts = explode( '_', $field, 2 );
+				if ( is_array( $field_parts ) && 2 === count( $field_parts ) ) {
 
-				$item_id = 'wcj_checkout_fields_' . $field . '_' . $item_key;
+					$section     = $field_parts[0]; // billing or shipping
+					$field_name  = $field_parts[1];
 
-				$default_value = isset( $default_values[ $item_key ] ) ?  $default_values[ $item_key ] : '';
+					if ( $field_key === $field_name ) {
 
-				$item_title = $field;// . ' ' . $item_key;
-				$item_title = str_replace( "_", " ", $item_title );
-				$item_title = ucwords( $item_title );
+						/* $is_required = get_option( 'wcj_checkout_fields_' . $field . '_' . 'is_required', 'default' );
+						if ( 'default' != $is_required ) {
+							$fields[ $field_name ]['required'] = ( 'yes' === $is_required ) ? true : false;
+						} */
 
-				$item_desc_tip = '';
-				if ( 'text' == $item_type ) $item_desc_tip = __( 'Leave blank for WooCommerce defaults.', 'woocommerce-jetpack' );
+						$label = get_option( 'wcj_checkout_fields_' . $field . '_' . 'label', '' );
+						if ( '' != $label ) {
+							$fields[ $field_name ]['label'] = $label;
+						}
 
-				$settings_to_add = array(
-//					'title'    => $item_title,
-//					'desc'     => $item_id,//__( 'Enable the Checkout feature', 'woocommerce-jetpack' ),
-					'desc'     => $item_key,
-					'desc_tip' => $item_desc_tip,// . __( 'Default: ', 'woocommerce-jetpack' ) . $default_value,
-					'id'       => $item_id,
-					'default'  => $default_value,
-					'type'     => $item_type,
-					'css'      => 'min-width:300px;width:50%;',
-				);
+						$placeholder = get_option( 'wcj_checkout_fields_' . $field . '_' . 'placeholder', '' );
+						if ( '' != $placeholder ) {
+							$fields[ $field_name ]['placeholder'] = $placeholder;
+						}
 
-				if ( 'class' === $item_key ) {
-					$settings_to_add['options'] = array(
+						/* $class = get_option( 'wcj_checkout_fields_' . $field . '_' . 'class', 'default' );
+						if ( 'default' != $class ) {
+							$fields[ $field_name ]['class'] = $class;
+						} */
+					}
+				}
+			}
+		}
+		return $fields;
+	}
+
+	/**
+	 * convert_old_settings.
+	 *
+	 * @version 2.3.8
+	 * @since   2.3.8
+	 */
+	/* function convert_old_settings() {
+		$woocommerce_core_checkout_fields_old = array(
+			'billing_country'     => array( 'default_required' => 'yes' ),
+			'billing_first_name'  => array( 'default_required' => 'yes' ),
+			'billing_last_name'   => array( 'default_required' => 'yes' ),
+			'billing_company'     => array( 'default_required' => 'no' ),
+			'billing_address_1'   => array( 'default_required' => 'yes' ),
+			'billing_address_2'   => array( 'default_required' => 'no' ),
+			'billing_city'        => array( 'default_required' => 'yes' ),
+			'billing_state'       => array( 'default_required' => 'yes' ),
+			'billing_postcode'    => array( 'default_required' => 'yes' ),
+			'billing_email'       => array( 'default_required' => 'yes' ),
+			'billing_phone'       => array( 'default_required' => 'yes' ),
+			'shipping_country'    => array( 'default_required' => 'yes' ),
+			'shipping_first_name' => array( 'default_required' => 'yes' ),
+			'shipping_last_name'  => array( 'default_required' => 'yes' ),
+			'shipping_company'    => array( 'default_required' => 'no' ),
+			'shipping_address_1'  => array( 'default_required' => 'yes' ),
+			'shipping_address_2'  => array( 'default_required' => 'no' ),
+			'shipping_city'       => array( 'default_required' => 'yes' ),
+			'shipping_state'      => array( 'default_required' => 'yes' ),
+			'shipping_postcode'   => array( 'default_required' => 'yes' ),
+			'account_password'    => array( 'default_required' => 'yes' ),
+			'order_comments'      => array( 'default_required' => 'no' ),
+		);
+
+		foreach ( $woocommerce_core_checkout_fields_old as $field => $options ) {
+			$is_enabled_old  = get_option( 'wcj_checkout_fields_' . $field . '_' . 'enabled', '' );
+			$is_required_old = get_option( 'wcj_checkout_fields_' . $field . '_' . 'required', '' );
+
+			if ( '' != $is_enabled_old && 'yes' != $is_enabled_old ) {
+				update_option( 'wcj_checkout_fields_' . $field . '_' . 'is_enabled', $is_enabled_old );
+			}
+			if ( '' != $is_required_old && $options['default_required'] != $is_required_old ) {
+				update_option( 'wcj_checkout_fields_' . $field . '_' . 'is_required', $is_required_old );
+			}
+
+			delete_option( 'wcj_checkout_fields_' . $field . '_' . 'enabled', '' );
+			delete_option( 'wcj_checkout_fields_' . $field . '_' . 'required', '' );
+		}
+	} */
+
+	/**
+	 * custom_override_checkout_fields.
+	 *
+	 * @version 2.3.8
+	 */
+	function custom_override_checkout_fields( $checkout_fields ) {
+
+		foreach ( $this->woocommerce_core_checkout_fields as $field ) {
+
+			$field_parts = explode( '_', $field, 2 );
+			$section = ( ! empty( $field_parts ) && is_array( $field_parts ) ) ? $field_parts[0] : ''; // billing or shipping
+
+			$is_enabled = get_option( 'wcj_checkout_fields_' . $field . '_' . 'is_enabled', 'default' );
+			if ( 'default' != $is_enabled ) {
+				if ( 'no' === $is_enabled ) {
+					if ( isset( $checkout_fields[ $section ][ $field ] ) ) {
+						unset( $checkout_fields[ $section ][ $field ] ); // e.g. unset( $checkout_fields['billing']['billing_country'] );
+					}
+				}
+			}
+
+			if ( isset( $checkout_fields[ $section ][ $field ] ) ) {
+
+				$is_required = get_option( 'wcj_checkout_fields_' . $field . '_' . 'is_required', 'default' );
+				if ( 'default' != $is_required ) {
+					$checkout_fields[ $section ][ $field ]['required'] = ( 'yes' === $is_required ) ? true : false;
+				}
+
+				$label = get_option( 'wcj_checkout_fields_' . $field . '_' . 'label', '' );
+				if ( '' != $label ) {
+					$checkout_fields[ $section ][ $field ]['label'] = $label;
+				}
+
+				$placeholder = get_option( 'wcj_checkout_fields_' . $field . '_' . 'placeholder', '' );
+				if ( '' != $placeholder ) {
+					$checkout_fields[ $section ][ $field ]['placeholder'] = $placeholder;
+				}
+
+				$class = get_option( 'wcj_checkout_fields_' . $field . '_' . 'class', 'default' );
+				if ( 'default' != $class ) {
+					$checkout_fields[ $section ][ $field ]['class'] = $class;
+				}
+			}
+		}
+
+		return $checkout_fields;
+	}
+
+	/**
+	 * get_settings.
+	 *
+	 * @version 2.3.8
+	 */
+	function get_settings() {
+
+		$settings = array(
+			array(
+				'title' => __( 'Checkout Core Fields Options', 'woocommerce-jetpack' ),
+				'type'  => 'title',
+				'id'    => 'wcj_checkout_core_fields_options',
+			),
+		);
+
+		foreach ( $this->woocommerce_core_checkout_fields as $field ) {
+
+			$settings = array_merge( $settings, array (
+
+				array(
+					'title'     => ucwords( str_replace( '_', ' ', $field ) ),
+					'desc'      => __( 'enabled', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_checkout_fields_' . $field . '_' . 'is_enabled',
+					'default'   => 'default',
+					'type'      => 'select',
+					'options'   => array(
+						'default' => __( 'Default', 'woocommerce-jetpack' ),
+						'yes'     => __( 'Enabled', 'woocommerce-jetpack' ),
+						'no'      => __( 'Disabled', 'woocommerce-jetpack' ),
+					),
+					'css'       => 'min-width:300px;width:50%;',
+				),
+
+				array(
+					'title'     => '',
+					'desc'      => __( 'required', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_checkout_fields_' . $field . '_' . 'is_required',
+					'default'   => 'default',
+					'type'      => 'select',
+					'options'   => array(
+						'default' => __( 'Default', 'woocommerce-jetpack' ),
+						'yes'     => __( 'Required', 'woocommerce-jetpack' ),
+						'no'      => __( 'Not Required', 'woocommerce-jetpack' ),
+					),
+					'css'       => 'min-width:300px;width:50%;',
+				),
+
+				array(
+					'title'     => '',
+					'desc'      => __( 'label', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'Leave blank for WooCommerce defaults.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_checkout_fields_' . $field . '_' . 'label',
+					'default'   => '',
+					'type'      => 'text',
+					'css'       => 'min-width:300px;width:50%;',
+				),
+
+				array(
+					'title'     => '',
+					'desc'      => __( 'placeholder', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'Leave blank for WooCommerce defaults.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_checkout_fields_' . $field . '_' . 'placeholder',
+					'default'   => '',
+					'type'      => 'text',
+					'css'       => 'min-width:300px;width:50%;',
+				),
+
+				array(
+					'title'     => '',
+					'desc'      => __( 'class', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_checkout_fields_' . $field . '_' . 'class',
+					'default'   => 'default',
+					'type'      => 'select',
+					'options'   => array(
 						'default'        => __( 'Default', 'woocommerce-jetpack' ),
 						'form-row-first' => __( 'Align Left', 'woocommerce-jetpack' ),
 						'form-row-last'  => __( 'Align Right', 'woocommerce-jetpack' ),
 						'form-row-full'  => __( 'Full Row', 'woocommerce-jetpack' ),
-					);
-					$settings_to_add['default'] = 'default';
-				}
+					),
+					'css'       => 'min-width:300px;width:50%;',
+				),
 
-				if ( 'enabled' == $item_key ) {
-
-					$settings_to_add['title'] = $item_title;
-					$settings_to_add['checkboxgroup'] = 'start';
-				}
-				else if ( 'required' == $item_key ) $settings_to_add['checkboxgroup'] = 'end';
-
-				$settings[] = $settings_to_add;
-			}
+			) );
 		}
 
-//		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_checkout_fields_options' );
-		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_checkout_core_fields_options' );
+		$settings[] = array(
+			'type' => 'sectionend',
+			'id'   => 'wcj_checkout_core_fields_options',
+		);
 
 		return $this->add_enable_module_setting( $settings );
 	}
