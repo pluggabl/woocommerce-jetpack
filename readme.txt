@@ -116,16 +116,16 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.8 - 21/10/2015 =
-~* Fix - CART & CHECKOUT - Checkout Core Fields - Is required.
-~* Fix - CART & CHECKOUT - Checkout Core Fields - Renaming (e.g. address).
-+* Fix - CART & CHECKOUT - Checkout Custom Fields - On admin save.
-+* Dev - CART & CHECKOUT - Checkout Custom Fields - Placeholder for select type added.
-+* Dev - CART & CHECKOUT - Checkout Custom Fields - Default value for checkbox type added.
-+* Dev - CART & CHECKOUT - Checkout Custom Fields - Values options for checkbox type added.
-+* Dev - PRODUCTS - Product Input Fields - Placeholder for select type added.
-+* Dev - PRODUCTS - Product Input Fields - Default value for checkbox type added.
-+* Dev - General - `custom_textarea`.
+= 2.3.8 - 22/10/2015 =
+* Fix - CART & CHECKOUT - Checkout Core Fields - Bug, causing message that some not existing field (e.g. State / County) is required, fixed.
+* Fix - CART & CHECKOUT - Checkout Core Fields - Bug with changing label and/or placeholder for some core checkout fields (e.g. address), fixed.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Bug, causing PHP notices on order admin save (on orders with some types of custom checkout fields), fixed.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - *Placeholder* for *select* type added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - *Default value* for *checkbox* type added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - *Values options* for *checkbox* type added.
+* Dev - PRODUCTS - Product Input Fields - *Placeholder* for *select* type added.
+* Dev - PRODUCTS - Product Input Fields - *Default value* for *checkbox* type added.
+* Dev - EMAILS & MISC. - General - CSS fields changed from `textarea` to `custom_textarea`.
 * Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool link added to module settings.
 * Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom statuses now counted in admin reports (and "Add Custom Statuses to Admin Reports" option added).
 
