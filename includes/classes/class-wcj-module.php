@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.3.0
+ * @version 2.3.8
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -180,13 +180,13 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * add_tools_list.
 	 *
-	 * @version 2.2.3
+	 * @version 2.3.8
 	 * @since   2.2.3
 	 */
 	function add_tools_list( $settings ) {
 		return array_merge( $settings, array(
 			array(
-				'title'    => $this->short_desc . ' ' . __( 'Tools', 'woocommerce-jetpack' ),
+				'title'    => /* $this->short_desc . ' ' .  */__( 'Tools', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => '',
 				'id'       => 'wcj_' . $this->id . '_tools_options'
