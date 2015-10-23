@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.3.0
+ * @version 2.3.8
  * @author  Algoritmika Ltd.
  */
 
@@ -162,7 +162,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_time_remaining.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.8
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_time_remaining( $atts ) {
@@ -171,10 +171,10 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		$hours_remaining   = floor( $seconds_remaining / (      60 * 60 ) );
 		$minutes_remaining = floor( $seconds_remaining /             60   );
 		if ( $seconds_remaining <= 0 ) return '';
-		if ( $days_remaining    >  0 ) return ( 1 === $days_remaining    ) ? $days_remaining    . ' day left'    : $days_remaining    . ' days left';
-		if ( $hours_remaining   >  0 ) return ( 1 === $hours_remaining   ) ? $hours_remaining   . ' hour left'   : $hours_remaining   . ' hours left';
-		if ( $minutes_remaining >  0 ) return ( 1 === $minutes_remaining ) ? $minutes_remaining . ' minute left' : $minutes_remaining . ' minutes left';
-		return                                ( 1 === $seconds_remaining ) ? $seconds_remaining . ' second left' : $seconds_remaining . ' seconds left';
+		if ( $days_remaining    >  0 ) return ( 1 == $days_remaining    ) ? $days_remaining    . ' day left'    : $days_remaining    . ' days left';
+		if ( $hours_remaining   >  0 ) return ( 1 == $hours_remaining   ) ? $hours_remaining   . ' hour left'   : $hours_remaining   . ' hours left';
+		if ( $minutes_remaining >  0 ) return ( 1 == $minutes_remaining ) ? $minutes_remaining . ' minute left' : $minutes_remaining . ' minutes left';
+		return                                ( 1 == $seconds_remaining ) ? $seconds_remaining . ' second left' : $seconds_remaining . ' seconds left';
 		/* if ( ( $seconds_remaining = strtotime( $this->wcj_product_crowdfunding_deadline( $atts ) ) - time() ) <= 0 ) return '';
 		if ( ( $days_remaining = floor( $seconds_remaining / ( 24 * 60 * 60 ) ) ) > 0 ) {
 			return ( 1 === $days_remaining ) ? $days_remaining . ' day left' : $days_remaining . ' days left';

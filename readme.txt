@@ -117,6 +117,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.8 - 22/10/2015 =
+* Fix - Shortcodes - Products - Crowdfunding - `[wcj_product_crowdfunding_time_remaining]` singular form bug fixed.
 * Fix - CART & CHECKOUT - Checkout Core Fields - Bug, causing message that some not existing field (e.g. State / County) is required, fixed.
 * Fix - CART & CHECKOUT - Checkout Core Fields - Bug with changing label and/or placeholder for some core checkout fields (e.g. address), fixed.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Bug, causing PHP notices on order admin save (on orders with some types of custom checkout fields), fixed.
