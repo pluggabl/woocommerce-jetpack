@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Cart class.
  *
- * @version 2.2.1
+ * @version 2.3.8
  * @author  Algoritmika Ltd.
  */
 
@@ -16,20 +16,26 @@ class WCJ_Cart extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.3.8
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'cart';
 		$this->short_desc = __( 'Cart', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add custom info to WooCommerce cart page. Add empty cart button.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add custom info to WooCommerce cart page.', 'woocommerce-jetpack' );
+		$this->full_desc  =
+			__( 'This feature allows you to add a final checkpoint for your customers before they proceed to payment.', 'woocommerce-jetpack' ) . '<br>' .
+			__( 'Show custom information at on the cart page using Booster\'s various shortcodes and give your customers a seamless cart experience.', 'woocommerce-jetpack' ) . '<br>' .
+			__( 'For example, show them the total weight of their items, any additional fees or taxes, or a confirmation of the address their products are being sent to.', 'woocommerce-jetpack' );
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
 
-			/*if ( 'yes' === get_option( 'wcj_cart_hide_shipping_and_taxes_estimated_message' ) )
-					add_filter( 'gettext', array( $this, 'hide_shipping_and_taxes_estimated_message' ), 20, 3 );*/
+			/* if ( 'yes' === get_option( 'wcj_cart_hide_shipping_and_taxes_estimated_message' ) )
+				add_filter( 'gettext', array( $this, 'hide_shipping_and_taxes_estimated_message' ), 20, 3 ); */
 
-			//add_action( get_option( 'wcj_cart_custom_info_hook', 'woocommerce_after_cart_totals' ), array( $this, 'add_cart_custom_info' ) );
+//			add_action( get_option( 'wcj_cart_custom_info_hook', 'woocommerce_after_cart_totals' ), array( $this, 'add_cart_custom_info' ) );
 			$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_cart_custom_info_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++) {
 				add_action( get_option( 'wcj_cart_custom_info_hook_' . $i, 'woocommerce_after_cart_totals' ), array( $this, 'add_cart_custom_info' ) );
@@ -52,8 +58,8 @@ class WCJ_Cart extends WCJ_Module {
 
 	/**
 	 * change_labels.
-	 *
-	public function hide_shipping_and_taxes_estimated_message( $translated_text, $text, $domain ) {
+	 */
+	/* function hide_shipping_and_taxes_estimated_message( $translated_text, $text, $domain ) {
 
 		if ( ! function_exists( 'is_cart' ) || ! is_cart() )
 			return $translated_text;
@@ -62,25 +68,32 @@ class WCJ_Cart extends WCJ_Module {
 			return '';
 
 		return $translated_text;
-	}
+	} */
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.3.8
 	 */
 	function get_settings() {
 
 		$settings = array();
 
-			/*array(
+			/* array(
 				'title'    => __( 'Hide "Note: Shipping and taxes are estimated..." message on Cart page', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_cart_hide_shipping_and_taxes_estimated_message',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-			),*/
+			), */
 
 		// Cart Custom Info Options
-		$settings[] = array( 'title' => __( 'Cart Custom Info Blocks', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_cart_custom_info_options' );
+		$settings[] = array(
+			'title'    => __( 'Cart Custom Info Blocks', 'woocommerce-jetpack' ),
+			'type'     => 'title',
+			'id'       => 'wcj_cart_custom_info_options',
+			'desc'     => $this->full_desc,
+		);
 
 		$settings[] = array(
 			'title'    => __( 'Total Blocks', 'woocommerce-jetpack' ),
@@ -89,10 +102,13 @@ class WCJ_Cart extends WCJ_Module {
 			'type'     => 'custom_number',
 			'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 			'custom_attributes'
-					   => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+			           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 		);
 
-		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_cart_custom_info_options' );
+		$settings[] = array(
+			'type'     => 'sectionend',
+			'id'       => 'wcj_cart_custom_info_options',
+		);
 
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_cart_custom_info_total_number', 1 ) );
 
@@ -100,7 +116,11 @@ class WCJ_Cart extends WCJ_Module {
 
 			$settings = array_merge( $settings, array(
 
-				array( 'title' => __( 'Info Block', 'woocommerce-jetpack' ) . ' #' . $i, 'type' => 'title', 'desc' => '', 'id' => 'wcj_cart_custom_info_options_' . $i, ),
+				array(
+					'title'    => __( 'Info Block', 'woocommerce-jetpack' ) . ' #' . $i,
+					'type'     => 'title',
+					'id'       => 'wcj_cart_custom_info_options_' . $i,
+				),
 
 				array(
 					'title'    => __( 'Content', 'woocommerce-jetpack' ),
@@ -140,6 +160,7 @@ class WCJ_Cart extends WCJ_Module {
 						'woocommerce_after_shipping_calculator'      => __( 'After shipping calculator', 'woocommerce-jetpack' ),
 
 						'woocommerce_cart_is_empty'                  => __( 'If cart is empty', 'woocommerce-jetpack' ),
+
 					),
 					'css'      => 'width:250px;',
 				),
@@ -152,11 +173,15 @@ class WCJ_Cart extends WCJ_Module {
 					'css'      => 'width:250px;',
 				),
 
-				array( 'type'  => 'sectionend', 'id' => 'wcj_cart_custom_info_options_' . $i, ),
+				array(
+					'type'     => 'sectionend',
+					'id'       => 'wcj_cart_custom_info_options_' . $i,
+				),
+
 			) );
 		}
 
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_enable_module_setting( $settings/* , $this->full_desc */ );
 	}
 }
 
