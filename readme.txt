@@ -118,19 +118,19 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 = 2.3.8 - 26/10/2015 =
 * Dev - Link changed to http://booster.io
-* Dev - CART & CHECKOUT - Cart - Module description added.
 * Fix - Shortcodes - Products - Crowdfunding - `[wcj_product_crowdfunding_time_remaining]` singular form bug fixed.
+* Dev - PRODUCTS - Product Input Fields - *Placeholder* for *select* type added.
+* Dev - PRODUCTS - Product Input Fields - *Default value* for *checkbox* type added.
+* Dev - CART & CHECKOUT - Cart - Module description added.
 * Fix - CART & CHECKOUT - Checkout Core Fields - Bug, causing message that some not existing field (e.g. State / County) is required, fixed.
 * Fix - CART & CHECKOUT - Checkout Core Fields - Bug with changing label and/or placeholder for some core checkout fields (e.g. address), fixed.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Bug, causing PHP notices on order admin save (on orders with some types of custom checkout fields), fixed.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - *Placeholder* for *select* type added.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - *Default value* for *checkbox* type added.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - *Values options* for *checkbox* type added.
-* Dev - PRODUCTS - Product Input Fields - *Placeholder* for *select* type added.
-* Dev - PRODUCTS - Product Input Fields - *Default value* for *checkbox* type added.
 * Dev - EMAILS & MISC. - General - CSS fields changed from `textarea` to `custom_textarea`.
-* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool link added to module settings.
 * Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom statuses now counted in admin reports (and "Add Custom Statuses to Admin Reports" option added).
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool link added to module settings.
 
 = 2.3.7 - 17/10/2015 =
 * Dev - General Shortcodes - `[wcj_tcpdf_pagebreak]` shortcode added.
