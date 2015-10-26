@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Booster for WooCommerce
-Plugin URI: http://BoostWoo.com
+Plugin URI: http://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.3.8-dev
+Version: 2.3.8
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Copyright: © 2015 Algoritmika Ltd.
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.3.3
+ * @version 2.3.8
  */
 
 final class WC_Jetpack {
@@ -230,39 +230,42 @@ final class WC_Jetpack {
 	/**
 	 * Show action links on the plugin screen
 	 *
-	 * @param mixed $links
-	 * @return array
+	 * @version 2.3.8
+	 * @param   mixed $links
+	 * @return  array
 	 */
 	public function action_links( $links ) {
 		return array_merge( array(
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
-			'<a href="' . esc_url( apply_filters( 'woocommerce_docs_url', 'http://BoostWoo.com/', 'woocommerce' ) ) . '">' . __( 'Docs', 'woocommerce' ) . '</a>',
-			'<a href="' . esc_url( apply_filters( 'woocommerce_support_url', 'http://BoostWoo.com/plus/' ) ) . '">' . __( 'Unlock all', 'woocommerce' ) . '</a>',
+			'<a href="' . esc_url( 'http://booster.io/' )                       . '">' . __( 'Docs', 'woocommerce' ) . '</a>',
+			'<a href="' . esc_url( 'http://booster.io/plus/' )                  . '">' . __( 'Unlock all', 'woocommerce' ) . '</a>',
 		), $links );
 	}
 
 	/**
 	 * get_wcj_plus_message.
+	 *
+	 * @version 2.3.8
 	 */
 	public function get_wcj_plus_message( $value, $message_type ) {
 
 		switch ( $message_type ) {
 
 			case 'global':
-				return	'<div class="updated">
-								<p class="main"><strong>' . __( 'Install Booster Plus to unlock all features', 'woocommerce-jetpack' ) . '</strong></p>
-								<span>' . sprintf( __('Some settings fields are locked and you will need %s to modify all locked fields.', 'woocommerce-jetpack'), '<a href="http://BoostWoo.com/plus/">Booster for WooCommerce Plus</a>' ) . '</span>
-								<p><a href="http://BoostWoo.com/plus/" target="_blank" class="button button-primary">' . __( 'Buy now', 'woocommerce-jetpack' ) . '</a> <a href="http://BoostWoo.com" target="_blank" class="button">'. sprintf( __( 'Visit %s', 'woocommerce-jetpack' ), 'BoostWoo.com' ) . '</a></p>
+				return '<div class="updated">
+							<p class="main"><strong>' . __( 'Install Booster Plus to unlock all features', 'woocommerce-jetpack' ) . '</strong></p>
+							<span>' . sprintf( __('Some settings fields are locked and you will need %s to modify all locked fields.', 'woocommerce-jetpack'), '<a href="http://booster.io/plus/">Booster for WooCommerce Plus</a>' ) . '</span>
+							<p><a href="http://booster.io/plus/" target="_blank" class="button button-primary">' . __( 'Buy now', 'woocommerce-jetpack' ) . '</a> <a href="http://booster.io" target="_blank" class="button">'. sprintf( __( 'Visit Booster Site', 'woocommerce-jetpack' ), 'http://booster.io' ) . '</a></p>
 						</div>';
 
 			case 'desc':
-				return __( 'Get <a href="http://BoostWoo.com/plus/" target="_blank">Booster Plus</a> to change value.', 'woocommerce-jetpack' );
+				return __( 'Get <a href="http://booster.io/plus/" target="_blank">Booster Plus</a> to change value.', 'woocommerce-jetpack' );
 
 			case 'desc_below':
-				return __( 'Get <a href="http://BoostWoo.com/plus/" target="_blank">Booster Plus</a> to change values below.', 'woocommerce-jetpack' );
+				return __( 'Get <a href="http://booster.io/plus/" target="_blank">Booster Plus</a> to change values below.', 'woocommerce-jetpack' );
 
 			case 'desc_above':
-				return __( 'Get <a href="http://BoostWoo.com/plus/" target="_blank">Booster Plus</a> to change values above.', 'woocommerce-jetpack' );
+				return __( 'Get <a href="http://booster.io/plus/" target="_blank">Booster Plus</a> to change values above.', 'woocommerce-jetpack' );
 
 			case 'desc_no_link':
 				return __( 'Get Booster Plus to change value.', 'woocommerce-jetpack' );

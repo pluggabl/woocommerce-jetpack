@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.3.4
+ * @version 2.3.8
  * @author  Algoritmika Ltd.
  */
 
@@ -45,7 +45,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.8
 	 */
 	function get_settings() {
 
@@ -134,7 +134,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 
 			$settings[] = array(
 				'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
-				'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predifined sets visit <a href="http://boostwoo.com/features/prices-and-currencies-by-customers-country">BoostWoo.com</a>', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predifined sets visit <a href="http://booster.io/features/prices-and-currencies-by-customers-country" target="_blank">http://booster.io</a>', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_exchange_rate_countries_group_' . $i,
 				'default'  => '',
 				'type'     => 'textarea',

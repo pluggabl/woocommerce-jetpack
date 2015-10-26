@@ -87,11 +87,11 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 = Feedback =
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!
-* If you have any ideas how to upgrade the plugin to make it better, or if you have ideas about the features that are missing from our plugin, please [fill the form](http://boostwoo.com/submit-idea/).
-* For support visit the [contact page](http://boostwoo.com/contact-us/).
+* If you have any ideas how to upgrade the plugin to make it better, or if you have ideas about the features that are missing from our plugin, please [fill the form](http://booster.io/submit-idea/).
+* For support visit the [contact page](http://booster.io/contact-us/).
 
 = More =
-* Visit the [Booster for WooCommerce plugin page](http://boostwoo.com/)
+* Visit the [Booster for WooCommerce plugin page](http://booster.io/)
 
 = Available Translations =
 * French - `fr_FR` by Jean-Marc Schreiber.
@@ -108,7 +108,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 = How to unlock those some features settings that are locked? =
 
-To unlock all Booster for WooCommerce features, please install additional <a href="http://boostwoo.com/plus/">Booster for WooCommerce Plus</a> plugin.
+To unlock all Booster for WooCommerce features, please install additional <a href="http://booster.io/plus/">Booster for WooCommerce Plus</a> plugin.
 
 == Screenshots ==
 
@@ -116,7 +116,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.8 - 24/10/2015 =
+= 2.3.8 - 26/10/2015 =
+* Dev - Link changed to http://booster.io
 * Dev - CART & CHECKOUT - Cart - Module description added.
 * Fix - Shortcodes - Products - Crowdfunding - `[wcj_product_crowdfunding_time_remaining]` singular form bug fixed.
 * Fix - CART & CHECKOUT - Checkout Core Fields - Bug, causing message that some not existing field (e.g. State / County) is required, fixed.
@@ -570,7 +571,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
   %price%, %price_excluding_tax% (suggested by Josh),
   %stock_availability% (by https://wordpress.org/support/topic/custom-tabs-1),
   %time_since_last_sale%, %weight%, %list_attributes% etc.
-  For full list of short codes, please visit http://boostwoo.com/features/product-info/
+  For full list of short codes, please visit http://booster.io/features/product-info/
 * Feature Upgraded - Product Listings - Option to change default WooCommerce behavior on displaying all products if none categories are dispalyed.
   Now it's possible to disable displaying the products. Suggested by Xavier.
 * Feature Upgraded - PDF Invoices - Order date and time added. Suggested by https://wordpress.org/support/topic/order-time

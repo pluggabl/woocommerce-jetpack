@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.2.8
+ * @version 2.3.8
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -436,7 +436,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Get settings array
 	 *
-	 * @version 2.2.5
+	 * @version 2.3.8
 	 * @return  array
 	 */
 	function get_settings( $current_section = '' ) {
@@ -447,7 +447,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			$settings[] = array(
 				'title' => __( 'Booster for WooCommerce - Dashboard', 'woocommerce-jetpack' ),
 				'type'  => 'title',
-				'desc'  => __( 'This dashboard lets you enable/disable any Booster\'s module. Each checkbox comes with short module\'s description. Please visit <a href="http://boostwoo.com" target="_blank">BoostWoo.com</a> for detailed info on each feature.', 'woocommerce-jetpack' ),
+				'desc'  => __( 'This dashboard lets you enable/disable any Booster\'s module. Each checkbox comes with short module\'s description. Please visit <a href="http://booster.io" target="_blank">http://booster.io</a> for detailed info on each feature.', 'woocommerce-jetpack' ),
 				'id'    => 'wcj_options'
 			);
 			//$settings = apply_filters( 'wcj_features_status', $settings );
