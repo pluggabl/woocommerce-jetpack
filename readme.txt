@@ -116,6 +116,9 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
+= 2.3.9 - 27/10/2015 =
+~* Dev - EMAILS & MISC. - General - WooCommerce Templates Editor Links section added.
+
 = 2.3.8 - 26/10/2015 =
 * Dev - Link changed to http://booster.io
 * Fix - Shortcodes - Products - Crowdfunding - `[wcj_product_crowdfunding_time_remaining]` singular form bug fixed.

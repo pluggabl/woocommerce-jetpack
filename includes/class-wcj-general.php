@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.3.8
+ * @version 2.3.9
  * @author  Algoritmika Ltd.
  */
 
@@ -58,9 +58,27 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.8
+	 * @version 2.3.9
 	 */
 	function get_settings() {
+
+		$links_html = '';
+		if ( class_exists( 'RecursiveIteratorIterator' ) && class_exists( 'RecursiveDirectoryIterator' ) ) {
+			$dir = untrailingslashit( realpath( plugin_dir_path( __FILE__ ) . '/../../woocommerce/templates' ) );
+			$rii = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $dir ) );
+			foreach ( $rii as $file ) {
+				$the_name = str_replace( $dir, '', $file->getPathname() );
+				$the_name_link = str_replace( DIRECTORY_SEPARATOR, '%2F', $the_name );
+				if ( $file->isDir() ) {
+					/* $links_html .= '<strong>' . $the_name . '</strong>' . PHP_EOL; */
+				} else {
+					$links_html .= '<a href="' . get_admin_url( null, 'plugin-editor.php?file=woocommerce' . '%2F' . 'templates' . $the_name_link . '&plugin=woocommerce' ) . '">' .
+							'templates' . $the_name . '</a>' . PHP_EOL;
+				}
+			}
+		} else {
+			$links_html = __( 'PHP 5 is required.', 'woocommerce-jetpack' );
+		}
 
 		$settings = array(
 
@@ -110,6 +128,24 @@ class WCJ_General extends WCJ_Module {
 			array(
 				'type'    => 'sectionend',
 				'id'      => 'wcj_general_custom_css_options',
+			),
+
+			array(
+				'title'   => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),
+				'type'    => 'title',
+				'id'      => 'wcj_general_wc_templates_editor_links_options',
+			),
+
+			array(
+				'title'   => __( 'Templates', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_general_wc_templates_editor_links',
+				'type'    => 'custom_link',
+				'link'    => '<pre>' . $links_html . '</pre>',
+			),
+
+			array(
+				'type'    => 'sectionend',
+				'id'      => 'wcj_general_wc_templates_editor_links_options',
 			),
 		);
 
