@@ -116,7 +116,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.9 - 27/10/2015 =
+= 2.3.9 - 20/11/2015 =
+* Dev - CART & CHECKOUT - Cart - "Cart Items Table Custom Info" added.
 ~* Dev - EMAILS & MISC. - General - WooCommerce Templates Editor Links section added.
 
 = 2.3.8 - 26/10/2015 =
