@@ -89,6 +89,7 @@ class WCJ_Reports {
 			}
 		}
 	}
+
 	/**
 	 * add_custom_order_reports_ranges_to_admin_bar.
 	 */

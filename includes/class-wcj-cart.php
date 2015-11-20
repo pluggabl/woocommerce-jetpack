@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Cart class.
  *
- * @version 2.3.8
+ * @version 2.3.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.8
+	 * @version 2.3.9
 	 */
 	function __construct() {
 
@@ -32,6 +32,8 @@ class WCJ_Cart extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
+			add_filter( 'woocommerce_cart_item_name', array( $this, 'add_custom_info_to_cart_item_name' ), PHP_INT_MAX, 3 );
+
 			/* if ( 'yes' === get_option( 'wcj_cart_hide_shipping_and_taxes_estimated_message' ) )
 				add_filter( 'gettext', array( $this, 'hide_shipping_and_taxes_estimated_message' ), 20, 3 ); */
 
@@ -41,6 +43,24 @@ class WCJ_Cart extends WCJ_Module {
 				add_action( get_option( 'wcj_cart_custom_info_hook_' . $i, 'woocommerce_after_cart_totals' ), array( $this, 'add_cart_custom_info' ) );
 			}
 		}
+	}
+
+	/**
+	 * add_custom_info_to_cart_item_name.
+	 *
+	 * @version 2.3.9
+	 * @since   2.3.9
+	 */
+	function add_custom_info_to_cart_item_name( $product_title, $cart_item, $cart_item_key ) {
+		$custom_content = get_option( 'wcj_cart_custom_info_item' );
+		if ( '' != $custom_content ) {
+			global $post;
+			$post = get_post( $cart_item['product_id'] );
+			setup_postdata( $post );
+			//wc_setup_product_data( $post );
+			$product_title .= do_shortcode( $custom_content );
+		}
+		return $product_title;
 	}
 
 	/**
@@ -73,7 +93,7 @@ class WCJ_Cart extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.8
+	 * @version 2.3.9
 	 */
 	function get_settings() {
 
@@ -180,6 +200,28 @@ class WCJ_Cart extends WCJ_Module {
 
 			) );
 		}
+
+		// Cart Items Table Custom Info Options
+		$settings[] = array(
+			'title'    => __( 'Cart Items Table Custom Info', 'woocommerce-jetpack' ),
+			'type'     => 'title',
+			'id'       => 'wcj_cart_custom_info_item_options',
+			'desc'     => '',
+		);
+
+		$settings[] = array(
+			'title'    => __( 'Add to Each Item Name', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'You can use shortcodes here. E.g.: [wcj_product_sku]. Leave blank to disable.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_cart_custom_info_item',
+			'default'  => '',
+			'type'     => 'textarea',
+			'css'      => 'width:30%;min-width:300px;height:100px;',
+		);
+
+		$settings[] = array(
+			'type'     => 'sectionend',
+			'id'       => 'wcj_cart_custom_info_item_options',
+		);
 
 		return $this->add_enable_module_setting( $settings/* , $this->full_desc */ );
 	}
