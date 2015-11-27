@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Sales Reports class.
  *
- * @version 2.3.0
+ * @version 2.3.9
  * @author  Algoritmika Ltd.
  */
 
@@ -27,14 +27,15 @@ class WCJ_Reports_Sales {
 	/**
 	 * get_report.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.9
 	 * @since   2.3.0
 	 */
 	public function get_report() {
 
 		$html = '';
 
-		$this->year = isset( $_GET['year'] ) ? $_GET['year'] : date( 'Y' );
+		$this->year          = isset( $_GET['year'] )          ? $_GET['year']          : date( 'Y' );
+		$this->product_title = isset( $_GET['product_title'] ) ? $_GET['product_title'] : '';
 
 		$html .= $this->get_products_sales();
 
@@ -57,7 +58,7 @@ class WCJ_Reports_Sales {
 	/*
 	 * get_products_sales.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.9
 	 * @since   2.3.0
 	 */
 	function get_products_sales() {
@@ -137,21 +138,28 @@ class WCJ_Reports_Sales {
 		}
 		$table_data[] = $the_header;
 		foreach ( $products_data as $product_id => $the_data ) {
-			$the_row = array( $the_data['title'] . ' (' . $the_data['sales'] . ')', );
-			foreach ( $years as $year => $value ) {
-				if ( $year != $this->year ) continue;
-				for ( $i = 12; $i >= 1; $i-- ) {
-					if ( $i > 1 ) {
-						$prev_month_data = $the_data['sales_by_month'][ $year ][ $i - 1 ];
-						$color = ( $prev_month_data >= $the_data['sales_by_month'][ $year ][ $i ] ) ? 'red' : 'green';
-					} else {
-						$color = 'black';
+			if ( '' == $this->product_title || false !== stripos( $the_data['title'], $this->product_title ) ) {
+				$the_row = array( $the_data['title'] . ' (' . $the_data['sales'] . ')', );
+				foreach ( $years as $year => $value ) {
+					if ( $year != $this->year ) continue;
+					for ( $i = 12; $i >= 1; $i-- ) {
+						if ( isset( $the_data['sales_by_month'][ $year ][ $i ] ) ) {
+							if ( $i > 1 ) {
+								$prev_month_data = ( isset( $the_data['sales_by_month'][ $year ][ $i - 1 ] ) ) ?
+									$the_data['sales_by_month'][ $year ][ $i - 1 ] :
+									0;
+								$color = ( $prev_month_data >= $the_data['sales_by_month'][ $year ][ $i ] ) ? 'red' : 'green';
+							} else {
+								$color = 'black';
+							}
+							$the_row[] = '<span style="color:' . $color . ';">' . $the_data['sales_by_month'][ $year ][ $i ] . '</span>';
+						} else {
+							$the_row[] = '';
+						}
 					}
-					$the_row[] = '<span style="color:' . $color . ';">' . $the_data['sales_by_month'][ $year ][ $i ] . '</span>';
-
 				}
+				$table_data[] = $the_row;
 			}
-			$table_data[] = $the_row;
 		}
 
 		$menu = '';
@@ -161,7 +169,15 @@ class WCJ_Reports_Sales {
 		$menu .= '</ul>';
 		$menu .= '<br class="clear">';
 
-		return '<p>' . $menu . '</p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat' ) );
+		$filter_form = '';
+		$filter_form .= '<form method="get" action="">';
+		$filter_form .= '<input type="hidden" name="page" value="' . $_GET['page'] . '" />';
+		$filter_form .= '<input type="hidden" name="tab" value="' . $_GET['tab'] . '" />';
+		$filter_form .= '<input type="hidden" name="report" value="' . $_GET['report'] . '" />';
+		$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" /><input type="submit" value="' . __( 'Filter', 'woocommerce' ) . '" />';
+		$filter_form .= '</form>';
+
+		return '<p>' . $menu . '</p>' . '<p>' . $filter_form . '</p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat' ) );
 	}
 }
 

@@ -80,6 +80,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
 * *Emails* - Add another email recipient(s) to all WooCommerce emails.
+* *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers.
 * *General* - Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets.
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
@@ -116,9 +117,12 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.9 - 20/11/2015 =
+= 2.3.9 - 27/11/2015 =
+* Dev - EMAILS & MISC. - EU VAT Number - Initial module release.
+* Dev - EMAILS & MISC. - General - "All Products and All Attributes" tool added.
+* Fix - EMAILS & MISC. - Reports - Product Sales - PHP notices fixed.
+* Dev - EMAILS & MISC. - Reports - Product Sales - Filter by product title option added.
 * Dev - CART & CHECKOUT - Cart - "Cart Items Table Custom Info" added.
-~* Dev - EMAILS & MISC. - General - WooCommerce Templates Editor Links section added.
 
 = 2.3.8 - 26/10/2015 =
 * Dev - Link changed to http://booster.io
