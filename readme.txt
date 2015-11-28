@@ -117,7 +117,9 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.9 - 27/11/2015 =
+= 2.3.9 - 28/11/2015 =
+~* Dev - Price by Country - `create_all_countries_groups` function added.
+* Dev - PDF Invoicing - Renumerate Invoices Tool - Fixed for operations with large number of orders.
 * Dev - EMAILS & MISC. - EU VAT Number - Initial module release.
 * Dev - EMAILS & MISC. - General - "All Products and All Attributes" tool added.
 * Fix - EMAILS & MISC. - Reports - Product Sales - PHP notices fixed.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Renumerate Tool class.
  *
- * @version 2.3.0
+ * @version 2.3.9
  * @author  Algoritmika Ltd.
  */
 
@@ -147,6 +147,8 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 
 	/**
 	 * Renumerate invoices function.
+	 *
+	 * @version 2.3.9
 	 */
 	public function renumerate_invoices( $invoice_type, $start_number, $start_date, $order_statuses, $the_delete_all ) {
 
@@ -156,43 +158,55 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 			update_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', $start_number );
 		}
 
-		$args = array(
-			'post_type'      => 'shop_order',
-			'post_status'    => 'any',
-			'posts_per_page' => -1,
-			'orderby'        => 'date',
-			'order'          => 'ASC',
-			'date_query'     => array(
-				array(
-					'after'     => $start_date,
-					'inclusive' => true,
-				),
-			),
-		);
-
-		$loop = new WP_Query( $args );
-
 		$deleted_invoices_counter = 0;
 		$created_invoices_counter = 0;
-		while ( $loop->have_posts() ) : $loop->the_post();
 
-			$order_id = $loop->post->ID;
-			if ( in_array( $loop->post->post_status, $order_statuses ) && strtotime( $loop->post->post_date ) >= strtotime( $start_date ) ) {
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
 
-				$the_order = wc_get_order( $order_id );
-				if ( 0 != $the_order->get_total() ) {
+			$args = array(
+				'post_type'      => 'shop_order',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+				'orderby'        => 'date',
+				'order'          => 'ASC',
+				'date_query'     => array(
+					array(
+						'after'     => $start_date,
+						'inclusive' => true,
+					),
+				),
+			);
 
-					wcj_create_invoice( $order_id, $invoice_type, strtotime( $loop->post->post_date ) );
-					$created_invoices_counter++;
+			$loop = new WP_Query( $args );
+
+			if ( ! $loop_orders->have_posts() ) break;
+
+			while ( $loop->have_posts() ) : $loop->the_post();
+
+				$order_id = $loop->post->ID;
+				if ( in_array( $loop->post->post_status, $order_statuses ) && strtotime( $loop->post->post_date ) >= strtotime( $start_date ) ) {
+
+					$the_order = wc_get_order( $order_id );
+					if ( 0 != $the_order->get_total() ) {
+
+						wcj_create_invoice( $order_id, $invoice_type, strtotime( $loop->post->post_date ) );
+						$created_invoices_counter++;
+					}
+				} else {
+					if ( $the_delete_all && wcj_is_invoice_created( $order_id, $invoice_type ) ) {
+						wcj_delete_invoice( $order_id, $invoice_type );
+						$deleted_invoices_counter++;
+					}
 				}
-			} else {
-				if ( $the_delete_all && wcj_is_invoice_created( $order_id, $invoice_type ) ) {
-					wcj_delete_invoice( $order_id, $invoice_type );
-					$deleted_invoices_counter++;
-				}
-			}
 
-		endwhile;
+			endwhile;
+
+			$offset += $block_size;
+
+		}
 
 		$output .= '<p>' . sprintf( __( 'Total documents created: %d', 'woocommerce-jetpack' ), $created_invoices_counter ) . '</p>';
 		$output .= '<p>' . sprintf( __( 'Total documents deleted: %d', 'woocommerce-jetpack' ), $deleted_invoices_counter ) . '</p>';

@@ -16,6 +16,7 @@ jQuery( function( $ ) {
 					} else {
 						$('p[id="billing_eu_vat_number_field"]').addClass('woocommerce-invalid');
 					}
+					console.log('triggering update_checkout');//TODO: double update_checkout issue.
 					$('body').trigger('update_checkout');
 				},
 				error: function (e) {

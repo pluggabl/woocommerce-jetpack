@@ -38,7 +38,35 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled' ) ) {
 					include_once( 'price-by-country/class-wcj-price-by-country-local.php' );
 				}
+				add_action( 'init', array( $this, 'create_all_countries_groups' ) );
 			}
+		}
+	}
+
+	/**
+	 * get_settings.
+	 *
+	 * @version 2.3.9
+	 */
+	function create_all_countries_groups() {
+		if ( ! is_super_admin() ) return;
+		if ( ! is_admin() ) return;
+		if ( ! isset( $_GET['wcj_create_all_countries_groups'] ) ) return;
+		if ( 1 === apply_filters( 'wcj_get_option_filter', 1, '' ) ) return;
+
+		$countries_groups = array( //TODO
+			'LT,LV,EE' => 'EUR',
+			'US'       => 'USD',
+		);
+
+		update_option( 'wcj_price_by_country_total_groups_number', count( $countries_groups ) );
+		$i = 0;
+		foreach ( $countries_groups as $countries_group => $group_currency ) {
+			$i++;
+			update_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, $countries_group );
+			update_option( 'wcj_price_by_country_exchange_rate_currency_group_'  . $i, $group_currency );
+			update_option( 'wcj_price_by_country_exchange_rate_group_'     . $i, 1 );
+			update_option( 'wcj_price_by_country_make_empty_price_group_'  . $i, 'no' );
 		}
 	}
 
