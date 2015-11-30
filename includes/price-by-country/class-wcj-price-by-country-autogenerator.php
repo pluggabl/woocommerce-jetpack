@@ -101,8 +101,8 @@ class WCJ_Price_By_Country_Autogenerator {
 				$i++;
 				update_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, implode( ',', $countries ) );
 				update_option( 'wcj_price_by_country_exchange_rate_currency_group_'  . $i, $group_currency );
-//				update_option( 'wcj_price_by_country_exchange_rate_group_'     . $i, 1 );
-//				update_option( 'wcj_price_by_country_make_empty_price_group_'  . $i, 'no' );
+				update_option( 'wcj_price_by_country_exchange_rate_group_'     . $i, 1 );
+				update_option( 'wcj_price_by_country_make_empty_price_group_'  . $i, 'no' );
 			}
 			$wcj_notice = __( 'Country Groups Generated.', 'woocommerce-jetpack' );
 		}
