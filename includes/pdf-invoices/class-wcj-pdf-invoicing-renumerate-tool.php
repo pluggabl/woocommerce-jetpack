@@ -182,7 +182,7 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 
 			$loop = new WP_Query( $args );
 
-			if ( ! $loop_orders->have_posts() ) break;
+			if ( ! $loop->have_posts() ) break;
 
 			while ( $loop->have_posts() ) : $loop->the_post();
 

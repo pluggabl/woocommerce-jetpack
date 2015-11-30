@@ -1,0 +1,115 @@
+<?php
+/**
+ * WooCommerce Jetpack Price By Country Autogenerator
+ *
+ * The WooCommerce Jetpack Price By Country Autogenerator class.
+ *
+ * @version  2.3.9
+ * @author   Algoritmika Ltd.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! class_exists( 'WCJ_Price_By_Country_Autogenerator' ) ) :
+
+class WCJ_Price_By_Country_Autogenerator {
+
+	/**
+	 * Constructor.
+	 */
+	function __construct() {
+		require_once( 'wcj-country-currency.php' );
+		add_action( 'init', array( $this, 'create_all_countries_groups' ) );
+	}
+
+	/**
+	 * get_currency_countries.
+	 *
+	 * @version 2.3.9
+	 */
+	function get_currency_countries( $limit_currencies = '' ) {
+		$country_currency = wcj_get_country_currency();
+		if ( '' != $limit_currencies ) {
+			$default_currency = get_woocommerce_currency();
+			if ( 'paypal_only' === $limit_currencies || 'paypal_and_yahoo_exchange_rates_only' === $limit_currencies ) {
+				$paypal_supported_currencies = wcj_get_paypal_supported_currencies();
+			}
+			if ( 'yahoo_exchange_rates_only' === $limit_currencies || 'paypal_and_yahoo_exchange_rates_only' === $limit_currencies ) {
+				$yahoo_exchange_rates_supported_currencies = wcj_get_yahoo_exchange_rates_supported_currency();
+			}
+		}
+		$currencies = array();
+		foreach ( $country_currency as $country => $currency ) {
+			if ( 'paypal_only' === $limit_currencies ) {
+				if ( ! isset( $paypal_supported_currencies[ $currency ] ) ) {
+					$currency = $default_currency;
+				}
+			} elseif ( 'yahoo_exchange_rates_only' === $limit_currencies ) {
+				if ( ! isset( $yahoo_exchange_rates_supported_currencies[ $currency ] ) ) {
+					$currency = $default_currency;
+				}
+			} elseif ( 'paypal_and_yahoo_exchange_rates_only' === $limit_currencies ) {
+				if ( ! isset( $paypal_supported_currencies[ $currency ] ) || ! isset( $yahoo_exchange_rates_supported_currencies[ $currency ] ) ) {
+					$currency = $default_currency;
+				}
+			}
+			$currencies[ $currency ][] = $country;
+		}
+		return $currencies;
+	}
+
+	/**
+	 * create_all_countries_groups.
+	 *
+	 * @version 2.3.9
+	 */
+	function create_all_countries_groups() {
+		global $wcj_notice;
+		if ( ! isset( $_GET['wcj_generate_country_groups'] ) ) {
+			return;
+		}
+		if ( /* ! is_admin() || */ ! is_super_admin() || 1 === apply_filters( 'wcj_get_option_filter', 1, '' ) ) {
+			$wcj_notice = __( 'Create All Country Groups Failed.', 'woocommerce-jetpack' );
+			return;
+		}
+
+		switch ( $_GET['wcj_generate_country_groups'] ) {
+			case 'all':
+			case 'paypal_only':
+			case 'yahoo_exchange_rates_only':
+			case 'paypal_and_yahoo_exchange_rates_only':
+				$currencies = $this->get_currency_countries( $_GET['wcj_generate_country_groups'] );
+				break;
+			default:
+				$wcj_notice = __( 'Create All Country Groups Failed. Wrong parameter.', 'woocommerce-jetpack' );
+				return;
+		}
+
+		if ( ! isset( $_GET['wcj_generate_country_groups_confirm'] ) ) {
+			$wcj_notice = '<p><a style="color:red !important;" href="' . add_query_arg( 'wcj_generate_country_groups_confirm', 'yes' ) . '">' .
+				__( 'Are you sure? Confirm.', 'woocommerce-jetpack' ) . '</a></p>';
+			/* $wcj_notice .= '<p>';
+			$wcj_notice .= __( 'Preview', 'woocommerce-jetpack' ) . '<br>';
+			foreach ( $currencies as $group_currency => $countries ) {
+				$wcj_notice .= $group_currency . ' - ' . implode( ',', $countries ) . '<br>';
+			}
+			$wcj_notice .= '</p>'; */
+		} else {
+			update_option( 'wcj_price_by_country_total_groups_number', count( $currencies ) );
+			$i = 0;
+			foreach ( $currencies as $group_currency => $countries ) {
+				$i++;
+				update_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, implode( ',', $countries ) );
+				update_option( 'wcj_price_by_country_exchange_rate_currency_group_'  . $i, $group_currency );
+//				update_option( 'wcj_price_by_country_exchange_rate_group_'     . $i, 1 );
+//				update_option( 'wcj_price_by_country_make_empty_price_group_'  . $i, 'no' );
+			}
+			$wcj_notice = __( 'Country Groups Generated.', 'woocommerce-jetpack' );
+		}
+	}
+
+}
+
+endif;
+
+return new WCJ_Price_By_Country_Autogenerator();
