@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Display class.
  *
- * @version 2.3.7
+ * @version 2.3.9
  * @author  Algoritmika Ltd.
  */
 
@@ -59,7 +59,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	 * Ouput custom columns for products
 	 *
 	 * @param   string $column
-	 * @version 2.3.0
+	 * @version 2.3.9
 	 */
 	public function render_order_columns( $column ) {
 
@@ -84,7 +84,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type_id . '_save_as_enabled', 'no' ) ) {
 				$query_args['save_pdf_invoice'] = '1';
 			}
-			$html .= '<a href="' . add_query_arg( $query_args ) . '">' . $the_number . '</a>';
+			$html .= '<a href="' . add_query_arg( $query_args, remove_query_arg( array( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) ) . '">' . $the_number . '</a>';
 
 			$html .= ' ';
 
