@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.3.6
+ * @version 2.3.9
  * @author  Algoritmika Ltd.
  */
 
@@ -198,9 +198,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_billing_address.
+	 *
+	 * @version 2.3.9
 	 */
 	function wcj_order_billing_address( $atts ) {
-		return $this->the_order->get_formatted_billing_address();
+		return apply_filters( 'wcj_order_billing_address', $this->the_order->get_formatted_billing_address(), $atts );
 	}
 
 	/**

@@ -117,7 +117,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.9 - 01/12/2015 =
+= 2.3.9 - 02/12/2015 =
+* Dev - Shortcodes - `wcj_order_billing_address` filter added.
 * Fix - PDF Invoicing - Display - `remove_query_arg` added.
 * Dev - Price by Country - "Autogenerate Groups" option added.
 * Dev - PDF Invoicing - Renumerate Invoices Tool - Fixed for operations with large number of orders.
