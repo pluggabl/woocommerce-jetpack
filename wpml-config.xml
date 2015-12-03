@@ -1,11 +1,5 @@
 <wpml-config>
 	<admin-texts>
-		<key name="wcj_global_price_labels_add_before_text" />
-		<key name="wcj_global_price_labels_add_after_text" />
-		<key name="wcj_global_price_labels_between_regular_and_sale_text" />
-		<key name="wcj_global_price_labels_remove_text" />
-		<key name="wcj_global_price_labels_replace_text" />
-		<key name="wcj_global_price_labels_replace_with_text" />
 		<key name="wcj_call_for_price_text" />
 		<key name="wcj_call_for_price_text_on_archive" />
 		<key name="wcj_call_for_price_text_on_home" />
@@ -34,6 +28,7 @@
 		<key name="wcj_product_input_fields_type_checkbox_yes_global_1" />
 		<key name="wcj_product_input_fields_type_checkbox_no_global_1" />
 		<key name="wcj_product_input_fields_type_file_accept_global_1" />
+		<key name="wcj_product_input_fields_type_select_options_global_1" />
 		<key name="wcj_product_input_fields_title_global_1" />
 		<key name="wcj_product_input_fields_placeholder_global_1" />
 		<key name="wcj_product_input_fields_required_message_global_1" />
@@ -71,15 +66,7 @@
 		<key name="wcj_add_to_cart_text_on_archives_in_cart_other" />
 		<key name="wcj_checkout_place_order_button_text" />
 		<key name="wcj_cart_custom_info_content_1" />
-		<key name="wcj_cart_custom_info_content_2" />
-		<key name="wcj_cart_custom_info_content_3" />
-		<key name="wcj_cart_custom_info_content_4" />
-		<key name="wcj_cart_custom_info_content_5" />
-		<key name="wcj_cart_custom_info_content_6" />
-		<key name="wcj_cart_custom_info_content_7" />
-		<key name="wcj_cart_custom_info_content_8" />
-		<key name="wcj_cart_custom_info_content_9" />
-		<key name="wcj_cart_custom_info_content_10" />
+		<key name="wcj_cart_custom_info_item" />
 		<key name="wcj_mini_cart_custom_info_content_1" />
 		<key name="wcj_checkout_fields_billing_country_label" />
 		<key name="wcj_checkout_fields_billing_country_placeholder" />
@@ -125,6 +112,9 @@
 		<key name="wcj_checkout_fields_account_password_placeholder" />
 		<key name="wcj_checkout_fields_order_comments_label" />
 		<key name="wcj_checkout_fields_order_comments_placeholder" />
+		<key name="wcj_checkout_custom_field_select_options_1" />
+		<key name="wcj_checkout_custom_field_checkbox_yes_1" />
+		<key name="wcj_checkout_custom_field_checkbox_no_1" />
 		<key name="wcj_checkout_custom_field_label_1" />
 		<key name="wcj_checkout_custom_field_placeholder_1" />
 		<key name="wcj_checkout_custom_info_content_1" />
@@ -192,10 +182,15 @@
 		<key name="wcj_invoicing_packing_slip_footer_text" />
 		<key name="wcj_invoicing_credit_note_footer_text" />
 		<key name="wcj_invoicing_custom_doc_footer_text" />
+		<key name="wcj_invoicing_invoice_link_text" />
 		<key name="wcj_invoicing_invoice_file_name" />
+		<key name="wcj_invoicing_proforma_invoice_link_text" />
 		<key name="wcj_invoicing_proforma_invoice_file_name" />
+		<key name="wcj_invoicing_packing_slip_link_text" />
 		<key name="wcj_invoicing_packing_slip_file_name" />
+		<key name="wcj_invoicing_credit_note_link_text" />
 		<key name="wcj_invoicing_credit_note_file_name" />
+		<key name="wcj_invoicing_custom_doc_link_text" />
 		<key name="wcj_invoicing_custom_doc_file_name" />
 	</admin-texts>
 </wpml-config>

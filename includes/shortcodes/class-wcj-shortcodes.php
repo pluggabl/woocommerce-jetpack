@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shortcodes class.
  *
- * @version 2.2.9
+ * @version 2.3.9
  * @author  Algoritmika Ltd.
  */
 
@@ -54,7 +54,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 2.2.9
+	 * @version 2.3.9
 	 */
 	function wcj_shortcode( $atts, $content, $shortcode ) {
 
@@ -92,8 +92,8 @@ class WCJ_Shortcodes {
 		if ( '' != $atts['location'] && 'all' != $atts['location'] && $atts['location'] != $this->wcj_get_user_location() ) return '';
 
 		// Check if language is ok
-		if ( 'wcj_wpml' === $shortcode || 'wcj_wpml_translate' === $shortcode ) $atts['wpml_language']     = $atts['lang'];
-		if ( 'wcj_wpml' === $shortcode || 'wcj_wpml_translate' === $shortcode ) $atts['wpml_not_language'] = $atts['not_lang'];
+		if ( 'wcj_wpml' === $shortcode || 'wcj_wpml_translate' === $shortcode ) $atts['wpml_language']     = isset( $atts['lang'] ) ? $atts['lang'] : '';
+		if ( 'wcj_wpml' === $shortcode || 'wcj_wpml_translate' === $shortcode ) $atts['wpml_not_language'] = isset( $atts['not_lang'] ) ? $atts['not_lang'] : '';
 		if ( '' != $atts['wpml_language'] ) {
 			if ( ! defined( 'ICL_LANGUAGE_CODE' ) ) return '';
 			if ( ! in_array( ICL_LANGUAGE_CODE, $this->custom_explode( $atts['wpml_language'] ) ) ) return '';

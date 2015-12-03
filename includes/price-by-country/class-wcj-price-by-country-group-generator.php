@@ -1,8 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack Price By Country Autogenerator
+ * WooCommerce Jetpack Price By Country Group Generator
  *
- * The WooCommerce Jetpack Price By Country Autogenerator class.
+ * The WooCommerce Jetpack Price By Country Group Generator class.
  *
  * @version  2.3.9
  * @author   Algoritmika Ltd.
@@ -10,16 +10,18 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( 'WCJ_Price_By_Country_Autogenerator' ) ) :
+if ( ! class_exists( 'WCJ_Price_By_Country_Group_Generator' ) ) :
 
-class WCJ_Price_By_Country_Autogenerator {
+class WCJ_Price_By_Country_Group_Generator {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.3.9
 	 */
 	function __construct() {
 		require_once( 'wcj-country-currency.php' );
-		add_action( 'init', array( $this, 'create_all_countries_groups' ) );
+		add_action( 'woocommerce_init', array( $this, 'create_all_countries_groups' ) );
 	}
 
 	/**
@@ -68,6 +70,9 @@ class WCJ_Price_By_Country_Autogenerator {
 		if ( ! isset( $_GET['wcj_generate_country_groups'] ) ) {
 			return;
 		}
+		if ( isset( $_POST['save'] ) ) {
+			return;
+		}
 		if ( /* ! is_admin() || */ ! is_super_admin() || 1 === apply_filters( 'wcj_get_option_filter', 1, '' ) ) {
 			$wcj_notice = __( 'Create All Country Groups Failed.', 'woocommerce-jetpack' );
 			return;
@@ -85,9 +90,11 @@ class WCJ_Price_By_Country_Autogenerator {
 				return;
 		}
 
+		$number_of_groups = count( $currencies );
 		if ( ! isset( $_GET['wcj_generate_country_groups_confirm'] ) ) {
-			$wcj_notice = '<p><a style="color:red !important;" href="' . add_query_arg( 'wcj_generate_country_groups_confirm', 'yes' ) . '">' .
-				__( 'Are you sure? Confirm.', 'woocommerce-jetpack' ) . '</a></p>';
+			$wcj_notice .= sprintf( __( 'All existing country groups will be deleted and %s new groups will be created. Are you sure?', 'woocommerce-jetpack' ), $number_of_groups );
+			$wcj_notice .= ' ' . '<a style="color: red !important;" href="' . add_query_arg( 'wcj_generate_country_groups_confirm', 'yes' ) . '">' . __( 'Confirm', 'woocommerce-jetpack' ) . '</a>.';
+			//$_GET['wc_message'] = __( 'Are you sure? Confirm.', 'woocommerce-jetpack' );
 			/* $wcj_notice .= '<p>';
 			$wcj_notice .= __( 'Preview', 'woocommerce-jetpack' ) . '<br>';
 			foreach ( $currencies as $group_currency => $countries ) {
@@ -95,7 +102,7 @@ class WCJ_Price_By_Country_Autogenerator {
 			}
 			$wcj_notice .= '</p>'; */
 		} else {
-			update_option( 'wcj_price_by_country_total_groups_number', count( $currencies ) );
+			update_option( 'wcj_price_by_country_total_groups_number', $number_of_groups );
 			$i = 0;
 			foreach ( $currencies as $group_currency => $countries ) {
 				$i++;
@@ -112,4 +119,4 @@ class WCJ_Price_By_Country_Autogenerator {
 
 endif;
 
-return new WCJ_Price_By_Country_Autogenerator();
+return new WCJ_Price_By_Country_Group_Generator();

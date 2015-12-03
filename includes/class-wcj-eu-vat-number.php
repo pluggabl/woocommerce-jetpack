@@ -26,7 +26,9 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			session_start();
+			if ( ! session_id() ) {
+				session_start();
+			}
 			add_filter( 'woocommerce_checkout_fields',            array( $this, 'add_eu_vat_number_checkout_field_to_frontend' ), PHP_INT_MAX );
 			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'update_eu_vat_number_checkout_field_order_meta' ) );
 			add_action( 'woocommerce_admin_billing_fields',       array( $this, 'add_billing_eu_vat_number_field_to_admin_order_display' ), PHP_INT_MAX );
@@ -41,11 +43,14 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	 * checkout_validate_vat.
 	 */
 	function checkout_validate_vat( $_posted ) {
-		if (
-			'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) &&
-			( ! isset( $_SESSION['wcj_is_eu_vat_number_valid'] ) || ! $_SESSION['wcj_is_eu_vat_number_valid'] )
-		) {
-			wc_add_notice( get_option( 'wcj_eu_vat_number_not_valid_message', __( '<strong>VAT Number</strong> is not valid.', 'woocommerce-jetpack' ) ), 'error' );
+		//wcj_log( $_posted );
+		if ( 'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) ) {
+			if (
+				( '' != $_posted['billing_eu_vat_number'] ) &&
+				( ! isset( $_SESSION['wcj_is_eu_vat_number_valid'] ) || false == $_SESSION['wcj_is_eu_vat_number_valid'] )
+			) {
+				wc_add_notice( get_option( 'wcj_eu_vat_number_not_valid_message', __( '<strong>EU VAT Number</strong> is not valid.', 'woocommerce-jetpack' ) ), 'error' );
+			}
 		}
 	}
 
@@ -126,7 +131,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	function add_billing_eu_vat_number_field_to_admin_order_display( $fields ) {
 		$fields[ $this->id ] = array(
 			'type'  => 'text',
-			'label' => __( 'VAT Number', 'woocommerce-jetpack' ),
+			'label' => __( 'EU VAT Number', 'woocommerce-jetpack' ),
 			'show'  => true,
 		);
 		return $fields;
@@ -154,7 +159,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		$the_section = 'billing';
 		$fields[ $the_section ][ $the_section . '_' . $this->id ] = array(
 			'type'              => 'text',
-			'label'             => get_option( 'wcj_eu_vat_number_field_label' ),
+			'label'             => get_option( 'wcj_eu_vat_number_field_label' ) .
+				' ' . '<span style="font-size:smaller !important;">[' . '<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'woocommerce-jetpack' ) . '</a>]</span>',
 			'placeholder'       => get_option( 'wcj_eu_vat_number_field_placeholder' ),
 			'required'          => ( 'yes' === get_option( 'wcj_eu_vat_number_field_required', 'no' ) ) ? true : false,
 			'custom_attributes' => array(),
@@ -179,13 +185,13 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			array(
 				'title'   => __( 'Field Label', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_eu_vat_number_field_label',
-				'default' => __( 'VAT Number', 'woocommerce-jetpack' ),
+				'default' => __( 'EU VAT Number', 'woocommerce-jetpack' ),
 				'type'    => 'text',
 			),
 			array(
 				'title'   => __( 'Placeholder', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_eu_vat_number_field_placeholder',
-				'default' => __( 'VAT Number', 'woocommerce-jetpack' ),
+				'default' => __( 'EU VAT Number', 'woocommerce-jetpack' ),
 				'type'    => 'text',
 			),
 			/* array(
@@ -229,7 +235,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			array(
 				'title'   => __( 'Message on Not Valid', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_eu_vat_number_not_valid_message',
-				'default' => '<strong>VAT Number</strong> is not valid.',
+				'default' => '<strong>EU VAT Number</strong> is not valid.',
 				'type'    => 'textarea',
 				'css'     => 'width:300px;',
 			),

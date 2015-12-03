@@ -1,6 +1,8 @@
 jQuery( function( $ ) {
 	$( 'form.checkout' ).on( 'blur change', 'input[name="billing_eu_vat_number"]', function(event) {
+//	$( 'form.checkout' ).on( 'click', 'a[name="billing_eu_vat_number_verify"]', function(event) {
 		event.stopImmediatePropagation();
+//		event.preventDefault();
 		$('p[id="billing_eu_vat_number_field"]').removeClass('woocommerce-invalid');
 		$('p[id="billing_eu_vat_number_field"]').removeClass('woocommerce-validated');
 		var wcj_eu_vat_number_to_check = $('input[name="billing_eu_vat_number"]').val();

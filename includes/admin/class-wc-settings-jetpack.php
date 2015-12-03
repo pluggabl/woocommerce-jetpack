@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.3.8
+ * @version 2.3.9
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -258,11 +258,15 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output the settings.
 	 *
-	 * @version 2.2.4
+	 * @version 2.3.9
 	 */
 	function output() {
 
-		global $current_section;
+		global $current_section, $wcj_notice;
+
+		if ( '' != $wcj_notice ) {
+			echo '<div id="wcj_message" class="updated"><p><strong>' . $wcj_notice . '</strong></p></div>';
+		}
 
 		$is_dashboard = ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section )
 			? false : true;

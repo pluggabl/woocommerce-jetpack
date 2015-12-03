@@ -41,8 +41,11 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled' ) ) {
 					include_once( 'price-by-country/class-wcj-price-by-country-local.php' );
 				}
-				include_once( 'price-by-country/class-wcj-price-by-country-autogenerator.php' );
 			}
+		}
+
+		if ( is_admin() ) {
+			include_once( 'price-by-country/class-wcj-price-by-country-group-generator.php' );
 		}
 	}
 
@@ -127,15 +130,24 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				'title'    => __( 'Autogenerate Groups', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_' . $this->id . '_module_tools',
 				'type'     => 'custom_link',
-				'link'     => '<pre>' . $wcj_notice . '</pre>' .
-					'<pre><a href="' . add_query_arg( 'wcj_generate_country_groups', 'all', remove_query_arg( 'wcj_generate_country_groups_confirm' ) ) . '">' .
-						__( 'Create all country groups', 'woocommerce-jetpack' ) . '</a></pre>' .
-					'<pre><a href="' . add_query_arg( 'wcj_generate_country_groups', 'paypal_only', remove_query_arg( 'wcj_generate_country_groups_confirm' ) ) . '">' .
-						__( 'Create only PayPal country groups', 'woocommerce-jetpack' ) . '</a></pre>' .
-					'<pre><a href="' . add_query_arg( 'wcj_generate_country_groups', 'yahoo_exchange_rates_only', remove_query_arg( 'wcj_generate_country_groups_confirm' ) ) . '">' .
-						__( 'Create only Yahoo exchange rates country groups', 'woocommerce-jetpack' ) . '</a></pre>' .
-					'<pre><a href="' . add_query_arg( 'wcj_generate_country_groups', 'paypal_and_yahoo_exchange_rates_only', remove_query_arg( 'wcj_generate_country_groups_confirm' ) ) . '">' .
-						__( 'Create only PayPal and Yahoo exchange rates country groups', 'woocommerce-jetpack' ) . '</a></pre>',
+				'link'     => /* '<pre>' . $wcj_notice . '</pre>' . */
+					'<pre>' .
+						__( 'Currencies supported in both PayPal and Yahoo Exchange Rates:', 'woocommerce-jetpack' ) . ' ' .
+						'<a href="' . add_query_arg( 'wcj_generate_country_groups', 'paypal_and_yahoo_exchange_rates_only', remove_query_arg( 'wcj_generate_country_groups_confirm' ) ) . '">' .
+						__( 'Generate', 'woocommerce-jetpack' ) . '</a>.' .
+					'</pre>' .
+					'<pre>' .
+						__( 'Currencies supported in Yahoo Exchange Rates:', 'woocommerce-jetpack' ) . ' ' .
+						'<a href="' . add_query_arg( 'wcj_generate_country_groups', 'yahoo_exchange_rates_only', remove_query_arg( 'wcj_generate_country_groups_confirm' ) ) . '">' .
+						__( 'Generate', 'woocommerce-jetpack' ) . '</a>.' .
+					'</pre>' .
+					'<pre>' .
+						__( 'All Countries and Currencies:', 'woocommerce-jetpack' ) . ' ' .
+						'<a href="' . add_query_arg( 'wcj_generate_country_groups', 'all', remove_query_arg( 'wcj_generate_country_groups_confirm' ) ) . '">' .
+						__( 'Generate', 'woocommerce-jetpack' ) . '</a>' .
+					'</pre>',
+					/* '<pre><a href="' . add_query_arg( 'wcj_generate_country_groups', 'paypal_only', remove_query_arg( 'wcj_generate_country_groups_confirm' ) ) . '">' .
+						__( 'Create only PayPal country groups', 'woocommerce-jetpack' ) . '</a></pre>' . */
 			),
 
 			array(
