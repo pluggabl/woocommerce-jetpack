@@ -16,8 +16,6 @@ class WCJ_Old_Slugs {
 
 	public function __construct() {
 
-		// HOOKS
-
 		// Main hooks
 		if ( get_option( 'wcj_old_slugs_enabled' ) == 'yes' ) {
 
