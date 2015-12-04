@@ -4,11 +4,8 @@
  *
  * The WooCommerce Jetpack Old Slugs class.
  *
- * @class 		WCJ_Old_Slugs
- * @version		1.2.1
- * @package		WC_Jetpack/Classes
- * @category	Class
- * @author 		Algoritmika Ltd.
+ * @version 2.3.9
+ * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -26,7 +23,7 @@ class WCJ_Old_Slugs {
 
 			if ( is_admin() ) {
 
-				//add_action( 'admin_menu', array($this, 'add_old_slugs_tool'), 100 ); 	// Add Remove Old Slugs tool to WooCommerce menu
+				//add_action( 'admin_menu', array($this, 'add_old_slugs_tool'), 100 ); // Add Remove Old Slugs tool to WooCommerce menu
 
 				add_filter( 'wcj_tools_tabs', array( $this, 'add_old_slugs_tool_tab' ), 100 );
 				add_action( 'wcj_tools_old_slugs', array( $this, 'create_old_slugs_tool' ), 100 );
@@ -35,9 +32,9 @@ class WCJ_Old_Slugs {
 		add_action( 'wcj_tools_dashboard', array( $this, 'add_old_slugs_tool_info_to_tools_dashboard' ), 100 );
 
 		// Settings hooks
-		add_filter( 'wcj_settings_sections', array( $this, 'settings_section' ) ); 		// Add section to WooCommerce > Settings > Jetpack
-		add_filter( 'wcj_settings_old_slugs', array( $this, 'get_settings' ), 100 ); 	// Add the settings
-		add_filter( 'wcj_features_status', array( $this, 'add_enabled_option' ), 100 );	// Add Enable option to Jetpack Settings Dashboard
+		add_filter( 'wcj_settings_sections',  array( $this, 'settings_section' ) );        // Add section to WooCommerce > Settings > Jetpack
+		add_filter( 'wcj_settings_old_slugs', array( $this, 'get_settings' ), 100 );       // Add the settings
+		add_filter( 'wcj_features_status',    array( $this, 'add_enabled_option' ), 100 ); // Add Enable option to Jetpack Settings Dashboard
 	}
 
 	/**
@@ -79,6 +76,8 @@ class WCJ_Old_Slugs {
 
 	/*
 	 * Add the settings.
+	 *
+	 * @version 2.3.9
 	 */
 	function get_settings() {
 
@@ -86,7 +85,7 @@ class WCJ_Old_Slugs {
 			array(
 				'title' => __( 'Old Slugs Options', 'woocommerce-jetpack' ),
 				'type'  => 'title',
-				'desc'  => sprintf( __( 'When enabled, the tool is accessible through <a href="%sadmin.php?page=wcj-tools&tab=old_slugs">WooCommerce > Jetpack Tools > Remove Old Slugs</a>.', 'woocommerce-jetpack' ), admin_url() ),
+				'desc'  => sprintf( __( 'When enabled, the tool is accessible through <a href="%sadmin.php?page=wcj-tools&tab=old_slugs">WooCommerce > Booster Tools > Remove Old Slugs</a>.', 'woocommerce-jetpack' ), admin_url() ),
 				'id'    => 'wcj_old_slugs_options'
 			),
 
