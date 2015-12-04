@@ -16,6 +16,8 @@ class WCJ_Old_Slugs {
 
 	public function __construct() {
 
+		// HOOKS
+
 		// Main hooks
 		if ( get_option( 'wcj_old_slugs_enabled' ) == 'yes' ) {
 
@@ -104,12 +106,12 @@ class WCJ_Old_Slugs {
 	}
 
 	/*
-	 * Add settings section to WooCommerce > Settings > Jetpack.
+	 * Add settings section to WooCommerce > Settings > Booster.
+	 *
+	 * @version 2.3.9
 	 */
 	function settings_section( $sections ) {
-
 		$sections['old_slugs'] = __( 'Old Slugs', 'woocommerce-jetpack' );
-
 		return $sections;
 	}
 
