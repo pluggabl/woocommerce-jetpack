@@ -117,7 +117,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.9 - 03/12/2015 =
+= 2.3.9 - 04/12/2015 =
+* Dev - EMAILS & MISC. - Remove Old Slugs - Renamed some text from Jetpack to Booster.
 * Fix - Shortcodes - `lang` and `not_lang` params PHP notice fixed.
 * Dev - Shortcodes - `wcj_order_billing_address` filter added.
 * Fix - PDF Invoicing - Display - `remove_query_arg` added.
