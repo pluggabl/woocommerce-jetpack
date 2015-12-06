@@ -78,12 +78,12 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			session_start();
 		}
 		$args = array();
-		parse_str( $_POST['post_data'], $args );
-//		wcj_log( $args );
-//		if ( isset( $_POST['billing_eu_vat_number'] ) && isset( $_SESSION['wcj_eu_vat_number_to_check'] ) && $_SESSION['wcj_eu_vat_number_to_check'] != $_POST['billing_eu_vat_number'] ) {
-		if ( isset( $args['billing_eu_vat_number'] ) && isset( $_SESSION['wcj_eu_vat_number_to_check'] ) && $_SESSION['wcj_eu_vat_number_to_check'] != $args['billing_eu_vat_number'] ) {
-			unset( $_SESSION['wcj_is_eu_vat_number_valid'] );
-			unset( $_SESSION['wcj_eu_vat_number_to_check'] );
+		if ( isset( $_POST['post_data'] ) ) {
+			parse_str( $_POST['post_data'], $args );
+			if ( isset( $args['billing_eu_vat_number'] ) && isset( $_SESSION['wcj_eu_vat_number_to_check'] ) && $_SESSION['wcj_eu_vat_number_to_check'] != $args['billing_eu_vat_number'] ) {
+				unset( $_SESSION['wcj_is_eu_vat_number_valid'] );
+				unset( $_SESSION['wcj_eu_vat_number_to_check'] );
+			}
 		}
 	}
 
