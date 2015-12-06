@@ -39,7 +39,35 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			add_filter( 'woocommerce_matched_rates',              array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX, 2 );
 			add_action( 'woocommerce_after_checkout_validation',  array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
 			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'update_eu_vat_number_checkout_field_order_meta' ) );
+			add_filter( 'woocommerce_customer_meta_fields',       array( $this, 'add_eu_vat_number_customer_meta_field' ) );
+			add_filter( 'default_checkout_billing_eu_vat_number', array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
 		}
+	}
+
+	/**
+	 * add_default_checkout_billing_eu_vat_number.
+	 */
+	function add_default_checkout_billing_eu_vat_number( $default_value, $field_key ) {
+		if ( isset( $_SESSION['wcj_eu_vat_number_to_check'] ) ) {
+			return $_SESSION['wcj_eu_vat_number_to_check'];
+		} elseif ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			if ( $meta = get_user_meta( $current_user->ID, 'billing_eu_vat_number', true ) ) {
+				return $meta;
+			}
+		}
+		return $default_value;
+	}
+
+	/**
+	 * add_eu_vat_number_customer_meta_field.
+	 */
+	function add_eu_vat_number_customer_meta_field( $fields ) {
+		$fields['billing']['fields']['billing_eu_vat_number'] = array(
+			'label'       => get_option( 'wcj_eu_vat_number_field_label' ),
+			'description' => ''
+		);
+		return $fields;
 	}
 
 	/**
@@ -186,10 +214,9 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	 * add_eu_vat_number_checkout_field_to_frontend.
 	 */
 	function add_eu_vat_number_checkout_field_to_frontend( $fields ) {
-		$the_section = 'billing';
-		$fields[ $the_section ][ $the_section . '_' . $this->id ] = array(
+		$fields['billing'][ 'billing_' . $this->id ] = array(
 			'type'              => 'text',
-			'default'           => isset( $_SESSION['wcj_eu_vat_number_to_check'] ) ? $_SESSION['wcj_eu_vat_number_to_check'] : '',
+//			'default'           => isset( $_SESSION['wcj_eu_vat_number_to_check'] ) ? $_SESSION['wcj_eu_vat_number_to_check'] : '',
 			'label'             => get_option( 'wcj_eu_vat_number_field_label' ),
 //			'description'       => '',
 			'placeholder'       => get_option( 'wcj_eu_vat_number_field_placeholder' ),
