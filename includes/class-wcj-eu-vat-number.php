@@ -175,12 +175,12 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 
 	/**
 	 * add_eu_vat_verify_button.
-	 */
-	/* function add_eu_vat_verify_button( $field, $key, $args, $value ) {
+	 *
+	function add_eu_vat_verify_button( $field, $key, $args, $value ) {
 		return ( 'billing_eu_vat_number' === $key ) ?
 			$field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'woocommerce-jetpack' ) . '</a>]' . '</span>' :
 			$field;
-	} */
+	}
 
 	/**
 	 * add_eu_vat_number_checkout_field_to_frontend.
@@ -189,6 +189,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		$the_section = 'billing';
 		$fields[ $the_section ][ $the_section . '_' . $this->id ] = array(
 			'type'              => 'text',
+			'default'           => isset( $_SESSION['wcj_eu_vat_number_to_check'] ) ? $_SESSION['wcj_eu_vat_number_to_check'] : '',
 			'label'             => get_option( 'wcj_eu_vat_number_field_label' ),
 //			'description'       => '',
 			'placeholder'       => get_option( 'wcj_eu_vat_number_field_placeholder' ),
