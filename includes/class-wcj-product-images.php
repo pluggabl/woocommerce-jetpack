@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Images class.
  *
- * @version 2.2.6
+ * @version 2.3.9
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -171,7 +171,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.9
 	 */
 	function get_settings() {
 
@@ -199,7 +199,7 @@ class WCJ_Product_Images extends WCJ_Module {
 				'desc'    => __( 'Replace image on single product page with custom HTML. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_product_images_custom_on_single',
 				'default' => '',
-				'type'    => 'custom_textarea',
+				'type'    => 'textarea',
 				'css'     => 'width:66%; min-width:300px;',
 			),
 
@@ -208,7 +208,7 @@ class WCJ_Product_Images extends WCJ_Module {
 				'desc'    => __( 'Replace thumbnails on single product page with custom HTML. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_product_images_thumbnails_custom_on_single',
 				'default' => '',
-				'type'    => 'custom_textarea',
+				'type'    => 'textarea',
 				'css'     => 'width:66%; min-width:300px;',
 			),
 
@@ -233,7 +233,7 @@ class WCJ_Product_Images extends WCJ_Module {
 				'desc'    => __( 'Replace image on archive pages with custom HTML. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_product_images_custom_on_archives',
 				'default' => '',
-				'type'    => 'custom_textarea',
+				'type'    => 'textarea',
 				'css'     => 'width:66%; min-width:300px;',
 			),
 
