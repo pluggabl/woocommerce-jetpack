@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.3.7
+ * @version 2.3.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.7
+	 * @version 2.3.9
 	 */
 	public function __construct() {
 
@@ -62,7 +62,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				}
 			}
 
-			if ( 'yes' === get_option( 'wcj_local_price_labels_enabled' ) ) {
+			if ( 'yes' === get_option( 'wcj_local_price_labels_enabled', 'yes' ) ) {
 				// Meta box (admin)
 				add_action( 'add_meta_boxes', array( $this, 'add_price_label_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_custom_price_labels' ), 999, 2 );
@@ -411,7 +411,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 2.3.7
+	 * @version 2.3.9
 	 */
 	public function custom_price( $price, $product ) {
 
@@ -482,7 +482,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 		}
 
 		// Per product
-		if ( 'yes' === get_option( 'wcj_local_price_labels_enabled' ) ) {
+		if ( 'yes' === get_option( 'wcj_local_price_labels_enabled', 'yes' ) ) {
 
 			foreach ( $this->custom_tab_sections as $custom_tab_section ) {
 

@@ -118,6 +118,9 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.9 - 09/12/2015 =
+* Fix - EMAILS & MISC. - Old Slugs - PHP notices fixed.
+* Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Tool link added to module's settings.
+* Fix - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_local_price_labels_enabled` defaults to `yes`.
 * Dev - PDF Invoicing - Styling - "Droid Sans Fallback" font added (can display Chinese).
 * Dev - EMAILS & MISC. - Remove Old Slugs - Some text from Jetpack to Booster renamed.
 * Fix - Shortcodes - `lang` and `not_lang` params PHP notice fixed.
