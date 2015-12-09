@@ -117,7 +117,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.9 - 04/12/2015 =
+= 2.3.9 - 09/12/2015 =
+* Dev - PDF Invoicing - Styling - "Droid Sans Fallback" font added (can display Chinese).
 * Dev - EMAILS & MISC. - Remove Old Slugs - Some text from Jetpack to Booster renamed.
 * Fix - Shortcodes - `lang` and `not_lang` params PHP notice fixed.
 * Dev - Shortcodes - `wcj_order_billing_address` filter added.
