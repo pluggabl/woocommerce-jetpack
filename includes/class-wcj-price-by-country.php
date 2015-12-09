@@ -31,7 +31,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( ! is_admin() ) { // || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				// Frontend
 				include_once( 'price-by-country/class-wcj-price-by-country-core.php' );
 			}
@@ -94,7 +94,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			array(
 				'title'    => __( 'Override Country on Checkout with Billing Country', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_override_on_checkout_with_billing_country',
-				'desc'     => __( 'Enable.', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
