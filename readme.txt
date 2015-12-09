@@ -118,6 +118,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.9 - 09/12/2015 =
+* Fix - PRICES & CURRENCIES - Price by Country - Per product - Variable products - Admin variations "Save Changes" button fix.
 * Fix - PRODUCTS - Product Images - All settings will handle HTML now.
 * Fix - PAYMENT GATEWAYS - Custom Gateways - Addition check to prevent PHP notices.
 * Fix - EMAILS & MISC. - Old Slugs - PHP notices fixed.
@@ -128,7 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Fix - Shortcodes - `lang` and `not_lang` params PHP notice fixed.
 * Dev - Shortcodes - `wcj_order_billing_address` filter added.
 * Fix - PDF Invoicing - Display - `remove_query_arg` added.
-* Dev - Price by Country - "Autogenerate Groups" option added.
+* Dev - PRICES & CURRENCIES - Price by Country - "Autogenerate Groups" option added.
 * Dev - PDF Invoicing - Renumerate Invoices Tool - Fixed for operations with large number of orders.
 * Dev - EMAILS & MISC. - EU VAT Number - Initial module release.
 * Dev - EMAILS & MISC. - General - "All Products and All Attributes" tool added.

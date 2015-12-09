@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Local class.
  *
- * @version  2.2.0
+ * @version  2.3.9
  * @author   Algoritmika Ltd.
  */
 
@@ -14,17 +14,21 @@ if ( ! class_exists( 'WCJ_Price_by_Country_Local' ) ) :
 
 class WCJ_Price_by_Country_Local {
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
-//		add_action( 'add_meta_boxes',    							    array( $this, 'add_custom_meta_box_to_product_edit' ) );
-		add_action( 'save_post_product', 							    array( $this, 'save_custom_meta_box_on_product_edit' ), PHP_INT_MAX, 2 );
-		add_action( 'woocommerce_product_options_pricing', 			    array( $this, 'add_simple_pricing' ), 					PHP_INT_MAX, 0 );
-		add_action( 'woocommerce_product_after_variable_attributes',    array( $this, 'add_variable_pricing' ), 				PHP_INT_MAX, 3 );
-		//add_action( 'woocommerce_variation_options',    array( $this, 'add_variable_pricing' ), 				PHP_INT_MAX, 3 );
-		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_hidden_save' ),		 				PHP_INT_MAX, 0 );
-    }
+	/**
+	 * Constructor.
+	 *
+	 * @version 2.3.9
+	 */
+	public function __construct() {
+//		add_action( 'add_meta_boxes',                                   array( $this, 'add_custom_meta_box_to_product_edit' ) );
+		add_action( 'woocommerce_ajax_save_product_variations',         array( $this, 'save_custom_meta_box_on_product_edit_ajax' ), PHP_INT_MAX, 1 );
+		add_action( 'save_post_product',                                array( $this, 'save_custom_meta_box_on_product_edit' ), PHP_INT_MAX, 2 );
+		add_action( 'woocommerce_product_options_pricing',              array( $this, 'add_simple_pricing' ), PHP_INT_MAX, 0 );
+		add_action( 'woocommerce_product_after_variable_attributes',    array( $this, 'add_variable_pricing' ), PHP_INT_MAX, 3 );
+//		add_action( 'woocommerce_variation_options',                    array( $this, 'add_variable_pricing' ), PHP_INT_MAX, 3 );
+		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_hidden_save' ), PHP_INT_MAX, 0 );
+		add_action( 'woocommerce_product_after_variable_attributes',    array( $this, 'add_hidden_save' ), PHP_INT_MAX, 0 );
+	}
 
 	/**
 	 * add_custom_meta_box_to_product_edit.
@@ -110,9 +114,9 @@ class WCJ_Price_by_Country_Local {
 		return apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) );
 	}
 
-    /**
-     * get_prices_options.
-     */
+	/**
+	 * get_prices_options.
+	 */
 	public function get_prices_options() {
 
 		$meta_box_id = 'price_by_country';
@@ -160,6 +164,16 @@ class WCJ_Price_by_Country_Local {
 					update_post_meta( $post_id, '_' . $option['id'] . $i, 'off' );
 			}
 		}
+	}
+
+	/**
+	 * Save Custom Meta Box on Product Edit - variations "Save Changes" button (ajax).
+	 *
+	 * @version 2.3.9
+	 * @since   2.3.9
+	 */
+	public function save_custom_meta_box_on_product_edit_ajax( $product_id ) {
+		return $this->save_custom_meta_box_on_product_edit( $product_id, /* 'ajax' */ null );
 	}
 
 	/**
