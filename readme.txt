@@ -118,6 +118,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.9 - 09/12/2015 =
+* Fix - PAYMENT GATEWAYS - Custom Gateways - Addition check to prevent PHP notices.
 * Fix - EMAILS & MISC. - Old Slugs - PHP notices fixed.
 * Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Tool link added to module's settings.
 * Fix - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_local_price_labels_enabled` defaults to `yes`.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Payment Gateway class.
  *
- * @version 2.3.0
+ * @version 2.3.9
  * @author  Algoritmika Ltd.
  */
 
@@ -161,7 +161,8 @@ function init_wc_gateway_wcj_custom_class() {
 		/**
 		 * Check If The Gateway Is Available For Use
 		 *
-		 * @return bool
+		 * @version 2.3.9
+		 * @return  bool
 		 */
 		public function is_available() {
 			// Check min amount
@@ -208,7 +209,8 @@ function init_wc_gateway_wcj_custom_class() {
 			if ( ! empty( $this->enable_for_methods ) ) {
 
 				// Only apply if all packages are being shipped via ...
-				$chosen_shipping_methods_session = WC()->session->get( 'chosen_shipping_methods' );
+				$session_object = WC()->session;
+				$chosen_shipping_methods_session = ( is_object( $session_object ) ) ? $session_object->get( 'chosen_shipping_methods' ) : null;
 
 				if ( isset( $chosen_shipping_methods_session ) ) {
 					$chosen_shipping_methods = array_unique( $chosen_shipping_methods_session );
@@ -308,7 +310,7 @@ function init_wc_gateway_wcj_custom_class() {
 				'redirect'	=> $this->get_return_url( $order ),
 			);
 		}
-		
+
 		/**
 		 * init.
 		 *
