@@ -117,7 +117,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.9 - 09/12/2015 =
+= 2.3.9 - 15/12/2015 =
+* Dev - EMAILS & MISC. - Emails - Code refactoring.
 * Fix - PRICES & CURRENCIES - Price by Country - Per product - Variable products - Admin wrong base currency for variations (taken by admin country), fixed.
 * Fix - PRICES & CURRENCIES - Price by Country - Per product - Variable products - Admin variations "Save Changes" button fix.
 * Fix - PRODUCTS - Product Images - All settings will handle HTML now.
