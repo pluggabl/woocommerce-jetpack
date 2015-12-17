@@ -4,7 +4,7 @@ Donate link: http://algoritmika.com/donate/
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack,custom price labels,call for price,currency symbol,remove sorting,remove old product slugs,add to cart text,order number,sequential order numbering,email pdf invoice,pdf invoice,pdf invoices,already in cart,empty cart,redirect to checkout,minimum order amount,customize checkout fields,checkout fields,email,customize product tabs,product tabs,related products number,empty cart,redirect add to cart,redirect to checkout,product already in cart,custom payment gateway,payment gateway icon,auto-complete all orders,custom order statuses,custom order status,remove text from price,custom css,hide categories count,hide subcategories count,hide category count,hide subcategory count,display total sales,custom product tabs,remove product tab,payment gateway fee,
 Requires at least: 3.8
 Tested up to: 4.3
-Stable tag: 2.3.8
+Stable tag: 2.3.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -79,7 +79,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Emails & Misc.**
 
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
-* *Emails* - Add another email recipient(s) to all WooCommerce emails.
+* *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers.
 * *General* - Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets.
 * *Old Slugs* - Remove old WooCommerce products slugs.
@@ -117,7 +117,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.9 - 17/12/2015 =
+= 2.3.9 - 18/12/2015 =
 * Fix - Shortcodes - `lang` and `not_lang` params PHP notice fixed.
 * Dev - Shortcodes - `wcj_order_billing_address` filter added.
 * Fix - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_local_price_labels_enabled` defaults to `yes`.
@@ -136,7 +136,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Dev - EMAILS & MISC. - General - "Export Customers" tool added.
 * Dev - EMAILS & MISC. - General - "All Products and All Attributes" tool added.
 * Dev - EMAILS & MISC. - Emails - "Custom Emails" added.
-* Dev - EMAILS & MISC. - Emails - Code refactoring.
+* Dev - EMAILS & MISC. - Emails - Code refactoring. Cc/Bcc Emails unlocked.
 * Fix - EMAILS & MISC. - Remove Old Slugs - PHP notices fixed.
 * Dev - EMAILS & MISC. - Remove Old Slugs - Code refactoring. Tool link added to module's settings.
 * Dev - EMAILS & MISC. - Remove Old Slugs - Some text from Jetpack to Booster renamed.

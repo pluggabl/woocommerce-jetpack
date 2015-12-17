@@ -102,23 +102,17 @@ class WCJ_Emails extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Cc Email', 'woocommerce-jetpack' ),
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 				'desc_tip' => __( 'Cc to email, e.g. youremail@yourdomain.com. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_emails_cc_email',
 				'default'  => '',
 				'type'     => 'text',
-				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
 			array(
 				'title'    => __( 'Bcc Email', 'woocommerce-jetpack' ),
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 				'desc_tip' => __( 'Bcc to email, e.g. youremail@yourdomain.com. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_emails_bcc_email',
 				'default'  => '',
 				'type'     => 'text',
-				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
 			array(
 				'type'     => 'sectionend',

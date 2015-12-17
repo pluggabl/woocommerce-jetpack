@@ -104,7 +104,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		if ( isset( $_GET['wcj_eu_vat_number_to_check'] ) && '' != $_GET['wcj_eu_vat_number_to_check'] ) {
 			$eu_vat_number_to_check = substr( $_GET['wcj_eu_vat_number_to_check'], 2 );
 			$eu_vat_number_country_to_check = substr( $_GET['wcj_eu_vat_number_to_check'], 0, 2 );
-			if ( 'yes' === get_option( 'wcj_eu_vat_number_check_ip_location_country', 'yes' ) ) {
+			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_eu_vat_number_check_ip_location_country', 'no' ) ) ) {
 				$location = WC_Geolocation::geolocate_ip();
 				if ( empty( $location['country'] ) ) {
 					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
@@ -136,7 +136,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			isset( $_SESSION['wcj_is_eu_vat_number_valid'] ) && true === $_SESSION['wcj_is_eu_vat_number_valid'] && isset( $_SESSION['wcj_eu_vat_number_to_check'] )
 		) {
 			$preserve_base_country_check_passed = true;
-			if ( 'yes' === get_option( 'wcj_eu_vat_number_preserve_in_base_country', 'yes' ) ) {
+			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_eu_vat_number_preserve_in_base_country', 'no' ) ) ) {
 				$location = wc_get_base_location();
 				if ( empty( $location['country'] ) ) {
 					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
@@ -308,15 +308,21 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				'title'   => __( 'Preserve VAT in Base Country', 'woocommerce-jetpack' ),
 				'desc'    => __( 'Yes', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_eu_vat_number_preserve_in_base_country',
-				'default' => 'yes',
+				'default' => 'no',
 				'type'    => 'checkbox',
+				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes'
+				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			),
 			array(
 				'title'   => __( 'Check for IP Location Country', 'woocommerce-jetpack' ),
 				'desc'    => __( 'Yes', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_eu_vat_number_check_ip_location_country',
-				'default' => 'yes',
+				'default' => 'no',
 				'type'    => 'checkbox',
+				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes'
+				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			),
 			array(
 				'type'    => 'sectionend',
