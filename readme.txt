@@ -117,29 +117,29 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.9 - 16/12/2015 =
-* Dev - EMAILS & MISC. - General - "Export Customers" tool added.
-* Dev - EMAILS & MISC. - Emails - "Custom Emails" added.
-* Dev - EMAILS & MISC. - Emails - Code refactoring.
-* Fix - PRICES & CURRENCIES - Price by Country - Per product - Variable products - Admin wrong base currency for variations (taken by admin country), fixed.
-* Fix - PRICES & CURRENCIES - Price by Country - Per product - Variable products - Admin variations "Save Changes" button fix.
-* Fix - PRODUCTS - Product Images - All settings will handle HTML now.
-* Fix - PAYMENT GATEWAYS - Custom Gateways - Addition check to prevent PHP notices.
-* Fix - EMAILS & MISC. - Old Slugs - PHP notices fixed.
-* Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Tool link added to module's settings.
-* Fix - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_local_price_labels_enabled` defaults to `yes`.
-* Dev - PDF Invoicing - Styling - "Droid Sans Fallback" font added (can display Chinese).
-* Dev - EMAILS & MISC. - Remove Old Slugs - Some text from Jetpack to Booster renamed.
+= 2.3.9 - 17/12/2015 =
 * Fix - Shortcodes - `lang` and `not_lang` params PHP notice fixed.
 * Dev - Shortcodes - `wcj_order_billing_address` filter added.
-* Fix - PDF Invoicing - Display - `remove_query_arg` added.
+* Fix - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_local_price_labels_enabled` defaults to `yes`.
+* Fix - PRICES & CURRENCIES - Price by Country - Per product - Variable products - Admin wrong base currency for variations (taken by admin country), fixed.
+* Fix - PRICES & CURRENCIES - Price by Country - Per product - Variable products - Admin variations "Save Changes" button fix.
 * Dev - PRICES & CURRENCIES - Price by Country - "Autogenerate Groups" option added.
+* Fix - PRODUCTS - Product Images - All settings will handle HTML now.
+* Dev - CART & CHECKOUT - Cart - "Cart Items Table Custom Info" added.
+* Fix - PAYMENT GATEWAYS - Custom Gateways - Addition check to prevent PHP notices.
+* Fix - PDF Invoicing - Display - `remove_query_arg` added.
+* Dev - PDF Invoicing - Styling - "Droid Sans Fallback" font added (can display Chinese).
 * Dev - PDF Invoicing - Renumerate Invoices Tool - Fixed for operations with large number of orders.
-* Dev - EMAILS & MISC. - EU VAT Number - Initial module release.
-* Dev - EMAILS & MISC. - General - "All Products and All Attributes" tool added.
 * Fix - EMAILS & MISC. - Reports - Product Sales - PHP notices fixed.
 * Dev - EMAILS & MISC. - Reports - Product Sales - Filter by product title option added.
-* Dev - CART & CHECKOUT - Cart - "Cart Items Table Custom Info" added.
+* Dev - EMAILS & MISC. - EU VAT Number - Initial module release.
+* Dev - EMAILS & MISC. - General - "Export Customers" tool added.
+* Dev - EMAILS & MISC. - General - "All Products and All Attributes" tool added.
+* Dev - EMAILS & MISC. - Emails - "Custom Emails" added.
+* Dev - EMAILS & MISC. - Emails - Code refactoring.
+* Fix - EMAILS & MISC. - Remove Old Slugs - PHP notices fixed.
+* Dev - EMAILS & MISC. - Remove Old Slugs - Code refactoring. Tool link added to module's settings.
+* Dev - EMAILS & MISC. - Remove Old Slugs - Some text from Jetpack to Booster renamed.
 
 = 2.3.8 - 26/10/2015 =
 * Dev - Link changed to http://booster.io

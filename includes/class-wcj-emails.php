@@ -23,7 +23,7 @@ class WCJ_Emails extends WCJ_Module {
 
 		$this->id         = 'emails';
 		$this->short_desc = __( 'Emails', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add another email recipient(s) to all WooCommerce emails.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add custom emails. Add another email recipient(s) to all WooCommerce emails.', 'woocommerce-jetpack' );
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -154,6 +154,7 @@ class WCJ_Emails extends WCJ_Module {
 				'title'    => __( 'Custom Emails', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_emails_custom_emails_options',
+				'desc'     => __( 'This section lets you set number of custom emails to add. After setting the number, visit "WooCommerce > Settings > Emails" to set each email options.', 'woocommerce-jetpack' ),
 			),
 			array(
 				'title'    => __( 'Custom Emails Number', 'woocommerce-jetpack' ),

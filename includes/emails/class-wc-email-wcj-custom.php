@@ -119,39 +119,12 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	 * Initialise settings form fields
 	 */
 	function init_form_fields() {
-		$default_html_template =
-'<h1>Email</h1>
-<p>
-<table>
-<tbody>
-	<tr><th>Order Date</th><td>[wcj_order_date]</td></tr>
-	<tr><th>Order Nr.</th><td>[wcj_order_number]</td></tr>
-</tbody>
-</table>
-</p>
-<p>
-<table>
-<tbody>
-	<tr><th>Buyer</th></tr>
-	<tr><td>[wcj_order_billing_address]</td></tr>
-</tbody>
-</table>
-</p>
-<p>
-[wcj_order_items_table
-	columns="item_number|item_name|item_quantity|line_total_tax_excl"
-	columns_titles="|Product|Qty|Total"
-	columns_styles="width:5%;|width:75%;|width:5%;|width:15%;text-align:right;"]
-<table>
-<tbody>
-	<tr><th>Total (excl. TAX)</th><td>[wcj_order_total_excl_tax]</td></tr>
-	<tr><th>Taxes</th><td>[wcj_order_total_tax hide_if_zero="no"]</td></tr>
-	<tr><th>Order Total</th><td>[wcj_order_total]</td></tr>
-</tbody>
-</table>
-</p>
-<p>Payment method: [wcj_order_payment_method]</p>';
-		$default_plain_template = '';
+		ob_start();
+		include( 'email-html.php' );
+		$default_html_template = ob_get_clean();
+		ob_start();
+		include( 'email-plain.php' );
+		$default_plain_template = ob_get_clean();
 		$this->form_fields = array(
 			'enabled' => array(
 				'title'         => __( 'Enable/Disable', 'woocommerce' ),
@@ -168,9 +141,22 @@ class WC_Email_WCJ_Custom extends WC_Email {
 					'woocommerce_order_status_pending_to_processing_notification' => __( 'Order status pending to processing', 'woocommerce-jetpack' ),
 					'woocommerce_order_status_pending_to_completed_notification'  => __( 'Order status pending to completed', 'woocommerce-jetpack' ),
 					'woocommerce_order_status_pending_to_on-hold_notification'    => __( 'Order status pending to on-hold', 'woocommerce-jetpack' ),
+					'woocommerce_order_status_pending_to_cancelled_notification'  => __( 'Order status pending to cancelled', 'woocommerce-jetpack' ),
+
 					'woocommerce_order_status_failed_to_processing_notification'  => __( 'Order status failed to processing', 'woocommerce-jetpack' ),
 					'woocommerce_order_status_failed_to_completed_notification'   => __( 'Order status failed to completed', 'woocommerce-jetpack' ),
 					'woocommerce_order_status_failed_to_on-hold_notification'     => __( 'Order status failed to on-hold', 'woocommerce-jetpack' ),
+
+					'woocommerce_order_status_completed_notification'             => __( 'Order status completed', 'woocommerce-jetpack' ),
+
+					'woocommerce_order_status_on-hold_to_cancelled_notification'  => __( 'Order status on-hold to cancelled', 'woocommerce-jetpack' ),
+
+					'woocommerce_reset_password_notification'                     => __( 'Reset password notification', 'woocommerce-jetpack' ),
+
+					'woocommerce_order_fully_refunded_notification'               => __( 'Order fully refunded notification', 'woocommerce-jetpack' ),
+					'woocommerce_order_partially_refunded_notification'           => __( 'Order partially refunded notification', 'woocommerce-jetpack' ),
+
+					'woocommerce_new_customer_note_notification'                  => __( 'New customer note notification', 'woocommerce-jetpack' ),
 				),
 			),
 			'recipient' => array(
@@ -208,6 +194,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				'description'   => '',
 				'placeholder'   => '',
 				'default'       => $default_html_template,
+				'css'           => 'width:66%;min-width:300px;height:500px;',
 			),
 			'content_plain_template' => array(
 				'title'         => __( 'Plain text template', 'woocommerce' ),
@@ -215,6 +202,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				'description'   => '',
 				'placeholder'   => '',
 				'default'       => $default_plain_template,
+				'css'           => 'width:66%;min-width:300px;height:500px;',
 			),
 		);
 	}

@@ -77,6 +77,12 @@ class WCJ_General extends WCJ_Module {
 	function create_export_customers_tool() {
 		$html = '';
 		$html .= '<pre>';
+		$html .=
+			__( 'Nr.', 'woocommerce-jetpack' ) . ',' .
+			__( 'Email', 'woocommerce-jetpack' ) . ',' .
+			__( 'First Name', 'woocommerce-jetpack' ) . ',' .
+			__( 'Last Name', 'woocommerce-jetpack' ) . ',' .
+			__( 'Order Date', 'woocommerce-jetpack' ) . PHP_EOL;
 		$total_customers = 0;
 		$orders = array();
 		$offset = 0;
@@ -99,7 +105,7 @@ class WCJ_General extends WCJ_Module {
 					$emails_to_skip = array();
 					if ( ! in_array( $order->billing_email, $emails_to_skip ) ) {
 						$total_customers++;
-						$html .= $total_customers . ' ' . $order->billing_email . PHP_EOL;
+						$html .= $total_customers . ',' . $order->billing_email . ',' . $order->billing_first_name . ','. $order->billing_last_name . ','. get_the_date( 'Y/m/d' ) . PHP_EOL;
 						$orders[] = $order->billing_email;
 					}
 				}
