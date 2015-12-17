@@ -26,7 +26,10 @@ class WCJ_General extends WCJ_Module {
 		$this->desc       = __( 'Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-		$this->add_tools( array( 'products_atts' => __( 'All Products and All Attributes', 'woocommerce-jetpack' ), ) );
+		$this->add_tools( array(
+			'products_atts'    => __( 'All Products and All Attributes', 'woocommerce-jetpack' ),
+			'export_customers' => __( 'Export Customers', 'woocommerce-jetpack' ),
+		) );
 
 		if ( $this->is_enabled() ) {
 
@@ -41,23 +44,70 @@ class WCJ_General extends WCJ_Module {
 				add_action( 'admin_head', array( $this, 'hook_custom_admin_css' ) );
 			}
 
-			add_filter( 'wcj_tools_tabs',               array( $this, 'add_products_atts_tool_tab' ), 100 );
-			add_action( 'wcj_tools_' . 'products_atts', array( $this, 'create_products_atts_tool'  ), 100 );
+			add_filter( 'wcj_tools_tabs',                  array( $this, 'add_tool_tabs' ), 100 );
+			add_action( 'wcj_tools_' . 'products_atts',    array( $this, 'create_products_atts_tool'  ), 100 );
+			add_action( 'wcj_tools_' . 'export_customers', array( $this, 'create_export_customers_tool'  ), 100 );
 		}
 	}
 
 	/**
-	 * add_products_atts_tool_tab.
+	 * add_tool_tabs.
 	 *
 	 * @version 2.3.9
 	 * @since   2.3.9
 	 */
-	function add_products_atts_tool_tab() {
+	function add_tool_tabs() {
 		$tabs[] = array(
 			'id'    => 'products_atts',
 			'title' => __( 'Products Atts', 'woocommerce-jetpack' ),
 		);
+		$tabs[] = array(
+			'id'    => 'export_customers',
+			'title' => __( 'Export Customers', 'woocommerce-jetpack' ),
+		);
 		return $tabs;
+	}
+
+	/**
+	 * create_export_customers_tool.
+	 *
+	 * @version 2.3.9
+	 * @since   2.3.9
+	 */
+	function create_export_customers_tool() {
+		$html = '';
+		$html .= '<pre>';
+		$total_customers = 0;
+		$orders = array();
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			$args_orders = array(
+				'post_type'      => 'shop_order',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+				'offset'         => $offset,
+			);
+			$loop_orders = new WP_Query( $args_orders );
+			if ( ! $loop_orders->have_posts() ) break;
+			while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
+				$order_id = $loop_orders->post->ID;
+				$order = wc_get_order( $order_id );
+				if ( isset( $order->billing_email ) && '' != $order->billing_email && ! in_array( $order->billing_email, $orders ) ) {
+					$emails_to_skip = array();
+					if ( ! in_array( $order->billing_email, $emails_to_skip ) ) {
+						$total_customers++;
+						$html .= $total_customers . ' ' . $order->billing_email . PHP_EOL;
+						$orders[] = $order->billing_email;
+					}
+				}
+			endwhile;
+			$offset += $block_size;
+		}
+		$html .= '</pre>';
+		echo $html;
 	}
 
 	/**

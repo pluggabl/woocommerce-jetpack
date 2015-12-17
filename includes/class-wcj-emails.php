@@ -27,6 +27,8 @@ class WCJ_Emails extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			add_filter( 'woocommerce_email_classes', array( $this, 'add_custom_emails_to_wc' ) );
+			add_filter( 'woocommerce_resend_order_emails_available', array( $this, 'add_custom_emails_to_wc_resend_order_emails' ) );
 			if ( '' != get_option( 'wcj_emails_bcc_email' ) ) {
 				add_filter( 'woocommerce_email_headers', array( $this, 'add_bcc_email' ) );
 			}
@@ -37,6 +39,35 @@ class WCJ_Emails extends WCJ_Module {
 			// Settings
 			add_filter( 'woocommerce_email_settings', array( $this, 'add_email_forwarding_fields_to_wc_standard_settings' ), 100 );
 		}
+	}
+
+	/**
+	 * add_custom_emails_to_wc_resend_order_emails.
+	 *
+	 * @version 2.3.9
+	 * @since   2.3.9
+	 */
+	function add_custom_emails_to_wc_resend_order_emails( $emails ) {
+		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
+			$emails[] =  'wcj_custom' . '_' . $i;
+		}
+		return $emails;
+	}
+
+	/**
+	 * add_custom_emails_to_wc.
+	 *
+	 * @version 2.3.9
+	 * @since   2.3.9
+	 */
+	function add_custom_emails_to_wc( $emails ) {
+		if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) {
+			require_once( 'emails/class-wc-email-wcj-custom.php' );
+		}
+		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
+			$emails[ 'WC_Email_WCJ_Custom_' . $i ] = new WC_Email_WCJ_Custom( $i );
+		}
+		return $emails;
 	}
 
 	 /**
@@ -118,7 +149,26 @@ class WCJ_Emails extends WCJ_Module {
 	 * @version 2.3.9
 	 */
 	function get_settings() {
-		$settings = array();
+		$settings = array(
+			array(
+				'title'    => __( 'Custom Emails', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_emails_custom_emails_options',
+			),
+			array(
+				'title'    => __( 'Custom Emails Number', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_emails_custom_emails_total_number',
+				'default'  => 1,
+				'type'     => 'custom_number',
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes'
+				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_emails_custom_emails_options',
+			),
+		);
 		$settings = array_merge( $settings, $this->get_emails_forwarding_settings() );
 		return $this->add_enable_module_setting( $settings );
 	}

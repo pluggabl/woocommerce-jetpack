@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Emails class.
  *
- * @version 2.2.7
+ * @version 2.3.9
  * @author  Algoritmika Ltd.
  */
 
@@ -97,7 +97,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.2.7
+	 * @version 2.3.9
 	 */
 	function get_settings() {
 
@@ -121,6 +121,11 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 				'customer_invoice'          => __( 'Customer - Invoice', 'woocommerce' ),
 				'customer_refunded_order'   => __( 'Customer - Refunded Order', 'woocommerce' ),
 			);
+			if ( 'yes' === get_option( 'wcj_emails_enabled', 'no' ) ) {
+				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
+					$available_emails[ 'wcj_custom' . '_' . $i ] = __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i;
+				}
+			}
 			$settings[] = array(
 				'title'         => __( 'Attach PDF to emails', 'woocommerce' ),
 				'id'            => 'wcj_invoicing_' . $invoice_type['id'] . '_attach_to_emails',
