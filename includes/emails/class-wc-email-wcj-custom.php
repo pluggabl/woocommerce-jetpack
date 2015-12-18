@@ -34,8 +34,11 @@ class WC_Email_WCJ_Custom extends WC_Email {
 		$this->template_plain   = 'emails/plain/admin-new-order.php'; */
 
 		// Triggers for this email
-		foreach ( $this->get_option( 'trigger', array() ) as $trigger_hook ) {
-			add_action( $trigger_hook, array( $this, 'trigger' ) );
+		$trigger_hooks = $this->get_option( 'trigger' );
+		if ( ! empty( $trigger_hooks ) && is_array( $trigger_hooks ) ) {
+			foreach ( $trigger_hooks as $trigger_hook ) {
+				add_action( $trigger_hook, array( $this, 'trigger' ) );
+			}
 		}
 
 		// Call parent constructor

@@ -157,49 +157,56 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	}
 
 	/**
+	 * Output cats
+	 *
+	 * @version 2.3.9
+	 */
+	function output_cats_submenu() {
+		$current_cat = empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( $_REQUEST['wcj-cat'] );
+		if ( empty( $this->cats ) ) {
+			return;
+		}
+		echo '<ul class="subsubsub" style="text-transform: uppercase !important; font-weight: bold; margin-bottom: 10px !important;">';
+		$array_keys = array_keys( $this->cats );
+		foreach ( $this->cats as $id => $label_info ) {
+			echo '<li><a href="' . admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . sanitize_title( $id ) ) . '&section=' . $label_info['default_cat_id'] . '" class="' . ( $current_cat == $id ? 'current' : '' ) . '">' . $label_info['label'] . '</a> ' . ( end( $array_keys ) == $id ? '' : '|' ) . ' </li>';
+		}
+		echo '</ul>' . '<br class="clear" />';
+	}
+
+	/**
 	 * Output sections (modules) sub menu
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.9
 	 */
 	function output_sections_submenu() {
-
 		global $current_section;
-
 		$sections = $this->get_sections();
-
-		//asort( $sections );
-
-		// Cats
 		$current_cat = empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( $_REQUEST['wcj-cat'] );
-
 		if ( 'dashboard' === $current_cat ) {
 			$sections['alphabetically'] = __( 'Alphabetically', 'woocommerce-jetpack' );
 			$sections['by_category']    = __( 'By Category', 'woocommerce-jetpack' );
 			$sections['active']         = __( 'Active', 'woocommerce-jetpack' );
-			if ( '' == $current_section ) $current_section = 'by_category';
+			if ( '' == $current_section ) {
+				$current_section = 'by_category';
+			}
 		}
-
-		if ( ! empty( $this->cats[ $current_cat ]['all_cat_ids'] ) )
-			foreach ( $sections as $id => $label )
-				if ( ! in_array( $id, $this->cats[ $current_cat ]['all_cat_ids'] ) )
+		if ( ! empty( $this->cats[ $current_cat ]['all_cat_ids'] ) ) {
+			foreach ( $sections as $id => $label ) {
+				if ( ! in_array( $id, $this->cats[ $current_cat ]['all_cat_ids'] ) ) {
 					unset( $sections[ $id ] );
-
+				}
+			}
+		}
 		if ( empty( $sections ) || 1 === count( $sections ) ) {
 			return;
 		}
-
-		echo '<p>';
 		echo '<ul class="subsubsub">';
-
-		//$array_keys = array_keys( $sections );
-		//foreach ( $sections as $id => $label ) {
 		foreach ( $this->cats[ $current_cat ]['all_cat_ids'] as $id ) {
-			//echo '<li><a href="' . admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . $current_cat . '&section=' . sanitize_title( $id ) ) . '" class="' . ( $current_section == $id ? 'current' : '' ) . '">' . $label . '</a> ' . ( end( $array_keys ) == $id ? '' : '|' ) . ' </li>';
 			$label = $sections[ $id ];
 			echo '<li><a href="' . admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . $current_cat . '&section=' . sanitize_title( $id ) ) . '" class="' . ( $current_section == $id ? 'current' : '' ) . '">' . $label . '</a> ' . ( end( $this->cats[ $current_cat ]['all_cat_ids'] ) == $id ? '' : '|' ) . ' </li>';
 		}
-
-		echo '</ul></p><br class="clear" />';
+		echo '</ul>' . '<br class="clear" />';
 	}
 
 	/**
@@ -212,28 +219,6 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						return $id;
 		}
 		return '';
-	}
-
-	/**
-	 * Output cats
-	 */
-	function output_cats_submenu() {
-
-		$current_cat = empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( $_REQUEST['wcj-cat'] );
-
-		if ( empty( $this->cats ) ) {
-			return;
-		}
-
-		echo '<ul class="subsubsub" style="text-transform: uppercase !important; font-weight: bold;">';
-
-		$array_keys = array_keys( $this->cats );
-
-		foreach ( $this->cats as $id => $label_info ) {
-			echo '<li><a href="' . admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . sanitize_title( $id ) ) . '&section=' . $label_info['default_cat_id'] . '" class="' . ( $current_cat == $id ? 'current' : '' ) . '">' . $label_info['label'] . '</a> ' . ( end( $array_keys ) == $id ? '' : '|' ) . ' </li>';
-		}
-
-		echo '</ul><br class="clear" />';
 	}
 
 	/**
