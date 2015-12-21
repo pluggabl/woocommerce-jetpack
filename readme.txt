@@ -117,6 +117,9 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
+= 2.3.10 - 21/12/2015 =
+* Dev - PDF Invoicing - Display - Admin's "Orders" Page - "Column Text", "Create Button" and "Delete Button" options added.
+
 = 2.3.9 - 18/12/2015 =
 * Fix - Shortcodes - `lang` and `not_lang` params PHP notice fixed.
 * Dev - Shortcodes - `wcj_order_billing_address` filter added.
