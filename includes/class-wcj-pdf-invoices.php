@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices class.
  *
- * @version 2.2.2
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
 
@@ -1432,9 +1432,11 @@ class WCJ_PDF_Invoices {
 
 	/**
 	 * settings_section.
+	 *
+	 * @version 2.3.10
 	 */
 	function settings_section( $sections ) {
-	    $sections['pdf_invoices'] = __( 'PDF Invoices', 'woocommerce-jetpack' );
+	    $sections['pdf_invoices'] = __( 'PDF Invoices', 'woocommerce-jetpack' ) . ' v1 - <em>' . __( 'Depreciated', 'woocommerce-jetpack' ) . '</em>';
 	    return $sections;
 	}
 }

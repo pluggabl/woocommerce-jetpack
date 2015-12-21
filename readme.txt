@@ -119,6 +119,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 = 2.3.10 - 21/12/2015 =
 * Dev - PDF Invoicing - Display - Admin's "Orders" Page - "Column Text", "Create Button" and "Delete Button" options added.
+* Dev - PDF Invoicing - Display - Customer's "My Account" Page - "Add link" and "Link text" options unlocked.
+* Dev - PDF Invoices (v1) marked as "Depreciated".
 
 = 2.3.9 - 18/12/2015 =
 * Fix - Shortcodes - `lang` and `not_lang` params PHP notice fixed.

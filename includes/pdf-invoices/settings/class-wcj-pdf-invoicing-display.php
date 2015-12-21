@@ -192,21 +192,17 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				array(
 					'title'    => __( 'Customer\'s "My Account" Page', 'woocommerce-jetpack' ),
 					'desc'     => __( 'Add link', 'woocommerce-jetpack' ),
-					'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_enabled_for_customers',
 					'default'  => 'no',
 					'type'     => 'checkbox',
-					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 				),
 
 				array(
 					'title'    => '',
 					'desc'     => __( 'Link Text', 'woocommerce-jetpack' ),
-					'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
 					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_link_text',
 					'default'  => $invoice_type['title'],
 					'type'     => 'text',
-					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 				),
 
 				array(

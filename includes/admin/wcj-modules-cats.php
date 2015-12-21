@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.3.9
+ * @version 2.3.10
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -126,9 +126,9 @@ return array(
 			'old_slugs',
 			'reports',
 			'admin_tools',
-			'pdf_invoices',
 			'emails',
 			'wpml',
+			'pdf_invoices',
 		),
 	),
 
