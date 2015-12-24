@@ -116,16 +116,16 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.10 - 23/12/2015 =
-* Dev - PDF Invoicing - "Renumerate Invoices" tool - "End Date" field added.
-* Fix - EMAILS & MISC. - General - Tabs at "Booster Tools" fixed.
+= 2.3.10 - 24/12/2015 =
 * Dev - PDF Invoicing - "Invoices Report" tool - Code refactoring.
 * Dev - PDF Invoicing - "Invoices Report" tool - "Get Report Zip" button added.
-* Dev - EMAILS & MISC. - EU VAT Number - "EU Countries VAT Rates" tool added.
-* Dev - Donate link removed.
+* Dev - PDF Invoicing - "Renumerate Invoices" tool - "End Date" field added.
 * Dev - PDF Invoicing - Display - Admin's "Orders" Page - "Column Text", "Create Button" and "Delete Button" options added.
 * Dev - PDF Invoicing - Display - Customer's "My Account" Page - "Add link" and "Link text" options unlocked.
 * Dev - PDF Invoices (v1) marked as "Depreciated".
+* Fix - EMAILS & MISC. - General - Tabs at "Booster Tools" fixed.
+* Dev - EMAILS & MISC. - EU VAT Number - "EU Countries VAT Rates" tool added.
+* Dev - Donate link removed.
 
 = 2.3.9 - 18/12/2015 =
 * Fix - Shortcodes - `lang` and `not_lang` params PHP notice fixed.
