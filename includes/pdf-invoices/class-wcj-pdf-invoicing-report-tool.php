@@ -88,7 +88,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			}
 		}
 		?><div>
-			<h2><?php echo __( 'WooCommerce Jetpack - Invoices Report', 'woocommerce-jetpack' ); ?></h2>
+			<h2><?php echo __( 'Booster - Invoices Report', 'woocommerce-jetpack' ); ?></h2>
 			<p><?php echo __( 'Invoices Monthly Reports.', 'woocommerce-jetpack' ); ?></p>
 			<?php echo $result_message; ?>
 			<p><form method="post" action="">
