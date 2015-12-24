@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack EU VAT Number class.
  *
- * @version 2.3.9
+ * @version 2.3.10
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -17,6 +17,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.3.10
 	 */
 	function __construct() {
 
@@ -24,6 +26,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		$this->short_desc = __( 'EU VAT Number', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers.', 'woocommerce-jetpack' );
 		parent::__construct();
+
+		$this->add_tools( array( 'eu_countries_vat_rates' => __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ), ) );
 
 		if ( $this->is_enabled() ) {
 			/* if ( ! session_id() ) {
@@ -41,7 +45,169 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'update_eu_vat_number_checkout_field_order_meta' ) );
 			add_filter( 'woocommerce_customer_meta_fields',       array( $this, 'add_eu_vat_number_customer_meta_field' ) );
 			add_filter( 'default_checkout_billing_eu_vat_number', array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
+
+			add_filter( 'wcj_tools_tabs',                        array( $this, 'add_tool_tab' ), 100 );
+			add_action( 'wcj_tools_' . 'eu_countries_vat_rates', array( $this, 'create_tool' ), 100 );
+			add_action( 'init', array( $this, 'add_eu_countries_vat_rates' ) );
 		}
+		add_action( 'wcj_tools_dashboard', array( $this, 'add_tool_info_to_tools_dashboard' ), 100 );
+	}
+
+	/**
+	 * add_tool_info_to_tools_dashboard.
+	 *
+	 * @version 2.3.10
+	 * @since   2.3.10
+	 */
+	public function add_tool_info_to_tools_dashboard() {
+		echo '<tr>';
+		$is_enabled = ( $this->is_enabled() ) ?
+			'<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' )  . '</span>' :
+			'<span style="color:gray;font-style:italic;">'  . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';
+		echo '<td>' . __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ) . '</td>';
+		echo '<td>' . $is_enabled . '</td>';
+		echo '<td>' . __( 'EU Countries VAT Rates.', 'woocommerce-jetpack' ) . '</td>';
+		echo '</tr>';
+	}
+
+	/**
+	 * add_tool_tab.
+	 *
+	 * @version 2.3.10
+	 * @since   2.3.10
+	 */
+	public function add_tool_tab( $tabs ) {
+		$tabs[] = array(
+			'id'    => 'eu_countries_vat_rates',
+			'title' => __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ),
+		);
+		return $tabs;
+	}
+
+	/**
+	 * add_eu_countries_vat_rates.
+	 *
+	 * @version 2.3.10
+	 * @since   2.3.10
+	 */
+	public function add_eu_countries_vat_rates() {
+
+		if ( ! isset( $_GET['add_eu_countries_vat_rates'] ) ) return;
+		if ( ! is_super_admin() ) return;
+
+		$loop = 0;
+
+		foreach ( $this->get_european_union_countries_with_vat_rate() as $country => $rate ) {
+
+			$tax_rate = array(
+				'tax_rate_country'  => $country,
+				'tax_rate'          => $rate,
+
+				'tax_rate_name'     => __( 'VAT', 'woocommerce' ),//$name,
+				'tax_rate_priority' => 1,//$priority,
+				'tax_rate_compound' => 0,//$compound ? 1 : 0,
+				'tax_rate_shipping' => 1,//$shipping ? 1 : 0,
+
+				'tax_rate_order'    => $loop ++,
+				'tax_rate_class'    => '',
+			);
+
+			$tax_rate_id = WC_Tax::_insert_tax_rate( $tax_rate );
+			WC_Tax::_update_tax_rate_postcodes( $tax_rate_id, '' );
+			WC_Tax::_update_tax_rate_cities( $tax_rate_id, '' );
+		}
+	}
+
+	/* Used by admin settings page.
+	 *
+	 * @param string $tax_class
+	 *
+	 * @return array|null|object
+	 *
+	 * @version 2.3.10
+	 * @since   2.3.10
+	 */
+	public static function get_rates_for_tax_class( $tax_class ) {
+		global $wpdb;
+
+		// Get all the rates and locations. Snagging all at once should significantly cut down on the number of queries.
+		$rates     = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rates` WHERE `tax_rate_class` = %s ORDER BY `tax_rate_order`;", sanitize_title( $tax_class ) ) );
+		$locations = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rate_locations`" );
+
+		// Set the rates keys equal to their ids.
+		$rates = array_combine( wp_list_pluck( $rates, 'tax_rate_id' ), $rates );
+
+		// Drop the locations into the rates array.
+		foreach ( $locations as $location ) {
+			// Don't set them for unexistent rates.
+			if ( ! isset( $rates[ $location->tax_rate_id ] ) ) {
+				continue;
+			}
+			// If the rate exists, initialize the array before appending to it.
+			if ( ! isset( $rates[ $location->tax_rate_id ]->{$location->location_type} ) ) {
+				$rates[ $location->tax_rate_id ]->{$location->location_type} = array();
+			}
+			$rates[ $location->tax_rate_id ]->{$location->location_type}[] = $location->location_code;
+		}
+
+		return $rates;
+	}
+
+	/**
+	 * get_european_union_countries_with_vat_rate.
+	 *
+	 * @version 2.3.10
+	 * @since   2.3.10
+	 */
+	function get_european_union_countries_with_vat_rate() {
+		return array(
+			'AT' => 20,
+			'BE' => 21,
+			'BG' => 20,
+			'CY' => 19,
+			'CZ' => 21,
+			'DE' => 19,
+			'DK' => 25,
+			'EE' => 20,
+			'ES' => 21,
+			'FI' => 24,
+			'FR' => 20,
+			'GB' => 20,
+			'GR' => 23,
+			'HU' => 27,
+			'HR' => 25,
+			'IE' => 23,
+			'IT' => 22,
+			'LT' => 21,
+			'LU' => 17,
+			'LV' => 21,
+			'MT' => 18,
+			'NL' => 21,
+			'PL' => 23,
+			'PT' => 23,
+			'RO' => 24,
+			'SE' => 25,
+			'SI' => 22,
+			'SK' => 20,
+		);
+	}
+
+	/**
+	 * create_tool.
+	 *
+	 * @version 2.3.10
+	 * @since   2.3.10
+	 */
+	public function create_tool() {
+		$the_tool_html = '';
+		$the_tool_html .= $this->get_back_to_settings_link_html();
+		$the_tool_html .= '<br>';
+		$the_tool_html .= '<a href="' . add_query_arg( 'add_eu_countries_vat_rates', '1' ) . '">' . __( 'Add EU Countries VAT Rates', 'woocommerce-jetpack' ) . '</a>';
+		$eu_vat_rates = $this->get_european_union_countries_with_vat_rate();
+		$the_tool_html .= '<pre>' . print_r( count( $eu_vat_rates ), true ) . PHP_EOL . print_r( $eu_vat_rates, true ) . '</pre>';
+		$standard_tax_rates = self::get_rates_for_tax_class( '' );
+		$the_tool_html .= '<pre>' . print_r( count( $standard_tax_rates ), true ) . PHP_EOL . print_r( $standard_tax_rates, true ) . '</pre>';
+		echo $the_tool_html;
 	}
 
 	/**
@@ -231,6 +397,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.3.10
 	 */
 	function get_settings() {
 
@@ -329,6 +497,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				'id'      => 'wcj_eu_vat_number_options'
 			),
 		);
+
+		$settings = $this->add_tools_list( $settings );
 
 		return $this->add_enable_module_setting( $settings );
 	}

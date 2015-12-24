@@ -1,6 +1,5 @@
 === Booster for WooCommerce ===
 Contributors: algoritmika,anbinder,solovjov
-Donate link: http://algoritmika.com/donate/
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack,custom price labels,call for price,currency symbol,remove sorting,remove old product slugs,add to cart text,order number,sequential order numbering,email pdf invoice,pdf invoice,pdf invoices,already in cart,empty cart,redirect to checkout,minimum order amount,customize checkout fields,checkout fields,email,customize product tabs,product tabs,related products number,empty cart,redirect add to cart,redirect to checkout,product already in cart,custom payment gateway,payment gateway icon,auto-complete all orders,custom order statuses,custom order status,remove text from price,custom css,hide categories count,hide subcategories count,hide category count,hide subcategory count,display total sales,custom product tabs,remove product tab,payment gateway fee,
 Requires at least: 3.8
 Tested up to: 4.4
@@ -117,7 +116,13 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.10 - 21/12/2015 =
+= 2.3.10 - 23/12/2015 =
+* Dev - PDF Invoicing - "Renumerate Invoices" tool - "End Date" field added.
+* Fix - EMAILS & MISC. - General - Tabs at "Booster Tools" fixed.
+* Dev - PDF Invoicing - "Invoices Report" tool - Code refactoring.
+* Dev - PDF Invoicing - "Invoices Report" tool - "Get Report Zip" button added.
+* Dev - EMAILS & MISC. - EU VAT Number - "EU Countries VAT Rates" tool added.
+* Dev - Donate link removed.
 * Dev - PDF Invoicing - Display - Admin's "Orders" Page - "Column Text", "Create Button" and "Delete Button" options added.
 * Dev - PDF Invoicing - Display - Customer's "My Account" Page - "Add link" and "Link text" options unlocked.
 * Dev - PDF Invoices (v1) marked as "Depreciated".

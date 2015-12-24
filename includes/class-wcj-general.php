@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.3.9
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
 
@@ -53,10 +53,10 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * add_tool_tabs.
 	 *
-	 * @version 2.3.9
+	 * @version 2.3.10
 	 * @since   2.3.9
 	 */
-	function add_tool_tabs() {
+	function add_tool_tabs( $tabs ) {
 		$tabs[] = array(
 			'id'    => 'products_atts',
 			'title' => __( 'Products Atts', 'woocommerce-jetpack' ),
