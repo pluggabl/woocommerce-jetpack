@@ -37,7 +37,9 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	function report_zip() {
 		if ( isset( $_POST['get_invoices_report_zip'] ) ) {
 			if ( ! empty( $_POST['report_year'] ) && ! empty( $_POST['report_month'] ) ) {
-				$this->get_invoices_report_zip( $_POST['report_year'], $_POST['report_month'] );
+				if ( is_super_admin() || is_shop_manager() ) {
+					$this->get_invoices_report_zip( $_POST['report_year'], $_POST['report_month'] );
+				}
 			}
 		}
 	}

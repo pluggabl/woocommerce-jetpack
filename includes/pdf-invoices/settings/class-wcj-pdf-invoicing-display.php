@@ -17,13 +17,13 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.10
 	 */
 	function __construct() {
 
 		$this->id         = 'pdf_invoicing_display';
 		$this->parent_id  = 'pdf_invoicing';
-		$this->short_desc = __( 'Misc.', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Display & Misc.', 'woocommerce-jetpack' );
 		$this->desc       = '';
 		parent::__construct( 'submodule' );
 
@@ -165,7 +165,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 
 				array(
 					'title'    => '',
-					'desc'     => __( 'Column Text', 'woocommerce-jetpack' ),
+					'desc'     => __( 'Column Title', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_page_column_text',
 					'default'  => $invoice_type['title'],
 					'type'     => 'text',
@@ -174,7 +174,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				array(
 					'title'    => '',
 					'desc'     => __( 'Create Button', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'Set blank to disable button', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Set empty to disable the button', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_column_create_btn',
 					'default'  => __( 'Create', 'woocommerce-jetpack' ),
 					'type'     => 'text',
@@ -183,7 +183,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				array(
 					'title'    => '',
 					'desc'     => __( 'Delete Button', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'Set blank to disable button', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Set empty to disable the button', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_column_delete_btn',
 					'default'  => __( 'Delete', 'woocommerce-jetpack' ),
 					'type'     => 'text',

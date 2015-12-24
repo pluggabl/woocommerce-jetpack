@@ -4,9 +4,46 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.3.0
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
+
+if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
+	/* Used by admin settings page.
+	 *
+	 * @param string $tax_class
+	 *
+	 * @return array|null|object
+	 *
+	 * @version 2.3.10
+	 * @since   2.3.10
+	 */
+	function wcj_get_rates_for_tax_class( $tax_class ) {
+		global $wpdb;
+
+		// Get all the rates and locations. Snagging all at once should significantly cut down on the number of queries.
+		$rates     = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rates` WHERE `tax_rate_class` = %s ORDER BY `tax_rate_order`;", sanitize_title( $tax_class ) ) );
+		$locations = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}woocommerce_tax_rate_locations`" );
+
+		// Set the rates keys equal to their ids.
+		$rates = array_combine( wp_list_pluck( $rates, 'tax_rate_id' ), $rates );
+
+		// Drop the locations into the rates array.
+		foreach ( $locations as $location ) {
+			// Don't set them for unexistent rates.
+			if ( ! isset( $rates[ $location->tax_rate_id ] ) ) {
+				continue;
+			}
+			// If the rate exists, initialize the array before appending to it.
+			if ( ! isset( $rates[ $location->tax_rate_id ]->{$location->location_type} ) ) {
+				$rates[ $location->tax_rate_id ]->{$location->location_type} = array();
+			}
+			$rates[ $location->tax_rate_id ]->{$location->location_type}[] = $location->location_code;
+		}
+
+		return $rates;
+	}
+}
 
 /*
  * wcj_get_select_options()

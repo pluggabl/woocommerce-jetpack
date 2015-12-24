@@ -120,7 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Dev - PDF Invoicing - "Invoices Report" tool - Code refactoring.
 * Dev - PDF Invoicing - "Invoices Report" tool - "Get Report Zip" button added.
 * Dev - PDF Invoicing - "Renumerate Invoices" tool - "End Date" field added.
-* Dev - PDF Invoicing - Display - Admin's "Orders" Page - "Column Text", "Create Button" and "Delete Button" options added.
+* Dev - PDF Invoicing - Display - Admin's "Orders" Page - "Column Title", "Create Button" and "Delete Button" options added.
+* Dev - PDF Invoicing - Display - "Misc." menu renamed to "Display & Misc.".
 * Dev - PDF Invoicing - Display - Customer's "My Account" Page - "Add link" and "Link text" options unlocked.
 * Dev - PDF Invoices (v1) marked as "Depreciated".
 * Fix - EMAILS & MISC. - General - Tabs at "Booster Tools" fixed.
