@@ -15,14 +15,14 @@ if ( ! class_exists( 'WCJ_PDF_Invoices' ) ) :
 class WCJ_PDF_Invoices {
 
 	public $default_css =
-'.pdf_invoice_header_text_wcj { text-align: right; color: gray; font-weight: bold; }
-.pdf_invoice_number_and_date_table_wcj { width: 50%; }
-.pdf_invoice_items_table_wcj { padding: 5px; width: 100%; }
-.pdf_invoice_items_table_wcj th { border: 1px solid #F0F0F0; font-weight: bold; text-align: center; }
-.pdf_invoice_items_table_wcj td { border: 1px solid #F0F0F0; }
-.pdf_invoice_totals_table_wcj { padding: 5px; width: 100%; }
-.pdf_invoice_totals_table_wcj th { width: 80%; text-align: right; }
-.pdf_invoice_totals_table_wcj td { width: 20%; text-align: right; border: 1px solid #F0F0F0; }';
+		'.pdf_invoice_header_text_wcj { text-align: right; color: gray; font-weight: bold; } ' .
+		'.pdf_invoice_number_and_date_table_wcj { width: 50%; } ' .
+		'.pdf_invoice_items_table_wcj { padding: 5px; width: 100%; } ' .
+		'.pdf_invoice_items_table_wcj th { border: 1px solid #F0F0F0; font-weight: bold; text-align: center; } ' .
+		'.pdf_invoice_items_table_wcj td { border: 1px solid #F0F0F0; } ' .
+		'.pdf_invoice_totals_table_wcj { padding: 5px; width: 100%; } ' .
+		'.pdf_invoice_totals_table_wcj th { width: 80%; text-align: right; } ' .
+		'.pdf_invoice_totals_table_wcj td { width: 20%; text-align: right; border: 1px solid #F0F0F0; }';
 
 	/**
 	 * Constructor.

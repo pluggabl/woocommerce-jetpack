@@ -29,7 +29,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 
 		$this->add_tools( array(
 			'renumerate_invoices' => array(
-				'title' => __( 'Renumerate Invoices', 'woocommerce-jetpack' ),
+				'title' => __( 'Invoices Renumerate', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Tool renumerates all invoices, proforma invoices, credit notes and packing slips.', 'woocommerce-jetpack' ),
 			),
 			'invoices_report' => array(
@@ -42,6 +42,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 
 			add_action( 'init', array( $this, 'catch_args' ) );
 			add_action( 'init', array( $this, 'generate_pdf_on_init' ) );
+
+			$this->the_pdf_invoicing_report_tool = include_once( 'pdf-invoices/class-wcj-pdf-invoicing-report-tool.php' );
 
 //			define ( 'K_PATH_IMAGES', $_SERVER['DOCUMENT_ROOT'] );
 
@@ -67,8 +69,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	 * @since   2.3.10
 	 */
 	function create_invoices_report_tool() {
-		$the_tool = include_once( 'pdf-invoices/class-wcj-pdf-invoicing-report-tool.php' );
-		return $the_tool->create_invoices_report_tool();
+		//$the_tool = include_once( 'pdf-invoices/class-wcj-pdf-invoicing-report-tool.php' );
+		return $this->the_pdf_invoicing_report_tool->create_invoices_report_tool();
 	}
 
 	/**
