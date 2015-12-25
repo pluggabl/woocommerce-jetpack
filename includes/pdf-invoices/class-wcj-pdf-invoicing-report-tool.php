@@ -21,6 +21,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 * @version 2.3.10
 	 */
 	public function __construct() {
+		$this->notice = '';
 		add_action( 'init', array( $this, 'generate_report_zip' ) );
 	}
 
@@ -34,8 +35,12 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		if ( isset( $_POST['get_invoices_report_zip'] ) ) {
 			if ( ! empty( $_POST['report_year'] ) && ! empty( $_POST['report_month'] ) ) {
 				if ( is_super_admin() || is_shop_manager() ) {
-					$this->get_invoices_report_zip( $_POST['report_year'], $_POST['report_month'] );
+					if ( false === $this->get_invoices_report_zip( $_POST['report_year'], $_POST['report_month'] ) ) {
+						$this->notice = '<div class="error"><p><strong>' . __( 'Sorry, but something went wrong...', 'woocommerce-jetpack' ) . '</strong></p></div>';
+					}
 				}
+			} else {
+				$this->notice = '<div class="error"><p><strong>' . __( 'Please fill year and month values.', 'woocommerce-jetpack' ) . '</strong></p></div>';
 			}
 		}
 	}
@@ -47,6 +52,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 */
 	function create_invoices_report_tool() {
 		$result_message = '';
+		$result_message .= $this->notice;
 		$the_year  = ( ! empty( $_POST['report_year'] ) )  ? $_POST['report_year']  : '';
 		$the_month = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : '';
 		if ( isset( $_POST['get_invoices_report'] ) ) {
@@ -75,12 +81,12 @@ class WCJ_PDF_Invoicing_Report_Tool {
 					// Get Report Button
 					array(
 						'',
-						'<input type="submit" name="get_invoices_report" value="' . __( 'Display monthly invoices table', 'woocommerce-jetpack' ) . '">',
+						'<input class="button-primary" type="submit" name="get_invoices_report" value="' . __( 'Display monthly invoices table', 'woocommerce-jetpack' ) . '">',
 					),
 					// Get Report Zip Button
 					array(
 						'',
-						'<input type="submit" name="get_invoices_report_zip" value="' . __( 'Download all monthly invoices PDFs in single Zip file', 'woocommerce-jetpack' ) . '">',
+						'<input class="button-primary" type="submit" name="get_invoices_report_zip" value="' . __( 'Download all monthly invoices PDFs in single Zip file', 'woocommerce-jetpack' ) . '">',
 					),
 				);
 				// Print all
@@ -103,9 +109,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			unlink ( $zip_file_path );
 		}
 		if ( $zip->open( $zip_file_path, ZipArchive::CREATE ) !== TRUE ) {
-			//exit("cannot open <$zip_file_path>\n");
-			echo 'ZIP_ERROR';
-			return;
+			return false;
 		}
 
 		$offset = 0;
@@ -155,6 +159,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		} else {
 			die( __( 'Unexpected error', 'woocommerce-jetpack' ) );
 		}
+		return true;
 	}
 
 	/**

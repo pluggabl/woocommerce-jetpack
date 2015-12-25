@@ -30,7 +30,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		$this->add_tools( array(
 			'eu_countries_vat_rates' => array(
 				'title' => __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ),
-				'desc'  => __( 'EU Countries VAT Rates.', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Add All EU Countries VAT Standard Rates to WooCommerce.', 'woocommerce-jetpack' ),
 			),
 		) );
 
@@ -91,11 +91,11 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	 * @since   2.3.10
 	 */
 	public function create_eu_countries_vat_rates_tool() {
-		$the_tool_html = '';
-		$the_tool_html .= '<h3>' . __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ) . '</h3>';
-		$the_tool_html .= $this->get_back_to_settings_link_html();
 
-		$the_tool_html .= '<h4>' . __( 'Settings', 'woocommerce-jetpack' ) . '</h4>';
+		$the_tool_html = '';
+		$the_tool_html .= $this->get_tool_header_html( 'eu_countries_vat_rates' );
+
+//		$the_tool_html .= '<h4>' . __( 'Settings', 'woocommerce-jetpack' ) . '</h4>';
 		$data = array();
 		$the_name = ( isset( $_POST['wcj_tax_name'] ) ) ? $_POST['wcj_tax_name'] : __( 'VAT', 'woocommerce' );
 		$data[] = array(
@@ -104,7 +104,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		);
 		$data[] = array(
 			'',
-			'<input type="submit" name="add_eu_countries_vat_rates" value="' . __( 'Add EU Countries VAT Rates', 'woocommerce-jetpack' ) . '">' . ' ' . __( 'Note: will add duplicates.', 'woocommerce-jetpack' ),
+			'<input class="button-primary" type="submit" name="add_eu_countries_vat_rates" value="' . __( 'Add EU Countries VAT Rates', 'woocommerce-jetpack' ) . '">' . ' ' . __( 'Note: will add duplicates.', 'woocommerce-jetpack' ),
 		);
 		$the_tool_html .= '<p>';
 		$the_tool_html .= '<form method="post" action="">';
@@ -112,7 +112,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		$the_tool_html .= '</form>';
 		$the_tool_html .= '</p>';
 
-		$the_tool_html .= '<h4>' . __( 'List of EU VAT Rates to be Added', 'woocommerce-jetpack' ) . '</h4>';
+		$the_tool_html .= '<h4>' . __( 'List of EU VAT rates to be added', 'woocommerce-jetpack' ) . '</h4>';
 		$eu_vat_rates = wcj_get_european_union_countries_with_vat();
 		$data = array();
 		$data[] = array(
@@ -126,7 +126,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		}
 		$the_tool_html .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', 'table_style' => 'width:50%;min-width:300px;', ) );
 
-		$the_tool_html .= '<h4>' . __( 'Current Standard Tax Rates', 'woocommerce-jetpack' ) . '</h4>';
+		$the_tool_html .= '<h4>' . __( 'Current standard tax rates', 'woocommerce-jetpack' ) . '</h4>';
 		$standard_tax_rates = wcj_get_rates_for_tax_class( '' );
 		$data = array();
 		$data[] = array(

@@ -155,8 +155,7 @@ class WCJ_SKU extends WCJ_Module {
 			$result_message = '<p><div class="updated"><p><strong>' . __( 'SKUs generated and set successfully!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 		}
 		?><div>
-			<?php echo $this->get_back_to_settings_link_html(); ?>
-			<?php echo $this->get_tool_html_header( 'sku' ); ?>
+			<?php echo $this->get_tool_header_html( 'sku' ); ?>
 			<?php if ( ! $is_preview ) echo $result_message; ?>
 			<p><form method="post" action="">
 				<input class="button-primary" type="submit" name="preview_sku" id="preview_sku" value="<?php _e( 'Preview SKUs', 'woocommerce-jetpack' ); ?>">
@@ -177,7 +176,7 @@ class WCJ_SKU extends WCJ_Module {
 				'title'    => __( 'SKU Format Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => '',
-				'id'       => 'wcj_sku_format_options'
+				'id'       => 'wcj_sku_format_options',
 			),
 
 			array(
@@ -219,7 +218,7 @@ class WCJ_SKU extends WCJ_Module {
 
 			array(
 				'type'     => 'sectionend',
-				'id'       => 'wcj_sku_format_options'
+				'id'       => 'wcj_sku_format_options',
 			),
 
 		);

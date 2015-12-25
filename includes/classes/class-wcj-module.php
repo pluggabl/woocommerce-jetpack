@@ -181,13 +181,13 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * get_back_to_settings_link_html.
 	 *
-	 * @version 2.2.3
+	 * @version 2.3.10
 	 * @since   2.2.3
 	 */
 	function get_back_to_settings_link_html() {
 		$cat_id = $this->get_cat_by_section( $this->id );
 		$the_link = admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $cat_id . '&section=' . $this->id );
-		return '<a href="' .  $the_link . '">' . __( 'Back to Module Settings', 'woocommerce-jetpack' ) . '</a>';
+		return '<a href="' .  $the_link . '"><< ' . __( 'Back to Module Settings', 'woocommerce-jetpack' ) . '</a>';
 	}
 
 	/**
@@ -217,19 +217,17 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	}
 
 	/**
-	 * add_tools.
+	 * get_tool_header_html.
 	 *
 	 * @version 2.3.10
 	 * @since   2.3.10
 	 */
-	function get_tool_html_header( $tool_id ) {
+	function get_tool_header_html( $tool_id ) {
 		$html = '';
-		foreach ( $this->tools_array as $id => $data ) {
-			if ( $tool_id == $id ) {
-				$html .= '<h3>' . __( 'Booster', 'woocommerce-jetpack' ) . ' - ' . $data['title'] . '</h3>';
-				$html .= '<p>'  . $data['desc']  . '</p>';
-				break;
-			}
+		if ( isset( $this->tools_array[ $tool_id ] ) ) {
+			$html .= '<p>' .  $this->get_back_to_settings_link_html() . '</p>';
+			$html .= '<h3>' . __( 'Booster', 'woocommerce-jetpack' ) . ' - ' . $this->tools_array[ $tool_id ]['title'] . '</h3>';
+			$html .= '<p style="font-style:italic;">' . $this->tools_array[ $tool_id ]['desc']  . '</p>';
 		}
 		return $html;
 	}
