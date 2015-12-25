@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Emails class.
  *
- * @version 2.3.9
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
 
@@ -140,7 +140,7 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.9
+	 * @version 2.3.10
 	 */
 	function get_settings() {
 		$settings = array(
@@ -165,7 +165,7 @@ class WCJ_Emails extends WCJ_Module {
 			),
 		);
 		$settings = array_merge( $settings, $this->get_emails_forwarding_settings() );
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 

@@ -27,7 +27,12 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		$this->desc       = __( 'Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-		$this->add_tools( array( 'eu_countries_vat_rates' => __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ), ) );
+		$this->add_tools( array(
+			'eu_countries_vat_rates' => array(
+				'title' => __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ),
+				'desc'  => __( 'EU Countries VAT Rates.', 'woocommerce-jetpack' ),
+			),
+		) );
 
 		if ( $this->is_enabled() ) {
 			/* if ( ! session_id() ) {
@@ -46,42 +51,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			add_filter( 'woocommerce_customer_meta_fields',       array( $this, 'add_eu_vat_number_customer_meta_field' ) );
 			add_filter( 'default_checkout_billing_eu_vat_number', array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
 
-			add_filter( 'wcj_tools_tabs',                        array( $this, 'add_tool_tab' ), 100 );
-			add_action( 'wcj_tools_' . 'eu_countries_vat_rates', array( $this, 'create_tool' ), 100 );
 			add_action( 'init', array( $this, 'add_eu_countries_vat_rates' ) );
 		}
-		add_action( 'wcj_tools_dashboard', array( $this, 'add_tool_info_to_tools_dashboard' ), 100 );
-	}
-
-	/**
-	 * add_tool_info_to_tools_dashboard.
-	 *
-	 * @version 2.3.10
-	 * @since   2.3.10
-	 */
-	public function add_tool_info_to_tools_dashboard() {
-		echo '<tr>';
-		$is_enabled = ( $this->is_enabled() ) ?
-			'<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' )  . '</span>' :
-			'<span style="color:gray;font-style:italic;">'  . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';
-		echo '<td>' . __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ) . '</td>';
-		echo '<td>' . $is_enabled . '</td>';
-		echo '<td>' . __( 'EU Countries VAT Rates.', 'woocommerce-jetpack' ) . '</td>';
-		echo '</tr>';
-	}
-
-	/**
-	 * add_tool_tab.
-	 *
-	 * @version 2.3.10
-	 * @since   2.3.10
-	 */
-	public function add_tool_tab( $tabs ) {
-		$tabs[] = array(
-			'id'    => 'eu_countries_vat_rates',
-			'title' => __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ),
-		);
-		return $tabs;
 	}
 
 	/**
@@ -114,12 +85,12 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	}
 
 	/**
-	 * create_tool.
+	 * create_eu_countries_vat_rates_tool.
 	 *
 	 * @version 2.3.10
 	 * @since   2.3.10
 	 */
-	public function create_tool() {
+	public function create_eu_countries_vat_rates_tool() {
 		$the_tool_html = '';
 		$the_tool_html .= '<h3>' . __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ) . '</h3>';
 		$the_tool_html .= $this->get_back_to_settings_link_html();

@@ -21,10 +21,6 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 * @version 2.3.10
 	 */
 	public function __construct() {
-		add_filter( 'wcj_tools_tabs',            array( $this, 'add_invoices_report_tool_tab' ), 100 );
-		add_action( 'wcj_tools_invoices_report', array( $this, 'create_invoices_report_tool' ), 100 );
-		add_action( 'wcj_tools_dashboard',       array( $this, 'add_invoices_report_tool_info_to_tools_dashboard' ), 100 );
-
 		add_action( 'init', array( $this, 'report_zip' ) );
 	}
 
@@ -42,32 +38,6 @@ class WCJ_PDF_Invoicing_Report_Tool {
 				}
 			}
 		}
-	}
-
-	/**
-	 * add_invoices_report_tool_info_to_tools_dashboard.
-	 */
-	public function add_invoices_report_tool_info_to_tools_dashboard() {
-		echo '<tr>';
-		if ( 'yes' === get_option( 'wcj_pdf_invoicing_enabled') )
-			$is_enabled = '<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' ) . '</span>';
-		else
-			$is_enabled = '<span style="color:gray;font-style:italic;">' . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';
-		echo '<td>' . __( 'Invoices Report', 'woocommerce-jetpack' ) . '</td>';
-		echo '<td>' . $is_enabled . '</td>';
-		echo '<td>' . __( 'Invoices Monthly Reports.', 'woocommerce-jetpack' ) . '</td>';
-		echo '</tr>';
-	}
-
-	/**
-	 * add_invoices_report_tool_tab.
-	 */
-	public function add_invoices_report_tool_tab( $tabs ) {
-		$tabs[] = array(
-			'id'    => 'invoices_report',
-			'title' => __( 'Invoices Report', 'woocommerce-jetpack' ),
-		);
-		return $tabs;
 	}
 
 	/**

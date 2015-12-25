@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Custom Statuses class.
  *
- * @version 2.3.8
+ * @version 2.3.10
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.8
+	 * @version 2.3.10
 	 */
 	public function __construct() {
 
@@ -27,7 +27,12 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 		$this->desc       = __( 'Custom statuses for WooCommerce orders.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-		$this->add_tools( array( 'custom_statuses' => __( 'Custom Statuses', 'woocommerce-jetpack' ), ) );
+		$this->add_tools( array(
+			'custom_statuses' => array(
+				'title' => __( 'Custom Statuses', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Tool lets you add or delete any custom status for WooCommerce orders.', 'woocommerce-jetpack' ),
+			),
+		) );
 
 		$this->default_statuses = array(
 			'wc-pending'    => _x( 'Pending payment', 'Order status', 'woocommerce' ),
@@ -44,8 +49,6 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			add_filter( 'wc_order_statuses',                  array( $this, 'add_custom_statuses_to_filter' ), 100 );
 			add_action( 'init',                               array( $this, 'register_custom_post_statuses' ) );
 			add_action( 'admin_head',                         array( $this, 'hook_statuses_icons_css' ) );
-			add_filter( 'wcj_tools_tabs',                     array( $this, 'add_custom_statuses_tool_tab' ), 100 );
-			add_action( 'wcj_tools_custom_statuses',          array( $this, 'create_custom_statuses_tool' ), 100 );
 
 			add_filter( 'woocommerce_default_order_status',   array( $this, 'set_default_order_status' ), 100 );
 
@@ -56,10 +59,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_bulk_actions' ) ) {
 				add_action( 'admin_footer', array( $this, 'bulk_admin_footer' ), 11 );
 			}
-
 		}
-
-		add_action( 'wcj_tools_dashboard', array( $this, 'add_custom_statuses_tool_info_to_tools_dashboard' ), 100 );
 	}
 
 	/**
@@ -110,31 +110,6 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 		$wcj_orders_custom_statuses_array = ( '' == get_option( 'wcj_orders_custom_statuses_array' ) ) ? array() : get_option( 'wcj_orders_custom_statuses_array' );
 		$order_statuses = ( '' == $order_statuses ) ? array() : $order_statuses;
 		return array_merge( $order_statuses, $wcj_orders_custom_statuses_array );
-	}
-
-	/**
-	 * add_custom_statuses_tool_info_to_tools_dashboard.
-	 */
-	public function add_custom_statuses_tool_info_to_tools_dashboard() {
-		echo '<tr>';
-		$is_enabled = ( $this->is_enabled() ) ?
-			'<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' ) . '</span>' :
-			'<span style="color:gray;font-style:italic;">' . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';
-		echo '<td>' . __( 'Custom Statuses', 'woocommerce-jetpack' ) . '</td>';
-		echo '<td>' . $is_enabled . '</td>';
-		echo '<td>' . __( 'Tool lets you add or delete any custom status for WooCommerce orders.', 'woocommerce-jetpack' ) . '</td>';
-		echo '</tr>';
-	}
-
-	/**
-	 * add_custom_statuses_tool_tab.
-	 */
-	public function add_custom_statuses_tool_tab( $tabs ) {
-		$tabs[] = array(
-			'id'    => 'custom_statuses',
-			'title' => __( 'Custom Statuses', 'woocommerce-jetpack' ),
-		);
-		return $tabs;
 	}
 
 	/**

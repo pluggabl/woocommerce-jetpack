@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing class.
  *
- * @version 2.3.0
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.10
 	 */
 	public function __construct() {
 
@@ -27,10 +27,18 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		$this->desc          = __( 'WooCommerce Invoices, Proforma Invoices, Credit Notes and Packing Slips.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-		if ( $this->is_enabled() ) {
+		$this->add_tools( array(
+			'renumerate_invoices' => array(
+				'title' => __( 'Renumerate Invoices', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Tool renumerates all invoices, proforma invoices, credit notes and packing slips.', 'woocommerce-jetpack' ),
+			),
+			'invoices_report' => array(
+				'title' => __( 'Invoices Report', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Invoices Monthly Reports.', 'woocommerce-jetpack' ),
+			),
+		) );
 
-			include_once( 'pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php' );
-			include_once( 'pdf-invoices/class-wcj-pdf-invoicing-report-tool.php' );
+		if ( $this->is_enabled() ) {
 
 			add_action( 'init', array( $this, 'catch_args' ) );
 			add_action( 'init', array( $this, 'generate_pdf_on_init' ) );
@@ -53,12 +61,34 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	}
 
 	/**
+	 * create_invoices_report_tool.
+	 *
+	 * @version 2.3.10
+	 * @since   2.3.10
+	 */
+	function create_invoices_report_tool() {
+		$the_tool = include_once( 'pdf-invoices/class-wcj-pdf-invoicing-report-tool.php' );
+		return $the_tool->create_invoices_report_tool();
+	}
+
+	/**
+	 * create_renumerate_invoices_tool.
+	 *
+	 * @version 2.3.10
+	 * @since   2.3.10
+	 */
+	function create_renumerate_invoices_tool() {
+		$the_tool = include_once( 'pdf-invoices/class-wcj-pdf-invoicing-renumerate-tool.php' );
+		return $the_tool->create_renumerate_invoices_tool();
+	}
+
+	/**
 	 * create_meta_box.
 	 *
 	 * @version 2.3.0
 	 * @since   2.3.0
-	 *
-	public function create_meta_box() {
+	 */
+	/* public function create_meta_box() {
 
 		$current_post_id = get_the_ID();
 
@@ -90,7 +120,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		}
 		$html .= '</table>';
 		echo $html;
-	}
+	} */
 	/**
 	 * create_invoice.
 	 */
@@ -201,7 +231,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.10
 	 */
 	function get_settings() {
 
@@ -237,7 +267,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 
 		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_pdf_invoicing_options' );
 
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 

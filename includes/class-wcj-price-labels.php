@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.3.9
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.9
+	 * @version 2.3.10
 	 */
 	public function __construct() {
 
@@ -25,6 +25,15 @@ class WCJ_Price_Labels extends WCJ_Module {
 		$this->short_desc = __( 'Custom Price Labels', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Create any custom price label for any WooCommerce product.', 'woocommerce-jetpack' );
 		parent::__construct();
+
+		$this->add_tools( array(
+			'migrate_from_custom_price_labels' => array(
+				'title' => __( 'Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Tool lets you copy all the data (that is labels) from Custom Price labels (Pro) plugin to Booster.', 'woocommerce-jetpack' ),
+//				'tab_title' => __( 'Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ),
+				'depreciated' => true,
+			),
+		), array( 'tools_dashboard_hook_priority' => PHP_INT_MAX ) );
 
 		// Custom Price Labels - fields array
 		$this->custom_tab_group_name = 'wcj_price_labels';// for compatibility with Custom Price Label Pro plugin should use 'simple_is_custom_pricing_label'
@@ -53,14 +62,6 @@ class WCJ_Price_Labels extends WCJ_Module {
 		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
-
-			if ( is_admin() ) {
-				if ( 'yes' === get_option( 'wcj_migrate_from_custom_price_labels_enabled' ) ) {
-					// "Migrate from Custom Price Labels (Pro)" tool
-					add_filter( 'wcj_tools_tabs', array( $this, 'add_migrate_from_custom_price_labels_tool_tab' ), 100 );
-					add_action( 'wcj_tools_migrate_from_custom_price_labels', array( $this, 'create_migrate_from_custom_price_labels_tool_tab' ), 100 );
-				}
-			}
 
 			if ( 'yes' === get_option( 'wcj_local_price_labels_enabled', 'yes' ) ) {
 				// Meta box (admin)
@@ -103,34 +104,6 @@ class WCJ_Price_Labels extends WCJ_Module {
 			foreach ( $this->prices_filters as $the_filter )
 				add_filter( $the_filter, array( $this, 'custom_price' ), 100, 2 );
 		}
-
-		add_action( 'wcj_tools_dashboard', array( $this, 'add_migrate_tool_info_to_tools_dashboard' ), 1000 );
-	}
-
-	/**
-	 * add_migrate_tool_info_to_tools_dashboard.
-	 */
-	public function add_migrate_tool_info_to_tools_dashboard() {
-		echo '<tr>';
-		if ( 'yes' === get_option( 'wcj_migrate_from_custom_price_labels_enabled') && 'yes' === get_option( 'wcj_price_labels_enabled') )
-			$is_enabled = '<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' ) . '</span>';
-		else
-			$is_enabled = '<span style="color:gray;font-style:italic;">' . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';
-		echo '<td>' . __( 'Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ) . '</td>';
-		echo '<td>' . $is_enabled . '</td>';
-		echo '<td>' . __( 'Tool lets you copy all the data (that is labels) from Custom Price labels (Pro) plugin to WooCommerce Jetpack.', 'woocommerce-jetpack' ) . '</td>';
-		echo '</tr>';
-	}
-
-	/**
-	 * Add tab to WooCommerce > Jetpack Tools.
-	 */
-	public function add_migrate_from_custom_price_labels_tool_tab( $tabs ) {
-		$tabs[] = array(
-			'id'    => 'migrate_from_custom_price_labels',
-			'title' => __( 'Migrate from Custom Price Labels', 'woocommerce-jetpack' ),
-		);
-		return $tabs;
 	}
 
 	/**
@@ -142,11 +115,13 @@ class WCJ_Price_Labels extends WCJ_Module {
 	} */
 
 	/**
-	 * create_migrate_from_custom_price_labels_tool_tab.
+	 * create_migrate_from_custom_price_labels_tool.
+	 *
+	 * @version 2.3.10
 	 */
-	public function create_migrate_from_custom_price_labels_tool_tab() {
+	public function create_migrate_from_custom_price_labels_tool() {
 
-		echo '<h2>' . __( 'WooCommerce Jetpack - Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ) . '</h2>';
+		echo '<h2>' . __( 'Booster - Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ) . '</h2>';
 
 		$migrate = isset( $_POST['migrate'] ) ? true : false;
 
@@ -556,11 +531,12 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.7
+	 * @version 2.3.10
 	 */
 	function get_settings() {
 		$settings = array();
 		$settings = apply_filters( 'wcj_price_labels_settings', $settings );
+		$settings = $this->add_tools_list( $settings );
 		return $this->add_enable_module_setting( $settings );
 	}
 
@@ -577,7 +553,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * add_settings.
 	 *
-	 * @version 2.3.7
+	 * @version 2.3.10
 	 * @since   2.3.7
 	 */
 	function add_settings() {
@@ -752,7 +728,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'id'        => 'wcj_local_price_labels_options'
 			),
 
-			array(
+			/* array(
 				'title'     => __( 'Migrate from Custom Price Labels (Pro) Options', 'woocommerce-jetpack' ),
 				'type'      => 'title',
 				'desc'      => __( 'This section lets you enable "Migrate from Custom Price Labels (Pro)" tool.', 'woocommerce-jetpack' ),
@@ -769,7 +745,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 			array(
 				'type'      => 'sectionend',
 				'id'        => 'wcj_migrate_from_custom_price_labels_options'
-			),
+			), */
 
 		);
 

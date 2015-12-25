@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Tools class.
  *
- * @version 2.2.4
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
 
@@ -35,7 +35,7 @@ class WCJ_Tools {
 	/**
 	 * create_tools_page.
 	 *
-	 * @version 2.2.4
+	 * @version 2.3.10
 	 */
 	function create_tools_page() {
 
@@ -75,9 +75,10 @@ class WCJ_Tools {
 			echo '<p>' . __( 'This dashboard lets you check statuses and short descriptions of all available Booster for WooCommerce tools. Tools can be enabled through WooCommerce > Settings > Booster. Enabled tools will appear in the tabs menu above.', 'woocommerce-jetpack' ) . '</p>';
 			echo '<table class="widefat" style="width:90%;">';
 			echo '<tr>';
-			echo '<th style="width:25%;">' . __( 'Tool', 'woocommerce-jetpack' ) . '</th>';
-			echo '<th style="width:25%;">' . __( 'Status', 'woocommerce-jetpack' ) . '</th>';
+			echo '<th style="width:20%;">' . __( 'Tool', 'woocommerce-jetpack' ) . '</th>';
+			echo '<th style="width:20%;">' . __( 'Module', 'woocommerce-jetpack' ) . '</th>';
 			echo '<th style="width:50%;">' . __( 'Description', 'woocommerce-jetpack' ) . '</th>';
+			echo '<th style="width:10%;">' . __( 'Status', 'woocommerce-jetpack' ) . '</th>';
 			echo '</tr>';
 			do_action( 'wcj_tools_' . $active_tab );
 			echo '</table>';

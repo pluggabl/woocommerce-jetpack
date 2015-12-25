@@ -16,37 +16,10 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.3.10
 	 */
 	public function __construct() {
-		add_filter( 'wcj_tools_tabs',                array( $this, 'add_renumerate_invoices_tool_tab' ),                     100 );
-		add_action( 'wcj_tools_renumerate_invoices', array( $this, 'create_renumerate_invoices_tool' ),                      100 );
-		add_action( 'wcj_tools_dashboard',           array( $this, 'add_renumerate_invoices_tool_info_to_tools_dashboard' ), 100 );
-	}
-
-	/**
-	 * add_renumerate_invoices_tool_info_to_tools_dashboard.
-	 */
-	public function add_renumerate_invoices_tool_info_to_tools_dashboard() {
-		echo '<tr>';
-		if ( 'yes' === get_option( 'wcj_pdf_invoicing_enabled') )
-			$is_enabled = '<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' ) . '</span>';
-		else
-			$is_enabled = '<span style="color:gray;font-style:italic;">' . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';
-		echo '<td>' . __( 'Invoices Renumerate', 'woocommerce-jetpack' ) . '</td>';
-		echo '<td>' . $is_enabled . '</td>';
-		echo '<td>' . __( 'Tool renumerates all invoices, proforma invoices, credit notes and packing slips.', 'woocommerce-jetpack' ) . '</td>';
-		echo '</tr>';
-	}
-
-	/**
-	 * add_renumerate_invoices_tool_tab.
-	 */
-	public function add_renumerate_invoices_tool_tab( $tabs ) {
-		$tabs[] = array(
-			'id'		=> 'renumerate_invoices',
-			'title'		=> __( 'Renumerate Invoices', 'woocommerce-jetpack' ),
-		);
-		return $tabs;
 	}
 
 	/**
@@ -66,7 +39,7 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 	 *
 	 * @version 2.3.10
 	 */
-	public function create_renumerate_invoices_tool() {
+	function create_renumerate_invoices_tool() {
 		$result_message = '';
 		$renumerate_result = '';
 
@@ -99,7 +72,7 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 					'<input class="input-text" display="date" type="text" name="start_date" value="' . $the_start_date . '">',
 					'<em>' . __( 'Date to start renumerating. Leave blank to renumerate all invoices.', 'woocommerce-jetpack' ) . '</em>',
 				);
-				
+
 				// End Date
 				$data[] = array(
 					__( 'End Date', 'woocommerce-jetpack' ),
@@ -161,14 +134,14 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 	 *
 	 * @version 2.3.10
 	 */
-	public function renumerate_invoices( $invoice_type, $start_number, $start_date, $end_date, $order_statuses, $the_delete_all ) {
+	function renumerate_invoices( $invoice_type, $start_number, $start_date, $end_date, $order_statuses, $the_delete_all ) {
 
 		$output = '';
 
 		if ( 0 != $start_number ) {
 			update_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', $start_number );
 		}
-		
+
 		$date_query_array = array(
 			array(
 				'after'     => $start_date,
@@ -203,9 +176,9 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 			while ( $loop->have_posts() ) : $loop->the_post();
 
 				$order_id = $loop->post->ID;
-				if ( 
-					in_array( $loop->post->post_status, $order_statuses ) && 
-					strtotime( $loop->post->post_date ) >= strtotime( $start_date ) && 
+				if (
+					in_array( $loop->post->post_status, $order_statuses ) &&
+					strtotime( $loop->post->post_date ) >= strtotime( $start_date ) &&
 					( strtotime( $loop->post->post_date ) <= strtotime( $end_date ) || '' == $end_date )
 				) {
 

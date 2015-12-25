@@ -17,7 +17,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.9
+	 * @version 2.3.10
 	 */
 	public function __construct() {
 
@@ -27,8 +27,14 @@ class WCJ_General extends WCJ_Module {
 		parent::__construct();
 
 		$this->add_tools( array(
-			'products_atts'    => __( 'All Products and All Attributes', 'woocommerce-jetpack' ),
-			'export_customers' => __( 'Export Customers', 'woocommerce-jetpack' ),
+			'products_atts'    => array(
+				'title' => __( 'Products Atts', 'woocommerce-jetpack' ),
+				'desc'  => __( 'All Products and All Attributes.', 'woocommerce-jetpack' ),
+			),
+			'export_customers' => array(
+				'title' => __( 'Export Customers', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Export Customers (extracted from orders).', 'woocommerce-jetpack' ),
+			),
 		) );
 
 		if ( $this->is_enabled() ) {
@@ -43,29 +49,7 @@ class WCJ_General extends WCJ_Module {
 			if ( '' != get_option( 'wcj_general_custom_admin_css' ) ) {
 				add_action( 'admin_head', array( $this, 'hook_custom_admin_css' ) );
 			}
-
-			add_filter( 'wcj_tools_tabs',                  array( $this, 'add_tool_tabs' ), 100 );
-			add_action( 'wcj_tools_' . 'products_atts',    array( $this, 'create_products_atts_tool'  ), 100 );
-			add_action( 'wcj_tools_' . 'export_customers', array( $this, 'create_export_customers_tool'  ), 100 );
 		}
-	}
-
-	/**
-	 * add_tool_tabs.
-	 *
-	 * @version 2.3.10
-	 * @since   2.3.9
-	 */
-	function add_tool_tabs( $tabs ) {
-		$tabs[] = array(
-			'id'    => 'products_atts',
-			'title' => __( 'Products Atts', 'woocommerce-jetpack' ),
-		);
-		$tabs[] = array(
-			'id'    => 'export_customers',
-			'title' => __( 'Export Customers', 'woocommerce-jetpack' ),
-		);
-		return $tabs;
 	}
 
 	/**
@@ -187,7 +171,7 @@ class WCJ_General extends WCJ_Module {
 				$_GET['wcj_attribute'],
 			);
 		} else {
-			//$table_data[] = array_values( $attributes_names );
+//			$table_data[] = array_values( $attributes_names );
 			$table_data[] = array_keys( $attributes_names );
 		}
 		foreach ( $attributes_names as $attributes_name => $attribute_title ) {

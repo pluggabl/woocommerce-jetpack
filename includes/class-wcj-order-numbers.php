@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Numbers class.
  *
- * @version 2.2.7
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.7
+	 * @version 2.3.10
 	 */
 	public function __construct() {
 
@@ -26,14 +26,19 @@ class WCJ_Order_Numbers extends WCJ_Module {
 		$this->desc       = __( 'WooCommerce sequential order numbering, custom order number prefix, suffix and number width.', 'woocommerce-jetpack' );
 		parent::__construct();
 
+		$this->add_tools( array(
+			'renumerate_orders' => array(
+				'title' => __( 'Orders Renumerate', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Tool renumerates all orders.', 'woocommerce-jetpack' ),
+//				'tab_title' => __( 'Renumerate orders', 'woocommerce-jetpack' ),
+			),
+		) );
+
 	    if ( $this->is_enabled() ) {
 //			add_action( 'woocommerce_new_order',       array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 			add_action( 'wp_insert_post',              array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_order_number',    array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
-			add_filter( 'wcj_tools_tabs',              array( $this, 'add_renumerate_orders_tool_tab' ), PHP_INT_MAX );
-			add_action( 'wcj_tools_renumerate_orders', array( $this, 'create_renumerate_orders_tool' ), PHP_INT_MAX );
 		}
-		add_action( 'wcj_tools_dashboard', array( $this, 'add_renumerate_orders_tool_info_to_tools_dashboard' ), PHP_INT_MAX );
 	}
 
 	/**
@@ -57,32 +62,6 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			)
 		);
 		return $order_number;
-	}
-
-	/**
-	 * add_renumerate_orders_tool_info_to_tools_dashboard.
-	 */
-	public function add_renumerate_orders_tool_info_to_tools_dashboard() {
-		echo '<tr>';
-		if ( 'yes' === get_option( 'wcj_order_numbers_enabled') )
-			$is_enabled = '<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' ) . '</span>';
-		else
-			$is_enabled = '<span style="color:gray;font-style:italic;">' . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';
-		echo '<td>' . __( 'Orders Renumerate', 'woocommerce-jetpack' ) . '</td>';
-		echo '<td>' . $is_enabled . '</td>';
-		echo '<td>' . __( 'Tool renumerates all orders.', 'woocommerce-jetpack' ) . '</td>';
-		echo '</tr>';
-	}
-
-	/**
-	 * add_renumerate_orders_tool_tab.
-	 */
-	public function add_renumerate_orders_tool_tab( $tabs ) {
-		$tabs[] = array(
-			'id'    => 'renumerate_orders',
-			'title' => __( 'Renumerate orders', 'woocommerce-jetpack' ),
-		);
-		return $tabs;
 	}
 
 	/**
@@ -153,6 +132,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.3.10
 	 */
 	function get_settings() {
 
@@ -238,7 +219,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 
 		);
 
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 

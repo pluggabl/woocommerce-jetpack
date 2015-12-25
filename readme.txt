@@ -116,7 +116,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.10 - 24/12/2015 =
+= 2.3.10 - 25/12/2015 =
+* Dev - `WCJ_Module` - Code refactoring (mostly Tools related).
 * Dev - PDF Invoicing - "Invoices Report" tool - Code refactoring.
 * Dev - PDF Invoicing - "Invoices Report" tool - "Get Report Zip" button added.
 * Dev - PDF Invoicing - "Renumerate Invoices" tool - "End Date" field added.
@@ -124,7 +125,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Dev - PDF Invoicing - Display - "Misc." menu renamed to "Display & Misc.".
 * Dev - PDF Invoicing - Display - Customer's "My Account" Page - "Add link" and "Link text" options unlocked.
 * Dev - PDF Invoices (v1) marked as "Depreciated".
-* Fix - EMAILS & MISC. - General - Tabs at "Booster Tools" fixed.
+* Fix - EMAILS & MISC. - General - Tabs on "Booster Tools" page fixed (caused other module's tools tabs disappear). Info on "Booster Tools Dashboard" page fixed.
 * Dev - EMAILS & MISC. - EU VAT Number - "EU Countries VAT Rates" tool added.
 * Dev - Donate link removed.
 

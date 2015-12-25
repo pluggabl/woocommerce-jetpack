@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack SKU class.
  *
- * @version 2.2.3
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.3
+	 * @version 2.3.10
 	 */
 	function __construct() {
 
@@ -26,16 +26,16 @@ class WCJ_SKU extends WCJ_Module {
 		$this->desc       = __( 'Generate WooCommerce SKUs automatically.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-		$this->add_tools( array( 'sku' => __( 'Autogenerate SKUs for Existing Products', 'woocommerce-jetpack' ), ) );
+		$this->add_tools( array(
+			'sku' => array(
+				'title' => __( 'Autogenerate SKUs', 'woocommerce-jetpack' ),
+				'desc'  => __( 'The tool generates and sets product SKUs.', 'woocommerce-jetpack' ),//__( 'Autogenerate SKUs for Existing Products', 'woocommerce-jetpack' ),
+			),
+		) );
 
-		$the_priority = 100;
 		if ( $this->is_enabled() ) {
-			add_filter( 'wcj_tools_tabs', array( $this, 'add_sku_tool_tab' ), $the_priority );
-			add_action( 'wcj_tools_sku',  array( $this, 'create_sku_tool' ), $the_priority );
-
-			add_action( 'wp_insert_post', array( $this, 'set_product_sku' ), $the_priority, 3 );
+			add_action( 'wp_insert_post', array( $this, 'set_product_sku' ), PHP_INT_MAX, 3 );
 		}
-		add_action( 'wcj_tools_dashboard', array( $this, 'add_sku_tool_info_to_tools_dashboard' ), $the_priority );
 	}
 
 	/**
@@ -137,17 +137,6 @@ class WCJ_SKU extends WCJ_Module {
 	}
 
 	/**
-	 * add_sku_tool_tab.
-	 */
-	function add_sku_tool_tab( $tabs ) {
-		$tabs[] = array(
-			'id'    => 'sku',
-			'title' => __( 'Autogenerate SKUs', 'woocommerce-jetpack' ),
-		);
-		return $tabs;
-	}
-
-	/**
 	 * create_sku_tool
 	 *
 	 * @version 2.2.3
@@ -182,21 +171,6 @@ class WCJ_SKU extends WCJ_Module {
 			</form></p>
 			<?php if ( $is_preview ) echo $preview_html; ?>
 		</div><?php
-	}
-
-	/**
-	 * add_sku_tool_info_to_tools_dashboard.
-	 */
-	function add_sku_tool_info_to_tools_dashboard() {
-		echo '<tr>';
-		if ( 'yes' === get_option( 'wcj_sku_enabled') )
-			$is_enabled = '<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' ) . '</span>';
-		else
-			$is_enabled = '<span style="color:gray;font-style:italic;">' . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';
-		echo '<td>' . __( 'Autogenerate SKUs', 'woocommerce-jetpack' ) . '</td>';
-		echo '<td>' . $is_enabled . '</td>';
-		echo '<td>' . __( 'The tool generates and sets product SKUs.', 'woocommerce-jetpack' ) . '</td>';
-		echo '</tr>';
 	}
 
 	/**

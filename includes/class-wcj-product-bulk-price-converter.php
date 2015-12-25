@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Bulk Price Converter class.
  *
- * @version 2.3.0
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.10
 	 */
 	public function __construct() {
 
@@ -26,24 +26,12 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		$this->desc       = __( 'Multiply all WooCommerce products prices by set value.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-		$this->add_tools( array( 'bulk_price_converter' => __( 'Bulk Price Converter Tool', 'woocommerce-jetpack' ), ) );
-
-		if ( $this->is_enabled() ) {
-			add_filter( 'wcj_tools_tabs',                 array( $this, 'add_bulk_price_converter_tool_tab' ), 100 );
-			add_action( 'wcj_tools_bulk_price_converter', array( $this, 'create_bulk_price_converter_tool' ),  100 );
-	    }
-		add_action( 'wcj_tools_dashboard', array( $this, 'add_bulk_price_converter_tool_info_to_tools_dashboard' ), 100 );
-	}
-
-	/**
-	 * add_bulk_price_converter_tool_tab.
-	 */
-	public function add_bulk_price_converter_tool_tab( $tabs ) {
-		$tabs[] = array(
-			'id'		=> 'bulk_price_converter',
-			'title'		=> __( 'Bulk Price Converter', 'woocommerce-jetpack' ),
-		);
-		return $tabs;
+		$this->add_tools( array(
+			'bulk_price_converter' => array(
+				'title' => __( 'Bulk Price Converter', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Bulk Price Converter Tool.', 'woocommerce-jetpack' ),
+			),
+		) );
 	}
 
 	/**
@@ -172,8 +160,8 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 
 	/**
 	 * make_pretty_price.
-	 *
-	function make_pretty_price( $price ) {
+	 */
+	/* function make_pretty_price( $price ) {
 
 		if ( 0 == $price )
 			return $price;
@@ -225,22 +213,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		}
 
 		return $the_multiplied_price;
-	}
-
-	/**
-	 * add_bulk_price_converter_tool_info_to_tools_dashboard.
-	 */
-	public function add_bulk_price_converter_tool_info_to_tools_dashboard() {
-		echo '<tr>';
-		if ( 'yes' === get_option( 'wcj_bulk_price_converter_enabled') )
-			$is_enabled = '<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' ) . '</span>';
-		else
-			$is_enabled = '<span style="color:gray;font-style:italic;">' . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';
-		echo '<td>' . __( 'Bulk Price Converter', 'woocommerce-jetpack' ) . '</td>';
-		echo '<td>' . $is_enabled . '</td>';
-		echo '<td>' . __( 'Bulk Price Converter Tool.', 'woocommerce-jetpack' ) . '</td>';
-		echo '</tr>';
-	}
+	} */
 
 	/**
 	 * get_settings.

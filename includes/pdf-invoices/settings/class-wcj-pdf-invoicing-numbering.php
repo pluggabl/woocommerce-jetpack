@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Numbering class.
  *
- * @version 2.3.0
+ * @version 2.3.10
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing_Numbering extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.10
 	 */
 	public function __construct() {
 
@@ -26,19 +26,15 @@ class WCJ_PDF_Invoicing_Numbering extends WCJ_Module {
 		$this->short_desc = __( 'Numbering', 'woocommerce-jetpack' );
 		$this->desc       = '';
 		parent::__construct( 'submodule' );
-
-		$this->add_tools( array( 'renumerate_invoices' => __( 'Renumerate Invoices', 'woocommerce-jetpack' ), ) );
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.10
 	 */
 	function get_settings() {
-
 		$settings = array();
-
 		$invoice_types = wcj_get_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
 			$settings[] = array( 'title' => strtoupper( $invoice_type['desc'] ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_options' );
@@ -74,9 +70,6 @@ class WCJ_PDF_Invoicing_Numbering extends WCJ_Module {
 			);
 			$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_options' );
 		}
-
-		$settings = $this->add_tools_list( $settings );
-
 		return $settings;
 	}
 }
