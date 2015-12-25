@@ -34,7 +34,7 @@ class WCJ_SKU extends WCJ_Module {
 		) );
 
 		if ( $this->is_enabled() ) {
-			add_action( 'wp_insert_post', array( $this, 'set_product_sku' ), PHP_INT_MAX, 3 );
+			add_action( 'wp_insert_post', array( $this, 'set_sku_for_new_product' ), PHP_INT_MAX, 3 );
 		}
 	}
 
@@ -76,13 +76,11 @@ class WCJ_SKU extends WCJ_Module {
 	 * set_sku.
 	 */
 	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview ) {
-
 		$the_sku = sprintf( '%s%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 'd%s%s',
 			get_option( 'wcj_sku_prefix', '' ),
 			$sku_number,
 			apply_filters( 'wcj_get_option_filter', '', get_option( 'wcj_sku_suffix', '' ) ),
 			$variation_suffix );
-
 		if ( $is_preview ) {
 			echo '<tr>' .
 				'<td>' . $this->product_counter++ . '</td>' .
@@ -90,47 +88,44 @@ class WCJ_SKU extends WCJ_Module {
 				'<td>' . $the_sku . '</td>' .
 			 '</tr>';
 		}
-		else
+		else {
 			update_post_meta( $product_id, '_' . 'sku', $the_sku );
+		}
 	}
 
 	/**
-	 * set_all_sku.
+	 * set_all_products_skus.
+	 *
+	 * @version 2.3.10
 	 */
-	function set_all_sku( $is_preview ) {
-
+	function set_all_products_skus( $is_preview ) {
 		$limit = 1000;
 		$offset = 0;
-
 		while ( TRUE ) {
 			$posts = new WP_Query( array(
 				'posts_per_page' => $limit,
 				'offset'         => $offset,
 				'post_type'      => 'product',
-				'post_status' 	 => 'any',
+				'post_status'    => 'any',
 			));
-
 			if ( ! $posts->have_posts() ) break;
-
 			while ( $posts->have_posts() ) {
 					$posts->the_post();
-
 					$this->set_sku_with_variable( $posts->post->ID, $is_preview );
 			}
-
 			$offset += $limit;
 		}
 	}
 
 	/**
-	 * set_product_sku.
+	 * set_sku_for_new_product.
+	 *
+	 * @version 2.3.10
 	 */
-	function set_product_sku( $post_ID, $post, $update ) {
-
+	function set_sku_for_new_product( $post_ID, $post, $update ) {
 		if ( 'product' != $post->post_type ) {
 			return;
 		}
-
 		if ( false === $update ) {
 			$this->set_sku_with_variable( $post_ID, false );
 		}
@@ -139,35 +134,33 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * create_sku_tool
 	 *
-	 * @version 2.2.3
+	 * @version 2.3.10
 	 */
 	function create_sku_tool() {
 		$result_message = '';
 		$is_preview = ( isset( $_POST['preview_sku'] ) ) ? true : false;
-
 		if ( isset( $_POST['set_sku'] ) || isset( $_POST['preview_sku'] ) ) {
-
 			$this->product_counter = 1;
 			$preview_html = '<table class="widefat" style="width:50%; min-width: 300px;">';
-			$preview_html .= '<tr>' .
-								'<th></th>' .
-								'<th>' . __( 'Product', 'woocommerce-jetpack' ) . '</th>' .
-								'<th>' . __( 'SKU', 'woocommerce-jetpack' ) . '</th>' .
-							'</tr>';
+			$preview_html .=
+				'<tr>' .
+					'<th></th>' .
+					'<th>' . __( 'Product', 'woocommerce-jetpack' ) . '</th>' .
+					'<th>' . __( 'SKU', 'woocommerce-jetpack' )     . '</th>' .
+				'</tr>';
 			ob_start();
-			$this->set_all_sku( $is_preview );
+			$this->set_all_products_skus( $is_preview );
 			$preview_html .= ob_get_clean();
 			$preview_html .= '</table>';
 			$result_message = '<p><div class="updated"><p><strong>' . __( 'SKUs generated and set successfully!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 		}
 		?><div>
 			<?php echo $this->get_back_to_settings_link_html(); ?>
-			<h2><?php echo __( 'WooCommerce Jetpack - Autogenerate SKUs', 'woocommerce-jetpack' ); ?></h2>
-			<p><?php echo __( 'The tool generates and sets product SKUs.', 'woocommerce-jetpack' ); ?></p>
+			<?php echo $this->get_tool_html_header( 'sku' ); ?>
 			<?php if ( ! $is_preview ) echo $result_message; ?>
 			<p><form method="post" action="">
-				<input class="button-primary" type="submit" name="preview_sku" id="preview_sku" value="Preview SKUs">
-				<input class="button-primary" type="submit" name="set_sku" value="Set SKUs">
+				<input class="button-primary" type="submit" name="preview_sku" id="preview_sku" value="<?php _e( 'Preview SKUs', 'woocommerce-jetpack' ); ?>">
+				<input class="button-primary" type="submit" name="set_sku" value="<?php _e( 'Set SKUs', 'woocommerce-jetpack' ); ?>">
 			</form></p>
 			<?php if ( $is_preview ) echo $preview_html; ?>
 		</div><?php
@@ -206,9 +199,8 @@ class WCJ_SKU extends WCJ_Module {
 				'id'       => 'wcj_sku_suffix',
 				'default'  => '',
 				'type'     => 'text',
-				'desc' 	   => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes'
-						   => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
 
 			array(
@@ -217,13 +209,12 @@ class WCJ_SKU extends WCJ_Module {
 				'default'  => 'as_variable',
 				'type'     => 'select',
 				'options'  => array(
-								'as_variable'             => __( 'SKU same as parent\'s product', 'woocommerce-jetpack' ),
-								'as_variation'            => __( 'Generate different SKU for each variation', 'woocommerce-jetpack' ),
-								'as_variable_with_suffix' => __( 'SKU same as parent\'s product + variation letter suffix', 'woocommerce-jetpack' ),
-							),
+					'as_variable'             => __( 'SKU same as parent\'s product', 'woocommerce-jetpack' ),
+					'as_variation'            => __( 'Generate different SKU for each variation', 'woocommerce-jetpack' ),
+					'as_variable_with_suffix' => __( 'SKU same as parent\'s product + variation letter suffix', 'woocommerce-jetpack' ),
+				),
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			),
 
 			array(
@@ -233,9 +224,7 @@ class WCJ_SKU extends WCJ_Module {
 
 		);
 
-		$settings = $this->add_tools_list( $settings );
-
-		return $this->add_enable_module_setting( $settings, __( 'When enabled - all new products will be given (autogenerated) SKU.<br>If you wish to set SKUs for existing products, use Autogenerate SKUs Tool.', 'woocommerce-jetpack' ) );
+		return $this->add_standard_settings( $settings, __( 'When enabled - all new products will be given (autogenerated) SKU.<br>If you wish to set SKUs for existing products, use Autogenerate SKUs Tool.', 'woocommerce-jetpack' ) );
 	}
 }
 

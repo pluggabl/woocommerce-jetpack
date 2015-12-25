@@ -21,16 +21,16 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 * @version 2.3.10
 	 */
 	public function __construct() {
-		add_action( 'init', array( $this, 'report_zip' ) );
+		add_action( 'init', array( $this, 'generate_report_zip' ) );
 	}
 
 	/**
-	 * report_zip.
+	 * generate_report_zip.
 	 *
 	 * @version 2.3.10
 	 * @since   2.3.10
 	 */
-	function report_zip() {
+	function generate_report_zip() {
 		if ( isset( $_POST['get_invoices_report_zip'] ) ) {
 			if ( ! empty( $_POST['report_year'] ) && ! empty( $_POST['report_month'] ) ) {
 				if ( is_super_admin() || is_shop_manager() ) {
@@ -45,13 +45,10 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 *
 	 * @version 2.3.10
 	 */
-	public function create_invoices_report_tool() {
-
+	function create_invoices_report_tool() {
 		$result_message = '';
-
-		$the_year = ( ! empty( $_POST['report_year'] ) ) ? $_POST['report_year'] : '';
+		$the_year  = ( ! empty( $_POST['report_year'] ) )  ? $_POST['report_year']  : '';
 		$the_month = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : '';
-
 		if ( isset( $_POST['get_invoices_report'] ) ) {
 			if ( ! empty( $the_year ) && ! empty( $the_month ) ) {
 				$result_message = $this->get_invoices_report( $the_year, $the_month );
@@ -60,33 +57,35 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			}
 		}
 		?><div>
-			<h2><?php echo __( 'Booster - Invoices Report', 'woocommerce-jetpack' ); ?></h2>
+			<h3><?php echo __( 'Booster - Invoices Report', 'woocommerce-jetpack' ); ?></h3>
 			<p><?php echo __( 'Invoices Monthly Reports.', 'woocommerce-jetpack' ); ?></p>
 			<?php echo $result_message; ?>
-			<p><form method="post" action="">
-				<?php
-
-				// Year
-				$data[] = array(
-					__( 'Year', 'woocommerce-jetpack' ),
-					'<input class="input-text" type="text" name="report_year" value="' . $the_year . '">',
-					//'<em>' . __( 'Year.', 'woocommerce-jetpack' ) . '</em>',
+			<p><form method="post" action=""><?php
+				$data = array(
+					// Year
+					array(
+						__( 'Year', 'woocommerce-jetpack' ),
+						'<input class="input-text" type="number" min="2000" max="2100" step="1" name="report_year" value="' . $the_year . '">',
+					),
+					// Month
+					array(
+						__( 'Month', 'woocommerce-jetpack' ),
+						'<input class="input-text" type="number" min="1" max="12" step="1" name="report_month" value="' . $the_month . '">',
+					),
+					// Get Report Button
+					array(
+						'',
+						'<input type="submit" name="get_invoices_report" value="' . __( 'Display monthly invoices table', 'woocommerce-jetpack' ) . '">',
+					),
+					// Get Report Zip Button
+					array(
+						'',
+						'<input type="submit" name="get_invoices_report_zip" value="' . __( 'Download all monthly invoices PDFs in single Zip file', 'woocommerce-jetpack' ) . '">',
+					),
 				);
-
-				// Month
-				$data[] = array(
-					__( 'Month', 'woocommerce-jetpack' ),
-					'<input class="input-text" type="text" name="report_month" value="' . $the_month . '">',
-					//'<em>' . __( 'Month.', 'woocommerce-jetpack' ) . '</em>',
-				);
-
 				// Print all
 				echo wcj_get_table_html( $data, array( 'table_heading_type' => 'vertical', ) );
-
-				?>
-				<input type="submit" name="get_invoices_report" value="<?php _e( 'Get Report', 'woocommerce-jetpack' ); ?>">
-				<input type="submit" name="get_invoices_report_zip" value="<?php _e( 'Get Report Zip', 'woocommerce-jetpack' ); ?>">
-			</form></p>
+			?></form></p>
 		</div><?php
 	}
 

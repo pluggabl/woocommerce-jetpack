@@ -41,11 +41,11 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * @version 2.3.10
 	 * @since   2.3.10
 	 */
-	function add_standard_settings( $settings = array() ) {
+	function add_standard_settings( $settings = array(), $module_desc = '' ) {
 		if ( isset( $this->tools_array ) && ! empty( $this->tools_array ) ) {
 			$settings = $this->add_tools_list( $settings );
 		}
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_enable_module_setting( $settings, $module_desc );
 	}
 
 	/**
@@ -214,6 +214,24 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				'id'       => 'wcj_' . $this->id . '_tools_options'
 			),
 		) );
+	}
+
+	/**
+	 * add_tools.
+	 *
+	 * @version 2.3.10
+	 * @since   2.3.10
+	 */
+	function get_tool_html_header( $tool_id ) {
+		$html = '';
+		foreach ( $this->tools_array as $id => $data ) {
+			if ( $tool_id == $id ) {
+				$html .= '<h3>' . __( 'Booster', 'woocommerce-jetpack' ) . ' - ' . $data['title'] . '</h3>';
+				$html .= '<p>'  . $data['desc']  . '</p>';
+				break;
+			}
+		}
+		return $html;
 	}
 
 	/**
