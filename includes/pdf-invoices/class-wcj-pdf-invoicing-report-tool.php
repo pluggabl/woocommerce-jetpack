@@ -33,9 +33,9 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 */
 	function generate_report_zip() {
 		if ( isset( $_POST['get_invoices_report_zip'] ) ) {
-			if ( ! empty( $_POST['report_year'] ) && ! empty( $_POST['report_month'] ) ) {
+			if ( ! empty( $_POST['report_year'] ) && ! empty( $_POST['report_month'] ) && ! empty( $_POST['invoice_type'] ) ) {
 				if ( is_super_admin() || is_shop_manager() ) {
-					if ( false === $this->get_invoices_report_zip( $_POST['report_year'], $_POST['report_month'] ) ) {
+					if ( false === $this->get_invoices_report_zip( $_POST['report_year'], $_POST['report_month'], $_POST['invoice_type'] ) ) {
 						$this->notice = '<div class="error"><p><strong>' . __( 'Sorry, but something went wrong...', 'woocommerce-jetpack' ) . '</strong></p></div>';
 					}
 				}
@@ -55,9 +55,10 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		$result_message .= $this->notice;
 		$the_year  = ( ! empty( $_POST['report_year'] ) )  ? $_POST['report_year']  : '';
 		$the_month = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : '';
+		$the_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
 		if ( isset( $_POST['get_invoices_report'] ) ) {
-			if ( ! empty( $the_year ) && ! empty( $the_month ) ) {
-				$result_message = $this->get_invoices_report( $the_year, $the_month );
+			if ( ! empty( $the_year ) && ! empty( $the_month ) && ! empty( $the_invoice_type ) ) {
+				$result_message = $this->get_invoices_report( $the_year, $the_month, $the_invoice_type );
 			} else {
 				$result_message = '<div class="error"><p><strong>' . __( 'Please fill year and month values.', 'woocommerce-jetpack' ) . '</strong></p></div>';
 			}
@@ -67,6 +68,15 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			<p><?php echo __( 'Invoices Monthly Reports.', 'woocommerce-jetpack' ); ?></p>
 			<?php echo $result_message; ?>
 			<p><form method="post" action=""><?php
+
+				// Type
+				$invoice_type_select_html = '<select name="invoice_type">';
+				$invoice_types = wcj_get_enabled_invoice_types();
+				foreach ( $invoice_types as $invoice_type ) {
+					$invoice_type_select_html .= '<option value="' . $invoice_type['id'] . '" ' . selected( $invoice_type['id'], $the_invoice_type, false ) . '>' . $invoice_type['title'] . '</option>';
+				}
+				$invoice_type_select_html .= '</select>';
+
 				$data = array(
 					// Year
 					array(
@@ -78,6 +88,11 @@ class WCJ_PDF_Invoicing_Report_Tool {
 						__( 'Month', 'woocommerce-jetpack' ),
 						'<input class="input-text" type="number" min="1" max="12" step="1" name="report_month" value="' . $the_month . '">',
 					),
+					// Type
+					array(
+						__( 'Document Type', 'woocommerce-jetpack' ),
+						$invoice_type_select_html,
+					),
 					// Get Report Button
 					array(
 						'',
@@ -86,7 +101,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 					// Get Report Zip Button
 					array(
 						'',
-						'<input class="button-primary" type="submit" name="get_invoices_report_zip" value="' . __( 'Download all monthly invoices PDFs in single Zip file', 'woocommerce-jetpack' ) . '">',
+						'<input class="button-primary" type="submit" name="get_invoices_report_zip" value="' . __( 'Download all monthly invoices PDFs in single ZIP file', 'woocommerce-jetpack' ) . '">',
 					),
 				);
 				// Print all
@@ -101,9 +116,9 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 * @version 2.3.10
 	 * @since   2.3.10
 	 */
-	function get_invoices_report_zip( $year, $month ) {
+	function get_invoices_report_zip( $year, $month, $invoice_type_id ) {
 		$zip = new ZipArchive();
-		$zip_file_name = $year . '_' . $month . '.zip';
+		$zip_file_name = $year . '_' . $month . '-' . $invoice_type_id . '.zip';
 		$zip_file_path = sys_get_temp_dir() . '/' . $zip_file_name;
 		if ( file_exists( $zip_file_path ) ) {
 			unlink ( $zip_file_path );
@@ -129,7 +144,6 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			if ( ! $loop->have_posts() ) break;
 			while ( $loop->have_posts() ) : $loop->the_post();
 				$order_id = $loop->post->ID;
-				$invoice_type_id = 'invoice';
 				if ( wcj_is_invoice_created( $order_id, $invoice_type_id ) ) {
 					$the_invoice = wcj_get_pdf_invoice( $order_id, $invoice_type_id );
 					$file_name = $the_invoice->get_pdf( 'F' );
@@ -167,7 +181,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 *
 	 * @version 2.3.10
 	 */
-	function get_invoices_report( $year, $month ) {
+	function get_invoices_report( $year, $month, $invoice_type_id ) {
 
 		$output = '';
 
@@ -205,7 +219,6 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			if ( ! $loop->have_posts() ) break;
 			while ( $loop->have_posts() ) : $loop->the_post();
 				$order_id = $loop->post->ID;
-				$invoice_type_id = 'invoice';
 
 				if ( wcj_is_invoice_created( $order_id, $invoice_type_id ) ) {
 
@@ -219,9 +232,9 @@ class WCJ_PDF_Invoicing_Report_Tool {
 					$order_total = $the_order->get_total();
 
 					$order_tax = apply_filters( 'wcj_order_total_tax', $the_order->get_total_tax(), $the_order );
-					//$order_tax_percent = ( isset( $taxes_by_countries_eu[ $customer_country ] ) ) ? $taxes_by_countries_eu[ $customer_country ] : 0;
-					//$order_tax_percent /= 100;
-					//$order_tax = $order_total * $order_tax_percent;
+//					$order_tax_percent = ( isset( $taxes_by_countries_eu[ $customer_country ] ) ) ? $taxes_by_countries_eu[ $customer_country ] : 0;
+//					$order_tax_percent /= 100;
+//					$order_tax = $order_total * $order_tax_percent;
 					$order_total_exlc_tax = $order_total - $order_tax;
 					$order_tax_percent = ( 0 == $order_total ) ? 0 : $order_tax / $order_total_exlc_tax;
 
@@ -229,7 +242,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 					$total_sum_excl_tax += $order_total_exlc_tax;
 					$total_tax += $order_tax;
 
-					//$order_tax_html = ( 0 == $order_tax ) ? '' : sprintf( '$ %.2f', $order_tax );
+//					$order_tax_html = ( 0 == $order_tax ) ? '' : sprintf( '$ %.2f', $order_tax );
 					$order_tax_html = sprintf( '%.2f', $order_tax );
 
 					$data[] = array(
@@ -252,11 +265,9 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		$output .= '<h3>' . 'Total Sum: ' . sprintf( '$ %.2f', $total_sum ) . '</h3>';
 		$output .= '<h3>' . 'Total Tax: ' . sprintf( '$ %.2f', $total_tax ) . '</h3>'; */
 		$output .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', ) );
-		/**/
 
 		return $output;
 	}
-	/**/
 }
 
 endif;

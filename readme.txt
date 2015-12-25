@@ -120,7 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Dev - `WCJ_Tools` and `WCJ_Module` - Code refactoring (mostly Tools related). Additionally modified modules:
   Admin Tools, Bulk Price Converter, Custom Price Labels, EU VAT Number, General, Old Slugs, Order Custom Statuses, Order Numbers, PDF Invoicing, SKU.
 * Dev - PDF Invoicing - "Invoices Report" tool - Code refactoring.
-* Dev - PDF Invoicing - "Invoices Report" tool - "Get Report Zip" button added.
+* Dev - PDF Invoicing - "Invoices Report" tool - "Document Type" select option added.
+* Dev - PDF Invoicing - "Invoices Report" tool - "Download all monthly invoices PDFs in single Zip file" button added.
 * Dev - PDF Invoicing - "Renumerate Invoices" tool - "End Date" field added.
 * Dev - PDF Invoicing - Display - Admin's "Orders" Page - "Column Title", "Create Button" and "Delete Button" options added.
 * Dev - PDF Invoicing - Display - "Misc." menu renamed to "Display & Misc.".

@@ -241,13 +241,13 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	function add_tools( $tools_array, $args = array() ) {
 		$this->tools_array = $tools_array;
 		add_action( 'wcj_module_tools_' . $this->id, array( $this, 'add_tool_link' ), PHP_INT_MAX );
+		$hook_priority = isset( $args['tools_dashboard_hook_priority'] ) ? $args['tools_dashboard_hook_priority'] : 10;
 		if ( $this->is_enabled() ) {
-			add_filter( 'wcj_tools_tabs', array( $this, 'add_module_tools_tabs' ) );
+			add_filter( 'wcj_tools_tabs', array( $this, 'add_module_tools_tabs' ), $hook_priority );
 			foreach ( $this->tools_array as $tool_id => $tool_data ) {
 				add_action( 'wcj_tools_' . $tool_id, array( $this, 'create_' . $tool_id . '_tool' ) );
 			}
 		}
-		$hook_priority = isset( $args['tools_dashboard_hook_priority'] ) ? $args['tools_dashboard_hook_priority'] : 10;
 		add_action( 'wcj_tools_dashboard', array( $this, 'add_module_tools_info_to_tools_dashboard' ), $hook_priority );
 	}
 
@@ -259,12 +259,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 */
 	function add_module_tools_tabs( $tabs ) {
 		foreach ( $this->tools_array as $tool_id => $tool_data ) {
-			$tool_title = ( is_array( $tool_data ) ) ?
-				( ( isset( $tool_data['tab_title'] ) ) ?
-						$tool_data['tab_title'] :
-						$tool_data['title']
-				) :
-				$tool_data;
+			$tool_title = ( isset( $tool_data['tab_title'] ) ) ?
+				$tool_data['tab_title'] :
+				$tool_data['title'];
 			$tabs[] = array(
 				'id'    => $tool_id,
 				'title' => $tool_title,
@@ -284,11 +281,11 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			'<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' )  . '</span>' :
 			'<span style="color:gray;font-style:italic;">'  . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';
 		foreach ( $this->tools_array as $tool_id => $tool_data ) {
-			$tool_title = ( is_array( $tool_data ) ) ? $tool_data['title'] : $tool_data;
-			$tool_desc  = ( is_array( $tool_data ) ) ? $tool_data['desc']  : $tool_data;
+			$tool_title = $tool_data['title'];
+			$tool_desc  = $tool_data['desc'];
 			$additional_style_html = '';
 			$additional_info_html = '';
-			if ( is_array( $tool_data ) && isset( $tool_data['depreciated'] ) && true === $tool_data['depreciated'] ) {
+			if ( isset( $tool_data['depreciated'] ) && true === $tool_data['depreciated'] ) {
 				$additional_style_html = 'color:gray;font-style:italic;';
 				$additional_info_html  = ' - ' . __( 'Depreciated', 'woocommerce-jetpack' );
 			}
@@ -309,7 +306,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 */
 	function add_tool_link() {
 		foreach ( $this->tools_array as $tool_id => $tool_data ) {
-			$tool_title = ( is_array( $tool_data ) ) ? $tool_data['title'] : $tool_data;
+			$tool_title = $tool_data['title'];
 			echo '<p>';
 			echo ( $this->is_enabled() ) ?
 				'<a href="' . admin_url( 'admin.php?page=wcj-tools&tab=' . $tool_id ) . '"><code>' . $tool_title . '</code></a>' :

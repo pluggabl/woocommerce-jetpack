@@ -114,11 +114,13 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 				$order_statuses_select_html .= '</select>';
 				$data[] = array( __( 'Order Statuses', 'woocommerce-jetpack' ), $order_statuses_select_html, '', );
 
+				// Button
+				$data[] = array( '<input class="button-primary" type="submit" name="renumerate_invoices" value="' . __( 'Renumerate invoices', 'woocommerce-jetpack' ) . '">', '', '' );
+
 				// Print all
 				echo wcj_get_table_html( $data, array( 'table_heading_type' => 'vertical', ) );
 
 				?>
-				<input type="submit" name="renumerate_invoices" value="Renumerate invoices">
 			</form></p>
 			<?php
 			if ( '' != $renumerate_result ) {
