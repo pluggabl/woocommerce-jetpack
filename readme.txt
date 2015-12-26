@@ -1,6 +1,6 @@
 === Booster for WooCommerce ===
 Contributors: algoritmika,anbinder,solovjov
-Tags: woocommerce,booster for woocommerce,woocommerce jetpack,custom price labels,call for price,currency symbol,remove sorting,remove old product slugs,add to cart text,order number,sequential order numbering,email pdf invoice,pdf invoice,pdf invoices,already in cart,empty cart,redirect to checkout,minimum order amount,customize checkout fields,checkout fields,email,customize product tabs,product tabs,related products number,empty cart,redirect add to cart,redirect to checkout,product already in cart,custom payment gateway,payment gateway icon,auto-complete all orders,custom order statuses,custom order status,remove text from price,custom css,hide categories count,hide subcategories count,hide category count,hide subcategory count,display total sales,custom product tabs,remove product tab,payment gateway fee,
+Tags: woocommerce,booster for woocommerce,woocommerce jetpack,custom price labels,call for price,currency symbol,remove sorting,remove old product slugs,add to cart text,order number,sequential order numbering,email pdf invoice,pdf invoice,pdf invoices,already in cart,empty cart,redirect to checkout,minimum order amount,customize checkout fields,checkout fields,email,customize product tabs,product tabs,related products number,empty cart,redirect add to cart,redirect to checkout,product already in cart,custom payment gateway,payment gateway icon,auto-complete all orders,custom order statuses,custom order status,remove text from price,custom css,hide categories count,hide subcategories count,hide category count,hide subcategory count,display total sales,custom product tabs,remove product tab,payment gateway fee,vat
 Requires at least: 3.8
 Tested up to: 4.4
 Stable tag: 2.3.9
@@ -79,7 +79,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
-* *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers.
+* *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
 * *General* - Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets.
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
@@ -121,7 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
   Admin Tools, Bulk Price Converter, Custom Price Labels, EU VAT Number, General, Old Slugs, Order Custom Statuses, Order Numbers, PDF Invoicing, SKU.
 * Dev - PDF Invoicing - "Invoices Report" tool - Code refactoring.
 * Dev - PDF Invoicing - "Invoices Report" tool - "Document Type" select option added.
-* Dev - PDF Invoicing - "Invoices Report" tool - "Download all monthly invoices PDFs in single Zip file" button added.
+* Dev - PDF Invoicing - "Invoices Report" tool - "Download all monthly invoices PDFs in single ZIP file" button added.
 * Dev - PDF Invoicing - "Renumerate Invoices" tool - "End Date" field added.
 * Dev - PDF Invoicing - Display - Admin's "Orders" Page - "Column Title", "Create Button" and "Delete Button" options added.
 * Dev - PDF Invoicing - Display - "Misc." menu renamed to "Display & Misc.".

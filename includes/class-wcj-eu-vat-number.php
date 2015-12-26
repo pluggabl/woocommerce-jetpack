@@ -30,7 +30,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		$this->add_tools( array(
 			'eu_countries_vat_rates' => array(
 				'title' => __( 'EU Countries VAT Rates', 'woocommerce-jetpack' ),
-				'desc'  => __( 'Add All EU Countries VAT Standard Rates to WooCommerce.', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Add all EU countries VAT standard rates to WooCommerce.', 'woocommerce-jetpack' ),
 			),
 		) );
 
