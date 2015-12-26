@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Report Tool class.
  *
- * @version 2.3.10
+ * @version 2.3.11
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -179,7 +179,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Invoices Report function.
 	 *
-	 * @version 2.3.10
+	 * @version 2.3.11
 	 */
 	function get_invoices_report( $year, $month, $invoice_type_id ) {
 
@@ -191,6 +191,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			__( 'Invoice Date', 'woocommerce-jetpack' ),
 			__( 'Order ID', 'woocommerce-jetpack' ),
 			__( 'Customer Country', 'woocommerce-jetpack' ),
+			__( 'Customer VAT ID', 'woocommerce-jetpack' ),
 			__( 'Tax %', 'woocommerce-jetpack' ),
 			__( 'Order Total Tax Excl.', 'woocommerce-jetpack' ),
 			__( 'Order Taxes', 'woocommerce-jetpack' ),
@@ -228,6 +229,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 					$billing_country  = isset( $user_meta['billing_country'][0] )  ? $user_meta['billing_country'][0]  : '';
 					$shipping_country = isset( $user_meta['shipping_country'][0] ) ? $user_meta['shipping_country'][0] : '';
 					$customer_country = ( '' == $billing_country ) ? $shipping_country : $billing_country;
+					$customer_vat_id = get_post_meta( $order_id, '_billing_eu_vat_number', true );
 
 					$order_total = $the_order->get_total();
 
@@ -250,6 +252,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 						wcj_get_invoice_date( $order_id, $invoice_type_id, 0, get_option( 'date_format' ) ),
 						$order_id,
 						$customer_country,
+						$customer_vat_id,
 						sprintf( '%.0f %%', $order_tax_percent * 100 ),
 						sprintf( '%.2f', $order_total_exlc_tax ),
 						$order_tax_html,

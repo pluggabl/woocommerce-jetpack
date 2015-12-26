@@ -116,6 +116,9 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
+= 2.3.11 - 26/12/2015 =
+* Dev - PDF Invoicing - "Invoices Report" tool - "Customer VAT ID" column added to invoices reports table.
+
 = 2.3.10 - 26/12/2015 =
 * Dev - `WCJ_Tools` and `WCJ_Module` - Code refactoring (mostly Tools related). Additionally modified modules:
   Admin Tools, Bulk Price Converter, Custom Price Labels, EU VAT Number, General, Old Slugs, Order Custom Statuses, Order Numbers, PDF Invoicing, SKU.
