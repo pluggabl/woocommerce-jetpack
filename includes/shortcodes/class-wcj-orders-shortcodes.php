@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.3.9
+ * @version 2.3.11
  * @author  Algoritmika Ltd.
  */
 
@@ -360,16 +360,14 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_total_tax_percent.
+	 *
+	 * @version 2.3.11
 	 */
 	function wcj_order_total_tax_percent( $atts ) {
-
-		$order_total_excl_tax = $this->the_order->get_total() - $this->the_order->get_total_tax();
-		$order_total_tax = $this->the_order->get_total_tax();
-		$order_total_tax_percent = ( 0 == $order_total_excl_tax ) ? 0 : $order_total_tax / $order_total_excl_tax * 100;
-
-		$order_total_tax_percent = apply_filters( 'wcj_order_total_tax_percent', $order_total_tax_percent, $this->the_order );
-
-		return $order_total_tax_percent;
+		$order_total_excl_tax        = $this->the_order->get_total() - $this->the_order->get_total_tax();
+		$order_total_tax_not_rounded = $this->the_order->get_cart_tax() + $this->the_order->get_shipping_tax();
+		$order_total_tax_percent     = ( 0 == $order_total_excl_tax ) ? 0 : $order_total_tax_not_rounded / $order_total_excl_tax * 100;
+		return apply_filters( 'wcj_order_total_tax_percent', $order_total_tax_percent, $this->the_order );
 	}
 
 	/**

@@ -238,7 +238,8 @@ class WCJ_PDF_Invoicing_Report_Tool {
 //					$order_tax_percent /= 100;
 //					$order_tax = $order_total * $order_tax_percent;
 					$order_total_exlc_tax = $order_total - $order_tax;
-					$order_tax_percent = ( 0 == $order_total ) ? 0 : $order_tax / $order_total_exlc_tax;
+					$order_total_tax_not_rounded = $the_order->get_cart_tax() + $the_order->get_shipping_tax();
+					$order_tax_percent = ( 0 == $order_total ) ? 0 : $order_total_tax_not_rounded / $order_total_exlc_tax;
 
 					$total_sum += $order_total;
 					$total_sum_excl_tax += $order_total_exlc_tax;
