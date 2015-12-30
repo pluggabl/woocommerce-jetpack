@@ -116,6 +116,10 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
+= 2.3.12 - 30/12/2015 =
+* Dev - PDF Invoicing - Code refactoring. Classes: WCJ_PDF_Invoicing_Page, WCJ_PDF_Invoicing_Styling etc.
+* Dev - PDF Invoicing - "Hide Settings for Disabled Document Types" option added.
+
 = 2.3.11 - 29/12/2015 =
 * Fix - Orders Shortcodes - `[wcj_order_total_tax_percent]` shortcode "rounding bug" fixed.
 * Fix - PDF Invoicing - "Invoices Report" tool - Tax percent column "rounding bug" fixed.

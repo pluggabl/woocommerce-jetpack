@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Display class.
  *
- * @version 2.3.10
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -90,6 +90,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				$html .= '"><span style="color:gray;font-style:italic;font-size:x-small;text-decoration:underline;">' . $delete_button_label . '</span></a>';
 			}
 		} else {
+
 			// Create Button
 			$create_button_label = get_option( 'wcj_invoicing_' . $invoice_type_id . '_admin_column_create_btn', __( 'Create', 'woocommerce-jetpack' ) );
 			if ( '' != $create_button_label ) {
@@ -139,12 +140,12 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.10
+	 * @version 2.3.12
 	 */
 	function get_settings() {
 
 		$settings = array();
-		$invoice_types = wcj_get_invoice_types();
+		$invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
 
 			$settings[] = array(

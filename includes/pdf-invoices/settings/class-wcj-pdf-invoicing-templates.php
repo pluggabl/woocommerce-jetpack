@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Templates class.
  *
- * @version 2.3.7
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -29,12 +29,14 @@ class WCJ_PDF_Invoicing_Templates extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.3.12
 	 */
 	function get_settings() {
 
 		$settings = array();
 
-		$invoice_types = wcj_get_invoice_types();
+		$invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
 
 			ob_start();
@@ -52,15 +54,23 @@ class WCJ_PDF_Invoicing_Templates extends WCJ_Module {
 				'default' => $default_template,
 				'type'    => 'textarea',
 				'css'     => 'width:66%;min-width:300px;height:500px;',
-            );
+			);
 			$settings[] = array(
 				'type' => 'sectionend',
 				'id'   => 'wcj_invoicing_' . $invoice_type['id'] . '_templates_options',
 			);
 		}
 
-		$settings[] = array( 'title' => __( 'Available Shortcodes', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => wcj_get_shortcodes_list(), 'id' => 'wcj_invoicing_templates_desc' );
-		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_invoicing_templates_desc' );
+		$settings[] = array(
+			'title' => __( 'Available Shortcodes', 'woocommerce-jetpack' ),
+			'type'  => 'title',
+			'desc'  => wcj_get_shortcodes_list(),
+			'id'    => 'wcj_invoicing_templates_desc',
+		);
+		$settings[] = array(
+			'type'  => 'sectionend',
+			'id'    => 'wcj_invoicing_templates_desc',
+		);
 
 		return $settings;
 	}

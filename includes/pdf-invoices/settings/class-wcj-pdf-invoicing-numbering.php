@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Numbering class.
  *
- * @version 2.3.10
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -20,7 +20,6 @@ class WCJ_PDF_Invoicing_Numbering extends WCJ_Module {
 	 * @version 2.3.10
 	 */
 	public function __construct() {
-
 		$this->id         = 'pdf_invoicing_numbering';
 		$this->parent_id  = 'pdf_invoicing';
 		$this->short_desc = __( 'Numbering', 'woocommerce-jetpack' );
@@ -31,13 +30,17 @@ class WCJ_PDF_Invoicing_Numbering extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.10
+	 * @version 2.3.12
 	 */
 	function get_settings() {
 		$settings = array();
-		$invoice_types = wcj_get_invoice_types();
+		$invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
-			$settings[] = array( 'title' => strtoupper( $invoice_type['desc'] ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_options' );
+			$settings[] = array(
+				'title'    => strtoupper( $invoice_type['desc'] ),
+				'type'     => 'title',
+				'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_options',
+			);
 			$settings[] = array(
 				'title'    => __( 'Sequential', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_sequential_enabled',
@@ -68,7 +71,10 @@ class WCJ_PDF_Invoicing_Numbering extends WCJ_Module {
 				'default'  => '',
 				'type'     => 'text',
 			);
-			$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_options' );
+			$settings[] = array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_options',
+			);
 		}
 		return $settings;
 	}

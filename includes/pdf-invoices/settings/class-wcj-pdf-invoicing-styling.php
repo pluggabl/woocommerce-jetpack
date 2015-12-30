@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Styling class.
  *
- * @version 2.3.9
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -12,27 +12,31 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WCJ_PDF_Invoicing_Styling' ) ) :
 
-class WCJ_PDF_Invoicing_Styling {
+class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.3.12
 	 */
-	public function __construct() {
-		// Settings hooks
-		add_filter( 'wcj_settings_sections',              array( $this, 'settings_section' ) );
-		add_filter( 'wcj_settings_pdf_invoicing_styling', array( $this, 'get_settings' ), 100 );
+	function __construct() {
+		$this->id         = 'pdf_invoicing_styling';
+		$this->parent_id  = 'pdf_invoicing';
+		$this->short_desc = __( 'Styling', 'woocommerce-jetpack' );
+		$this->desc       = '';
+		parent::__construct( 'submodule' );
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.9
+	 * @version 2.3.12
 	 */
 	function get_settings() {
 
 		$settings = array();
 
-		$invoice_types = wcj_get_invoice_types();
+		$invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
 
 			$settings[] = array(
@@ -90,14 +94,6 @@ class WCJ_PDF_Invoicing_Styling {
 		}
 
 		return $settings;
-	}
-
-	/**
-	 * settings_section.
-	 */
-	function settings_section( $sections ) {
-		$sections['pdf_invoicing_styling'] = __( 'Styling', 'woocommerce-jetpack' );
-		return $sections;
 	}
 }
 
