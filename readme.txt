@@ -117,6 +117,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 30/12/2015 =
+* Dev - EMAILS & MISC. - EU VAT Number - "Description" option added.
 * Dev - PDF Invoicing - Code refactoring. Classes: WCJ_PDF_Invoicing_Page, WCJ_PDF_Invoicing_Styling etc.
 * Dev - PDF Invoicing - "Hide Settings for Disabled Document Types" option added.
 
