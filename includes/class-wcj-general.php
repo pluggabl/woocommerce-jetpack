@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.3.10
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.10
+	 * @version 2.3.12
 	 */
 	public function __construct() {
 
@@ -39,6 +39,10 @@ class WCJ_General extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
+			if ( 'yes' === get_option( 'wcj_product_revisions_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_register_post_type_product', array( $this, 'enable_product_revisions' ) );
+			}
+
 			if ( 'yes' === get_option( 'wcj_general_shortcodes_in_text_widgets_enabled' ) ) {
 				add_filter( 'widget_text', 'do_shortcode' );
 			}
@@ -50,6 +54,17 @@ class WCJ_General extends WCJ_Module {
 				add_action( 'admin_head', array( $this, 'hook_custom_admin_css' ) );
 			}
 		}
+	}
+
+	/**
+	 * enable_product_revisions.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function enable_product_revisions( $args ) {
+		$args['supports'][] = 'revisions';
+		return $args;
 	}
 
 	/**
@@ -209,7 +224,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.9
+	 * @version 2.3.12
 	 */
 	function get_settings() {
 
@@ -279,6 +294,25 @@ class WCJ_General extends WCJ_Module {
 			array(
 				'type'    => 'sectionend',
 				'id'      => 'wcj_general_custom_css_options',
+			),
+
+			array(
+				'title'   => __( 'Product Revisions', 'woocommerce-jetpack' ),
+				'type'    => 'title',
+				'id'      => 'wcj_product_revisions_options',
+			),
+
+			array(
+				'title'   => __( 'Product Revisions', 'woocommerce-jetpack' ),
+				'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_product_revisions_enabled',
+				'default' => 'no',
+				'type'    => 'checkbox',
+			),
+
+			array(
+				'type'    => 'sectionend',
+				'id'      => 'wcj_product_revisions_options',
 			),
 
 			/* array(
