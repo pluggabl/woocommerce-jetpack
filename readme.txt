@@ -117,6 +117,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 07/01/2016 =
+* Dev - PAYMENT GATEWAYS - Gateways Currency - "No changes" option added.
+* Fix - PRICES & CURRENCIES - Price by Country - Payment Gateway Currency module now changes prices *after* Price by Country module.
 * Dev - EMAILS & MISC. - General - "Products Revisions" options section added.
 * Dev - EMAILS & MISC. - EU VAT Number - "Description" option added.
 * Dev - PDF Invoicing - Code refactoring. Classes: WCJ_PDF_Invoicing_Page, WCJ_PDF_Invoicing_Styling etc.

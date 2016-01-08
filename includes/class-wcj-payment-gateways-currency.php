@@ -83,6 +83,8 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 
 	/**
 	 * extend_paypal_supported_currencies.
+	 *
+	 * @version 2.3.12
 	 */
 	function extend_paypal_supported_currencies( $supported_currencies ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -90,7 +92,9 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 			$current_gateway = $woocommerce->session->chosen_payment_method;
 			if ( '' != $current_gateway ) {
 				$gateway_currency = get_option( 'wcj_gateways_currency_' . $current_gateway );
-				$supported_currencies[] = $gateway_currency;
+				if ( 'no_changes' != $gateway_currency ) {
+					$supported_currencies[] = $gateway_currency;
+				}
 			}
 		}
 		return $supported_currencies;
@@ -98,6 +102,8 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 
 	/**
 	 * change_currency_symbol.
+	 *
+	 * @version 2.3.12
 	 */
 	public function change_currency_symbol( $currency_symbol, $currency ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -105,7 +111,9 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 			$current_gateway = $woocommerce->session->chosen_payment_method;
 			if ( '' != $current_gateway ) {
 				$gateway_currency = get_option( 'wcj_gateways_currency_' . $current_gateway );
-				return wcj_get_currency_symbol( $gateway_currency );
+				if ( 'no_changes' != $gateway_currency ) {
+					return wcj_get_currency_symbol( $gateway_currency );
+				}
 			}
 		}
 		return $currency_symbol;
@@ -113,6 +121,8 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 
 	/**
 	 * change_currency_code.
+	 *
+	 * @version 2.3.12
 	 */
 	public function change_currency_code( $currency ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -127,8 +137,10 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 				}
 			} */
 			if ( '' != $current_gateway ) {
-				$gateway_currency  = get_option( 'wcj_gateways_currency_' . $current_gateway );
-				return $gateway_currency;
+				$gateway_currency = get_option( 'wcj_gateways_currency_' . $current_gateway );
+				if ( 'no_changes' != $gateway_currency ) {
+					return $gateway_currency;
+				}
 			}
 		}
 		return $currency;
@@ -170,6 +182,8 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 
 	/**
 	 * add_currency_settings.
+	 *
+	 * @version 2.3.12
 	 */
 	function add_currency_settings( $settings ) {
 
@@ -192,7 +206,13 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 				'currency_to'          => $currency_to,
 				'multiply_by_field_id' => 'wcj_gateways_currency_exchange_rate_' . $key,
 			);
-			if ( $currency_from == $currency_to ) $custom_attributes['disabled'] = 'disabled';
+			if ( $currency_from == $currency_to ) {
+				$custom_attributes['disabled'] = 'disabled';
+			}
+			if ( 'no_changes' == $currency_to ) {
+				$custom_attributes['disabled'] = 'disabled';
+				$currency_to = $currency_from;
+			}
 
 			$settings = array_merge( $settings, array(
 
@@ -200,9 +220,9 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 					'title'     => $gateway->title,
 //					'desc'      => __( 'currency', 'woocommerce-jetpack' ),
 					'id'        => 'wcj_gateways_currency_' . $key,
-					'default'   => get_woocommerce_currency(),
+					'default'   => 'no_changes',//get_woocommerce_currency(),
 					'type'      => 'select',
-					'options'   => wcj_get_currencies_names_and_symbols(),
+					'options'   => array_merge( array( 'no_changes' => __( 'No changes', 'woocommerce-jetpack' ) ), wcj_get_currencies_names_and_symbols() ),
 				),
 
 				array(

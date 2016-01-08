@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.3.0
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -25,7 +25,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.12
 	 */
 	function add_hooks() {
 
@@ -43,10 +43,10 @@ class WCJ_Price_by_Country_Core {
 		//if (  ) { //todo
 
 			// Price hooks
-			add_filter( 'woocommerce_variation_prices',            array( $this, 'change_price_by_country_variations' ), PHP_INT_MAX, 2 );
-			add_filter( 'woocommerce_get_price',                   array( $this, 'change_price_by_country' ), PHP_INT_MAX, 2 );
-			add_filter( 'woocommerce_get_sale_price',              array( $this, 'change_price_by_country' ), PHP_INT_MAX, 2 );
-			add_filter( 'woocommerce_get_regular_price',           array( $this, 'change_price_by_country' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_variation_prices',            array( $this, 'change_price_by_country_variations' ), PHP_INT_MAX - 1, 2 );
+			add_filter( 'woocommerce_get_price',                   array( $this, 'change_price_by_country' ), PHP_INT_MAX - 1, 2 );
+			add_filter( 'woocommerce_get_sale_price',              array( $this, 'change_price_by_country' ), PHP_INT_MAX - 1, 2 );
+			add_filter( 'woocommerce_get_regular_price',           array( $this, 'change_price_by_country' ), PHP_INT_MAX - 1, 2 );
 //			add_filter( 'woocommerce_get_variation_price',         array( $this, 'change_price_by_country' ), PHP_INT_MAX, 2 );
 //			add_filter( 'woocommerce_get_variation_sale_price',    array( $this, 'change_price_by_country' ), PHP_INT_MAX, 2 );
 //			add_filter( 'woocommerce_get_variation_regular_price', array( $this, 'change_price_by_country' ), PHP_INT_MAX, 2 );
@@ -54,11 +54,11 @@ class WCJ_Price_by_Country_Core {
 //			add_filter( 'woocommerce_get_price_html',              array( $this, 'fix_variable_product_price_on_sale' ), 10 , 2 );
 
 			// Currency hooks
-			add_filter( 'woocommerce_currency_symbol',             array( $this, 'change_currency_symbol' ), PHP_INT_MAX, 2 );
-			add_filter( 'woocommerce_currency',                    array( $this, 'change_currency_code' ), PHP_INT_MAX, 1 );
+			add_filter( 'woocommerce_currency_symbol',             array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 );
+			add_filter( 'woocommerce_currency',                    array( $this, 'change_currency_code' ),   PHP_INT_MAX - 1, 1 );
 
 			// Shipping
-			add_filter( 'woocommerce_package_rates',               array( $this, 'change_shipping_price_by_country' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_package_rates',               array( $this, 'change_shipping_price_by_country' ), PHP_INT_MAX - 1, 2 );
 		//}
 
 		// Country selection box
