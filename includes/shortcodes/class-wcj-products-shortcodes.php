@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.3.8
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.12
 	 */
 	public function __construct() {
 
@@ -42,6 +42,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_crowdfunding_startdate',
 			'wcj_product_crowdfunding_deadline',
 			'wcj_product_crowdfunding_time_remaining',
+			'wcj_product_shipping_class',
+			'wcj_product_dimensions',
+			'wcj_product_formatted_name',
+			'wcj_product_stock_availability',
+			'wcj_product_tax_class',
+			'wcj_product_average_rating',
+			'wcj_product_categories',
+			'wcj_product_list_attributes',
+			'wcj_product_stock_quantity',
+			'wcj_product_sale_price',
+			'wcj_product_regular_price',
 		);
 
 		$this->the_atts = array(
@@ -55,18 +66,19 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'sep'             => ', ',
 			'add_links'       => 'yes',
 			'add_percent_row' => 'no',
+			'show_always'     => 'yes',
 		);
 
 		parent::__construct();
-    }
+	}
 
-    /**
-     * Inits shortcode atts and properties.
+	/**
+	 * Inits shortcode atts and properties.
 	 *
 	 * @param array $atts Shortcode atts.
 	 *
 	 * @return array The (modified) shortcode atts.
-     */
+	 */
 	function init_atts( $atts ) {
 
 		// Atts
@@ -117,6 +129,126 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		endwhile;
 		wp_reset_postdata();
 		return ( 'orders_sum' === $return_value ) ? $total_sum : $total_orders;
+	}
+
+	/**
+	 * wcj_product_regular_price.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_regular_price( $atts ) {
+		if ( $this->the_product->is_on_sale() || 'yes' === $atts['show_always'] ) {
+			$the_price = $this->the_product->get_regular_price();
+			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
+		}
+		return false;
+	}
+
+	/**
+	 * wcj_product_sale_price.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_sale_price( $atts ) {
+		if ( $this->the_product->is_on_sale() ) {
+			$the_price = $this->the_product->get_sale_price();
+			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
+		}
+		return false;
+	}
+
+	/**
+	 * wcj_product_tax_class.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_tax_class( $atts ) {
+		return $this->the_product->get_tax_class();
+	}
+
+	/**
+	 * wcj_product_list_attributes.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_list_attributes( $atts ) {
+		return ( $this->the_product->has_attributes() ) ? $this->the_product->list_attributes() : false;
+	}
+
+	/**
+	 * wcj_product_stock_quantity.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_stock_quantity( $atts ) {
+		$stock_quantity = $this->the_product->get_stock_quantity();
+		return ( '' != $stock_quantity ) ? $stock_quantity : false;
+	}
+
+	/**
+	 * wcj_product_average_rating.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_average_rating( $atts ) {
+		return $this->the_product->get_average_rating();
+	}
+
+	/**
+	 * wcj_product_categories.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_categories( $atts ) {
+		return $this->the_product->get_categories();
+	}
+
+	/**
+	 * wcj_product_formatted_name.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_formatted_name( $atts ) {
+		return $this->the_product->get_formatted_name();
+	}
+
+	/**
+	 * wcj_product_stock_availability.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_stock_availability( $atts ) {
+		$stock_availability_array = $this->the_product->get_availability();
+		return ( isset( $stock_availability_array['availability'] ) ) ? $stock_availability_array['availability'] : false;
+	}
+
+	/**
+	 * wcj_product_dimensions.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_dimensions( $atts ) {
+		return ( $this->the_product->has_dimensions() ) ? $this->the_product->get_dimensions() : false;
+	}
+
+	/**
+	 * wcj_product_shipping_class.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_shipping_class( $atts ) {
+		return $this->the_product->get_shipping_class();
 	}
 
 	/**
@@ -292,13 +424,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		//return get_post_meta( $atts['product_id'], $atts['name'], true );
 	}
 
-    /**
-     * Returns product (modified) price.
+	/**
+	 * Returns product (modified) price.
 	 *
 	 * @todo Variable products: a)not range, and b)price by country.
 	 *
 	 * @return string The product (modified) price
-     */
+	 */
 	function wcj_product_price( $atts ) {
 		// Variable
 		if ( $this->the_product->is_type( 'variable' ) ) {
@@ -322,9 +454,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		}
 	}
 
-    /**
+	/**
 	 * wcj_product_wholesale_price_table.
-     */
+	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 
 		if ( ! wcj_is_product_wholesale_enabled( $this->the_product->id ) ) return '';
@@ -443,8 +575,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
-     * wcj_product_image.
-     */
+	 * wcj_product_image.
+	 */
 	function wcj_product_image( $atts ) {
 		return $this->the_product->get_image( $atts['image_size'] );
 	}
