@@ -126,9 +126,14 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
   `[wcj_product_average_rating]`,
   `[wcj_product_categories]`,
   `[wcj_product_list_attributes]`,
+  `[wcj_product_list_attribute]`,
   `[wcj_product_stock_quantity]`,
   `[wcj_product_sale_price]`,
   `[wcj_product_regular_price]`,
+  `[wcj_product_time_since_last_sale]`,
+  `[wcj_product_price_including_tax]`,
+  `[wcj_product_price_excluding_tax]`,
+  `[wcj_product_available_variations]`,
 * Dev - PRODUCTS - Product Info - Code refactoring.
 * Dev - PAYMENT GATEWAYS - Gateways Currency - "No changes" option added.
 * Fix - PRICES & CURRENCIES - Price by Country - Payment Gateway Currency module now changes prices *after* Price by Country module.

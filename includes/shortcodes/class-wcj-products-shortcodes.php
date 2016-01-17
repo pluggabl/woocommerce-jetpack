@@ -50,9 +50,14 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_average_rating',
 			'wcj_product_categories',
 			'wcj_product_list_attributes',
+			'wcj_product_list_attribute',
 			'wcj_product_stock_quantity',
 			'wcj_product_sale_price',
 			'wcj_product_regular_price',
+			'wcj_product_time_since_last_sale',
+			'wcj_product_price_including_tax',
+			'wcj_product_price_excluding_tax',
+//			'wcj_product_available_variations',
 		);
 
 		$this->the_atts = array(
@@ -132,6 +137,82 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * wcj_product_time_since_last_sale.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 * @todo    not finished
+	 */
+	function wcj_product_time_since_last_sale( $atts ) {
+		// Constants
+		$days_to_cover = 90;
+		$do_use_only_completed_orders = true;
+		// Get the ID before new query
+		$the_ID = get_the_ID();
+		// Create args for new query
+		$args = array(
+			'post_type'      => 'shop_order',
+			'post_status'    => ( true === $do_use_only_completed_orders ? 'wc-completed' : 'any' ),
+			'posts_per_page' => -1,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'date_query'     => array( array( 'after'   => strtotime( '-' . $days_to_cover . ' days' ) ) ),
+		);
+		// Run new query
+		$loop = new WP_Query( $args );
+		// Analyze the results, i.e. orders
+		while ( $loop->have_posts() ) : $loop->the_post();
+			$order = new WC_Order( $loop->post->ID );
+			$items = $order->get_items();
+			foreach ( $items as $item ) {
+				// Run through all order's items
+				if ( $item['product_id'] == $the_ID ) {
+					// Found sale!
+					$result = sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) );
+					wp_reset_postdata();
+					return $result;
+				}
+			}
+		endwhile;
+		wp_reset_postdata();
+		// No sales found
+		return false;
+	}
+
+	/**
+	 * wcj_product_available_variations.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 * @todo    not finished!
+	 */
+	function wcj_product_available_variations( $atts ) {
+		return ( $this->the_product->is_type( 'variable' ) ) ? print_r( $this->the_product->get_available_variations(), true ) : false;
+	}
+
+	/**
+	 * wcj_product_price_excluding_tax.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_price_excluding_tax( $atts ) {
+		$the_price = $this->the_product->get_price_excluding_tax();
+		return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
+	}
+
+	/**
+	 * wcj_product_price_including_tax.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_price_including_tax( $atts ) {
+		$the_price = $this->the_product->get_price_including_tax();
+		return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
+	}
+
+	/**
 	 * wcj_product_regular_price.
 	 *
 	 * @version 2.3.12
@@ -177,6 +258,16 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_product_list_attributes( $atts ) {
 		return ( $this->the_product->has_attributes() ) ? $this->the_product->list_attributes() : false;
+	}
+
+	/**
+	 * wcj_product_list_attribute.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function wcj_product_list_attribute( $atts ) {
+		return ( $this->the_product->has_attributes() ) ? $this->the_product->get_attribute( $atts['name'] ) : false;
 	}
 
 	/**
@@ -383,10 +474,11 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_you_save.
 	 *
-	 * @return string
+	 * @return  string
+	 * @todo    a) hide_currency; b) check if on sale;
 	 */
 	function wcj_product_you_save( $atts ) {
-
+		//if ( $product->is_on_sale() ) else return false;
 		if ( $this->the_product->is_type( 'variable' ) ) {
 			$you_save = ( $this->the_product->get_variation_regular_price( 'max' ) - $this->the_product->get_variation_sale_price( 'max' ) );
 		} else {
@@ -398,10 +490,10 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_you_save_percent.
 	 *
-	 * @return string
+	 * @return  string
+	 * @todo    check if on sale;
 	 */
 	function wcj_product_you_save_percent( $atts ) {
-
 		if ( $this->the_product->is_type( 'variable' ) ) {
 			$you_save      = ( $this->the_product->get_variation_regular_price( 'max' ) - $this->the_product->get_variation_sale_price( 'max' ) );
 			$regular_price = $this->the_product->get_variation_regular_price( 'max' );
@@ -409,7 +501,6 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			$you_save      = ( $this->the_product->get_regular_price() - $this->the_product->get_sale_price() );
 			$regular_price = $this->the_product->get_regular_price();
 		}
-
 		return ( 0 != $regular_price ) ? intval( $you_save / $regular_price * 100 ) : '';
 	}
 
@@ -427,9 +518,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Returns product (modified) price.
 	 *
-	 * @todo Variable products: a)not range, and b)price by country.
-	 *
-	 * @return string The product (modified) price
+	 * @todo    variable products: a) not range; and b) price by country.
+	 * @return  string The product (modified) price
 	 */
 	function wcj_product_price( $atts ) {
 		// Variable
@@ -571,7 +661,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @return string
 	 */
 	function wcj_product_weight( $atts ) {
-		return $this->the_product->get_weight();
+		return ( $this->the_product->has_weight() ) ? $this->the_product->get_weight() : false;
 	}
 
 	/**
