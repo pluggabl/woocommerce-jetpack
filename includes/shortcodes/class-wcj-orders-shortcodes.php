@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.3.11
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -67,6 +67,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * add_extra_atts.
+	 *
+	 * @version 2.3.12
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -79,6 +81,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'field_id'      => '',
 			'name'          => '',
 			'round_by_line' => 'no',
+			'whole'         => __( 'Dollars', 'woocommerce-jetpack' ),
+			'decimal'       => __( 'Cents', 'woocommerce-jetpack' ),
 		), $atts );
 
 		return $modified_atts;
@@ -433,21 +437,25 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_total_in_words.
+	 *
+	 * @version 2.3.12
 	 */
 	function wcj_order_total_in_words( $atts ) {
+
 		$order_total = ( true === $atts['excl_tax'] ) ? $this->the_order->get_total() - $this->the_order->get_total_tax() : $this->the_order->get_total();
-		$order_total_dollars = intval( $order_total );
-		$order_total_cents = ( $order_total - intval( $order_total ) ) * 100;
+		$order_total_whole   = intval( $order_total );
+		$order_total_decimal = round( ( $order_total - $order_total_whole ) * 100 );
 
 		$the_number_in_words = '%s %s';
-		if ( 0 != $order_total_cents ) $the_number_in_words .= ', %s %s.';
-		else $the_number_in_words .= '.';
-		$dollars = 'Dollars';//$this->the_order->get_order_currency();
-		$cents = 'Cents';
+		$the_number_in_words .= ( 0 != $order_total_decimal ) ? ', %s %s.' : '.';
+
+		$dollars = $atts['whole'];
+		$cents = $atts['decimal'];
+
 		return sprintf( $the_number_in_words,
-			ucfirst( convert_number_to_words( $order_total_dollars ) ),
+			ucfirst( convert_number_to_words( $order_total_whole ) ),
 			$dollars,
-			ucfirst( convert_number_to_words( $order_total_cents ) ),
+			ucfirst( convert_number_to_words( $order_total_decimal ) ),
 			$cents );
 	}
 }
