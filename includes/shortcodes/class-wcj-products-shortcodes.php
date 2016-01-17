@@ -339,7 +339,15 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.3.12
 	 */
 	function wcj_product_shipping_class( $atts ) {
-		return $this->the_product->get_shipping_class();
+		$the_product_shipping_class = $this->the_product->get_shipping_class();
+		if ( '' != $the_product_shipping_class ) {
+			foreach ( WC()->shipping->get_shipping_classes() as $shipping_class ) {
+				if ( $the_product_shipping_class === $shipping_class->slug ) {
+					return $shipping_class->name;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**

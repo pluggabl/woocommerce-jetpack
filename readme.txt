@@ -116,9 +116,12 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.12 - 11/01/2016 =
+= 2.3.12 - 17/01/2016 =
+~* Dev - 'Reset to Default Settings' option added.
+~* Dev - EMAILS & MISC. - Shortcodes - Initial module release. Now shortcodes can be disabled, for memory saving.
+~* Dev - PRODUCTS - Product Info - Code refactoring.
 * Dev - Shortcodes - Products - Shortcodes added:
-  `[wcj_product_shipping_class]`,
+  `[wcj_product_shipping_class]` (returns shipping class *name*, not slug),
   `[wcj_product_dimensions]`,
   `[wcj_product_formatted_name]`,
   `[wcj_product_stock_availability]`,
@@ -134,7 +137,6 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
   `[wcj_product_price_including_tax]`,
   `[wcj_product_price_excluding_tax]`,
   `[wcj_product_available_variations]`,
-* Dev - PRODUCTS - Product Info - Code refactoring.
 * Dev - PAYMENT GATEWAYS - Gateways Currency - "No changes" option added.
 * Fix - PRICES & CURRENCIES - Price by Country - Payment Gateway Currency module now changes prices *after* Price by Country module.
 * Dev - EMAILS & MISC. - General - "Products Revisions" options section added.

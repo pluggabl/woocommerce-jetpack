@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.3.9
+ * @version 2.3.12
  */
 
 final class WC_Jetpack {
@@ -317,7 +317,6 @@ final class WC_Jetpack {
 	 * include_functions.
 	 */
 	private function include_functions() {
-		// Functions
 		include_once( 'includes/functions/wcj-debug-functions.php' );
 		include_once( 'includes/functions/wcj-functions.php' );
 		include_once( 'includes/functions/wcj-html-functions.php' );
@@ -327,21 +326,24 @@ final class WC_Jetpack {
 
 	/**
 	 * include_shortcodes.
+	 *
+	 * @version 2.3.12
 	 */
 	private function include_shortcodes() {
-		// Shortcodes
-		include_once( 'includes/shortcodes/class-wcj-shortcodes.php' );
-		include_once( 'includes/shortcodes/class-wcj-general-shortcodes.php' );
-		include_once( 'includes/shortcodes/class-wcj-invoices-shortcodes.php' );
-		include_once( 'includes/shortcodes/class-wcj-orders-shortcodes.php' );
-		include_once( 'includes/shortcodes/class-wcj-order-items-shortcodes.php' );
-		include_once( 'includes/shortcodes/class-wcj-products-shortcodes.php' );
+		if ( 'yes' === get_option( 'wcj_shortcodes_enabled', 'no' ) ) {
+			include_once( 'includes/shortcodes/class-wcj-shortcodes.php' );
+			include_once( 'includes/shortcodes/class-wcj-general-shortcodes.php' );
+			include_once( 'includes/shortcodes/class-wcj-invoices-shortcodes.php' );
+			include_once( 'includes/shortcodes/class-wcj-orders-shortcodes.php' );
+			include_once( 'includes/shortcodes/class-wcj-order-items-shortcodes.php' );
+			include_once( 'includes/shortcodes/class-wcj-products-shortcodes.php' );
+		}
 	}
 
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.3.9
+	 * @version 2.3.12
 	 */
 	private function include_modules() {
 		$settings = array();
@@ -408,6 +410,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-currency-exchange-rates.php' );
 
 		$settings[] = include_once( 'includes/class-wcj-general.php' );
+		$settings[] = include_once( 'includes/class-wcj-shortcodes-module.php' );
 		$settings[] = include_once( 'includes/class-wcj-eu-vat-number.php' );
 		$settings[] = include_once( 'includes/class-wcj-old-slugs.php' );
 		$settings[] = include_once( 'includes/class-wcj-reports.php' );
