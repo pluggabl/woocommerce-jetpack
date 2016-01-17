@@ -297,7 +297,7 @@ class WCJ_Product_Info extends WCJ_Module {
 			$default_value = '';
 			switch ( $i ) {
 				case 1: $default_value = '<ul>'; break;
-				case 2: $default_value = '<li>' . __( '[wcj_product_you_save before="You save: <strong>" after="</strong>"][wcj_product_you_save_percent before=" (" after="%)"]', 'woocommerce-jetpack' ) . '</li>'; break;
+				case 2: $default_value = '<li>' . __( '[wcj_product_you_save before="You save: <strong>" hide_if_zero="yes" after="</strong>"][wcj_product_you_save_percent hide_if_zero="yes" before=" (" after="%)"]', 'woocommerce-jetpack' ) . '</li>'; break;
 				case 3: $default_value = '<li>' . __( '[wcj_product_total_sales before="Total sales: "]', 'woocommerce-jetpack' ) . '</li>'; break;
 				case 4: $default_value = '</ul>'; break;
 			}

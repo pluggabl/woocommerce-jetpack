@@ -117,6 +117,12 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 17/01/2016 =
+~* Dev - `reverse` attribute added to `[wcj_product_you_save_percent]` shortcode.
+~* Dev - `hide_if_zero` attribute added to Products Shortcodes.
+* Dev - `[wcj_product_you_save]` - `hide_currency` attribute added.
+* Fix - `[wcj_product_you_save]` - checking if product is on sale.
+* Fix - `[wcj_product_you_save_percent]` - checking if product is on sale.
+~* Dev - `[wcj_order_items_table]` - `item_excerpt` option added.
 ~* Dev - 'Reset to Default Settings' option added.
 ~* Dev - EMAILS & MISC. - Shortcodes - Initial module release. Now shortcodes can be disabled, for memory saving.
 ~* Dev - PRODUCTS - Product Info - Code refactoring.
@@ -136,7 +142,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
   `[wcj_product_time_since_last_sale]`,
   `[wcj_product_price_including_tax]`,
   `[wcj_product_price_excluding_tax]`,
-  `[wcj_product_available_variations]`,
+  `[wcj_product_available_variations]` (todo: not finished!),
 * Dev - PAYMENT GATEWAYS - Gateways Currency - "No changes" option added.
 * Fix - PRICES & CURRENCIES - Price by Country - Payment Gateway Currency module now changes prices *after* Price by Country module.
 * Dev - EMAILS & MISC. - General - "Products Revisions" options section added.

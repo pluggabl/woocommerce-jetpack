@@ -212,6 +212,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 
 		$settings[] = array(
 			'title'    => __( 'Hide Disabled Docs Settings', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_hide_disabled_docs_settings',
 			'default'  => 'no',
 			'type'     => 'checkbox',

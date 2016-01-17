@@ -72,6 +72,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'add_links'       => 'yes',
 			'add_percent_row' => 'no',
 			'show_always'     => 'yes',
+			'hide_if_zero'    => 'no',
+			'reverse'         => 'no',
 		);
 
 		parent::__construct();
@@ -483,33 +485,45 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * wcj_product_you_save.
 	 *
 	 * @return  string
-	 * @todo    a) hide_currency; b) check if on sale;
+	 * @version 2.3.12
 	 */
 	function wcj_product_you_save( $atts ) {
-		//if ( $product->is_on_sale() ) else return false;
-		if ( $this->the_product->is_type( 'variable' ) ) {
-			$you_save = ( $this->the_product->get_variation_regular_price( 'max' ) - $this->the_product->get_variation_sale_price( 'max' ) );
+		if ( $this->the_product->is_on_sale() ) {
+			if ( $this->the_product->is_type( 'variable' ) ) {
+				$you_save = ( $this->the_product->get_variation_regular_price( 'max' ) - $this->the_product->get_variation_sale_price( 'max' ) );
+			} else {
+				$you_save = ( $this->the_product->get_regular_price() - $this->the_product->get_sale_price() );
+			}
+			return ( 'yes' === $atts['hide_currency'] ) ? $you_save : wc_price( $you_save );
 		} else {
-			$you_save = ( $this->the_product->get_regular_price() - $this->the_product->get_sale_price() );
+			return ( 'yes' === $atts['hide_if_zero'] ) ? '' : 0;
 		}
-		return wc_price( $you_save );
 	}
 
 	/**
 	 * wcj_product_you_save_percent.
 	 *
 	 * @return  string
-	 * @todo    check if on sale;
+	 * @version 2.3.12
 	 */
 	function wcj_product_you_save_percent( $atts ) {
-		if ( $this->the_product->is_type( 'variable' ) ) {
-			$you_save      = ( $this->the_product->get_variation_regular_price( 'max' ) - $this->the_product->get_variation_sale_price( 'max' ) );
-			$regular_price = $this->the_product->get_variation_regular_price( 'max' );
+		if ( $this->the_product->is_on_sale() ) {
+			if ( $this->the_product->is_type( 'variable' ) ) {
+				$you_save      = ( $this->the_product->get_variation_regular_price( 'max' ) - $this->the_product->get_variation_sale_price( 'max' ) );
+				$regular_price = $this->the_product->get_variation_regular_price( 'max' );
+			} else {
+				$you_save      = ( $this->the_product->get_regular_price() - $this->the_product->get_sale_price() );
+				$regular_price = $this->the_product->get_regular_price();
+			}
+			if ( 0 != $regular_price ) {
+				$you_save_percent = intval( $you_save / $regular_price * 100 );
+				return ( 'yes' === $atts['reverse'] ) ? ( 100 - $you_save_percent ) : $you_save_percent;
+			} else {
+				return '';
+			}
 		} else {
-			$you_save      = ( $this->the_product->get_regular_price() - $this->the_product->get_sale_price() );
-			$regular_price = $this->the_product->get_regular_price();
+			return ( 'yes' === $atts['hide_if_zero'] ) ? '' : ( ( 'yes' === $atts['reverse'] ) ? 100 : 0 );
 		}
-		return ( 0 != $regular_price ) ? intval( $you_save / $regular_price * 100 ) : '';
 	}
 
 	/**
@@ -640,9 +654,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		if ( 0 != $atts['excerpt_length'] ) remove_filter( 'excerpt_length', array( $this, 'custom_excerpt_length' ), PHP_INT_MAX );
 
 		wp_reset_postdata();
-		//wcj_log( $the_excerpt );
 		return $the_excerpt;
-
 	}
 
 	/**

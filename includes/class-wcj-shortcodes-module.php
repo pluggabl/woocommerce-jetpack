@@ -20,7 +20,7 @@ class WCJ_Shortcodes_Module extends WCJ_Module {
 	public function __construct() {
 		$this->id         = 'shortcodes';
 		$this->short_desc = __( 'Shortcodes', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Shortcodes.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Booster\'s shortcodes.', 'woocommerce-jetpack' );
 		parent::__construct();
 	}
 

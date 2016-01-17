@@ -71,20 +71,20 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		extract( $new_item_args );
 		// Create item
 		$items[] = array(
-			'is_custom'			=> true,
-			'name'				=> $name,
-			'type' 				=> 'line_item',
-			'qty' 				=> $qty,
-			'line_subtotal' 	=> $line_subtotal,
-			'line_total' 		=> $line_total,
-			'line_tax' 			=> $line_tax,
+			'is_custom'         => true,
+			'name'              => $name,
+			'type'              => 'line_item',
+			'qty'               => $qty,
+			'line_subtotal'     => $line_subtotal,
+			'line_total'        => $line_total,
+			'line_tax'          => $line_tax,
 			'line_subtotal_tax' => $line_subtotal_tax,
-			'item_meta'			=> array(
-				'_qty' 					=> array( $qty ),
-				'_line_subtotal' 		=> array( $line_subtotal ),
-				'_line_total' 			=> array( $line_total ),
-				'_line_tax' 			=> array( $line_tax ),
-				'_line_subtotal_tax' 	=> array( $line_subtotal_tax ),
+			'item_meta'         => array(
+				'_qty'               => array( $qty ),
+				'_line_subtotal'     => array( $line_subtotal ),
+				'_line_total'        => array( $line_total ),
+				'_line_tax'          => array( $line_tax ),
+				'_line_subtotal_tax' => array( $line_subtotal_tax ),
 			),
 		);
 		return $items;
@@ -197,6 +197,20 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 								$the_item_title .= '<div style="font-size:smaller;">' . wc_get_formatted_variation( $the_product->variation_data, true ) . '</div>';
 							}
 							$data[ $item_counter ][] = $the_item_title;
+						}
+						break;
+					case 'item_excerpt':
+					case 'item_description':
+					case 'item_short_description':
+						if ( true === $item['is_custom'] ) {
+							$data[ $item_counter ][] = '';
+						} else {
+							global $post;
+							$post = get_post( $item['product_id'] );
+							setup_postdata( $post );
+							$the_excerpt = get_the_excerpt();
+							wp_reset_postdata();
+							$data[ $item_counter ][] = $the_excerpt;
 						}
 						break;
 					case 'item_variation':
