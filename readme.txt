@@ -116,9 +116,10 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.12 - 17/01/2016 =
-* Dev - Shortcodes -  `[wcj_order_total_in_words]` - `whole` and `decimal` attributes added.
-* Fix - Shortcodes -  `[wcj_order_total_in_words]` - decimal part rounding bug fixed.
+= 2.3.12 - 22/01/2016 =
+* Dev - PRICES & CURRENCIES - Currencies - Code refactoring.
+* Dev - Shortcodes - `[wcj_order_total_in_words]` - `whole` and `decimal` attributes added.
+* Fix - Shortcodes - `[wcj_order_total_in_words]` - decimal part rounding bug fixed.
 ~* Dev - Shortcodes - `reverse` attribute added to `[wcj_product_you_save_percent]` shortcode.
 ~* Dev - Shortcodes - `hide_if_zero` attribute added to Products Shortcodes.
 * Dev - Shortcodes - `[wcj_product_you_save]` - `hide_currency` attribute added.
