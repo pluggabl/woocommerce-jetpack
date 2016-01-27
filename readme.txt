@@ -116,7 +116,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.12 - 22/01/2016 =
+= 2.3.12 - 27/01/2016 =
+* Dev - PRICES & CURRENCIES - Currencies - *Custom Currencies* options added.
 * Dev - PRICES & CURRENCIES - Currencies - Code refactoring.
 * Dev - Shortcodes - `[wcj_order_total_in_words]` - `whole` and `decimal` attributes added.
 * Fix - Shortcodes - `[wcj_order_total_in_words]` - decimal part rounding bug fixed.

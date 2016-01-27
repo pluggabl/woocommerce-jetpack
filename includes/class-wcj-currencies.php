@@ -32,6 +32,17 @@ class WCJ_Currencies extends WCJ_Module {
 			$this->currency_names[   $data['code'] ] = $data['name'];
 		}
 
+		$custom_currency_total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
+		for ( $i = 1; $i <= $custom_currency_total_number; $i++) {
+			$custom_currency_code   = get_option( 'wcj_currency_custom_currency_code_'   . $i );
+			$custom_currency_name   = get_option( 'wcj_currency_custom_currency_name_'   . $i );
+			$custom_currency_symbol = get_option( 'wcj_currency_custom_currency_symbol_' . $i );
+			if ( '' != $custom_currency_code && '' != $custom_currency_name && '' != $custom_currency_symbol ) {
+				$this->currency_names[   $custom_currency_code ] = $custom_currency_name;
+				$this->currency_symbols[ $custom_currency_code ] = $custom_currency_symbol;
+			}
+		}
+
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_currencies',      array( $this, 'add_all_currencies'), 100 );
 			add_filter( 'woocommerce_currency_symbol', array( $this, 'add_currency_symbol'), 100, 2 );
@@ -64,13 +75,15 @@ class WCJ_Currencies extends WCJ_Module {
 
 	/**
 	 * add_edit_currency_symbol_field.
+	 *
+	 * @version 2.3.12
 	 */
 	function add_edit_currency_symbol_field( $settings ) {
 		$updated_settings = array();
 		foreach ( $settings as $section ) {
 			if ( isset( $section['id'] ) && 'woocommerce_currency_pos' == $section['id'] ) {
 				$updated_settings[] = array(
-					'name'     => __( 'Currency Symbol', 'woocommerce-jetpack' ),
+					'name'     => __( 'Booster: Currency Symbol', 'woocommerce-jetpack' ),
 					'desc_tip' => __( 'This sets the currency symbol.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_currency_' . get_woocommerce_currency(),
 					'type'     => 'text',
@@ -91,6 +104,7 @@ class WCJ_Currencies extends WCJ_Module {
 	 * @version 2.3.12
 	 */
 	function get_settings() {
+
 		$settings = array(
 
 			array(
@@ -109,7 +123,7 @@ class WCJ_Currencies extends WCJ_Module {
 			),
 		);
 
-		foreach ( $this->currency_names as $currency_code => $currency_name )
+		foreach ( $this->currency_names as $currency_code => $currency_name ) {
 			$settings[] = array(
 				'title'     => $currency_name,
 				'desc_tip'  => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
@@ -118,11 +132,60 @@ class WCJ_Currencies extends WCJ_Module {
 				'type'      => 'text',
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			);
+		}
 
 		$settings[] = array(
 				'type'      => 'sectionend',
 				'id'        => 'wcj_all_currencies_list_options',
+		);
+
+		$settings[] = array(
+				'title'     => __( 'Custom Currencies', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'id'        => 'wcj_currency_custom_currency_options',
+		);
+
+		$settings[] = array(
+				'title'     => __( 'Total Custom Currencies', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_currency_custom_currency_total_number',
+				'default'   => 1,
+				'type'      => 'custom_number',
+				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+		);
+
+		$custom_currency_total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
+		for ( $i = 1; $i <= $custom_currency_total_number; $i++) {
+
+			$settings[] = array(
+				'title'     => __( 'Custom Currency', 'woocommerce-jetpack' ) . ' #' . $i,
+				'desc'      => __( 'Currency Name', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_currency_custom_currency_name_' . $i,
+				'default'   => '',
+				'type'      => 'text',
 			);
+
+			$settings[] = array(
+				'title'     => '',
+				'desc'      => __( 'Currency Code', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_currency_custom_currency_code_' . $i,
+				'default'   => '',
+				'type'      => 'text',
+			);
+
+			$settings[] = array(
+				'title'     => '',
+				'desc'      => __( 'Currency Symbol', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_currency_custom_currency_symbol_' . $i,
+				'default'   => '',
+				'type'      => 'text',
+			);
+		}
+
+		$settings[] = array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_currency_custom_currency_options',
+		);
 
 		return $this->add_standard_settings( $settings );
 	}
