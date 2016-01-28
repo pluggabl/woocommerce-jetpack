@@ -130,17 +130,46 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	}
 
 	/**
+	 * get_order_statuses.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function get_order_statuses() {
+		$result = array();
+		$statuses = function_exists( 'wc_get_order_statuses' ) ? wc_get_order_statuses() : array();
+		foreach( $statuses as $status => $status_name ) {
+			$result[ substr( $status, 3 ) ] = $statuses[ $status ];
+		}
+		return $result;
+	}
+
+	/**
 	 * Initialise settings form fields
 	 *
 	 * @version 2.3.12
 	 */
 	function init_form_fields() {
+
 		ob_start();
 		include( 'email-html.php' );
 		$default_html_template = ob_get_clean();
 		ob_start();
 		include( 'email-plain.php' );
 		$default_plain_template = ob_get_clean();
+
+		$status_change_triggers = array();
+		$status_triggers = array();
+		$order_statuses = $this->get_order_statuses();
+		foreach ( $order_statuses as $slug => $name ) {
+			$status_triggers[ 'woocommerce_order_status_' . $slug . '_notification' ] = sprintf( __( 'Order status %s', 'woocommerce-jetpack' ), $name );
+			foreach ( $order_statuses as $slug2 => $name2 ) {
+				if ( $slug != $slug2 ) {
+					$status_change_triggers[ 'woocommerce_order_status_' . $slug . '_to_' . $slug2 . '_notification' ] = sprintf( __( 'Order status %s to %s', 'woocommerce-jetpack' ), $name, $name2 );
+				}
+			}
+		}
+
 		$this->form_fields = array(
 			'enabled' => array(
 				'title'         => __( 'Enable/Disable', 'woocommerce' ),
@@ -153,27 +182,18 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				'type'          => 'multiselect',
 				'placeholder'   => '',
 				'default'       => array(),
-				'options'       => array(
-					'woocommerce_order_status_pending_to_processing_notification' => __( 'Order status pending to processing', 'woocommerce-jetpack' ),
-					'woocommerce_order_status_pending_to_completed_notification'  => __( 'Order status pending to completed', 'woocommerce-jetpack' ),
-					'woocommerce_order_status_pending_to_on-hold_notification'    => __( 'Order status pending to on-hold', 'woocommerce-jetpack' ),
-					'woocommerce_order_status_pending_to_cancelled_notification'  => __( 'Order status pending to cancelled', 'woocommerce-jetpack' ),
-
-					'woocommerce_order_status_failed_to_processing_notification'  => __( 'Order status failed to processing', 'woocommerce-jetpack' ),
-					'woocommerce_order_status_failed_to_completed_notification'   => __( 'Order status failed to completed', 'woocommerce-jetpack' ),
-					'woocommerce_order_status_failed_to_on-hold_notification'     => __( 'Order status failed to on-hold', 'woocommerce-jetpack' ),
-
-					'woocommerce_order_status_completed_notification'             => __( 'Order status completed', 'woocommerce-jetpack' ),
-
-					'woocommerce_order_status_on-hold_to_cancelled_notification'  => __( 'Order status on-hold to cancelled', 'woocommerce-jetpack' ),
-
-					'woocommerce_reset_password_notification'                     => __( 'Reset password notification', 'woocommerce-jetpack' ),
-
-					'woocommerce_order_fully_refunded_notification'               => __( 'Order fully refunded notification', 'woocommerce-jetpack' ),
-					'woocommerce_order_partially_refunded_notification'           => __( 'Order partially refunded notification', 'woocommerce-jetpack' ),
-
-					'woocommerce_new_customer_note_notification'                  => __( 'New customer note notification', 'woocommerce-jetpack' ),
+				'options'       => array_merge(
+					$status_triggers,
+					array(
+						'woocommerce_reset_password_notification'                     => __( 'Reset password notification', 'woocommerce-jetpack' ),
+						'woocommerce_order_fully_refunded_notification'               => __( 'Order fully refunded notification', 'woocommerce-jetpack' ),
+						'woocommerce_order_partially_refunded_notification'           => __( 'Order partially refunded notification', 'woocommerce-jetpack' ),
+						'woocommerce_new_customer_note_notification'                  => __( 'New customer note notification', 'woocommerce-jetpack' ),
+					),
+					$status_change_triggers
 				),
+				'css'           => 'height:300px;',
+//				'class'         => 'chosen_select',
 			),
 			'recipient' => array(
 				'title'         => __( 'Recipient(s)', 'woocommerce' ),

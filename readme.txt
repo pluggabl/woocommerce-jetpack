@@ -117,6 +117,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 28/01/2016 =
+* Dev - EMAILS & MISC. - Emails - "Custom Emails" - Triggers added (includes custom order statuses).
 * Dev - EMAILS & MISC. - Emails - "Custom Emails" - `%customer%` as recipient added.
 * Dev - PDF Invoices v1 - removed.
 * Fix - `get_cart_discount()` (depreciated since WooCommerce 2.3)
