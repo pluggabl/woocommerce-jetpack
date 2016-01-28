@@ -349,7 +349,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	function add_reset_settings_button( $settings ) {
 		$reset_settings_setting = array(
 			array(
-				'title' => __( 'Reset to Default Settings', 'woocommerce-jetpack' ),
+				'title' => __( 'Reset Module to Default Settings', 'woocommerce-jetpack' ),
 				'type'  => 'title',
 				'id'    => 'wcj_' . $this->id . '_reset_settings_options',
 			),

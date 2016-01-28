@@ -11,7 +11,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 2.3.9
+ * @version 2.3.12
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -20,10 +20,13 @@ class WC_Email_WCJ_Custom extends WC_Email {
 
 	/**
 	 * Constructor
+	 *
+	 * @version 2.3.12
 	 */
 	function __construct( $id = 1 ) {
 
 		$this->id               = 'wcj_custom' . '_' . $id;
+		$this->customer_email   = ( '%customer%' === $this->get_option( 'recipient' ) ) ? true : false;
 		$this->title            = __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $id;
 		$this->description      = __( 'Custom emails are sent to the recipient list when selected triggers are called.', 'woocommerce-jetpack' );
 
@@ -45,19 +48,27 @@ class WC_Email_WCJ_Custom extends WC_Email {
 		parent::__construct();
 
 		// Other settings
-		$this->recipient = $this->get_option( 'recipient' );
+		if ( ! $this->customer_email ) {
+			$this->recipient = $this->get_option( 'recipient' );
 
-		if ( ! $this->recipient )
-			$this->recipient = get_option( 'admin_email' );
+			if ( ! $this->recipient )
+				$this->recipient = get_option( 'admin_email' );
+		}
 	}
 
 	/**
 	 * Trigger.
+	 *
+	 * @version 2.3.12
 	 */
 	function trigger( $order_id ) {
 
 		if ( $order_id ) {
 			$this->object       = wc_get_order( $order_id );
+
+			if ( $this->customer_email ) {
+				$this->recipient = $this->object->billing_email;
+			}
 
 			$this->find['order-date']      = '{order_date}';
 			$this->find['order-number']    = '{order_number}';
@@ -120,6 +131,8 @@ class WC_Email_WCJ_Custom extends WC_Email {
 
 	/**
 	 * Initialise settings form fields
+	 *
+	 * @version 2.3.12
 	 */
 	function init_form_fields() {
 		ob_start();
@@ -165,7 +178,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			'recipient' => array(
 				'title'         => __( 'Recipient(s)', 'woocommerce' ),
 				'type'          => 'text',
-				'description'   => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to <code>%s</code>.', 'woocommerce' ), esc_attr( get_option('admin_email') ) ),
+				'description'   => sprintf( __( 'Enter recipients (comma separated) for this email. Defaults to <code>%s</code>.', 'woocommerce' ), esc_attr( get_option('admin_email') ) ) . ' ' . __( 'Or enter <code>%customer%</code> to send to customer billing email.', 'woocommerce-jetpack' ),
 				'placeholder'   => '',
 				'default'       => '',
 			),
