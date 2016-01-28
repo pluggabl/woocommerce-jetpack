@@ -389,7 +389,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-order-numbers.php' );
 		$settings[] = include_once( 'includes/class-wcj-order-custom-statuses.php' );
 
-		$settings[] = include_once( 'includes/class-wcj-pdf-invoices.php' );
+//		$settings[] = include_once( 'includes/class-wcj-pdf-invoices.php' );
 
 		$settings[] = include_once( 'includes/class-wcj-pdf-invoicing.php' );
 		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-numbering.php' );

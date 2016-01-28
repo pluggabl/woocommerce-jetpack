@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.2.0
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -93,7 +93,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_get_cart_discount_tax.
 	 */
-	function wcj_order_get_cart_discount_tax() {
+	/* function wcj_order_get_cart_discount_tax() {
 
 		$the_cart_discount = $this->the_order->get_cart_discount();
 		$is_discount_taxable = ( $the_cart_discount > 0 ) ? true : false;
@@ -101,7 +101,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		if ( $is_discount_taxable ) {
 
 			/* $order_total_incl_tax = $this->the_order->get_total();
-			$order_total_tax      = $this->the_order->get_total_tax(); */
+			$order_total_tax      = $this->the_order->get_total_tax(); *//*
 
 			$order_total_incl_tax = 0;
 			$order_total_tax = 0;
@@ -121,10 +121,12 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		return false;
-	}
+	} */
 
 	/**
 	 * wcj_order_items_table.
+	 *
+	 * @version 2.3.12
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -158,10 +160,10 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			$total_discount_tax_excl = $the_order->get_total_discount( true );
 			$discount_tax            = $the_order->get_total_discount( false ) - $total_discount_tax_excl;
 
-			if ( false != ( $the_tax = $this->wcj_order_get_cart_discount_tax() ) ) {
+			/* if ( false != ( $the_tax = $this->wcj_order_get_cart_discount_tax() ) ) {
 				$total_discount_tax_excl -= $the_tax;
 				$discount_tax += $the_tax;
-			}
+			} */
 
 			$total_discount_tax_excl *= -1;
 			$discount_tax *= -1;

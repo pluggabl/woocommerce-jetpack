@@ -129,7 +129,7 @@ return array(
 			'admin_tools',
 			'emails',
 			'wpml',
-			'pdf_invoices',
+//			'pdf_invoices',
 		),
 	),
 

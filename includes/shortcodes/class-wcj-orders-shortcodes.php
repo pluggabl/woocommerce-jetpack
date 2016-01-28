@@ -17,7 +17,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.12
 	 */
 	public function __construct() {
 
@@ -40,7 +40,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_subtotal',
 			'wcj_order_subtotal_plus_shipping',
 			'wcj_order_total_discount',
-			'wcj_order_cart_discount',
+//			'wcj_order_cart_discount',
 			'wcj_order_shipping_tax',
 			'wcj_order_total_tax',
 			'wcj_order_total_tax_percent',
@@ -302,7 +302,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_get_cart_discount_tax.
 	 */
-	function wcj_order_get_cart_discount_tax() {
+	/* function wcj_order_get_cart_discount_tax() {
 
 		$the_cart_discount = $this->the_order->get_cart_discount();
 		$is_discount_taxable = ( $the_cart_discount > 0 ) ? true : false;
@@ -310,7 +310,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		if ( $is_discount_taxable ) {
 
 			/* $order_total_incl_tax = $this->the_order->get_total();
-			$order_total_tax      = $this->the_order->get_total_tax(); */
+			$order_total_tax      = $this->the_order->get_total_tax(); *//*
 
 			$order_total_incl_tax = 0;
 			$order_total_tax = 0;
@@ -330,20 +330,22 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		return false;
-	}
+	} */
 
 	/**
 	 * wcj_order_total_discount.
+	 *
+	 * @version 2.3.12
 	 */
 	function wcj_order_total_discount( $atts ) {
 
 		$the_discount = $this->the_order->get_total_discount( $atts['excl_tax'] );
 
-		if ( true === $atts['excl_tax'] ) {
+		/* if ( true === $atts['excl_tax'] ) {
 			if ( false != ( $the_tax = $this->wcj_order_get_cart_discount_tax() ) ) {
 				$the_discount -= $the_tax;
 			}
-		}
+		} */
 
 		return $this->wcj_price_shortcode( $the_discount, $atts );
 	}
@@ -351,9 +353,9 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_cart_discount.
 	 */
-	function wcj_order_cart_discount( $atts ) {
+	/* function wcj_order_cart_discount( $atts ) {
 		return $this->wcj_price_shortcode( $this->the_order->get_cart_discount() , $atts );
-	}
+	} */
 
 	/**
 	 * wcj_order_shipping_tax.
