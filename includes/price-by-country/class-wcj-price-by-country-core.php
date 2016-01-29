@@ -59,6 +59,8 @@ class WCJ_Price_by_Country_Core {
 
 			// Shipping
 			add_filter( 'woocommerce_package_rates',               array( $this, 'change_shipping_price_by_country' ), PHP_INT_MAX - 1, 2 );
+
+			add_filter( 'woocommerce_get_variation_prices_hash',   array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 1, 3 );
 		//}
 
 		// Country selection box
@@ -68,6 +70,18 @@ class WCJ_Price_by_Country_Core {
 
 		// Debug
 //		add_shortcode( 'wcj_debug_price_by_country', 		array( $this, 'get_debug_info' ) );
+	}
+
+	/**
+	 * get_variation_prices_hash.
+	 *
+	 * @version 2.3.12
+	 * @since   2.3.12
+	 */
+	function get_variation_prices_hash( $price_hash, $_product, $display ) {
+		//if ( ! empty( $price_hash ) ) wcj_log( $price_hash );
+		$price_hash = array( false );
+		return $price_hash;
 	}
 
 	/**
