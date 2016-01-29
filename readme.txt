@@ -117,7 +117,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 29/01/2016 =
-* Fix - PRICES & CURRENCIES - Price by Country - Variable products fix (error came with WooCommerce v2.5.0 update).
+-* Fix - PRICES & CURRENCIES - Price by Country - Variable products fix (error came with WooCommerce v2.5.0 update).
 * Dev - EMAILS & MISC. - Emails - "Custom Emails" - Triggers added (includes custom order statuses).
 * Dev - EMAILS & MISC. - Emails - "Custom Emails" - `%customer%` as recipient added.
 * Dev - PDF Invoices v1 - removed.
