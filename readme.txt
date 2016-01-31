@@ -117,50 +117,31 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 29/01/2016 =
--* Fix - PRICES & CURRENCIES - Price by Country - Variable products fix (error came with WooCommerce v2.5.0 update).
-* Dev - EMAILS & MISC. - Emails - "Custom Emails" - Triggers added (includes custom order statuses).
-* Dev - EMAILS & MISC. - Emails - "Custom Emails" - `%customer%` as recipient added.
-* Dev - PDF Invoices v1 - removed.
-* Fix - `get_cart_discount()` (depreciated since WooCommerce 2.3)
-  removed from `[wcj_order_items_table]` shortcode (affected if `discount_as_item` option was used);
-  removed from `[wcj_order_total_discount]` shortcode;
-  `[wcj_order_cart_discount]` shortcode removed.
+* Dev - 'Reset to Default Settings' option added.
+* Fix - Shortcodes - Orders - `get_cart_discount()` (depreciated since WooCommerce 2.3) removed from `[wcj_order_items_table]` shortcode (affected if `discount_as_item` option was used); removed from `[wcj_order_total_discount]` shortcode; `[wcj_order_cart_discount]` shortcode removed.
+* Fix - Shortcodes - Orders - `[wcj_order_total_in_words]` - decimal part rounding bug fixed.
+* Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `whole` and `decimal` attributes added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_short_description` option added.
+* Dev - Shortcodes - Products - `hide_if_zero` attribute added to Products Shortcodes.
+* Fix - Shortcodes - Products - `[wcj_product_you_save]` - checking if product is on sale.
+* Dev - Shortcodes - Products - `[wcj_product_you_save]` - `hide_currency` attribute added.
+* Fix - Shortcodes - Products - `[wcj_product_you_save_percent]` - checking if product is on sale.
+* Dev - Shortcodes - Products - `[wcj_product_you_save_percent]` - `reverse` attribute added.
+* Dev - Shortcodes - Products - New shortcodes added: `[wcj_product_shipping_class]` (returns shipping class *name*, not slug), `[wcj_product_dimensions]`, `[wcj_product_formatted_name]`, `[wcj_product_stock_availability]`, `[wcj_product_tax_class]`, `[wcj_product_average_rating]`, `[wcj_product_categories]`, `[wcj_product_list_attributes]`, `[wcj_product_list_attribute]`, `[wcj_product_stock_quantity]`, `[wcj_product_sale_price]`, `[wcj_product_regular_price]`, `[wcj_product_time_since_last_sale]`, `[wcj_product_price_including_tax]`, `[wcj_product_price_excluding_tax]`, `[wcj_product_available_variations]`;
+* Fix - PRICES & CURRENCIES - Price by Country - Payment Gateway Currency module now changes prices *after* Price by Country module.
+* Fix - PRICES & CURRENCIES - Price by Country - Variable products fix (error appeared with WooCommerce v2.5.0 update).
 * Dev - PRICES & CURRENCIES - Currencies - *Custom Currencies* options added.
 * Dev - PRICES & CURRENCIES - Currencies - Code refactoring.
-* Dev - Shortcodes - `[wcj_order_total_in_words]` - `whole` and `decimal` attributes added.
-* Fix - Shortcodes - `[wcj_order_total_in_words]` - decimal part rounding bug fixed.
-~* Dev - Shortcodes - `reverse` attribute added to `[wcj_product_you_save_percent]` shortcode.
-~* Dev - Shortcodes - `hide_if_zero` attribute added to Products Shortcodes.
-* Dev - Shortcodes - `[wcj_product_you_save]` - `hide_currency` attribute added.
-* Fix - Shortcodes - `[wcj_product_you_save]` - checking if product is on sale.
-* Fix - Shortcodes - `[wcj_product_you_save_percent]` - checking if product is on sale.
-~* Dev - Shortcodes - `[wcj_order_items_table]` - `item_excerpt` option added.
-~* Dev - 'Reset to Default Settings' option added.
-~* Dev - EMAILS & MISC. - Shortcodes - Initial module release. Now shortcodes can be disabled, for memory saving.
 ~* Dev - PRODUCTS - Product Info - Code refactoring.
-* Dev - Shortcodes - Products - Shortcodes added:
-  `[wcj_product_shipping_class]` (returns shipping class *name*, not slug),
-  `[wcj_product_dimensions]`,
-  `[wcj_product_formatted_name]`,
-  `[wcj_product_stock_availability]`,
-  `[wcj_product_tax_class]`,
-  `[wcj_product_average_rating]`,
-  `[wcj_product_categories]`,
-  `[wcj_product_list_attributes]`,
-  `[wcj_product_list_attribute]`,
-  `[wcj_product_stock_quantity]`,
-  `[wcj_product_sale_price]`,
-  `[wcj_product_regular_price]`,
-  `[wcj_product_time_since_last_sale]`,
-  `[wcj_product_price_including_tax]`,
-  `[wcj_product_price_excluding_tax]`,
-  `[wcj_product_available_variations]` (todo: not finished!),
 * Dev - PAYMENT GATEWAYS - Gateways Currency - "No changes" option added.
-* Fix - PRICES & CURRENCIES - Price by Country - Payment Gateway Currency module now changes prices *after* Price by Country module.
-* Dev - EMAILS & MISC. - General - "Products Revisions" options section added.
-* Dev - EMAILS & MISC. - EU VAT Number - "Description" option added.
 * Dev - PDF Invoicing - Code refactoring. Classes: WCJ_PDF_Invoicing_Page, WCJ_PDF_Invoicing_Styling etc.
 * Dev - PDF Invoicing - "Hide Settings for Disabled Document Types" option added.
+* Dev - EMAILS & MISC. - General - "Products Revisions" options section added.
+* Dev - EMAILS & MISC. - EU VAT Number - "Description" option added.
+* Dev - EMAILS & MISC. - Emails - "Custom Emails" - Triggers added (includes custom order statuses).
+* Dev - EMAILS & MISC. - Emails - "Custom Emails" - `%customer%` as recipient added.
+* Dev - EMAILS & MISC. - PDF Invoices v1 - removed.
+~* Dev - EMAILS & MISC. - Shortcodes - Initial module release. Now shortcodes can be disabled, for memory saving.
 
 = 2.3.11 - 29/12/2015 =
 * Fix - Orders Shortcodes - `[wcj_order_total_tax_percent]` shortcode "rounding bug" fixed.

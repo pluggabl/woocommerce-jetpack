@@ -57,7 +57,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_time_since_last_sale',
 			'wcj_product_price_including_tax',
 			'wcj_product_price_excluding_tax',
-//			'wcj_product_available_variations',
+			'wcj_product_available_variations',
 		);
 
 		$this->the_atts = array(
@@ -178,7 +178,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		endwhile;
 		wp_reset_postdata();
 		// No sales found
-		return false;
+		return '';
 	}
 
 	/**
@@ -186,10 +186,23 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.3.12
 	 * @since   2.3.12
-	 * @todo    not finished!
 	 */
 	function wcj_product_available_variations( $atts ) {
-		return ( $this->the_product->is_type( 'variable' ) ) ? print_r( $this->the_product->get_available_variations(), true ) : false;
+		$return_html = '';
+		if ( $this->the_product->is_type( 'variable' ) ) {
+			$return_html .= '<table>';
+			foreach ( $this->the_product->get_available_variations() as $variation ) {
+				$return_html .= '<tr>';
+				foreach ( $variation['attributes'] as $attribute_slug => $attribute_name ) {
+					if ( '' == $attribute_name ) $attribute_name = __( 'Any', 'woocommerce-jetpack' );
+					$return_html .= '<td>' . $attribute_name . '</td>';
+				}
+				$return_html .= '<td>' . $variation['price_html'] . '</td>';
+				$return_html .= '</tr>';
+			}
+			$return_html .= '</table>';
+		}
+		return $return_html;
 	}
 
 	/**
@@ -225,7 +238,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			$the_price = $this->the_product->get_regular_price();
 			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
 		}
-		return false;
+		return '';
 	}
 
 	/**
@@ -239,7 +252,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			$the_price = $this->the_product->get_sale_price();
 			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
 		}
-		return false;
+		return '';
 	}
 
 	/**
@@ -259,7 +272,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.3.12
 	 */
 	function wcj_product_list_attributes( $atts ) {
-		return ( $this->the_product->has_attributes() ) ? $this->the_product->list_attributes() : false;
+		return ( $this->the_product->has_attributes() ) ? $this->the_product->list_attributes() : '';
 	}
 
 	/**
@@ -321,7 +334,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_product_stock_availability( $atts ) {
 		$stock_availability_array = $this->the_product->get_availability();
-		return ( isset( $stock_availability_array['availability'] ) ) ? $stock_availability_array['availability'] : false;
+		return ( isset( $stock_availability_array['availability'] ) ) ? $stock_availability_array['availability'] : '';
 	}
 
 	/**
@@ -331,7 +344,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.3.12
 	 */
 	function wcj_product_dimensions( $atts ) {
-		return ( $this->the_product->has_dimensions() ) ? $this->the_product->get_dimensions() : false;
+		return ( $this->the_product->has_dimensions() ) ? $this->the_product->get_dimensions() : '';
 	}
 
 	/**
@@ -349,7 +362,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				}
 			}
 		}
-		return false;
+		return '';
 	}
 
 	/**
@@ -444,12 +457,12 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_total_sales.
 	 *
-	 * @version 2.2.6
+	 * @version 2.3.12
 	 * @since   2.2.6
 	 */
 	function wcj_product_total_sales( $atts ) {
 		$product_custom_fields = get_post_custom( $this->the_product->id );
-		return ( isset( $product_custom_fields['total_sales'][0] ) ) ? $product_custom_fields['total_sales'][0] : false;
+		return ( isset( $product_custom_fields['total_sales'][0] ) ) ? $product_custom_fields['total_sales'][0] : '';
 	}
 
 	/**
@@ -678,10 +691,11 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Get the product's weight.
 	 *
-	 * @return string
+	 * @return  string
+	 * @version 2.3.12
 	 */
 	function wcj_product_weight( $atts ) {
-		return ( $this->the_product->has_weight() ) ? $this->the_product->get_weight() : false;
+		return ( $this->the_product->has_weight() ) ? $this->the_product->get_weight() : '';
 	}
 
 	/**
