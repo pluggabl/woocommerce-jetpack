@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.3.9
+ * @version 2.3.12
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -126,15 +126,25 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 
 	/**
 	 * output_custom_number.
+	 *
+	 * @version 2.3.12
 	 */
 	function output_custom_number( $value ) {
 		$type         = 'number';//$value['type'];
 		$option_value = get_option( $value['id'], $value['default'] );
 
 		$tooltip_html = '';
-		$custom_attributes = ( is_array( $value['custom_attributes'] ) ) ? $value['custom_attributes'] : array();
+//		$custom_attributes = ( is_array( $value['custom_attributes'] ) ) ? $value['custom_attributes'] : array();
 		$description = ' <span class="description">' . $value['desc'] . '</span>';
 		$save_button = apply_filters( 'wcj_get_option_filter', '', ' <input name="save" class="button-primary" type="submit" value="' . __( 'Save changes', 'woocommerce' ) . '">' );
+
+		// Custom attribute handling
+		$custom_attributes = array();
+		if ( ! empty( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) {
+			foreach ( $value['custom_attributes'] as $attribute => $attribute_value ) {
+				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+			}
+		}
 
 		?><tr valign="top">
 			<th scope="row" class="titledesc">

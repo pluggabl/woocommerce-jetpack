@@ -117,6 +117,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 31/01/2016 =
+* Fix - Custom attribute handling in `output_custom_number()` fixed.
 * Dev - "Reset Module to Default Settings" option added.
 * Fix - Shortcodes - Orders - `get_cart_discount()` (depreciated since WooCommerce 2.3) removed from `[wcj_order_items_table]` shortcode (affected if `discount_as_item` option was used); removed from `[wcj_order_total_discount]` shortcode; `[wcj_order_cart_discount]` shortcode removed.
 * Fix - Shortcodes - Orders - `[wcj_order_total_in_words]` - decimal part rounding bug fixed.
@@ -133,8 +134,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Dev - PRICES & CURRENCIES - Currencies - *Custom Currencies* options added.
 * Dev - PRICES & CURRENCIES - Currencies - Code refactoring.
 * Dev - PRODUCTS - Product Info - Code refactoring.
-~* Dev - PRODUCTS - Product Input Fields - Code refactoring.
-~* Dev - PRODUCTS - Product Input Fields - Required field sign option added.
+* Dev - PRODUCTS - Product Input Fields - Code refactoring.
+* Dev - PRODUCTS - Product Input Fields - Required field sign option added.
 * Dev - PAYMENT GATEWAYS - Gateways Currency - "No changes" option added.
 * Dev - PAYMENT GATEWAYS - Custom Gateways - "Custom Return URL (Thank You Page)" option added.
 * Dev - PDF Invoicing - Code refactoring. Classes: WCJ_PDF_Invoicing_Page, WCJ_PDF_Invoicing_Styling etc.
