@@ -23,67 +23,67 @@ class WCJ_Product_Info extends WCJ_Module {
 	private function search_and_replace_depreciated_shortcodes( $data ) {
 		$search_and_replace_depreciated_shortcodes_array = array(
 			'%sku%'                                    => '[wcj_product_sku]',
-			'[wcj_sku]'                                => '[wcj_product_sku]', // TODO: for all [wcj_x] shortcodes with args, e.g.: [wcj_sku before="" after=""]
+			'wcj_sku'                                  => 'wcj_product_sku',
 			'%title%'                                  => '[wcj_product_title]',
-			'[wcj_title]'                              => '[wcj_product_title]',
+			'wcj_title'                                => 'wcj_product_title',
 			'%weight%'                                 => '[wcj_product_weight]',
-			'[wcj_weight]'                             => '[wcj_product_weight]',
+			'wcj_weight'                               => 'wcj_product_weight',
 			'%total_sales%'                            => '[wcj_product_total_sales]',
-			'[wcj_total_sales]'                        => '[wcj_product_total_sales]',
+			'wcj_total_sales'                          => 'wcj_product_total_sales',
 			'%shipping_class%'                         => '[wcj_product_shipping_class]',
-			'[wcj_shipping_class]'                     => '[wcj_product_shipping_class]',
+			'wcj_shipping_class'                       => 'wcj_product_shipping_class',
 			'%dimensions%'                             => '[wcj_product_dimensions]',
-			'[wcj_dimensions]'                         => '[wcj_product_dimensions]',
+			'wcj_dimensions'                           => 'wcj_product_dimensions',
 			'%formatted_name%'                         => '[wcj_product_formatted_name]',
-			'[wcj_formatted_name]'                     => '[wcj_product_formatted_name]',
+			'wcj_formatted_name'                       => 'wcj_product_formatted_name',
 			'%stock_availability%'                     => '[wcj_product_stock_availability]',
-			'[wcj_stock_availability]'                 => '[wcj_product_stock_availability]',
+			'wcj_stock_availability'                   => 'wcj_product_stock_availability',
 			'%tax_class%'                              => '[wcj_product_tax_class]',
-			'[wcj_tax_class]'                          => '[wcj_product_tax_class]',
+			'wcj_tax_class'                            => 'wcj_product_tax_class',
 			'%average_rating%'                         => '[wcj_product_average_rating]',
-			'[wcj_average_rating]'                     => '[wcj_product_average_rating]',
+			'wcj_average_rating'                       => 'wcj_product_average_rating',
 			'%categories%'                             => '[wcj_product_categories]',
-			'[wcj_categories]'                         => '[wcj_product_categories]',
+			'wcj_categories'                           => 'wcj_product_categories',
 			'%list_attributes%'                        => '[wcj_product_list_attributes]',
-			'[wcj_list_attributes]'                    => '[wcj_product_list_attributes]',
-			'%list_attribute%'                         => '[wcj_product_list_attribute]',// TODO: ??
-			'[wcj_list_attribute]'                     => '[wcj_product_list_attribute]',// TODO: 'options'
-			'[wcjp_list_attribute]'                    => '[wcj_product_list_attribute]',// TODO: 'attribute_name'
+			'wcj_list_attributes'                      => 'wcj_product_list_attributes',
+//			'%list_attribute%'                         => '[wcj_product_list_attribute]',
+			'wcj_list_attribute options='              => 'wcj_product_list_attribute name=',
+			'wcjp_list_attribute attribute_name='      => 'wcj_product_list_attribute name=',
 			'%stock_quantity%'                         => '[wcj_product_stock_quantity]',
-			'[wcj_stock_quantity]'                     => '[wcj_product_stock_quantity]',
+			'wcj_stock_quantity'                       => 'wcj_product_stock_quantity',
 			'%sale_price%'                             => '[wcj_product_sale_price hide_currency="yes"]',
-			'[wcj_sale_price]'                         => '[wcj_product_sale_price hide_currency="yes"]',
+			'wcj_sale_price'                           => 'wcj_product_sale_price hide_currency="yes"',
 			'%sale_price_formatted%'                   => '[wcj_product_sale_price]',
-			'[wcj_sale_price_formatted]'               => '[wcj_product_sale_price]',
+			'wcj_sale_price_formatted'                 => 'wcj_product_sale_price',
 			'%regular_price%'                          => '[wcj_product_regular_price hide_currency="yes"]',
-			'[wcj_regular_price]'                      => '[wcj_product_regular_price hide_currency="yes"]',
+			'wcj_regular_price'                        => 'wcj_product_regular_price hide_currency="yes"',
 			'%regular_price_formatted%'                => '[wcj_product_regular_price]',
-			'[wcj_regular_price_formatted]'            => '[wcj_product_regular_price]',
+			'wcj_regular_price_formatted'              => 'wcj_product_regular_price',
 			'%regular_price_if_on_sale%'               => '[wcj_product_regular_price hide_currency="yes" show_always="no"]',
-			'[wcj_regular_price_if_on_sale]'           => '[wcj_product_regular_price hide_currency="yes" show_always="no"]',
+			'wcj_regular_price_if_on_sale'             => 'wcj_product_regular_price hide_currency="yes" show_always="no"',
 			'%regular_price_if_on_sale_formatted%'     => '[wcj_product_regular_price show_always="no"]',
-			'[wcj_regular_price_if_on_sale_formatted]' => '[wcj_product_regular_price show_always="no"]',
+			'wcj_regular_price_if_on_sale_formatted'   => 'wcj_product_regular_price show_always="no"',
 			'%time_since_last_sale%'                   => '[wcj_product_time_since_last_sale]',
-			'[wcj_time_since_last_sale]'               => '[wcj_product_time_since_last_sale]',
+			'wcj_time_since_last_sale'                 => 'wcj_product_time_since_last_sale',
 			'%price_including_tax%'                    => '[wcj_product_price_including_tax hide_currency="yes"]',
-			'[wcj_price_including_tax]'                => '[wcj_product_price_including_tax hide_currency="yes"]',
+			'wcj_price_including_tax'                  => 'wcj_product_price_including_tax hide_currency="yes"',
 			'%price_including_tax_formatted%'          => '[wcj_product_price_including_tax]',
-			'[wcj_price_including_tax_formatted]'      => '[wcj_product_price_including_tax]',
+			'wcj_price_including_tax_formatted'        => 'wcj_product_price_including_tax',
 			'%price_excluding_tax%'                    => '[wcj_product_price_excluding_tax hide_currency="yes"]',
-			'[wcj_price_excluding_tax]'                => '[wcj_product_price_excluding_tax hide_currency="yes"]',
+			'wcj_price_excluding_tax'                  => 'wcj_product_price_excluding_tax hide_currency="yes"',
 			'%price_excluding_tax_formatted%'          => '[wcj_product_price_excluding_tax]',
-			'[wcj_price_excluding_tax_formatted]'      => '[wcj_product_price_excluding_tax]',
+			'wcj_price_excluding_tax_formatted'        => 'wcj_product_price_excluding_tax',
 			'%price%'                                  => '[wcj_product_price hide_currency="yes"]',
-			'[wcj_price]'                              => '[wcj_product_price hide_currency="yes"]',
+			'wcj_price'                                => 'wcj_product_price hide_currency="yes"',
 			'%price_formatted%'                        => '[wcj_product_price]',
-			'[wcj_price_formatted]'                    => '[wcj_product_price]',
+			'wcj_price_formatted'                      => 'wcj_product_price',
 			'%you_save%'                               => '[wcj_product_you_save hide_currency="yes"]',
-			'[wcj_you_save]'                           => '[wcj_product_you_save hide_currency="yes"]',
+			'wcj_you_save'                             => 'wcj_product_you_save hide_currency="yes"',
 			'%you_save_formatted%'                     => '[wcj_product_you_save]',
-			'[wcj_you_save_formatted]'                 => '[wcj_product_you_save]',
+			'wcj_you_save_formatted'                   => 'wcj_product_you_save',
 			'%you_save_percent%'                       => '[wcj_product_you_save_percent]',
-			'[wcj_you_save_percent]'                   => '[wcj_product_you_save_percent]',
-			'[wcj_available_variations]'               => '[wcj_product_available_variations]',
+			'wcj_you_save_percent'                     => 'wcj_product_you_save_percent',
+			'wcj_available_variations'                 => 'wcj_product_available_variations',
 		);
 		return str_replace(
 			array_keys(   $search_and_replace_depreciated_shortcodes_array ),
@@ -215,12 +215,14 @@ class WCJ_Product_Info extends WCJ_Module {
 			$product_ids_to_exclude = str_replace( ' ', '', $product_ids_to_exclude );
 			$product_ids_to_exclude = explode( ',', $product_ids_to_exclude );
 			$product_id = get_the_ID();
-			if ( ! empty( $product_ids_to_exclude ) && is_array( $product_ids_to_exclude ) && in_array( $product_id, $product_ids_to_exclude ) )
+			if ( ! empty( $product_ids_to_exclude ) && is_array( $product_ids_to_exclude ) && in_array( $product_id, $product_ids_to_exclude ) ) {
 				return;
+			}
 		}
 
-		if ( '' == $the_product_info )
+		if ( '' == $the_product_info ) {
 			return;
+		}
 
 		/* foreach ( $this->product_info_shortcodes_array as $product_info_short_code ) {
 			if ( false !== strpos( $the_product_info, $product_info_short_code ) ) {

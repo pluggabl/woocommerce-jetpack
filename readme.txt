@@ -132,7 +132,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Fix - PRICES & CURRENCIES - Price by Country - Variable products fix (error appeared with WooCommerce v2.5.0 update).
 * Dev - PRICES & CURRENCIES - Currencies - *Custom Currencies* options added.
 * Dev - PRICES & CURRENCIES - Currencies - Code refactoring.
-~* Dev - PRODUCTS - Product Info - Code refactoring.
+* Dev - PRODUCTS - Product Info - Code refactoring.
 * Dev - PAYMENT GATEWAYS - Gateways Currency - "No changes" option added.
 * Dev - PDF Invoicing - Code refactoring. Classes: WCJ_PDF_Invoicing_Page, WCJ_PDF_Invoicing_Styling etc.
 * Dev - PDF Invoicing - "Hide Settings for Disabled Document Types" option added.
@@ -141,7 +141,6 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Dev - EMAILS & MISC. - Emails - "Custom Emails" - Triggers added (includes custom order statuses).
 * Dev - EMAILS & MISC. - Emails - "Custom Emails" - `%customer%` as recipient added.
 * Dev - EMAILS & MISC. - PDF Invoices v1 - removed.
-~* Dev - EMAILS & MISC. - Shortcodes - Initial module release. Now shortcodes can be disabled, for memory saving.
 
 = 2.3.11 - 29/12/2015 =
 * Fix - Orders Shortcodes - `[wcj_order_total_tax_percent]` shortcode "rounding bug" fixed.

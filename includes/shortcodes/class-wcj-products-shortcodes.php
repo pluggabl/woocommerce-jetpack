@@ -74,6 +74,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'show_always'     => 'yes',
 			'hide_if_zero'    => 'no',
 			'reverse'         => 'no',
+			'find'            => '',
+			'replace'         => '',
 		);
 
 		parent::__construct();
@@ -282,7 +284,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.3.12
 	 */
 	function wcj_product_list_attribute( $atts ) {
-		return ( $this->the_product->has_attributes() ) ? $this->the_product->get_attribute( $atts['name'] ) : false;
+		return str_replace( $atts['find'], $atts['replace'], $this->the_product->get_attribute( $atts['name'] ) );
 	}
 
 	/**

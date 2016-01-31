@@ -330,14 +330,14 @@ final class WC_Jetpack {
 	 * @version 2.3.12
 	 */
 	private function include_shortcodes() {
-		if ( 'yes' === get_option( 'wcj_shortcodes_enabled', 'no' ) ) {
+		//if ( 'yes' === get_option( 'wcj_shortcodes_enabled', 'no' ) ) {
 			include_once( 'includes/shortcodes/class-wcj-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-general-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-invoices-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-orders-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-order-items-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-products-shortcodes.php' );
-		}
+		//}
 	}
 
 	/**
@@ -400,7 +400,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php' );
 		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php' );
 		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php' );
-		//$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-general.php' );
+//		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-general.php' );
 
 		$settings[] = include_once( 'includes/class-wcj-emails.php' );
 
@@ -410,7 +410,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-currency-exchange-rates.php' );
 
 		$settings[] = include_once( 'includes/class-wcj-general.php' );
-		$settings[] = include_once( 'includes/class-wcj-shortcodes-module.php' );
+//		$settings[] = include_once( 'includes/class-wcj-shortcodes-module.php' );
 		$settings[] = include_once( 'includes/class-wcj-eu-vat-number.php' );
 		$settings[] = include_once( 'includes/class-wcj-old-slugs.php' );
 		$settings[] = include_once( 'includes/class-wcj-reports.php' );

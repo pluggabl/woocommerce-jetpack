@@ -122,7 +122,7 @@ return array(
 		'default_cat_id' => 'general',
 		'all_cat_ids'    => array(
 			'general',
-			'shortcodes',
+//			'shortcodes',
 			'eu_vat_number',
 			'old_slugs',
 			'reports',
