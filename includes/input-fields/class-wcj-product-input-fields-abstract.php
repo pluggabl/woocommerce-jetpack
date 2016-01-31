@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.3.8
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -356,7 +356,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 2.3.8
+	 * @version 2.3.12
 	 */
 	public function add_product_input_fields_to_frontend() {
 		global $product;
@@ -374,6 +374,10 @@ class WCJ_Product_Input_Fields_Abstract {
 			$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product->id, '' );
 			$custom_attributes = ( 'file' === $type ) ? ' accept="' . $file_accept . '"' : '';
 			$field_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
+
+			if ( 'on' === $is_required || 'yes' === $is_required ) {
+				$title .= get_option( 'wcj_product_input_fields_frontend_view_required_html', '&nbsp;<abbr class="required" title="required">*</abbr>' );
+			}
 
 			if ( 'on' === $is_enabled || 'yes' === $is_enabled ) {
 				switch ( $type ) {

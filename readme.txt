@@ -133,7 +133,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Dev - PRICES & CURRENCIES - Currencies - *Custom Currencies* options added.
 * Dev - PRICES & CURRENCIES - Currencies - Code refactoring.
 * Dev - PRODUCTS - Product Info - Code refactoring.
-* Dev - PRODUCTS - Product Input Fields - Code refactoring.
+~* Dev - PRODUCTS - Product Input Fields - Code refactoring.
+~* Dev - PRODUCTS - Product Input Fields - Required field sign option added.
 * Dev - PAYMENT GATEWAYS - Gateways Currency - "No changes" option added.
 * Dev - PAYMENT GATEWAYS - Custom Gateways - "Custom Return URL (Thank You Page)" option added.
 * Dev - PDF Invoicing - Code refactoring. Classes: WCJ_PDF_Invoicing_Page, WCJ_PDF_Invoicing_Styling etc.

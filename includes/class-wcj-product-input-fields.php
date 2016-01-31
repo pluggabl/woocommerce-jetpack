@@ -143,7 +143,13 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'default'  => 1,
 				'type'     => 'number',
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => array_merge(
+					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					array(
+						'step' => '1',
+						'min'  => '1',
+					)
+				),
 			),
 
 			array(
@@ -172,9 +178,15 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'desc_tip' => __( 'Click "Save changes" after you change this number.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_input_fields_global_total_number',
 				'default'  => 1,
-				'type'     => 'number',
+				'type'     => 'custom_number',
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => array_merge(
+					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					array(
+						'step' => '1',
+						'min'  => '1',
+					)
+				),
 			),
 		);
 
@@ -197,6 +209,27 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_input_fields_global_options',
 		);
+
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => __( 'Frontend View Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_input_fields_frontend_view_options',
+			),
+
+			array(
+				'title'    => __( 'HTML to add after required field title', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_input_fields_frontend_view_required_html',
+				'default'  => '&nbsp;<abbr class="required" title="required">*</abbr>',
+				'type'     => 'textarea',
+				'css'      => 'width:30%;min-width:300px;',
+			),
+
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_input_fields_frontend_view_options',
+			),
+		) );
 
 		$settings = array_merge( $settings, array(
 			array(
