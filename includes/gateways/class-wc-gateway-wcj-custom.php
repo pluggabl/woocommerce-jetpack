@@ -16,13 +16,13 @@ function init_wc_gateway_wcj_custom_class() {
 
 		/**
 		 * set_icon
-		 *
-		public function set_icon() {
+		 */
+		/* public function set_icon() {
 			$icon_url = get_option( 'wcj_payment_gateways_icons_woocommerce_wcj_custom_icon', '' );
 			if ( $icon_url === '' )
 				return $this->get_option( 'icon', '' );
 			return $icon_url;
-		}
+		} */
 
 		/**
 		 * Initialise Gateway Settings Form Fields
@@ -34,69 +34,77 @@ function init_wc_gateway_wcj_custom_class() {
 
 			$shipping_methods = array();
 
-			if ( is_admin() )
+			if ( is_admin() ) {
 				foreach ( WC()->shipping->load_shipping_methods() as $method ) {
 					$shipping_methods[ $method->id ] = $method->get_title();
 				}
+			}
 
 			$desc = '';
 			$icon_url = $this->get_option( 'icon', '' );//apply_filters( 'woocommerce_wcj_custom_icon', $this->get_option( 'icon', '' ) );
-			if ( $icon_url !== '' )
+			if ( $icon_url !== '' ) {
 				//$desc = '<img src="' . $icon_url . '" alt="WooJetpack Custom" title="WooJetpack Custom" />';
 				$desc = '<img src="' . $icon_url . '" alt="' . $this->title . '" title="' . $this->title . '" />';
+			}
 
 			$this->form_fields = array(
 				'enabled' => array(
-					'title'   => __( 'Enable/Disable', 'woocommerce' ),
-					'type'    => 'checkbox',
-					'label'   => __( 'Enable Custom Payment', 'woocommerce' ),
-					'default' => 'no',
+					'title'             => __( 'Enable/Disable', 'woocommerce' ),
+					'type'              => 'checkbox',
+					'label'             => __( 'Enable Custom Payment', 'woocommerce' ),
+					'default'           => 'no',
 				),
+
 				'title' => array(
-					'title'       => __( 'Title', 'woocommerce' ),
-					'type'        => 'text',
-					'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce' ),
-					'default'     => __( 'Custom Payment', 'woocommerce' ),
-					'desc_tip'    => true,
+					'title'             => __( 'Title', 'woocommerce' ),
+					'type'              => 'text',
+					'description'       => __( 'This controls the title which the user sees during checkout.', 'woocommerce' ),
+					'default'           => __( 'Custom Payment', 'woocommerce' ),
+					'desc_tip'          => true,
 				),
+
 				'description' => array(
-					'title'       => __( 'Description', 'woocommerce' ),
-					'type'        => 'textarea',
-					'description' => __( 'Payment method description that the customer will see on your checkout.', 'woocommerce' ),
-					'default'     => __( 'Custom Payment Description.', 'woocommerce' ),
-					'desc_tip'    => true,
+					'title'             => __( 'Description', 'woocommerce' ),
+					'type'              => 'textarea',
+					'description'       => __( 'Payment method description that the customer will see on your checkout.', 'woocommerce' ),
+					'default'           => __( 'Custom Payment Description.', 'woocommerce' ),
+					'desc_tip'          => true,
 				),
+
 				'instructions' => array(
-					'title'       => __( 'Instructions', 'woocommerce' ),
-					'type'        => 'textarea',
-					'description' => __( 'Instructions that will be added to the thank you page.', 'woocommerce-jetpack' ),
-					'default'     => '',
-					'desc_tip'    => true,
+					'title'             => __( 'Instructions', 'woocommerce' ),
+					'type'              => 'textarea',
+					'description'       => __( 'Instructions that will be added to the thank you page.', 'woocommerce-jetpack' ),
+					'default'           => '',
+					'desc_tip'          => true,
 				),
+
 				'instructions_in_email' => array(
-					'title'       => __( 'Email Instructions', 'woocommerce' ),
-					'type'        => 'textarea',
-					'description' => __( 'Instructions that will be added to the emails.', 'woocommerce-jetpack' ),
-					'default'     => '',
-					'desc_tip'    => true,
+					'title'             => __( 'Email Instructions', 'woocommerce' ),
+					'type'              => 'textarea',
+					'description'       => __( 'Instructions that will be added to the emails.', 'woocommerce-jetpack' ),
+					'default'           => '',
+					'desc_tip'          => true,
 				),
+
 				'icon' => array(
-					'title'       => __( 'Icon', 'woocommerce-jetpack' ),
-					'type'        => 'text',
-					'desc_tip' 	  => __( 'If you want to show an image next to the gateway\'s name on the frontend, enter a URL to an image.', 'woocommerce-jetpack' ),
-					'default'     => '',
-					'description' => $desc,
-					'css'    	  => 'min-width:300px;width:50%;',
+					'title'             => __( 'Icon', 'woocommerce-jetpack' ),
+					'type'              => 'text',
+					'desc_tip'          => __( 'If you want to show an image next to the gateway\'s name on the frontend, enter a URL to an image.', 'woocommerce-jetpack' ),
+					'default'           => '',
+					'description'       => $desc,
+					'css'               => 'min-width:300px;width:50%;',
 				),
+
 				'min_amount' => array(
-					'title'       	=> __( 'Minimum order amount', 'woocommerce-jetpack' ),
-					'type'        	=> 'number',
-					'desc_tip' 		=> __( 'If you want to set minimum order amount to show this gateway on frontend, enter a number here. Set to 0 to disable.', 'woocommerce-jetpack' ),
-					'default'     	=> 0,
-					'description' 	=> apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-					'custom_attributes'
-									=> apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+					'title'             => __( 'Minimum order amount', 'woocommerce-jetpack' ),
+					'type'              => 'number',
+					'desc_tip'          => __( 'If you want to set minimum order amount to show this gateway on frontend, enter a number here. Set to 0 to disable.', 'woocommerce-jetpack' ),
+					'default'           => 0,
+					'description'       => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 				),
+
 				'enable_for_methods' => array(
 					'title'             => __( 'Enable for shipping methods', 'woocommerce' ),
 					'type'              => 'multiselect',
@@ -106,10 +114,9 @@ function init_wc_gateway_wcj_custom_class() {
 					'description'       => __( 'If gateway is only available for certain shipping methods, set it up here. Leave blank to enable for all methods.', 'woocommerce-jetpack' ),
 					'options'           => $shipping_methods,
 					'desc_tip'          => true,
-					'custom_attributes' => array(
-						'data-placeholder' => __( 'Select shipping methods', 'woocommerce' )
-					)
+					'custom_attributes' => array( 'data-placeholder' => __( 'Select shipping methods', 'woocommerce' ) ),
 				),
+
 				'enable_for_virtual' => array(
 					'title'             => __( 'Enable for virtual orders', 'woocommerce' ),
 					'label'             => __( 'Enable gateway if the order is virtual', 'woocommerce-jetpack' ),
@@ -118,33 +125,34 @@ function init_wc_gateway_wcj_custom_class() {
 				),
 
 				'default_order_status' => array(
-					'title'    			=> __( 'Default Order Status', 'woocommerce-jetpack' ),
-					'description'     	=> __( 'Enable Custom Statuses feature to add custom statuses to the list.', 'woocommerce-jetpack' ),
-					'default'  			=> apply_filters( 'woocommerce_default_order_status', 'pending' ),
-					'type'     			=> 'select',
-					'options'  			=> $this->get_order_statuses(),
+					'title'             => __( 'Default Order Status', 'woocommerce-jetpack' ),
+					'description'       => __( 'Enable Custom Statuses feature to add custom statuses to the list.', 'woocommerce-jetpack' ),
+					'default'           => apply_filters( 'woocommerce_default_order_status', 'pending' ),
+					'type'              => 'select',
+					'options'           => $this->get_order_statuses(),
 				),
 
 				'send_email_to_admin' => array(
-					'title'    			=> __( 'Send Additional Emails', 'woocommerce-jetpack' ),
+					'title'             => __( 'Send Additional Emails', 'woocommerce-jetpack' ),
 					'label'             => __( 'Send to Admin', 'woocommerce-jetpack' ),
-					//'description'     	=> __( 'This may help if you are using pending or custom default status and not getting new order emails.', 'woocommerce-jetpack' ),
-					'default'  			=> 'no',
-					'type'     			=> 'checkbox',
+//					'description'       => __( 'This may help if you are using pending or custom default status and not getting new order emails.', 'woocommerce-jetpack' ),
+					'default'           => 'no',
+					'type'              => 'checkbox',
 				),
 
 				'send_email_to_customer' => array(
-					'title'    			=> '',//__( 'Send Additional Email to Customer', 'woocommerce-jetpack' ),
+					'title'             => '',//__( 'Send Additional Email to Customer', 'woocommerce-jetpack' ),
 					'label'             => __( 'Send to Customer', 'woocommerce-jetpack' ),
-					'description'     	=> __( 'This may help if you are using pending or custom default status and not getting new order emails.', 'woocommerce-jetpack' ),
-					'default'  			=> 'no',
-					'type'     			=> 'checkbox',
+					'description'       => __( 'This may help if you are using pending or custom default status and not getting new order emails.', 'woocommerce-jetpack' ),
+					'default'           => 'no',
+					'type'              => 'checkbox',
 				),
 
 				'custom_return_url' => array(
 					'title'             => __( 'Custom Return URL (Thank You Page)', 'woocommerce-jetpack' ),
 					'label'             => __( 'URL', 'woocommerce-jetpack' ),
-					'description'       => __( 'Leave blank to use default URL.', 'woocommerce-jetpack' ),
+					'desc_tip'          => __( 'Enter full URL with http(s).', 'woocommerce-jetpack' ),
+					'description'       => __( 'Optional. Leave blank to use default URL.', 'woocommerce-jetpack' ),
 					'default'           => '',
 					'type'              => 'text',
 				),
@@ -317,8 +325,8 @@ function init_wc_gateway_wcj_custom_class() {
 
 			// Return thankyou redirect
 			return array(
-				'result' 	=> 'success',
-				'redirect'	=> ( '' == $this->custom_return_url ) ? $this->get_return_url( $order ) : $this->custom_return_url,
+				'result'   => 'success',
+				'redirect' => ( '' == $this->custom_return_url ) ? $this->get_return_url( $order ) : $this->custom_return_url,
 			);
 		}
 
@@ -328,26 +336,26 @@ function init_wc_gateway_wcj_custom_class() {
 		 * @version 2.3.12
 		 */
 		public function init( $id_count ) {
-			$this->id 					    = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
-			$this->has_fields 				= false;
-			$this->method_title 			= __( 'Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count;
-			$this->method_description 		= __( 'Booster for WooCommerce: Custom Payment Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count;
+			$this->id                       = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
+			$this->has_fields               = false;
+			$this->method_title             = __( 'Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count;
+			$this->method_description       = __( 'Booster for WooCommerce: Custom Payment Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count;
 			$this->id_count = $id_count;
 			// Load the settings.
 			$this->init_form_fields();
 			$this->init_settings();
 			// Define user set variables
-			$this->title        			= $this->get_option( 'title' );
-			$this->description  			= $this->get_option( 'description' );
-			$this->instructions 			= $this->get_option( 'instructions', '' );//$this->description );
-			$this->instructions_in_email	= $this->get_option( 'instructions_in_email', '' );
-			$this->icon						= $this->get_option( 'icon', '' );//apply_filters( 'woocommerce_wcj_custom_icon', $this->get_option( 'icon', '' ) );
-			$this->min_amount				= $this->get_option( 'min_amount', 0 );
-			$this->enable_for_methods 		= $this->get_option( 'enable_for_methods', array() );
-			$this->enable_for_virtual 		= $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes' ? true : false;
-			$this->default_order_status 	= $this->get_option( 'default_order_status', 'pending' );
-			$this->send_email_to_admin		= $this->get_option( 'send_email_to_admin', 'no' );
-			$this->send_email_to_customer	= $this->get_option( 'send_email_to_customer', 'no' );
+			$this->title                    = $this->get_option( 'title' );
+			$this->description              = $this->get_option( 'description' );
+			$this->instructions             = $this->get_option( 'instructions', '' );//$this->description );
+			$this->instructions_in_email    = $this->get_option( 'instructions_in_email', '' );
+			$this->icon                     = $this->get_option( 'icon', '' );//apply_filters( 'woocommerce_wcj_custom_icon', $this->get_option( 'icon', '' ) );
+			$this->min_amount               = $this->get_option( 'min_amount', 0 );
+			$this->enable_for_methods       = $this->get_option( 'enable_for_methods', array() );
+			$this->enable_for_virtual       = $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes' ? true : false;
+			$this->default_order_status     = $this->get_option( 'default_order_status', 'pending' );
+			$this->send_email_to_admin      = $this->get_option( 'send_email_to_admin', 'no' );
+			$this->send_email_to_customer   = $this->get_option( 'send_email_to_customer', 'no' );
 			$this->custom_return_url        = $this->get_option( 'custom_return_url', '' );
 			// Actions
 			add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
