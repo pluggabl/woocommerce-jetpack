@@ -116,7 +116,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.12 - 29/01/2016 =
+= 2.3.12 - 31/01/2016 =
+* Dev - PAYMENT GATEWAYS - Custom Gateways - "Custom Return URL (Thank You Page)" option added.
 * Dev - "Reset Module to Default Settings" option added.
 * Fix - Shortcodes - Orders - `get_cart_discount()` (depreciated since WooCommerce 2.3) removed from `[wcj_order_items_table]` shortcode (affected if `discount_as_item` option was used); removed from `[wcj_order_total_discount]` shortcode; `[wcj_order_cart_discount]` shortcode removed.
 * Fix - Shortcodes - Orders - `[wcj_order_total_in_words]` - decimal part rounding bug fixed.

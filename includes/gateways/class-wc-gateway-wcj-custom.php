@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Payment Gateway class.
  *
- * @version 2.3.9
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -26,6 +26,8 @@ function init_wc_gateway_wcj_custom_class() {
 
 		/**
 		 * Initialise Gateway Settings Form Fields
+		 *
+		 * @version 2.3.12
 		 */
 		public function init_form_fields() {
 			global $woocommerce;
@@ -137,6 +139,14 @@ function init_wc_gateway_wcj_custom_class() {
 					'description'     	=> __( 'This may help if you are using pending or custom default status and not getting new order emails.', 'woocommerce-jetpack' ),
 					'default'  			=> 'no',
 					'type'     			=> 'checkbox',
+				),
+
+				'custom_return_url' => array(
+					'title'             => __( 'Custom Return URL (Thank You Page)', 'woocommerce-jetpack' ),
+					'label'             => __( 'URL', 'woocommerce-jetpack' ),
+					'description'       => __( 'Leave blank to use default URL.', 'woocommerce-jetpack' ),
+					'default'           => '',
+					'type'              => 'text',
 				),
 			);
 
@@ -279,8 +289,9 @@ function init_wc_gateway_wcj_custom_class() {
 		/**
 		 * Process the payment and return the result
 		 *
-		 * @param int $order_id
-		 * @return array
+		 * @version 2.3.12
+		 * @param   int $order_id
+		 * @return  array
 		 */
 		public function process_payment( $order_id ) {
 
@@ -307,14 +318,14 @@ function init_wc_gateway_wcj_custom_class() {
 			// Return thankyou redirect
 			return array(
 				'result' 	=> 'success',
-				'redirect'	=> $this->get_return_url( $order ),
+				'redirect'	=> ( '' == $this->custom_return_url ) ? $this->get_return_url( $order ) : $this->custom_return_url,
 			);
 		}
 
 		/**
 		 * init.
 		 *
-		 * @version 2.3.0
+		 * @version 2.3.12
 		 */
 		public function init( $id_count ) {
 			$this->id 					    = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
@@ -337,6 +348,7 @@ function init_wc_gateway_wcj_custom_class() {
 			$this->default_order_status 	= $this->get_option( 'default_order_status', 'pending' );
 			$this->send_email_to_admin		= $this->get_option( 'send_email_to_admin', 'no' );
 			$this->send_email_to_customer	= $this->get_option( 'send_email_to_customer', 'no' );
+			$this->custom_return_url        = $this->get_option( 'custom_return_url', '' );
 			// Actions
 			add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 			add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou_page' ) );
