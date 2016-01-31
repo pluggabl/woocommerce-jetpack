@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields class.
  *
- * @version 2.2.2
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -12,18 +12,22 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WCJ_Product_Input_Fields' ) ) :
 
-class WCJ_Product_Input_Fields {
+class WCJ_Product_Input_Fields extends WCJ_Module {
 
 	/**
 	 * Constructor.
-	 * @version 2.2.2
+	 * @version 2.3.12
 	 */
 	public function __construct() {
 
+		$this->id         = 'product_input_fields';
+		$this->short_desc = __( 'Product Input Fields', 'woocommerce-jetpack' );
+		$this->desc       = __( 'WooCommerce product input fields.', 'woocommerce-jetpack' );
+		parent::__construct();
+
 		include_once( 'input-fields/class-wcj-product-input-fields-abstract.php' );
 
-		// Main hooks
-		if ( 'yes' === get_option( 'wcj_product_input_fields_enabled' ) ) {
+		if ( $this->is_enabled() ) {
 
 			add_action( 'woocommerce_delete_order_items', array( $this, 'delete_file_uploads' ) );
 
@@ -37,18 +41,13 @@ class WCJ_Product_Input_Fields {
 				add_action( 'init',               array( $this, 'register_scripts' ) );
 			}
 		}
-
-		// Settings hooks
-		add_filter( 'wcj_settings_sections',             array( $this, 'settings_section' ) );
-		add_filter( 'wcj_settings_product_input_fields', array( $this, 'get_settings' ), 100 );
-		add_filter( 'wcj_features_status',               array( $this, 'add_enabled_option' ), 100 );
 	}
 
 	/**
 	 * delete_file_uploads.
 	 *
 	 * @version 2.2.2
-	 * @since 2.2.2
+	 * @since   2.2.2
 	 */
 	public function delete_file_uploads( $postid ) {
 		$the_order = wc_get_order( $postid );
@@ -67,7 +66,7 @@ class WCJ_Product_Input_Fields {
 	 * handle_downloads.
 	 *
 	 * @version 2.2.2
-	 * @since 2.2.2
+	 * @since   2.2.2
 	 */
 	public function handle_downloads() {
 		if ( isset ( $_GET['wcj_download_file'] ) ) {
@@ -112,40 +111,19 @@ class WCJ_Product_Input_Fields {
 	}
 
 	/**
-	 * add_enabled_option.
-	 */
-	public function add_enabled_option( $settings ) {
-		$all_settings = $this->get_settings();
-		$settings[] = $all_settings[1];
-		return $settings;
-	}
-
-	/**
 	 * get_settings.
+	 *
+	 * @version 2.3.12
 	 */
 	function get_settings() {
 
 		$settings = array(
 
-			array( 'title' => __( 'Product Input Fields Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_product_input_fields_options' ),
-
-			array(
-				'title'    => __( 'Product Input Fields', 'woocommerce-jetpack' ),
-				'desc'     => '<strong>' . __( 'Enable Module', 'woocommerce-jetpack' ) . '</strong>',
-				'desc_tip' => __( 'WooCommerce product input fields.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_input_fields_enabled',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-
-			array( 'type'  => 'sectionend', 'id' => 'wcj_product_input_fields_options' ),
-
 			array(
 				'title'    => __( 'Product Input Fields per Product Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => __( 'Add custom input fields to product\'s single page for customer to fill before adding product to cart.', 'woocommerce-jetpack' )
-							  . ' '
-							  . __( 'When enabled this module will add "Product Input Fields" tab to product\'s "Edit" page.', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Add custom input fields to product\'s single page for customer to fill before adding product to cart.', 'woocommerce-jetpack' ) . ' '
+					. __( 'When enabled this module will add "Product Input Fields" tab to each product\'s "Edit" page.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_input_fields_local_options',
 			),
 
@@ -164,9 +142,8 @@ class WCJ_Product_Input_Fields {
 				'desc_tip' => __( 'You will be able to change this number later as well as define the fields, for each product individually, in product\'s "Edit".', 'woocommerce-jetpack' ),
 				'default'  => 1,
 				'type'     => 'number',
-				'desc' 	   => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes'
-						   => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
 
 			array(
@@ -191,62 +168,58 @@ class WCJ_Product_Input_Fields {
 			),
 
 			array(
-				'title' 	=> __( 'Product Input Fields Number', 'woocommerce-jetpack' ),
-				'desc_tip' 	=> __( 'Click "Save changes" after you change this number.', 'woocommerce-jetpack' ),
-				'id' 		=> 'wcj_product_input_fields_global_total_number',
-				'default'	=> 1,
-				'type' 		=> 'number',
-				'desc' 	   => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes'
-						   => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'title'    => __( 'Product Input Fields Number', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Click "Save changes" after you change this number.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_input_fields_global_total_number',
+				'default'  => 1,
+				'type'     => 'number',
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
 		);
 
 		$options = $this->get_options();
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_product_input_fields_global_total_number', 1 ) ); $i++ ) {
 			foreach( $options as $option ) {
-				$settings[] =
-					array(
-						'title' 	=> ( 'wcj_product_input_fields_enabled_global_' === $option['id'] ) ? __( 'Product Input Field', 'woocommerce-jetpack' ) . ' #' . $i : '',
-						'desc'		=> $option['title'],
-						'id' 		=> $option['id'] . $i,
-						'default'	=> $option['default'],
-						'type' 		=> $option['type'],
-						'options' 	=> isset( $option['options'] ) ? $option['options'] : '',
-						'css'		=> 'width:30%;min-width:300px;',
-					);
+				$settings[] = array(
+					'title'   => ( 'wcj_product_input_fields_enabled_global_' === $option['id'] ) ? __( 'Product Input Field', 'woocommerce-jetpack' ) . ' #' . $i : '',
+					'desc'    => $option['title'],
+					'id'      => $option['id'] . $i,
+					'default' => $option['default'],
+					'type'    => $option['type'],
+					'options' => isset( $option['options'] ) ? $option['options'] : '',
+					'css'     => 'width:30%;min-width:300px;',
+				);
 			}
 		}
 
-		$settings[] =
-			array(
+		$settings[] = array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_input_fields_global_options',
-			);
+		);
 
 		$settings = array_merge( $settings, array(
-			array( 'title' => __( 'Admin Order View Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_product_input_fields_admin_view_options' ),
-
 			array(
-				'title'   => __( 'Replace Field ID with Field Label', 'woocommerce-jetpack' ),
-				'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_product_input_fields_make_nicer_name_enabled',
-				'default' => 'yes',
-				'type'    => 'checkbox',
+				'title'    => __( 'Admin Order View Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_input_fields_admin_view_options',
 			),
 
-			array( 'type'  => 'sectionend', 'id' => 'wcj_product_input_fields_admin_view_options' ),
+			array(
+				'title'    => __( 'Replace Field ID with Field Label', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_input_fields_make_nicer_name_enabled',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_input_fields_admin_view_options',
+			),
 		) );
 
-		return $settings;
-	}
-
-	/**
-	 * settings_section.
-	 */
-	function settings_section( $sections ) {
-		$sections['product_input_fields'] = __( 'Product Input Fields', 'woocommerce-jetpack' );
-		return $sections;
+		return $this->add_standard_settings( $settings );
 	}
 }
 

@@ -389,6 +389,7 @@ class WCJ_Product_Input_Fields_Abstract {
 						break;
 
 					case 'checkbox':
+
 						$checked = checked(
 							$this->get_value( 'wcj_product_input_fields_type_checkbox_default_' . $this->scope . '_' . $i, $product->id, 'no' ),
 							'yes',
@@ -432,7 +433,7 @@ class WCJ_Product_Input_Fields_Abstract {
 						echo '<p>' . $title . '<select name="' . $field_name . '">' . $select_options_html . '</select>' . '</p>';
 						break;
 
-					case 'radio' :
+					case 'radio':
 
 						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $product->id, '' );
 						$select_options = wcj_get_select_options( $select_options_raw );
@@ -451,7 +452,8 @@ class WCJ_Product_Input_Fields_Abstract {
 						}
 						break;
 
-					case 'country' :
+					case 'country':
+
 						$countries = WC()->countries->get_allowed_countries();
 						if ( sizeof( $countries ) > 1 ) {
 							$value = key( $countries );

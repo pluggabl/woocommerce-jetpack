@@ -47,8 +47,10 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			global $wcj_notice;
 			if ( ! isset( $_GET['wcj_confirm_reset_settings'] ) ) {
 				$wcj_notice .= __( 'Are you sure you want to reset current module\'s settings to default values?', 'woocommerce-jetpack' );
-				$wcj_notice .= ' ' . '<a style="color: green !important;" href="' . add_query_arg( 'wcj_confirm_reset_settings', 'yes' ) . '">' . __( 'Yes', 'woocommerce-jetpack' ) . '</a>';
-				$wcj_notice .= ' / ' . '<a style="color: red !important;" href="' . remove_query_arg( 'wcj_reset_settings' ) . '">' . __( 'No', 'woocommerce-jetpack' ) . '</a>';
+				$yes_button_style = "background: green; border-color: green; box-shadow: 0 1px 0 green; text-shadow: 0 -1px 1px #0a0,1px 0 1px #0a0,0 1px 1px #0a0,-1px 0 1px #0a0;";
+				$no_button_style  = "background: red; border-color: red; box-shadow: 0 1px 0 red; text-shadow: 0 -1px 1px #a00,1px 0 1px #a00,0 1px 1px #a00,-1px 0 1px #a00;";
+				$wcj_notice .= ' ' . '<a class="button-primary" style="' . $yes_button_style . '" href="' . add_query_arg( 'wcj_confirm_reset_settings', 'yes' ) . '">' . __( 'Yes', 'woocommerce-jetpack' ) . '</a>';
+				$wcj_notice .= ' ' . '<a class="button-primary" style="' . $no_button_style  . '" href="' . remove_query_arg( 'wcj_reset_settings' )             . '">' . __( 'No', 'woocommerce-jetpack' )  . '</a>';
 			} else {
 				foreach ( $this->get_settings() as $settings ) {
 					$default_value = isset( $settings['default'] ) ? $settings['default'] : '';
