@@ -82,9 +82,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * @since   2.2.6
 	 */
 	function get_settings() {
-		$settings = array();
-		$settings = $this->add_reset_settings_button( $settings );
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings();
 	}
 
 	/**

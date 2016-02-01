@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Bulk Price Converter class.
  *
- * @version 2.3.10
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -37,7 +37,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * change_price_by_type.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.12
 	 */
 	public function change_price_by_type( $product_id, $multiply_price_by, $price_type, $is_preview ) {
 		$the_price = get_post_meta( $product_id, '_' . $price_type, true );
@@ -45,26 +45,36 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		if ( '' != $the_price ) {
 			$precision = get_option( 'woocommerce_price_num_decimals', 2 );
 			$the_modified_price = round( $the_price * $multiply_price_by, $precision );
-			/*if ( isset( $_POST['make_pretty_prices'] ) )
-				$the_modified_price = $this->make_pretty_price( $the_modified_price );*/
-			if ( ! $is_preview )
+			/* if ( isset( $_POST['make_pretty_prices'] ) )
+				$the_modified_price = $this->make_pretty_price( $the_modified_price ); */
+			if ( ! $is_preview ) {
 				update_post_meta( $product_id, '_' . $price_type, $the_modified_price );
+			}
+		}
+
+		$product_cats = array();
+		$product_terms = get_the_terms( $product_id, 'product_cat' );
+		if ( is_array( $product_terms ) ) {
+			foreach ( $product_terms as $term ) {
+				$product_cats[] = esc_html( $term->name );
+			}
 		}
 
 		echo '<tr>' .
 				'<td>' . get_the_title( $product_id ) . '</td>' .
+				'<td>' . implode( ', ', $product_cats ) . '</td>' .
 				'<td><em>' . $price_type . '</em></td>' .
 				'<td>' . $the_price . '</td>' .
 				'<td>' . $the_modified_price . '</td>' .
-			 '</tr>';
+			'</tr>';
 	}
 
 	/**
 	 * change_price_all_types.
 	 */
 	public function change_price_all_types( $product_id, $multiply_price_by, $is_preview ) {
-		$this->change_price_by_type( $product_id, $multiply_price_by, 'price', $is_preview );
-		$this->change_price_by_type( $product_id, $multiply_price_by, 'sale_price', $is_preview );
+		$this->change_price_by_type( $product_id, $multiply_price_by, 'price',         $is_preview );
+		$this->change_price_by_type( $product_id, $multiply_price_by, 'sale_price',    $is_preview );
 		$this->change_price_by_type( $product_id, $multiply_price_by, 'regular_price', $is_preview );
 	}
 
@@ -85,30 +95,55 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 
 	/**
 	 * change_all_products_prices
+	 *
+	 * @version 2.3.12
 	 */
 	public function change_all_products_prices( $multiply_prices_by, $is_preview ) {
 		$multiply_prices_by = floatval( $multiply_prices_by );
-		if ( $multiply_prices_by <= 0 )
+		if ( $multiply_prices_by <= 0 ) {
 			return;
+		}
 
 		ob_start();
 
-		$args = array(
-			'post_type'      => 'product',
-			'post_status'    => 'any',
-			'posts_per_page' => -1,
-		);
-		$loop = new WP_Query( $args );
 		echo '<table class="widefat" style="width:50%; min-width: 300px;">';
 		echo '<tr>' .
-				'<th>' . __( 'Product', 'woocommerce-jetpack' ) . '</th>' .
-				'<th>' . __( 'Price Type', 'woocommerce-jetpack' ) . '</th>' .
-				'<th>' . __( 'Price', 'woocommerce-jetpack' ) . '</th>' .
+				'<th>' . __( 'Product', 'woocommerce-jetpack' )        . '</th>' .
+				'<th>' . __( 'Categories', 'woocommerce-jetpack' )       . '</th>' .
+				'<th>' . __( 'Price Type', 'woocommerce-jetpack' )     . '</th>' .
+				'<th>' . __( 'Original Price', 'woocommerce-jetpack' )          . '</th>' .
 				'<th>' . __( 'Modified Price', 'woocommerce-jetpack' ) . '</th>' .
-			 '</tr>';
-		while ( $loop->have_posts() ) : $loop->the_post();
-			$this->change_product_price( $loop->post->ID, $multiply_prices_by, $is_preview );
-		endwhile;
+			'</tr>';
+
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			$args = array(
+				'post_type'      => 'product',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+				'orderby'        => 'date',
+				'order'          => 'ASC',
+			);
+			if ( isset( $_POST['wcj_product_cat'] ) && 'wcj_any' != $_POST['wcj_product_cat'] ) {
+				$args['tax_query'] = array(
+					array(
+						'taxonomy' => 'product_cat',
+						'field'    => 'slug',
+						'terms'    => array( $_POST['wcj_product_cat'] ),
+					),
+				);
+			}
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
+			while ( $loop->have_posts() ) : $loop->the_post();
+				$this->change_product_price( $loop->post->ID, $multiply_prices_by, $is_preview );
+			endwhile;
+			$offset += $block_size;
+		}
+		wp_reset_postdata();
+
 		echo '</table>';
 
 		return ob_get_clean();
@@ -117,7 +152,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * create_bulk_price_converter_tool.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.12
 	 */
 	public function create_bulk_price_converter_tool() {
 
@@ -143,16 +178,27 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 				}
 			}
 		}
+
+		$select_options_html = '';
+		$selected_option = ( isset( $_POST['wcj_product_cat'] ) ) ? $_POST['wcj_product_cat'] : '';
+		$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+		if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ){
+			foreach ( $product_categories as $product_category ) {
+				$select_options_html .= '<option value="' . $product_category->slug . '"' . selected( $product_category->slug, $selected_option, false ) . '>' . $product_category->name . '</option>';
+			}
+		}
+
 		?>
 		<div>
 			<?php echo $result_message; ?>
 			<p><form method="post" action="">
 				<?php echo __( 'Multiply all product prices by', 'woocommerce-jetpack' ); ?> <input class="" type="number" step="0.000001" min="0.000001" name="multiply_prices_by" id="multiply_prices_by" value="<?php echo $multiply_prices_by; ?>">
+				<?php if ( '' != $select_options_html ) echo '<select name="wcj_product_cat">' . '<option value="wcj_any">' . __( 'Any', 'woocommerce-jetpack' ) . '</option>' . $select_options_html . '</select>'; ?>
 				<input class="button-primary" type="submit" name="bulk_change_prices_preview" id="bulk_change_prices_preview" value="Preview Prices">
 				<?php if ( isset( $_POST['bulk_change_prices_preview'] ) ) { ?><input class="button-primary" type="submit" name="bulk_change_prices" id="bulk_change_prices" value="Change Prices"><?php } ?>
 				<?php /*<input type="checkbox" name="make_pretty_prices" id="make_pretty_prices" value="">Make Pretty Prices*/ ?>
 			</form></p>
-			<?php if ( $is_preview ) echo $result_changing_prices; ?>
+			<?php /* if ( $is_preview ) */ echo $result_changing_prices; ?>
 		</div>
 		<?php
 	}
@@ -215,16 +261,6 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		return $the_multiplied_price;
 	} */
 
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.3.0
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = $this->add_tools_list( $settings );
-		return $this->add_enable_module_setting( $settings );
-	}
 }
 
 endif;
