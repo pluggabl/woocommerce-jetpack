@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack SKU class.
  *
- * @version 2.3.10
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -96,10 +96,10 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_all_products_skus.
 	 *
-	 * @version 2.3.10
+	 * @version 2.3.12
 	 */
 	function set_all_products_skus( $is_preview ) {
-		$limit = 1000;
+		$limit = 96;
 		$offset = 0;
 		while ( TRUE ) {
 			$posts = new WP_Query( array(
@@ -110,11 +110,12 @@ class WCJ_SKU extends WCJ_Module {
 			));
 			if ( ! $posts->have_posts() ) break;
 			while ( $posts->have_posts() ) {
-					$posts->the_post();
-					$this->set_sku_with_variable( $posts->post->ID, $is_preview );
+				$posts->the_post();
+				$this->set_sku_with_variable( $posts->post->ID, $is_preview );
 			}
 			$offset += $limit;
 		}
+		wp_reset_postdata();
 	}
 
 	/**
@@ -134,14 +135,14 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * create_sku_tool
 	 *
-	 * @version 2.3.10
+	 * @version 2.3.12
 	 */
 	function create_sku_tool() {
 		$result_message = '';
 		$is_preview = ( isset( $_POST['preview_sku'] ) ) ? true : false;
 		if ( isset( $_POST['set_sku'] ) || isset( $_POST['preview_sku'] ) ) {
 			$this->product_counter = 1;
-			$preview_html = '<table class="widefat" style="width:50%; min-width: 300px;">';
+			$preview_html = '<table class="widefat" style="width:50%; min-width: 300px; margin-top: 10px;">';
 			$preview_html .=
 				'<tr>' .
 					'<th></th>' .
@@ -157,10 +158,10 @@ class WCJ_SKU extends WCJ_Module {
 		?><div>
 			<?php echo $this->get_tool_header_html( 'sku' ); ?>
 			<?php if ( ! $is_preview ) echo $result_message; ?>
-			<p><form method="post" action="">
+			<form method="post" action="">
 				<input class="button-primary" type="submit" name="preview_sku" id="preview_sku" value="<?php _e( 'Preview SKUs', 'woocommerce-jetpack' ); ?>">
 				<input class="button-primary" type="submit" name="set_sku" value="<?php _e( 'Set SKUs', 'woocommerce-jetpack' ); ?>">
-			</form></p>
+			</form>
 			<?php if ( $is_preview ) echo $preview_html; ?>
 		</div><?php
 	}

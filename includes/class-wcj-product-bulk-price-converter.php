@@ -106,8 +106,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 
 		ob_start();
 
-		echo '<p>';
-		echo '<table class="widefat" style="width:50%; min-width: 300px;">';
+		echo '<table class="widefat" style="width:50%; min-width: 300px; margin-top: 10px;">';
 		echo '<tr>' .
 				'<th>' . __( 'Product', 'woocommerce-jetpack' )        . '</th>' .
 				'<th>' . __( 'Categories', 'woocommerce-jetpack' )     . '</th>' .
@@ -124,8 +123,8 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 				'post_status'    => 'any',
 				'posts_per_page' => $block_size,
 				'offset'         => $offset,
-				'orderby'        => 'date',
-				'order'          => 'ASC',
+//				'orderby'        => 'date',
+//				'order'          => 'ASC',
 			);
 			if ( isset( $_POST['wcj_product_cat'] ) && 'wcj_any' != $_POST['wcj_product_cat'] && 'any' != apply_filters( 'wcj_get_option_filter', 'any', '' ) ) {
 				$args['tax_query'] = array(
@@ -146,7 +145,6 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		wp_reset_postdata();
 
 		echo '</table>';
-		echo '</p>';
 
 		return ob_get_clean();
 	}
@@ -157,8 +155,6 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	 * @version 2.3.12
 	 */
 	public function create_bulk_price_converter_tool() {
-
-		echo $this->get_back_to_settings_link_html();
 
 		$result_message = '';
 
@@ -192,6 +188,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 
 		// Output HTML
 		echo '<div>';
+			echo $this->get_tool_header_html( 'bulk_price_converter' );
 			echo $result_message;
 			echo '<form method="post" action="">';
 				$data_table = array();
@@ -221,7 +218,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 				/* <input type="checkbox" name="make_pretty_prices" id="make_pretty_prices" value="">Make Pretty Prices */
 				echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none', ) );
 			echo '</form>';
-			/* if ( $is_preview ) */ echo $result_changing_prices;
+			if ( $is_preview ) echo $result_changing_prices;
 		echo '</div>';
 	}
 

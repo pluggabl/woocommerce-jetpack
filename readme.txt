@@ -117,6 +117,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 01/02/2016 =
+* Dev - PRODUCTS - SKU - Code refactoring (minor).
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - Code refactoring.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - Option to convert prices by *product category* added.
 * Fix - Custom attribute handling in `output_custom_number()` fixed.
