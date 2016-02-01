@@ -109,9 +109,9 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		echo '<table class="widefat" style="width:50%; min-width: 300px;">';
 		echo '<tr>' .
 				'<th>' . __( 'Product', 'woocommerce-jetpack' )        . '</th>' .
-				'<th>' . __( 'Categories', 'woocommerce-jetpack' )       . '</th>' .
+				'<th>' . __( 'Categories', 'woocommerce-jetpack' )     . '</th>' .
 				'<th>' . __( 'Price Type', 'woocommerce-jetpack' )     . '</th>' .
-				'<th>' . __( 'Original Price', 'woocommerce-jetpack' )          . '</th>' .
+				'<th>' . __( 'Original Price', 'woocommerce-jetpack' ) . '</th>' .
 				'<th>' . __( 'Modified Price', 'woocommerce-jetpack' ) . '</th>' .
 			'</tr>';
 
@@ -193,9 +193,15 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 			<?php echo $result_message; ?>
 			<p><form method="post" action="">
 				<?php echo __( 'Multiply all product prices by', 'woocommerce-jetpack' ); ?> <input class="" type="number" step="0.000001" min="0.000001" name="multiply_prices_by" id="multiply_prices_by" value="<?php echo $multiply_prices_by; ?>">
-				<?php if ( '' != $select_options_html ) echo '<select name="wcj_product_cat">' . '<option value="wcj_any">' . __( 'Any', 'woocommerce-jetpack' ) . '</option>' . $select_options_html . '</select>'; ?>
-				<input class="button-primary" type="submit" name="bulk_change_prices_preview" id="bulk_change_prices_preview" value="Preview Prices">
-				<?php if ( isset( $_POST['bulk_change_prices_preview'] ) ) { ?><input class="button-primary" type="submit" name="bulk_change_prices" id="bulk_change_prices" value="Change Prices"><?php } ?>
+				<?php if ( '' != $select_options_html ) {
+					echo '<br><br>' . __( 'Category', 'woocommerce-jetpack' ) . ' ' . '<select name="wcj_product_cat" ' . apply_filters( 'wcj_get_option_filter', 'disabled', '' ) . '>' .
+						'<option value="wcj_any">' . __( 'Any', 'woocommerce-jetpack' ) . '</option>' .
+						$select_options_html .
+					'</select>';
+					echo ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' );
+				} ?>
+				<br><br><input class="button-primary" type="submit" name="bulk_change_prices_preview" id="bulk_change_prices_preview" value="<?php echo __( 'Preview Prices', 'woocommerce-jetpack' ); ?>">
+				<?php if ( isset( $_POST['bulk_change_prices_preview'] ) ) { ?><input class="button-primary" type="submit" name="bulk_change_prices" id="bulk_change_prices" value="<?php echo __( 'Change Prices', 'woocommerce-jetpack' ); ?>"><?php } ?>
 				<?php /*<input type="checkbox" name="make_pretty_prices" id="make_pretty_prices" value="">Make Pretty Prices*/ ?>
 			</form></p>
 			<?php /* if ( $is_preview ) */ echo $result_changing_prices; ?>
