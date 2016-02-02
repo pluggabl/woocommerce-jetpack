@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.3.7
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -62,7 +62,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_country_select_drop_down_list.
 	 *
-	 * @version 2.3.0
+	 * @version 2.3.12
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
 
@@ -95,11 +95,18 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		} */
 		$selected_country = ( isset( $_SESSION[ 'wcj-country' ] ) ) ? $_SESSION[ 'wcj-country' ] : '';
 
-		foreach ( $countries as $country_code => $country_name ) {
-			if ( empty( $shortcode_countries ) || ( in_array( $country_code, $shortcode_countries ) ) ) {
+		if ( empty( $shortcode_countries ) ) {
+			foreach ( $countries as $country_code => $country_name ) {
 				$html .= '<option value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $country_name . '</option>';
 			}
+		} else {
+			foreach ( $shortcode_countries as $country_code ) {
+				if ( isset( $countries[ $country_code ] ) ) {
+					$html .= '<option value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $countries[ $country_code ] . '</option>';
+				}
+			}
 		}
+
 		$html .= '</select>';
 
 		$html .= '</form>';

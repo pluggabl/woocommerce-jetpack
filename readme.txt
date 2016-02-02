@@ -117,6 +117,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 02/02/2016 =
+* Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - manual sorting when `countries` attribute is used.
 * Dev - PRODUCTS - SKU - "Category Suffix" and "Category Prefix" options added.
 * Dev - PRODUCTS - SKU - Code refactoring (minor). Suffix option unlocked.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - Code refactoring.
