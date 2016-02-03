@@ -19,7 +19,7 @@ class WCJ_Tools {
 	 */
 	function __construct() {
 		if ( is_admin() ) {
-			add_action( 'admin_menu', array($this, 'add_wcj_tools'), 100 );
+			add_action( 'admin_menu', array( $this, 'add_wcj_tools' ), 100 );
 		}
 	}
 

@@ -39,7 +39,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	 *
 	 * @version 2.3.12
 	 */
-	public function change_price_by_type( $product_id, $multiply_price_by, $price_type, $is_preview ) {
+	public function change_price_by_type( $product_id, $multiply_price_by, $price_type, $is_preview, $parent_product_id ) {
 		$the_price = get_post_meta( $product_id, '_' . $price_type, true );
 		$the_modified_price = $the_price;
 		if ( '' != $the_price ) {
@@ -53,13 +53,12 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		}
 
 		$product_cats = array();
-		$product_terms = get_the_terms( $product_id, 'product_cat' );
+		$product_terms = get_the_terms( $parent_product_id, 'product_cat' );
 		if ( is_array( $product_terms ) ) {
 			foreach ( $product_terms as $term ) {
 				$product_cats[] = esc_html( $term->name );
 			}
 		}
-
 		echo '<tr>' .
 				'<td>' . get_the_title( $product_id )   . '</td>' .
 				'<td>' . implode( ', ', $product_cats ) . '</td>' .
@@ -71,24 +70,28 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 
 	/**
 	 * change_price_all_types.
+	 *
+	 * @version 2.3.12
 	 */
-	public function change_price_all_types( $product_id, $multiply_price_by, $is_preview ) {
-		$this->change_price_by_type( $product_id, $multiply_price_by, 'price',         $is_preview );
-		$this->change_price_by_type( $product_id, $multiply_price_by, 'sale_price',    $is_preview );
-		$this->change_price_by_type( $product_id, $multiply_price_by, 'regular_price', $is_preview );
+	public function change_price_all_types( $product_id, $multiply_price_by, $is_preview, $parent_product_id ) {
+		$this->change_price_by_type( $product_id, $multiply_price_by, 'price',         $is_preview, $parent_product_id );
+		$this->change_price_by_type( $product_id, $multiply_price_by, 'sale_price',    $is_preview, $parent_product_id );
+		$this->change_price_by_type( $product_id, $multiply_price_by, 'regular_price', $is_preview, $parent_product_id );
 	}
 
 	/**
 	 * change_product_price.
+	 *
+	 * @version 2.3.12
 	 */
 	public function change_product_price( $product_id, $multiply_price_by, $is_preview ) {
-		$this->change_price_all_types( $product_id, $multiply_price_by, $is_preview );
+		$this->change_price_all_types( $product_id, $multiply_price_by, $is_preview, $product_id );
 		// Handling variable products
 		$product = wc_get_product( $product_id );
 		if ( $product->is_type( 'variable' ) ) {
 			$variations = $product->get_available_variations();
 			foreach( $variations as $variation ) {
-				$this->change_price_all_types( $variation['variation_id'], $multiply_price_by, $is_preview );
+				$this->change_price_all_types( $variation['variation_id'], $multiply_price_by, $is_preview, $product_id );
 			}
 		}
 	}
