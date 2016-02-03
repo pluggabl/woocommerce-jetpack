@@ -340,7 +340,7 @@ if ( ! function_exists( 'wcj_plugin_path' ) ) {
  * Convert the php date format string to a js date format.
  * https://gist.github.com/clubduece/4053820
  */
-if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
+/* if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
 	function wcj_date_format_php_to_js( $php_date_format ) {
 		$date_formats_php_to_js = array(
 			'F j, Y' => 'MM dd, yy',
@@ -349,6 +349,72 @@ if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
 			'd/m/Y'  => 'dd/mm/yy',
 		);
 		return isset( $date_formats_php_to_js[ $php_date_format ] ) ? $date_formats_php_to_js[ $php_date_format ] : 'MM dd, yy';
+	}
+} */
+
+/*
+ * Matches each symbol of PHP date format standard
+ * with jQuery equivalent codeword
+ * http://stackoverflow.com/questions/16702398/convert-a-php-date-format-to-a-jqueryui-datepicker-date-format
+ *
+ * @author  Tristan Jahier
+ * @version 2.3.12
+ * @since   2.3.12
+ */
+if ( ! function_exists( 'wcj_date_format_php_to_js_v2' ) ) {
+	function wcj_date_format_php_to_js_v2( $php_format ) {
+		$SYMBOLS_MATCHING = array(
+			// Day
+			'd' => 'dd',
+			'D' => 'D',
+			'j' => 'd',
+			'l' => 'DD',
+			'N' => '',
+			'S' => '',
+			'w' => '',
+			'z' => 'o',
+			// Week
+			'W' => '',
+			// Month
+			'F' => 'MM',
+			'm' => 'mm',
+			'M' => 'M',
+			'n' => 'm',
+			't' => '',
+			// Year
+			'L' => '',
+			'o' => '',
+			'Y' => 'yy',
+			'y' => 'y',
+			// Time
+			'a' => '',
+			'A' => '',
+			'B' => '',
+			'g' => '',
+			'G' => '',
+			'h' => '',
+			'H' => '',
+			'i' => '',
+			's' => '',
+			'u' => ''
+		);
+		$jqueryui_format = "";
+		$escaping = false;
+		for ( $i = 0; $i < strlen( $php_format ); $i++ ) {
+			$char = $php_format[ $i ];
+			if ( $char === '\\' ) { // PHP date format escaping character
+				$i++;
+				$jqueryui_format .= ( $escaping ) ? $php_format[ $i ] : '\'' . $php_format[ $i ];
+				$escaping = true;
+			} else {
+				if ( $escaping ) {
+					$jqueryui_format .= "'";
+					$escaping = false;
+				}
+				$jqueryui_format .= ( isset( $SYMBOLS_MATCHING[ $char ] ) ) ? $SYMBOLS_MATCHING[ $char ] : $char;
+			}
+		}
+		return $jqueryui_format;
 	}
 }
 

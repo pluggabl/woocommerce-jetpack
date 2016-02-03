@@ -116,7 +116,11 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.12 - 02/02/2016 =
+= 2.3.12 - 03/02/2016 =
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring (minor).
+* Dev - CART & CHECKOUT - Checkout Custom Fields - "date format", "min date" and "max date" options added.
+* Fix - PRODUCTS - Product Input Fields - `add_product_input_fields_to_order_item_name()` fixed. "Item Name Order Table Format" option added.
+* Dev - PRODUCTS - Product Input Fields - "date format", "min date" and "max date" options added.
 * Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - manual sorting when `countries` attribute is used.
 * Dev - PRODUCTS - SKU - "Category Suffix" and "Category Prefix" options added.
 * Dev - PRODUCTS - SKU - Code refactoring (minor). Suffix option unlocked.

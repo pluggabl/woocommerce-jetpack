@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.3.8
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -347,7 +347,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 2.3.8
+	 * @version 2.3.12
 	 */
 	public function add_custom_checkout_fields( $fields ) {
 
@@ -378,6 +378,16 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				if ( 'datepicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
 					if ( 'datepicker' === $the_type || 'timepicker' === $the_type ) {
 						$custom_attributes['display'] = ( 'datepicker' === $the_type ) ? 'date' : 'time';
+						if ( 'datepicker' === $the_type ) {
+							$datepicker_format = get_option( 'wcj_checkout_custom_field_datepicker_format_' . $i, '' );
+							if ( '' == $datepicker_format ) {
+								$datepicker_format = get_option( 'date_format' );
+							}
+							$datepicker_format = wcj_date_format_php_to_js_v2( $datepicker_format );
+							$custom_attributes['dateformat'] = $datepicker_format;
+							$custom_attributes['mindate'] = get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
+							$custom_attributes['maxdate'] = get_option( 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,  365 );
+						}
 					} else/* if ( 'number' === $the_type ) */ {
 						$custom_attributes['display'] = $the_type;
 					}
@@ -425,7 +435,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.8
+	 * @version 2.3.12
 	 */
 	public function get_settings() {
 
@@ -561,6 +571,27 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					),
 					array(
 						'title'     => '',
+						'desc'      => __( 'If datepicker is selected, set date format here. Visit <a href="http://php.net/manual/en/function.date.php" target="_blank">PHP date function page</a> for valid date formats. Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
+						'id'        => 'wcj_checkout_custom_field_datepicker_format_' . $i,
+						'type'      => 'text',
+						'default'   => '',
+					),
+					array(
+						'title'     => '',
+						'desc'      => __( 'If datepicker is selected, set min date (in days) here', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_checkout_custom_field_datepicker_mindate_' . $i,
+						'type'      => 'number',
+						'default'   => -365,
+					),
+					array(
+						'title'     => '',
+						'desc'      => __( 'If datepicker is selected, set max date (in days) here', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,
+						'type'      => 'number',
+						'default'   => 365,
+					),
+					array(
+						'title'     => '',
 						'desc'      => __( 'required', 'woocommerce-jetpack' ),
 						'id'        => 'wcj_checkout_custom_field_required_' . $i,
 						'default'   => 'no',
@@ -575,20 +606,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						'type'      => 'textarea',
 						'css'       => 'min-width:300px;width:50%;',
 					),
-					/*array(
-						'title'     => '',
-						'desc'      => __( 'for datepicker: min days', 'woocommerce-jetpack' ),
-						'id'        => 'wcj_checkout_custom_field_datepicker_mindays_' . $i,
-						'default'   => 0,
-						'type'      => 'number',
-					),
-					array(
-						'title'     => '',
-						'desc'      => __( 'for datepicker: max days', 'woocommerce-jetpack' ),
-						'id'        => 'wcj_checkout_custom_field_datepicker_maxdays_' . $i,
-						'default'   => 0,
-						'type'      => 'number',
-					),*/
 					array(
 						'title'     => '',
 						'desc'      => __( 'placeholder', 'woocommerce-jetpack' ),
@@ -597,7 +614,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						'type'      => 'textarea',
 						'css'       => 'min-width:300px;width:50%;',
 					),
-
 					array(
 						'title'        => '',
 						'desc'        => __( 'section', 'woocommerce-jetpack' ),
@@ -612,7 +628,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						),
 						'css'       => 'min-width:300px;width:50%;',
 					),
-
 					array(
 						'title'     => '',
 						'desc'      => __( 'class', 'woocommerce-jetpack' ),
@@ -626,7 +641,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						),
 						'css'       => 'min-width:300px;width:50%;',
 					),
-
 					array(
 						'title'     => '',
 						'desc'      => __( 'clear', 'woocommerce-jetpack' ),
@@ -635,7 +649,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						'type'      => 'checkbox',
 						'css'       => 'min-width:300px;width:50%;',
 					),
-
 					array(
 						'title'     => '',
 						'desc'      => __( 'categories', 'woocommerce-jetpack' ),
@@ -647,14 +660,13 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						'css'       => 'min-width:300px;width:50%;',
 						'options'   => $product_cats,
 					),
-
 				)
 			);
 		}
 
 		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_checkout_custom_fields_individual_options' );
 
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 
 }

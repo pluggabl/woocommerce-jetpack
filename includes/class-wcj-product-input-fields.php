@@ -226,6 +226,15 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 			),
 
 			array(
+				'title'    => __( 'Item Name Order Table Format', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Affects Checkout, Emails and Admin Orders View', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_input_fields_frontend_view_order_table_format',
+				'default'  => '&nbsp;| %title% %value%',
+				'type'     => 'textarea',
+				'css'      => 'width:30%;min-width:300px;',
+			),
+
+			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_input_fields_frontend_view_options',
 			),

@@ -27,7 +27,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * get_options.
 	 *
-	 * @version 2.3.8
+	 * @version 2.3.12
 	 */
 	public function get_options() {
 		$options = array(
@@ -108,6 +108,30 @@ class WCJ_Product_Input_Fields_Abstract {
 				'short_title'       => __( 'File: Accepted types', 'woocommerce-jetpack' ),
 				'type'              => 'text',
 				'default'           => __( '.jpg,.jpeg,.png', 'woocommerce-jetpack' ),
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_type_datepicker_format_' . $this->scope . '_',
+				'title'             => __( 'If datepicker is selected, set date format here. Visit <a href="http://php.net/manual/en/function.date.php" target="_blank">PHP date function page</a> for valid date formats. Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
+				'short_title'       => __( 'Datepicker: Date format', 'woocommerce-jetpack' ),
+				'type'              => 'text',
+				'default'           => '',
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_',
+				'title'             => __( 'If datepicker is selected, set min date (in days) here', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Datepicker: Min date', 'woocommerce-jetpack' ),
+				'type'              => 'number',
+				'default'           => -365,
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_',
+				'title'             => __( 'If datepicker is selected, set max date (in days) here', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Datepicker: Max date', 'woocommerce-jetpack' ),
+				'type'              => 'number',
+				'default'           => 365,
 			),
 
 			array(
@@ -371,6 +395,14 @@ class WCJ_Product_Input_Fields_Abstract {
 			$title       = $this->get_value( 'wcj_product_input_fields_title_' .       $this->scope . '_' . $i, $product->id, '' );
 			$placeholder = $this->get_value( 'wcj_product_input_fields_placeholder_' . $this->scope . '_' . $i, $product->id, '' );
 
+			$datepicker_format = $this->get_value( 'wcj_product_input_fields_type_datepicker_format_'  . $this->scope . '_' . $i, $product->id, '' );
+			if ( '' == $datepicker_format ) {
+				$datepicker_format = get_option( 'date_format' );
+			}
+			$datepicker_format = wcj_date_format_php_to_js_v2( $datepicker_format );
+			$datepicker_mindate = $this->get_value( 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_' . $i, $product->id, -365 );
+			$datepicker_maxdate = $this->get_value( 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_' . $i, $product->id, 365 );
+
 			$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product->id, '' );
 			$custom_attributes = ( 'file' === $type ) ? ' accept="' . $file_accept . '"' : '';
 			$field_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
@@ -404,7 +436,7 @@ class WCJ_Product_Input_Fields_Abstract {
 
 					case 'datepicker':
 
-						echo '<p>' . $title . '<input type="' . $type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						echo '<p>' . $title . '<input dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'timepicker':
@@ -545,14 +577,19 @@ class WCJ_Product_Input_Fields_Abstract {
 
 	/**
 	 * Adds product input values to order details (and emails).
+	 *
+	 * @version 2.3.12
 	 */
-	public function add_product_input_fields_to_order_item_name( $name, $item ) {
+	public function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
 
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
-		if ( $total_number < 1 )
+		if ( $total_number < 1 ) {
 			return $name;
+		}
 
-		$name .= '<dl style="font-size:smaller;">';
+		if ( $is_cart ) {
+			$name .= '<dl style="font-size:smaller;">';
+		}
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
 			$is_enabled  = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $item['product_id'], 'no' );
@@ -573,7 +610,7 @@ class WCJ_Product_Input_Fields_Abstract {
 
 				$yes_value = $this->get_value( 'wcj_product_input_fields_type_checkbox_yes_' . $this->scope . '_' . $i, $item['product_id'], '' );
 				$no_value  = $this->get_value( 'wcj_product_input_fields_type_checkbox_no_'  . $this->scope . '_' . $i, $item['product_id'], '' );
-				//$type    = $this->get_value( 'wcj_product_input_fields_type_'              . $this->scope . '_' . $i, $item['product_id'], '' );
+//				$type      = $this->get_value( 'wcj_product_input_fields_type_'              . $this->scope . '_' . $i, $item['product_id'], '' );
 				if ( 'checkbox' === $type ) {
 					$value = ( 'on' === $value ) ? $yes_value : $no_value;
 				}
@@ -583,24 +620,38 @@ class WCJ_Product_Input_Fields_Abstract {
 					$value = $value['name'];
 				}
 
-				$name .= '<dt>'
-					  . $title
-					  . '</dt>'
-					  . '<dd>'
-					  . $value
-					  . '</dd>';
+				if ( '' != $value ) {
+					if ( $is_cart ) {
+						$name .= '<dt>'
+							  . $title
+							  . '</dt>'
+							  . '<dd>'
+							  . $value
+							  . '</dd>';
+					} else {
+						$name .= str_replace(
+							array( '%title%', '%value%' ),
+							array( $title, $value ),
+							get_option( 'wcj_product_input_fields_frontend_view_order_table_format', '&nbsp;| %title% %value%' )
+						);
+					}
+				}
 			}
 		}
-		$name .= '</dl>';
+		if ( $is_cart ) {
+			$name .= '</dl>';
+		}
 
 		return $name;
 	}
 
 	/**
 	 * Adds product input values to cart item details.
+	 *
+	 * @version 2.3.12
 	 */
 	public function add_product_input_fields_to_cart_item_name( $name, $cart_item, $cart_item_key  ) {
-		return $this->add_product_input_fields_to_order_item_name( $name, $cart_item );
+		return $this->add_product_input_fields_to_order_item_name( $name, $cart_item, true );
 	}
 
 	/**

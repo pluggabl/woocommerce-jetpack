@@ -405,7 +405,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 				$the_subtotal += $this->the_order->get_line_subtotal( $item, false, true );
 			}
 		} else {
-			$the_subtotal =  $this->the_order->get_subtotal();
+			$the_subtotal = $this->the_order->get_subtotal();
 		}
 
 		return $this->wcj_price_shortcode( $the_subtotal, $atts );
