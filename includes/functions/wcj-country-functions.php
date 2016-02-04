@@ -4,7 +4,7 @@
  *
  * The WooCommerce Country Jetpack Functions.
  *
- * @version  2.2.0
+ * @version  2.3.12
  * @author   Algoritmika Ltd.
  */
 
@@ -30,6 +30,7 @@ if ( ! function_exists( 'wcj_get_customer_country' ) ) {
 /**
  * wcj_get_european_union_countries_with_vat.
  *
+ * @version 2.3.12
  * @return array
  */
 if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
@@ -59,7 +60,7 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 			'NL' => 21,
 			'PL' => 23,
 			'PT' => 23,
-			'RO' => 24,
+			'RO' => 20,//24,
 			'SE' => 25,
 			'SI' => 22,
 			'SK' => 20,
@@ -337,7 +338,7 @@ if ( ! function_exists( 'wcj_get_countries' ) ) {
 			'WS' => __( 'Western Samoa', 'woocommerce' ),
 			'YE' => __( 'Yemen', 'woocommerce' ),
 			'ZM' => __( 'Zambia', 'woocommerce' ),
-			'ZW' => __( 'Zimbabwe', 'woocommerce' )	
+			'ZW' => __( 'Zimbabwe', 'woocommerce' )
 		);
 	}
 }
