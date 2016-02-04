@@ -112,7 +112,7 @@ class WCJ_Product_Input_Fields_Abstract {
 
 			array(
 				'id'                => 'wcj_product_input_fields_type_datepicker_format_' . $this->scope . '_',
-				'title'             => __( 'If datepicker is selected, set date format here. Visit <a href="http://php.net/manual/en/function.date.php" target="_blank">PHP date function page</a> for valid date formats. Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
+				'title'             => __( 'If datepicker is selected, set date format here. Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats. Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
 				'short_title'       => __( 'Datepicker: Date format', 'woocommerce-jetpack' ),
 				'type'              => 'text',
 				'default'           => '',
