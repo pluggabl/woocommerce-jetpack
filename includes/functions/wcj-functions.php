@@ -4,9 +4,22 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.3.10
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
+
+/*
+ * wcj_get_select_options()
+ *
+ * @version  2.3.12
+ * @since    2.3.12
+ * @return   boolean
+ */
+if ( ! function_exists( 'wcj_is_module_enabled' ) ) {
+	function wcj_is_module_enabled( $module_id ) {
+		return ( 'yes' === get_option( 'wcj_' . $module_id . '_enabled', 'no' ) ) ? true : false;
+	}
+}
 
 if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 	/* Used by admin settings page.

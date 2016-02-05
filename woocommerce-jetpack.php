@@ -331,13 +331,14 @@ final class WC_Jetpack {
 	 */
 	private function include_shortcodes() {
 		//if ( 'yes' === get_option( 'wcj_shortcodes_enabled', 'no' ) ) {
+		if ( wcj_is_module_enabled( 'general' ) && 'yes' === get_option( 'wcj_general_shortcodes_disable_booster_shortcodes', 'no' ) ) {
 			include_once( 'includes/shortcodes/class-wcj-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-general-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-invoices-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-orders-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-order-items-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-products-shortcodes.php' );
-		//}
+		}
 	}
 
 	/**

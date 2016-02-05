@@ -117,6 +117,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 04/02/2016 =
+~* Dev - Functions - General - `wcj_is_module_enabled()` function added.
+~* Dev - EMAILS & MISC. - General - "Disable Booster's Shortcodes" option added.
 * Dev - EMAILS & MISC. - EU VAT Number - `wcj_get_european_union_countries_with_vat()` Romania VAT rate changed from 24% to 20%.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring (minor).
 * Dev - CART & CHECKOUT - Checkout Custom Fields - "date format", "min date" and "max date" options added.
