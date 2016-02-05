@@ -441,7 +441,8 @@ class WCJ_Product_Input_Fields_Abstract {
 
 					case 'timepicker':
 
-						echo '<p>' . $title . '<input type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						$timepicker_format = 'hh:mm p';
+						echo '<p>' . $title . '<input timeformat="' . $timepicker_format . '" type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'textarea':

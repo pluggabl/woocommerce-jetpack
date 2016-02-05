@@ -117,13 +117,14 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 05/02/2016 =
+~* Dev - EMAILS & MISC. - General - Advanced Options (for handling datepicker and timepicker CSS and JS) added.
 ~* Dev - Functions - General - `wcj_is_module_enabled()` function added.
 ~* Dev - EMAILS & MISC. - General - "Disable Booster's Shortcodes" option added.
 * Dev - EMAILS & MISC. - EU VAT Number - `wcj_get_european_union_countries_with_vat()` Romania VAT rate changed from 24% to 20%.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring (minor).
-* Dev - CART & CHECKOUT - Checkout Custom Fields - "date format", "min date" and "max date" options added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Datepicker - "date format", "min date" and "max date" options added.
 * Fix - PRODUCTS - Product Input Fields - `add_product_input_fields_to_order_item_name()` fixed. "Item Name Order Table Format" option added.
-* Dev - PRODUCTS - Product Input Fields - "date format", "min date" and "max date" options added.
+* Dev - PRODUCTS - Product Input Fields - Datepicker - "date format", "min date" and "max date" options added.
 * Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - manual sorting when `countries` attribute is used.
 * Dev - PRODUCTS - SKU - "Category Suffix" and "Category Prefix" options added.
 * Dev - PRODUCTS - SKU - Code refactoring (minor). Suffix option unlocked.

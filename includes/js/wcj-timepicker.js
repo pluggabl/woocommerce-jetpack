@@ -1,3 +1,7 @@
 jQuery(document).ready(function() {
-	jQuery("input[display='time']").timepicker();
+	jQuery("input[display='time']").each( function () {
+		jQuery(this).timepicker({
+			timeFormat : jQuery(this).attr("timeformat")
+		});
+	});
 });

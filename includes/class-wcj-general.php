@@ -325,6 +325,57 @@ class WCJ_General extends WCJ_Module {
 				'id'       => 'wcj_product_revisions_options',
 			),
 
+			array(
+				'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_general_advanced_options',
+			),
+
+			array(
+				'title'    => __( 'Disable Loading Datepicker CSS', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_general_advanced_disable_datepicker_css',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'title'    => __( 'Datepicker CSS', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_general_advanced_datepicker_css',
+				'default'  => '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css',
+				'type'     => 'text',
+				'css'      => 'width:66%;min-width:300px;',
+			),
+
+			array(
+				'title'    => __( 'Disable Loading Datepicker JavaScript', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_general_advanced_disable_datepicker_js',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'title'    => __( 'Disable Loading Timepicker CSS', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_general_advanced_disable_timepicker_css',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'title'    => __( 'Disable Loading Timepicker JavaScript', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_general_advanced_disable_timepicker_js',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_general_advanced_options',
+			),
+
 			/* array(
 				'title'    => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),
 				'type'     => 'title',
