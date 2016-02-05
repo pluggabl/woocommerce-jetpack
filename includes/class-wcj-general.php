@@ -225,6 +225,7 @@ class WCJ_General extends WCJ_Module {
 	 * get_settings.
 	 *
 	 * @version 2.3.12
+	 * @todo    add link to Booster's shortcodes list
 	 */
 	function get_settings() {
 
