@@ -332,7 +332,7 @@ class WCJ_General extends WCJ_Module {
 			),
 
 			array(
-				'title'    => __( 'Disable Loading Datepicker CSS', 'woocommerce-jetpack' ),
+				'title'    => __( 'Disable Loading Datepicker/Weekpicker CSS', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_general_advanced_disable_datepicker_css',
 				'default'  => 'no',
@@ -340,7 +340,7 @@ class WCJ_General extends WCJ_Module {
 			),
 
 			array(
-				'title'    => __( 'Datepicker CSS', 'woocommerce-jetpack' ),
+				'title'    => __( 'Datepicker/Weekpicker CSS', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_general_advanced_datepicker_css',
 				'default'  => '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css',
 				'type'     => 'text',
@@ -348,7 +348,7 @@ class WCJ_General extends WCJ_Module {
 			),
 
 			array(
-				'title'    => __( 'Disable Loading Datepicker JavaScript', 'woocommerce-jetpack' ),
+				'title'    => __( 'Disable Loading Datepicker/Weekpicker JavaScript', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_general_advanced_disable_datepicker_js',
 				'default'  => 'no',

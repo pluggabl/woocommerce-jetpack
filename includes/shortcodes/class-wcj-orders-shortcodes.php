@@ -375,7 +375,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$order_total_excl_tax        = $this->the_order->get_total() - $order_total_tax_not_rounded;
 		$order_total_tax_percent = ( 0 == $order_total_excl_tax ) ? 0 : $order_total_tax_not_rounded / $order_total_excl_tax * 100;
 		$order_total_tax_percent = round( $order_total_tax_percent, $atts['precision'] );
-		return apply_filters( 'wcj_order_total_tax_percent', $order_total_tax_percent, $this->the_order );
+		apply_filters( 'wcj_order_total_tax_percent', $order_total_tax_percent, $this->the_order );
+		return number_format( $order_total_tax_percent, $atts['precision'] );
 	}
 
 	/**

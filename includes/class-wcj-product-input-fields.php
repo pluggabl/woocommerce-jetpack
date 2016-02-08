@@ -194,13 +194,14 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_product_input_fields_global_total_number', 1 ) ); $i++ ) {
 			foreach( $options as $option ) {
 				$settings[] = array(
-					'title'   => ( 'wcj_product_input_fields_enabled_global_' === $option['id'] ) ? __( 'Product Input Field', 'woocommerce-jetpack' ) . ' #' . $i : '',
-					'desc'    => $option['title'],
-					'id'      => $option['id'] . $i,
-					'default' => $option['default'],
-					'type'    => $option['type'],
-					'options' => isset( $option['options'] ) ? $option['options'] : '',
-					'css'     => 'width:30%;min-width:300px;',
+					'title'    => ( 'wcj_product_input_fields_enabled_global_' === $option['id'] ) ? __( 'Product Input Field', 'woocommerce-jetpack' ) . ' #' . $i : '',
+					'desc'     => $option['title'],
+					'desc_tip' => ( isset( $option['desc_tip'] ) ) ? $option['desc_tip'] : '',
+					'id'       => $option['id'] . $i,
+					'default'  => $option['default'],
+					'type'     => $option['type'],
+					'options'  => isset( $option['options'] ) ? $option['options'] : '',
+					'css'      => 'width:30%;min-width:300px;',
 				);
 			}
 		}

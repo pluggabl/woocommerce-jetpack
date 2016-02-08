@@ -286,13 +286,13 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_fields.
 	 *
-	 * @version 2.3.8
+	 * @version 2.3.12
 	 */
 	public function add_woocommerce_admin_fields( $fields, $section ) {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_type = get_option( 'wcj_checkout_custom_field_type_' . $i );
-				if ( 'datepicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
+				if ( 'datepicker' === $the_type || 'weekpicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
 					$the_type = 'text';
 				}
 				if ( 'checkbox' === $the_type || 'select' === $the_type || 'radio' === $the_type ) {
@@ -375,10 +375,14 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 				$the_type = get_option( 'wcj_checkout_custom_field_type_' . $i );
 				$custom_attributes = array();
-				if ( 'datepicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
-					if ( 'datepicker' === $the_type || 'timepicker' === $the_type ) {
-						$custom_attributes['display'] = ( 'datepicker' === $the_type ) ? 'date' : 'time';
-						if ( 'datepicker' === $the_type ) {
+				if ( 'datepicker' === $the_type ||  'weekpicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
+					if ( 'datepicker' === $the_type || 'weekpicker' === $the_type || 'timepicker' === $the_type ) {
+						switch ( $the_type ) {
+							case 'datepicker' :  $custom_attributes['display'] = 'date'; break;
+							case 'weekpicker' :  $custom_attributes['display'] = 'week'; break;
+							case 'timepicker' :  $custom_attributes['display'] = 'time'; break;
+						}
+						if ( 'datepicker' === $the_type || 'weekpicker' === $the_type ) {
 							$datepicker_format = get_option( 'wcj_checkout_custom_field_datepicker_format_' . $i, '' );
 							if ( '' == $datepicker_format ) {
 								$datepicker_format = get_option( 'date_format' );
@@ -522,6 +526,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							'checkbox'   => __( 'Checkbox', 'woocommerce-jetpack' ),
 //							'file'       => __( 'File', 'woocommerce-jetpack' ),
 							'datepicker' => __( 'Datepicker', 'woocommerce-jetpack' ),
+							'weekpicker' => __( 'Weekpicker', 'woocommerce-jetpack' ),
 							'timepicker' => __( 'Timepicker', 'woocommerce-jetpack' ),
 							'select'     => __( 'Select', 'woocommerce-jetpack' ),
 							'radio'      => __( 'Radio', 'woocommerce-jetpack' ),
@@ -571,21 +576,22 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					),
 					array(
 						'title'     => '',
-						'desc'      => __( 'If datepicker is selected, set date format here. Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats. Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
+						'desc'      => __( 'If datepicker/weekpicker is selected, set date format here. Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats.', 'woocommerce-jetpack' ),
+						'desc_tip'  => __( 'Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
 						'id'        => 'wcj_checkout_custom_field_datepicker_format_' . $i,
 						'type'      => 'text',
 						'default'   => '',
 					),
 					array(
 						'title'     => '',
-						'desc'      => __( 'If datepicker is selected, set min date (in days) here', 'woocommerce-jetpack' ),
+						'desc'      => __( 'If datepicker/weekpicker is selected, set min date (in days) here', 'woocommerce-jetpack' ),
 						'id'        => 'wcj_checkout_custom_field_datepicker_mindate_' . $i,
 						'type'      => 'number',
 						'default'   => -365,
 					),
 					array(
 						'title'     => '',
-						'desc'      => __( 'If datepicker is selected, set max date (in days) here', 'woocommerce-jetpack' ),
+						'desc'      => __( 'If datepicker/weekpicker is selected, set max date (in days) here', 'woocommerce-jetpack' ),
 						'id'        => 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,
 						'type'      => 'number',
 						'default'   => 365,

@@ -152,6 +152,10 @@ final class WC_Jetpack {
 				array( 'jquery' ),
 				false,
 				true );
+			wp_enqueue_script( 'wcj-weekpicker', wcj_plugin_url() . '/includes/js/wcj-weekpicker.js',
+				array( 'jquery' ),
+				false,
+				true );
 		}
 	}
 

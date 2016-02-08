@@ -51,6 +51,7 @@ class WCJ_Product_Input_Fields_Abstract {
 					'checkbox'   => __( 'Checkbox', 'woocommerce-jetpack' ),
 					'file'       => __( 'File', 'woocommerce-jetpack' ),
 					'datepicker' => __( 'Datepicker', 'woocommerce-jetpack' ),
+					'weekpicker' => __( 'Weekpicker', 'woocommerce-jetpack' ),
 					'timepicker' => __( 'Timepicker', 'woocommerce-jetpack' ),
 					'select'     => __( 'Select', 'woocommerce-jetpack' ),
 					'radio'      => __( 'Radio', 'woocommerce-jetpack' ),
@@ -112,24 +113,25 @@ class WCJ_Product_Input_Fields_Abstract {
 
 			array(
 				'id'                => 'wcj_product_input_fields_type_datepicker_format_' . $this->scope . '_',
-				'title'             => __( 'If datepicker is selected, set date format here. Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats. Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
-				'short_title'       => __( 'Datepicker: Date format', 'woocommerce-jetpack' ),
+				'title'             => __( 'If datepicker/weekpicker is selected, set date format here. Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats.', 'woocommerce-jetpack' ),
+				'desc_tip'          => __( 'Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
+				'short_title'       => __( 'Datepicker/Weekpicker: Date format', 'woocommerce-jetpack' ),
 				'type'              => 'text',
 				'default'           => '',
 			),
 
 			array(
 				'id'                => 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_',
-				'title'             => __( 'If datepicker is selected, set min date (in days) here', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Datepicker: Min date', 'woocommerce-jetpack' ),
+				'title'             => __( 'If datepicker/weekpicker is selected, set min date (in days) here', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Datepicker/Weekpicker: Min date', 'woocommerce-jetpack' ),
 				'type'              => 'number',
 				'default'           => -365,
 			),
 
 			array(
 				'id'                => 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_',
-				'title'             => __( 'If datepicker is selected, set max date (in days) here', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Datepicker: Max date', 'woocommerce-jetpack' ),
+				'title'             => __( 'If datepicker/weekpicker is selected, set max date (in days) here', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Datepicker/Weekpicker: Max date', 'woocommerce-jetpack' ),
 				'type'              => 'number',
 				'default'           => 365,
 			),
@@ -437,6 +439,11 @@ class WCJ_Product_Input_Fields_Abstract {
 					case 'datepicker':
 
 						echo '<p>' . $title . '<input dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						break;
+
+					case 'weekpicker':
+
+						echo '<p>' . $title . '<input dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="week" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'timepicker':
