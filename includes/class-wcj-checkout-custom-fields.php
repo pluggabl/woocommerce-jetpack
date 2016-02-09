@@ -376,26 +376,19 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				$the_type = get_option( 'wcj_checkout_custom_field_type_' . $i );
 				$custom_attributes = array();
 				if ( 'datepicker' === $the_type ||  'weekpicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
-					if ( 'datepicker' === $the_type || 'weekpicker' === $the_type || 'timepicker' === $the_type ) {
-						switch ( $the_type ) {
-							case 'datepicker' :  $custom_attributes['display'] = 'date'; break;
-							case 'weekpicker' :  $custom_attributes['display'] = 'week'; break;
-							case 'timepicker' :  $custom_attributes['display'] = 'time'; break;
-						}
-						if ( 'datepicker' === $the_type || 'weekpicker' === $the_type ) {
-							$datepicker_format = get_option( 'wcj_checkout_custom_field_datepicker_format_' . $i, '' );
-							if ( '' == $datepicker_format ) {
-								$datepicker_format = get_option( 'date_format' );
-							}
-							$datepicker_format = wcj_date_format_php_to_js_v2( $datepicker_format );
-							$custom_attributes['dateformat'] = $datepicker_format;
-							$custom_attributes['mindate'] = get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
-							$custom_attributes['maxdate'] = get_option( 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,  365 );
-							$custom_attributes['firstday'] = get_option( 'wcj_checkout_custom_field_datepicker_firstday_' . $i, 0 );
-						} elseif ( 'timepicker' === $the_type ) {
-							$custom_attributes['timeformat'] = get_option( 'wcj_checkout_custom_field_timepicker_format_' . $i, 'hh:mm p' );
-							$custom_attributes['interval'] = get_option( 'wcj_checkout_custom_field_timepicker_interval_' . $i, 15 );
-						}
+					if ( 'datepicker' === $the_type || 'weekpicker' === $the_type ) {
+						$datepicker_format_option = get_option( 'wcj_checkout_custom_field_datepicker_format_' . $i, '' );
+						$datepicker_format = ( '' == $datepicker_format_option ) ? get_option( 'date_format' ) : $datepicker_format_option;
+						$datepicker_format = wcj_date_format_php_to_js_v2( $datepicker_format );
+						$custom_attributes['dateformat'] = $datepicker_format;
+						$custom_attributes['mindate'] = get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
+						$custom_attributes['maxdate'] = get_option( 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,  365 );
+						$custom_attributes['firstday'] = get_option( 'wcj_checkout_custom_field_datepicker_firstday_' . $i, 0 );
+						$custom_attributes['display'] = ( 'datepicker' === $the_type ) ? 'date' : 'week';
+					} elseif ( 'timepicker' === $the_type ) {
+						$custom_attributes['timeformat'] = get_option( 'wcj_checkout_custom_field_timepicker_format_' . $i, 'hh:mm p' );
+						$custom_attributes['interval'] = get_option( 'wcj_checkout_custom_field_timepicker_interval_' . $i, 15 );
+						$custom_attributes['display'] = 'time';
 					} else/* if ( 'number' === $the_type ) */ {
 						$custom_attributes['display'] = $the_type;
 					}
