@@ -51,6 +51,7 @@ return array(
 		'all_cat_ids'    => array(
 			'product_listings',
 			'product_tabs',
+			'product_custom_info',
 			'product_info',
 			'related_products',
 			'sorting',

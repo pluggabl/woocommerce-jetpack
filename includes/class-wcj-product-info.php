@@ -100,7 +100,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'product_info';
-		$this->short_desc = __( 'Product Info', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Product Info - Depreciated', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add additional info to WooCommerce category and single product pages.', 'woocommerce-jetpack' );
 		parent::__construct();
 
@@ -411,7 +411,6 @@ class WCJ_Product_Info extends WCJ_Module {
 				'default'  => 10,
 				'type'     => 'number',
 			),
-
 			array(
 				'title'    => __( 'Product IDs to exclude', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Comma separated list of product IDs to exclude from product info.', 'woocommerce-jetpack' ),
@@ -420,7 +419,6 @@ class WCJ_Product_Info extends WCJ_Module {
 				'type'     => 'text',
 				'css'      => 'min-width:300px;',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_info_additional_options',

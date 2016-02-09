@@ -117,6 +117,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 09/02/2016 =
+~* Dev - PRODUCTS - Product Info V2 - Initial module release. Product Info marked as depreciated.
 ~* Dev - CART & CHECKOUT - Checkout Core Fields - "time format", "interval" options for Timepicker added.
 ~* Dev - PRODUCTS - Product Input Fields - "time format", "interval" options for Timepicker added.
 ~* Dev - CART & CHECKOUT - Checkout Core Fields - "First week day" option for Datepicker/Weekpicker added.

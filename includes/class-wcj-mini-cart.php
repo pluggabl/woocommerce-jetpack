@@ -25,9 +25,9 @@ class WCJ_Mini_Cart extends WCJ_Module {
 		$this->desc       = __( 'Customize WooCommerce mini cart widget.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-	    if ( $this->is_enabled() ) {
+		if ( $this->is_enabled() ) {
 			$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
-			for ( $i = 1; $i <= $total_number; $i++) {
+			for ( $i = 1; $i <= $total_number; $i++ ) {
 				add_action( get_option( 'wcj_mini_cart_custom_info_hook_' . $i, 'woocommerce_after_mini_cart' ), array( $this, 'add_mini_cart_custom_info' ) );
 			}
 		}
@@ -39,7 +39,7 @@ class WCJ_Mini_Cart extends WCJ_Module {
 	function get_settings() {
 
 		// The Module settings
-	    $settings = array();
+		$settings = array();
 
 		// Mini Cart Custom Info Options
 		$settings[] = array( 'title' => __( 'Mini Cart Custom Info Blocks', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_mini_cart_custom_info_options' );
@@ -51,15 +51,14 @@ class WCJ_Mini_Cart extends WCJ_Module {
 			'type'     => 'custom_number',
 			//'type'     => 'number',
 			'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-			'custom_attributes'
-			           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+			'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 		);
 
 		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_mini_cart_custom_info_options' );
 
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
 
-		for ( $i = 1; $i <= $total_number; $i++) {
+		for ( $i = 1; $i <= $total_number; $i++ ) {
 
 			$settings = array_merge( $settings, array(
 
@@ -103,7 +102,7 @@ class WCJ_Mini_Cart extends WCJ_Module {
 
 		//$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_mini_cart_custom_info_options' );
 
-	    return $this->add_enable_module_setting( $settings );
+		return $this->add_enable_module_setting( $settings );
 	}
 
 	/**
