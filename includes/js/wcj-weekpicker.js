@@ -4,6 +4,7 @@ jQuery(document).ready(function() {
 			dateFormat : jQuery(this).attr("dateformat"),
 			minDate : jQuery(this).attr("mindate"),
 			maxDate : jQuery(this).attr("maxdate"),
+			firstDay : jQuery(this).attr("firstday"),
 			showOtherMonths: true,
 			selectOtherMonths: true,
 			changeMonth: true,
@@ -22,10 +23,12 @@ jQuery(document).ready(function() {
 			},
 			onClose: function(dateText, inst) {
 				var date = jQuery(this).datepicker( "getDate" );
-				var dateFormat = inst.settings.dateFormat || jQuery(this).datepicker._defaults.dateFormat;
-				var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
-				var endDateFormatted = jQuery.datepicker.formatDate( dateFormat, endDate, inst.settings );
-				jQuery(this).val(dateText + " - " + endDateFormatted);
+				if (date != null){
+					var dateFormat = inst.settings.dateFormat || jQuery(this).datepicker._defaults.dateFormat;
+					var endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay() + 6);
+					var endDateFormatted = jQuery.datepicker.formatDate( dateFormat, endDate, inst.settings );
+					jQuery(this).val(dateText + " - " + endDateFormatted);
+				}
 				// disable live listeners so they dont impact other instances
 				jQuery(".ui-datepicker-calendar tbody tr").die("mousemove");
 				jQuery(".ui-datepicker-calendar tbody tr").die("mouseleave");

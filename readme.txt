@@ -117,6 +117,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 08/02/2016 =
+~* Dev - CART & CHECKOUT - Checkout Core Fields - "First week day" option for Datepicker/Weekpicker added.
+~* Dev - PRODUCTS - Product Input Fields - "First week day" option for Datepicker/Weekpicker added.
 ~* Fix - CART & CHECKOUT - Checkout Core Fields - "Class" bug fixed.
 ~* Dev - CART & CHECKOUT - Checkout Custom Fields - "Weekpicker" added.
 ~* Dev - PRODUCTS - Product Input Fields - "Weekpicker" added.

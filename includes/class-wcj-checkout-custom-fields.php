@@ -391,6 +391,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							$custom_attributes['dateformat'] = $datepicker_format;
 							$custom_attributes['mindate'] = get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
 							$custom_attributes['maxdate'] = get_option( 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,  365 );
+							$custom_attributes['firstday'] = get_option( 'wcj_checkout_custom_field_datepicker_firstday_' . $i, 0 );
 						}
 					} else/* if ( 'number' === $the_type ) */ {
 						$custom_attributes['display'] = $the_type;
@@ -595,6 +596,22 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						'id'        => 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,
 						'type'      => 'number',
 						'default'   => 365,
+					),
+					array(
+						'title'     => '',
+						'desc'      => __( 'If datepicker/weekpicker is selected, set first week day here', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_checkout_custom_field_datepicker_firstday_' . $i,
+						'type'      => 'select',
+						'default'   => 0,
+						'options'   => array(
+							__( 'Sunday', 'woocommerce-jetpack' ),
+							__( 'Monday', 'woocommerce-jetpack' ),
+							__( 'Tuesday', 'woocommerce-jetpack' ),
+							__( 'Wednesday', 'woocommerce-jetpack' ),
+							__( 'Thursday', 'woocommerce-jetpack' ),
+							__( 'Friday', 'woocommerce-jetpack' ),
+							__( 'Saturday', 'woocommerce-jetpack' ),
+						),
 					),
 					array(
 						'title'     => '',

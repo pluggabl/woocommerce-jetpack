@@ -137,6 +137,23 @@ class WCJ_Product_Input_Fields_Abstract {
 			),
 
 			array(
+				'id'                => 'wcj_product_input_fields_type_datepicker_firstday_' . $this->scope . '_',
+				'title'             => __( 'If datepicker/weekpicker is selected, set first week day here', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Datepicker/Weekpicker: First week day', 'woocommerce-jetpack' ),
+				'type'              => 'select',
+				'default'           => 0,
+				'options'           => array(
+					__( 'Sunday', 'woocommerce-jetpack' ),
+					__( 'Monday', 'woocommerce-jetpack' ),
+					__( 'Tuesday', 'woocommerce-jetpack' ),
+					__( 'Wednesday', 'woocommerce-jetpack' ),
+					__( 'Thursday', 'woocommerce-jetpack' ),
+					__( 'Friday', 'woocommerce-jetpack' ),
+					__( 'Saturday', 'woocommerce-jetpack' ),
+				),
+			),
+
+			array(
 				'id'                => 'wcj_product_input_fields_type_select_options_' . $this->scope . '_',
 				'title'             => __( 'If select/radio is selected, set options here. One option per line', 'woocommerce-jetpack' ),
 				'short_title'       => __( 'Select/Radio: Options', 'woocommerce-jetpack' ),
@@ -404,6 +421,7 @@ class WCJ_Product_Input_Fields_Abstract {
 			$datepicker_format = wcj_date_format_php_to_js_v2( $datepicker_format );
 			$datepicker_mindate = $this->get_value( 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_' . $i, $product->id, -365 );
 			$datepicker_maxdate = $this->get_value( 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_' . $i, $product->id, 365 );
+			$datepicker_firstday = $this->get_value( 'wcj_product_input_fields_type_datepicker_firstday_' . $this->scope . '_' . $i, $product->id, 0 );
 
 			$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product->id, '' );
 			$custom_attributes = ( 'file' === $type ) ? ' accept="' . $file_accept . '"' : '';
@@ -438,12 +456,12 @@ class WCJ_Product_Input_Fields_Abstract {
 
 					case 'datepicker':
 
-						echo '<p>' . $title . '<input dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						echo '<p>' . $title . '<input firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'weekpicker':
 
-						echo '<p>' . $title . '<input dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="week" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						echo '<p>' . $title . '<input firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="week" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'timepicker':
