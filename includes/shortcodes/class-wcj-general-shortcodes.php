@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -62,7 +62,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_country_select_drop_down_list.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
 

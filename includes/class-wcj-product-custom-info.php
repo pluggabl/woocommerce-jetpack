@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Product Custom Info class.
  *
- * @version 2.3.12
- * @since   2.3.12
+ * @version 2.4.0
+ * @since   2.4.0
  * @author  Algoritmika Ltd.
  */
 

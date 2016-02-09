@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function __construct() {
 
@@ -59,8 +59,8 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * enable_product_revisions.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function enable_product_revisions( $args ) {
 		$args['supports'][] = 'revisions';
@@ -224,7 +224,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 * @todo    add link to Booster's shortcodes list
 	 */
 	function get_settings() {

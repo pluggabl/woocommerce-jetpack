@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Payment Gateway class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -27,7 +27,7 @@ function init_wc_gateway_wcj_custom_class() {
 		/**
 		 * Initialise Gateway Settings Form Fields
 		 *
-		 * @version 2.3.12
+		 * @version 2.4.0
 		 */
 		public function init_form_fields() {
 			global $woocommerce;
@@ -297,7 +297,7 @@ function init_wc_gateway_wcj_custom_class() {
 		/**
 		 * Process the payment and return the result
 		 *
-		 * @version 2.3.12
+		 * @version 2.4.0
 		 * @param   int $order_id
 		 * @return  array
 		 */
@@ -333,7 +333,7 @@ function init_wc_gateway_wcj_custom_class() {
 		/**
 		 * init.
 		 *
-		 * @version 2.3.12
+		 * @version 2.4.0
 		 */
 		public function init( $id_count ) {
 			$this->id                       = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;

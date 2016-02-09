@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -127,7 +127,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_custom_number.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function output_custom_number( $value ) {
 		$type         = 'number';//$value['type'];

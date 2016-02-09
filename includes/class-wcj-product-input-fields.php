@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,7 +16,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 
 	/**
 	 * Constructor.
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function __construct() {
 
@@ -113,7 +113,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function get_settings() {
 

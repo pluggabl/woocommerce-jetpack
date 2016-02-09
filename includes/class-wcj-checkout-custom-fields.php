@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -286,7 +286,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_fields.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function add_woocommerce_admin_fields( $fields, $section ) {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
@@ -347,7 +347,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function add_custom_checkout_fields( $fields ) {
 
@@ -436,7 +436,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function get_settings() {
 

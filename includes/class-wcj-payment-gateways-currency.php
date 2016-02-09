@@ -84,7 +84,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * extend_paypal_supported_currencies.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function extend_paypal_supported_currencies( $supported_currencies ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -103,7 +103,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * change_currency_symbol.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function change_currency_symbol( $currency_symbol, $currency ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -122,7 +122,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * change_currency_code.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function change_currency_code( $currency ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -183,7 +183,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * add_currency_settings.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function add_currency_settings( $settings ) {
 

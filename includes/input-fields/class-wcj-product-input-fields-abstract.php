@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -27,7 +27,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * get_options.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function get_options() {
 		$options = array(
@@ -415,7 +415,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function add_product_input_fields_to_frontend() {
 		global $product;
@@ -622,7 +622,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Adds product input values to order details (and emails).
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
 
@@ -692,7 +692,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Adds product input values to cart item details.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function add_product_input_fields_to_cart_item_name( $name, $cart_item, $cart_item_key  ) {
 		return $this->add_product_input_fields_to_order_item_name( $name, $cart_item, true );

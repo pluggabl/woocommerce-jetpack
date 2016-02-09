@@ -116,31 +116,12 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.12 - 09/02/2016 =
-~* Dev - PRODUCTS - Product Info V2 - Initial module release. Product Info marked as depreciated.
-~* Dev - CART & CHECKOUT - Checkout Core Fields - "time format", "interval" options for Timepicker added.
-~* Dev - PRODUCTS - Product Input Fields - "time format", "interval" options for Timepicker added.
-~* Dev - CART & CHECKOUT - Checkout Core Fields - "First week day" option for Datepicker/Weekpicker added.
-~* Dev - PRODUCTS - Product Input Fields - "First week day" option for Datepicker/Weekpicker added.
-~* Fix - CART & CHECKOUT - Checkout Core Fields - "Class" bug fixed.
-~* Dev - CART & CHECKOUT - Checkout Custom Fields - "Weekpicker" added.
-~* Dev - PRODUCTS - Product Input Fields - "Weekpicker" added.
-~* Fix - Shortcodes - Orders - `[wcj_order_total_tax_percent]` fixed. `precision` attribute added.
-~* Dev - EMAILS & MISC. - General - Advanced Options (for handling datepicker and timepicker CSS and JS) added.
-~* Dev - Functions - General - `wcj_is_module_enabled()` function added.
-~* Dev - EMAILS & MISC. - General - "Disable Booster's Shortcodes" option added.
-* Dev - EMAILS & MISC. - EU VAT Number - `wcj_get_european_union_countries_with_vat()` Romania VAT rate changed from 24% to 20%.
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring (minor).
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Datepicker - "date format", "min date" and "max date" options added.
-* Fix - PRODUCTS - Product Input Fields - `add_product_input_fields_to_order_item_name()` fixed. "Item Name Order Table Format" option added.
-* Dev - PRODUCTS - Product Input Fields - Datepicker - "date format", "min date" and "max date" options added.
-* Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - manual sorting when `countries` attribute is used.
-* Dev - PRODUCTS - SKU - "Category Suffix" and "Category Prefix" options added.
-* Dev - PRODUCTS - SKU - Code refactoring (minor). Suffix option unlocked.
-* Dev - PRICES & CURRENCIES - Bulk Price Converter - Code refactoring.
-* Dev - PRICES & CURRENCIES - Bulk Price Converter - Option to convert prices by *product category* added.
+= 2.4.0 - 10/02/2016 =
 * Fix - Custom attribute handling in `output_custom_number()` fixed.
 * Dev - "Reset Module to Default Settings" option added.
+* Dev - Functions - General - `wcj_is_module_enabled()` function added.
+* Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - manual sorting when `countries` attribute is used.
+* Fix - Shortcodes - Orders - `[wcj_order_total_tax_percent]` fixed. `precision` attribute added.
 * Fix - Shortcodes - Orders - `get_cart_discount()` (depreciated since WooCommerce 2.3) removed from `[wcj_order_items_table]` shortcode (affected if `discount_as_item` option was used); removed from `[wcj_order_total_discount]` shortcode; `[wcj_order_cart_discount]` shortcode removed.
 * Fix - Shortcodes - Orders - `[wcj_order_total_in_words]` - decimal part rounding bug fixed.
 * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `whole` and `decimal` attributes added.
@@ -155,14 +136,33 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 * Fix - PRICES & CURRENCIES - Price by Country - Variable products fix (error appeared with WooCommerce v2.5.0 update).
 * Dev - PRICES & CURRENCIES - Currencies - *Custom Currencies* options added.
 * Dev - PRICES & CURRENCIES - Currencies - Code refactoring.
+* Dev - PRICES & CURRENCIES - Bulk Price Converter - Code refactoring.
+* Dev - PRICES & CURRENCIES - Bulk Price Converter - Option to convert prices by *product category* added.
 * Dev - PRODUCTS - Product Info - Code refactoring.
+* Dev - PRODUCTS - Product Info V2 - Initial module release. Product Info marked as depreciated.
 * Dev - PRODUCTS - Product Input Fields - Code refactoring.
 * Dev - PRODUCTS - Product Input Fields - Required field sign option added.
+* Dev - PRODUCTS - Product Input Fields - "time format", "interval" options for Timepicker added.
+* Dev - PRODUCTS - Product Input Fields - "First week day" option for Datepicker/Weekpicker added.
+* Dev - PRODUCTS - Product Input Fields - "Weekpicker" added.
+* Fix - PRODUCTS - Product Input Fields - `add_product_input_fields_to_order_item_name()` fixed. "Item Name Order Table Format" option added.
+* Dev - PRODUCTS - Product Input Fields - Datepicker - "date format", "min date" and "max date" options added.
+* Dev - PRODUCTS - SKU - "Category Suffix" and "Category Prefix" options added.
+* Dev - PRODUCTS - SKU - Code refactoring (minor). Suffix option unlocked.
+* Dev - CART & CHECKOUT - Checkout Core Fields - "time format", "interval" options for Timepicker added.
+* Dev - CART & CHECKOUT - Checkout Core Fields - "First week day" option for Datepicker/Weekpicker added.
+* Fix - CART & CHECKOUT - Checkout Core Fields - "Class" bug fixed.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - "Weekpicker" added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring (minor).
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Datepicker - "date format", "min date" and "max date" options added.
 * Dev - PAYMENT GATEWAYS - Gateways Currency - "No changes" option added.
 * Dev - PAYMENT GATEWAYS - Custom Gateways - "Custom Return URL (Thank You Page)" option added.
 * Dev - PDF Invoicing - Code refactoring. Classes: WCJ_PDF_Invoicing_Page, WCJ_PDF_Invoicing_Styling etc.
 * Dev - PDF Invoicing - "Hide Settings for Disabled Document Types" option added.
 * Dev - EMAILS & MISC. - General - "Products Revisions" options section added.
+* Dev - EMAILS & MISC. - General - Advanced Options (for handling datepicker and timepicker CSS and JS) added.
+* Dev - EMAILS & MISC. - General - "Disable Booster's Shortcodes" option added.
+* Dev - EMAILS & MISC. - EU VAT Number - `wcj_get_european_union_countries_with_vat()` Romania VAT rate changed from 24% to 20%.
 * Dev - EMAILS & MISC. - EU VAT Number - "Description" option added.
 * Dev - EMAILS & MISC. - Emails - "Custom Emails" - Triggers added (includes custom order statuses).
 * Dev - EMAILS & MISC. - Emails - "Custom Emails" - `%customer%` as recipient added.

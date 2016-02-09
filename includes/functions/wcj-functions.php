@@ -4,15 +4,15 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
 /*
  * wcj_get_select_options()
  *
- * @version  2.3.12
- * @since    2.3.12
+ * @version  2.4.0
+ * @since    2.4.0
  * @return   boolean
  */
 if ( ! function_exists( 'wcj_is_module_enabled' ) ) {
@@ -371,8 +371,8 @@ if ( ! function_exists( 'wcj_plugin_path' ) ) {
  * http://stackoverflow.com/questions/16702398/convert-a-php-date-format-to-a-jqueryui-datepicker-date-format
  *
  * @author  Tristan Jahier
- * @version 2.3.12
- * @since   2.3.12
+ * @version 2.4.0
+ * @since   2.4.0
  */
 if ( ! function_exists( 'wcj_date_format_php_to_js_v2' ) ) {
 	function wcj_date_format_php_to_js_v2( $php_format ) {

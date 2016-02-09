@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -24,7 +24,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function __construct( $type = 'module' ) {
 		add_filter( 'wcj_settings_sections',     array( $this, 'settings_section' ) );
@@ -39,8 +39,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * reset_settings.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function reset_settings() {
 		if ( isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && is_super_admin() && ! isset( $_POST['save'] ) ) {
@@ -64,7 +64,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * add_standard_settings.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 * @since   2.3.10
 	 */
 	function add_standard_settings( $settings = array(), $module_desc = '' ) {
@@ -78,7 +78,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 * @since   2.2.6
 	 */
 	function get_settings() {
@@ -345,8 +345,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * add_reset_settings_button.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function add_reset_settings_button( $settings ) {
 		$reset_button_style = "background: red; border-color: red; box-shadow: 0 1px 0 red; text-shadow: 0 -1px 1px #a00,1px 0 1px #a00,0 1px 1px #a00,-1px 0 1px #a00;";

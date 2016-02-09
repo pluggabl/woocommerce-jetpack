@@ -4,7 +4,7 @@
  *
  * The WooCommerce Country Jetpack Functions.
  *
- * @version  2.3.12
+ * @version  2.4.0
  * @author   Algoritmika Ltd.
  */
 
@@ -30,7 +30,7 @@ if ( ! function_exists( 'wcj_get_customer_country' ) ) {
 /**
  * wcj_get_european_union_countries_with_vat.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @return array
  */
 if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {

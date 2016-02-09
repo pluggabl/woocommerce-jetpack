@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack currencies class stores currencies data.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function __construct() {
 
@@ -76,7 +76,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * add_edit_currency_symbol_field.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function add_edit_currency_symbol_field( $settings ) {
 		$updated_settings = array();
@@ -101,7 +101,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function get_settings() {
 

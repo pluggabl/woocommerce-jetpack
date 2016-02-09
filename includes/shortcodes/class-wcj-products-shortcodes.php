@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function __construct() {
 
@@ -143,8 +143,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_time_since_last_sale.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 * @todo    not finished
 	 */
 	function wcj_product_time_since_last_sale( $atts ) {
@@ -186,8 +186,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_available_variations.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_available_variations( $atts ) {
 		$return_html = '';
@@ -210,8 +210,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_price_excluding_tax.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_price_excluding_tax( $atts ) {
 		$the_price = $this->the_product->get_price_excluding_tax();
@@ -221,8 +221,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_price_including_tax.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_price_including_tax( $atts ) {
 		$the_price = $this->the_product->get_price_including_tax();
@@ -232,8 +232,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_regular_price.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_regular_price( $atts ) {
 		if ( $this->the_product->is_on_sale() || 'yes' === $atts['show_always'] ) {
@@ -246,8 +246,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_sale_price.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_sale_price( $atts ) {
 		if ( $this->the_product->is_on_sale() ) {
@@ -260,8 +260,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_tax_class.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_tax_class( $atts ) {
 		return $this->the_product->get_tax_class();
@@ -270,8 +270,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_list_attributes.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_list_attributes( $atts ) {
 		return ( $this->the_product->has_attributes() ) ? $this->the_product->list_attributes() : '';
@@ -280,8 +280,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_list_attribute.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_list_attribute( $atts ) {
 		return str_replace( $atts['find'], $atts['replace'], $this->the_product->get_attribute( $atts['name'] ) );
@@ -290,8 +290,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_stock_quantity.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_stock_quantity( $atts ) {
 		$stock_quantity = $this->the_product->get_stock_quantity();
@@ -301,8 +301,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_average_rating.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_average_rating( $atts ) {
 		return $this->the_product->get_average_rating();
@@ -311,8 +311,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_categories.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_categories( $atts ) {
 		return $this->the_product->get_categories();
@@ -321,8 +321,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_formatted_name.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_formatted_name( $atts ) {
 		return $this->the_product->get_formatted_name();
@@ -331,8 +331,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_stock_availability.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_stock_availability( $atts ) {
 		$stock_availability_array = $this->the_product->get_availability();
@@ -342,8 +342,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_dimensions.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_dimensions( $atts ) {
 		return ( $this->the_product->has_dimensions() ) ? $this->the_product->get_dimensions() : '';
@@ -352,8 +352,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_shipping_class.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function wcj_product_shipping_class( $atts ) {
 		$the_product_shipping_class = $this->the_product->get_shipping_class();
@@ -459,7 +459,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_total_sales.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_total_sales( $atts ) {
@@ -500,7 +500,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * wcj_product_you_save.
 	 *
 	 * @return  string
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function wcj_product_you_save( $atts ) {
 		if ( $this->the_product->is_on_sale() ) {
@@ -519,7 +519,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * wcj_product_you_save_percent.
 	 *
 	 * @return  string
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function wcj_product_you_save_percent( $atts ) {
 		if ( $this->the_product->is_on_sale() ) {
@@ -694,7 +694,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * Get the product's weight.
 	 *
 	 * @return  string
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function wcj_product_weight( $atts ) {
 		return ( $this->the_product->has_weight() ) ? $this->the_product->get_weight() : '';

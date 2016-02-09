@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: http://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.3.12-dev
+Version: 2.4.0-dev
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Copyright: © 2015 Algoritmika Ltd.
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.3.12
+ * @version 2.4.0
  */
 
 final class WC_Jetpack {
@@ -63,7 +63,7 @@ final class WC_Jetpack {
 	/**
 	 * WC_Jetpack Constructor.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 * @access public
 	 */
 	public function __construct() {
@@ -119,7 +119,7 @@ final class WC_Jetpack {
 	/**
 	 * enqueue_frontend_scripts.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 * @since   2.3.0
 	 */
 	function enqueue_frontend_scripts() {
@@ -132,7 +132,7 @@ final class WC_Jetpack {
 	/**
 	 * enqueue_backend_scripts.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function enqueue_backend_scripts() {
 		$this->maybe_enqueue_datepicker_scripts();
@@ -142,8 +142,8 @@ final class WC_Jetpack {
 	/**
 	 * maybe_enqueue_datepicker_scripts.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function maybe_enqueue_datepicker_scripts() {
 		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === get_option( 'wcj_general_advanced_disable_datepicker_js', 'no' ) ) ) {
@@ -162,8 +162,8 @@ final class WC_Jetpack {
 	/**
 	 * maybe_enqueue_timepicker_scripts.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function maybe_enqueue_timepicker_scripts() {
 		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === get_option( 'wcj_general_advanced_disable_timepicker_js', 'no' ) ) ) {
@@ -182,8 +182,8 @@ final class WC_Jetpack {
 	/**
 	 * maybe_enqueue_datepicker_style.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function maybe_enqueue_datepicker_style() {
 		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === get_option( 'wcj_general_advanced_disable_datepicker_css', 'no' ) ) ) {
@@ -198,8 +198,8 @@ final class WC_Jetpack {
 	/**
 	 * maybe_enqueue_timepicker_style.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function maybe_enqueue_timepicker_style() {
 		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === get_option( 'wcj_general_advanced_disable_timepicker_css', 'no' ) ) ) {
@@ -368,7 +368,7 @@ final class WC_Jetpack {
 	/**
 	 * include_shortcodes.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	private function include_shortcodes() {
 		//if ( 'yes' === get_option( 'wcj_shortcodes_enabled', 'no' ) ) {
@@ -385,7 +385,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	private function include_modules() {
 		$settings = array();

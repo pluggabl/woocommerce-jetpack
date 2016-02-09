@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Info class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,8 +17,8 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * search_and_replace_depreciated_shortcodes.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	private function search_and_replace_depreciated_shortcodes( $data ) {
 		$search_and_replace_depreciated_shortcodes_array = array(
@@ -95,7 +95,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function __construct() {
 
@@ -116,8 +116,8 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * get_product_info_on_archive_filters_array.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	private function get_product_info_on_archive_filters_array() {
 		return array(
@@ -131,8 +131,8 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * get_product_info_on_single_filters_array.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	private function get_product_info_on_single_filters_array() {
 		return array(
@@ -161,7 +161,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * product_info.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function product_info() {
 		$the_action_name = current_filter();
@@ -191,7 +191,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * add_more_product_info.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function add_more_product_info( $single_or_archive ) {
 		//$single_or_archive = 'archive';
@@ -206,7 +206,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * apply_product_info_short_codes.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function apply_product_info_short_codes( $the_product_info, $remove_on_empty ) {
 
@@ -291,7 +291,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * admin_add_product_info_fields.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function admin_add_product_info_fields( &$settings, $single_or_archive ) {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 4, get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
@@ -321,7 +321,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * Get settings.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function get_settings() {
 

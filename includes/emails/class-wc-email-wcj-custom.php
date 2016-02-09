@@ -11,7 +11,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -21,7 +21,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Constructor
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function __construct( $id = 1 ) {
 
@@ -59,7 +59,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Trigger.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function trigger( $order_id ) {
 
@@ -132,8 +132,8 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * get_order_statuses.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	function get_order_statuses() {
 		$result = array();
@@ -147,7 +147,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Initialise settings form fields
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function init_form_fields() {
 

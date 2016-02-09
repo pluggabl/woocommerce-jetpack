@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Bulk Price Converter class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -37,7 +37,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * change_price_by_type.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function change_price_by_type( $product_id, $multiply_price_by, $price_type, $is_preview, $parent_product_id ) {
 		$the_price = get_post_meta( $product_id, '_' . $price_type, true );
@@ -71,7 +71,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * change_price_all_types.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function change_price_all_types( $product_id, $multiply_price_by, $is_preview, $parent_product_id ) {
 		$this->change_price_by_type( $product_id, $multiply_price_by, 'price',         $is_preview, $parent_product_id );
@@ -82,7 +82,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * change_product_price.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function change_product_price( $product_id, $multiply_price_by, $is_preview ) {
 		$this->change_price_all_types( $product_id, $multiply_price_by, $is_preview, $product_id );
@@ -99,7 +99,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * change_all_products_prices
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function change_all_products_prices( $multiply_prices_by, $is_preview ) {
 		$multiply_prices_by = floatval( $multiply_prices_by );
@@ -155,7 +155,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * create_bulk_price_converter_tool.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function create_bulk_price_converter_tool() {
 

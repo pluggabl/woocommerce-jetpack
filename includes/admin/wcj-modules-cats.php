@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */

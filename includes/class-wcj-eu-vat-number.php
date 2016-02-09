@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack EU VAT Number class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -234,7 +234,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * add_eu_vat_number_checkout_field_to_frontend.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function add_eu_vat_number_checkout_field_to_frontend( $fields ) {
 		$fields['billing'][ 'billing_' . $this->id ] = array(
@@ -255,7 +255,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function get_settings() {
 		$settings = array(

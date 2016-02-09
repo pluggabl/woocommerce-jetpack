@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Core Fields class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -155,7 +155,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * custom_override_checkout_fields.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function custom_override_checkout_fields( $checkout_fields ) {
 

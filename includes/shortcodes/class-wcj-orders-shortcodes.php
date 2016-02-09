@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	public function __construct() {
 
@@ -68,7 +68,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -336,7 +336,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_total_discount.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function wcj_order_total_discount( $atts ) {
 
@@ -368,7 +368,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_total_tax_percent.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function wcj_order_total_tax_percent( $atts ) {
 		$order_total_tax_not_rounded = $this->the_order->get_cart_tax() + $this->the_order->get_shipping_tax();
@@ -443,7 +443,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_total_in_words.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function wcj_order_total_in_words( $atts ) {
 

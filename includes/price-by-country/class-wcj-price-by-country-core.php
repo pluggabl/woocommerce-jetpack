@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.3.12
+ * @version 2.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -25,7 +25,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.3.12
+	 * @version 2.4.0
 	 */
 	function add_hooks() {
 
@@ -78,8 +78,8 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.3.12
-	 * @since   2.3.12
+	 * @version 2.4.0
+	 * @since   2.4.0
 	 */
 	/* function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		if ( ! empty( $price_hash ) ) wcj_log( $price_hash );
