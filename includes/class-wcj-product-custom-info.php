@@ -143,15 +143,18 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 						'type'     => 'select',
 						'options'  => ( 'single' === $single_or_archive ) ?
 							array(
-								'woocommerce_single_product_summary'        => __( 'Inside single product summary', 'woocommerce-jetpack' ),
+								'woocommerce_before_single_product'         => __( 'Before single product', 'woocommerce-jetpack' ),
 								'woocommerce_before_single_product_summary' => __( 'Before single product summary', 'woocommerce-jetpack' ),
+								'woocommerce_single_product_summary'        => __( 'Inside single product summary', 'woocommerce-jetpack' ),
 								'woocommerce_after_single_product_summary'  => __( 'After single product summary', 'woocommerce-jetpack' ),
+								'woocommerce_after_single_product'          => __( 'After single product', 'woocommerce-jetpack' ),
 							) :
 							array(
 								'woocommerce_before_shop_loop_item'       => __( 'Before product', 'woocommerce-jetpack' ),
 								'woocommerce_before_shop_loop_item_title' => __( 'Before product title', 'woocommerce-jetpack' ),
-								'woocommerce_after_shop_loop_item'        => __( 'After product', 'woocommerce-jetpack' ),
+								'woocommerce_shop_loop_item_title'        => __( 'Inside product title', 'woocommerce-jetpack' ),
 								'woocommerce_after_shop_loop_item_title'  => __( 'After product title', 'woocommerce-jetpack' ),
+								'woocommerce_after_shop_loop_item'        => __( 'After product', 'woocommerce-jetpack' ),
 							),
 						'css'      => 'width:250px;',
 					),
