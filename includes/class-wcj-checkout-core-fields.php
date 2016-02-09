@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Core Fields class.
  *
- * @version 2.3.8
+ * @version 2.3.12
  * @author  Algoritmika Ltd.
  */
 
@@ -155,7 +155,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * custom_override_checkout_fields.
 	 *
-	 * @version 2.3.8
+	 * @version 2.3.12
 	 */
 	function custom_override_checkout_fields( $checkout_fields ) {
 
@@ -192,7 +192,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 
 				$class = get_option( 'wcj_checkout_fields_' . $field . '_' . 'class', 'default' );
 				if ( 'default' != $class ) {
-					$checkout_fields[ $section ][ $field ]['class'] = $class;
+					$checkout_fields[ $section ][ $field ]['class'] = array( $class );
 				}
 			}
 		}

@@ -117,6 +117,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.3.12 - 08/02/2016 =
+~* Fix - CART & CHECKOUT - Checkout Core Fields - "Class" bug fixed.
 ~* Dev - CART & CHECKOUT - Checkout Custom Fields - "Weekpicker" added.
 ~* Dev - PRODUCTS - Product Input Fields - "Weekpicker" added.
 ~* Fix - Shortcodes - Orders - `[wcj_order_total_tax_percent]` fixed. `precision` attribute added.
