@@ -154,6 +154,22 @@ class WCJ_Product_Input_Fields_Abstract {
 			),
 
 			array(
+				'id'                => 'wcj_product_input_fields_type_timepicker_format_' . $this->scope . '_',
+				'title'             => __( 'If timepicker is selected, set time format here. Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid time formats.', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Timepicker: Time format', 'woocommerce-jetpack' ),
+				'type'              => 'text',
+				'default'           => 'hh:mm p',
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_type_timepicker_interval_' . $this->scope . '_',
+				'title'             => __( 'If timepicker is selected, set interval (in minutes) here', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Timepicker: Interval', 'woocommerce-jetpack' ),
+				'type'              => 'number',
+				'default'           => 15,
+			),
+
+			array(
 				'id'                => 'wcj_product_input_fields_type_select_options_' . $this->scope . '_',
 				'title'             => __( 'If select/radio is selected, set options here. One option per line', 'woocommerce-jetpack' ),
 				'short_title'       => __( 'Select/Radio: Options', 'woocommerce-jetpack' ),
@@ -423,6 +439,9 @@ class WCJ_Product_Input_Fields_Abstract {
 			$datepicker_maxdate = $this->get_value( 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_' . $i, $product->id, 365 );
 			$datepicker_firstday = $this->get_value( 'wcj_product_input_fields_type_datepicker_firstday_' . $this->scope . '_' . $i, $product->id, 0 );
 
+			$timepicker_format = $this->get_value( 'wcj_product_input_fields_type_timepicker_format_' . $this->scope . '_' . $i, $product->id, 'hh:mm p' );
+			$timepicker_interval = $this->get_value( 'wcj_product_input_fields_type_timepicker_interval_' . $this->scope . '_' . $i, $product->id, 15 );
+
 			$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product->id, '' );
 			$custom_attributes = ( 'file' === $type ) ? ' accept="' . $file_accept . '"' : '';
 			$field_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
@@ -466,8 +485,7 @@ class WCJ_Product_Input_Fields_Abstract {
 
 					case 'timepicker':
 
-						$timepicker_format = 'hh:mm p';
-						echo '<p>' . $title . '<input timeformat="' . $timepicker_format . '" type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						echo '<p>' . $title . '<input interval="' . $timepicker_interval . '" timeformat="' . $timepicker_format . '" type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'textarea':

@@ -392,6 +392,9 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							$custom_attributes['mindate'] = get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
 							$custom_attributes['maxdate'] = get_option( 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,  365 );
 							$custom_attributes['firstday'] = get_option( 'wcj_checkout_custom_field_datepicker_firstday_' . $i, 0 );
+						} elseif ( 'timepicker' === $the_type ) {
+							$custom_attributes['timeformat'] = get_option( 'wcj_checkout_custom_field_timepicker_format_' . $i, 'hh:mm p' );
+							$custom_attributes['interval'] = get_option( 'wcj_checkout_custom_field_timepicker_interval_' . $i, 15 );
 						}
 					} else/* if ( 'number' === $the_type ) */ {
 						$custom_attributes['display'] = $the_type;
@@ -612,6 +615,21 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							__( 'Friday', 'woocommerce-jetpack' ),
 							__( 'Saturday', 'woocommerce-jetpack' ),
 						),
+					),
+					array(
+						'title'     => '',
+						'desc'      => __( 'If timepicker is selected, set time format here. Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid time formats.', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_checkout_custom_field_timepicker_format_' . $i,
+						'type'      => 'text',
+						'default'   => 'hh:mm p',
+					),
+
+					array(
+						'title'     => '',
+						'desc'      => __( 'If timepicker is selected, set interval (in minutes) here', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_checkout_custom_field_timepicker_interval_' . $i,
+						'type'      => 'number',
+						'default'   => 15,
 					),
 					array(
 						'title'     => '',

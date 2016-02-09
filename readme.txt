@@ -116,7 +116,9 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.3.12 - 08/02/2016 =
+= 2.3.12 - 09/02/2016 =
+~* Dev - CART & CHECKOUT - Checkout Core Fields - "time format", "interval" options for Timepicker added.
+~* Dev - PRODUCTS - Product Input Fields - "time format", "interval" options for Timepicker added.
 ~* Dev - CART & CHECKOUT - Checkout Core Fields - "First week day" option for Datepicker/Weekpicker added.
 ~* Dev - PRODUCTS - Product Input Fields - "First week day" option for Datepicker/Weekpicker added.
 ~* Fix - CART & CHECKOUT - Checkout Core Fields - "Class" bug fixed.
