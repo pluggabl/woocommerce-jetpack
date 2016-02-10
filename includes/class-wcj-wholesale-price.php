@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Wholesale Price class.
  *
- * @version 2.2.7
+ * @version 2.4.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -61,18 +61,18 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * add_discount_info_to_cart_page.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.1
 	 */
 	function add_discount_info_to_cart_page( $price_html, $cart_item, $cart_item_key ) {
 
 		$_product = wc_get_product( $cart_item['product_id'] );
 
 		remove_filter( 'woocommerce_get_price', array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
-		//$old_price_html = $_product->get_price_html();
+//		$old_price_html = $_product->get_price_html();
 		$old_price_html = wc_price( $_product->get_price() );
 		add_filter( 'woocommerce_get_price',    array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
 
-		if ( $old_price_html != $price_html ) {
+		if ( $old_price_html != wc_price( $_product->get_price() ) ) {
 
 			$the_quantity = $this->get_wholesale_quantity( $_product );
 
@@ -80,13 +80,16 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 
 			if ( 'fixed' === get_option( 'wcj_wholesale_price_discount_type' ) ) $discount = wc_price( $discount );
 
-			$wholesale_price_html = get_option( 'wcj_wholesale_price_show_info_on_cart_format' );
-			$wholesale_price_html = str_replace( '%old_price%',        $old_price_html,   $wholesale_price_html );
-			$wholesale_price_html = str_replace( '%price%',            $price_html,       $wholesale_price_html );
-			$wholesale_price_html = str_replace( '%discount_percent%', $discount,         $wholesale_price_html ); //depreciated
-			$wholesale_price_html = str_replace( '%discount_value%',   $discount,         $wholesale_price_html );
+			if ( 0 != $discount ) {
 
-			return $wholesale_price_html;
+				$wholesale_price_html = get_option( 'wcj_wholesale_price_show_info_on_cart_format' );
+				$wholesale_price_html = str_replace( '%old_price%',        $old_price_html,   $wholesale_price_html );
+				$wholesale_price_html = str_replace( '%price%',            $price_html,       $wholesale_price_html );
+				$wholesale_price_html = str_replace( '%discount_percent%', $discount,         $wholesale_price_html ); //depreciated
+				$wholesale_price_html = str_replace( '%discount_value%',   $discount,         $wholesale_price_html );
+
+				return $wholesale_price_html;
+			}
 		}
 
 		return $price_html;

@@ -116,6 +116,9 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
+= 2.4.1 - 11/02/2016 =
+* Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page bug fixed.
+
 = 2.4.0 - 10/02/2016 =
 * Fix - Custom attribute handling in `output_custom_number()` fixed.
 * Dev - "Reset Module to Default Settings" option added.
