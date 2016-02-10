@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: http://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.4.0-dev
+Version: 2.4.0
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Copyright: © 2015 Algoritmika Ltd.
