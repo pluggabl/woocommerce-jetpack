@@ -100,7 +100,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'product_info';
-		$this->short_desc = __( 'Product Info - Depreciated', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Product Info', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add additional info to WooCommerce category and single product pages.', 'woocommerce-jetpack' );
 		parent::__construct();
 

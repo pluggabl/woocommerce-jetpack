@@ -253,7 +253,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output the settings.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.0
 	 */
 	function output() {
 
@@ -265,6 +265,19 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 
 		$is_dashboard = ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section )
 			? false : true;
+
+		$depreciated_modules = array(
+			'product_info' => 'Product Info V2',
+		);
+		if ( array_key_exists( $current_section, $depreciated_modules ) ) {
+			echo '<div id="wcj_message" class="error">';
+			echo '<p>';
+			echo '<strong>';
+			echo sprintf( __( 'Please note that current module is depreciated and will be removed in future updates. Please use <em>%s</em> module instead.', 'woocommerce-jetpack' ), $depreciated_modules[ $current_section ] );
+			echo '</strong>';
+			echo '</p>';
+			echo '</div>';
+		}
 
 		if ( 'yes' === get_option( 'wcj_admin_tools_enabled' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
 			// Breadcrumbs
