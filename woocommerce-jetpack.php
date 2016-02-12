@@ -6,7 +6,7 @@ Description: Supercharge your WooCommerce site with these awesome powerful featu
 Version: 2.4.1-dev
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
-Copyright: © 2015 Algoritmika Ltd.
+Copyright: © 2016 Algoritmika Ltd.
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
