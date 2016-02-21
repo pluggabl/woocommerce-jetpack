@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 = 2.4.1 - 21/02/2016 =
 ~* Dev - PAYMENT GATEWAYS - Gateways Min/Max - Initial module release.
 * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page bug fixed.
+* Dev - wpml-config.xml updated.
 
 = 2.4.0 - 10/02/2016 =
 * Fix - Custom attribute handling in `output_custom_number()` fixed.
