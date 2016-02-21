@@ -118,7 +118,7 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 == Changelog ==
 
 = 2.4.1 - 21/02/2016 =
-* Dev - PAYMENT GATEWAYS - Gateways Min/Max - Initial module release.
+~* Dev - PAYMENT GATEWAYS - Gateways Min/Max - Initial module release.
 * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page bug fixed.
 
 = 2.4.0 - 10/02/2016 =
