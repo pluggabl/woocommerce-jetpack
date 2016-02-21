@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.4.0
+ * @version 2.4.1
  */
 
 final class WC_Jetpack {
@@ -385,7 +385,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.1
 	 */
 	private function include_modules() {
 		$settings = array();
@@ -422,6 +422,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-payment-gateways-fees.php' );
 		$settings[] = include_once( 'includes/class-wcj-payment-gateways-per-category.php' );
 		$settings[] = include_once( 'includes/class-wcj-payment-gateways-currency.php' );
+		$settings[] = include_once( 'includes/class-wcj-payment-gateways-min-max.php' );
 
 		$settings[] = include_once( 'includes/class-wcj-shipping.php' );
 		$settings[] = include_once( 'includes/class-wcj-shipping-calculator.php' );

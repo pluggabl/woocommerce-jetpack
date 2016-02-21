@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.4.0
+ * @version 2.4.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -86,6 +86,7 @@ return array(
 			'payment_gateways_fees',
 			'payment_gateways_per_category',
 			'payment_gateways_currency',
+			'payment_gateways_min_max',
 		),
 	),
 
