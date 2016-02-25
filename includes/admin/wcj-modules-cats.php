@@ -87,6 +87,7 @@ return array(
 			'payment_gateways_per_category',
 			'payment_gateways_currency',
 			'payment_gateways_min_max',
+			'payment_gateways_by_country',
 		),
 	),
 

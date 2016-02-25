@@ -423,6 +423,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-payment-gateways-per-category.php' );
 		$settings[] = include_once( 'includes/class-wcj-payment-gateways-currency.php' );
 		$settings[] = include_once( 'includes/class-wcj-payment-gateways-min-max.php' );
+		$settings[] = include_once( 'includes/class-wcj-payment-gateways-by-country.php' );
 
 		$settings[] = include_once( 'includes/class-wcj-shipping.php' );
 		$settings[] = include_once( 'includes/class-wcj-shipping-calculator.php' );
