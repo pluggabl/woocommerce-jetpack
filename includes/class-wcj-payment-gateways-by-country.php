@@ -38,12 +38,12 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	function available_payment_gateways( $_available_gateways ) {
 		foreach ( $_available_gateways as $key => $gateway ) {
 			$customer_country = WC()->customer->get_country();
-			$include_countries = get_option( 'wcj_payment_gateways_countries_include_' . $key, '' );
+			$include_countries = get_option( 'wcj_gateways_countries_include_' . $key, '' );
 			if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries ) ) {
 				unset( $_available_gateways[ $key ] );
 				continue;
 			}
-			$exclude_countries = get_option( 'wcj_payment_gateways_countries_exclude_' . $key, '' );
+			$exclude_countries = get_option( 'wcj_gateways_countries_exclude_' . $key, '' );
 			if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries ) ) {
 				unset( $_available_gateways[ $key ] );
 				continue;
@@ -88,7 +88,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 				'title'     => $gateway->title,
 				'desc_tip'  => $desc_tip,
 				'desc'      => __( 'Include', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_payment_gateways_countries_include_' . $key,
+				'id'        => 'wcj_gateways_countries_include_' . $key,
 				'default'   => '',
 				'type'      => 'multiselect',
 				'class'     => 'chosen_select',
@@ -100,7 +100,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 				'title'     => '',
 				'desc_tip'  => $desc_tip,
 				'desc'      => __( 'Exclude', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_payment_gateways_countries_exclude_' . $key,
+				'id'        => 'wcj_gateways_countries_exclude_' . $key,
 				'default'   => '',
 				'type'      => 'multiselect',
 				'class'     => 'chosen_select',
