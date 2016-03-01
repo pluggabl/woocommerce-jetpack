@@ -11,7 +11,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 2.4.0
+ * @version 2.4.1
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -54,6 +54,21 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			if ( ! $this->recipient )
 				$this->recipient = get_option( 'admin_email' );
 		}
+	}
+
+	/**
+	 * Proxy to parent's get_option and attempt to localize the result using gettext.
+	 *
+	 * @version 2.4.1
+	 * @since   2.4.1
+	 * @param   string $key
+	 * @param   mixed  $empty_value
+	 * @return  mixed
+	 */
+	public function get_option( $key, $empty_value = null ) {
+		$grandparent = get_parent_class( 'WC_Email' );
+		$value = $grandparent::get_option( $key, $empty_value );
+		return ( is_array( $value ) ) ? $value : apply_filters( 'woocommerce_email_get_option', __( $value ), $this, $value, $key, $empty_value );
 	}
 
 	/**

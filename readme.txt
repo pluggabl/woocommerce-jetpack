@@ -118,7 +118,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.4.1 - 21/02/2016 =
+= 2.4.1 - 01/03/2016 =
+~* Fix - EMAILS & MISC. - Emails - "Illegal offset type in isset or empty in ..." warning fixed.
 ~$* Dev - PAYMENT GATEWAYS - Gateways by Country - Initial module release.
 ~$* Dev - PAYMENT GATEWAYS - Gateways Min/Max - Initial module release.
 * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page bug fixed.
