@@ -121,10 +121,10 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 = 2.4.1 - 03/03/2016 =
 ~* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed.
 ~* Fix - EMAILS & MISC. - Emails - "Illegal offset type in isset or empty in ..." warning fixed.
-~$* Dev - PAYMENT GATEWAYS - Gateways by Country - Initial module release.
-~$* Dev - PAYMENT GATEWAYS - Gateways Min/Max - Initial module release.
+~* Dev - PAYMENT GATEWAYS - Gateways by Country - Initial module release.
+~* Dev - PAYMENT GATEWAYS - Gateways Min/Max - Initial module release.
 * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page bug fixed.
-* Dev - wpml-config.xml updated.
+-* Dev - wpml-config.xml updated.
 
 = 2.4.0 - 10/02/2016 =
 * Fix - Custom attribute handling in `output_custom_number()` fixed.

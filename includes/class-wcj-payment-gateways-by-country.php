@@ -65,15 +65,15 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	function add_countries_settings( $settings ) {
 		$settings = array();
 		$settings[] = array(
-			'title' => __( 'Options', 'woocommerce-jetpack' ),
+			'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 			'type'  => 'title',
 			'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ),
-			'id'    => 'wcj_payment_gateways_by_country_options',
+			'id'    => 'wcj_payment_gateways_by_country_gateways_options',
 		);
 		$countries = wcj_get_countries();
 		$gateways = WC()->payment_gateways->payment_gateways();
 		foreach ( $gateways as $key => $gateway ) {
-			$default_gateways = array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' );
+			$default_gateways = array( 'bacs' );
 			if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
 				$custom_attributes = apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' );
 				if ( '' == $custom_attributes ) {
@@ -111,7 +111,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 		}
 		$settings[] = array(
 			'type'  => 'sectionend',
-			'id'    => 'wcj_payment_gateways_by_country_options',
+			'id'    => 'wcj_payment_gateways_by_country_gateways_options',
 		);
 		return $settings;
 	}

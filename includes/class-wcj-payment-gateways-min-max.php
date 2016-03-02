@@ -40,7 +40,8 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 			$min = get_option( 'wcj_payment_gateways_min_' . $key, 0 );
 			$max = get_option( 'wcj_payment_gateways_max_' . $key, 0 );
 			global $woocommerce;
-			$total_in_cart = $woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total;
+			$total_in_cart = ( 'no' === get_option( 'wcj_payment_gateways_min_max_exclude_shipping', 'no' ) ) ?
+				$woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total : $woocommerce->cart->cart_contents_total;
 			if ( $min != 0 && $total_in_cart < $min ) {
 				unset( $_available_gateways[ $key ] );
 				continue;
@@ -64,16 +65,33 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	 * add_min_max_settings.
 	 */
 	function add_min_max_settings( $settings ) {
-		$settings = array();
+		$settings = array(
+			array(
+				'title'     => __( 'General Options', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'id'        => 'wcj_payment_gateways_min_max_general_options',
+			),
+			array(
+				'title'     => __( 'Exclude Shipping', 'alg-woocommerce-fees' ),
+				'desc'      => __( 'Exclude shipping from total cart sum, when comparing with min/max amounts.', 'alg-woocommerce-fees' ),
+				'id'        => 'wcj_payment_gateways_min_max_exclude_shipping',
+				'default'   => 'no',
+				'type'      => 'checkbox',
+			),
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_payment_gateways_min_max_general_options',
+			),
+		);
 		$settings[] = array(
-			'title' => __( 'Options', 'woocommerce-jetpack' ),
+			'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 			'type'  => 'title',
 			'desc'  => __( 'Leave zero to disable.', 'woocommerce-jetpack' ),
-			'id'    => 'wcj_payment_gateways_min_max_options',
+			'id'    => 'wcj_payment_gateways_min_max_gateways_options',
 		);
 		$gateways = WC()->payment_gateways->payment_gateways();
 		foreach ( $gateways as $key => $gateway ) {
-			$default_gateways = array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' );
+			$default_gateways = array( 'bacs' );
 			if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
 				$custom_attributes = apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' );
 				if ( '' == $custom_attributes ) {
@@ -105,7 +123,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 		}
 		$settings[] = array(
 			'type'  => 'sectionend',
-			'id'    => 'wcj_payment_gateways_min_max_options',
+			'id'    => 'wcj_payment_gateways_min_max_gateways_options',
 		);
 		return $settings;
 	}
