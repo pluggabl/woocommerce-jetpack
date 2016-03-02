@@ -118,7 +118,8 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.4.1 - 01/03/2016 =
+= 2.4.1 - 03/03/2016 =
+~* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed.
 ~* Fix - EMAILS & MISC. - Emails - "Illegal offset type in isset or empty in ..." warning fixed.
 ~$* Dev - PAYMENT GATEWAYS - Gateways by Country - Initial module release.
 ~$* Dev - PAYMENT GATEWAYS - Gateways Min/Max - Initial module release.
