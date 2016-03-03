@@ -36,6 +36,11 @@
 		<key name="wcj_product_input_fields_required_message_global_1" />
 		<key name="wcj_product_input_fields_frontend_view_required_html" />
 		<key name="wcj_product_input_fields_frontend_view_order_table_format" />
+		<key name="wcj_wholesale_price_show_info_on_cart_format" />
+		<key name="wcj_product_images_custom_on_single" />
+		<key name="wcj_product_images_thumbnails_custom_on_single" />
+		<key name="wcj_product_images_custom_on_archives" />
+		<key name="wcj_product_images_sale_flash_html" />
 		<key name="wcj_add_to_cart_per_category_text_single_group_1" />
 		<key name="wcj_add_to_cart_per_category_text_archive_group_1" />
 		<key name="wcj_add_to_cart_text_on_single_simple" />
@@ -71,6 +76,8 @@
 		<key name="wcj_checkout_place_order_button_text" />
 		<key name="wcj_cart_custom_info_content_1" />
 		<key name="wcj_cart_custom_info_item" />
+		<key name="wcj_empty_cart_text" />
+		<key name="wcj_empty_cart_confirmation_text" />
 		<key name="wcj_mini_cart_custom_info_content_1" />
 		<key name="wcj_checkout_fields_billing_country_label" />
 		<key name="wcj_checkout_fields_billing_country_placeholder" />
@@ -176,5 +183,9 @@
 		<key name="wcj_invoicing_custom_doc_admin_column_delete_btn" />
 		<key name="wcj_invoicing_custom_doc_link_text" />
 		<key name="wcj_invoicing_custom_doc_file_name" />
+		<key name="wcj_eu_vat_number_field_label" />
+		<key name="wcj_eu_vat_number_field_placeholder" />
+		<key name="wcj_eu_vat_number_field_description" />
+		<key name="wcj_eu_vat_number_not_valid_message" />
 	</admin-texts>
 </wpml-config>

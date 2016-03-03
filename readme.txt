@@ -110,7 +110,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 = How to unlock those some features settings that are locked? =
 
-To unlock all Booster for WooCommerce features, please install additional <a href="http://booster.io/plus/">Booster for WooCommerce Plus</a> plugin.
+To unlock all Booster for WooCommerce features, please install additional [Booster for WooCommerce Plus](http://booster.io/plus/) plugin.
 
 == Screenshots ==
 
@@ -118,13 +118,13 @@ To unlock all Booster for WooCommerce features, please install additional <a hre
 
 == Changelog ==
 
-= 2.4.1 - 03/03/2016 =
-~* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed.
-~* Fix - EMAILS & MISC. - Emails - "Illegal offset type in isset or empty in ..." warning fixed.
-~* Dev - PAYMENT GATEWAYS - Gateways by Country - Initial module release.
-~* Dev - PAYMENT GATEWAYS - Gateways Min/Max - Initial module release.
+= 2.4.1 - 04/03/2016 =
 * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page bug fixed.
--* Dev - wpml-config.xml updated.
+* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed.
+* Dev - PAYMENT GATEWAYS - Gateways by Country - Initial module release.
+* Dev - PAYMENT GATEWAYS - Gateways Min/Max - Initial module release.
+* Fix - EMAILS & MISC. - Emails - "Illegal offset type in isset or empty in ..." warning fixed.
+* Dev - EMAILS & MISC. - WPML - Code refactoring.
 
 = 2.4.0 - 10/02/2016 =
 * Fix - Custom attribute handling in `output_custom_number()` fixed.
