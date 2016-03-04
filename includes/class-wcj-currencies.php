@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack currencies class stores currencies data.
  *
- * @version 2.4.0
+ * @version 2.4.2
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.2
 	 */
 	function __construct() {
 
@@ -37,7 +37,7 @@ class WCJ_Currencies extends WCJ_Module {
 			$custom_currency_code   = get_option( 'wcj_currency_custom_currency_code_'   . $i );
 			$custom_currency_name   = get_option( 'wcj_currency_custom_currency_name_'   . $i );
 			$custom_currency_symbol = get_option( 'wcj_currency_custom_currency_symbol_' . $i );
-			if ( '' != $custom_currency_code && '' != $custom_currency_name && '' != $custom_currency_symbol ) {
+			if ( '' != $custom_currency_code && '' != $custom_currency_name /* && '' != $custom_currency_symbol */ ) {
 				$this->currency_names[   $custom_currency_code ] = $custom_currency_name;
 				$this->currency_symbols[ $custom_currency_code ] = $custom_currency_symbol;
 			}
@@ -101,7 +101,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.2
 	 */
 	function get_settings() {
 
@@ -159,7 +159,7 @@ class WCJ_Currencies extends WCJ_Module {
 
 			$settings[] = array(
 				'title'     => __( 'Custom Currency', 'woocommerce-jetpack' ) . ' #' . $i,
-				'desc'      => __( 'Currency Name', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Currency Name (required)', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_currency_custom_currency_name_' . $i,
 				'default'   => '',
 				'type'      => 'text',
@@ -167,7 +167,7 @@ class WCJ_Currencies extends WCJ_Module {
 
 			$settings[] = array(
 				'title'     => '',
-				'desc'      => __( 'Currency Code', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Currency Code (required)', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_currency_custom_currency_code_' . $i,
 				'default'   => '',
 				'type'      => 'text',
