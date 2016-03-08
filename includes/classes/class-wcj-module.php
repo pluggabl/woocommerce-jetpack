@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.4.0
+ * @version 2.4.3
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -24,7 +24,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.3
 	 */
 	public function __construct( $type = 'module' ) {
 		add_filter( 'wcj_settings_sections',     array( $this, 'settings_section' ) );
@@ -33,7 +33,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		if ( 'module' === $this->type ) {
 			$this->parent_id = '';
 		}
-		add_action( 'init', array( $this, 'reset_settings' ) );
+		add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
 	}
 
 	/**
@@ -88,15 +88,17 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * save_meta_box.
 	 *
-	 * @since 2.2.6
+	 * @since 2.4.3
 	 */
 	function save_meta_box( $post_id, $post ) {
 		// Check that we are saving with current metabox displayed.
 		if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) return;
 		// Save options
 		foreach ( $this->get_meta_box_options() as $option ) {
-			$option_value = isset( $_POST[ $option['name'] ] ) ? $_POST[ $option['name'] ] : $option['default'];
-			update_post_meta( $post_id, '_' . $option['name'], $option_value );
+			$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : $option['default'];
+			$the_post_id   = ( isset( $option['product_id'] )     ) ? $option['product_id']     : $post_id;
+			$the_meta_name = ( isset( $option['meta_name'] ) )      ? $option['meta_name']  : '_' . $option['name'];
+			update_post_meta( $the_post_id, $the_meta_name, $option_value );
 		}
 	}
 
@@ -123,15 +125,16 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @since 2.2.6
+	 * @since 2.4.3
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
 		$html = '';
-		//$html .= '<div style="width:40%;">';
 		$html .= '<table>';
 		foreach ( $this->get_meta_box_options() as $option ) {
-			$option_value = get_post_meta( $current_post_id, '_' . $option['name'], true );
+			$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id;
+			$the_meta_name = ( isset( $option['meta_name'] ) )  ? $option['meta_name']  : '_' . $option['name'];
+			$option_value = get_post_meta( $the_post_id, $the_meta_name, true );
 			$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
 			switch ( $option['type'] ) {
 				case 'number':
@@ -149,12 +152,14 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			}
 			$html .= '<tr>';
 			$html .= '<th style="text-align:left;">' . $option['title'] . '</th>';
+			if ( isset( $option['desc'] ) && '' != $option['desc'] ) {
+				$html .= '<td style="font-style:italic;">' . $option['desc'] . '</td>';
+			}
 			$html .= '<td>' . $field_html . '</td>';
 			$html .= '</tr>';
 		}
 		$html .= '</table>';
 		$html .= '<input type="hidden" name="woojetpack_' . $this->id . '_save_post" value="woojetpack_' . $this->id . '_save_post">';
-		//$html .= '</div>';
 		echo $html;
 	}
 

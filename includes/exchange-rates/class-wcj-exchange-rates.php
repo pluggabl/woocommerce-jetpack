@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exchange Rates class.
  *
- * @version  2.3.0
+ * @version  2.4.3
  * @author   Algoritmika Ltd.
  */
 
@@ -28,10 +28,18 @@ class WCJ_Exchange_Rates {
 	/**
 	 * register_script.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.3
 	 */
 	public function register_script() {
-		if ( isset( $_GET['section'] ) && in_array( $_GET['section'], array( 'price_by_country', 'payment_gateways_currency', 'currency_exchange_rates', ) ) ) {
+		if (
+			isset( $_GET['section'] ) &&
+			in_array( $_GET['section'], array(
+				'multicurrency',
+				'price_by_country',
+				'payment_gateways_currency',
+				'currency_exchange_rates',
+			) )
+		) {
 			wp_register_script( 'wcj-exchange-rates', trailingslashit( WCJ()->plugin_url() ) . 'includes/js/exchange_rates.js', array( 'jquery' ), false, true );
 		}
 	}
@@ -39,10 +47,18 @@ class WCJ_Exchange_Rates {
 	/**
 	 * enqueue_exchange_rates_script.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.3
 	 */
 	public function enqueue_exchange_rates_script() {
-	    if ( isset( $_GET['section'] ) && in_array( $_GET['section'], array( 'price_by_country', 'payment_gateways_currency', 'currency_exchange_rates', ) ) ) {
+	    if (
+			isset( $_GET['section'] ) &&
+			in_array( $_GET['section'], array(
+				'multicurrency',
+				'price_by_country',
+				'payment_gateways_currency',
+				'currency_exchange_rates',
+			) )
+		) {
 			wp_enqueue_script( 'wcj-exchange-rates' );
 		}
 	}

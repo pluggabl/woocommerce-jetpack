@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.4.1
+ * @version 2.4.3
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -26,6 +26,7 @@ return array(
 		'default_cat_id' => 'price_by_country',
 		'all_cat_ids'    => array(
 			'price_by_country',
+			'multicurrency',
 			'currency',
 			'currency_external_products',
 			'bulk_price_converter',

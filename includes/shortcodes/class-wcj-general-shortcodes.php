@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.4.0
+ * @version 2.4.3
  * @author  Algoritmika Ltd.
  */
 
@@ -17,17 +17,18 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.7
+	 * @version 2.4.3
 	 */
 	public function __construct() {
 
 		$this->the_shortcodes = array(
 			'wcj_current_date',
-			//'wcj_image',
+//			'wcj_image',
 			'wcj_cart_items_total_weight',
 			'wcj_wpml',
 			'wcj_wpml_translate',
 			'wcj_country_select_drop_down_list',
+			'wcj_currency_select_drop_down_list',
 			'wcj_text',
 			'wcj_tcpdf_pagebreak',
 		);
@@ -39,10 +40,11 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'width'       => '',
 			'height'      => '',*/
 			'lang'        => '',
-			'form_method' => 'get',
+			'form_method' => 'post',//'get',
 			'class'       => '',
 			'style'       => '',
 			'countries'   => '',
+			'currencies'  => '',
 		);
 
 		parent::__construct();
@@ -57,6 +59,49 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_tcpdf_pagebreak( $atts, $content ) {
 		return '<tcpdf method="AddPage" />';
+	}
+
+	/**
+	 * wcj_currency_select_drop_down_list.
+	 *
+	 * @version 2.4.3
+	 * @since   2.4.3
+	 */
+	function wcj_currency_select_drop_down_list( $atts, $content ) {
+		// Start
+		$html = '';
+		$form_method  = $atts['form_method'];
+		$select_class = $atts['class'];
+		$select_style = $atts['style'];
+		$html .= '<form action="" method="' . $form_method . '">';
+		$html .= '<select name="wcj-currency" id="wcj-currency" style="' . $select_style . '" class="' . $select_class . '" onchange="this.form.submit()">';
+		// Shortcode currencies
+		$shortcode_currencies = $atts['currencies'];
+		if ( '' == $shortcode_currencies ) {
+			$shortcode_currencies = array();
+		} else {
+			$shortcode_currencies = str_replace( ' ', '', $shortcode_currencies );
+			$shortcode_currencies = trim( $shortcode_currencies, ',' );
+			$shortcode_currencies = explode( ',', $shortcode_currencies );
+		}
+		if ( empty( $shortcode_currencies ) ) {
+			$total_number = apply_filters( 'wcj_get_option_filter', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+			for ( $i = 1; $i <= $total_number; $i++ ) {
+				$shortcode_currencies[] = get_option( 'wcj_multicurrency_currency_' . $i );
+			}
+		}
+		// Options
+		$currencies = wcj_get_currencies_names_and_symbols();
+		$selected_currency = ( isset( $_SESSION['wcj-currency'] ) ) ? $_SESSION['wcj-currency'] : '';
+		foreach ( $shortcode_currencies as $currency_code ) {
+			if ( isset( $currencies[ $currency_code ] ) ) {
+				$html .= '<option value="' . $currency_code . '" ' . selected( $currency_code, $selected_currency, false ) . '>' . $currencies[ $currency_code ] . '</option>';
+			}
+		}
+		// End
+		$html .= '</select>';
+		$html .= '</form>';
+		return $html;
 	}
 
 	/**

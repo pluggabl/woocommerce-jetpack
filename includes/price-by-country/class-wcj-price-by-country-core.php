@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.4.1
+ * @version 2.4.3
  * @author  Algoritmika Ltd.
  */
 
@@ -40,7 +40,7 @@ class WCJ_Price_by_Country_Core {
 			}
 		}
 
-		//if (  ) { //todo
+		//if (  ) { // TODO
 
 			// Price hooks
 //			add_filter( 'woocommerce_variation_prices',            array( $this, 'change_price_by_country_variations' ), PHP_INT_MAX - 1, 2 );
@@ -60,10 +60,11 @@ class WCJ_Price_by_Country_Core {
 			// Shipping
 			add_filter( 'woocommerce_package_rates',               array( $this, 'change_shipping_price_by_country' ), PHP_INT_MAX - 1, 2 );
 
-			//add_filter( 'woocommerce_get_variation_prices_hash',   array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 1, 3 );
+			// Variable products
 			add_filter( 'woocommerce_variation_prices_price',         array( $this, 'change_price_by_country' ), PHP_INT_MAX - 1, 2 );
 			add_filter( 'woocommerce_variation_prices_regular_price', array( $this, 'change_price_by_country' ), PHP_INT_MAX - 1, 2 );
 			add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'change_price_by_country' ), PHP_INT_MAX - 1, 2 );
+			add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 1, 3 );
 		//}
 
 		// Country selection box
@@ -72,20 +73,8 @@ class WCJ_Price_by_Country_Core {
 		} */
 
 		// Debug
-//		add_shortcode( 'wcj_debug_price_by_country', 		array( $this, 'get_debug_info' ) );
+//		add_shortcode( 'wcj_debug_price_by_country', array( $this, 'get_debug_info' ) );
 	}
-
-	/**
-	 * get_variation_prices_hash.
-	 *
-	 * @version 2.4.0
-	 * @since   2.4.0
-	 */
-	/* function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		if ( ! empty( $price_hash ) ) wcj_log( $price_hash );
-		//$price_hash = array( false );
-		return $price_hash;
-	} */
 
 	/**
 	 * add_country_selection_box.
@@ -301,7 +290,7 @@ class WCJ_Price_by_Country_Core {
 	 * @version 2.3.0
 	 * @since   2.3.0
 	 */
-	public function change_price_by_country_variations( $prices_array, $product ) {
+	/* public function change_price_by_country_variations( $prices_array, $product ) {
 		$modified_prices_array = $prices_array;
 		foreach ( $prices_array as $price_type => $prices ) {
 			foreach ( $prices as $variation_id => $price ) {
@@ -309,12 +298,23 @@ class WCJ_Price_by_Country_Core {
 			}
 		}
 		return $modified_prices_array;
+	} */
+
+	/**
+	 * get_variation_prices_hash.
+	 *
+	 * @version 2.4.3
+	 * @since   2.4.3
+	 */
+	function get_variation_prices_hash( $price_hash, $_product, $display ) {
+		$price_hash['wcj_country_group_id'] = $this->get_customer_country_group_id();
+		return $price_hash;
 	}
 
 	/**
 	 * change_price_by_country.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.3
 	 */
 	public function change_price_by_country( $price, $product ) {
 
@@ -336,7 +336,7 @@ class WCJ_Price_by_Country_Core {
 				}
 
 				$price_by_country = '';
-				if ( 'woocommerce_get_price' == current_filter() ) {
+				if ( 'woocommerce_get_price' == current_filter() || 'woocommerce_variation_prices_price' == current_filter() ) {
 
 					$regular_or_sale = '_regular_price_';
 					$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
@@ -352,8 +352,15 @@ class WCJ_Price_by_Country_Core {
 						$price_by_country = $regular_price;
 
 				}
-				elseif ( 'woocommerce_get_regular_price' == current_filter() || 'woocommerce_get_sale_price' == current_filter() ) {
-					$regular_or_sale = ( 'woocommerce_get_regular_price' == current_filter() ) ? '_regular_price_' : '_sale_price_';
+				elseif (
+					'woocommerce_get_regular_price' == current_filter() ||
+					'woocommerce_get_sale_price' == current_filter() ||
+					'woocommerce_variation_prices_regular_price' == current_filter() ||
+					'woocommerce_variation_prices_sale_price' == current_filter()
+				) {
+					$regular_or_sale = (
+						'woocommerce_get_regular_price' == current_filter() || 'woocommerce_variation_prices_regular_price' == current_filter()
+					) ? '_regular_price_' : '_sale_price_';
 					$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
 					$price_by_country = get_post_meta( $the_product_id, $meta_id, true );
 				}

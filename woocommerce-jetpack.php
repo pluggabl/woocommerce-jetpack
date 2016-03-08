@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: http://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.4.2
+Version: 2.4.3
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Copyright: © 2016 Algoritmika Ltd.
@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.4.2
+ * @version 2.4.3
  */
 
 final class WC_Jetpack {
@@ -329,6 +329,9 @@ final class WC_Jetpack {
 
 	/**
 	 * Include required core files used in admin and on the frontend.
+	 *
+	 * @version 2.4.3
+	 * @since   2.4.3
 	 */
 	private function includes() {
 
@@ -346,6 +349,9 @@ final class WC_Jetpack {
 
 		// Shortcodes
 		$this->include_shortcodes();
+
+		// Widgets
+		include_once( 'includes/widgets/class-wcj-widget-multicurrency.php' );
 
 		// Abstracts
 		//include_once( 'includes/abstracts/class-wcj-product-input-fields.php' );
@@ -385,7 +391,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.4.2
+	 * @version 2.4.3
 	 */
 	private function include_modules() {
 		$settings = array();
@@ -430,6 +436,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-pdf-invoicing.php' );
 		$settings[] = include_once( 'includes/class-wcj-emails.php' );
 		$settings[] = include_once( 'includes/class-wcj-currencies.php' );
+		$settings[] = include_once( 'includes/class-wcj-multicurrency.php' );
 		$settings[] = include_once( 'includes/class-wcj-currency-external-products.php' );
 		$settings[] = include_once( 'includes/class-wcj-price-by-country.php' );
 		$settings[] = include_once( 'includes/class-wcj-currency-exchange-rates.php' );
