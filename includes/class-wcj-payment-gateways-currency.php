@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Currency class.
  *
- * @version 2.4.2
+ * @version 2.4.3
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -149,13 +149,11 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.2
+	 * @version 2.4.3
 	 */
 	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_payment_gateways_currency_settings', $settings );
-//		return $this->add_standard_settings( $settings ); // TODO
-		return $this->add_enable_module_setting( $settings );
+		$settings = apply_filters( 'wcj_payment_gateways_currency_settings', array() );
+		return $this->add_standard_settings( $settings );
 	}
 
 	/**

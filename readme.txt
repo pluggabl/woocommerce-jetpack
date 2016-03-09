@@ -119,7 +119,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.3 - 08/03/2016 =
+= 2.4.3 - 09/03/2016 =
+* Dev - PAYMENT GATEWAYS - Gateways Currency - "Reset settings" button added to admin settings.
 * Fix - "Reset settings" bug fixed.
 * Dev - `WCJ_Module` class code refactoring.
 * Fix - PRICES & CURRENCIES - Price by Country - Price range for variable products bug fixed.

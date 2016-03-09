@@ -32,8 +32,10 @@ class WCJ_Multicurrency extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			add_filter( 'init', array( $this, 'add_hooks' ) );
 
-			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) ) {
+				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
 		}
 	}
 
@@ -149,22 +151,28 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 * @version 2.4.3
 	 */
 	function change_price_by_currency( $price, $_product ) {
-		$the_product_id = ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
-		if ( '' != ( $regular_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_multicurrency_per_product_regular_price_' . $this->get_current_currency_code(), true ) ) ) {
-			if ( 'woocommerce_get_price' == current_filter() || 'woocommerce_variation_prices_price' == current_filter() ) {
-				$sale_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
-				return ( '' != $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
-			} elseif ( 'woocommerce_get_regular_price' == current_filter() || 'woocommerce_variation_prices_regular_price' == current_filter() ) {
-				return $regular_price_per_product;
-			} elseif ( 'woocommerce_get_sale_price' == current_filter() || 'woocommerce_variation_prices_sale_price' == current_filter() ) {
-				$sale_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
-				return ( '' != $sale_price_per_product ) ? $sale_price_per_product : $price;
-			}
-		} else {
-			if ( 1 != ( $currency_exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() ) ) ) {
-				return $price * $currency_exchange_rate;
+
+		// Per product
+		if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) ) {
+			$the_product_id = ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
+			if ( '' != ( $regular_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_multicurrency_per_product_regular_price_' . $this->get_current_currency_code(), true ) ) ) {
+				if ( 'woocommerce_get_price' == current_filter() || 'woocommerce_variation_prices_price' == current_filter() ) {
+					$sale_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
+					return ( '' != $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
+				} elseif ( 'woocommerce_get_regular_price' == current_filter() || 'woocommerce_variation_prices_regular_price' == current_filter() ) {
+					return $regular_price_per_product;
+				} elseif ( 'woocommerce_get_sale_price' == current_filter() || 'woocommerce_variation_prices_sale_price' == current_filter() ) {
+					$sale_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
+					return ( '' != $sale_price_per_product ) ? $sale_price_per_product : $price;
+				}
 			}
 		}
+
+		// Global
+		if ( 1 != ( $currency_exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() ) ) ) {
+			return $price * $currency_exchange_rate;
+		}
+
 		// No changes
 		return $price;
 	}
@@ -228,15 +236,15 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 * @version 2.4.3
 	 */
 	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_multicurrency_settings', $settings );
-		return $this->add_standard_settings( $settings );
+		$settings = apply_filters( 'wcj_multicurrency_settings', array() );
+		return $this->add_standard_settings( $settings, __( 'After setting currencies in the Currencies Options below, use <em>Booster - Multicurrency Switcher</em> widget, or <em>[wcj_currency_select_drop_down_list]</em> shortcode. If you want to insert switcher in your PHP code, just use <em>echo do_shortcode( \'[wcj_currency_select_drop_down_list]\' );</em>', 'woocommerce-jetpack' ) );
 	}
 
 	/**
 	 * add_settings.
 	 *
 	 * @version 2.4.3
+	 * @todo    rounding (maybe)
 	 */
 	function add_settings() {
 		$currency_from = get_woocommerce_currency();
@@ -261,6 +269,24 @@ class WCJ_Multicurrency extends WCJ_Module {
 					:
 					apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+			),
+			array(
+				'title'    => __( 'Multicurrency on per Product Basis', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'This will add meta boxes in product edit.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_multicurrency_per_product_enabled',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_multicurrency_options',
+			),
+			array(
+				'title'    => __( 'Currencies Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'desc'     => __( 'One currency probably should be set to current (original) shop currency with an exchange rate of 1.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_multicurrency_currencies_options',
 			),
 			array(
 				'title'    => __( 'Total Currencies', 'woocommerce-jetpack' ),
@@ -310,7 +336,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 		$settings = array_merge( $settings, array(
 			array(
 				'type'     => 'sectionend',
-				'id'       => 'wcj_multicurrency_options',
+				'id'       => 'wcj_multicurrency_currencies_options',
 			),
 		) );
 		return $settings;
