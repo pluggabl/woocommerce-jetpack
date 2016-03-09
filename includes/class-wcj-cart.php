@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Cart class.
  *
- * @version 2.3.9
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -93,7 +93,7 @@ class WCJ_Cart extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.4
 	 */
 	function get_settings() {
 
@@ -155,33 +155,7 @@ class WCJ_Cart extends WCJ_Module {
 					'id'       => 'wcj_cart_custom_info_hook_' . $i,
 					'default'  => 'woocommerce_after_cart_totals',
 					'type'     => 'select',
-					'options'  => array(
-
-						'woocommerce_before_cart'                    => __( 'Before cart', 'woocommerce-jetpack' ),
-						'woocommerce_before_cart_table'              => __( 'Before cart table', 'woocommerce-jetpack' ),
-						'woocommerce_before_cart_contents'           => __( 'Before cart contents', 'woocommerce-jetpack' ),
-						'woocommerce_cart_contents'                  => __( 'Cart contents', 'woocommerce-jetpack' ),
-						'woocommerce_cart_coupon'                    => __( 'Cart coupon', 'woocommerce-jetpack' ),
-						'woocommerce_cart_actions'                   => __( 'Cart actions', 'woocommerce-jetpack' ),
-						'woocommerce_after_cart_contents'            => __( 'After cart contents', 'woocommerce-jetpack' ),
-						'woocommerce_after_cart_table'               => __( 'After cart table', 'woocommerce-jetpack' ),
-						'woocommerce_cart_collaterals'               => __( 'Cart collaterals', 'woocommerce-jetpack' ),
-						'woocommerce_after_cart'                     => __( 'After cart', 'woocommerce-jetpack' ),
-
-						'woocommerce_before_cart_totals'             => __( 'Before cart totals', 'woocommerce-jetpack' ),
-						'woocommerce_cart_totals_before_shipping'    => __( 'Cart totals: Before shipping', 'woocommerce-jetpack' ),
-						'woocommerce_cart_totals_after_shipping'     => __( 'Cart totals: After shipping', 'woocommerce-jetpack' ),
-						'woocommerce_cart_totals_before_order_total' => __( 'Cart totals: Before order total', 'woocommerce-jetpack' ),
-						'woocommerce_cart_totals_after_order_total'  => __( 'Cart totals: After order total', 'woocommerce-jetpack' ),
-						'woocommerce_proceed_to_checkout'            => __( 'Proceed to checkout', 'woocommerce-jetpack' ),
-						'woocommerce_after_cart_totals'              => __( 'After cart totals', 'woocommerce-jetpack' ),
-
-						'woocommerce_before_shipping_calculator'     => __( 'Before shipping calculator', 'woocommerce-jetpack' ),
-						'woocommerce_after_shipping_calculator'      => __( 'After shipping calculator', 'woocommerce-jetpack' ),
-
-						'woocommerce_cart_is_empty'                  => __( 'If cart is empty', 'woocommerce-jetpack' ),
-
-					),
+					'options'  => wcj_get_cart_filters(),
 					'css'      => 'width:250px;',
 				),
 

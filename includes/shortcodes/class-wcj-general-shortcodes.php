@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.4.3
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.4
 	 */
 	public function __construct() {
 
@@ -31,6 +31,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_currency_select_drop_down_list',
 			'wcj_text',
 			'wcj_tcpdf_pagebreak',
+			'wcj_get_left_to_free_shipping',
 		);
 
 		$this->the_atts = array(
@@ -45,10 +46,21 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'style'       => '',
 			'countries'   => '',
 			'currencies'  => '',
+			'content'     => '',
 		);
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_get_left_to_free_shipping.
+	 *
+	 * @version 2.4.4
+	 * @since   2.4.4
+	 */
+	function wcj_get_left_to_free_shipping( $atts, $content ) {
+		echo wcj_get_left_to_free_shipping( $atts['content'] );
 	}
 
 	/**

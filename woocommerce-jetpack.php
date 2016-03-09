@@ -330,8 +330,7 @@ final class WC_Jetpack {
 	/**
 	 * Include required core files used in admin and on the frontend.
 	 *
-	 * @version 2.4.3
-	 * @since   2.4.3
+	 * @version 2.4.4
 	 */
 	private function includes() {
 
@@ -352,6 +351,7 @@ final class WC_Jetpack {
 
 		// Widgets
 		include_once( 'includes/widgets/class-wcj-widget-multicurrency.php' );
+		include_once( 'includes/widgets/class-wcj-widget-left-to-free-shipping.php' );
 
 		// Abstracts
 		//include_once( 'includes/abstracts/class-wcj-product-input-fields.php' );
