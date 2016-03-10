@@ -22,6 +22,24 @@
 		<key name="wcj_product_info_on_single" />
 		<key name="wcj_custom_product_tabs_title_global_1" />
 		<key name="wcj_custom_product_tabs_content_global_1" />
+		<key name="wcj_custom_product_tabs_title_global_2" />
+		<key name="wcj_custom_product_tabs_content_global_2" />
+		<key name="wcj_custom_product_tabs_title_global_3" />
+		<key name="wcj_custom_product_tabs_content_global_3" />
+		<key name="wcj_custom_product_tabs_title_global_4" />
+		<key name="wcj_custom_product_tabs_content_global_4" />
+		<key name="wcj_custom_product_tabs_title_global_5" />
+		<key name="wcj_custom_product_tabs_content_global_5" />
+		<key name="wcj_custom_product_tabs_title_global_6" />
+		<key name="wcj_custom_product_tabs_content_global_6" />
+		<key name="wcj_custom_product_tabs_title_global_7" />
+		<key name="wcj_custom_product_tabs_content_global_7" />
+		<key name="wcj_custom_product_tabs_title_global_8" />
+		<key name="wcj_custom_product_tabs_content_global_8" />
+		<key name="wcj_custom_product_tabs_title_global_9" />
+		<key name="wcj_custom_product_tabs_content_global_9" />
+		<key name="wcj_custom_product_tabs_title_global_10" />
+		<key name="wcj_custom_product_tabs_content_global_10" />
 		<key name="wcj_product_info_product_tabs_description_title" />
 		<key name="wcj_product_info_product_tabs_additional_information_title" />
 		<key name="wcj_product_info_product_tabs_reviews_title" />
@@ -133,6 +151,10 @@
 		<key name="wcj_checkout_custom_info_content_1" />
 		<key name="wcj_order_minimum_amount_error_message" />
 		<key name="wcj_order_minimum_amount_cart_notice_message" />
+		<key name="wcj_eu_vat_number_field_label" />
+		<key name="wcj_eu_vat_number_field_placeholder" />
+		<key name="wcj_eu_vat_number_field_description" />
+		<key name="wcj_eu_vat_number_not_valid_message" />
 		<key name="wcj_invoicing_invoice_template" />
 		<key name="wcj_invoicing_proforma_invoice_template" />
 		<key name="wcj_invoicing_packing_slip_template" />
@@ -183,9 +205,5 @@
 		<key name="wcj_invoicing_custom_doc_admin_column_delete_btn" />
 		<key name="wcj_invoicing_custom_doc_link_text" />
 		<key name="wcj_invoicing_custom_doc_file_name" />
-		<key name="wcj_eu_vat_number_field_label" />
-		<key name="wcj_eu_vat_number_field_placeholder" />
-		<key name="wcj_eu_vat_number_field_description" />
-		<key name="wcj_eu_vat_number_not_valid_message" />
 	</admin-texts>
 </wpml-config>
