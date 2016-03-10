@@ -119,8 +119,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.4 - 09/03/2016 =
-~* Dev - SHIPPING & ORDERS - Shipping - "Left to free shipping" functionality added.
+= 2.4.4 - 10/03/2016 =
+* Dev - SHIPPING & ORDERS - Shipping - "Left to free shipping" functionality added.
 * Dev - SHIPPING & ORDERS - Shipping - Code refactoring.
 
 = 2.4.3 - 09/03/2016 =

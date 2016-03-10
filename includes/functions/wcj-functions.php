@@ -9,7 +9,7 @@
  */
 
 /*
- * wcj_get_left_to_free_shipping()
+ * wcj_get_left_to_free_shipping.
  *
  * @version 2.4.4
  * @since   2.4.4
@@ -17,6 +17,9 @@
  */
 if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	function wcj_get_left_to_free_shipping( $content ) {
+		if ( '' == $content ) {
+			$content = __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' );
+		}
 		$free_shipping = new WC_Shipping_Free_Shipping();
 		if ( in_array( $free_shipping->requires, array( 'min_amount', 'either', 'both' ) ) && isset( WC()->cart->cart_contents_total ) ) {
 			if ( WC()->cart->prices_include_tax ) {

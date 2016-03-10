@@ -39,14 +39,14 @@ class WCJ_Shipping extends WCJ_Module {
 					get_option( 'wcj_shipping_left_to_free_info_priority_cart', 10 )
 				);
 			}
-			if ( 'yes' === get_option( 'wcj_shipping_left_to_free_info_enabled_mini_cart', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_shipping_left_to_free_info_enabled_mini_cart', 'no' ) ) ) {
 				add_action(
 					get_option( 'wcj_shipping_left_to_free_info_position_mini_cart', 'woocommerce_after_mini_cart' ),
 					array( $this, 'show_left_to_free_shipping_info_mini_cart' ),
 					get_option( 'wcj_shipping_left_to_free_info_priority_mini_cart', 10 )
 				);
 			}
-			if ( 'yes' === get_option( 'wcj_shipping_left_to_free_info_enabled_checkout', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_shipping_left_to_free_info_enabled_checkout', 'no' ) ) ) {
 				add_action(
 					get_option( 'wcj_shipping_left_to_free_info_position_checkout', 'woocommerce_checkout_after_order_review' ),
 					array( $this, 'show_left_to_free_shipping_info_checkout' ),
@@ -205,7 +205,7 @@ class WCJ_Shipping extends WCJ_Module {
 				'title'    => __( 'Left to Free Shipping Info Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => __( 'This section lets you enable info or cart, mini cart and checkout pages.', 'woocommerce-jetpack' )
-					. '<br>' . __( 'You can also use <em>Booster - Left to Free Shipping</em> widget, <em>[wcj_get_left_to_free_shipping]</em> shortcode or <em>wcj_get_left_to_free_shipping</em> function.', 'woocommerce-jetpack' )
+					. '<br>' . __( 'You can also use <em>Booster - Left to Free Shipping</em> widget, <em>[wcj_get_left_to_free_shipping content=""]</em> shortcode or <em>wcj_get_left_to_free_shipping( $content );</em> function.', 'woocommerce-jetpack' )
 					. '<br>' . __( 'In content you can use: <em>%left_to_free%</em> and <em>%free_shipping_min_amount%</em> shortcodes.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_left_to_free_info_options',
 			),
@@ -247,6 +247,8 @@ class WCJ_Shipping extends WCJ_Module {
 				'id'       => 'wcj_shipping_left_to_free_info_enabled_mini_cart',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 			),
 			array(
 				'title'    => '',
@@ -283,6 +285,8 @@ class WCJ_Shipping extends WCJ_Module {
 				'id'       => 'wcj_shipping_left_to_free_info_enabled_checkout',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 			),
 			array(
 				'title'    => '',
