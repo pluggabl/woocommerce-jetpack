@@ -104,7 +104,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * create_wpml_xml_file.
 	 *
-	 * @version 2.4.1
+	 * @version 2.4.4
 	 */
 	function create_wpml_xml_file() {
 		$file_path = wcj_plugin_path() . '/wpml-config.xml';
@@ -114,11 +114,13 @@ class WCJ_WPML extends WCJ_Module {
 			fwrite( $handle, '<admin-texts>' . PHP_EOL );
 			$sections = apply_filters( 'wcj_settings_sections', array() );
 			foreach ( $sections as $section => $section_title ) {
-				$settings = apply_filters( 'wcj_settings_' . $section, array() );
-				foreach ( $settings as $value ) {
-					if ( $this->is_wpml_value( $section, $value ) ) {
-						fwrite( $handle, "\t\t" );
-						fwrite( $handle, '<key name="' . $value['id'] . '" />' . PHP_EOL );
+				if ( $this->is_wpml_section( $section ) ) {
+					$settings = apply_filters( 'wcj_settings_' . $section, array() );
+					foreach ( $settings as $value ) {
+						if ( $this->is_wpml_value( $value ) ) {
+							fwrite( $handle, "\t\t" );
+							fwrite( $handle, '<key name="' . $value['id'] . '" />' . PHP_EOL );
+						}
 					}
 				}
 			}
@@ -132,14 +134,10 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * is_wpml_value.
 	 *
-	 * @version 2.4.1
+	 * @version 2.4.4
+	 * @since   2.4.4
 	 */
-	function is_wpml_value( $section, $value ) {
-
-		// Type
-		$is_type_ok = ( 'textarea' === $value['type'] || 'text' === $value['type'] ) ? true : false;
-
-		// Section
+	function is_wpml_section( $section ) {
 		$sections_to_skip = array(
 			'price_by_country',
 			'currency',
@@ -180,7 +178,18 @@ class WCJ_WPML extends WCJ_Module {
 			'emails',
 			'wpml',
 		);
-		$is_section_ok = ( ! in_array( $section, $sections_to_skip ) ) ? true : false;
+		return ( ! in_array( $section, $sections_to_skip ) ) ? true : false;
+	}
+
+	/**
+	 * is_wpml_value.
+	 *
+	 * @version 2.4.4
+	 */
+	function is_wpml_value( $value ) {
+
+		// Type
+		$is_type_ok = ( 'textarea' === $value['type'] || 'text' === $value['type'] ) ? true : false;
 
 		// ID
 		$values_to_skip = array(
@@ -202,7 +211,7 @@ class WCJ_WPML extends WCJ_Module {
 		}
 
 		// Final return
-		return ( $is_type_ok && $is_section_ok && $is_id_ok );
+		return ( $is_type_ok && $is_id_ok );
 	}
 
 }
