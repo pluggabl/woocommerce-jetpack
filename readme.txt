@@ -120,6 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.4 - 11/03/2016 =
+~* Dev - EMAILS & MISC. - WPML - wpml-config.xml file updated.
+* Fix - EMAILS & MISC. - WPML - Regenerate wpml-config.xml file tool bug fixed.
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - Only enabled modules currencies are added to the list.
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - `no_changes` currency bug fixed.
 * Fix - PRICES & CURRENCIES - Multicurrency and Currency Exchange Rates - Currency pairs added to Currency Exchange Rates module.

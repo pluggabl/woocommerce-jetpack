@@ -1,5 +1,11 @@
 <wpml-config>
 	<admin-texts>
+		<key name="wcj_global_price_labels_add_before_text" />
+		<key name="wcj_global_price_labels_add_after_text" />
+		<key name="wcj_global_price_labels_between_regular_and_sale_text" />
+		<key name="wcj_global_price_labels_remove_text" />
+		<key name="wcj_global_price_labels_replace_text" />
+		<key name="wcj_global_price_labels_replace_with_text" />
 		<key name="wcj_call_for_price_text" />
 		<key name="wcj_call_for_price_text_on_archive" />
 		<key name="wcj_call_for_price_text_on_home" />
@@ -10,6 +16,26 @@
 		<key name="wcj_sorting_by_sku_desc_text" />
 		<key name="wcj_sorting_by_stock_quantity_asc_text" />
 		<key name="wcj_sorting_by_stock_quantity_desc_text" />
+		<key name="wcj_product_custom_info_content_single_1" />
+		<key name="wcj_product_custom_info_content_single_2" />
+		<key name="wcj_product_custom_info_content_single_3" />
+		<key name="wcj_product_custom_info_content_single_4" />
+		<key name="wcj_product_custom_info_content_single_5" />
+		<key name="wcj_product_custom_info_content_single_6" />
+		<key name="wcj_product_custom_info_content_single_7" />
+		<key name="wcj_product_custom_info_content_single_8" />
+		<key name="wcj_product_custom_info_content_single_9" />
+		<key name="wcj_product_custom_info_content_single_10" />
+		<key name="wcj_product_custom_info_content_archive_1" />
+		<key name="wcj_product_custom_info_content_archive_2" />
+		<key name="wcj_product_custom_info_content_archive_3" />
+		<key name="wcj_product_custom_info_content_archive_4" />
+		<key name="wcj_product_custom_info_content_archive_5" />
+		<key name="wcj_product_custom_info_content_archive_6" />
+		<key name="wcj_product_custom_info_content_archive_7" />
+		<key name="wcj_product_custom_info_content_archive_8" />
+		<key name="wcj_product_custom_info_content_archive_9" />
+		<key name="wcj_product_custom_info_content_archive_10" />
 		<key name="wcj_more_product_info_on_archive_1" />
 		<key name="wcj_more_product_info_on_archive_2" />
 		<key name="wcj_more_product_info_on_archive_3" />
@@ -149,6 +175,10 @@
 		<key name="wcj_checkout_custom_field_label_1" />
 		<key name="wcj_checkout_custom_field_placeholder_1" />
 		<key name="wcj_checkout_custom_info_content_1" />
+		<key name="wcj_gateways_fees_text_bacs" />
+		<key name="wcj_gateways_fees_text_cheque" />
+		<key name="wcj_gateways_fees_text_cod" />
+		<key name="wcj_gateways_fees_text_paypal" />
 		<key name="wcj_order_minimum_amount_error_message" />
 		<key name="wcj_order_minimum_amount_cart_notice_message" />
 		<key name="wcj_eu_vat_number_field_label" />

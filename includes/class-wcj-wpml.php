@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack WPML class.
  *
- * @version 2.4.1
+ * @version 2.4.4
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.1
+	 * @version 2.4.4
 	 */
 	function __construct() {
 
@@ -28,7 +28,7 @@ class WCJ_WPML extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_action( 'woocommerce_init', array( $this, 'create_wpml_xml_file_tool' ), PHP_INT_MAX );
+			add_action( 'init', array( $this, 'create_wpml_xml_file_tool' ), PHP_INT_MAX );
 			/* if ( 'yes' === get_option( 'wcj_' . $this->id . '_auto_regenerate', 'no' ) ) {
 				add_action( 'woojetpack_after_settings_save', array( $this, 'create_wpml_xml_file' ) );
 			} */
