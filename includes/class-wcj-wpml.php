@@ -40,7 +40,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.1
+	 * @version 2.4.4
 	 */
 	function get_settings() {
 		$settings = array(
@@ -70,10 +70,12 @@ class WCJ_WPML extends WCJ_Module {
 				'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_' . $this->id . '_module_tools',
 				'type'     => 'custom_link',
-				'link'     => '<pre>' .
+				'link'     => ( $this->is_enabled() ) ?
+					'<code>' .
 					'<a href="' . add_query_arg( 'create_wpml_xml_file', '1' ) . '">' . __( 'Regenerate wpml-config.xml file', 'woocommerce-jetpack' ) . '</a>' .
-					'</pre>' .
-					'<pre>' . $this->notice . '</pre>',
+					'</code>' .
+					'<pre>' . $this->notice . '</pre>' :
+					'<code>' . __( 'Regenerate wpml-config.xml file', 'woocommerce-jetpack' ) . '</code>',
 			),
 			array(
 				'type'     => 'sectionend',
