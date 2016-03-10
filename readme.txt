@@ -119,8 +119,11 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.4 - 10/03/2016 =
-* Dev - SHIPPING & ORDERS - Shipping - "Left to free shipping" functionality added.
+= 2.4.4 - 11/03/2016 =
+* Fix - PRICES & CURRENCIES - Currency Exchange Rates - Only enabled modules currencies are added to the list.
+* Fix - PRICES & CURRENCIES - Currency Exchange Rates - `no_changes` currency bug fixed.
+* Fix - PRICES & CURRENCIES - Multicurrency and Currency Exchange Rates - Currency pairs added to Currency Exchange Rates module.
+* Dev - SHIPPING & ORDERS - Shipping - "Left to free shipping" functionality added (including widget and shortcode).
 * Dev - SHIPPING & ORDERS - Shipping - Code refactoring.
 
 = 2.4.3 - 09/03/2016 =
