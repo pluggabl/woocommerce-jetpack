@@ -39,14 +39,24 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	 *
 	 * @version 2.4.4
 	 */
-	public function change_price_by_type( $product_id, $multiply_price_by, $price_type, $is_preview, $parent_product_id ) {
+	public function change_price_by_type( $product_id, $multiply_price_by, $price_type, $is_preview, $parent_product_id, $min_price = 0, $max_price = 0 ) {
 		$the_price = get_post_meta( $product_id, '_' . $price_type, true );
 		$the_modified_price = $the_price;
-		if ( '' != $the_price ) {
+		if ( '' != $the_price && 0 != $the_price ) {
 			$precision = get_option( 'woocommerce_price_num_decimals', 2 );
 			$the_modified_price = round( $the_price * $multiply_price_by, $precision );
-			if ( isset( $_POST['make_pretty_prices_threshold'] ) && apply_filters( 'wcj_get_option_filter', 0, $_POST['make_pretty_prices_threshold'] ) > 0 )
+			if ( isset( $_POST['make_pretty_prices_threshold'] ) && apply_filters( 'wcj_get_option_filter', 0, $_POST['make_pretty_prices_threshold'] ) > 0 ) {
 				$the_modified_price = $this->make_pretty_price( $the_modified_price );
+			}
+			if ( $the_modified_price < 0 ) {
+				$the_modified_price = 0;
+			}
+			if ( 0 != $min_price && $the_modified_price < $min_price ) {
+				$the_modified_price = $min_price;
+			}
+			if ( 0 != $max_price && $the_modified_price > $max_price ) {
+				$the_modified_price = $max_price;
+			}
 			if ( ! $is_preview ) {
 				update_post_meta( $product_id, '_' . $price_type, $the_modified_price );
 			}
@@ -59,24 +69,48 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 				$product_cats[] = esc_html( $term->name );
 			}
 		}
-		echo '<tr>' .
-				'<td>' . get_the_title( $product_id )   . '</td>' .
-				'<td>' . implode( ', ', $product_cats ) . '</td>' .
-				'<td>' . '<em>' . $price_type . '</em>' . '</td>' .
-				'<td>' . $the_price                     . '</td>' .
-				'<td>' . $the_modified_price            . '</td>' .
-			'</tr>';
+		if ( '' != $the_price || '' != $the_modified_price ) {
+			echo '<tr>' .
+					'<td>' . get_the_title( $product_id )   . '</td>' .
+					'<td>' . implode( ', ', $product_cats ) . '</td>' .
+					'<td>' . '<em>' . $price_type . '</em>' . '</td>' .
+					'<td>' . $the_price                     . '</td>' .
+					'<td>' . $the_modified_price            . '</td>' .
+				'</tr>';
+		}
 	}
 
 	/**
 	 * change_price_all_types.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.4
 	 */
 	public function change_price_all_types( $product_id, $multiply_price_by, $is_preview, $parent_product_id ) {
-		$this->change_price_by_type( $product_id, $multiply_price_by, 'price',         $is_preview, $parent_product_id );
-		$this->change_price_by_type( $product_id, $multiply_price_by, 'sale_price',    $is_preview, $parent_product_id );
-		$this->change_price_by_type( $product_id, $multiply_price_by, 'regular_price', $is_preview, $parent_product_id );
+		$what_prices_to_modify = ( isset( $_POST['wcj_price_types'] ) ) ? $_POST['wcj_price_types'] : 'wcj_both';
+		if ( 'wcj_both' === $what_prices_to_modify ) {
+			$this->change_price_by_type( $product_id, $multiply_price_by, 'price',         $is_preview, $parent_product_id );
+			$this->change_price_by_type( $product_id, $multiply_price_by, 'sale_price',    $is_preview, $parent_product_id );
+			$this->change_price_by_type( $product_id, $multiply_price_by, 'regular_price', $is_preview, $parent_product_id );
+		} elseif ( 'wcj_sale_prices' === $what_prices_to_modify ) {
+			if ( get_post_meta( $product_id, '_' . 'price', true ) === get_post_meta( $product_id, '_' . 'sale_price', true ) ) {
+				$this->change_price_by_type( $product_id, $multiply_price_by, 'price',     $is_preview, $parent_product_id,
+					0, get_post_meta( $product_id, '_' . 'regular_price', true ) );
+			}
+			$this->change_price_by_type( $product_id, $multiply_price_by, 'sale_price',    $is_preview, $parent_product_id,
+				0, get_post_meta( $product_id, '_' . 'regular_price', true ) );
+		} elseif ( 'wcj_regular_prices' === $what_prices_to_modify ) {
+			if ( get_post_meta( $product_id, '_' . 'price', true ) === get_post_meta( $product_id, '_' . 'regular_price', true ) ) {
+				if (
+					get_post_meta( $product_id, '_' . 'price', true ) !== get_post_meta( $product_id, '_' . 'sale_price', true ) ||
+					$multiply_price_by <= 1
+				) {
+					$this->change_price_by_type( $product_id, $multiply_price_by, 'price', $is_preview, $parent_product_id,
+						get_post_meta( $product_id, '_' . 'sale_price', true ), 0 );
+				}
+			}
+			$this->change_price_by_type( $product_id, $multiply_price_by, 'regular_price', $is_preview, $parent_product_id,
+				get_post_meta( $product_id, '_' . 'sale_price', true ), 0 );
+		}
 	}
 
 	/**
@@ -205,9 +239,23 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 						$multiply_prices_by . '">',
 					'',
 				);
+
+				$selected_option_price_types = ( isset( $_POST['wcj_price_types'] ) ) ? $_POST['wcj_price_types'] : '';
+				$data_table[] = array(
+					__( 'Price type to modify', 'woocommerce-jetpack' ),
+					'<select name="wcj_price_types">' .
+						'<option value="wcj_both">' . __( 'Both', 'woocommerce-jetpack' ) . '</option>' .
+						'<option value="wcj_sale_prices"'    . selected( 'wcj_sale_prices',    $selected_option_price_types, false ) . '>'
+							. __( 'Sale prices only', 'woocommerce-jetpack' )    . '</option>' .
+						'<option value="wcj_regular_prices"' . selected( 'wcj_regular_prices', $selected_option_price_types, false ) . '>'
+							. __( 'Regular prices only', 'woocommerce-jetpack' ) . '</option>' .
+					'</select>',
+					'',
+				);
+
 				if ( '' != $select_options_html ) {
 					$data_table[] = array(
-						__( 'Products Category', 'woocommerce-jetpack' ),
+						__( 'Products category', 'woocommerce-jetpack' ),
 						'<select name="wcj_product_cat" ' . apply_filters( 'wcj_get_option_filter', 'disabled', '' ) . '>' .
 							'<option value="wcj_any">' . __( 'Any', 'woocommerce-jetpack' ) . '</option>' .
 							$select_options_html .

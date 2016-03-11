@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.4 - 11/03/2016 =
+* Dev - PRICES & CURRENCIES - Bulk Price Converter - "Price type to modify" functionality added to the Bulk Price Converter tool.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - "None" product category added to the Bulk Price Converter tool.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - "Pretty price" functionality added to the Bulk Price Converter tool.
 * Dev - EMAILS & MISC. - WPML - wpml-config.xml file updated.
