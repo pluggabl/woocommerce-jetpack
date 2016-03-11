@@ -45,8 +45,8 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			if ( '' != get_option( 'wcj_currency_external_products_symbol' ) ) {
-				add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), 100, 2 );
-				add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ), 100, 2 );
+				add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ),   PHP_INT_MAX, 1 );
 			}
 		}
 	}
@@ -84,16 +84,13 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 	 * @version 2.4.4
 	 */
 	function get_settings() {
-
 		$settings = array(
-
 			array(
 				'title'    => __( 'Currency for External Products Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => '',
 				'id'       => 'wcj_currency_external_products_options',
 			),
-
 			array(
 				'title'    => __( 'Currency', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Set currency for all external products.', 'woocommerce-jetpack' ),
@@ -102,13 +99,11 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 				'type'     => 'select',
 				'options'  => $this->currency_names_and_symbols,
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_currency_external_products_options',
 			),
 		);
-
 		return $this->add_standard_settings( $settings );
 	}
 }
