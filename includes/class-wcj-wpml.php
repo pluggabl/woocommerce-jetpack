@@ -142,6 +142,7 @@ class WCJ_WPML extends WCJ_Module {
 	function is_wpml_section( $section ) {
 		$sections_to_skip = array(
 			'price_by_country',
+			'multicurrency',
 			'currency',
 			'currency_external_products',
 			'bulk_price_converter',
