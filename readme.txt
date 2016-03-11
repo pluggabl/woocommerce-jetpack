@@ -120,6 +120,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.4 - 11/03/2016 =
+* Fix - PRICES & CURRENCIES - Currency for External Products - `change_currency_code()` added.
+~* Dev - PRICES & CURRENCIES - Currency for External Products - Custom currencies added to the list.
+* Dev - PRICES & CURRENCIES - Currency for External Products - "Reset settings" button added.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - "Price type to modify" functionality added to the Bulk Price Converter tool.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - "None" product category added to the Bulk Price Converter tool.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - "Pretty price" functionality added to the Bulk Price Converter tool.
