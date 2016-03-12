@@ -63,9 +63,9 @@
  * Default images directory.
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-//define ('K_PATH_IMAGES', '');
+define ('K_PATH_IMAGES', '');
 //define ( 'K_PATH_IMAGES', $_SERVER['DOCUMENT_ROOT'] );
-define ( 'K_PATH_IMAGES', ABSPATH ); // Algoritmika - WCJ version 2.3.0
+//define ( 'K_PATH_IMAGES', ABSPATH ); // Algoritmika - WCJ version 2.3.0
 
 /**
  * Deafult image logo used be the default Header() method.

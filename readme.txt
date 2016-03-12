@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.4 - 11/03/2016 =
+~* Fix - PDF Invoicing - `K_PATH_IMAGES` in `tcpdf_config.php`.
 * Fix - PRICES & CURRENCIES - Currency for External Products - `change_currency_code()` added.
 ~* Dev - PRICES & CURRENCIES - Currency for External Products - Custom currencies added to the list.
 * Dev - PRICES & CURRENCIES - Currency for External Products - "Reset settings" button added.
