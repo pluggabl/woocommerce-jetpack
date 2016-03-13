@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Numbers class.
  *
- * @version 2.3.10
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -67,7 +67,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add Renumerate Orders tool to WooCommerce menu (the content).
 	 *
-	 * @version 2.2.7
+	 * @version 2.4.4
 	 */
 	public function create_renumerate_orders_tool() {
 		$result_message = '';
@@ -76,8 +76,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			$result_message = '<p><div class="updated"><p><strong>' . __( 'Orders successfully renumerated!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 		}
 		?><div>
-			<h2><?php echo __( 'WooCommerce Jetpack - Renumerate Orders', 'woocommerce-jetpack' ); ?></h2>
-			<p><?php echo __( 'The tool renumerates all orders. Press the button below to renumerate all existing orders starting from order counter settings in WooCommerce > Settings > Jetpack > Order Numbers.', 'woocommerce-jetpack' ); ?></p>
+			<?php echo $this->get_tool_header_html( 'renumerate_orders' ); ?>
+			<p><?php echo __( 'Press the button below to renumerate all existing orders starting from order counter settings in WooCommerce > Settings > Booster > Order Numbers.', 'woocommerce-jetpack' ); ?></p>
 			<?php echo $result_message; ?>
 			<form method="post" action="">
 				<input class="button-primary" type="submit" name="renumerate_orders" value="<?php echo __( 'Renumerate orders', 'woocommerce-jetpack' ); ?>">
