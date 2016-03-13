@@ -64,7 +64,7 @@
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
 // Algoritmika - Booster version 2.4.4
-switch ( get_option( 'wcj_invoicing_general_header_images_path', 'tcpdf_default' ) ) {
+switch ( get_option( 'wcj_invoicing_general_header_images_path', 'empty' ) ) {
 	case 'tcpdf_default':
 		//define ( 'K_PATH_IMAGES', '' );
 		break;

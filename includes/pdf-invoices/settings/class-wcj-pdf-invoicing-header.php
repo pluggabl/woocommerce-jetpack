@@ -113,13 +113,13 @@ class WCJ_PDF_Invoicing_Header extends WCJ_Module {
 				'desc'      => __( 'Default images directory in TCPDF library (K_PATH_IMAGES).', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'Try changing this if you have issues displaying image in header.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_invoicing_general_header_images_path',
-				'default'   => 'tcpdf_default',
+				'default'   => 'empty',
 				'type'      => 'select',
 				'options'   => array(
+					'empty'         => __( 'Empty', 'woocommerce-jetpack' ),
 					'tcpdf_default' => __( 'TCPDF Default', 'woocommerce-jetpack' ),
 					'abspath'       => __( 'ABSPATH', 'woocommerce-jetpack' ),// . ': ' . ABSPATH,
 					'document_root' => __( 'DOCUMENT_ROOT', 'woocommerce-jetpack' ),// . ': ' . $_SERVER['DOCUMENT_ROOT'],
-					'empty'         => __( 'Empty', 'woocommerce-jetpack' ),
 				),
 			),
 			array(
