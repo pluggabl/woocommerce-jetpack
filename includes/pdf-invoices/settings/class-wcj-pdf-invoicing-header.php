@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Header class.
  *
- * @version 2.4.0
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -30,7 +30,7 @@ class WCJ_PDF_Invoicing_Header extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.4
 	 */
 	function get_settings() {
 		$settings = array();
@@ -101,6 +101,33 @@ class WCJ_PDF_Invoicing_Header extends WCJ_Module {
 				'id'   => 'wcj_invoicing_' . $invoice_type['id'] . '_header_options',
 			);
 		}
+
+		$settings = array_merge( $settings, array(
+			array(
+				'title'     => __( 'PDF Invoicing Header General Options', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'id'        => 'wcj_invoicing_general_header_options',
+			),
+			array(
+				'title'     => __( 'Default Images Directory', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Default images directory in TCPDF library (K_PATH_IMAGES).', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Try changing this if you have issues displaying image in header.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_invoicing_general_header_images_path',
+				'default'   => 'tcpdf_default',
+				'type'      => 'select',
+				'options'   => array(
+					'tcpdf_default' => __( 'TCPDF Default', 'woocommerce-jetpack' ),
+					'abspath'       => __( 'ABSPATH', 'woocommerce-jetpack' ),// . ': ' . ABSPATH,
+					'document_root' => __( 'DOCUMENT_ROOT', 'woocommerce-jetpack' ),// . ': ' . $_SERVER['DOCUMENT_ROOT'],
+					'empty'         => __( 'Empty', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_invoicing_general_header_options',
+			),
+		) );
+
 		return $settings;
 	}
 }

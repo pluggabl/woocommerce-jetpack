@@ -63,9 +63,21 @@
  * Default images directory.
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-define ('K_PATH_IMAGES', '');
-//define ( 'K_PATH_IMAGES', $_SERVER['DOCUMENT_ROOT'] );
-//define ( 'K_PATH_IMAGES', ABSPATH ); // Algoritmika - WCJ version 2.3.0
+// Algoritmika - Booster version 2.4.4
+switch ( get_option( 'wcj_invoicing_general_header_images_path', 'tcpdf_default' ) ) {
+	case 'tcpdf_default':
+		//define ( 'K_PATH_IMAGES', '' );
+		break;
+	case 'empty':
+		define ( 'K_PATH_IMAGES', '' );
+		break;
+	case 'document_root':
+		define ( 'K_PATH_IMAGES', $_SERVER['DOCUMENT_ROOT'] );
+		break;
+	case 'abspath':
+		define ( 'K_PATH_IMAGES', ABSPATH );
+		break;
+}
 
 /**
  * Deafult image logo used be the default Header() method.
