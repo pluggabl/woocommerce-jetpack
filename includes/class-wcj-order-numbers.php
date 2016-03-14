@@ -94,6 +94,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 
 	/**
 	 * Add/update order_number meta to order.
+	 *
+	 * @version 2.4.4
 	 */
 	public function add_order_number_meta( $order_id, $do_overwrite ) {
 
@@ -101,9 +103,28 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			return;
 
 		if ( true === $do_overwrite || 0 == get_post_meta( $order_id, '_wcj_order_number', true ) ) {
-			$current_order_number = get_option( 'wcj_order_number_counter' );
-			update_option( 'wcj_order_number_counter', ( $current_order_number + 1 ) );
-			update_post_meta( $order_id, '_wcj_order_number', $current_order_number );
+			if ( 'yes' === get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'no' ) ) {
+				global $wpdb;
+				$wpdb->query( 'START TRANSACTION' );
+				$wp_options_table = $wpdb->prefix . 'options';
+				$result_select = $wpdb->get_row( "SELECT * FROM $wp_options_table WHERE option_name = 'wcj_order_number_counter'" );
+				if ( NULL != $result_select ) {
+					$current_order_number = $result_select->option_value;
+					$result_update = $wpdb->update( $wp_options_table, array( 'option_value' => ( $current_order_number + 1 ) ), array( 'option_name' => 'wcj_order_number_counter' ) );
+					if ( NULL != $result_update ) {
+						$wpdb->query( 'COMMIT' ); // all ok
+						update_post_meta( $order_id, '_wcj_order_number', $current_order_number );
+					} else {
+						$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback
+					}
+				} else {
+					$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback
+				}
+			} else {
+				$current_order_number = get_option( 'wcj_order_number_counter' );
+				update_option( 'wcj_order_number_counter', ( $current_order_number + 1 ) );
+				update_post_meta( $order_id, '_wcj_order_number', $current_order_number );
+			}
 		}
 	}
 
@@ -133,7 +154,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.4
 	 */
 	function get_settings() {
 
@@ -213,6 +234,15 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'custom_attributes'
 				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 				'css'      => 'width:300px;',
+			),
+
+			array(
+				'title'    => __( 'Use MySQL Transaction', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'This should be enabled if you have a lot of simultaneous orders in your shop - to prevent duplicate order numbers (sequential).', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_number_use_mysql_transaction_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_order_numbers_options' ),
