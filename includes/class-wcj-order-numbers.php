@@ -99,8 +99,9 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 */
 	public function add_order_number_meta( $order_id, $do_overwrite ) {
 
-		if ( 'shop_order' !== get_post_type( $order_id ) )
+		if ( 'shop_order' !== get_post_type( $order_id ) ) {
 			return;
+		}
 
 		if ( true === $do_overwrite || 0 == get_post_meta( $order_id, '_wcj_order_number', true ) ) {
 			if ( 'yes' === get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'no' ) ) {
