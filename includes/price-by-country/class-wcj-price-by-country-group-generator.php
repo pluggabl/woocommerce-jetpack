@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price By Country Group Generator class.
  *
- * @version  2.3.9
+ * @version  2.4.4
  * @author   Algoritmika Ltd.
  */
 
@@ -63,7 +63,7 @@ class WCJ_Price_By_Country_Group_Generator {
 	/**
 	 * create_all_countries_groups.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.4
 	 */
 	function create_all_countries_groups() {
 		global $wcj_notice;
@@ -106,7 +106,17 @@ class WCJ_Price_By_Country_Group_Generator {
 			$i = 0;
 			foreach ( $currencies as $group_currency => $countries ) {
 				$i++;
-				update_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, implode( ',', $countries ) );
+				switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
+					case 'comma_list':
+						update_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, implode( ',', $countries ) );
+						break;
+					case 'multiselect':
+						update_option( 'wcj_price_by_country_countries_group_' . $i, $countries );
+						break;
+					case 'chosen_select':
+						update_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, $countries );
+						break;
+				}
 				update_option( 'wcj_price_by_country_exchange_rate_currency_group_'  . $i, $group_currency );
 				update_option( 'wcj_price_by_country_exchange_rate_group_'     . $i, 1 );
 				update_option( 'wcj_price_by_country_make_empty_price_group_'  . $i, 'no' );

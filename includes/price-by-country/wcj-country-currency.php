@@ -2,7 +2,7 @@
 /**
  * WooCommerce Jetpack Country Currency functions
  *
- * @version 2.3.9
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -234,7 +234,7 @@ if ( ! function_exists( 'wcj_get_country_currency' ) ) {
 	/**
 	 * wcj_get_country_currency.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.4
 	 */
 	function wcj_get_country_currency() {
 		return array(
@@ -453,7 +453,8 @@ if ( ! function_exists( 'wcj_get_country_currency' ) ) {
 			'TV' => 'AUD',
 			'UG' => 'UGX',
 			'AE' => 'AED',
-			'UK' => 'GBP',
+//			'UK' => 'GBP',
+			'GB' => 'GBP',
 			'US' => 'USD',
 			'UY' => 'UYU',
 			'UZ' => 'UZS',

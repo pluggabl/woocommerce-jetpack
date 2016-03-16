@@ -119,7 +119,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.4 - 14/03/2016 =
+= 2.4.4 - 15/03/2016 =
+~* Dev - BUTTON & PRICE LABELS - Custom Price Labels - WooCommerce Subscription products support added.
+~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Autogenerate Groups - `UK` changed to `GB` in `wcj_get_country_currency()`.
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Countries Selection" admin option added.
 * Dev - SHIPPING & ORDERS - Order Numbers - "Use MySQL Transaction" option added to admin settings. This will ensure no duplicated order numbers for shops with large number of simultaneous orders (sequential).
 * Dev - SHIPPING & ORDERS - Order Numbers - "Orders Renumerate" tool code refactoring.
 * Fix - PDF Invoicing - Header - "Default Images Directory" option added (`K_PATH_IMAGES` in `tcpdf_config.php`).

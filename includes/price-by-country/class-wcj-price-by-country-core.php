@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.4.3
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -186,7 +186,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 2.4.1
+	 * @version 2.4.4
 	 */
 	public function get_customer_country_group_id() {
 
@@ -245,9 +245,19 @@ class WCJ_Price_by_Country_Core {
 
 		// Get the country group id - go through all the groups, first found group is returned
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
-			$country_exchange_rate_group = get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
-			$country_exchange_rate_group = str_replace( ' ', '', $country_exchange_rate_group );
-			$country_exchange_rate_group = explode( ',', $country_exchange_rate_group );
+			switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
+				case 'comma_list':
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
+					$country_exchange_rate_group = str_replace( ' ', '', $country_exchange_rate_group );
+					$country_exchange_rate_group = explode( ',', $country_exchange_rate_group );
+					break;
+				case 'multiselect':
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_' . $i );
+					break;
+				case 'chosen_select':
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i );
+					break;
+			}
 			if ( in_array( $country, $country_exchange_rate_group ) ) {
 				$this->customer_country_group_id = $i;
 				//wcj_log( 'customer_country_group_id=' . $this->customer_country_group_id );

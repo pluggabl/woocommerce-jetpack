@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.3.10
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.4
 	 */
 	public function __construct() {
 
@@ -100,6 +100,9 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'woocommerce_variation_free_price_html',
 				'woocommerce_variation_price_html',
 				'woocommerce_variation_sale_price_html',
+				// WooCommerce Subscription
+				'woocommerce_subscriptions_product_price_string',
+				//'woocommerce_variable_subscription_price_html',
 			);
 			foreach ( $this->prices_filters as $the_filter )
 				add_filter( $the_filter, array( $this, 'custom_price' ), 100, 2 );
@@ -386,7 +389,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.4
 	 */
 	public function custom_price( $price, $product ) {
 
@@ -395,6 +398,9 @@ class WCJ_Price_Labels extends WCJ_Module {
 		$current_filter_name = current_filter();
 
 		if ( ( 'woocommerce_get_price_html' === $current_filter_name ) && ( 'booking' !== $product->product_type ) )
+			return $price;
+
+		if ( ( 'subscription' === $product->product_type ) && ( 'woocommerce_subscriptions_product_price_string' !== $current_filter_name ) )
 			return $price;
 
 		if ( 'woocommerce_cart_item_price' === $current_filter_name )

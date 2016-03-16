@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.3.9
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -52,7 +52,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.4
 	 */
 	function get_settings() {
 
@@ -124,7 +124,24 @@ class WCJ_Price_By_Country extends WCJ_Module {
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_price_by_country_options' ),
 
-			array( 'title' => __( 'Country Groups', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_price_by_country_country_groups_options' ),
+			array(
+				'title'    => __( 'Country Groups', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_price_by_country_country_groups_options',
+			),
+
+			array(
+				'title'    => __( 'Countries Selection', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Choose how do you want to enter countries groups in admin.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_price_by_country_selection',
+				'default'  => 'comma_list',
+				'type'     => 'select',
+				'options'  => array(
+					'comma_list'    => __( 'Comma separated list', 'woocommerce-jetpack' ),
+					'multiselect'   => __( 'Multiselect', 'woocommerce-jetpack' ),
+					'chosen_select' => __( 'Chosen select', 'woocommerce-jetpack' ),
+				),
+			),
 
 			array(
 				'title'    => __( 'Autogenerate Groups', 'woocommerce-jetpack' ),
@@ -165,26 +182,42 @@ class WCJ_Price_By_Country extends WCJ_Module {
 
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 
-			$settings[] = array(
-				'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
-				'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predifined sets visit <a href="http://booster.io/features/prices-and-currencies-by-customers-country" target="_blank">http://booster.io</a>', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_price_by_country_exchange_rate_countries_group_' . $i,
-				'default'  => '',
-				'type'     => 'textarea',
-				'css'      => 'width:50%;min-width:300px;height:100px;',
-			);
+			switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
 
-			/* TODO: Multiselect instead of comma separated list.
-			$settings[] = array(
-				'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
-				'id'       => 'wcj_price_by_country_countries_group_' . $i,
-				'default'  => '',
-				'type'     => 'multiselect',
-				'options'  => wcj_get_countries(),
-				//'class'    => 'chosen_select',
-				'css'      => 'width:50%;min-width:300px;height:100px;',
-			);
-			*/
+				case 'comma_list':
+					$settings[] = array(
+						'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
+						'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predifined sets visit <a href="http://booster.io/features/prices-and-currencies-by-customers-country" target="_blank">http://booster.io</a>', 'woocommerce-jetpack' ),
+						'id'       => 'wcj_price_by_country_exchange_rate_countries_group_' . $i,
+						'default'  => '',
+						'type'     => 'textarea',
+						'css'      => 'width:50%;min-width:300px;height:100px;',
+					);
+					break;
+
+				case 'multiselect':
+					$settings[] = array(
+						'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
+						'id'       => 'wcj_price_by_country_countries_group_' . $i,
+						'default'  => '',
+						'type'     => 'multiselect',
+						'options'  => wcj_get_countries(),
+						'css'      => 'width:50%;min-width:300px;height:100px;',
+					);
+					break;
+
+				case 'chosen_select':
+					$settings[] = array(
+						'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
+						'id'       => 'wcj_price_by_country_countries_group_chosen_select_' . $i,
+						'default'  => '',
+						'type'     => 'multiselect',
+						'options'  => wcj_get_countries(),
+						'class'    => 'chosen_select',
+						'css'      => 'width:50%;min-width:300px;',
+					);
+					break;
+			}
 
 			$settings[] = array(
 				'title'    => '',

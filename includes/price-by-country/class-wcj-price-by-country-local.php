@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Local class.
  *
- * @version  2.3.9
+ * @version  2.4.4
  * @author   Algoritmika Ltd.
  */
 
@@ -232,6 +232,8 @@ class WCJ_Price_by_Country_Local {
 
 	/**
 	 * get_all_options_html.
+	 *
+	 * @version 2.4.4
 	 */
 	public function get_all_options_html( $simple_or_variable, $current_post_id, $total_number, $variation_id_addon = '' ) {
 		$html = '';
@@ -247,7 +249,17 @@ class WCJ_Price_by_Country_Local {
 				$html .= '<strong>';
 				$html .= __( 'Country Group Nr.', 'woocommerce-jetpack' ) . ' ' . $i;
 				$html .= ': ';
-				$html .= get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
+				switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
+					case 'comma_list':
+						$html .= get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
+						break;
+					case 'multiselect':
+						$html .= implode( ',', get_option( 'wcj_price_by_country_countries_group_' . $i ) );
+						break;
+					case 'chosen_select':
+						$html .= implode( ',', get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i ) );
+						break;
+				}
 				$html .= '</strong>';
 				$html .= '</p>';
 			//}
