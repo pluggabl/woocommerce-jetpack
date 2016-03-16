@@ -397,14 +397,17 @@ class WCJ_Price_Labels extends WCJ_Module {
 
 		$current_filter_name = current_filter();
 
-		if ( ( 'woocommerce_get_price_html' === $current_filter_name ) && ( 'booking' !== $product->product_type ) )
+		if ( 'woocommerce_get_price_html' === $current_filter_name && 'booking' !== $product->product_type ) {
 			return $price;
+		}
 
-		if ( ( 'subscription' === $product->product_type ) && ( 'woocommerce_subscriptions_product_price_string' !== $current_filter_name ) )
+		if ( 'woocommerce_subscriptions_product_price_string' === $current_filter_name && 'subscription' !== $product->product_type ) {
 			return $price;
+		}
 
-		if ( 'woocommerce_cart_item_price' === $current_filter_name )
+		if ( 'woocommerce_cart_item_price' === $current_filter_name ) {
 			$product = $product['data'];
+		}
 
 		$do_apply_global = true;
 		$products_incl = get_option( 'wcj_global_price_labels_products_incl', array() );
