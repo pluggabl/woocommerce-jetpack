@@ -119,7 +119,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.4 - 15/03/2016 =
+= 2.4.4 - 16/03/2016 =
+-* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed (again).
 ~* Dev - BUTTON & PRICE LABELS - Custom Price Labels - WooCommerce Subscription products support added.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Autogenerate Groups - `UK` changed to `GB` in `wcj_get_country_currency()`.
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Countries Selection" admin option added.

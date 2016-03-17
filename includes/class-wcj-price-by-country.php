@@ -17,7 +17,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.4
 	 */
 	public function __construct() {
 
@@ -31,7 +31,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			if ( ! is_admin() ) { // || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				// Frontend
 				include_once( 'price-by-country/class-wcj-price-by-country-core.php' );
 			}
