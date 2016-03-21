@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Tabs class.
  *
- * @version 2.2.9
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -37,6 +37,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 
 	/**
 	 * Customize the product tabs.
+	 *
+	 * @version 2.4.4
 	 */
 	function customize_product_tabs( $tabs ) {
 
@@ -101,6 +103,23 @@ class WCJ_Product_Tabs extends WCJ_Module {
 						continue;
 				}
 
+				// Exclude by product tag
+				$array_to_exclude = get_option( 'wcj_custom_product_tabs_global_hide_in_tags_' . $i );
+				if ( '' != $array_to_exclude ) {
+					$do_exclude = false;
+					$product_tags_objects = get_the_terms( $product->id, 'product_tag' );
+					if ( $product_tags_objects && ! empty( $product_tags_objects ) ) {
+						foreach ( $product_tags_objects as $product_tags_object ) {
+							if ( $product && $array_to_exclude && in_array( $product_tags_object->term_id, $array_to_exclude ) ) {
+								$do_exclude = true;
+								break;
+							}
+						}
+					}
+					if ( $do_exclude )
+						continue;
+				}
+
 				// Include by product id
 				$list_to_include = get_option( 'wcj_custom_product_tabs_title_global_show_in_product_ids_' . $i );
 				if ( '' != $list_to_include ) {
@@ -120,6 +139,23 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					if ( $product_categories_objects && ! empty( $product_categories_objects ) ) {
 						foreach ( $product_categories_objects as $product_categories_object ) {
 							if ( $product && $array_to_include && in_array( $product_categories_object->term_id, $array_to_include ) ) {
+								$do_include = true;
+								break;
+							}
+						}
+					}
+					if ( ! $do_include )
+						continue;
+				}
+
+				// Include by product tag
+				$array_to_include = get_option( 'wcj_custom_product_tabs_global_show_in_tags_' . $i );
+				if ( '' != $array_to_include ) {
+					$do_include = false;
+					$product_tags_objects = get_the_terms( $product->id, 'product_tag' );
+					if ( $product_tags_objects && ! empty( $product_tags_objects ) ) {
+						foreach ( $product_tags_objects as $product_tags_object ) {
+							if ( $product && $array_to_include && in_array( $product_tags_object->term_id, $array_to_include ) ) {
 								$do_include = true;
 								break;
 							}
@@ -304,7 +340,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.2.9
+	 * @version 2.4.4
 	 */
 	function get_settings() {
 
@@ -329,6 +365,14 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				            => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
 		);
+
+		$product_tags_options = array();
+		$product_tags = get_terms( 'product_tag', 'orderby=name&hide_empty=0' );
+		if ( ! empty( $product_tags ) && ! is_wp_error( $product_tags ) ){
+			foreach ( $product_tags as $product_tag ) {
+				$product_tags_options[ $product_tag->term_id ] = $product_tag->name;
+			}
+		}
 
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
 			$settings = array_merge( $settings,
@@ -368,18 +412,18 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					),
 					array(
 						'title'     => '',
-						'desc'      => __( 'Comma separated CATEGORY IDs to HIDE this tab', 'woocommerce-jetpack' ),
-						'desc_tip'  => __( 'To hide this tab from some categories, enter category IDs here.', 'woocommerce-jetpack' ),
-						'id'        => 'wcj_custom_product_tabs_title_global_hide_in_cats_ids_' . $i,
+						'desc'      => __( 'Comma separated PRODUCT IDs to SHOW this tab', 'woocommerce-jetpack' ),
+						'desc_tip'  => __( 'To show this tab only for some products, enter product IDs here.', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_custom_product_tabs_title_global_show_in_product_ids_' . $i,
 						'default'   => '',
 						'type'      => 'text',
 						'css'       => 'width:30%;min-width:300px;',
 					),
 					array(
 						'title'     => '',
-						'desc'      => __( 'Comma separated PRODUCT IDs to SHOW this tab', 'woocommerce-jetpack' ),
-						'desc_tip'  => __( 'To show this tab only for some products, enter product IDs here.', 'woocommerce-jetpack' ),
-						'id'        => 'wcj_custom_product_tabs_title_global_show_in_product_ids_' . $i,
+						'desc'      => __( 'Comma separated CATEGORY IDs to HIDE this tab', 'woocommerce-jetpack' ),
+						'desc_tip'  => __( 'To hide this tab from some categories, enter category IDs here.', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_custom_product_tabs_title_global_hide_in_cats_ids_' . $i,
 						'default'   => '',
 						'type'      => 'text',
 						'css'       => 'width:30%;min-width:300px;',
@@ -392,6 +436,26 @@ class WCJ_Product_Tabs extends WCJ_Module {
 						'default'   => '',
 						'type'      => 'text',
 						'css'       => 'width:30%;min-width:300px;',
+					),
+					array(
+						'title'     => '',
+						'desc'      => __( 'TAGS to HIDE this tab', 'woocommerce-jetpack' ),
+						'desc_tip'  => __( 'To hide this tab from some tags, enter tags here.', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_custom_product_tabs_global_hide_in_tags_' . $i,
+						'default'   => '',
+						'class'     => 'chosen_select',
+						'type'      => 'multiselect',
+						'options'   => $product_tags_options,
+					),
+					array(
+						'title'     => '',
+						'desc'      => __( 'TAGS to HIDE this tab', 'woocommerce-jetpack' ),
+						'desc_tip'  => __( 'To hide this tab from some tags, enter tags here.', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_custom_product_tabs_global_show_in_tags_' . $i,
+						'default'   => '',
+						'class'     => 'chosen_select',
+						'type'      => 'multiselect',
+						'options'   => $product_tags_options,
 					),
 				)
 			);
@@ -528,7 +592,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 
 		) );
 
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 

@@ -111,6 +111,8 @@ class WCJ_Price_by_Country_Core {
 
 	/**
 	 * change_shipping_price_by_country.
+	 *
+	 * @version 2.4.4
 	 */
 	function change_shipping_price_by_country( $package_rates, $package ) {
 
@@ -119,7 +121,14 @@ class WCJ_Price_by_Country_Core {
 			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
 			$modified_package_rates = array();
 			foreach ( $package_rates as $id => $package_rate ) {
-				if ( 1 != $country_exchange_rate && isset( $package_rate->cost ) ) $package_rate->cost = $package_rate->cost * $country_exchange_rate;
+				if ( 1 != $country_exchange_rate && isset( $package_rate->cost ) ) {
+					$package_rate->cost = $package_rate->cost * $country_exchange_rate;
+					if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
+						foreach ( $package_rate->taxes as $tax_id => $tax ) {
+							$package_rate->taxes[ $tax_id ] = $package_rate->taxes[ $tax_id ] * $country_exchange_rate;
+						}
+					}
+				}
 				$modified_package_rates[ $id ] = $package_rate;
 			}
 			return $modified_package_rates;

@@ -120,6 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.4 - 16/03/2016 =
+* Fix - PRICES & CURRENCIES - Price by Country - Shipping (taxable) calculation fixed.
+-* Dev - `wcj_get_currencies_names_and_symbols()` and `wcj_get_currency_symbol()` functions modified.
 -* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed (again).
 -* Dev - BUTTON & PRICE LABELS - Custom Price Labels - WooCommerce Subscription products support added.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Autogenerate Groups - `UK` changed to `GB` in `wcj_get_country_currency()`.
