@@ -1,12 +1,12 @@
 var jsonpCallbacks = {cntr: 0};
 
 function doJSONP(from, to, callbackFuncName) {
-	var url = "http://query.yahooapis.com/v1/public/yql?q=select%20rate%2Cname%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes%3Fs%3D"+from+to+"%253DX%26f%3Dl1n'%20and%20columns%3D'rate%2Cname'&format=json";
+	var url = "//query.yahooapis.com/v1/public/yql?q=select%20rate%2Cname%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes%3Fs%3D"+from+to+"%253DX%26f%3Dl1n'%20and%20columns%3D'rate%2Cname'&format=json";
     var fullURL = url + "&callback=" + callbackFuncName;
     // generate the script tag here
 	var script = document.createElement('script');
 	script.setAttribute('src', fullURL);
-	document.body.appendChild(script);   
+	document.body.appendChild(script);
 }
 
 function getRate(from, to, id, fn) {
@@ -32,7 +32,7 @@ function parseExchangeRate(id, data) {
 	jQuery("#"+id).val(rate);
 }
 
-jQuery(document).ready(function() {		
+jQuery(document).ready(function() {
 	jQuery(".exchage_rate_button").click(function(){
 		getRate(this.getAttribute('currency_from'), this.getAttribute('currency_to'), this.getAttribute('multiply_by_field_id'), parseExchangeRate);
 		return false;

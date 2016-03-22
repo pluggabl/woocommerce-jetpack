@@ -614,7 +614,7 @@ if ( ! function_exists( 'wcj_get_currencies_names_and_symbols' ) ) {
 				}
 			}
 		}
-		if ( 'all' === $scope || 'custom_only' === $scope ) {
+		if ( wcj_is_module_enabled( 'currency' ) && ( 'all' === $scope || 'custom_only' === $scope ) ) {
 			// Custom currencies
 			$custom_currency_total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
 			for ( $i = 1; $i <= $custom_currency_total_number; $i++) {
