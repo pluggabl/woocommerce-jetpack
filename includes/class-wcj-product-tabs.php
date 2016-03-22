@@ -105,7 +105,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 
 				// Exclude by product tag
 				$array_to_exclude = get_option( 'wcj_custom_product_tabs_global_hide_in_tags_' . $i );
-				if ( '' != $array_to_exclude && ! empty( $array_to_include ) ) {
+				if ( '' != $array_to_exclude && ! empty( $array_to_exclude ) ) {
 					$do_exclude = false;
 					$product_tags_objects = get_the_terms( $product->id, 'product_tag' );
 					if ( $product_tags_objects && ! empty( $product_tags_objects ) ) {
@@ -449,8 +449,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					),
 					array(
 						'title'     => '',
-						'desc'      => __( 'TAGS to HIDE this tab', 'woocommerce-jetpack' ),
-						'desc_tip'  => __( 'To hide this tab from some tags, enter tags here.', 'woocommerce-jetpack' ),
+						'desc'      => __( 'TAGS to SHOW this tab', 'woocommerce-jetpack' ),
+						'desc_tip'  => __( 'To show this tab only for some tags, enter tags here.', 'woocommerce-jetpack' ),
 						'id'        => 'wcj_custom_product_tabs_global_show_in_tags_' . $i,
 						'default'   => '',
 						'class'     => 'chosen_select',
