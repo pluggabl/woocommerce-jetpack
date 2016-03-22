@@ -199,16 +199,25 @@ if ( ! function_exists( 'add_wcj_get_products_filter' ) ) {
  * @version 2.4.4
  */
 if ( ! function_exists( 'wcj_get_products' ) ) {
-	function wcj_get_products( $products ) {
-		$args = array(
-			'post_type'      => 'product',
-			'post_status'    => 'any',
-			'posts_per_page' => -1,
-		);
-		$loop = new WP_Query( $args );
-		while ( $loop->have_posts() ) : $loop->the_post();
-			$products[ strval( $loop->post->ID ) ] = get_the_title( $loop->post->ID );
-		endwhile;
+	function wcj_get_products( $products = array() ) {
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			$args = array(
+				'post_type'      => 'product',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
+			while ( $loop->have_posts() ) : $loop->the_post();
+				$products[ strval( $loop->post->ID ) ] = get_the_title( $loop->post->ID );
+			endwhile;
+			$offset += $block_size;
+		}
 		wp_reset_postdata();
 		return $products;
 	}

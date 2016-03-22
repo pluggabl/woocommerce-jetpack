@@ -119,7 +119,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.4 - 21/03/2016 =
+= 2.4.4 - 22/03/2016 =
+~* Dev - PRODUCTS - Product Tabs - "CATEGORIES to HIDE this tab" and "CATEGORIES to SHOW this tab" options added, instead of depreciated "Comma separated CATEGORY IDs..." options.
+~* Dev - PRODUCTS - Product Tabs - "PRODUCTS to HIDE this tab" and "PRODUCTS to SHOW this tab" options added, instead of depreciated "Comma separated PRODUCT IDs..." options.
 ~* Dev - "WooCommerce Jetpack Currencies Array" (wcj-currencies.php) updated.
 ~* Dev - PRODUCTS - Product Tabs - "TAGS to HIDE this tab" and "TAGS to SHOW this tab" options added.
 * Dev - PRODUCTS - Product Tabs - "Reset settings" button added.
@@ -138,7 +140,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - "Price type to modify" functionality added to the Bulk Price Converter tool.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - "None" product category added to the Bulk Price Converter tool.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - "Pretty price" functionality added to the Bulk Price Converter tool.
-* Dev - EMAILS & MISC. - WPML - wpml-config.xml file updated.
+~* Dev - EMAILS & MISC. - WPML - wpml-config.xml file updated.
 * Dev - EMAILS & MISC. - WPML - "Regenerate wpml-config.xml file" tool optimized for speed.
 * Fix - EMAILS & MISC. - WPML - "Regenerate wpml-config.xml file" link fixed.
 * Fix - EMAILS & MISC. - WPML - "Regenerate wpml-config.xml file" tool bug fixed.
