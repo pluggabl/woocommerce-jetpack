@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways by Country class.
  *
- * @version 2.4.1
+ * @version 2.4.4
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -17,12 +17,14 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.4
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_by_country';
-		$this->short_desc = __( 'Gateways by Country', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set countries to include/exclude for WooCommerce payment gateways to show up.', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Gateways by Country or State', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set countries or states to include/exclude for WooCommerce payment gateways to show up.', 'woocommerce-jetpack' );
 		parent::__construct();
 
 		add_filter( 'init', array( $this, 'add_hooks' ) );
@@ -34,6 +36,8 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 
 	/**
 	 * available_payment_gateways.
+	 *
+	 * @version 2.4.4
 	 */
 	function available_payment_gateways( $_available_gateways ) {
 		foreach ( $_available_gateways as $key => $gateway ) {
@@ -45,6 +49,17 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 			}
 			$exclude_countries = get_option( 'wcj_gateways_countries_exclude_' . $key, '' );
 			if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries ) ) {
+				unset( $_available_gateways[ $key ] );
+				continue;
+			}
+			$customer_state = WC()->customer->get_state();
+			$include_states = get_option( 'wcj_gateways_states_include_' . $key, '' );
+			if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states ) ) {
+				unset( $_available_gateways[ $key ] );
+				continue;
+			}
+			$exclude_states = get_option( 'wcj_gateways_states_exclude_' . $key, '' );
+			if ( ! empty( $exclude_states ) && in_array( $customer_state, $exclude_states ) ) {
 				unset( $_available_gateways[ $key ] );
 				continue;
 			}
@@ -61,6 +76,8 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 
 	/**
 	 * add_countries_settings.
+	 *
+	 * @version 2.4.4
 	 */
 	function add_countries_settings( $settings ) {
 		$settings = array();
@@ -71,6 +88,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 			'id'    => 'wcj_payment_gateways_by_country_gateways_options',
 		);
 		$countries = wcj_get_countries();
+		$states = wcj_get_states();
 		$gateways = WC()->payment_gateways->payment_gateways();
 		foreach ( $gateways as $key => $gateway ) {
 			$default_gateways = array( 'bacs' );
@@ -87,7 +105,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 			$settings[] = array(
 				'title'     => $gateway->title,
 				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Include', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Include Countries', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_gateways_countries_include_' . $key,
 				'default'   => '',
 				'type'      => 'multiselect',
@@ -99,13 +117,37 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 			$settings[] = array(
 				'title'     => '',
 				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Exclude', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Exclude Countries', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_gateways_countries_exclude_' . $key,
 				'default'   => '',
 				'type'      => 'multiselect',
 				'class'     => 'chosen_select',
 				'css'       => 'width: 450px;',
 				'options'   => $countries,
+				'custom_attributes' => $custom_attributes,
+			);
+			$settings[] = array(
+				'title'     => '',
+				'desc_tip'  => $desc_tip,
+				'desc'      => __( 'Include States (US Only)', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_gateways_states_include_' . $key,
+				'default'   => '',
+				'type'      => 'multiselect',
+				'class'     => 'chosen_select',
+				'css'       => 'width: 450px;',
+				'options'   => $states,
+				'custom_attributes' => $custom_attributes,
+			);
+			$settings[] = array(
+				'title'     => '',
+				'desc_tip'  => $desc_tip,
+				'desc'      => __( 'Exclude States (US Only)', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_gateways_states_exclude_' . $key,
+				'default'   => '',
+				'type'      => 'multiselect',
+				'class'     => 'chosen_select',
+				'css'       => 'width: 450px;',
+				'options'   => $states,
 				'custom_attributes' => $custom_attributes,
 			);
 		}

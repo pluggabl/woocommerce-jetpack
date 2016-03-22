@@ -120,7 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.4 - 22/03/2016 =
-* Fix - http removed in exchange_rates.js. Fixes bug when loading https.
+~* Dev - PAYMENT GATEWAYS - Gateways by Country or State - "Include States (US Only)" and "Exclude States (US Only)" options added.
+* Fix - "http" removed in exchange_rates.js. Fixes bug when loading https.
 * Dev - PRODUCTS - Product Tabs - "CATEGORIES to HIDE this tab" and "CATEGORIES to SHOW this tab" options added, instead of depreciated "Comma separated CATEGORY IDs..." options.
 * Dev - PRODUCTS - Product Tabs - "PRODUCTS to HIDE this tab" and "PRODUCTS to SHOW this tab" options added, instead of depreciated "Comma separated PRODUCT IDs..." options.
 * Dev - "Booster Currencies Array" (wcj-currencies.php) updated.
