@@ -105,7 +105,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 
 				// Exclude by product tag
 				$array_to_exclude = get_option( 'wcj_custom_product_tabs_global_hide_in_tags_' . $i );
-				if ( '' != $array_to_exclude ) {
+				if ( '' != $array_to_exclude && ! empty( $array_to_include ) ) {
 					$do_exclude = false;
 					$product_tags_objects = get_the_terms( $product->id, 'product_tag' );
 					if ( $product_tags_objects && ! empty( $product_tags_objects ) ) {
@@ -150,7 +150,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 
 				// Include by product tag
 				$array_to_include = get_option( 'wcj_custom_product_tabs_global_show_in_tags_' . $i );
-				if ( '' != $array_to_include ) {
+				if ( '' != $array_to_include && ! empty( $array_to_include ) ) {
 					$do_include = false;
 					$product_tags_objects = get_the_terms( $product->id, 'product_tag' );
 					if ( $product_tags_objects && ! empty( $product_tags_objects ) ) {
