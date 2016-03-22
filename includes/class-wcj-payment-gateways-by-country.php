@@ -129,7 +129,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 			$settings[] = array(
 				'title'     => '',
 				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Include States (US Only)', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Include States (Base Country)', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_gateways_states_include_' . $key,
 				'default'   => '',
 				'type'      => 'multiselect',
@@ -141,7 +141,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 			$settings[] = array(
 				'title'     => '',
 				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Exclude States (US Only)', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Exclude States (Base Country)', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_gateways_states_exclude_' . $key,
 				'default'   => '',
 				'type'      => 'multiselect',

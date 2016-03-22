@@ -96,9 +96,9 @@ if ( ! function_exists( 'wcj_get_country_name_by_code' ) ) {
  */
 if ( ! function_exists( 'wcj_get_states' ) ) {
 	function wcj_get_states() {
-		/*$all_states = WC()->countries->get_allowed_country_states();
-		return isset( $all_states['US'] ) ? $all_states['US'] : array();*/
-		return WC()->countries->get_states( 'US' );
+		$base_country = WC()->countries->get_base_country();
+		$states = WC()->countries->get_states( $base_country );
+		return ( isset( $states ) && ! empty( $states ) ) ? $states : array();
 	}
 }
 
