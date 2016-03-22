@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.4.3
+ * @version 2.4.4
  */
 
 final class WC_Jetpack {
@@ -362,6 +362,8 @@ final class WC_Jetpack {
 
 	/**
 	 * include_functions.
+	 *
+	 * @version 2.4.4
 	 */
 	private function include_functions() {
 		include_once( 'includes/functions/wcj-debug-functions.php' );
@@ -369,6 +371,8 @@ final class WC_Jetpack {
 		include_once( 'includes/functions/wcj-html-functions.php' );
 		include_once( 'includes/functions/wcj-country-functions.php' );
 		include_once( 'includes/functions/wcj-invoicing-functions.php' );
+
+		include_once( 'includes/currencies/wcj-currencies.php' );
 	}
 
 	/**
