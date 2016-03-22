@@ -122,12 +122,12 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 = 2.4.4 - 22/03/2016 =
 ~* Dev - PRODUCTS - Product Tabs - "CATEGORIES to HIDE this tab" and "CATEGORIES to SHOW this tab" options added, instead of depreciated "Comma separated CATEGORY IDs..." options.
 ~* Dev - PRODUCTS - Product Tabs - "PRODUCTS to HIDE this tab" and "PRODUCTS to SHOW this tab" options added, instead of depreciated "Comma separated PRODUCT IDs..." options.
-~* Dev - "WooCommerce Jetpack Currencies Array" (wcj-currencies.php) updated.
+~* Dev - "Booster Currencies Array" (wcj-currencies.php) updated.
 ~* Dev - PRODUCTS - Product Tabs - "TAGS to HIDE this tab" and "TAGS to SHOW this tab" options added.
 * Dev - PRODUCTS - Product Tabs - "Reset settings" button added.
 * Fix - PRICES & CURRENCIES - Price by Country - Shipping (taxable) calculation fixed.
--* Dev - `wcj_get_currencies_names_and_symbols()` and `wcj_get_currency_symbol()` functions modified.
--* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed (again).
+~* Dev - `wcj_get_currencies_names_and_symbols()` and `wcj_get_currency_symbol()` functions modified.
+~* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed (again).
 -* Dev - BUTTON & PRICE LABELS - Custom Price Labels - WooCommerce Subscription products support added.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Autogenerate Groups - `UK` changed to `GB` in `wcj_get_country_currency()`.
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Countries Selection" admin option added.
