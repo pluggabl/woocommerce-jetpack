@@ -578,12 +578,52 @@ if ( ! function_exists( 'wcj_get_order_statuses' ) ) {
 
 /**
  * wcj_get_currencies_names_and_symbols.
+ *
+ * @version 2.4.4
  */
 if ( ! function_exists( 'wcj_get_currencies_names_and_symbols' ) ) {
-	function wcj_get_currencies_names_and_symbols() {
-		$currencies = include( wcj_plugin_path() . '/includes/currencies/wcj-currencies.php' );
-		foreach( $currencies as $data ) {
-			$currency_names_and_symbols[ $data['code'] ] = $data['name'] . ' (' . $data['symbol'] . ')';
+	function wcj_get_currencies_names_and_symbols( $result = 'names_and_symbols', $scope = 'all' ) {
+		$currency_names_and_symbols = array();
+		/* if ( ! wcj_is_module_enabled( 'currency' ) ) {
+			return $currency_names_and_symbols;
+		} */
+		if ( 'all' === $scope || 'no_custom' === $scope ) {
+			$currencies = include( wcj_plugin_path() . '/includes/currencies/wcj-currencies.php' );
+			foreach( $currencies as $data ) {
+				switch ( $result ) {
+					case 'names_and_symbols':
+						$currency_names_and_symbols[ $data['code'] ] = $data['name'] . ' (' . $data['symbol'] . ')';
+						break;
+					case 'names':
+						$currency_names_and_symbols[ $data['code'] ] = $data['name'];
+						break;
+					case 'symbols':
+						$currency_names_and_symbols[ $data['code'] ] = $data['symbol'];
+						break;
+				}
+			}
+		}
+		if ( 'all' === $scope || 'custom_only' === $scope ) {
+			// Custom currencies
+			$custom_currency_total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
+			for ( $i = 1; $i <= $custom_currency_total_number; $i++) {
+				$custom_currency_code   = get_option( 'wcj_currency_custom_currency_code_'   . $i );
+				$custom_currency_name   = get_option( 'wcj_currency_custom_currency_name_'   . $i );
+				$custom_currency_symbol = get_option( 'wcj_currency_custom_currency_symbol_' . $i );
+				if ( '' != $custom_currency_code && '' != $custom_currency_name /* && '' != $custom_currency_symbol */ ) {
+					switch ( $result ) {
+						case 'names_and_symbols':
+							$currency_names_and_symbols[ $custom_currency_code ] = $custom_currency_name . ' (' . $custom_currency_symbol . ')';
+							break;
+						case 'names':
+							$currency_names_and_symbols[ $custom_currency_code ] = $custom_currency_name;
+							break;
+						case 'symbols':
+							$currency_names_and_symbols[ $custom_currency_code ] = $custom_currency_symbol;
+							break;
+					}
+				}
+			}
 		}
 		return $currency_names_and_symbols;
 	}
@@ -592,19 +632,18 @@ if ( ! function_exists( 'wcj_get_currencies_names_and_symbols' ) ) {
 /**
  * wcj_get_currency_symbol.
  *
- * @version 2.2.7
+ * @version 2.4.4
  */
 if ( ! function_exists( 'wcj_get_currency_symbol' ) ) {
 	function wcj_get_currency_symbol( $currency_code ) {
 		$return = '';
-		$currencies = include( wcj_plugin_path() . '/includes/currencies/wcj-currencies.php' );
-		foreach( $currencies as $data ) {
-			if ( $currency_code == $data['code'] ) {
-				$return = $data['symbol'];
-				break;
-			}
+		$currencies = wcj_get_currencies_names_and_symbols( 'symbols', 'no_custom' );
+		if ( isset( $currencies[ $currency_code ] ) ) {
+			$return = apply_filters( 'wcj_get_option_filter', $currencies[ $currency_code ], get_option( 'wcj_currency_' . $currency_code, $currencies[ $currency_code ] ) );
+		} else {
+			$currencies = wcj_get_currencies_names_and_symbols( 'symbols', 'custom_only' );
+			$return = isset( $currencies[ $currency_code ] ) ? $currencies[ $currency_code ] : '';
 		}
-		$return = apply_filters( 'wcj_get_option_filter', $return, get_option( 'wcj_currency_' . $currency_code, $return ) );
 		return ( '' != $return ) ? $return : false;
 	}
 }

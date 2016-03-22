@@ -119,7 +119,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.4 - 16/03/2016 =
+= 2.4.4 - 21/03/2016 =
+~* Dev - PRODUCTS - Product Tabs - "TAGS to HIDE this tab" and "TAGS to SHOW this tab" options added.
+* Dev - PRODUCTS - Product Tabs - "Reset settings" button added.
 * Fix - PRICES & CURRENCIES - Price by Country - Shipping (taxable) calculation fixed.
 -* Dev - `wcj_get_currencies_names_and_symbols()` and `wcj_get_currency_symbol()` functions modified.
 -* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed (again).

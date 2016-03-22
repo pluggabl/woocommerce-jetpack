@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack currencies class stores currencies data.
  *
- * @version 2.4.2
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.2
+	 * @version 2.4.4
 	 */
 	function __construct() {
 
@@ -26,36 +26,21 @@ class WCJ_Currencies extends WCJ_Module {
 		$this->desc       = __( 'Add all world currencies to your WooCommerce store; change currency symbol.', 'woocommerce-jetpack' );
 		parent::__construct();
 
-		$currencies = include( 'currencies/wcj-currencies.php' );
-		foreach( $currencies as $data ) {
-			$this->currency_symbols[ $data['code'] ] = $data['symbol'];
-			$this->currency_names[   $data['code'] ] = $data['name'];
-		}
-
-		$custom_currency_total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
-		for ( $i = 1; $i <= $custom_currency_total_number; $i++) {
-			$custom_currency_code   = get_option( 'wcj_currency_custom_currency_code_'   . $i );
-			$custom_currency_name   = get_option( 'wcj_currency_custom_currency_name_'   . $i );
-			$custom_currency_symbol = get_option( 'wcj_currency_custom_currency_symbol_' . $i );
-			if ( '' != $custom_currency_code && '' != $custom_currency_name /* && '' != $custom_currency_symbol */ ) {
-				$this->currency_names[   $custom_currency_code ] = $custom_currency_name;
-				$this->currency_symbols[ $custom_currency_code ] = $custom_currency_symbol;
-			}
-		}
-
 		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_currencies',      array( $this, 'add_all_currencies'), 100 );
-			add_filter( 'woocommerce_currency_symbol', array( $this, 'add_currency_symbol'), 100, 2 );
-
-			add_filter( 'woocommerce_general_settings', array( $this, 'add_edit_currency_symbol_field' ), 100 );
+			add_filter( 'woocommerce_currencies',       array( $this, 'add_all_currencies'),              PHP_INT_MAX );
+			add_filter( 'woocommerce_currency_symbol',  array( $this, 'change_currency_symbol'),          PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_general_settings', array( $this, 'add_edit_currency_symbol_field' ), PHP_INT_MAX );
 		}
 	}
 
 	/**
-	 * add_all_currencies.
+	 * add_all_currencies - changing currency code.
+	 *
+	 * @version 2.4.4
 	 */
 	function add_all_currencies( $currencies ) {
-		foreach ( $this->currency_names as $currency_code => $currency_name ) {
+		$currency_names = wcj_get_currencies_names_and_symbols( 'names' );
+		foreach ( $currency_names as $currency_code => $currency_name ) {
 			$currencies[ $currency_code ] = $currency_name;
 		}
 		asort( $currencies );
@@ -63,14 +48,16 @@ class WCJ_Currencies extends WCJ_Module {
 	}
 
 	/**
-	 * add_currency_symbol.
+	 * change_currency_symbol.
+	 *
+	 * @version 2.4.4
 	 */
-	function add_currency_symbol( $currency_symbol, $currency ) {
+	function change_currency_symbol( $currency_symbol, $currency ) {
 		if ( 'yes' === get_option( 'wcj_currency_hide_symbol' ) ) {
 			return '';
 		}
-		$default = ( isset( $this->currency_symbols[ $currency ] ) ) ? $this->currency_symbols[ $currency ] : $currency_symbol;
-		return apply_filters( 'wcj_get_option_filter', $default, get_option( 'wcj_currency_' . $currency, $currency_symbol ) );
+//		return apply_filters( 'wcj_get_option_filter', wcj_get_currency_symbol( $currency ), get_option( 'wcj_currency_' . $currency, $currency_symbol ) ); // TODO: custom currency
+		return wcj_get_currency_symbol( $currency );
 	}
 
 	/**
@@ -101,7 +88,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.2
+	 * @version 2.4.4
 	 */
 	function get_settings() {
 
@@ -123,12 +110,14 @@ class WCJ_Currencies extends WCJ_Module {
 			),
 		);
 
-		foreach ( $this->currency_names as $currency_code => $currency_name ) {
+		$currency_names   = wcj_get_currencies_names_and_symbols( 'names',   'no_custom' );
+		$currency_symbols = wcj_get_currencies_names_and_symbols( 'symbols', 'no_custom' );
+		foreach ( $currency_names as $currency_code => $currency_name ) {
 			$settings[] = array(
 				'title'     => $currency_name,
 				'desc_tip'  => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
 				'id'        => 'wcj_currency_' . $currency_code,
-				'default'   => $this->currency_symbols[ $currency_code ],
+				'default'   => $currency_symbols[ $currency_code ],
 				'type'      => 'text',
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			);
