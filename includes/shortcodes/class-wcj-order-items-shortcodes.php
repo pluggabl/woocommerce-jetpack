@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.4.0
+ * @version 2.4.4
  * @author  Algoritmika Ltd.
  */
 
@@ -126,7 +126,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.4
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -184,6 +184,10 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			$item_counter++;
 			// Columns
 			foreach( $columns as $column ) {
+				if ( false !== ( $pos = strpos( $column, '=' ) ) ) {
+					$column_param = substr( $column, $pos + 1 );
+					$column       = substr( $column, 0, $pos );
+				}
 				switch ( $column ) {
 					case 'item_number':
 						$data[ $item_counter ][] = $item_counter;
@@ -200,6 +204,12 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 							}
 							$data[ $item_counter ][] = $the_item_title;
 						}
+						break;
+					case 'item_product_input_fields':
+						$data[ $item_counter ][] = wcj_get_product_input_fields( $item );
+						break;
+					case 'item_key':
+						$data[ $item_counter ][] = isset( $item[ $column_param ] ) ? $item[ $column_param ] : '';
 						break;
 					case 'item_excerpt':
 					case 'item_description':
@@ -290,7 +300,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$data[ $item_counter ][] = sprintf( $atts['tax_percent_format'], $line_tax_percent );
 						break; */
 					default:
-						$data[ $item_counter ][] = '';
+						$data[ $item_counter ][] = ''; //$column;
 				}
 			}
 		}

@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.4 - 22/03/2016 =
+~* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_product_input_fields` and `item_key=` options (columns) added.
 ~* Dev - PAYMENT GATEWAYS - Gateways by Country or State - "Include States (US Only)" and "Exclude States (US Only)" options added.
 * Fix - "http" removed in exchange_rates.js. Fixes bug when loading https.
 * Dev - PRODUCTS - Product Tabs - "CATEGORIES to HIDE this tab" and "CATEGORIES to SHOW this tab" options added, instead of depreciated "Comma separated CATEGORY IDs..." options.

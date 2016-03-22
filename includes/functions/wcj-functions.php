@@ -9,6 +9,25 @@
  */
 
 /*
+ * wcj_get_product_input_fields.
+ *
+ * @version 2.4.4
+ * @since   2.4.4
+ * @return  string
+ */
+if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
+	function wcj_get_product_input_fields( $item ) {
+		$product_input_fields = array();
+		foreach ( $item as $key => $value ) {
+			if ( false !== strpos( $key, 'wcj_product_input_fields_' ) ) {
+				$product_input_fields[] = /* $key . ': ' . */ $value;
+			}
+		}
+		return ( ! empty( $product_input_fields ) ) ? /* ' (' . */ implode( ', ', $product_input_fields ) /* . ')' */ : '';
+	}
+}
+
+/*
  * wcj_get_left_to_free_shipping.
  *
  * @version 2.4.4
