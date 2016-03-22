@@ -639,7 +639,11 @@ if ( ! function_exists( 'wcj_get_currency_symbol' ) ) {
 		$return = '';
 		$currencies = wcj_get_currencies_names_and_symbols( 'symbols', 'no_custom' );
 		if ( isset( $currencies[ $currency_code ] ) ) {
-			$return = apply_filters( 'wcj_get_option_filter', $currencies[ $currency_code ], get_option( 'wcj_currency_' . $currency_code, $currencies[ $currency_code ] ) );
+			if ( wcj_is_module_enabled( 'currency' ) ) {
+				$return = apply_filters( 'wcj_get_option_filter', $currencies[ $currency_code ], get_option( 'wcj_currency_' . $currency_code, $currencies[ $currency_code ] ) );
+			} else {
+				$return = $currencies[ $currency_code ];
+			}
 		} else {
 			$currencies = wcj_get_currencies_names_and_symbols( 'symbols', 'custom_only' );
 			$return = isset( $currencies[ $currency_code ] ) ? $currencies[ $currency_code ] : '';
