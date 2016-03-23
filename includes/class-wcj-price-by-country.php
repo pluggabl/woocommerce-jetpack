@@ -101,7 +101,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			), */
 
 			array(
-				'title'    => __( 'Override Country on Checkout with Billing Country', 'woocommerce-jetpack' ),
+				'title'    => __( 'Override Country with Customer\'s Checkout Billing Country', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_override_on_checkout_with_billing_country',
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'default'  => 'no',

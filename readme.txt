@@ -123,7 +123,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - "Booster Currencies Array" (wcj-currencies.php) updated.
 * Dev - `wcj_get_currencies_names_and_symbols()` and `wcj_get_currency_symbol()` functions modified.
 * Fix - "http" removed in exchange_rates.js. Fixes bug when loading https.
-~* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_product_input_fields` and `item_key=` options (columns) added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_product_input_fields` and `item_key=` options (columns) added.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Shipping (taxable) calculation fixed.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Wrong currency in emails bug fixed (again).
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Autogenerate Groups - `UK` changed to `GB` in `wcj_get_country_currency()`.
@@ -137,7 +137,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - Only enabled modules currencies are added to the list.
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - `no_changes` currency bug fixed.
 * Fix - PRICES & CURRENCIES - Multicurrency and Currency Exchange Rates - Currency pairs added to Currency Exchange Rates module.
--* Dev - BUTTON & PRICE LABELS - Custom Price Labels - WooCommerce Subscription products support added.
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - WooCommerce Subscription products support added.
 * Dev - PRODUCTS - Product Tabs - "CATEGORIES to HIDE this tab" and "CATEGORIES to SHOW this tab" options added, instead of depreciated "Comma separated CATEGORY IDs..." options.
 * Dev - PRODUCTS - Product Tabs - "PRODUCTS to HIDE this tab" and "PRODUCTS to SHOW this tab" options added, instead of depreciated "Comma separated PRODUCT IDs..." options.
 * Dev - PRODUCTS - Product Tabs - "TAGS to HIDE this tab" and "TAGS to SHOW this tab" options added.

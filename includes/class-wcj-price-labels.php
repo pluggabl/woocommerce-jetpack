@@ -102,7 +102,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'woocommerce_variation_sale_price_html',
 				// WooCommerce Subscription
 				'woocommerce_subscriptions_product_price_string',
-				//'woocommerce_variable_subscription_price_html',
+				'woocommerce_variable_subscription_price_html',
 			);
 			foreach ( $this->prices_filters as $the_filter )
 				add_filter( $the_filter, array( $this, 'custom_price' ), 100, 2 );
@@ -383,7 +383,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				break;
 		}
 
-		return str_replace( 'From: ', '', $price );
+		return str_replace( 'From: ', '', $price ); // TODO: recheck if this is necessary? Also this works only for English WP installs.
 	}
 
 	/*
@@ -397,16 +397,27 @@ class WCJ_Price_Labels extends WCJ_Module {
 
 		$current_filter_name = current_filter();
 
+		if ( 'woocommerce_cart_item_price' === $current_filter_name ) {
+			$product = $product['data'];
+		}
+
 		if ( 'woocommerce_get_price_html' === $current_filter_name && 'booking' !== $product->product_type ) {
 			return $price;
 		}
 
-		if ( 'woocommerce_subscriptions_product_price_string' === $current_filter_name && 'subscription' !== $product->product_type ) {
+		if ( 'subscription' === $product->product_type && 'woocommerce_subscriptions_product_price_string' !== $current_filter_name ) {
 			return $price;
 		}
 
-		if ( 'woocommerce_cart_item_price' === $current_filter_name ) {
-			$product = $product['data'];
+		if ( 'variable-subscription' === $product->product_type && 'woocommerce_variable_subscription_price_html' !== $current_filter_name ) {
+			return $price;
+		}
+
+		if ( 'subscription_variation' === $product->product_type && 'woocommerce_subscriptions_product_price_string' !== $current_filter_name ) {
+			return $price;
+		}
+		if ( 'subscription_variation' === $product->product_type && 'woocommerce_subscriptions_product_price_string' === $current_filter_name ) {
+			$current_filter_name = 'woocommerce_variation_subscription_price_html';
 		}
 
 		$do_apply_global = true;
@@ -511,6 +522,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 								'woocommerce_variable_free_sale_price_html',
 								'woocommerce_variable_price_html',
 								'woocommerce_variable_sale_price_html',
+								'woocommerce_variable_subscription_price_html',
 							);
 
 							$variation_filters_array = array(
@@ -519,6 +531,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 								//woocommerce_variation_option_name
 								'woocommerce_variation_price_html',
 								'woocommerce_variation_sale_price_html',
+								'woocommerce_variation_subscription_price_html', // pseudo filter!
 							);
 
 							if (
@@ -534,6 +547,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 			}
 		}
 
+//		return do_shortcode( $price . $current_filter_name . $product->product_type . $labels_array['variation_variable'] . $labels_array['variation_variation'] );
 		return do_shortcode( $price );
 	}
 
