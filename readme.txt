@@ -121,7 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 = 2.4.4 - 22/03/2016 =
 ~* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_product_input_fields` and `item_key=` options (columns) added.
-~* Dev - PAYMENT GATEWAYS - Gateways by Country or State - "Include States (Base Country)" and "Exclude States (Base Country)" options added.
+* Dev - PAYMENT GATEWAYS - Gateways by Country or State - "Include States (Base Country)" and "Exclude States (Base Country)" options added.
 * Fix - "http" removed in exchange_rates.js. Fixes bug when loading https.
 * Dev - PRODUCTS - Product Tabs - "CATEGORIES to HIDE this tab" and "CATEGORIES to SHOW this tab" options added, instead of depreciated "Comma separated CATEGORY IDs..." options.
 * Dev - PRODUCTS - Product Tabs - "PRODUCTS to HIDE this tab" and "PRODUCTS to SHOW this tab" options added, instead of depreciated "Comma separated PRODUCT IDs..." options.
@@ -130,7 +130,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - PRODUCTS - Product Tabs - "Reset settings" button added.
 * Fix - PRICES & CURRENCIES - Price by Country - Shipping (taxable) calculation fixed.
 * Dev - `wcj_get_currencies_names_and_symbols()` and `wcj_get_currency_symbol()` functions modified.
-~* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed (again).
+* Fix - PRICES & CURRENCIES - Price by Country - Wrong currency in emails bug fixed (again).
 -* Dev - BUTTON & PRICE LABELS - Custom Price Labels - WooCommerce Subscription products support added.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Autogenerate Groups - `UK` changed to `GB` in `wcj_get_country_currency()`.
 * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Countries Selection" admin option added.

@@ -32,8 +32,17 @@ class WCJ_Price_By_Country extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-				// Frontend
-				include_once( 'price-by-country/class-wcj-price-by-country-core.php' );
+				$do_load_core = true;
+				if ( is_admin() ) {
+					global $pagenow;
+					if ( 'admin-ajax.php' === $pagenow ) {
+						$do_load_core = false;
+					}
+				}
+				if ( $do_load_core ) {
+					// Frontend
+					include_once( 'price-by-country/class-wcj-price-by-country-core.php' );
+				}
 			}
 			if ( is_admin() ) {
 				// Backend
