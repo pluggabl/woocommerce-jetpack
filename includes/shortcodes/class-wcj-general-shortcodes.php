@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.4.4
+ * @version 2.4.5
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.5
 	 */
 	public function __construct() {
 
@@ -29,6 +29,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_wpml_translate',
 			'wcj_country_select_drop_down_list',
 			'wcj_currency_select_drop_down_list',
+			'wcj_currency_select_radio_list',
 			'wcj_text',
 			'wcj_tcpdf_pagebreak',
 			'wcj_get_left_to_free_shipping',
@@ -74,19 +75,21 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
-	 * wcj_currency_select_drop_down_list.
+	 * wcj_currency_selector.
 	 *
-	 * @version 2.4.3
-	 * @since   2.4.3
+	 * @version 2.4.5
+	 * @since   2.4.5
 	 */
-	function wcj_currency_select_drop_down_list( $atts, $content ) {
+	function wcj_currency_selector( $atts, $content, $type = 'select' ) {
 		// Start
 		$html = '';
 		$form_method  = $atts['form_method'];
-		$select_class = $atts['class'];
-		$select_style = $atts['style'];
+		$class = $atts['class'];
+		$style = $atts['style'];
 		$html .= '<form action="" method="' . $form_method . '">';
-		$html .= '<select name="wcj-currency" id="wcj-currency" style="' . $select_style . '" class="' . $select_class . '" onchange="this.form.submit()">';
+		if ( 'select' === $type ) {
+			$html .= '<select name="wcj-currency" id="wcj-currency-select" style="' . $style . '" class="' . $class . '" onchange="this.form.submit()">';
+		}
 		// Shortcode currencies
 		$shortcode_currencies = $atts['currencies'];
 		if ( '' == $shortcode_currencies ) {
@@ -107,13 +110,39 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$selected_currency = ( isset( $_SESSION['wcj-currency'] ) ) ? $_SESSION['wcj-currency'] : '';
 		foreach ( $shortcode_currencies as $currency_code ) {
 			if ( isset( $currencies[ $currency_code ] ) ) {
-				$html .= '<option value="' . $currency_code . '" ' . selected( $currency_code, $selected_currency, false ) . '>' . $currencies[ $currency_code ] . '</option>';
+				if ( 'select' === $type ) {
+					$html .= '<option value="' . $currency_code . '" ' . selected( $currency_code, $selected_currency, false ) . '>' . $currencies[ $currency_code ] . '</option>';
+				} elseif ( 'radio' === $type ) {
+					$html .= '<input type="radio" name="wcj-currency" id="wcj-currency-radio" value="' . $currency_code . '" ' . checked( $currency_code, $selected_currency, false ) . ' onclick="this.form.submit()"> ' . $currencies[ $currency_code ] . '<br>';
+				}
 			}
 		}
 		// End
-		$html .= '</select>';
+		if ( 'select' === $type ) {
+			$html .= '</select>';
+		}
 		$html .= '</form>';
 		return $html;
+	}
+
+	/**
+	 * wcj_currency_select_radio_list.
+	 *
+	 * @version 2.4.5
+	 * @since   2.4.5
+	 */
+	function wcj_currency_select_radio_list( $atts, $content ) {
+		return $this->wcj_currency_selector( $atts, $content, 'radio' );
+	}
+
+	/**
+	 * wcj_currency_select_drop_down_list.
+	 *
+	 * @version 2.4.5
+	 * @since   2.4.3
+	 */
+	function wcj_currency_select_drop_down_list( $atts, $content ) {
+		return $this->wcj_currency_selector( $atts, $content, 'select' );
 	}
 
 	/**

@@ -119,6 +119,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.4.5 - 26/03/2016 =
+* Dev - Shortcodes - General - `[wcj_currency_select_radio_list]` shortcode added.
+
 = 2.4.4 - 23/03/2016 =
 * Dev - "Booster Currencies Array" (wcj-currencies.php) updated.
 * Dev - `wcj_get_currencies_names_and_symbols()` and `wcj_get_currency_symbol()` functions modified.
