@@ -30,6 +30,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_country_select_drop_down_list',
 			'wcj_currency_select_drop_down_list',
 			'wcj_currency_select_radio_list',
+			'wcj_currency_select_link_list',
 			'wcj_text',
 			'wcj_tcpdf_pagebreak',
 			'wcj_get_left_to_free_shipping',
@@ -55,41 +56,12 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
-	 * wcj_get_left_to_free_shipping.
-	 *
-	 * @version 2.4.4
-	 * @since   2.4.4
-	 */
-	function wcj_get_left_to_free_shipping( $atts, $content ) {
-		echo wcj_get_left_to_free_shipping( $atts['content'] );
-	}
-
-	/**
-	 * wcj_tcpdf_pagebreak.
-	 *
-	 * @version 2.3.7
-	 * @since   2.3.7
-	 */
-	function wcj_tcpdf_pagebreak( $atts, $content ) {
-		return '<tcpdf method="AddPage" />';
-	}
-
-	/**
-	 * wcj_currency_selector.
+	 * get_shortcode_currencies.
 	 *
 	 * @version 2.4.5
 	 * @since   2.4.5
 	 */
-	function wcj_currency_selector( $atts, $content, $type = 'select' ) {
-		// Start
-		$html = '';
-		$form_method  = $atts['form_method'];
-		$class = $atts['class'];
-		$style = $atts['style'];
-		$html .= '<form action="" method="' . $form_method . '">';
-		if ( 'select' === $type ) {
-			$html .= '<select name="wcj-currency" id="wcj-currency-select" style="' . $style . '" class="' . $class . '" onchange="this.form.submit()">';
-		}
+	private function get_shortcode_currencies( $atts ) {
 		// Shortcode currencies
 		$shortcode_currencies = $atts['currencies'];
 		if ( '' == $shortcode_currencies ) {
@@ -105,6 +77,77 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 				$shortcode_currencies[] = get_option( 'wcj_multicurrency_currency_' . $i );
 			}
 		}
+		return $shortcode_currencies;
+	}
+
+	/**
+	 * wcj_currency_select_link_list.
+	 *
+	 * @version 2.4.5
+	 * @since   2.4.5
+	 */
+	function wcj_currency_select_link_list( $atts, $content ) {
+		$html = '';
+		$shortcode_currencies = $this->get_shortcode_currencies( $atts );
+		// Options
+		$currencies = wcj_get_currencies_names_and_symbols();
+		$selected_currency = ( isset( $_SESSION['wcj-currency'] ) ) ? $_SESSION['wcj-currency'] : '';
+		$links = array();
+		$first_link = '';
+		foreach ( $shortcode_currencies as $currency_code ) {
+			if ( isset( $currencies[ $currency_code ] ) ) {
+				$the_link = '<a href="' . add_query_arg( 'wcj-currency', $currency_code ) . '">' . $currencies[ $currency_code ] . '</a>';
+				if ( $currency_code != $selected_currency ) {
+					$links[] = $the_link;
+				} else {
+					$first_link = $the_link;
+				}
+			}
+		}
+		if ( '' != $first_link ) {
+			$links = array_merge( array( $first_link ), $links );
+		}
+		$html .= implode( '<br>', $links );
+		return $html;
+	}
+
+	/**
+	 * wcj_get_left_to_free_shipping.
+	 *
+	 * @version 2.4.5
+	 * @since   2.4.4
+	 */
+	function wcj_get_left_to_free_shipping( $atts, $content ) {
+		return wcj_get_left_to_free_shipping( $atts['content'] );
+	}
+
+	/**
+	 * wcj_tcpdf_pagebreak.
+	 *
+	 * @version 2.3.7
+	 * @since   2.3.7
+	 */
+	function wcj_tcpdf_pagebreak( $atts, $content ) {
+		return '<tcpdf method="AddPage" />';
+	}
+
+	/**
+	 * get_currency_selector.
+	 *
+	 * @version 2.4.5
+	 * @since   2.4.5
+	 */
+	private function get_currency_selector( $atts, $content, $type = 'select' ) {
+		// Start
+		$html = '';
+		$form_method  = $atts['form_method'];
+		$class = $atts['class'];
+		$style = $atts['style'];
+		$html .= '<form action="" method="' . $form_method . '">';
+		if ( 'select' === $type ) {
+			$html .= '<select name="wcj-currency" id="wcj-currency-select" style="' . $style . '" class="' . $class . '" onchange="this.form.submit()">';
+		}
+		$shortcode_currencies = $this->get_shortcode_currencies( $atts );
 		// Options
 		$currencies = wcj_get_currencies_names_and_symbols();
 		$selected_currency = ( isset( $_SESSION['wcj-currency'] ) ) ? $_SESSION['wcj-currency'] : '';
@@ -132,7 +175,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.4.5
 	 */
 	function wcj_currency_select_radio_list( $atts, $content ) {
-		return $this->wcj_currency_selector( $atts, $content, 'radio' );
+		return $this->get_currency_selector( $atts, $content, 'radio' );
 	}
 
 	/**
@@ -142,7 +185,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.4.3
 	 */
 	function wcj_currency_select_drop_down_list( $atts, $content ) {
-		return $this->wcj_currency_selector( $atts, $content, 'select' );
+		return $this->get_currency_selector( $atts, $content, 'select' );
 	}
 
 	/**

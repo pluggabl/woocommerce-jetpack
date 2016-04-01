@@ -119,7 +119,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.5 - 26/03/2016 =
+= 2.4.5 - 01/04/2016 =
+* Fix - Shortcodes - General - `[wcj_get_left_to_free_shipping]` bug fixed.
+* Dev - Shortcodes - General - `[wcj_currency_select_link_list]` shortcode added.
 * Dev - Shortcodes - General - `[wcj_currency_select_radio_list]` shortcode added.
 
 = 2.4.4 - 23/03/2016 =
