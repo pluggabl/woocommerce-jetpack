@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack SKU class.
  *
- * @version 2.4.0
+ * @version 2.4.5
  * @author  Algoritmika Ltd.
  * @todo    add "random number" option
  */
@@ -200,7 +200,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.5
 	 */
 	function get_settings() {
 
@@ -251,6 +251,7 @@ class WCJ_SKU extends WCJ_Module {
 
 			array(
 				'title'    => __( 'Variable Products Variations', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Please note, that on new variable product creation, variations will get same SKUs as parent product, and if you want variations to have different SKUs, you will need to run "Autogenerate SKUs" tool manually.' ),
 				'id'       => 'wcj_sku_variations_handling',
 				'default'  => 'as_variable',
 				'type'     => 'select',

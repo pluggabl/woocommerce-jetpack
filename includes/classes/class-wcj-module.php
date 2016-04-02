@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.4.3
+ * @version 2.4.5
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -97,7 +97,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		foreach ( $this->get_meta_box_options() as $option ) {
 			$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : $option['default'];
 			$the_post_id   = ( isset( $option['product_id'] )     ) ? $option['product_id']     : $post_id;
-			$the_meta_name = ( isset( $option['meta_name'] ) )      ? $option['meta_name']  : '_' . $option['name'];
+			$the_meta_name = ( isset( $option['meta_name'] ) )      ? $option['meta_name']      : '_' . $option['name'];
 			update_post_meta( $the_post_id, $the_meta_name, $option_value );
 		}
 	}
@@ -125,7 +125,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @since 2.4.3
+	 * @since 2.4.5
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -137,9 +137,6 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			$option_value = get_post_meta( $the_post_id, $the_meta_name, true );
 			$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
 			switch ( $option['type'] ) {
-				case 'number':
-					$field_html = '<input class="short" type="number"' . $input_ending;
-					break;
 				case 'price':
 					$field_html = '<input class="short wc_input_price" type="number" step="0.0001"' . $input_ending;
 					break;
@@ -148,6 +145,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					break;
 				case 'textarea':
 					$field_html = '<textarea style="min-width:300px;"' . ' id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
+					break;
+				default:
+					$field_html = '<input class="short" type="' . $option['type'] . '"' . $input_ending;
 					break;
 			}
 			$html .= '<tr>';
