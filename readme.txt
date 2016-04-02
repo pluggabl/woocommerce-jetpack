@@ -119,8 +119,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.5 - 01/04/2016 =
+= 2.4.5 - 02/04/2016 =
 * Dev - Default type added to `WCJ_Module::create_meta_box()` (works for `text` type).
+~* Dev - Products - Product Cost Price - Variable products support added.
 * Dev - Products - Product Cost Price - Code refactoring.
 ~* Dev - `K_TCPDF_THROW_EXCEPTION_ERROR` "is defined" check added to `tcpdf_config.php` file.
 ~* Dev - PRODUCTS - SKU - Description tip added to "Variable Products Variations" option.
