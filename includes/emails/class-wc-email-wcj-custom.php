@@ -11,7 +11,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 2.4.1
+ * @version 2.4.5
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -21,7 +21,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Constructor
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.5
 	 */
 	function __construct( $id = 1 ) {
 
@@ -39,8 +39,14 @@ class WC_Email_WCJ_Custom extends WC_Email {
 		// Triggers for this email
 		$trigger_hooks = $this->get_option( 'trigger' );
 		if ( ! empty( $trigger_hooks ) && is_array( $trigger_hooks ) ) {
+			$is_woocommerce_new_order_notification_added = false;
 			foreach ( $trigger_hooks as $trigger_hook ) {
-				add_action( $trigger_hook, array( $this, 'trigger' ) );
+				if ( false !== strpos( $trigger_hook, 'woocommerce_new_order_notification' ) && false === $is_woocommerce_new_order_notification_added ) {
+					add_action( 'woocommerce_new_order_notification', array( $this, 'trigger' ) );
+					$is_woocommerce_new_order_notification_added = true;
+				} else {
+					add_action( $trigger_hook, array( $this, 'trigger' ) );
+				}
 			}
 		}
 
@@ -74,7 +80,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Trigger.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.5
 	 */
 	function trigger( $order_id ) {
 
@@ -99,6 +105,23 @@ class WC_Email_WCJ_Custom extends WC_Email {
 		if ( $order_id ) {
 			global $post;
 			$order = wc_get_order( $order_id );
+			if ( 'woocommerce_new_order_notification' === current_filter() ) {
+				// Check status
+				$is_status_found = false;
+				$trigger_hooks = $this->get_option( 'trigger' );
+				foreach ( $trigger_hooks as $trigger_hook ) {
+					if ( false !== ( $pos = strpos( $trigger_hook, 'woocommerce_new_order_notification' ) ) ) {
+						$the_status = 'wc-' . substr( $trigger_hook, 35 );
+						if ( 'wc-wcj_any_status' === $the_status || $order->post_status === $the_status ) {
+							$is_status_found = true;
+							break;
+						}
+					}
+				}
+				if ( false === $is_status_found ) {
+					return;
+				}
+			}
 			$post = $order->post;
 			setup_postdata( $post );
 		}
@@ -162,7 +185,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Initialise settings form fields
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.5
 	 */
 	function init_form_fields() {
 
@@ -174,10 +197,12 @@ class WC_Email_WCJ_Custom extends WC_Email {
 		$default_plain_template = ob_get_clean();
 
 		$status_change_triggers = array();
+		$new_order_triggers = array();
 		$status_triggers = array();
 		$order_statuses = $this->get_order_statuses();
 		foreach ( $order_statuses as $slug => $name ) {
-			$status_triggers[ 'woocommerce_order_status_' . $slug . '_notification' ] = sprintf( __( 'Order status %s', 'woocommerce-jetpack' ), $name );
+			$new_order_triggers[ 'woocommerce_new_order_notification_' . $slug ] = sprintf( __( 'New order (%s)', 'woocommerce-jetpack' ), $name );
+			$status_triggers[ 'woocommerce_order_status_' . $slug . '_notification' ] = sprintf( __( 'Order status updated to %s', 'woocommerce-jetpack' ), $name );
 			foreach ( $order_statuses as $slug2 => $name2 ) {
 				if ( $slug != $slug2 ) {
 					$status_change_triggers[ 'woocommerce_order_status_' . $slug . '_to_' . $slug2 . '_notification' ] = sprintf( __( 'Order status %s to %s', 'woocommerce-jetpack' ), $name, $name2 );
@@ -197,7 +222,12 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				'type'          => 'multiselect',
 				'placeholder'   => '',
 				'default'       => array(),
+				'desc_tip'      => __( 'Please note, that all new orders in WooCommerce by default are created with Pending Payment status. If you want to change the default order status - you can use Booster\'s "Order Custom Statuses" module (in WooCommerce > Settings > Booster > Shipping & Orders > Order Custom Statuses).', 'woocommerce-jetpack' ),
 				'options'       => array_merge(
+					array(
+						'woocommerce_new_order_notification_wcj_any_status'           => __( 'New order (Any status)', 'woocommerce-jetpack' ),
+					),
+					$new_order_triggers,
 					$status_triggers,
 					array(
 						'woocommerce_reset_password_notification'                     => __( 'Reset password notification', 'woocommerce-jetpack' ),

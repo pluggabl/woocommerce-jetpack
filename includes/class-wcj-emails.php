@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Emails class.
  *
- * @version 2.3.10
+ * @version 2.4.5
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.5
 	 */
 	public function __construct() {
 
@@ -27,6 +27,7 @@ class WCJ_Emails extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			add_filter( 'woocommerce_email_actions', array( $this, 'add_custom_woocommerce_email_actions' ) );
 			add_filter( 'woocommerce_email_classes', array( $this, 'add_custom_emails_to_wc' ) );
 			add_filter( 'woocommerce_resend_order_emails_available', array( $this, 'add_custom_emails_to_wc_resend_order_emails' ) );
 			if ( '' != get_option( 'wcj_emails_bcc_email' ) ) {
@@ -39,6 +40,17 @@ class WCJ_Emails extends WCJ_Module {
 			// Settings
 			add_filter( 'woocommerce_email_settings', array( $this, 'add_email_forwarding_fields_to_wc_standard_settings' ), 100 );
 		}
+	}
+
+	/**
+	 * add_custom_woocommerce_email_actions.
+	 *
+	 * @version 2.4.5
+	 * @since   2.4.5
+	 */
+	function add_custom_woocommerce_email_actions( $email_actions ) {
+		$email_actions[] = 'woocommerce_new_order';
+		return $email_actions;
 	}
 
 	/**
