@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.4.3
+ * @version 2.4.5
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -74,6 +74,7 @@ return array(
 			'mini_cart',
 			'checkout_core_fields',
 			'checkout_custom_fields',
+			'checkout_files_upload',
 			'checkout_custom_info',
 		),
 	),

@@ -119,7 +119,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.5 - 03/04/2016 =
+= 2.4.5 - 04/04/2016 =
+~* Fix - Shortcodes - Orders - `[wcj_order_checkout_field]` - `field_id` string conversion added.
+~* Dev - CART & CHECKOUT - Checkout Files Upload - Initial module release.
 * Dev - EMAILS & MISC. - Emails - "New order (Status)" triggers added to custom emails.
 * Dev - Default type added to `WCJ_Module::create_meta_box()` (works for `text` type).
 ~* Dev - Products - Product Cost Price - Variable products support added.

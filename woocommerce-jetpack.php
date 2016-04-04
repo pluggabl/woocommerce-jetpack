@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.4.4
+ * @version 2.4.5
  */
 
 final class WC_Jetpack {
@@ -395,7 +395,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.5
 	 */
 	private function include_modules() {
 		$settings = array();
@@ -422,6 +422,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-mini-cart.php' );
 		$settings[] = include_once( 'includes/class-wcj-checkout-core-fields.php' );
 		$settings[] = include_once( 'includes/class-wcj-checkout-custom-fields.php' );
+		$settings[] = include_once( 'includes/class-wcj-checkout-files-upload.php' );
 		$settings[] = include_once( 'includes/class-wcj-checkout-custom-info.php' );
 		$settings[] = include_once( 'includes/class-wcj-payment-gateways.php' );
 		$settings[] = include_once( 'includes/class-wcj-payment-gateways-icons.php' );
