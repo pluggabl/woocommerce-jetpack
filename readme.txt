@@ -51,6 +51,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Cart* - Add custom info to WooCommerce cart page. Add empty cart button.
 * *Checkout Core Fields* - Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders.
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
+* *Checkout Files Upload* - Let customers upload files on WooCommerce checkout.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
 * *Empty Cart Button* - Add and customize "Empty Cart" button to cart page.
 * *Mini Cart* - Customize WooCommerce mini cart widget.
