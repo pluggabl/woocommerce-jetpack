@@ -153,6 +153,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$selected_currency = ( isset( $_SESSION['wcj-currency'] ) ) ? $_SESSION['wcj-currency'] : '';
 		foreach ( $shortcode_currencies as $currency_code ) {
 			if ( isset( $currencies[ $currency_code ] ) ) {
+				if ( '' == $selected_currency ) {
+					$selected_currency = $currency_code;
+				}
 				if ( 'select' === $type ) {
 					$html .= '<option value="' . $currency_code . '" ' . selected( $currency_code, $selected_currency, false ) . '>' . $currencies[ $currency_code ] . '</option>';
 				} elseif ( 'radio' === $type ) {
