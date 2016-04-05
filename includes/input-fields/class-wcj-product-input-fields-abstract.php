@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.4.0
+ * @version 2.4.5
  * @author  Algoritmika Ltd.
  */
 
@@ -360,6 +360,8 @@ class WCJ_Product_Input_Fields_Abstract {
 
 	/**
 	 * validate_product_input_fields_on_add_to_cart.
+	 *
+	 * @version 2.4.5
 	 */
 	public function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
@@ -393,17 +395,17 @@ class WCJ_Product_Input_Fields_Abstract {
 				}
 			}
 
-
-			if ( 'file' === $type && '' != $_FILES[ $field_name ]['name'] ) {
+			if ( 'file' === $type && isset( $_FILES[ $field_name ] ) && '' != $_FILES[ $field_name ]['name'] ) {
 				// Validate file type
-				$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product_id, '' );
-				$file_accept = explode( ',', $file_accept );
-				if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
-					$file_type = '.' . pathinfo( $_FILES[ $field_name ]['name'], PATHINFO_EXTENSION );
-					if ( ! in_array( $file_type, $file_accept ) ) {
-						$passed = false;
-						wc_add_notice( __( 'Wrong file type!', 'woocommerce-jetpack' ), 'error' );
-						//wc_add_notice( $this->get_value( 'wcj_product_input_fields_wrong_file_type_msg_' . $this->scope . '_' . $i, $product_id, '' ), 'error' );
+				if ( '' != ( $file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product_id, '' ) ) ) {
+					$file_accept = explode( ',', $file_accept );
+					if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
+						$file_type = '.' . pathinfo( $_FILES[ $field_name ]['name'], PATHINFO_EXTENSION );
+						if ( ! in_array( $file_type, $file_accept ) ) {
+							$passed = false;
+							wc_add_notice( __( 'Wrong file type!', 'woocommerce-jetpack' ), 'error' );
+//							wc_add_notice( $this->get_value( 'wcj_product_input_fields_wrong_file_type_msg_' . $this->scope . '_' . $i, $product_id, '' ), 'error' );
+						}
 					}
 				}
 			}

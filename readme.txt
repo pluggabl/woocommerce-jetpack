@@ -131,6 +131,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Widgets - Multicurrency Switcher - "Switcher type" options added.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Wrong currency in emails bug fixed (again).
 * Dev - PRODUCTS - SKU - Description tip added to "Variable Products Variations" option.
+* Fix - PRODUCTS - Product Input Fields - File type field - "Leave blank to accept all files" bug fixed.
+* Fix - PRODUCTS - Product Input Fields - File type field - Adding from archive bug fixed.
 * Dev - PRODUCTS - Product Cost Price - Variable products support added.
 * Dev - PRODUCTS - Product Cost Price - Code refactoring.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Custom fields added to user profile and to checkout page defaults.
