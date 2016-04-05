@@ -121,18 +121,20 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.5 - 05/04/2016 =
-* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Wrong currency in emails bug fixed (again).
-~* Fix - Shortcodes - Orders - `[wcj_order_checkout_field]` - `field_id` string conversion added.
-~* Dev - CART & CHECKOUT - Checkout Files Upload - Initial module release.
-* Dev - EMAILS & MISC. - Emails - "New order (Status)" triggers added to custom emails.
+* Dev - `K_TCPDF_THROW_EXCEPTION_ERROR` "is defined" check added to `tcpdf_config.php` file.
 * Dev - Default type added to `WCJ_Module::create_meta_box()` (works for `text` type).
-~* Dev - Products - Product Cost Price - Variable products support added.
-* Dev - Products - Product Cost Price - Code refactoring.
-~* Dev - `K_TCPDF_THROW_EXCEPTION_ERROR` "is defined" check added to `tcpdf_config.php` file.
-~* Dev - PRODUCTS - SKU - Description tip added to "Variable Products Variations" option.
 * Fix - Shortcodes - General - `[wcj_get_left_to_free_shipping]` bug fixed.
-~* Dev - Shortcodes - General - `[wcj_currency_select_link_list]` shortcode added.
-~* Dev - Shortcodes - General - `[wcj_currency_select_radio_list]` shortcode added.
+* Dev - Shortcodes - General - `[wcj_currency_select_link_list]` shortcode added.
+* Dev - Shortcodes - General - `[wcj_currency_select_radio_list]` shortcode added.
+* Fix - Shortcodes - Orders - `[wcj_order_checkout_field]` - `field_id` string conversion added.
+* Fix - Widgets - Multicurrency Switcher - Default title value set to blank.
+* Dev - Widgets - Multicurrency Switcher - Type options added.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Wrong currency in emails bug fixed (again).
+* Dev - PRODUCTS - SKU - Description tip added to "Variable Products Variations" option.
+* Dev - PRODUCTS - Product Cost Price - Variable products support added.
+* Dev - PRODUCTS - Product Cost Price - Code refactoring.
+* Dev - CART & CHECKOUT - Checkout Files Upload - Initial module release.
+* Dev - EMAILS & MISC. - Emails - "New order (Status)" triggers added to custom emails.
 
 = 2.4.4 - 23/03/2016 =
 * Dev - "Booster Currencies Array" (wcj-currencies.php) updated.
