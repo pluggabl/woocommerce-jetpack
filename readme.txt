@@ -133,6 +133,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - PRODUCTS - SKU - Description tip added to "Variable Products Variations" option.
 * Dev - PRODUCTS - Product Cost Price - Variable products support added.
 * Dev - PRODUCTS - Product Cost Price - Code refactoring.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Custom fields added to user profile and to checkout page defaults.
 * Dev - CART & CHECKOUT - Checkout Files Upload - Initial module release.
 * Dev - EMAILS & MISC. - Emails - "New order (Status)" triggers added to custom emails.
 

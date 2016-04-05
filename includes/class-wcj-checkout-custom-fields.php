@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.4.0
+ * @version 2.4.5
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.5
 	 */
 	function __construct() {
 
@@ -50,7 +50,54 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 //			add_filter( 'woocommerce_form_field_' . 'number',           array( $this, 'woocommerce_form_field_type_number' ), PHP_INT_MAX, 4 );
 			add_filter( 'woocommerce_form_field_' . 'text',             array( $this, 'woocommerce_form_field_type_number' ), PHP_INT_MAX, 4 );
+
+			add_filter( 'woocommerce_customer_meta_fields',             array( $this, 'add_checkout_custom_fields_customer_meta_fields' ) );
+			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+				if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
+					$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
+					$the_key     = 'wcj_checkout_field_' . $i;
+					$the_name    = $the_section . '_' . $the_key;
+					add_filter( 'default_checkout_' . $the_name,        array( $this, 'add_default_checkout_custom_fields' ), PHP_INT_MAX, 2 );
+				}
+			}
 		}
+	}
+
+	/**
+	 * add_checkout_custom_fields_customer_meta_fields.
+	 *
+	 * @version 2.4.5
+	 * @since   2.4.5
+	 */
+	function add_checkout_custom_fields_customer_meta_fields( $fields ) {
+		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
+				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
+				$the_key     = 'wcj_checkout_field_' . $i;
+				$the_name    = $the_section . '_' . $the_key;
+				$fields[ $the_section ]['fields'][ $the_name ] = array(
+					'label'       => get_option( 'wcj_checkout_custom_field_label_' . $i ),
+					'description' => '',
+				);
+			}
+		}
+		return $fields;
+	}
+
+	/**
+	 * add_default_checkout_custom_fields.
+	 *
+	 * @version 2.4.5
+	 * @since   2.4.5
+	 */
+	function add_default_checkout_custom_fields( $default_value, $field_key ) {
+		if ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			if ( $meta = get_user_meta( $current_user->ID, $field_key, true ) ) {
+				return $meta;
+			}
+		}
+		return $default_value;
 	}
 
 	/**
