@@ -33,6 +33,31 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				array( $this, 'add_files_upload_form_to_checkout_frontend' )
 			);
 			add_action( 'woocommerce_checkout_order_processed', array( $this, 'add_files_to_order' ), PHP_INT_MAX, 2 );
+			add_action( 'woocommerce_after_checkout_validation', array( $this, 'validate' ) );
+		}
+	}
+
+	/**
+	 * validate.
+	 */
+	function validate( $posted ) {
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( 'yes' === get_option( 'wcj_checkout_files_upload_required_' . $i, 'no' ) && ! isset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] ) ) {
+				// Is required
+				wc_add_notice( __( 'File is required', 'woocommerce-jetpack' ), 'error' );
+			}
+			if ( '' != ( $file_accept = get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' ) ) && isset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] ) ) {
+				// Validate file type
+				$file_accept = explode( ',', $file_accept );
+				if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
+					$file_name = $_SESSION[ 'wcj_checkout_files_upload_' . $i ]['name'];
+					$file_type = '.' . pathinfo( $file_name, PATHINFO_EXTENSION );
+					if ( ! in_array( $file_type, $file_accept ) ) {
+						wc_add_notice( sprintf( __( 'Wrong file type: "%s"', 'woocommerce-jetpack' ), $file_name ), 'error' );
+					}
+				}
+			}
 		}
 	}
 
@@ -189,7 +214,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 					$html .= '</td>';
 					$html .= '<td>';
 					$html .= '<input type="submit"' .
-						' class="button alt"' .
+						' class="button"' .
 						' name="wcj_remove_checkout_file_' . $i . '"' .
 						' id="wcj_remove_checkout_file_' . $i . '"' .
 						' value="' . __( 'Remove', 'woocommerce-jetpack' ) . '"' .
@@ -217,7 +242,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @todo required; (maybe) position and position priority (i.e. order);
+	 * @todo (maybe) position and position priority (i.e. order);
 	 */
 	function get_settings() {
 		$settings = array(
@@ -258,6 +283,12 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 					'desc'              => __( 'Enabled', 'woocommerce-jetpack' ),
 					'type'              => 'checkbox',
 					'default'           => 'yes',
+				),
+				array(
+					'id'                => 'wcj_checkout_files_upload_required_' . $i,
+					'desc'              => __( 'Required', 'woocommerce-jetpack' ),
+					'type'              => 'checkbox',
+					'default'           => 'no',
 				),
 				array(
 					'desc'              => __( 'Label', 'woocommerce-jetpack' ),
