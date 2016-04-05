@@ -133,6 +133,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		if ( ! session_id() ) {
 			session_start();
 		}
+		// Remove file
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( isset( $_POST[ 'wcj_remove_checkout_file_' . $i ] ) ) {
@@ -142,6 +143,22 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				unset( $_SESSION[ $file_name ] );
 			}
 		}
+		// Upload file
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( isset( $_POST[ 'wcj_upload_checkout_file_' . $i ] ) ) {
+				$file_name = 'wcj_checkout_files_upload_' . $i;
+				if ( isset( $_FILES[ $file_name ] ) && '' != $_FILES[ $file_name ]['tmp_name'] ) {
+					$_SESSION[ $file_name ] = $_FILES[ $file_name ];
+					$tmp_dest_file = tempnam( sys_get_temp_dir(), 'wcj' );
+					move_uploaded_file( $_SESSION[ $file_name ]['tmp_name'], $tmp_dest_file );
+					$_SESSION[ $file_name ]['tmp_name'] = $tmp_dest_file;
+					wc_add_notice( sprintf( __( 'File "%s" was successfully uploaded', 'woocommerce-jetpack' ), $_SESSION[ $file_name ]['name'] ) );
+				} else {
+					wc_add_notice( __( 'Please select file to upload', 'woocommerce-jetpack' ), 'notice' );
+				}
+			}
+		}
+		// Admin file download
 		if ( isset( $_GET['wcj_download_checkout_file_admin'] ) ) {
 			$tmp_file_name = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . $_GET['wcj_download_checkout_file_admin'];
 			$file_name     = get_post_meta( $_GET['post'], '_' . 'wcj_checkout_files_upload_real_name_' . $_GET['wcj_checkout_file_number'], true );
@@ -156,6 +173,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				exit();
 			}
 		}
+		// User file download
 		if ( isset( $_GET['wcj_download_checkout_file'] ) ) {
 			$tmp_file_name = $_SESSION[ $_GET['wcj_download_checkout_file'] ]['tmp_name'];
 			$file_name     = $_SESSION[ $_GET['wcj_download_checkout_file'] ]['name'];
@@ -168,16 +186,17 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 			readfile( $tmp_file_name );
 			exit();
 		}
+		// Upload all files
 		if ( isset( $_POST['wcj_checkout_files_upload_submit'] ) ) {
 			$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
-				if ( isset( $_FILES[ 'wcj_checkout_files_upload_' . $i ] ) && '' != $_FILES[ 'wcj_checkout_files_upload_' . $i ]['tmp_name'] ) {
-					$_SESSION[ 'wcj_checkout_files_upload_' . $i ] = $_FILES[ 'wcj_checkout_files_upload_' . $i ];
+				$file_name = 'wcj_checkout_files_upload_' . $i;
+				if ( isset( $_FILES[ $file_name ] ) && '' != $_FILES[ $file_name ]['tmp_name'] ) {
+					$_SESSION[ $file_name ] = $_FILES[ $file_name ];
 					$tmp_dest_file = tempnam( sys_get_temp_dir(), 'wcj' );
-					move_uploaded_file( $_SESSION[ 'wcj_checkout_files_upload_' . $i ]['tmp_name'], $tmp_dest_file );
-					$_SESSION[ 'wcj_checkout_files_upload_' . $i ]['tmp_name'] = $tmp_dest_file;
-					wc_add_notice( sprintf( __( 'File "%s" was successfully uploaded', 'woocommerce-jetpack' ),
-						$_SESSION[ 'wcj_checkout_files_upload_' . $i ]['name'] ) );
+					move_uploaded_file( $_SESSION[ $file_name ]['tmp_name'], $tmp_dest_file );
+					$_SESSION[ $file_name ]['tmp_name'] = $tmp_dest_file;
+					wc_add_notice( sprintf( __( 'File "%s" was successfully uploaded', 'woocommerce-jetpack' ), $_SESSION[ $file_name ]['name'] ) );
 				}
 			}
 		}
@@ -196,14 +215,26 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 					$html .= '<tr>';
 					$html .= '<td colspan="2">';
 					$html .= $the_label;
+					if ( 'yes' === get_option( 'wcj_checkout_files_upload_required_' . $i, 'no' ) ) {
+						$html .= '&nbsp;<abbr class="required" title="required">*</abbr>';
+					}
 					$html .= '</td>';
 					$html .= '</tr>';
 				}
 				if ( ! isset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] ) ) {
 					$html .= '<tr>';
-					$html .= '<td colspan="2">';
+					$html .= '<td>';
 					$html .= '<input type="file" name="wcj_checkout_files_upload_' . $i . '" id="wcj_checkout_files_upload_' . $i .
 						'" accept="' . get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' ) . '">';
+					$html .= '</td>';
+					$html .= '<td>';
+					$html .= '<input type="submit"' .
+						' class="button alt"' .
+						' style="width:100%;"' .
+						' name="wcj_upload_checkout_file_' . $i . '"' .
+						' id="wcj_upload_checkout_file_' . $i . '"' .
+						' value="' . __( 'Upload', 'woocommerce-jetpack' ) . '"' .
+						' data-value="' . __( 'Upload', 'woocommerce-jetpack' ) . '">';
 					$html .= '</td>';
 					$html .= '</tr>';
 				} else {
@@ -215,6 +246,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 					$html .= '<td>';
 					$html .= '<input type="submit"' .
 						' class="button"' .
+						' style="width:100%;"' .
 						' name="wcj_remove_checkout_file_' . $i . '"' .
 						' id="wcj_remove_checkout_file_' . $i . '"' .
 						' value="' . __( 'Remove', 'woocommerce-jetpack' ) . '"' .
@@ -224,16 +256,18 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				}
 			}
 		}
-		$html .= '<tr>';
-		$html .= '<td colspan="2">';
-		$html .= '<input type="submit"' .
-			' class="button alt"' .
-			' name="wcj_checkout_files_upload_submit"' .
-			' id="wcj_checkout_files_upload_submit"' .
-			' value="' . __( 'Upload', 'woocommerce-jetpack' ) . '"' .
-			' data-value="' . __( 'Upload', 'woocommerce-jetpack' ) . '"></p>';
-		$html .= '</td>';
-		$html .= '</tr>';
+		if ( $total_number > 1 ) {
+			$html .= '<tr>';
+			$html .= '<td colspan="2">';
+			$html .= '<input type="submit"' .
+				' class="button alt"' .
+				' name="wcj_checkout_files_upload_submit"' .
+				' id="wcj_checkout_files_upload_submit"' .
+				' value="' . __( 'Upload All', 'woocommerce-jetpack' ) . '"' .
+				' data-value="' . __( 'Upload All', 'woocommerce-jetpack' ) . '"></p>';
+			$html .= '</td>';
+			$html .= '</tr>';
+		}
 		$html .= '</table>';
 		$html .= '</form>';
 		echo $html;
@@ -242,7 +276,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @todo (maybe) position and position priority (i.e. order);
+	 * @todo styling options; (maybe) position and position priority (i.e. order); custom messages; place form on cart, order review and my account pages.
 	 */
 	function get_settings() {
 		$settings = array(
