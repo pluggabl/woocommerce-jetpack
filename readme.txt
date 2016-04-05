@@ -120,7 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.5 - 04/04/2016 =
+= 2.4.5 - 05/04/2016 =
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Wrong currency in emails bug fixed (again).
 ~* Fix - Shortcodes - Orders - `[wcj_order_checkout_field]` - `field_id` string conversion added.
 ~* Dev - CART & CHECKOUT - Checkout Files Upload - Initial module release.
 * Dev - EMAILS & MISC. - Emails - "New order (Status)" triggers added to custom emails.
