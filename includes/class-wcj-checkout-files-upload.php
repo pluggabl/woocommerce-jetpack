@@ -166,28 +166,37 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 		$html .= '<table>';
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( ! isset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] ) ) {
-				$html .= '<tr>';
-				$html .= '<td colspan="2">';
-				$html .= '<input type="file" name="wcj_checkout_files_upload_' . $i . '" id="wcj_checkout_files_upload_' . $i .
-					'" accept="' . get_option( 'wcj_checkout_files_upload_file_accept_' . $i ) . '">';
-				$html .= '</td>';
-				$html .= '</tr>';
-			} else {
-				$html .= '<tr>';
-				$html .= '<td>';
-				$html .= '<a href="' . add_query_arg( 'wcj_download_checkout_file', 'wcj_checkout_files_upload_' . $i ) . '">' .
-					$_SESSION[ 'wcj_checkout_files_upload_' . $i ]['name'] . '</a>';
-				$html .= '</td>';
-				$html .= '<td>';
-				$html .= '<input type="submit"' .
-					' class="button alt"' .
-					' name="wcj_remove_checkout_file_' . $i . '"' .
-					' id="wcj_remove_checkout_file_' . $i . '"' .
-					' value="' . __( 'Remove', 'woocommerce-jetpack' ) . '"' .
-					' data-value="' . __( 'Remove', 'woocommerce-jetpack' ) . '">';
-				$html .= '</td>';
-				$html .= '</tr>';
+			if ( 'yes' === get_option( 'wcj_checkout_files_upload_enabled_' . $i, 'yes' ) ) {
+				if ( '' != ( $the_label = get_option( 'wcj_checkout_files_upload_label_' . $i, '' ) ) ) {
+					$html .= '<tr>';
+					$html .= '<td colspan="2">';
+					$html .= $the_label;
+					$html .= '</td>';
+					$html .= '</tr>';
+				}
+				if ( ! isset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] ) ) {
+					$html .= '<tr>';
+					$html .= '<td colspan="2">';
+					$html .= '<input type="file" name="wcj_checkout_files_upload_' . $i . '" id="wcj_checkout_files_upload_' . $i .
+						'" accept="' . get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' ) . '">';
+					$html .= '</td>';
+					$html .= '</tr>';
+				} else {
+					$html .= '<tr>';
+					$html .= '<td>';
+					$html .= '<a href="' . add_query_arg( 'wcj_download_checkout_file', 'wcj_checkout_files_upload_' . $i ) . '">' .
+						$_SESSION[ 'wcj_checkout_files_upload_' . $i ]['name'] . '</a>';
+					$html .= '</td>';
+					$html .= '<td>';
+					$html .= '<input type="submit"' .
+						' class="button alt"' .
+						' name="wcj_remove_checkout_file_' . $i . '"' .
+						' id="wcj_remove_checkout_file_' . $i . '"' .
+						' value="' . __( 'Remove', 'woocommerce-jetpack' ) . '"' .
+						' data-value="' . __( 'Remove', 'woocommerce-jetpack' ) . '">';
+					$html .= '</td>';
+					$html .= '</tr>';
+				}
 			}
 		}
 		$html .= '<tr>';
@@ -208,7 +217,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @todo required; label; (maybe) position and position priority (i.e. order);
+	 * @todo required; (maybe) position and position priority (i.e. order);
 	 */
 	function get_settings() {
 		$settings = array(
@@ -249,6 +258,13 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 					'desc'              => __( 'Enabled', 'woocommerce-jetpack' ),
 					'type'              => 'checkbox',
 					'default'           => 'yes',
+				),
+				array(
+					'desc'              => __( 'Label', 'woocommerce-jetpack' ),
+					'desc_tip'          => __( 'Leave blank to disable label', 'woocommerce-jetpack' ),
+					'id'                => 'wcj_checkout_files_upload_label_' . $i,
+					'default'           => '',
+					'type'              => 'text',
 				),
 				array(
 					'desc'              => __( 'Accepted file types', 'woocommerce-jetpack' ),
