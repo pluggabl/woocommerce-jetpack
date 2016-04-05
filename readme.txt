@@ -128,7 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Shortcodes - General - `[wcj_currency_select_radio_list]` shortcode added.
 * Fix - Shortcodes - Orders - `[wcj_order_checkout_field]` - `field_id` string conversion added.
 * Fix - Widgets - Multicurrency Switcher - Default title value set to blank.
-* Dev - Widgets - Multicurrency Switcher - Type options added.
+* Dev - Widgets - Multicurrency Switcher - "Switcher type" options added.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Wrong currency in emails bug fixed (again).
 * Dev - PRODUCTS - SKU - Description tip added to "Variable Products Variations" option.
 * Dev - PRODUCTS - Product Cost Price - Variable products support added.
