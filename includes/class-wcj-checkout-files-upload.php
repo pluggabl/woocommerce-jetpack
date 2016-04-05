@@ -247,14 +247,14 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				}
 				if ( ! isset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] ) ) {
 					$html .= '<tr>';
-					$html .= '<td>';
+					$html .= '<td style="width:50%;">';
 					$html .= '<input type="file" name="wcj_checkout_files_upload_' . $i . '" id="wcj_checkout_files_upload_' . $i .
 						'" accept="' . get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' ) . '">';
 					$html .= '</td>';
-					$html .= '<td>';
+					$html .= '<td style="width:50%;">';
 					$html .= '<input type="submit"' .
 						' class="button alt"' .
-//						' style="width:100%;"' .
+						' style="width:100%;"' .
 						' name="wcj_upload_checkout_file_' . $i . '"' .
 						' id="wcj_upload_checkout_file_' . $i . '"' .
 						' value="'      . get_option( 'wcj_checkout_files_upload_label_upload_button_' . $i, __( 'Upload', 'woocommerce-jetpack' ) ) . '"' .
@@ -263,14 +263,14 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 					$html .= '</tr>';
 				} else {
 					$html .= '<tr>';
-					$html .= '<td>';
+					$html .= '<td style="width:50%;">';
 					$html .= '<a href="' . add_query_arg( 'wcj_download_checkout_file', 'wcj_checkout_files_upload_' . $i ) . '">' .
 						$_SESSION[ 'wcj_checkout_files_upload_' . $i ]['name'] . '</a>';
 					$html .= '</td>';
-					$html .= '<td>';
+					$html .= '<td style="width:50%;">';
 					$html .= '<input type="submit"' .
 						' class="button"' .
-//						' style="width:100%;"' .
+						' style="width:100%;"' .
 						' name="wcj_remove_checkout_file_' . $i . '"' .
 						' id="wcj_remove_checkout_file_' . $i . '"' .
 						' value="'      . get_option( 'wcj_checkout_files_upload_label_remove_button_' . $i, __( 'Remove', 'woocommerce-jetpack' ) ) . '"' .
