@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.4.4
+ * @version 2.4.5
  * @author  Algoritmika Ltd.
  */
 
@@ -333,7 +333,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_by_country.
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.5
 	 */
 	public function change_price_by_country( $price, $product ) {
 
@@ -391,7 +391,7 @@ class WCJ_Price_by_Country_Core {
 			}
 
 			if ( ! $is_price_modified ) {
-				if ( 'yes' === get_option( 'wcj_price_by_country_make_empty_price_group_' . $group_id, 1 ) ) {
+				if ( 'yes' === get_option( 'wcj_price_by_country_make_empty_price_group_' . $group_id, 1 ) || '' === $price ) {
 					return '';
 				}
 			}

@@ -120,7 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.5 - 05/04/2016 =
+= 2.4.5 - 06/04/2016 =
 * Dev - `K_TCPDF_THROW_EXCEPTION_ERROR` "is defined" check added to `tcpdf_config.php` file.
 * Dev - Default type added to `WCJ_Module::create_meta_box()` (works for `text` type).
 * Fix - Shortcodes - General - `[wcj_get_left_to_free_shipping]` bug fixed.
@@ -130,6 +130,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - Widgets - Multicurrency Switcher - Default title value set to blank.
 * Dev - Widgets - Multicurrency Switcher - "Switcher type" options added.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Wrong currency in emails bug fixed (again).
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Main price empty (or Call for Price) bug fixed.
 * Dev - PRODUCTS - SKU - Description tip added to "Variable Products Variations" option.
 * Fix - PRODUCTS - Product Input Fields - File type field - "Leave blank to accept all files" bug fixed.
 * Fix - PRODUCTS - Product Input Fields - File type field - Adding from archive bug fixed.
