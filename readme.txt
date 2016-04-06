@@ -134,9 +134,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - PRODUCTS - SKU - Description tip added to "Variable Products Variations" option.
 * Fix - PRODUCTS - Product Input Fields - File type field - "Leave blank to accept all files" bug fixed.
 * Fix - PRODUCTS - Product Input Fields - File type field - Adding from archive bug fixed.
-* Dev - PRODUCTS - Product Cost Price - Variable products support added.
+* Dev - PRODUCTS - Product Cost Price - "Affiliate commission" optional field added (also affected `WCJ_Product` class).
 * Dev - PRODUCTS - Product Cost Price - Options to enable/disable fields added (also affected functions in `WCJ_Module` and `WCJ_Product` classes).
 * Dev - PRODUCTS - Product Cost Price - `wcj_purchase_data_product_options` and `wcj_get_product_purchase_price` filters added (second filter added to `WCJ_Product` class).
+* Dev - PRODUCTS - Product Cost Price - Variable products support added.
 * Dev - PRODUCTS - Product Cost Price - Code refactoring.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Custom fields added to user profile and to checkout page defaults.
 * Dev - CART & CHECKOUT - Checkout Files Upload - Initial module release.

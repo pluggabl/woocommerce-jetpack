@@ -39,6 +39,9 @@ class WCJ_Product {
 		if ( 'yes' === get_option( 'wcj_purchase_price_extra_enabled', 'yes' ) ) {
 			$purchase_price += get_post_meta( $this->id, '_' . 'wcj_purchase_price_extra', true );
 		}
+		if ( 'yes' === get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ) ) {
+			$purchase_price += get_post_meta( $this->id, '_' . 'wcj_purchase_price_affiliate_commission', true );
+		}
 		return apply_filters( 'wcj_get_product_purchase_price', $purchase_price, $this->id );
 	}
 }

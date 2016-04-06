@@ -127,6 +127,16 @@ class WCJ_Purchase_Data extends WCJ_Module {
 					'enabled'    => get_option( 'wcj_purchase_price_extra_enabled', 'yes' ),
 				),
 				array(
+					'name'       => 'wcj_purchase_price_affiliate_commission_' . $product_id,
+					'default'    => 0,
+					'type'       => 'price',
+					'title'      => __( 'Affiliate commission', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
+					'desc'       => $desc,
+					'product_id' => $product_id,
+					'meta_name'  => '_' . 'wcj_purchase_price_affiliate_commission',
+					'enabled'    => get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ),
+				),
+				array(
 					'name'       => 'wcj_purchase_date_' . $product_id,
 					'default'    => '',
 					'type'       => 'date',
@@ -250,6 +260,13 @@ class WCJ_Purchase_Data extends WCJ_Module {
 				'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_purchase_price_extra_enabled',
 				'default'   => 'yes',
+				'type'      => 'checkbox',
+			),
+			array(
+				'title'     => __( 'Affiliate commission', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_purchase_price_affiliate_commission_enabled',
+				'default'   => 'no',
 				'type'      => 'checkbox',
 			),
 			array(
