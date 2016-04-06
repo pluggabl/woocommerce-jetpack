@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product class.
  *
- * @version 2.2.0
+ * @version 2.4.5
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,27 +18,28 @@ class WCJ_Product {
 	public $id;
 	public $product;
 
-    /**
-     * Constructor.
-     */
-    public function __construct( $product_id ) {
-		$this->id = $product_id;
-		//$this->product = wc_get_product( $this->id );
-    }
+	/**
+	 * Constructor.
+	 */
+	public function __construct( $product_id ) {
+		$this->id      = $product_id;
+//		$this->product = wc_get_product( $this->id );
+	}
 
-    /**
-     * get_purchase_price.
-     */
+	/**
+	 * get_purchase_price.
+	 *
+	 * @version 2.4.5
+	 */
 	public function get_purchase_price() {
-		/* $current_post_id = $this->id;//get_the_ID();
-		$option_name = 'wcj_purchase_price';
-		if ( ! ( $purchase_price = get_post_meta( $current_post_id, '_' . $option_name, true ) ) ) {
-			$purchase_price = 0;
-		} */
 		$purchase_price = 0;
-		$purchase_price += get_post_meta( $this->id, '_' . 'wcj_purchase_price', true );
-		$purchase_price += get_post_meta( $this->id, '_' . 'wcj_purchase_price_extra', true );
-		return $purchase_price;
+		if ( 'yes' === get_option( 'wcj_purchase_price_enabled', 'yes' ) ) {
+			$purchase_price += get_post_meta( $this->id, '_' . 'wcj_purchase_price' , true );
+		}
+		if ( 'yes' === get_option( 'wcj_purchase_price_extra_enabled', 'yes' ) ) {
+			$purchase_price += get_post_meta( $this->id, '_' . 'wcj_purchase_price_extra', true );
+		}
+		return apply_filters( 'wcj_get_product_purchase_price', $purchase_price, $this->id );
 	}
 }
 
