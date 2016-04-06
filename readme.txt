@@ -120,6 +120,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.4.6 - 06/04/2016 =
+* Fix - PRODUCTS - Product Input Fields - File type field - Admin order view - Check for not empty file name added.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Admin fields edit - Styling bug fixed (full row styling added) and proper select type display added.
+
 = 2.4.5 - 06/04/2016 =
 * Dev - `K_TCPDF_THROW_EXCEPTION_ERROR` "is defined" check added to `tcpdf_config.php` file.
 * Dev - Default type added to `WCJ_Module::create_meta_box()` (works for `text` type).

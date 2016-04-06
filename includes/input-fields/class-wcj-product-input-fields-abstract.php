@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.4.5
+ * @version 2.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -230,6 +230,8 @@ class WCJ_Product_Input_Fields_Abstract {
 
 	/**
 	 * output_custom_input_fields_in_admin_order.
+	 *
+	 * @version 2.4.6
 	 */
 	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
 		echo '<table cellspacing="0" class="display_meta">';
@@ -250,7 +252,9 @@ class WCJ_Product_Input_Fields_Abstract {
 				//$the_value = $upload_url . '/' . $the_value;
 				//$the_value = '<img style="width:50px;" src="' . $the_value . '">'; */
 				$the_value = maybe_unserialize( $the_value );
-				$the_value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '.' . pathinfo( $the_value['name'], PATHINFO_EXTENSION ) ) . '">' . $the_value['name'] . '</a>';
+				if ( isset( $the_value['name'] ) ) {
+					$the_value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '.' . pathinfo( $the_value['name'], PATHINFO_EXTENSION ) ) . '">' . $the_value['name'] . '</a>';
+				}
 			} else {
 				if ( 'no' === get_option( 'wcj_product_input_fields_make_nicer_name_enabled' ) ) {
 					continue;

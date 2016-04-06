@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.4.5
+ * @version 2.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -333,17 +333,30 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_fields.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.6
 	 */
 	public function add_woocommerce_admin_fields( $fields, $section ) {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_type = get_option( 'wcj_checkout_custom_field_type_' . $i );
-				if ( 'datepicker' === $the_type || 'weekpicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
+				/* if ( 'datepicker' === $the_type || 'weekpicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
 					$the_type = 'text';
 				}
 				if ( 'checkbox' === $the_type || 'select' === $the_type || 'radio' === $the_type ) {
 					$the_type = 'text';
+				} */
+				if ( 'select' === $the_type ) {
+					$the_class = 'first';
+					$options = wcj_get_select_options( get_option( 'wcj_checkout_custom_field_select_options_' . $i, array() ) );
+				}
+				else if ( 'country' === $the_type ) {
+					$the_type = 'select';
+					$the_class = 'js_field-country select short';
+					$options = WC()->countries->get_allowed_countries();
+				}
+				else /* if ( 'select' != $the_type ) */ {
+					$the_type = 'text';
+					$the_class = 'short';
 				}
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
 				if ( $section != $the_section ) continue;
@@ -362,7 +375,12 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						get_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, true ) :
 						get_option( 'wcj_checkout_custom_field_label_' . $i ),
 					'show'  => true,
+					'class' => $the_class,
+					'wrapper_class' => 'form-field-wide',
 				);
+				if ( isset( $options ) ) {
+					$fields[ $the_key ]['options'] = $options;
+				}
 			}
 		}
 		return $fields;
