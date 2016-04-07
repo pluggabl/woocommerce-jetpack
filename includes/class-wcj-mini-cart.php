@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Mini Cart class.
  *
- * @version 2.4.2
+ * @version 2.4.6
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -17,18 +17,25 @@ class WCJ_Mini_Cart extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.6
 	 */
 	public function __construct() {
 
 		$this->id         = 'mini_cart';
 		$this->short_desc = __( 'Mini Cart', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Customize WooCommerce mini cart widget.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-mini-cart/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
 			$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
-				add_action( get_option( 'wcj_mini_cart_custom_info_hook_' . $i, 'woocommerce_after_mini_cart' ), array( $this, 'add_mini_cart_custom_info' ) );
+				add_action(
+					get_option( 'wcj_mini_cart_custom_info_hook_' . $i, 'woocommerce_after_mini_cart' ),
+					array( $this, 'add_mini_cart_custom_info' ),
+					get_option( 'wcj_mini_cart_custom_info_priority_' . $i, 10 )
+				);
 			}
 		}
 	}
@@ -36,11 +43,10 @@ class WCJ_Mini_Cart extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.2
+	 * @version 2.4.6
 	 */
 	function get_settings() {
 
-		// The Module settings
 		$settings = array();
 
 		// Mini Cart Custom Info Options
@@ -98,7 +104,7 @@ class WCJ_Mini_Cart extends WCJ_Module {
 				),
 
 				array(
-					'title'    => __( 'Priority', 'woocommerce-jetpack' ),
+					'title'    => __( 'Position Order (i.e. Priority)', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_mini_cart_custom_info_priority_' . $i,
 					'default'  => 10,
 					'type'     => 'number',
@@ -117,12 +123,19 @@ class WCJ_Mini_Cart extends WCJ_Module {
 
 	/**
 	 * add_mini_cart_custom_info.
+	 *
+	 * @version 2.4.6
 	 */
 	function add_mini_cart_custom_info() {
 		$current_filter = current_filter();
+		$current_filter_priority = wcj_current_filter_priority();
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( '' != get_option( 'wcj_mini_cart_custom_info_content_' . $i ) && $current_filter === get_option( 'wcj_mini_cart_custom_info_hook_' . $i ) ) {
+			if (
+				'' != get_option( 'wcj_mini_cart_custom_info_content_' . $i ) &&
+				$current_filter === get_option( 'wcj_mini_cart_custom_info_hook_' . $i, 'woocommerce_after_mini_cart' ) &&
+				$current_filter_priority == get_option( 'wcj_mini_cart_custom_info_priority_' . $i, 10 )
+			) {
 				echo do_shortcode( get_option( 'wcj_mini_cart_custom_info_content_' . $i ) );
 			}
 		}

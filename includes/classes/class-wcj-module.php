@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.4.5
+ * @version 2.4.6
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -20,6 +20,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	public $desc;
 	public $parent_id; // for `submodule` only
 	public $type;      // `module` or `submodule`
+	public $link;
 
 	/**
 	 * Constructor.
@@ -391,9 +392,15 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * settings_section.
 	 * only for `module`
 	 *
-	 * @version 2.2.7
+	 * @version 2.4.6
 	 */
 	function add_enable_module_setting( $settings, $module_desc = '' ) {
+		$the_link = '';
+		if ( isset( $this->link ) &&  '' != $this->link ) {
+			$the_link = ' <a class="button-primary"' .
+				' style="background: green; border-color: green; box-shadow: 0 1px 0 green; text-shadow: 0 -1px 1px #0a0,1px 0 1px #0a0,0 1px 1px #0a0,-1px 0 1px #0a0;"' .
+				' href="' . $this->link . '" target="_blank">' . __( 'Documentation', 'woocommerce-jetpack' ) . '</a>';
+		}
 		$enable_module_setting = array(
 			array(
 				'title' => $this->short_desc . ' ' . __( 'Module Options', 'woocommerce-jetpack' ),
@@ -404,7 +411,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			array(
 				'title'    => $this->short_desc,
 				'desc'     => '<strong>' . __( 'Enable Module', 'woocommerce-jetpack' ) . '</strong>',
-				'desc_tip' => $this->desc,
+				'desc_tip' => $this->desc . $the_link,
 				'id'       => 'wcj_' . $this->id . '_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
