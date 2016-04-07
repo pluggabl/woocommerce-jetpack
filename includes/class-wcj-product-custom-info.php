@@ -93,6 +93,8 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 
 	/**
 	 * add_settings.
+	 *
+	 * @version 2.4.6
 	 */
 	function add_settings() {
 
@@ -170,7 +172,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 						'css'      => 'width:250px;',
 					),
 					array(
-						'title'    => __( 'Priority', 'woocommerce-jetpack' ),
+						'title'    => __( 'Position Order (i.e. Priority)', 'woocommerce-jetpack' ),
 						'id'       => 'wcj_product_custom_info_priority_' . $single_or_archive . '_' . $i,
 						'default'  => 10,
 						'type'     => 'number',

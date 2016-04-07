@@ -121,7 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.6 - 07/04/2016 =
-* Dev - Documentation link added to `WCJ_Module` class;
+* Dev - Documentation link added to `WCJ_Module` class.
+* Dev - CART & CHECKOUT - Cart - Documentation link added. Reset button added.
 * Dev - CART & CHECKOUT - Mini Cart - Documentation link added.
 * Fix - CART & CHECKOUT - Mini Cart - Priority bug fixed.
 * Fix - PRODUCTS - Product Info V2 - Priority bug fixed.
