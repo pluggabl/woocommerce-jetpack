@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.6 - 07/04/2016 =
+* Dev - BUTTON & PRICE LABELS - Call for Price - Code refactoring.
 * Dev - Documentation link added to `WCJ_Module` class.
 * Fix - CART & CHECKOUT - Cart - Priority bug fixed.
 * Dev - CART & CHECKOUT - Cart - Documentation link added. Reset button added.

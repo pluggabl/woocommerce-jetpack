@@ -415,6 +415,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				'id'       => 'wcj_' . $this->id . '_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+				'wcj_desc' => $this->desc,
+				'wcj_link' => ( isset( $this->link ) ? $this->link : '' ),
 			),
 			array(
 				'type' => 'sectionend',

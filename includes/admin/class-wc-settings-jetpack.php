@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.4.0
+ * @version 2.4.6
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -360,7 +360,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard_modules.
 	 *
-	 * @version 2.2.8
+	 * @version 2.4.6
 	 */
 	function output_dashboard_modules( $settings, $cat_id = '' ) {
 		$readme_html = '';
@@ -413,23 +413,26 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 					$html .= '<td class="plugin-title"><strong>' . $the_feature['title'] . '</strong>';
 					$html .= '<div class="row-actions visible">';
 
-					$html .= '<span class="0"><a href="' . admin_url() . 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">Settings</a></span>';
+					$html .= '<span class="0"><a href="' . admin_url() . 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">' . __( 'Settings', 'woocommerce' ) . '</a></span>';
+					if ( isset( $the_feature['wcj_link'] ) && '' != $the_feature['wcj_link'] ) {
+						$html .= ' | <span class="0"><a href="' . $the_feature['wcj_link'] . '" target="_blank">' . __( 'Documentation', 'woocommerce' ) . '</a></span>';
+					}
 					$html .= '</div>';
 					$html .= '</td>';
 
 					$html .= '<td class="column-description desc">';
-					$html .= '<div class="plugin-description"><p>' . $the_feature['desc_tip'] . '</p></div>';
+					$html .= '<div class="plugin-description"><p>' . ( ( isset( $the_feature['wcj_desc'] ) ) ? $the_feature['wcj_desc'] : $the_feature['desc_tip'] ) . '</p></div>';
 					$html .= '</td>';
 
 					$html .= '</tr>';
 
-					$readme_html .= '* *' . $the_feature['title'] . '* - ' . $the_feature['desc_tip'] . PHP_EOL;
+					$readme_html .= '* *' . $the_feature['title'] . '* - ' . ( ( isset( $the_feature['wcj_desc'] ) ) ? $the_feature['wcj_desc'] : $the_feature['desc_tip'] ) . PHP_EOL;
 				}
 				echo $html;
 			?></tbody>
 		</table><p style="color:gray;font-size:x-small;font-style:italic;"><?php echo __( 'Total Modules:' ) . ' ' . $total_modules; ?></p>
 		<?php
-		return '<pre>' . $readme_html . '</pre>';
+		return $readme_html;
 	}
 
 	/**
