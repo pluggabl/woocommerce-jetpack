@@ -41,6 +41,26 @@ class WCJ_Mini_Cart extends WCJ_Module {
 	}
 
 	/**
+	 * add_mini_cart_custom_info.
+	 *
+	 * @version 2.4.6
+	 */
+	function add_mini_cart_custom_info() {
+		$current_filter = current_filter();
+		$current_filter_priority = wcj_current_filter_priority();
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if (
+				'' != get_option( 'wcj_mini_cart_custom_info_content_' . $i ) &&
+				$current_filter === get_option( 'wcj_mini_cart_custom_info_hook_' . $i, 'woocommerce_after_mini_cart' ) &&
+				$current_filter_priority == get_option( 'wcj_mini_cart_custom_info_priority_' . $i, 10 )
+			) {
+				echo do_shortcode( get_option( 'wcj_mini_cart_custom_info_content_' . $i ) );
+			}
+		}
+	}
+
+	/**
 	 * get_settings.
 	 *
 	 * @version 2.4.6
@@ -119,26 +139,6 @@ class WCJ_Mini_Cart extends WCJ_Module {
 		}
 
 		return $this->add_standard_settings( $settings );
-	}
-
-	/**
-	 * add_mini_cart_custom_info.
-	 *
-	 * @version 2.4.6
-	 */
-	function add_mini_cart_custom_info() {
-		$current_filter = current_filter();
-		$current_filter_priority = wcj_current_filter_priority();
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
-		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if (
-				'' != get_option( 'wcj_mini_cart_custom_info_content_' . $i ) &&
-				$current_filter === get_option( 'wcj_mini_cart_custom_info_hook_' . $i, 'woocommerce_after_mini_cart' ) &&
-				$current_filter_priority == get_option( 'wcj_mini_cart_custom_info_priority_' . $i, 10 )
-			) {
-				echo do_shortcode( get_option( 'wcj_mini_cart_custom_info_content_' . $i ) );
-			}
-		}
 	}
 }
 
