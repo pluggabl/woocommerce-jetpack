@@ -317,16 +317,16 @@ class WCJ_Reports {
 				'title' 	=> __( 'Available Reports', 'woocommerce-jetpack' ),
 				'type' 		=> 'title',
 				'desc' 		=> '<p>'
-							   . __( 'Booster: Customers by Country. Available in WooCommerce > Reports > Customers.', 'woocommerce-jetpack' )
-							   . '</p><p>'
-							   . __( 'Booster: Customers by Country Sets. Available in WooCommerce > Reports > Customers.', 'woocommerce-jetpack' )
-							   . '</p><p>'
-							   . __( 'Booster: All in Stock with sales data. Available in WooCommerce > Reports > Stock.', 'woocommerce-jetpack' )
-							   . '</p><p>'
-							   . __( 'Booster: Understocked products (calculated by sales data). Available in WooCommerce > Reports > Stock.', 'woocommerce-jetpack' )
-							   . '</p><p>'
-							   . __( 'Booster: Overstocked products (calculated by sales data). Available in WooCommerce > Reports > Stock.', 'woocommerce-jetpack' )
-							   . '</p>',
+					. __( 'Booster: Customers by Country. Available in WooCommerce > Reports > Customers.', 'woocommerce-jetpack' )
+					. '</p><p>'
+					. __( 'Booster: Customers by Country Sets. Available in WooCommerce > Reports > Customers.', 'woocommerce-jetpack' )
+					. '</p><p>'
+					. __( 'Booster: All in Stock with sales data. Available in WooCommerce > Reports > Stock.', 'woocommerce-jetpack' )
+					. '</p><p>'
+					. __( 'Booster: Understocked products (calculated by sales data). Available in WooCommerce > Reports > Stock.', 'woocommerce-jetpack' )
+					. '</p><p>'
+					. __( 'Booster: Overstocked products (calculated by sales data). Available in WooCommerce > Reports > Stock.', 'woocommerce-jetpack' )
+					. '</p>',
 				'id' 		=> 'wcj_reports_more_options'
 			),
 
