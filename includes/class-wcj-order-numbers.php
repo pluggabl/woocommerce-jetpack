@@ -28,8 +28,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 
 		$this->add_tools( array(
 			'renumerate_orders' => array(
-				'title' => __( 'Orders Renumerate', 'woocommerce-jetpack' ),
-				'desc'  => __( 'Tool renumerates all orders.', 'woocommerce-jetpack' ),
+				'title'     => __( 'Orders Renumerate', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Tool renumerates all orders.', 'woocommerce-jetpack' ),
 //				'tab_title' => __( 'Renumerate orders', 'woocommerce-jetpack' ),
 			),
 		) );
