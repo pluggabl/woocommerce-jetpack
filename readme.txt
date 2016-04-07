@@ -122,9 +122,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 = 2.4.6 - 07/04/2016 =
 * Dev - Documentation link added to `WCJ_Module` class.
+* Fix - CART & CHECKOUT - Cart - Priority bug fixed.
 * Dev - CART & CHECKOUT - Cart - Documentation link added. Reset button added.
-* Dev - CART & CHECKOUT - Mini Cart - Documentation link added.
 * Fix - CART & CHECKOUT - Mini Cart - Priority bug fixed.
+* Dev - CART & CHECKOUT - Mini Cart - Documentation link added.
 * Fix - PRODUCTS - Product Info V2 - Priority bug fixed.
 * Dev - Functions - `wcj_current_filter_priority()` function added (affected Checkout Files Upload module).
 * Fix - PRODUCTS - Product Input Fields - File type field - Admin order view - Check for not empty file name added.
