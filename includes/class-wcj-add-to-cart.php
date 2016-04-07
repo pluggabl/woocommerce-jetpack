@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Add to Cart class.
  *
- * @version 2.2.0
+ * @version 2.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -12,33 +12,26 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if ( ! class_exists( 'WCJ_Add_To_Cart' ) ) :
 
-class WCJ_Add_To_Cart {
+class WCJ_Add_To_Cart extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.6
 	 */
 	public function __construct() {
 
-	    // Main hooks
-	    if ( 'yes' === get_option( 'wcj_add_to_cart_enabled' ) ) {
+		$this->id         = 'add_to_cart';
+		$this->short_desc = __( 'Add to Cart Labels', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Change text for Add to Cart button by WooCommerce product type, by product category or for individual products.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-add-to-cart-labels/';
+		parent::__construct();
+
+		if ( $this->is_enabled() ) {
 			include_once( 'add-to-cart/class-wcj-add-to-cart-per-category.php' );
 			include_once( 'add-to-cart/class-wcj-add-to-cart-per-product.php' );
 			include_once( 'add-to-cart/class-wcj-add-to-cart-per-product-type.php' );
-	    }
-
-	    // Settings hooks
-	    add_filter( 'wcj_settings_sections', 		array( $this, 'settings_section' ) );
-	    add_filter( 'wcj_settings_add_to_cart', 	array( $this, 'get_settings' ), 100 );
-	    add_filter( 'wcj_features_status', 			array( $this, 'add_enabled_option' ), 100 );
-	}
-
-	/**
-	 * add_enabled_option.
-	 */
-	public function add_enabled_option( $settings ) {
-	    $all_settings = $this->get_settings();
-	    $settings[] = $all_settings[1];
-	    return $settings;
+		}
 	}
 
 	/**
@@ -61,29 +54,29 @@ class WCJ_Add_To_Cart {
 		$groups_by_product_type = array(
 
 			array(
-				'id'		=>		'simple',
-				'title'		=>		__( 'Simple product', 'woocommerce-jetpack' ),
-				'default'	=>		'Add to cart',
+				'id'		=> 'simple',
+				'title'		=> __( 'Simple product', 'woocommerce-jetpack' ),
+				'default'	=> 'Add to cart',
 			),
 			array(
-				'id'		=>		'variable',
-				'title'		=>		__( 'Variable product', 'woocommerce-jetpack' ),
-				'default'	=>		'Select options',
+				'id'		=> 'variable',
+				'title'		=> __( 'Variable product', 'woocommerce-jetpack' ),
+				'default'	=> 'Select options',
 			),
 			array(
-				'id'		=>		'external',
-				'title'		=>		__( 'External product', 'woocommerce-jetpack' ),
-				'default'	=>		'Buy product',
+				'id'		=> 'external',
+				'title'		=> __( 'External product', 'woocommerce-jetpack' ),
+				'default'	=> 'Buy product',
 			),
 			array(
-				'id'		=>		'grouped',
-				'title'		=>		__( 'Grouped product', 'woocommerce-jetpack' ),
-				'default'	=>		'View products',
+				'id'		=> 'grouped',
+				'title'		=> __( 'Grouped product', 'woocommerce-jetpack' ),
+				'default'	=> 'View products',
 			),
 			array(
-				'id'		=>		'other',
-				'title'		=>		__( 'Other product', 'woocommerce-jetpack' ),
-				'default'	=>		'Read more',
+				'id'		=> 'other',
+				'title'		=> __( 'Other product', 'woocommerce-jetpack' ),
+				'default'	=> 'Read more',
 			),
 		);
 
@@ -152,8 +145,8 @@ class WCJ_Add_To_Cart {
 					'id'       => 'wcj_add_to_cart_text_on_single_in_cart_' . $group_by_product_type['id'],
 					'desc'     => __( 'Already in cart. Single product view.', 'woocommerce-jetpack' ),
 					'desc_tip' => __( 'Leave blank to disable.', 'woocommerce-jetpack' ) . ' ' .
-								  __( 'Try: ', 'woocommerce-jetpack' ) . __( 'Already in cart - Add Again?', 'woocommerce-jetpack' ) . ' ' .
-								  __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Add to cart', 'woocommerce-jetpack' ),
+						__( 'Try: ', 'woocommerce-jetpack' ) . __( 'Already in cart - Add Again?', 'woocommerce-jetpack' ) . ' ' .
+						__( 'Default: ', 'woocommerce-jetpack' ) . __( 'Add to cart', 'woocommerce-jetpack' ),
 					'default'  => __( 'Add to cart', 'woocommerce-jetpack' ),
 					'type'     => 'text',
 					'css'      => 'width:30%;min-width:300px;',
@@ -165,8 +158,8 @@ class WCJ_Add_To_Cart {
 					'id'       => 'wcj_add_to_cart_text_on_archives_in_cart_' . $group_by_product_type['id'],
 					'desc'     => __( 'Already in cart. Product category (archive) view.', 'woocommerce-jetpack' ),
 					'desc_tip' => __( 'Leave blank to disable.', 'woocommerce-jetpack' ) . ' ' .
-								  __( 'Try: ', 'woocommerce-jetpack' ) . __( 'Already in cart - Add Again?', 'woocommerce-jetpack' ) . ' ' .
-								  __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Add to cart', 'woocommerce-jetpack' ),
+						__( 'Try: ', 'woocommerce-jetpack' ) . __( 'Already in cart - Add Again?', 'woocommerce-jetpack' ) . ' ' .
+						__( 'Default: ', 'woocommerce-jetpack' ) . __( 'Add to cart', 'woocommerce-jetpack' ),
 					'default'  => __( 'Add to cart', 'woocommerce-jetpack' ),
 					'type'     => 'text',
 					'css'      => 'width:30%;min-width:300px;',
@@ -182,27 +175,26 @@ class WCJ_Add_To_Cart {
 	 * get_per_product_settings.
 	 */
 	function get_per_product_settings() {
-
-	    $settings = array(
-
-	        array(
-				'title' => __( 'Per Product Options', 'woocommerce-jetpack' ),
-				'type' => 'title',
-				'desc' => __( 'This section lets you set Add to Cart button text on per product basis. When enabled, label for each product can be changed in "Edit Product".', 'woocommerce-jetpack' ),
-				'id' => 'wcj_add_to_cart_per_product_options' ),
-
-	        array(
-	            'title'    => __( 'Per Product Labels', 'woocommerce-jetpack' ),
-	            'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
+		$settings = array(
+			array(
+				'title'    => __( 'Per Product Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'desc'     => __( 'This section lets you set Add to Cart button text on per product basis. When enabled, label for each product can be changed in "Edit Product".', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_add_to_cart_per_product_options',
+			),
+			array(
+				'title'    => __( 'Per Product Labels', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
 				'desc_tip' => '',
-	            'id'       => 'wcj_add_to_cart_per_product_enabled',
-	            'default'  => 'yes',
-	            'type'     => 'checkbox',
-	        ),
-
-	        array( 'type'  => 'sectionend', 'id' => 'wcj_add_to_cart_per_product_options' ),
-	    );
-
+				'id'       => 'wcj_add_to_cart_per_product_enabled',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_add_to_cart_per_product_options',
+			),
+		);
 		return $settings;
 	}
 
@@ -213,16 +205,16 @@ class WCJ_Add_To_Cart {
 
 		$settings = array(
 
-	        array( 'title' => __( 'Per Category Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This sections lets you set Add to Cart button text on per category basis.', 'woocommerce-jetpack' ), 'id' => 'wcj_add_to_cart_per_category_options' ),
+			array( 'title' => __( 'Per Category Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This sections lets you set Add to Cart button text on per category basis.', 'woocommerce-jetpack' ), 'id' => 'wcj_add_to_cart_per_category_options' ),
 
-	        array(
-	            'title'    => __( 'Per Category Labels', 'woocommerce-jetpack' ),
-	            'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
+			array(
+				'title'    => __( 'Per Category Labels', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
 				'desc_tip' => '',
-	            'id'       => 'wcj_add_to_cart_per_category_enabled',
-	            'default'  => 'yes',
-	            'type'     => 'checkbox',
-	        ),
+				'id'       => 'wcj_add_to_cart_per_category_enabled',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
 
 			array(
 				'title'    => __( 'Category Groups Number', 'woocommerce-jetpack' ),
@@ -261,7 +253,7 @@ class WCJ_Add_To_Cart {
 				//delete_option( 'wcj_add_to_cart_per_category_group_' . $i );
 			} */
 
-	        $settings = array_merge( $settings, array(
+			$settings = array_merge( $settings, array(
 				array(
 					'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
 					'desc'	   => __( 'Enable', 'woocommerce-jetpack' ),
@@ -319,40 +311,15 @@ class WCJ_Add_To_Cart {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.4.6
 	 */
 	function get_settings() {
-
-		$settings = array(
-
-			array( 'title' => __( 'Add to Cart Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => '', 'id' => 'wcj_add_to_cart_options' ),
-
-			array(
-				'title'    => __( 'Add to Cart Labels', 'woocommerce-jetpack' ),
-				'desc'     => '<strong>' . __( 'Enable Module', 'woocommerce-jetpack' ) . '</strong>',
-				'desc_tip' => __( 'Change text for Add to Cart button by WooCommerce product type, by product category or for individual products.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_add_to_cart_enabled',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-
-			array( 'type' => 'sectionend', 'id' => 'wcj_add_to_cart_options' ),
-		);
-
+		$settings = array();
 		$settings = array_merge( $settings, $this->get_per_category_settings() );
-
 		$settings = array_merge( $settings, $this->get_per_product_settings() );
-
 		$settings = array_merge( $settings, $this->get_per_product_type_settings() );
-
-	    return $settings;
-	}
-
-	/**
-	 * settings_section.
-	 */
-	function settings_section( $sections ) {
-	    $sections['add_to_cart'] = __( 'Add to Cart Labels', 'woocommerce-jetpack' );
-	    return $sections;
+		return $this->add_standard_settings( $settings );
 	}
 }
 

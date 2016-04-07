@@ -4,10 +4,8 @@
  *
  * The WooCommerce Jetpack Add to Cart per Product class.
  *
- * @class    WCJ_Add_To_Cart_Per_Product
- * @version  2.2.0
- * @category Class
- * @author   Algoritmika Ltd.
+ * @version 2.2.0
+ * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -16,47 +14,45 @@ if ( ! class_exists( 'WCJ_Add_To_Cart_Per_Product' ) ) :
 
 class WCJ_Add_To_Cart_Per_Product {
 
-    /**
-     * Constructor.
-     */
-    public function __construct() {
-
-        // Main hooks
-        if ( 'yes' === get_option( 'wcj_add_to_cart_per_product_enabled' ) ) {
-
-			add_filter( 'woocommerce_product_single_add_to_cart_text', array( $this, 'change_add_to_cart_button_text_single' ), 	PHP_INT_MAX );
-			add_filter( 'woocommerce_product_add_to_cart_text',        array( $this, 'change_add_to_cart_button_text_archive' ), 	PHP_INT_MAX );
-
+	/**
+	 * Constructor.
+	 */
+	public function __construct() {
+		if ( 'yes' === get_option( 'wcj_add_to_cart_per_product_enabled' ) ) {
+			add_filter( 'woocommerce_product_single_add_to_cart_text', array( $this, 'change_add_to_cart_button_text_single' ),  PHP_INT_MAX );
+			add_filter( 'woocommerce_product_add_to_cart_text',        array( $this, 'change_add_to_cart_button_text_archive' ), PHP_INT_MAX );
 			add_action( 'add_meta_boxes',                              array( $this, 'add_custom_add_to_cart_meta_box' ) );
-			add_action( 'save_post_product',                           array( $this, 'save_custom_add_to_cart_meta_box' ), 		100, 			2 );
-        }
-    }
+			add_action( 'save_post_product',                           array( $this, 'save_custom_add_to_cart_meta_box' ), 100, 2 );
+		}
+	}
 
-    /**
-     * change_add_to_cart_button_text_single.
-     */
-    public function change_add_to_cart_button_text_single( $add_to_cart_text ) {
+	/**
+	 * change_add_to_cart_button_text_single.
+	 */
+	public function change_add_to_cart_button_text_single( $add_to_cart_text ) {
 		return $this->change_add_to_cart_button_text( $add_to_cart_text, 'single' );
 	}
 
-    /**
-     * change_add_to_cart_button_text_archive.
-     */
-    public function change_add_to_cart_button_text_archive( $add_to_cart_text ) {
+	/**
+	 * change_add_to_cart_button_text_archive.
+	 */
+	public function change_add_to_cart_button_text_archive( $add_to_cart_text ) {
 		return $this->change_add_to_cart_button_text( $add_to_cart_text, 'archive' );
 	}
 
-    /**
-     * change_add_to_cart_button_text.
-     */
-    public function change_add_to_cart_button_text( $add_to_cart_text, $single_or_archive ) {
+	/**
+	 * change_add_to_cart_button_text.
+	 */
+	public function change_add_to_cart_button_text( $add_to_cart_text, $single_or_archive ) {
 		global $product;
-		if ( ! $product )
+		if ( ! $product ) {
 			return $add_to_cart_text;
+		}
 		$local_custom_add_to_cart_option_id = 'wcj_custom_add_to_cart_local_' . $single_or_archive;
 		$local_custom_add_to_cart_option_value = get_post_meta( $product->id, '_' . $local_custom_add_to_cart_option_id, true );
-		if ( '' != $local_custom_add_to_cart_option_value )
+		if ( '' != $local_custom_add_to_cart_option_value ) {
 			return $local_custom_add_to_cart_option_value;
+		}
 		return $add_to_cart_text;
 	}
 
@@ -65,8 +61,9 @@ class WCJ_Add_To_Cart_Per_Product {
 	 */
 	public function save_custom_add_to_cart_meta_box( $post_id, $post ) {
 		// Check that we are saving with custom add to cart metabox displayed.
-		if ( ! isset( $_POST['woojetpack_custom_add_to_cart_save_post'] ) )
+		if ( ! isset( $_POST['woojetpack_custom_add_to_cart_save_post'] ) ) {
 			return;
+		}
 		$option_name = 'wcj_custom_add_to_cart_local_' . 'single';
 		update_post_meta( $post_id, '_' . $option_name, $_POST[ $option_name ] );
 		$option_name = 'wcj_custom_add_to_cart_local_' . 'archive';
@@ -88,8 +85,8 @@ class WCJ_Add_To_Cart_Per_Product {
 		$current_post_id = get_the_ID();
 
 		$options = array(
-			'single'			=> __( 'Single product view', 'woocommerce-jetpack' ),
-			'archive'			=> __( 'Product category (archive) view', 'woocommerce-jetpack' ),
+			'single'  => __( 'Single product view', 'woocommerce-jetpack' ),
+			'archive' => __( 'Product category (archive) view', 'woocommerce-jetpack' ),
 		);
 
 		$html = '<table style="width:50%;min-width:300px;">';
