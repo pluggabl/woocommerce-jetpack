@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Files Upload class.
  *
- * @version 2.4.5
+ * @version 2.4.6
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  */
@@ -217,6 +217,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 
 	/**
 	 * add_files_upload_form_to_checkout_frontend.
+	 *
+	 * @version 2.4.6
 	 */
 	function add_files_upload_form_to_checkout_frontend() {
 		$html = '';
@@ -224,9 +226,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 //		$html .= '<table>';
 		$current_filter = current_filter();
-//		$current_filter_priority = current_filter_priority();
-		global $wp_filter;
-		$current_filter_priority = key( $wp_filter[ current_filter() ] );
+		$current_filter_priority = wcj_current_filter_priority();
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if (
 				'yes' === get_option( 'wcj_checkout_files_upload_enabled_' . $i, 'yes' ) &&

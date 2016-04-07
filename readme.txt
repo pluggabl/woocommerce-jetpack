@@ -120,7 +120,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.6 - 06/04/2016 =
+= 2.4.6 - 07/04/2016 =
+* Fix - PRODUCTS - Product Info V2 - Priority bug fixed.
+* Dev - Functions - `wcj_current_filter_priority()` function added (affected Checkout Files Upload module).
 * Fix - PRODUCTS - Product Input Fields - File type field - Admin order view - Check for not empty file name added.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Admin fields edit - Styling bug fixed (full row styling added) and proper select type display added.
 

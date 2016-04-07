@@ -4,9 +4,23 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.4.4
+ * @version 2.4.6
  * @author  Algoritmika Ltd.
  */
+
+/*
+ * wcj_current_filter_priority.
+ *
+ * @version 2.4.6
+ * @since   2.4.6
+ */
+if ( ! function_exists( 'wcj_current_filter_priority' ) ) {
+	function wcj_current_filter_priority() {
+		global $wp_filter;
+		$current_filter_priority = key( $wp_filter[ current_filter() ] );
+		return $current_filter_priority;
+	}
+}
 
 /*
  * wcj_get_product_input_fields.
