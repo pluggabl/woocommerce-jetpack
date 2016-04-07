@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder,solovjov
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack,custom price labels,call for price,currency symbol,remove sorting,remove old product slugs,add to cart text,order number,sequential order numbering,email pdf invoice,pdf invoice,pdf invoices,already in cart,empty cart,redirect to checkout,minimum order amount,customize checkout fields,checkout fields,email,customize product tabs,product tabs,related products number,empty cart,redirect add to cart,redirect to checkout,product already in cart,custom payment gateway,payment gateway icon,auto-complete all orders,custom order statuses,custom order status,remove text from price,custom css,hide categories count,hide subcategories count,hide category count,hide subcategory count,display total sales,custom product tabs,remove product tab,payment gateway fee,vat,gateway by country,price by country,currency switcher
 Requires at least: 3.8
 Tested up to: 4.4
-Stable tag: 2.4.5
+Stable tag: 2.4.6
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -121,18 +121,20 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.6 - 07/04/2016 =
-* Dev - SHIPPING & ORDERS - Shipping Calculator - Code refactoring.
+* Dev - Documentation link added to `WCJ_Module` class.
+* Dev - Functions - `wcj_current_filter_priority()` function added (affected Checkout Files Upload module).
 * Dev - BUTTON & PRICE LABELS - Add to Cart Labels - Code refactoring.
 * Dev - BUTTON & PRICE LABELS - Call for Price - Code refactoring.
-* Dev - Documentation link added to `WCJ_Module` class.
+* Dev - PRODUCTS - Product Listings - Code refactoring.
+* Fix - PRODUCTS - Product Info V2 - Priority bug fixed.
+* Fix - PRODUCTS - Product Input Fields - File type field - Admin order view - Check for not empty file name added.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Admin fields edit - Styling bug fixed (full row styling added) and proper select type display added.
 * Fix - CART & CHECKOUT - Cart - Priority bug fixed.
 * Dev - CART & CHECKOUT - Cart - Documentation link added. Reset button added.
 * Fix - CART & CHECKOUT - Mini Cart - Priority bug fixed.
 * Dev - CART & CHECKOUT - Mini Cart - Documentation link added.
-* Fix - PRODUCTS - Product Info V2 - Priority bug fixed.
-* Dev - Functions - `wcj_current_filter_priority()` function added (affected Checkout Files Upload module).
-* Fix - PRODUCTS - Product Input Fields - File type field - Admin order view - Check for not empty file name added.
-* Fix - CART & CHECKOUT - Checkout Custom Fields - Admin fields edit - Styling bug fixed (full row styling added) and proper select type display added.
+* Dev - SHIPPING & ORDERS - Shipping Calculator - Code refactoring.
+* Dev - EMAILS & MISC. - Reports - Code refactoring.
 
 = 2.4.5 - 06/04/2016 =
 * Dev - `K_TCPDF_THROW_EXCEPTION_ERROR` "is defined" check added to `tcpdf_config.php` file.
