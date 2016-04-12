@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Tabs class.
  *
- * @version 2.4.4
+ * @version 2.4.7
  * @author  Algoritmika Ltd.
  */
 
@@ -273,12 +273,12 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * add_custom_tabs_meta_box.
 	 *
-	 * @version 2.2.9
+	 * @version 2.4.7
 	 */
 	public function add_custom_tabs_meta_box() {
 		add_meta_box(
 			'wc-jetpack-custom-tabs',
-			__( 'WooCommerce Jetpack: Custom Tabs', 'woocommerce-jetpack' ),
+			__( 'Booster: Custom Tabs', 'woocommerce-jetpack' ),
 			array( $this, 'create_custom_tabs_meta_box' ),
 			'product',
 			'normal',
