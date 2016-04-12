@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.7 - 12/04/2016 =
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Required products/categories/tags options added.
 * Dev - PRODUCTS - Product Tabs - Product edit metabox renamed.
 
 = 2.4.6 - 07/04/2016 =

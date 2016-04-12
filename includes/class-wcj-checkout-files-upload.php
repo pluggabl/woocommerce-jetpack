@@ -7,6 +7,7 @@
  * @version 2.4.6
  * @since   2.4.5
  * @author  Algoritmika Ltd.
+ * @todo    Add files info to order details.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -218,7 +219,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_upload_form_to_checkout_frontend.
 	 *
-	 * @version 2.4.6
+	 * @version 2.4.7
 	 */
 	function add_files_upload_form_to_checkout_frontend() {
 		$html = '';
@@ -233,6 +234,52 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				$current_filter === get_option( 'wcj_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' ) &&
 				$current_filter_priority == get_option( 'wcj_checkout_files_upload_hook_priority_' . $i, 10 )
 			) {
+				// Include by product id
+				$products_in = get_option( 'wcj_checkout_files_upload_show_products_in_' . $i );
+				if ( ! empty( $products_in ) ) {
+					$do_skip = true;
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+						if ( in_array( $values['product_id'], $products_in ) ) {
+							$do_skip = false;
+							break;
+						}
+					}
+					if ( $do_skip ) continue;
+				}
+				// Include by product category
+				$categories_in = get_option( 'wcj_checkout_files_upload_show_cats_in_' . $i );
+				if ( ! empty( $categories_in ) ) {
+					$do_skip = true;
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+						$product_categories = get_the_terms( $values['product_id'], 'product_cat' );
+						if ( empty( $product_categories ) ) continue;
+						foreach( $product_categories as $product_category ) {
+							if ( in_array( $product_category->term_id, $categories_in ) ) {
+								$do_skip = false;
+								break;
+							}
+						}
+						if ( ! $do_skip ) break;
+					}
+					if ( $do_skip ) continue;
+				}
+				// Include by product tag
+				$tags_in = get_option( 'wcj_checkout_files_upload_show_tags_in_' . $i );
+				if ( ! empty( $tags_in ) ) {
+					$do_skip = true;
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+						$product_tags = get_the_terms( $values['product_id'], 'product_tag' );
+						if ( empty( $product_tags ) ) continue;
+						foreach( $product_tags as $product_tag ) {
+							if ( in_array( $product_tag->term_id, $tags_in ) ) {
+								$do_skip = false;
+								break;
+							}
+						}
+						if ( ! $do_skip ) break;
+					}
+					if ( $do_skip ) continue;
+				}
 				$html .= '<form enctype="multipart/form-data" action="" method="POST">';
 				$html .= '<table>';
 				if ( '' != ( $the_label = get_option( 'wcj_checkout_files_upload_label_' . $i, '' ) ) ) {
@@ -302,9 +349,29 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @todo styling options; options to place form on: cart, order review and my account pages.
+	 * @version 2.4.7
+	 * @todo    styling options; options to place form on: cart, order review and my account pages.
 	 */
 	function get_settings() {
+
+		$product_tags_options = array();
+		$product_tags = get_terms( 'product_tag', 'orderby=name&hide_empty=0' );
+		if ( ! empty( $product_tags ) && ! is_wp_error( $product_tags ) ){
+			foreach ( $product_tags as $product_tag ) {
+				$product_tags_options[ $product_tag->term_id ] = $product_tag->name;
+			}
+		}
+
+		$product_cats_options = array();
+		$product_cats = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+		if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ){
+			foreach ( $product_cats as $product_cat ) {
+				$product_cats_options[ $product_cat->term_id ] = $product_cat->name;
+			}
+		}
+
+		$products_options = apply_filters( 'wcj_get_products_filter', array() );
+
 		$settings = array(
 			array(
 				'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -454,6 +521,66 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 					'default'  =>  __( 'File "%s" was successfully removed.', 'woocommerce-jetpack' ),
 					'type'     => 'text',
 					'css'      => 'width:250px;',
+				),
+				/* array(
+					'title'    => '',
+					'desc'     => __( 'PRODUCTS to HIDE this field', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To hide this field from some products, enter products here.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_files_upload_hide_in_products_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $products_options,
+				), */
+				array(
+					'title'    => '',
+					'desc'     => __( 'PRODUCTS to show this field', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To show this field only if at least one selected product is in cart, enter products here.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_files_upload_show_products_in_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $products_options,
+				),
+				/* array(
+					'title'    => '',
+					'desc'     => __( 'CATEGORIES to HIDE this field', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To hide this field from some categories, enter categories here.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_files_upload_hide_in_cats_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_cats_options,
+				), */
+				array(
+					'title'    => '',
+					'desc'     => __( 'CATEGORIES to show this field', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To show this field only if at least one product of selected category is in cart, enter categories here.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_files_upload_show_cats_in_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_cats_options,
+				),
+				/* array(
+					'title'    => '',
+					'desc'     => __( 'TAGS to HIDE this field', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To hide this field from some tags, enter tags here.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_files_upload_hide_in_tags_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_tags_options,
+				), */
+				array(
+					'title'    => '',
+					'desc'     => __( 'TAGS to show this field', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To show this field only if at least one product of selected tag is in cart, enter tags here.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_files_upload_show_tags_in_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_tags_options,
 				),
 			) );
 		}
