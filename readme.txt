@@ -121,6 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.7 - 13/04/2016 =
+* Fix - PAYMENT GATEWAYS - Gateways per Product or Category - Additional check added in `filter_available_payment_gateways_per_category` function. This is fixing compatibility issue with "WooCommerce Subscriptions" plugin.
+* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - Documentation link added. Reset button added.
 * Dev - `source` parameter added to documentation link (module and dashboard).
 * Fix - CART & CHECKOUT - Checkout Custom Info - Priority bug fixed.
 * Dev - CART & CHECKOUT - Checkout Custom Info - Documentation link added. Reset button added.

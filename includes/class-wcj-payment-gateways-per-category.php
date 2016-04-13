@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways per Category class.
  *
- * @version 2.3.7
+ * @version 2.4.7
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,13 +18,14 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.7
+	 * @version 2.4.7
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_per_category';
 		$this->short_desc = __( 'Gateways per Product or Category', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Show WooCommerce gateway only if there is selected product or product category in cart.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-gateways-per-product-or-category/';
 		parent::__construct();
 
 		add_filter( 'init',  array( $this, 'add_hooks' ) );
@@ -37,11 +38,13 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.4.7
 	 */
 	function get_settings() {
 		$settings = array();
 		$settings = apply_filters( 'wcj_payment_gateways_per_category_settings', $settings );
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 
 	/**
@@ -54,11 +57,13 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	/**
 	 * filter_available_payment_gateways_per_category.
 	 *
-	 * @version 2.3.7
+	 * @version 2.4.7
 	 */
 	function filter_available_payment_gateways_per_category( $available_gateways ) {
 
 //		if ( ! is_checkout() ) return $available_gateways;
+
+		if ( ! isset( WC()->cart ) ) return $available_gateways;
 
 		foreach ( $available_gateways as $gateway_id => $gateway ) {
 
