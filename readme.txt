@@ -120,8 +120,13 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.7 - 12/04/2016 =
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Required products/categories/tags options added.
+= 2.4.7 - 13/04/2016 =
+* Dev - EMAILS & MISC. - EU VAT Number - Unnecessary `woocommerce_checkout_update_order_meta` filter function removed.
+* Dev - EMAILS & MISC. - EU VAT Number - VAT number info added to order details and emails.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed wrong "is required" validation when field is disabled.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Settings field type changed from `text` to `textarea` (in all notice and main label fields).
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Files info added to order details and emails.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Conditional visibility by products/categories/tags options added.
 * Dev - PRODUCTS - Product Tabs - Product edit metabox renamed.
 
 = 2.4.6 - 07/04/2016 =

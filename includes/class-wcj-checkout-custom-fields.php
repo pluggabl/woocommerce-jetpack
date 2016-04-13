@@ -278,7 +278,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							get_option( 'wcj_checkout_custom_field_checkbox_no_' . $i );
 						update_post_meta( $order_id, '_' . $option_name_checkbox_value, $checkbox_value );
 					} else {
-						update_post_meta( $order_id, '_' . $option_name,       wc_clean( $_POST[ $option_name ] ) );
+						update_post_meta( $order_id, '_' . $option_name, wc_clean( $_POST[ $option_name ] ) );
 					}
 				}
 			}

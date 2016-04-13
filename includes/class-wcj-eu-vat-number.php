@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack EU VAT Number class.
  *
- * @version 2.4.0
+ * @version 2.4.7
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.7
 	 */
 	function __construct() {
 
@@ -38,21 +38,40 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			/* if ( ! session_id() ) {
 				session_start();
 			} */
-//			add_action( 'init',                                   'session_start' );
-			add_action( 'init',                                   array( $this, 'start_session' ) );
-			add_filter( 'woocommerce_checkout_fields',            array( $this, 'add_eu_vat_number_checkout_field_to_frontend' ), PHP_INT_MAX );
-			add_filter( 'woocommerce_admin_billing_fields',       array( $this, 'add_billing_eu_vat_number_field_to_admin_order_display' ), PHP_INT_MAX );
-			add_action( 'wp_enqueue_scripts',                     array( $this, 'enqueue_scripts' ) );
-//			add_filter( 'woocommerce_form_field_text',            array( $this, 'add_eu_vat_verify_button' ), PHP_INT_MAX, 4 );
-			add_action( 'init',                                   array( $this, 'wcj_validate_eu_vat_number' ) );
-			add_filter( 'woocommerce_matched_rates',              array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX, 2 );
-			add_action( 'woocommerce_after_checkout_validation',  array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
-			add_action( 'woocommerce_checkout_update_order_meta', array( $this, 'update_eu_vat_number_checkout_field_order_meta' ) );
-			add_filter( 'woocommerce_customer_meta_fields',       array( $this, 'add_eu_vat_number_customer_meta_field' ) );
-			add_filter( 'default_checkout_billing_eu_vat_number', array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
+//			add_action( 'init',                                        'session_start' );
+			add_action( 'init',                                        array( $this, 'start_session' ) );
+			add_filter( 'woocommerce_checkout_fields',                 array( $this, 'add_eu_vat_number_checkout_field_to_frontend' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_admin_billing_fields',            array( $this, 'add_billing_eu_vat_number_field_to_admin_order_display' ), PHP_INT_MAX );
+			add_action( 'wp_enqueue_scripts',                          array( $this, 'enqueue_scripts' ) );
+//			add_filter( 'woocommerce_form_field_text',                 array( $this, 'add_eu_vat_verify_button' ), PHP_INT_MAX, 4 );
+			add_action( 'init',                                        array( $this, 'wcj_validate_eu_vat_number' ) );
+			add_filter( 'woocommerce_matched_rates',                   array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX, 2 );
+			add_action( 'woocommerce_after_checkout_validation',       array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_customer_meta_fields',            array( $this, 'add_eu_vat_number_customer_meta_field' ) );
+			add_filter( 'default_checkout_billing_eu_vat_number',      array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
+			add_action( 'woocommerce_order_details_after_order_table', array( $this, 'add_eu_vat_number_to_order_display' ), PHP_INT_MAX );
+			add_action( 'woocommerce_email_after_order_table',         array( $this, 'add_eu_vat_number_to_order_display' ), PHP_INT_MAX );
 
 			$this->eu_countries_vat_rates_tool = include_once( 'tools/class-wcj-eu-countries-vat-rates-tool.php' );
 		}
+	}
+
+	/**
+	 * add_eu_vat_number_to_order_display.
+	 *
+	 * @version 2.4.7
+	 * @since   2.4.7
+	 */
+	function add_eu_vat_number_to_order_display( $order ) {
+		$order_id = $order->id;
+		$html = '';
+		$option_name = '_billing_' . $this->id;
+		$the_eu_vat_number = get_post_meta( $order_id, $option_name, true );
+		if ( '' != $the_eu_vat_number ) {
+			$the_label = get_option( 'wcj_eu_vat_number_field_label', __( 'EU VAT Number', 'woocommerce-jetpack' ) );
+			$html .= $the_label . ': ' . $the_eu_vat_number . '<br>';
+		}
+		echo $html;
 	}
 
 	/**
@@ -197,16 +216,6 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 					'error'
 				);
 			}
-		}
-	}
-
-	/**
-	 * update_eu_vat_number_checkout_field_order_meta.
-	 */
-	function update_eu_vat_number_checkout_field_order_meta( $order_id ) {
-		$option_name = '_billing_' . $this->id;
-		if ( isset( $_POST[ $option_name ] ) ) {
-			update_post_meta( $order_id, $option_name, wc_clean( $_POST[ $option_name ] ) );
 		}
 	}
 
