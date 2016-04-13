@@ -580,7 +580,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				array(
 					'title'    => '',
 					'desc'     => __( 'PRODUCTS to show this field', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'To show this field only if at least one selected product is in cart, enter products here.', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To show this field only if at least one selected product is in cart, enter products here. Leave blank to show for all products.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_checkout_files_upload_show_products_in_' . $i,
 					'default'  => '',
 					'class'    => 'chosen_select',
@@ -600,7 +600,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				array(
 					'title'    => '',
 					'desc'     => __( 'CATEGORIES to show this field', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'To show this field only if at least one product of selected category is in cart, enter categories here.', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To show this field only if at least one product of selected category is in cart, enter categories here. Leave blank to show for all products.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_checkout_files_upload_show_cats_in_' . $i,
 					'default'  => '',
 					'class'    => 'chosen_select',
@@ -620,7 +620,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				array(
 					'title'    => '',
 					'desc'     => __( 'TAGS to show this field', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'To show this field only if at least one product of selected tag is in cart, enter tags here.', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To show this field only if at least one product of selected tag is in cart, enter tags here. Leave blank to show for all products.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_checkout_files_upload_show_tags_in_' . $i,
 					'default'  => '',
 					'class'    => 'chosen_select',

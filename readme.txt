@@ -121,6 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.7 - 13/04/2016 =
+* Fix - CART & CHECKOUT - Checkout Custom Info - Priority bug fixed.
+* Dev - CART & CHECKOUT - Checkout Custom Info - Documentation link added. Reset button added.
 * Dev - EMAILS & MISC. - EU VAT Number - Unnecessary `woocommerce_checkout_update_order_meta` filter function removed.
 * Dev - EMAILS & MISC. - EU VAT Number - VAT number info added to order details and emails.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed wrong "is required" validation when field is disabled.
