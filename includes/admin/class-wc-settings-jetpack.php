@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.4.6
+ * @version 2.4.7
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -360,7 +360,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard_modules.
 	 *
-	 * @version 2.4.6
+	 * @version 2.4.7
 	 */
 	function output_dashboard_modules( $settings, $cat_id = '' ) {
 		$readme_html = '';
@@ -415,7 +415,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 
 					$html .= '<span class="0"><a href="' . admin_url() . 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">' . __( 'Settings', 'woocommerce' ) . '</a></span>';
 					if ( isset( $the_feature['wcj_link'] ) && '' != $the_feature['wcj_link'] ) {
-						$html .= ' | <span class="0"><a href="' . $the_feature['wcj_link'] . '" target="_blank">' . __( 'Documentation', 'woocommerce' ) . '</a></span>';
+						$html .= ' | <span class="0"><a href="' . $the_feature['wcj_link'] . '?source=module_documentation_link" target="_blank">' . __( 'Documentation', 'woocommerce' ) . '</a></span>';
 					}
 					$html .= '</div>';
 					$html .= '</td>';
