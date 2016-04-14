@@ -38,7 +38,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Customize the product tabs.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.7
 	 */
 	function customize_product_tabs( $tabs ) {
 
@@ -206,18 +206,22 @@ class WCJ_Product_Tabs extends WCJ_Module {
 			$total_custom_tabs = 0;
 
 		for ( $i = 1; $i <= $total_custom_tabs; $i++ ) {
-			$key = 'local_' . $i;
+			if ( $this->is_local_tab_visible( $i, $current_post_id ) ) {
+				$key = 'local_' . $i;
 
-			$tab_priority = get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_priority_' . $key, true );
-			if ( ! $tab_priority )
-				$tab_priority = (50 + $i - 1);
+				$tab_priority = get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_priority_' . $key, true );
+				if ( ! $tab_priority ) {
+					$tab_priority = (50 + $i - 1);
+				}
 
-			if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) && '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_content_' . $key, true ) )
-				$tabs[ $key ] = array(
-					'title'    => get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ),
-					'priority' => $tab_priority,
-					'callback' => array( $this, 'create_new_custom_product_tab_local' ),
-				);
+				if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) && '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_content_' . $key, true ) ) {
+					$tabs[ $key ] = array(
+						'title'    => get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ),
+						'priority' => $tab_priority,
+						'callback' => array( $this, 'create_new_custom_product_tab_local' ),
+					);
+				}
+			}
 		}
 
 		return $tabs;
@@ -241,7 +245,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * save_custom_tabs_meta_box.
 	 *
-	 * @version 2.2.9
+	 * @version 2.4.7
 	 */
 	public function save_custom_tabs_meta_box( $post_id, $post ) {
 
@@ -259,8 +263,10 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		$total_custom_tabs_before_saving = get_post_meta( $post_id, '_' . 'wcj_custom_product_tabs_local_total_number', true );
 		$total_custom_tabs_before_saving = ( '' != $total_custom_tabs_before_saving ) ? $total_custom_tabs_before_saving : $default_total_custom_tabs;
 		for ( $i = 1; $i <= $total_custom_tabs_before_saving; $i++ ) {
-			foreach ( $option_names as $option_name ) {
-				update_post_meta( $post_id, '_' . $option_name . $i, $_POST[ $option_name . $i ] );
+			if ( $this->is_local_tab_visible( $i, $post_id ) ) {
+				foreach ( $option_names as $option_name ) {
+					update_post_meta( $post_id, '_' . $option_name . $i, $_POST[ $option_name . $i ] );
+				}
 			}
 		}
 
@@ -287,9 +293,99 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	}
 
 	/**
+	 * is_local_tab_visible.
+	 *
+	 * @version 2.4.7
+	 * @since   2.4.7
+	 */
+	function is_local_tab_visible( $custom_tab_index, $product_id ) {
+
+		// Exclude by product id
+		$array_to_exclude = get_option( 'wcj_custom_product_tabs_local_hide_in_products_' . $custom_tab_index );
+		if ( '' != $array_to_exclude && ! empty( $array_to_exclude ) ) {
+			if ( $array_to_exclude && in_array( $product_id, $array_to_exclude ) ) {
+				return false;
+			}
+		}
+
+		// Exclude by product category
+		$array_to_exclude = get_option( 'wcj_custom_product_tabs_local_hide_in_cats_' . $custom_tab_index );
+		if ( '' != $array_to_exclude && ! empty( $array_to_exclude ) ) {
+			$product_categories_objects = get_the_terms( $product_id, 'product_cat' );
+			if ( $product_categories_objects && ! empty( $product_categories_objects ) ) {
+				foreach ( $product_categories_objects as $product_categories_object ) {
+					if ( $array_to_exclude && in_array( $product_categories_object->term_id, $array_to_exclude ) ) {
+						return false;
+					}
+				}
+			}
+		}
+
+		// Exclude by product tag
+		$array_to_exclude = get_option( 'wcj_custom_product_tabs_local_hide_in_tags_' . $custom_tab_index );
+		if ( '' != $array_to_exclude && ! empty( $array_to_exclude ) ) {
+			$product_tags_objects = get_the_terms( $product_id, 'product_tag' );
+			if ( $product_tags_objects && ! empty( $product_tags_objects ) ) {
+				foreach ( $product_tags_objects as $product_tags_object ) {
+					if ( $array_to_exclude && in_array( $product_tags_object->term_id, $array_to_exclude ) ) {
+						return false;
+					}
+				}
+			}
+		}
+
+		// Include by product id
+		$array_to_include = get_option( 'wcj_custom_product_tabs_local_show_in_products_' . $custom_tab_index );
+		if ( '' != $array_to_include && ! empty( $array_to_include ) ) {
+			// If NOT in array then hide this tab for this product
+			if ( $array_to_include && ! in_array( $product_id, $array_to_include ) ) {
+				return false;
+			}
+		}
+
+		// Include by product category
+		$array_to_include = get_option( 'wcj_custom_product_tabs_local_show_in_cats_' . $custom_tab_index );
+		if ( '' != $array_to_include && ! empty( $array_to_include ) ) {
+			$do_include = false;
+			$product_categories_objects = get_the_terms( $product_id, 'product_cat' );
+			if ( $product_categories_objects && ! empty( $product_categories_objects ) ) {
+				foreach ( $product_categories_objects as $product_categories_object ) {
+					if ( $array_to_include && in_array( $product_categories_object->term_id, $array_to_include ) ) {
+						$do_include = true;
+						break;
+					}
+				}
+			}
+			if ( ! $do_include ) {
+				return false;
+			}
+		}
+
+		// Include by product tag
+		$array_to_include = get_option( 'wcj_custom_product_tabs_local_show_in_tags_' . $custom_tab_index );
+		if ( '' != $array_to_include && ! empty( $array_to_include ) ) {
+			$do_include = false;
+			$product_tags_objects = get_the_terms( $product_id, 'product_tag' );
+			if ( $product_tags_objects && ! empty( $product_tags_objects ) ) {
+				foreach ( $product_tags_objects as $product_tags_object ) {
+					if ( $array_to_include && in_array( $product_tags_object->term_id, $array_to_include ) ) {
+						$do_include = true;
+						break;
+					}
+				}
+			}
+			if ( ! $do_include ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * create_custom_tabs_meta_box.
 	 *
-	 * @version 2.2.9
+	 * @version 2.4.7
 	 */
 	public function create_custom_tabs_meta_box() {
 
@@ -334,28 +430,37 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'type'  => 'number',
 			),
 		);
-//		$html .= '<h4>' . __( 'Customize the tab(s)', 'woocommerce-jetpack' ) . '</h4>';
 		for ( $i = 1; $i <= $total_custom_tabs; $i++ ) {
+			$is_local_tab_visible = $this->is_local_tab_visible( $i, $current_post_id );
+			$readonly = ( $is_local_tab_visible ) ? '' : ' readonly'; // not really used
+			$disabled = ( $is_local_tab_visible ) ? '' : ' - ' . __( 'Disabled', 'woocommerce-jetpack' );
 			$data = array();
 			$html .= '<hr>';
-			$html .= '<h4>' . __( 'Custom Product Tab', 'woocommerce-jetpack' ) . ' #' . $i . '</h4>';
-			foreach ( $options as $option ) {
-				$option_id = $option['id'] . $i;
-				$option_value = get_post_meta( $current_post_id, '_' . $option_id, true );
-				if ( ! $option_value && 'wcj_custom_product_tabs_priority_local_' == $option['id'] )
-					$option_value = 50;
-				switch ( $option['type'] ) {
-					case 'number':
-					case 'text':
-						$the_field = '<input type="' . $option['type'] . '" id="' . $option_id . '" name="' . $option_id . '" value="' . $option_value . '">';
-						break;
-					case 'textarea':
-						$the_field = '<textarea class="short" rows="10" cols="40" id="' . $option_id . '" name="' . $option_id . '">' . $option_value . '</textarea>';
-						break;
+			$html .= '<h4>' . __( 'Custom Product Tab', 'woocommerce-jetpack' ) . ' #' . $i . $disabled . '</h4>';
+			if ( $is_local_tab_visible ) {
+				foreach ( $options as $option ) {
+					$option_id = $option['id'] . $i;
+					if ( ! ( $option_value = get_post_meta( $current_post_id, '_' . $option_id, true ) ) ) {
+						$option_value = get_option( $option['id'] . 'default_' . $i, '' );
+						if ( '' === $option_value && 'wcj_custom_product_tabs_priority_local_' === $option['id'] ) {
+							$option_value = 50;
+						}
+					}
+					switch ( $option['type'] ) {
+						case 'number':
+							$the_field = '<input style="width:25%;min-width:100px;" type="' . $option['type'] . '" id="' . $option_id . '" name="' . $option_id . '" value="' . $option_value . '"' . $readonly . '>';
+							break;
+						case 'text':
+							$the_field = '<input style="width:50%;min-width:150px;" type="' . $option['type'] . '" id="' . $option_id . '" name="' . $option_id . '" value="' . $option_value . '"' . $readonly . '>';
+							break;
+						case 'textarea':
+							$the_field = '<textarea style="width:100%;height:300px;" id="' . $option_id . '" name="' . $option_id . '"' . $readonly . '>' . $option_value . '</textarea>';
+							break;
+					}
+					$data[] = array( $option['title'], $the_field );
 				}
-				$data[] = array( $option['title'], $the_field );
+				$html .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', 'table_heading_type' => 'vertical', 'columns_styles' => array( 'width:10%;', ) ) );
 			}
-			$html .= wcj_get_table_html( $data, array( 'table_heading_type' => 'vertical', ) );
 		}
 		$html .= '<input type="hidden" name="woojetpack_custom_tabs_save_post" value="woojetpack_custom_tabs_save_post">';
 		echo $html;
@@ -364,12 +469,11 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.7
 	 */
 	function get_settings() {
 
 		$settings = array(
-
 			// Global Custom Tabs
 			array(
 				'title'     => __( 'Custom Product Tabs Options', 'woocommerce-jetpack' ),
@@ -377,7 +481,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'desc'      => __( 'This section lets you add custom single product tabs.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_options',
 			),
-
 			array(
 				'title'     => __( 'Custom Product Tabs Number', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'Click "Save changes" after you change this number.', 'woocommerce-jetpack' ),
@@ -536,12 +639,10 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		}
 
 		$settings = array_merge( $settings, array(
-
 			array(
 				'type'      => 'sectionend',
 				'id'        => 'wcj_custom_product_tabs_options',
 			),
-
 			// Local Custom Tabs
 			array(
 				'title'     => __( 'Custom Product Tabs - Per Product', 'woocommerce-jetpack' ),
@@ -549,7 +650,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'desc'      => __( 'This section lets you set defaults for per product custom tabs.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_options_local',
 			),
-
 			array(
 				'title'     => __( 'Enable Per Product Custom Product Tabs', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
@@ -558,7 +658,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'default'   => 'yes',
 				'type'      => 'checkbox',
 			),
-
 			array(
 				'title'     => __( 'Default Per Product Custom Product Tabs Number', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_local_total_number_default',
@@ -568,12 +667,102 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'custom_attributes'
 				            => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
+		) );
 
+		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) ); $i++ ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'     => __( 'Custom Product Tab', 'woocommerce-jetpack' ) . ' #' . $i,
+					'desc'      => __( 'Default Title', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_custom_product_tabs_title_local_default_' . $i,
+					'default'   => '',
+					'type'      => 'text',
+					'css'       => 'width:30%;min-width:300px;',
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'Default Priority (i.e. Order)', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_custom_product_tabs_priority_local_default_' . $i,
+					'default'   => 50,
+					'type'      => 'number',
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'Default Content', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'You can use shortcodes here...', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_custom_product_tabs_content_local_default_' . $i,
+					'default'   => '',
+					'type'      => 'textarea',
+					'css'       => 'width:50%;min-width:300px;height:200px;',
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'PRODUCTS to HIDE this tab', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'To hide this tab from some products, enter products here.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_custom_product_tabs_local_hide_in_products_' . $i,
+					'default'   => '',
+					'class'     => 'chosen_select',
+					'type'      => 'multiselect',
+					'options'   => $products_options,
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'PRODUCTS to SHOW this tab', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'To show this tab only for some products, enter products here.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_custom_product_tabs_local_show_in_products_' . $i,
+					'default'   => '',
+					'class'     => 'chosen_select',
+					'type'      => 'multiselect',
+					'options'   => $products_options,
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'CATEGORIES to HIDE this tab', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'To hide this tab from some categories, enter categories here.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_custom_product_tabs_local_hide_in_cats_' . $i,
+					'default'   => '',
+					'class'     => 'chosen_select',
+					'type'      => 'multiselect',
+					'options'   => $product_cats_options,
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'CATEGORIES to SHOW this tab', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'To show this tab only for some categories, enter categories here.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_custom_product_tabs_local_show_in_cats_' . $i,
+					'default'   => '',
+					'class'     => 'chosen_select',
+					'type'      => 'multiselect',
+					'options'   => $product_cats_options,
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'TAGS to HIDE this tab', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'To hide this tab from some tags, enter tags here.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_custom_product_tabs_local_hide_in_tags_' . $i,
+					'default'   => '',
+					'class'     => 'chosen_select',
+					'type'      => 'multiselect',
+					'options'   => $product_tags_options,
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'TAGS to SHOW this tab', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'To show this tab only for some tags, enter tags here.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_custom_product_tabs_local_show_in_tags_' . $i,
+					'default'   => '',
+					'class'     => 'chosen_select',
+					'type'      => 'multiselect',
+					'options'   => $product_tags_options,
+				),
+			) );
+		}
+
+		$settings = array_merge( $settings, array(
 			array(
 				'type'      => 'sectionend',
 				'id'        => 'wcj_custom_product_tabs_options_local',
 			),
-
 			// Standard WooCommerce Tabs
 			array(
 				'title'     => __( 'WooCommerce Standard Product Tabs Options', 'woocommerce-jetpack' ),
@@ -581,7 +770,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'desc'      => __( 'This section lets you customize single product tabs.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_product_info_product_tabs_options',
 			),
-
 			array(
 				'title'     => __( 'Description Tab', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Remove tab from product page', 'woocommerce-jetpack' ),
@@ -589,7 +777,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'default'   => 'no',
 				'type'      => 'checkbox',
 			),
-
 			array(
 				'title'     => '',
 				'desc'      => __( 'Title.', 'woocommerce-jetpack' ),
@@ -598,7 +785,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'default'   => '',
 				'type'      => 'text',
 			),
-
 			array(
 				'title'     => '',
 				'id'        => 'wcj_product_info_product_tabs_description_priority',
@@ -607,7 +793,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'desc'      => __( 'Priority (i.e. Order).', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
-
 			array(
 				'title'     => __( 'Additional Information Tab', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Remove tab from product page', 'woocommerce-jetpack' ),
@@ -615,7 +800,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'default'   => 'no',
 				'type'      => 'checkbox',
 			),
-
 			array(
 				'title'     => '',
 				'desc'      => __( 'Title.', 'woocommerce-jetpack' ),
@@ -624,7 +808,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'default'   => '',
 				'type'      => 'text',
 			),
-
 			array(
 				'title'     => '',
 				'id'        => 'wcj_product_info_product_tabs_additional_information_priority',
@@ -633,7 +816,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'desc'      => __( 'Priority (i.e. Order).', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
-
 			array(
 				'title'     => __( 'Reviews Tab', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Remove tab from product page', 'woocommerce-jetpack' ),
@@ -641,7 +823,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'default'   => 'no',
 				'type'      => 'checkbox',
 			),
-
 			array(
 				'title'     => '',
 				'desc'      => __( 'Title.', 'woocommerce-jetpack' ),
@@ -650,7 +831,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'default'   => '',
 				'type'      => 'text',
 			),
-
 			array(
 				'title'     => '',
 				'id'        => 'wcj_product_info_product_tabs_reviews_priority',
@@ -659,12 +839,10 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'desc'      => __( 'Priority (i.e. Order).', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
-
 			array(
 				'type'      => 'sectionend',
 				'id'        => 'wcj_product_info_product_tabs_options',
 			),
-
 		) );
 
 		return $this->add_standard_settings( $settings );

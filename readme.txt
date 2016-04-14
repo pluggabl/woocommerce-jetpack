@@ -120,7 +120,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.7 - 13/04/2016 =
+= 2.4.7 - 14/04/2016 =
+* Dev - PRODUCTS - Product Tabs - Per product tabs - Styling (in admin product edit) changed.
+* Dev - PRODUCTS - Product Tabs - Per product tabs - Default title/priority/content/conditional visibility by products/categories/tags options added.
 * Fix - PAYMENT GATEWAYS - Gateways per Product or Category - Additional check added in `filter_available_payment_gateways_per_category` function. This is fixing compatibility issue with "WooCommerce Subscriptions" plugin.
 * Dev - PAYMENT GATEWAYS - Gateways per Product or Category - Documentation link added. Reset button added.
 * Dev - `source` parameter added to documentation link (module and dashboard).
