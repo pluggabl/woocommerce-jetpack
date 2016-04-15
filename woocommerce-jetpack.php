@@ -21,10 +21,18 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.4.5
+ * @version 2.4.7
  */
 
 final class WC_Jetpack {
+
+	/**
+	 * WooCommerce Jetpack version.
+	 *
+	 * @var   string
+	 * @since 2.4.7
+	 */
+	public $version = '2.4.7-dev-201604151842';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -395,7 +403,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.4.5
+	 * @version 2.4.7
 	 */
 	private function include_modules() {
 		$settings = array();
@@ -466,24 +474,33 @@ final class WC_Jetpack {
 
 		// Add options
 		if ( is_admin() ) {
+
+			// Modules statuses
+			$submodules_classes = array(
+				'WCJ_PDF_Invoicing_Display',
+				'WCJ_PDF_Invoicing_Emails',
+				'WCJ_PDF_Invoicing_Footer',
+				'WCJ_PDF_Invoicing_Header',
+				'WCJ_PDF_Invoicing_Numbering',
+				'WCJ_PDF_Invoicing_Page',
+				'WCJ_PDF_Invoicing_Styling',
+				'WCJ_PDF_Invoicing_Templates',
+			);
+
 			foreach ( $settings as $section ) {
 
-				$values = $section->get_settings();
-
-				// Modules statuses
-				$submodules_classes = array(
-					'WCJ_PDF_Invoicing_Display',
-					'WCJ_PDF_Invoicing_Emails',
-					'WCJ_PDF_Invoicing_Footer',
-					'WCJ_PDF_Invoicing_Header',
-					'WCJ_PDF_Invoicing_Numbering',
-					'WCJ_PDF_Invoicing_Page',
-					'WCJ_PDF_Invoicing_Styling',
-					'WCJ_PDF_Invoicing_Templates',
-				);
 				if ( ! in_array( get_class( $section ), $submodules_classes ) ) {
-					$this->module_statuses[] = $values[1];
+//					$this->module_statuses[] = $values[1];
+					$status_settings = $section->add_enable_module_setting( array() );
+					$this->module_statuses[] = $status_settings[1];
 				}
+
+//				if ( ! $section->is_enabled() && ! isset ( $_GET['woojetpack_admin_options_reset'] ) ) {
+				if ( get_option( 'booster_for_woocommerce_version' ) === $this->version && ! isset ( $_GET['woojetpack_admin_options_reset'] ) ) {
+					continue;
+				}
+
+				$values = $section->get_settings();
 
 				// Adding options
 				foreach ( $values as $value ) {
@@ -506,6 +523,10 @@ final class WC_Jetpack {
 						} */
 					}
 				}
+			}
+
+			if ( get_option( 'booster_for_woocommerce_version' ) !== $this->version ) {
+				update_option( 'booster_for_woocommerce_version', $this->version );
 			}
 		}
 	}
