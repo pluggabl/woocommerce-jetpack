@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.7 - 15/04/2016 =
+* Dev - EMAILS & MISC. - Reports - "Booster: Monthly Sales" added.
 * Dev - PDF Invoicing - "Invoices Report" tool - Buttons renamed.
 * Dev - Fixing plugin's performance issue - Version (`booster_for_woocommerce_version`) parameter added.
 * Dev - PRODUCTS - Product Tabs - Per product tabs - Styling (in admin product edit) changed.

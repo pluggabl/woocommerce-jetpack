@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Reports class.
  *
- * @version 2.4.6
+ * @version 2.4.7
  * @author  Algoritmika Ltd.
  */
 
@@ -26,7 +26,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.6
+	 * @version 2.4.7
 	 */
 	public function __construct() {
 
@@ -46,6 +46,7 @@ class WCJ_Reports extends WCJ_Module {
 				include_once( 'reports/wcj-class-reports-customers.php' );
 				include_once( 'reports/wcj-class-reports-stock.php' );
 				include_once( 'reports/wcj-class-reports-sales.php' );
+				include_once( 'reports/wcj-class-reports-monthly-sales.php' );
 
 				add_action( 'admin_bar_menu', array( $this, 'add_custom_order_reports_ranges_to_admin_bar' ), PHP_INT_MAX );
 				add_action( 'admin_bar_menu', array( $this, 'add_custom_order_reports_ranges_by_month_to_admin_bar' ), PHP_INT_MAX );
@@ -199,6 +200,16 @@ class WCJ_Reports extends WCJ_Module {
 	}
 
 	/**
+	 * get_report_monthly_sales.
+	 * @version 2.4.7
+	 * @since   2.4.7
+	 */
+	function get_report_monthly_sales() {
+		$report = new WCJ_Reports_Monthly_Sales();
+		echo $report->get_report();
+	}
+
+	/**
 	 * get_report_stock.
 	 */
 	public function get_report_stock() {
@@ -220,7 +231,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Add reports to WooCommerce > Reports > Sales
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.7
 	 * @since   2.3.0
 	 */
 	public function add_sales_reports( $reports ) {
@@ -228,8 +239,15 @@ class WCJ_Reports extends WCJ_Module {
 		$reports['orders']['reports']['booster_products_sales'] = array(
 			'title'       => __( 'Booster: Product Sales', 'woocommerce-jetpack' ),
 			'description' => '',
-			'hide_title'  => true,
+			'hide_title'  => false,
 			'callback'    => array( $this, 'get_report_sales' ),
+		);
+
+		$reports['orders']['reports']['booster_monthly_sales'] = array(
+			'title'       => __( 'Booster: Monthly Sales', 'woocommerce-jetpack' ) . ' <sup>[' . __( 'Beta', 'woocommerce-jetpack' ) . ']</sup>',
+			'description' => '',
+			'hide_title'  => false,
+			'callback'    => array( $this, 'get_report_monthly_sales' ),
 		);
 
 		return $reports;
