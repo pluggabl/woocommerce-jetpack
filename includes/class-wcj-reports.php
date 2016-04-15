@@ -307,31 +307,82 @@ class WCJ_Reports extends WCJ_Module {
 	/*
 	 * Add the settings.
 	 *
-	 * @version 2.4.6
+	 * @version 2.4.7
 	 */
 	function get_settings() {
+		$reports = array(
+			array(
+				'title'     => __( 'Product Sales', 'woocommerce-jetpack' ),
+				'tab'       => 'orders',
+				'tab_title' => 'Orders',
+				'report'    => 'booster_products_sales',
+			),
+			array(
+				'title'     => __( 'Monthly Sales (with currency conversions)', 'woocommerce-jetpack' ),
+				'tab'       => 'orders',
+				'tab_title' => 'Orders',
+				'report'    => 'booster_monthly_sales',
+			),
+			array(
+				'title'     => __( 'Customers by Country', 'woocommerce-jetpack' ),
+				'tab'       => 'customers',
+				'tab_title' => 'Customers',
+				'report'    => 'customers_by_country',
+			),
+			array(
+				'title'     => __( 'Customers by Country Sets', 'woocommerce-jetpack' ),
+				'tab'       => 'customers',
+				'tab_title' => 'Customers',
+				'report'    => 'customers_by_country_sets',
+			),
+			array(
+				'title'     => __( 'All in Stock with sales data', 'woocommerce-jetpack' ),
+				'tab'       => 'stock',
+				'tab_title' => 'Stock',
+				'report'    => 'on_stock',
+			),
+			array(
+				'title'     => __( 'Understocked products (calculated by sales data)', 'woocommerce-jetpack' ),
+				'tab'       => 'stock',
+				'tab_title' => 'Stock',
+				'report'    => 'understocked',
+			),
+			array(
+				'title'     => __( 'Overstocked products (calculated by sales data)', 'woocommerce-jetpack' ),
+				'tab'       => 'stock',
+				'tab_title' => 'Stock',
+				'report'    => 'overstocked',
+			),
+		);
 		$settings = array(
 			array(
 				'title'     => __( 'Available Reports', 'woocommerce-jetpack' ),
 				'type'      => 'title',
-				'desc'      => '<p>'
-					. __( 'Booster: Customers by Country. Available in WooCommerce > Reports > Customers.', 'woocommerce-jetpack' )
-					. '</p><p>'
-					. __( 'Booster: Customers by Country Sets. Available in WooCommerce > Reports > Customers.', 'woocommerce-jetpack' )
-					. '</p><p>'
-					. __( 'Booster: All in Stock with sales data. Available in WooCommerce > Reports > Stock.', 'woocommerce-jetpack' )
-					. '</p><p>'
-					. __( 'Booster: Understocked products (calculated by sales data). Available in WooCommerce > Reports > Stock.', 'woocommerce-jetpack' )
-					. '</p><p>'
-					. __( 'Booster: Overstocked products (calculated by sales data). Available in WooCommerce > Reports > Stock.', 'woocommerce-jetpack' )
-					. '</p>',
 				'id'        => 'wcj_reports_more_options'
 			),
+		);
+//		$button_style = "background: red; border-color: red; box-shadow: 0 1px 0 red; text-shadow: 0 -1px 1px #a00,1px 0 1px #a00,0 1px 1px #a00,-1px 0 1px #a00;";
+		$button_style = '';
+		foreach ( $reports as $report ) {
+			$settings = array_merge( $settings, array(
+				array(
+//					'title'    => 'WooCommerce > Reports > ' . $report['tab_title'] . ' > ' . $report['title'],
+					'title'    => '[' . $report['tab_title'] . '] ' . $report['title'],
+					'id'       => 'wcj_' . $report['report'] . '_link',
+					'type'     => 'custom_link',
+					'link'     => '<a class="button-primary" '
+						. 'style="' . $button_style . '" '
+						. 'href="' . get_admin_url() . 'admin.php?page=wc-reports&tab=' . $report['tab'] . '&report=' . $report['report'] . '">'
+						. __( 'View report', 'woocommerce-jetpack' ) . '</a>',
+				),
+			) );
+		}
+		$settings = array_merge( $settings, array(
 			array(
 				'type'      => 'sectionend',
 				'id'        => 'wcj_reports_more_options',
 			),
-		);
+		) );
 		return $this->add_standard_settings( $settings );
 	}
 }
