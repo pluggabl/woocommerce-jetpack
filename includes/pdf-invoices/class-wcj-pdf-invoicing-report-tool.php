@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Report Tool class.
  *
- * @version 2.3.11
+ * @version 2.4.7
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -48,7 +48,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Add Invoices Report tool to WooCommerce menu (the content).
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.7
 	 */
 	function create_invoices_report_tool() {
 		$result_message = '';
@@ -96,12 +96,12 @@ class WCJ_PDF_Invoicing_Report_Tool {
 					// Get Report Button
 					array(
 						'',
-						'<input class="button-primary" type="submit" name="get_invoices_report" value="' . __( 'Display monthly invoices table', 'woocommerce-jetpack' ) . '">',
+						'<input class="button-primary" type="submit" name="get_invoices_report" value="' . __( 'Display monthly documents table', 'woocommerce-jetpack' ) . '">',
 					),
 					// Get Report Zip Button
 					array(
 						'',
-						'<input class="button-primary" type="submit" name="get_invoices_report_zip" value="' . __( 'Download all monthly invoices PDFs in single ZIP file', 'woocommerce-jetpack' ) . '">',
+						'<input class="button-primary" type="submit" name="get_invoices_report_zip" value="' . __( 'Download all monthly documents PDFs in single ZIP file', 'woocommerce-jetpack' ) . '">',
 					),
 				);
 				// Print all
