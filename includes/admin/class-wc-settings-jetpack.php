@@ -431,6 +431,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				echo $html;
 			?></tbody>
 		</table><p style="color:gray;font-size:x-small;font-style:italic;"><?php echo __( 'Total Modules:' ) . ' ' . $total_modules; ?></p>
+		<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;"><?php echo __( 'Version:' ) . ' ' . get_option( 'booster_for_woocommerce_version', 'N/A' ); ?></p>
 		<?php
 		return $readme_html;
 	}
