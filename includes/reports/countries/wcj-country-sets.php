@@ -2,10 +2,10 @@
 /**
  * WooCommerce Jetpack Country Sets
  *
- * @version		2.0.0
- * @author 		Algoritmika Ltd.
+ * @version 2.4.7
+ * @author  Algoritmika Ltd.
  */
- 
+
 return array(
 
 	'Africa' => array(
@@ -21,7 +21,7 @@ return array(
 	),
 	'Europe' => array(
 		'AD', 'AL', 'AT', 'AX', 'BA', 'BE', 'BG', 'BY', 'CH', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FO', 'FR', 'FX', 'GB', 'GG', 'GI', 'GR', 'HR', 'HU', 'IE', 'IM', 'IS', 'IT', 'JE', 'LI', 'LT', 'LU', 'LV', 'MC', 'MD', 'ME', 'MK', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO', 'RS', 'RU', 'SE', 'SI', 'SJ', 'SK', 'SM', 'TR', 'UA', 'VA',
-	),		
+	),
 	/*'Europe excl EU' => array(
 		'AD', 'AL', 'AX', 'BA', 'BY', 'CH', 'FO', 'FX', 'GG', 'GI', 'IM', 'IS', 'JE', 'LI', 'MC', 'MD', 'ME', 'MK', 'NO', 'RS', 'RU', 'SJ', 'SM', 'TR', 'UA', 'VA',
 	),*/
@@ -40,6 +40,10 @@ return array(
 
 	'South America' => array(
 		'AR', 'BO', 'BR', 'CL', 'CO', 'EC', 'FK', 'GF', 'GY', 'GY', 'PE', 'PY', 'SR', 'UY', 'VE',
+	),
+
+	'Antarctica' => array(
+		'AQ',
 	),
 
 );
