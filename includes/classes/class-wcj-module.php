@@ -357,7 +357,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * add_reset_settings_button.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.7
 	 * @since   2.4.0
 	 */
 	function add_reset_settings_button( $settings ) {
@@ -369,7 +369,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				'id'    => 'wcj_' . $this->id . '_reset_settings_options',
 			),
 			array(
-				'title'    => __( 'Reset Module to Default Settings', 'woocommerce-jetpack' ),
+				'title'    => ( 'module' === $this->type ) ?
+					__( 'Reset Module to Default Settings', 'woocommerce-jetpack' ) :
+					__( 'Reset Submodule to Default Settings', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_' . $this->id . '_reset_settings',
 				'type'     => 'custom_link',
 				'link'     => '<a class="button-primary" style="' . $reset_button_style . '" href="' . add_query_arg( 'wcj_reset_settings', $this->id, remove_query_arg( 'wcj_confirm_reset_settings' ) ) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
@@ -395,6 +397,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * @version 2.4.7
 	 */
 	function add_enable_module_setting( $settings, $module_desc = '' ) {
+		if ( 'module' != $this->type ) {
+			return $settings;
+		}
 		$the_link = '';
 		if ( isset( $this->link ) &&  '' != $this->link ) {
 			$the_link = ' <a class="button-primary"' .

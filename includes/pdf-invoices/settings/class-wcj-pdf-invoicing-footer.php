@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Footer class.
  *
- * @version 2.4.0
+ * @version 2.4.7
  * @author  Algoritmika Ltd.
  */
 
@@ -28,7 +28,7 @@ class WCJ_PDF_Invoicing_Footer extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.7
 	 */
 	function get_settings() {
 		$settings = array();
@@ -83,7 +83,7 @@ class WCJ_PDF_Invoicing_Footer extends WCJ_Module {
 				'id'    => 'wcj_invoicing_' . $invoice_type['id'] . '_footer_options',
 			);
 		}
-		return $settings;
+		return $this->add_standard_settings( $settings );
 	}
 }
 

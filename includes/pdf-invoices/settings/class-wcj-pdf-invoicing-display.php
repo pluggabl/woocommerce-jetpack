@@ -338,7 +338,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			);
 		}
 
-		return $settings;
+		return $this->add_standard_settings( $settings );
 	}
 }
 

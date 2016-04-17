@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Templates class.
  *
- * @version 2.4.0
+ * @version 2.4.7
  * @author  Algoritmika Ltd.
  */
 
@@ -30,7 +30,7 @@ class WCJ_PDF_Invoicing_Templates extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.7
 	 */
 	function get_settings() {
 
@@ -72,7 +72,7 @@ class WCJ_PDF_Invoicing_Templates extends WCJ_Module {
 			'id'    => 'wcj_invoicing_templates_desc',
 		);
 
-		return $settings;
+		return $this->add_standard_settings( $settings );
 	}
 
 }

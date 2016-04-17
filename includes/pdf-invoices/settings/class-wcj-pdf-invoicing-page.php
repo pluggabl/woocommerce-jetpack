@@ -449,7 +449,7 @@ class WCJ_PDF_Invoicing_Page extends WCJ_Module {
 				'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_page_options',
 			);
 		}
-		return $settings;
+		return $this->add_standard_settings( $settings );
 	}
 }
 
