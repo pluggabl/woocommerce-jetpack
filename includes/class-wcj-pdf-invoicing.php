@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing class.
  *
- * @version 2.4.0
+ * @version 2.4.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.7
 	 */
 	public function __construct() {
 
@@ -25,6 +25,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		$this->short_desc    = __( 'PDF Invoicing', 'woocommerce-jetpack' );
 		$this->section_title = __( 'General', 'woocommerce-jetpack' );
 		$this->desc          = __( 'WooCommerce Invoices, Proforma Invoices, Credit Notes and Packing Slips.', 'woocommerce-jetpack' );
+		$this->link          = 'http://booster.io/features/woocommerce-pdf-invoicing-and-packing-slips/';
 		parent::__construct();
 
 		$this->add_tools( array(

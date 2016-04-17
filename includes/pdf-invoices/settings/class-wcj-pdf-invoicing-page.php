@@ -34,7 +34,7 @@ class WCJ_PDF_Invoicing_Page extends WCJ_Module {
 	 * @since   2.4.7
 	 */
 	function get_page_formats() {
-		return array(
+		$page_formats = array(
 			// ISO 216 A Series + 2 SIS 014711 extensions
 			'A0',
 			'A1',
@@ -381,6 +381,12 @@ class WCJ_PDF_Invoicing_Page extends WCJ_Module {
 			'FR_TELLIERE',
 			'FR_POT', */
 		);
+
+		$page_formats_options = array();
+		foreach ( $page_formats as $page_format ) {
+			$page_formats_options[ $page_format ] = $page_format;
+		}
+		return $page_formats_options;
 	}
 
 	/**

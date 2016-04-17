@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Display class.
  *
- * @version 2.4.0
+ * @version 2.4.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.7
 	 */
 	function __construct() {
 
@@ -33,7 +33,93 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), 2 );
 			// Action Links on Customer's My Account page
 			add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'add_pdf_invoices_action_links' ), PHP_INT_MAX, 2 );
+			// Action Buttons to Admin's Orders list
+			add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_pdf_invoices_admin_actions' ), PHP_INT_MAX, 2 );
+			add_filter( 'admin_head', array( $this, 'add_pdf_invoices_admin_actions_buttons_css' ) );
 		}
+	}
+
+	/**
+	 * add_pdf_invoices_admin_actions_buttons_css.
+	 *
+	 * @version 2.4.7
+	 * @since   2.4.7
+	 */
+	function add_pdf_invoices_admin_actions_buttons_css() {
+		echo '<style>' . PHP_EOL;
+		$invoice_types = wcj_get_enabled_invoice_types();
+		foreach ( $invoice_types as $invoice_type ) {
+			switch ( $invoice_type['id'] ) {
+				case 'invoice':
+					$color = 'green';
+					break;
+				case 'proforma_invoice':
+					$color = 'orange';
+					break;
+				case 'packing_slip':
+					$color = 'blue';
+					break;
+				case 'credit_note':
+					$color = 'red';
+					break;
+				default: // 'custom_doc'
+					$color = 'gray';
+					break;
+			}
+			echo '.view.' . $invoice_type['id'] .                  '{ color: ' . $color . ' !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] . '_' . 'create' . '{ color: ' . $color . ' !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] . '_' . 'delete' . '{ color: ' . $color . ' !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] .                   '::after { content: "\e028" !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] .  '_' . 'create' . '::after { content: "\e027" !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] .  '_' . 'delete' . '::after { content: "\e030" !important; }' . PHP_EOL;
+		}
+		echo '</style>' . PHP_EOL;
+	}
+
+	/**
+	 * add_pdf_invoices_admin_actions.
+	 *
+	 * @version 2.4.7
+	 * @since   2.4.7
+	 */
+	function add_pdf_invoices_admin_actions( $actions, $the_order ) {
+		$invoice_types = wcj_get_enabled_invoice_types();
+		foreach ( $invoice_types as $invoice_type ) {
+			if ( wcj_is_invoice_created( $the_order->id, $invoice_type['id'] ) ) {
+				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_view_btn', 'no' ) ) {
+					// Document (View) button
+					$query_args = array( 'order_id' => $the_order->id, 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
+					if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
+						$query_args['save_pdf_invoice'] = '1';
+					}
+					$the_url       = add_query_arg( $query_args, remove_query_arg( array ( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) );
+					$the_name      = __( 'View', 'woocommerce-jetpack' ) . ' '  . $invoice_type['title'];
+					$the_action    = 'view ' . $invoice_type['id'];
+					$the_action_id = $invoice_type['id'];
+					$actions[ $the_action_id ] = array( 'url' => $the_url, 'name' => $the_name, 'action' => $the_action, );
+				}
+				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn', 'yes' ) ) {
+					// Delete button
+					$query_args = array( 'delete_invoice_for_order_id' => $the_order->id, 'invoice_type_id' => $invoice_type['id'] );
+					$the_url       = add_query_arg( $query_args, remove_query_arg( 'create_invoice_for_order_id' ) );
+					$the_name      = __( 'Delete', 'woocommerce-jetpack' ) . ' ' . $invoice_type['title'];
+					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'delete';
+					$the_action_id = $invoice_type['id'] . '_' . 'delete';
+					$actions[ $the_action_id ] = array( 'url' => $the_url, 'name' => $the_name, 'action' => $the_action, );
+				}
+			} else {
+				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn', 'yes' ) ) {
+					// Create button
+					$query_args = array( 'create_invoice_for_order_id' => $the_order->id, 'invoice_type_id' => $invoice_type['id'] );
+					$the_url       = add_query_arg( $query_args, remove_query_arg( 'delete_invoice_for_order_id' ) );
+					$the_name      = __( 'Create', 'woocommerce-jetpack' ) . ' ' . $invoice_type['title'];
+					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'create';
+					$the_action_id = $invoice_type['id'] . '_' . 'create';
+					$actions[ $the_action_id ] = array( 'url' => $the_url, 'name' => $the_name, 'action' => $the_action, );
+				}
+			}
+		}
+		return $actions;
 	}
 
 	/**
@@ -55,7 +141,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	 * Ouput custom columns for products
 	 *
 	 * @param   string $column
-	 * @version 2.3.10
+	 * @version 2.4.7
 	 */
 	public function render_order_columns( $column ) {
 		$invoice_types_ids = wcj_get_enabled_invoice_types_ids();
@@ -78,7 +164,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				. add_query_arg( $query_args, remove_query_arg( array( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) )
 				. '">' . $the_number . '</a>';
 
-			// Delete button
+			/* // Delete button
 			$delete_button_label = get_option( 'wcj_invoicing_' . $invoice_type_id . '_admin_column_delete_btn', __( 'Delete', 'woocommerce-jetpack' ) );
 			if ( '' != $delete_button_label ) {
 				$html .= ' ';
@@ -88,8 +174,8 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 					remove_query_arg( 'create_invoice_for_order_id' )
 				);
 				$html .= '"><span style="color:gray;font-style:italic;font-size:x-small;text-decoration:underline;">' . $delete_button_label . '</span></a>';
-			}
-		} else {
+			} */
+		} /* else {
 
 			// Create Button
 			$create_button_label = get_option( 'wcj_invoicing_' . $invoice_type_id . '_admin_column_create_btn', __( 'Create', 'woocommerce-jetpack' ) );
@@ -101,7 +187,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				);
 				$html .= '"><span style="color:gray;font-style:italic;font-size:x-small;text-decoration:underline;">' . $create_button_label . '</span></a>';
 			}
-		}
+		} */
 		echo $html;
 	}
 
@@ -140,7 +226,8 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.7
+	 * @todo    "edit order" metabox; confirmation on create/delete;
 	 */
 	function get_settings() {
 
@@ -172,7 +259,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 					'type'     => 'text',
 				),
 
-				array(
+				/* array(
 					'title'    => '',
 					'desc'     => __( 'Create Button', 'woocommerce-jetpack' ),
 					'desc_tip' => __( 'Set empty to disable the button', 'woocommerce-jetpack' ),
@@ -188,6 +275,27 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_column_delete_btn',
 					'default'  => __( 'Delete', 'woocommerce-jetpack' ),
 					'type'     => 'text',
+				), */
+
+				array(
+					'desc'     => __( 'Add View Button', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_view_btn',
+					'default'  => 'no',
+					'type'     => 'checkbox',
+				),
+
+				array(
+					'desc'     => __( 'Add Create Button', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn',
+					'default'  => 'yes',
+					'type'     => 'checkbox',
+				),
+
+				array(
+					'desc'     => __( 'Add Create Button', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn',
+					'default'  => 'yes',
+					'type'     => 'checkbox',
 				),
 
 				array(
