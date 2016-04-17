@@ -292,7 +292,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				),
 
 				array(
-					'desc'     => __( 'Add Create Button', 'woocommerce-jetpack' ),
+					'desc'     => __( 'Add Delete Button', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn',
 					'default'  => 'yes',
 					'type'     => 'checkbox',
