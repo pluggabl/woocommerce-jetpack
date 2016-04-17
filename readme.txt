@@ -120,7 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.7 - 15/04/2016 =
+= 2.4.7 - 17/04/2016 =
+* Dev - PDF INVOICING & PACKING SLIPS - Page Settings - Page Format - Options added.
 * Dev - EMAILS & MISC. - Reports - "Available Reports" section in admin's settings modified.
 * Dev - EMAILS & MISC. - Reports - "Booster: Monthly Sales" added.
 * Dev - PDF Invoicing - "Invoices Report" tool - Buttons renamed.
