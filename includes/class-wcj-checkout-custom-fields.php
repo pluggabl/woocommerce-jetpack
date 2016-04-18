@@ -257,7 +257,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * update_custom_checkout_fields_order_meta.
 	 *
-	 * @version 2.3.8
+	 * @version 2.4.7
 	 */
 	public function update_custom_checkout_fields_order_meta( $order_id ) {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
@@ -278,6 +278,11 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							get_option( 'wcj_checkout_custom_field_checkbox_yes_' . $i ) :
 							get_option( 'wcj_checkout_custom_field_checkbox_no_' . $i );
 						update_post_meta( $order_id, '_' . $option_name_checkbox_value, $checkbox_value );
+					} elseif ( 'radio' === $the_type || 'select' === $the_type ) {
+						update_post_meta( $order_id, '_' . $option_name, wc_clean( $_POST[ $option_name ] ) );
+						$option_name_values = $the_section . '_' . 'wcj_checkout_field_select_options_' . $i;
+						$the_values = get_option( 'wcj_checkout_custom_field_select_options_' . $i );
+						update_post_meta( $order_id, '_' . $option_name_values, $the_values );
 					} else {
 						update_post_meta( $order_id, '_' . $option_name, wc_clean( $_POST[ $option_name ] ) );
 					}
@@ -289,7 +294,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 2.3.8
+	 * @version 2.4.7
 	 * @since   2.3.0
 	 */
 	function add_custom_fields_to_order_display( $order ) {
@@ -301,7 +306,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				if (
 					false !== strpos( $key, '_label_' ) ||
 					false !== strpos( $key, '_type_' ) ||
-					false !== strpos( $key, '_checkbox_value_' )
+					false !== strpos( $key, '_checkbox_value_' ) ||
+					false !== strpos( $key, '_select_options_' )
 				) {
 					continue;
 				}
@@ -322,6 +328,25 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				if ( isset( $post_meta[ $the_type_key ][0] ) && 'checkbox' === $post_meta[ $the_type_key ][0] ) {
 					$the_checkbox_value_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_checkbox_value_', $key );
 					$output .= ( isset( $post_meta[ $the_checkbox_value_key ][0] ) ) ? $post_meta[ $the_checkbox_value_key ][0] : $the_value;
+				} elseif ( isset( $post_meta[ $the_type_key ][0] ) && ( 'radio' === $post_meta[ $the_type_key ][0] || 'select' === $post_meta[ $the_type_key ][0] ) ) {
+					$the_select_values_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_select_options_', $key );
+					$the_select_values = ( isset( $post_meta[ $the_select_values_key ][0] ) ) ? $post_meta[ $the_select_values_key ][0] : '';
+					if ( ! empty( $the_select_values ) ) {
+						$the_select_values_prepared = wcj_get_select_options( $the_select_values );
+						$is_found = false;
+						foreach ( $the_select_values_prepared as $the_select_value_prepared_key => $the_select_value_prepared_value ) {
+							if ( $the_value === $the_select_value_prepared_key ) {
+								$output .= $the_select_value_prepared_value;
+								$is_found = true;
+								break;
+							}
+						}
+						if ( ! $is_found ) {
+							$output .= $the_value;
+						}
+					} else {
+						$output .= $the_value;
+					}
 				} else {
 					$output .= $the_value;
 				}
@@ -334,11 +359,15 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_fields.
 	 *
-	 * @version 2.4.6
+	 * @version 2.4.7
 	 */
 	public function add_woocommerce_admin_fields( $fields, $section ) {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
+				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
+				if ( $section != $the_section ) {
+					continue;
+				}
 				$the_type = get_option( 'wcj_checkout_custom_field_type_' . $i );
 				/* if ( 'datepicker' === $the_type || 'weekpicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
 					$the_type = 'text';
@@ -348,22 +377,31 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				} */
 				if ( 'select' === $the_type ) {
 					$the_class = 'first';
-					$options = wcj_get_select_options( get_option( 'wcj_checkout_custom_field_select_options_' . $i, array() ) );
-				}
-				else if ( 'country' === $the_type ) {
-					$the_type = 'select';
+					$options   = wcj_get_select_options( get_option( 'wcj_checkout_custom_field_select_options_' . $i ) );
+				} elseif ( 'radio' === $the_type ) {
+					if ( ! empty( ( $the_options = get_post_meta( get_the_ID(), '_' . $section . '_' . 'wcj_checkout_field_select_options_' . $i, true ) ) ) ) {
+						$the_type  = 'select';
+						$the_class = 'first';
+						$options   = wcj_get_select_options( $the_options );
+					} elseif ( ! empty( ( $the_options = wcj_get_select_options( get_option( 'wcj_checkout_custom_field_select_options_' . $i ) ) ) ) ) {
+						$the_type  = 'select';
+						$the_class = 'first';
+						$options   = $the_options;
+					} else {
+						$the_type  = 'text';
+						$the_class = 'short';
+					}
+				} elseif ( 'country' === $the_type ) {
+					$the_type  = 'select';
 					$the_class = 'js_field-country select short';
-					$options = WC()->countries->get_allowed_countries();
-				}
-				else /* if ( 'select' != $the_type ) */ {
-					$the_type = 'text';
+					$options   = WC()->countries->get_allowed_countries();
+				} else /* if ( 'select' != $the_type ) */ {
+					$the_type  = 'text';
 					$the_class = 'short';
 				}
-				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
-				if ( $section != $the_section ) continue;
-				$the_key = 'wcj_checkout_field_' . $i;
+				$the_key       = 'wcj_checkout_field_' . $i;
 				$the_key_label = 'wcj_checkout_field_label_' . $i;
-				$the_meta = get_post_meta( get_the_ID(), '_' . $section . '_' . $the_key, true );
+				$the_meta      = get_post_meta( get_the_ID(), '_' . $section . '_' . $the_key, true );
 				if ( is_array( $the_meta ) ) {
 					// Converting from before version 2.3.0
 					if ( isset( $the_meta['value'] ) ) update_post_meta( get_the_ID(), '_' . $section . '_' . $the_key,       $the_meta['value'] );
