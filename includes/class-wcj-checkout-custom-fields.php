@@ -379,17 +379,21 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					$the_class = 'first';
 					$options   = wcj_get_select_options( get_option( 'wcj_checkout_custom_field_select_options_' . $i ) );
 				} elseif ( 'radio' === $the_type ) {
-					if ( ! empty( ( $the_options = get_post_meta( get_the_ID(), '_' . $section . '_' . 'wcj_checkout_field_select_options_' . $i, true ) ) ) ) {
+					$the_options = get_post_meta( get_the_ID(), '_' . $section . '_' . 'wcj_checkout_field_select_options_' . $i, true );
+					if ( ! empty( $the_options ) ) {
 						$the_type  = 'select';
 						$the_class = 'first';
 						$options   = wcj_get_select_options( $the_options );
-					} elseif ( ! empty( ( $the_options = wcj_get_select_options( get_option( 'wcj_checkout_custom_field_select_options_' . $i ) ) ) ) ) {
-						$the_type  = 'select';
-						$the_class = 'first';
-						$options   = $the_options;
 					} else {
-						$the_type  = 'text';
-						$the_class = 'short';
+						$the_options = wcj_get_select_options( get_option( 'wcj_checkout_custom_field_select_options_' . $i ) );
+						if ( ! empty( $the_options ) ) {
+							$the_type  = 'select';
+							$the_class = 'first';
+							$options   = $the_options;
+						} else {
+							$the_type  = 'text';
+							$the_class = 'short';
+						}
 					}
 				} elseif ( 'country' === $the_type ) {
 					$the_type  = 'select';
