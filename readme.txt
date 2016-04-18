@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.7 - 18/04/2016 =
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Documentation link added.
 * Fix - PRODUCTS - Product Input Fields - File type field - Admin order view (order details) - Check for not empty file name added.
 * Dev - PDF INVOICING & PACKING SLIPS - Reset buttons added to all submodules.
 * Dev - PDF INVOICING & PACKING SLIPS - Documentation link added.

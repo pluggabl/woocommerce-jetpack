@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.4.6
+ * @version 2.4.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.5
+	 * @version 2.4.7
 	 */
 	function __construct() {
 
 		$this->id         = 'checkout_custom_fields';
 		$this->short_desc = __( 'Checkout Custom Fields', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add custom fields to WooCommerce checkout page.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-checkout-custom-fields/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -440,7 +441,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 				$the_type = get_option( 'wcj_checkout_custom_field_type_' . $i );
 				$custom_attributes = array();
-				if ( 'datepicker' === $the_type ||  'weekpicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
+				if ( 'datepicker' === $the_type || 'weekpicker' === $the_type || 'timepicker' === $the_type || 'number' === $the_type ) {
 					if ( 'datepicker' === $the_type || 'weekpicker' === $the_type ) {
 						$datepicker_format_option = get_option( 'wcj_checkout_custom_field_datepicker_format_' . $i, '' );
 						$datepicker_format = ( '' == $datepicker_format_option ) ? get_option( 'date_format' ) : $datepicker_format_option;
