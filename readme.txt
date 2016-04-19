@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 19/04/2016 =
+* Fix - Admin module dashboard - Version display fixed.
 * Dev - Shortcodes - Orders - `[wcj_order_total_fees_incl_tax]` shortcode added.
 * Fix - PAYMENT GATEWAYS - Gateways Currency - Shipping conversion added.
 * Fix - PRICES & CURRENCIES - Multicurrency - Shipping (taxable) calculation fixed.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.4.7
+ * @version 2.4.8
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -319,6 +319,8 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 
 	/**
 	 * output_dashboard.
+	 *
+	 * @version 2.4.8
 	 */
 	function output_dashboard( $current_section ) {
 		$the_settings = $this->get_settings();
@@ -346,6 +348,8 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			$this->output_dashboard_modules( $the_settings, 'active_modules_only' );
 		}
 
+		echo '<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . __( 'Version' ) . ': ' . get_option( 'booster_for_woocommerce_version', 'N/A' ) . '</p>';
+
 		$readme_html .= '</pre>';
 		if ( isset( $_GET['woojetpack_readme'] ) ) echo $readme_html;
 	}
@@ -360,7 +364,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard_modules.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.8
 	 */
 	function output_dashboard_modules( $settings, $cat_id = '' ) {
 		$readme_html = '';
@@ -430,9 +434,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				}
 				echo $html;
 			?></tbody>
-		</table><p style="color:gray;font-size:x-small;font-style:italic;"><?php echo __( 'Total Modules:' ) . ' ' . $total_modules; ?></p>
-		<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;"><?php echo __( 'Version:' ) . ' ' . get_option( 'booster_for_woocommerce_version', 'N/A' ); ?></p>
-		<?php
+		</table><p style="color:gray;font-size:x-small;font-style:italic;"><?php echo __( 'Total Modules:' ) . ' ' . $total_modules; ?></p><?php
 		return $readme_html;
 	}
 
