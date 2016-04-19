@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder,solovjov
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack,custom price labels,call for price,currency symbol,remove sorting,remove old product slugs,add to cart text,order number,sequential order numbering,email pdf invoice,pdf invoice,pdf invoices,already in cart,empty cart,redirect to checkout,minimum order amount,customize checkout fields,checkout fields,email,customize product tabs,product tabs,related products number,empty cart,redirect add to cart,redirect to checkout,product already in cart,custom payment gateway,payment gateway icon,auto-complete all orders,custom order statuses,custom order status,remove text from price,custom css,hide categories count,hide subcategories count,hide category count,hide subcategory count,display total sales,custom product tabs,remove product tab,payment gateway fee,vat,gateway by country,price by country,currency switcher
 Requires at least: 4.1
 Tested up to: 4.5
-Stable tag: 2.4.6
+Stable tag: 2.4.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -121,33 +121,33 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.7 - 19/04/2016 =
-* Dev - PRODUCTS - Product Input Fields - Datepicker/Weekpicker - Year selector and year range options added.
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Datepicker/Weekpicker - Year selector and year range options added.
-* Fix - CART & CHECKOUT - Checkout Custom Fields - Name instead of value in order details and admin order view for select and radio type fields.
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Documentation link added.
+* Dev - Fixing plugin's performance issue - Version (`booster_for_woocommerce_version`) parameter added.
+* Dev - `source` parameter added to documentation link (module and dashboard).
 * Fix - PRODUCTS - Product Input Fields - File type field - Admin order view (order details) - Check for not empty file name added.
+* Dev - PRODUCTS - Product Input Fields - Datepicker/Weekpicker - Year selector and year range options added.
+* Dev - PRODUCTS - Product Tabs - Product edit metabox renamed.
+* Dev - PRODUCTS - Product Tabs - Per product tabs - Styling (in admin product edit) changed.
+* Dev - PRODUCTS - Product Tabs - Per product tabs - Default title/priority/content/conditional visibility by products/categories/tags options added.
+* Fix - CART & CHECKOUT - Checkout Files Upload - Fixed wrong "is required" validation when field is disabled.
+* Dev - CART & CHECKOUT - Checkout Files Upload - Settings field type changed from `text` to `textarea` (in all notice and main label fields).
+* Dev - CART & CHECKOUT - Checkout Files Upload - Files info added to order details and emails.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Name instead of value in order details and admin order view for select and radio type fields.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Conditional visibility by products/categories/tags options added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Datepicker/Weekpicker - Year selector and year range options added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Documentation link added.
+* Fix - CART & CHECKOUT - Checkout Custom Info - Priority bug fixed.
+* Dev - CART & CHECKOUT - Checkout Custom Info - Documentation link added. Reset button added.
+* Fix - PAYMENT GATEWAYS - Gateways per Product or Category - Additional check added in `filter_available_payment_gateways_per_category` function. This is fixing compatibility issue with "WooCommerce Subscriptions" plugin.
+* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - Documentation link added. Reset button added.
 * Dev - PDF INVOICING & PACKING SLIPS - Reset buttons added to all submodules.
 * Dev - PDF INVOICING & PACKING SLIPS - Documentation link added.
 * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Actions" buttons added (and column buttons removed).
 * Dev - PDF INVOICING & PACKING SLIPS - Page Settings - Page Format - Options added.
-* Dev - EMAILS & MISC. - Reports - "Available Reports" section in admin's settings modified.
-* Dev - EMAILS & MISC. - Reports - "Booster: Monthly Sales" added.
 * Dev - PDF INVOICING & PACKING SLIPS - "Invoices Report" tool - Buttons renamed.
-* Dev - Fixing plugin's performance issue - Version (`booster_for_woocommerce_version`) parameter added.
-* Dev - PRODUCTS - Product Tabs - Per product tabs - Styling (in admin product edit) changed.
-* Dev - PRODUCTS - Product Tabs - Per product tabs - Default title/priority/content/conditional visibility by products/categories/tags options added.
-* Fix - PAYMENT GATEWAYS - Gateways per Product or Category - Additional check added in `filter_available_payment_gateways_per_category` function. This is fixing compatibility issue with "WooCommerce Subscriptions" plugin.
-* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - Documentation link added. Reset button added.
-* Dev - `source` parameter added to documentation link (module and dashboard).
-* Fix - CART & CHECKOUT - Checkout Custom Info - Priority bug fixed.
-* Dev - CART & CHECKOUT - Checkout Custom Info - Documentation link added. Reset button added.
 * Dev - EMAILS & MISC. - EU VAT Number - Unnecessary `woocommerce_checkout_update_order_meta` filter function removed.
 * Dev - EMAILS & MISC. - EU VAT Number - VAT number info added to order details and emails.
-* Fix - CART & CHECKOUT - Checkout Custom Fields - Fixed wrong "is required" validation when field is disabled.
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Settings field type changed from `text` to `textarea` (in all notice and main label fields).
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Files info added to order details and emails.
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Conditional visibility by products/categories/tags options added.
-* Dev - PRODUCTS - Product Tabs - Product edit metabox renamed.
+* Dev - EMAILS & MISC. - Reports - "Available Reports" section in admin's settings modified.
+* Dev - EMAILS & MISC. - Reports - "Booster: Monthly Sales" added.
 
 = 2.4.6 - 07/04/2016 =
 * Dev - Documentation link added to `WCJ_Module` class.
