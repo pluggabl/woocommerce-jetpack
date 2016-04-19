@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency class.
  *
- * @version 2.4.3
+ * @version 2.4.8
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -207,7 +207,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_shipping_price_by_currency.
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.8
 	 */
 	function change_shipping_price_by_currency( $package_rates, $package ) {
 		$currency_exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
@@ -215,6 +215,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 		foreach ( $package_rates as $id => $package_rate ) {
 			if ( 1 != $currency_exchange_rate && isset( $package_rate->cost ) ) {
 				$package_rate->cost = $package_rate->cost * $currency_exchange_rate;
+				if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
+					foreach ( $package_rate->taxes as $tax_id => $tax ) {
+						$package_rate->taxes[ $tax_id ] = $package_rate->taxes[ $tax_id ] * $currency_exchange_rate;
+					}
+				}
 			}
 			$modified_package_rates[ $id ] = $package_rate;
 		}

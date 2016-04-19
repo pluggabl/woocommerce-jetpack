@@ -120,6 +120,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.4.8 - 19/04/2016 =
+* Fix - PRICES & CURRENCIES - Multicurrency - Shipping (taxable) calculation fixed.
+
 = 2.4.7 - 19/04/2016 =
 * Dev - Fixing plugin's performance issue - Version (`booster_for_woocommerce_version`) parameter added.
 * Dev - `source` parameter added to documentation link (module and dashboard).
