@@ -455,7 +455,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.7
 	 */
 	public function add_custom_checkout_fields( $fields ) {
 
@@ -489,10 +489,14 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						$datepicker_format = ( '' == $datepicker_format_option ) ? get_option( 'date_format' ) : $datepicker_format_option;
 						$datepicker_format = wcj_date_format_php_to_js_v2( $datepicker_format );
 						$custom_attributes['dateformat'] = $datepicker_format;
-						$custom_attributes['mindate'] = get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
-						$custom_attributes['maxdate'] = get_option( 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,  365 );
-						$custom_attributes['firstday'] = get_option( 'wcj_checkout_custom_field_datepicker_firstday_' . $i, 0 );
-						$custom_attributes['display'] = ( 'datepicker' === $the_type ) ? 'date' : 'week';
+						$custom_attributes['mindate']    = get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
+						$custom_attributes['maxdate']    = get_option( 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,  365 );
+						$custom_attributes['firstday']   = get_option( 'wcj_checkout_custom_field_datepicker_firstday_' . $i, 0 );
+						if ( 'yes' === get_option( 'wcj_checkout_custom_field_datepicker_changeyear_' . $i, 'yes' ) ) {
+							$custom_attributes['changeyear'] = 1;
+							$custom_attributes['yearrange']  = get_option( 'wcj_checkout_custom_field_datepicker_yearrange_' . $i, 'c-10:c+10' );
+						}
+						$custom_attributes['display']    = ( 'datepicker' === $the_type ) ? 'date' : 'week';
 					} elseif ( 'timepicker' === $the_type ) {
 						$custom_attributes['timeformat'] = get_option( 'wcj_checkout_custom_field_timepicker_format_' . $i, 'hh:mm p' );
 						$custom_attributes['interval'] = get_option( 'wcj_checkout_custom_field_timepicker_interval_' . $i, 15 );
@@ -544,7 +548,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.7
 	 */
 	public function get_settings() {
 
@@ -700,6 +704,21 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						'id'        => 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,
 						'type'      => 'number',
 						'default'   => 365,
+					),
+					array(
+						'title'     => '',
+						'desc'      => __( 'If datepicker/weekpicker is selected, set if you want to add year selector', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_checkout_custom_field_datepicker_changeyear_' . $i,
+						'type'      => 'checkbox',
+						'default'   => 'no',
+					),
+					array(
+						'title'     => '',
+						'desc'      => __( 'If datepicker/weekpicker is selected, and year selector is enabled, set year range here', 'woocommerce-jetpack' ),
+						'desc_tip'  => __( 'The range of years displayed in the year drop-down: either relative to today\'s year ("-nn:+nn"), relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats ("nnnn:-nn"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the minDate and/or maxDate options.', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_checkout_custom_field_datepicker_yearrange_' . $i,
+						'type'      => 'text',
+						'default'   => 'c-10:c+10',
 					),
 					array(
 						'title'     => '',
