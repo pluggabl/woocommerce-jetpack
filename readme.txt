@@ -131,8 +131,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - CART & CHECKOUT - Checkout Files Upload - Fixed wrong "is required" validation when field is disabled.
 * Dev - CART & CHECKOUT - Checkout Files Upload - Settings field type changed from `text` to `textarea` (in all notice and main label fields).
 * Dev - CART & CHECKOUT - Checkout Files Upload - Files info added to order details and emails.
+* Dev - CART & CHECKOUT - Checkout Files Upload - Conditional visibility by products/categories/tags options added.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Name instead of value in order details and admin order view for select and radio type fields.
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Conditional visibility by products/categories/tags options added.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Datepicker/Weekpicker - Year selector and year range options added.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Documentation link added.
 * Fix - CART & CHECKOUT - Checkout Custom Info - Priority bug fixed.
