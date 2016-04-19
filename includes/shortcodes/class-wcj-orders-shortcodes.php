@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.4.5
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.8
 	 */
 	public function __construct() {
 
@@ -51,6 +51,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_shipping_price',
 
 			'wcj_order_total_fees',
+			'wcj_order_total_fees_incl_tax',
 			'wcj_order_fee',
 			'wcj_order_fees_html',
 
@@ -124,6 +125,27 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$the_fees = $this->the_order->get_fees();
 		foreach ( $the_fees as $the_fee ) {
 			$total_fees += $the_fee['line_total'];
+		}
+		return $this->wcj_price_shortcode( $total_fees, $atts );
+	}
+
+	/**
+	 * wcj_order_total_fees_incl_tax.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function wcj_order_total_fees_incl_tax( $atts ) {
+		$total_fees = 0;
+		$the_fees = $this->the_order->get_fees();
+		foreach ( $the_fees as $the_fee ) {
+			$total_fees += $the_fee['line_total'];
+			$taxes = maybe_unserialize( $the_fee['line_tax_data'] );
+			if ( ! empty( $taxes ) && is_array( $taxes ) && isset( $taxes['total'] ) && is_array( $taxes['total'] ) ) {
+				foreach ( $taxes['total'] as $tax ) {
+					$total_fees += $tax;
+				}
+			}
 		}
 		return $this->wcj_price_shortcode( $total_fees, $atts );
 	}
