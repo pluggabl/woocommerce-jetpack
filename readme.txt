@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 19/04/2016 =
+* Fix - PAYMENT GATEWAYS - Gateways Currency - Shipping conversion added.
 * Fix - PRICES & CURRENCIES - Multicurrency - Shipping (taxable) calculation fixed.
 
 = 2.4.7 - 19/04/2016 =
