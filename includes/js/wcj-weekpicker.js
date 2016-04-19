@@ -1,3 +1,8 @@
+/**
+ * wcj-weekpicker.
+ *
+ * version 2.4.7
+ */
 jQuery(document).ready(function() {
 	jQuery("input[display='week']").each( function () {
 		jQuery(this).datepicker({
@@ -5,10 +10,11 @@ jQuery(document).ready(function() {
 			minDate : jQuery(this).attr("mindate"),
 			maxDate : jQuery(this).attr("maxdate"),
 			firstDay : jQuery(this).attr("firstday"),
+			changeYear: jQuery(this).attr("changeyear"),
+			yearRange: jQuery(this).attr("yearrange"),
 			showOtherMonths: true,
 			selectOtherMonths: true,
 			changeMonth: true,
-			changeYear: true,
 			showWeek: true,
 			beforeShow: function(dateText, inst) {
 				// for week highighting

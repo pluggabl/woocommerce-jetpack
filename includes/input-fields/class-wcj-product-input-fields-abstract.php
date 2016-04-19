@@ -27,7 +27,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * get_options.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.7
 	 */
 	public function get_options() {
 		$options = array(
@@ -134,6 +134,23 @@ class WCJ_Product_Input_Fields_Abstract {
 				'short_title'       => __( 'Datepicker/Weekpicker: Max date', 'woocommerce-jetpack' ),
 				'type'              => 'number',
 				'default'           => 365,
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_type_datepicker_changeyear_' . $this->scope . '_',
+				'title'             => __( 'If datepicker/weekpicker is selected, set if you want to add year selector', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Datepicker/Weekpicker: Change year', 'woocommerce-jetpack' ),
+				'type'              => 'checkbox',
+				'default'           => 'no',
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_type_datepicker_yearrange_' . $this->scope . '_',
+				'title'             => __( 'If datepicker/weekpicker is selected, and year selector is enabled, set year range here', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Datepicker/Weekpicker: Year range', 'woocommerce-jetpack' ),
+//				'desc_tip'          => __( 'The range of years displayed in the year drop-down: either relative to today\'s year ("-nn:+nn"), relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats ("nnnn:-nn"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the minDate and/or maxDate options.', 'woocommerce-jetpack' ),
+				'type'              => 'text',
+				'default'           => 'c-10:c+10',
 			),
 
 			array(
@@ -421,7 +438,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.7
 	 */
 	public function add_product_input_fields_to_frontend() {
 		global $product;
@@ -440,10 +457,17 @@ class WCJ_Product_Input_Fields_Abstract {
 			if ( '' == $datepicker_format ) {
 				$datepicker_format = get_option( 'date_format' );
 			}
-			$datepicker_format = wcj_date_format_php_to_js_v2( $datepicker_format );
-			$datepicker_mindate = $this->get_value( 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_' . $i, $product->id, -365 );
-			$datepicker_maxdate = $this->get_value( 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_' . $i, $product->id, 365 );
-			$datepicker_firstday = $this->get_value( 'wcj_product_input_fields_type_datepicker_firstday_' . $this->scope . '_' . $i, $product->id, 0 );
+			$datepicker_format     = wcj_date_format_php_to_js_v2( $datepicker_format );
+			$datepicker_mindate    = $this->get_value( 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_' . $i, $product->id, -365 );
+			$datepicker_maxdate    = $this->get_value( 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_' . $i, $product->id, 365 );
+			$datepicker_firstday   = $this->get_value( 'wcj_product_input_fields_type_datepicker_firstday_' . $this->scope . '_' . $i, $product->id, 0 );
+			$datepicker_changeyear = $this->get_value( 'wcj_product_input_fields_type_datepicker_changeyear_' . $this->scope . '_' . $i, $product->id, 'no' );
+			$datepicker_yearrange  = $this->get_value( 'wcj_product_input_fields_type_datepicker_yearrange_' . $this->scope . '_' . $i, $product->id, 'c-10:c+10' );
+			if ( 'on' === $datepicker_changeyear || 'yes' === $datepicker_changeyear ) {
+				$datepicker_year = 'changeyear="1" yearRange="' . $datepicker_yearrange . '" ';
+			} else {
+				$datepicker_year = '';
+			}
 
 			$timepicker_format = $this->get_value( 'wcj_product_input_fields_type_timepicker_format_' . $this->scope . '_' . $i, $product->id, 'hh:mm p' );
 			$timepicker_interval = $this->get_value( 'wcj_product_input_fields_type_timepicker_interval_' . $this->scope . '_' . $i, $product->id, 15 );
@@ -481,12 +505,12 @@ class WCJ_Product_Input_Fields_Abstract {
 
 					case 'datepicker':
 
-						echo '<p>' . $title . '<input firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						echo '<p>' . $title . '<input ' . $datepicker_year . 'firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'weekpicker':
 
-						echo '<p>' . $title . '<input firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="week" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						echo '<p>' . $title . '<input ' . $datepicker_year . 'firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="week" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'timepicker':
