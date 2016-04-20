@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shipping class.
  *
- * @version 2.4.4
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Shipping extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.8
 	 */
 	function __construct() {
 
@@ -27,7 +27,7 @@ class WCJ_Shipping extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-//			include_once( 'shipping/class-wc-shipping-wcj-custom.php' );
+			include_once( 'shipping/class-wc-shipping-wcj-custom.php' );
 //			add_filter( 'woocommerce_available_shipping_methods', array( $this, 'hide_all_shipping_when_free_is_available' ), 10, 1 );
 			add_filter( 'woocommerce_package_rates',     array( $this, 'hide_shipping_when_free_is_available' ), 10, 2 );
 			add_filter( 'woocommerce_shipping_settings', array( $this, 'add_hide_shipping_if_free_available_fields' ), 100 );
