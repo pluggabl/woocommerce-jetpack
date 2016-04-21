@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Styling class.
  *
- * @version 2.4.7
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -30,7 +30,7 @@ class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.8
 	 */
 	function get_settings() {
 
@@ -69,6 +69,7 @@ class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
 					'helvetica'         => 'Helvetica',
 					'times'             => 'Times',
 					'droidsansfallback' => 'Droid Sans Fallback',
+					'tahoma'            => 'Tahoma',
 				),
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			);
