@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Emails class.
  *
- * @version 2.4.5
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -43,13 +43,40 @@ class WCJ_Emails extends WCJ_Module {
 	}
 
 	/**
+	 * get_order_statuses.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function get_order_statuses() {
+		$result = array();
+		$statuses = function_exists( 'wc_get_order_statuses' ) ? wc_get_order_statuses() : array();
+		foreach( $statuses as $status => $status_name ) {
+			$result[ substr( $status, 3 ) ] = $statuses[ $status ];
+		}
+		return $result;
+	}
+
+	/**
 	 * add_custom_woocommerce_email_actions.
 	 *
-	 * @version 2.4.5
+	 * @version 2.4.8
 	 * @since   2.4.5
 	 */
 	function add_custom_woocommerce_email_actions( $email_actions ) {
+
 		$email_actions[] = 'woocommerce_new_order';
+
+		$order_statuses = $this->get_order_statuses();
+		foreach ( $order_statuses as $slug => $name ) {
+			$email_actions[] = 'woocommerce_order_status_' . $slug;
+			foreach ( $order_statuses as $slug2 => $name2 ) {
+				if ( $slug != $slug2 ) {
+					$email_actions[] = 'woocommerce_order_status_' . $slug . '_to_' . $slug2;
+				}
+			}
+		}
+
 		return $email_actions;
 	}
 

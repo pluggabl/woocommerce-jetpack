@@ -120,7 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.8 - 20/04/2016 =
+= 2.4.8 - 21/04/2016 =
+* Fix - EMAILS & MISC. - Emails - Custom statuses added to custom emails actions.
 ~* Dev - SHIPPING & ORDERS - Shipping - Custom shipping added.
 * Fix - Admin module dashboard - Version display fixed.
 * Dev - Shortcodes - Orders - `[wcj_order_total_fees_tax]` shortcode added.
