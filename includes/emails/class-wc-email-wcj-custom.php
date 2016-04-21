@@ -134,8 +134,9 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * get_content_html function.
 	 *
-	 * @access public
-	 * @return string
+	 * @version 2.4.8
+	 * @access  public
+	 * @return  string
 	 */
 	function get_content_html() {
 		/* ob_start();
@@ -146,14 +147,15 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			'plain_text'    => false
 		), '', wcj_plugin_path() . '/templates' );
 		return ob_get_clean(); */
-		return $this->get_option( 'content_html_template' );
+		return do_shortcode( $this->get_option( 'content_html_template' ) );
 	}
 
 	/**
 	 * get_content_plain function.
 	 *
-	 * @access public
-	 * @return string
+	 * @version 2.4.8
+	 * @access  public
+	 * @return  string
 	 */
 	function get_content_plain() {
 		/* ob_start();
@@ -164,7 +166,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			'plain_text'    => true
 		), '', wcj_plugin_path() . '/templates' );
 		return ob_get_clean(); */
-		return $this->get_option( 'content_plain_template' );
+		return do_shortcode( $this->get_option( 'content_plain_template' ) );
 	}
 
 	/**
@@ -272,6 +274,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			'content_html_template' => array(
 				'title'         => __( 'HTML template', 'woocommerce' ),
 				'type'          => 'textarea',
+				'desc_tip'      => __( 'You can use shortcodes here. E.g. Booster\'s order shortcodes.', 'woocommerce' ),
 				'description'   => '',
 				'placeholder'   => '',
 				'default'       => $default_html_template,
@@ -280,6 +283,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			'content_plain_template' => array(
 				'title'         => __( 'Plain text template', 'woocommerce' ),
 				'type'          => 'textarea',
+				'desc_tip'      => __( 'You can use shortcodes here. E.g. Booster\'s order shortcodes.', 'woocommerce' ),
 				'description'   => '',
 				'placeholder'   => '',
 				'default'       => $default_plain_template,

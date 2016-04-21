@@ -119,6 +119,18 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * Get order custom field.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 * @return  string
+	 */
+	function wcj_order_custom_field( $atts ) {
+		$order_custom_fields = get_post_custom( $atts['order_id'] );
+		return ( isset( $order_custom_fields[ $atts['name'] ][0] ) ) ? $order_custom_fields[ $atts['name'] ][0] : '';
+	}
+
+	/**
 	 * wcj_order_total_fees.
 	 */
 	function wcj_order_total_fees( $atts ) {

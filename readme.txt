@@ -121,6 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 21/04/2016 =
+* Dev - Shortcodes - Orders - `[wcj_order_custom_field]` shortcode added.
+* Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcodes can now be used in templates.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - "Admin Title Custom Email" options added.
 * Fix - EMAILS & MISC. - Emails - Custom Emails - Custom statuses added to custom emails actions.
 ~* Dev - SHIPPING & ORDERS - Shipping - Custom shipping added.
