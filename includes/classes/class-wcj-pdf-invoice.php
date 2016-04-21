@@ -216,8 +216,9 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$result_pdf = $pdf->Output( '', 'S' );
 		$file_name = $this->get_file_name();
 		$file_path = sys_get_temp_dir() . '/' . $file_name;
-		if ( ! file_put_contents( $file_path, $result_pdf ) )
+		if ( ! file_put_contents( $file_path, $result_pdf ) ) {
 			return null;
+		}
 
 		if ( 'F' === $dest ) {
 			return $file_path;
@@ -237,13 +238,12 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 			header( "Content-Length: " . filesize( $file_path ) );
 			flush(); // this doesn't really matter.
 
-			if ( false !== ( $fp = fopen($file_path, "r") ) ) {
-				while (!feof($fp))
-				{
-					echo fread($fp, 65536);
+			if ( false !== ( $fp = fopen( $file_path, "r" ) ) ) {
+				while ( ! feof( $fp ) ) {
+					echo fread( $fp, 65536 );
 					flush(); // this is essential for large downloads
 				}
-				fclose($fp);
+				fclose( $fp );
 			} else {
 				die( __( 'Unexpected error', 'woocommerce-jetpack' ) );
 			}
