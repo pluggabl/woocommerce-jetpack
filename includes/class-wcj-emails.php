@@ -179,7 +179,7 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.8
 	 */
 	function get_settings() {
 		$settings = array(
@@ -195,14 +195,24 @@ class WCJ_Emails extends WCJ_Module {
 				'default'  => 1,
 				'type'     => 'custom_number',
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
+		);
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$settings [] = array(
+				'title'    => __( 'Admin Title Custom Email', 'woocommerce-jetpack' ) . ' #' . $i,
+				'id'       => 'wcj_emails_custom_emails_admin_title_' . $i,
+				'default'  => __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i,
+				'type'     => 'text',
+			);
+		}
+		$settings = array_merge( $settings, array(
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_emails_custom_emails_options',
 			),
-		);
+		) );
 		$settings = array_merge( $settings, $this->get_emails_forwarding_settings() );
 		return $this->add_standard_settings( $settings );
 	}

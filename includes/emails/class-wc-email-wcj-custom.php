@@ -11,7 +11,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 2.4.5
+ * @version 2.4.8
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -21,13 +21,13 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Constructor
 	 *
-	 * @version 2.4.5
+	 * @version 2.4.8
 	 */
 	function __construct( $id = 1 ) {
 
 		$this->id               = 'wcj_custom' . '_' . $id;
 		$this->customer_email   = ( '%customer%' === $this->get_option( 'recipient' ) ) ? true : false;
-		$this->title            = __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $id;
+		$this->title            = get_option( 'wcj_emails_custom_emails_admin_title_' . $id, __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $id );
 		$this->description      = __( 'Custom emails are sent to the recipient list when selected triggers are called.', 'woocommerce-jetpack' );
 
 		$this->heading          = __( 'Custom Heading', 'woocommerce' );
