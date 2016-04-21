@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.4.0
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -224,7 +224,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.8
 	 * @todo    add link to Booster's shortcodes list
 	 */
 	function get_settings() {
@@ -367,6 +367,14 @@ class WCJ_General extends WCJ_Module {
 				'title'    => __( 'Disable Loading Timepicker JavaScript', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_general_advanced_disable_timepicker_js',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'title'    => __( 'Disable Saving PDFs in PHP directory for temporary files', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_general_advanced_disable_save_sys_temp_dir',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

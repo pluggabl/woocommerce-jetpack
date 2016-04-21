@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Emails class.
  *
- * @version 2.4.7
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -16,6 +16,8 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.8
 	 */
 	function __construct() {
 
@@ -28,7 +30,9 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 		add_filter( 'init',  array( $this, 'add_hooks' ) );
 
 		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_email_attachments', array( $this, 'add_pdf_invoice_email_attachment' ), PHP_INT_MAX, 3 );
+			if ( ! wcj_is_module_enabled( 'general' ) || 'no' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
+				add_filter( 'woocommerce_email_attachments', array( $this, 'add_pdf_invoice_email_attachment' ), PHP_INT_MAX, 3 );
+			}
 		}
 	}
 

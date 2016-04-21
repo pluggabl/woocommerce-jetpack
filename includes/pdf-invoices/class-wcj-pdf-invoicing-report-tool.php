@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Report Tool class.
  *
- * @version 2.4.7
+ * @version 2.4.8
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -28,19 +28,23 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * generate_report_zip.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.8
 	 * @since   2.3.10
 	 */
 	function generate_report_zip() {
 		if ( isset( $_POST['get_invoices_report_zip'] ) ) {
-			if ( ! empty( $_POST['report_year'] ) && ! empty( $_POST['report_month'] ) && ! empty( $_POST['invoice_type'] ) ) {
-				if ( is_super_admin() || is_shop_manager() ) {
-					if ( false === $this->get_invoices_report_zip( $_POST['report_year'], $_POST['report_month'], $_POST['invoice_type'] ) ) {
-						$this->notice = '<div class="error"><p><strong>' . __( 'Sorry, but something went wrong...', 'woocommerce-jetpack' ) . '</strong></p></div>';
-					}
-				}
+			if ( wcj_is_module_enabled( 'general' ) && 'yes' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
+				$this->notice = '<div class="error"><p><strong>' . __( 'This option is disabled in WooCommerce > Settings > Booster > Emails & Misc. > General > Advanced Options > Disable Saving PDFs in PHP directory for temporary files', 'woocommerce-jetpack' ) . '</strong></p></div>';
 			} else {
-				$this->notice = '<div class="error"><p><strong>' . __( 'Please fill year and month values.', 'woocommerce-jetpack' ) . '</strong></p></div>';
+				if ( ! empty( $_POST['report_year'] ) && ! empty( $_POST['report_month'] ) && ! empty( $_POST['invoice_type'] ) ) {
+					if ( is_super_admin() || is_shop_manager() ) {
+						if ( false === $this->get_invoices_report_zip( $_POST['report_year'], $_POST['report_month'], $_POST['invoice_type'] ) ) {
+							$this->notice = '<div class="error"><p><strong>' . __( 'Sorry, but something went wrong...', 'woocommerce-jetpack' ) . '</strong></p></div>';
+						}
+					}
+				} else {
+					$this->notice = '<div class="error"><p><strong>' . __( 'Please fill year and month values.', 'woocommerce-jetpack' ) . '</strong></p></div>';
+				}
 			}
 		}
 	}

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoice class.
  *
- * @version 2.3.9
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -137,7 +137,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 2.2.9
+	 * @version 2.4.8
 	 */
 	function get_pdf( $dest ) {
 
@@ -215,12 +215,12 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		// Close and output PDF document
 		$result_pdf = $pdf->Output( '', 'S' );
 		$file_name = $this->get_file_name();
-		$file_path = sys_get_temp_dir() . '/' . $file_name;
-		if ( ! file_put_contents( $file_path, $result_pdf ) ) {
-			return null;
-		}
 
 		if ( 'F' === $dest ) {
+			$file_path = sys_get_temp_dir() . '/' . $file_name;
+			if ( ! file_put_contents( $file_path, $result_pdf ) ) {
+				return null;
+			}
 			return $file_path;
 		}
 		elseif ( 'D' === $dest || 'I' === $dest ) {
@@ -235,17 +235,28 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 				header( "Content-type: application/pdf" );
 				header( "Content-Disposition: inline; filename=" . urlencode( $file_name ) );
 			}
-			header( "Content-Length: " . filesize( $file_path ) );
-			flush(); // this doesn't really matter.
-
-			if ( false !== ( $fp = fopen( $file_path, "r" ) ) ) {
-				while ( ! feof( $fp ) ) {
-					echo fread( $fp, 65536 );
-					flush(); // this is essential for large downloads
-				}
-				fclose( $fp );
+			if ( wcj_is_module_enabled( 'general' ) && 'yes' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
+				header( "Content-Length: " . strlen( $result_pdf ) );
+				echo $result_pdf;
 			} else {
-				die( __( 'Unexpected error', 'woocommerce-jetpack' ) );
+
+				$file_path = sys_get_temp_dir() . '/' . $file_name;
+				if ( ! file_put_contents( $file_path, $result_pdf ) ) {
+					return null;
+				}
+
+				header( "Content-Length: " . filesize( $file_path ) );
+				flush(); // this doesn't really matter.
+
+				if ( false !== ( $fp = fopen( $file_path, "r" ) ) ) {
+					while ( ! feof( $fp ) ) {
+						echo fread( $fp, 65536 );
+						flush(); // this is essential for large downloads
+					}
+					fclose( $fp );
+				} else {
+					die( __( 'Unexpected error', 'woocommerce-jetpack' ) );
+				}
 			}
 		}
 		return null;
