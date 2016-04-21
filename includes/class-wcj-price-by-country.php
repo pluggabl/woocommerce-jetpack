@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.4.5
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.5
+	 * @version 2.4.8
 	 */
 	public function __construct() {
 
 		$this->id         = 'price_by_country';
 		$this->short_desc = __( 'Prices and Currencies by Country', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Change WooCommerce product price and currency automatically by customer\'s country.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-prices-and-currencies-by-country/';
 		parent::__construct();
 
 		global $wcj_notice;
@@ -65,7 +66,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.8
 	 */
 	function get_settings() {
 
@@ -147,7 +148,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				'title'    => __( 'Countries Selection', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Choose how do you want to enter countries groups in admin.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_selection',
-				'default'  => 'comma_list',
+				'default'  => 'chosen_select',
 				'type'     => 'select',
 				'options'  => array(
 					'comma_list'    => __( 'Comma separated list', 'woocommerce-jetpack' ),
@@ -372,7 +373,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			),
 		) ); */
 
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 
