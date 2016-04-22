@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 22/04/2016 =
+* Dev - PRODUCTS - SKU - In variable products now counting *all* variations instead of only *available*.
 * Dev - BUTTON & PRICE LABELS - Add to Cart Labels - Metabox title renamed.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Metabox title renamed.
 * Dev - PRODUCTS - Product Input Fields - Metabox title renamed.

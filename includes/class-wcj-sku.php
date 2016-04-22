@@ -41,9 +41,24 @@ class WCJ_SKU extends WCJ_Module {
 	}
 
 	/**
+	 * get_available_variations.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function get_all_variations( $_product ) {
+		$all_variations = array();
+		foreach ( $_product->get_children() as $child_id ) {
+			$variation = $_product->get_child( $child_id );
+			$all_variations[] = $_product->get_available_variation( $variation );
+		}
+		return $all_variations;
+	}
+
+	/**
 	 * set_sku_with_variable.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.8
 	 * @todo    Handle cases with more than 26 variations
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
@@ -54,7 +69,7 @@ class WCJ_SKU extends WCJ_Module {
 		$variation_handling = apply_filters( 'wcj_get_option_filter', 'as_variable', get_option( 'wcj_sku_variations_handling', 'as_variable' ) );
 		$product = wc_get_product( $product_id );
 		if ( $product->is_type( 'variable' ) ) {
-			$variations = $product->get_available_variations();
+			$variations = $this->get_all_variations( $product );
 			if ( 'as_variable' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
 					$this->set_sku( $variation['variation_id'], $product_id, '', $is_preview, $product_id );
