@@ -121,6 +121,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 22/04/2016 =
+* Dev - BUTTON & PRICE LABELS - Add to Cart Labels - Metabox title renamed.
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Metabox title renamed.
+* Dev - PRODUCTS - Product Input Fields - Metabox title renamed.
 * Dev - PRODUCTS - SKU - Documentation link added.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - "Conditional visibility by selected product (in cart)" option added.
 * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_key` column - `maybe_unserialize` added (this fixes displaying file type product input fields).

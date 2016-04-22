@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.4.4
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -259,9 +259,11 @@ class WCJ_Price_Labels extends WCJ_Module {
 
 	/**
 	 * add_price_label_meta_box.
+	 *
+	 * @version 2.4.8
 	 */
 	public function add_price_label_meta_box() {
-		add_meta_box( 'wc-jetpack-price-labels', 'WooCommerce Jetpack: Custom Price Labels', array( $this, 'wcj_price_label' ), 'product', 'normal', 'high' );
+		add_meta_box( 'wc-jetpack-price-labels', __( 'Booster: Custom Price Labels', 'woocommerce-jetpack' ), array( $this, 'wcj_price_label' ), 'product', 'normal', 'high' );
 	}
 
 	/*

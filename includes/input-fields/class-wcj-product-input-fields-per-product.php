@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields per Product class.
  *
- * @version 2.2.9
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -98,11 +98,13 @@ class WCJ_Product_Input_Fields_Per_Product extends WCJ_Product_Input_Fields_Abst
 
 	/**
 	 * add_local_product_input_fields_meta_box_to_product_edit.
+	 *
+	 * @version 2.4.8
 	 */
 	public function add_local_product_input_fields_meta_box_to_product_edit() {
 		add_meta_box(
 			'wc-jetpack-product-input-fields',
-			__( 'WooCommerce Jetpack: Product Input Fields', 'woocommerce-jetpack' ),
+			__( 'Booster: Product Input Fields', 'woocommerce-jetpack' ),
 			array( $this, 'create_local_product_input_fields_meta_box' ),
 			'product',
 			'normal',
