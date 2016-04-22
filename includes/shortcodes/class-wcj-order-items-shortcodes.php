@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.4.4
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -126,7 +126,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.8
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -209,7 +209,16 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$data[ $item_counter ][] = wcj_get_product_input_fields( $item );
 						break;
 					case 'item_key':
-						$data[ $item_counter ][] = isset( $item[ $column_param ] ) ? $item[ $column_param ] : '';
+						if ( isset( $item[ $column_param ] ) ) {
+							$maybe_unserialized_value = maybe_unserialize( $item[ $column_param ] );
+							if ( is_array( $maybe_unserialized_value ) ) {
+								$data[ $item_counter ][] = isset( $maybe_unserialized_value['name'] ) ? $maybe_unserialized_value['name'] : '';
+							} else {
+								$data[ $item_counter ][] = $maybe_unserialized_value;
+							}
+						} else {
+							$data[ $item_counter ][] = '';
+						}
 						break;
 					case 'item_excerpt':
 					case 'item_description':

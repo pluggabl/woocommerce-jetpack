@@ -120,7 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.8 - 21/04/2016 =
+= 2.4.8 - 22/04/2016 =
+* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_key` column - `maybe_unserialize` added (this fixes displaying file type product input fields).
 ~* Dev - EMAILS & MISC. - General - Advanced Options - "Disable Saving PDFs in PHP directory for temporary files" option added.
 * Dev - PDF INVOICING & PACKING SLIPS - Styling - "Tahoma" font added (for Thai text rendering).
 * Dev - Prices & Currencies - Prices and Currencies by Country - Documentation link added. Reset button added. "Countries Selection" default set to "Chosen select".
