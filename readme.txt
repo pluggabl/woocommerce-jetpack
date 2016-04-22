@@ -121,11 +121,12 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 22/04/2016 =
-* Dev - Cart & Checkout - Checkout Custom Fields - "Conditional visibility by selected product (in cart)" option added.
+* Dev - PRODUCTS - SKU - Documentation link added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - "Conditional visibility by selected product (in cart)" option added.
 * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_key` column - `maybe_unserialize` added (this fixes displaying file type product input fields).
 ~* Dev - EMAILS & MISC. - General - Advanced Options - "Disable Saving PDFs in PHP directory for temporary files" option added.
 * Dev - PDF INVOICING & PACKING SLIPS - Styling - "Tahoma" font added (for Thai text rendering).
-* Dev - Prices & Currencies - Prices and Currencies by Country - Documentation link added. Reset button added. "Countries Selection" default set to "Chosen select".
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Documentation link added. Reset button added. "Countries Selection" default set to "Chosen select".
 * Dev - Shortcodes - Orders - `[wcj_order_custom_field]` shortcode added.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcodes can now be used in templates.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - "Admin Title Custom Email" options added.

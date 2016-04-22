@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack SKU class.
  *
- * @version 2.4.5
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  * @todo    add "random number" option
  */
@@ -18,13 +18,14 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.8
 	 */
 	function __construct() {
 
 		$this->id         = 'sku';
 		$this->short_desc = __( 'SKU', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Generate WooCommerce SKUs automatically.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-sku/';
 		parent::__construct();
 
 		$this->add_tools( array(
