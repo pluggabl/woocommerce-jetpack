@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.4.7
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -455,7 +455,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.8
 	 */
 	public function add_custom_checkout_fields( $fields ) {
 
@@ -464,7 +464,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 
 				$categories_in = get_option( 'wcj_checkout_custom_field_categories_in_' . $i );
-
 				if ( ! empty( $categories_in ) ) {
 					$do_skip = true;
 					foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
@@ -477,6 +476,18 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							}
 						}
 						if ( ! $do_skip ) break;
+					}
+					if ( $do_skip ) continue;
+				}
+
+				$products_in = get_option( 'wcj_checkout_custom_field_products_in_' . $i );
+				if ( ! empty( $products_in ) ) {
+					$do_skip = true;
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+						if ( in_array( $values['product_id'], $products_in ) ) {
+							$do_skip = false;
+							break;
+						}
 					}
 					if ( $do_skip ) continue;
 				}
@@ -548,7 +559,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.8
 	 */
 	public function get_settings() {
 
@@ -610,6 +621,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				$product_cats[ $product_category->term_id ] = $product_category->name;
 			}
 		}
+
+		$products_options = apply_filters( 'wcj_get_products_filter', array() );
 
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			$settings = array_merge( $settings,
@@ -813,13 +826,24 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					array(
 						'title'     => '',
 						'desc'      => __( 'categories', 'woocommerce-jetpack' ),
-						'desc_tip'  => __( '', 'woocommerce-jetpack' ),
+						'desc_tip'  => __( 'Show this field only if there is a product of selected category in cart.', 'woocommerce-jetpack' ),
 						'id'        => 'wcj_checkout_custom_field_categories_in_' . $i,
 						'default'   => '',
 						'type'      => 'multiselect',
 						'class'     => 'chosen_select',
 						'css'       => 'min-width:300px;width:50%;',
 						'options'   => $product_cats,
+					),
+					array(
+						'title'     => '',
+						'desc'      => __( 'products', 'woocommerce-jetpack' ),
+						'desc_tip'  => __( 'Show this field only if there is a selected product in cart.', 'woocommerce-jetpack' ),
+						'id'        => 'wcj_checkout_custom_field_products_in_' . $i,
+						'default'   => '',
+						'type'      => 'multiselect',
+						'class'     => 'chosen_select',
+						'css'       => 'min-width:300px;width:50%;',
+						'options'   => $products_options,
 					),
 				)
 			);
