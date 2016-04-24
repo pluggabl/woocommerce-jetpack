@@ -120,7 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.8 - 22/04/2016 =
+= 2.4.8 - 24/04/2016 =
+* Dev - SHIPPING & ORDERS - Shipping - Documentation link added.
 * Dev - PRODUCTS - SKU - In variable products now counting *all* variations instead of only *available*.
 * Dev - BUTTON & PRICE LABELS - Add to Cart Labels - Metabox title renamed.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Metabox title renamed.
@@ -128,14 +129,14 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - PRODUCTS - SKU - Documentation link added.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - "Conditional visibility by selected product (in cart)" option added.
 * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_key` column - `maybe_unserialize` added (this fixes displaying file type product input fields).
-~* Dev - EMAILS & MISC. - General - Advanced Options - "Disable Saving PDFs in PHP directory for temporary files" option added.
+* Dev - EMAILS & MISC. - General - Advanced Options - "Disable Saving PDFs in PHP directory for temporary files" option added.
 * Dev - PDF INVOICING & PACKING SLIPS - Styling - "Tahoma" font added (for Thai text rendering).
 * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Documentation link added. Reset button added. "Countries Selection" default set to "Chosen select".
 * Dev - Shortcodes - Orders - `[wcj_order_custom_field]` shortcode added.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcodes can now be used in templates.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - "Admin Title Custom Email" options added.
 * Fix - EMAILS & MISC. - Emails - Custom Emails - Custom statuses added to custom emails actions.
-~* Dev - SHIPPING & ORDERS - Shipping - Custom shipping added.
+* Dev - SHIPPING & ORDERS - Shipping - Custom shipping added.
 * Fix - Admin module dashboard - Version display fixed.
 * Dev - Shortcodes - Orders - `[wcj_order_total_fees_tax]` shortcode added.
 * Dev - Shortcodes - Orders - `[wcj_order_total_fees_incl_tax]` shortcode added.
