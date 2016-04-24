@@ -72,7 +72,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
 * *Orders* - Minimum WooCommerce order amount; orders auto-complete.
-* *Shipping* - Hide WooCommerce shipping when free is available.
+* *Shipping* - Add multiple custom shipping methods to WooCommerce. Hide WooCommerce shipping when free is available. Display "left to free shipping" info.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 
 **PDF Invoicing & Packing Slips**
