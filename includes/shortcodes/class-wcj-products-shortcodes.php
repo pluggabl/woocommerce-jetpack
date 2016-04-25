@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.4.0
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -84,16 +84,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Inits shortcode atts and properties.
 	 *
-	 * @param array $atts Shortcode atts.
-	 *
-	 * @return array The (modified) shortcode atts.
+	 * @version 2.4.8
+	 * @param   array $atts Shortcode atts.
+	 * @return  array The (modified) shortcode atts.
 	 */
 	function init_atts( $atts ) {
 
 		// Atts
 		$atts['product_id'] = ( 0 == $atts['product_id'] ) ? get_the_ID() : $atts['product_id'];
 		if ( 0 == $atts['product_id'] ) return false;
-		if ( 'product' !== get_post_type( $atts['product_id'] ) ) return false;
+		$the_post_type = get_post_type( $atts['product_id'] );
+		if ( 'product' !== $the_post_type && 'product_variation' !== $the_post_type ) return false;
 
 		// Class properties
 		$this->the_product = wc_get_product( $atts['product_id'] );
@@ -210,23 +211,59 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_price_excluding_tax.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.8
 	 * @since   2.4.0
 	 */
 	function wcj_product_price_excluding_tax( $atts ) {
-		$the_price = $this->the_product->get_price_excluding_tax();
-		return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
+		if ( $this->the_product->is_type( 'variable' ) ) {
+			// Variable
+			$prices = $this->the_product->get_variation_prices( false );
+			$min_product_id = key( $prices['price'] );
+			end( $prices['price'] );
+			$max_product_id = key( $prices['price'] );
+			$min_variation_product = wc_get_product( $min_product_id );
+			$max_variation_product = wc_get_product( $max_product_id );
+			$min = $min_variation_product->get_price_excluding_tax();
+			$max = $max_variation_product->get_price_excluding_tax();
+			if ( 'yes' !== $atts['hide_currency'] ) {
+				$min = wc_price( $min );
+				$max = wc_price( $max );
+			}
+			return sprintf( '%s-%s', $min, $max );
+		} else {
+			 // Simple etc.
+			$the_price = $this->the_product->get_price_excluding_tax();
+			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
+		}
 	}
 
 	/**
 	 * wcj_product_price_including_tax.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.8
 	 * @since   2.4.0
 	 */
 	function wcj_product_price_including_tax( $atts ) {
-		$the_price = $this->the_product->get_price_including_tax();
-		return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
+		if ( $this->the_product->is_type( 'variable' ) ) {
+			// Variable
+			$prices = $this->the_product->get_variation_prices( false );
+			$min_product_id = key( $prices['price'] );
+			end( $prices['price'] );
+			$max_product_id = key( $prices['price'] );
+			$min_variation_product = wc_get_product( $min_product_id );
+			$max_variation_product = wc_get_product( $max_product_id );
+			$min = $min_variation_product->get_price_including_tax();
+			$max = $max_variation_product->get_price_including_tax();
+			if ( 'yes' !== $atts['hide_currency'] ) {
+				$min = wc_price( $min );
+				$max = wc_price( $max );
+			}
+			return sprintf( '%s-%s', $min, $max );
+		} else {
+			 // Simple etc.
+			$the_price = $this->the_product->get_price_including_tax();
+			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
+		}
 	}
 
 	/**
