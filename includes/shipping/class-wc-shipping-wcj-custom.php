@@ -79,14 +79,15 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 							'default'     => 'flat_rate',
 							'desc_tip'    => true,
 							'options'     => array(
-								'flat_rate'            => __( 'Flat Rate', 'woocommerce-jetpack' ),
-								'by_total_cart_weight' => __( 'By Total Cart Weight', 'woocommerce-jetpack' ),
+								'flat_rate'              => __( 'Flat Rate', 'woocommerce-jetpack' ),
+								'by_total_cart_weight'   => __( 'By Total Cart Weight', 'woocommerce-jetpack' ),
+								'by_total_cart_quantity' => __( 'By Total Cart Quantity', 'woocommerce-jetpack' ),
 							),
 						),
 						'cost' => array(
 							'title'       => __( 'Cost', 'woocommerce' ),
 							'type'        => 'number',
-							'description' => __( 'Cost. If calculating by weight - then cost per one weight unit.', 'woocommerce-jetpack' ),
+							'description' => __( 'Cost. If calculating by weight - then cost per one weight unit. If calculating by quantity - then cost per one piece.', 'woocommerce-jetpack' ),
 							'default'     => 0,
 							'desc_tip'    => true,
 							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
@@ -103,8 +104,15 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				 */
 				function calculate_shipping( $package ) {
 					switch ( $this->type ) {
+						case 'by_total_cart_quantity':
+							$cart_quantity = 0;
+							foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+								$cart_quantity += $values['quantity'];
+							}
+							$cost = $this->cost * $cart_quantity;
+							break;
 						case 'by_total_cart_weight':
-							$cost = $this->cost * WC()->cart->cart_contents_weight;
+							$cost = $this->cost * WC()->cart->get_cart_contents_weight();
 							break;
 						default: // 'flat_rate'
 							$cost = $this->cost;
