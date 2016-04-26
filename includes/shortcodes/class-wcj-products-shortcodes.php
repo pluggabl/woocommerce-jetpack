@@ -592,6 +592,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Returns product (modified) price.
 	 *
+	 * @version 2.4.8
 	 * @todo    variable products: a) not range; and b) price by country.
 	 * @return  string The product (modified) price
 	 */
@@ -608,7 +609,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$min = wc_price( $min );
 				$max = wc_price( $max );
 			}
-			return sprintf( '%s-%s', $min, $max );
+			return ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
 		}
 		// Simple etc.
 		else {

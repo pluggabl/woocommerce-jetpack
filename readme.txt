@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 26/04/2016 =
+* Fix - Shortcodes - Products - Fixed for variable products if min and max are equal (in `[wcj_product_price]` shortcode).
 * Dev - PDF INVOICING & PACKING SLIPS - Styling - "Tahoma" font added; Three Thai fonts added.
 * Dev - PRODUCTS - Product Tabs - "Use Visual Editor" option added.
 * Dev - PRODUCTS - Product Info V2 - Single product page add to cart hooks added.
