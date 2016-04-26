@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 26/04/2016 =
+* Dev - PRODUCTS - Product Cost Price - Documentation link added.
 * Dev - `WCJ_Module` - `create_meta_box` now takes option default value if no post meta is set.
 * Dev - PRODUCTS - Product Cost Price - Custom Price Fields options added.
 * Fix - Shortcodes - Products - Fixed for variable products if min and max are equal (in `[wcj_product_price]` shortcode).
