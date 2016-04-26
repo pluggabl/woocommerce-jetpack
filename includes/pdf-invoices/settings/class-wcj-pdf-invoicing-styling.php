@@ -70,6 +70,9 @@ class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
 					'times'             => 'Times',
 					'droidsansfallback' => 'Droid Sans Fallback',
 					'tahoma'            => 'Tahoma',
+					'angsanaupc'        => 'AngsanaUPC',
+					'cordiaupc'         => 'CordiaUPC',
+					'thsarabun'         => 'THSarabunPSK',
 				),
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			);
