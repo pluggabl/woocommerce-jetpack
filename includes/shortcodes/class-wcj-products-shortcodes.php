@@ -229,7 +229,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$min = wc_price( $min );
 				$max = wc_price( $max );
 			}
-			return sprintf( '%s-%s', $min, $max );
+			return ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
 		} else {
 			 // Simple etc.
 			$the_price = $this->the_product->get_price_excluding_tax();
@@ -258,7 +258,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$min = wc_price( $min );
 				$max = wc_price( $max );
 			}
-			return sprintf( '%s-%s', $min, $max );
+			return ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
 		} else {
 			 // Simple etc.
 			$the_price = $this->the_product->get_price_including_tax();
