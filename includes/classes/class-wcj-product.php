@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product class.
  *
- * @version 2.4.5
+ * @version 2.4.8
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -29,7 +29,7 @@ class WCJ_Product {
 	/**
 	 * get_purchase_price.
 	 *
-	 * @version 2.4.5
+	 * @version 2.4.8
 	 */
 	public function get_purchase_price() {
 		$purchase_price = 0;
@@ -41,6 +41,17 @@ class WCJ_Product {
 		}
 		if ( 'yes' === get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ) ) {
 			$purchase_price += get_post_meta( $this->id, '_' . 'wcj_purchase_price_affiliate_commission', true );
+		}
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( '' == get_option( 'wcj_purchase_data_custom_price_field_name_' . $i, '' ) ) {
+				continue;
+			}
+			$meta_value = get_post_meta( $this->id, '_' . 'wcj_purchase_price_custom_field_' . $i, true );
+			if ( '' != $meta_value ) {
+				$the_type = get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' );
+				$purchase_price += ( 'fixed' === $the_type ) ? $meta_value : $purchase_price * $meta_value / 100.0;
+			}
 		}
 		return apply_filters( 'wcj_get_product_purchase_price', $purchase_price, $this->id );
 	}

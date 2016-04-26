@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.4.7
+ * @version 2.4.8
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -129,7 +129,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @since 2.4.5
+	 * @since 2.4.8
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -140,7 +140,11 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			if ( $is_enabled ) {
 				$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id;
 				$the_meta_name = ( isset( $option['meta_name'] ) )  ? $option['meta_name']  : '_' . $option['name'];
-				$option_value = get_post_meta( $the_post_id, $the_meta_name, true );
+				if ( get_post_meta( $the_post_id, $the_meta_name ) ) {
+					$option_value = get_post_meta( $the_post_id, $the_meta_name, true );
+				} else {
+					$option_value = ( isset( $option['default'] ) ) ? $option['default'] : '';
+				}
 				$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
 				switch ( $option['type'] ) {
 					case 'price':

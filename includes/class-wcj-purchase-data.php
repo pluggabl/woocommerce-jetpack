@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Purchase Data class.
  *
- * @version 2.4.5
+ * @version 2.4.8
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -86,7 +86,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.4.5
+	 * @version 2.4.8
 	 * @since   2.4.5
 	 * @todo    wcj_purchase_price_currency
 	 */
@@ -105,7 +105,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 		}
 		$options = array();
 		foreach ( $products as $product_id => $desc ) {
-			$product_options = apply_filters( 'wcj_purchase_data_product_options', array(
+			$product_options = array(
 				array(
 					'name'       => 'wcj_purchase_price_' . $product_id,
 					'default'    => 0,
@@ -136,11 +136,33 @@ class WCJ_Purchase_Data extends WCJ_Module {
 					'meta_name'  => '_' . 'wcj_purchase_price_affiliate_commission',
 					'enabled'    => get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ),
 				),
+			);
+			$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+			for ( $i = 1; $i <= $total_number; $i++ ) {
+				$the_title = get_option( 'wcj_purchase_data_custom_price_field_name_' . $i, '' );
+				if ( '' == $the_title ) {
+					continue;
+				}
+				$the_type           = get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' );
+				$the_default_value  = get_option( 'wcj_purchase_data_custom_price_field_default_value_' . $i, 0 );
+				$the_title .= ( 'fixed' === $the_type ) ? ' (' . get_woocommerce_currency_symbol() . ')'  : ' (' . '%' . ')';
+				$product_options[] = array(
+					'name'       => 'wcj_purchase_price_custom_field_' . $i . '_' . $product_id,
+					'default'    => $the_default_value,
+					'type'       => 'price',
+					'title'      => $the_title,
+					'desc'       => $desc,
+					'product_id' => $product_id,
+					'meta_name'  => '_' . 'wcj_purchase_price_custom_field_' . $i,
+					'enabled'    => 'yes',
+				);
+			}
+			$product_options = array_merge( $product_options, array(
 				array(
 					'name'       => 'wcj_purchase_date_' . $product_id,
 					'default'    => '',
 					'type'       => 'date',
-					'title'      => __( '(Last) Purchase date', 'woocommerce-jetpack' ),
+					'title'      => '<em>' . __( '(Last) Purchase date', 'woocommerce-jetpack' ) . '</em>',
 					'desc'       => $desc,
 					'product_id' => $product_id,
 					'meta_name'  => '_' . 'wcj_purchase_date',
@@ -150,7 +172,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 					'name'       => 'wcj_purchase_partner_' . $product_id,
 					'default'    => '',
 					'type'       => 'text',
-					'title'      => __( 'Seller', 'woocommerce-jetpack' ),
+					'title'      => '<em>' . __( 'Seller', 'woocommerce-jetpack' ) . '</em>',
 					'desc'       => $desc,
 					'product_id' => $product_id,
 					'meta_name'  => '_' . 'wcj_purchase_partner',
@@ -160,13 +182,14 @@ class WCJ_Purchase_Data extends WCJ_Module {
 					'name'       => 'wcj_purchase_info_' . $product_id,
 					'default'    => '',
 					'type'       => 'textarea',
-					'title'      => __( 'Purchase info', 'woocommerce-jetpack' ),
+					'title'      => '<em>' . __( 'Purchase info', 'woocommerce-jetpack' ) . '</em>',
 					'desc'       => $desc,
 					'product_id' => $product_id,
 					'meta_name'  => '_' . 'wcj_purchase_info',
 					'enabled'    => get_option( 'wcj_purchase_info_enabled', 'yes' ),
 				),
-			), $product_id, $desc );
+			) );
+			$product_options = apply_filters( 'wcj_purchase_data_product_options', $product_options, $product_id, $desc );
 			$options = array_merge( $options, $product_options );
 		}
 		return $options;
@@ -237,7 +260,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.5
+	 * @version 2.4.8
 	 * @todo    add options to set fields and column titles
 	 */
 	function get_settings() {
@@ -272,6 +295,56 @@ class WCJ_Purchase_Data extends WCJ_Module {
 			array(
 				'type'      => 'sectionend',
 				'id'        => 'wcj_purchase_data_price_fields_options',
+			),
+			array(
+				'title'     => __( 'Custom Price Fields', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'desc'      => __( 'This fields will be added to product\'s edit page and will be included in product\'s purchase cost calculation.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_purchase_data_custom_price_fields_options',
+			),
+			array(
+				'title'    => __( 'Total Custom Price Fields', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_purchase_data_custom_price_fields_total_number',
+				'default'  => 1,
+				'type'     => 'custom_number',
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+			),
+		);
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'     => __( 'Custom Price Field', 'woocommerce-jetpack' ) . ' #' . $i,
+					'id'        => 'wcj_purchase_data_custom_price_field_name_' . $i,
+					'desc'      => __( 'Title', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+					'default'   => '',
+					'type'      => 'text',
+				),
+				array(
+					'id'        => 'wcj_purchase_data_custom_price_field_type_' . $i,
+					'desc'      => __( 'Type', 'woocommerce-jetpack' ),
+					'default'   => 'fixed',
+					'type'      => 'select',
+					'options'   => array(
+						'fixed'   => __( 'Fixed', 'woocommerce-jetpack' ),
+						'percent' => __( 'Percent', 'woocommerce-jetpack' ),
+					),
+				),
+				array(
+					'id'        => 'wcj_purchase_data_custom_price_field_default_value_' . $i,
+					'desc'      => __( 'Default Value', 'woocommerce-jetpack' ),
+					'default'   => 0,
+					'type'      => 'number',
+					'custom_attributes' => array( 'step' => '0.0001' ),
+				),
+			) );
+		}
+		$settings = array_merge( $settings, array(
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_purchase_data_custom_price_fields_options',
 			),
 			array(
 				'title'     => __( 'Info Fields', 'woocommerce-jetpack' ),
@@ -321,7 +394,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 				'type'      => 'sectionend',
 				'id'        => 'wcj_purchase_data_custom_columns_options',
 			),
-		);
+		) );
 		return $this->add_standard_settings( $settings );
 	}
 }
