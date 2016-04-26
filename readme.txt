@@ -120,7 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.8 - 25/04/2016 =
+= 2.4.8 - 26/04/2016 =
+* Dev - PRODUCTS - Product Info V2 - Single product page add to cart hooks added.
 * Dev - Shortcodes - Products - Now accepting *product variation* id as `product_id` attribute.
 * Dev - Shortcodes - Products - Variable products support added to `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` shortcodes.
 * Dev - SHIPPING & ORDERS - Shipping - Documentation link added.

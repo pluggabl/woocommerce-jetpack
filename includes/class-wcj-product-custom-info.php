@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Custom Info class.
  *
- * @version 2.4.6
+ * @version 2.4.8
  * @since   2.4.0
  * @author  Algoritmika Ltd.
  */
@@ -94,7 +94,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.4.6
+	 * @version 2.4.8
 	 */
 	function add_settings() {
 
@@ -161,6 +161,10 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 								'woocommerce_single_product_summary'        => __( 'Inside single product summary', 'woocommerce-jetpack' ),
 								'woocommerce_after_single_product_summary'  => __( 'After single product summary', 'woocommerce-jetpack' ),
 								'woocommerce_after_single_product'          => __( 'After single product', 'woocommerce-jetpack' ),
+								'woocommerce_before_add_to_cart_form'       => __( 'Before add to cart form', 'woocommerce-jetpack' ),
+								'woocommerce_before_add_to_cart_button'     => __( 'Before add to cart button', 'woocommerce-jetpack' ),
+								'woocommerce_after_add_to_cart_button'      => __( 'After add to cart button', 'woocommerce-jetpack' ),
+								'woocommerce_after_add_to_cart_form'        => __( 'After add to cart form', 'woocommerce-jetpack' ),
 							) :
 							array(
 								'woocommerce_before_shop_loop_item'       => __( 'Before product', 'woocommerce-jetpack' ),
