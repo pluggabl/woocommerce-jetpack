@@ -17,13 +17,14 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.9
+	 * @version 2.4.8
 	 */
 	public function __construct() {
 
 		$this->id         = 'product_tabs';
 		$this->short_desc = __( 'Product Tabs', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-custom-product-tabs/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
