@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Tabs class.
  *
- * @version 2.4.7
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -385,7 +385,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_custom_tabs_meta_box.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.8
 	 */
 	public function create_custom_tabs_meta_box() {
 
@@ -404,7 +404,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		$html .= __( 'Total number of custom tabs', 'woocommerce-jetpack' );
 		$html .= '</th>';
 		$html .= '<td>';
-		$html .= '<input type="number" id="' . $option_name . '" name="' . $option_name . '" value="' . $total_custom_tabs . '" ' . $is_disabled . '>';
+		$html .= '<input type="number" min="1" id="' . $option_name . '" name="' . $option_name . '" value="' . $total_custom_tabs . '" ' . $is_disabled . '>';
 		$html .= '</td>';
 		$html .= '<td>';
 		$html .= __( 'Click "Update" product after you change this number.', 'woocommerce-jetpack' ) . '<br>' . $is_disabled_message;
@@ -412,6 +412,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		$html .= '</td>';
 		$html .= '</tr>';
 		$html .= '</table>';
+		echo $html;
 
 		$options = array(
 			array(
@@ -420,23 +421,28 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'type'  => 'text',
 			),
 			array(
-				'id'    => 'wcj_custom_product_tabs_content_local_',
-				'title' => __( 'Content', 'woocommerce-jetpack' ),
-				'type'  => 'textarea',
-			),
-			array(
 				'id'    => 'wcj_custom_product_tabs_priority_local_',
 				'title' => __( 'Order', 'woocommerce-jetpack' ),
 				'type'  => 'number',
 			),
+			array(
+				'id'    => 'wcj_custom_product_tabs_content_local_',
+				'title' => __( 'Content', 'woocommerce-jetpack' ),
+				'type'  => 'textarea',
+			),
 		);
+		$enable_wp_editor = get_option( 'wcj_custom_product_tabs_local_wp_editor_enabled', 'yes' );
+		$enable_wp_editor = ( 'yes' === $enable_wp_editor ) ? true : false;
 		for ( $i = 1; $i <= $total_custom_tabs; $i++ ) {
 			$is_local_tab_visible = $this->is_local_tab_visible( $i, $current_post_id );
 			$readonly = ( $is_local_tab_visible ) ? '' : ' readonly'; // not really used
 			$disabled = ( $is_local_tab_visible ) ? '' : ' - ' . __( 'Disabled', 'woocommerce-jetpack' );
 			$data = array();
-			$html .= '<hr>';
+			$html = '<hr>';
 			$html .= '<h4>' . __( 'Custom Product Tab', 'woocommerce-jetpack' ) . ' #' . $i . $disabled . '</h4>';
+			if ( $enable_wp_editor ) {
+				$the_field_wp_editor = array();
+			}
 			if ( $is_local_tab_visible ) {
 				foreach ( $options as $option ) {
 					$option_id = $option['id'] . $i;
@@ -454,22 +460,33 @@ class WCJ_Product_Tabs extends WCJ_Module {
 							$the_field = '<input style="width:50%;min-width:150px;" type="' . $option['type'] . '" id="' . $option_id . '" name="' . $option_id . '" value="' . $option_value . '"' . $readonly . '>';
 							break;
 						case 'textarea':
-							$the_field = '<textarea style="width:100%;height:300px;" id="' . $option_id . '" name="' . $option_id . '"' . $readonly . '>' . $option_value . '</textarea>';
+							if ( $enable_wp_editor ) {
+								$the_field = '';
+								$the_field_wp_editor = array( $option_id => $option_value );
+							} else {
+								$the_field = '<textarea style="width:100%;height:300px;" id="' . $option_id . '" name="' . $option_id . '"' . $readonly . '>' . $option_value . '</textarea>';
+							}
 							break;
 					}
-					$data[] = array( $option['title'], $the_field );
+					if ( '' != $the_field ) {
+						$data[] = array( $option['title'], $the_field );
+					}
 				}
-				$html .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', 'table_heading_type' => 'vertical', 'columns_styles' => array( 'width:10%;', ) ) );
+				$html .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', 'table_style' => 'margin-bottom:20px;', 'table_heading_type' => 'vertical', 'columns_styles' => array( 'width:10%;', ) ) );
+			}
+			echo $html;
+			if ( $enable_wp_editor && ! empty( $the_field_wp_editor ) ) {
+				wp_editor( current( $the_field_wp_editor ), key( $the_field_wp_editor ) );
 			}
 		}
-		$html .= '<input type="hidden" name="woojetpack_custom_tabs_save_post" value="woojetpack_custom_tabs_save_post">';
+		$html = '<input type="hidden" name="woojetpack_custom_tabs_save_post" value="woojetpack_custom_tabs_save_post">';
 		echo $html;
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.8
 	 */
 	function get_settings() {
 
@@ -488,8 +505,13 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'default'   => 1,
 				'type'      => 'number',
 				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes'
-				            => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => array_merge(
+					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					array(
+						'step' => '1',
+						'min'  => '0',
+					)
+				),
 			),
 		);
 
@@ -659,13 +681,25 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'type'      => 'checkbox',
 			),
 			array(
+				'title'     => __( 'Use Visual Editor', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_custom_product_tabs_local_wp_editor_enabled',
+				'default'   => 'yes',
+				'type'      => 'checkbox',
+			),
+			array(
 				'title'     => __( 'Default Per Product Custom Product Tabs Number', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_local_total_number_default',
 				'default'   => 1,
 				'type'      => 'number',
 				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes'
-				            => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => array_merge(
+					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					array(
+						'step' => '1',
+						'min'  => '0',
+					)
+				),
 			),
 		) );
 
