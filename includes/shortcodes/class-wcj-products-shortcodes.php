@@ -91,8 +91,15 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	function init_atts( $atts ) {
 
 		// Atts
-		$atts['product_id'] = ( 0 == $atts['product_id'] ) ? get_the_ID() : $atts['product_id'];
-		if ( 0 == $atts['product_id'] ) return false;
+		if ( 0 == $atts['product_id'] ) {
+			global $wcj_product_id_for_shortcode;
+			if ( 0 != $wcj_product_id_for_shortcode ) {
+				$atts['product_id'] = $wcj_product_id_for_shortcode;
+			} else {
+				$atts['product_id'] = get_the_ID();
+			}
+			if ( 0 == $atts['product_id'] ) return false;
+		}
 		$the_post_type = get_post_type( $atts['product_id'] );
 		if ( 'product' !== $the_post_type && 'product_variation' !== $the_post_type ) return false;
 

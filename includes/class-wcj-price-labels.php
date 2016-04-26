@@ -391,7 +391,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.8
 	 */
 	public function custom_price( $price, $product ) {
 
@@ -550,7 +550,11 @@ class WCJ_Price_Labels extends WCJ_Module {
 		}
 
 //		return do_shortcode( $price . $current_filter_name . $product->product_type . $labels_array['variation_variable'] . $labels_array['variation_variation'] );
-		return do_shortcode( $price );
+		global $wcj_product_id_for_shortcode;
+		$wcj_product_id_for_shortcode = ( isset( $product->variation_id ) ) ? $product->variation_id : $product->id;
+		$result = do_shortcode( $price );
+		$wcj_product_id_for_shortcode = 0;
+		return $result;
 	}
 
 	/**
