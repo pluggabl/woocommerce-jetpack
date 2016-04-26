@@ -263,13 +263,22 @@ class WCJ_Price_Labels extends WCJ_Module {
 	 * @version 2.4.8
 	 */
 	public function add_price_label_meta_box() {
-		add_meta_box( 'wc-jetpack-price-labels', __( 'Booster: Custom Price Labels', 'woocommerce-jetpack' ), array( $this, 'wcj_price_label' ), 'product', 'normal', 'high' );
+		add_meta_box(
+			'wc-jetpack-price-labels',
+			__( 'Booster: Custom Price Labels', 'woocommerce-jetpack' ),
+			array( $this, 'create_price_label_meta_box' ),
+			'product',
+			'normal',
+			'high'
+		);
 	}
 
 	/*
-	 * wcj_price_label - back end.
+	 * create_price_label_meta_box - back end.
+	 *
+	 * @version 2.4.8
 	 */
-	public function wcj_price_label() {
+	public function create_price_label_meta_box() {
 
 		$current_post_id = get_the_ID();
 		echo '<table style="width:100%;">';
