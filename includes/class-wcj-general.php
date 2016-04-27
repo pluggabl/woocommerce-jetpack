@@ -32,6 +32,10 @@ class WCJ_General extends WCJ_Module {
 				'desc'  => __( 'All Products and All Attributes.', 'woocommerce-jetpack' ),
 			),
 			'export_customers' => array(
+				'title' => __( 'Export Customers', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Export Customers.', 'woocommerce-jetpack' ),
+			),
+			'export_customers_from_orders' => array(
 				'title' => __( 'Export Customers from Orders', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Export Customers (extracted from orders).', 'woocommerce-jetpack' ),
 			),
@@ -72,6 +76,28 @@ class WCJ_General extends WCJ_Module {
 	}
 
 	/**
+	 * create_export_customers_tool.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function create_export_customers_tool() {
+		$html = '';
+		$html .= '<pre>';
+		$html .=
+			__( 'Customer ID', 'woocommerce-jetpack' ) . ',' .
+			__( 'Customer Email', 'woocommerce-jetpack' ) . ',' .
+			__( 'Customer First Name', 'woocommerce-jetpack' ) . ',' .
+			__( 'Customer Last Name', 'woocommerce-jetpack' ) . PHP_EOL;
+		$customers = get_users( 'role=customer' );
+		foreach ( $customers as $customer ) {
+			$html .= $customer->ID . ',' . $customer->user_email . ',' . $customer->first_name . ',' . $customer->last_name . PHP_EOL;
+		}
+		$html .= '</pre>';
+		echo $html;
+	}
+
+	/**
 	 * create_export_orders_tool.
 	 *
 	 * @version 2.4.8
@@ -81,7 +107,7 @@ class WCJ_General extends WCJ_Module {
 		$html = '';
 		$html .= '<pre>';
 		$html .=
-			__( 'Order Nr.', 'woocommerce-jetpack' ) . ',' .
+			__( 'Order ID', 'woocommerce-jetpack' ) . ',' .
 			__( 'Customer Email', 'woocommerce-jetpack' ) . ',' .
 			__( 'Customer First Name', 'woocommerce-jetpack' ) . ',' .
 			__( 'Customer Last Name', 'woocommerce-jetpack' ) . ',' .
@@ -111,12 +137,12 @@ class WCJ_General extends WCJ_Module {
 	}
 
 	/**
-	 * create_export_customers_tool.
+	 * create_export_customers_from_orders_tool.
 	 *
 	 * @version 2.4.8
 	 * @since   2.3.9
 	 */
-	function create_export_customers_tool() {
+	function create_export_customers_from_orders_tool() {
 		$html = '';
 		$html .= '<pre>';
 		$html .=
