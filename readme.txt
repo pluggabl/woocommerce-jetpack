@@ -129,7 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - `WCJ_Module` - `create_meta_box` now takes option default value if no post meta is set.
 * Dev - PRODUCTS - Product Cost Price - Custom Price Fields options added.
 * Fix - Shortcodes - Products - Fixed for variable products if min and max are equal (in `[wcj_product_price]` shortcode).
-* Dev - PDF INVOICING & PACKING SLIPS - Styling - "Tahoma" font added; Three Thai fonts added.
+~* Dev - PDF INVOICING & PACKING SLIPS - Styling - "Tahoma" font added; Three Thai fonts added.
 * Dev - PRODUCTS - Product Tabs - Documentation link added.
 * Dev - PRODUCTS - Product Tabs - "Use Visual Editor" option added.
 * Dev - PRODUCTS - Product Info V2 - Single product page add to cart hooks added.
