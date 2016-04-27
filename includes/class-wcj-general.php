@@ -17,7 +17,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.8
 	 */
 	public function __construct() {
 
@@ -32,8 +32,12 @@ class WCJ_General extends WCJ_Module {
 				'desc'  => __( 'All Products and All Attributes.', 'woocommerce-jetpack' ),
 			),
 			'export_customers' => array(
-				'title' => __( 'Export Customers', 'woocommerce-jetpack' ),
+				'title' => __( 'Export Customers from Orders', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Export Customers (extracted from orders).', 'woocommerce-jetpack' ),
+			),
+			'export_orders' => array(
+				'title' => __( 'Export Orders', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Export Orders.', 'woocommerce-jetpack' ),
 			),
 		) );
 
@@ -68,9 +72,48 @@ class WCJ_General extends WCJ_Module {
 	}
 
 	/**
+	 * create_export_orders_tool.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function create_export_orders_tool() {
+		$html = '';
+		$html .= '<pre>';
+		$html .=
+			__( 'Order Nr.', 'woocommerce-jetpack' ) . ',' .
+			__( 'Customer Email', 'woocommerce-jetpack' ) . ',' .
+			__( 'Customer First Name', 'woocommerce-jetpack' ) . ',' .
+			__( 'Customer Last Name', 'woocommerce-jetpack' ) . ',' .
+			__( 'Order Date', 'woocommerce-jetpack' ) . PHP_EOL;
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			$args_orders = array(
+				'post_type'      => 'shop_order',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+				'offset'         => $offset,
+			);
+			$loop_orders = new WP_Query( $args_orders );
+			if ( ! $loop_orders->have_posts() ) break;
+			while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
+				$order_id = $loop_orders->post->ID;
+				$order = wc_get_order( $order_id );
+				$html .= $order_id . ',' . $order->billing_email . ',' . $order->billing_first_name . ','. $order->billing_last_name . ','. get_the_date( 'Y/m/d' ) . PHP_EOL;
+			endwhile;
+			$offset += $block_size;
+		}
+		$html .= '</pre>';
+		echo $html;
+	}
+
+	/**
 	 * create_export_customers_tool.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.8
 	 * @since   2.3.9
 	 */
 	function create_export_customers_tool() {
@@ -81,7 +124,7 @@ class WCJ_General extends WCJ_Module {
 			__( 'Email', 'woocommerce-jetpack' ) . ',' .
 			__( 'First Name', 'woocommerce-jetpack' ) . ',' .
 			__( 'Last Name', 'woocommerce-jetpack' ) . ',' .
-			__( 'Order Date', 'woocommerce-jetpack' ) . PHP_EOL;
+			__( 'Last Order Date', 'woocommerce-jetpack' ) . PHP_EOL;
 		$total_customers = 0;
 		$orders = array();
 		$offset = 0;

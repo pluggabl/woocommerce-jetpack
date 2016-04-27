@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 27/04/2016 =
+~* Dev - EMAILS & MISC. - General - "Export Orders" tool added.
 * Dev - SHIPPING & ORDERS - Shipping - "Message on Free Shipping Reached" option added.
 * Dev - `wcj_product_id_for_shortcode` added to products shortcodes and to Custom Price Labels module.
 * Dev - `WCJ_Module` - `create_meta_box` now takes option default value if no post meta is set.
