@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 27/04/2016 =
+* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` shortcode added.
 ~* Dev - EMAILS & MISC. - General - "Export Customers" tool added.
 * Dev - EMAILS & MISC. - General - "Export Customers" tool renamed to "Export Customers from Orders".
 ~* Dev - EMAILS & MISC. - General - "Export Orders" tool added.
