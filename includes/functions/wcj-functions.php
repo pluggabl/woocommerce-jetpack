@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.4.6
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -44,7 +44,7 @@ if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
 /*
  * wcj_get_left_to_free_shipping.
  *
- * @version 2.4.4
+ * @version 2.4.8
  * @since   2.4.4
  * @return  string
  */
@@ -61,7 +61,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 				$total = WC()->cart->cart_contents_total;
 			}
 			if ( $total >= $free_shipping->min_amount ) {
-				return '';
+				return get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) );
 			} else {
 				$content = str_replace( '%left_to_free%',             wc_price( $free_shipping->min_amount - $total ), $content );
 				$content = str_replace( '%free_shipping_min_amount%', wc_price( $free_shipping->min_amount ),          $content );

@@ -256,7 +256,7 @@ class WCJ_Shipping extends WCJ_Module {
 			),
 			array(
 				'title'    => '',
-				'desc'     => __( 'Order (Priority)', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Position Order (Priority)', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_left_to_free_info_priority_cart',
 				'default'  => 10,
 				'type'     => 'number',
@@ -294,7 +294,7 @@ class WCJ_Shipping extends WCJ_Module {
 			),
 			array(
 				'title'    => '',
-				'desc'     => __( 'Order (Priority)', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Position Order (Priority)', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_left_to_free_info_priority_mini_cart',
 				'default'  => 10,
 				'type'     => 'number',
@@ -338,11 +338,19 @@ class WCJ_Shipping extends WCJ_Module {
 			),
 			array(
 				'title'    => '',
-				'desc'     => __( 'Order (Priority)', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Position Order (Priority)', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_left_to_free_info_priority_checkout',
 				'default'  => 10,
 				'type'     => 'number',
 				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Message on Free Shipping Reached', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'You can set it empty', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_left_to_free_info_content_reached',
+				'default'  => __( 'You have Free delivery', 'woocommerce-jetpack' ),
+				'type'     => 'textarea',
+				'css'      => 'width:30%;min-width:300px;height:100px;',
 			),
 			array(
 				'type'     => 'sectionend',
