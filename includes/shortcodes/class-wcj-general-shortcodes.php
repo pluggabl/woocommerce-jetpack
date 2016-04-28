@@ -101,8 +101,11 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		$table_rows = array( $data_qty, $data_discount_percent, );
-		$table_styles = array( 'columns_styles' => array( 'text-align: center;', 'text-align: center;', 'text-align: center;', ), );
-		return wcj_get_table_html( $table_rows, $table_styles );
+		$columns_styles = array();
+		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
+			$columns_styles[] = 'text-align: center;';
+		}
+		return wcj_get_table_html( $table_rows, array( 'columns_styles' => $columns_styles ) );
 	}
 
 	/**

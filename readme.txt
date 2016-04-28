@@ -121,6 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 28/04/2016 =
+* Fix - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - Columns styles fixed (now works for more than three levels).
 * Fix - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - Fix for variable products with same min and max prices.
 * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `add_price_row` shortcode parameter added.
 -* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checkout" fixed.
