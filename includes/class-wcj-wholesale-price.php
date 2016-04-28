@@ -18,13 +18,14 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.8
 	 */
 	function __construct() {
 
 		$this->id         = 'wholesale_price';
 		$this->short_desc = __( 'Wholesale Price', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set WooCommerce wholesale pricing depending on product quantity in cart (buy more pay less).', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-wholesale-price/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
