@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.8
 	 */
 	public function __construct() {
 
@@ -71,6 +71,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'sep'             => ', ',
 			'add_links'       => 'yes',
 			'add_percent_row' => 'no',
+			'add_price_row'   => 'yes',
 			'show_always'     => 'yes',
 			'hide_if_zero'    => 'no',
 			'reverse'         => 'no',
@@ -628,13 +629,14 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_product_wholesale_price_table.
+	 *
+	 * @version 2.4.8
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 
 		if ( ! wcj_is_product_wholesale_enabled( $this->the_product->id ) ) return '';
 
 		$wholesale_price_levels = array();
-
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
 			$level_qty        = get_option( 'wcj_wholesale_price_level_min_qty_' . $i, PHP_INT_MAX );
 			$discount_percent = get_option( 'wcj_wholesale_price_level_discount_percent_' . $i, 0 );
@@ -644,13 +646,12 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 
 		$data_qty = array();
 		$data_price = array();
-
+		$data_discount_percent = array();
 		foreach ( $wholesale_price_levels as $wholesale_price_level ) {
 
 			$the_price = '';
-
-			// Variable
 			if ( $this->the_product->is_type( 'variable' ) ) {
+				// Variable
 				$min = $this->the_product->get_variation_price( 'min', false );
 				$max = $this->the_product->get_variation_price( 'max', false );
 				if ( '' !== $wholesale_price_level['koef'] && is_numeric( $wholesale_price_level['koef'] ) ) {
@@ -661,11 +662,10 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 					$min = wc_price( $min );
 					$max = wc_price( $max );
 				}
-				$the_price = sprintf( '%s-%s', $min, $max );
-			}
-			// Simple etc.
-			else {
-				//$the_price = wc_price( round( $this->the_product->get_price() * $wholesale_price_level['koef'], $precision ) );
+				$the_price = ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
+			} else {
+				// Simple etc.
+//				$the_price = wc_price( round( $this->the_product->get_price() * $wholesale_price_level['koef'], $precision ) );
 				$the_price = $this->the_product->get_price();
 				if ( '' !== $wholesale_price_level['koef'] && is_numeric( $wholesale_price_level['koef'] ) ) {
 					$the_price = $the_price * $wholesale_price_level['koef'];
@@ -675,14 +675,19 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				}
 			}
 
-			$data_qty[]              = str_replace( '%level_qty%', $wholesale_price_level['quantity'], $atts['heading_format'] ) ;
-			$data_price[]            = $the_price;
+			$data_qty[] = str_replace( '%level_qty%', $wholesale_price_level['quantity'], $atts['heading_format'] ) ;
+			if ( 'yes' === $atts['add_price_row'] ) {
+				$data_price[] = $the_price;
+			}
 			if ( 'yes' === $atts['add_percent_row'] ) {
 				$data_discount_percent[] = '-' . $wholesale_price_level['discount_percent'] . '%';
 			}
 		}
 
-		$table_rows = array( $data_qty, $data_price, );
+		$table_rows = array( $data_qty, );
+		if ( 'yes' === $atts['add_price_row'] ) {
+			$table_rows[] = $data_price;
+		}
 		if ( 'yes' === $atts['add_percent_row'] ) {
 			$table_rows[] = $data_discount_percent;
 		}
