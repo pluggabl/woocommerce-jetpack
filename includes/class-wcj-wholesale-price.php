@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Wholesale Price class.
  *
- * @version 2.4.1
+ * @version 2.4.8
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -133,11 +133,18 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 
 	/**
 	 * get_wholesale_quantity.
+	 *
+	 * @version 2.4.8
 	 */
 	private function get_wholesale_quantity( $_product ) {
 
 		// Get quanitity from cart
-		$the_cart = WC()->cart->get_cart();
+		$is_paypal_express = ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) ? true : false;
+		if ( $is_paypal_express ) {
+			$the_cart = array_filter( (array) WC()->cart->cart_contents );
+		} else {
+			$the_cart = WC()->cart->get_cart();
+		}
 		$quanitities = array();
 		$total_quantity = 0;
 		foreach ( $the_cart as $cart_item_key => $values ) {
@@ -153,7 +160,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * wholesale_price.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.8
 	 */
 	function wholesale_price( $price, $_product ) {
 
@@ -161,7 +168,8 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 
 		// Show only on checkout and cart pages
 		//$is_ajax = ( is_admin() && ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) ? true : false;
-		if ( ! ( is_checkout() || is_cart() /* || $is_ajax */ ) ) return $price;
+		$is_paypal_express = ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) ? true : false;
+		if ( ! ( is_checkout() || is_cart() || $is_paypal_express /* || $is_ajax */ ) ) return $price;
 
 		// If other discount was applied in cart...
 		if ( 'yes' === get_option( 'wcj_wholesale_price_apply_only_if_no_other_discounts', 'no' ) ) {
