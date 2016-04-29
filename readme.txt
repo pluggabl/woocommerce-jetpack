@@ -121,6 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 28/04/2016 =
+* Dev - PRODUCTS - Product Input Fields - Documentation link added.
+* Dev - CART & CHECKOUT - Checkout Files Upload - Documentation link added.
 * Dev - Documentation link and button link modified according to Google URL standards.
 * Dev - PRICES & CURRENCIES - Wholesale Price - Documentation link added.
 * Fix - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - Columns styles fixed (now works for more than three levels).

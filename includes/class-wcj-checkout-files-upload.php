@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Files Upload class.
  *
- * @version 2.4.7
+ * @version 2.4.8
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  */
@@ -18,13 +18,14 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.8
 	 */
 	function __construct() {
 
 		$this->id         = 'checkout_files_upload';
 		$this->short_desc = __( 'Checkout Files Upload', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Let customers upload files on WooCommerce checkout.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-checkout-files-upload/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
