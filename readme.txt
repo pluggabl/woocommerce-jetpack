@@ -120,7 +120,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.8 - 28/04/2016 =
+= 2.4.8 - 29/04/2016 =
+* Dev - PRODUCTS - Product Images - Documentation link added. Reset button added.
+* Dev - PRODUCTS - Product Add to Cart - Documentation link added.
+* Dev - PRODUCTS - Crowdfunding - Documentation link added.
 * Dev - PRODUCTS - Product Input Fields - Documentation link added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - Documentation link added.
 * Dev - Documentation link and button link modified according to Google URL standards.

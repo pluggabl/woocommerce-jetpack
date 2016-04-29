@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Add To Cart class.
  *
- * @version 2.2.0
+ * @version 2.4.8
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -17,12 +17,15 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.8
 	 */
 	public function __construct() {
 
 		$this->id         = 'product_add_to_cart';
 		$this->short_desc = __( 'Product Add to Cart', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-product-add-to-cart/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

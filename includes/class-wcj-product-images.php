@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Images class.
  *
- * @version 2.3.9
+ * @version 2.4.8
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,13 +18,14 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.8
 	 */
 	function __construct() {
 
 		$this->id         = 'product_images';
 		$this->short_desc = __( 'Product Images', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Customize WooCommerce products images, thumbnails and sale flashes.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-product-images/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -171,7 +172,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.8
 	 */
 	function get_settings() {
 
@@ -288,7 +289,7 @@ class WCJ_Product_Images extends WCJ_Module {
 			array( 'type' => 'sectionend', 'id' => 'wcj_product_images_sale_flash_options' ),
 		);
 
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 

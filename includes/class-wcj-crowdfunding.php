@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Crowdfunding class.
  *
- * @version 2.3.0
+ * @version 2.4.8
  * @since   2.2.6
  * @author  Algoritmika Ltd.
  */
@@ -17,12 +17,15 @@ class WCJ_Crowdfunding extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.8
 	 */
 	function __construct() {
 
 		$this->id         = 'crowdfunding';
 		$this->short_desc = __( 'Crowdfunding', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add crowdfunding products to WooCommerce.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-crowdfunding/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
