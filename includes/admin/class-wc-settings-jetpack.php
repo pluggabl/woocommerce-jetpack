@@ -419,7 +419,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 
 					$html .= '<span class="0"><a href="' . admin_url() . 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">' . __( 'Settings', 'woocommerce' ) . '</a></span>';
 					if ( isset( $the_feature['wcj_link'] ) && '' != $the_feature['wcj_link'] ) {
-						$html .= ' | <span class="0"><a href="' . $the_feature['wcj_link'] . '?source=module_documentation_link" target="_blank">' . __( 'Documentation', 'woocommerce' ) . '</a></span>';
+						$html .= ' | <span class="0"><a href="' . $the_feature['wcj_link'] . '?utm_source=module_documentation&utm_medium=dashboard_link&utm_campaign=booster_documentation" target="_blank">' . __( 'Documentation', 'woocommerce' ) . '</a></span>';
 					}
 					$html .= '</div>';
 					$html .= '</td>';
