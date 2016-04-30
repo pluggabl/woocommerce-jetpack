@@ -42,6 +42,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.4.8
 	 */
 	function get_settings() {
 
@@ -87,7 +89,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	        array( 'type'  => 'sectionend', 'id' => 'wcj_add_to_cart_on_visit_options' ),
 	    );
 
-	    return $this->add_enable_module_setting( $settings );
+	    return $this->add_standard_settings( $settings );
 	}
 
 	/*

@@ -125,7 +125,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - SHIPPING & ORDERS - Address Formats - Documentation link added. Reset button added.
 ~* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Initial module release.
 * Dev - PRODUCTS - Product Images - Documentation link added. Reset button added.
-* Dev - PRODUCTS - Product Add to Cart - Documentation link added.
+* Dev - PRODUCTS - Product Add to Cart - Documentation link added. Reset button added.
 * Dev - PRODUCTS - Crowdfunding - Documentation link added.
 * Dev - PRODUCTS - Product Input Fields - Documentation link added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - Documentation link added.
