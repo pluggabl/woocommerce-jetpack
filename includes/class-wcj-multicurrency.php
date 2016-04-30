@@ -129,7 +129,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	}
 
 	/**
-	 * change_price_by_currency.
+	 * get_currency_exchange_rate.
 	 *
 	 * @version 2.4.3
 	 */

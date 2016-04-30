@@ -121,7 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.8 - 29/04/2016 =
+= 2.4.8 - 30/04/2016 =
+* Dev - SHIPPING & ORDERS - Address Formats - Documentation link added. Reset button added.
 ~* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Initial module release.
 * Dev - PRODUCTS - Product Images - Documentation link added. Reset button added.
 * Dev - PRODUCTS - Product Add to Cart - Documentation link added.
