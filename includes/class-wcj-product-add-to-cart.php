@@ -37,7 +37,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_add_to_cart_on_visit_enabled' ) ) {
 				add_action( 'woocommerce_before_single_product', array( $this, 'add_to_cart_on_visit' ), 100 );
 			}
-	    }
+		}
 	}
 
 	/**
@@ -47,7 +47,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	 */
 	function get_settings() {
 
-	    $settings = array(
+		$settings = array(
 
 			array(
 				'title'    => __( 'Add to Cart Local Redirect Options', 'woocommerce-jetpack' ),
@@ -76,7 +76,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
 			array( 'type'  => 'sectionend', 'id' => 'wcj_add_to_cart_redirect_options' ),
 
-	        array( 'title' => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you enable automatically adding product to cart on visiting the product page. Product is only added once, so if it is already in cart - duplicate product is not added. ', 'woocommerce-jetpack' ), 'id' => 'wcj_add_to_cart_on_visit_options' ),
+			array( 'title' => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you enable automatically adding product to cart on visiting the product page. Product is only added once, so if it is already in cart - duplicate product is not added. ', 'woocommerce-jetpack' ), 'id' => 'wcj_add_to_cart_on_visit_options' ),
 
 			array(
 				'title'    => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ),
@@ -86,10 +86,10 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				'type'     => 'checkbox',
 			),
 
-	        array( 'type'  => 'sectionend', 'id' => 'wcj_add_to_cart_on_visit_options' ),
-	    );
+			array( 'type'  => 'sectionend', 'id' => 'wcj_add_to_cart_on_visit_options' ),
+		);
 
-	    return $this->add_standard_settings( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 
 	/*
