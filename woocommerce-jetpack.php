@@ -21,7 +21,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.4.7
+ * @version 2.4.8
  */
 
 final class WC_Jetpack {
@@ -32,7 +32,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.4.8-dev-201604282102';
+	public $version = '2.4.8-dev-201604302132';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -403,7 +403,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.8
 	 */
 	private function include_modules() {
 		$settings = array();
@@ -450,6 +450,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-emails.php' );
 		$settings[] = include_once( 'includes/class-wcj-currencies.php' );
 		$settings[] = include_once( 'includes/class-wcj-multicurrency.php' );
+		$settings[] = include_once( 'includes/class-wcj-multicurrency-product-base-price.php' );
 		$settings[] = include_once( 'includes/class-wcj-currency-external-products.php' );
 		$settings[] = include_once( 'includes/class-wcj-price-by-country.php' );
 		$settings[] = include_once( 'includes/class-wcj-currency-exchange-rates.php' );

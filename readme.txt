@@ -23,6 +23,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Currency for External Products* - Set different currency for external WooCommerce products.
 * *Prices and Currencies by Country* - Change WooCommerce product price and currency automatically by customer's country.
 * *Multicurrency* - Add multiple currencies (currency switcher) to WooCommerce.
+* *Multicurrency Product Base Price* - Enter prices for WooCommerce products in different currencies.
 * *Wholesale Price* - Set WooCommerce wholesale pricing depending on product quantity in cart (buy more pay less).
 
 **Button & Price Labels**
@@ -121,6 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 29/04/2016 =
+~* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Initial module release.
 * Dev - PRODUCTS - Product Images - Documentation link added. Reset button added.
 * Dev - PRODUCTS - Product Add to Cart - Documentation link added.
 * Dev - PRODUCTS - Crowdfunding - Documentation link added.

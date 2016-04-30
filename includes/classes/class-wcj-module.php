@@ -146,6 +146,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					$option_value = ( isset( $option['default'] ) ) ? $option['default'] : '';
 				}
 				$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
+				if ( 'select' === $option['type'] ) {
+					$options = '';
+					foreach ( $option['options'] as $select_option_key => $select_option_value ) {
+						$options .= '<option value="' . $select_option_key . '" ' . selected( $option_value, $select_option_key, false ) . '>' . $select_option_value . '</option>';
+					}
+				}
 				switch ( $option['type'] ) {
 					case 'price':
 						$field_html = '<input class="short wc_input_price" type="number" step="0.0001"' . $input_ending;
@@ -155,6 +161,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						break;
 					case 'textarea':
 						$field_html = '<textarea style="min-width:300px;"' . ' id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
+						break;
+					case 'select':
+						$field_html = '<select' . ' id="' . $option['name'] . '" name="' . $option['name'] . '">' . $options . '</select>';
 						break;
 					default:
 						$field_html = '<input class="short" type="' . $option['type'] . '"' . $input_ending;

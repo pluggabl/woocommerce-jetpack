@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack WPML class.
  *
- * @version 2.4.4
+ * @version 2.4.8
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -136,13 +136,14 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * is_wpml_value.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.8
 	 * @since   2.4.4
 	 */
 	function is_wpml_section( $section ) {
 		$sections_to_skip = array(
 			'price_by_country',
 			'multicurrency',
+			'multicurrency_base_price',
 			'currency',
 			'currency_external_products',
 			'bulk_price_converter',

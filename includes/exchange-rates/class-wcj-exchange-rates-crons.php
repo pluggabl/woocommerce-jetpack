@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exchange Rates Crons class.
  *
- * @version 2.4.4
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -110,7 +110,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * On the scheduled action hook, run a function.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.8
 	 */
 	function update_the_exchange_rates( $interval ) {
 
@@ -132,6 +132,16 @@ class WCJ_Exchange_Rates_Crons {
 				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
 					$currency_to = get_option( 'wcj_multicurrency_currency_' . $i );
 					$currency_pairs = $this->get_currency_pair( $currency_pairs, $currency_to, 'wcj_multicurrency_exchange_rate_' . $i );
+				}
+			}
+		}
+
+		if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
+			// Currency Pairs - Preparation - Multicurrency Product Base Price
+			if ( 'manual' != apply_filters( 'wcj_get_option_filter', 'manual', get_option( 'wcj_multicurrency_base_price_exchange_rate_update', 'manual' ) ) ) {
+				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
+					$currency_to = get_option( 'wcj_multicurrency_base_price_currency_' . $i );
+					$currency_pairs = $this->get_currency_pair( $currency_pairs, $currency_to, 'wcj_multicurrency_base_price_exchange_rate_' . $i );
 				}
 			}
 		}
