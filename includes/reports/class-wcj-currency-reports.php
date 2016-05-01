@@ -1,8 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack Price By Country Reports
+ * WooCommerce Jetpack Currency Reports
  *
- * The WooCommerce Jetpack Price By Country Reports class.
+ * The WooCommerce Jetpack Currency Reports class.
  *
  * @version  2.4.8
  * @author   Algoritmika Ltd.
@@ -10,9 +10,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( 'WCJ_Price_By_Country_Reports' ) ) :
+if ( ! class_exists( 'WCJ_Currency_Reports' ) ) :
 
-class WCJ_Price_By_Country_Reports {
+class WCJ_Currency_Reports {
 
 	/**
 	 * Constructor.
@@ -50,6 +50,28 @@ class WCJ_Price_By_Country_Reports {
 				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 					$the_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
 					$currency_symbols[ $the_code ] = $the_code;
+				}
+			}
+			if ( wcj_is_module_enabled( 'multicurrency' ) ) {
+				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
+					$the_code = get_option( 'wcj_multicurrency_currency_' . $i );
+					$currency_symbols[ $the_code ] = $the_code;
+				}
+			}
+			if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
+				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
+					$the_code = get_option( 'wcj_multicurrency_base_price_currency_' . $i );
+					$currency_symbols[ $the_code ] = $the_code;
+				}
+			}
+			if ( wcj_is_module_enabled( 'payment_gateways_currency' ) ) {
+				global $woocommerce;
+				$available_gateways = $woocommerce->payment_gateways->payment_gateways();
+				foreach ( $available_gateways as $key => $gateway ) {
+					$the_code = get_option( 'wcj_gateways_currency_' . $key );
+					if ( 'no_changes' != $the_code ) {
+						$currency_symbols[ $the_code ] = $the_code;
+					}
 				}
 			}
 			$currency_symbols['merge'] = 'merge';
@@ -99,4 +121,4 @@ class WCJ_Price_By_Country_Reports {
 
 endif;
 
-return new WCJ_Price_By_Country_Reports();
+return new WCJ_Currency_Reports();

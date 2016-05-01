@@ -18,7 +18,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.8
 	 */
 	function __construct() {
 
@@ -35,6 +35,10 @@ class WCJ_Multicurrency extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
+
+			if ( is_admin() ) {
+				include_once( 'reports/class-wcj-currency-reports.php' );
 			}
 		}
 	}

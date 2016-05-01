@@ -18,7 +18,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.5
+	 * @version 2.4.8
 	 */
 	function __construct() {
 
@@ -32,6 +32,9 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			/* add_action( 'init', array( $this, 'add_hooks' ) ); */
 			$this->add_hooks();
+			if ( is_admin() ) {
+				include_once( 'reports/class-wcj-currency-reports.php' );
+			}
 		}
 	}
 

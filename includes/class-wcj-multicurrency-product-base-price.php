@@ -45,6 +45,10 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 				add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 10, 2 );
 				add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 10, 3 );
 			}
+
+			if ( is_admin() ) {
+				include_once( 'reports/class-wcj-currency-reports.php' );
+			}
 		}
 	}
 
