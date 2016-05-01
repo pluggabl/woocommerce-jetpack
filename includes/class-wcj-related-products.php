@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Related Products class.
  *
- * @version 2.2.6
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.6
+	 * @version 2.4.8
 	 */
 	public function __construct() {
 
 		$this->id         = 'related_products';
 		$this->short_desc = __( 'Related Products', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Change displayed WooCommerce related products number, columns, order, relate by tag and/or category, or hide related products completely.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-related-products/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -88,44 +89,40 @@ class WCJ_Related_Products extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.4.8
 	 */
 	function get_settings() {
-
 		$settings = array(
-
 			array(
-				'title'    => '',//__( 'Related Products Options', 'woocommerce-jetpack' ),
+				'title'    => __( 'Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => '',
-				'id'       => 'wcj_product_info_related_products_options'
+				'id'       => 'wcj_product_info_related_products_options',
 			),
-
 			array(
 				'title'    => __( 'Related Products Number', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_info_related_products_num',
 				'default'  => 3,
 				'type'     => 'number',
 			),
-
 			array(
 				'title'    => __( 'Related Products Columns', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_info_related_products_columns',
 				'default'  => 3,
 				'type'     => 'number',
 			),
-
 			array(
 				'title'    => __( 'Order by', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_info_related_products_orderby',
 				'default'  => 'rand',
 				'type'     => 'select',
 				'options'  => array(
-						'rand'  => __( 'Random', 'woocommerce-jetpack' ),
-						'date'	=> __( 'Date', 'woocommerce-jetpack' ),
-						'title' => __( 'Title', 'woocommerce-jetpack' ),
-					),
+					'rand'  => __( 'Random', 'woocommerce-jetpack' ),
+					'date'  => __( 'Date', 'woocommerce-jetpack' ),
+					'title' => __( 'Title', 'woocommerce-jetpack' ),
+				),
 			),
-
 			array(
 				'title'    => __( 'Order', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Ignored if order by "Random" is selected above.', 'woocommerce-jetpack' ),
@@ -133,40 +130,35 @@ class WCJ_Related_Products extends WCJ_Module {
 				'default'  => 'desc',
 				'type'     => 'select',
 				'options'  => array(
-						'asc'   => __( 'Ascending', 'woocommerce-jetpack' ),
-						'desc'	=> __( 'Descending', 'woocommerce-jetpack' ),
-					),
+					'asc'  => __( 'Ascending', 'woocommerce-jetpack' ),
+					'desc' => __( 'Descending', 'woocommerce-jetpack' ),
+				),
 			),
-
 			array(
-				'title' 	=> __( 'Relate by Category', 'woocommerce-jetpack' ),
-				'id' 		=> 'wcj_product_info_related_products_relate_by_category',
-				'default'	=> 'yes',
-				'type' 		=> 'checkbox',
+				'title'    => __( 'Relate by Category', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_info_related_products_relate_by_category',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
 			),
-
 			array(
-				'title' 	=> __( 'Relate by Tag', 'woocommerce-jetpack' ),
-				'id' 		=> 'wcj_product_info_related_products_relate_by_tag',
-				'default'	=> 'yes',
-				'type' 		=> 'checkbox',
+				'title'    => __( 'Relate by Tag', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_info_related_products_relate_by_tag',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
 			),
-
 			array(
-				'title'   => __( 'Hide Related Products', 'woocommerce-jetpack' ),
-				'desc'    => __( 'Hide', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_product_info_related_products_hide',
-				'default' => 'no',
-				'type'    => 'checkbox',
+				'title'    => __( 'Hide Related Products', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_info_related_products_hide',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
-
 			array(
-				'type'    => 'sectionend',
-				'id'      => 'wcj_product_info_related_products_options'
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_info_related_products_options',
 			),
 		);
-
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 

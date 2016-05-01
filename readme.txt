@@ -122,7 +122,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.8 - 30/04/2016 =
+= 2.4.8 - 01/05/2016 =
+* Dev - PRODUCTS - Related Products - Documentation link added. Reset button added.
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
 $-* Dev - PRICES & CURRENCIES - Product Dynamic Pricing - Initial module release.
 $~* Dev - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - "Display Radio Buttons Instead of Drop Box" option added.
