@@ -186,17 +186,17 @@ class WCJ_Product_Dynamic_Pricing extends WCJ_Module {
 			$max_price = get_post_meta( $product_id, '_' . 'wcj_product_dynamic_price_max_price', true );
 			if ( $min_price > 0 ) {
 				if ( ! isset( $_POST['wcj_dynamic_price'] ) || '' === $_POST['wcj_dynamic_price'] ) {
-					wc_add_notice( __( 'Value is required!', 'woocommerce-jetpack' ), 'error' );
+					wc_add_notice( __( 'Price is required!', 'woocommerce-jetpack' ), 'error' );
 					return false;
 				}
 				if ( $_POST['wcj_dynamic_price'] < $min_price ) {
-					wc_add_notice( __( 'Entered value is to small!', 'woocommerce-jetpack' ), 'error' );
+					wc_add_notice( __( 'Entered price is to small!', 'woocommerce-jetpack' ), 'error' );
 					return false;
 				}
 			}
 			if ( $max_price > 0 ) {
 				if ( isset( $_POST['wcj_dynamic_price'] ) && $_POST['wcj_dynamic_price'] > $max_price ) {
-					wc_add_notice( __( 'Entered value is to big!', 'woocommerce-jetpack' ), 'error' );
+					wc_add_notice( __( 'Entered price is to big!', 'woocommerce-jetpack' ), 'error' );
 					return false;
 				}
 			}
