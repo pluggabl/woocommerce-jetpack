@@ -123,6 +123,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 01/05/2016 =
+* Dev - PRODUCTS - Sorting - Documentation link added. Reset button added.
 * Dev - PRODUCTS - Related Products - Documentation link added. Reset button added.
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
 $-* Dev - PRICES & CURRENCIES - Product Dynamic Pricing - Initial module release.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Sorting class.
  *
- * @version 2.2.9
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -19,21 +19,22 @@ class WCJ_Sorting extends WCJ_Module {
 	 * WCJ_Sorting Constructor.
 	 *
 	 * @access  public
-	 * @version 2.2.4
+	 * @version 2.4.8
 	 */
 	public function __construct() {
 
 		$this->id         = 'sorting';
 		$this->short_desc = __( 'Sorting', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add more WooCommerce sorting options or remove all sorting including default.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-more-sorting-options/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
 
 			if ( 'yes' === get_option( 'wcj_more_sorting_enabled' ) ) {
-				add_filter( 'woocommerce_get_catalog_ordering_args',       array( $this, 'custom_woocommerce_get_catalog_ordering_args' ), 100 );// Sorting
-				add_filter( 'woocommerce_catalog_orderby',                 array( $this, 'custom_woocommerce_catalog_orderby' ), 100 );// Front end
-				add_filter( 'woocommerce_default_catalog_orderby_options', array( $this, 'custom_woocommerce_catalog_orderby' ), 100 );// Back end (default sorting)
+				add_filter( 'woocommerce_get_catalog_ordering_args',       array( $this, 'custom_woocommerce_get_catalog_ordering_args' ), 100 ); // Sorting
+				add_filter( 'woocommerce_catalog_orderby',                 array( $this, 'custom_woocommerce_catalog_orderby' ), 100 ); // Front end
+				add_filter( 'woocommerce_default_catalog_orderby_options', array( $this, 'custom_woocommerce_catalog_orderby' ), 100 ); // Back end (default sorting)
 			}
 
 			if ( 'yes' === get_option( 'wcj_sorting_remove_all_enabled' ) ) {
@@ -158,19 +159,15 @@ class WCJ_Sorting extends WCJ_Module {
 	/*
 	 * Add the settings.
 	 *
-	 * @version 2.2.4
+	 * @version 2.4.8
 	 */
 	function get_settings() {
-
 		$settings = array(
-
 			array(
 				'title'     => __( 'Remove All Sorting', 'woocommerce-jetpack' ),
 				'type'      => 'title',
-				'desc'      => '',
-				'id'        => 'wcj_remove_all_sorting_options'
+				'id'        => 'wcj_remove_all_sorting_options',
 			),
-
 			array(
 				'title'     => __( 'Remove All Sorting', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Remove all sorting (including WooCommerce default)', 'woocommerce-jetpack' ),
@@ -178,30 +175,24 @@ class WCJ_Sorting extends WCJ_Module {
 				'id'        => 'wcj_sorting_remove_all_enabled',
 				'default'   => 'no',
 				'type'      => 'checkbox',
-				'custom_attributes'
-				            => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			),
-
 			array(
 				'type'      => 'sectionend',
-				'id'        => 'wcj_remove_all_sorting_options'
+				'id'        => 'wcj_remove_all_sorting_options',
 			),
-
 			array(
 				'title'     => __( 'Add More Sorting', 'woocommerce-jetpack' ),
 				'type'      => 'title',
-				'desc'      => '',
-				'id'        => 'wcj_more_sorting_options'
+				'id'        => 'wcj_more_sorting_options',
 			),
-
 			array(
 				'title'     => __( 'Add More Sorting', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_more_sorting_enabled',
 				'default'   => 'yes',
-				'type'      => 'checkbox'
+				'type'      => 'checkbox',
 			),
-
 			array(
 				'title'     => __( 'Sort by Name', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by title: A to Z', 'woocommerce-jetpack' ),
@@ -211,7 +202,6 @@ class WCJ_Sorting extends WCJ_Module {
 				'type'      => 'text',
 				'css'       => 'min-width:300px;',
 			),
-
 			array(
 				'title'     => '',//__( 'Sort by Name - Desc', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by title: Z to A', 'woocommerce-jetpack' ),
@@ -221,7 +211,6 @@ class WCJ_Sorting extends WCJ_Module {
 				'type'      => 'text',
 				'css'       => 'min-width:300px;',
 			),
-
 			array(
 				'title'     => __( 'Sort by SKU', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by SKU: low to high', 'woocommerce-jetpack' ),
@@ -231,7 +220,6 @@ class WCJ_Sorting extends WCJ_Module {
 				'type'      => 'text',
 				'css'       => 'min-width:300px;',
 			),
-
 			array(
 				'title'     => '',//__( 'Sort by SKU - Desc', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by SKU: high to low', 'woocommerce-jetpack' ),
@@ -241,7 +229,6 @@ class WCJ_Sorting extends WCJ_Module {
 				'type'      => 'text',
 				'css'       => 'min-width:300px;',
 			),
-
 			array(
 				'title'     => '',
 				'desc'      => __( 'Sort SKUs as numbers instead of as texts', 'woocommerce-jetpack' ),
@@ -249,10 +236,8 @@ class WCJ_Sorting extends WCJ_Module {
 				'default'   => 'no',
 				'type'      => 'checkbox',
 				'desc_tip'  => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes'
-				            => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			),
-
 			array(
 				'title'     => __( 'Sort by stock quantity', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by stock quantity: low to high', 'woocommerce-jetpack' ),
@@ -262,7 +247,6 @@ class WCJ_Sorting extends WCJ_Module {
 				'type'      => 'text',
 				'css'       => 'min-width:300px;',
 			),
-
 			array(
 				'title'     => '',//__( 'Sort by stock quantity - Desc', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by stock quantity: high to low', 'woocommerce-jetpack' ),
@@ -272,14 +256,12 @@ class WCJ_Sorting extends WCJ_Module {
 				'type'      => 'text',
 				'css'       => 'min-width:300px;',
 			),
-
 			array(
 				'type'      => 'sectionend',
-				'id'        => 'wcj_more_sorting_options'
+				'id'        => 'wcj_more_sorting_options',
 			),
 		);
-
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 
 }
