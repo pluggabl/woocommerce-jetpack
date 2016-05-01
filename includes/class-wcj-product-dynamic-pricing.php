@@ -25,7 +25,7 @@ class WCJ_Product_Dynamic_Pricing extends WCJ_Module {
 
 		$this->id         = 'product_dynamic_pricing';
 		$this->short_desc = __( 'Product Dynamic Pricing', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Product Dynamic Pricing.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Let your WooCommerce store customers enter price for the product manually.', 'woocommerce-jetpack' );
 		$this->link       = '';
 		parent::__construct();
 
@@ -36,6 +36,7 @@ class WCJ_Product_Dynamic_Pricing extends WCJ_Module {
 			add_filter( 'woocommerce_get_price_html',             array( $this, 'hide_original_price' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_get_variation_price_html',   array( $this, 'hide_original_price' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_is_sold_individually',       array( $this, 'hide_quantity_input_field' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_is_purchasable',             array( $this, 'is_purchasable' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_product_add_to_cart_url',    array( $this, 'add_to_cart_url' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_product_add_to_cart_text',   array( $this, 'add_to_cart_text' ), PHP_INT_MAX, 2 );
 			add_action( 'woocommerce_before_add_to_cart_button',  array( $this, 'add_dynamic_price_input_field_to_frontend' ), PHP_INT_MAX );
@@ -54,6 +55,32 @@ class WCJ_Product_Dynamic_Pricing extends WCJ_Module {
 	 */
 	function is_dynamic_price_product( $_product ) {
 		return ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_product_dynamic_price_enabled', true ) ) ? true : false;
+	}
+
+	/**
+	 * is_purchasable.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function is_purchasable( $purchasable, $_product ) {
+		if ( $this->is_dynamic_price_product( $_product ) ) {
+			$purchasable = true;
+
+			// Products must exist of course
+			if ( ! $_product->exists() ) {
+				$purchasable = false;
+
+			// Other products types need a price to be set
+			/* } elseif ( $_product->get_price() === '' ) {
+				$purchasable = false; */
+
+			// Check the product is published
+			} elseif ( $_product->post->post_status !== 'publish' && ! current_user_can( 'edit_post', $_product->id ) ) {
+				$purchasable = false;
+			}
+		}
+		return $purchasable;
 	}
 
 	/**
