@@ -39,7 +39,7 @@ class WCJ_Product_Dynamic_Pricing extends WCJ_Module {
 			add_filter( 'woocommerce_product_add_to_cart_url',    array( $this, 'add_to_cart_url' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_product_add_to_cart_text',   array( $this, 'add_to_cart_text' ), PHP_INT_MAX, 2 );
 			add_action( 'woocommerce_before_add_to_cart_button',  array( $this, 'add_dynamic_price_input_field_to_frontend' ), PHP_INT_MAX );
-//			add_filter( 'woocommerce_add_to_cart_validation',     array( $this, 'validate_dynamic_price_on_add_to_cart' ), PHP_INT_MAX, 2 ); // TODO
+			add_filter( 'woocommerce_add_to_cart_validation',     array( $this, 'validate_dynamic_price_on_add_to_cart' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_add_cart_item_data',         array( $this, 'add_dynamic_price_to_cart_item_data' ), PHP_INT_MAX, 3 );
 			add_filter( 'woocommerce_add_cart_item',              array( $this, 'add_dynamic_price_to_cart_item' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_dynamic_price_from_session' ), PHP_INT_MAX, 3 );
@@ -53,8 +53,7 @@ class WCJ_Product_Dynamic_Pricing extends WCJ_Module {
 	 * @since   2.4.8
 	 */
 	function is_dynamic_price_product( $_product ) {
-		//return ( 535 === $_product->id ) ? true : false; // TODO
-		return true;
+		return ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_product_dynamic_price_enabled', true ) ) ? true : false;
 	}
 
 	/**
@@ -64,13 +63,34 @@ class WCJ_Product_Dynamic_Pricing extends WCJ_Module {
 	 * @since   2.4.8
 	 */
 	function get_meta_box_options() {
-		// TODO
 		$options = array(
 			array(
 				'name'       => 'wcj_product_dynamic_price_enabled',
 				'default'    => 'no',
-				'type'       => 'checkbox',
-				'title'      => __( 'Dynamic Price Enabled', 'woocommerce-jetpack' ),
+				'type'       => 'select',
+				'options'    => array(
+					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+					'no'  => __( 'No', 'woocommerce-jetpack' ),
+				),
+				'title'      => __( 'Enabled', 'woocommerce-jetpack' ),
+			),
+			array(
+				'name'       => 'wcj_product_dynamic_price_default_price',
+				'default'    => '',
+				'type'       => 'number',
+				'title'      => __( 'Default Price', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
+			),
+			array(
+				'name'       => 'wcj_product_dynamic_price_min_price',
+				'default'    => 1,
+				'type'       => 'number',
+				'title'      => __( 'Min Price', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
+			),
+			array(
+				'name'       => 'wcj_product_dynamic_price_max_price',
+				'default'    => '',
+				'type'       => 'number',
+				'title'      => __( 'Max Price', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
 			),
 		);
 		return $options;
@@ -127,12 +147,43 @@ class WCJ_Product_Dynamic_Pricing extends WCJ_Module {
 	}
 
 	/**
+	 * validate_dynamic_price_on_add_to_cart.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function validate_dynamic_price_on_add_to_cart( $passed, $product_id ) {
+		$the_product = wc_get_product( $product_id );
+		if ( $this->is_dynamic_price_product( $the_product ) ) {
+			$min_price = get_post_meta( $product_id, '_' . 'wcj_product_dynamic_price_min_price', true );
+			$max_price = get_post_meta( $product_id, '_' . 'wcj_product_dynamic_price_max_price', true );
+			if ( $min_price > 0 ) {
+				if ( ! isset( $_POST['wcj_dynamic_price'] ) || '' === $_POST['wcj_dynamic_price'] ) {
+					wc_add_notice( __( 'Value is required!', 'woocommerce-jetpack' ), 'error' );
+					return false;
+				}
+				if ( $_POST['wcj_dynamic_price'] < $min_price ) {
+					wc_add_notice( __( 'Entered value is to small!', 'woocommerce-jetpack' ), 'error' );
+					return false;
+				}
+			}
+			if ( $max_price > 0 ) {
+				if ( isset( $_POST['wcj_dynamic_price'] ) && $_POST['wcj_dynamic_price'] > $max_price ) {
+					wc_add_notice( __( 'Entered value is to big!', 'woocommerce-jetpack' ), 'error' );
+					return false;
+				}
+			}
+		}
+		return $passed;
+	}
+
+	/**
 	 * get_cart_item_dynamic_price_from_session.
 	 *
 	 * @version 2.4.8
 	 * @since   2.4.8
 	 */
-	public function get_cart_item_dynamic_price_from_session( $item, $values, $key ) {
+	function get_cart_item_dynamic_price_from_session( $item, $values, $key ) {
 		if ( array_key_exists( 'wcj_dynamic_price', $values ) ) {
 			$item['data']->wcj_dynamic_price = $values['wcj_dynamic_price'];
 		}
@@ -175,8 +226,10 @@ class WCJ_Product_Dynamic_Pricing extends WCJ_Module {
 		$the_product = wc_get_product();
 		if ( $this->is_dynamic_price_product( $the_product ) ) {
 			$title = __( 'Your offer', 'woocommerce-jetpack' );
-			$placeholder = $the_product->get_price();
-			$value = ( isset( $_POST['wcj_dynamic_price'] ) ) ? $_POST['wcj_dynamic_price'] : $the_product->get_price();
+//			$placeholder = $the_product->get_price();
+			$value = ( isset( $_POST['wcj_dynamic_price'] ) ) ?
+				$_POST['wcj_dynamic_price'] :
+				get_post_meta( $the_product->id, '_' . 'wcj_product_dynamic_price_default_price', true );
 			$custom_attributes = '';
 			$wc_price_decimals = wc_get_price_decimals();
 			if ( $wc_price_decimals > 0 ) {
@@ -190,7 +243,7 @@ class WCJ_Product_Dynamic_Pricing extends WCJ_Module {
 					. 'style="width:75px;text-align:center;" '
 					. 'name="wcj_dynamic_price" '
 					. 'id="wcj_dynamic_price" '
-					. 'placeholder="' . $placeholder . '" '
+//					. 'placeholder="' . $placeholder . '" '
 					. 'value="' . $value . '" '
 					. $custom_attributes
 				. '>'
