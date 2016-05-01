@@ -31,6 +31,7 @@ class WCJ_Price_By_Country_Reports {
 	function add_reports_currency_to_admin_bar( $wp_admin_bar ) {
 
 		if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
+
 			$the_current_code = isset( $_GET['currency'] ) ? $_GET['currency'] : get_woocommerce_currency();
 			$parent = 'reports_currency_select';
 			$args = array(
@@ -40,31 +41,27 @@ class WCJ_Price_By_Country_Reports {
 				'href'   => false,
 				'meta'   => array( 'title' => __( 'Show reports only in', 'woocommerce-jetpack' ) . ' ' . $the_current_code, ),
 			);
-
 			$wp_admin_bar->add_node( $args );
 
 			$currency_symbols = array();
-			$currency_symbols[ $the_current_code ] = '';
-			$currency_symbols[ get_woocommerce_currency() ] = '';
+			$currency_symbols[ $the_current_code ] = $the_current_code;
+			$currency_symbols[ get_woocommerce_currency() ] = get_woocommerce_currency();
 			if ( wcj_is_module_enabled( 'price_by_country' ) ) {
 				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
-					$currency_symbols[ get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i ) ] = '';
+					$the_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
+					$currency_symbols[ $the_code ] = $the_code;
 				}
 			}
-			$currency_symbols['merge'] = '';
-			$reports_currency_symbols = $currency_symbols;
+			$currency_symbols['merge'] = 'merge';
 
-			foreach ( $reports_currency_symbols as $code => $symbol ) {
-				//if ( $code === $the_current_code )
-				//	continue;
+			foreach ( $currency_symbols as $code ) {
 				$args = array(
 					'parent' => $parent,
 					'id'     => $parent . '_' . $code,
-					'title'  => $code,// . ' ' . $symbol,
-					'href'   => add_query_arg( 'currency', $code),
+					'title'  => $code,
+					'href'   => add_query_arg( 'currency', $code ),
 					'meta'   => array( 'title' => __( 'Show reports only in', 'woocommerce-jetpack' ) . ' ' . $code, ),
 				);
-
 				$wp_admin_bar->add_node( $args );
 			}
 		}
@@ -86,7 +83,6 @@ class WCJ_Price_By_Country_Reports {
 	 * filter_reports.
 	 */
 	function filter_reports( $args ) {
-//		if ( ! isset( $_GET['currency'] ) ) return $args;
 		if ( isset( $_GET['currency'] ) && 'merge' === $_GET['currency'] ) {
 			return $args;
 		}
