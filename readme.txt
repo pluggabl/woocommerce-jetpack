@@ -124,59 +124,59 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 = 2.4.8 - 01/05/2016 =
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
-$~* Dev - PRICES & CURRENCIES - Product Dynamic Pricing - Initial module release.
-$~* Dev - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - "Display Radio Buttons Instead of Drop Box" option added.
-~* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Initial module release.
+* Dev - `WCJ_Module` - `create_meta_box` now takes option default value if no post meta is set.
+* Dev - `wcj_product_id_for_shortcode` added to products shortcodes and to Custom Price Labels module.
+* Fix - Admin module dashboard - Version display fixed.
 * Dev - Documentation link and button link modified according to Google URL standards.
+* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` shortcode added.
+* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_key` column - `maybe_unserialize` added (this fixes displaying file type product input fields).
+* Dev - Shortcodes - Orders - `[wcj_order_total_fees_tax]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_total_fees_incl_tax]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_custom_field]` shortcode added.
 * Fix - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - Columns styles fixed (now works for more than three levels).
 * Fix - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - Fix for variable products with same min and max prices.
 * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `add_price_row` shortcode parameter added.
+* Fix - Shortcodes - Products - Fixed for variable products if min and max are equal (in `[wcj_product_price]` shortcode).
+* Dev - Shortcodes - Products - Now accepting *product variation* id as `product_id` attribute.
+* Dev - Shortcodes - Products - Variable products support added to `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` shortcodes.
+* Fix - PRICES & CURRENCIES - Multicurrency - Shipping (taxable) calculation fixed.
+~* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Initial module release.
+$~* Dev - PRICES & CURRENCIES - Product Dynamic Pricing - Initial module release.
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checkout" fixed.
-* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` shortcode added.
+$~* Dev - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - "Display Radio Buttons Instead of Drop Box" option added.
+* Dev - PRODUCTS - Product Cost Price - Custom Price Fields options added.
+* Dev - PRODUCTS - Product Info V2 - Single product page add to cart hooks added.
+* Dev - PRODUCTS - Product Tabs - "Use Visual Editor" option added.
+* Dev - PRODUCTS - SKU - In variable products now counting *all* variations instead of only *available*.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - "Conditional visibility by selected product (in cart)" option added.
+* Fix - PAYMENT GATEWAYS - Gateways Currency - Shipping conversion added.
+* Dev - SHIPPING & ORDERS - Shipping - "Message on Free Shipping Reached" option added.
+* Dev - SHIPPING & ORDERS - Shipping - Custom shipping added.
+~* Dev - PDF INVOICING & PACKING SLIPS - Styling - "Tahoma" font added; Three Thai fonts added.
+* Dev - EMAILS & MISC. - General - Advanced Options - "Disable Saving PDFs in PHP directory for temporary files" option added.
 ~* Dev - EMAILS & MISC. - General - "Export Customers" tool added.
 * Dev - EMAILS & MISC. - General - "Export Customers" tool renamed to "Export Customers from Orders".
 ~* Dev - EMAILS & MISC. - General - "Export Orders" tool added.
-* Dev - SHIPPING & ORDERS - Shipping - "Message on Free Shipping Reached" option added.
-* Dev - `wcj_product_id_for_shortcode` added to products shortcodes and to Custom Price Labels module.
-* Dev - `WCJ_Module` - `create_meta_box` now takes option default value if no post meta is set.
-* Dev - PRODUCTS - Product Cost Price - Custom Price Fields options added.
-* Fix - Shortcodes - Products - Fixed for variable products if min and max are equal (in `[wcj_product_price]` shortcode).
-~* Dev - PDF INVOICING & PACKING SLIPS - Styling - "Tahoma" font added; Three Thai fonts added.
-* Dev - PRODUCTS - Product Tabs - "Use Visual Editor" option added.
-* Dev - PRODUCTS - Product Info V2 - Single product page add to cart hooks added.
-* Dev - Shortcodes - Products - Now accepting *product variation* id as `product_id` attribute.
-* Dev - Shortcodes - Products - Variable products support added to `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` shortcodes.
-* Dev - PRODUCTS - SKU - In variable products now counting *all* variations instead of only *available*.
-* Dev - CART & CHECKOUT - Checkout Custom Fields - "Conditional visibility by selected product (in cart)" option added.
-* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_key` column - `maybe_unserialize` added (this fixes displaying file type product input fields).
-* Dev - EMAILS & MISC. - General - Advanced Options - "Disable Saving PDFs in PHP directory for temporary files" option added.
-* Dev - Shortcodes - Orders - `[wcj_order_custom_field]` shortcode added.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcodes can now be used in templates.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - "Admin Title Custom Email" options added.
 * Fix - EMAILS & MISC. - Emails - Custom Emails - Custom statuses added to custom emails actions.
-* Dev - SHIPPING & ORDERS - Shipping - Custom shipping added.
-* Fix - Admin module dashboard - Version display fixed.
-* Dev - Shortcodes - Orders - `[wcj_order_total_fees_tax]` shortcode added.
-* Dev - Shortcodes - Orders - `[wcj_order_total_fees_incl_tax]` shortcode added.
-* Fix - PAYMENT GATEWAYS - Gateways Currency - Shipping conversion added.
-* Fix - PRICES & CURRENCIES - Multicurrency - Shipping (taxable) calculation fixed.
-* Tweak - SHIPPING & ORDERS - Shipping - Documentation link added.
+* Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Documentation link added. Reset button added. "Countries Selection" default set to "Chosen select".
+* Tweak - PRICES & CURRENCIES - Wholesale Price - Documentation link added.
 * Tweak - BUTTON & PRICE LABELS - Add to Cart Labels - Metabox title renamed.
 * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - Metabox title renamed.
-* Tweak - PRODUCTS - Product Input Fields - Metabox title renamed.
-* Tweak - PRODUCTS - SKU - Documentation link added.
-* Tweak - PRODUCTS - Product Tabs - Documentation link added.
-* Tweak - PRICES & CURRENCIES - Wholesale Price - Documentation link added.
-* Tweak - PRODUCTS - Product Images - Documentation link added. Reset button added.
-* Tweak - PRODUCTS - Product Add to Cart - Documentation link added. Reset button added.
 * Tweak - PRODUCTS - Crowdfunding - Documentation link added.
+* Tweak - PRODUCTS - Product Add to Cart - Documentation link added. Reset button added.
+* Tweak - PRODUCTS - Product Images - Documentation link added. Reset button added.
 * Tweak - PRODUCTS - Product Input Fields - Documentation link added.
+* Tweak - PRODUCTS - Product Input Fields - Metabox title renamed.
+* Tweak - PRODUCTS - Product Listings - Documentation link added.
+* Tweak - PRODUCTS - Product Tabs - Documentation link added.
+* Tweak - PRODUCTS - Related Products - Documentation link added. Reset button added.
+* Tweak - PRODUCTS - SKU - Documentation link added.
+* Tweak - PRODUCTS - Sorting - Documentation link added. Reset button added.
 * Tweak - CART & CHECKOUT - Checkout Files Upload - Documentation link added.
 * Tweak - SHIPPING & ORDERS - Address Formats - Documentation link added. Reset button added.
-* Tweak - PRODUCTS - Product Listings - Documentation link added.
-* Tweak - PRODUCTS - Sorting - Documentation link added. Reset button added.
-* Tweak - PRODUCTS - Related Products - Documentation link added. Reset button added.
-* Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Documentation link added. Reset button added. "Countries Selection" default set to "Chosen select".
+* Tweak - SHIPPING & ORDERS - Shipping - Documentation link added.
 
 = 2.4.7 - 19/04/2016 =
 * Dev - Fixing plugin's performance issue - Version (`booster_for_woocommerce_version`) parameter added.
