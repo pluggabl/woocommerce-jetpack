@@ -74,6 +74,7 @@ class WCJ_Currency_Reports {
 					}
 				}
 			}
+			sort( $currency_symbols );
 			$currency_symbols['merge'] = 'merge';
 
 			foreach ( $currency_symbols as $code ) {

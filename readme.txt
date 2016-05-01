@@ -123,6 +123,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 01/05/2016 =
+* Dev - Currency reports added to Multicurrency and Gateways Currency modules.
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
 * Dev - `WCJ_Module` - `create_meta_box` now takes option default value if no post meta is set.
 * Dev - `wcj_product_id_for_shortcode` added to products shortcodes and to Custom Price Labels module.
