@@ -32,7 +32,7 @@ return array(
 			'currency_external_products',
 			'bulk_price_converter',
 			'wholesale_price',
-			'product_dynamic_pricing',
+			'product_open_pricing',
 			'currency_exchange_rates',
 		),
 	),

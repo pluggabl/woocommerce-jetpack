@@ -229,15 +229,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			$min_product_id = key( $prices['price'] );
 			end( $prices['price'] );
 			$max_product_id = key( $prices['price'] );
-			$min_variation_product = wc_get_product( $min_product_id );
-			$max_variation_product = wc_get_product( $max_product_id );
-			$min = $min_variation_product->get_price_excluding_tax();
-			$max = $max_variation_product->get_price_excluding_tax();
-			if ( 'yes' !== $atts['hide_currency'] ) {
-				$min = wc_price( $min );
-				$max = wc_price( $max );
+			if ( 0 != $min_product_id && 0 != $max_product_id ) {
+				$min_variation_product = wc_get_product( $min_product_id );
+				$max_variation_product = wc_get_product( $max_product_id );
+				$min = $min_variation_product->get_price_excluding_tax();
+				$max = $max_variation_product->get_price_excluding_tax();
+				if ( 'yes' !== $atts['hide_currency'] ) {
+					$min = wc_price( $min );
+					$max = wc_price( $max );
+				}
+				return ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
 			}
-			return ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
 		} else {
 			 // Simple etc.
 			$the_price = $this->the_product->get_price_excluding_tax();
@@ -258,15 +260,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			$min_product_id = key( $prices['price'] );
 			end( $prices['price'] );
 			$max_product_id = key( $prices['price'] );
-			$min_variation_product = wc_get_product( $min_product_id );
-			$max_variation_product = wc_get_product( $max_product_id );
-			$min = $min_variation_product->get_price_including_tax();
-			$max = $max_variation_product->get_price_including_tax();
-			if ( 'yes' !== $atts['hide_currency'] ) {
-				$min = wc_price( $min );
-				$max = wc_price( $max );
+			if ( 0 != $min_product_id && 0 != $max_product_id ) {
+				$min_variation_product = wc_get_product( $min_product_id );
+				$max_variation_product = wc_get_product( $max_product_id );
+				$min = $min_variation_product->get_price_including_tax();
+				$max = $max_variation_product->get_price_including_tax();
+				if ( 'yes' !== $atts['hide_currency'] ) {
+					$min = wc_price( $min );
+					$max = wc_price( $max );
+				}
+				return ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
 			}
-			return ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
 		} else {
 			 // Simple etc.
 			$the_price = $this->the_product->get_price_including_tax();

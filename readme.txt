@@ -24,7 +24,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Multicurrency* - Add multiple currencies (currency switcher) to WooCommerce.
 * *Multicurrency Product Base Price* - Enter prices for WooCommerce products in different currencies.
 * *Prices and Currencies by Country* - Change WooCommerce product price and currency automatically by customer's country.
-* *Product Dynamic Pricing* - Let your WooCommerce store customers enter price for the product manually.
+* *Product Open Pricing (Name Your Price)* - Let your WooCommerce store customers enter price for the product manually.
 * *Wholesale Price* - Set WooCommerce wholesale pricing depending on product quantity in cart (buy more pay less).
 
 **Button & Price Labels**
@@ -143,7 +143,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Shortcodes - Products - Variable products support added to `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` shortcodes.
 * Fix - PRICES & CURRENCIES - Multicurrency - Shipping (taxable) calculation fixed.
 ~* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Initial module release.
-~$* Dev - PRICES & CURRENCIES - Product Dynamic Pricing - Initial module release.
+~$* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Initial module release.
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checkout" fixed.
 ~$* Dev - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - "Display Radio Buttons Instead of Drop Box" option added.
 * Dev - PRODUCTS - Product Cost Price - Custom Price Fields options added.
