@@ -160,6 +160,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - EMAILS & MISC. - General - "Export Customers" tool renamed to "Export Customers from Orders".
 * Dev - EMAILS & MISC. - General - "Export Orders" tool added.
 * Dev - EMAILS & MISC. - Reports - Monthly Sales - `set_time_limit` increased. `show_rates` added.
+* Dev - EMAILS & MISC. - Reports - Monthly Sales - "Average / Day" row added.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcodes can now be used in templates.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - "Admin Title Custom Email" options added.
 * Fix - EMAILS & MISC. - Emails - Custom Emails - Custom statuses added to custom emails actions.

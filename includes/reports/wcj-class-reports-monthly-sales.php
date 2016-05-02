@@ -108,7 +108,11 @@ class WCJ_Reports_Monthly_Sales {
 		$table_data = array();
 		$months_array = array( '' );
 		$total_orders_array = array( __( 'Total Orders', 'woocommerce-jetpack' ) );
-		$total_orders_sum_array = array( __( 'Total Sum', 'woocommerce-jetpack' ) . '<br>' . __( 'Total Sum (excl. TAX)', 'woocommerce-jetpack' ) );
+		$total_orders_sum_array = array(
+			__( 'Total Sum', 'woocommerce-jetpack' ) . '<br>' .
+			__( 'Total Sum (excl. TAX)', 'woocommerce-jetpack' ) . '<br>' .
+			__( 'Average / Day (excl. TAX)', 'woocommerce-jetpack' )
+		);
 		$order_currencies_array = array(); // TODO
 		$report_currency = ( isset( $_GET['currency'] ) && 'merge' != $_GET['currency'] ) ? $_GET['currency'] : get_woocommerce_currency();
 		for ( $i = 1; $i <= 12; $i++ ) {
@@ -168,6 +172,12 @@ class WCJ_Reports_Monthly_Sales {
 			//if ( $total_orders_sum != $total_orders_sum_excl_tax) {
 				$total_orders_result_html .= '<br>' . $report_currency . ' ' . number_format( $total_orders_sum_excl_tax, 2, '.', ',' );
 			//}
+			$day_for_average = ( $i == date( 'm' ) ) ? date( 'd' ) : date( 'd', strtotime( $end_date ) );
+			$average_result = $total_orders_sum_excl_tax / $day_for_average;
+			$total_orders_result_html .= '<br>' . $report_currency . ' ' . number_format( $average_result, 2, '.', ',' );
+			if ( 0 != $average_result ) {
+				$total_orders_result_html .= ' (' . $day_for_average . 'd.)';
+			}
 			/* $total_orders_result_html .= '<br>' . $report_currency . ' ' . number_format( $total_orders_sum_excl_tax * 0.965, 2, '.', ',' ); // TODO !!!;
 			$total_orders_result_html .= '<br>' . $report_currency . ' ' . number_format( $total_orders_sum_excl_tax * 0.965 * 0.80, 2, '.', ',' ); // TODO !!!; */
 //			if ( isset( $_GET['show_rates'] ) ) { // TODO
