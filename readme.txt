@@ -123,7 +123,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 01/05/2016 =
-* Dev - "Booster - Country Switcher" widget added.
+~* Dev - "Booster - Country Switcher" widget added.
 * Dev - EMAILS & MISC. - Reports - `set_time_limit` increased. `show_rates` added.
 * Dev - Currency reports added to Multicurrency and Gateways Currency modules.
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
