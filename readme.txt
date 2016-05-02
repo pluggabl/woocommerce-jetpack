@@ -143,9 +143,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Shortcodes - Products - Variable products support added to `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` shortcodes.
 * Fix - PRICES & CURRENCIES - Multicurrency - Shipping (taxable) calculation fixed.
 ~* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Initial module release.
-$~* Dev - PRICES & CURRENCIES - Product Dynamic Pricing - Initial module release.
+~$* Dev - PRICES & CURRENCIES - Product Dynamic Pricing - Initial module release.
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checkout" fixed.
-$~* Dev - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - "Display Radio Buttons Instead of Drop Box" option added.
+~$* Dev - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - "Display Radio Buttons Instead of Drop Box" option added.
 * Dev - PRODUCTS - Product Cost Price - Custom Price Fields options added.
 * Dev - PRODUCTS - Product Info V2 - Single product page add to cart hooks added.
 * Dev - PRODUCTS - Product Tabs - "Use Visual Editor" option added.
