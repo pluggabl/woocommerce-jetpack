@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Mothly Sales Reports class.
  *
- * @version 2.4.7
+ * @version 2.4.8
  * @since   2.4.7
  * @author  Algoritmika Ltd.
  */
@@ -41,7 +41,7 @@ class WCJ_Reports_Monthly_Sales {
 	/*
 	 * get_exchange_rate_average.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.8
 	 * @since   2.4.7
 	 */
 	function get_exchange_rate_average( $currency_from, $currency_to, $start_date, $end_date ) {
@@ -56,7 +56,7 @@ class WCJ_Reports_Monthly_Sales {
 				. $end_date. '%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
 			ob_start();
 			$max_execution_time = ini_get( 'max_execution_time' );
-			set_time_limit( 2 );
+			set_time_limit( 5 );
 			$exchange_rate = json_decode( file_get_contents( $url ) );
 			set_time_limit( $max_execution_time );
 			ob_end_clean();
@@ -79,7 +79,7 @@ class WCJ_Reports_Monthly_Sales {
 				. $end_date. '%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
 			ob_start();
 			$max_execution_time = ini_get( 'max_execution_time' );
-			set_time_limit( 2 );
+			set_time_limit( 5 );
 			$exchange_rate = json_decode( file_get_contents( $url ) );
 			set_time_limit( $max_execution_time );
 			ob_end_clean();
@@ -100,7 +100,7 @@ class WCJ_Reports_Monthly_Sales {
 	/*
 	 * get_monthly_sales_report.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.8
 	 * @since   2.4.7
 	 */
 	function get_monthly_sales_report() {
@@ -170,7 +170,7 @@ class WCJ_Reports_Monthly_Sales {
 			//}
 			/* $total_orders_result_html .= '<br>' . $report_currency . ' ' . number_format( $total_orders_sum_excl_tax * 0.965, 2, '.', ',' ); // TODO !!!;
 			$total_orders_result_html .= '<br>' . $report_currency . ' ' . number_format( $total_orders_sum_excl_tax * 0.965 * 0.80, 2, '.', ',' ); // TODO !!!; */
-			if ( isset( $_GET['show_rates'] ) ) { // TODO
+//			if ( isset( $_GET['show_rates'] ) ) { // TODO
 				ksort( $current_months_averages, true );
 //				$total_orders_result_html .= '<pre style="font-size:8px;">' . print_r( $current_months_averages, true ) . '</pre>';
 				$total_orders_result_html .= '<pre style="font-size:x-small;">';
@@ -180,7 +180,7 @@ class WCJ_Reports_Monthly_Sales {
 					}
 				}
 				$total_orders_result_html .= '</pre>';
-			}
+//			}
 			$total_orders_sum_array[] = $total_orders_result_html;
 		}
 		$table_data[] = $months_array;
