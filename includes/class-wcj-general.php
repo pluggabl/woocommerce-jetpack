@@ -61,6 +61,8 @@ class WCJ_General extends WCJ_Module {
 			if ( '' != get_option( 'wcj_general_custom_admin_css' ) ) {
 				add_action( 'admin_head', array( $this, 'hook_custom_admin_css' ) );
 			}
+
+			add_action( 'init', array( $this, 'export_csv' ) );
 		}
 	}
 
@@ -76,25 +78,72 @@ class WCJ_General extends WCJ_Module {
 	}
 
 	/**
+	 * export.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function export( $tool_id ) {
+		$data = array();
+		switch ( $tool_id ) {
+			case 'customers':
+				$data = $this->export_customers();
+				break;
+			case 'customers_from_orders':
+				$data = $this->export_customers_from_orders();
+				break;
+			case 'orders':
+				$data = $this->export_orders();
+				break;
+		}
+		return $data;
+	}
+
+	/**
+	 * export_csv.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function export_csv() {
+		if ( isset( $_POST['wcj_export'] ) ) {
+			$data = $this->export( $_POST['wcj_export'] );
+			$csv = '';
+			foreach ( $data as $row ) {
+				$csv .= implode( ',', $row ) . PHP_EOL;
+			}
+			header( "Content-Type: application/octet-stream" );
+			header( "Content-Disposition: attachment; filename=" . $_POST['wcj_export'] . ".csv" );
+			header( "Content-Type: application/octet-stream" );
+			header( "Content-Type: application/download" );
+			header( "Content-Description: File Transfer" );
+			header( "Content-Length: " . strlen( $csv ) );
+			echo $csv;
+		}
+	}
+
+	/**
+	 * create_export_tool.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function create_export_tool( $tool_id ) {
+		$data = $this->export( $tool_id );
+		echo '<p><form method="post" action="">';
+		echo '<button class="button-primary" type="submit" name="wcj_export" value="' . $tool_id . '">' . __( 'Download CSV', 'woocommerce-jetpack' ) . '</button>';
+		echo '</form></p>';
+		echo wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) );
+	}
+
+	/**
 	 * create_export_customers_tool.
 	 *
 	 * @version 2.4.8
 	 * @since   2.4.8
 	 */
 	function create_export_customers_tool() {
-		$html = '';
-		$html .= '<pre>';
-		$html .=
-			__( 'Customer ID', 'woocommerce-jetpack' ) . ',' .
-			__( 'Customer Email', 'woocommerce-jetpack' ) . ',' .
-			__( 'Customer First Name', 'woocommerce-jetpack' ) . ',' .
-			__( 'Customer Last Name', 'woocommerce-jetpack' ) . PHP_EOL;
-		$customers = get_users( 'role=customer' );
-		foreach ( $customers as $customer ) {
-			$html .= $customer->ID . ',' . $customer->user_email . ',' . $customer->first_name . ',' . $customer->last_name . PHP_EOL;
-		}
-		$html .= '</pre>';
-		echo $html;
+		$this->create_export_tool( 'customers' );
 	}
 
 	/**
@@ -104,14 +153,55 @@ class WCJ_General extends WCJ_Module {
 	 * @since   2.4.8
 	 */
 	function create_export_orders_tool() {
-		$html = '';
-		$html .= '<pre>';
-		$html .=
-			__( 'Order ID', 'woocommerce-jetpack' ) . ',' .
-			__( 'Customer Email', 'woocommerce-jetpack' ) . ',' .
-			__( 'Customer First Name', 'woocommerce-jetpack' ) . ',' .
-			__( 'Customer Last Name', 'woocommerce-jetpack' ) . ',' .
-			__( 'Order Date', 'woocommerce-jetpack' ) . PHP_EOL;
+		$this->create_export_tool( 'orders' );
+	}
+
+	/**
+	 * create_export_customers_from_orders_tool.
+	 *
+	 * @version 2.4.8
+	 * @since   2.3.9
+	 */
+	function create_export_customers_from_orders_tool() {
+		$this->create_export_tool( 'customers_from_orders' );
+	}
+
+	/**
+	 * export_customers.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function export_customers() {
+		$data = array();
+		$data[] = array(
+			__( 'Customer ID', 'woocommerce-jetpack' ),
+			__( 'Customer Email', 'woocommerce-jetpack' ),
+			__( 'Customer First Name', 'woocommerce-jetpack' ),
+			__( 'Customer Last Name', 'woocommerce-jetpack' ),
+		);
+		$customers = get_users( 'role=customer' );
+		foreach ( $customers as $customer ) {
+			$data[] = array( $customer->ID, $customer->user_email, $customer->first_name, $customer->last_name, );
+		}
+		return $data;
+	}
+
+	/**
+	 * export_orders.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function export_orders() {
+		$data = array();
+		$data[] = array(
+			__( 'Order ID', 'woocommerce-jetpack' ),
+			__( 'Customer Email', 'woocommerce-jetpack' ),
+			__( 'Customer First Name', 'woocommerce-jetpack' ),
+			__( 'Customer Last Name', 'woocommerce-jetpack' ),
+			__( 'Order Date', 'woocommerce-jetpack' ),
+		);
 		$offset = 0;
 		$block_size = 96;
 		while( true ) {
@@ -128,29 +218,28 @@ class WCJ_General extends WCJ_Module {
 			while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
 				$order_id = $loop_orders->post->ID;
 				$order = wc_get_order( $order_id );
-				$html .= $order_id . ',' . $order->billing_email . ',' . $order->billing_first_name . ','. $order->billing_last_name . ','. get_the_date( 'Y/m/d' ) . PHP_EOL;
+				$data[] = array( $order_id, $order->billing_email, $order->billing_first_name, $order->billing_last_name, get_the_date( 'Y/m/d' ), );
 			endwhile;
 			$offset += $block_size;
 		}
-		$html .= '</pre>';
-		echo $html;
+		return $data;
 	}
 
 	/**
-	 * create_export_customers_from_orders_tool.
+	 * export_customers_from_orders.
 	 *
 	 * @version 2.4.8
-	 * @since   2.3.9
+	 * @since   2.4.8
 	 */
-	function create_export_customers_from_orders_tool() {
-		$html = '';
-		$html .= '<pre>';
-		$html .=
-			__( 'Nr.', 'woocommerce-jetpack' ) . ',' .
-			__( 'Email', 'woocommerce-jetpack' ) . ',' .
-			__( 'First Name', 'woocommerce-jetpack' ) . ',' .
-			__( 'Last Name', 'woocommerce-jetpack' ) . ',' .
-			__( 'Last Order Date', 'woocommerce-jetpack' ) . PHP_EOL;
+	function export_customers_from_orders() {
+		$data = array();
+		$data[] = array(
+			__( 'Nr.', 'woocommerce-jetpack' ),
+			__( 'Email', 'woocommerce-jetpack' ),
+			__( 'First Name', 'woocommerce-jetpack' ),
+			__( 'Last Name', 'woocommerce-jetpack' ),
+			__( 'Last Order Date', 'woocommerce-jetpack' ),
+		);
 		$total_customers = 0;
 		$orders = array();
 		$offset = 0;
@@ -173,15 +262,14 @@ class WCJ_General extends WCJ_Module {
 					$emails_to_skip = array();
 					if ( ! in_array( $order->billing_email, $emails_to_skip ) ) {
 						$total_customers++;
-						$html .= $total_customers . ',' . $order->billing_email . ',' . $order->billing_first_name . ','. $order->billing_last_name . ','. get_the_date( 'Y/m/d' ) . PHP_EOL;
+						$data[] = array( $total_customers, $order->billing_email, $order->billing_first_name, $order->billing_last_name, get_the_date( 'Y/m/d' ), );
 						$orders[] = $order->billing_email;
 					}
 				}
 			endwhile;
 			$offset += $block_size;
 		}
-		$html .= '</pre>';
-		echo $html;
+		return $data;
 	}
 
 	/**

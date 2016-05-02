@@ -122,9 +122,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.8 - 01/05/2016 =
+= 2.4.8 - 02/05/2016 =
 ~* Dev - "Booster - Country Switcher" widget added.
-* Dev - EMAILS & MISC. - Reports - `set_time_limit` increased. `show_rates` added.
 * Dev - Currency reports added to Multicurrency and Gateways Currency modules.
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
 * Dev - `WCJ_Module` - `create_meta_box` now takes option default value if no post meta is set.
@@ -157,9 +156,10 @@ $~* Dev - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - "Displ
 * Dev - SHIPPING & ORDERS - Shipping - Custom shipping added.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Styling - "Tahoma" font added; Three Thai fonts added.
 * Dev - EMAILS & MISC. - General - Advanced Options - "Disable Saving PDFs in PHP directory for temporary files" option added.
-~* Dev - EMAILS & MISC. - General - "Export Customers" tool added.
+* Dev - EMAILS & MISC. - General - "Export Customers" tool added.
 * Dev - EMAILS & MISC. - General - "Export Customers" tool renamed to "Export Customers from Orders".
-~* Dev - EMAILS & MISC. - General - "Export Orders" tool added.
+* Dev - EMAILS & MISC. - General - "Export Orders" tool added.
+* Dev - EMAILS & MISC. - Reports - Monthly Sales - `set_time_limit` increased. `show_rates` added.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcodes can now be used in templates.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - "Admin Title Custom Email" options added.
 * Fix - EMAILS & MISC. - Emails - Custom Emails - Custom statuses added to custom emails actions.
