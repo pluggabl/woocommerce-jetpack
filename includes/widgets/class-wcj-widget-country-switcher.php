@@ -39,7 +39,7 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 		if ( ! empty( $instance['title'] ) ) {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
-		echo do_shortcode( '[wcj_country_select_drop_down_list]' );
+		echo do_shortcode( '[wcj_country_select_drop_down_list countries="' . $instance['countries'] . '"]' );
 		/* switch ( $instance['switcher_type'] ) {
 			case 'link_list':
 				echo do_shortcode( '[wcj_currency_select_link_list]' );
@@ -63,11 +63,16 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 	public function form( $instance ) {
 		// outputs the options form on admin
 		$title         = ! empty( $instance['title'] )         ? $instance['title']         : '';
+		$countries     = ! empty( $instance['countries'] )     ? $instance['countries']     : '';
 //		$switcher_type = ! empty( $instance['switcher_type'] ) ? $instance['switcher_type'] : 'drop_down';
 		?>
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+		</p>
+		<p>
+		<label for="<?php echo $this->get_field_id( 'countries' ); ?>"><?php _e( 'Countries:' ); ?></label>
+		<input class="widefat" id="<?php echo $this->get_field_id( 'countries' ); ?>" name="<?php echo $this->get_field_name( 'countries' ); ?>" type="text" value="<?php echo esc_attr( $countries ); ?>">
 		</p>
 		<?php /*<p>
 		<label for="<?php echo $this->get_field_id( 'switcher_type' ); ?>"><?php _e( 'Type:' ); ?></label>
@@ -91,6 +96,7 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 		// processes widget options to be saved
 		$instance = array();
 		$instance['title']         = ( ! empty( $new_instance['title'] ) )         ? strip_tags( $new_instance['title'] )         : '';
+		$instance['countries']     = ( ! empty( $new_instance['countries'] ) )     ? $new_instance['countries']                   : '';
 //		$instance['switcher_type'] = ( ! empty( $new_instance['switcher_type'] ) ) ? $new_instance['switcher_type']               : 'drop_down';
 		return $instance;
 	}
