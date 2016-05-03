@@ -186,17 +186,17 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			$max_price = get_post_meta( $product_id, '_' . 'wcj_product_open_price_max_price', true );
 			if ( $min_price > 0 ) {
 				if ( ! isset( $_POST['wcj_open_price'] ) || '' === $_POST['wcj_open_price'] ) {
-					wc_add_notice( __( 'Price is required!', 'woocommerce-jetpack' ), 'error' );
+					wc_add_notice( get_option( 'wcj_product_open_price_messages_required', __( 'Price is required!', 'woocommerce-jetpack' ) ), 'error' );
 					return false;
 				}
 				if ( $_POST['wcj_open_price'] < $min_price ) {
-					wc_add_notice( __( 'Entered price is to small!', 'woocommerce-jetpack' ), 'error' );
+					wc_add_notice( get_option( 'wcj_product_open_price_messages_to_small', __( 'Entered price is to small!', 'woocommerce-jetpack' ) ), 'error' );
 					return false;
 				}
 			}
 			if ( $max_price > 0 ) {
 				if ( isset( $_POST['wcj_open_price'] ) && $_POST['wcj_open_price'] > $max_price ) {
-					wc_add_notice( __( 'Entered price is to big!', 'woocommerce-jetpack' ), 'error' );
+					wc_add_notice( get_option( 'wcj_product_open_price_messages_to_big', __( 'Entered price is to big!', 'woocommerce-jetpack' ) ), 'error' );
 					return false;
 				}
 			}
@@ -252,7 +252,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	function add_open_price_input_field_to_frontend() {
 		$the_product = wc_get_product();
 		if ( $this->is_open_price_product( $the_product ) ) {
-			$title = __( 'Name Your Price', 'woocommerce-jetpack' );
+			$title = get_option( 'wcj_product_open_price_label_frontend', __( 'Name Your Price', 'woocommerce-jetpack' ) );
 //			$placeholder = $the_product->get_price();
 			$value = ( isset( $_POST['wcj_open_price'] ) ) ?
 				$_POST['wcj_open_price'] :
@@ -285,7 +285,45 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	 * @since   2.4.8
 	 */
 	function get_settings() {
-		$settings = array();
+		$settings = array(
+			array(
+				'title'    => __( 'Labels and Messages', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_open_price_messages_options',
+			),
+			array(
+				'title'    => __( 'Frontend Label', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_open_price_label_frontend',
+				'default'  => __( 'Name Your Price', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Message on Empty Price', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_open_price_messages_required',
+				'default'  => __( 'Price is required!', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Message on Price to Small', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_open_price_messages_to_small',
+				'default'  => __( 'Entered price is to small!', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Message on Price to Big', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_open_price_messages_to_big',
+				'default'  => __( 'Entered price is to big!', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_open_price_messages_options',
+			),
+		);
 		return $this->add_standard_settings( $settings );
 	}
 }
