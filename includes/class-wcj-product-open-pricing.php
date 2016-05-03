@@ -44,6 +44,8 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			add_filter( 'woocommerce_add_cart_item_data',         array( $this, 'add_open_price_to_cart_item_data' ), PHP_INT_MAX, 3 );
 			add_filter( 'woocommerce_add_cart_item',              array( $this, 'add_open_price_to_cart_item' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_open_price_from_session' ), PHP_INT_MAX, 3 );
+			add_filter( 'wcj_save_meta_box_value',                array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
+			add_action( 'admin_notices',                          array( $this, 'admin_notices' ) );
 		}
 	}
 
@@ -55,6 +57,65 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	 */
 	function is_open_price_product( $_product ) {
 		return ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_product_open_price_enabled', true ) ) ? true : false;
+	}
+
+	/**
+	 * save_meta_box_value.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function save_meta_box_value( $option_value, $option_name, $module_id ) {
+		if ( true === apply_filters( 'wcj_get_option_filter', false, true ) ) {
+			return $option_value;
+		}
+		if ( 'no' === $option_value ) {
+			return $option_value;
+		}
+		if ( $this->id === $module_id && 'wcj_product_open_price_enabled' === $option_name ) {
+			$args = array(
+				'post_type'      => 'product',
+				'post_status'    => 'any',
+				'posts_per_page' => -1,
+				'meta_key'       => '_' . 'wcj_product_open_price_enabled',
+				'meta_value'     => 'yes',
+			);
+			$loop = new WP_Query( $args );
+			$c = $loop->found_posts;
+			if ( $c >= 4 ) {
+				add_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
+				return 'no';
+			}
+		}
+		return $option_value;
+	}
+
+	/**
+	 * add_notice_query_var.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function add_notice_query_var( $location ) {
+		remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
+		return add_query_arg( array( 'wcj_product_open_price_admin_notice' => true ), $location );
+	}
+
+	/**
+	 * admin_notices.
+	 *
+	 * @version 2.4.8
+	 * @since   2.4.8
+	 */
+	function admin_notices() {
+		if ( ! isset( $_GET['wcj_product_open_price_admin_notice'] ) ) {
+			return;
+		}
+		?><div class="error"><p><?php
+			echo '<div class="message">'
+				. __( 'Free plugin\'s version is limited to 3 open pricing products enabled at the same time. Please visit <a href="http://booster.io/plus/" target="_blank">plugin\'s page</a> for more information.', 'woocommerce-jetpack' )
+				. '</div>';
+		?></p></div><?php
 	}
 
 	/**
