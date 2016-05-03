@@ -21,7 +21,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Currencies* - Add all world currencies to your WooCommerce store; change currency symbol.
 * *Currency Exchange Rates* - Automatic currency exchange rates for WooCommerce.
 * *Currency for External Products* - Set different currency for external WooCommerce products.
-* *Multicurrency* - Add multiple currencies (currency switcher) to WooCommerce.
+* *Multicurrency (Currency Switcher)* - Add multiple currencies (currency switcher) to WooCommerce.
 * *Multicurrency Product Base Price* - Enter prices for WooCommerce products in different currencies.
 * *Prices and Currencies by Country* - Change WooCommerce product price and currency automatically by customer's country.
 * *Product Open Pricing (Name Your Price)* - Let your WooCommerce store customers enter price for the product manually.
@@ -164,6 +164,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcodes can now be used in templates.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - "Admin Title Custom Email" options added.
 * Fix - EMAILS & MISC. - Emails - Custom Emails - Custom statuses added to custom emails actions.
+* Tweak - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Documentation link added. "Currency Switcher" added to the module name.
 * Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Documentation link added. Reset button added. "Countries Selection" default set to "Chosen select".
 * Tweak - PRICES & CURRENCIES - Wholesale Price - Documentation link added.
 * Tweak - BUTTON & PRICE LABELS - Add to Cart Labels - Metabox title renamed.
