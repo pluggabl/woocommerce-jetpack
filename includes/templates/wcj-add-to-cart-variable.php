@@ -23,9 +23,15 @@ do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 	<?php if ( empty( $available_variations ) && false !== $available_variations ) : ?>
 		<p class="stock out-of-stock"><?php _e( 'This product is currently out of stock and unavailable.', 'woocommerce' ); ?></p>
 	<?php else : ?>
-		<?php foreach ( $available_variations as $variation ) : ?>
-			<?php wcj_variation_radio_button( $product, $variation ); ?>
-		<?php endforeach; ?>
+		<table class="" cellspacing="0">
+			<tbody>
+				<?php foreach ( $available_variations as $variation ) : ?>
+					<tr>
+						<?php wcj_variation_radio_button( $product, $variation ); ?>
+					</tr>
+				<?php endforeach; ?>
+			</tbody>
+		</table>
 		<?php
 			foreach ( $product->get_attributes() as $attribute_name => $options ) {
 				echo '<input type="hidden" name="attribute_' . $attribute_name . '" value="">';

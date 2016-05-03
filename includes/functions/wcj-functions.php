@@ -46,12 +46,15 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 		$variation_id    = $variation['variation_id'];
 		$is_checked = checked( $is_checked, true, false );
 
-		echo '<p>';
-		echo '<input name="wcj_variations" type="radio"' . $attributes_html . ' variation_id="' . $variation_id . '"' . $is_checked . '>' . ' ' . $variation_title;
+		echo '<td style="width:10%;">';
+		echo '<input name="wcj_variations" type="radio"' . $attributes_html . ' variation_id="' . $variation_id . '"' . $is_checked . '>';
+		echo '</td>';
+		echo '<td>';
+		echo $variation_title;
 		echo '<br>';
 //		echo '<small>' . $variation['variation_description'] . '</small>';
 		echo '<small>' . get_post_meta( $variation_id, '_variation_description', true )  . '</small>';
-		echo '</p>';
+		echo '</td>';
 	}
 }
 
