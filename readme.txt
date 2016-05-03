@@ -154,7 +154,7 @@ P* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checko
 * Fix - PAYMENT GATEWAYS - Gateways Currency - Shipping conversion added.
 * Dev - SHIPPING & ORDERS - Shipping - "Message on Free Shipping Reached" option added.
 * Dev - SHIPPING & ORDERS - Shipping - Custom shipping added.
-~* Dev - PDF INVOICING & PACKING SLIPS - Styling - "Tahoma" font added; Three Thai fonts added.
+~* Dev - PDF INVOICING & PACKING SLIPS - Styling - Three Thai fonts added.
 * Dev - EMAILS & MISC. - General - Advanced Options - "Disable Saving PDFs in PHP directory for temporary files" option added.
 * Dev - EMAILS & MISC. - General - "Export Customers" tool added.
 * Dev - EMAILS & MISC. - General - "Export Customers" tool renamed to "Export Customers from Orders".

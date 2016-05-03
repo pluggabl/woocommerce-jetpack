@@ -69,7 +69,6 @@ class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
 					'helvetica'         => 'Helvetica',
 					'times'             => 'Times',
 					'droidsansfallback' => 'Droid Sans Fallback',
-					'tahoma'            => 'Tahoma',
 					'angsanaupc'        => 'AngsanaUPC',
 					'cordiaupc'         => 'CordiaUPC',
 					'thsarabun'         => 'THSarabunPSK',
