@@ -123,7 +123,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 04/05/2016 =
-~* Dev - "Booster - Country Switcher" widget added.
+* Dev - "Booster - Country Switcher" widget added.
 * Dev - Currency reports added to Multicurrency and Gateways Currency modules.
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
 * Dev - `WCJ_Module` - `create_meta_box` now takes option default value if no post meta is set.
@@ -142,10 +142,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Shortcodes - Products - Now accepting *product variation* id as `product_id` attribute.
 * Dev - Shortcodes - Products - Variable products support added to `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` shortcodes.
 * Fix - PRICES & CURRENCIES - Multicurrency - Shipping (taxable) calculation fixed.
-P* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Initial module release.
-~$* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Initial module release.
-P* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checkout" fixed.
-~$* Dev - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - "Display Radio Buttons Instead of Drop Box" option added.
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Initial module release.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Initial module release.
+* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checkout" fixed.
+* Dev - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - "Display Radio Buttons Instead of Drop Box" option added.
 * Dev - PRODUCTS - Product Cost Price - Custom Price Fields options added.
 * Dev - PRODUCTS - Product Info V2 - Single product page add to cart hooks added.
 * Dev - PRODUCTS - Product Tabs - "Use Visual Editor" option added.
@@ -155,7 +155,7 @@ P* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checko
 * Fix - PAYMENT GATEWAYS - Gateways Currency - Shipping conversion added.
 * Dev - SHIPPING & ORDERS - Shipping - "Message on Free Shipping Reached" option added.
 * Dev - SHIPPING & ORDERS - Shipping - Custom shipping added.
-~* Dev - PDF INVOICING & PACKING SLIPS - Styling - Three Thai fonts added.
+* Dev - PDF INVOICING & PACKING SLIPS - Styling - Three Thai fonts added.
 * Dev - EMAILS & MISC. - General - Advanced Options - "Disable Saving PDFs in PHP directory for temporary files" option added.
 * Dev - EMAILS & MISC. - General - "Export Customers" tool added.
 * Dev - EMAILS & MISC. - General - "Export Customers" tool renamed to "Export Customers from Orders".
