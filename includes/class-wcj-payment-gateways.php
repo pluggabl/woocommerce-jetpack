@@ -35,13 +35,19 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.4.8
 	 */
 	function get_settings() {
+		$wocommerce_checkout_settings_url = admin_url( 'admin.php?page=wc-settings&tab=checkout' );
+		$wocommerce_checkout_settings_url = '<a href="' . $wocommerce_checkout_settings_url . '">' . __( 'WooCommerce > Settings > Checkout', 'woocommerce-jetpack' ) . '</a>';
 		$settings = array(
 			array(
 				'title'    => __( 'Custom Payment Gateways Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_custom_payment_gateways_options',
+				'desc'     => __( 'This section lets you set number of custom payment gateways to add.', 'woocommerce-jetpack' )
+					. ' ' . sprintf( __( 'After setting the number, visit %s to set each gateway options.', 'woocommerce-jetpack' ), $wocommerce_checkout_settings_url ),
 			),
 			array(
 				'title'    => __( 'Number of Gateways', 'woocommerce-jetpack' ),
@@ -55,11 +61,22 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 					array( 'step' => '1', 'min' => '1', 'max' => '10', )
 				),
 			),
+		);
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_payment_gateways_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$settings [] = array(
+				'title'    => __( 'Admin Title Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $i,
+				'id'       => 'wcj_custom_payment_gateways_admin_title_' . $i,
+				'default'  => __( 'Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $i,
+				'type'     => 'text',
+			);
+		}
+		$settings = array_merge( $settings, array(
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_custom_payment_gateways_options',
 			),
-		);
+		) );
 		return $this->add_standard_settings( $settings );
 	}
 }

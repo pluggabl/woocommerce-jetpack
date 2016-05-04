@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Payment Gateway class.
  *
- * @version 2.4.2
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -337,12 +337,12 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * init.
 				 *
-				 * @version 2.4.0
+				 * @version 2.4.8
 				 */
 				public function init( $id_count ) {
 					$this->id                       = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
 					$this->has_fields               = false;
-					$this->method_title             = __( 'Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count;
+					$this->method_title             = get_option( 'wcj_custom_payment_gateways_admin_title_' . $id_count, __( 'Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count );
 					$this->method_description       = __( 'Booster for WooCommerce: Custom Payment Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count;
 					$this->id_count = $id_count;
 					// Load the settings.

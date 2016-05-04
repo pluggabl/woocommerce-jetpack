@@ -123,6 +123,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 04/05/2016 =
+* Dev - PAYMENT GATEWAYS - Custom Gateways - "Admin Title Custom Gateway" options added.
 ~* Dev - "Booster - Country Switcher" widget added.
 * Dev - Currency reports added to Multicurrency and Gateways Currency modules.
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
