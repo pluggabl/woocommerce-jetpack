@@ -122,7 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.8 - 02/05/2016 =
+= 2.4.8 - 04/05/2016 =
 ~* Dev - "Booster - Country Switcher" widget added.
 * Dev - Currency reports added to Multicurrency and Gateways Currency modules.
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
@@ -169,6 +169,7 @@ P* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checko
 * Tweak - PRICES & CURRENCIES - Wholesale Price - Documentation link added.
 * Tweak - BUTTON & PRICE LABELS - Add to Cart Labels - Metabox title renamed.
 * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - Metabox title renamed.
+* Tweak - BUTTON & PRICE LABELS - More Button Labels - Documentation link added. Reset button added.
 * Tweak - PRODUCTS - Crowdfunding - Documentation link added.
 * Tweak - PRODUCTS - Product Add to Cart - Documentation link added. Reset button added.
 * Tweak - PRODUCTS - Product Images - Documentation link added. Reset button added.
