@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways class.
  *
- * @version 2.3.0
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.8
 	 */
 	public function __construct() {
 
 		$this->id         = 'payment_gateways';
 		$this->short_desc = __( 'Custom Gateways', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add multiple custom payment gateways to WooCommerce.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-custom-payment-gateways/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -36,11 +37,12 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 	 * get_settings.
 	 */
 	function get_settings() {
-
 		$settings = array(
-
-			array( 'title' => __( 'Custom Payment Gateways Options', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( '', 'woocommerce-jetpack' ), 'id' => 'wcj_custom_payment_gateways_options' ),
-
+			array(
+				'title'    => __( 'Custom Payment Gateways Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_custom_payment_gateways_options',
+			),
 			array(
 				'title'    => __( 'Number of Gateways', 'woocommerce-jetpack' ),
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
@@ -53,11 +55,12 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 					array( 'step' => '1', 'min' => '1', 'max' => '10', )
 				),
 			),
-
-			array( 'type'  => 'sectionend', 'id' => 'wcj_custom_payment_gateways_options' ),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_custom_payment_gateways_options',
+			),
 		);
-
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 

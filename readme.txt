@@ -182,6 +182,7 @@ P* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checko
 * Tweak - PRODUCTS - SKU - Documentation link added.
 * Tweak - PRODUCTS - Sorting - Documentation link added. Reset button added.
 * Tweak - CART & CHECKOUT - Checkout Files Upload - Documentation link added.
+* Tweak - PAYMENT GATEWAYS - Custom Gateways - Documentation link added. Reset button added.
 * Tweak - SHIPPING & ORDERS - Address Formats - Documentation link added. Reset button added.
 * Tweak - SHIPPING & ORDERS - Shipping - Documentation link added.
 
