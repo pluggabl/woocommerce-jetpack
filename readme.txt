@@ -164,6 +164,7 @@ P* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checko
 * Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcodes can now be used in templates.
 * Dev - EMAILS & MISC. - Emails - Custom Emails - "Admin Title Custom Email" options added.
 * Fix - EMAILS & MISC. - Emails - Custom Emails - Custom statuses added to custom emails actions.
+* Tweak - PRICES & CURRENCIES - Currencies - Documentation link added.
 * Tweak - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Documentation link added. "Currency Switcher" added to the module name.
 * Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Documentation link added. Reset button added. "Countries Selection" default set to "Chosen select".
 * Tweak - PRICES & CURRENCIES - Wholesale Price - Documentation link added.

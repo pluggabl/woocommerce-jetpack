@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack currencies class stores currencies data.
  *
- * @version 2.4.4
+ * @version 2.4.8
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.8
 	 */
 	function __construct() {
 
 		$this->id         = 'currency';
 		$this->short_desc = __( 'Currencies', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add all world currencies to your WooCommerce store; change currency symbol.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-all-currencies/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
