@@ -82,7 +82,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			);
 			$loop = new WP_Query( $args );
 			$c = $loop->found_posts;
-			if ( $c >= 4 ) {
+			if ( $c >= 2 ) {
 				add_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
 				return 'no';
 			}
@@ -113,7 +113,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 		}
 		?><div class="error"><p><?php
 			echo '<div class="message">'
-				. __( 'Free plugin\'s version is limited to 3 open pricing products enabled at the same time. Please visit <a href="http://booster.io/plus/" target="_blank">plugin\'s page</a> for more information.', 'woocommerce-jetpack' )
+				. __( 'Booster: Free plugin\'s version is limited to only one open pricing product enabled at a time. You will need to get <a href="http://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of open pricing products.', 'woocommerce-jetpack' )
 				. '</div>';
 		?></p></div><?php
 	}

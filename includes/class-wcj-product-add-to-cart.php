@@ -39,7 +39,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			}
 
 			// Variable Add to Cart Template
-			if ( 'yes' === get_option( 'wcj_add_to_cart_variable_as_radio_enabled', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'wcj', get_option( 'wcj_add_to_cart_variable_as_radio_enabled', 'no' ) ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_variable_add_to_cart_scripts' ) );
 				add_filter( 'wc_get_template', array( $this, 'change_variable_add_to_cart_template' ), PHP_INT_MAX, 5 );
 			}
@@ -168,6 +168,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				'id'       => 'wcj_add_to_cart_variable_as_radio_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 			),
 			array(
 				'type'     => 'sectionend',
