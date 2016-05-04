@@ -123,7 +123,6 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.8 - 04/05/2016 =
-* Dev - PAYMENT GATEWAYS - Custom Gateways - "Admin Title Custom Gateway" options added.
 ~* Dev - "Booster - Country Switcher" widget added.
 * Dev - Currency reports added to Multicurrency and Gateways Currency modules.
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
@@ -152,6 +151,7 @@ P* Fix - PRICES & CURRENCIES - Wholesale Price - Bug with "PayPal Express Checko
 * Dev - PRODUCTS - Product Tabs - "Use Visual Editor" option added.
 * Dev - PRODUCTS - SKU - In variable products now counting *all* variations instead of only *available*.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - "Conditional visibility by selected product (in cart)" option added.
+* Dev - PAYMENT GATEWAYS - Custom Gateways - "Admin Title Custom Gateway" options added.
 * Fix - PAYMENT GATEWAYS - Gateways Currency - Shipping conversion added.
 * Dev - SHIPPING & ORDERS - Shipping - "Message on Free Shipping Reached" option added.
 * Dev - SHIPPING & ORDERS - Shipping - Custom shipping added.
