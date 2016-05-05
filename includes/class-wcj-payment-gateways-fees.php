@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Fees class.
  *
- * @version 2.3.0
+ * @version 2.4.9
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -18,13 +18,14 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.9
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_fees';
 		$this->short_desc = __( 'Gateways Fees and Discounts', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Enable extra fees or discounts for WooCommerce payment gateways.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-fees-and-discounts/';
 		parent::__construct();
 
 		add_filter( 'init',  array( $this, 'add_hooks' ) );
@@ -39,12 +40,13 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.4.9
 	 */
 	function get_settings() {
 		$settings = array();
-		//$settings = $this->add_fees_settings( $settings );
 		$settings = apply_filters( 'wcj_payment_gateways_fees_settings', $settings );
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 
 	/**
@@ -65,8 +67,9 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	 * enqueue_checkout_script.
 	 */
 	public function enqueue_checkout_script() {
-		if( ! is_checkout() )
+		if( ! is_checkout() ) {
 			return;
+		}
 		wp_enqueue_script( 'wcj-payment-gateways-checkout' );
 	}
 
@@ -126,120 +129,99 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	 * @version 2.3.0
 	 */
 	function add_fees_settings( $settings ) {
-		// Gateway's Extra Fees
 		$settings[] = array(
 			'title' => __( 'Payment Gateways Fees and Discounts Options', 'woocommerce-jetpack' ),
 			'type'  => 'title',
 			'desc'  => __( 'This section lets you set extra fees for payment gateways.', 'woocommerce-jetpack' ),
-//					   __( 'Fees are applied BEFORE taxes.', 'woocommerce-jetpack' ),
-			'id'    => 'wcj_payment_gateways_fees_options'
+			'id'    => 'wcj_payment_gateways_fees_options',
 		);
-
-		//$available_gateways = WC()->payment_gateways->payment_gateways();
+//		$available_gateways = WC()->payment_gateways->payment_gateways();
 		global $woocommerce;
 		$available_gateways = $woocommerce->payment_gateways->payment_gateways();
-		//$available_gateways = WC()->payment_gateways();
 		foreach ( $available_gateways as $key => $gateway ) {
-			/*echo '<h5>' . $gateway->title . '</h5>';
-			if ( $gateway->is_available() )
-				echo '<strong style="color: green;">' . __( 'Available', 'woocommerce-jetpack' ) . '</strong>';
-			else
-				echo '<strong style="color: red;">' . __( 'Not available', 'woocommerce-jetpack' ) . '</strong>';*/
-
 			$settings = array_merge( $settings, array(
-
 				array(
-					'title'    	=> $gateway->title,
-					'desc'    	=> __( 'Fee (or discount) title to show to customer.', 'woocommerce-jetpack' ),
-					'desc_tip'	=> __( 'Leave blank to disable.', 'woocommerce-jetpack' ),
-					'id'       	=> 'wcj_gateways_fees_text_' . $key,
-					'default'  	=> '',
-					'type'		=> 'text',
+					'title'     => $gateway->title, // . ' [' . ( $gateway->is_available() ? __( 'Available', 'woocommerce-jetpack' ) : __( 'Not available', 'woocommerce-jetpack' ) ) . ']',
+					'desc'      => __( 'Fee (or discount) title to show to customer.', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'Leave blank to disable.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_fees_text_' . $key,
+					'default'   => '',
+					'type'      => 'text',
 				),
-
 				array(
-					'title'    	=> '',
-					'desc'    	=> __( 'Fee (or discount) type.', 'woocommerce-jetpack' ),
-					'desc_tip'	=> __( 'Percent or fixed value.', 'woocommerce-jetpack' )/*  . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ) */,
-					/* 'custom_attributes'
-								=> apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ), */
-					'id'       	=> 'wcj_gateways_fees_type_' . $key,
-					'default'  	=> 'fixed',
-					'type'		=> 'select',
-					'options'     => array(
-						'fixed' 	=> __( 'Fixed', 'woocommerce-jetpack' ),
-						'percent'   => __( 'Percent', 'woocommerce-jetpack' ),
+					'title'     => '',
+					'desc'      => __( 'Fee (or discount) type.', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'Percent or fixed value.', 'woocommerce-jetpack' )/*  . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ) */,
+					'id'        => 'wcj_gateways_fees_type_' . $key,
+					'default'   => 'fixed',
+					'type'      => 'select',
+					'options'   => array(
+						'fixed'   => __( 'Fixed', 'woocommerce-jetpack' ),
+						'percent' => __( 'Percent', 'woocommerce-jetpack' ),
 					),
 				),
-
 				array(
-					'title'    	=> '',
-					'desc'    	=> __( 'Fee (or discount) value.', 'woocommerce-jetpack' ),
-					'desc_tip'	=> __( 'The value. For discount enter a negative number.', 'woocommerce-jetpack' ),
-					'id'       	=> 'wcj_gateways_fees_value_' . $key,
-					'default'  	=> 0,
-					'type'		=> 'number',
+					'title'     => '',
+					'desc'      => __( 'Fee (or discount) value.', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'The value. For discount enter a negative number.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_fees_value_' . $key,
+					'default'   => 0,
+					'type'      => 'number',
 					'custom_attributes' => array(
-						'step' 	=> '0.01',
+						'step' => '0.01',
 					),
 				),
-
 				array(
-					'title'    	=> '',
-					'desc'    	=> __( 'Minimum cart amount for adding the fee (or discount).', 'woocommerce-jetpack' ),
-					'desc_tip'	=> __( 'Set 0 to disable.', 'woocommerce-jetpack' ),
-					'id'       	=> 'wcj_gateways_fees_min_cart_amount_' . $key,
-					'default'  	=> 0,
-					'type'		=> 'number',
+					'title'     => '',
+					'desc'      => __( 'Minimum cart amount for adding the fee (or discount).', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'Set 0 to disable.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_fees_min_cart_amount_' . $key,
+					'default'   => 0,
+					'type'      => 'number',
 					'custom_attributes' => array(
-						'step' 	=> '0.01',
-						'min'	=> '0',
+						'step' => '0.01',
+						'min'  => '0',
 					),
 				),
-
 				array(
-					'title'    	=> '',
-					'desc'    	=> __( 'Maximum cart amount for adding the fee (or discount).', 'woocommerce-jetpack' ),
-					'desc_tip'	=> __( 'Set 0 to disable.', 'woocommerce-jetpack' ),
-					'id'       	=> 'wcj_gateways_fees_max_cart_amount_' . $key,
-					'default'  	=> 0,
-					'type'		=> 'number',
+					'title'     => '',
+					'desc'      => __( 'Maximum cart amount for adding the fee (or discount).', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'Set 0 to disable.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_fees_max_cart_amount_' . $key,
+					'default'   => 0,
+					'type'      => 'number',
 					'custom_attributes' => array(
-						'step' 	=> '0.01',
-						'min'	=> '0',
+						'step' => '0.01',
+						'min'  => '0',
 					),
 				),
-
 				array(
-					'title'    	=> '',
-					'desc'    	=> __( 'Round the fee (or discount) value before adding to the cart.', 'woocommerce-jetpack' ),
-					//'desc_tip'	=> __( 'Set 0 to disable.', 'woocommerce-jetpack' ),
-					'id'       	=> 'wcj_gateways_fees_round_' . $key,
-					'default'  	=> 'no',
-					'type'		=> 'checkbox',
+					'title'     => '',
+					'desc'      => __( 'Round the fee (or discount) value before adding to the cart.', 'woocommerce-jetpack' ),
+//					'desc_tip'  => __( 'Set 0 to disable.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_fees_round_' . $key,
+					'default'   => 'no',
+					'type'      => 'checkbox',
 				),
-
 				array(
-					'title'    	=> '',
-					'desc'    	=> __( 'If rounding is enabled, set precision here.', 'woocommerce-jetpack' ),
-					//'desc_tip'	=> __( 'Set 0 to disable.', 'woocommerce-jetpack' ),
-					'id'       	=> 'wcj_gateways_fees_round_precision_' . $key,
-					'default'  	=> 0,
-					'type'		=> 'number',
+					'title'     => '',
+					'desc'      => __( 'If rounding is enabled, set precision here.', 'woocommerce-jetpack' ),
+//					'desc_tip'  => __( 'Set 0 to disable.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_fees_round_precision_' . $key,
+					'default'   => 0,
+					'type'      => 'number',
 					'custom_attributes' => array(
-						'step' 	=> '1',
-						'min'	=> '0',
+						'step' => '1',
+						'min'  => '0',
 					),
 				),
-
 				array(
-					'title'    	=> '',
-					'desc'    	=> __( 'Is taxable?', 'woocommerce-jetpack' ),
-					'id'       	=> 'wcj_gateways_fees_is_taxable_' . $key,
-					'default'  	=> 'no',
-					'type'		=> 'checkbox',
+					'title'     => '',
+					'desc'      => __( 'Is taxable?', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_fees_is_taxable_' . $key,
+					'default'   => 'no',
+					'type'      => 'checkbox',
 				),
-
 				array(
 					'title'     => '',
 					'desc'      => __( 'Tax Class (only if Taxable selected).', 'woocommerce-jetpack' ),
@@ -248,12 +230,12 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 					'type'      => 'select',
 					'options'   => array_merge( array( __( 'Standard Rate', 'woocommerce-jetpack' ) ), WC_Tax::get_tax_classes() ),
 				),
-
 			) );
 		}
-
-		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_payment_gateways_fees_options' );
-
+		$settings[] = array(
+			'type'  => 'sectionend',
+			'id'    => 'wcj_payment_gateways_fees_options',
+		);
 		return $settings;
 	}
 }
