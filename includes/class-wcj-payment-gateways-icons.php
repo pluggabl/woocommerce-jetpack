@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Icons class.
  *
- * @version 2.3.1
+ * @version 2.4.9
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -13,22 +13,19 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WCJ_Payment_Gateways_Icons' ) ) :
 
-/**
- * WCJ_Payment_Gateways_Icons Class.
- */
-
 class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.1
+	 * @version 2.4.9
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_icons';
 		$this->short_desc = __( 'Gateways Icons', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Change or completely remove icons (images) for any (default or custom) WooCommerce payment gateway.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-icons/';
 		parent::__construct();
 
 		add_filter( 'init', array( $this, 'add_hooks' ) );
@@ -51,12 +48,12 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.1
+	 * @version 2.4.9
 	 */
 	function get_settings() {
 		$settings = array();
 		$settings = apply_filters( 'wcj_payment_gateways_icons_settings', $settings );
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 
 	/**
@@ -76,8 +73,12 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 	 */
 	function set_icon( $icon, $key ) {
 		$default_gateways = apply_filters( 'wcj_get_option_filter', array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' ), array() );
-		if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) return $icon;
-		if ( 'yes' === get_option( 'wcj_gateways_icons_' . $key . '_icon_remove', 'no' ) ) return '';
+		if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
+			return $icon;
+		}
+		if ( 'yes' === get_option( 'wcj_gateways_icons_' . $key . '_icon_remove', 'no' ) ) {
+			return '';
+		}
 		$custom_icon_url = get_option( 'wcj_gateways_icons_' . $key . '_icon', '' );
 		return ( '' == $custom_icon_url ) ? $icon : '<img src="' . $custom_icon_url . '" alt="' . $key . '" />';
 	}
@@ -89,19 +90,15 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 	 * @since   2.3.1
 	 */
 	function add_icons_settings( $settings ) {
-
 		$settings = array();
-
 		$settings[] = array(
 			'title' => __( 'Options', 'woocommerce-jetpack' ),
 			'type'  => 'title',
 			'desc'  => __( 'If you want to show an image next to the gateway\'s name on the frontend, enter a URL to an image.', 'woocommerce-jetpack' ),
 			'id'    => 'wcj_payment_gateways_icons_options'
 		);
-
 		$available_gateways = WC()->payment_gateways->payment_gateways();
 		foreach ( $available_gateways as $key => $gateway ) {
-
 			$default_gateways = array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' );
 			if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
 				$custom_attributes = apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' );
@@ -132,12 +129,10 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 				'custom_attributes' => $custom_attributes,
 			);
 		}
-
 		$settings[] = array(
 			'type' => 'sectionend',
 			'id'   => 'wcj_payment_gateways_icons_options'
 		);
-
 		return $settings;
 	}
 }

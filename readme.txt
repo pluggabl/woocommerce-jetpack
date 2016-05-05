@@ -133,6 +133,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - PRODUCTS - Crowdfunding - Reset button added.
 * Tweak - CART & CHECKOUT - Empty Cart Button - Documentation link added. Reset button added.
 * Tweak - CART & CHECKOUT - Checkout Core Fields - Documentation link added. Reset button added.
+* Tweak - PAYMENT GATEWAYS - Gateways Icons - Documentation link added. Reset button added.
 * Tweak - PAYMENT GATEWAYS - Gateways Fees and Discounts - Documentation link added. Reset button added.
 * Tweak - SHIPPING & ORDERS - Orders - Documentation link added. Reset button added.
 * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Documentation link added. Reset button added.
