@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Crowdfunding class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.2.6
  * @author  Algoritmika Ltd.
  */
@@ -83,6 +83,8 @@ class WCJ_Crowdfunding extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.4.9
  	 */
 	function get_settings() {
 		$module_desc = __( 'When enabled, module will add Crowdfunding metabox to product edit.', 'woocommerce-jetpack' )
@@ -98,7 +100,7 @@ class WCJ_Crowdfunding extends WCJ_Module {
 					 . __( 'Shortcodes could be used in "Product Info" module.', 'woocommerce-jetpack' )
 					 . '<br>'
 					 . __( 'To change add to cart button labels use "Add to Cart Labels" module.', 'woocommerce-jetpack' );
-		return $this->add_enable_module_setting( array(), $module_desc );
+		return $this->add_standard_settings( array(), $module_desc );
 	}
 }
 
