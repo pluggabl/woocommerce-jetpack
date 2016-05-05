@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
 		$this->id         = 'general';
 		$this->short_desc = __( 'General', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-booster-general-tools/';
 		parent::__construct();
 
 		$this->add_tools( array(

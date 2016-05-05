@@ -134,6 +134,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - Documentation link added. Reset button added.
 * Tweak - PRODUCTS - Crowdfunding - Reset button added.
 * Tweak - PRODUCTS - Product Info - Documentation link added.
+* Tweak - PRODUCTS - Product Info V2 - Documentation link added.
 * Tweak - CART & CHECKOUT - Empty Cart Button - Documentation link added. Reset button added.
 * Tweak - CART & CHECKOUT - Checkout Core Fields - Documentation link added. Reset button added.
 * Tweak - PAYMENT GATEWAYS - Gateways Currency - Documentation link added.
@@ -149,6 +150,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - EMAILS & MISC. - Emails - Documentation link added.
 * Tweak - EMAILS & MISC. - Old Slugs - Documentation link added. Reset button added.
 * Tweak - EMAILS & MISC. - Reports - Documentation link added.
+* Tweak - EMAILS & MISC. - Admin Tools - Documentation link added.
+* Tweak - EMAILS & MISC. - General - Documentation link added.
 
 = 2.4.8 - 04/05/2016 =
 * Dev - "Booster - Country Switcher" widget added.
