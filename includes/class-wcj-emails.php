@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Emails class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.5
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
 		$this->id         = 'emails';
 		$this->short_desc = __( 'Emails', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add custom emails. Add another email recipient(s) to all WooCommerce emails.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-emails/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
