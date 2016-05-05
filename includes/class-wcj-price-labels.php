@@ -17,7 +17,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 

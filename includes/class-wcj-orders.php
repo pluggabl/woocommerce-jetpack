@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders class.
  *
- * @version 2.3.7
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.7
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
 		$this->id         = 'orders';
 		$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Minimum WooCommerce order amount; orders auto-complete; custom admin order list columns.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-orders/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -72,11 +73,8 @@ class WCJ_Orders extends WCJ_Module {
 	 */
 	public function restrict_manage_posts() {
 		global $typenow, $wp_query;
-
 		if ( in_array( $typenow, wc_get_order_types( 'order-meta-boxes' ) ) ) {
-
 			$selected_coutry = isset( $_GET['country'] ) ? $_GET['country'] : 'all';
-
 			$countries = array_merge( array( 'all' => __( 'All countries', 'woocommerce-jetpack' ) ), wcj_get_countries() );
 			echo '<select id="country" name="country">';
 			foreach ( $countries as $code => $name ) {
@@ -106,48 +104,35 @@ class WCJ_Orders extends WCJ_Module {
 	 * @param  string $column
 	 */
 	public function render_order_columns( $column ) {
-
 		if ( 'country' != $column ) {
 			return;
 		}
-
 		$order = wc_get_order( get_the_ID() );
-		//$country_code = wcj_get_customer_country( $order->customer_user );
+//		$country_code = wcj_get_customer_country( $order->customer_user );
 		$country_code = $order->billing_country;
-
 		echo ( 2 == strlen( $country_code ) )
 			? $this->wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code )
 			: wcj_get_country_name_by_code( $country_code );
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//																				AUTO COMPLETE																		  //
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	/**
 	* Auto Complete all WooCommerce orders.
 	*/
 	public function auto_complete_order( $order_id ) {
-
 		global $woocommerce;
-
-		if ( !$order_id )
+		if ( !$order_id ) {
 			return;
+		}
 		$order = new WC_Order( $order_id );
 		$order->update_status( 'completed' );
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//																				MINIMUM AMOUNT																		  //
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/**
 	 * order_minimum_amount.
 	 */
 	public function order_minimum_amount() {
-
 		$minimum = get_option( 'wcj_order_minimum_amount' );
 		if ( WC()->cart->total < $minimum ) {
-
 			if( is_cart() ) {
 				if ( 'yes' === get_option( 'wcj_order_minimum_amount_cart_notice_enabled' ) ) {
 					wc_print_notice(
@@ -178,27 +163,31 @@ class WCJ_Orders extends WCJ_Module {
 	public function stop_from_seeing_checkout( $wp ) {
 //		if ( is_admin() ) return;
 		global $woocommerce;
-		if ( ! isset( $woocommerce ) || ! is_object( $woocommerce ) ) return;
-		if ( ! isset( $woocommerce->cart ) || ! is_object( $woocommerce->cart ) ) return;
+		if ( ! isset( $woocommerce ) || ! is_object( $woocommerce ) ) {
+			return;
+		}
+		if ( ! isset( $woocommerce->cart ) || ! is_object( $woocommerce->cart ) ) {
+			return;
+		}
 		$the_cart_total = isset( $woocommerce->cart->cart_contents_total ) ? $woocommerce->cart->cart_contents_total : 0;
-		if ( 0 != $the_cart_total && $the_cart_total < get_option( 'wcj_order_minimum_amount' ) && is_checkout() )
+		if ( 0 != $the_cart_total && $the_cart_total < get_option( 'wcj_order_minimum_amount' ) && is_checkout() ) {
 			wp_safe_redirect( $woocommerce->cart->get_cart_url() );
+		}
 	}
 
 	/**
 	 * Add settings arrays to Jetpack Settings.
+	 *
+	 * @version 2.4.9
 	 */
 	function get_settings() {
-
 		$settings = array(
-
 			array(
 				'title'    => __( 'Order Minimum Amount', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => __( 'This section lets you set minimum order amount.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_order_minimum_amount_options',
 			),
-
 			array(
 				'title'    => __( 'Amount', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Minimum order amount. Set to 0 to disable.', 'woocommerce-jetpack' ),
@@ -210,7 +199,6 @@ class WCJ_Orders extends WCJ_Module {
 					'min'  => '0',
 				),
 			),
-
 			array(
 				'title'    => __( 'Error message', 'woocommerce-jetpack' ),
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
@@ -218,11 +206,9 @@ class WCJ_Orders extends WCJ_Module {
 				'id'       => 'wcj_order_minimum_amount_error_message',
 				'default'  => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
 				'type'     => 'textarea',
-				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 				'css'      => 'width:50%;min-width:300px;',
 			),
-
 			array(
 				'title'    => __( 'Add notice to cart page also', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
@@ -230,7 +216,6 @@ class WCJ_Orders extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Message on cart page', 'woocommerce-jetpack' ),
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
@@ -238,11 +223,9 @@ class WCJ_Orders extends WCJ_Module {
 				'id'       => 'wcj_order_minimum_amount_cart_notice_message',
 				'default'  => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
 				'type'     => 'textarea',
-				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 				'css'      => 'width:50%;min-width:300px;',
 			),
-
 			array(
 				'title'    => __( 'Stop customer from seeing the Checkout page if minimum amount not reached.', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Redirect back to Cart page', 'woocommerce-jetpack' ),
@@ -250,19 +233,16 @@ class WCJ_Orders extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_order_minimum_amount_options',
 			),
-
 			array(
 				'title'    => __( 'Orders Auto-Complete', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => __( 'This section lets you enable orders auto-complete function.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_order_auto_complete_options',
 			),
-
 			array(
 				'title'    => __( 'Auto-complete all WooCommerce orders', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -271,19 +251,16 @@ class WCJ_Orders extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_order_auto_complete_options',
 			),
-
 			array(
 				'title'    => __( 'Orders List Custom Columns', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => __( 'This section lets you add custom columns to WooCommerce orders list.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_orders_list_custom_columns_options',
 			),
-
 			array(
 				'title'    => __( 'Country', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
@@ -291,15 +268,12 @@ class WCJ_Orders extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_orders_list_custom_columns_options',
 			),
-
 		);
-
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 
