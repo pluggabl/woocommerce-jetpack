@@ -132,6 +132,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - PRICES & CURRENCIES - Wholesale Price - Reset button added.
 * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - Documentation link added. Reset button added.
 * Tweak - PRODUCTS - Crowdfunding - Reset button added.
+* Tweak - PRODUCTS - Product Info - Documentation link added.
 * Tweak - CART & CHECKOUT - Empty Cart Button - Documentation link added. Reset button added.
 * Tweak - CART & CHECKOUT - Checkout Core Fields - Documentation link added. Reset button added.
 * Tweak - PAYMENT GATEWAYS - Gateways Currency - Documentation link added.
@@ -142,6 +143,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - SHIPPING & ORDERS - Orders - Documentation link added. Reset button added.
 * Tweak - SHIPPING & ORDERS - Order Numbers - Documentation link added.
 * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Documentation link added. Reset button added.
+* Tweak - EMAILS & MISC. - Booster WPML - Documentation link added. Short description updated.
+* Tweak - EMAILS & MISC. - EU VAT Number - Documentation link added.
 * Tweak - EMAILS & MISC. - Emails - Documentation link added.
 * Tweak - EMAILS & MISC. - Old Slugs - Documentation link added. Reset button added.
 

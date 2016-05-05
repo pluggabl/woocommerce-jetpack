@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack EU VAT Number class.
  *
- * @version 2.4.7
+ * @version 2.4.9
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -18,13 +18,14 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.9
 	 */
 	function __construct() {
 
 		$this->id         = 'eu_vat_number';
 		$this->short_desc = __( 'EU VAT Number', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-eu-vat-number/';
 		parent::__construct();
 
 		$this->add_tools( array(
