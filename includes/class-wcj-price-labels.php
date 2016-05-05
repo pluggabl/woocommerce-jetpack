@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -24,6 +24,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 		$this->id         = 'price_labels';
 		$this->short_desc = __( 'Custom Price Labels', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Create any custom price label for any WooCommerce product.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-custom-price-labels/';
 		parent::__construct();
 
 		$this->add_tools( array(
@@ -569,13 +570,12 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.9
 	 */
 	function get_settings() {
 		$settings = array();
 		$settings = apply_filters( 'wcj_price_labels_settings', $settings );
-		$settings = $this->add_tools_list( $settings );
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 
 	/*
