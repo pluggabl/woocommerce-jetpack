@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -97,7 +97,7 @@ return array(
 
 	'shipping_and_orders' => array(
 		'label'          => __( 'Shipping & Orders', 'woocommerce-jetpack' ),
-		'default_cat_id' => 'orders',
+		'default_cat_id' => 'shipping',
 		'all_cat_ids'    => array(
 			'shipping',
 			'shipping_calculator',

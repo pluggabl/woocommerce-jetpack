@@ -18,13 +18,14 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
 		$this->id         = 'order_custom_statuses';
 		$this->short_desc = __( 'Order Custom Statuses', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Custom statuses for WooCommerce orders.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-order-custom-statuses/';
 		parent::__construct();
 
 		$this->add_tools( array(
@@ -257,18 +258,15 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.8
+	 * @version 2.4.9
 	 */
 	function get_settings() {
-
 		$settings = array(
-
 			array(
 				'title'    => __( 'Custom Statuses', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'id'       => 'wcj_orders_custom_statuses_options'
+				'id'       => 'wcj_orders_custom_statuses_options',
 			),
-
 			array(
 				'title'    => __( 'Default Order Status', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable Custom Statuses feature to add custom statuses to the list.', 'woocommerce-jetpack' ),
@@ -278,7 +276,6 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				'type'     => 'select',
 				'options'  => $this->get_order_statuses(),
 			),
-
 			array(
 				'title'    => __( 'Add All Statuses to Admin Order Bulk Actions', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
@@ -286,7 +283,6 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Add Custom Statuses to Admin Reports', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
@@ -294,16 +290,12 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'type'     => 'sectionend',
-				'id'       => 'wcj_orders_custom_statuses_options'
+				'id'       => 'wcj_orders_custom_statuses_options',
 			),
 		);
-
-		$settings = $this->add_tools_list( $settings );
-
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 
