@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Empty Cart Button class.
  *
- * @version 2.2.1
+ * @version 2.4.9
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -17,24 +17,27 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.9
 	 */
 	function __construct() {
 
 		$this->id         = 'empty_cart';
 		$this->short_desc = __( 'Empty Cart Button', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add and customize "Empty Cart" button to cart page.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-empty-cart-button/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
 
 			add_action( 'init', array( $this, 'empty_cart' ) );
-			//add_action( get_option( 'wcj_empty_cart_position', 'woocommerce_after_cart' ), array( $this, 'add_empty_cart_link' ) );
+//			add_action( get_option( 'wcj_empty_cart_position', 'woocommerce_after_cart' ), array( $this, 'add_empty_cart_link' ) );
 			add_action( apply_filters( 'wcj_get_option_filter', 'woocommerce_after_cart', get_option( 'wcj_empty_cart_position', 'woocommerce_after_cart' ) ),
 						array( $this, 'add_empty_cart_link' ) );
 
-			//add_action( 'wp_head', array( $this, 'add_confirmation_script' ) );
+//			add_action( 'wp_head', array( $this, 'add_confirmation_script' ) );
 
-			//add_filter( 'wcj_empty_cart_button_filter', array( $this, 'empty_cart_button_filter_function' ), 100, 2 );
+//			add_filter( 'wcj_empty_cart_button_filter', array( $this, 'empty_cart_button_filter_function' ), 100, 2 );
 
 		}
 	}
@@ -86,6 +89,8 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.4.9
 	 */
 	function get_settings() {
 
@@ -168,7 +173,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 
 		) );
 
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 

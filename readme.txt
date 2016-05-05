@@ -123,11 +123,12 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 05/05/2016 =
-* Tweak - EMAILS & MISC. - Emails - Documentation link added.
 * Tweak - PRICES & CURRENCIES - Multicurrency Product Base Price - Documentation link added.
 * Tweak - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Documentation link added.
 * Tweak - PRICES & CURRENCIES - Currency for External Products - Documentation link added.
 * Tweak - PRICES & CURRENCIES - Bulk Price Converter - Documentation link added.
+* Tweak - CART & CHECKOUT - Empty Cart Button - Documentation link added. Reset button added.
+* Tweak - EMAILS & MISC. - Emails - Documentation link added.
 
 = 2.4.8 - 04/05/2016 =
 * Dev - "Booster - Country Switcher" widget added.
