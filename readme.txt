@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Documentation link added.
 * Tweak - PRICES & CURRENCIES - Currency for External Products - Documentation link added.
 * Tweak - PRICES & CURRENCIES - Bulk Price Converter - Documentation link added.
+* Tweak - PRICES & CURRENCIES - Wholesale Price - Reset button added.
 * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - Documentation link added. Reset button added.
 * Tweak - PRODUCTS - Crowdfunding - Reset button added.
 * Tweak - CART & CHECKOUT - Empty Cart Button - Documentation link added. Reset button added.

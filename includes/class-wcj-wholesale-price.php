@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Wholesale Price class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -30,12 +30,12 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			/* add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 ); */
+//			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+//			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
 			add_filter( 'woocommerce_get_price',         array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
-			//add_filter( 'woocommerce_get_sale_price',    array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
-			//add_filter( 'woocommerce_get_regular_price', array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
+//			add_filter( 'woocommerce_get_sale_price',    array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
+//			add_filter( 'woocommerce_get_regular_price', array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
 
 			if ( 'yes' === get_option( 'wcj_wholesale_price_show_info_on_cart', 'no' ) ) {
 				add_filter( 'woocommerce_cart_item_price',   array( $this, 'add_discount_info_to_cart_page' ), PHP_INT_MAX, 3 );
@@ -79,7 +79,9 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 
 			$discount = $this->get_discount_by_quantity( $the_quantity );
 
-			if ( 'fixed' === get_option( 'wcj_wholesale_price_discount_type' ) ) $discount = wc_price( $discount );
+			if ( 'fixed' === get_option( 'wcj_wholesale_price_discount_type' ) ) {
+				$discount = wc_price( $discount );
+			}
 
 			if ( 0 != $discount ) {
 
@@ -149,7 +151,9 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 		$quanitities = array();
 		$total_quantity = 0;
 		foreach ( $the_cart as $cart_item_key => $values ) {
-			if ( ! isset( $quanitities[ $values['product_id'] ] ) ) $quanitities[ $values['product_id'] ] = 0;
+			if ( ! isset( $quanitities[ $values['product_id'] ] ) ) {
+				$quanitities[ $values['product_id'] ] = 0;
+			}
 			$quanitities[ $values['product_id'] ] += $values['quantity'];
 			$total_quantity += $values['quantity'];
 		}
@@ -165,16 +169,22 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	 */
 	function wholesale_price( $price, $_product ) {
 
-		if ( ! wcj_is_product_wholesale_enabled( $_product->id ) ) return $price;
+		if ( ! wcj_is_product_wholesale_enabled( $_product->id ) ) {
+			return $price;
+		}
 
 		// Show only on checkout and cart pages
 		//$is_ajax = ( is_admin() && ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) ? true : false;
 		$is_paypal_express = ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) ? true : false;
-		if ( ! ( is_checkout() || is_cart() || $is_paypal_express /* || $is_ajax */ ) ) return $price;
+		if ( ! ( is_checkout() || is_cart() || $is_paypal_express /* || $is_ajax */ ) ) {
+			return $price;
+		}
 
 		// If other discount was applied in cart...
 		if ( 'yes' === get_option( 'wcj_wholesale_price_apply_only_if_no_other_discounts', 'no' ) ) {
-			if ( WC()->cart->get_total_discount() > 0 || sizeof( WC()->cart->applied_coupons ) > 0 ) return $price;
+			if ( WC()->cart->get_total_discount() > 0 || sizeof( WC()->cart->applied_coupons ) > 0 ) {
+				return $price;
+			}
 		}
 
 		// Maybe set wholesale price
@@ -194,20 +204,18 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.4.9
 	 */
 	function get_settings() {
-
 		$products = apply_filters( 'wcj_get_products_filter', array() );
-
 		$settings = array(
-
 			array(
-				'title' => __( 'Wholesale Price Levels Options', 'woocommerce-jetpack' ),
-				'type'  => 'title',
-				'desc'  => __( 'Wholesale Price Levels Options. If you want to display prices table on frontend, use [wcj_product_wholesale_price_table] shortcode.', 'woocommerce-jetpack' ),
-				'id'    => 'wcj_wholesale_price_level_options'
+				'title'   => __( 'Wholesale Price Levels Options', 'woocommerce-jetpack' ),
+				'type'    => 'title',
+				'desc'    => __( 'Wholesale Price Levels Options. If you want to display prices table on frontend, use [wcj_product_wholesale_price_table] shortcode.', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_wholesale_price_level_options',
 			),
-
 			array(
 				'title'   => __( 'Use total cart quantity instead of product quantity', 'woocommerce-jetpack' ),
 				'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
@@ -215,7 +223,6 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'default' => 'no',
 				'type'    => 'checkbox',
 			),
-
 			array(
 				'title'   => __( 'Apply wholesale discount only if no other cart discounts were applied', 'woocommerce-jetpack' ),
 				'desc'    => __( 'Enable', 'woocommerce-jetpack' ),
@@ -223,7 +230,6 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'default' => 'no',
 				'type'    => 'checkbox',
 			),
-
 			array(
 				'title'   => __( 'Show discount info on cart page', 'woocommerce-jetpack' ),
 				'desc'    => __( 'Show', 'woocommerce-jetpack' ),
@@ -231,7 +237,6 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'default' => 'no',
 				'type'    => 'checkbox',
 			),
-
 			array(
 				'title'   => __( 'If show discount info on cart page is enabled, set format here', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_wholesale_price_show_info_on_cart_format',
@@ -239,7 +244,6 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'type'    => 'textarea',
 				'css'     => 'width: 450px;',
 			),
-
 			array(
 				'title'   => __( 'Discount Type', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_wholesale_price_discount_type',
@@ -250,7 +254,6 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 					'fixed'   => __( 'Fixed', 'woocommerce-jetpack' ),
 				),
 			),
-
 			array(
 				'title'   => __( 'Products to include', 'woocommerce-jetpack' ),
 				'desc'    => __( 'Leave blank to include all products.', 'woocommerce-jetpack' ),
@@ -258,10 +261,9 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'default' => '',
 				'type'    => 'multiselect',
 				'class'   => 'chosen_select',
-				//'css'     => 'width: 450px;',
+//				'css'     => 'width: 450px;',
 				'options' => $products,
 			),
-
 			array(
 				'title'   => __( 'Number of levels', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_wholesale_price_levels_number',
@@ -271,19 +273,17 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'custom_attributes' => array_merge(
 					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
 					array('step' => '1', 'min' => '1', ) ),
-				'css'	   => 'width:100px;',
+				'css'     => 'width:100px;',
 			),
 		);
-
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
-
 			$settings[] = array(
 				'title'   => __( 'Min quantity', 'woocommerce-jetpack' ) . ' #' . $i,
 				'desc'    => __( 'Minimum quantity to apply discount', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_wholesale_price_level_min_qty_' . $i,
 				'default' => 0,
 				'type'    => 'number',
-				//'css'     => 'width:50%;min-width:300px;height:100px;',
+//				'css'     => 'width:50%;min-width:300px;height:100px;',
 				'custom_attributes' => array('step' => '1', 'min' => '0', ),
 			);
 			$settings[] = array(
@@ -292,7 +292,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'id'      => 'wcj_wholesale_price_level_discount_percent_' . $i,
 				'default' => 0,
 				'type'    => 'number',
-				//'css'     => 'width:50%;min-width:300px;height:100px;',
+//				'css'     => 'width:50%;min-width:300px;height:100px;',
 				'custom_attributes' => array('step' => '0.0001', 'min' => '0', ),
 			);
 			/* $settings[] = array(
@@ -301,17 +301,15 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'id'      => 'wcj_wholesale_price_level_discount_fixed_' . $i,
 				'default' => 0,
 				'type'    => 'number',
-				//'css'     => 'width:50%;min-width:300px;height:100px;',
+//				'css'     => 'width:50%;min-width:300px;height:100px;',
 				'custom_attributes' => array('step' => '0.0001', 'min' => '0', ),
 			); */
 		}
-
 		$settings[] = array(
-			'type' => 'sectionend',
-			'id'   => 'wcj_wholesale_price_level_options'
+			'type'        => 'sectionend',
+			'id'          => 'wcj_wholesale_price_level_options',
 		);
-
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 }
 
