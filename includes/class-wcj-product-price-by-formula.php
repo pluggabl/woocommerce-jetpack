@@ -152,12 +152,13 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	function get_settings() {
 		$settings = array(
 			array(
-				'title'    => __( 'Options', 'woocommerce-jetpack' ),
+				'title'    => __( 'Default Settings', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_product_price_by_formula_options',
 			),
 			array(
 				'title'    => __( 'Formula', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Use "x" variable for product\'s base price. For example: x+p1*p2', 'woocommerce-jetpack' ),
 				'type'     => 'text',
 				'id'       => 'wcj_product_price_by_formula_eval',
 				'default'  => '',
