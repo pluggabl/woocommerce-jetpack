@@ -148,6 +148,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - EMAILS & MISC. - EU VAT Number - Documentation link added.
 * Tweak - EMAILS & MISC. - Emails - Documentation link added.
 * Tweak - EMAILS & MISC. - Old Slugs - Documentation link added. Reset button added.
+* Tweak - EMAILS & MISC. - Reports - Documentation link added.
 
 = 2.4.8 - 04/05/2016 =
 * Dev - "Booster - Country Switcher" widget added.

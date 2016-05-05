@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Reports class.
  *
- * @version 2.4.7
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -26,13 +26,14 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
 		$this->id         = 'reports';
 		$this->short_desc = __( 'Reports', 'woocommerce-jetpack' );
 		$this->desc       = __( 'WooCommerce stock, sales, customers etc. reports.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-reports/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
