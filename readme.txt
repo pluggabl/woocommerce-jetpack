@@ -123,7 +123,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 05/05/2016 =
-* Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
+~$* Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
 * Fix - CART & CHECKOUT - Empty Cart Button - "Wrapping DIV style" option fixed in free version.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - "Add All Fields to Order Received Page" option added.
 * Tweak - Admin Modules Menu - "Shipping" module set to default in SHIPPING & ORDERS category.
