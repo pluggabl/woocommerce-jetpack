@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Numbers class.
  *
- * @version 2.4.4
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
 		$this->id         = 'order_numbers';
 		$this->short_desc = __( 'Order Numbers', 'woocommerce-jetpack' );
 		$this->desc       = __( 'WooCommerce sequential order numbering, custom order number prefix, suffix and number width.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-custom-order-numbers/';
 		parent::__construct();
 
 		$this->add_tools( array(
@@ -48,8 +49,9 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 */
 	public function display_order_number( $order_number, $order ) {
 		$order_number_meta = get_post_meta( $order->id, '_wcj_order_number', true );
-		if ( '' == $order_number_meta || 'no' === get_option( 'wcj_order_number_sequential_enabled' ) )
+		if ( '' == $order_number_meta || 'no' === get_option( 'wcj_order_number_sequential_enabled' ) ) {
 			$order_number_meta = $order->id;
+		}
 		$order_timestamp = strtotime( $order->post->post_date );
 		$order_number = apply_filters( 'wcj_get_option_filter',
 			sprintf( '%s%d', do_shortcode( get_option( 'wcj_order_number_prefix', '' ) ), $order_number_meta ),
@@ -98,11 +100,9 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * @version 2.4.4
 	 */
 	public function add_order_number_meta( $order_id, $do_overwrite ) {
-
 		if ( 'shop_order' !== get_post_type( $order_id ) ) {
 			return;
 		}
-
 		if ( true === $do_overwrite || 0 == get_post_meta( $order_id, '_wcj_order_number', true ) ) {
 			if ( 'yes' === get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'no' ) ) {
 				global $wpdb;
@@ -133,7 +133,6 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * Renumerate orders function.
 	 */
 	public function renumerate_orders() {
-
 		$args = array(
 			'post_type'      => 'shop_order',
 			'post_status'    => 'any',
@@ -141,14 +140,10 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			'orderby'        => 'date',
 			'order'          => 'ASC',
 		);
-
 		$loop = new WP_Query( $args );
-
 		while ( $loop->have_posts() ) : $loop->the_post();
-
 			$order_id = $loop->post->ID;
 			$this->add_order_number_meta( $order_id, true );
-
 		endwhile;
 	}
 
@@ -158,11 +153,13 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * @version 2.4.4
 	 */
 	function get_settings() {
-
 		$settings = array(
-
-			array( 'title' => __( 'Order Numbers', 'woocommerce-jetpack' ), 'type' => 'title', 'desc' => __( 'This section lets you enable sequential order numbering, set custom number prefix, suffix and width.', 'woocommerce-jetpack' ), 'id' => 'wcj_order_numbers_options' ),
-
+			array(
+				'title'    => __( 'Order Numbers', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'desc'     => __( 'This section lets you enable sequential order numbering, set custom number prefix, suffix and width.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_numbers_options',
+			),
 			array(
 				'title'    => __( 'Make Order Numbers Sequential', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -170,7 +167,6 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Next Order Number', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Next new order will be given this number.', 'woocommerce-jetpack' ) . ' ' . __( 'Use Renumerate Orders tool for existing orders.', 'woocommerce-jetpack' ),
@@ -179,7 +175,6 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'default'  => 1,
 				'type'     => 'number',
 			),
-
 			array(
 				'title'    => __( 'Order Number Custom Prefix', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Prefix before order number (optional). This will change the prefixes for all existing orders.', 'woocommerce-jetpack' ),
@@ -188,7 +183,6 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'type'     => 'text',
 				'css'      => 'width:300px;',
 			),
-
 			array(
 				'title'    => __( 'Order Number Date Prefix', 'woocommerce-jetpack' ),
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
@@ -196,11 +190,9 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'id'       => 'wcj_order_number_date_prefix',
 				'default'  => '',
 				'type'     => 'text',
-				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 				'css'      => 'width:300px;',
 			),
-
 			array(
 				'title'    => __( 'Order Number Width', 'woocommerce-jetpack' ),
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
@@ -208,11 +200,9 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'id'       => 'wcj_order_number_min_width',
 				'default'  => 0,
 				'type'     => 'number',
-				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 				'css'      => 'width:300px;',
 			),
-
 			array(
 				'title'    => __( 'Order Number Custom Suffix', 'woocommerce-jetpack' ),
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
@@ -220,11 +210,9 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'id'       => 'wcj_order_number_suffix',
 				'default'  => '',
 				'type'     => 'text',
-				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 				'css'      => 'width:300px;',
 			),
-
 			array(
 				'title'    => __( 'Order Number Date Suffix', 'woocommerce-jetpack' ),
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
@@ -232,11 +220,9 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'id'       => 'wcj_order_number_date_suffix',
 				'default'  => '',
 				'type'     => 'text',
-				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 				'css'      => 'width:300px;',
 			),
-
 			array(
 				'title'    => __( 'Use MySQL Transaction', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -245,11 +231,11 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
-			array( 'type'  => 'sectionend', 'id' => 'wcj_order_numbers_options' ),
-
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_order_numbers_options',
+			),
 		);
-
 		return $this->add_standard_settings( $settings );
 	}
 }
