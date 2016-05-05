@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.9
 	 */
 	function __construct() {
 
@@ -35,7 +35,9 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 			add_action( 'woocommerce_admin_shipping_fields',            array( $this, 'add_custom_shipping_fields_to_admin_order_display' ), PHP_INT_MAX );
 			add_action( 'woocommerce_admin_shipping_fields',            array( $this, 'add_custom_order_and_account_fields_to_admin_order_display' ), PHP_INT_MAX );
 
-			add_action( 'woocommerce_order_details_after_order_table',  array( $this, 'add_custom_fields_to_order_display' ), PHP_INT_MAX );
+			if ( 'yes' === get_option( 'wcj_checkout_custom_fields_add_to_order_received', 'yes' ) ) {
+				add_action( 'woocommerce_order_details_after_order_table', array( $this, 'add_custom_fields_to_order_display' ), PHP_INT_MAX );
+			}
 			add_action( 'woocommerce_email_after_order_table',          array( $this, 'add_custom_fields_to_emails' ), PHP_INT_MAX, 2 );
 
 			add_filter( 'woo_ce_order_fields',                          array( $this, 'add_custom_fields_to_store_exporter' ) );
@@ -559,7 +561,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 */
 	public function get_settings() {
 
@@ -574,7 +576,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 			array(
 				'title'     => __( 'Add All Fields to Admin Emails', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Add', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_checkout_custom_fields_email_all_to_admin',
 				'default'   => 'yes',
 				'type'      => 'checkbox',
@@ -582,8 +584,16 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 			array(
 				'title'     => __( 'Add All Fields to Customers Emails', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Add', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_checkout_custom_fields_email_all_to_customer',
+				'default'   => 'yes',
+				'type'      => 'checkbox',
+			),
+
+			array(
+				'title'     => __( 'Add All Fields to "Order Received" Page', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Add', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_checkout_custom_fields_add_to_order_received',
 				'default'   => 'yes',
 				'type'      => 'checkbox',
 			),
