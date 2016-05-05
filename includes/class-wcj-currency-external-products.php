@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency for External Products class.
  *
- * @version 2.4.4
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
 		$this->id         = 'currency_external_products';
 		$this->short_desc = __( 'Currency for External Products', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set different currency for external WooCommerce products.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-currency-for-external-products/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
