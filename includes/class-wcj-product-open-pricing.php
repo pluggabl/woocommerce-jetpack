@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Open Pricing class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -26,7 +26,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 		$this->id         = 'product_open_pricing';
 		$this->short_desc = __( 'Product Open Pricing (Name Your Price)', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Let your WooCommerce store customers enter price for the product manually.', 'woocommerce-jetpack' );
-		$this->link       = '';
+		$this->link       = 'http://booster.io/features/woocommerce-product-open-pricing-name-your-price/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency Product Base Price class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -17,12 +17,16 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.8
 	 */
 	function __construct() {
 
 		$this->id         = 'multicurrency_base_price';
 		$this->short_desc = __( 'Multicurrency Product Base Price', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Enter prices for WooCommerce products in different currencies.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-multicurrency-product-base-price/';
 		parent::__construct();
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );
