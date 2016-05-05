@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways by Country class.
  *
- * @version 2.4.4
+ * @version 2.4.9
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -18,13 +18,14 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.9
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_by_country';
 		$this->short_desc = __( 'Gateways by Country or State', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set countries or states to include/exclude for WooCommerce payment gateways to show up.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-by-country-or-state/';
 		parent::__construct();
 
 		add_filter( 'init', array( $this, 'add_hooks' ) );

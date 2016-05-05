@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Currency class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -18,13 +18,14 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_currency';
 		$this->short_desc = __( 'Gateways Currency', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Currency per WooCommerce payment gateway.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-currency/';
 		parent::__construct();
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );
