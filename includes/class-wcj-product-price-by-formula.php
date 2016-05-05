@@ -154,6 +154,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 			array(
 				'title'    => __( 'Default Settings', 'woocommerce-jetpack' ),
 				'type'     => 'title',
+				'desc'     => __( 'You can optionally set default settings here. All settings can later be changed in individual product\'s edit page.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_price_by_formula_options',
 			),
 			array(
