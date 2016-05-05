@@ -130,6 +130,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - PRICES & CURRENCIES - Bulk Price Converter - Documentation link added.
 * Tweak - PRODUCTS - Crowdfunding - Reset button added.
 * Tweak - CART & CHECKOUT - Empty Cart Button - Documentation link added. Reset button added.
+* Tweak - CART & CHECKOUT - Checkout Core Fields - Documentation link added. Reset button added.
 * Tweak - EMAILS & MISC. - Emails - Documentation link added.
 
 = 2.4.8 - 04/05/2016 =
