@@ -123,6 +123,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 05/05/2016 =
+* Fix - CART & CHECKOUT - Empty Cart Button - "Wrapping DIV style" option fixed in free version.
 * Tweak - PRICES & CURRENCIES - Multicurrency Product Base Price - Documentation link added.
 * Tweak - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Documentation link added.
 * Tweak - PRICES & CURRENCIES - Currency for External Products - Documentation link added.
