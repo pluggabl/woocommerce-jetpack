@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency Exchange Rates class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -17,12 +17,15 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.9
 	 */
 	function __construct() {
 
 		$this->id         = 'currency_exchange_rates';
 		$this->short_desc = __( 'Currency Exchange Rates', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Automatic currency exchange rates for WooCommerce.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-currency-exchange-rates/';
 		parent::__construct();
 
 		add_filter( 'init', array( $this, 'add_hooks' ) );
@@ -35,11 +38,13 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 	/**
 	 * get_settings.
+	 *
+	 * @version 2.4.9
 	 */
 	function get_settings() {
 		$settings = array();
 		$settings = apply_filters( 'wcj_currency_exchange_rates_settings', $settings );
-		return $this->add_enable_module_setting( $settings );
+		return $this->add_standard_settings( $settings );
 	}
 
 	/**
