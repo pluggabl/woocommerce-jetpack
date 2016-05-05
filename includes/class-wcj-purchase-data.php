@@ -304,11 +304,11 @@ class WCJ_Purchase_Data extends WCJ_Module {
 				'id'        => 'wcj_purchase_data_custom_price_fields_options',
 			),
 			array(
-				'title'    => __( 'Total Custom Price Fields', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_purchase_data_custom_price_fields_total_number',
-				'default'  => 1,
-				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'title'     => __( 'Total Custom Price Fields', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_purchase_data_custom_price_fields_total_number',
+				'default'   => 1,
+				'type'      => 'custom_number',
+				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
 		);
