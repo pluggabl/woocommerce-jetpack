@@ -33,6 +33,7 @@ return array(
 			'bulk_price_converter',
 			'wholesale_price',
 			'product_open_pricing',
+			'product_price_by_formula',
 			'currency_exchange_rates',
 		),
 	),
