@@ -132,6 +132,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - CART & CHECKOUT - Empty Cart Button - Documentation link added. Reset button added.
 * Tweak - CART & CHECKOUT - Checkout Core Fields - Documentation link added. Reset button added.
 * Tweak - EMAILS & MISC. - Emails - Documentation link added.
+* Tweak - EMAILS & MISC. - Old Slugs - Documentation link added. Reset button added.
 
 = 2.4.8 - 04/05/2016 =
 * Dev - "Booster - Country Switcher" widget added.

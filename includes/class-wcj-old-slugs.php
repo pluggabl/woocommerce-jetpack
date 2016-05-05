@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Old Slugs class.
  *
- * @version 2.3.10
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Old_Slugs extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
 		$this->id         = 'old_slugs';
 		$this->short_desc = __( 'Old Slugs', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Remove old WooCommerce products slugs.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-remove-old-products-slugs/';
 		parent::__construct();
 
 		$this->add_tools( array(
@@ -32,17 +33,6 @@ class WCJ_Old_Slugs extends WCJ_Module {
 				'desc'  => __( 'Tool removes old slugs/permalinks from database.', 'woocommerce-jetpack' ),
 			),
 		) );
-	}
-
-	/*
-	 * Add the settings.
-	 *
-	 * @version 2.3.9
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = $this->add_tools_list( $settings );
-		return $this->add_enable_module_setting( $settings );
 	}
 
 	/**
