@@ -122,6 +122,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.4.9 - 05/05/2016 =
+* Tweak - PRICES & CURRENCIES - Bulk Price Converter - Documentation link added.
+
 = 2.4.8 - 04/05/2016 =
 * Dev - "Booster - Country Switcher" widget added.
 * Dev - Currency reports added to Multicurrency and Gateways Currency modules.

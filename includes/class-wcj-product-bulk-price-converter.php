@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Bulk Price Converter class.
  *
- * @version 2.4.4
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,14 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
 		$this->id         = 'bulk_price_converter';
 		$this->short_desc = __( 'Bulk Price Converter', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Multiply all WooCommerce products prices by set value.', 'woocommerce-jetpack' );
+		$this->link       = 'http://booster.io/features/woocommerce-bulk-price-converter/';
 		parent::__construct();
 
 		$this->add_tools( array(
