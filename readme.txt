@@ -1,5 +1,5 @@
 === Booster for WooCommerce ===
-Contributors: algoritmika,anbinder,solovjov
+Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack,custom price labels,call for price,currency symbol,remove sorting,remove old product slugs,add to cart text,order number,sequential order numbering,email pdf invoice,pdf invoice,pdf invoices,already in cart,empty cart,redirect to checkout,minimum order amount,customize checkout fields,checkout fields,email,customize product tabs,product tabs,related products number,empty cart,redirect add to cart,redirect to checkout,product already in cart,custom payment gateway,payment gateway icon,auto-complete all orders,custom order statuses,custom order status,remove text from price,custom css,hide categories count,hide subcategories count,hide category count,hide subcategory count,display total sales,custom product tabs,remove product tab,payment gateway fee,vat,gateway by country,price by country,currency switcher
 Requires at least: 4.1
 Tested up to: 4.5
@@ -123,6 +123,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 06/05/2016 =
+* Dev - "Plugin renamed..." notice (`name_changed_notice`) removed.
 ~* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Fixed for deleted products.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Field ID display added to module's settings page.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `debug` column added.
