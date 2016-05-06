@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways per Category class.
  *
- * @version 2.4.7
+ * @version 2.4.9
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -158,7 +158,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	/**
 	 * add_per_category_settings.
 	 *
-	 * @version 2.3.7
+	 * @version 2.4.9
 	 */
 	function add_per_category_settings( $settings ) {
 
@@ -174,19 +174,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 			$product_cats[ $product_category->term_id ] = $product_category->name;
 		}
 
-		$products = array();
-		$args = array(
-			'post_type'      => 'product',
-			'post_status'    => 'any',
-			'posts_per_page' => -1,
-		);
-		$loop = new WP_Query( $args );
-		if ( $loop->have_posts() ) {
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$products[ strval( $loop->post->ID ) ] = get_the_title( $loop->post->ID );
-			endwhile;
-			wp_reset_postdata();
-		}
+		$products = wcj_get_products();
 
 		global $woocommerce;
 		$available_gateways = $woocommerce->payment_gateways->payment_gateways();
