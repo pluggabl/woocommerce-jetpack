@@ -33,7 +33,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 			add_action( 'woocommerce_admin_billing_fields',             array( $this, 'add_custom_billing_fields_to_admin_order_display' ), PHP_INT_MAX );
 			add_action( 'woocommerce_admin_shipping_fields',            array( $this, 'add_custom_shipping_fields_to_admin_order_display' ), PHP_INT_MAX );
-			add_action( 'woocommerce_admin_shipping_fields',            array( $this, 'add_custom_order_and_account_fields_to_admin_order_display' ), PHP_INT_MAX );
+			add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $this, 'add_custom_order_and_account_fields_to_admin_order_display' ), PHP_INT_MAX );
 
 			if ( 'yes' === get_option( 'wcj_checkout_custom_fields_add_to_order_received', 'yes' ) ) {
 				add_action( 'woocommerce_order_details_after_order_table', array( $this, 'add_custom_fields_to_order_display' ), PHP_INT_MAX );
@@ -296,14 +296,23 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 2.4.7
+	 * @version 2.4.9
 	 * @since   2.3.0
 	 */
-	function add_custom_fields_to_order_display( $order ) {
+	function add_custom_fields_to_order_display( $order, $section = '', $make_strong = false ) {
 		$post_meta = get_post_meta( $order->id );
 		foreach( $post_meta as $key => $values ) {
 
 			if ( false !== strpos( $key, 'wcj_checkout_field_' ) && isset( $values[0] ) ) {
+
+				if ( '' != $section ) {
+//					$the_section_meta_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_section_', $key );
+					//$the_section = current( explode( '_', $key ) );
+					$the_section = strtok( $key, '_' );
+					if ( $section !== $the_section ) {
+						continue;
+					}
+				}
 
 				if (
 					false !== strpos( $key, '_label_' ) ||
@@ -322,6 +331,10 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				} elseif ( is_array( $values[0] ) && isset( $values[0]['label'] ) ) {
 					$output .= $values[0]['label'] . ': ';
 					// TODO convert from before version 2.3.0
+				}
+
+				if ( $make_strong && '' != $output ) {
+					$output = '<strong>' . $output . '</strong>';
 				}
 
 				$the_value = ( is_array( $values[0] ) && isset( $values[0]['value'] ) ) ? $values[0]['value'] : $values[0];
@@ -447,11 +460,17 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 	/**
 	 * add_custom_order_and_account_fields_to_admin_order_display
+	 *
+	 * @version 2.4.9
 	 */
-	public function add_custom_order_and_account_fields_to_admin_order_display( $fields ) {
+	public function add_custom_order_and_account_fields_to_admin_order_display( $order ) {
+		$this->add_custom_fields_to_order_display( $order, 'order',   true );
+		$this->add_custom_fields_to_order_display( $order, 'account', true );
+		/*
 		$fields = $this->add_woocommerce_admin_fields( $fields, 'order' );
 		$fields = $this->add_woocommerce_admin_fields( $fields, 'account' );
 		return $fields;
+		*/
 	}
 
 	/**
