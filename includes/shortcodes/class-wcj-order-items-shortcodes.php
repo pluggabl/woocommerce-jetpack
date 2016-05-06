@@ -200,9 +200,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						if ( true === $item['is_custom'] ) {
 							$data[ $item_counter ][] = $item['name'];
 						} else {
-							$the_item_title = $the_product->get_title();
+							$the_item_title = $item['name'];//$the_product->get_title();
 							// Variation (if needed)
-							if ( $the_product->is_type( 'variation' ) && ! in_array( 'item_variation', $columns ) ) {
+							if ( is_object( $the_product ) && $the_product->is_type( 'variation' ) && ! in_array( 'item_variation', $columns ) ) {
 								$the_item_title .= '<div style="font-size:smaller;">' . wc_get_formatted_variation( $the_product->variation_data, true ) . '</div>';
 							}
 							$data[ $item_counter ][] = $the_item_title;
@@ -238,11 +238,11 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						}
 						break;
 					case 'item_variation':
-						$data[ $item_counter ][] = ( $the_product->is_type( 'variation' ) ) ? wc_get_formatted_variation( $the_product->variation_data, true ) : '';
+						$data[ $item_counter ][] = ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) ? wc_get_formatted_variation( $the_product->variation_data, true ) : '';
 						break;
 					case 'item_thumbnail':
 						//$data[ $item_counter ][] = $the_product->get_image();
-						$image_id = ( true === $item['is_custom'] ) ? 0 : $the_product->get_image_id();
+						$image_id = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? 0 : $the_product->get_image_id();
 						$image_src = ( 0 != $image_id ) ? wp_get_attachment_image_src( $image_id ) : wc_placeholder_img_src();
 						if ( is_array( $image_src ) ) $image_src = $image_src[0];
 						$maybe_width  = ( 0 != $atts['item_image_width'] )  ? ' width="'  . $atts['item_image_width']  . '"' : '';
@@ -250,7 +250,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$data[ $item_counter ][] = '<img src="' . $image_src . '"' . $maybe_width . $maybe_height . '>';
 						break;
 					case 'item_sku':
-						$data[ $item_counter ][] = ( true === $item['is_custom'] ) ? '' : $the_product->get_sku();
+						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_sku();
 						break;
 					case 'item_quantity':
 						$data[ $item_counter ][] = $item['qty'];
