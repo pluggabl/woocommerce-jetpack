@@ -123,6 +123,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 06/05/2016 =
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Field ID display added to module's settings page.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `debug` column added.
 ~$* Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
 * Fix - CART & CHECKOUT - Empty Cart Button - "Wrapping DIV style" option fixed in free version.

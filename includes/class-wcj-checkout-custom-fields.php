@@ -566,14 +566,12 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	public function get_settings() {
 
 		$settings = array(
-
 			array(
-				'title'    => __( 'Checkout Custom Fields Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'desc'     => '',//__( 'This section lets you add custom checkout fields.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_custom_fields_options',
+				'title'     => __( 'Checkout Custom Fields Options', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'desc'      => '',//__( 'This section lets you add custom checkout fields.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_checkout_custom_fields_options',
 			),
-
 			array(
 				'title'     => __( 'Add All Fields to Admin Emails', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Add', 'woocommerce-jetpack' ),
@@ -581,7 +579,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				'default'   => 'yes',
 				'type'      => 'checkbox',
 			),
-
 			array(
 				'title'     => __( 'Add All Fields to Customers Emails', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Add', 'woocommerce-jetpack' ),
@@ -589,7 +586,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				'default'   => 'yes',
 				'type'      => 'checkbox',
 			),
-
 			array(
 				'title'     => __( 'Add All Fields to "Order Received" Page', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Add', 'woocommerce-jetpack' ),
@@ -597,15 +593,16 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				'default'   => 'yes',
 				'type'      => 'checkbox',
 			),
-
-			array( 'type'  => 'sectionend', 'id' => 'wcj_checkout_custom_fields_options' ),
-
 			array(
-				'title'    => __( 'The Fields', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_checkout_custom_fields_individual_options',
+				'type'      => 'sectionend',
+				'id'        => 'wcj_checkout_custom_fields_options',
 			),
 
+			array(
+				'title'     => __( 'The Fields', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'id'        => 'wcj_checkout_custom_fields_individual_options',
+			),
 			array(
 				'title'     => __( 'Custom Fields Number', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'Click "Save changes" after you change this number.', 'woocommerce-jetpack' ),
@@ -639,7 +636,9 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				array(
 					array(
 						'title'     => __( 'Custom Field', 'woocommerce-jetpack' ) . ' #' . $i,
-						'desc'      => __( 'enabled', 'woocommerce-jetpack' ),
+						'desc'      => __( 'Enabled', 'woocommerce-jetpack' ),
+						'desc_tip'  => /* __( 'Key', 'woocommerce-jetpack' ) . ': ' . */
+							get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ) . '_' . 'wcj_checkout_field_' . $i,
 						'id'        => 'wcj_checkout_custom_field_enabled_' . $i,
 						'default'   => 'no',
 						'type'      => 'checkbox',
@@ -858,7 +857,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				)
 			);
 		}
-
 		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_checkout_custom_fields_individual_options' );
 
 		return $this->add_standard_settings( $settings );
