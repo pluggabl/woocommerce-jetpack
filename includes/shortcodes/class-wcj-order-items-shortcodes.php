@@ -28,6 +28,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * add_extra_atts.
+	 *
+	 * @version 2.4.9
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -43,6 +45,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'item_image_width'   => 0,
 			'item_image_height'  => 0,
 			'price_prefix'       => '',
+			'style_item_name_variation' => 'font-size:smaller;',
 		), $atts );
 		return $modified_atts;
 	}
@@ -203,7 +206,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 							$the_item_title = $item['name'];//$the_product->get_title();
 							// Variation (if needed)
 							if ( is_object( $the_product ) && $the_product->is_type( 'variation' ) && ! in_array( 'item_variation', $columns ) ) {
-								$the_item_title .= '<div style="font-size:smaller;">' . wc_get_formatted_variation( $the_product->variation_data, true ) . '</div>';
+								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">'
+									. str_replace( 'pa_', '', urldecode( wc_get_formatted_variation( $the_product->variation_data, true ) ) )
+									. '</div>';
 							}
 							$data[ $item_counter ][] = $the_item_title;
 						}
@@ -238,7 +243,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						}
 						break;
 					case 'item_variation':
-						$data[ $item_counter ][] = ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) ? wc_get_formatted_variation( $the_product->variation_data, true ) : '';
+						$data[ $item_counter ][] = ( is_object( $the_product ) && $the_product->is_type( 'variation' ) )
+							? str_replace( 'pa_', '', urldecode( wc_get_formatted_variation( $the_product->variation_data, true ) ) ) : '';
 						break;
 					case 'item_thumbnail':
 						//$data[ $item_counter ][] = $the_product->get_image();

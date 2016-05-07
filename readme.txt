@@ -122,7 +122,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 06/05/2016 =
+= 2.4.9 - 07/05/2016 =
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - `style_item_name_variation` attribute added.
+* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` and `item_variation` - Variation data fixed (`pa_` removed and `urlencode` added).
 * Fix - PAYMENT GATEWAYS - Gateways per Product or Category - Products query is made by blocks now (`wcj_get_products()`).
 * Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).
 * Fix - BUTTON & PRICE LABELS - Custom Price Labels - Products query is made by blocks now (`wcj_get_products()`).
