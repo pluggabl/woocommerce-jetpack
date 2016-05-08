@@ -122,21 +122,21 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 07/05/2016 =
-* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - `style_item_name_variation` attribute added.
-* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` and `item_variation` - Variation data fixed (`pa_` removed and `urlencode` added).
-* Fix - PAYMENT GATEWAYS - Gateways per Product or Category - Products query is made by blocks now (`wcj_get_products()`).
-* Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).
-* Fix - BUTTON & PRICE LABELS - Custom Price Labels - Products query is made by blocks now (`wcj_get_products()`).
-* Fix - CART & CHECKOUT - Checkout Custom Fields - `add_custom_order_and_account_fields_to_admin_order_display`.
+= 2.4.9 - 08/05/2016 =
 * Dev - "Plugin renamed..." notice (`name_changed_notice`) removed.
 * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Fixed for deleted products.
-* Dev - CART & CHECKOUT - Checkout Custom Fields - Field ID display added to module's settings page.
+* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` and `item_variation` - Variation data fixed (`pa_` removed and `urlencode` added).
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - `style_item_name_variation` attribute added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `debug` column added.
 * Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `posts_per_page` lowered to query only necessary number of product in `save_meta_box_value`.
+* Fix - BUTTON & PRICE LABELS - Custom Price Labels - Products query is made by blocks now (`wcj_get_products()`).
+* Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).
 * Fix - CART & CHECKOUT - Empty Cart Button - "Wrapping DIV style" option fixed in free version.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - `add_custom_order_and_account_fields_to_admin_order_display`.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Field ID display added to module's settings page.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - "Add All Fields to Order Received Page" option added.
+* Fix - PAYMENT GATEWAYS - Gateways per Product or Category - Products query is made by blocks now (`wcj_get_products()`).
 * Tweak - Admin Modules Menu - "Shipping" module set to default in SHIPPING & ORDERS category.
 * Tweak - PRICES & CURRENCIES - Currency Exchange Rates - Documentation link added. Reset button added.
 * Tweak - PRICES & CURRENCIES - Multicurrency Product Base Price - Documentation link added.
