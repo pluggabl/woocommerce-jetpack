@@ -63,6 +63,7 @@ return array(
 			'product_input_fields',
 			'product_add_to_cart',
 			'purchase_data',
+			'product_bookings',
 			'crowdfunding',
 			'product_images',
 		),

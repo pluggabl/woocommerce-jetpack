@@ -32,7 +32,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.4.9-dev-201605062300';
+	public $version = '2.4.9-dev-201605081732';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -108,7 +108,8 @@ final class WC_Jetpack {
 
 		if (
 			'yes' === get_option( 'wcj_product_input_fields_enabled' ) ||
-			'yes' === get_option( 'wcj_checkout_custom_fields_enabled' )
+			'yes' === get_option( 'wcj_checkout_custom_fields_enabled' ) ||
+			'yes' === get_option( 'wcj_product_bookings_enabled' )
 		){
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ) );
 		}
@@ -418,6 +419,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-product-input-fields.php' );
 		$settings[] = include_once( 'includes/class-wcj-product-bulk-price-converter.php' );
 		$settings[] = include_once( 'includes/class-wcj-purchase-data.php' );
+		$settings[] = include_once( 'includes/class-wcj-product-bookings.php' );
 		$settings[] = include_once( 'includes/class-wcj-crowdfunding.php' );
 		$settings[] = include_once( 'includes/class-wcj-wholesale-price.php' );
 		$settings[] = include_once( 'includes/class-wcj-product-open-pricing.php' );

@@ -25,6 +25,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Multicurrency Product Base Price* - Enter prices for WooCommerce products in different currencies.
 * *Prices and Currencies by Country* - Change WooCommerce product price and currency automatically by customer's country.
 * *Product Open Pricing (Name Your Price)* - Let your WooCommerce store customers enter price for the product manually.
+* *Product Price by Formula* - Set formula for automatic WooCommerce product price calculation.
 * *Wholesale Price* - Set WooCommerce wholesale pricing depending on product quantity in cart (buy more pay less).
 
 **Button & Price Labels**
@@ -36,6 +37,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 **Products**
 
+* *Bookings* - Add bookings products to WooCommerce.
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
 * *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products.
 * *Product Cost Price* - Save WooCommerce product purchase costs data for admin reports.
@@ -133,6 +135,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `posts_per_page` lowered to query only necessary number of product in `save_meta_box_value`.
 * Fix - BUTTON & PRICE LABELS - Custom Price Labels - Products query is made by blocks now (`wcj_get_products()`).
 * Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).
+~* Dev - PRODUCTS - Bookings - Initial module release.
 * Fix - CART & CHECKOUT - Empty Cart Button - "Wrapping DIV style" option fixed in free version.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - `add_custom_order_and_account_fields_to_admin_order_display`.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Field ID display added to module's settings page.
