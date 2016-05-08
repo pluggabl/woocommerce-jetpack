@@ -96,7 +96,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	 */
 	function add_info_to_order_item_meta(  $item_id, $values, $cart_item_key  ) {
 		if ( isset( $values['wcj_bookings_price'] ) ) {
-//			wc_add_order_item_meta( $item_id, '_' . 'wcj_bookings_price',     $values['wcj_bookings_price'] );
+			wc_add_order_item_meta( $item_id, '_' . 'wcj_bookings_price',     $values['wcj_bookings_price'] );
 			wc_add_order_item_meta( $item_id, '_' . 'wcj_bookings_date_from', $values['wcj_bookings_date_from'] );
 			wc_add_order_item_meta( $item_id, '_' . 'wcj_bookings_date_to',   $values['wcj_bookings_date_to'] );
 		}
