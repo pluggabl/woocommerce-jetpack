@@ -62,7 +62,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * save_meta_box_value.
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 * @since   2.4.8
 	 */
 	function save_meta_box_value( $option_value, $option_name, $module_id ) {
@@ -76,7 +76,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			$args = array(
 				'post_type'      => 'product',
 				'post_status'    => 'any',
-				'posts_per_page' => -1,
+				'posts_per_page' => 2,
 				'meta_key'       => '_' . 'wcj_product_open_price_enabled',
 				'meta_value'     => 'yes',
 			);

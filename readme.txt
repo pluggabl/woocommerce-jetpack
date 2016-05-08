@@ -134,6 +134,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Field ID display added to module's settings page.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `debug` column added.
 * Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `posts_per_page` lowered to query only necessary number of product in `save_meta_box_value`.
 * Fix - CART & CHECKOUT - Empty Cart Button - "Wrapping DIV style" option fixed in free version.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - "Add All Fields to Order Received Page" option added.
 * Tweak - Admin Modules Menu - "Shipping" module set to default in SHIPPING & ORDERS category.
