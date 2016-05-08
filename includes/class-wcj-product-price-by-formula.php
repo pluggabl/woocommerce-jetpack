@@ -30,7 +30,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			require_once( wcj_plugin_path() . '/includes/lib/evalmath.class.php' );
+			require_once( wcj_plugin_path() . '/includes/lib/PHPMathParser/Math.php' );
 
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
@@ -55,22 +55,29 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	 * @version 2.4.9
 	 * @since   2.4.9
 	 */
-	function change_price_by_formula( $price, $_product ) {
+	function change_price_by_formula( $price, $_product, $output_errors = false ) {
 		if ( '' != $price ) {
 			$the_formula = get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_eval', true );
 			if ( '' != $the_formula ) {
 				$total_params = get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_total_params', true );
 				if ( $total_params > 0 ) {
-					$m = new EvalMath;
-					$m->suppress_errors = true;
-					$m->evaluate( 'x = ' . $price );
+					$math = new PHPMathParser\Math();
+					$math->registerVariable( 'x', $price );
 					for ( $i = 1; $i <= $total_params; $i++ ) {
 						$the_param = get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_param_' . $i, true );
 						if ( '' != $the_param ) {
-							$m->evaluate( 'p' . $i . ' = ' . $the_param );
+							$math->registerVariable( 'p' . $i, $the_param );
 						}
 					}
-					$price = $m->evaluate( $the_formula );
+					$the_formula = str_replace( 'x', '$x', $the_formula );
+					$the_formula = str_replace( 'p', '$p', $the_formula );
+					try {
+						$price = $math->evaluate( $the_formula );
+					} catch ( Exception $e ) {
+						if ( $output_errors ) {
+							echo '<p style="color:red;">' . __( 'Error in formula', 'woocommerce-jetpack' ) . ': ' . $e->getMessage() . '</p>';
+						}
+					}
 				}
 			}
 		}
@@ -138,7 +145,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 
 		$the_product = wc_get_product();
 		$the_price   = $the_product->get_price();
-		$the_price   = $this->change_price_by_formula( $the_price, $the_product );
+		$the_price   = $this->change_price_by_formula( $the_price, $the_product, true );
 		echo '<h4>' . __( 'Final Price Preview', 'woocommerce-jetpack' ) . '</h4>';
 		echo wc_price( $the_price );
 	}

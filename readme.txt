@@ -130,7 +130,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - BUTTON & PRICE LABELS - Custom Price Labels - Products query is made by blocks now (`wcj_get_products()`).
 * Fix - CART & CHECKOUT - Checkout Custom Fields - `add_custom_order_and_account_fields_to_admin_order_display`.
 * Dev - "Plugin renamed..." notice (`name_changed_notice`) removed.
-~* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Fixed for deleted products.
+* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Fixed for deleted products.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Field ID display added to module's settings page.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `debug` column added.
 ~$* Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
