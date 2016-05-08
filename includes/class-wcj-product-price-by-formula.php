@@ -46,6 +46,9 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 				add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'change_price_by_formula' ), PHP_INT_MAX - 100, 2 );
 				add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 100, 3 );
 			}
+
+			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
+			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
 		}
 	}
 
@@ -106,6 +109,65 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 				: get_option( 'wcj_product_price_by_formula_total_params', 1 );
 		}
 		return $price_hash;
+	}
+
+	/**
+	 * save_meta_box_value.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function save_meta_box_value( $option_value, $option_name, $module_id ) {
+		if ( true === apply_filters( 'wcj_get_option_filter', false, true ) ) {
+			return $option_value;
+		}
+		if ( 'no' === $option_value ) {
+			return $option_value;
+		}
+		if ( $this->id === $module_id && 'wcj_product_price_by_formula_enabled' === $option_name ) {
+			$args = array(
+				'post_type'      => 'product',
+				'post_status'    => 'any',
+				'posts_per_page' => 2,
+				'meta_key'       => '_' . 'wcj_product_price_by_formula_enabled',
+				'meta_value'     => 'yes',
+			);
+			$loop = new WP_Query( $args );
+			$c = $loop->found_posts;
+			if ( $c >= 2 ) {
+				add_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
+				return 'no';
+			}
+		}
+		return $option_value;
+	}
+
+	/**
+	 * add_notice_query_var.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function add_notice_query_var( $location ) {
+		remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
+		return add_query_arg( array( 'wcj_product_price_by_formula_admin_notice' => true ), $location );
+	}
+
+	/**
+	 * admin_notices.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function admin_notices() {
+		if ( ! isset( $_GET['wcj_product_price_by_formula_admin_notice'] ) ) {
+			return;
+		}
+		?><div class="error"><p><?php
+			echo '<div class="message">'
+				. __( 'Booster: Free plugin\'s version is limited to only one price by formula product enabled at a time. You will need to get <a href="http://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of price by formula products.', 'woocommerce-jetpack' )
+				. '</div>';
+		?></p></div><?php
 	}
 
 	/**
