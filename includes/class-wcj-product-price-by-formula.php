@@ -56,15 +56,22 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	 * @since   2.4.9
 	 */
 	function change_price_by_formula( $price, $_product, $output_errors = false ) {
-		if ( '' != $price ) {
-			$the_formula = get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_eval', true );
+		if ( $this->is_price_by_formula_product( $_product ) && '' != $price ) {
+			$is_per_product = ( 'per_product' === get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_calculation', true ) ) ? true : false;
+			$the_formula = ( $is_per_product )
+				? get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_eval', true )
+				: get_option( 'wcj_product_price_by_formula_eval', '' );
 			if ( '' != $the_formula ) {
-				$total_params = get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_total_params', true );
+				$total_params = ( $is_per_product )
+					? get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_total_params', true )
+					: get_option( 'wcj_product_price_by_formula_total_params', 1 );
 				if ( $total_params > 0 ) {
 					$math = new PHPMathParser\Math();
 					$math->registerVariable( 'x', $price );
 					for ( $i = 1; $i <= $total_params; $i++ ) {
-						$the_param = get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_param_' . $i, true );
+						$the_param = ( $is_per_product )
+							? get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_param_' . $i, true )
+							: get_option( 'wcj_product_price_by_formula_param_' . $i, '' );
 						if ( '' != $the_param ) {
 							$math->registerVariable( 'p' . $i, $the_param );
 						}
@@ -89,10 +96,26 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	 *
 	 * @version 2.4.9
 	 * @since   2.4.9
+	 * @todo    recheck if this really needed
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		$price_hash['wcj_price_by_formula_total_params'] = get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_total_params', true ); // TODO?
+		if ( $this->is_price_by_formula_product( $_product ) ) {
+			$is_per_product = ( 'per_product' === get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_calculation', true ) ) ? true : false;
+			$price_hash['wcj_price_by_formula_total_params'] = ( $is_per_product )
+				? get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_total_params', true )
+				: get_option( 'wcj_product_price_by_formula_total_params', 1 );
+		}
 		return $price_hash;
+	}
+
+	/**
+	 * is_price_by_formula_product.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function is_price_by_formula_product( $_product ) {
+		return ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_enabled', true ) ) ? true : false;
 	}
 
 	/**
@@ -103,6 +126,26 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	 */
 	function get_meta_box_options() {
 		$options = array(
+			array(
+				'name'       => 'wcj_product_price_by_formula_enabled',
+				'default'    => 'no',
+				'type'       => 'select',
+				'options'    => array(
+					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+					'no'  => __( 'No', 'woocommerce-jetpack' ),
+				),
+				'title'      => __( 'Enabled', 'woocommerce-jetpack' ),
+			),
+			array(
+				'name'       => 'wcj_product_price_by_formula_calculation',
+				'default'    => 'per_product',
+				'type'       => 'select',
+				'options'    => array(
+					'per_product' => __( 'Use values below', 'woocommerce-jetpack' ),
+					'global'      => __( 'Use default values', 'woocommerce-jetpack' ),
+				),
+				'title'      => __( 'Calculation', 'woocommerce-jetpack' ),
+			),
 			array(
 				'name'       => 'wcj_product_price_by_formula_eval',
 				'default'    => get_option( 'wcj_product_price_by_formula_eval', '' ),
@@ -144,10 +187,12 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 		parent::create_meta_box();
 
 		$the_product = wc_get_product();
-		$the_price   = $the_product->get_price();
-		$the_price   = $this->change_price_by_formula( $the_price, $the_product, true );
-		echo '<h4>' . __( 'Final Price Preview', 'woocommerce-jetpack' ) . '</h4>';
-		echo wc_price( $the_price );
+		if ( $this->is_price_by_formula_product( $the_product ) ) {
+			$the_price   = $the_product->get_price();
+			$the_price   = $this->change_price_by_formula( $the_price, $the_product, true );
+			echo '<h4>' . __( 'Final Price Preview', 'woocommerce-jetpack' ) . '</h4>';
+			echo wc_price( $the_price );
+		}
 	}
 
 	/**
@@ -161,7 +206,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 			array(
 				'title'    => __( 'Default Settings', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => __( 'You can optionally set default settings here. All settings can later be changed in individual product\'s edit page.', 'woocommerce-jetpack' ),
+				'desc'     => __( 'You can set default settings here. All settings can later be changed in individual product\'s edit page.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_price_by_formula_options',
 			),
 			array(
