@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - `style_item_name_variation` attribute added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `debug` column added.
 * Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
+* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `post__not_in` added to `save_meta_box_value`.
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `posts_per_page` lowered to query only necessary number of product in `save_meta_box_value`.
 * Fix - BUTTON & PRICE LABELS - Custom Price Labels - Products query is made by blocks now (`wcj_get_products()`).
 * Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).

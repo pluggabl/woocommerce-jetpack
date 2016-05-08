@@ -131,6 +131,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 				'posts_per_page' => 2,
 				'meta_key'       => '_' . 'wcj_product_price_by_formula_enabled',
 				'meta_value'     => 'yes',
+				'post__not_in'   => array( get_the_ID() ),
 			);
 			$loop = new WP_Query( $args );
 			$c = $loop->found_posts;

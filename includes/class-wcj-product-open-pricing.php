@@ -79,6 +79,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				'posts_per_page' => 2,
 				'meta_key'       => '_' . 'wcj_product_open_price_enabled',
 				'meta_value'     => 'yes',
+				'post__not_in'   => array( get_the_ID() ),
 			);
 			$loop = new WP_Query( $args );
 			$c = $loop->found_posts;
