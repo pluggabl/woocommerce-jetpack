@@ -288,13 +288,13 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			$args = array(
 				'post_type'      => 'product',
 				'post_status'    => 'any',
-				'posts_per_page' => 2,
+				'posts_per_page' => 1,
 				'meta_key'       => '_' . 'wcj_product_bookings_enabled',
 				'meta_value'     => 'yes',
 				'post__not_in'   => array( get_the_ID() ),
 			);
 			$loop = new WP_Query( $args );
-			$c = $loop->found_posts;
+			$c = $loop->found_posts + 1;
 			if ( $c >= 2 ) {
 				add_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
 				return 'no';
