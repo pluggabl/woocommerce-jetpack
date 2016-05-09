@@ -125,6 +125,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 09/05/2016 =
+* Dev - POT file updated.
 * Dev - "Plugin renamed..." notice (`name_changed_notice`) removed.
 * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Fixed for deleted products.
 * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` and `item_variation` - Variation data fixed (`pa_` removed and `urlencode` added).
