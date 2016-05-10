@@ -101,11 +101,6 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 = More =
 * Visit the [Booster for WooCommerce plugin page](http://booster.io/)
 
-= Available Translations =
-* French - `fr_FR` by Jean-Marc Schreiber.
-* Dutch - `nl_NL`.
-* Russian - `ru_RU`.
-
 == Installation ==
 
 1. Upload the entire `woocommerce-jetpack` folder to the `/wp-content/plugins/` directory
@@ -124,7 +119,13 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 09/05/2016 =
+= 2.4.9 - 10/05/2016 =
+~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_goal_remaining_progress_bar]` shortcode added.
+~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` shortcode added.
+~* Dev - Shortcodes - Products - `[wcj_product_total_orders_items]` shortcode added.
+~* Dev - Shortcodes - Products - `date_i18n` added to `[wcj_product_crowdfunding_startdate]` and `[wcj_product_crowdfunding_deadline]`.
+~* Dev - Shortcodes - Products - `get_product_orders_data` - `offset` shortcodes attribute added.
+* Fix - Shortcodes - Products - `get_product_orders_data` - `total_orders` fixed.
 * Dev - POT file updated.
 * Dev - "Plugin renamed..." notice (`name_changed_notice`) removed.
 * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Fixed for deleted products.
