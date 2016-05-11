@@ -299,8 +299,9 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 * @version 2.4.9
 	 * @since   2.3.0
 	 */
-	function add_custom_fields_to_order_display( $order, $section = '', $make_strong = false ) {
+	function add_custom_fields_to_order_display( $order, $section = '', $add_styling = false ) {
 		$post_meta = get_post_meta( $order->id );
+		$final_output = '';
 		foreach( $post_meta as $key => $values ) {
 
 			if ( false !== strpos( $key, 'wcj_checkout_field_' ) && isset( $values[0] ) ) {
@@ -333,7 +334,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					// TODO convert from before version 2.3.0
 				}
 
-				if ( $make_strong && '' != $output ) {
+				if ( $add_styling && '' != $output ) {
 					$output = '<strong>' . $output . '</strong>';
 				}
 
@@ -366,7 +367,16 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					$output .= $the_value;
 				}
 
-				if ( '' != $output ) echo $output . '<br>';
+				if ( '' != $output ) {
+					$final_output .= $output . '<br>';
+				}
+			}
+		}
+		if ( '' != $final_output ) {
+			if ( $add_styling ) {
+				echo '<div class="clear"></div><p>' . $final_output . '</p>';
+			} else {
+				echo $final_output;
 			}
 		}
 	}

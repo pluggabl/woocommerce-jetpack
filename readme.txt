@@ -119,7 +119,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 10/05/2016 =
+= 2.4.9 - 11/05/2016 =
+* Dev - Text domain added to the plugin header.
 ~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_goal_remaining_progress_bar]` shortcode added.
 ~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` shortcode added.
 ~* Dev - Shortcodes - Products - `[wcj_product_total_orders_items]` shortcode added.
