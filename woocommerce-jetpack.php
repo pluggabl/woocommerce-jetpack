@@ -7,6 +7,7 @@ Version: 2.4.9-dev
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Text Domain: woocommerce-jetpack
+Domain Path: /langs
 Copyright: © 2016 Algoritmika Ltd.
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
