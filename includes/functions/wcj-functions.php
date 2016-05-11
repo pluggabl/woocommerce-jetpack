@@ -4,9 +4,33 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
+
+if ( ! function_exists( 'wcj_get_currency_exchange_rate' ) ) {
+	/**
+	 * wcj_get_currency_exchange_rate.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function wcj_get_currency_exchange_rate( $module, $currency_code ) {
+		$currency_exchange_rate = 1;
+		if ( wcj_is_module_enabled( $module ) ) {
+			if ( 'multicurrency' === $module ) {
+				$total_number = apply_filters( 'wcj_get_option_filter', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+				for ( $i = 1; $i <= $total_number; $i++ ) {
+					if ( $currency_code === get_option( 'wcj_multicurrency_currency_' . $i ) ) {
+						$currency_exchange_rate = get_option( 'wcj_multicurrency_exchange_rate_' . $i );
+						break;
+					}
+				}
+			}
+		}
+		return $currency_exchange_rate;
+	}
+}
 
 if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 	/**

@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 11/05/2016 =
+* Dev - Functions - `wcj_get_currency_exchange_rate()` function added.
 * Dev - Text domain added to the plugin header.
 ~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_goal_remaining_progress_bar]` shortcode added.
 ~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` shortcode added.
