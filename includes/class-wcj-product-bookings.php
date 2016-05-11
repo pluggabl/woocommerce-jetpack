@@ -35,6 +35,9 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+				add_action( 'wp_enqueue_scripts',                         array( $this, 'enqueue_scripts' ) );
+				add_action( 'wp_ajax_price_change',                       array( $this, 'price_change_ajax' ) );
+				add_action( 'wp_ajax_nopriv_price_change',                array( $this, 'price_change_ajax' ) );
 				// Prices
 				add_filter( 'woocommerce_get_price',                      array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
 				add_filter( 'woocommerce_get_sale_price',                 array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
@@ -66,6 +69,37 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
 		}
+	}
+
+	/**
+	 * price_change_ajax.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function price_change_ajax( $param ) {
+		if ( isset( $_POST['date_from'] ) && '' != $_POST['date_from'] && isset( $_POST['date_to'] ) && '' != $_POST['date_to'] ) {
+			$date_to       = strtotime( $_POST['date_to'] );
+			$date_from     = strtotime( $_POST['date_from'] );
+			$seconds_diff  = $date_to - $date_from;
+			$days_diff     = ( $seconds_diff / 60 / 60 / 24 );
+			$the_product   = wc_get_product( $_POST['product_id'] );
+			$price_per_day = $the_product->get_price();
+			$the_price     = $days_diff * $price_per_day;
+			echo wc_price( $the_price );
+		}
+		wp_die();
+	}
+
+	/**
+	 * enqueue_scripts.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function enqueue_scripts() {
+		wp_enqueue_script( 'wcj-bookings', wcj_plugin_url() . '/includes/js/wcj-bookings.js', array(), false, true );
+		wp_localize_script( 'wcj-bookings', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'product_id' => get_the_ID(), ) );
 	}
 
 	/**
