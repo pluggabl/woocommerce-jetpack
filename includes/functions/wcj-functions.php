@@ -8,6 +8,24 @@
  * @author  Algoritmika Ltd.
  */
 
+if ( ! function_exists( 'wcj_get_current_currency_code' ) ) {
+	/**
+	 * wcj_get_current_currency_code.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function wcj_get_current_currency_code( $module ) {
+		$current_currency_code = get_woocommerce_currency();
+		if ( wcj_is_module_enabled( $module ) ) {
+			if ( 'multicurrency' === $module ) {
+				$current_currency_code = ( isset( $_SESSION['wcj-currency'] ) ) ? $_SESSION['wcj-currency'] : $current_currency_code;
+			}
+		}
+		return $current_currency_code;
+	}
+}
+
 if ( ! function_exists( 'wcj_get_currency_exchange_rate' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate.

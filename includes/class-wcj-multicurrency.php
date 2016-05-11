@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 */
 	function __construct() {
 
@@ -31,7 +31,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 		add_filter( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
-			add_filter( 'init', array( $this, 'add_hooks' ) );
+//			add_filter( 'init', array( $this, 'add_hooks' ) );
+			$this->add_hooks();
 
 			if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
