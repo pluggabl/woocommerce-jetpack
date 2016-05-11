@@ -99,7 +99,13 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	 */
 	function enqueue_scripts() {
 		wp_enqueue_script( 'wcj-bookings', wcj_plugin_url() . '/includes/js/wcj-bookings.js', array(), false, true );
-		wp_localize_script( 'wcj-bookings', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ), 'product_id' => get_the_ID(), ) );
+		$the_product = wc_get_product();
+		wp_localize_script( 'wcj-bookings', 'ajax_object', array(
+			'ajax_url'            => admin_url( 'admin-ajax.php' ),
+			'product_id'          => get_the_ID(),
+			'wrong_dates_message' => __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ),
+			'original_price_html' => $the_product->get_price_html(),
+		) );
 	}
 
 	/**
@@ -271,6 +277,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" name="wcj_product_bookings_date_to" placeholder="" value="' . $date_to_value . '">',
 			);
 			echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none', ) );
+			echo '<div style="display:none !important;" name="wcj_bookings_message"><p style="color:red;"></p></div>';
 		}
 	}
 
