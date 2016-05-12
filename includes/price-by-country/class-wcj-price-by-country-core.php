@@ -333,7 +333,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_by_country.
 	 *
-	 * @version 2.4.5
+	 * @version 2.4.9
 	 */
 	public function change_price_by_country( $price, $product ) {
 
@@ -401,24 +401,24 @@ class WCJ_Price_by_Country_Core {
 				$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
 				if ( 1 != $country_exchange_rate ) {
 					$modified_price = $price * $country_exchange_rate;
+					$rounding = get_option( 'wcj_price_by_country_rounding', 'none' );
+					$precision = get_option( 'woocommerce_price_num_decimals', 2 );
+					switch ( $rounding ) {
+						case 'none':
+							$modified_price = round( $modified_price, $precision ); // $modified_price
+						case 'round':
+							$modified_price = round( $modified_price );
+						case 'floor':
+							$modified_price = floor( $modified_price );
+						case 'ceil':
+							$modified_price = ceil( $modified_price );
+					}
 					$is_price_modified = true;
 				}
 			}
 
 			if ( $is_price_modified ) {
-				$rounding = get_option( 'wcj_price_by_country_rounding', 'none' );
-				$precision = get_option( 'woocommerce_price_num_decimals', 2 );
-				switch ( $rounding ) {
-					case 'none':
-						//return ( $modified_price );
-						return round( $modified_price, $precision );
-					case 'round':
-						return round( $modified_price );
-					case 'floor':
-						return floor( $modified_price );
-					case 'ceil':
-						return ceil( $modified_price );
-				}
+				return $modified_price;
 			}
 		}
 		// No changes

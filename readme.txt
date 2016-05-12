@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 12/05/2016 =
+~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Now rounding applies to global (not per product) conversions only.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()` to prevent PHP notice on empty value.
 * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - Bulgarian language (`lang="BG"`) added.
 * Dev - Widgets - Multicurrency Switcher - "module not enabled" message added.
