@@ -372,11 +372,13 @@ final class WC_Jetpack {
 	/**
 	 * include_functions.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.9
 	 */
 	private function include_functions() {
 		include_once( 'includes/functions/wcj-debug-functions.php' );
 		include_once( 'includes/functions/wcj-functions.php' );
+		include_once( 'includes/functions/wcj-functions-number-to-words.php' );
+		include_once( 'includes/functions/wcj-functions-number-to-words-bg.php' );
 		include_once( 'includes/functions/wcj-html-functions.php' );
 		include_once( 'includes/functions/wcj-country-functions.php' );
 		include_once( 'includes/functions/wcj-invoicing-functions.php' );

@@ -119,7 +119,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 11/05/2016 =
+= 2.4.9 - 12/05/2016 =
+* Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - Bulgarian language (`lang="BG"`) added.
 * Dev - Widgets - Multicurrency Switcher - "module not enabled" message added.
 ~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `add_hooks()` moved from `init` hook to constructor.
 * Dev - Functions - `wcj_get_current_currency_code()` function added.

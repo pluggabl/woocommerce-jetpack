@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -70,7 +70,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.9
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -86,6 +86,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'whole'         => __( 'Dollars', 'woocommerce-jetpack' ),
 			'decimal'       => __( 'Cents', 'woocommerce-jetpack' ),
 			'precision'     => get_option( 'woocommerce_price_num_decimals', 2 ),
+			'lang'          => 'EN',
 		), $atts );
 
 		return $modified_atts;
@@ -504,7 +505,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_total_in_words.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.9
 	 */
 	function wcj_order_total_in_words( $atts ) {
 
@@ -518,11 +519,16 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$dollars = $atts['whole'];
 		$cents = $atts['decimal'];
 
-		return sprintf( $the_number_in_words,
-			ucfirst( convert_number_to_words( $order_total_whole ) ),
-			$dollars,
-			ucfirst( convert_number_to_words( $order_total_decimal ) ),
-			$cents );
+		switch ( $atts['lang'] ) {
+			case 'BG':
+				return convert_number_to_words_bg( $order_total );
+			default: // 'EN'
+				return sprintf( $the_number_in_words,
+					ucfirst( convert_number_to_words( $order_total_whole ) ),
+					$dollars,
+					ucfirst( convert_number_to_words( $order_total_decimal ) ),
+					$cents );
+		}
 	}
 }
 
