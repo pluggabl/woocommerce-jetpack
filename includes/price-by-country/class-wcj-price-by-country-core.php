@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.4.5
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -195,7 +195,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.9
 	 */
 	public function get_customer_country_group_id() {
 
@@ -267,7 +267,7 @@ class WCJ_Price_by_Country_Core {
 					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i );
 					break;
 			}
-			if ( in_array( $country, $country_exchange_rate_group ) ) {
+			if ( is_array( $country_exchange_rate_group ) && in_array( $country, $country_exchange_rate_group ) ) {
 				$this->customer_country_group_id = $i;
 				//wcj_log( 'customer_country_group_id=' . $this->customer_country_group_id );
 				return $i;
