@@ -34,7 +34,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.4.9-dev-201605081732';
+	public $version = '2.4.9-dev-201605130057';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -427,6 +427,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-crowdfunding.php' );
 		$settings[] = include_once( 'includes/class-wcj-wholesale-price.php' );
 		$settings[] = include_once( 'includes/class-wcj-product-open-pricing.php' );
+		$settings[] = include_once( 'includes/class-wcj-price-by-user-role.php' );
 		$settings[] = include_once( 'includes/class-wcj-product-price-by-formula.php' );
 		$settings[] = include_once( 'includes/class-wcj-product-images.php' );
 		$settings[] = include_once( 'includes/class-wcj-add-to-cart.php' );
