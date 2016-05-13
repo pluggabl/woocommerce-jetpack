@@ -119,8 +119,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 12/05/2016 =
--* Dev - PRICES & CURRENCIES - Price by User Role - Initial module release.
+= 2.4.9 - 13/05/2016 =
+-$* Dev - PRICES & CURRENCIES - Price by User Role - Initial module release.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Now rounding applies to global (not per product) conversions only.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()` to prevent PHP notice on empty value.
 * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - Bulgarian language (`lang="BG"`) added.
@@ -146,7 +146,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `posts_per_page` lowered to query only necessary number of product in `save_meta_box_value`.
 * Fix - BUTTON & PRICE LABELS - Custom Price Labels - Products query is made by blocks now (`wcj_get_products()`).
 * Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).
-~* Dev - PRODUCTS - Bookings - Initial module release.
+-* Dev - PRODUCTS - Bookings - Initial module release.
 * Fix - CART & CHECKOUT - Empty Cart Button - "Wrapping DIV style" option fixed in free version.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - `add_custom_order_and_account_fields_to_admin_order_display`.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Field ID display added to module's settings page.
