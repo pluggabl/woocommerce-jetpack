@@ -34,7 +34,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.4.9-dev-201605130057';
+	public $version = '2.4.9-dev-201605132359';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -389,7 +389,7 @@ final class WC_Jetpack {
 	/**
 	 * include_shortcodes.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.9
 	 */
 	private function include_shortcodes() {
 		//if ( 'yes' === get_option( 'wcj_shortcodes_enabled', 'no' ) ) {
@@ -400,6 +400,7 @@ final class WC_Jetpack {
 			include_once( 'includes/shortcodes/class-wcj-orders-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-order-items-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-products-shortcodes.php' );
+			include_once( 'includes/shortcodes/class-wcj-products-add-form-shortcodes.php' );
 		}
 	}
 
