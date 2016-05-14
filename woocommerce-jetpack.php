@@ -15,7 +15,12 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-if ( ! in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) return; // Check if WooCommerce is active
+// Check if WooCommerce is active
+$plugin = 'woocommerce/woocommerce.php';
+if (
+	! in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) &&
+	! ( is_multisite() && array_key_exists( $plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
+) return;
 
 if ( ! class_exists( 'WC_Jetpack' ) ) :
 
@@ -34,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.4.9-dev-201605132359';
+	public $version = '2.4.9-dev-201605142045';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
