@@ -38,12 +38,13 @@ class WCJ_Old_Slugs extends WCJ_Module {
 	/**
 	 * add_old_slugs_tool_tab.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.9
 	 */
 	public function create_old_slugs_tool() {
 
 		global $wpdb;
-		$all_old_slugs = $wpdb->get_results( "SELECT * FROM wp_postmeta WHERE meta_key = '_wp_old_slug' ORDER BY post_id" );
+		$wp_postmeta_table = $wpdb->prefix . 'postmeta';
+		$all_old_slugs = $wpdb->get_results( "SELECT * FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug' ORDER BY post_id" );
 		$num_old_slugs = count( $all_old_slugs );
 		$remove_result_html = '';
 		if ( $num_old_slugs > 0 ) {
@@ -74,11 +75,11 @@ class WCJ_Old_Slugs extends WCJ_Module {
 				if ( isset( $_POST['remove_old_products_slugs'] ) ) $post_ids_to_delete = join( ',', $posts_ids['products'] );
 				else if ( isset( $_POST['remove_old_none_products_slugs'] ) ) $post_ids_to_delete = join( ',', $posts_ids['none_products'] );
 
-				$the_delete_query = "DELETE FROM wp_postmeta WHERE meta_key = '_wp_old_slug' AND post_id IN ($post_ids_to_delete)";
+				$the_delete_query = "DELETE FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug' AND post_id IN ($post_ids_to_delete)";
 
 				$delete_result = $wpdb->get_results( $the_delete_query );
 
-				$recheck_result = $wpdb->get_results("SELECT * FROM wp_postmeta WHERE meta_key = '_wp_old_slug'");
+				$recheck_result = $wpdb->get_results("SELECT * FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug'");
 				$recheck_result_count = count( $recheck_result );
 				$remove_result_html = '<div class="updated"><p><strong>Removing old slugs from database finished! ' . ($num_old_slugs-$recheck_result_count) . ' old slug(s) deleted. Please <a href="">refresh</a> the page.</strong></p></div>';
 			}

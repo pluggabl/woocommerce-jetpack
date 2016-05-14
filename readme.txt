@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 14/05/2016 =
+* Fix - EMAILS & MISC. - Old Slugs - `$wpdb->prefix` fix.
 ~* Dev - Multisite enabled.
 -$* Dev - PRICES & CURRENCIES - Products by Users - Initial module release.
 -$* Dev - PRICES & CURRENCIES - Price by User Role - Initial module release.
