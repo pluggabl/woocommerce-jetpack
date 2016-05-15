@@ -121,7 +121,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * create_migrate_from_custom_price_labels_tool.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.9
 	 */
 	public function create_migrate_from_custom_price_labels_tool() {
 
@@ -130,38 +130,41 @@ class WCJ_Price_Labels extends WCJ_Module {
 		$migrate = isset( $_POST['migrate'] ) ? true : false;
 
 		$migration_data = array(
-			'_simple_is_custom_pricing_label'					=> '_wcj_price_labels_instead_enabled',
-			'_simple_is_custom_pricing_label_home'				=> '_wcj_price_labels_instead_home',
-			'_simple_is_custom_pricing_label_products'			=> '_wcj_price_labels_instead_products',
-			'_simple_is_custom_pricing_label_single'			=> '_wcj_price_labels_instead_single',
-			'_simple_is_custom_pricing_label_text'				=> '_wcj_price_labels_instead_text',
+			'_simple_is_custom_pricing_label'                  => '_wcj_price_labels_instead_enabled',
+			'_simple_is_custom_pricing_label_home'             => '_wcj_price_labels_instead_home',
+			'_simple_is_custom_pricing_label_products'         => '_wcj_price_labels_instead_products',
+			'_simple_is_custom_pricing_label_single'           => '_wcj_price_labels_instead_single',
+			'_simple_is_custom_pricing_label_text'             => '_wcj_price_labels_instead_text',
 
-			'_simple_is_custom_pricing_label_before'			=> '_wcj_price_labels_before_enabled',
-			'_simple_is_custom_pricing_label_before_home'		=> '_wcj_price_labels_before_home',
-			'_simple_is_custom_pricing_label_before_products'	=> '_wcj_price_labels_before_products',
-			'_simple_is_custom_pricing_label_before_single'		=> '_wcj_price_labels_before_single',
-			'_simple_is_custom_pricing_label_text_before'		=> '_wcj_price_labels_before_text',
+			'_simple_is_custom_pricing_label_before'           => '_wcj_price_labels_before_enabled',
+			'_simple_is_custom_pricing_label_before_home'      => '_wcj_price_labels_before_home',
+			'_simple_is_custom_pricing_label_before_products'  => '_wcj_price_labels_before_products',
+			'_simple_is_custom_pricing_label_before_single'    => '_wcj_price_labels_before_single',
+			'_simple_is_custom_pricing_label_text_before'      => '_wcj_price_labels_before_text',
 
-			'_simple_is_custom_pricing_label_between'			=> '_wcj_price_labels_between_enabled',
-			'_simple_is_custom_pricing_label_between_home'		=> '_wcj_price_labels_between_home',
-			'_simple_is_custom_pricing_label_between_products'	=> '_wcj_price_labels_between_products',
-			'_simple_is_custom_pricing_label_between_single'	=> '_wcj_price_labels_between_single',
-			'_simple_is_custom_pricing_label_text_between'		=> '_wcj_price_labels_between_text',
+			'_simple_is_custom_pricing_label_between'          => '_wcj_price_labels_between_enabled',
+			'_simple_is_custom_pricing_label_between_home'     => '_wcj_price_labels_between_home',
+			'_simple_is_custom_pricing_label_between_products' => '_wcj_price_labels_between_products',
+			'_simple_is_custom_pricing_label_between_single'   => '_wcj_price_labels_between_single',
+			'_simple_is_custom_pricing_label_text_between'     => '_wcj_price_labels_between_text',
 
-			'_simple_is_custom_pricing_label_after'				=> '_wcj_price_labels_after_enabled',
-			'_simple_is_custom_pricing_label_after_home'		=> '_wcj_price_labels_after_home',
-			'_simple_is_custom_pricing_label_after_products'	=> '_wcj_price_labels_after_products',
-			'_simple_is_custom_pricing_label_after_single'		=> '_wcj_price_labels_after_single',
-			'_simple_is_custom_pricing_label_text_after'		=> '_wcj_price_labels_after_text',
+			'_simple_is_custom_pricing_label_after'            => '_wcj_price_labels_after_enabled',
+			'_simple_is_custom_pricing_label_after_home'       => '_wcj_price_labels_after_home',
+			'_simple_is_custom_pricing_label_after_products'   => '_wcj_price_labels_after_products',
+			'_simple_is_custom_pricing_label_after_single'     => '_wcj_price_labels_after_single',
+			'_simple_is_custom_pricing_label_text_after'       => '_wcj_price_labels_after_text',
 		);
-
-		$args = array(
-			'post_type' => 'product',
-			'posts_per_page' => -1,
-		);
-		$loop = new WP_Query( $args );
-		if ( $loop->have_posts() ) {
-			$html = '<pre><ul>';
+		$offset = 0;
+		$block_size = 96;
+		$html = '<pre><ul>';
+		while( true ) {
+			$args = array(
+				'post_type'      => 'product',
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
 			while ( $loop->have_posts() ) : $loop->the_post();
 				$the_product_id = get_the_ID();
 				foreach ( $migration_data as $old_meta_name => $new_meta_name ) {
@@ -209,13 +212,12 @@ class WCJ_Price_Labels extends WCJ_Module {
 					}
 				}
 			endwhile;
-			if ( '<pre><ul>' == $html )
-				$html = __( 'No data to migrate found', 'woocommerce-jetpack' );
-			else
-				$html .= '</ul></pre>';
-		} else {
-			$html = __( 'No products found', 'woocommerce-jetpack' );
+			$offset += $block_size;
 		}
+		if ( '<pre><ul>' == $html )
+			$html = __( 'No data to migrate found', 'woocommerce-jetpack' );
+		else
+			$html .= '</ul></pre>';
 		wp_reset_postdata();
 
 		$form_html =  '<form method="post" action="">';
