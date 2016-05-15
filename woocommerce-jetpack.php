@@ -227,7 +227,7 @@ final class WC_Jetpack {
 		if ( ! is_admin() ) return;
 
 		//require_once( ABSPATH . 'wp-includes/pluggable.php' );
-		if ( ! is_super_admin() ) return;
+		if ( ! wcj_is_user_role( 'administrator' ) ) return;
 
 		$user_id = get_current_user_id();
 
@@ -523,7 +523,7 @@ final class WC_Jetpack {
 						// Admin reset
 						if ( isset ( $_GET['woojetpack_admin_options_reset'] ) ) {
 							require_once( ABSPATH . 'wp-includes/pluggable.php' );
-							if ( is_super_admin() ) {
+							if ( wcj_is_user_role( 'administrator' ) ) {
 								delete_option( $value['id'] );
 							}
 						}

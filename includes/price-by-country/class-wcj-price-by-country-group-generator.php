@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price By Country Group Generator class.
  *
- * @version  2.4.4
+ * @version  2.4.9
  * @author   Algoritmika Ltd.
  */
 
@@ -63,7 +63,7 @@ class WCJ_Price_By_Country_Group_Generator {
 	/**
 	 * create_all_countries_groups.
 	 *
-	 * @version 2.4.4
+	 * @version 2.4.9
 	 */
 	function create_all_countries_groups() {
 		global $wcj_notice;
@@ -73,7 +73,7 @@ class WCJ_Price_By_Country_Group_Generator {
 		if ( isset( $_POST['save'] ) ) {
 			return;
 		}
-		if ( /* ! is_admin() || */ ! is_super_admin() || 1 === apply_filters( 'wcj_get_option_filter', 1, '' ) ) {
+		if ( /* ! is_admin() || */ ! wcj_is_user_role( 'administrator' ) || 1 === apply_filters( 'wcj_get_option_filter', 1, '' ) ) {
 			$wcj_notice = __( 'Create All Country Groups Failed.', 'woocommerce-jetpack' );
 			return;
 		}

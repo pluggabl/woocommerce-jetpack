@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -40,11 +40,11 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * reset_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.9
 	 * @since   2.4.0
 	 */
 	function reset_settings() {
-		if ( isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && is_super_admin() && ! isset( $_POST['save'] ) ) {
+		if ( isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) ) {
 			global $wcj_notice;
 			if ( ! isset( $_GET['wcj_confirm_reset_settings'] ) ) {
 				$wcj_notice .= __( 'Are you sure you want to reset current module\'s settings to default values?', 'woocommerce-jetpack' );

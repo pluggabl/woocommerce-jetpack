@@ -207,7 +207,7 @@ class WCJ_Price_by_Country_Core {
 		/* if ( -1 === $this->customer_country_group_id )
 			return null; */
 
-		if ( isset( $_GET['country'] ) && '' != $_GET['country'] && is_super_admin() ) {
+		if ( isset( $_GET['country'] ) && '' != $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
 
 			$country = $_GET['country'];
 

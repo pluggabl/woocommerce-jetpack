@@ -90,11 +90,11 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * create_wpml_xml_file.
 	 *
-	 * @version 2.4.1
+	 * @version 2.4.9
 	 * @since   2.4.1
 	 */
 	function create_wpml_xml_file_tool() {
-		if ( ! isset( $_GET['create_wpml_xml_file'] ) || ! is_super_admin() ) {
+		if ( ! isset( $_GET['create_wpml_xml_file'] ) || ! wcj_is_user_role( 'administrator' ) ) {
 			return;
 		}
 		if ( ! isset( $_GET['section'] ) || 'wpml' != $_GET['section'] ) {

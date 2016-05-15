@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Files Upload class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  */
@@ -165,6 +165,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 
 	/**
 	 * process_checkout_files_upload.
+	 *
+	 * @version 2.4.9
 	 */
 	function process_checkout_files_upload() {
 		if ( ! session_id() ) {
@@ -202,7 +204,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		if ( isset( $_GET['wcj_download_checkout_file_admin'] ) ) {
 			$tmp_file_name = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . $_GET['wcj_download_checkout_file_admin'];
 			$file_name     = get_post_meta( $_GET['post'], '_' . 'wcj_checkout_files_upload_real_name_' . $_GET['wcj_checkout_file_number'], true );
-			if ( is_super_admin() || is_shop_manager() ) {
+			if ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) {
 				header( "Expires: 0" );
 				header( "Cache-Control: must-revalidate, post-check=0, pre-check=0" );
 				header( "Cache-Control: private", false );

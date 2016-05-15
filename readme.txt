@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 14/05/2016 =
+~* Dev - `is_super_admin()` replaced with `wcj_is_user_role()`.
 * Fix - EMAILS & MISC. - Old Slugs - `$wpdb->prefix` fix.
 ~* Dev - Multisite enabled.
 -$* Dev - PRICES & CURRENCIES - Products by Users - Initial module release.

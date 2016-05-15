@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Report Tool class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -28,7 +28,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * generate_report_zip.
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 * @since   2.3.10
 	 */
 	function generate_report_zip() {
@@ -37,7 +37,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 				$this->notice = '<div class="error"><p><strong>' . __( 'This option is disabled in WooCommerce > Settings > Booster > Emails & Misc. > General > Advanced Options > Disable Saving PDFs in PHP directory for temporary files', 'woocommerce-jetpack' ) . '</strong></p></div>';
 			} else {
 				if ( ! empty( $_POST['report_year'] ) && ! empty( $_POST['report_month'] ) && ! empty( $_POST['invoice_type'] ) ) {
-					if ( is_super_admin() || is_shop_manager() ) {
+					if ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) {
 						if ( false === $this->get_invoices_report_zip( $_POST['report_year'], $_POST['report_month'], $_POST['invoice_type'] ) ) {
 							$this->notice = '<div class="error"><p><strong>' . __( 'Sorry, but something went wrong...', 'woocommerce-jetpack' ) . '</strong></p></div>';
 						}

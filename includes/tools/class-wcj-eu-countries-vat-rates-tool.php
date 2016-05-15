@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack EU Countries VAT Rates Tool class.
  *
- * @version 2.3.10
+ * @version 2.4.9
  * @since   2.3.10
  * @author  Algoritmika Ltd.
  */
@@ -28,12 +28,12 @@ class WCJ_EU_Countries_VAT_Rates_Tool {
 	/**
 	 * add_eu_countries_vat_rates.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.9
 	 * @since   2.3.10
 	 */
 	function add_eu_countries_vat_rates() {
 		if ( ! isset( $_POST['add_eu_countries_vat_rates'] ) ) return;
-		if ( ! is_super_admin() && ! is_shop_manager() ) return;
+		if ( ! wcj_is_user_role( 'administrator' ) && ! is_shop_manager() ) return;
 		$loop = 0;
 		foreach ( wcj_get_european_union_countries_with_vat() as $country => $rate ) {
 			$tax_rate = array(

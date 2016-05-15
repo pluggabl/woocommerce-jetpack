@@ -39,12 +39,12 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * create_tool.
 	 *
-	 * @version 2.3.10
+	 * @version 2.4.9
 	 */
 	public function create_admin_tools_tool() {
 
 		$the_notice = '';
-		if ( isset( $_GET['wcj_delete_log'] ) && is_super_admin() ) {
+		if ( isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) ) {
 			update_option( 'wcj_log', '' );
 			$the_notice .= __( 'Log deleted successfully.', 'woocommerce-jetpack' );
 		}

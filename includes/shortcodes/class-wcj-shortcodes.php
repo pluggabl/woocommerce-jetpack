@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shortcodes class.
  *
- * @version 2.3.9
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -54,7 +54,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 2.3.9
+	 * @version 2.4.9
 	 */
 	function wcj_shortcode( $atts, $content, $shortcode ) {
 
@@ -74,7 +74,7 @@ class WCJ_Shortcodes {
 		$atts = array_merge( $global_defaults, $atts );
 
 		// Check if privileges are ok
-		if ( 'admin' === $atts['visibility'] && ! is_super_admin() ) return '';
+		if ( 'admin' === $atts['visibility'] && ! wcj_is_user_role( 'administrator' ) ) return '';
 
 		// Check if site visibility is ok
 		if ( '' != $atts['site_visibility'] ) {
@@ -143,10 +143,12 @@ class WCJ_Shortcodes {
 
 	/**
 	 * wcj_get_user_location.
+	 *
+	 * @version 2.4.9
 	 */
 	function wcj_get_user_location() {
 		$country = '';
-		if ( isset( $_GET['country'] ) && '' != $_GET['country'] && is_super_admin() ) {
+		if ( isset( $_GET['country'] ) && '' != $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
 			$country = $_GET['country'];
 		} else {
 			// Get the country by IP

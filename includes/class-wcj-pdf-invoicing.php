@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing class.
  *
- * @version 2.4.7
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -137,7 +137,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * catch_args.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.9
 	 */
 	function catch_args() {
 		$this->order_id        = ( isset( $_GET['order_id'] ) )                                             ? $_GET['order_id'] : 0;
@@ -145,10 +145,10 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		$this->save_as_pdf     = ( isset( $_GET['save_pdf_invoice'] ) && '1' == $_GET['save_pdf_invoice'] ) ? true : false;
 		$this->get_invoice     = ( isset( $_GET['get_invoice'] ) && '1' == $_GET['get_invoice'] )           ? true : false;
 
-		if ( isset( $_GET['create_invoice_for_order_id'] ) && ( is_super_admin() || is_shop_manager() ) ) {
+		if ( isset( $_GET['create_invoice_for_order_id'] ) && ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) ) {
 			$this->create_document( $_GET['create_invoice_for_order_id'], $this->invoice_type_id );
 		}
-		if ( isset( $_GET['delete_invoice_for_order_id'] ) && ( is_super_admin() || is_shop_manager() ) ) {
+		if ( isset( $_GET['delete_invoice_for_order_id'] ) && ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) ) {
 			$this->delete_document( $_GET['delete_invoice_for_order_id'], $this->invoice_type_id );
 		}
 	}

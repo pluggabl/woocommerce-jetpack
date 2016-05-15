@@ -383,6 +383,20 @@ if ( ! function_exists( 'is_shop_manager' ) ) {
 }
 
 /**
+ * wcj_is_user_role.
+ *
+ * @version 2.4.9
+ * @since   2.4.9
+ * @return  bool
+ */
+if ( ! function_exists( 'wcj_is_user_role' ) ) {
+	function wcj_is_user_role( $user_fole, $user_id = 0 ) {
+		$the_user = ( 0 == $user_id ) ? wp_get_current_user() : get_user_by( 'id', $user_id );
+		return ( isset( $the_user->roles[0] ) && $user_fole === $the_user->roles[0] ) ? true : false;
+	}
+}
+
+/**
  * validate_VAT.
  *
  * @return mixed: bool on successful checking (can be true or false), null otherwise
