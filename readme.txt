@@ -120,6 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 15/05/2016 =
+* Fix - EMAILS & MISC. - Reports - `gather_orders_data` - Fixed for deleted products (caused PHP notice).
+* Dev - EMAILS & MISC. - Reports - `gather_products_data` - Query by blocks.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - `create_migrate_from_custom_price_labels_tool` - Query by blocks.
 * Dev - SHIPPING & ORDERS - Order Numbers - `renumerate_orders` - Query by blocks.
 ~* Dev - `is_super_admin()` replaced with `wcj_is_user_role()`.

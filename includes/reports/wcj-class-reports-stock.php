@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Stock Reports class.
  *
- * @version 2.3.0
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -94,24 +94,23 @@ class WCJ_Reports_Stock {
 	/*
 	 * gather_products_data.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.9
 	 */
 	public function gather_products_data( &$products_info ) {
 
-		//return array();
-
-		$args = array(
-			'post_type'      => 'product',
-			'posts_per_page' => -1,
-		);
-
-		$loop = new WP_Query( $args );
-		if ( $loop->have_posts() ) {
-
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			$args = array(
+				'post_type'      => 'product',
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
 			while ( $loop->have_posts() ) : $loop->the_post();
 
 				$the_ID = get_the_ID();
-				//$the_product = new WC_Product( $the_ID );
 				$the_product = wc_get_product( $the_ID );
 				$the_price = $the_product->get_price();
 				$the_stock = $the_product->get_total_stock();
@@ -134,30 +133,31 @@ class WCJ_Reports_Stock {
 					$sales_in_day_range[ $the_range ] = 0;
 
 				$products_info[$the_ID] = array(
-					'ID'				=> $the_ID,
-					'title'				=> $the_title,
-					'category'			=> $the_categories,
-					'permalink'			=> $the_permalink,
-					'price'				=> $the_price,
-					'stock'				=> $the_stock,
-					'stock_price'		=> $the_price * $the_stock,
-					'total_sales'		=> $total_sales,
-					'date_added'		=> $the_date,
+					'ID'              => $the_ID,
+					'title'           => $the_title,
+					'category'        => $the_categories,
+					'permalink'       => $the_permalink,
+					'price'           => $the_price,
+					'stock'           => $the_stock,
+					'stock_price'     => $the_price * $the_stock,
+					'total_sales'     => $total_sales,
+					'date_added'      => $the_date,
 
-					'purchase_price'	=> $purchase_price,
+					'purchase_price'  => $purchase_price,
 
-					'last_sale'			=> 0,
-					'sales_in_period'	=> $sales_in_day_range,
+					'last_sale'       => 0,
+					'sales_in_period' => $sales_in_day_range,
 				);
 
 			endwhile;
+			$offset += $block_size;
 		}
 	}
 
 	/*
 	 * gather_orders_data.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.9
 	 */
 	function gather_orders_data( &$products_info ) {
 
@@ -206,6 +206,23 @@ class WCJ_Reports_Stock {
 
 						//foreach ( $products_info_sales_in_period as $the_period => $the_value ) {
 							//if ( $order_age < ( $the_period * $one_day_seconds ) ) {
+								if ( ! isset( $products_info[ $item['product_id'] ]['sales_in_period'][ $the_period ] ) ) {
+									// Deleted product
+									$products_info[ $item['product_id'] ] = array(
+										'ID'              => $item['product_id'],
+										'title'           => $item['name'] . ' (' . __( 'deleted', 'woocommerce-jetpack' ) . ')',
+										'category'        => '',
+										'permalink'       => '',
+										'price'           => '',
+										'stock'           => '',
+										'stock_price'     => '',
+										'total_sales'     => '',
+										'date_added'      => '',
+										'purchase_price'  => '',
+										'last_sale'       => 0,
+										'sales_in_period' => array( $the_period => 0 ),
+									);
+								}
 								$products_info[ $item['product_id'] ]['sales_in_period'][ $the_period ] += $item['qty'];
 							//}
 						//}
