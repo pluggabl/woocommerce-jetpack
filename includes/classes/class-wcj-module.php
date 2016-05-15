@@ -129,7 +129,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @since 2.4.8
+	 * @since 2.4.9
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -138,6 +138,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		foreach ( $this->get_meta_box_options() as $option ) {
 			$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 			if ( $is_enabled ) {
+				$custom_attributes = '';
 				$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id;
 				$the_meta_name = ( isset( $option['meta_name'] ) )  ? $option['meta_name']  : '_' . $option['name'];
 				if ( get_post_meta( $the_post_id, $the_meta_name ) ) {
@@ -145,12 +146,28 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				} else {
 					$option_value = ( isset( $option['default'] ) ) ? $option['default'] : '';
 				}
-				$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
+				$input_ending = '';
 				if ( 'select' === $option['type'] ) {
+					if ( isset( $option['multiple'] ) ) {
+						$custom_attributes = ' multiple';
+						$option_name       = $option['name'] . '[]';
+					} else {
+						$option_name       = $option['name'];
+					}
 					$options = '';
 					foreach ( $option['options'] as $select_option_key => $select_option_value ) {
-						$options .= '<option value="' . $select_option_key . '" ' . selected( $option_value, $select_option_key, false ) . '>' . $select_option_value . '</option>';
+						$selected = '';
+						if ( is_array( $option_value ) ) {
+							foreach ( $option_value as $single_option_value ) {
+								$selected .= selected( $single_option_value, $select_option_key, false );
+							}
+						} else {
+							$selected = selected( $option_value, $select_option_key, false );
+						}
+						$options .= '<option value="' . $select_option_key . '" ' . $selected . '>' . $select_option_value . '</option>';
 					}
+				} else {
+					$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
 				}
 				switch ( $option['type'] ) {
 					case 'price':
@@ -163,7 +180,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						$field_html = '<textarea style="min-width:300px;"' . ' id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
 						break;
 					case 'select':
-						$field_html = '<select' . ' id="' . $option['name'] . '" name="' . $option['name'] . '">' . $options . '</select>';
+						$field_html = '<select' . $custom_attributes . ' id="' . $option['name'] . '" name="' . $option_name . '">' . $options . '</select>';
 						break;
 					default:
 						$field_html = '<input class="short" type="' . $option['type'] . '"' . $input_ending;

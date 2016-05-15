@@ -120,6 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 15/05/2016 =
+* Dev - `WCJ_Module` - `multiple` attribute added to `select` type option.
+~* Dev - PRODUCTS - Product by Country - Initial module release.
 * Dev - Shortcodes - Products - `get_product_orders_data` and `wcj_product_time_since_last_sale` - Query by blocks.
 * Fix - EMAILS & MISC. - Reports - `gather_orders_data` - Fixed for deleted products (caused PHP notice).
 * Dev - EMAILS & MISC. - Reports - `gather_products_data` - Query by blocks.

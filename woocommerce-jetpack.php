@@ -436,6 +436,7 @@ final class WC_Jetpack {
 		$settings[] = include_once( 'includes/class-wcj-price-by-user-role.php' );
 		$settings[] = include_once( 'includes/class-wcj-product-price-by-formula.php' );
 		$settings[] = include_once( 'includes/class-wcj-product-images.php' );
+		$settings[] = include_once( 'includes/class-wcj-product-by-country.php' );
 		$settings[] = include_once( 'includes/class-wcj-add-to-cart.php' );
 		$settings[] = include_once( 'includes/class-wcj-more-button-labels.php' );
 		$settings[] = include_once( 'includes/class-wcj-cart.php' );
