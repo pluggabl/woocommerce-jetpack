@@ -125,36 +125,43 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		$total_orders = 0;
 		$total_qty    = 0;
 		$total_sum    = 0;
-		$args = array(
-			'post_type'      => 'shop_order',
-			'post_status'    => 'wc-completed',
-			'posts_per_page' => -1,
-			'orderby'        => 'date',
-			'order'          => 'ASC',
-			'date_query'     => array(
-				array(
-					'after'     => get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_startdate', true ),
-					'inclusive' => true,
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			$args = array(
+				'post_type'      => 'shop_order',
+				'post_status'    => 'wc-completed',
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+				'orderby'        => 'date',
+				'order'          => 'ASC',
+				'date_query'     => array(
+					array(
+						'after'     => get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_startdate', true ),
+						'inclusive' => true,
+					),
 				),
-			),
-		);
-		$loop = new WP_Query( $args );
-		while ( $loop->have_posts() ) : $loop->the_post();
-			$order_id = $loop->post->ID;
-			$the_order = wc_get_order( $order_id );
-			$the_items = $the_order->get_items();
-			$item_found = false;
-			foreach( $the_items as $item ) {
-				if ( $this->the_product->id == $item['product_id'] ) {
-					$total_sum += $item['line_total'] + $item['line_tax'];
-					$total_qty += $item['qty'];
-					$item_found = true;
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
+			while ( $loop->have_posts() ) : $loop->the_post();
+				$order_id = $loop->post->ID;
+				$the_order = wc_get_order( $order_id );
+				$the_items = $the_order->get_items();
+				$item_found = false;
+				foreach( $the_items as $item ) {
+					if ( $this->the_product->id == $item['product_id'] ) {
+						$total_sum += $item['line_total'] + $item['line_tax'];
+						$total_qty += $item['qty'];
+						$item_found = true;
+					}
 				}
-			}
-			if ( $item_found ) {
-				$total_orders++;
-			}
-		endwhile;
+				if ( $item_found ) {
+					$total_orders++;
+				}
+			endwhile;
+			$offset += $block_size;
+		}
 		wp_reset_postdata();
 		switch ( $return_value ) {
 			case 'orders_sum':
@@ -176,7 +183,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_time_since_last_sale.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.9
 	 * @since   2.4.0
 	 * @todo    not finished
 	 */
@@ -186,31 +193,38 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		$do_use_only_completed_orders = true;
 		// Get the ID before new query
 		$the_ID = get_the_ID();
-		// Create args for new query
-		$args = array(
-			'post_type'      => 'shop_order',
-			'post_status'    => ( true === $do_use_only_completed_orders ? 'wc-completed' : 'any' ),
-			'posts_per_page' => -1,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-			'date_query'     => array( array( 'after'   => strtotime( '-' . $days_to_cover . ' days' ) ) ),
-		);
-		// Run new query
-		$loop = new WP_Query( $args );
-		// Analyze the results, i.e. orders
-		while ( $loop->have_posts() ) : $loop->the_post();
-			$order = new WC_Order( $loop->post->ID );
-			$items = $order->get_items();
-			foreach ( $items as $item ) {
-				// Run through all order's items
-				if ( $item['product_id'] == $the_ID ) {
-					// Found sale!
-					$result = sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) );
-					wp_reset_postdata();
-					return $result;
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			// Create args for new query
+			$args = array(
+				'post_type'      => 'shop_order',
+				'post_status'    => ( true === $do_use_only_completed_orders ? 'wc-completed' : 'any' ),
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+				'date_query'     => array( array( 'after'   => strtotime( '-' . $days_to_cover . ' days' ) ) ),
+			);
+			// Run new query
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
+			// Analyze the results, i.e. orders
+			while ( $loop->have_posts() ) : $loop->the_post();
+				$order = new WC_Order( $loop->post->ID );
+				$items = $order->get_items();
+				foreach ( $items as $item ) {
+					// Run through all order's items
+					if ( $item['product_id'] == $the_ID ) {
+						// Found sale!
+						$result = sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) );
+						wp_reset_postdata();
+						return $result;
+					}
 				}
-			}
-		endwhile;
+			endwhile;
+			$offset += $block_size;
+		}
 		wp_reset_postdata();
 		// No sales found
 		return '';

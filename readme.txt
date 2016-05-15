@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 15/05/2016 =
+* Dev - Shortcodes - Products - `get_product_orders_data` and `wcj_product_time_since_last_sale` - Query by blocks.
 * Fix - EMAILS & MISC. - Reports - `gather_orders_data` - Fixed for deleted products (caused PHP notice).
 * Dev - EMAILS & MISC. - Reports - `gather_products_data` - Query by blocks.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - `create_migrate_from_custom_price_labels_tool` - Query by blocks.
