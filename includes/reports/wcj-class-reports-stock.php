@@ -206,7 +206,7 @@ class WCJ_Reports_Stock {
 
 						//foreach ( $products_info_sales_in_period as $the_period => $the_value ) {
 							//if ( $order_age < ( $the_period * $one_day_seconds ) ) {
-								if ( ! isset( $products_info[ $item['product_id'] ]['sales_in_period'][ $the_period ] ) ) {
+								if ( ! isset( $products_info[ $item['product_id'] ] ) ) {
 									// Deleted product
 									$products_info[ $item['product_id'] ] = array(
 										'ID'              => $item['product_id'],
