@@ -390,9 +390,9 @@ if ( ! function_exists( 'is_shop_manager' ) ) {
  * @return  bool
  */
 if ( ! function_exists( 'wcj_is_user_role' ) ) {
-	function wcj_is_user_role( $user_fole, $user_id = 0 ) {
+	function wcj_is_user_role( $user_role, $user_id = 0 ) {
 		$the_user = ( 0 == $user_id ) ? wp_get_current_user() : get_user_by( 'id', $user_id );
-		return ( isset( $the_user->roles[0] ) && $user_fole === $the_user->roles[0] ) ? true : false;
+		return ( isset( $the_user->roles ) && is_array( $the_user->roles ) && in_array( $user_role, $the_user->roles ) ) ? true : false;
 	}
 }
 
