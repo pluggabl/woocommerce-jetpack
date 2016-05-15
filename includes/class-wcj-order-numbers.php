@@ -131,20 +131,29 @@ class WCJ_Order_Numbers extends WCJ_Module {
 
 	/**
 	 * Renumerate orders function.
+	 *
+	 * @version 2.4.9
 	 */
 	public function renumerate_orders() {
-		$args = array(
-			'post_type'      => 'shop_order',
-			'post_status'    => 'any',
-			'posts_per_page' => -1,
-			'orderby'        => 'date',
-			'order'          => 'ASC',
-		);
-		$loop = new WP_Query( $args );
-		while ( $loop->have_posts() ) : $loop->the_post();
-			$order_id = $loop->post->ID;
-			$this->add_order_number_meta( $order_id, true );
-		endwhile;
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			$args = array(
+				'post_type'      => 'shop_order',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'orderby'        => 'date',
+				'order'          => 'ASC',
+				'offset'         => $offset,
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
+			while ( $loop->have_posts() ) : $loop->the_post();
+				$order_id = $loop->post->ID;
+				$this->add_order_number_meta( $order_id, true );
+			endwhile;
+			$offset += $block_size;
+		}
 	}
 
 	/**
