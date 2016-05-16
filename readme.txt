@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 16/05/2016 =
+* Dev - PRICES & CURRENCIES - Wholesale Price - Per product functionality added.
 * Dev - `WCJ_Module` - `create_meta_box()` and `save_meta_box()` - `title` option type added.
 * Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Compatibility with PayPal Express added.
 * Dev - `WCJ_Module` - `create_meta_box()` - `multiple` attribute added to `select` type option.

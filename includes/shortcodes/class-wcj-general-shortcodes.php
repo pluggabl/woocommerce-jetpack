@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -79,32 +79,35 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
-	 * wcj_wholesale_price_table.
+	 * wcj_wholesale_price_table (global only).
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 * @since   2.4.8
 	 */
 	function wcj_wholesale_price_table( $atts ) {
 
+		if ( ! wcj_is_module_enabled( 'wholesale_price' ) ) {
+			return '';
+		}
+
 		$wholesale_price_levels = array();
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
-			$level_qty        = get_option( 'wcj_wholesale_price_level_min_qty_' . $i, PHP_INT_MAX );
-			$discount_percent = get_option( 'wcj_wholesale_price_level_discount_percent_' . $i, 0 );
-			$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount_percent' => $discount_percent, );
+			$level_qty                = get_option( 'wcj_wholesale_price_level_min_qty_' . $i, PHP_INT_MAX );
+			$discount                 = get_option( 'wcj_wholesale_price_level_discount_percent_' . $i, 0 );
+			$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => $discount, );
 		}
 
-		$data_qty = array();
-		$data_discount_percent = array();
+		$data_qty              = array();
+		$data_discount         = array();
+		$columns_styles        = array();
 		foreach ( $wholesale_price_levels as $wholesale_price_level ) {
 			$data_qty[]              = str_replace( '%level_qty%', $wholesale_price_level['quantity'], $atts['heading_format'] ) ;
-			$data_discount_percent[] = '-' . $wholesale_price_level['discount_percent'] . '%';
+			$data_discount[]         = ( 'fixed' === get_option( 'wcj_wholesale_price_discount_type', 'percent' ) )
+				? '-' . wc_price( $wholesale_price_level['discount'] ) : '-' . $wholesale_price_level['discount'] . '%';
+			$columns_styles[]        = 'text-align: center;';
 		}
 
-		$table_rows = array( $data_qty, $data_discount_percent, );
-		$columns_styles = array();
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
-			$columns_styles[] = 'text-align: center;';
-		}
+		$table_rows = array( $data_qty, $data_discount, );
 		return wcj_get_table_html( $table_rows, array( 'columns_styles' => $columns_styles ) );
 	}
 
