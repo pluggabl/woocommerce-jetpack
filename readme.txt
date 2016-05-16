@@ -119,7 +119,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 15/05/2016 =
+= 2.4.9 - 16/05/2016 =
+* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Compatibility with PayPal Express added.
 * Dev - `WCJ_Module` - `multiple` attribute added to `select` type option.
 ~* Dev - PRODUCTS - Product by Country - Initial module release.
 * Dev - Shortcodes - Products - `get_product_orders_data` and `wcj_product_time_since_last_sale` - Query by blocks.

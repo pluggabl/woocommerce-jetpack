@@ -76,18 +76,23 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * gateways_fees.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.9
 	 */
 	function gateways_fees() {
 		global $woocommerce;
-		$current_gateway = $woocommerce->session->chosen_payment_method;
-		$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
-		if ( ! array_key_exists( $current_gateway, $available_gateways ) ) {
-			$current_gateway = get_option( 'woocommerce_default_gateway', '' );
-			if ( '' == $current_gateway ) {
-				$current_gateway = current( $available_gateways );
-				$current_gateway = isset( $current_gateway->id ) ? $current_gateway->id : '';
+		$is_paypal_express = ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) ? true : false;
+		if ( ! $is_paypal_express ) {
+			$current_gateway = $woocommerce->session->chosen_payment_method;
+			$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
+			if ( ! array_key_exists( $current_gateway, $available_gateways ) ) {
+				$current_gateway = get_option( 'woocommerce_default_gateway', '' );
+				if ( '' == $current_gateway ) {
+					$current_gateway = current( $available_gateways );
+					$current_gateway = isset( $current_gateway->id ) ? $current_gateway->id : '';
+				}
 			}
+		} else {
+			$current_gateway = 'paypal_express';
 		}
 		if ( '' != $current_gateway ) {
 			$fee_text  = get_option( 'wcj_gateways_fees_text_' . $current_gateway );
