@@ -89,13 +89,16 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * save_meta_box.
 	 *
-	 * @since 2.4.8
+	 * @since 2.4.9
 	 */
 	function save_meta_box( $post_id, $post ) {
 		// Check that we are saving with current metabox displayed.
 		if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) return;
 		// Save options
 		foreach ( $this->get_meta_box_options() as $option ) {
+			if ( 'title' === $option['type'] ) {
+				continue;
+			}
 			$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 			if ( $is_enabled ) {
 				$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : $option['default'];
@@ -138,61 +141,67 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		foreach ( $this->get_meta_box_options() as $option ) {
 			$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 			if ( $is_enabled ) {
-				$custom_attributes = '';
-				$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id;
-				$the_meta_name = ( isset( $option['meta_name'] ) )  ? $option['meta_name']  : '_' . $option['name'];
-				if ( get_post_meta( $the_post_id, $the_meta_name ) ) {
-					$option_value = get_post_meta( $the_post_id, $the_meta_name, true );
+				if ( 'title' === $option['type'] ) {
+					$html .= '<tr>';
+					$html .= '<th cospan="2" style="text-align:left;">' . $option['title'] . '</th>';
+					$html .= '</tr>';
 				} else {
-					$option_value = ( isset( $option['default'] ) ) ? $option['default'] : '';
-				}
-				$input_ending = '';
-				if ( 'select' === $option['type'] ) {
-					if ( isset( $option['multiple'] ) ) {
-						$custom_attributes = ' multiple';
-						$option_name       = $option['name'] . '[]';
+					$custom_attributes = '';
+					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id;
+					$the_meta_name = ( isset( $option['meta_name'] ) )  ? $option['meta_name']  : '_' . $option['name'];
+					if ( get_post_meta( $the_post_id, $the_meta_name ) ) {
+						$option_value = get_post_meta( $the_post_id, $the_meta_name, true );
 					} else {
-						$option_name       = $option['name'];
+						$option_value = ( isset( $option['default'] ) ) ? $option['default'] : '';
 					}
-					$options = '';
-					foreach ( $option['options'] as $select_option_key => $select_option_value ) {
-						$selected = '';
-						if ( is_array( $option_value ) ) {
-							foreach ( $option_value as $single_option_value ) {
-								$selected .= selected( $single_option_value, $select_option_key, false );
-							}
+					$input_ending = '';
+					if ( 'select' === $option['type'] ) {
+						if ( isset( $option['multiple'] ) ) {
+							$custom_attributes = ' multiple';
+							$option_name       = $option['name'] . '[]';
 						} else {
-							$selected = selected( $option_value, $select_option_key, false );
+							$option_name       = $option['name'];
 						}
-						$options .= '<option value="' . $select_option_key . '" ' . $selected . '>' . $select_option_value . '</option>';
+						$options = '';
+						foreach ( $option['options'] as $select_option_key => $select_option_value ) {
+							$selected = '';
+							if ( is_array( $option_value ) ) {
+								foreach ( $option_value as $single_option_value ) {
+									$selected .= selected( $single_option_value, $select_option_key, false );
+								}
+							} else {
+								$selected = selected( $option_value, $select_option_key, false );
+							}
+							$options .= '<option value="' . $select_option_key . '" ' . $selected . '>' . $select_option_value . '</option>';
+						}
+					} else {
+						$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
 					}
-				} else {
-					$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
+					switch ( $option['type'] ) {
+						case 'price':
+							$field_html = '<input class="short wc_input_price" type="number" step="0.0001"' . $input_ending;
+							break;
+						case 'date':
+							$field_html = '<input class="input-text" display="date" type="text"' . $input_ending;
+							break;
+						case 'textarea':
+							$field_html = '<textarea style="min-width:300px;"' . ' id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
+							break;
+						case 'select':
+							$field_html = '<select' . $custom_attributes . ' id="' . $option['name'] . '" name="' . $option_name . '">' . $options . '</select>';
+							break;
+						default:
+							$field_html = '<input class="short" type="' . $option['type'] . '"' . $input_ending;
+							break;
+					}
+					$html .= '<tr>';
+					$html .= '<th style="text-align:left;">' . $option['title'] . '</th>';
+					if ( isset( $option['desc'] ) && '' != $option['desc'] ) {
+						$html .= '<td style="font-style:italic;">' . $option['desc'] . '</td>';
+					}
+					$html .= '<td>' . $field_html . '</td>';
+					$html .= '</tr>';
 				}
-				switch ( $option['type'] ) {
-					case 'price':
-						$field_html = '<input class="short wc_input_price" type="number" step="0.0001"' . $input_ending;
-						break;
-					case 'date':
-						$field_html = '<input class="input-text" display="date" type="text"' . $input_ending;
-						break;
-					case 'textarea':
-						$field_html = '<textarea style="min-width:300px;"' . ' id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
-						break;
-					case 'select':
-						$field_html = '<select' . $custom_attributes . ' id="' . $option['name'] . '" name="' . $option_name . '">' . $options . '</select>';
-						break;
-					default:
-						$field_html = '<input class="short" type="' . $option['type'] . '"' . $input_ending;
-						break;
-				}
-				$html .= '<tr>';
-				$html .= '<th style="text-align:left;">' . $option['title'] . '</th>';
-				if ( isset( $option['desc'] ) && '' != $option['desc'] ) {
-					$html .= '<td style="font-style:italic;">' . $option['desc'] . '</td>';
-				}
-				$html .= '<td>' . $field_html . '</td>';
-				$html .= '</tr>';
 			}
 		}
 		$html .= '</table>';

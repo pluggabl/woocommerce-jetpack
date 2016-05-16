@@ -120,8 +120,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 16/05/2016 =
+* Dev - `WCJ_Module` - `create_meta_box()` and `save_meta_box()` - `title` option type added.
 * Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Compatibility with PayPal Express added.
-* Dev - `WCJ_Module` - `multiple` attribute added to `select` type option.
+* Dev - `WCJ_Module` - `create_meta_box()` - `multiple` attribute added to `select` type option.
 ~* Dev - PRODUCTS - Product by Country - Initial module release.
 * Dev - Shortcodes - Products - `get_product_orders_data` and `wcj_product_time_since_last_sale` - Query by blocks.
 * Fix - EMAILS & MISC. - Reports - `gather_orders_data` - Fixed for deleted products (caused PHP notice).
