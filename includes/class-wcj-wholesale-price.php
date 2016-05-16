@@ -36,10 +36,10 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
 
-			add_filter( 'woocommerce_get_price',         array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_get_price', array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
 
 			if ( 'yes' === get_option( 'wcj_wholesale_price_show_info_on_cart', 'no' ) ) {
-				add_filter( 'woocommerce_cart_item_price',   array( $this, 'add_discount_info_to_cart_page' ), PHP_INT_MAX, 3 );
+				add_filter( 'woocommerce_cart_item_price', array( $this, 'add_discount_info_to_cart_page' ), PHP_INT_MAX, 3 );
 			}
 		}
 	}
