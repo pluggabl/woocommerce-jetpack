@@ -120,6 +120,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 17/05/2016 =
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - `get_customer_country_group_id()` - Not recalculating `customer_country_group_id` - works faster now.
+~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `get_variation_prices_hash()` - Variable products main price fixed.
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Mini cart bug fixed.
 ~* Dev - PRICES & CURRENCIES - Wholesale Price - Major code refactoring.
 * Dev - PRICES & CURRENCIES - Wholesale Price - Per product functionality added.

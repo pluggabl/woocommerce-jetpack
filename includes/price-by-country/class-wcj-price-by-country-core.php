@@ -200,8 +200,9 @@ class WCJ_Price_by_Country_Core {
 	public function get_customer_country_group_id() {
 
 		// We already know the group - nothing to calculate - return group
-//		if ( null != $this->customer_country_group_id && $this->customer_country_group_id > 0 )
-//			return $this->customer_country_group_id;
+		if ( null != $this->customer_country_group_id && $this->customer_country_group_id > 0 ) {
+			return $this->customer_country_group_id;
+		}
 
 		// We've already tried - no country was detected, no need to try again
 		/* if ( -1 === $this->customer_country_group_id )
@@ -269,7 +270,6 @@ class WCJ_Price_by_Country_Core {
 			}
 			if ( is_array( $country_exchange_rate_group ) && in_array( $country, $country_exchange_rate_group ) ) {
 				$this->customer_country_group_id = $i;
-				//wcj_log( 'customer_country_group_id=' . $this->customer_country_group_id );
 				return $i;
 			}
 		}
@@ -322,11 +322,24 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.9
 	 * @since   2.4.3
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		$price_hash['wcj_country_group_id'] = $this->get_customer_country_group_id();
+		$group_id = $this->get_customer_country_group_id();
+		$price_hash['wcj_price_by_country_group_id_data'] = array(
+			$group_id,
+			get_option( 'wcj_price_by_country_rounding' ),
+			get_option( 'wcj_price_by_country_local_enabled' ),
+			get_option( 'wcj_price_by_country_selection' ),
+			get_option( 'wcj_price_by_country_total_groups_number' ),
+			get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $group_id ),
+			get_option( 'wcj_price_by_country_countries_group_' . $group_id ),
+			get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $group_id ),
+			get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $group_id ),
+			get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 ),
+			get_option( 'wcj_price_by_country_make_empty_price_group_' . $group_id, 'no' ),
+		);
 		return $price_hash;
 	}
 
@@ -335,7 +348,7 @@ class WCJ_Price_by_Country_Core {
 	 *
 	 * @version 2.4.9
 	 */
-	public function change_price_by_country( $price, $product ) {
+	function change_price_by_country( $price, $product ) {
 
 		if ( is_numeric( $product ) ) $the_product_id = $product;
 		else $the_product_id = ( isset( $product->variation_id ) ) ? $product->variation_id : $product->id;
