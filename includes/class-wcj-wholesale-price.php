@@ -117,10 +117,10 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	 *
 	 * @version 2.4.9
 	 */
-	private function get_wholesale_price( $price, $quantity, $_product ) {
-		$discount = $this->get_discount_by_quantity( $quantity, $_product->id );
-		$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $_product->id ) )
-			? get_post_meta( $_product->id, '_' . 'wcj_wholesale_price_discount_type', true )
+	private function get_wholesale_price( $price, $quantity, $product_id ) {
+		$discount = $this->get_discount_by_quantity( $quantity, $product_id );
+		$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $product_id ) )
+			? get_post_meta( $product_id, '_' . 'wcj_wholesale_price_discount_type', true )
 			: get_option( 'wcj_wholesale_price_discount_type', 'percent' );
 		if ( 'percent' === $discount_type ) {
 			$discount_koef = 1.0 - ( $discount / 100.0 );
@@ -152,6 +152,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	 * @since   2.4.9
 	 */
 	function calculate_totals( $cart ) {
+
 		foreach ( $cart->cart_contents as $item_key => $item ) {
 
 			if ( isset( WC()->cart->cart_contents[ $item_key ]['data']->wcj_wholesale_price ) ) {
@@ -168,19 +169,22 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			if ( ! wcj_is_product_wholesale_enabled( $_product->id ) ) {
 				continue;
 			}
+
 			$price = $_product->get_price();
+
 			// If other discount was applied in cart...
 			if ( 'yes' === get_option( 'wcj_wholesale_price_apply_only_if_no_other_discounts', 'no' ) ) {
 				if ( WC()->cart->get_total_discount() > 0 || sizeof( WC()->cart->applied_coupons ) > 0 ) {
 					continue;
 				}
 			}
+
 			// Maybe set wholesale price
 			$the_quantity = ( 'yes' === get_option( 'wcj_wholesale_price_use_total_cart_quantity', 'no' ) )
 				? $cart->cart_contents_count
 				: $item['quantity'];
 			if ( $the_quantity > 1 ) {
-				$wholesale_price = $this->get_wholesale_price( $price, $the_quantity, $_product );
+				$wholesale_price = $this->get_wholesale_price( $price, $the_quantity, $_product->id );
 				if ( $wholesale_price != $price ) {
 					// Setting wholesale price
 					$precision = get_option( 'woocommerce_price_num_decimals', 2 );
@@ -190,6 +194,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 					WC()->cart->cart_contents[ $item_key ]['wcj_wholesale_price_old']   = $price;
 				}
 			}
+
 		}
 	}
 

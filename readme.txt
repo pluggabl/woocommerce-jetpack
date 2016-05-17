@@ -119,7 +119,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 16/05/2016 =
+= 2.4.9 - 17/05/2016 =
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Mini cart bug fixed.
 ~* Dev - PRICES & CURRENCIES - Wholesale Price - Major code refactoring.
 * Dev - PRICES & CURRENCIES - Wholesale Price - Per product functionality added.
