@@ -127,10 +127,17 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.9
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		$price_hash['wcj_currency'] = $this->get_current_currency_code();
+		$currency_code = $this->get_current_currency_code();
+		$currency_exchange_rate = $this->get_currency_exchange_rate( $currency_code );
+		$price_hash['wcj_multicurrency_data'] = array(
+			$currency_code,
+			$currency_exchange_rate,
+			get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ),
+			apply_filters( 'wcj_get_option_filter', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ), // todo: do we really need this line?
+		);
 		return $price_hash;
 	}
 
@@ -152,11 +159,25 @@ class WCJ_Multicurrency extends WCJ_Module {
 	}
 
 	/**
+	 * do_revert.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function do_revert() {
+		return ( 'yes' === get_option( 'wcj_multicurrency_revert', 'no' ) && is_checkout() );
+	}
+
+	/**
 	 * change_price_by_currency.
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.9
 	 */
 	function change_price_by_currency( $price, $_product ) {
+
+		if ( $this->do_revert() ) {
+			return $price;
+		}
 
 		// Per product
 		if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) ) {
@@ -186,9 +207,12 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_currency_symbol.
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.9
 	 */
 	function change_currency_symbol( $currency_symbol, $currency ) {
+		if ( $this->do_revert() ) {
+			return $currency_symbol;
+		}
 		return wcj_get_currency_symbol( $this->get_current_currency_code( $currency ) );
 	}
 
@@ -204,18 +228,24 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_currency_code.
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.9
 	 */
 	function change_currency_code( $currency ) {
+		if ( $this->do_revert() ) {
+			return $currency;
+		}
 		return $this->get_current_currency_code( $currency );
 	}
 
 	/**
 	 * change_shipping_price_by_currency.
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 */
 	function change_shipping_price_by_currency( $package_rates, $package ) {
+		if ( $this->do_revert() ) {
+			return $package_rates;
+		}
 		$currency_exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
 		$modified_package_rates = array();
 		foreach ( $package_rates as $id => $package_rate ) {
@@ -254,7 +284,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.4.3
+	 * @version 2.4.9
 	 * @todo    rounding (maybe)
 	 */
 	function add_settings() {
@@ -287,6 +317,13 @@ class WCJ_Multicurrency extends WCJ_Module {
 				'desc_tip' => __( 'This will add meta boxes in product edit.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_multicurrency_per_product_enabled',
 				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Revert Currency to Default on Checkout', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_multicurrency_revert',
+				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
 			array(
