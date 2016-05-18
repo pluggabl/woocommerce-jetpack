@@ -269,13 +269,13 @@ final class WC_Jetpack {
 	/**
 	 * Add menu item
 	 *
-	 * @version 2.2.4
+	 * @version 2.4.9
 	 */
 	public function jetpack_menu() {
 		add_submenu_page(
 			'woocommerce',
-			__( 'Booster for WooCommerce', 'woocommerce' ),
-			__( 'Booster Settings', 'woocommerce' ) ,
+			__( 'Booster for WooCommerce', 'woocommerce-jetpack' ),
+			__( 'Booster Settings', 'woocommerce-jetpack' ) ,
 			'manage_woocommerce',
 			'admin.php?page=wc-settings&tab=jetpack'
 		);

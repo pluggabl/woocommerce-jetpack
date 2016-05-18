@@ -119,7 +119,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 17/05/2016 =
+= 2.4.9 - 18/05/2016 =
+* Fix - Translation domain fixed (in `jetpack_menu()`).
 ~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Revert Currency to Default on Checkout" option added.
 ~* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_variation_prices_hash()` - Variable products main price fixed.
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - `get_customer_country_group_id()` - Not recalculating `customer_country_group_id` - works faster now.
