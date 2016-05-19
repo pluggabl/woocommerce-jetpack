@@ -34,6 +34,12 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 				apply_filters( 'wcj_get_option_filter', 'woocommerce_after_cart', get_option( 'wcj_empty_cart_position', 'woocommerce_after_cart' ) ),
 				array( $this, 'add_empty_cart_link' )
 			);
+			if ( 'disable' != ( $empty_cart_checkout_position = get_option( 'wcj_empty_cart_checkout_position', 'disable' ) ) ) {
+				add_action(
+					$empty_cart_checkout_position,
+					array( $this, 'add_empty_cart_link' )
+				);
+			}
 		}
 	}
 
@@ -98,6 +104,26 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 				),
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+			),
+			array(
+				'title'    => __( 'Button position on the Checkout page', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_empty_cart_checkout_position',
+				'default'  => 'disable',
+				'type'     => 'select',
+				'options'  => array(
+					'disable'                                       => __( 'Do not add', 'woocommerce-jetpack' ),
+					'woocommerce_before_checkout_form'              => __( 'Before checkout form', 'woocommerce-jetpack' ),
+					'woocommerce_checkout_before_customer_details'  => __( 'Before customer details', 'woocommerce-jetpack' ),
+					'woocommerce_checkout_billing'                  => __( 'Billing', 'woocommerce-jetpack' ),
+					'woocommerce_checkout_shipping'                 => __( 'Shipping', 'woocommerce-jetpack' ),
+					'woocommerce_checkout_after_customer_details'   => __( 'After customer details', 'woocommerce-jetpack' ),
+					'woocommerce_checkout_before_order_review'      => __( 'Before order review', 'woocommerce-jetpack' ),
+					'woocommerce_checkout_order_review'             => __( 'Order review', 'woocommerce-jetpack' ),
+					'woocommerce_checkout_after_order_review'       => __( 'After order review', 'woocommerce-jetpack' ),
+					'woocommerce_after_checkout_form'               => __( 'After checkout form', 'woocommerce-jetpack' ),
+				),
+				/* 'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ), */
 			),
 			array(
 				'title'    => __( 'Confirmation', 'woocommerce-jetpack' ),
