@@ -64,11 +64,26 @@ class WCJ_Product_Bookings extends WCJ_Module {
 				add_filter( 'woocommerce_cart_item_name',                 array( $this, 'add_info_to_cart_item_name' ), PHP_INT_MAX, 3 );
 				add_filter( 'woocommerce_order_item_name',                array( $this, 'add_info_to_order_item_name' ), PHP_INT_MAX, 2 );
 				add_action( 'woocommerce_add_order_item_meta',            array( $this, 'add_info_to_order_item_meta' ), PHP_INT_MAX, 3 );
+				// Hide quantity
+				add_filter( 'woocommerce_is_sold_individually',           array( $this, 'sold_individually' ), PHP_INT_MAX, 2 );
 			}
 
 			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
 		}
+	}
+
+	/**
+	 * sold_individually.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function sold_individually( $return, $_product ) {
+		if ( $this->is_bookings_product( $_product ) ) {
+			return true;
+		}
+		return $return;
 	}
 
 	/**
@@ -150,11 +165,11 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	 */
 	function add_info_to_order_item_name( $name, $item, $is_cart = false ) {
 		if ( $is_cart ) {
-			$name .= '<dl style="font-size:smaller;">';
+			$name .= '<dl class="variation">';
 		}
 		if ( isset( $item['wcj_bookings_price'] ) ) {
 			if ( $is_cart ) {
-				$name .= '<dt>' . __( 'Period', 'woocommerce-jetpack' ) . '</dt>';
+				$name .= '<dt>' . __( 'Period', 'woocommerce-jetpack' ) . ':' . '</dt>';
 				$name .= '<dd>' . $item['wcj_bookings_date_from'] . ' - ' . $item['wcj_bookings_date_to'] . '</dd>';
 			} else {
 				$name .= ' | ' . $item['wcj_bookings_date_from'] . ' - ' . $item['wcj_bookings_date_to'];
