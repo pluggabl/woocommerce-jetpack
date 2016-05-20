@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.4.7
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -224,6 +224,35 @@ class WCJ_Product_Input_Fields_Abstract {
 
 		);
 		return $options;
+	}
+
+	/**
+	 * add_files_to_email_attachments.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function add_files_to_email_attachments( $attachments, $status, $order ) {
+		if (
+			( 'new_order' === $status                 && 'yes' === get_option( 'wcj_product_input_fields_attach_to_admin_new_order',           'yes' ) ) ||
+			( 'customer_processing_order' === $status && 'yes' === get_option( 'wcj_product_input_fields_attach_to_customer_processing_order', 'yes' ) )
+		) {
+			foreach ( $order->get_items() as $item_key => $item ) {
+				$product_id = $item['product_id'];
+				$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
+				for ( $i = 1; $i <= $total_number; $i++ ) {
+					if ( isset( $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] ) ) {
+						$the_value = $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ];
+						$the_value = maybe_unserialize( $the_value );
+						if ( isset( $the_value['wcj_type'] ) && 'file' === $the_value['wcj_type'] && isset( $the_value['tmp_name'] ) ) {
+							$file_path = $the_value['tmp_name'];
+							$attachments[] = $file_path;
+						}
+					}
+				}
+			}
+		}
+		return $attachments;
 	}
 
 	/**
@@ -730,6 +759,8 @@ class WCJ_Product_Input_Fields_Abstract {
 
 	/**
 	 * add_product_input_fields_to_order_item_meta.
+	 *
+	 * @version 2.4.9
 	 */
 	public function add_product_input_fields_to_order_item_meta(  $item_id, $values, $cart_item_key  ) {
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
@@ -753,7 +784,7 @@ class WCJ_Product_Input_Fields_Abstract {
 					file_put_contents( $upload_dir_and_name, $file_data );
 					unlink( $tmp_name );
 					//unset( $input_field_value['tmp_name'] );
-					$input_field_value['tmp_name'] = $upload_dir_and_name;
+					$input_field_value['tmp_name'] = addslashes( $upload_dir_and_name );
 					$input_field_value['wcj_type'] = 'file';
 					//$orig_file_name = $input_field_value['name'];
 					//wc_add_order_item_meta( $item_id, '_wcj_product_input_fields_' . $this->scope . '_' . $i . '_orig_file_name', $orig_file_name );

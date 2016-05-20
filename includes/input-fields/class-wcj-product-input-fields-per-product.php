@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields per Product class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -16,6 +16,8 @@ class WCJ_Product_Input_Fields_Per_Product extends WCJ_Product_Input_Fields_Abst
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
@@ -54,6 +56,8 @@ class WCJ_Product_Input_Fields_Per_Product extends WCJ_Product_Input_Fields_Abst
 			}
 //			add_filter( 'woocommerce_attribute_label',              array( $this, 'change_woocommerce_attribute_label' ), PHP_INT_MAX, 2 );
 
+			// Add to emails
+			add_filter( 'woocommerce_email_attachments',            array( $this, 'add_files_to_email_attachments' ), PHP_INT_MAX, 3 );
 		}
 	}
 

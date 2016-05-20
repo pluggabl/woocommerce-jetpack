@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields Global class.
  *
- * @version 2.2.2
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -16,6 +16,8 @@ class WCJ_Product_Input_Fields_Global extends WCJ_Product_Input_Fields_Abstract 
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.4.9
 	 */
 	public function __construct() {
 
@@ -48,6 +50,9 @@ class WCJ_Product_Input_Fields_Global extends WCJ_Product_Input_Fields_Abstract 
 				add_filter( 'woocommerce_hidden_order_itemmeta',    array( $this, 'hide_custom_input_fields_default_output_in_admin_order' ), 100 );
 			}
 			//add_filter( 'woocommerce_attribute_label',              array( $this, 'change_woocommerce_attribute_label' ), PHP_INT_MAX, 2  );
+
+			// Add to emails
+			add_filter( 'woocommerce_email_attachments',            array( $this, 'add_files_to_email_attachments' ), PHP_INT_MAX, 3 );
 
 			//add_action( 'init',                                   array( $this, 'init' ), 100 );
 			//add_action( 'woocommerce_ajax_added_to_cart',         array( $this, 'ajax_add_to_cart' ), 100 );

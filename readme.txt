@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 20/05/2016 =
+* Dev - PRODUCTS - Product Input Fields - "Emails Options" added.
 * Fix - PRODUCTS - Product Tabs - Local product tabs number field set to min zero (instead of one).
 -* Dev - CART & CHECKOUT - Checkout Files Upload - "Add to Thank You page" and "Add to My Account page" options added.
 * Dev - CART & CHECKOUT - Empty Cart Button - "Button position on the Checkout page" option added.

@@ -114,7 +114,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.9
 	 */
 	function get_settings() {
 
@@ -239,6 +239,35 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_input_fields_frontend_view_options',
+			),
+		) );
+
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => __( 'Emails Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_input_fields_emails_options',
+			),
+
+			array(
+				'title'    => __( 'Attach Files to Admin\'s New Order Emails', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Attach', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_input_fields_attach_to_admin_new_order',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'title'    => __( 'Attach Files to Customer\'s Processing Order Emails', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Attach', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_input_fields_attach_to_customer_processing_order',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_input_fields_emails_options',
 			),
 		) );
 
