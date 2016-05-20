@@ -121,7 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 = 2.4.9 - 20/05/2016 =
 -* Dev/Fix - PRICES & CURRENCIES - Prices and Currencies by Country - support for grouped products added.
-~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Customer Country Detection Method" changed from "by user selection" to "by IP, then by user selection".
+-* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Customer Country Detection Method" changed from "by user selection" to "by IP, then by user selection".
 * Dev - PRODUCTS - Product Input Fields - "Emails Options" added.
 * Fix - PRODUCTS - Product Tabs - Local product tabs number field set to min zero (instead of one).
 -* Dev - CART & CHECKOUT - Checkout Files Upload - "Add to Thank You page" and "Add to My Account page" options added.
