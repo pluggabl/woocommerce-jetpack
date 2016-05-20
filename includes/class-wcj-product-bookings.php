@@ -66,11 +66,26 @@ class WCJ_Product_Bookings extends WCJ_Module {
 				add_action( 'woocommerce_add_order_item_meta',            array( $this, 'add_info_to_order_item_meta' ), PHP_INT_MAX, 3 );
 				// Hide quantity
 				add_filter( 'woocommerce_is_sold_individually',           array( $this, 'sold_individually' ), PHP_INT_MAX, 2 );
+				// Disable AJAX add to cart
+				add_filter( 'woocommerce_product_supports',               array( $this, 'disable_add_to_cart_ajax' ), PHP_INT_MAX, 3 );
 			}
 
 			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
 		}
+	}
+
+	/**
+	 * disable_add_to_cart_ajax.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function disable_add_to_cart_ajax( $supports, $feature, $_product ) {
+		if ( $this->is_bookings_product( $_product ) && 'ajax_add_to_cart' === $feature ) {
+			$supports = false;
+		}
+		return $supports;
 	}
 
 	/**
@@ -80,10 +95,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	 * @since   2.4.9
 	 */
 	function sold_individually( $return, $_product ) {
-		if ( $this->is_bookings_product( $_product ) ) {
-			return true;
-		}
-		return $return;
+		return ( $this->is_bookings_product( $_product ) ) ? true : $return;
 	}
 
 	/**
