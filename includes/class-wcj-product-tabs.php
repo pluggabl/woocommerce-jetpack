@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Tabs class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -386,7 +386,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_custom_tabs_meta_box.
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 */
 	public function create_custom_tabs_meta_box() {
 
@@ -405,7 +405,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		$html .= __( 'Total number of custom tabs', 'woocommerce-jetpack' );
 		$html .= '</th>';
 		$html .= '<td>';
-		$html .= '<input type="number" min="1" id="' . $option_name . '" name="' . $option_name . '" value="' . $total_custom_tabs . '" ' . $is_disabled . '>';
+		$html .= '<input type="number" min="0" id="' . $option_name . '" name="' . $option_name . '" value="' . $total_custom_tabs . '" ' . $is_disabled . '>';
 		$html .= '</td>';
 		$html .= '<td>';
 		$html .= __( 'Click "Update" product after you change this number.', 'woocommerce-jetpack' ) . '<br>' . $is_disabled_message;
