@@ -25,7 +25,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.4.0
+	 * @version 2.4.9
 	 */
 	function add_hooks() {
 
@@ -35,6 +35,11 @@ class WCJ_Price_by_Country_Core {
 			}
 			if ( isset( $_REQUEST[ 'wcj-country' ] ) ) {
 				$_SESSION[ 'wcj-country' ] = $_REQUEST[ 'wcj-country' ];
+			}
+			if ( ! isset( $_SESSION[ 'wcj-country' ] ) ) {
+				if ( null != ( $country = $this->get_customer_country_by_ip() ) ) {
+					$_SESSION[ 'wcj-country' ] = $country;
+				}
 			}
 		}
 
@@ -55,6 +60,22 @@ class WCJ_Price_by_Country_Core {
 
 		// Shipping
 		add_filter( 'woocommerce_package_rates', array( $this, 'change_shipping_price_by_country' ), PHP_INT_MAX - 1, 2 );
+	}
+
+	/**
+	 * get_customer_country_by_ip.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function get_customer_country_by_ip() {
+		// Get the country by IP
+		$location = WC_Geolocation::geolocate_ip();
+		// Base fallback
+		if ( empty( $location['country'] ) ) {
+			$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
+		}
+		return ( isset( $location['country'] ) ) ? $location['country'] : null;
 	}
 
 	/**
@@ -105,13 +126,7 @@ class WCJ_Price_by_Country_Core {
 			$country = WC()->customer->get_country();
 		} else {
 			if ( 'by_ip' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
-				// Get the country by IP
-				$location = WC_Geolocation::geolocate_ip();
-				// Base fallback
-				if ( empty( $location['country'] ) ) {
-					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
-				}
-				$country = ( isset( $location['country'] ) ) ? $location['country'] : null;
+				$country = $this->get_customer_country_by_ip();
 			} elseif ( 'by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
 				$country = ( isset( $_SESSION[ 'wcj-country' ] ) ) ? $_SESSION[ 'wcj-country' ] : null;
 			} elseif ( 'by_wpml' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
