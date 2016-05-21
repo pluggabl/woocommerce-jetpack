@@ -37,6 +37,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			add_filter( 'woocommerce_get_variation_price_html',   array( $this, 'hide_original_price' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_is_sold_individually',       array( $this, 'hide_quantity_input_field' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_is_purchasable',             array( $this, 'is_purchasable' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_product_supports',           array( $this, 'disable_add_to_cart_ajax' ), PHP_INT_MAX, 3 );
 			add_filter( 'woocommerce_product_add_to_cart_url',    array( $this, 'add_to_cart_url' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_product_add_to_cart_text',   array( $this, 'add_to_cart_text' ), PHP_INT_MAX, 2 );
 			add_action( 'woocommerce_before_add_to_cart_button',  array( $this, 'add_open_price_input_field_to_frontend' ), PHP_INT_MAX );
@@ -57,6 +58,19 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	 */
 	function is_open_price_product( $_product ) {
 		return ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_product_open_price_enabled', true ) ) ? true : false;
+	}
+
+	/**
+	 * disable_add_to_cart_ajax.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function disable_add_to_cart_ajax( $supports, $feature, $_product ) {
+		if ( $this->is_open_price_product( $_product ) && 'ajax_add_to_cart' === $feature ) {
+			$supports = false;
+		}
+		return $supports;
 	}
 
 	/**

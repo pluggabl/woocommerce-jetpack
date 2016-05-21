@@ -119,7 +119,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 20/05/2016 =
+= 2.4.9 - 21/05/2016 =
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `disable_add_to_cart_ajax` added.
 * Dev - Widgets - Country Switcher - "module not enabled" and "wrong configuration" messages added.
 -* Dev/Fix - PRICES & CURRENCIES - Prices and Currencies by Country - support for grouped products added.
 -* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Customer Country Detection Method" changed from "by user selection" to "by IP, then by user selection".
