@@ -325,14 +325,18 @@ class WCJ_Price_by_Country_Core {
 					$rounding = get_option( 'wcj_price_by_country_rounding', 'none' );
 					$precision = get_option( 'woocommerce_price_num_decimals', 2 );
 					switch ( $rounding ) {
-						case 'none':
-							$modified_price = round( $modified_price, $precision ); // $modified_price
 						case 'round':
 							$modified_price = round( $modified_price );
+							break;
 						case 'floor':
 							$modified_price = floor( $modified_price );
+							break;
 						case 'ceil':
 							$modified_price = ceil( $modified_price );
+							break;
+						default: // case 'none':
+							$modified_price = round( $modified_price, $precision ); // $modified_price
+							break;
 					}
 					$is_price_modified = true;
 				}
