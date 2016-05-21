@@ -45,11 +45,37 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 				add_filter( 'woocommerce_variation_prices_regular_price', array( $this, 'change_price_by_formula' ), PHP_INT_MAX - 100, 2 );
 				add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'change_price_by_formula' ), PHP_INT_MAX - 100, 2 );
 				add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 100, 3 );
+				// Grouped products
+				add_filter( 'woocommerce_get_price_including_tax',        array( $this, 'change_price_by_formula_grouped' ), PHP_INT_MAX - 100, 3 );
+				add_filter( 'woocommerce_get_price_excluding_tax',        array( $this, 'change_price_by_formula_grouped' ), PHP_INT_MAX - 100, 3 );
 			}
 
 			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
 		}
+	}
+
+	/**
+	 * change_price_by_formula_grouped.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function change_price_by_formula_grouped( $price, $qty, $_product ) {
+		if ( $_product->is_type( 'grouped' ) ) {
+			if ( true ) { // todo
+				foreach ( $_product->get_children() as $child_id ) {
+					$the_price = get_post_meta( $child_id, '_price', true );
+					if ( $the_price == $price ) {
+						$the_product = wc_get_product( $child_id );
+						return $this->change_price_by_formula( $price, $the_product );
+					}
+				}
+			} /* else {
+				return $this->change_price_by_formula( $price, null );
+			} */
+		}
+		return $price;
 	}
 
 	/**
