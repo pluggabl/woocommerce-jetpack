@@ -198,6 +198,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - PAYMENT GATEWAYS - Gateways Icons - Documentation link added. Reset button added.
 * Tweak - PAYMENT GATEWAYS - Gateways Min/Max - Documentation link added.
 * Tweak - PAYMENT GATEWAYS - Gateways by Country or State - Documentation link added.
+* Tweak - SHIPPING & ORDERS - Shipping - Module description updated.
 * Tweak - SHIPPING & ORDERS - Orders - Documentation link added. Reset button added.
 * Tweak - SHIPPING & ORDERS - Order Numbers - Documentation link added.
 * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Documentation link added. Reset button added.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shipping class.
  *
- * @version 2.4.8
+ * @version 2.4.9
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,16 @@ class WCJ_Shipping extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.4.9
 	 */
 	function __construct() {
 
 		$this->id         = 'shipping';
 		$this->short_desc = __( 'Shipping', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Hide WooCommerce shipping when free is available.', 'woocommerce-jetpack' );
+		$this->desc       =
+			__( 'Add multiple custom shipping methods to WooCommerce.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'Hide WooCommerce shipping when free is available.', 'woocommerce-jetpack') . ' ' .
+			__( 'Display "left to free shipping" info.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-shipping/';
 		parent::__construct();
 
