@@ -40,7 +40,7 @@ class WCJ_Widget_Multicurrency extends WP_Widget {
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 		}
 		if ( ! wcj_is_module_enabled( 'multicurrency' ) ) {
-			echo __( 'Multicurrency module not enabled!', '' );
+			echo __( 'Multicurrency module not enabled!', 'woocommerce-jetpack' );
 		} else {
 			switch ( $instance['switcher_type'] ) {
 				case 'link_list':
