@@ -48,6 +48,9 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 				add_filter( 'woocommerce_variation_prices_regular_price', array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 10, 2 );
 				add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 10, 2 );
 				add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 10, 3 );
+				// Grouped products
+				add_filter( 'woocommerce_get_price_including_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 10, 3 );
+				add_filter( 'woocommerce_get_price_excluding_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 10, 3 );
 			}
 
 			if ( is_admin() ) {
@@ -69,6 +72,25 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 			}
 		}
 		return $currency_exchange_rate;
+	}
+
+	/**
+	 * change_price_by_currency_grouped.
+	 *
+	 * @version 2.4.9
+	 * @since   2.4.9
+	 */
+	function change_price_by_currency_grouped( $price, $qty, $_product ) {
+		if ( $_product->is_type( 'grouped' ) ) {
+			foreach ( $_product->get_children() as $child_id ) {
+				$the_price = get_post_meta( $child_id, '_price', true );
+				if ( $the_price == $price ) {
+					$the_product = wc_get_product( $child_id );
+					return $this->change_price_by_currency( $price, $the_product );
+				}
+			}
+		}
+		return $price;
 	}
 
 	/**
