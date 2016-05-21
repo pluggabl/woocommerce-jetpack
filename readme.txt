@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 20/05/2016 =
+* Dev - Widgets - Country Switcher - "module not enabled" and "wrong configuration" messages added.
 -* Dev/Fix - PRICES & CURRENCIES - Prices and Currencies by Country - support for grouped products added.
 -* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Customer Country Detection Method" changed from "by user selection" to "by IP, then by user selection".
 * Dev - PRODUCTS - Product Input Fields - "Emails Options" added.
@@ -209,7 +210,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - EMAILS & MISC. - General - Documentation link added.
 
 = 2.4.8 - 04/05/2016 =
-* Dev - "Booster - Country Switcher" widget added.
+* Dev - Widgets - "Booster - Country Switcher" widget added.
 * Dev - Currency reports added to Multicurrency and Gateways Currency modules.
 * Dev - `WCJ_Module` - `create_meta_box` - `select` type added.
 * Dev - `WCJ_Module` - `create_meta_box` now takes option default value if no post meta is set.
