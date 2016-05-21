@@ -201,6 +201,10 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 */
 	function change_price_by_currency( $price, $_product ) {
 
+		if ( '' === $price ) {
+			return $price;
+		}
+
 		if ( $this->do_revert() ) {
 			return $price;
 		}

@@ -120,6 +120,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 21/05/2016 =
+~* Dev/Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Empty price fixed.
 ~* Dev/Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - support for grouped products added.
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `disable_add_to_cart_ajax` added.
 * Dev - Widgets - Country Switcher - "module not enabled" and "wrong configuration" messages added.
