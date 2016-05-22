@@ -120,70 +120,70 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.4.9 - 21/05/2016 =
-~* Dev/Fix - PRICES & CURRENCIES -  Multicurrency Product Base Price - Support for grouped products added.
-~* Dev/Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Empty price fixed.
-~* Dev/Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Support for grouped products added.
-* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `disable_add_to_cart_ajax` added.
-* Dev - Widgets - Country Switcher - "module not enabled" and "wrong configuration" messages added.
-~* Dev/Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Support for grouped products added.
--* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Customer Country Detection Method" changed from "by user selection" to "by IP, then by user selection".
-* Dev - PRODUCTS - Product Input Fields - "Emails Options" added.
-* Fix - PRODUCTS - Product Tabs - Local product tabs number field set to min zero (instead of one).
--* Dev - CART & CHECKOUT - Checkout Files Upload - "Add to Thank You page" and "Add to My Account page" options added.
-* Dev - CART & CHECKOUT - Empty Cart Button - "Button position on the Checkout page" option added.
-* Fix - Translation domain fixed (in `jetpack_menu()`).
-~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Revert Currency to Default on Checkout" option added.
-~* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_variation_prices_hash()` - Variable products main price fixed.
-~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - `get_customer_country_group_id()` - Not recalculating `customer_country_group_id` - works faster now.
-~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `get_variation_prices_hash()` - Variable products main price fixed.
-~* Fix - PRICES & CURRENCIES - Wholesale Price - Mini cart bug fixed.
-~* Dev - PRICES & CURRENCIES - Wholesale Price - Major code refactoring.
-* Dev - PRICES & CURRENCIES - Wholesale Price - Per product functionality added.
-* Dev - `WCJ_Module` - `create_meta_box()` and `save_meta_box()` - `title` option type added.
-* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Compatibility with PayPal Express added.
-* Dev - `WCJ_Module` - `create_meta_box()` - `multiple` attribute added to `select` type option.
-~* Dev - PRODUCTS - Product by Country - Initial module release.
-* Dev - Shortcodes - Products - `get_product_orders_data` and `wcj_product_time_since_last_sale` - Query by blocks.
-* Fix - EMAILS & MISC. - Reports - `gather_orders_data` - Fixed for deleted products (caused PHP notice).
-* Dev - EMAILS & MISC. - Reports - `gather_products_data` - Query by blocks.
-* Dev - BUTTON & PRICE LABELS - Custom Price Labels - `create_migrate_from_custom_price_labels_tool` - Query by blocks.
-* Dev - SHIPPING & ORDERS - Order Numbers - `renumerate_orders` - Query by blocks.
-~* Dev - `is_super_admin()` replaced with `wcj_is_user_role()`.
-* Fix - EMAILS & MISC. - Old Slugs - `$wpdb->prefix` fix.
 ~* Dev - Multisite enabled.
--$* Dev - PRICES & CURRENCIES - Products by Users - Initial module release.
--$* Dev - PRICES & CURRENCIES - Price by User Role - Initial module release.
-~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Now rounding applies to global (not per product) conversions only.
-* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()` to prevent PHP notice on empty value.
-* Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - Bulgarian language (`lang="BG"`) added.
-* Dev - Widgets - Multicurrency Switcher - "module not enabled" message added.
-~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `add_hooks()` moved from `init` hook to constructor.
+* Fix - Translation domain fixed (in `jetpack_menu()`).
+* Dev - Text domain added to the plugin header.
+* Dev - POT file updated.
+~* Dev - `is_super_admin()` replaced with `wcj_is_user_role()`.
+* Dev - "Plugin renamed..." notice (`name_changed_notice`) removed.
+* Dev - `WCJ_Module` - `create_meta_box()` and `save_meta_box()` - `title` option type added.
+* Dev - `WCJ_Module` - `create_meta_box()` - `multiple` attribute added to `select` type option.
 * Dev - Functions - `wcj_get_current_currency_code()` function added.
 * Dev - Functions - `wcj_get_currency_exchange_rate()` function added.
-* Dev - Text domain added to the plugin header.
-~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_goal_remaining_progress_bar]` shortcode added.
-~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` shortcode added.
-~* Dev - Shortcodes - Products - `[wcj_product_total_orders_items]` shortcode added.
-~* Dev - Shortcodes - Products - `date_i18n` added to `[wcj_product_crowdfunding_startdate]` and `[wcj_product_crowdfunding_deadline]`.
-~* Dev - Shortcodes - Products - `get_product_orders_data` - `offset` shortcodes attribute added.
-* Fix - Shortcodes - Products - `get_product_orders_data` - `total_orders` fixed.
-* Dev - POT file updated.
-* Dev - "Plugin renamed..." notice (`name_changed_notice`) removed.
+* Dev - Widgets - Multicurrency Switcher - "module not enabled" message added.
+* Dev - Widgets - Country Switcher - "module not enabled" and "wrong configuration" messages added.
 * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Fixed for deleted products.
 * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` and `item_variation` - Variation data fixed (`pa_` removed and `urlencode` added).
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - `style_item_name_variation` attribute added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `debug` column added.
+* Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - Bulgarian language (`lang="BG"`) added.
+* Fix - Shortcodes - Products - `get_product_orders_data` - `total_orders` fixed.
+~* Dev - Shortcodes - Products - `get_product_orders_data` - `offset` shortcodes attribute added.
+* Dev - Shortcodes - Products - `get_product_orders_data` and `[wcj_product_time_since_last_sale]` - Query by blocks.
+~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_goal_remaining_progress_bar]` shortcode added.
+~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` shortcode added.
+~* Dev - Shortcodes - Products - `[wcj_product_total_orders_items]` shortcode added.
+~* Dev - Shortcodes - Products - `date_i18n` added to `[wcj_product_crowdfunding_startdate]` and `[wcj_product_crowdfunding_deadline]`.
 * Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
+-$* Dev - PRICES & CURRENCIES - Products by Users - Initial module release.
+-$* Dev - PRICES & CURRENCIES - Price by User Role - Initial module release.
+~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Now rounding applies to global (not per product) conversions only.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()` to prevent PHP notice on empty value.
+~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `get_variation_prices_hash()` - Variable products main price fixed.
+~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Support for grouped products added.
+-* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Customer Country Detection Method" changed from "by user selection" to "by IP, then by user selection".
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - `get_customer_country_group_id()` - Not recalculating `customer_country_group_id` - works faster now.
+~* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_variation_prices_hash()` - Variable products main price fixed.
+~* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Empty price fixed.
+~* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Support for grouped products added.
+~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Revert Currency to Default on Checkout" option added.
+~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `add_hooks()` moved from `init` hook to constructor.
+~* Fix - PRICES & CURRENCIES -  Multicurrency Product Base Price - Support for grouped products added.
 ~* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `post__not_in` added to `save_meta_box_value`.
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `posts_per_page` lowered to query only necessary number of product in `save_meta_box_value`.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `disable_add_to_cart_ajax` added.
+~* Fix - PRICES & CURRENCIES - Wholesale Price - Mini cart bug fixed.
+~* Dev - PRICES & CURRENCIES - Wholesale Price - Major code refactoring.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Per product functionality added.
 * Fix - BUTTON & PRICE LABELS - Custom Price Labels - Products query is made by blocks now (`wcj_get_products()`).
-* Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - `create_migrate_from_custom_price_labels_tool` - Query by blocks.
 -* Dev - PRODUCTS - Bookings - Initial module release.
+~* Dev - PRODUCTS - Product by Country - Initial module release.
+* Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).
+* Fix - PRODUCTS - Product Tabs - Local product tabs number field set to min zero (instead of one).
+* Dev - PRODUCTS - Product Input Fields - "Emails Options" added.
+-* Dev - CART & CHECKOUT - Checkout Files Upload - "Add to Thank You page" and "Add to My Account page" options added.
 * Fix - CART & CHECKOUT - Empty Cart Button - "Wrapping DIV style" option fixed in free version.
+* Dev - CART & CHECKOUT - Empty Cart Button - "Button position on the Checkout page" option added.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - `add_custom_order_and_account_fields_to_admin_order_display`.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Field ID display added to module's settings page.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - "Add All Fields to Order Received Page" option added.
 * Fix - PAYMENT GATEWAYS - Gateways per Product or Category - Products query is made by blocks now (`wcj_get_products()`).
+* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Compatibility with PayPal Express added.
+* Dev - SHIPPING & ORDERS - Order Numbers - `renumerate_orders` - Query by blocks.
+* Fix - EMAILS & MISC. - Old Slugs - `$wpdb->prefix` fix.
+* Fix - EMAILS & MISC. - Reports - `gather_orders_data` - Fixed for deleted products (caused PHP notice).
+* Dev - EMAILS & MISC. - Reports - `gather_products_data` - Query by blocks.
 * Tweak - Admin Modules Menu - "Shipping" module set to default in SHIPPING & ORDERS category.
 * Tweak - PRICES & CURRENCIES - Currency Exchange Rates - Documentation link added. Reset button added.
 * Tweak - PRICES & CURRENCIES - Multicurrency Product Base Price - Documentation link added.
