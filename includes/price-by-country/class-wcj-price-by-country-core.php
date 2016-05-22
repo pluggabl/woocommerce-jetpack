@@ -29,14 +29,17 @@ class WCJ_Price_by_Country_Core {
 	 */
 	function add_hooks() {
 
-		if ( 'by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
+		if (
+			'by_user_selection'            === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ||
+			'by_ip_then_by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' )
+		) {
 			if ( ! session_id() ) {
 				session_start();
 			}
 			if ( isset( $_REQUEST[ 'wcj-country' ] ) ) {
 				$_SESSION[ 'wcj-country' ] = $_REQUEST[ 'wcj-country' ];
 			}
-			if ( ! isset( $_SESSION[ 'wcj-country' ] ) ) {
+			if ( ! isset( $_SESSION[ 'wcj-country' ] ) && 'by_ip_then_by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
 				if ( null != ( $country = $this->get_customer_country_by_ip() ) ) {
 					$_SESSION[ 'wcj-country' ] = $country;
 				}
@@ -156,6 +159,8 @@ class WCJ_Price_by_Country_Core {
 		} else {
 			if ( 'by_ip' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
 				$country = $this->get_customer_country_by_ip();
+			} elseif ( 'by_ip_then_by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
+				$country = ( isset( $_SESSION[ 'wcj-country' ] ) ) ? $_SESSION[ 'wcj-country' ] : $this->get_customer_country_by_ip();
 			} elseif ( 'by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
 				$country = ( isset( $_SESSION[ 'wcj-country' ] ) ) ? $_SESSION[ 'wcj-country' ] : null;
 			} elseif ( 'by_wpml' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {

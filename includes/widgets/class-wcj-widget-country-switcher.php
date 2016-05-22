@@ -42,7 +42,7 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 		if ( ! wcj_is_module_enabled( 'price_by_country' ) ) {
 			echo __( 'Prices and Currencies by Country module not enabled!', 'woocommerce-jetpack' );
 		} elseif ( 'by_ip' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
-			echo __( 'Customer Country Detection Method must be set to "by user selection"!', 'woocommerce-jetpack' );
+			echo __( 'Customer Country Detection Method must include "by user selection"!', 'woocommerce-jetpack' );
 		} else {
 			echo do_shortcode( '[wcj_country_select_drop_down_list countries="' . $instance['countries'] . '"]' );
 			/* switch ( $instance['switcher_type'] ) {

@@ -88,9 +88,10 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				'default'  => 'by_ip',
 				'type'     => 'select',
 				'options'  => array(
-					'by_ip'             => __( 'by IP', 'woocommerce-jetpack' ),
-					'by_user_selection' => __( 'by IP, then by user selection', 'woocommerce-jetpack' ),
-//					'by_wpml'           => __( 'by WPML', 'woocommerce-jetpack' ),
+					'by_ip'                        => __( 'by IP', 'woocommerce-jetpack' ),
+					'by_ip_then_by_user_selection' => __( 'by IP, then by user selection', 'woocommerce-jetpack' ),
+					'by_user_selection'            => __( 'by user selection', 'woocommerce-jetpack' ),
+//					'by_wpml'                      => __( 'by WPML', 'woocommerce-jetpack' ),
 				),
 			),
 
@@ -177,8 +178,6 @@ class WCJ_Price_By_Country extends WCJ_Module {
 						'<a href="' . add_query_arg( 'wcj_generate_country_groups', 'all', remove_query_arg( 'wcj_generate_country_groups_confirm' ) ) . '">' .
 						__( 'Generate', 'woocommerce-jetpack' ) . '</a>' .
 					'</pre>',
-					/* '<pre><a href="' . add_query_arg( 'wcj_generate_country_groups', 'paypal_only', remove_query_arg( 'wcj_generate_country_groups_confirm' ) ) . '">' .
-						__( 'Create only PayPal country groups', 'woocommerce-jetpack' ) . '</a></pre>' . */
 			),
 
 			array(
@@ -255,18 +254,11 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			'options'  => array(
 				'manual'     => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
 				'auto'       => __( 'Automatically via Currency Exchange Rates module', 'woocommerce-jetpack' ),
-				/* 'hourly'     => __( 'Automatically: Update Hourly', 'woocommerce-jetpack' ),
-				'twicedaily' => __( 'Automatically: Update Twice Daily', 'woocommerce-jetpack' ),
-				'daily'      => __( 'Automatically: Update Daily', 'woocommerce-jetpack' ),
-				'weekly'     => __( 'Automatically: Update Weekly', 'woocommerce-jetpack' ),
-				'minutely'   => __( 'Automatically: Update Every Minute', 'woocommerce-jetpack' ), */
 			),
-			'desc'     => ( '' == apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) ) ?
-				__( 'Visit', 'woocommerce-jetpack' ) . ' <a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
-				:
-	            apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-			'custom_attributes'
-			           => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+			'desc'     => ( '' == apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) )
+				? __( 'Visit', 'woocommerce-jetpack' ) . ' <a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
+				: apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+			'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 		);
 
 		$currency_from = apply_filters( 'woocommerce_currency', get_option('woocommerce_currency') );

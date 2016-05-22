@@ -150,13 +150,13 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()` to prevent PHP notice on empty value.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `get_variation_prices_hash()` - Variable products main price fixed.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Support for grouped products added.
-~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Customer Country Detection Method" changed from "by user selection" to "by IP, then by user selection".
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Customer Country Detection Method" changed from "by user selection" to "by IP, then by user selection".
 * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - `get_customer_country_group_id()` - Not recalculating `customer_country_group_id` - works faster now.
 * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_variation_prices_hash()` - Variable products main price fixed.
 * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Empty price bug fixed.
 * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Support for grouped products added.
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Revert Currency to Default on Checkout" option added.
-~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `add_hooks()` moved from `init` hook to constructor.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `add_hooks()` moved from `init` hook to constructor.
 * Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Support for grouped products added.
 * Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - `get_variation_prices_hash()` - Variable products main price fixed.
 * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `post__not_in` added to `save_meta_box_value`.
