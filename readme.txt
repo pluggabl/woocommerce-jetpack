@@ -158,7 +158,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 ~* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Support for grouped products added.
 ~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Revert Currency to Default on Checkout" option added.
 ~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `add_hooks()` moved from `init` hook to constructor.
-~* Fix - PRICES & CURRENCIES -  Multicurrency Product Base Price - Support for grouped products added.
+~* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Support for grouped products added.
+~* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - `get_variation_prices_hash()` - Variable products main price fixed.
 ~* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `post__not_in` added to `save_meta_box_value`.
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `posts_per_page` lowered to query only necessary number of product in `save_meta_box_value`.
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `disable_add_to_cart_ajax` added.
@@ -167,7 +168,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - PRICES & CURRENCIES - Wholesale Price - Per product functionality added.
 * Fix - BUTTON & PRICE LABELS - Custom Price Labels - Products query is made by blocks now (`wcj_get_products()`).
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - `create_migrate_from_custom_price_labels_tool` - Query by blocks.
--* Dev - PRODUCTS - Bookings - Initial module release.
+* Dev - PRODUCTS - Bookings - Initial module release.
 * Dev - PRODUCTS - Product by Country - Initial module release.
 * Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).
 * Fix - PRODUCTS - Product Tabs - Local product tabs number field set to min zero (instead of one).

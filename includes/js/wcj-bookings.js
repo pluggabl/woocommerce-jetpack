@@ -32,7 +32,13 @@ var decodeEntities = (function () {
 function change_price() {
 	var date_from = jQuery("input[name='wcj_product_bookings_date_from']").val();
 	var date_to = jQuery("input[name='wcj_product_bookings_date_to']").val();
-	if ( date_from && date_to ) {
+	var is_variation_ok = true;
+	if ( jQuery(".variations select").length ) {
+		if ( jQuery(".variations select").find(":selected").val() == '' ) {
+			is_variation_ok = false;
+		}
+	}
+	if ( date_from && date_to && is_variation_ok ) {
 		var d1 = new Date(date_from);
 		var d2 = new Date(date_to);
 		var t1 = d1.getTime();
@@ -66,6 +72,7 @@ function change_price() {
 }
 
 jQuery(document).ready(function() {
+	change_price();
 	jQuery("input[name^='wcj_product_bookings_date_']").each( function () {
 		jQuery(this).change( change_price );
 	});

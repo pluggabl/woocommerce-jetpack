@@ -24,7 +24,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'product_bookings';
-		$this->short_desc = __( 'Bookings [BETA]', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Bookings', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add bookings products to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-bookings/';
 		parent::__construct();
@@ -40,13 +40,6 @@ class WCJ_Product_Bookings extends WCJ_Module {
 				add_action( 'wp_ajax_nopriv_price_change',                array( $this, 'price_change_ajax' ) );
 				// Prices
 				add_filter( 'woocommerce_get_price',                      array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
-//				add_filter( 'woocommerce_get_sale_price',                 array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 ); // todo???
-//				add_filter( 'woocommerce_get_regular_price',              array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 ); // todo?
-				// Prices - Variations
-//				add_filter( 'woocommerce_variation_prices_price',         array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 ); // todo?
-//				add_filter( 'woocommerce_variation_prices_regular_price', array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 ); // todo???
-//				add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 ); // todo???
-///				add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 100, 3 ); // todo?
 				// Single Page
 				add_action( 'woocommerce_before_add_to_cart_button',      array( $this, 'add_input_fields_to_frontend' ), PHP_INT_MAX );
 				// Add to cart
@@ -111,7 +104,8 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			$seconds_diff  = $date_to - $date_from;
 			$days_diff     = ( $seconds_diff / 60 / 60 / 24 );
 			$the_product   = wc_get_product( $_POST['product_id'] );
-			$price_per_day = $the_product->get_price();
+			$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
+			$price_per_day = $the_product->$get_price_method();
 			$the_price     = $days_diff * $price_per_day;
 			echo wc_price( $the_price );
 		}
@@ -329,17 +323,6 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	}
 
 	/**
-	 * get_variation_prices_hash.
-	 *
-	 * @version 2.5.0
-	 * @since   2.5.0
-	 * @todo    recheck if this really needed
-	 */
-	/* function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		return $price_hash;
-	} */
-
-	/**
 	 * save_meta_box_value.
 	 *
 	 * @version 2.5.0
@@ -439,7 +422,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	 */
 	function get_settings() {
 		$settings = array();
-		return $this->add_standard_settings( $settings );
+		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Bookings" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
 	}
 }
 

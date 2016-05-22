@@ -87,7 +87,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	 */
 	function get_settings() {
 		$settings = array();
-		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Product by Country" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
+		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Product by Country" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
 	}
 }
 
