@@ -119,7 +119,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 21/05/2016 =
+= 2.4.9 - 22/05/2016 =
 ~* Dev - Multisite enabled.
 * Fix - Translation domain fixed (in `jetpack_menu()`).
 * Dev - Text domain added to the plugin header.
@@ -168,7 +168,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - BUTTON & PRICE LABELS - Custom Price Labels - Products query is made by blocks now (`wcj_get_products()`).
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - `create_migrate_from_custom_price_labels_tool` - Query by blocks.
 -* Dev - PRODUCTS - Bookings - Initial module release.
-~* Dev - PRODUCTS - Product by Country - Initial module release.
+* Dev - PRODUCTS - Product by Country - Initial module release.
 * Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).
 * Fix - PRODUCTS - Product Tabs - Local product tabs number field set to min zero (instead of one).
 * Dev - PRODUCTS - Product Input Fields - "Emails Options" added.

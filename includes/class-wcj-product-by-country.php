@@ -24,9 +24,9 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'product_by_country';
-		$this->short_desc = __( 'Product by Country [BETA]', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Product by Country', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Display WooCommerce products by customers country.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-product-by-country/'; // TODO
+		$this->link       = 'http://booster.io/features/woocommerce-product-by-country/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -87,7 +87,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	 */
 	function get_settings() {
 		$settings = array();
-		return $this->add_standard_settings( $settings );
+		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Product by Country" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
 	}
 }
 
