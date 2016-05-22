@@ -172,6 +172,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - PRODUCTS - Product Info V2 - Products query is made by blocks now (`wcj_get_products()`).
 * Fix - PRODUCTS - Product Tabs - Local product tabs number field set to min zero (instead of one).
 * Dev - PRODUCTS - Product Input Fields - "Emails Options" added.
+* Dev - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - Display Radio Buttons Instead of Drop Box - `label` tag added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - "Add to Thank You page" and "Add to My Account page" options added.
 * Fix - CART & CHECKOUT - Empty Cart Button - "Wrapping DIV style" option fixed in free version.
 * Dev - CART & CHECKOUT - Empty Cart Button - "Button position on the Checkout page" option added.

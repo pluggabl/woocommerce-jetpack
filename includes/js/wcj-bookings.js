@@ -79,3 +79,4 @@ jQuery(document).ready(function() {
 });
 
 jQuery(document.body).on('change','.variations select',change_price);
+jQuery(document.body).on('change','input[name="wcj_variations"]',change_price);

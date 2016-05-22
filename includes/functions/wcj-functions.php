@@ -54,7 +54,7 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 	/**
 	 * wcj_variation_radio_button.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.0
 	 * @since   2.4.8
 	 */
 	function wcj_variation_radio_button( $_product, $variation ) {
@@ -89,13 +89,17 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 		$is_checked = checked( $is_checked, true, false );
 
 		echo '<td style="width:10%;">';
-		echo '<input name="wcj_variations" type="radio"' . $attributes_html . ' variation_id="' . $variation_id . '"' . $is_checked . '>';
+		echo '<input id="wcj_variation_' . $variation_id . '" name="wcj_variations" type="radio"' . $attributes_html . ' variation_id="' . $variation_id . '"' . $is_checked . '>';
 		echo '</td>';
 		echo '<td>';
+		echo '<label for="wcj_variation_' . $variation_id . '">';
 		echo $variation_title;
-		echo '<br>';
-//		echo '<small>' . $variation['variation_description'] . '</small>';
-		echo '<small>' . get_post_meta( $variation_id, '_variation_description', true )  . '</small>';
+		if ( '' != ( $variation_description = get_post_meta( $variation_id, '_variation_description', true ) ) ) {
+			echo '<br>';
+//			echo '<small>' . $variation['variation_description'] . '</small>';
+			echo '<small>' . $variation_description . '</small>';
+		}
+		echo '</label>';
 		echo '</td>';
 	}
 }
