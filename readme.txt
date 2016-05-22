@@ -145,7 +145,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Shortcodes - Products - `[wcj_product_total_orders_items]` shortcode added.
 * Dev - Shortcodes - Products - `date_i18n` added to `[wcj_product_crowdfunding_startdate]` and `[wcj_product_crowdfunding_deadline]`.
 ~* Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
-$* Dev - PRICES & CURRENCIES - Price by User Role - Initial module release.
+* Dev - PRICES & CURRENCIES - Price by User Role - Initial module release.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Now rounding applies to global (not per product) conversions only.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()` to prevent PHP notice on empty value.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `get_variation_prices_hash()` - Variable products main price fixed.
