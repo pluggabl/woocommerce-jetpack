@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -229,8 +229,8 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_files_to_email_attachments.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function add_files_to_email_attachments( $attachments, $status, $order ) {
 		if (
@@ -760,7 +760,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_order_item_meta.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function add_product_input_fields_to_order_item_meta(  $item_id, $values, $cart_item_key  ) {
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $values['product_id'], 1 ) );

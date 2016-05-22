@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Core Fields class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function __construct() {
 
@@ -204,7 +204,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function get_settings() {
 

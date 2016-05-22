@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -40,7 +40,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * reset_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.0
 	 */
 	function reset_settings() {
@@ -89,7 +89,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * save_meta_box.
 	 *
-	 * @since 2.4.9
+	 * @since 2.5.0
 	 */
 	function save_meta_box( $post_id, $post ) {
 		// Check that we are saving with current metabox displayed.
@@ -132,7 +132,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @since 2.4.9
+	 * @since 2.5.0
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -12,8 +12,8 @@ if ( ! function_exists( 'wcj_get_current_currency_code' ) ) {
 	/**
 	 * wcj_get_current_currency_code.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function wcj_get_current_currency_code( $module ) {
 		$current_currency_code = get_woocommerce_currency();
@@ -30,8 +30,8 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function wcj_get_currency_exchange_rate( $module, $currency_code ) {
 		$currency_exchange_rate = 1;
@@ -297,8 +297,8 @@ if ( ! function_exists( 'wcj_get_wcj_uploads_dir' ) ) {
 /**
  * wcj_is_product_wholesale_enabled_per_product.
  *
- * @version 2.4.9
- * @since   2.4.9
+ * @version 2.5.0
+ * @since   2.5.0
  */
 if ( ! function_exists( 'wcj_is_product_wholesale_enabled_per_product' ) ) {
 	function wcj_is_product_wholesale_enabled_per_product( $product_id ) {
@@ -312,7 +312,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled_per_product' ) ) {
 /**
  * wcj_is_product_wholesale_enabled.
  *
- * @version 2.4.9
+ * @version 2.5.0
  */
 if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	function wcj_is_product_wholesale_enabled( $product_id ) {
@@ -412,8 +412,8 @@ if ( ! function_exists( 'is_shop_manager' ) ) {
 /**
  * wcj_is_user_role.
  *
- * @version 2.4.9
- * @since   2.4.9
+ * @version 2.5.0
+ * @since   2.5.0
  * @return  bool
  */
 if ( ! function_exists( 'wcj_is_user_role' ) ) {

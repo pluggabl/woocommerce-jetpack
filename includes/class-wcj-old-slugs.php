@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Old Slugs class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Old_Slugs extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function __construct() {
 
@@ -38,7 +38,7 @@ class WCJ_Old_Slugs extends WCJ_Module {
 	/**
 	 * add_old_slugs_tool_tab.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function create_old_slugs_tool() {
 

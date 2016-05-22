@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Wholesale Price class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation;
@@ -19,7 +19,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function __construct() {
 
@@ -49,7 +49,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * add_discount_info_to_cart_page.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function add_discount_info_to_cart_page( $price_html, $cart_item, $cart_item_key ) {
 
@@ -84,7 +84,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * get_discount_by_quantity.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	private function get_discount_by_quantity( $quantity, $product_id ) {
 
@@ -115,7 +115,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * get_wholesale_price.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	private function get_wholesale_price( $price, $quantity, $product_id ) {
 		$discount = $this->get_discount_by_quantity( $quantity, $product_id );
@@ -134,8 +134,8 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * cart_loaded_from_session.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function cart_loaded_from_session( $cart ) {
 		foreach ( $cart->cart_contents as $item_key => $item ) {
@@ -148,8 +148,8 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * calculate_totals.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function calculate_totals( $cart ) {
 
@@ -201,7 +201,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * wholesale_price.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function wholesale_price( $price, $_product ) {
 		return ( wcj_is_product_wholesale_enabled( $_product->id ) && isset( $_product->wcj_wholesale_price ) ) ? $_product->wcj_wholesale_price : $price;
@@ -210,8 +210,8 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_meta_box_options() {
 		$product_id = get_the_ID();
@@ -269,7 +269,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function get_settings() {
 		$products = apply_filters( 'wcj_get_products_filter', array() );

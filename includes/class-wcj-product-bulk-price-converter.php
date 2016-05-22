@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Bulk Price Converter class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function __construct() {
 

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Empty Cart Button class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function __construct() {
 
@@ -46,7 +46,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	/**
 	 * add_empty_cart_link.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function add_empty_cart_link() {
 		$confirmation_html = ( 'confirm_with_pop_up_box' == get_option( 'wcj_empty_cart_confirmation', 'no_confirmation' ) ) ? ' onclick="return confirm(\'' . get_option( 'wcj_empty_cart_confirmation_text' ) . '\')"' : '';
@@ -66,7 +66,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function get_settings() {
 		$settings = array(

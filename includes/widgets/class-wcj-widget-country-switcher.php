@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Country Switcher Widget class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -29,7 +29,7 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 	/**
 	 * Outputs the content of the widget
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @param array $args
 	 * @param array $instance
 	 */

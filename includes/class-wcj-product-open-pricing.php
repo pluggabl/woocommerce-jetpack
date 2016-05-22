@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Open Pricing class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -63,8 +63,8 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * disable_add_to_cart_ajax.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function disable_add_to_cart_ajax( $supports, $feature, $_product ) {
 		if ( $this->is_open_price_product( $_product ) && 'ajax_add_to_cart' === $feature ) {
@@ -76,7 +76,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * save_meta_box_value.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.8
 	 */
 	function save_meta_box_value( $option_value, $option_name, $module_id ) {

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Report Tool class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -28,7 +28,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * generate_report_zip.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.3.10
 	 */
 	function generate_report_zip() {

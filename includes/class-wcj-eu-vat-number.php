@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack EU VAT Number class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function __construct() {
 

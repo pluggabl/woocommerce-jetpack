@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Product Price by Formula class.
  *
- * @version 2.4.9
- * @since   2.4.9
+ * @version 2.5.0
+ * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function __construct() {
 
@@ -58,8 +58,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price_by_formula_grouped.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function change_price_by_formula_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
@@ -83,8 +83,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price_by_formula.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function change_price_by_formula( $price, $_product, $output_errors = false ) {
 		if ( $this->is_price_by_formula_product( $_product ) && '' != $price ) {
@@ -130,8 +130,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 * @todo    recheck if this really needed
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
@@ -158,8 +158,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * save_meta_box_value.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function save_meta_box_value( $option_value, $option_name, $module_id ) {
 		if ( true === apply_filters( 'wcj_get_option_filter', false, true ) ) {
@@ -190,8 +190,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * add_notice_query_var.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function add_notice_query_var( $location ) {
 		remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
@@ -201,8 +201,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * admin_notices.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function admin_notices() {
 		if ( ! isset( $_GET['wcj_product_price_by_formula_admin_notice'] ) ) {
@@ -218,8 +218,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * is_price_by_formula_product.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function is_price_by_formula_product( $_product ) {
 		return ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_enabled', true ) ) ? true : false;
@@ -228,8 +228,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_meta_box_options() {
 		$options = array(
@@ -286,8 +286,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function create_meta_box() {
 
@@ -305,8 +305,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_settings() {
 		$settings = array(

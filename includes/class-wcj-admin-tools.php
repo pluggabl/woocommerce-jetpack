@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Admin Tools class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function __construct() {
 
@@ -39,7 +39,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * create_tool.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function create_admin_tools_tool() {
 

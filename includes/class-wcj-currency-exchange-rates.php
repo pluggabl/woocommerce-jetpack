@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency Exchange Rates class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function __construct() {
 
@@ -39,7 +39,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function get_settings() {
 		$settings = array();

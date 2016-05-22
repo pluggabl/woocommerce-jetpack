@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Product by Country class.
  *
- * @version 2.4.9
- * @since   2.4.9
+ * @version 2.5.0
+ * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function __construct() {
 
@@ -41,8 +41,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * product_by_country.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function product_by_country( $visible, $product_id ) {
 		// Get the country by IP
@@ -62,8 +62,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_meta_box_options() {
 		$options = array(
@@ -82,8 +82,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_settings() {
 		$settings = array();

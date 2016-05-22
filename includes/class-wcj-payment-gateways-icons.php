@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Icons class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function __construct() {
 
@@ -48,7 +48,7 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function get_settings() {
 		$settings = array();

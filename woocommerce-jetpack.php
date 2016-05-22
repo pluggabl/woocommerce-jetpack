@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: http://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.4.9-dev
+Version: 2.5.0-dev
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Text Domain: woocommerce-jetpack
@@ -28,7 +28,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.4.9
+ * @version 2.5.0
  */
 
 final class WC_Jetpack {
@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.4.9-dev-201605202041';
+	public $version = '2.5.0-dev-201605202041';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -78,7 +78,7 @@ final class WC_Jetpack {
 	/**
 	 * WC_Jetpack Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @access public
 	 */
 	public function __construct() {
@@ -269,7 +269,7 @@ final class WC_Jetpack {
 	/**
 	 * Add menu item
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function jetpack_menu() {
 		add_submenu_page(
@@ -377,7 +377,7 @@ final class WC_Jetpack {
 	/**
 	 * include_functions.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	private function include_functions() {
 		include_once( 'includes/functions/wcj-debug-functions.php' );
@@ -394,7 +394,7 @@ final class WC_Jetpack {
 	/**
 	 * include_shortcodes.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	private function include_shortcodes() {
 		//if ( 'yes' === get_option( 'wcj_shortcodes_enabled', 'no' ) ) {
@@ -412,7 +412,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	private function include_modules() {
 		$settings = array();

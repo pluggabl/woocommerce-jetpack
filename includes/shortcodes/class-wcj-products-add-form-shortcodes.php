@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Products Add Form Shortcodes class.
  *
- * @version 2.4.9
- * @since   2.4.9
+ * @version 2.5.0
+ * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function __construct() {
 
@@ -38,8 +38,8 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Inits shortcode atts and properties.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function init_atts( $atts ) {
 		return $atts;
@@ -48,8 +48,8 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wc_add_new_product.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function wc_add_new_product( $args, $shortcode_atts ) {
 
@@ -80,8 +80,8 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * validate_args.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function validate_args( $args, $shortcode_atts ) {
 		if ( '' == $args['title'] ) {
@@ -93,8 +93,8 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_add_new.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function wcj_product_add_new( $atts ) {
 

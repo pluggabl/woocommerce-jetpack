@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function __construct() {
 
@@ -121,7 +121,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * create_migrate_from_custom_price_labels_tool.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function create_migrate_from_custom_price_labels_tool() {
 
@@ -572,7 +572,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function get_settings() {
 		$settings = array();
@@ -593,7 +593,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * add_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.3.7
 	 */
 	function add_settings() {

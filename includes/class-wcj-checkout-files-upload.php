@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Files Upload class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options;
@@ -19,7 +19,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.5
 	 */
 	function __construct() {
@@ -74,7 +74,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * validate_on_checkout.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.5
 	 */
 	function validate_on_checkout( $posted ) {
@@ -182,7 +182,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.5
 	 */
 	function process_checkout_files_upload() {
@@ -298,7 +298,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * is_visible.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.7
 	 */
 	function is_visible( $i, $order_id = 0 ) {
@@ -376,8 +376,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_the_form.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_the_form( $i, $file_name, $order_id = 0 ) {
 		$html = '';
@@ -436,8 +436,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_upload_form_to_thankyou_and_myaccount_page.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function add_files_upload_form_to_thankyou_and_myaccount_page( $order_id ) {
 		$html = '';
@@ -454,7 +454,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_upload_form_to_checkout_frontend.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.5
 	 */
 	function add_files_upload_form_to_checkout_frontend() {
@@ -479,7 +479,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.5
 	 */
 	function get_settings() {

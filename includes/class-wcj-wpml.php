@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack WPML class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function __construct() {
 
@@ -90,7 +90,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * create_wpml_xml_file.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.1
 	 */
 	function create_wpml_xml_file_tool() {

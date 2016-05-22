@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function __construct() {
 
@@ -96,7 +96,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function add_hooks() {
 		// Session
@@ -130,8 +130,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_by_currency_grouped.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function change_price_by_currency_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
@@ -162,7 +162,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$currency_code = $this->get_current_currency_code();
@@ -196,8 +196,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * do_revert.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function do_revert() {
 		return ( 'yes' === get_option( 'wcj_multicurrency_revert', 'no' ) && is_checkout() );
@@ -206,7 +206,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_by_currency.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function change_price_by_currency( $price, $_product ) {
 
@@ -252,7 +252,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_currency_symbol.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function change_currency_symbol( $currency_symbol, $currency ) {
 		if ( $this->do_revert() ) {
@@ -273,7 +273,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_currency_code.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function change_currency_code( $currency ) {
 		if ( $this->do_revert() ) {
@@ -285,7 +285,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_shipping_price_by_currency.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function change_shipping_price_by_currency( $package_rates, $package ) {
 		if ( $this->do_revert() ) {
@@ -329,7 +329,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @todo    rounding (maybe)
 	 */
 	function add_settings() {

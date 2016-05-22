@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function __construct() {
 
@@ -296,7 +296,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.3.0
 	 */
 	function add_custom_fields_to_order_display( $order, $section = '', $add_styling = false ) {
@@ -471,7 +471,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_order_and_account_fields_to_admin_order_display
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function add_custom_order_and_account_fields_to_admin_order_display( $order ) {
 		$this->add_custom_fields_to_order_display( $order, 'order',   true );
@@ -590,7 +590,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function get_settings() {
 

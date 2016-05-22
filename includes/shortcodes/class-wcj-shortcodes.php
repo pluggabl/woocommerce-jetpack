@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shortcodes class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -54,7 +54,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function wcj_shortcode( $atts, $content, $shortcode ) {
 
@@ -144,7 +144,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_get_user_location.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function wcj_get_user_location() {
 		$country = '';

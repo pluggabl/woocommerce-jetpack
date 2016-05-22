@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Price by User Role class.
  *
- * @version 2.4.9
- * @since   2.4.9
+ * @version 2.5.0
+ * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function __construct() {
 
@@ -50,8 +50,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_meta_box_options() {
 		$main_product_id = get_the_ID();
@@ -97,8 +97,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * create_custom_roles_tool.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function create_custom_roles_tool() {
 		if ( isset( $_POST['wcj_add_new_role'] ) ) {
@@ -155,8 +155,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function add_hooks() {
 		// Prices
@@ -177,8 +177,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price_by_role_grouped.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function change_price_by_role_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
@@ -203,8 +203,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price_by_role.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function change_price_by_role( $price, $_product ) {
 
@@ -242,8 +242,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		// TODO: per product?
@@ -259,8 +259,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_current_user_role.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_current_user_role() {
 		$current_user = wp_get_current_user();
@@ -270,8 +270,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_user_roles() {
 		global $wp_roles;
@@ -288,8 +288,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * add_settings_hook.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function add_settings_hook() {
 		add_filter( 'wcj_price_by_user_role_settings', array( $this, 'add_settings' ) );
@@ -298,8 +298,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_settings() {
 		$settings = apply_filters( 'wcj_price_by_user_role_settings', array() );
@@ -309,8 +309,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function add_settings() {
 		$settings = array(

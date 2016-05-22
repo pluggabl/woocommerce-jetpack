@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -25,7 +25,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function add_hooks() {
 
@@ -69,8 +69,8 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_by_country_grouped.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function change_price_by_country_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
@@ -94,8 +94,8 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_by_ip.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function get_customer_country_by_ip() {
 		// Get the country by IP
@@ -136,7 +136,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function get_customer_country_group_id() {
 
@@ -223,7 +223,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.3
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
@@ -247,7 +247,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_by_country.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function change_price_by_country( $price, $product ) {
 

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways per Category class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -158,7 +158,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	/**
 	 * add_per_category_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function add_per_category_settings( $settings ) {
 

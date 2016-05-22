@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Custom Info class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @since   2.4.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function __construct() {
 
@@ -95,7 +95,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function add_settings() {
 

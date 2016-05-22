@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function __construct() {
 
@@ -119,7 +119,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_product_orders_data.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.2.6
 	 */
 	function get_product_orders_data( $return_value = 'total_orders', $atts ) {
@@ -184,7 +184,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_time_since_last_sale.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.4.0
 	 * @todo    not finished
 	 */
@@ -458,8 +458,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_total_orders_items.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function wcj_product_total_orders_items( $atts ) {
 		return $this->get_product_orders_data( 'total_items', $atts );
@@ -468,7 +468,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_total_orders.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_total_orders( $atts ) {
@@ -478,7 +478,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_total_orders_sum.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_total_orders_sum( $atts ) {
@@ -488,7 +488,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_startdate.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_startdate( $atts ) {
@@ -498,7 +498,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_deadline.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_deadline( $atts ) {
@@ -537,8 +537,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_time_remaining_progress_bar.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function wcj_product_crowdfunding_time_remaining_progress_bar( $atts ) {
 		$deadline_seconds  = strtotime( get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_deadline', true ) );
@@ -575,8 +575,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_goal_remaining_progress_bar.
 	 *
-	 * @version 2.4.9
-	 * @since   2.4.9
+	 * @version 2.5.0
+	 * @since   2.5.0
 	 */
 	function wcj_product_crowdfunding_goal_remaining_progress_bar( $atts ) {
 		$current_value = $this->wcj_product_total_orders_sum( $atts );
@@ -713,7 +713,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 

@@ -1,8 +1,8 @@
 /**
  * wcj-bookings.
  *
- * version 2.4.9
- * since   2.4.9
+ * version 2.5.0
+ * since   2.5.0
  */
 var decodeEntities = (function () {
 	//create a new html document (doesn't execute script tags in child elements)

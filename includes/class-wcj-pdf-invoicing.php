@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -137,7 +137,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * catch_args.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function catch_args() {
 		$this->order_id        = ( isset( $_GET['order_id'] ) )                                             ? $_GET['order_id'] : 0;

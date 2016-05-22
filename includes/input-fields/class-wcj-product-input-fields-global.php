@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields Global class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Product_Input_Fields_Global extends WCJ_Product_Input_Fields_Abstract 
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function __construct() {
 

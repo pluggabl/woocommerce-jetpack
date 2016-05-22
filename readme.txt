@@ -119,7 +119,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.4.9 - 22/05/2016 =
+= 2.5.0 - 22/05/2016 =
 ~* Dev - Multisite enabled.
 * Fix - Translation domain fixed (in `jetpack_menu()`).
 * Dev - Text domain added to the plugin header.

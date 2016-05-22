@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price By Country Group Generator class.
  *
- * @version  2.4.9
+ * @version  2.5.0
  * @author   Algoritmika Ltd.
  */
 
@@ -63,7 +63,7 @@ class WCJ_Price_By_Country_Group_Generator {
 	/**
 	 * create_all_countries_groups.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function create_all_countries_groups() {
 		global $wcj_notice;

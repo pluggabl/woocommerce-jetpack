@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Stock Reports class.
  *
- * @version 2.4.9
+ * @version 2.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -94,7 +94,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * gather_products_data.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	public function gather_products_data( &$products_info ) {
 
@@ -157,7 +157,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * gather_orders_data.
 	 *
-	 * @version 2.4.9
+	 * @version 2.5.0
 	 */
 	function gather_orders_data( &$products_info ) {
 
