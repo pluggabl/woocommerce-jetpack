@@ -82,10 +82,12 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	 */
 	function change_price_by_currency_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
+			$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 			foreach ( $_product->get_children() as $child_id ) {
 				$the_price = get_post_meta( $child_id, '_price', true );
+				$the_product = wc_get_product( $child_id );
+				$the_price = $the_product->$get_price_method( 1, $the_price );
 				if ( $the_price == $price ) {
-					$the_product = wc_get_product( $child_id );
 					return $this->change_price_by_currency( $price, $the_product );
 				}
 			}

@@ -64,10 +64,12 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	function change_price_by_formula_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
 			if ( true ) { // todo
+				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 				foreach ( $_product->get_children() as $child_id ) {
 					$the_price = get_post_meta( $child_id, '_price', true );
+					$the_product = wc_get_product( $child_id );
+					$the_price = $the_product->$get_price_method( 1, $the_price );
 					if ( $the_price == $price ) {
-						$the_product = wc_get_product( $child_id );
 						return $this->change_price_by_formula( $price, $the_product );
 					}
 				}
@@ -95,6 +97,11 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 					? get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_total_params', true )
 					: get_option( 'wcj_product_price_by_formula_total_params', 1 );
 				if ( $total_params > 0 ) {
+					$the_current_filter = current_filter();
+					if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
+						$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
+						return $_product->$get_price_method();
+					}
 					$math = new PHPMathParser\Math();
 					$math->registerVariable( 'x', $price );
 					for ( $i = 1; $i <= $total_params; $i++ ) {

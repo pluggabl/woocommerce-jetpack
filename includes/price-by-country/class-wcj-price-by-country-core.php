@@ -75,8 +75,11 @@ class WCJ_Price_by_Country_Core {
 	function change_price_by_country_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
 			if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled' ) ) {
+				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 				foreach ( $_product->get_children() as $child_id ) {
 					$the_price = get_post_meta( $child_id, '_price', true );
+					$the_product = wc_get_product( $child_id );
+					$the_price = $the_product->$get_price_method( 1, $the_price );
 					if ( $the_price == $price ) {
 						return $this->change_price_by_country( $price, $child_id );
 					}
@@ -270,12 +273,12 @@ class WCJ_Price_by_Country_Core {
 
 				$price_by_country = '';
 				$the_current_filter = current_filter();
-				if (
-					'woocommerce_get_price' == $the_current_filter ||
-					'woocommerce_variation_prices_price' == $the_current_filter ||
-					'woocommerce_get_price_including_tax' == $the_current_filter ||
-					'woocommerce_get_price_excluding_tax' == $the_current_filter
-				) {
+				if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
+					$_product = wc_get_product( $the_product_id );
+					$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
+					return $_product->$get_price_method();
+
+				} elseif ( 'woocommerce_get_price' == $the_current_filter || 'woocommerce_variation_prices_price' == $the_current_filter ) {
 
 					$regular_or_sale = '_regular_price_';
 					$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
