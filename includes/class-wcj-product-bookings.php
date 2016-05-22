@@ -259,7 +259,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 				$cart_item_data['wcj_bookings_price']     = $the_price;
 				$cart_item_data['wcj_bookings_date_from'] = $_POST['wcj_product_bookings_date_from'];
 				$cart_item_data['wcj_bookings_date_to']   = $_POST['wcj_product_bookings_date_to'];
-				wc_add_notice( sprintf( __( 'Price for %d days: %s', 'woocommerce-jetpack' ), $days_diff, wc_price( $the_price ) ), 'notice' );
+//				wc_add_notice( sprintf( __( 'Price for %d days: %s', 'woocommerce-jetpack' ), $days_diff, wc_price( $the_price ) ), 'notice' );
 			}
 		}
 		return $cart_item_data;
