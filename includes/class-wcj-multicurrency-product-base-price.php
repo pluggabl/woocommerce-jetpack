@@ -112,7 +112,6 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	 * get_variation_prices_hash.
 	 *
 	 * @version 2.5.0
-	 * @todo    recheck if this really needed
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$multicurrency_base_price_currency = get_post_meta( $_product->id, '_' . 'wcj_multicurrency_base_price_currency', true );

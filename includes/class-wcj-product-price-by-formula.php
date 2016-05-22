@@ -63,19 +63,15 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	 */
 	function change_price_by_formula_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
-			if ( true ) { // todo
-				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-				foreach ( $_product->get_children() as $child_id ) {
-					$the_price = get_post_meta( $child_id, '_price', true );
-					$the_product = wc_get_product( $child_id );
-					$the_price = $the_product->$get_price_method( 1, $the_price );
-					if ( $the_price == $price ) {
-						return $this->change_price_by_formula( $price, $the_product );
-					}
+			$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
+			foreach ( $_product->get_children() as $child_id ) {
+				$the_price = get_post_meta( $child_id, '_price', true );
+				$the_product = wc_get_product( $child_id );
+				$the_price = $the_product->$get_price_method( 1, $the_price );
+				if ( $the_price == $price ) {
+					return $this->change_price_by_formula( $price, $the_product );
 				}
-			} /* else {
-				return $this->change_price_by_formula( $price, null );
-			} */
+			}
 		}
 		return $price;
 	}
@@ -132,14 +128,9 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	 *
 	 * @version 2.5.0
 	 * @since   2.5.0
-	 * @todo    recheck if this really needed
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		if ( $this->is_price_by_formula_product( $_product ) ) {
-			/* $is_per_product = ( 'per_product' === get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_calculation', true ) ) ? true : false;
-			$price_hash['wcj_price_by_formula_total_params'] = ( $is_per_product )
-				? get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_total_params', true )
-				: get_option( 'wcj_product_price_by_formula_total_params', 1 ); */
 			$the_formula = get_option( 'wcj_product_price_by_formula_eval', '' );
 			$total_params = get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_total_params', true );
 			$the_params = array();

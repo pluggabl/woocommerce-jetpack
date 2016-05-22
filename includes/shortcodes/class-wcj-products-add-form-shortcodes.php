@@ -28,7 +28,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		);
 
 		$this->the_atts = array(
-			'product_id'  => 0, // todo (for editing?)
+			'product_id'  => 0,         // todo (for editing?)
 			'post_status' => 'publish', // todo (for editing?)
 		);
 

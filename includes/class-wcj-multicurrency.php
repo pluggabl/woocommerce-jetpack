@@ -139,13 +139,6 @@ class WCJ_Multicurrency extends WCJ_Module {
 				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 				foreach ( $_product->get_children() as $child_id ) {
 					$the_price = get_post_meta( $child_id, '_price', true );
-					/* remove_filter( 'woocommerce_' . $get_price_method, array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 1, 3 );
-					$the_price = $_product->$get_price_method( 1, $the_price );
-					add_filter(    'woocommerce_' . $get_price_method, array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 1, 3 );
-					if ( $the_price == $price ) {
-						$the_product = wc_get_product( $child_id );
-						return $this->change_price_by_currency( $price, $the_product );
-					} */
 					$the_product = wc_get_product( $child_id );
 					$the_price = $the_product->$get_price_method( 1, $the_price );
 					if ( $the_price == $price ) {
@@ -171,7 +164,6 @@ class WCJ_Multicurrency extends WCJ_Module {
 			$currency_code,
 			$currency_exchange_rate,
 			get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ),
-//			apply_filters( 'wcj_get_option_filter', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ), // todo: do we really need this line?
 		);
 		return $price_hash;
 	}
