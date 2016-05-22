@@ -120,12 +120,12 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.0 - 22/05/2016 =
-~* Dev - Multisite enabled.
-* Fix - Translation domain fixed (in `jetpack_menu()`).
-* Dev - Text domain added to the plugin header.
-* Dev - POT file updated.
-~* Dev - `is_super_admin()` replaced with `wcj_is_user_role()`.
+* Dev - Multisite support added.
+* Dev - `is_super_admin()` replaced with `wcj_is_user_role()`.
 * Dev - "Plugin renamed..." notice (`name_changed_notice`) removed.
+* Fix - Translations - Translation domain fixed (in `jetpack_menu()`).
+* Dev - Translations - Text domain added to the plugin header.
+* Dev - Translations - POT file updated.
 * Dev - `WCJ_Module` - `create_meta_box()` and `save_meta_box()` - `title` option type added.
 * Dev - `WCJ_Module` - `create_meta_box()` - `multiple` attribute added to `select` type option.
 * Dev - Functions - `wcj_get_current_currency_code()` function added.
@@ -138,23 +138,22 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `debug` column added.
 * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - Bulgarian language (`lang="BG"`) added.
 * Fix - Shortcodes - Products - `get_product_orders_data` - `total_orders` fixed.
-~* Dev - Shortcodes - Products - `get_product_orders_data` - `offset` shortcodes attribute added.
+* Dev - Shortcodes - Products - `get_product_orders_data` - `offset` shortcodes attribute added.
 * Dev - Shortcodes - Products - `get_product_orders_data` and `[wcj_product_time_since_last_sale]` - Query by blocks.
-~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_goal_remaining_progress_bar]` shortcode added.
-~* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` shortcode added.
-~* Dev - Shortcodes - Products - `[wcj_product_total_orders_items]` shortcode added.
-~* Dev - Shortcodes - Products - `date_i18n` added to `[wcj_product_crowdfunding_startdate]` and `[wcj_product_crowdfunding_deadline]`.
-* Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
--$* Dev - PRICES & CURRENCIES - Products by Users - Initial module release.
--$* Dev - PRICES & CURRENCIES - Price by User Role - Initial module release.
+* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_goal_remaining_progress_bar]` shortcode added.
+* Dev - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` shortcode added.
+* Dev - Shortcodes - Products - `[wcj_product_total_orders_items]` shortcode added.
+* Dev - Shortcodes - Products - `date_i18n` added to `[wcj_product_crowdfunding_startdate]` and `[wcj_product_crowdfunding_deadline]`.
+~* Dev - PRICES & CURRENCIES - Product Price by Formula - Initial module release.
+$* Dev - PRICES & CURRENCIES - Price by User Role - Initial module release.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Now rounding applies to global (not per product) conversions only.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()` to prevent PHP notice on empty value.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `get_variation_prices_hash()` - Variable products main price fixed.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Support for grouped products added.
--* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Customer Country Detection Method" changed from "by user selection" to "by IP, then by user selection".
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Customer Country Detection Method" changed from "by user selection" to "by IP, then by user selection".
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - `get_customer_country_group_id()` - Not recalculating `customer_country_group_id` - works faster now.
 ~* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_variation_prices_hash()` - Variable products main price fixed.
-~* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Empty price fixed.
+~* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Empty price bug fixed.
 ~* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Support for grouped products added.
 ~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Revert Currency to Default on Checkout" option added.
 ~* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `add_hooks()` moved from `init` hook to constructor.

@@ -24,23 +24,26 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'price_by_user_role';
-		$this->short_desc = __( 'Price by User Role [BETA]', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Price by User Role', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Display WooCommerce products prices by user roles.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-price-by-user-role/'; // TODO
+		$this->link       = 'http://booster.io/features/woocommerce-price-by-user-role/';
 		parent::__construct();
 
 		$this->add_tools( array(
 			'custom_roles' => array(
-				'title' => __( 'Custom Roles', 'woocommerce-jetpack' ),
-				'desc'  => __( 'Manage Custom Roles.', 'woocommerce-jetpack' ),
+				'title'     => __( 'Add/Manage Custom Roles', 'woocommerce-jetpack' ),
+				'tab_title' => __( 'Custom Roles', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Manage Custom Roles.', 'woocommerce-jetpack' ),
 			),
 		) );
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
-			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {
+				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				$this->add_hooks();
 			}
@@ -137,7 +140,6 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 				? ''
 				: '<a href="' . add_query_arg( 'wcj_delete_role', $role_key ). '">' . __( 'Delete', 'woocommerce-jetpack') . '</a>';
 			$table_data[] = array( $role_key, $role_data['name'], $delete_html );
-//			$table_data[] = array( $role_key, $role_data['name'], http_build_query( $role_data['capabilities'], '', ', ' ) );
 		}
 		echo '<h3>' . __( 'Existing Roles', 'woocommerce-jetpack') . '</h3>';
 		echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
@@ -160,18 +162,45 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 */
 	function add_hooks() {
 		// Prices
-		add_filter( 'woocommerce_get_price',                      array( $this, 'change_price_by_role' ), PHP_INT_MAX - 200, 2 ); // TODO: priority
+		add_filter( 'woocommerce_get_price',                      array( $this, 'change_price_by_role' ), PHP_INT_MAX - 200, 2 );
 		add_filter( 'woocommerce_get_sale_price',                 array( $this, 'change_price_by_role' ), PHP_INT_MAX - 200, 2 );
 		add_filter( 'woocommerce_get_regular_price',              array( $this, 'change_price_by_role' ), PHP_INT_MAX - 200, 2 );
 		// Variations
 		add_filter( 'woocommerce_variation_prices_price',         array( $this, 'change_price_by_role' ), PHP_INT_MAX - 200, 2 );
 		add_filter( 'woocommerce_variation_prices_regular_price', array( $this, 'change_price_by_role' ), PHP_INT_MAX - 200, 2 );
 		add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'change_price_by_role' ), PHP_INT_MAX - 200, 2 );
-		add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 200, 3 ); // TODO: priority
-		// TODO: shipping?
+		add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 200, 3 );
+		// Shipping
+		add_filter( 'woocommerce_package_rates',                  array( $this, 'change_price_by_role_shipping' ), PHP_INT_MAX - 200, 2 );
 		// Grouped products
 		add_filter( 'woocommerce_get_price_including_tax',        array( $this, 'change_price_by_role_grouped' ), PHP_INT_MAX - 200, 3 );
 		add_filter( 'woocommerce_get_price_excluding_tax',        array( $this, 'change_price_by_role_grouped' ), PHP_INT_MAX - 200, 3 );
+	}
+
+	/**
+	 * change_price_by_role_shipping.
+	 *
+	 * @version 2.5.0
+	 * @since   2.5.0
+	 */
+	function change_price_by_role_shipping( $package_rates, $package ) {
+		if ( 'yes' === get_option( 'wcj_price_by_user_role_shipping_enabled', 'no' ) ) {
+			$current_user_role = $this->get_current_user_role();
+			$koef = get_option( 'wcj_price_by_user_role_' . $current_user_role, 1 );
+			$modified_package_rates = array();
+			foreach ( $package_rates as $id => $package_rate ) {
+				if ( 1 != $koef && isset( $package_rate->cost ) ) {
+					$package_rate->cost = $package_rate->cost * $koef;
+					if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
+						foreach ( $package_rate->taxes as $tax_id => $tax ) {
+							$package_rate->taxes[ $tax_id ] = $package_rate->taxes[ $tax_id ] * $koef;
+						}
+					}
+				}
+				$modified_package_rates[ $id ] = $package_rate;
+			}
+		}
+		return $modified_package_rates;
 	}
 
 	/**
@@ -182,8 +211,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 */
 	function change_price_by_role_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
-//			if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled' , 'yes' ) ) { // todo
-			if ( true ) {
+			if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {
 				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 				foreach ( $_product->get_children() as $child_id ) {
 					$the_price = get_post_meta( $child_id, '_price', true );
@@ -211,7 +239,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		$current_user_role = $this->get_current_user_role();
 
 		// Per product
-//		if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled' , 'yes' ) ) { // todo
+		if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {
 			$the_product_id = ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
 			if ( '' != ( $regular_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_price_by_user_role_regular_price_' . $current_user_role, true ) ) ) {
 				$the_current_filter = current_filter();
@@ -228,7 +256,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 					return ( '' != $sale_price_per_product ) ? $sale_price_per_product : $price;
 				}
 			}
-//		}
+		}
 
 		// Global
 		if ( 1 != ( $koef = get_option( 'wcj_price_by_user_role_' . $current_user_role, 1 ) ) ) {
@@ -246,12 +274,12 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 * @since   2.5.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		// TODO: per product?
 		$user_role = $this->get_current_user_role();
 		$koef = get_option( 'wcj_price_by_user_role_' . $user_role, 1 );
 		$price_hash['wcj_user_role'] = array(
-			$user_role, // $koef; // TODO?
+			$user_role,
 			$koef,
+			get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ),
 		);
 		return $price_hash;
 	}
@@ -313,12 +341,38 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 * @since   2.5.0
 	 */
 	function add_settings() {
-		$settings = array(
+		$settings = array();
+		$settings = array_merge( $settings, array(
 			array(
 				'title'    => __( 'Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_price_by_user_role_options',
 			),
+			array(
+				'title'    => __( 'Enable per Product Settings', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'When enabled, this will add new "Booster: Price by User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
+				'type'     => 'checkbox',
+				'id'       => 'wcj_price_by_user_role_per_product_enabled',
+				'default'  => 'yes',
+			),
+			array(
+				'title'    => __( 'Shipping', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'When enabled, this will apply user role multipliers to shipping calculations.', 'woocommerce-jetpack' ),
+				'type'     => 'checkbox',
+				'id'       => 'wcj_price_by_user_role_shipping_enabled',
+				'default'  => 'no',
+			),
+			array(
+				'type'         => 'sectionend',
+				'id'           => 'wcj_price_by_user_role_options',
+			),
+		) );
+		$settings[] = array(
+			'title'        => __( 'Roles & Multipliers', 'woocommerce-jetpack' ),
+			'type'         => 'title',
+			'id'           => 'wcj_price_by_user_role_multipliers_options',
 		);
 		foreach ( $this->get_user_roles() as $role_key => $role_data ) {
 			$settings[] = array(
@@ -331,7 +385,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		}
 		$settings[] = array(
 			'type'         => 'sectionend',
-			'id'           => 'wcj_price_by_user_role_options',
+			'id'           => 'wcj_price_by_user_role_multipliers_options',
 		);
 		return $settings;
 	}
