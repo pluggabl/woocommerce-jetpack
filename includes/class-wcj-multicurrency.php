@@ -171,7 +171,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 			$currency_code,
 			$currency_exchange_rate,
 			get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ),
-			apply_filters( 'wcj_get_option_filter', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ), // todo: do we really need this line?
+//			apply_filters( 'wcj_get_option_filter', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ), // todo: do we really need this line?
 		);
 		return $price_hash;
 	}

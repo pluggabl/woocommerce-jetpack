@@ -247,8 +247,12 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		// TODO: per product?
-//		$koef = get_option( 'wcj_price_by_user_role_' . $this->get_current_user_role(), 1 );
-		$price_hash['wcj_user_role'] = $this->get_current_user_role(); // $koef; // TODO?
+		$user_role = $this->get_current_user_role();
+		$koef = get_option( 'wcj_price_by_user_role_' . $user_role, 1 );
+		$price_hash['wcj_user_role'] = array(
+			$user_role, // $koef; // TODO?
+			$koef,
+		);
 		return $price_hash;
 	}
 
