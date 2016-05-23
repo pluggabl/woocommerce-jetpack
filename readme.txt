@@ -23,6 +23,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Currency for External Products* - Set different currency for external WooCommerce products.
 * *Multicurrency (Currency Switcher)* - Add multiple currencies (currency switcher) to WooCommerce.
 * *Multicurrency Product Base Price* - Enter prices for WooCommerce products in different currencies.
+* *Price by User Role* - Display WooCommerce products prices by user roles.
 * *Prices and Currencies by Country* - Change WooCommerce product price and currency automatically by customer's country.
 * *Product Open Pricing (Name Your Price)* - Let your WooCommerce store customers enter price for the product manually.
 * *Product Price by Formula* - Set formula for automatic WooCommerce product price calculation.
@@ -46,17 +47,18 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Input Fields* - WooCommerce product input fields.
 * *Product Listings* - Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
+* *Product by Country* - Display WooCommerce products by customers country.
 * *Related Products* - Change displayed WooCommerce related products number, columns, order, relate by tag and/or category, or hide related products completely.
 * *SKU* - Generate WooCommerce SKUs automatically.
 * *Sorting* - Add more WooCommerce sorting options or remove all sorting including default.
 
 **Cart & Checkout**
 
-* *Cart* - Add custom info to WooCommerce cart page. Add empty cart button.
+* *Cart* - Add custom info to WooCommerce cart page.
 * *Checkout Core Fields* - Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders.
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
-* *Checkout Files Upload* - Let customers upload files on WooCommerce checkout.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
+* *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
 * *Empty Cart Button* - Add and customize "Empty Cart" button to cart page.
 * *Mini Cart* - Customize WooCommerce mini cart widget.
 
@@ -64,18 +66,18 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Custom Gateways* - Add multiple custom payment gateways to WooCommerce.
 * *Gateways Currency* - Currency per WooCommerce payment gateway.
-* *Gateways Fees* - Enable extra fees for WooCommerce payment gateways.
+* *Gateways Fees and Discounts* - Enable extra fees or discounts for WooCommerce payment gateways.
 * *Gateways Icons* - Change or completely remove icons (images) for any (default or custom) WooCommerce payment gateway.
 * *Gateways Min/Max* - Add min/max amounts for WooCommerce payment gateways to show up.
-* *Gateways by Country* - Set countries to include/exclude for WooCommerce payment gateways to show up.
-* *Gateways per Category* - Show payment gateway only if there is product of selected category in WooCommerce cart.
+* *Gateways by Country or State* - Set countries or states to include/exclude for WooCommerce payment gateways to show up.
+* *Gateways per Product or Category* - Show WooCommerce gateway only if there is selected product or product category in cart.
 
 **Shipping & Orders**
 
 * *Address Formats* - Set address format in WooCommerce orders on per country basis. Force base country display.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
-* *Orders* - Minimum WooCommerce order amount; orders auto-complete.
+* *Orders* - Minimum WooCommerce order amount; orders auto-complete; custom admin order list columns.
 * *Shipping* - Add multiple custom shipping methods to WooCommerce. Hide WooCommerce shipping when free is available. Display "left to free shipping" info.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 
@@ -86,12 +88,12 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Emails & Misc.**
 
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
-* *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
+* *Booster WPML* - Booster for WooCommerce basic WPML support.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
+* *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *General* - Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets.
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
-* *WPML* - Booster for WooCommerce basic WPML support.
 
 = Feedback =
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!
@@ -119,7 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.0 - 22/05/2016 =
+= 2.5.0 - 23/05/2016 =
 * Dev - Multisite support added.
 * Dev - `is_super_admin()` replaced with `wcj_is_user_role()`.
 * Dev - "Plugin renamed..." notice (`name_changed_notice`) removed.
@@ -193,6 +195,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - PRICES & CURRENCIES - Bulk Price Converter - Documentation link added.
 * Tweak - PRICES & CURRENCIES - Wholesale Price - Reset button added.
 * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - Documentation link added. Reset button added.
+* Tweak - PRODUCTS - Product Add to Cart - Description updated.
 * Tweak - PRODUCTS - Crowdfunding - Reset button added.
 * Tweak - PRODUCTS - Product Info - Documentation link added.
 * Tweak - PRODUCTS - Product Info V2 - Documentation link added.
@@ -209,6 +212,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Documentation link added. Reset button added.
 * Tweak - EMAILS & MISC. - Booster WPML - Documentation link added. Short description updated.
 * Tweak - EMAILS & MISC. - EU VAT Number - Documentation link added.
+* Tweak - EMAILS & MISC. - EU VAT Number - Description updated.
 * Tweak - EMAILS & MISC. - Emails - Documentation link added.
 * Tweak - EMAILS & MISC. - Old Slugs - Documentation link added. Reset button added.
 * Tweak - EMAILS & MISC. - Reports - Documentation link added.
