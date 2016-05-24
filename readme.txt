@@ -122,6 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.1 - 24/05/2016 =
+* Dev - PRICES & CURRENCIES - Product Price by Formula - Not using namespace (as it required PHP 5 >= 5.3.0)
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Frontend Template" option added.
 * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - get_customer_country_by_ip() - Check for if `WC_Geolocation` class exists added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_weight` column added.

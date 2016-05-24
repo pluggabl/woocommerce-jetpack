@@ -1,6 +1,6 @@
 <?php
 
-namespace PHPMathParser;
+//namespace PHPMathParser;
 
 class Stack {
 

@@ -1,12 +1,12 @@
 <?php
 
-namespace PHPMathParser;
+//namespace PHPMathParser;
 
 require_once 'Stack.php';
 require_once 'TerminalExpression.php';
 require_once 'Expressions.php';
 
-class Math {
+class Alg_Math {
 
     protected $variables = array();
 

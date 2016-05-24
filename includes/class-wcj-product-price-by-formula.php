@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Price by Formula class.
  *
- * @version 2.5.0
+ * @version 2.5.1
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -79,7 +79,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price_by_formula.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.1
 	 * @since   2.5.0
 	 */
 	function change_price_by_formula( $price, $_product, $output_errors = false ) {
@@ -98,7 +98,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 						$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 						return $_product->$get_price_method();
 					}
-					$math = new PHPMathParser\Math();
+					$math = new /* PHPMathParser\ */Alg_Math();
 					$math->registerVariable( 'x', $price );
 					for ( $i = 1; $i <= $total_params; $i++ ) {
 						$the_param = ( $is_per_product )
