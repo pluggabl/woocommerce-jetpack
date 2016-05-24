@@ -121,6 +121,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.5.1 - 24/05/2016 =
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_weight` column added.
+
 = 2.5.0 - 23/05/2016 =
 * Dev - Multisite support added.
 * Dev - `is_super_admin()` replaced with `wcj_is_user_role()`.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.5.0
+ * @version 2.5.1
  * @author  Algoritmika Ltd.
  */
 
@@ -129,7 +129,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.1
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -317,6 +317,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$line_tax_percent = apply_filters( 'wcj_line_tax_percent', $line_tax_percent, $the_order );
 						$data[ $item_counter ][] = sprintf( $atts['tax_percent_format'], $line_tax_percent );
 						break; */
+					case 'item_weight':
+						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_weight();
+						break;
 					default:
 						$data[ $item_counter ][] = ''; //$column;
 				}
