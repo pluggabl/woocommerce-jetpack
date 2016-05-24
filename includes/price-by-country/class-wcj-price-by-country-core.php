@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.5.0
+ * @version 2.5.1
  * @author  Algoritmika Ltd.
  */
 
@@ -97,17 +97,21 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_by_ip.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.1
 	 * @since   2.5.0
 	 */
 	function get_customer_country_by_ip() {
-		// Get the country by IP
-		$location = WC_Geolocation::geolocate_ip();
-		// Base fallback
-		if ( empty( $location['country'] ) ) {
-			$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
+		if ( class_exists( 'WC_Geolocation' ) ) {
+			// Get the country by IP
+			$location = WC_Geolocation::geolocate_ip();
+			// Base fallback
+			if ( empty( $location['country'] ) ) {
+				$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
+			}
+			return ( isset( $location['country'] ) ) ? $location['country'] : null;
+		} else {
+			return null;
 		}
-		return ( isset( $location['country'] ) ) ? $location['country'] : null;
 	}
 
 	/**
