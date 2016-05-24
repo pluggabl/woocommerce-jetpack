@@ -17,11 +17,11 @@ class Alg_Math {
 
     public function parse($string) {
         $tokens = $this->tokenize($string);
-        $output = new Stack();
-        $operators = new Stack();
+        $output = new Alg_Stack();
+        $operators = new Alg_Stack();
         foreach ($tokens as $token) {
             $token = $this->extractVariables($token);
-            $expression = TerminalExpression::factory($token);
+            $expression = Alg_TerminalExpression::factory($token);
             if ($expression->isOperator()) {
                 $this->parseOperator($expression, $output, $operators);
             } elseif ($expression->isParenthesis()) {
@@ -32,7 +32,7 @@ class Alg_Math {
         }
         while (($op = $operators->pop())) {
             if ($op->isParenthesis()) {
-                throw new \RuntimeException('Mismatched Parenthesis');
+                throw new RuntimeException('Mismatched Parenthesis');
             }
             $output->push($op);
         }
@@ -43,11 +43,11 @@ class Alg_Math {
         $this->variables[$name] = $value;
     }
 
-    public function run(Stack $stack) {
+    public function run(Alg_Stack $stack) {
         while (($operator = $stack->pop()) && $operator->isOperator()) {
             $value = $operator->operate($stack);
             if (!is_null($value)) {
-                $stack->push(TerminalExpression::factory($value));
+                $stack->push(Alg_TerminalExpression::factory($value));
             }
         }
         return $operator ? $operator->render() : $this->render($stack);
@@ -61,7 +61,7 @@ class Alg_Math {
         return $token;
     }
 
-    protected function render(Stack $stack) {
+    protected function render(Alg_Stack $stack) {
         $output = '';
         while (($el = $stack->pop())) {
             $output .= $el->render();
@@ -69,10 +69,10 @@ class Alg_Math {
         if ($output) {
             return $output;
         }
-        throw new \RuntimeException('Could not render output');
+        throw new RuntimeException('Could not render output');
     }
 
-    protected function parseParenthesis(TerminalExpression $expression, Stack $output, Stack $operators) {
+    protected function parseParenthesis(Alg_TerminalExpression $expression, Alg_Stack $output, Alg_Stack $operators) {
         if ($expression->isOpen()) {
             $operators->push($expression);
         } else {
@@ -86,12 +86,12 @@ class Alg_Math {
                 }
             }
             if (!$clean) {
-                throw new \RuntimeException('Mismatched Parenthesis');
+                throw new RuntimeException('Mismatched Parenthesis');
             }
         }
     }
 
-    protected function parseOperator(TerminalExpression $expression, Stack $output, Stack $operators) {
+    protected function parseOperator(Alg_TerminalExpression $expression, Alg_Stack $output, Alg_Stack $operators) {
         $end = $operators->poke();
         if (!$end) {
             $operators->push($expression);

@@ -2,7 +2,7 @@
 
 //namespace PHPMathParser;
 
-abstract class TerminalExpression {
+abstract class Alg_TerminalExpression {
 
     protected $value = '';
 
@@ -13,27 +13,27 @@ abstract class TerminalExpression {
     public static function factory($value) {
 
 //        var_dump($value);
-        if (is_object($value) && $value instanceof TerminalExpression) {
+        if (is_object($value) && $value instanceof Alg_TerminalExpression) {
             return $value;
         } elseif (is_numeric($value)) {
-            return new Number($value);
+            return new Alg_Number($value);
         } elseif ($value == '+') {
-            return new Addition($value);
+            return new Alg_Addition($value);
         } elseif ($value == '-') {
-            return new Subtraction($value);
+            return new Alg_Subtraction($value);
         } elseif ($value == '*') {
-            return new Multiplication($value);
+            return new Alg_Multiplication($value);
         } elseif ($value == '/') {
-            return new Division($value);
+            return new Alg_Division($value);
         } elseif (in_array($value, array('(', ')'))) {
-            return new Parenthesis($value);
+            return new Alg_Parenthesis($value);
         } elseif ($value == '^') {
-            return new Power($value);
+            return new Alg_Power($value);
         }
-        throw new \Exception('Undefined Value ' . $value);
+        throw new Exception('Undefined Value ' . $value);
     }
 
-    abstract public function operate(Stack $stack);
+    abstract public function operate(Alg_Stack $stack);
 
     public function isOperator() {
         return false;

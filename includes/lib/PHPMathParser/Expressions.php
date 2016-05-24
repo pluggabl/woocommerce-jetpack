@@ -2,11 +2,11 @@
 
 //namespace PHPMathParser;
 
-class Parenthesis extends TerminalExpression {
+class Alg_Parenthesis extends Alg_TerminalExpression {
 
     protected $precedence = 6;
 
-    public function operate(Stack $stack) {
+    public function operate(Alg_Stack $stack) {
     }
 
     public function getPrecedence() {
@@ -27,15 +27,15 @@ class Parenthesis extends TerminalExpression {
 
 }
 
-class Number extends TerminalExpression {
+class Alg_Number extends Alg_TerminalExpression {
 
-    public function operate(Stack $stack) {
+    public function operate(Alg_Stack $stack) {
         return $this->value;
     }
 
 }
 
-abstract class Operator extends TerminalExpression {
+abstract class Alg_Operator extends Alg_TerminalExpression {
 
     protected $precedence = 0;
     protected $leftAssoc = true;
@@ -54,21 +54,21 @@ abstract class Operator extends TerminalExpression {
 
 }
 
-class Addition extends Operator {
+class Alg_Addition extends Alg_Operator {
 
     protected $precedence = 4;
 
-    public function operate(Stack $stack) {
+    public function operate(Alg_Stack $stack) {
         return $stack->pop()->operate($stack) + $stack->pop()->operate($stack);
     }
 
 }
 
-class Subtraction extends Operator {
+class Alg_Subtraction extends Alg_Operator {
 
     protected $precedence = 4;
 
-    public function operate(Stack $stack) {
+    public function operate(Alg_Stack $stack) {
         $left = $stack->pop()->operate($stack);
         $right = $stack->pop()->operate($stack);
         return $right - $left;
@@ -76,21 +76,21 @@ class Subtraction extends Operator {
 
 }
 
-class Multiplication extends Operator {
+class Alg_Multiplication extends Alg_Operator {
 
     protected $precedence = 5;
 
-    public function operate(Stack $stack) {
+    public function operate(Alg_Stack $stack) {
         return $stack->pop()->operate($stack) * $stack->pop()->operate($stack);
     }
 
 }
 
-class Division extends Operator {
+class Alg_Division extends Alg_Operator {
 
     protected $precedence = 5;
 
-    public function operate(Stack $stack) {
+    public function operate(Alg_Stack $stack) {
         $left = $stack->pop()->operate($stack);
         $right = $stack->pop()->operate($stack);
         return $right / $left;
@@ -98,11 +98,11 @@ class Division extends Operator {
 
 }
 
-class Power extends Operator {
+class Alg_Power extends Alg_Operator {
 
     protected $precedence = 5;
 
-    public function operate(Stack $stack) {
+    public function operate(Alg_Stack $stack) {
         $left = $stack->pop()->operate($stack);
         $right = $stack->pop()->operate($stack);
         return pow($left,$right);
