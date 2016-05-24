@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Open Pricing class.
  *
- * @version 2.5.0
+ * @version 2.5.1
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -322,42 +322,45 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_open_price_input_field_to_frontend.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.1
 	 * @since   2.4.8
 	 */
 	function add_open_price_input_field_to_frontend() {
 		$the_product = wc_get_product();
 		if ( $this->is_open_price_product( $the_product ) ) {
+			// Title
 			$title = get_option( 'wcj_product_open_price_label_frontend', __( 'Name Your Price', 'woocommerce-jetpack' ) );
+			// Input field
+			$value = ( isset( $_POST['wcj_open_price'] ) ) ? $_POST['wcj_open_price'] : get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_default_price', true );
 //			$placeholder = $the_product->get_price();
-			$value = ( isset( $_POST['wcj_open_price'] ) ) ?
-				$_POST['wcj_open_price'] :
-				get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_default_price', true );
 			$custom_attributes = '';
 			$wc_price_decimals = wc_get_price_decimals();
 			if ( $wc_price_decimals > 0 ) {
 				$custom_attributes .= sprintf( 'step="0.%0' . ( $wc_price_decimals ) . 'd" ', 1 );
 			}
-			echo
-				/* '<div>' . */ '<label for="wcj_open_price">' . $title . '</label>' . ' '
-				. '<input '
-					. 'type="number" '
-					. 'class="text" '
-					. 'style="width:75px;text-align:center;" '
-					. 'name="wcj_open_price" '
-					. 'id="wcj_open_price" '
-//					. 'placeholder="' . $placeholder . '" '
-					. 'value="' . $value . '" '
-					. $custom_attributes
-				. '>'
-				. ' ' . get_woocommerce_currency_symbol() /* . '</div>' */;
+			$input_field = '<input '
+				. 'type="number" '
+				. 'class="text" '
+				. 'style="width:75px;text-align:center;" '
+				. 'name="wcj_open_price" '
+				. 'id="wcj_open_price" '
+//				. 'placeholder="' . $placeholder . '" '
+				. 'value="' . $value . '" '
+				. $custom_attributes . '>';
+			// Currency symbol
+			$currency_symbol = get_woocommerce_currency_symbol();
+			echo str_replace(
+				array( '%frontend_label%', '%open_price_input%', '%currency_symbol%' ),
+				array( $title,             $input_field,         $currency_symbol ),
+				get_option( 'wcj_product_open_price_frontend_template', '<label for="wcj_open_price">%frontend_label%</label> %open_price_input% %currency_symbol%' )
+			);
 		}
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.1
 	 * @since   2.4.8
 	 */
 	function get_settings() {
@@ -373,6 +376,14 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				'default'  => __( 'Name Your Price', 'woocommerce-jetpack' ),
 				'type'     => 'text',
 				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Frontend Template', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Here you can use' ) . ': ' . '%frontend_label%, %open_price_input%, %currency_symbol%',
+				'id'       => 'wcj_product_open_price_frontend_template',
+				'default'  => '<label for="wcj_open_price">%frontend_label%</label> %open_price_input% %currency_symbol%',
+				'type'     => 'textarea',
+				'css'      => 'min-width:300px;width:50%;',
 			),
 			array(
 				'title'    => __( 'Message on Empty Price', 'woocommerce-jetpack' ),
