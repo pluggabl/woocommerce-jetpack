@@ -121,6 +121,11 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.5.1 - 25/05/2016 =
+* Dev - PRODUCTS - Product Images - Per product "Hide" options added.
+* Fix - PRODUCTS - Product Images - Meta boxes added only if section is enabled.
+* Tweak - PRODUCTS - Product Images - Module settings rearranged.
+
 = 2.5.1 - 24/05/2016 =
 * Dev - PRICES & CURRENCIES - Product Price by Formula - No more using `namespace` (as it required PHP 5 >= 5.3.0).
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Frontend Template" option added.
