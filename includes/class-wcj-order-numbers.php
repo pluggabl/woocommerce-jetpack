@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Numbers class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 */
 	public function __construct() {
 
@@ -36,10 +36,46 @@ class WCJ_Order_Numbers extends WCJ_Module {
 		) );
 
 	    if ( $this->is_enabled() ) {
-//			add_action( 'woocommerce_new_order',       array( $this, 'add_new_order_number' ), PHP_INT_MAX );
-			add_action( 'wp_insert_post',              array( $this, 'add_new_order_number' ), PHP_INT_MAX );
-			add_filter( 'woocommerce_order_number',    array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
+//			add_action( 'woocommerce_new_order',    array( $this, 'add_new_order_number' ), PHP_INT_MAX );
+			add_action( 'wp_insert_post',           array( $this, 'add_new_order_number' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_order_number', array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
+			if ( 'yes' === get_option( 'wcj_order_number_order_tracking_enabled', 'yes' ) ) {
+				add_filter( 'woocommerce_shortcode_order_tracking_order_id', array( $this, 'add_order_number_to_tracking' ), PHP_INT_MAX );
+			}
 		}
+	}
+
+	/**
+	 * add_order_number_to_tracking.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_order_number_to_tracking( $order_number ) {
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			$args = array(
+				'post_type'      => 'shop_order',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+				'offset'         => $offset,
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
+			while ( $loop->have_posts() ) : $loop->the_post();
+				$_order_id = $loop->post->ID;
+				$_order = wc_get_order( $_order_id );
+				$_order_number = $this->display_order_number( $_order_id, $_order );
+				if ( $_order_number === $order_number ) {
+					return $_order_id;
+				}
+			endwhile;
+			$offset += $block_size;
+		}
+		return $order_number;
 	}
 
 	/**
@@ -159,7 +195,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.4
+	 * @version 2.5.2
 	 */
 	function get_settings() {
 		$settings = array(
@@ -238,6 +274,13 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'desc_tip' => __( 'This should be enabled if you have a lot of simultaneous orders in your shop - to prevent duplicate order numbers (sequential).', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_order_number_use_mysql_transaction_enabled',
 				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Enable Order Tracking by Custom Number', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_number_order_tracking_enabled',
+				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
 			array(

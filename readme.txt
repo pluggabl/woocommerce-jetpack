@@ -121,7 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.1 - 25/05/2016 =
+= 2.5.1 - 26/05/2016 =
+* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Tracking by Custom Number" option added.
 * Dev - PRODUCTS - Product Images - Per product "Hide" options added.
 * Fix - PRODUCTS - Product Images - Meta boxes added only if section is enabled.
 * Tweak - PRODUCTS - Product Images - Module settings rearranged.
