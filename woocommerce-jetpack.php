@@ -530,12 +530,24 @@ final class WC_Jetpack {
 				unset( $_POST['booster_import_settings'] );
 			} else {
 				$import_counter = 0;
-				$import_settings = json_decode( file_get_contents( $_FILES['booster_import_settings_file']['tmp_name'] ), true );
-				foreach ( $import_settings as $import_key => $import_setting ) {
-					update_option( $import_key, $import_setting );
-					$import_counter++;
+				$import_settings = file_get_contents( $_FILES['booster_import_settings_file']['tmp_name'] );
+				$import_settings = explode( PHP_EOL, $import_settings );
+				if ( ! is_array( $import_settings ) || 2 !== count( $import_settings ) ) {
+					$wcj_notice .= __( 'Wrong file format!', 'woocommerce-jetpack' );
+				} else {
+					$import_header = $import_settings[0];
+					$required_header = 'Booster for WooCommerce';
+					if ( $required_header !== substr( $import_header, 0, strlen( $required_header ) ) ) {
+						$wcj_notice .= __( 'Wrong file format!', 'woocommerce-jetpack' );
+					} else {
+						$import_settings = json_decode( $import_settings[1], true );
+						foreach ( $import_settings as $import_key => $import_setting ) {
+							update_option( $import_key, $import_setting );
+							$import_counter++;
+						}
+						$wcj_notice .= sprintf( __( '%d options successfully imported.', 'woocommerce-jetpack' ), $import_counter );
+					}
 				}
-				$wcj_notice .= sprintf( __( '%d options successfully imported.', 'woocommerce-jetpack' ), $import_counter );
 			}
 		}
 
@@ -605,7 +617,7 @@ final class WC_Jetpack {
 
 		if ( isset ( $_POST['booster_export_settings'] ) ) {
 			$export_settings = json_encode( $export_settings );
-//			$export_settings = 'Booster for WooCommerce v' . get_option( 'booster_for_woocommerce_version', 'NA' ) . PHP_EOL . $export_settings;
+			$export_settings = 'Booster for WooCommerce v' . get_option( 'booster_for_woocommerce_version', 'NA' ) . PHP_EOL . $export_settings;
 			header( "Content-Type: application/octet-stream" );
 			header( "Content-Disposition: attachment; filename=booster_settings.txt" );
 			header( "Content-Type: application/octet-stream" );
