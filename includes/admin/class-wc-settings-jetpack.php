@@ -379,7 +379,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard_modules.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.2
 	 */
 	function output_dashboard_modules( $settings, $cat_id = '' ) {
 		$readme_html = '';
@@ -448,6 +448,9 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 					$readme_html .= '* *' . $the_feature['title'] . '* - ' . ( ( isset( $the_feature['wcj_desc'] ) ) ? $the_feature['wcj_desc'] : $the_feature['desc_tip'] ) . PHP_EOL;
 				}
 				echo $html;
+				if ( 0 == $total_modules && 'active_modules_only' === $cat_id ) {
+					echo '<tr><td colspan="3">' . '<em>' . __( 'No active modules found.', 'woocommerce-jetpack' ) . '</em>' . '</td></tr>';
+				}
 			?></tbody>
 		</table><p style="color:gray;font-size:x-small;font-style:italic;"><?php echo __( 'Total Modules:' ) . ' ' . $total_modules; ?></p><?php
 		return $readme_html;
