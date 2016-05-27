@@ -324,12 +324,17 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	 * @version 2.5.2
 	 */
 	function output_dashboard( $current_section ) {
+
+		if ( '' == $current_section ) $current_section = 'by_category';
+
 		$the_settings = $this->get_settings();
 
 		echo '<h3>' . $the_settings[0]['title'] . '</h3>';
-		echo '<p>' . $the_settings[0]['desc'] . '</p>';
-
-		if ( '' == $current_section ) $current_section = 'by_category';
+		if ( 'manager' != $current_section ) {
+			echo '<p>' . $the_settings[0]['desc'] . '</p>';
+		} else {
+			echo '<p>' . __( 'This section lets you export, import or reset all Booster\'s modules settings.', 'woocommerce-jetpack' ) . '</p>';
+		}
 
 		$readme_html = '';
 		$readme_html .= '<pre>';
@@ -346,21 +351,10 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		} elseif ( 'active' === $current_section ) {
 			$this->output_dashboard_modules( $the_settings, 'active_modules_only' );
 		} elseif ( 'manager' === $current_section ) {
-			//global $wcj_notice;
-			/* if ( isset( $_POST['booster_reset_settings'] ) ) {
-				//echo '<form method="post" action="">';
-				echo '<p><button class="button-primary" type="submit" name="booster_reset_settings_confirm">'  . __( 'Confirm', 'woocommerce-jetpack' )  . '</button></p>';
-				//echo '</form>';
-			} */
-			//echo '<p>' . $wcj_notice . '</p>';
-			//echo '<form method="post" action="" enctype="multipart/form-data">';
 			echo '<p><button class="button-primary" type="submit" name="booster_export_settings">' . __( 'Export', 'woocommerce-jetpack' ) . '</button></p>';
-			echo '<p><input type="file" name="booster_import_settings_file"></p>';
-			echo '<p><button class="button-primary" type="submit" name="booster_import_settings">' . __( 'Import', 'woocommerce-jetpack' ) . '</button></p>';
-			//if ( ! isset( $_POST['booster_reset_settings'] ) ) {
-				echo '<p><button class="button-primary" type="submit" name="booster_reset_settings" onclick="return confirm(\'' . __( 'This will reset settings to defaults for all Booster modules. Are you sure?', 'woocommerce-jetpack' ) . '\')">'  . __( 'Reset', 'woocommerce-jetpack' )  . '</button></p>';
-			//}
-			//echo '</form>';
+			echo '<p><button class="button-primary" type="submit" name="booster_import_settings">' . __( 'Import', 'woocommerce-jetpack' ) . '</button>';
+			echo ' ' . '<input type="file" name="booster_import_settings_file"></p>';
+			echo '<p><button class="button-primary" type="submit" name="booster_reset_settings" onclick="return confirm(\'' . __( 'This will reset settings to defaults for all Booster modules. Are you sure?', 'woocommerce-jetpack' ) . '\')">'  . __( 'Reset', 'woocommerce-jetpack' )  . '</button></p>';
 		}
 
 		echo '<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . __( 'Version' ) . ': ' . get_option( 'booster_for_woocommerce_version', 'N/A' ) . '</p>';
