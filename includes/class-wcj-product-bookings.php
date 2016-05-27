@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Bookings class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -115,7 +115,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function enqueue_scripts() {
@@ -124,7 +124,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 		wp_localize_script( 'wcj-bookings', 'ajax_object', array(
 			'ajax_url'            => admin_url( 'admin-ajax.php' ),
 			'product_id'          => get_the_ID(),
-			'wrong_dates_message' => __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ),
+			'wrong_dates_message' => get_option( 'wcj_product_bookings_message_date_to_before_date_from', __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ) ),
 			'original_price_html' => $the_product->get_price_html(),
 		) );
 	}
@@ -166,7 +166,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * Adds info to order details (and emails).
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function add_info_to_order_item_name( $name, $item, $is_cart = false ) {
@@ -175,7 +175,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 		}
 		if ( isset( $item['wcj_bookings_price'] ) ) {
 			if ( $is_cart ) {
-				$name .= '<dt>' . __( 'Period', 'woocommerce-jetpack' ) . ':' . '</dt>';
+				$name .= '<dt>' . get_option( 'wcj_product_bookings_label_period', __( 'Period', 'woocommerce-jetpack' ) ) . ':' . '</dt>';
 				$name .= '<dd>' . $item['wcj_bookings_date_from'] . ' - ' . $item['wcj_bookings_date_to'] . '</dd>';
 			} else {
 				$name .= ' | ' . $item['wcj_bookings_date_from'] . ' - ' . $item['wcj_bookings_date_to'];
@@ -200,24 +200,24 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * validate_bookings_on_add_to_cart.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function validate_bookings_on_add_to_cart( $passed, $product_id ) {
 		$the_product = wc_get_product( $product_id );
 		if ( $this->is_bookings_product( $the_product ) ) {
 			if ( ! isset( $_POST['wcj_product_bookings_date_from'] ) || '' == $_POST['wcj_product_bookings_date_from'] ) {
-				wc_add_notice( __( '"Date from" must be set', 'woocommerce-jetpack' ), 'error' );
+				wc_add_notice( get_option( 'wcj_product_bookings_message_no_date_from', __( '"Date from" must be set', 'woocommerce-jetpack' ) ), 'error' );
 				return false;
 			}
 			if ( ! isset( $_POST['wcj_product_bookings_date_to'] ) || '' == $_POST['wcj_product_bookings_date_to'] ) {
-				wc_add_notice( __( '"Date to" must be set', 'woocommerce-jetpack' ), 'error' );
+				wc_add_notice( get_option( 'wcj_product_bookings_message_no_date_to', __( '"Date to" must be set', 'woocommerce-jetpack' ) ), 'error' );
 				return false;
 			}
 			$date_to   = strtotime( $_POST['wcj_product_bookings_date_to'] );
 			$date_from = strtotime( $_POST['wcj_product_bookings_date_from'] );
 			if ( $date_from >= $date_to ) {
-				wc_add_notice( __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ), 'error' );
+				wc_add_notice( get_option( 'wcj_product_bookings_message_date_to_before_date_from', __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ) ), 'error' );
 				return false;
 			}
 		}
@@ -281,7 +281,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * add_input_fields_to_frontend.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function add_input_fields_to_frontend() {
@@ -290,12 +290,12 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			$date_from_value = ( isset( $_POST['wcj_product_bookings_date_from'] ) ) ? $_POST['wcj_product_bookings_date_from'] : '';
 			$date_to_value   = ( isset( $_POST['wcj_product_bookings_date_to'] ) )   ? $_POST['wcj_product_bookings_date_to']   : '';
 			$data_table[] = array(
-				__( 'Date from' ),
-				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" name="wcj_product_bookings_date_from" placeholder="" value="' . $date_from_value . '">',
+				'<label for="wcj_product_bookings_date_to">' . get_option( 'wcj_product_bookings_label_date_from', __( 'Date from' ) ) . '</label>',
+				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_from" name="wcj_product_bookings_date_from" placeholder="" value="' . $date_from_value . '">',
 			);
 			$data_table[] = array(
-				__( 'Date to' ),
-				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" name="wcj_product_bookings_date_to" placeholder="" value="' . $date_to_value . '">',
+				'<label for="wcj_product_bookings_date_to">' . get_option( 'wcj_product_bookings_label_date_to', __( 'Date to' ) ) . '</label>',
+				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_to" name="wcj_product_bookings_date_to" placeholder="" value="' . $date_to_value . '">',
 			);
 			echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none', ) );
 			echo '<div style="display:none !important;" name="wcj_bookings_message"><p style="color:red;"></p></div>';
@@ -305,11 +305,11 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * add_per_day_label.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function add_per_day_label( $price_html, $_product ) {
-		return ( $this->is_bookings_product( $_product ) ) ? $price_html . ' / ' . __( 'day', 'woocommerce-jetpack' ) : $price_html;
+		return ( $this->is_bookings_product( $_product ) ) ? $price_html . ' ' . get_option( 'wcj_product_bookings_label_per_day', __( '/ day', 'woocommerce-jetpack' ) ) : $price_html;
 	}
 
 	/**
@@ -417,11 +417,70 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function get_settings() {
-		$settings = array();
+		$settings = array(
+			array(
+				'title'    => __( 'Labels and Messages', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_bookings_labels_and_messages_options',
+			),
+			array(
+				'title'    => __( 'Frontend Label: "Date from"', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_bookings_label_date_from',
+				'default'  => __( 'Date from', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Frontend Label: "Date to"', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_bookings_label_date_to',
+				'default'  => __( 'Date to', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Frontend Label: Period', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_bookings_label_period',
+				'default'  => __( 'Period', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Frontend Label: Price per Day', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_bookings_label_per_day',
+				'default'  => __( '/ day', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Message: "Date from" is missing', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_bookings_message_no_date_from',
+				'default'  => __( '"Date from" must be set', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Message: "Date to" is missing', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_bookings_message_no_date_to',
+				'default'  => __( '"Date to" must be set', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Message: "Date to" is missing', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_bookings_message_date_to_before_date_from',
+				'default'  => __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ),
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_bookings_labels_and_messages_options',
+			),
+		);
 		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Bookings" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
 	}
 }

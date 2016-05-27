@@ -122,6 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 27/05/2016 =
+* Dev - PRODUCTS - Bookings - "Labels and Messages" settings added.
 * Tweak - "No active modules found." message added.
 ~* Dev - "Manage Settings" functionality added.
 * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Tracking by Custom Number" option added.
