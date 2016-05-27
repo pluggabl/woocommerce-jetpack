@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,6 +18,7 @@ return array(
 			'alphabetically',
 			'by_category',
 			'active',
+			'manager',
 		),
 	),
 

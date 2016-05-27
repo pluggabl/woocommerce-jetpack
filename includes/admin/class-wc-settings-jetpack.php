@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.4.8
+ * @version 2.5.2
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -187,7 +187,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output sections (modules) sub menu
 	 *
-	 * @version 2.3.9
+	 * @version 2.5.2
 	 */
 	function output_sections_submenu() {
 		global $current_section;
@@ -197,6 +197,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			$sections['alphabetically'] = __( 'Alphabetically', 'woocommerce-jetpack' );
 			$sections['by_category']    = __( 'By Category', 'woocommerce-jetpack' );
 			$sections['active']         = __( 'Active', 'woocommerce-jetpack' );
+			$sections['manager']        = __( 'Manager', 'woocommerce-jetpack' );
 			if ( '' == $current_section ) {
 				$current_section = 'by_category';
 			}
@@ -253,7 +254,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output the settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.5.2
 	 */
 	function output() {
 
@@ -263,7 +264,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '<div id="wcj_message" class="updated"><p><strong>' . $wcj_notice . '</strong></p></div>';
 		}
 
-		$is_dashboard = ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section )
+		$is_dashboard = ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section && 'manager' != $current_section )
 			? false : true;
 
 		$depreciated_modules = array(
@@ -320,7 +321,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.2
 	 */
 	function output_dashboard( $current_section ) {
 		$the_settings = $this->get_settings();
@@ -335,17 +336,31 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 
 		if ( 'alphabetically' === $current_section ) {
 			$this->output_dashboard_modules( $the_settings );
-		}
-		elseif ( 'by_category' === $current_section ) {
+		} elseif ( 'by_category' === $current_section ) {
 			foreach ( $this->cats as $cat_id => $cat_label_info ) {
 				if ( 'dashboard' === $cat_id ) continue;
 				echo '<h4>' . $cat_label_info['label'] . '</h4>';
 				$readme_html .= PHP_EOL . '**' . $cat_label_info['label'] . '**' . PHP_EOL . PHP_EOL;
 				$readme_html .= $this->output_dashboard_modules( $the_settings, $cat_id );
 			}
-		}
-		elseif ( 'active' === $current_section ) {
+		} elseif ( 'active' === $current_section ) {
 			$this->output_dashboard_modules( $the_settings, 'active_modules_only' );
+		} elseif ( 'manager' === $current_section ) {
+			//global $wcj_notice;
+			/* if ( isset( $_POST['booster_reset_settings'] ) ) {
+				//echo '<form method="post" action="">';
+				echo '<p><button class="button-primary" type="submit" name="booster_reset_settings_confirm">'  . __( 'Confirm', 'woocommerce-jetpack' )  . '</button></p>';
+				//echo '</form>';
+			} */
+			//echo '<p>' . $wcj_notice . '</p>';
+			//echo '<form method="post" action="" enctype="multipart/form-data">';
+			echo '<p><button class="button-primary" type="submit" name="booster_export_settings">' . __( 'Export', 'woocommerce-jetpack' ) . '</button></p>';
+			echo '<p><input type="file" name="booster_import_settings_file"></p>';
+			echo '<p><button class="button-primary" type="submit" name="booster_import_settings">' . __( 'Import', 'woocommerce-jetpack' ) . '</button></p>';
+			//if ( ! isset( $_POST['booster_reset_settings'] ) ) {
+				echo '<p><button class="button-primary" type="submit" name="booster_reset_settings" onclick="return confirm(\'' . __( 'This will reset settings to defaults for all Booster modules. Are you sure?', 'woocommerce-jetpack' ) . '\')">'  . __( 'Reset', 'woocommerce-jetpack' )  . '</button></p>';
+			//}
+			//echo '</form>';
 		}
 
 		echo '<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . __( 'Version' ) . ': ' . get_option( 'booster_for_woocommerce_version', 'N/A' ) . '</p>';

@@ -28,7 +28,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.5.0
+ * @version 2.5.2
  */
 
 final class WC_Jetpack {
@@ -412,7 +412,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 */
 	private function include_modules() {
 		$settings = array();
@@ -487,63 +487,141 @@ final class WC_Jetpack {
 
 //		do_action( 'woojetpack_modules', $settings );
 
-		// Add options
+		// Add and Manage options
 		if ( is_admin() ) {
+			$this->manage_options( $settings );
+		}
+	}
 
-			// Modules statuses
-			$submodules_classes = array(
-				'WCJ_PDF_Invoicing_Display',
-				'WCJ_PDF_Invoicing_Emails',
-				'WCJ_PDF_Invoicing_Footer',
-				'WCJ_PDF_Invoicing_Header',
-				'WCJ_PDF_Invoicing_Numbering',
-				'WCJ_PDF_Invoicing_Page',
-				'WCJ_PDF_Invoicing_Styling',
-				'WCJ_PDF_Invoicing_Templates',
-			);
+	/**
+	 * manage_options.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function manage_options( $settings ) {
+		// Modules statuses
+		$submodules_classes = array(
+			'WCJ_PDF_Invoicing_Display',
+			'WCJ_PDF_Invoicing_Emails',
+			'WCJ_PDF_Invoicing_Footer',
+			'WCJ_PDF_Invoicing_Header',
+			'WCJ_PDF_Invoicing_Numbering',
+			'WCJ_PDF_Invoicing_Page',
+			'WCJ_PDF_Invoicing_Styling',
+			'WCJ_PDF_Invoicing_Templates',
+		);
 
-			foreach ( $settings as $section ) {
+		if ( isset ( $_POST['booster_reset_settings'] ) ) {
+			global $wcj_notice;
+			$delete_counter = 0;
+		}
 
-				if ( ! in_array( get_class( $section ), $submodules_classes ) ) {
-//					$this->module_statuses[] = $values[1];
-					$status_settings = $section->add_enable_module_setting( array() );
-					$this->module_statuses[] = $status_settings[1];
+		if ( isset ( $_POST['booster_export_settings'] ) ) {
+			$export_settings = array();
+			$export_counter = 0;
+		}
+
+		if ( isset ( $_POST['booster_import_settings'] ) ) {
+			global $wcj_notice;
+			if( ! isset( $_FILES['booster_import_settings_file']['tmp_name'] ) || '' == $_FILES['booster_import_settings_file']['tmp_name'] ) {
+				$wcj_notice .= __( 'Please upload a file to import!', 'woocommerce-jetpack' );
+				$import_settings = array();
+				unset( $_POST['booster_import_settings'] );
+			} else {
+				$import_counter = 0;
+				$import_settings = json_decode( file_get_contents( $_FILES['booster_import_settings_file']['tmp_name'] ), true );
+				foreach ( $import_settings as $import_key => $import_setting ) {
+					update_option( $import_key, $import_setting );
+					$import_counter++;
 				}
-
-//				if ( ! $section->is_enabled() && ! isset ( $_GET['woojetpack_admin_options_reset'] ) ) {
-				if ( get_option( 'booster_for_woocommerce_version' ) === $this->version && ! isset ( $_GET['woojetpack_admin_options_reset'] ) ) {
-					continue;
-				}
-
-				$values = $section->get_settings();
-
-				// Adding options
-				foreach ( $values as $value ) {
-					if ( isset( $value['default'] ) && isset( $value['id'] ) ) {
-
-						// Admin reset
-						if ( isset ( $_GET['woojetpack_admin_options_reset'] ) ) {
-							require_once( ABSPATH . 'wp-includes/pluggable.php' );
-							if ( wcj_is_user_role( 'administrator' ) ) {
-								delete_option( $value['id'] );
-							}
-						}
-
-						// Finally adding options
-						$autoload = isset( $value['autoload'] ) ? (bool) $value['autoload'] : true;
-						add_option( $value['id'], $value['default'], '', ( $autoload ? 'yes' : 'no' ) );
-
-						/* if ( $this->is_wpml_value( $section, $value ) ) {
-							$wpml_keys[] = $value['id'];
-						} */
-					}
-				}
-			}
-
-			if ( get_option( 'booster_for_woocommerce_version' ) !== $this->version ) {
-				update_option( 'booster_for_woocommerce_version', $this->version );
+				$wcj_notice .= sprintf( __( '%d options successfully imported.', 'woocommerce-jetpack' ), $import_counter );
 			}
 		}
+
+		foreach ( $settings as $section ) {
+
+			if ( ! in_array( get_class( $section ), $submodules_classes ) ) {
+				$status_settings = $section->add_enable_module_setting( array() );
+				$this->module_statuses[] = $status_settings[1];
+			}
+
+			if (
+				get_option( 'booster_for_woocommerce_version' ) === $this->version &&
+				! isset ( $_POST['booster_reset_settings'] ) &&
+				! isset ( $_POST['booster_export_settings'] ) /* &&
+				! isset ( $_POST['booster_import_settings'] ) */
+			) {
+				continue;
+			}
+
+			$values = $section->get_settings();
+
+			// Adding options
+			foreach ( $values as $value ) {
+				if ( isset( $value['default'] ) && isset( $value['id'] ) ) {
+
+					// Admin reset
+					if ( isset ( $_POST['booster_reset_settings'] ) ) {
+						require_once( ABSPATH . 'wp-includes/pluggable.php' );
+						if ( wcj_is_user_role( 'administrator' ) ) {
+							delete_option( $value['id'] );
+							$delete_counter++;
+						}
+					}
+
+					// Export settings
+					if ( isset ( $_POST['booster_export_settings'] ) ) {
+						$export_settings[ $value['id'] ] = get_option( $value['id'], $value['default'] );
+						$export_counter++;
+					}
+
+					// Import settings
+					/* if ( isset ( $_POST['booster_import_settings'] ) && isset( $import_settings[ $value['id'] ] ) ) {
+						update_option( $value['id'], $import_settings[ $value['id'] ] );
+						$import_counter++;
+					} */
+
+					// Finally adding options
+					$autoload = isset( $value['autoload'] ) ? (bool) $value['autoload'] : true;
+					add_option( $value['id'], $value['default'], '', ( $autoload ? 'yes' : 'no' ) );
+
+					/* if ( $this->is_wpml_value( $section, $value ) ) {
+						$wpml_keys[] = $value['id'];
+					} */
+				}
+			}
+		}
+
+		if ( get_option( 'booster_for_woocommerce_version' ) !== $this->version ) {
+			update_option( 'booster_for_woocommerce_version', $this->version );
+		}
+
+		if ( isset ( $_POST['booster_reset_settings'] ) ) {
+			if ( $delete_counter > 0 ) {
+				$wcj_notice .= sprintf( __( '%d options successfully deleted.', 'woocommerce-jetpack' ), $delete_counter );
+			}
+		}
+
+		if ( isset ( $_POST['booster_export_settings'] ) ) {
+			$export_settings = json_encode( $export_settings );
+//			$export_settings = 'Booster for WooCommerce v' . get_option( 'booster_for_woocommerce_version', 'NA' ) . PHP_EOL . $export_settings;
+			header( "Content-Type: application/octet-stream" );
+			header( "Content-Disposition: attachment; filename=booster_settings.txt" );
+			header( "Content-Type: application/octet-stream" );
+			header( "Content-Type: application/download" );
+			header( "Content-Description: File Transfer" );
+			header( "Content-Length: " . strlen( $export_settings ) );
+			echo $export_settings;
+//			echo $export_counter;
+			die();
+		}
+
+		/* if ( isset ( $_POST['booster_import_settings'] ) ) {
+			if ( $import_counter > 0 ) {
+				$wcj_notice .= sprintf( __( '%d options successfully imported.', 'woocommerce-jetpack' ), $import_counter );
+			}
+		} */
 	}
 
 	/**
