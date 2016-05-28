@@ -121,7 +121,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 27/05/2016 =
+= 2.5.2 - 28/05/2016 =
+-* Dev - PRODUCTS - Product by User - Initial module release.
+* Dev - Shortcodes - `module` (and `module_name`) attribute added.
+* Dev - Shortcodes - `visibility` attribute modified (and `login_text` attribute added).
 * Dev - PRODUCTS - Bookings - "Labels and Messages" settings added.
 * Tweak - "No active modules found." message added.
 ~* Dev - "Manage Settings" functionality added.

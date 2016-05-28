@@ -381,7 +381,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	}
 
 	/**
-	 * get_settings.
+	 * get_user_roles.
 	 *
 	 * @version 2.5.0
 	 * @since   2.5.0

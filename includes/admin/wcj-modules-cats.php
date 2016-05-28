@@ -69,6 +69,7 @@ return array(
 			'crowdfunding',
 			'product_images',
 			'product_by_country',
+			'product_by_user',
 		),
 	),
 

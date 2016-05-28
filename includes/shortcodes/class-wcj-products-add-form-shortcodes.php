@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Add Form Shortcodes class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -28,8 +28,15 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		);
 
 		$this->the_atts = array(
-			'product_id'  => 0,         // todo (for editing?)
-			'post_status' => 'publish', // todo (for editing?)
+			'product_id'         => 0, // todo (for editing?)
+			'post_status'        => get_option( 'wcj_product_by_user_status', 'draft' ),
+			'desc_enabled'       => get_option( 'wcj_product_by_user_desc_enabled', 'yes' ),
+			'short_desc_enabled' => get_option( 'wcj_product_by_user_short_desc_enabled', 'no' ),
+			'cats_enabled'       => get_option( 'wcj_product_by_user_cats_enabled', 'no' ),
+			'tags_enabled'       => get_option( 'wcj_product_by_user_tags_enabled', 'no' ),
+			'visibility'         => implode( ',', get_option( 'wcj_product_by_user_user_visibility', array() ) ),
+			'module'             => 'product_by_user',
+			'module_name'        => __( 'Product by User', 'woocommerce-jetpack' ),
 		);
 
 		parent::__construct();
@@ -93,7 +100,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_add_new.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function wcj_product_add_new( $atts ) {
@@ -105,9 +112,9 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 
 		if ( isset( $_REQUEST['wcj_add_new_product'] ) ) {
 			$args = array(
-				'title'             => $_REQUEST['wcj_add_new_product_title'],
-				'description'       => $_REQUEST['wcj_add_new_product_desc'],
-				'short_description' => $_REQUEST['wcj_add_new_product_short_desc'],
+				'title'             => isset( $_REQUEST['wcj_add_new_product_title'] ) ? $_REQUEST['wcj_add_new_product_title'] : '',
+				'description'       => isset( $_REQUEST['wcj_add_new_product_desc'] ) ? $_REQUEST['wcj_add_new_product_desc'] : '',
+				'short_description' => isset( $_REQUEST['wcj_add_new_product_short_desc'] ) ? $_REQUEST['wcj_add_new_product_short_desc'] : '',
 				'cats'              => isset( $_REQUEST['wcj_add_new_product_cats'] ) ? $_REQUEST['wcj_add_new_product_cats'] : array(),
 				'tags'              => isset( $_REQUEST['wcj_add_new_product_tags'] ) ? $_REQUEST['wcj_add_new_product_tags'] : array(),
 			);
@@ -130,32 +137,40 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			__( 'Title', 'woocommerce-jetpack' ),
 			'<input type="text" style="' . $input_style . '" name="wcj_add_new_product_title">'
 		);
-		$table_data[] = array(
-			__( 'Description', 'woocommerce-jetpack' ),
-			'<textarea style="' . $input_style . '" name="wcj_add_new_product_desc"></textarea>'
-		);
-		$table_data[] = array(
-			__( 'Short Description', 'woocommerce-jetpack' ),
-			'<textarea style="' . $input_style . '" name="wcj_add_new_product_short_desc"></textarea>'
-		);
-		$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
-		$product_categories_as_select_options = '';
-		foreach ( $product_categories as $product_category ) {
-			$product_categories_as_select_options .= '<option value="' . $product_category->slug . '">' . $product_category->name .'</option>';
+		if ( 'yes' === $atts['desc_enabled'] ) {
+			$table_data[] = array(
+				__( 'Description', 'woocommerce-jetpack' ),
+				'<textarea style="' . $input_style . '" name="wcj_add_new_product_desc"></textarea>'
+			);
 		}
-		$table_data[] = array(
-			__( 'Categories', 'woocommerce-jetpack' ),
-			'<select multiple style="' . $input_style . '" name="wcj_add_new_product_cats[]">' . $product_categories_as_select_options . '</select>'
-		);
-		$products_tags = get_terms( 'product_tag', 'orderby=name&hide_empty=0' );
-		$products_tags_as_select_options = '';
-		foreach ( $products_tags as $products_tag ) {
-			$products_tags_as_select_options .= '<option value="' . $products_tag->slug . '">' . $products_tag->name .'</option>';
+		if ( 'yes' === $atts['short_desc_enabled'] ) {
+			$table_data[] = array(
+				__( 'Short Description', 'woocommerce-jetpack' ),
+				'<textarea style="' . $input_style . '" name="wcj_add_new_product_short_desc"></textarea>'
+			);
 		}
-		$table_data[] = array(
-			__( 'Tags', 'woocommerce-jetpack' ),
-			'<select multiple style="' . $input_style . '" name="wcj_add_new_product_tags[]">' . $products_tags_as_select_options . '</select>'
-		);
+		if ( 'yes' === $atts['cats_enabled'] ) {
+			$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+			$product_categories_as_select_options = '';
+			foreach ( $product_categories as $product_category ) {
+				$product_categories_as_select_options .= '<option value="' . $product_category->slug . '">' . $product_category->name .'</option>';
+			}
+			$table_data[] = array(
+				__( 'Categories', 'woocommerce-jetpack' ),
+				'<select multiple style="' . $input_style . '" name="wcj_add_new_product_cats[]">' . $product_categories_as_select_options . '</select>'
+			);
+		}
+		if ( 'yes' === $atts['tags_enabled'] ) {
+			$products_tags = get_terms( 'product_tag', 'orderby=name&hide_empty=0' );
+			$products_tags_as_select_options = '';
+			foreach ( $products_tags as $products_tag ) {
+				$products_tags_as_select_options .= '<option value="' . $products_tag->slug . '">' . $products_tag->name .'</option>';
+			}
+			$table_data[] = array(
+				__( 'Tags', 'woocommerce-jetpack' ),
+				'<select multiple style="' . $input_style . '" name="wcj_add_new_product_tags[]">' . $products_tags_as_select_options . '</select>'
+			);
+		}
 		$input_fields_html .= wcj_get_table_html( $table_data, array( 'table_class' => 'widefat', 'table_heading_type' => 'vertical', ) );
 
 		$footer_html .= '<input type="submit" class="button" name="wcj_add_new_product" value="' . __( 'Add', 'woocommerce-jetpack' ) . '">';

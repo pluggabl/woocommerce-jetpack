@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shortcodes class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -28,8 +28,13 @@ class WCJ_Shortcodes {
 
 	/**
 	 * add_extra_atts.
+	 *
+	 * @version 2.5.2
 	 */
 	function add_extra_atts( $atts ) {
+		if ( ! isset( $this->the_atts ) ) {
+			$this->the_atts = array();
+		}
 		$final_atts = array_merge( $this->the_atts, $atts );
 		return $final_atts;
 	}
@@ -54,27 +59,58 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 */
 	function wcj_shortcode( $atts, $content, $shortcode ) {
 
 		// Init
 		if ( empty( $atts ) ) $atts = array();
+
+		// Add child class specific atts
+		$atts = $this->add_extra_atts( $atts );
+
+		// Merge atts with global defaults
 		$global_defaults = array(
 			'before'              => '',
 			'after'               => '',
 			'visibility'          => '',//user_visibility
+			'login_text'          => __( 'Login', 'woocommerce-jetpack' ),
 			'site_visibility'     => '',
 			'location'            => '',//user_location
 			'wpml_language'       => '',
 			'wpml_not_language'   => '',
 			'billing_country'     => '',
 			'not_billing_country' => '',
+			'module'              => '',
 		);
 		$atts = array_merge( $global_defaults, $atts );
 
+		// Check for required atts
+		if ( false === ( $atts = $this->init_atts( $atts ) ) ) return '';
+
+		// Check for module enabled
+		if ( '' != $atts['module'] && ! wcj_is_module_enabled( $atts['module'] ) ) {
+			return '<p>' . sprintf( __( '%s module not enabled!', 'woocommerce-jetpack' ), $atts['module_name'] ) . '</p>';
+		}
+
 		// Check if privileges are ok
-		if ( 'admin' === $atts['visibility'] && ! wcj_is_user_role( 'administrator' ) ) return '';
+		if ( '' != $atts['visibility'] ) {
+			$visibilities = str_replace( ' ', '', $atts['visibility'] );
+			$visibilities = explode( ',', $visibilities );
+			$is_iser_visibility_ok = false;
+			foreach ( $visibilities as $visibility ) {
+				if ( 'admin' === $visibility ) {
+					$visibility = 'administrator';
+				}
+				if ( wcj_is_user_role( $visibility ) ) {
+					$is_iser_visibility_ok = true;
+					break;
+				}
+			}
+			if ( ! $is_iser_visibility_ok ) {
+				return '<p><a href="' . wp_login_url( get_permalink() ) . '" title="' . $atts['login_text'] . '">' . $atts['login_text'] . '</a></p>';
+			}
+		}
 
 		// Check if site visibility is ok
 		if ( '' != $atts['site_visibility'] ) {
@@ -116,12 +152,6 @@ class WCJ_Shortcodes {
 				if ( in_array( $_GET['billing_country'], $this->custom_explode( $atts['not_billing_country'] ) ) ) return '';
 			}
 		}
-
-		// Add child class specific atts
-		$atts = $this->add_extra_atts( $atts );
-
-		// Check for required atts
-		if ( false === ( $atts = $this->init_atts( $atts ) ) ) return '';
 
 		// Run the shortcode function
 		$shortcode_function = $shortcode;
