@@ -24,7 +24,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	public function __construct() {
 
 		$this->id         = 'product_by_user';
-		$this->short_desc = __( 'Product by User', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Product by User [BETA]', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Let users to add new WooCommerce products from frontend.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-by-user/';
 		parent::__construct();
@@ -128,10 +128,10 @@ class WCJ_Product_By_User extends WCJ_Module {
 			array(
 				'title'    => __( 'Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => '',
+				'desc'     => __( 'Title field is always enabled and required.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_by_user_options',
 			),
-			array(
+			/* array(
 				'title'    => __( 'Fields', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Title', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_by_user_title_enabled',
@@ -139,17 +139,32 @@ class WCJ_Product_By_User extends WCJ_Module {
 				'type'     => 'checkbox',
 				'custom_attributes' => array( 'disabled' => 'disabled' ),
 				'checkboxgroup' => 'start',
-			),
+			), */
 			array(
+				'title'    => __( 'Additional Fields', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Description', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_by_user_desc_enabled',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+				'checkboxgroup' => 'start',
+			),
+			array(
+				'desc'     => __( 'Short Description', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_by_user_short_desc_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => '',
+			),
+			array(
+				'desc'     => __( 'Regular Price', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_by_user_regular_price_enabled',
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 				'checkboxgroup' => '',
 			),
 			array(
-				'desc'     => __( 'Short Description', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_short_desc_enabled',
+				'desc'     => __( 'Sale Price', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_by_user_sale_price_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 				'checkboxgroup' => '',
@@ -188,7 +203,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 				'id'       => 'wcj_product_by_user_options',
 			),
 		);
-		return $this->add_standard_settings( $settings );
+		return $this->add_standard_settings( $settings, __( 'Use [wcj_product_add_new] shortcode.', 'woocommerce-jetpack' ) );
 	}
 }
 

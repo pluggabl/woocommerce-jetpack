@@ -7,7 +7,7 @@
  * @version 2.5.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
- * @todo    image; price; required; titles and messages; styling; editing (and security)?; custom fields;
+ * @todo    image; +price; required; titles and messages; styling; +editing (and security)?; custom fields;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -29,15 +29,18 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		);
 
 		$this->the_atts = array(
-			'product_id'         => /* ( isset( $_GET['wcj_edit_product'] ) ) ? $_GET['wcj_edit_product'] :  */ 0, // todo?
-			'post_status'        => get_option( 'wcj_product_by_user_status', 'draft' ),
-			'desc_enabled'       => get_option( 'wcj_product_by_user_desc_enabled', 'yes' ),
-			'short_desc_enabled' => get_option( 'wcj_product_by_user_short_desc_enabled', 'no' ),
-			'cats_enabled'       => get_option( 'wcj_product_by_user_cats_enabled', 'no' ),
-			'tags_enabled'       => get_option( 'wcj_product_by_user_tags_enabled', 'no' ),
-			'visibility'         => implode( ',', get_option( 'wcj_product_by_user_user_visibility', array() ) ),
-			'module'             => 'product_by_user',
-			'module_name'        => __( 'Product by User', 'woocommerce-jetpack' ),
+			'product_id'            => /* ( isset( $_GET['wcj_edit_product'] ) ) ? $_GET['wcj_edit_product'] :  */ 0, // todo?
+			'post_status'           => get_option( 'wcj_product_by_user_status', 'draft' ),
+			'desc_enabled'          => get_option( 'wcj_product_by_user_desc_enabled', 'yes' ),
+			'short_desc_enabled'    => get_option( 'wcj_product_by_user_short_desc_enabled', 'no' ),
+			'regular_price_enabled' => get_option( 'wcj_product_by_user_regular_price_enabled', 'yes' ),
+			'sale_price_enabled'    => get_option( 'wcj_product_by_user_sale_price_enabled', 'no' ),
+			'short_desc_enabled'    => get_option( 'wcj_product_by_user_short_desc_enabled', 'no' ),
+			'cats_enabled'          => get_option( 'wcj_product_by_user_cats_enabled', 'no' ),
+			'tags_enabled'          => get_option( 'wcj_product_by_user_tags_enabled', 'no' ),
+			'visibility'            => implode( ',', get_option( 'wcj_product_by_user_user_visibility', array() ) ),
+			'module'                => 'product_by_user',
+			'module_name'           => __( 'Product by User', 'woocommerce-jetpack' ),
 		);
 
 		parent::__construct();
@@ -86,6 +89,13 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			wp_set_object_terms( $product_id, $args['cats'], 'product_cat' );
 			wp_set_object_terms( $product_id, $args['tags'], 'product_tag' );
 
+			update_post_meta( $product_id, '_regular_price', $args['regular_price'] );
+			update_post_meta( $product_id, '_sale_price', $args['sale_price'] );
+			if ( '' == $args['sale_price'] ) {
+				update_post_meta( $product_id, '_price', $args['regular_price'] );
+			} else {
+				update_post_meta( $product_id, '_price', $args['sale_price'] );
+			}
 			update_post_meta( $product_id, '_visibility', 'visible' );
 			update_post_meta( $product_id, '_stock_status', 'instock' );
 
@@ -98,11 +108,14 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * validate_args.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function validate_args( $args, $shortcode_atts ) {
 		if ( '' == $args['title'] ) {
+			return false;
+		}
+		if ( $args['sale_price'] > $args['regular_price'] ) {
 			return false;
 		}
 		return true;
@@ -123,11 +136,13 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 
 		if ( isset( $_REQUEST['wcj_add_new_product'] ) ) {
 			$args = array(
-				'title'             => isset( $_REQUEST['wcj_add_new_product_title'] )      ? $_REQUEST['wcj_add_new_product_title']      : '',
-				'description'       => isset( $_REQUEST['wcj_add_new_product_desc'] )       ? $_REQUEST['wcj_add_new_product_desc']       : '',
-				'short_description' => isset( $_REQUEST['wcj_add_new_product_short_desc'] ) ? $_REQUEST['wcj_add_new_product_short_desc'] : '',
-				'cats'              => isset( $_REQUEST['wcj_add_new_product_cats'] )       ? $_REQUEST['wcj_add_new_product_cats']       : array(),
-				'tags'              => isset( $_REQUEST['wcj_add_new_product_tags'] )       ? $_REQUEST['wcj_add_new_product_tags']       : array(),
+				'title'             => isset( $_REQUEST['wcj_add_new_product_title'] )         ? $_REQUEST['wcj_add_new_product_title']         : '',
+				'description'       => isset( $_REQUEST['wcj_add_new_product_desc'] )          ? $_REQUEST['wcj_add_new_product_desc']          : '',
+				'short_description' => isset( $_REQUEST['wcj_add_new_product_short_desc'] )    ? $_REQUEST['wcj_add_new_product_short_desc']    : '',
+				'regular_price'     => isset( $_REQUEST['wcj_add_new_product_regular_price'] ) ? $_REQUEST['wcj_add_new_product_regular_price'] : '',
+				'sale_price'        => isset( $_REQUEST['wcj_add_new_product_sale_price'] )    ? $_REQUEST['wcj_add_new_product_sale_price']    : '',
+				'cats'              => isset( $_REQUEST['wcj_add_new_product_cats'] )          ? $_REQUEST['wcj_add_new_product_cats']          : array(),
+				'tags'              => isset( $_REQUEST['wcj_add_new_product_tags'] )          ? $_REQUEST['wcj_add_new_product_tags']          : array(),
 			);
 			if ( $this->validate_args( $args, $atts ) ) {
 				$result = $this->wc_add_new_product( $args, $atts );
@@ -162,6 +177,18 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			$table_data[] = array(
 				__( 'Short Description', 'woocommerce-jetpack' ),
 				'<textarea style="' . $input_style . '" name="wcj_add_new_product_short_desc">' . ( ( 0 != $atts['product_id'] ) ? get_post_field( 'post_excerpt', $atts['product_id'] ) : '' ) . '</textarea>'
+			);
+		}
+		if ( 'yes' === $atts['regular_price_enabled'] ) {
+			$table_data[] = array(
+				__( 'Regular Price', 'woocommerce-jetpack' ),
+				'<input type="number"  min="0" step="0.01" name="wcj_add_new_product_regular_price" value="' . ( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_regular_price', true ) : '' ) . '">'
+			);
+		}
+		if ( 'yes' === $atts['sale_price_enabled'] ) {
+			$table_data[] = array(
+				__( 'Sale Price', 'woocommerce-jetpack' ),
+				'<input type="number" min="0" step="0.01" name="wcj_add_new_product_sale_price" value="' . ( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_sale_price', true ) : '' ) . '">'
 			);
 		}
 		if ( 'yes' === $atts['cats_enabled'] ) {
