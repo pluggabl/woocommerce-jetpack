@@ -108,7 +108,14 @@ class WCJ_Shortcodes {
 				}
 			}
 			if ( ! $is_iser_visibility_ok ) {
-				return '<p><a href="' . wp_login_url( get_permalink() ) . '" title="' . $atts['login_text'] . '">' . $atts['login_text'] . '</a></p>';
+//				return '<p><a href="' . wp_login_url( get_permalink() ) . '" title="' . $atts['login_text'] . '">' . $atts['login_text'] . '</a></p>';
+				if ( ! is_user_logged_in() ) {
+					ob_start();
+					woocommerce_login_form();
+					return ob_get_clean();
+				} else {
+					return '<p>' . __( 'Wrong user role!', 'woocommerce-jetpack' ) . '</p>';
+				}
 			}
 		}
 

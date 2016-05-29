@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -416,13 +416,16 @@ if ( ! function_exists( 'is_shop_manager' ) ) {
 /**
  * wcj_is_user_role.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @since   2.5.0
  * @return  bool
  */
 if ( ! function_exists( 'wcj_is_user_role' ) ) {
 	function wcj_is_user_role( $user_role, $user_id = 0 ) {
 		$the_user = ( 0 == $user_id ) ? wp_get_current_user() : get_user_by( 'id', $user_id );
+		if ( ! isset( $the_user->roles ) || empty( $the_user->roles ) ) {
+			$the_user->roles = array( 'guest' );
+		}
 		return ( isset( $the_user->roles ) && is_array( $the_user->roles ) && in_array( $user_role, $the_user->roles ) ) ? true : false;
 	}
 }

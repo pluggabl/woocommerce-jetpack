@@ -30,7 +30,68 @@ class WCJ_Product_By_User extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			add_action( 'woocommerce_before_my_account', array( $this, 'add_my_products_to_my_account_page' ) );
+		}
+	}
 
+	/**
+	 * add_my_products_to_my_account_page.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_my_products_to_my_account_page() {
+		$user_ID = get_current_user_id();
+		if ( 0 == $user_ID ) {
+			return;
+		}
+		if ( isset( $_GET['wcj_edit_product'] ) ) {
+			$product_id = $_GET['wcj_edit_product'];
+			$post_author_id = get_post_field( 'post_author', $product_id );
+			if ( $user_ID != $post_author_id ) {
+				echo '<p>' . __( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
+			}
+			echo do_shortcode( '[wcj_product_add_new product_id="' . $product_id . '"]' );
+		}
+		$offset = 0;
+		$block_size = 96;
+		$products = array();
+		while( true ) {
+			$args = array(
+				'post_type'      => 'product',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+				'author'         => $user_ID,
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
+			while ( $loop->have_posts() ) : $loop->the_post();
+				$products[ strval( $loop->post->ID ) ] = array(
+					'title'  => get_the_title( $loop->post->ID ),
+					'status' => get_post_status( $loop->post->ID ),
+				);
+			endwhile;
+			$offset += $block_size;
+		}
+		wp_reset_postdata();
+		if ( 0 != count( $products ) ) {
+			echo '<h2>' . __( 'My Products', 'woocommerce-jetpack' ) . '</h2>';
+			$table_data = array();
+			$table_data[] = array( '#', __( 'Status', 'woocommerce-jetpack' ), __( 'Title', 'woocommerce-jetpack' ), __( 'Actions', 'woocommerce-jetpack' ) );
+			$i = 0;
+			foreach ( $products as $_product_id => $_product_data ) {
+				$i++;
+				$table_data[] = array(
+					$i . ' [' . $_product_id . ']',
+					'<code>'. $_product_data['status'] . '</code>',
+					$_product_data['title'],
+					'<a href="' . add_query_arg( 'wcj_edit_product', $_product_id ) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>',
+				);
+			}
+			echo wcj_get_table_html( $table_data, array( 'table_class' => 'shop_table shop_table_responsive' ) );
 		}
 	}
 
