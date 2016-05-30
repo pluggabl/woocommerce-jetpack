@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 */
 	public function __construct() {
 
@@ -71,6 +71,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'excerpt_length'   => 0,
 			'name'             => '',
 			'heading_format'   => 'from %level_qty% pcs.',
+			'price_row_format' => '<del>%old_price%</del> %price%',
 			'sep'              => ', ',
 			'add_links'        => 'yes',
 			'add_percent_row'  => 'no',
@@ -713,7 +714,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 
@@ -747,8 +748,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 
 			if ( $this->the_product->is_type( 'variable' ) ) {
 				// Variable
-				$min = $this->the_product->get_variation_price( 'min', false );
-				$max = $this->the_product->get_variation_price( 'max', false );
+				$prices = $this->the_product->get_variation_prices( false );
+				$min_key = key( $prices['price'] );
+				end( $prices['price'] );
+				$max_key = key( $prices['price'] );
+				$min_product = wc_get_product( $min_key );
+				$max_product = wc_get_product( $max_key );
+				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
+				$min = $min_product->$get_price_method();
+				$max = $max_product->$get_price_method();
+				$min_original = $min;
+				$max_original = $max;
 				if ( 'fixed' === $discount_type ) {
 					$min = $min - $wholesale_price_level['discount'];
 					$max = $max - $wholesale_price_level['discount'];
@@ -760,11 +770,16 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				if ( 'yes' !== $atts['hide_currency'] ) {
 					$min = wc_price( $min );
 					$max = wc_price( $max );
+					$min_original = wc_price( $min_original );
+					$max_original = wc_price( $max_original );
 				}
 				$the_price = ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
+				$the_price_original = ( $min_original != $max_original ) ? sprintf( '%s-%s', $min_original, $max_original ) : $min_original;
 			} else {
 				// Simple etc.
-				$the_price = $this->the_product->get_price();
+				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
+				$the_price = $this->the_product->$get_price_method();
+				$the_price_original = $the_price;
 				if ( 'fixed' === $discount_type ) {
 					$the_price = $the_price - $wholesale_price_level['discount'];
 				} else {
@@ -773,12 +788,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				}
 				if ( 'yes' !== $atts['hide_currency'] ) {
 					$the_price = wc_price( $the_price );
+					$the_price_original = wc_price( $the_price_original );
 				}
 			}
 
 			$data_qty[] = str_replace( '%level_qty%', $wholesale_price_level['quantity'], $atts['heading_format'] ) ;
 			if ( 'yes' === $atts['add_price_row'] ) {
-				$data_price[] = $the_price;
+				$data_price[] = str_replace( array( '%old_price%', '%price%' ), array( $the_price_original, $the_price ), $atts['price_row_format'] );
 			}
 			if ( 'yes' === $atts['add_percent_row'] ) {
 				if ( 'fixed' === $discount_type ) {
