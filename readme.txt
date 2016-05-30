@@ -121,7 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 29/05/2016 =
+= 2.5.2 - 30/05/2016 =
 -$* Dev - PRODUCTS - Product by User - Initial module release.
 * Dev - Shortcodes - `module` (and `module_name`) attribute added.
 * Dev - Shortcodes - `visibility` attribute modified (and `login_text` attribute added).
@@ -131,6 +131,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Tracking by Custom Number" option added.
 * Dev - PRODUCTS - Product Images - Per product "Hide" options added.
 * Fix - PRODUCTS - Product Images - Meta boxes added only if section is enabled.
+* Tweak - PDF INVOICING & PACKING SLIPS - Templates - "Available Shortcodes" info section modified.
 * Tweak - PRODUCTS - Product Images - Module settings rearranged.
 
 = 2.5.1 - 24/05/2016 =

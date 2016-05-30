@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Templates class.
  *
- * @version 2.4.7
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -30,7 +30,7 @@ class WCJ_PDF_Invoicing_Templates extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.2
 	 */
 	function get_settings() {
 
@@ -43,34 +43,41 @@ class WCJ_PDF_Invoicing_Templates extends WCJ_Module {
 			include( 'defaults/wcj-content-template-' . $invoice_type['id'] . '.php' );
 			$default_template = ob_get_clean();
 
-			$settings[] = array(
-				'title' => strtoupper( $invoice_type['desc'] ),
-				'type'  => 'title',
-				'id'    => 'wcj_invoicing_' . $invoice_type['id'] . '_templates_options',
-			);
-			$settings[] = array(
-				'title'   => __( 'HTML Template', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_invoicing_' . $invoice_type['id'] . '_template',
-				'default' => $default_template,
-				'type'    => 'textarea',
-				'css'     => 'width:66%;min-width:300px;height:500px;',
-			);
-			$settings[] = array(
-				'type' => 'sectionend',
-				'id'   => 'wcj_invoicing_' . $invoice_type['id'] . '_templates_options',
-			);
+			$settings = array_merge( $settings, array(
+				array(
+					'title'   => strtoupper( $invoice_type['desc'] ),
+					'type'    => 'title',
+					'id'      => 'wcj_invoicing_' . $invoice_type['id'] . '_templates_options',
+				),
+				array(
+					'title'   => __( 'HTML Template', 'woocommerce-jetpack' ),
+					'id'      => 'wcj_invoicing_' . $invoice_type['id'] . '_template',
+					'default' => $default_template,
+					'type'    => 'textarea',
+					'css'     => 'width:66%;min-width:300px;height:500px;',
+				),
+				array(
+					'type'    => 'sectionend',
+					'id'      => 'wcj_invoicing_' . $invoice_type['id'] . '_templates_options',
+				),
+			) );
 		}
 
-		$settings[] = array(
-			'title' => __( 'Available Shortcodes', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'desc'  => wcj_get_shortcodes_list(),
-			'id'    => 'wcj_invoicing_templates_desc',
-		);
-		$settings[] = array(
-			'type'  => 'sectionend',
-			'id'    => 'wcj_invoicing_templates_desc',
-		);
+		$settings = array_merge( $settings, array(
+			array(
+				'title' => __( 'Available Shortcodes', 'woocommerce-jetpack' ),
+				'type'  => 'title',
+				'desc'  => sprintf(
+					__( 'For the list of available shortcodes, please visit %s.', 'woocommerce-jetpack' ),
+					'<a target="_blank" href="http://booster.io/category/shortcodes/?utm_source=shortcodes_list&utm_medium=module_button&utm_campaign=booster_documentation">http://booster.io/category/shortcodes/</a>'
+				),
+				'id'    => 'wcj_invoicing_templates_desc',
+			),
+			array(
+				'type'  => 'sectionend',
+				'id'    => 'wcj_invoicing_templates_desc',
+			),
+		) );
 
 		return $this->add_standard_settings( $settings );
 	}
