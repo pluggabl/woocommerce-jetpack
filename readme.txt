@@ -122,7 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 30/05/2016 =
-* Fix - Shortcodes - `[wcj_product_wholesale_price_table]` - Price tax bug fixed.
+~* Fix - Shortcodes - `[wcj_product_wholesale_price_table]` - Price tax bug fixed.
 * Dev - Shortcodes - `[wcj_product_wholesale_price_table]` - `price_row_format` attribute added.
 -$* Dev - PRODUCTS - Product by User - Initial module release.
 * Dev - Shortcodes - `module` (and `module_name`) attribute added.
