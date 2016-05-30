@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -27,7 +27,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * get_options.
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.2
 	 */
 	public function get_options() {
 		$options = array(
@@ -109,6 +109,14 @@ class WCJ_Product_Input_Fields_Abstract {
 				'short_title'       => __( 'File: Accepted types', 'woocommerce-jetpack' ),
 				'type'              => 'text',
 				'default'           => __( '.jpg,.jpeg,.png', 'woocommerce-jetpack' ),
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_type_file_max_size_' . $this->scope . '_',
+				'title'             => __( 'If file is selected, set max file size here. Set to zero to accept all files', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'File: Max size', 'woocommerce-jetpack' ),
+				'type'              => 'number',
+				'default'           => 0,
 			),
 
 			array(
@@ -411,7 +419,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * validate_product_input_fields_on_add_to_cart.
 	 *
-	 * @version 2.4.5
+	 * @version 2.5.2
 	 */
 	public function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
@@ -456,6 +464,13 @@ class WCJ_Product_Input_Fields_Abstract {
 							wc_add_notice( __( 'Wrong file type!', 'woocommerce-jetpack' ), 'error' );
 //							wc_add_notice( $this->get_value( 'wcj_product_input_fields_wrong_file_type_msg_' . $this->scope . '_' . $i, $product_id, '' ), 'error' );
 						}
+					}
+				}
+				// Validate file max size
+				if ( ( $max_file_size = $this->get_value( 'wcj_product_input_fields_type_file_max_size_' . $this->scope . '_' . $i, $product_id, '' ) ) > 0 ) {
+					if ( $_FILES[ $field_name ]['size'] > $max_file_size ) {
+						$passed = false;
+						wc_add_notice( __( 'File is too big!', 'woocommerce-jetpack' ), 'error' );
 					}
 				}
 			}
