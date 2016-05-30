@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -81,7 +81,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_wholesale_price_table (global only).
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.4.8
 	 */
 	function wcj_wholesale_price_table( $atts ) {
@@ -108,7 +108,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		$table_rows = array( $data_qty, $data_discount, );
-		return wcj_get_table_html( $table_rows, array( 'columns_styles' => $columns_styles ) );
+		return wcj_get_table_html( $table_rows, array( 'table_class' => 'wcj_wholesale_price_table', 'columns_styles' => $columns_styles ) );
 	}
 
 	/**

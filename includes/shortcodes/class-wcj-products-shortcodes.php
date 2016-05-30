@@ -822,7 +822,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			$table_rows[] = $data_discount;
 		}
 
-		return wcj_get_table_html( $table_rows, array( 'columns_styles' => $columns_styles ) );
+		return wcj_get_table_html( $table_rows, array( 'table_class' => 'wcj_product_wholesale_price_table', 'columns_styles' => $columns_styles ) );
 	}
 
 	/**
