@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency Product Base Price class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -53,9 +53,9 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 				add_filter( 'woocommerce_get_price_excluding_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 10, 3 );
 			}
 
-			if ( is_admin() ) {
+			/* if ( is_admin() ) {
 				include_once( 'reports/class-wcj-currency-reports.php' );
-			}
+			} */
 		}
 	}
 

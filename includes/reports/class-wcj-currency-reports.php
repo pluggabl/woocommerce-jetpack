@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency Reports class.
  *
- * @version  2.4.8
+ * @version  2.5.2
  * @author   Algoritmika Ltd.
  */
 
@@ -26,7 +26,7 @@ class WCJ_Currency_Reports {
 	/**
 	 * add_reports_currency_to_admin_bar.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.2
 	 */
 	function add_reports_currency_to_admin_bar( $wp_admin_bar ) {
 
@@ -58,12 +58,12 @@ class WCJ_Currency_Reports {
 					$currency_symbols[ $the_code ] = $the_code;
 				}
 			}
-			if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
+			/* if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
 				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
 					$the_code = get_option( 'wcj_multicurrency_base_price_currency_' . $i );
 					$currency_symbols[ $the_code ] = $the_code;
 				}
-			}
+			} */
 			if ( wcj_is_module_enabled( 'payment_gateways_currency' ) ) {
 				global $woocommerce;
 				$available_gateways = $woocommerce->payment_gateways->payment_gateways();
