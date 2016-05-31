@@ -135,7 +135,11 @@ final class WC_Jetpack {
 	 * @todo    this is only temporary solution!
 	 */
 	function fix_mini_cart() {
-		WC()->cart->calculate_totals();
+		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( null !== ( $wc = WC() ) ) {
+				$wc->cart->calculate_totals();
+			}
+		}
 	}
 
 	/**
