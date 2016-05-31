@@ -106,6 +106,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 						'weight_table_total_rows' => array(
 							'title'       => __( 'Weight Table Total Rows', 'woocommerce' ),
 							'type'        => 'number',
+							'description' => __( 'Press Save changes after you change this number.', 'woocommerce-jetpack' ),
 							'default'     => 0,
 							'desc_tip'    => true,
 							'custom_attributes' => array( 'min'  => '0', ),
