@@ -122,6 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 31/05/2016 =
+* Dev - PRODUCTS - Product Tabs - `do_shortcode` added to custom tab titles.
 * Dev - PRODUCTS - Product Input Fields - "File: Max size" option added.
 * Dev - Shortcodes - `[wcj_wholesale_price_table]` and `[wcj_product_wholesale_price_table]` - Table class added.
 ~* Fix - Shortcodes - `[wcj_product_wholesale_price_table]` - Price tax bug fixed.

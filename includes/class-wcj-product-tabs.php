@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Tabs class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -39,7 +39,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Customize the product tabs.
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.2
 	 */
 	function customize_product_tabs( $tabs ) {
 
@@ -192,7 +192,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 
 				// Adding the tab
 				$tabs[ $key ] = array(
-					'title'    => get_option( 'wcj_custom_product_tabs_title_' . $key ),
+					'title'    => do_shortcode( get_option( 'wcj_custom_product_tabs_title_' . $key ) ),
 					'priority' => get_option( 'wcj_custom_product_tabs_priority_' . $key, 40 ),
 					'callback' => array( $this, 'create_new_custom_product_tab_global' ),
 				);
@@ -217,7 +217,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 
 				if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) && '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_content_' . $key, true ) ) {
 					$tabs[ $key ] = array(
-						'title'    => get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ),
+						'title'    => do_shortcode( get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) ),
 						'priority' => $tab_priority,
 						'callback' => array( $this, 'create_new_custom_product_tab_local' ),
 					);
