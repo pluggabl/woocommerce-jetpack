@@ -29,6 +29,7 @@ return array(
 			'price_by_country',
 			'multicurrency',
 			'multicurrency_base_price',
+			'currency_per_product',
 			'currency',
 			'currency_external_products',
 			'bulk_price_converter',

@@ -122,6 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 31/05/2016 =
+~* Dev - PRICES & CURRENCIES - Currency per Product - Initial module release.
 * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Removed from currency reports.
 * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Weight Table" option added.
 * Dev - PRODUCTS - Product Tabs - `do_shortcode` added to custom tab titles.
