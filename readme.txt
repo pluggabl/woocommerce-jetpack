@@ -121,7 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 30/05/2016 =
+= 2.5.2 - 31/05/2016 =
 * Dev - PRODUCTS - Product Input Fields - "File: Max size" option added.
 * Dev - Shortcodes - `[wcj_wholesale_price_table]` and `[wcj_product_wholesale_price_table]` - Table class added.
 ~* Fix - Shortcodes - `[wcj_product_wholesale_price_table]` - Price tax bug fixed.
@@ -135,6 +135,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Tracking by Custom Number" option added.
 * Dev - PRODUCTS - Product Images - Per product "Hide" options added.
 * Fix - PRODUCTS - Product Images - Meta boxes added only if section is enabled.
+* Tweak - PDF INVOICING & PACKING SLIPS - Numbering - Fields width and order modified.
 * Tweak - PDF INVOICING & PACKING SLIPS - Templates - "Available Shortcodes" info section modified.
 * Tweak - PRODUCTS - Product Images - Module settings rearranged.
 
