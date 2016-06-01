@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Files Upload class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options;
@@ -454,21 +454,32 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_upload_form_to_checkout_frontend.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.4.5
 	 */
 	function add_files_upload_form_to_checkout_frontend() {
+		$this->add_files_upload_form_to_checkout_frontend_all();
+	}
+
+	/**
+	 * add_files_upload_form_to_checkout_frontend_all.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_files_upload_form_to_checkout_frontend_all( $is_direct_call = false ) {
 		$html = '';
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
-		$current_filter = current_filter();
-		$current_filter_priority = wcj_current_filter_priority();
+		if ( ! $is_direct_call ) {
+			$current_filter = current_filter();
+			$current_filter_priority = wcj_current_filter_priority();
+		}
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if (
-				'yes' === get_option( 'wcj_checkout_files_upload_enabled_' . $i, 'yes' ) &&
+			$is_filter_ok = ( $is_direct_call ) ? true : (
 				$current_filter === get_option( 'wcj_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' ) &&
-				$current_filter_priority == get_option( 'wcj_checkout_files_upload_hook_priority_' . $i, 10 ) &&
-				$this->is_visible( $i )
-			) {
+				$current_filter_priority == get_option( 'wcj_checkout_files_upload_hook_priority_' . $i, 10 )
+			);
+			if ( 'yes' === get_option( 'wcj_checkout_files_upload_enabled_' . $i, 'yes' ) && $is_filter_ok && $this->is_visible( $i ) ) {
 				$file_name = ( isset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] ) ) ? $_SESSION[ 'wcj_checkout_files_upload_' . $i ]['name'] : '';
 				$html .= $this->get_the_form( $i, $file_name );
 			}

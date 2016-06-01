@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.2-dev-201606010028';
+	public $version = '2.5.2-dev-201606011936';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -432,83 +432,90 @@ final class WC_Jetpack {
 	 * @version 2.5.2
 	 */
 	private function include_modules() {
-		$settings = array();
-		$settings[] = include_once( 'includes/class-wcj-price-labels.php' );
-		$settings[] = include_once( 'includes/class-wcj-call-for-price.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-listings.php' );
-		$settings[] = include_once( 'includes/class-wcj-sorting.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-custom-info.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-info.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-add-to-cart.php' );
-		$settings[] = include_once( 'includes/class-wcj-related-products.php' );
-		$settings[] = include_once( 'includes/class-wcj-sku.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-tabs.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-input-fields.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-bulk-price-converter.php' );
-		$settings[] = include_once( 'includes/class-wcj-purchase-data.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-bookings.php' );
-		$settings[] = include_once( 'includes/class-wcj-crowdfunding.php' );
-		$settings[] = include_once( 'includes/class-wcj-wholesale-price.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-open-pricing.php' );
-		$settings[] = include_once( 'includes/class-wcj-price-by-user-role.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-price-by-formula.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-images.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-by-country.php' );
-		$settings[] = include_once( 'includes/class-wcj-product-by-user.php' );
-		$settings[] = include_once( 'includes/class-wcj-add-to-cart.php' );
-		$settings[] = include_once( 'includes/class-wcj-more-button-labels.php' );
-		$settings[] = include_once( 'includes/class-wcj-cart.php' );
-		$settings[] = include_once( 'includes/class-wcj-empty-cart-button.php' );
-		$settings[] = include_once( 'includes/class-wcj-mini-cart.php' );
-		$settings[] = include_once( 'includes/class-wcj-checkout-core-fields.php' );
-		$settings[] = include_once( 'includes/class-wcj-checkout-custom-fields.php' );
-		$settings[] = include_once( 'includes/class-wcj-checkout-files-upload.php' );
-		$settings[] = include_once( 'includes/class-wcj-checkout-custom-info.php' );
-		$settings[] = include_once( 'includes/class-wcj-payment-gateways.php' );
-		$settings[] = include_once( 'includes/class-wcj-payment-gateways-icons.php' );
-		$settings[] = include_once( 'includes/class-wcj-payment-gateways-fees.php' );
-		$settings[] = include_once( 'includes/class-wcj-payment-gateways-per-category.php' );
-		$settings[] = include_once( 'includes/class-wcj-payment-gateways-currency.php' );
-		$settings[] = include_once( 'includes/class-wcj-payment-gateways-min-max.php' );
-		$settings[] = include_once( 'includes/class-wcj-payment-gateways-by-country.php' );
-		$settings[] = include_once( 'includes/class-wcj-shipping.php' );
-		$settings[] = include_once( 'includes/class-wcj-shipping-calculator.php' );
-		$settings[] = include_once( 'includes/class-wcj-address-formats.php' );
-		$settings[] = include_once( 'includes/class-wcj-orders.php' );
-		$settings[] = include_once( 'includes/class-wcj-order-numbers.php' );
-		$settings[] = include_once( 'includes/class-wcj-order-custom-statuses.php' );
-//		$settings[] = include_once( 'includes/class-wcj-pdf-invoices.php' );
-		$settings[] = include_once( 'includes/class-wcj-pdf-invoicing.php' );
-		$settings[] = include_once( 'includes/class-wcj-emails.php' );
-		$settings[] = include_once( 'includes/class-wcj-currencies.php' );
-		$settings[] = include_once( 'includes/class-wcj-multicurrency.php' );
-		$settings[] = include_once( 'includes/class-wcj-multicurrency-product-base-price.php' );
-		$settings[] = include_once( 'includes/class-wcj-currency-per-product.php' );
-		$settings[] = include_once( 'includes/class-wcj-currency-external-products.php' );
-		$settings[] = include_once( 'includes/class-wcj-price-by-country.php' );
-		$settings[] = include_once( 'includes/class-wcj-currency-exchange-rates.php' );
-		$settings[] = include_once( 'includes/class-wcj-general.php' );
-//		$settings[] = include_once( 'includes/class-wcj-shortcodes-module.php' );
-		$settings[] = include_once( 'includes/class-wcj-eu-vat-number.php' );
-		$settings[] = include_once( 'includes/class-wcj-old-slugs.php' );
-		$settings[] = include_once( 'includes/class-wcj-reports.php' );
-		$settings[] = include_once( 'includes/class-wcj-admin-tools.php' );
-		$settings[] = include_once( 'includes/class-wcj-wpml.php' );
-		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-numbering.php' );
-		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-templates.php' );
-		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-styling.php' );
-		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php' );
-		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-footer.php' );
-		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php' );
-		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php' );
-		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php' );
-//		$settings[] = include_once( 'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-general.php' );
+		$modules_files = array(
+			'includes/class-wcj-price-labels.php',
+			'includes/class-wcj-call-for-price.php',
+			'includes/class-wcj-product-listings.php',
+			'includes/class-wcj-sorting.php',
+			'includes/class-wcj-product-custom-info.php',
+			'includes/class-wcj-product-info.php',
+			'includes/class-wcj-product-add-to-cart.php',
+			'includes/class-wcj-related-products.php',
+			'includes/class-wcj-sku.php',
+			'includes/class-wcj-product-tabs.php',
+			'includes/class-wcj-product-input-fields.php',
+			'includes/class-wcj-product-bulk-price-converter.php',
+			'includes/class-wcj-purchase-data.php',
+			'includes/class-wcj-product-bookings.php',
+			'includes/class-wcj-crowdfunding.php',
+			'includes/class-wcj-wholesale-price.php',
+			'includes/class-wcj-product-open-pricing.php',
+			'includes/class-wcj-price-by-user-role.php',
+			'includes/class-wcj-product-price-by-formula.php',
+			'includes/class-wcj-product-images.php',
+			'includes/class-wcj-product-by-country.php',
+			'includes/class-wcj-product-by-user.php',
+			'includes/class-wcj-add-to-cart.php',
+			'includes/class-wcj-more-button-labels.php',
+			'includes/class-wcj-cart.php',
+			'includes/class-wcj-empty-cart-button.php',
+			'includes/class-wcj-mini-cart.php',
+			'includes/class-wcj-checkout-core-fields.php',
+			'includes/class-wcj-checkout-custom-fields.php',
+			'includes/class-wcj-checkout-files-upload.php',
+			'includes/class-wcj-checkout-custom-info.php',
+			'includes/class-wcj-payment-gateways.php',
+			'includes/class-wcj-payment-gateways-icons.php',
+			'includes/class-wcj-payment-gateways-fees.php',
+			'includes/class-wcj-payment-gateways-per-category.php',
+			'includes/class-wcj-payment-gateways-currency.php',
+			'includes/class-wcj-payment-gateways-min-max.php',
+			'includes/class-wcj-payment-gateways-by-country.php',
+			'includes/class-wcj-shipping.php',
+			'includes/class-wcj-shipping-calculator.php',
+			'includes/class-wcj-address-formats.php',
+			'includes/class-wcj-orders.php',
+			'includes/class-wcj-order-numbers.php',
+			'includes/class-wcj-order-custom-statuses.php',
+//			'includes/class-wcj-pdf-invoices.php',
+			'includes/class-wcj-pdf-invoicing.php',
+			'includes/class-wcj-emails.php',
+			'includes/class-wcj-currencies.php',
+			'includes/class-wcj-multicurrency.php',
+			'includes/class-wcj-multicurrency-product-base-price.php',
+			'includes/class-wcj-currency-per-product.php',
+			'includes/class-wcj-currency-external-products.php',
+			'includes/class-wcj-price-by-country.php',
+			'includes/class-wcj-currency-exchange-rates.php',
+			'includes/class-wcj-general.php',
+//			'includes/class-wcj-shortcodes-module.php',
+			'includes/class-wcj-eu-vat-number.php',
+			'includes/class-wcj-old-slugs.php',
+			'includes/class-wcj-reports.php',
+			'includes/class-wcj-admin-tools.php',
+			'includes/class-wcj-wpml.php',
+			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-numbering.php',
+			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-templates.php',
+			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-styling.php',
+			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php',
+			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-footer.php',
+			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php',
+			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php',
+			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php',
+//			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-general.php',
+		);
+
+		$this->modules = array();
+		foreach ( $modules_files as $module_file ) {
+			$module = include_once( $module_file );
+			$this->modules[ $module->id ] = $module;
+		}
 
 //		do_action( 'woojetpack_modules', $settings );
 
 		// Add and Manage options
 		if ( is_admin() ) {
-			$this->manage_options( $settings );
+			$this->manage_options( $this->modules );
 		}
 	}
 

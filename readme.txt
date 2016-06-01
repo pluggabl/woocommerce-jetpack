@@ -121,7 +121,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 31/05/2016 =
+= 2.5.2 - 01/06/2016 =
+~* Dev - `wcj_add_files_upload_form_to_checkout_frontend` function added.
+~* Dev - `include_modules` function code refactoring.
 ~* Dev - Cart `calculate_totals()` added on `wp_loaded` to fix mini cart currency and cart issues.
 ~* Dev - PRICES & CURRENCIES - Currency per Product - Initial module release.
 * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Removed from currency reports.

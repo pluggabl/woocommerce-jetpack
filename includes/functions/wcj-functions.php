@@ -8,6 +8,18 @@
  * @author  Algoritmika Ltd.
  */
 
+if ( ! function_exists( 'wcj_add_files_upload_form_to_checkout_frontend' ) ) {
+	/**
+	 * wcj_add_files_upload_form_to_checkout_frontend.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function wcj_add_files_upload_form_to_checkout_frontend() {
+		WCJ()->modules['checkout_files_upload']->add_files_upload_form_to_checkout_frontend_all( true );
+	}
+}
+
 if ( ! function_exists( 'wcj_get_current_currency_code' ) ) {
 	/**
 	 * wcj_get_current_currency_code.
