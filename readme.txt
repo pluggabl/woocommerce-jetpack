@@ -122,6 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 01/06/2016 =
+~* Fix - PRODUCTS - Bookings - `is_product` check added to `enqueue_scripts` function.
 ~* Dev - `wcj_add_files_upload_form_to_checkout_frontend` function added.
 ~* Dev - `include_modules` function code refactoring.
 ~* Dev - Cart `calculate_totals()` added on `wp_loaded` to fix mini cart currency and cart issues.
