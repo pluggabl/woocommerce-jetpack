@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by User Role class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -263,7 +263,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price_by_role_shipping.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function change_price_by_role_shipping( $package_rates, $package ) {
@@ -282,8 +282,9 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 				}
 				$modified_package_rates[ $id ] = $package_rate;
 			}
+			return $modified_package_rates;
 		}
-		return $modified_package_rates;
+		return $package_rates;
 	}
 
 	/**
