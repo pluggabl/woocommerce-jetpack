@@ -122,7 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 02/06/2016 =
-~* Fix - Emails & Misc. - EU VAT Number - `woocommerce_matched_rates` filter changed to `woocommerce_find_rates` - this fixes the issue with sipping tax not exempting.
+~* Fix - EMAILS & MISC. - EU VAT Number - `woocommerce_matched_rates` filter changed to `woocommerce_find_rates` - this fixes the issue with sipping tax not exempting.
 ~* Fix - PRODUCTS - Bookings - `is_product` check added to `enqueue_scripts` function.
 ~* Dev - `wcj_add_files_upload_form_to_checkout_frontend` function added.
 ~* Dev - `include_modules` function code refactoring.
