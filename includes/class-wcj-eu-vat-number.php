@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack EU VAT Number class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 */
 	function __construct() {
 
@@ -46,7 +46,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			add_action( 'wp_enqueue_scripts',                          array( $this, 'enqueue_scripts' ) );
 //			add_filter( 'woocommerce_form_field_text',                 array( $this, 'add_eu_vat_verify_button' ), PHP_INT_MAX, 4 );
 			add_action( 'init',                                        array( $this, 'wcj_validate_eu_vat_number' ) );
-			add_filter( 'woocommerce_matched_rates',                   array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_find_rates',                      array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX, 2 );
 			add_action( 'woocommerce_after_checkout_validation',       array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_customer_meta_fields',            array( $this, 'add_eu_vat_number_customer_meta_field' ) );
 			add_filter( 'default_checkout_billing_eu_vat_number',      array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
@@ -167,10 +167,10 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 
 	/**
 	 * maybe_exclude_vat.
+	 *
+	 * @version 2.5.2
 	 */
-	function maybe_exclude_vat( $matched_tax_rates, $tax_class ) {
-		/* wcj_log( explode( '&', $_POST['post_data'] ) ); */
-		/* if ( ! isset( $_POST['billing_eu_vat_number'] ) ) return $matched_tax_rates; */
+	function maybe_exclude_vat( $matched_tax_rates, $args ) {
 		if (
 			'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) &&
 			'yes' === get_option( 'wcj_eu_vat_number_disable_for_valid', 'yes' ) &&
