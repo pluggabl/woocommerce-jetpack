@@ -280,6 +280,25 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '</div>';
 		}
 
+		$multicurrency_modules_enabled = 0;
+		$mod = array();
+		$multicurrency_modules = array( 'price_by_country', 'multicurrency', 'payment_gateways_currency' );
+		foreach ( $multicurrency_modules as $multicurrency_module ) {
+			if ( wcj_is_module_enabled( $multicurrency_module ) ) {
+				$multicurrency_modules_enabled++;
+				$mod[] = WCJ()->modules[ $multicurrency_module ]->short_desc;
+			}
+		}
+		if ( $multicurrency_modules_enabled > 1 ) {
+			echo '<div id="wcj_message" class="error">';
+			echo '<p>';
+			echo '<strong>';
+			echo sprintf( __( 'Please note that only single multicurrency module can be enabled simultaneously. You have <em>%s</em> modules enabled, please choose one of them.', 'woocommerce-jetpack' ), implode( ', ', $mod ) );
+			echo '</strong>';
+			echo '</p>';
+			echo '</div>';
+		}
+
 		if ( 'yes' === get_option( 'wcj_admin_tools_enabled' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
 			// Breadcrumbs
 			$breadcrumbs_html = '';

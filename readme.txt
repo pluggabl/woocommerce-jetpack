@@ -122,6 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 03/06/2016 =
+* Tweak - "... single multicurrency module can be enabled ..." admin message added.
 * Tweak - "Unlock all" link modified.
 ~* Fix - Shortcodes - Orders - `[wcj_order_total_fees_tax]` and `[wcj_order_total_fees_incl_tax]` - using `get_line_tax()` instead of calculating taxes manually - that should fix the issue with wrong taxes rounding.
 -* Dev - EMAILS & MISC. - EU VAT Number - Option ("Display") to append EU VAT number to order and my account billing addresses added.
@@ -132,7 +133,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 ~* Fix - PRODUCTS - Bookings - `is_product` check added to `enqueue_scripts` function.
 ~* Dev - `wcj_add_files_upload_form_to_checkout_frontend` function added.
 ~* Dev - `include_modules` function code refactoring.
-~* Dev - Cart `calculate_totals()` added on `wp_loaded` to fix mini cart currency and cart issues.
+~* Fix - Cart `calculate_totals()` added on `wp_loaded` to fix mini cart currency and price issues.
 ~* Dev - PRICES & CURRENCIES - Currency per Product - Initial module release.
 * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Removed from currency reports.
 * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Weight Table" option added.
@@ -143,7 +144,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 ~* Dev - Shortcodes - `[wcj_product_wholesale_price_table]` - `price_row_format` attribute added.
 -$* Dev - PRODUCTS - Product by User - Initial module release.
 * Dev - Shortcodes - `module` (and `module_name`) attribute added.
-* Dev - Shortcodes - `visibility` attribute modified (and `login_text` attribute added).
+~* Dev - Shortcodes - `visibility` attribute modified (and `login_text` attribute added).
 * Dev - PRODUCTS - Bookings - "Labels and Messages" settings added.
 * Tweak - "No active modules found." message added.
 ~* Dev - "Manage Settings" functionality added.
