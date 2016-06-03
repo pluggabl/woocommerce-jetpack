@@ -121,7 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 02/06/2016 =
+= 2.5.2 - 03/06/2016 =
+-* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Loading core on `admin-ajax.php` (caused issue in mini cart).
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Old price taxes fixed when displaying in cart.
 * Fix - PRICES & CURRENCIES - Price by User Role - `change_price_by_role_shipping()` fixed (produced an error if price by user role for shipping was disabled).
 ~* Fix - EMAILS & MISC. - EU VAT Number - `woocommerce_matched_rates` filter changed to `woocommerce_find_rates` - this fixes the issue with sipping tax not exempting.

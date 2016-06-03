@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.2
 	 */
 	public function __construct() {
 
@@ -34,12 +34,12 @@ class WCJ_Price_By_Country extends WCJ_Module {
 
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				$do_load_core = true;
-				if ( is_admin() ) {
+				/* if ( is_admin() ) {
 					global $pagenow;
 					if ( 'admin-ajax.php' === $pagenow ) {
 						$do_load_core = false;
 					}
-				}
+				} */
 				if ( ! defined( 'DOING_AJAX' ) && '/wc-api/WC_Gateway_Paypal/' == $_SERVER['REQUEST_URI'] ) {
 					// "Wrong currency in emails" bug fix
 					$do_load_core = false;
