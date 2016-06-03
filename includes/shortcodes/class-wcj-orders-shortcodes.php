@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -146,19 +146,20 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_total_fees_tax.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.2
 	 * @since   2.4.8
 	 */
 	function wcj_order_total_fees_tax( $atts ) {
 		$total_fees_tax = 0;
 		$the_fees = $this->the_order->get_fees();
 		foreach ( $the_fees as $the_fee ) {
-			$taxes = maybe_unserialize( $the_fee['line_tax_data'] );
+			/* $taxes = maybe_unserialize( $the_fee['line_tax_data'] );
 			if ( ! empty( $taxes ) && is_array( $taxes ) && isset( $taxes['total'] ) && is_array( $taxes['total'] ) ) {
 				foreach ( $taxes['total'] as $tax ) {
 					$total_fees_tax += $tax;
 				}
-			}
+			} */
+			$total_fees_tax += $this->the_order->get_line_tax( $the_fee );
 		}
 		return $this->wcj_price_shortcode( $total_fees_tax, $atts );
 	}
