@@ -122,7 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 03/06/2016 =
-~* Fix - Shortcodes - Orders - `[wcj_order_total_fees_tax]` - using `get_line_tax()` instead of calculating taxes manually - that should fix the issue with wrong taxes rounding.
+~* Fix - Shortcodes - Orders - `[wcj_order_total_fees_tax]` and `[wcj_order_total_fees_incl_tax]` - using `get_line_tax()` instead of calculating taxes manually - that should fix the issue with wrong taxes rounding.
 -* Dev - EMAILS & MISC. - EU VAT Number - Option ("Display") to append EU VAT number to order and my account billing addresses added.
 -* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Loading core on `admin-ajax.php` (caused issue in mini cart).
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Old price taxes fixed when displaying in cart.
