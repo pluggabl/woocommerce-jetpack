@@ -301,16 +301,19 @@ final class WC_Jetpack {
 	/**
 	 * Show action links on the plugin screen
 	 *
-	 * @version 2.3.8
+	 * @version 2.5.2
 	 * @param   mixed $links
 	 * @return  array
 	 */
 	public function action_links( $links ) {
-		return array_merge( array(
+		$custom_links = array(
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
 			'<a href="' . esc_url( 'http://booster.io/' )                       . '">' . __( 'Docs', 'woocommerce' ) . '</a>',
-			'<a href="' . esc_url( 'http://booster.io/plus/' )                  . '">' . __( 'Unlock all', 'woocommerce' ) . '</a>',
-		), $links );
+		);
+		if ( 1 === apply_filters( 'wcj_get_option_filter', 1, '' ) ) {
+			$custom_links[] = '<a href="' . esc_url( 'http://booster.io/plus/' ) . '">' . __( 'Unlock all', 'woocommerce' ) . '</a>';
+		}
+		return array_merge( $custom_links, $links );
 	}
 
 	/**
