@@ -50,11 +50,72 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			add_action( 'woocommerce_after_checkout_validation',       array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_customer_meta_fields',            array( $this, 'add_eu_vat_number_customer_meta_field' ) );
 			add_filter( 'default_checkout_billing_eu_vat_number',      array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
-			add_action( 'woocommerce_order_details_after_order_table', array( $this, 'add_eu_vat_number_to_order_display' ), PHP_INT_MAX );
-			add_action( 'woocommerce_email_after_order_table',         array( $this, 'add_eu_vat_number_to_order_display' ), PHP_INT_MAX );
+
+			if ( 'after_order_table' === get_option( 'wcj_eu_vat_number_display_position', 'after_order_table' ) ) {
+				add_action( 'woocommerce_order_details_after_order_table', array( $this, 'add_eu_vat_number_to_order_display' ), PHP_INT_MAX );
+				add_action( 'woocommerce_email_after_order_table',         array( $this, 'add_eu_vat_number_to_order_display' ), PHP_INT_MAX );
+			} else {
+				add_filter( 'woocommerce_order_formatted_billing_address',         array( $this, 'add_eu_vat_number_to_order_billing_address' ), PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_my_account_my_address_formatted_address', array( $this, 'add_eu_vat_number_to_my_account_billing_address' ), PHP_INT_MAX, 3 );
+				add_filter( 'woocommerce_localisation_address_formats',            array( $this, 'add_eu_vat_number_to_address_formats' ) );
+				add_filter( 'woocommerce_formatted_address_replacements',          array( $this, 'replace_eu_vat_number_in_address_formats' ), PHP_INT_MAX, 2 );
+			}
 
 			$this->eu_countries_vat_rates_tool = include_once( 'tools/class-wcj-eu-countries-vat-rates-tool.php' );
 		}
+	}
+
+	/**
+	 * replace_eu_vat_number_in_address_formats.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function replace_eu_vat_number_in_address_formats( $replacements, $args ) {
+		$field_name = 'billing_' . $this->id;
+		$replacements['{' . $field_name . '}'] = ( isset( $args[ $field_name ] ) ) ? $args[ $field_name ] : '';
+		return $replacements;
+	}
+
+	/**
+	 * add_eu_vat_number_to_address_formats.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_eu_vat_number_to_address_formats( $address_formats ) {
+		$field_name = 'billing_' . $this->id;
+		$modified_address_formats = array();
+		foreach ( $address_formats as $country => $address_format ) {
+			$modified_address_formats[ $country ] = $address_format . "\n{" . $field_name . '}';
+		}
+		return $modified_address_formats;
+	}
+
+	/**
+	 * add_eu_vat_number_to_my_account_billing_address.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_eu_vat_number_to_my_account_billing_address( $fields, $customer_id, $name ) {
+		if ( 'billing' === $name ) {
+			$field_name = 'billing_' . $this->id;
+			$fields[ $field_name ] = get_user_meta( $customer_id, $field_name, true );
+		}
+		return $fields;
+	}
+
+	/**
+	 * add_eu_vat_number_to_order_billing_address.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_eu_vat_number_to_order_billing_address( $fields, $_order ) {
+		$field_name = 'billing_' . $this->id;
+		$fields[ $field_name ] = get_post_meta( $_order->id, '_' . $field_name, true );
+		return $fields;
 	}
 
 	/**
@@ -265,7 +326,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.5.2
 	 */
 	function get_settings() {
 		$settings = array(
@@ -384,6 +445,16 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				'type'    => 'textarea',
 				'css'     => 'width:300px;',
 			), */
+			array(
+				'title'   => __( 'Display', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_eu_vat_number_display_position',
+				'default' => 'after_order_table',
+				'type'    => 'select',
+				'options' => array(
+					'after_order_table'  => __( 'After order table', 'woocommerce-jetpack' ),
+					'in_billing_address' => __( 'In billing address', 'woocommerce-jetpack' ),
+				),
+			),
 			array(
 				'type'    => 'sectionend',
 				'id'      => 'wcj_eu_vat_number_options'
