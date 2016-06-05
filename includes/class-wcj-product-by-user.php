@@ -103,11 +103,8 @@ class WCJ_Product_By_User extends WCJ_Module {
 	 */
 	function get_user_roles() {
 		global $wp_roles;
-		$all_roles = $wp_roles->roles;
+		$all_roles = ( isset( $wp_roles ) && is_object( $wp_roles ) ) ? $wp_roles->roles : array();
 		$all_roles = apply_filters( 'editable_roles', $all_roles );
-		if ( '' == $all_roles ) {
-			$all_roles = array();
-		}
 		$all_roles = array_merge( array(
 			'guest' => array(
 				'name'         => __( 'Guest', 'woocommerce-jetpack' ),
