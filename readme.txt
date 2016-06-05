@@ -122,8 +122,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 05/06/2016 =
-~* Tweak - "Caching" admin message added.
-~* Tweak - "Multicurrency" admin message added.
+~* Tweak - "Caching ..." admin message added.
+~* Tweak - "Single multicurrency module..." admin message added.
 * Tweak - "Unlock all" link modified.
 ~* Fix - Shortcodes - Orders - `[wcj_order_total_fees_tax]` and `[wcj_order_total_fees_incl_tax]` - using `get_line_tax()` instead of calculating taxes manually - that should fix the issue with wrong taxes rounding.
 -* Dev - EMAILS & MISC. - EU VAT Number - Option ("Display") to append EU VAT number to order and my account billing addresses added.
