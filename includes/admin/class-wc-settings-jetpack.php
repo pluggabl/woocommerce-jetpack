@@ -267,6 +267,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		$is_dashboard = ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section && 'manager' != $current_section )
 			? false : true;
 
+		// Depreciated message
 		$depreciated_modules = array(
 			'product_info' => 'Product Info V2',
 		);
@@ -280,20 +281,55 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '</div>';
 		}
 
+		// Multicurrency message
 		$multicurrency_modules_enabled = 0;
-		$mod = array();
+		$multicurrency_modules_titles = array();
 		$multicurrency_modules = array( 'price_by_country', 'multicurrency', 'payment_gateways_currency' );
 		foreach ( $multicurrency_modules as $multicurrency_module ) {
 			if ( wcj_is_module_enabled( $multicurrency_module ) ) {
 				$multicurrency_modules_enabled++;
-				$mod[] = WCJ()->modules[ $multicurrency_module ]->short_desc;
+				$multicurrency_modules_titles[] = WCJ()->modules[ $multicurrency_module ]->short_desc;
 			}
 		}
 		if ( $multicurrency_modules_enabled > 1 ) {
 			echo '<div id="wcj_message" class="error">';
 			echo '<p>';
 			echo '<strong>';
-			echo sprintf( __( 'Please note that only single multicurrency module can be enabled simultaneously. You have <em>%s</em> modules enabled, please choose one of them.', 'woocommerce-jetpack' ), implode( ', ', $mod ) );
+			echo sprintf( __( 'Please note that only single multicurrency module can be enabled simultaneously. You have <em>%s</em> modules enabled, please choose one of them.', 'woocommerce-jetpack' ), implode( ', ', $multicurrency_modules_titles ) );
+			echo '</strong>';
+			echo '</p>';
+			echo '</div>';
+		}
+
+		// Caching message
+		$known_caching_plugins = array( 'w3-total-cache/w3-total-cache.php' );
+		$no_caching_modules = array();
+		$no_caching_modules = array_merge( $no_caching_modules, $multicurrency_modules );
+		$caching_plugin_is_active = false;
+		foreach ( $known_caching_plugins as $caching_plugin ) {
+			// Check if caching_plugin is active
+			if (
+				in_array( $caching_plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) ||
+				( is_multisite() && array_key_exists( $caching_plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
+			) {
+				$caching_plugin_is_active = true;
+				break;
+			}
+		}
+		$no_caching_module_is_active = false;
+		$multicurrency_modules_titles = array();
+		foreach ( $multicurrency_modules as $multicurrency_module ) {
+			if ( wcj_is_module_enabled( $multicurrency_module ) ) {
+				$no_caching_module_is_active = true;
+				$multicurrency_modules_titles[] = WCJ()->modules[ $multicurrency_module ]->short_desc;
+				//break;
+			}
+		}
+		if ( $caching_plugin_is_active && $no_caching_module_is_active ) {
+			echo '<div id="wcj_message" class="error">';
+			echo '<p>';
+			echo '<strong>';
+			echo sprintf( __( 'Please note that <em>%s</em> modules require caching to be turned off.', 'woocommerce-jetpack' ), implode( ', ', $multicurrency_modules_titles ) );
 			echo '</strong>';
 			echo '</p>';
 			echo '</div>';
