@@ -282,7 +282,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		}
 
 		// Multicurrency message
-		$multicurrency_modules_enabled = 0;
+		/* $multicurrency_modules_enabled = 0;
 		$multicurrency_modules_titles = array();
 		$multicurrency_modules = array( 'price_by_country', 'multicurrency', 'payment_gateways_currency' );
 		foreach ( $multicurrency_modules as $multicurrency_module ) {
@@ -299,10 +299,10 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '</strong>';
 			echo '</p>';
 			echo '</div>';
-		}
+		} */
 
 		// Caching message
-		$known_caching_plugins = array( 'w3-total-cache/w3-total-cache.php' );
+		/* $known_caching_plugins = array( 'w3-total-cache/w3-total-cache.php' );
 		$no_caching_modules = array();
 		$no_caching_modules = array_merge( $no_caching_modules, $multicurrency_modules );
 		$caching_plugin_is_active = false;
@@ -333,7 +333,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '</strong>';
 			echo '</p>';
 			echo '</div>';
-		}
+		} */
 
 		if ( 'yes' === get_option( 'wcj_admin_tools_enabled' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
 			// Breadcrumbs
