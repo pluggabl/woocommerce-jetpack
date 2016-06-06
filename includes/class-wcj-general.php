@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 */
 	public function __construct() {
 
@@ -64,7 +64,57 @@ class WCJ_General extends WCJ_Module {
 			}
 
 			add_action( 'init', array( $this, 'export_csv' ) );
+
+			if ( 'yes' === get_option( 'wcj_paypal_email_per_product_enabled', 'no' ) ) {
+
+				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+
+				add_filter( 'woocommerce_payment_gateways', array( $this, 'maybe_change_paypal_email' ) );
+			}
 		}
+	}
+
+	/**
+	 * get_meta_box_options.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function get_meta_box_options() {
+		$options = array(
+			array(
+				'name'       => 'wcj_paypal_per_product_email',
+				'default'    => '',
+				'type'       => 'text',
+				'title'      => __( 'PayPal Email', 'woocommerce-jetpack' ),
+			),
+		);
+		return $options;
+	}
+
+	/**
+	 * maybe_change_paypal_email.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function maybe_change_paypal_email( $load_gateways ) {
+		if ( isset( WC()->cart ) ) {
+			foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+				if ( '' != ( $email = get_post_meta( $values['product_id'], '_' . 'wcj_paypal_per_product_email', true ) ) ) {
+					foreach ( $load_gateways as $key => $gateway ) {
+						if ( is_string( $gateway ) && 'WC_Gateway_Paypal' === $gateway ) {
+							$load_gateway = new $gateway();
+							$load_gateway->receiver_email = $load_gateway->email = $load_gateway->settings['receiver_email'] = $load_gateway->settings['email'] = $email;
+							$load_gateways[ $key ] = $load_gateway;
+						}
+					}
+					break;
+				}
+			}
+		}
+		return $load_gateways;
 	}
 
 	/**
@@ -382,7 +432,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.2
 	 * @todo    add link to Booster's shortcodes list
 	 */
 	function get_settings() {
@@ -540,6 +590,26 @@ class WCJ_General extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_general_advanced_options',
+			),
+
+			array(
+				'title'    => __( 'PayPal Email per Product Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_paypal_email_per_product_options',
+			),
+
+			array(
+				'title'    => __( 'PayPal Email per Product', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_paypal_email_per_product_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_paypal_email_per_product_options',
 			),
 
 			/* array(
