@@ -121,7 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 06/06/2016 =
+= 2.5.2 - 07/06/2016 =
+~* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Confirmation request added to the delete and create buttons.
 ~* Dev - SHIPPING & ORDERS - Order Custom Statuses - Custom icon and icon color options added.
 ~* Dev - EMAILS & MISC. - General - "PayPal Email per Product" option added.
 -* Tweak - "Caching ..." admin message added.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Display class.
  *
- * @version 2.4.7
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.2
 	 */
 	function __construct() {
 
@@ -36,7 +36,18 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			// Action Buttons to Admin's Orders list
 			add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_pdf_invoices_admin_actions' ), PHP_INT_MAX, 2 );
 			add_filter( 'admin_head', array( $this, 'add_pdf_invoices_admin_actions_buttons_css' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		}
+	}
+
+	/**
+	 * enqueue_scripts.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function enqueue_scripts() {
+		wp_enqueue_script( 'wcj-pdf-invoicing', wcj_plugin_url() . '/includes/js/wcj-pdf-invoicing.js', array(), false, true );
 	}
 
 	/**
@@ -79,7 +90,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * add_pdf_invoices_admin_actions.
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.2
 	 * @since   2.4.7
 	 */
 	function add_pdf_invoices_admin_actions( $actions, $the_order ) {
@@ -103,7 +114,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 					$query_args = array( 'delete_invoice_for_order_id' => $the_order->id, 'invoice_type_id' => $invoice_type['id'] );
 					$the_url       = add_query_arg( $query_args, remove_query_arg( 'create_invoice_for_order_id' ) );
 					$the_name      = __( 'Delete', 'woocommerce-jetpack' ) . ' ' . $invoice_type['title'];
-					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'delete';
+					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'delete' . ' wcj_need_confirmation';
 					$the_action_id = $invoice_type['id'] . '_' . 'delete';
 					$actions[ $the_action_id ] = array( 'url' => $the_url, 'name' => $the_name, 'action' => $the_action, );
 				}
@@ -113,7 +124,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 					$query_args = array( 'create_invoice_for_order_id' => $the_order->id, 'invoice_type_id' => $invoice_type['id'] );
 					$the_url       = add_query_arg( $query_args, remove_query_arg( 'delete_invoice_for_order_id' ) );
 					$the_name      = __( 'Create', 'woocommerce-jetpack' ) . ' ' . $invoice_type['title'];
-					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'create';
+					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'create' . ' wcj_need_confirmation';
 					$the_action_id = $invoice_type['id'] . '_' . 'create';
 					$actions[ $the_action_id ] = array( 'url' => $the_url, 'name' => $the_name, 'action' => $the_action, );
 				}
@@ -138,7 +149,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	}
 
 	/**
-	 * Ouput custom columns for products
+	 * Output custom columns for products
 	 *
 	 * @param   string $column
 	 * @version 2.4.7
