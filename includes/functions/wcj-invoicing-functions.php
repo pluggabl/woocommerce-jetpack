@@ -2,14 +2,14 @@
 /**
  * WooCommerce Jetpack Invoicing Functions
  *
- * @version 2.2.7
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
 /*
  * wcj_get_invoice_types.
  *
- * @version 2.2.7
+ * @version 2.5.2
  */
 if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 	function wcj_get_invoice_types() {
@@ -19,7 +19,7 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 				'title' => __( 'Invoice', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Invoices', 'woocommerce-jetpack' ),
 				'defaults'  => array( 'init' => 'disabled', ),
-				'icon'  => '\e028',
+//				'icon'  => '\e028',
 			),
 
 			array(
@@ -27,7 +27,7 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 				'title' => __( 'Proforma Invoice', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Proforma Invoices', 'woocommerce-jetpack' ),
 				'defaults'  => array( 'init' => 'disabled', ),
-				'icon'  => '\e030',
+//				'icon'  => '\e030',
 			),
 
 			array(
@@ -35,7 +35,7 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 				'title' => __( 'Packing Slip', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Packing Slips', 'woocommerce-jetpack' ),
 				'defaults'  => array( 'init' => 'disabled', ),
-				'icon'  => '\e019',
+//				'icon'  => '\e019',
 			),
 
 			array(
@@ -43,7 +43,7 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 				'title' => __( 'Credit Note', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Credit Notes', 'woocommerce-jetpack' ),
 				'defaults'  => array( 'init' => 'disabled', ),
-				'icon'  => '\e019',
+//				'icon'  => '\e019',
 			),
 
 			array(
@@ -51,7 +51,7 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 				'title' => __( 'Custom Document', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Custom Documents', 'woocommerce-jetpack' ),
 				'defaults'  => array( 'init' => 'disabled', ),
-				'icon'  => '\e019',
+//				'icon'  => '\e019',
 			),
 		);
 		return $invoice_types;

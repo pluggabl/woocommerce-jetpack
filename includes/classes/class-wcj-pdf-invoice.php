@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoice class.
  *
- * @version 2.4.8
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -24,7 +24,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * prepare_pdf.
 	 *
-	 * @version 2.3.9
+	 * @version 2.5.2
 	 */
 	function prepare_pdf() {
 
@@ -46,8 +46,16 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 
 		// Set document information
 		$pdf->SetCreator( PDF_CREATOR );
-		//$pdf->SetAuthor( 'Algoritmika Ltd.' );
-		$pdf->SetTitle( 'Invoice' );
+//		$pdf->SetAuthor( 'Algoritmika Ltd.' );
+		$invoice_title = $invoice_type;
+		$invoice_types = /* ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : */ wcj_get_invoice_types();
+		foreach ( $invoice_types as $invoice_type_data ) {
+			if ( $invoice_type === $invoice_type_data['id'] ) {
+				$invoice_title = $invoice_type_data['title'];
+				break;
+			}
+		}
+		$pdf->SetTitle( $invoice_title );
 		$pdf->SetSubject( 'Invoice PDF' );
 		$pdf->SetKeywords( 'invoice, PDF' );
 
