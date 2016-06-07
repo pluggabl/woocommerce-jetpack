@@ -122,6 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 06/06/2016 =
+~* Dev - SHIPPING & ORDERS - Order Custom Statuses - Custom icon and icon color options added.
 ~* Dev - EMAILS & MISC. - General - "PayPal Email per Product" option added.
 -* Tweak - "Caching ..." admin message added.
 -* Tweak - "Single multicurrency module..." admin message added.
