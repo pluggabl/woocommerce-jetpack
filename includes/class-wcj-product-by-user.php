@@ -156,6 +156,13 @@ class WCJ_Product_By_User extends WCJ_Module {
 				'checkboxgroup' => '',
 			),
 			array(
+				'desc'     => __( 'Image', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_by_user_image_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => '',
+			),
+			array(
 				'desc'     => __( 'Regular Price', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_by_user_regular_price_enabled',
 				'default'  => 'yes',

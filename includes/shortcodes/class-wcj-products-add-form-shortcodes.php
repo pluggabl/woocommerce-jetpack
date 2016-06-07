@@ -7,7 +7,7 @@
  * @version 2.5.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
- * @todo    image; +price; required; titles and messages; styling; +editing (and security)?; custom fields;
+ * @todo    -+image; +price; required; titles and messages; styling; +editing (and security)?; custom fields;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -38,6 +38,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			'short_desc_enabled'    => get_option( 'wcj_product_by_user_short_desc_enabled', 'no' ),
 			'cats_enabled'          => get_option( 'wcj_product_by_user_cats_enabled', 'no' ),
 			'tags_enabled'          => get_option( 'wcj_product_by_user_tags_enabled', 'no' ),
+			'image_enabled'         => get_option( 'wcj_product_by_user_image_enabled', 'no' ),
 			'visibility'            => implode( ',', get_option( 'wcj_product_by_user_user_visibility', array() ) ),
 			'module'                => 'product_by_user',
 			'module_name'           => __( 'Product by User', 'woocommerce-jetpack' ),
@@ -99,6 +100,30 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			update_post_meta( $product_id, '_visibility', 'visible' );
 			update_post_meta( $product_id, '_stock_status', 'instock' );
 
+			// Image
+			if ( '' != $args['image_file'] && '' != $args['image_file']['tmp_name'] ) {
+				$upload_dir = wp_upload_dir();
+				$filename = $args['image_file']['name'];
+				$file = ( wp_mkdir_p( $upload_dir['path'] ) ) ? $upload_dir['path'] : $upload_dir['basedir'];
+				$file .= '/' . $filename;
+
+				move_uploaded_file( $args['image_file']['tmp_name'], $file );
+
+				$wp_filetype = wp_check_filetype( $filename, null );
+				$attachment = array(
+					'post_mime_type' => $wp_filetype['type'],
+					'post_title'     => sanitize_file_name( $filename ),
+					'post_content'   => '',
+					'post_status'    => 'inherit'
+				);
+				$attach_id = wp_insert_attachment( $attachment, $file, $product_id );
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
+				$attach_data = wp_generate_attachment_metadata( $attach_id, $file );
+				wp_update_attachment_metadata( $attach_id, $attach_data );
+
+				set_post_thumbnail( $product_id, $attach_id );
+			}
+
 			wp_update_post( array( 'ID' => $product_id, 'post_status' => $shortcode_atts['post_status'] ) );
 		}
 
@@ -143,6 +168,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 				'sale_price'        => isset( $_REQUEST['wcj_add_new_product_sale_price'] )    ? $_REQUEST['wcj_add_new_product_sale_price']    : '',
 				'cats'              => isset( $_REQUEST['wcj_add_new_product_cats'] )          ? $_REQUEST['wcj_add_new_product_cats']          : array(),
 				'tags'              => isset( $_REQUEST['wcj_add_new_product_tags'] )          ? $_REQUEST['wcj_add_new_product_tags']          : array(),
+				'image_file'        => isset( $_FILES['wcj_add_new_product_image'] )           ? $_FILES['wcj_add_new_product_image']           : '',
 			);
 			if ( $this->validate_args( $args, $atts ) ) {
 				$result = $this->wc_add_new_product( $args, $atts );
@@ -159,7 +185,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		$header_html .= '<h3>';
 		$header_html .= ( 0 == $atts['product_id'] ) ? __( 'Add New Product', 'woocommerce-jetpack' ) : __( 'Edit Product', 'woocommerce-jetpack' );
 		$header_html .= '</h3>';
-		$header_html .= '<form method="post" action="">';
+		$header_html .= '<form method="post" action="" enctype="multipart/form-data">'; // todo multipart only if image...
 
 		$table_data = array();
 		$input_style = 'width:100%;';
@@ -179,10 +205,16 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 				'<textarea style="' . $input_style . '" name="wcj_add_new_product_short_desc">' . ( ( 0 != $atts['product_id'] ) ? get_post_field( 'post_excerpt', $atts['product_id'] ) : '' ) . '</textarea>'
 			);
 		}
+		if ( 'yes' === $atts['image_enabled'] ) {
+			$table_data[] = array(
+				__( 'Image', 'woocommerce-jetpack' ),
+				'<input type="file" name="wcj_add_new_product_image" accept="image/*">'
+			);
+		}
 		if ( 'yes' === $atts['regular_price_enabled'] ) {
 			$table_data[] = array(
 				__( 'Regular Price', 'woocommerce-jetpack' ),
-				'<input type="number"  min="0" step="0.01" name="wcj_add_new_product_regular_price" value="' . ( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_regular_price', true ) : '' ) . '">'
+				'<input type="number" min="0" step="0.01" name="wcj_add_new_product_regular_price" value="' . ( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_regular_price', true ) : '' ) . '">'
 			);
 		}
 		if ( 'yes' === $atts['sale_price_enabled'] ) {
@@ -227,6 +259,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 				'<select multiple style="' . $input_style . '" name="wcj_add_new_product_tags[]">' . $products_tags_as_select_options . '</select>'
 			);
 		}
+
 		$input_fields_html .= wcj_get_table_html( $table_data, array( 'table_class' => 'widefat', 'table_heading_type' => 'vertical', ) );
 
 		$footer_html .= '<input type="submit" class="button" name="wcj_add_new_product" value="' . ( ( 0 == $atts['product_id'] ) ? __( 'Add', 'woocommerce-jetpack' ) : __( 'Edit', 'woocommerce-jetpack' ) ) . '">';
