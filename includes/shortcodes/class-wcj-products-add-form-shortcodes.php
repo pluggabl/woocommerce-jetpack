@@ -180,12 +180,24 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			}
 		}
 
+		if ( isset( $_GET['wcj_edit_product_image_delete'] ) ) {
+			$product_id = $_GET['wcj_edit_product_image_delete'];
+			$post_author_id = get_post_field( 'post_author', $product_id );
+			$user_ID = get_current_user_id();
+			if ( $user_ID != $post_author_id ) {
+				echo '<p>' . __( 'Wrong user ID!', 'woocommerce-jetpack' ) . '</p>';
+			} else {
+				$image_id = get_post_thumbnail_id( $product_id );
+				wp_delete_post( $image_id, true );
+			}
+		}
+
 		$this->the_product = wc_get_product( $atts['product_id'] );
 
 		$header_html .= '<h3>';
 		$header_html .= ( 0 == $atts['product_id'] ) ? __( 'Add New Product', 'woocommerce-jetpack' ) : __( 'Edit Product', 'woocommerce-jetpack' );
 		$header_html .= '</h3>';
-		$header_html .= '<form method="post" action="" enctype="multipart/form-data">'; // todo multipart only if image...
+		$header_html .= '<form method="post" action="' . remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) . '" enctype="multipart/form-data">'; // todo multipart only if image...
 
 		$table_data = array();
 		$input_style = 'width:100%;';
@@ -206,9 +218,17 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			);
 		}
 		if ( 'yes' === $atts['image_enabled'] ) {
+			$new_image_field = '<input type="file" name="wcj_add_new_product_image" accept="image/*">';
+			if ( 0 != $atts['product_id'] ) {
+				$the_field = ( '' == get_post_thumbnail_id( $atts['product_id'] ) ) ?
+					$new_image_field :
+					'<a href="' . add_query_arg( 'wcj_edit_product_image_delete', $atts['product_id'] ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a><br>' . get_the_post_thumbnail( $atts['product_id'], array( 50, 50 ) , array( 'class' => 'alignleft' ) );
+			} else {
+				$the_field = $new_image_field;
+			}
 			$table_data[] = array(
 				__( 'Image', 'woocommerce-jetpack' ),
-				'<input type="file" name="wcj_add_new_product_image" accept="image/*">'
+				$the_field
 			);
 		}
 		if ( 'yes' === $atts['regular_price_enabled'] ) {
