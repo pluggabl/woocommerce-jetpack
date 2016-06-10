@@ -265,7 +265,7 @@ class WCJ_SKU extends WCJ_Module {
 //				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			),
 			array(
-				'title'    => __( 'Sequential Number Generation', 'woocommerce-jetpack' ),
+				'title'    => __( 'Sequential Number Generation Counter', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sku_number_generation_sequential',
 				'default'  => 1,
 				'type'     => 'number',
