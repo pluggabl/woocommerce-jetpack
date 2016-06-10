@@ -121,7 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 10/06/2016 =
+= 2.5.2 - 11/06/2016 =
+* Dev - SHIPPING & ORDERS - Shipping - "Left to free shipping" - `do_shortcode` added to all messages.
 ~$* Dev - PRODUCTS - SKU - Sequential number generation option added.
 ~* Dev - PDF INVOICING & PACKING SLIPS - `SetTitle` fixed.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Confirmation request added to the delete and create buttons.

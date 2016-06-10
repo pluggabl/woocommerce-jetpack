@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shipping class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -64,31 +64,31 @@ class WCJ_Shipping extends WCJ_Module {
 	/**
 	 * show_left_to_free_shipping_info_checkout.
 	 *
-	 * @version 2.4.4
+	 * @version 2.5.2
 	 * @since   2.4.4
 	 */
 	function show_left_to_free_shipping_info_checkout() {
-		$this->show_left_to_free_shipping_info( get_option( 'wcj_shipping_left_to_free_info_content_checkout', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) );
+		$this->show_left_to_free_shipping_info( do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_checkout', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) ) );
 	}
 
 	/**
 	 * show_left_to_free_shipping_info_mini_cart.
 	 *
-	 * @version 2.4.4
+	 * @version 2.5.2
 	 * @since   2.4.4
 	 */
 	function show_left_to_free_shipping_info_mini_cart() {
-		$this->show_left_to_free_shipping_info( get_option( 'wcj_shipping_left_to_free_info_content_mini_cart', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) );
+		$this->show_left_to_free_shipping_info( do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_mini_cart', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) ) );
 	}
 
 	/**
 	 * show_left_to_free_shipping_info_cart.
 	 *
-	 * @version 2.4.4
+	 * @version 2.5.2
 	 * @since   2.4.4
 	 */
 	function show_left_to_free_shipping_info_cart() {
-		$this->show_left_to_free_shipping_info( get_option( 'wcj_shipping_left_to_free_info_content_cart', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) );
+		$this->show_left_to_free_shipping_info( do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_cart', __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ) ) ) );
 	}
 
 	/**
