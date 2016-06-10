@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack SKU class.
  *
- * @version 2.4.8
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  * @todo    add "random number" option
  */
@@ -58,12 +58,22 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku_with_variable.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.2
 	 * @todo    Handle cases with more than 26 variations
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
 
-		$this->set_sku( $product_id, $product_id, '', $is_preview, $product_id );
+		/* if ( 'random' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
+			$sku_number = rand();
+		} */
+		if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
+			$sku_number = $this->sequential_counter;
+			$this->sequential_counter++;
+		} else { // if 'product_id'
+			$sku_number = $product_id;
+		}
+
+		$this->set_sku( $product_id, $sku_number, '', $is_preview, $product_id );
 
 		// Handling variable products
 		$variation_handling = apply_filters( 'wcj_get_option_filter', 'as_variable', get_option( 'wcj_sku_variations_handling', 'as_variable' ) );
@@ -72,19 +82,25 @@ class WCJ_SKU extends WCJ_Module {
 			$variations = $this->get_all_variations( $product );
 			if ( 'as_variable' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
-					$this->set_sku( $variation['variation_id'], $product_id, '', $is_preview, $product_id );
+					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id );
 				}
 			}
 			else if ( 'as_variation' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
-					$this->set_sku( $variation['variation_id'], $variation['variation_id'], '', $is_preview, $product_id );
+					if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
+						$sku_number = $this->sequential_counter;
+						$this->sequential_counter++;
+					} else { // if 'product_id'
+						$sku_number = $variation['variation_id'];
+					}
+					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id );
 				}
 			}
 			else if ( 'as_variable_with_suffix' === $variation_handling ) {
 				$variation_suffixes = 'abcdefghijklmnopqrstuvwxyz';
 				$abc = 0;
 				foreach ( $variations as $variation ) {
-					$this->set_sku( $variation['variation_id'], $product_id, $variation_suffixes[ $abc++ ], $is_preview, $product_id );
+					$this->set_sku( $variation['variation_id'], $sku_number, $variation_suffixes[ $abc++ ], $is_preview, $product_id );
 					if ( 26 == $abc ) {
 						$abc = 0;
 					}
@@ -113,10 +129,6 @@ class WCJ_SKU extends WCJ_Module {
 			}
 		}
 
-		/* if ( 'random' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
-			$sku_number = rand();
-		} */
-
 		$the_sku = sprintf( '%s%s%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 'd%s%s%s',
 			apply_filters( 'wcj_get_option_filter', '', $category_prefix ),
 			get_option( 'wcj_sku_prefix', '' ),
@@ -142,9 +154,12 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_all_products_skus.
 	 *
-	 * @version 2.4.0
+	 * @version 2.5.2
 	 */
 	function set_all_products_skus( $is_preview ) {
+		if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
+			$this->sequential_counter = get_option( 'wcj_sku_number_generation_sequential', 1 );
+		}
 		$limit = 96;
 		$offset = 0;
 		while ( TRUE ) {
@@ -153,6 +168,8 @@ class WCJ_SKU extends WCJ_Module {
 				'offset'         => $offset,
 				'post_type'      => 'product',
 				'post_status'    => 'any',
+				'order'          => 'ASC',
+				'orderby'        => 'date',
 			));
 			if ( ! $posts->have_posts() ) break;
 			while ( $posts->have_posts() ) {
@@ -162,19 +179,28 @@ class WCJ_SKU extends WCJ_Module {
 			$offset += $limit;
 		}
 		wp_reset_postdata();
+		if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) && ! $is_preview ) {
+			update_option( 'wcj_sku_number_generation_sequential', $this->sequential_counter );
+		}
 	}
 
 	/**
 	 * set_sku_for_new_product.
 	 *
-	 * @version 2.3.10
+	 * @version 2.5.2
 	 */
 	function set_sku_for_new_product( $post_ID, $post, $update ) {
 		if ( 'product' != $post->post_type ) {
 			return;
 		}
 		if ( false === $update ) {
+			if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
+				$this->sequential_counter = get_option( 'wcj_sku_number_generation_sequential', 1 );
+			}
 			$this->set_sku_with_variable( $post_ID, false );
+			if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
+				update_option( 'wcj_sku_number_generation_sequential', $this->sequential_counter );
+			}
 		}
 	}
 
@@ -216,46 +242,47 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.5
+	 * @version 2.5.2
 	 */
 	function get_settings() {
-
 		$settings = array(
-
 			array(
 				'title'    => __( 'SKU Format Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => '',
 				'id'       => 'wcj_sku_format_options',
 			),
-
-			/* array(
+			array(
 				'title'    => __( 'Number Generation', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sku_number_generation',
 				'default'  => 'product_id',
 				'type'     => 'select',
 				'options'  => array(
-					'product_id' => __( 'From product ID (recommended)', 'woocommerce-jetpack' ),
-					'random'     => __( 'Random (including variations)', 'woocommerce-jetpack' ),
+					'product_id' => __( 'From product ID', 'woocommerce-jetpack' ),
+					'sequential' => __( 'Sequential', 'woocommerce-jetpack' ),
+//					'random'     => __( 'Random (including variations)', 'woocommerce-jetpack' ),
 				),
 //				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 //				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-			), */
-
+			),
+			array(
+				'title'    => __( 'Sequential Number Generation', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_sku_number_generation_sequential',
+				'default'  => 1,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 0 ),
+			),
 			array(
 				'title'    => __( 'Prefix', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sku_prefix',
 				'default'  => '',
 				'type'     => 'text',
 			),
-
 			array(
 				'title'    => __( 'Minimum Number Length', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sku_minimum_number_length',
 				'default'  => 0,
 				'type'     => 'number',
 			),
-
 			array(
 				'title'    => __( 'Suffix', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sku_suffix',
@@ -264,7 +291,6 @@ class WCJ_SKU extends WCJ_Module {
 //				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 //				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
-
 			array(
 				'title'    => __( 'Variable Products Variations', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Please note, that on new variable product creation, variations will get same SKUs as parent product, and if you want variations to have different SKUs, you will need to run "Autogenerate SKUs" tool manually.' ),
@@ -279,49 +305,49 @@ class WCJ_SKU extends WCJ_Module {
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_sku_format_options',
 			),
 		);
-
-		$settings[] = array(
+		$settings = array_merge( $settings, array(
+			array(
 				'title'    => __( 'Categories Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => '',
 				'id'       => 'wcj_sku_categories_options',
-		);
-
+			),
+		) );
 		$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
 		if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ){
 			foreach ( $product_categories as $product_category ) {
-				$settings[] = array(
-					'title'    => $product_category->name,
-					'desc'     => __( 'Prefix', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_sku_prefix_cat_' . $product_category->term_id,
-					'default'  => '',
-					'type'     => 'text',
-					'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
-					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
-				);
-				$settings[] = array(
-					'title'    => '',
-					'desc'     => __( 'Suffix', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_sku_suffix_cat_' . $product_category->term_id,
-					'default'  => '',
-					'type'     => 'text',
-//					'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
-//					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
-				);
+				$settings = array_merge( $settings, array(
+					array(
+						'title'    => $product_category->name,
+						'desc'     => __( 'Prefix', 'woocommerce-jetpack' ),
+						'id'       => 'wcj_sku_prefix_cat_' . $product_category->term_id,
+						'default'  => '',
+						'type'     => 'text',
+						'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
+						'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+					),
+					array(
+						'title'    => '',
+						'desc'     => __( 'Suffix', 'woocommerce-jetpack' ),
+						'id'       => 'wcj_sku_suffix_cat_' . $product_category->term_id,
+						'default'  => '',
+						'type'     => 'text',
+//						'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
+//						'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+					),
+				) );
 			}
 		}
-
-		$settings[] = array(
+		$settings = array_merge( $settings, array(
+			array(
 				'type'     => 'sectionend',
-				'id'       => 'wcj_sku_format_options',
-		);
-
+				'id'       => 'wcj_sku_categories_options',
+			),
+		) );
 		return $this->add_standard_settings(
 			$settings,
 			__( 'When enabled - all new products will be given (autogenerated) SKU.', 'woocommerce-jetpack' ) . '<br>' .
