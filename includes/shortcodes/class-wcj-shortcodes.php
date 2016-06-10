@@ -74,7 +74,7 @@ class WCJ_Shortcodes {
 			'before'              => '',
 			'after'               => '',
 			'visibility'          => '',//user_visibility
-			'login_text'          => __( 'Login', 'woocommerce-jetpack' ),
+//			'login_text'          => __( 'Login', 'woocommerce-jetpack' ),
 			'site_visibility'     => '',
 			'location'            => '',//user_location
 			'wpml_language'       => '',

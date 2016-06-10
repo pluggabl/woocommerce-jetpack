@@ -121,7 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 07/06/2016 =
+= 2.5.2 - 09/06/2016 =
 ~* Dev - PDF INVOICING & PACKING SLIPS - `SetTitle` fixed.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Confirmation request added to the delete and create buttons.
 ~* Dev - SHIPPING & ORDERS - Order Custom Statuses - Custom icon and icon color options added.
@@ -149,7 +149,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 ~* Dev - Shortcodes - `[wcj_product_wholesale_price_table]` - `price_row_format` attribute added.
 -$* Dev - PRODUCTS - Product by User - Initial module release.
 * Dev - Shortcodes - `module` (and `module_name`) attribute added.
-~* Dev - Shortcodes - `visibility` attribute modified (and `login_text` attribute added).
+~* Dev - Shortcodes - `visibility` attribute modified.
 * Dev - PRODUCTS - Bookings - "Labels and Messages" settings added.
 * Tweak - "No active modules found." message added.
 ~* Dev - "Manage Settings" functionality added.
