@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.5.1
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -143,9 +143,14 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 */
 	public function get_customer_country_group_id() {
+
+		if ( 'yes' === get_option( 'wcj_price_by_country_revert', 'no' ) && is_checkout() ) {
+			$this->customer_country_group_id = -1;
+			return null;
+		}
 
 		// We already know the group - nothing to calculate - return group
 		if ( null != $this->customer_country_group_id && $this->customer_country_group_id > 0 ) {

@@ -66,7 +66,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 */
 	function get_settings() {
 
@@ -110,6 +110,14 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				'title'    => __( 'Override Country with Customer\'s Checkout Billing Country', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_override_on_checkout_with_billing_country',
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'title'    => __( 'Revert Currency to Default on Checkout', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_price_by_country_revert',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
