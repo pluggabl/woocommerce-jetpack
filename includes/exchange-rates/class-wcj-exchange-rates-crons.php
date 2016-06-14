@@ -64,8 +64,9 @@ class WCJ_Exchange_Rates_Crons {
 	}
 
 	/*
-	 * Functions gets currency exchange rate from rate-exchange.appspot.com server.
-	 * returns rate on success, else 0
+	 * get_exchange_rate.
+	 *
+	 * @return float rate on success, else 0
 	 */
 	function get_exchange_rate( $currency_from, $currency_to ) {
 
