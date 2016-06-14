@@ -159,7 +159,9 @@ final class WC_Jetpack {
 	function fix_mini_cart() {
 		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 			if ( null !== ( $wc = WC() ) ) {
-				$wc->cart->calculate_totals();
+				if ( isset( $wc->cart ) ) {
+					$wc->cart->calculate_totals();
+				}
 			}
 		}
 	}
