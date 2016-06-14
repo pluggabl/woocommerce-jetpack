@@ -189,7 +189,9 @@ class WCJ_Exchange_Rates_Crons {
 			} else {
 				$result_message = __( 'Cron job: exchange rates update failed', 'woocommerce-jetpack' );
 			}
-			//wcj_log( $result_message . ': ' . $currency_from . $currency_to . ': ' . $the_rate . ': ' . 'update_the_exchange_rates: ' . $interval );
+			if ( 'yes' === get_option( 'wcj_currency_exchange_logging_enabled', 'no' ) ) {
+				wcj_log( $result_message . ': ' . $currency_from . $currency_to . ': ' . $the_rate . ': ' . 'update_the_exchange_rates: ' . $interval );
+			}
 		}
 	}
 

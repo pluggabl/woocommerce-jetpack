@@ -161,6 +161,14 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 		}
 
 		$settings[] = array(
+			'title'    => __( 'Logging', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_currency_exchange_logging_enabled',
+			'default'  => 'no',
+			'type'     => 'checkbox',
+		);
+
+		$settings[] = array(
 			'type'  => 'sectionend',
 			'id'    => 'wcj_currency_exchange_rates_options',
 		);

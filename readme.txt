@@ -122,6 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 13/06/2016 =
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Logging" option added.
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Revert Currency to Default on Checkout" option added.
 * Dev - SHIPPING & ORDERS - Shipping - "Left to free shipping" - `do_shortcode` added to all messages.
 ~$* Dev - PRODUCTS - SKU - Sequential number generation option added.
