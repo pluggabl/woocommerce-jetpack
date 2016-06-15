@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Report Tool class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -117,7 +117,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * get_invoices_report_zip.
 	 *
-	 * @version 2.3.10
+	 * @version 2.5.2
 	 * @since   2.3.10
 	 */
 	function get_invoices_report_zip( $year, $month, $invoice_type_id ) {
@@ -131,6 +131,9 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			return false;
 		}
 
+		$first_minute = mktime( 0, 0, 0, $month, 1, $year );
+		$last_minute  = mktime( 23, 59, 59, $month, date( 't', $first_minute ), $year );
+
 		$offset = 0;
 		$block_size = 96;
 		while( true ) {
@@ -138,10 +141,19 @@ class WCJ_PDF_Invoicing_Report_Tool {
 				'post_type'      => 'shop_order',
 				'post_status'    => 'any',
 				'posts_per_page' => $block_size,
-				'orderby'        => 'date',
+				'orderby'        => 'meta_value_num',
+				'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date',
 				'order'          => 'ASC',
-				'year'           => $year,
-				'monthnum'       => $month,
+//				'year'           => $year,
+//				'monthnum'       => $month,
+				'meta_query' => array(
+					array(
+						'key'     => '_wcj_invoicing_' . $invoice_type_id . '_date',
+						'value'   => array( $first_minute , $last_minute ),
+						'type'    => 'numeric',
+						'compare' => 'BETWEEN',
+					),
+				),
 				'offset'         => $offset,
 			);
 			$loop = new WP_Query( $args );
@@ -183,7 +195,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Invoices Report function.
 	 *
-	 * @version 2.3.11
+	 * @version 2.5.2
 	 */
 	function get_invoices_report( $year, $month, $invoice_type_id ) {
 
@@ -191,8 +203,8 @@ class WCJ_PDF_Invoicing_Report_Tool {
 
 		$data = array();
 		$data[] = array(
-			__( 'Invoice Nr.', 'woocommerce-jetpack' ),
-			__( 'Invoice Date', 'woocommerce-jetpack' ),
+			__( 'Document Nr.', 'woocommerce-jetpack' ),
+			__( 'Document Date', 'woocommerce-jetpack' ),
 			__( 'Order ID', 'woocommerce-jetpack' ),
 			__( 'Customer Country', 'woocommerce-jetpack' ),
 			__( 'Customer VAT ID', 'woocommerce-jetpack' ),
@@ -207,6 +219,9 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		$total_sum_excl_tax = 0;
 		$total_tax = 0;
 
+		$first_minute = mktime( 0, 0, 0, $month, 1, $year );
+		$last_minute  = mktime( 23, 59, 59, $month, date( 't', $first_minute ), $year );
+
 		$offset = 0;
 		$block_size = 96;
 		while( true ) {
@@ -214,10 +229,19 @@ class WCJ_PDF_Invoicing_Report_Tool {
 				'post_type'      => 'shop_order',
 				'post_status'    => 'any',
 				'posts_per_page' => $block_size,
-				'orderby'        => 'date',
+				'orderby'        => 'meta_value_num',
+				'meta_key'       => '_wcj_invoicing_' . $invoice_type_id . '_date',
 				'order'          => 'ASC',
-				'year'           => $year,
-				'monthnum'       => $month,
+//				'year'           => $year,
+//				'monthnum'       => $month,
+				'meta_query' => array(
+					array(
+						'key'     => '_wcj_invoicing_' . $invoice_type_id . '_date',
+						'value'   => array( $first_minute , $last_minute ),
+						'type'    => 'numeric',
+						'compare' => 'BETWEEN',
+					),
+				),
 				'offset'         => $offset,
 			);
 			$loop = new WP_Query( $args );
@@ -263,6 +287,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 						$order_tax_html,
 						sprintf( '%.2f', $order_total ),
 						$the_order->get_order_currency(),
+						//'<pre>' . print_r( get_post_meta( $order_id ), true ) . '</pre>',
 					);
 				}
 			endwhile;
@@ -273,6 +298,8 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		$output .= '<h3>' . 'Total Sum: ' . sprintf( '$ %.2f', $total_sum ) . '</h3>';
 		$output .= '<h3>' . 'Total Tax: ' . sprintf( '$ %.2f', $total_tax ) . '</h3>'; */
 		$output .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', ) );
+
+//		$output .= date( "Y-m-d H:i:s", $first_minute ) . ' -> ' . date( "Y-m-d H:i:s", $last_minute );
 
 		return $output;
 	}
