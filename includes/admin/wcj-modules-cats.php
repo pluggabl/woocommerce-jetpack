@@ -38,6 +38,7 @@ return array(
 			'price_by_user_role',
 			'product_price_by_formula',
 			'currency_exchange_rates',
+			'price_formats',
 		),
 	),
 
