@@ -29,6 +29,8 @@ class WCJ_Price_Formats extends WCJ_Module {
 		$this->link       = 'http://booster.io/features/woocommerce-price-formats/'; // TODO
 		parent::__construct();
 
+		add_action( 'init', array( $this, 'add_settings_hook' ) );
+
 		if ( $this->is_enabled() ) {
 			add_filter( 'wc_price_args', array( $this, 'price_format' ), PHP_INT_MAX );
 		}
@@ -80,12 +82,33 @@ class WCJ_Price_Formats extends WCJ_Module {
 	}
 
 	/**
+	 * add_settings_hook.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_settings_hook() {
+		add_filter( 'wcj_price_formats_settings', array( $this, 'add_settings' ) );
+	}
+
+	/**
 	 * get_settings.
 	 *
 	 * @version 2.5.2
 	 * @since   2.5.2
 	 */
 	function get_settings() {
+		$settings = apply_filters( 'wcj_price_formats_settings', array() );
+		return $this->add_standard_settings( $settings );
+	}
+
+	/**
+	 * add_settings.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_settings() {
 		$settings = array(
 			array(
 				'title'    => __( 'Formats', 'woocommerce-jetpack' ),
@@ -157,7 +180,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 				'id'       => 'wcj_price_formats_options',
 			),
 		) );
-		return $this->add_standard_settings( $settings );
+		return $settings;
 	}
 }
 
