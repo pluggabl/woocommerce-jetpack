@@ -7,6 +7,7 @@
  * @version 2.5.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
+ * @todo    Fix "Make Empty Price" option for variable products
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -115,7 +116,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function get_meta_box_options() {
@@ -172,6 +173,19 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 							'desc'       => $desc,
 							'product_id' => $product_id,
 							'meta_name'  => '_' . 'wcj_price_by_user_role_sale_price_' . $role_key,
+						),
+						array(
+							'name'       => 'wcj_price_by_user_role_empty_price_' . $role_key . '_' . $product_id,
+							'default'    => 'no',
+							'type'       => 'select',
+							'options'    => array(
+								'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+								'no'  => __( 'No', 'woocommerce-jetpack' ),
+							),
+							'title'      => __( 'Make Empty Price', 'woocommerce-jetpack' ),
+							'desc'       => $desc,
+							'product_id' => $product_id,
+							'meta_name'  => '_' . 'wcj_price_by_user_role_empty_price_' . $role_key,
 						),
 					) );
 				}
@@ -315,7 +329,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price_by_role.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function change_price_by_role( $price, $_product ) {
@@ -326,6 +340,9 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {
 			if ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
 				$the_product_id = ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
+				if ( 'yes' === get_post_meta( $the_product_id, '_' . 'wcj_price_by_user_role_empty_price_' . $current_user_role, true ) ) {
+					return '';
+				}
 				if ( '' != ( $regular_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_price_by_user_role_regular_price_' . $current_user_role, true ) ) ) {
 					$the_current_filter = current_filter();
 					if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
@@ -345,6 +362,9 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		}
 
 		// Global
+		if ( 'yes' === get_option( 'wcj_price_by_user_role_empty_price_' . $current_user_role, 'no' ) ) {
+			return '';
+		}
 		if ( 1 != ( $koef = get_option( 'wcj_price_by_user_role_' . $current_user_role, 1 ) ) ) {
 			return ( '' === $price ) ? $price : $price * $koef;
 		}
@@ -356,15 +376,17 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$user_role = $this->get_current_user_role();
 		$koef = get_option( 'wcj_price_by_user_role_' . $user_role, 1 );
+		$is_empty = get_option( 'wcj_price_by_user_role_empty_price_' . $user_role, 'no' );
 		$price_hash['wcj_user_role'] = array(
 			$user_role,
 			$koef,
+			$is_empty,
 			get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ),
 		);
 		return $price_hash;
@@ -423,7 +445,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 * @since   2.5.0
 	 */
 	function add_settings() {
@@ -461,13 +483,21 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			'id'           => 'wcj_price_by_user_role_multipliers_options',
 		);
 		foreach ( $this->get_user_roles() as $role_key => $role_data ) {
-			$settings[] = array(
-				'title'    => $role_data['name'],
-				'id'       => 'wcj_price_by_user_role_' . $role_key,
-				'default'  => 1,
-				'type'     => 'number',
-				'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
-			);
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => $role_data['name'],
+					'id'       => 'wcj_price_by_user_role_' . $role_key,
+					'default'  => 1,
+					'type'     => 'number',
+					'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+				),
+				array(
+					'desc'     => __( 'Make Empty Price', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_price_by_user_role_empty_price_' . $role_key,
+					'default'  => 'no',
+					'type'     => 'checkbox',
+				),
+			) );
 		}
 		$settings[] = array(
 			'type'         => 'sectionend',
