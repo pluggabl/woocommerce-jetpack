@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Add To Cart class.
  *
- * @version 2.5.0
+ * @version 2.5.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.2
 	 */
 	public function __construct() {
 
@@ -43,6 +43,26 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_variable_add_to_cart_scripts' ) );
 				add_filter( 'wc_get_template', array( $this, 'change_variable_add_to_cart_template' ), PHP_INT_MAX, 5 );
 			}
+
+			// Quantity
+			if ( 'yes' === get_option( 'wcj_add_to_cart_quantity_disable', 'no' ) || 'yes' === get_option( 'wcj_add_to_cart_quantity_disable_cart', 'no' ) ) {
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_disable_quantity_add_to_cart_script' ) );
+			}
+		}
+	}
+
+	/**
+	 * enqueue_disable_quantity_add_to_cart_script.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function enqueue_disable_quantity_add_to_cart_script() {
+		if (
+			( 'yes' === get_option( 'wcj_add_to_cart_quantity_disable', 'no' ) && is_product() ) ||
+			( 'yes' === get_option( 'wcj_add_to_cart_quantity_disable_cart', 'no' ) && is_cart() )
+		) {
+			wp_enqueue_script( 'wcj-disable-quantity', wcj_plugin_url() . '/includes/js/wcj-disable-quantity.js', array( 'jquery' ) );
 		}
 	}
 
@@ -110,7 +130,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.2
 	 */
 	function get_settings() {
 		$settings = array(
@@ -174,6 +194,30 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_add_to_cart_variable_options',
+			),
+			array(
+				'title'    => __( 'Add to Cart Quantity', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_add_to_cart_quantity_options',
+			),
+			array(
+				'title'    => __( 'Disable Quantity Field for All Products', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Disable on Single Product Page', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_add_to_cart_quantity_disable',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => 'start',
+			),
+			array(
+				'desc'     => __( 'Disable on Cart Page', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_add_to_cart_quantity_disable_cart',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => 'end',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_add_to_cart_quantity_options',
 			),
 		);
 		return $this->add_standard_settings( $settings );

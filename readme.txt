@@ -122,6 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 16/06/2016 =
+~* Dev - PRODUCTS - Product Add to Cart - "Disable Quantity Field for All Products" option added.
 ~* Dev - PRICES & CURRENCIES - Price by User Role - "Make Empty Price" option added.
 * Fix - PDF INVOICING & PACKING SLIPS - Report Tool - Querying by document date instead of order date.
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Logging" option added.
