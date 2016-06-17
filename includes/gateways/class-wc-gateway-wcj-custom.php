@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Payment Gateway class.
  *
- * @version 2.4.8
+ * @version 2.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -337,7 +337,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * init.
 				 *
-				 * @version 2.4.8
+				 * @version 2.5.2
 				 */
 				public function init( $id_count ) {
 					$this->id                       = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
@@ -350,7 +350,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					$this->init_settings();
 					// Define user set variables
 					$this->title                    = $this->get_option( 'title' );
-					$this->description              = $this->get_option( 'description' );
+					$this->description              = do_shortcode( str_replace( '[wcj_input_field', '[wcj_input_field attach_to="' . $this->id . '"', $this->get_option( 'description' ) ) );
 					$this->instructions             = $this->get_option( 'instructions', '' );//$this->description );
 					$this->instructions_in_email    = $this->get_option( 'instructions_in_email', '' );
 					$this->icon                     = $this->get_option( 'icon', '' );//apply_filters( 'woocommerce_wcj_custom_icon', $this->get_option( 'icon', '' ) );

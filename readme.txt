@@ -121,7 +121,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 16/06/2016 =
+= 2.5.2 - 17/06/2016 =
+-* Dev - PAYMENT GATEWAYS - Custom Gateways - Custom input fields (and `[wcj_input_field]` shortcode) added.
 ~* Dev - PRICES & CURRENCIES - Price Formats - Initial module release.
 ~* Dev - PRODUCTS - Product Add to Cart - "Disable Quantity Field for All Products" option added.
 ~* Dev - PRICES & CURRENCIES - Price by User Role - "Make Empty Price" option added.
