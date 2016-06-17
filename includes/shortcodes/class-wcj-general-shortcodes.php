@@ -38,7 +38,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		);
 
 		$this->the_atts = array(
-			'date_format' => get_option( 'date_format' ),
+			'date_format'    => get_option( 'date_format' ),
 			'lang'           => '',
 			'form_method'    => 'post',//'get',
 			'class'          => '',
