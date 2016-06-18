@@ -53,7 +53,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * add_pdf_invoices_admin_actions_buttons_css.
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.2
 	 * @since   2.4.7
 	 */
 	function add_pdf_invoices_admin_actions_buttons_css() {
@@ -80,9 +80,9 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			echo '.view.' . $invoice_type['id'] .                  '{ color: ' . $color . ' !important; }' . PHP_EOL;
 			echo '.view.' . $invoice_type['id'] . '_' . 'create' . '{ color: ' . $color . ' !important; }' . PHP_EOL;
 			echo '.view.' . $invoice_type['id'] . '_' . 'delete' . '{ color: ' . $color . ' !important; }' . PHP_EOL;
-			echo '.view.' . $invoice_type['id'] .                   '::after { content: "\e028" !important; }' . PHP_EOL;
-			echo '.view.' . $invoice_type['id'] .  '_' . 'create' . '::after { content: "\e027" !important; }' . PHP_EOL;
-			echo '.view.' . $invoice_type['id'] .  '_' . 'delete' . '::after { content: "\e030" !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] .                   '::after { content: "\f159" !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] .  '_' . 'create' . '::after { content: "\f132" !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] .  '_' . 'delete' . '::after { content: "\f460" !important; }' . PHP_EOL;
 		}
 		echo '</style>' . PHP_EOL;
 	}
