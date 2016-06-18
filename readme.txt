@@ -122,7 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 18/06/2016 =
-* Fix - PDF INVOICING & PACKING SLIPS - Icons changed.
+* Fix/Dev - PDF INVOICING & PACKING SLIPS - Display - Action buttons icons changed.
 -* Dev - PAYMENT GATEWAYS - Custom Gateways - Custom input fields (and `[wcj_input_field]` shortcode) added.
 ~* Dev - PRICES & CURRENCIES - Price Formats - Initial module release.
 ~* Dev - PRODUCTS - Product Add to Cart - "Disable Quantity Field for All Products" option added.
