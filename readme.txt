@@ -122,7 +122,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 19/06/2016 =
-* Dev - PRODUCTS - Product Add to Cart - Disable Add to Cart Button (on Single Product Page and/or Loop) options added.
+~* Dev - PRODUCTS - Product Add to Cart - Disable Add to Cart Button (on Single Product Page and/or Loop) options added.
 * Fix/Dev - PDF INVOICING & PACKING SLIPS - Display - Action buttons icons changed.
 -* Dev - PAYMENT GATEWAYS - Custom Gateways - Custom input fields (and `[wcj_input_field]` shortcode) added.
 ~* Dev - PRICES & CURRENCIES - Price Formats - Initial module release.
