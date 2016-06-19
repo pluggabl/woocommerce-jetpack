@@ -48,7 +48,83 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_add_to_cart_quantity_disable', 'no' ) || 'yes' === get_option( 'wcj_add_to_cart_quantity_disable_cart', 'no' ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_disable_quantity_add_to_cart_script' ) );
 			}
+
+			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+
+			add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_to_cart_button_disable_start' ), PHP_INT_MAX, 0 );
+			add_action( 'woocommerce_after_add_to_cart_button',  array( $this, 'add_to_cart_button_disable_end' ), PHP_INT_MAX, 0 );
+			add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'add_to_cart_button_loop_disable' ), PHP_INT_MAX, 2 );
 		}
+	}
+
+	/**
+	 * add_to_cart_button_loop_disable.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_to_cart_button_loop_disable( $link, $_product ) {
+		if ( 0 != get_the_ID() && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_loop_disable', true ) ) {
+			return '';
+		}
+		return $link;
+	}
+
+	/**
+	 * add_to_cart_button_disable_end.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_to_cart_button_disable_end() {
+		if ( 0 != get_the_ID() && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_disable', true ) ) {
+			ob_end_clean();
+		}
+	}
+
+	/**
+	 * add_to_cart_button_disable_start.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function add_to_cart_button_disable_start() {
+		if ( 0 != get_the_ID() && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_disable', true ) ) {
+			ob_start();
+		}
+	}
+
+	/**
+	 * get_meta_box_options.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 */
+	function get_meta_box_options() {
+		$options = array(
+			array(
+				'name'       => 'wcj_add_to_cart_button_disable',
+				'default'    => 'no',
+				'type'       => 'select',
+				'options'    => array(
+					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+					'no'  => __( 'No', 'woocommerce-jetpack' ),
+				),
+				'title'      => __( 'Disable Add to Cart Button (Single Product Page)', 'woocommerce-jetpack' ),
+			),
+			array(
+				'name'       => 'wcj_add_to_cart_button_loop_disable',
+				'default'    => 'no',
+				'type'       => 'select',
+				'options'    => array(
+					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+					'no'  => __( 'No', 'woocommerce-jetpack' ),
+				),
+				'title'      => __( 'Disable Add to Cart Button (Category/Archives)', 'woocommerce-jetpack' ),
+			),
+		);
+		return $options;
 	}
 
 	/**
