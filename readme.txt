@@ -121,7 +121,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 18/06/2016 =
+= 2.5.2 - 19/06/2016 =
 * Fix/Dev - PDF INVOICING & PACKING SLIPS - Display - Action buttons icons changed.
 -* Dev - PAYMENT GATEWAYS - Custom Gateways - Custom input fields (and `[wcj_input_field]` shortcode) added.
 ~* Dev - PRICES & CURRENCIES - Price Formats - Initial module release.
@@ -145,7 +145,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Old price taxes fixed when displaying in cart.
 * Fix - PRICES & CURRENCIES - Price by User Role - `change_price_by_role_shipping()` fixed (produced an error if price by user role for shipping was disabled).
 ~* Fix - EMAILS & MISC. - EU VAT Number - `woocommerce_matched_rates` filter changed to `woocommerce_find_rates` - this fixes the issue with sipping tax not exempting.
-~* Fix - PRODUCTS - Bookings - `is_product` check added to `enqueue_scripts` function.
+~* Fix - PRODUCTS - Bookings - `is_product` and `is_bookings_product` checks added to `enqueue_scripts` function.
 ~* Dev - `wcj_add_files_upload_form_to_checkout_frontend` function added.
 ~* Dev - `include_modules` function code refactoring.
 ~* Fix - Cart `calculate_totals()` added on `wp_loaded` to fix mini cart currency and price issues.
