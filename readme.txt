@@ -158,7 +158,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Tracking by Custom Number" option added.
 * Fix - PDF INVOICING & PACKING SLIPS - `SetTitle` fixed.
 * Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - Action buttons icons changed.
-~* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Confirmation request added to the delete and create buttons.
+* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Confirmation request added to the delete and create buttons.
 * Fix - PDF INVOICING & PACKING SLIPS - Report Tool - Querying by document date instead of order date.
 * Dev - EMAILS & MISC. - General - "PayPal Email per Product" option added.
 * Dev - EMAILS & MISC. - EU VAT Number - Option ("Display") to append EU VAT number to order and my account billing addresses added.
