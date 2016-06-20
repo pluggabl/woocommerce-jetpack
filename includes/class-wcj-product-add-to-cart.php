@@ -49,12 +49,15 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_disable_quantity_add_to_cart_script' ) );
 			}
 
-			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			// Button per product
+			if ( 'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ) {
+				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
-			add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_to_cart_button_disable_start' ), PHP_INT_MAX, 0 );
-			add_action( 'woocommerce_after_add_to_cart_button',  array( $this, 'add_to_cart_button_disable_end' ), PHP_INT_MAX, 0 );
-			add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'add_to_cart_button_loop_disable' ), PHP_INT_MAX, 2 );
+				add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_to_cart_button_disable_start' ), PHP_INT_MAX, 0 );
+				add_action( 'woocommerce_after_add_to_cart_button',  array( $this, 'add_to_cart_button_disable_end' ), PHP_INT_MAX, 0 );
+				add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'add_to_cart_button_loop_disable' ), PHP_INT_MAX, 2 );
+			}
 		}
 	}
 
@@ -294,6 +297,23 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_add_to_cart_quantity_options',
+			),
+			array(
+				'title'    => __( 'Add to Cart Button', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_add_to_cart_button_options',
+			),
+			array(
+				'title'    => __( 'Add to Cart Buttons on per Product Basis', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_add_to_cart_button_per_product_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_add_to_cart_button_options',
 			),
 		);
 		return $this->add_standard_settings( $settings );

@@ -21,8 +21,10 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Currencies* - Add all world currencies to your WooCommerce store; change currency symbol.
 * *Currency Exchange Rates* - Automatic currency exchange rates for WooCommerce.
 * *Currency for External Products* - Set different currency for external WooCommerce products.
+* *Currency per Product* - Display prices for WooCommerce products in different currencies.
 * *Multicurrency (Currency Switcher)* - Add multiple currencies (currency switcher) to WooCommerce.
 * *Multicurrency Product Base Price* - Enter prices for WooCommerce products in different currencies.
+* *Price Formats* - Set different WooCommerce price formats for different currencies.
 * *Price by User Role* - Display WooCommerce products prices by user roles.
 * *Prices and Currencies by Country* - Change WooCommerce product price and currency automatically by customer's country.
 * *Product Open Pricing (Name Your Price)* - Let your WooCommerce store customers enter price for the product manually.
@@ -48,6 +50,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Listings* - Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
 * *Product by Country* - Display WooCommerce products by customers country.
+* *Product by User* - Let users to add new WooCommerce products from frontend.
 * *Related Products* - Change displayed WooCommerce related products number, columns, order, relate by tag and/or category, or hide related products completely.
 * *SKU* - Generate WooCommerce SKUs automatically.
 * *Sorting* - Add more WooCommerce sorting options or remove all sorting including default.
@@ -144,7 +147,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - PRODUCTS - Bookings - `is_product` and `is_bookings_product` checks added to `enqueue_scripts` function.
 * Dev - PRODUCTS - Bookings - "Labels and Messages" settings added.
 * Dev - PRODUCTS - Product Add to Cart - "Disable Quantity Field for All Products" option added.
-~* Dev - PRODUCTS - Product Add to Cart - Disable Add to Cart Button (on Single Product Page and/or Loop) options added.
+* Dev - PRODUCTS - Product Add to Cart - Disable Add to Cart Button (on Single Product Page and/or Loop) options added.
 * Dev - PRODUCTS - Product by User - Initial module release.
 * Dev - PRODUCTS - Product Images - Per product "Hide" options added.
 * Fix - PRODUCTS - Product Images - Meta boxes added only if section is enabled.
