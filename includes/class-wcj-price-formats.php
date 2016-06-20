@@ -26,7 +26,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 		$this->id         = 'price_formats';
 		$this->short_desc = __( 'Price Formats', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set different WooCommerce price formats for different currencies.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-price-formats/'; // TODO
+		$this->link       = 'http://booster.io/features/woocommerce-price-formats/';
 		parent::__construct();
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );
@@ -43,7 +43,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 	 * @since   2.5.2
 	 */
 	function price_format( $args ) {
-		for ( $i = 1; $i <= get_option( 'wcj_price_formats_total_number', 0 ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
 			if ( get_woocommerce_currency() === get_option( 'wcj_price_formats_currency_' . $i ) ) {
 				$args['price_format']       = $this->get_woocommerce_price_format( get_option( 'wcj_price_formats_currency_position_' . $i ) );
 				$args['decimal_separator']  = get_option( 'wcj_price_formats_decimal_separator_'  . $i );
@@ -118,11 +118,16 @@ class WCJ_Price_Formats extends WCJ_Module {
 			array(
 				'title'    => __( 'Total Number', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_formats_total_number',
-				'default'  => 0,
+				'default'  => 1,
 				'type'     => 'custom_number',
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => array_merge(
+					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					array( 'step' => '1', 'min'  => '0', )
+				),
 			),
 		);
-		for ( $i = 1; $i <= get_option( 'wcj_price_formats_total_number', 0 ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
 			$currency_symbol = wcj_get_currency_symbol( get_option( 'wcj_price_formats_currency_' . $i, get_woocommerce_currency() ) );
 			$settings = array_merge( $settings, array(
 				array(

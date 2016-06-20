@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.2-dev-201606172035';
+	public $version = '2.5.2-dev-201606201852';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -121,7 +121,9 @@ final class WC_Jetpack {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ) );
 		}
 
-		add_action( 'wp_loaded', array( $this, 'fix_mini_cart' ), PHP_INT_MAX );
+		if ( wcj_is_module_enabled( 'general' ) && 'yes' === get_option( 'wcj_general_advanced_recalculate_cart_totals', 'no' ) ) {
+			add_action( 'wp_loaded', array( $this, 'fix_mini_cart' ), PHP_INT_MAX );
+		}
 
 		add_action( 'wp_loaded', array( $this, 'manage_options' ), PHP_INT_MAX );
 

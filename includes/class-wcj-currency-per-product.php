@@ -24,7 +24,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'currency_per_product';
-		$this->short_desc = __( 'Currency per Product [BETA]', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Currency per Product', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Display prices for WooCommerce products in different currencies.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-currency-per-product/';
 		parent::__construct();

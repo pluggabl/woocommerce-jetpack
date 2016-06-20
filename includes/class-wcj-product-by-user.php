@@ -24,23 +24,41 @@ class WCJ_Product_By_User extends WCJ_Module {
 	public function __construct() {
 
 		$this->id         = 'product_by_user';
-		$this->short_desc = __( 'Product by User [BETA]', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Product by User', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Let users to add new WooCommerce products from frontend.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-by-user/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_action( 'woocommerce_before_my_account', array( $this, 'add_my_products_to_my_account_page' ) );
+			if ( 'yes' === get_option( 'wcj_product_by_user_add_to_my_account', 'yes' ) ) {
+				add_filter( 'woocommerce_account_menu_items', array( $this, 'add_my_products_tab_my_account_page' ) );
+				add_action( 'woocommerce_account_content',    array( $this, 'add_my_products_content_my_account_page' ) );
+			}
 		}
 	}
 
 	/**
-	 * add_my_products_to_my_account_page.
+	 * add_my_products_tab_my_account_page.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 * @todo    check if user's products exist
+	 */
+	function add_my_products_tab_my_account_page( $items ) {
+		$items['wcj-my-products'] = __( 'My Products', 'woocommerce-jetpack' );
+		return $items;
+	}
+
+	/**
+	 * add_my_products_content_my_account_page.
 	 *
 	 * @version 2.5.2
 	 * @since   2.5.2
 	 */
-	function add_my_products_to_my_account_page() {
+	function add_my_products_content_my_account_page() {
+		if ( ! isset( $_GET['wcj-my-products'] ) ) {
+			return;
+		}
 		$user_ID = get_current_user_id();
 		if ( 0 == $user_ID ) {
 			return;
@@ -135,91 +153,89 @@ class WCJ_Product_By_User extends WCJ_Module {
 	 * @since   2.5.2
 	 */
 	function get_settings() {
-		$settings = array(
-			array(
-				'title'    => __( 'Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'desc'     => __( 'Title field is always enabled and required.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_options',
-			),
-			/* array(
-				'title'    => __( 'Fields', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Title', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_title_enabled',
-				'default'  => 'yes',
-				'type'     => 'checkbox',
-				'custom_attributes' => array( 'disabled' => 'disabled' ),
-				'checkboxgroup' => 'start',
-			), */
-			array(
-				'title'    => __( 'Additional Fields', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Description', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_desc_enabled',
-				'default'  => 'yes',
-				'type'     => 'checkbox',
-				'checkboxgroup' => 'start',
-			),
-			array(
-				'desc'     => __( 'Short Description', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_short_desc_enabled',
+
+		$fields = array(
+			'desc'          => __( 'Description', 'woocommerce-jetpack' ),
+			'short_desc'    => __( 'Short Description', 'woocommerce-jetpack' ),
+			'image'         => __( 'Image', 'woocommerce-jetpack' ),
+			'regular_price' => __( 'Regular Price', 'woocommerce-jetpack' ),
+			'sale_price'    => __( 'Sale Price', 'woocommerce-jetpack' ),
+			'cats'          => __( 'Categories', 'woocommerce-jetpack' ),
+			'tags'          => __( 'Tags', 'woocommerce-jetpack' ),
+		);
+		$fields_enabled_options  = array();
+		$fields_required_options = array();
+		$i = 0;
+		$total_fields = count( $fields );
+		foreach ( $fields as $field_id => $field_desc ) {
+			$i++;
+			$checkboxgroup = '';
+			if ( 1 === $i ) {
+				$checkboxgroup = 'start';
+			} elseif ( $total_fields === $i ) {
+				$checkboxgroup = 'end';
+			}
+			$fields_enabled_options[] = array(
+				'title'    => ( ( 1 === $i ) ? __( 'Additional Fields', 'woocommerce-jetpack' ) : '' ),
+				'desc'     => $field_desc,
+				'id'       => 'wcj_product_by_user_' . $field_id . '_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'checkboxgroup' => '',
-			),
-			array(
-				'desc'     => __( 'Image', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_image_enabled',
+				'checkboxgroup' => $checkboxgroup,
+				'custom_attributes' => ( ( 'image' === $field_id ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ) : '' ),
+				'desc_tip' => ( ( 'image' === $field_id ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) : '' ),
+			);
+			$fields_required_options[] = array(
+				'title'    => ( ( 1 === $i ) ? __( 'Is Required', 'woocommerce-jetpack' ) : '' ),
+				'desc'     => $field_desc,
+				'id'       => 'wcj_product_by_user_' . $field_id . '_required',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'checkboxgroup' => '',
-			),
+				'checkboxgroup' => $checkboxgroup,
+				'custom_attributes' => ( ( 'image' === $field_id ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ) : '' ),
+				'desc_tip' => ( ( 'image' === $field_id ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) : '' ),
+			);
+		}
+
+		$settings = array_merge(
 			array(
-				'desc'     => __( 'Regular Price', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_regular_price_enabled',
-				'default'  => 'yes',
-				'type'     => 'checkbox',
-				'checkboxgroup' => '',
+				array(
+					'title'    => __( 'Options', 'woocommerce-jetpack' ),
+					'type'     => 'title',
+					'desc'     => __( '<em>Title</em> field is always enabled and required.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_by_user_options',
+				),
 			),
+			$fields_enabled_options,
+			$fields_required_options,
 			array(
-				'desc'     => __( 'Sale Price', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_sale_price_enabled',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-				'checkboxgroup' => '',
-			),
-			array(
-				'desc'     => __( 'Categories', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_cats_enabled',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-				'checkboxgroup' => '',
-			),
-			array(
-				'desc'     => __( 'Tags', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_tags_enabled',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-				'checkboxgroup' => 'end',
-			),
-			array(
-				'title'    => __( 'User Visibility', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_user_visibility',
-				'default'  => array(),
-				'type'     => 'multiselect',
-				'class'    => 'chosen_select',
-				'options'  => $this->get_user_roles(),
-			),
-			array(
-				'title'    => __( 'Product Status', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_status',
-				'default'  => 'draft',
-				'type'     => 'select',
-				'options'  => get_post_statuses(),
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_product_by_user_options',
-			),
+				array(
+					'title'    => __( 'User Visibility', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_by_user_user_visibility',
+					'default'  => array(),
+					'type'     => 'multiselect',
+					'class'    => 'chosen_select',
+					'options'  => $this->get_user_roles(),
+				),
+				array(
+					'title'    => __( 'Product Status', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_by_user_status',
+					'default'  => 'draft',
+					'type'     => 'select',
+					'options'  => get_post_statuses(),
+				),
+				array(
+					'title'    => __( 'Add "My Products" Tab to User\'s My Account Page', 'woocommerce-jetpack' ),
+					'desc '    => __( 'Add', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_by_user_add_to_my_account',
+					'default'  => 'yes',
+					'type'     => 'checkbox',
+				),
+				array(
+					'type'     => 'sectionend',
+					'id'       => 'wcj_product_by_user_options',
+				),
+			)
 		);
 		return $this->add_standard_settings( $settings, __( 'Use [wcj_product_add_new] shortcode.', 'woocommerce-jetpack' ) );
 	}

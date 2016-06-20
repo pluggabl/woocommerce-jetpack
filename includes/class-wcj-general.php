@@ -436,7 +436,6 @@ class WCJ_General extends WCJ_Module {
 	 * @todo    add link to Booster's shortcodes list
 	 */
 	function get_settings() {
-
 		/* $links_html = '';
 		if ( class_exists( 'RecursiveIteratorIterator' ) && class_exists( 'RecursiveDirectoryIterator' ) ) {
 			$dir = untrailingslashit( realpath( plugin_dir_path( __FILE__ ) . '/../../woocommerce/templates' ) );
@@ -454,15 +453,12 @@ class WCJ_General extends WCJ_Module {
 		} else {
 			$links_html = __( 'PHP 5 is required.', 'woocommerce-jetpack' );
 		} */
-
 		$settings = array(
-
 			array(
 				'title'    => __( 'Shortcodes Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_general_shortcodes_options',
 			),
-
 			array(
 				'title'    => __( 'Enable All Shortcodes in WordPress Text Widgets', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'This will enable all (including non Booster\'s) shortcodes in WordPress text widgets.', 'woocommerce-jetpack' ),
@@ -471,7 +467,6 @@ class WCJ_General extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Disable Booster\'s Shortcodes', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Disable all Booster\'s shortcodes (for memory saving).', 'woocommerce-jetpack' ),
@@ -480,19 +475,16 @@ class WCJ_General extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_general_shortcodes_options',
 			),
-
 			array(
 				'title'    => __( 'Custom CSS Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => __( 'Another custom CSS, if you need one.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_general_custom_css_options',
 			),
-
 			array(
 				'title'    => __( 'Custom CSS - Front end (Customers)', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_general_custom_css',
@@ -500,7 +492,6 @@ class WCJ_General extends WCJ_Module {
 				'type'     => 'custom_textarea',
 				'css'      => 'width:66%;min-width:300px;min-height:300px;',
 			),
-
 			array(
 				'title'    => __( 'Custom CSS - Back end (Admin)', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_general_custom_admin_css',
@@ -508,18 +499,15 @@ class WCJ_General extends WCJ_Module {
 				'type'     => 'custom_textarea',
 				'css'      => 'width:66%;min-width:300px;min-height:300px;',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_general_custom_css_options',
 			),
-
 			array(
 				'title'    => __( 'Product Revisions', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_product_revisions_options',
 			),
-
 			array(
 				'title'    => __( 'Product Revisions', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -527,18 +515,22 @@ class WCJ_General extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_revisions_options',
 			),
-
 			array(
 				'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_general_advanced_options',
 			),
-
+			array(
+				'title'    => __( 'Recalculate Cart Totals on Every Page Load', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_general_advanced_recalculate_cart_totals',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
 			array(
 				'title'    => __( 'Disable Loading Datepicker/Weekpicker CSS', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
@@ -546,7 +538,6 @@ class WCJ_General extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Datepicker/Weekpicker CSS', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_general_advanced_datepicker_css',
@@ -554,7 +545,6 @@ class WCJ_General extends WCJ_Module {
 				'type'     => 'text',
 				'css'      => 'width:66%;min-width:300px;',
 			),
-
 			array(
 				'title'    => __( 'Disable Loading Datepicker/Weekpicker JavaScript', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
@@ -562,7 +552,6 @@ class WCJ_General extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Disable Loading Timepicker CSS', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
@@ -570,7 +559,6 @@ class WCJ_General extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Disable Loading Timepicker JavaScript', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
@@ -578,7 +566,6 @@ class WCJ_General extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Disable Saving PDFs in PHP directory for temporary files', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
@@ -586,18 +573,15 @@ class WCJ_General extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_general_advanced_options',
 			),
-
 			array(
 				'title'    => __( 'PayPal Email per Product Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_paypal_email_per_product_options',
 			),
-
 			array(
 				'title'    => __( 'PayPal Email per Product', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -606,31 +590,26 @@ class WCJ_General extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_paypal_email_per_product_options',
 			),
-
 			/* array(
 				'title'    => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_general_wc_templates_editor_links_options',
 			),
-
 			array(
 				'title'    => __( 'Templates', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_general_wc_templates_editor_links',
 				'type'     => 'custom_link',
 				'link'     => '<pre>' . $links_html . '</pre>',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_general_wc_templates_editor_links_options',
 			), */
 		);
-
 		return $this->add_standard_settings( $settings );
 	}
 }

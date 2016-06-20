@@ -121,55 +121,55 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 19/06/2016 =
-~* Dev - PRODUCTS - Product Add to Cart - Disable Add to Cart Button (on Single Product Page and/or Loop) options added.
-* Fix/Dev - PDF INVOICING & PACKING SLIPS - Display - Action buttons icons changed.
--* Dev - PAYMENT GATEWAYS - Custom Gateways - Custom input fields (and `[wcj_input_field]` shortcode) added.
-~* Dev - PRICES & CURRENCIES - Price Formats - Initial module release.
-~* Dev - PRODUCTS - Product Add to Cart - "Disable Quantity Field for All Products" option added.
-~* Dev - PRICES & CURRENCIES - Price by User Role - "Make Empty Price" option added.
-* Fix - PDF INVOICING & PACKING SLIPS - Report Tool - Querying by document date instead of order date.
+= 2.5.2 - 20/06/2016 =
+* Dev - "Manage Settings" functionality added.
+* Dev - `wcj_add_files_upload_form_to_checkout_frontend` function added.
+* Dev - `include_modules` function code refactoring.
+* Fix - Cart `calculate_totals()` added on `wp_loaded` to fix mini cart currency and price issues.
+* Dev - Shortcodes - `module` (and `module_name`) attribute added.
+* Dev - Shortcodes - `visibility` attribute modified.
+* Fix - Shortcodes - Orders - `[wcj_order_total_fees_tax]` and `[wcj_order_total_fees_incl_tax]` - using `get_line_tax()` instead of calculating taxes manually - that should fix the issue with wrong taxes rounding.
+* Dev - Shortcodes - General and Products - `[wcj_wholesale_price_table]` and `[wcj_product_wholesale_price_table]` - Table class added.
+* Fix - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - Price tax bug fixed.
+* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `price_row_format` attribute added.
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Logging" option added.
-~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Revert Currency to Default on Checkout" option added.
+* Dev - PRICES & CURRENCIES - Currency per Product - Initial module release.
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Removed from currency reports.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Revert Currency to Default on Checkout" option added.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Loading core on `admin-ajax.php` (caused issue in mini cart).
+* Dev - PRICES & CURRENCIES - Price by User Role - "Make Empty Price" option added.
+* Fix - PRICES & CURRENCIES - Price by User Role - `change_price_by_role_shipping()` fixed (produced an error if price by user role for shipping was disabled).
+* Dev - PRICES & CURRENCIES - Price Formats - Initial module release.
+* Fix - PRICES & CURRENCIES - Wholesale Price - Old price taxes fixed when displaying in cart.
+* Fix - PRODUCTS - Bookings - `is_product` and `is_bookings_product` checks added to `enqueue_scripts` function.
+* Dev - PRODUCTS - Bookings - "Labels and Messages" settings added.
+~* Dev - PRODUCTS - Product Add to Cart - "Disable Quantity Field for All Products" option added.
+~* Dev - PRODUCTS - Product Add to Cart - Disable Add to Cart Button (on Single Product Page and/or Loop) options added.
+~* Dev - PRODUCTS - Product by User - Initial module release.
+* Dev - PRODUCTS - Product Images - Per product "Hide" options added.
+* Fix - PRODUCTS - Product Images - Meta boxes added only if section is enabled.
+* Dev - PRODUCTS - Product Input Fields - "File: Max size" option added.
+* Dev - PRODUCTS - Product Tabs - `do_shortcode` added to custom tab titles.
+* Dev - PRODUCTS - SKU - Sequential number generation option added.
+~* Dev - PAYMENT GATEWAYS - Custom Gateways - Custom input fields (and `[wcj_input_field]` shortcode) added.
+* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Weight Table" option added.
 * Dev - SHIPPING & ORDERS - Shipping - "Left to free shipping" - `do_shortcode` added to all messages.
-~$* Dev - PRODUCTS - SKU - Sequential number generation option added.
-~* Dev - PDF INVOICING & PACKING SLIPS - `SetTitle` fixed.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Custom icon and icon color options added.
+* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Tracking by Custom Number" option added.
+* Fix - PDF INVOICING & PACKING SLIPS - `SetTitle` fixed.
+* Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - Action buttons icons changed.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Confirmation request added to the delete and create buttons.
-~* Dev - SHIPPING & ORDERS - Order Custom Statuses - Custom icon and icon color options added.
-~* Dev - EMAILS & MISC. - General - "PayPal Email per Product" option added.
+* Fix - PDF INVOICING & PACKING SLIPS - Report Tool - Querying by document date instead of order date.
+* Dev - EMAILS & MISC. - General - "PayPal Email per Product" option added.
+* Dev - EMAILS & MISC. - EU VAT Number - Option ("Display") to append EU VAT number to order and my account billing addresses added.
+* Fix - EMAILS & MISC. - EU VAT Number - `woocommerce_matched_rates` filter changed to `woocommerce_find_rates` - this fixes the issue with sipping tax not exempting.
 -* Tweak - "Caching ..." admin message added.
 -* Tweak - "Single multicurrency module..." admin message added.
 * Tweak - "Unlock all" link modified.
-~* Fix - Shortcodes - Orders - `[wcj_order_total_fees_tax]` and `[wcj_order_total_fees_incl_tax]` - using `get_line_tax()` instead of calculating taxes manually - that should fix the issue with wrong taxes rounding.
--* Dev - EMAILS & MISC. - EU VAT Number - Option ("Display") to append EU VAT number to order and my account billing addresses added.
--* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Loading core on `admin-ajax.php` (caused issue in mini cart).
-~* Fix - PRICES & CURRENCIES - Wholesale Price - Old price taxes fixed when displaying in cart.
-* Fix - PRICES & CURRENCIES - Price by User Role - `change_price_by_role_shipping()` fixed (produced an error if price by user role for shipping was disabled).
-~* Fix - EMAILS & MISC. - EU VAT Number - `woocommerce_matched_rates` filter changed to `woocommerce_find_rates` - this fixes the issue with sipping tax not exempting.
-~* Fix - PRODUCTS - Bookings - `is_product` and `is_bookings_product` checks added to `enqueue_scripts` function.
-~* Dev - `wcj_add_files_upload_form_to_checkout_frontend` function added.
-~* Dev - `include_modules` function code refactoring.
-~* Fix - Cart `calculate_totals()` added on `wp_loaded` to fix mini cart currency and price issues.
-~* Dev - PRICES & CURRENCIES - Currency per Product - Initial module release.
-* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Removed from currency reports.
-* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Weight Table" option added.
-* Dev - PRODUCTS - Product Tabs - `do_shortcode` added to custom tab titles.
-* Dev - PRODUCTS - Product Input Fields - "File: Max size" option added.
-* Dev - Shortcodes - `[wcj_wholesale_price_table]` and `[wcj_product_wholesale_price_table]` - Table class added.
-~* Fix - Shortcodes - `[wcj_product_wholesale_price_table]` - Price tax bug fixed.
-~* Dev - Shortcodes - `[wcj_product_wholesale_price_table]` - `price_row_format` attribute added.
--$* Dev - PRODUCTS - Product by User - Initial module release.
-* Dev - Shortcodes - `module` (and `module_name`) attribute added.
-~* Dev - Shortcodes - `visibility` attribute modified.
-* Dev - PRODUCTS - Bookings - "Labels and Messages" settings added.
 * Tweak - "No active modules found." message added.
-~* Dev - "Manage Settings" functionality added.
-* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Tracking by Custom Number" option added.
-* Dev - PRODUCTS - Product Images - Per product "Hide" options added.
-* Fix - PRODUCTS - Product Images - Meta boxes added only if section is enabled.
+* Tweak - PRODUCTS - Product Images - Module settings rearranged.
 * Tweak - PDF INVOICING & PACKING SLIPS - Numbering - Fields width and order modified.
 * Tweak - PDF INVOICING & PACKING SLIPS - Templates - "Available Shortcodes" info section modified.
-* Tweak - PRODUCTS - Product Images - Module settings rearranged.
 
 = 2.5.1 - 24/05/2016 =
 * Dev - PRICES & CURRENCIES - Product Price by Formula - No more using `namespace` (as it required PHP 5 >= 5.3.0).

@@ -63,10 +63,10 @@ class WCJ_SKU extends WCJ_Module {
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
 
-		/* if ( 'random' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
+		/* if ( 'random' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$sku_number = rand();
 		} */
-		if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
+		if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$sku_number = $this->sequential_counter;
 			$this->sequential_counter++;
 		} else { // if 'product_id'
@@ -87,7 +87,7 @@ class WCJ_SKU extends WCJ_Module {
 			}
 			else if ( 'as_variation' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
-					if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
+					if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 						$sku_number = $this->sequential_counter;
 						$this->sequential_counter++;
 					} else { // if 'product_id'
@@ -157,8 +157,8 @@ class WCJ_SKU extends WCJ_Module {
 	 * @version 2.5.2
 	 */
 	function set_all_products_skus( $is_preview ) {
-		if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
-			$this->sequential_counter = get_option( 'wcj_sku_number_generation_sequential', 1 );
+		if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+			$this->sequential_counter = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
 		}
 		$limit = 96;
 		$offset = 0;
@@ -179,7 +179,7 @@ class WCJ_SKU extends WCJ_Module {
 			$offset += $limit;
 		}
 		wp_reset_postdata();
-		if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) && ! $is_preview ) {
+		if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) && ! $is_preview ) {
 			update_option( 'wcj_sku_number_generation_sequential', $this->sequential_counter );
 		}
 	}
@@ -194,11 +194,11 @@ class WCJ_SKU extends WCJ_Module {
 			return;
 		}
 		if ( false === $update ) {
-			if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
-				$this->sequential_counter = get_option( 'wcj_sku_number_generation_sequential', 1 );
+			if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+				$this->sequential_counter = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
 			}
 			$this->set_sku_with_variable( $post_ID, false );
-			if ( 'sequential' === get_option( 'wcj_sku_number_generation', 'product_id' ) ) {
+			if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 				update_option( 'wcj_sku_number_generation_sequential', $this->sequential_counter );
 			}
 		}
@@ -261,15 +261,19 @@ class WCJ_SKU extends WCJ_Module {
 					'sequential' => __( 'Sequential', 'woocommerce-jetpack' ),
 //					'random'     => __( 'Random (including variations)', 'woocommerce-jetpack' ),
 				),
-//				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-//				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			),
 			array(
 				'title'    => __( 'Sequential Number Generation Counter', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sku_number_generation_sequential',
 				'default'  => 1,
 				'type'     => 'number',
-				'custom_attributes' => array( 'min' => 0 ),
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => array_merge(
+					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					array( 'step' => '1', 'min'  => '0', )
+				),
 			),
 			array(
 				'title'    => __( 'Prefix', 'woocommerce-jetpack' ),
