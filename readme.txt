@@ -163,8 +163,6 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - EMAILS & MISC. - General - "PayPal Email per Product" option added.
 * Dev - EMAILS & MISC. - EU VAT Number - Option ("Display") to append EU VAT number to order and my account billing addresses added.
 * Fix - EMAILS & MISC. - EU VAT Number - `woocommerce_matched_rates` filter changed to `woocommerce_find_rates` - this fixes the issue with sipping tax not exempting.
--* Tweak - "Caching ..." admin message added.
--* Tweak - "Single multicurrency module..." admin message added.
 * Tweak - "Unlock all" link modified.
 * Tweak - "No active modules found." message added.
 * Tweak - PRODUCTS - Product Images - Module settings rearranged.

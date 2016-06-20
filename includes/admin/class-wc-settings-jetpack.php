@@ -304,7 +304,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		// Caching message
 		/* $known_caching_plugins = array( 'w3-total-cache/w3-total-cache.php' );
 		$no_caching_modules = array();
-		$no_caching_modules = array_merge( $no_caching_modules, $multicurrency_modules );
+//		$no_caching_modules = array_merge( $no_caching_modules, $multicurrency_modules );
 		$caching_plugin_is_active = false;
 		foreach ( $known_caching_plugins as $caching_plugin ) {
 			// Check if caching_plugin is active
@@ -317,11 +317,11 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			}
 		}
 		$no_caching_module_is_active = false;
-		$multicurrency_modules_titles = array();
-		foreach ( $multicurrency_modules as $multicurrency_module ) {
-			if ( wcj_is_module_enabled( $multicurrency_module ) ) {
+		$no_caching_modules_titles = array();
+		foreach ( $no_caching_modules as $no_caching_module ) {
+			if ( wcj_is_module_enabled( $no_caching_module ) ) {
 				$no_caching_module_is_active = true;
-				$multicurrency_modules_titles[] = WCJ()->modules[ $multicurrency_module ]->short_desc;
+				$no_caching_modules_titles[] = WCJ()->modules[ $no_caching_module ]->short_desc;
 				//break;
 			}
 		}
@@ -329,7 +329,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '<div id="wcj_message" class="error">';
 			echo '<p>';
 			echo '<strong>';
-			echo sprintf( __( 'Please note that <em>%s</em> modules require caching to be turned off.', 'woocommerce-jetpack' ), implode( ', ', $multicurrency_modules_titles ) );
+			echo sprintf( __( 'Please note that <em>%s</em> modules require caching to be turned off.', 'woocommerce-jetpack' ), implode( ', ', $no_caching_modules_titles ) );
 			echo '</strong>';
 			echo '</p>';
 			echo '</div>';
