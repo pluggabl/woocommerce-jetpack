@@ -92,7 +92,11 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 			foreach ( $_POST as $key => $value ) {
 				if ( 'wcj_input_field_' === substr( $key, 0, 16 ) ) {
 					if ( isset( $_POST[ 'for_' . $key ] ) && $payment_method === $_POST[ 'for_' . $key ] ) {
-						$input_fields[ substr( $key, 16 ) ] = $value;
+						if ( isset( $_POST[ 'label_for_' . $key ] ) ) {
+							$input_fields[ $_POST[ 'label_for_' . $key ] ] = $value;
+						} else {
+							$input_fields[ substr( $key, 16 ) ] = $value;
+						}
 					}
 				}
 			}

@@ -143,15 +143,15 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - PRICES & CURRENCIES - Wholesale Price - Old price taxes fixed when displaying in cart.
 * Fix - PRODUCTS - Bookings - `is_product` and `is_bookings_product` checks added to `enqueue_scripts` function.
 * Dev - PRODUCTS - Bookings - "Labels and Messages" settings added.
-~* Dev - PRODUCTS - Product Add to Cart - "Disable Quantity Field for All Products" option added.
+* Dev - PRODUCTS - Product Add to Cart - "Disable Quantity Field for All Products" option added.
 ~* Dev - PRODUCTS - Product Add to Cart - Disable Add to Cart Button (on Single Product Page and/or Loop) options added.
-~* Dev - PRODUCTS - Product by User - Initial module release.
+* Dev - PRODUCTS - Product by User - Initial module release.
 * Dev - PRODUCTS - Product Images - Per product "Hide" options added.
 * Fix - PRODUCTS - Product Images - Meta boxes added only if section is enabled.
 * Dev - PRODUCTS - Product Input Fields - "File: Max size" option added.
 * Dev - PRODUCTS - Product Tabs - `do_shortcode` added to custom tab titles.
 * Dev - PRODUCTS - SKU - Sequential number generation option added.
-~* Dev - PAYMENT GATEWAYS - Custom Gateways - Custom input fields (and `[wcj_input_field]` shortcode) added.
+* Dev - PAYMENT GATEWAYS - Custom Gateways - Custom input fields (and `[wcj_input_field]` shortcode) added.
 * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Weight Table" option added.
 * Dev - SHIPPING & ORDERS - Shipping - "Left to free shipping" - `do_shortcode` added to all messages.
 * Dev - SHIPPING & ORDERS - Order Custom Statuses - Custom icon and icon color options added.

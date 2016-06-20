@@ -34,6 +34,7 @@ class WCJ_Input_Field_Shortcodes extends WCJ_Shortcodes {
 			'placeholder' => '',
 			'name'        => '',
 			'attach_to'   => '',
+			'label'       => '',
 		);
 
 		parent::__construct();
@@ -60,6 +61,9 @@ class WCJ_Input_Field_Shortcodes extends WCJ_Shortcodes {
 			' id="wcj_input_field_' . $atts['name'] . '">';
 		if ( '' != $atts['attach_to'] ) {
 			$the_field .= '<input type="hidden" name="for_wcj_input_field_' . $atts['name'] . '" value="' . $atts['attach_to'] . '">';
+		}
+		if ( '' != $atts['label'] ) {
+			$the_field .= '<input type="hidden" name="label_for_wcj_input_field_' . $atts['name'] . '" value="' . $atts['label'] . '">';
 		}
 		return $the_field;
 	}

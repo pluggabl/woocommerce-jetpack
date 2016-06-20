@@ -31,7 +31,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * Initialise Gateway Settings Form Fields
 				 *
-				 * @version 2.4.0
+				 * @version 2.5.2
 				 */
 				public function init_form_fields() {
 					global $woocommerce;
@@ -70,7 +70,8 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 						'description' => array(
 							'title'             => __( 'Description', 'woocommerce' ),
 							'type'              => 'textarea',
-							'description'       => __( 'Payment method description that the customer will see on your checkout.', 'woocommerce' ),
+							'description'       => __( 'Payment method description that the customer will see on your checkout.', 'woocommerce' ) . ' ' .
+								__( 'You can add input fields with [wcj_input_field] shortcode.', 'woocommerce' ),
 							'default'           => __( 'Custom Payment Description.', 'woocommerce' ),
 							'desc_tip'          => true,
 						),
