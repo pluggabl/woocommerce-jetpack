@@ -149,7 +149,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 * @since   2.5.2
 	 */
 	function get_settings() {
@@ -226,7 +226,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 				),
 				array(
 					'title'    => __( 'Add "My Products" Tab to User\'s My Account Page', 'woocommerce-jetpack' ),
-					'desc '    => __( 'Add', 'woocommerce-jetpack' ),
+					'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_product_by_user_add_to_my_account',
 					'default'  => 'yes',
 					'type'     => 'checkbox',

@@ -125,7 +125,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 21/06/2016 =
-* Tweak - PRODUCTS - Product by User - Description updated.
+* Tweak - PRODUCTS - Product by User - Module and admin settings descriptions updated.
 
 = 2.5.2 - 21/06/2016 =
 * Dev - "Manage Settings" functionality added.
