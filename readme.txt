@@ -42,7 +42,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Bookings* - Add bookings products to WooCommerce.
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
-* *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products.
+* *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Disable add to cart button on per product basis.
 * *Product Cost Price* - Save WooCommerce product purchase costs data for admin reports.
 * *Product Images* - Customize WooCommerce products images, thumbnails and sale flashes.
 * *Product Info* - Add additional info to WooCommerce category and single product pages.
@@ -125,6 +125,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 21/06/2016 =
+~* Tweak - PRODUCTS - Product Add to Cart - Module description updated.
 * Tweak - PRODUCTS - Product by User - Module and admin settings descriptions updated.
 
 = 2.5.2 - 21/06/2016 =
