@@ -50,7 +50,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Listings* - Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
 * *Product by Country* - Display WooCommerce products by customers country.
-* *Product by User* - Let users to add new WooCommerce products from frontend.
+* *Product by User* - Let users add new WooCommerce products from frontend.
 * *Related Products* - Change displayed WooCommerce related products number, columns, order, relate by tag and/or category, or hide related products completely.
 * *SKU* - Generate WooCommerce SKUs automatically.
 * *Sorting* - Add more WooCommerce sorting options or remove all sorting including default.
@@ -123,6 +123,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 1. Plugin admin area.
 
 == Changelog ==
+
+= 2.5.2 - 21/06/2016 =
+* Tweak - PRODUCTS - Product by User - Description updated.
 
 = 2.5.2 - 21/06/2016 =
 * Dev - "Manage Settings" functionality added.
