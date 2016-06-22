@@ -110,6 +110,7 @@ class WCJ_Orders extends WCJ_Module {
 		$img_src = plugins_url() . '/' . 'woocommerce-jetpack' . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png';
 		return '<img src="' . $img_src . '" title="' . wcj_get_country_name_by_code( $country_code ) . '">';
 	}
+
 	/**
 	 * Output custom columns for orders
 	 * @param  string $column
