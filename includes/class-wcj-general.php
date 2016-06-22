@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 */
 	public function __construct() {
 
@@ -29,20 +29,25 @@ class WCJ_General extends WCJ_Module {
 
 		$this->add_tools( array(
 			'products_atts'    => array(
-				'title' => __( 'Products Atts', 'woocommerce-jetpack' ),
-				'desc'  => __( 'All Products and All Attributes.', 'woocommerce-jetpack' ),
+				'title'     => __( 'Products Atts', 'woocommerce-jetpack' ),
+				'desc'      => __( 'All Products and All Attributes.', 'woocommerce-jetpack' ),
 			),
 			'export_customers' => array(
-				'title' => __( 'Export Customers', 'woocommerce-jetpack' ),
-				'desc'  => __( 'Export Customers.', 'woocommerce-jetpack' ),
+				'title'     => __( 'Export Customers', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Export Customers.', 'woocommerce-jetpack' ),
 			),
 			'export_customers_from_orders' => array(
-				'title' => __( 'Export Customers from Orders', 'woocommerce-jetpack' ),
-				'desc'  => __( 'Export Customers (extracted from orders).', 'woocommerce-jetpack' ),
+				'title'     => __( 'Export Customers from Orders', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Export Customers (extracted from orders).', 'woocommerce-jetpack' ),
 			),
 			'export_orders' => array(
-				'title' => __( 'Export Orders', 'woocommerce-jetpack' ),
-				'desc'  => __( 'Export Orders.', 'woocommerce-jetpack' ),
+				'title'     => __( 'Export Orders', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Export Orders.', 'woocommerce-jetpack' ),
+			),
+			'custom_roles' => array(
+				'title'     => __( 'Add/Manage Custom Roles', 'woocommerce-jetpack' ),
+				'tab_title' => __( 'Custom Roles', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Manage Custom Roles.', 'woocommerce-jetpack' ),
 			),
 		) );
 
@@ -73,6 +78,63 @@ class WCJ_General extends WCJ_Module {
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'maybe_change_paypal_email' ) );
 			}
 		}
+	}
+
+	/**
+	 * create_custom_roles_tool.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function create_custom_roles_tool() {
+		if ( isset( $_POST['wcj_add_new_role'] ) ) {
+			if (
+				! isset( $_POST['wcj_custom_role_id'] )   || '' == $_POST['wcj_custom_role_id'] ||
+				! isset( $_POST['wcj_custom_role_name'] ) || '' == $_POST['wcj_custom_role_name']
+			) {
+				echo '<p style="color:red;font-weight:bold;">' . __( 'Both fields are required!', 'woocommerce-jetpack') . '</p>';
+			} else {
+				if ( is_numeric( $_POST['wcj_custom_role_id'] ) ) {
+					echo '<p style="color:red;font-weight:bold;">' . __( 'Role ID must not be numbers only!', 'woocommerce-jetpack') . '</p>';
+				} else {
+					$result = add_role( $_POST['wcj_custom_role_id'], $_POST['wcj_custom_role_name'] );
+					if ( null !== $result ) {
+						echo '<p style="color:green;font-weight:bold;">' . __( 'Role successfully added!', 'woocommerce-jetpack') . '</p>';
+					} else {
+						echo '<p style="color:red;font-weight:bold;">' . __( 'Role already exists!', 'woocommerce-jetpack') . '</p>';
+					}
+				}
+			}
+		}
+
+		if ( isset( $_GET['wcj_delete_role'] ) && '' != $_GET['wcj_delete_role'] ) {
+			remove_role( $_GET['wcj_delete_role'] );
+			echo '<p style="color:green;font-weight:bold;">' . sprintf( __( 'Role %s successfully deleted!', 'woocommerce-jetpack'), $_GET['wcj_delete_role'] ) . '</p>';
+		}
+
+		echo $this->get_tool_header_html( 'custom_roles' );
+
+		$table_data = array();
+		$table_data[] = array( __( 'ID', 'woocommerce-jetpack'), __( 'Name', 'woocommerce-jetpack'), __( 'Actions', 'woocommerce-jetpack'), );
+		$existing_roles = wcj_get_user_roles();
+		$default_wp_wc_roles = array( 'guest', 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'customer', 'shop_manager', );
+		foreach ( $existing_roles as $role_key => $role_data ) {
+			$delete_html = ( in_array( $role_key, $default_wp_wc_roles ) )
+				? ''
+				: '<a href="' . add_query_arg( 'wcj_delete_role', $role_key ). '">' . __( 'Delete', 'woocommerce-jetpack') . '</a>';
+			$table_data[] = array( $role_key, $role_data['name'], $delete_html );
+		}
+		echo '<h3>' . __( 'Existing Roles', 'woocommerce-jetpack') . '</h3>';
+		echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
+
+		$table_data = array();
+		$table_data[] = array( __( 'ID', 'woocommerce-jetpack'),   '<input type="text" name="wcj_custom_role_id">' );
+		$table_data[] = array( __( 'Name', 'woocommerce-jetpack'), '<input type="text" name="wcj_custom_role_name">' );
+		echo '<h3>' . __( 'Add New Role', 'woocommerce-jetpack') . '</h3>';
+		echo '<form method="post" action="' . remove_query_arg( 'wcj_delete_role' ) . '">' .
+			wcj_get_table_html( $table_data, array( 'table_class' => 'widefat', 'table_heading_type' => 'vertical', 'table_style' => 'width:20%;min-width:300px;', ) )
+			. '<p>' . '<input type="submit" name="wcj_add_new_role" class="button-primary" value="' . __( 'Add', 'woocommerce-jetpack' ) . '">' . '</p>'
+			. '</form>';
 	}
 
 	/**

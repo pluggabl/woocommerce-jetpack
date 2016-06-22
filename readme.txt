@@ -124,7 +124,11 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 21/06/2016 =
+= 2.5.2 - 22/06/2016 =
+* Dev - EMAILS & MISC. - General - "Add/Manage Custom Roles" tool moved from "Price by User Role" module.
+* Dev - PRODUCTS - Product by User - Class functions replaced with global functions.
+* Dev - PRICES & CURRENCIES - Price by User Role - Class functions replaced with global functions.
+* Dev - PAYMENT GATEWAYS - Gateways by User Role - Initial module release.
 ~* Tweak - PRODUCTS - Product Add to Cart - Module description updated.
 * Tweak - PRODUCTS - Product by User - Module and admin settings descriptions updated.
 

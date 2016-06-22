@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -422,6 +422,62 @@ if ( ! function_exists( 'is_shop_manager' ) ) {
 		$the_user = ( 0 == $user_id ) ? wp_get_current_user() : get_user_by( 'id', $user_id );
 		//if ( isset( $the_user['roles'][0] ) && 'shop_manager' === $the_user['roles'][0] ) {
 		return ( isset( $the_user->roles[0] ) && 'shop_manager' === $the_user->roles[0] ) ? true : false;
+	}
+}
+
+/**
+ * wcj_get_current_user_first_role.
+ *
+ * @version 2.5.3
+ * @since   2.5.3
+ */
+if ( ! function_exists( 'wcj_get_current_user_first_role' ) ) {
+	function wcj_get_current_user_first_role() {
+		$current_user = wp_get_current_user();
+		return ( isset( $current_user->roles[0] ) && '' != $current_user->roles[0] ) ? $current_user->roles[0] : 'guest';
+	}
+}
+
+/**
+ * wcj_get_user_roles.
+ *
+ * @version 2.5.3
+ * @since   2.5.3
+ */
+if ( ! function_exists( 'wcj_get_user_roles' ) ) {
+	function wcj_get_user_roles() {
+		global $wp_roles;
+		$all_roles = ( isset( $wp_roles ) && is_object( $wp_roles ) ) ? $wp_roles->roles : array();
+		$all_roles = apply_filters( 'editable_roles', $all_roles );
+		$all_roles = array_merge( array(
+			'guest' => array(
+				'name'         => __( 'Guest', 'woocommerce-jetpack' ),
+				'capabilities' => array(),
+			) ), $all_roles );
+		return $all_roles;
+	}
+}
+/**
+ * wcj_get_user_roles_options.
+ *
+ * @version 2.5.3
+ * @since   2.5.3
+ */
+if ( ! function_exists( 'wcj_get_user_roles_options' ) ) {
+	function wcj_get_user_roles_options() {
+		global $wp_roles;
+		$all_roles = ( isset( $wp_roles ) && is_object( $wp_roles ) ) ? $wp_roles->roles : array();
+		$all_roles = apply_filters( 'editable_roles', $all_roles );
+		$all_roles = array_merge( array(
+			'guest' => array(
+				'name'         => __( 'Guest', 'woocommerce-jetpack' ),
+				'capabilities' => array(),
+			) ), $all_roles );
+		$all_roles_options = array();
+		foreach ( $all_roles as $_role_key => $_role ) {
+			$all_roles_options[ $_role_key ] = $_role['name'];
+		}
+		return $all_roles_options;
 	}
 }
 

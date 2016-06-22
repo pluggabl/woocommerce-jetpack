@@ -28,7 +28,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.5.2
+ * @version 2.5.3
  */
 
 final class WC_Jetpack {
@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.3-dev-201606211704';
+	public $version = '2.5.3-dev-201606221944';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -459,7 +459,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 */
 	function include_modules() {
 		$modules_files = array(
@@ -501,6 +501,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-payment-gateways-currency.php',
 			'includes/class-wcj-payment-gateways-min-max.php',
 			'includes/class-wcj-payment-gateways-by-country.php',
+			'includes/class-wcj-payment-gateways-by-user-role.php',
 			'includes/class-wcj-shipping.php',
 			'includes/class-wcj-shipping-calculator.php',
 			'includes/class-wcj-address-formats.php',

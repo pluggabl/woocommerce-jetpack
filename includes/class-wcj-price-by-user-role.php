@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by User Role class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -19,7 +19,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.3
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -29,14 +29,6 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		$this->desc       = __( 'Display WooCommerce products prices by user roles.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-price-by-user-role/';
 		parent::__construct();
-
-		$this->add_tools( array(
-			'custom_roles' => array(
-				'title'     => __( 'Add/Manage Custom Roles', 'woocommerce-jetpack' ),
-				'tab_title' => __( 'Custom Roles', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Manage Custom Roles.', 'woocommerce-jetpack' ),
-			),
-		) );
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
@@ -150,7 +142,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		);
 		if ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
 			foreach ( $products as $product_id => $desc ) {
-				foreach ( $this->get_user_roles() as $role_key => $role_data ) {
+				foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 					$options = array_merge( $options, array(
 						array(
 							'type'       => 'title',
@@ -195,63 +187,6 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	}
 
 	/**
-	 * create_custom_roles_tool.
-	 *
-	 * @version 2.5.0
-	 * @since   2.5.0
-	 */
-	function create_custom_roles_tool() {
-		if ( isset( $_POST['wcj_add_new_role'] ) ) {
-			if (
-				! isset( $_POST['wcj_custom_role_id'] )   || '' == $_POST['wcj_custom_role_id'] ||
-				! isset( $_POST['wcj_custom_role_name'] ) || '' == $_POST['wcj_custom_role_name']
-			) {
-				echo '<p style="color:red;font-weight:bold;">' . __( 'Both fields are required!', 'woocommerce-jetpack') . '</p>';
-			} else {
-				if ( is_numeric( $_POST['wcj_custom_role_id'] ) ) {
-					echo '<p style="color:red;font-weight:bold;">' . __( 'Role ID must not be numbers only!', 'woocommerce-jetpack') . '</p>';
-				} else {
-					$result = add_role( $_POST['wcj_custom_role_id'], $_POST['wcj_custom_role_name'] );
-					if ( null !== $result ) {
-						echo '<p style="color:green;font-weight:bold;">' . __( 'Role successfully added!', 'woocommerce-jetpack') . '</p>';
-					} else {
-						echo '<p style="color:red;font-weight:bold;">' . __( 'Role already exists!', 'woocommerce-jetpack') . '</p>';
-					}
-				}
-			}
-		}
-
-		if ( isset( $_GET['wcj_delete_role'] ) && '' != $_GET['wcj_delete_role'] ) {
-			remove_role( $_GET['wcj_delete_role'] );
-			echo '<p style="color:green;font-weight:bold;">' . sprintf( __( 'Role %s successfully deleted!', 'woocommerce-jetpack'), $_GET['wcj_delete_role'] ) . '</p>';
-		}
-
-		echo $this->get_tool_header_html( 'custom_roles' );
-
-		$table_data = array();
-		$table_data[] = array( __( 'ID', 'woocommerce-jetpack'), __( 'Name', 'woocommerce-jetpack'), __( 'Actions', 'woocommerce-jetpack'), );
-		$existing_roles = $this->get_user_roles();
-		$default_wp_wc_roles = array( 'guest', 'administrator', 'editor', 'author', 'contributor', 'subscriber', 'customer', 'shop_manager', );
-		foreach ( $existing_roles as $role_key => $role_data ) {
-			$delete_html = ( in_array( $role_key, $default_wp_wc_roles ) )
-				? ''
-				: '<a href="' . add_query_arg( 'wcj_delete_role', $role_key ). '">' . __( 'Delete', 'woocommerce-jetpack') . '</a>';
-			$table_data[] = array( $role_key, $role_data['name'], $delete_html );
-		}
-		echo '<h3>' . __( 'Existing Roles', 'woocommerce-jetpack') . '</h3>';
-		echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
-
-		$table_data = array();
-		$table_data[] = array( __( 'ID', 'woocommerce-jetpack'),   '<input type="text" name="wcj_custom_role_id">' );
-		$table_data[] = array( __( 'Name', 'woocommerce-jetpack'), '<input type="text" name="wcj_custom_role_name">' );
-		echo '<h3>' . __( 'Add New Role', 'woocommerce-jetpack') . '</h3>';
-		echo '<form method="post" action="' . remove_query_arg( 'wcj_delete_role' ) . '">' .
-			wcj_get_table_html( $table_data, array( 'table_class' => 'widefat', 'table_heading_type' => 'vertical', 'table_style' => 'width:20%;min-width:300px;', ) )
-			. '<p>' . '<input type="submit" name="wcj_add_new_role" class="button-primary" value="' . __( 'Add', 'woocommerce-jetpack' ) . '">' . '</p>'
-			. '</form>';
-	}
-
-	/**
 	 * add_hooks.
 	 *
 	 * @version 2.5.0
@@ -277,12 +212,12 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price_by_role_shipping.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 * @since   2.5.0
 	 */
 	function change_price_by_role_shipping( $package_rates, $package ) {
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_shipping_enabled', 'no' ) ) {
-			$current_user_role = $this->get_current_user_role();
+			$current_user_role = wcj_get_current_user_first_role();
 			$koef = get_option( 'wcj_price_by_user_role_' . $current_user_role, 1 );
 			$modified_package_rates = array();
 			foreach ( $package_rates as $id => $package_rate ) {
@@ -329,12 +264,12 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price_by_role.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 * @since   2.5.0
 	 */
 	function change_price_by_role( $price, $_product ) {
 
-		$current_user_role = $this->get_current_user_role();
+		$current_user_role = wcj_get_current_user_first_role();
 
 		// Per product
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {
@@ -376,11 +311,11 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 * @since   2.5.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		$user_role = $this->get_current_user_role();
+		$user_role = wcj_get_current_user_first_role();
 		$koef = get_option( 'wcj_price_by_user_role_' . $user_role, 1 );
 		$is_empty = get_option( 'wcj_price_by_user_role_empty_price_' . $user_role, 'no' );
 		$price_hash['wcj_user_role'] = array(
@@ -390,35 +325,6 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ),
 		);
 		return $price_hash;
-	}
-
-	/**
-	 * get_current_user_role.
-	 *
-	 * @version 2.5.0
-	 * @since   2.5.0
-	 */
-	function get_current_user_role() {
-		$current_user = wp_get_current_user();
-		return ( isset( $current_user->roles[0] ) && '' != $current_user->roles[0] ) ? $current_user->roles[0] : 'guest';
-	}
-
-	/**
-	 * get_user_roles.
-	 *
-	 * @version 2.5.0
-	 * @since   2.5.0
-	 */
-	function get_user_roles() {
-		global $wp_roles;
-		$all_roles = $wp_roles->roles;
-		$all_roles = apply_filters( 'editable_roles', $all_roles );
-		$all_roles = array_merge( array(
-			'guest' => array(
-				'name'         => __( 'Guest', 'woocommerce-jetpack' ),
-				'capabilities' => array(),
-			) ), $all_roles );
-		return $all_roles;
 	}
 
 	/**
@@ -445,7 +351,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 * @since   2.5.0
 	 */
 	function add_settings() {
@@ -480,9 +386,11 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		$settings[] = array(
 			'title'        => __( 'Roles & Multipliers', 'woocommerce-jetpack' ),
 			'type'         => 'title',
+			'desc'         => sprintf( __( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module', 'woocommerce-jetpack' ),
+				admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ),
 			'id'           => 'wcj_price_by_user_role_multipliers_options',
 		);
-		foreach ( $this->get_user_roles() as $role_key => $role_data ) {
+		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 			$settings = array_merge( $settings, array(
 				array(
 					'title'    => $role_data['name'],

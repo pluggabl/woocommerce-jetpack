@@ -125,28 +125,6 @@ class WCJ_Product_By_User extends WCJ_Module {
 	}
 
 	/**
-	 * get_user_roles.
-	 *
-	 * @version 2.5.2
-	 * @since   2.5.2
-	 */
-	function get_user_roles() {
-		global $wp_roles;
-		$all_roles = ( isset( $wp_roles ) && is_object( $wp_roles ) ) ? $wp_roles->roles : array();
-		$all_roles = apply_filters( 'editable_roles', $all_roles );
-		$all_roles = array_merge( array(
-			'guest' => array(
-				'name'         => __( 'Guest', 'woocommerce-jetpack' ),
-				'capabilities' => array(),
-			) ), $all_roles );
-		$all_roles_options = array();
-		foreach ( $all_roles as $_role_key => $_role ) {
-			$all_roles_options[ $_role_key ] = $_role['name'];
-		}
-		return $all_roles_options;
-	}
-
-	/**
 	 * get_settings.
 	 *
 	 * @version 2.5.3
@@ -211,11 +189,13 @@ class WCJ_Product_By_User extends WCJ_Module {
 			array(
 				array(
 					'title'    => __( 'User Visibility', 'woocommerce-jetpack' ),
+					'desc'     => sprintf( __( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module', 'woocommerce-jetpack' ),
+						admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ),
 					'id'       => 'wcj_product_by_user_user_visibility',
 					'default'  => array(),
 					'type'     => 'multiselect',
 					'class'    => 'chosen_select',
-					'options'  => $this->get_user_roles(),
+					'options'  => wcj_get_user_roles_options(),
 				),
 				array(
 					'title'    => __( 'Product Status', 'woocommerce-jetpack' ),
