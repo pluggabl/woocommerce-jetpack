@@ -8,6 +8,18 @@
  * @author  Algoritmika Ltd.
  */
 
+if ( ! function_exists( 'wcj_get_rocket_icon' ) ) {
+	/**
+	 * wcj_get_rocket_icon.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function wcj_get_rocket_icon() {
+		return '<img src="' . plugins_url() . '/' . 'woocommerce-jetpack' . '/assets/images/rocket-icon.png' . '" title="">';
+	}
+}
+
 if ( ! function_exists( 'wcj_add_files_upload_form_to_checkout_frontend' ) ) {
 	/**
 	 * wcj_add_files_upload_form_to_checkout_frontend.

@@ -78,7 +78,7 @@ final class WC_Jetpack {
 	/**
 	 * WC_Jetpack Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 * @access public
 	 */
 	public function __construct() {
@@ -98,7 +98,7 @@ final class WC_Jetpack {
 			add_filter( 'get_wc_jetpack_plus_message',                        array( $this, 'get_wcj_plus_message' ), 100, 2 );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			add_action( 'admin_menu',                                         array( $this, 'jetpack_menu' ), 100 );
-//			add_filter( 'admin_footer_text',                                  array( $this, 'admin_footer_text' ), 2 );
+			add_filter( 'admin_footer_text',                                  array( $this, 'admin_footer_text' ), 2 );
 //			add_action( 'admin_notices',                                      array( $this, 'name_changed_notice' ) );
 		}
 
@@ -299,15 +299,25 @@ final class WC_Jetpack {
 
 	/**
 	 * admin_footer_text
+	 *
+	 * @version 2.5.3
 	 */
-	/* public function admin_footer_text( $footer_text ) {
+	function admin_footer_text( $footer_text ) {
 		if ( isset( $_GET['page'] ) ) {
 			if ( 'wcj-tools' === $_GET['page'] || ( 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) ) {
-				return sprintf( __( 'If you like <strong>WooCommerce Jetpack</strong> please leave us a <a href="%1$s" target="_blank">&#9733;&#9733;&#9733;&#9733;&#9733;</a> rating on <a href="%1$s" target="_blank">WordPress.org</a>. We will be grateful for any help!', 'woocommerce-jetpack' ), 'https://wordpress.org/support/view/plugin-reviews/woocommerce-jetpack?filter=5#postform' );
+				$rocket_icons = '';
+				for ( $i = 0; $i < 5; $i++ ) {
+					$rocket_icons .= wcj_get_rocket_icon();
+				}
+				$rating_link = '<a href="https://wordpress.org/support/view/plugin-reviews/woocommerce-jetpack?filter=5#postform" target="_blank">' . $rocket_icons . '</a>';
+				return sprintf(
+					__( 'If you like <strong>Booster for WooCommerce</strong> please leave us a %s rating. Thank you, we couldn\'t have done it without you!', 'woocommerce-jetpack' ),
+					$rating_link
+				);
 			}
 		}
 		return $footer_text;
-	} */
+	}
 
 	/**
 	 * Add menu item
