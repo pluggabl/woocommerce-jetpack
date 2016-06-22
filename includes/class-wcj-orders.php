@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders class.
  *
- * @version 2.5.0
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.3
 	 */
 	public function __construct() {
 
@@ -29,7 +29,18 @@ class WCJ_Orders extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			if ( get_option( 'wcj_order_minimum_amount' ) > 0 ) {
+			$is_order_minimum_amount_enabled = false;
+			if ( get_option( 'wcj_order_minimum_amount', 0 ) > 0 ) {
+				$is_order_minimum_amount_enabled = true;
+			} else {
+				foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
+					if ( get_option( 'wcj_order_minimum_amount_by_user_role_' . $role_key, 0 ) > 0 ) {
+						$is_order_minimum_amount_enabled = true;
+						break;
+					}
+				}
+			}
+			if ( $is_order_minimum_amount_enabled ) {
 				add_action( 'woocommerce_checkout_process', array( $this, 'order_minimum_amount' ) );
 				add_action( 'woocommerce_before_cart',      array( $this, 'order_minimum_amount' ) );
 				if ( 'yes' === get_option( 'wcj_order_minimum_amount_stop_from_seeing_checkout' ) ) {
@@ -128,17 +139,44 @@ class WCJ_Orders extends WCJ_Module {
 	}
 
 	/**
+	 * get_order_minimum_amount_with_user_roles.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function get_order_minimum_amount_with_user_roles() {
+		$minimum = get_option( 'wcj_order_minimum_amount' );
+		$current_user_role = wcj_get_current_user_first_role();
+		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
+			if ( $role_key === $current_user_role ) {
+				$order_minimum_amount_by_user_role = get_option( 'wcj_order_minimum_amount_by_user_role_' . $role_key, 0 );
+				if ( $order_minimum_amount_by_user_role > /* $minimum */ 0 ) {
+					$minimum = $order_minimum_amount_by_user_role;
+				}
+				break;
+			}
+		}
+		return $minimum;
+	}
+
+	/**
 	 * order_minimum_amount.
+	 *
+	 * @version 2.5.3
 	 */
 	public function order_minimum_amount() {
-		$minimum = get_option( 'wcj_order_minimum_amount' );
-		if ( WC()->cart->total < $minimum ) {
+		$minimum = $this->get_order_minimum_amount_with_user_roles();
+		if ( 0 == $minimum ) {
+			return;
+		}
+		$cart_total = WC()->cart->total;
+		if ( $cart_total < $minimum ) {
 			if( is_cart() ) {
 				if ( 'yes' === get_option( 'wcj_order_minimum_amount_cart_notice_enabled' ) ) {
 					wc_print_notice(
 						sprintf( apply_filters( 'wcj_get_option_filter', 'You must have an order with a minimum of %s to place your order, your current order total is %s.', get_option( 'wcj_order_minimum_amount_cart_notice_message' ) ),
 							woocommerce_price( $minimum ),
-							woocommerce_price( WC()->cart->total )
+							woocommerce_price( $cart_total )
 						),
 						'notice'
 					);
@@ -147,7 +185,7 @@ class WCJ_Orders extends WCJ_Module {
 				wc_add_notice(
 					sprintf( apply_filters( 'wcj_get_option_filter', 'You must have an order with a minimum of %s to place your order, your current order total is %s.', get_option( 'wcj_order_minimum_amount_error_message' ) ),
 						woocommerce_price( $minimum ),
-						woocommerce_price( WC()->cart->total )
+						woocommerce_price( $cart_total )
 					),
 					'error'
 				);
@@ -158,7 +196,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * stop_from_seeing_checkout.
 	 *
-	 * @version 2.3.7
+	 * @version 2.5.3
 	 */
 	public function stop_from_seeing_checkout( $wp ) {
 //		if ( is_admin() ) return;
@@ -169,8 +207,18 @@ class WCJ_Orders extends WCJ_Module {
 		if ( ! isset( $woocommerce->cart ) || ! is_object( $woocommerce->cart ) ) {
 			return;
 		}
-		$the_cart_total = isset( $woocommerce->cart->cart_contents_total ) ? $woocommerce->cart->cart_contents_total : 0;
-		if ( 0 != $the_cart_total && $the_cart_total < get_option( 'wcj_order_minimum_amount' ) && is_checkout() ) {
+		if ( ! is_checkout() ) {
+			return;
+		}
+		$minimum = $this->get_order_minimum_amount_with_user_roles();
+		if ( 0 == $minimum ) {
+			return;
+		}
+		$the_cart_total = isset( $woocommerce->cart->cart_contents_total ) ? $woocommerce->cart->cart_contents_total : 0; // todo: this is different from value in order_minimum_amount() function
+		if ( 0 == $the_cart_total ) {
+			return;
+		}
+		if ( $the_cart_total < $minimum ) {
 			wp_safe_redirect( $woocommerce->cart->get_cart_url() );
 		}
 	}
@@ -178,7 +226,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Add settings arrays to Jetpack Settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.3
 	 */
 	function get_settings() {
 		$settings = array(
@@ -238,6 +286,28 @@ class WCJ_Orders extends WCJ_Module {
 				'id'       => 'wcj_order_minimum_amount_options',
 			),
 			array(
+				'title'    => __( 'Order Minimum Amount by User Role', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_order_minimum_amount_by_ser_role_options',
+			),
+		);
+		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => $role_data['name'],
+					'id'       => 'wcj_order_minimum_amount_by_user_role_' . $role_key,
+					'default'  => 0,
+					'type'     => 'number',
+					'custom_attributes' => array( 'step' => '0.0001', 'min'  => '0', ),
+				),
+			) );
+		}
+		$settings = array_merge( $settings, array(
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_order_minimum_amount_by_ser_role_options',
+			),
+			array(
 				'title'    => __( 'Orders Auto-Complete', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => __( 'This section lets you enable orders auto-complete function.', 'woocommerce-jetpack' ),
@@ -272,7 +342,7 @@ class WCJ_Orders extends WCJ_Module {
 				'type'     => 'sectionend',
 				'id'       => 'wcj_orders_list_custom_columns_options',
 			),
-		);
+		) );
 		return $this->add_standard_settings( $settings );
 	}
 }
