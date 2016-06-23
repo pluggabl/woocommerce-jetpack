@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Reports class.
  *
- * @version 2.5.0
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -232,7 +232,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Add reports to WooCommerce > Reports > Sales
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.3
 	 * @since   2.3.0
 	 */
 	public function add_sales_reports( $reports ) {
@@ -245,7 +245,7 @@ class WCJ_Reports extends WCJ_Module {
 		);
 
 		$reports['orders']['reports']['booster_monthly_sales'] = array(
-			'title'       => __( 'Booster: Monthly Sales', 'woocommerce-jetpack' ) . ' <sup>[' . __( 'Beta', 'woocommerce-jetpack' ) . ']</sup>',
+			'title'       => __( 'Booster: Monthly Sales', 'woocommerce-jetpack' ),
 			'description' => '',
 			'hide_title'  => false,
 			'callback'    => array( $this, 'get_report_monthly_sales' ),

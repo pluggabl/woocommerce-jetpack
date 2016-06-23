@@ -124,7 +124,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 22/06/2016 =
+= 2.5.2 - 23/06/2016 =
+~* Dev - EMAILS & MISC. - Reports - Monthly Sales - Major code refactoring. New data added.
 ~* Tweak - Rating message added.
 ~$* Dev - SHIPPING & ORDERS - Orders - Order Minimum Amount - "By user role" options added.
 * Dev - EMAILS & MISC. - General - "Add/Manage Custom Roles" tool moved from "Price by User Role" module.
