@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Listings class.
  *
- * @version 2.4.8
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.3
 	 */
 	public function __construct() {
 		$this->id         = 'product_listings';
@@ -27,16 +27,96 @@ class WCJ_Product_Listings extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+
 			// Exclude and Hide Empty
 			add_filter( 'woocommerce_product_subcategories_args',       array( $this, 'filter_subcategories' ), 100 );
 			add_filter( 'woocommerce_product_subcategories_hide_empty', array( $this, 'filter_subcategories_show_empty' ), 100 );
+
 			// Hide Count
 			if ( 'yes' === get_option( 'wcj_product_listings_hide_cats_count_on_shop' ) || 'yes' === get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) {
 				add_filter( 'woocommerce_subcategory_count_html', array( $this, 'remove_subcategory_count' ), 100 );
 			}
+
+			// Products per Page
+			if ( 'yes' === get_option( 'wcj_products_per_page_enabled', 'no' ) ) {
+				add_filter( 'loop_shop_per_page',           array( $this, 'set_products_per_page_number' ), PHP_INT_MAX );
+				add_action( 'woocommerce_before_shop_loop', array( $this, 'add_products_per_page_form' ), 20 );
+				add_action( 'woocommerce_after_shop_loop',  array( $this, 'add_products_per_page_form' ), 20 );
+			}
+
 			// Settings to "WooCommerce > Settings > Products > Product Listings"
 			add_filter( 'woocommerce_product_settings', array( $this, 'add_fields_to_woocommerce_settings' ), 100 );
 		}
+	}
+
+	/**
+	 * add_products_per_page_form.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function add_products_per_page_form() {
+
+		global $wp_query;
+
+		if ( isset( $_POST['wcj_products_per_page'] ) ) {
+			$products_per_page = $_POST['wcj_products_per_page'];
+		} elseif ( isset( $_COOKIE['wcj_products_per_page'] ) ) {
+			$products_per_page = $_COOKIE['wcj_products_per_page'];
+		} else {
+			$products_per_page = 36; // default
+		}
+
+		$paged = get_query_var( 'paged' );
+		if ( 0 == $paged ) {
+			$paged = 1;
+		}
+
+		$products_from  = ( $paged - 1 ) * $products_per_page + 1;
+		$products_to    = ( $paged - 1 ) * $products_per_page + $wp_query->post_count;
+		$products_total = $wp_query->found_posts;
+
+		$html = '';
+		$html .= '<div class="clearfix"></div>';
+		$html .= '<div>';
+		$html .= '<form action="' . remove_query_arg( 'paged' ) . '" method="POST">';
+		$html .= sprintf( __( 'Products <strong>%d - %d</strong> from <strong>%d</strong>.', 'woocommerce-jetpack' ), $products_from, $products_to, $products_total );
+		$html .= ' ' . __( 'Products on page', 'woocommerce-jetpack' ) . ' ';
+		$html .= '<select name="wcj_products_per_page" id="wcj_products_per_page" class="sortby rounded_corners_class" onchange="this.form.submit()">';
+		$products_per_page_array = array(
+			'2'  => '2',
+			'4'  => '4',
+			'12' => '12',
+			'24' => '24',
+			'36' => '36',
+			'48' => '48',
+			'72' => '72',
+		);
+		foreach ( $products_per_page_array as $sort_id => $sort_name ) {
+			$html .=  '<option value="' . $sort_id . '" ' . selected( $products_per_page, $sort_id, false ) . ' >' . $sort_name . '</option>';
+		}
+		$html .= '</select>';
+		$html .= '</form>';
+		$html .= '</div>';
+
+		echo $html;
+	}
+
+	/**
+	 * set_products_per_page_number.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function set_products_per_page_number( $the_number ) {
+		if ( isset( $_COOKIE['wcj_products_per_page'] ) ) {
+			$the_number = $_COOKIE['wcj_products_per_page'];
+		}
+		if ( isset( $_POST['wcj_products_per_page'] ) ) {
+			$the_number = $_POST['wcj_products_per_page'];
+			setcookie( 'wcj_products_per_page', $the_number, ( time() + 1209600 ), '/', $_SERVER['SERVER_NAME'], false );
+		}
+		return $the_number;
 	}
 
 	/**
@@ -186,7 +266,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.6
+	 * @version 2.5.3
 	 */
 	function get_settings() {
 		$settings = array(
@@ -269,6 +349,22 @@ class WCJ_Product_Listings extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_listings_archive_pages_options',
+			),
+			array(
+				'title'    => __( 'Products per Page Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_products_per_page_options',
+			),
+			array(
+				'title'    => __( 'Enable Products per Page', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_products_per_page_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_products_per_page_options',
 			),
 		);
 		return $this->add_standard_settings( $settings );
