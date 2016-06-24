@@ -223,15 +223,14 @@ class WCJ_Add_To_Cart extends WCJ_Module {
 				'default'  => 1,
 				'type'     => 'custom_number',
 				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes'
-				           => array_merge(
-								is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
-								array(
-									'step' 	=> '1',
-									'min'	=> '1',
-								)
-							  ),
-				'css'		=> 'width:100px;',
+				'custom_attributes' => array_merge(
+					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					array(
+						'step' => '1',
+						'min'  => '1',
+					)
+				),
+				'css'      => 'width:100px;',
 			),
 		);
 

@@ -69,6 +69,7 @@ return array(
 			'purchase_data',
 			'product_bookings',
 			'crowdfunding',
+			'product_addons',
 			'product_images',
 			'product_by_country',
 			'product_by_user',
