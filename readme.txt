@@ -125,6 +125,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 24/06/2016 =
+~~* Dev - EMAILS & MISC. - General - "Export Products" tool added.
 ~~* Dev - PRODUCTS - Product Listings - "Products per Page" options added.
 ~* Dev - EMAILS & MISC. - Reports - Monthly Sales - Major code refactoring. New data added.
 ~* Tweak - Rating message added.

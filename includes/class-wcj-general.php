@@ -6,6 +6,7 @@
  *
  * @version 2.5.3
  * @author  Algoritmika Ltd.
+ * @todo    import products tool;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -43,6 +44,10 @@ class WCJ_General extends WCJ_Module {
 			'export_orders' => array(
 				'title'     => __( 'Export Orders', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Export Orders.', 'woocommerce-jetpack' ),
+			),
+			'export_products' => array(
+				'title'     => __( 'Export Products', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Export Products.', 'woocommerce-jetpack' ),
 			),
 			'custom_roles' => array(
 				'title'     => __( 'Add/Manage Custom Roles', 'woocommerce-jetpack' ),
@@ -193,7 +198,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * export.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.3
 	 * @since   2.4.8
 	 */
 	function export( $tool_id ) {
@@ -207,6 +212,9 @@ class WCJ_General extends WCJ_Module {
 				break;
 			case 'orders':
 				$data = $this->export_orders();
+				break;
+			case 'products':
+				$data = $this->export_products();
 				break;
 		}
 		return $data;
@@ -267,6 +275,16 @@ class WCJ_General extends WCJ_Module {
 	 */
 	function create_export_orders_tool() {
 		$this->create_export_tool( 'orders' );
+	}
+
+	/**
+	 * create_export_products_tool.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function create_export_products_tool() {
+		$this->create_export_tool( 'products' );
 	}
 
 	/**
@@ -332,6 +350,58 @@ class WCJ_General extends WCJ_Module {
 				$order_id = $loop_orders->post->ID;
 				$order = wc_get_order( $order_id );
 				$data[] = array( $order_id, $order->billing_email, $order->billing_first_name, $order->billing_last_name, get_the_date( 'Y/m/d' ), );
+			endwhile;
+			$offset += $block_size;
+		}
+		return $data;
+	}
+
+	/**
+	 * export_products.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function export_products() {
+		$data = array();
+		$data[] = array(
+			__( 'Product ID', 'woocommerce-jetpack' ),
+			__( 'Name', 'woocommerce-jetpack' ),
+			__( 'SKU', 'woocommerce-jetpack' ),
+			__( 'Stock', 'woocommerce-jetpack' ),
+			__( 'Regular Price', 'woocommerce-jetpack' ),
+			__( 'Sale Price', 'woocommerce-jetpack' ),
+			__( 'Price', 'woocommerce-jetpack' ),
+			__( 'Type', 'woocommerce-jetpack' ),
+//			__( 'Attributes', 'woocommerce-jetpack' ),
+		);
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			$args = array(
+				'post_type'      => 'product',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+				'offset'         => $offset,
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
+			while ( $loop->have_posts() ) : $loop->the_post();
+				$product_id = $loop->post->ID;
+				$_product = wc_get_product( $product_id );
+				$data[] = array(
+					$product_id,
+					$_product->get_title(),
+					$_product->get_sku(),
+					$_product->/* get_total_stock() */get_stock_quantity(),
+					$_product->get_regular_price(),
+					$_product->get_sale_price(),
+					$_product->get_price(),
+					$_product->get_type(),
+//					( ! empty( $_product->get_attributes() ) ? serialize( $_product->get_attributes() ) : '' ),
+				);
 			endwhile;
 			$offset += $block_size;
 		}
