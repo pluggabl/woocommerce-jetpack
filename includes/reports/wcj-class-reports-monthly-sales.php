@@ -87,7 +87,8 @@ class WCJ_Reports_Monthly_Sales {
 		}
 		// Saved values
 		$saved_rates = get_option( 'wcj_reports_currency_rates', array() );
-		if ( date( 'Y-m' ) != date( 'Y-m', strtotime( $start_date ) ) ) {
+		$is_current_month = ( date( 'Y-m' ) == date( 'Y-m', strtotime( $start_date ) ) ) ? true : false;
+		if ( ! $is_current_month ) {
 			if ( ! empty( $saved_rates ) ) {
 				if ( isset( $saved_rates[ $currency_from ][ $currency_to ][ $start_date ][ $end_date ] ) ) {
 					return $saved_rates[ $currency_from ][ $currency_to ][ $start_date ][ $end_date ];
@@ -114,8 +115,10 @@ class WCJ_Reports_Monthly_Sales {
 			$average_currency_to = 1.0;
 		}
 		$the_rate = $average_currency_to / $average_currency_from;
-		$saved_rates[ $currency_from ][ $currency_to ][ $start_date ][ $end_date ] = $the_rate;
-		update_option( 'wcj_reports_currency_rates', $saved_rates );
+		if ( ! $is_current_month ) {
+			$saved_rates[ $currency_from ][ $currency_to ][ $start_date ][ $end_date ] = $the_rate;
+			update_option( 'wcj_reports_currency_rates', $saved_rates );
+		}
 		return $the_rate;
 	}
 
