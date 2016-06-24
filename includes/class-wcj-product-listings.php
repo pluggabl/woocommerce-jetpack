@@ -39,6 +39,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 
 			// Products per Page
 			if ( 'yes' === get_option( 'wcj_products_per_page_enabled', 'no' ) ) {
+				// todo: position; label; post or get;
 				add_filter( 'loop_shop_per_page',           array( $this, 'set_products_per_page_number' ), PHP_INT_MAX );
 				add_action( 'woocommerce_before_shop_loop', array( $this, 'add_products_per_page_form' ), 20 );
 				add_action( 'woocommerce_after_shop_loop',  array( $this, 'add_products_per_page_form' ), 20 );
@@ -64,7 +65,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 		} elseif ( isset( $_COOKIE['wcj_products_per_page'] ) ) {
 			$products_per_page = $_COOKIE['wcj_products_per_page'];
 		} else {
-			$products_per_page = 36; // default
+			$products_per_page = get_option( 'wcj_products_per_page_default', get_option( 'posts_per_page' ) ); // default
 		}
 
 		$paged = get_query_var( 'paged' );
@@ -83,17 +84,15 @@ class WCJ_Product_Listings extends WCJ_Module {
 		$html .= sprintf( __( 'Products <strong>%d - %d</strong> from <strong>%d</strong>.', 'woocommerce-jetpack' ), $products_from, $products_to, $products_total );
 		$html .= ' ' . __( 'Products on page', 'woocommerce-jetpack' ) . ' ';
 		$html .= '<select name="wcj_products_per_page" id="wcj_products_per_page" class="sortby rounded_corners_class" onchange="this.form.submit()">';
-		$products_per_page_array = array(
-			'2'  => '2',
-			'4'  => '4',
-			'12' => '12',
-			'24' => '24',
-			'36' => '36',
-			'48' => '48',
-			'72' => '72',
-		);
-		foreach ( $products_per_page_array as $sort_id => $sort_name ) {
-			$html .=  '<option value="' . $sort_id . '" ' . selected( $products_per_page, $sort_id, false ) . ' >' . $sort_name . '</option>';
+		$products_per_page_select_options = get_option( 'wcj_products_per_page_select_options' );
+		$products_per_page_select_options = explode( PHP_EOL, $products_per_page_select_options );
+		foreach ( $products_per_page_select_options as $products_per_page_select_option ) {
+			$the_option = explode( '|', $products_per_page_select_option );
+			if ( 2 === count( $the_option ) ) {
+				$sort_id   = $the_option[1];
+				$sort_name = $the_option[0];
+				$html .= '<option value="' . $sort_id . '" ' . selected( $products_per_page, $sort_id, false ) . ' >' . $sort_name . '</option>';
+			}
 		}
 		$html .= '</select>';
 		$html .= '</form>';
@@ -109,12 +108,13 @@ class WCJ_Product_Listings extends WCJ_Module {
 	 * @since   2.5.3
 	 */
 	function set_products_per_page_number( $the_number ) {
-		if ( isset( $_COOKIE['wcj_products_per_page'] ) ) {
-			$the_number = $_COOKIE['wcj_products_per_page'];
-		}
 		if ( isset( $_POST['wcj_products_per_page'] ) ) {
 			$the_number = $_POST['wcj_products_per_page'];
 			setcookie( 'wcj_products_per_page', $the_number, ( time() + 1209600 ), '/', $_SERVER['SERVER_NAME'], false );
+		} elseif ( isset( $_COOKIE['wcj_products_per_page'] ) ) {
+			$the_number = $_COOKIE['wcj_products_per_page'];
+		} else {
+			$the_number = get_option( 'wcj_products_per_page_default', get_option( 'posts_per_page' ) );
 		}
 		return $the_number;
 	}
@@ -138,10 +138,10 @@ class WCJ_Product_Listings extends WCJ_Module {
 	public function filter_subcategories( $args ) {
 		if ( is_shop() ) {
 			$args['exclude'] = get_option( 'wcj_product_listings_exclude_cats_on_shop' );
-			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_shop' ) ) ? 1 : 0;		// depreciated?
+			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_shop' ) ) ? 1 : 0;     // depreciated?
 		} else {
 			$args['exclude'] = get_option( 'wcj_product_listings_exclude_cats_on_archives' );
-			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_archives' ) ) ? 1 : 0;	// depreciated?
+			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_archives' ) ) ? 1 : 0; // depreciated?
 		}
 		return $args;
 	}
@@ -361,6 +361,21 @@ class WCJ_Product_Listings extends WCJ_Module {
 				'id'       => 'wcj_products_per_page_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Select Options', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Name|Number; one per line; -1 for all products', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_products_per_page_select_options',
+				'default'  => '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1',
+				'type'     => 'textarea',
+				'css'      => 'height:200px;',
+			),
+			array(
+				'title'    => __( 'Default', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_products_per_page_default',
+				'default'  => get_option( 'posts_per_page' ),
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => -1 ),
 			),
 			array(
 				'type'     => 'sectionend',
