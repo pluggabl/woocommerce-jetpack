@@ -125,6 +125,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.2 - 25/06/2016 =
+* Dev - SHIPPING & ORDERS - Orders - "Custom Columns" options added.
 * Fix - PRODUCTS - Product Input Fields - `output_custom_input_fields_in_admin_order()` for shipping bug fixed.
 ~~* Dev - PRODUCTS - Product Addons - Initial module release.
 ~~* Dev - EMAILS & MISC. - General - "Export Products" tool added.

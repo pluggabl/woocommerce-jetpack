@@ -53,10 +53,10 @@ class WCJ_Orders extends WCJ_Module {
 				add_action( 'woocommerce_thankyou', array( $this, 'auto_complete_order' ) );
 			}
 
+			// Custom columns
+			add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_column' ),     PHP_INT_MAX );
+			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
 			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
-				// Country column
-				add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_column' ),     PHP_INT_MAX );
-				add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
 				// Country filtering
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
 				add_filter( 'parse_query',           array( $this, 'orders_by_country_admin_filter_query' ) );
@@ -97,9 +97,19 @@ class WCJ_Orders extends WCJ_Module {
 
 	/**
 	 * add_order_column.
+	 *
+	 * @version 2.5.3
 	 */
 	function add_order_column( $columns ) {
-		$columns['country'] = __( 'Country', 'woocommerce-jetpack' );
+		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
+			$columns['country'] = __( 'Country', 'woocommerce-jetpack' );
+		}
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
+				$columns[ 'wcj_orders_custom_column_' . $i ] = get_option( 'wcj_orders_list_custom_columns_label_' . $i, '' );
+			}
+		}
 		return $columns;
 	}
 
@@ -113,18 +123,27 @@ class WCJ_Orders extends WCJ_Module {
 
 	/**
 	 * Output custom columns for orders
-	 * @param  string $column
+	 *
+	 * @version 2.5.3
+	 * @param   string $column
 	 */
 	public function render_order_columns( $column ) {
-		if ( 'country' != $column ) {
-			return;
+		if ( 'country' === $column && 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
+			$order = wc_get_order( get_the_ID() );
+//			$country_code = wcj_get_customer_country( $order->customer_user );
+			$country_code = $order->billing_country;
+			echo ( 2 == strlen( $country_code ) )
+				? $this->wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code )
+				: wcj_get_country_name_by_code( $country_code );
 		}
-		$order = wc_get_order( get_the_ID() );
-//		$country_code = wcj_get_customer_country( $order->customer_user );
-		$country_code = $order->billing_country;
-		echo ( 2 == strlen( $country_code ) )
-			? $this->wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code )
-			: wcj_get_country_name_by_code( $country_code );
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
+				if ( 'wcj_orders_custom_column_' . $i === $column ) {
+					echo do_shortcode( get_option( 'wcj_orders_list_custom_columns_value_' . $i, '' ) );
+				}
+			}
+		}
 	}
 
 	/**
@@ -339,6 +358,46 @@ class WCJ_Orders extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
+			array(
+				'title'    => __( 'Custom Columns Total Number', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_orders_list_custom_columns_total_number',
+				'default'  => 1,
+				'type'     => 'custom_number',
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => array_merge(
+					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					array( 'step' => '1', 'min'  => '0', )
+				),
+			),
+		) );
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => __( 'Custom Column', 'woocommerce-jetpack' ) . ' #' . $i,
+					'desc'     => __( 'Enabled', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_orders_list_custom_columns_enabled_' . $i,
+					'default'  => 'no',
+					'type'     => 'checkbox',
+				),
+				array(
+					'desc'     => __( 'Label', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_orders_list_custom_columns_label_' . $i,
+					'default'  => '',
+					'type'     => 'text',
+					'css'      => 'width:300px;',
+				),
+				array(
+					'desc'     => __( 'Value', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_orders_list_custom_columns_value_' . $i,
+					'default'  => '',
+					'type'     => 'text',
+					'css'      => 'width:300px;',
+				),
+			) );
+		}
+		$settings = array_merge( $settings, array(
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_orders_list_custom_columns_options',
