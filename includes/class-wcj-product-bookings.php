@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Bookings class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.3
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -58,7 +58,9 @@ class WCJ_Product_Bookings extends WCJ_Module {
 				add_filter( 'woocommerce_order_item_name',                array( $this, 'add_info_to_order_item_name' ), PHP_INT_MAX, 2 );
 				add_action( 'woocommerce_add_order_item_meta',            array( $this, 'add_info_to_order_item_meta' ), PHP_INT_MAX, 3 );
 				// Hide quantity
-				add_filter( 'woocommerce_is_sold_individually',           array( $this, 'sold_individually' ), PHP_INT_MAX, 2 );
+				if ( 'yes' === get_option( 'wcj_product_bookings_hide_quantity', 'yes' ) ) {
+					add_filter( 'woocommerce_is_sold_individually',       array( $this, 'sold_individually' ), PHP_INT_MAX, 2 );
+				}
 				// Disable AJAX add to cart
 				add_filter( 'woocommerce_product_supports',               array( $this, 'disable_add_to_cart_ajax' ), PHP_INT_MAX, 3 );
 			}
@@ -421,7 +423,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 * @since   2.5.0
 	 */
 	function get_settings() {
@@ -483,6 +485,22 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_bookings_labels_and_messages_options',
+			),
+			array(
+				'title'    => __( 'Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_bookings_options',
+			),
+			array(
+				'title'    => __( 'Hide Quantity Selector for Booking Products', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_bookings_hide_quantity',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_bookings_options',
 			),
 		);
 		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Bookings" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
