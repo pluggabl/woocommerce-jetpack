@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -285,9 +285,13 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * output_custom_input_fields_in_admin_order.
 	 *
-	 * @version 2.4.6
+	 * @version 2.5.3
 	 */
 	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
+		if ( null === $_product ) {
+			// Shipping
+			return;
+		}
 		echo '<table cellspacing="0" class="display_meta">';
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product->id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
