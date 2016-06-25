@@ -124,7 +124,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.2 - 25/06/2016 =
+= 2.5.3 - 25/06/2016 =
 * Dev - PRODUCTS - Bookings - "Hide Quantity Selector" option added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` shortcode added.
 * Dev - SHIPPING & ORDERS - Orders - "Custom Columns" options added.

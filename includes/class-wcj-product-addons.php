@@ -38,6 +38,12 @@ class WCJ_Product_Addons extends WCJ_Module {
 				add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
 			}
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+				if ( 'yes' === get_option( 'wcj_product_addons_ajax_enabled', 'no' ) ) {
+					// Scripts
+					add_action( 'wp_enqueue_scripts',                         array( $this, 'enqueue_scripts' ) );
+					add_action( 'wp_ajax_product_addons_price_change',        array( $this, 'price_change_ajax' ) );
+					add_action( 'wp_ajax_nopriv_product_addons_price_change', array( $this, 'price_change_ajax' ) );
+				}
 				// Single Page
 				add_action( 'woocommerce_before_add_to_cart_button',      array( $this, 'add_addons_to_frontend' ), PHP_INT_MAX );
 				// Add to cart
@@ -50,6 +56,48 @@ class WCJ_Product_Addons extends WCJ_Module {
 				add_filter( 'woocommerce_cart_item_name',                 array( $this, 'add_info_to_cart_item_name' ), PHP_INT_MAX, 3 );
 				add_filter( 'woocommerce_order_item_name',                array( $this, 'add_info_to_order_item_name' ), PHP_INT_MAX, 2 );
 				add_action( 'woocommerce_add_order_item_meta',            array( $this, 'add_info_to_order_item_meta' ), PHP_INT_MAX, 3 );
+			}
+		}
+	}
+
+	/**
+	 * price_change_ajax.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function price_change_ajax( $param ) {
+		$the_product = wc_get_product( $_POST['product_id'] );
+		$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
+		$the_price = $the_product->$get_price_method();
+		$parent_product_id = ( $the_product->is_type( 'variation' ) ) ? wp_get_post_parent_id( $_POST['product_id'] ) : $_POST['product_id'];
+		$addons = $this->get_product_addons( $parent_product_id );
+		foreach ( $addons as $addon ) {
+			if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
+				$the_price += $addon['price_value'];
+			}
+		}
+		echo wc_price( $the_price );
+		wp_die();
+	}
+
+	/**
+	 * enqueue_scripts.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function enqueue_scripts() {
+		if ( is_product() ) {
+			$the_product = wc_get_product();
+			$addons = $this->get_product_addons( $the_product->id );
+			if ( ! empty( $addons ) ) {
+				wp_enqueue_script(  'wcj-product-addons', wcj_plugin_url() . '/includes/js/wcj-product-addons.js', array(), false, true );
+				wp_localize_script( 'wcj-product-addons', 'ajax_object', array(
+					'ajax_url'            => admin_url( 'admin-ajax.php' ),
+					'product_id'          => get_the_ID(),
+					'original_price_html' => $the_product->get_price_html(),
+				) );
 			}
 		}
 	}
@@ -440,6 +488,24 @@ class WCJ_Product_Addons extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_addons_all_products_options',
+			),
+		) );
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => __( 'Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_addons_options',
+			),
+			array(
+				'title'    => __( 'Enable AJAX on Single Product Page', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_addons_ajax_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_addons_options',
 			),
 		) );
 		return $this->add_standard_settings( $settings );
