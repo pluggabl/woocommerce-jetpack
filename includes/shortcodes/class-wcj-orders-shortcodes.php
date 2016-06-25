@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.3
 	 */
 	public function __construct() {
 
@@ -36,6 +36,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_custom_field',
 			'wcj_order_custom_meta_field',
 			'wcj_order_meta',
+			'wcj_order_items_meta',
 
 			'wcj_order_subtotal',
 			'wcj_order_subtotal_plus_shipping',
@@ -281,6 +282,29 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_order_billing_phone( $atts ) {
 		return $this->the_order->billing_phone;
+	}
+
+	/**
+	 * wcj_order_items_meta.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function wcj_order_items_meta( $atts ) {
+		$items_metas = array();
+		$the_items = $this->the_order->get_items();
+		foreach ( $the_items as $item_id => $item ) {
+			$the_meta = $this->the_order->get_item_meta( $item_id, $atts['meta_key'], true );
+			if ( '' != $the_meta ) {
+				$items_metas[] = $the_meta;
+			}
+			/* foreach ( $item as $key => $value ) {
+				if ( $atts['meta_key'] === $key ) {
+					$items_metas[] = $value;
+				}
+			} */
+		}
+		return ( ! empty( $items_metas ) ) ? implode( ', ', $items_metas ) : '';
 	}
 
 	/**
