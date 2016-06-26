@@ -124,7 +124,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.3 - 25/06/2016 =
+= 2.5.3 - 26/06/2016 =
+* Fix - PRODUCTS - Product by User - Settings moved to `init` hook. This caused "wp-admin show white screen and no errors" on some servers.
 * Dev - PRODUCTS - Bookings - "Hide Quantity Selector" option added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` shortcode added.
 * Dev - SHIPPING & ORDERS - Orders - "Custom Columns" options added.

@@ -29,6 +29,8 @@ class WCJ_Product_By_User extends WCJ_Module {
 		$this->link       = 'http://booster.io/features/woocommerce-product-by-user/';
 		parent::__construct();
 
+		add_action( 'init', array( $this, 'add_settings_hook' ) );
+
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === get_option( 'wcj_product_by_user_add_to_my_account', 'yes' ) ) {
 				add_filter( 'woocommerce_account_menu_items', array( $this, 'add_my_products_tab_my_account_page' ) );
@@ -125,12 +127,33 @@ class WCJ_Product_By_User extends WCJ_Module {
 	}
 
 	/**
+	 * add_settings_hook.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function add_settings_hook() {
+		add_filter( 'wcj_product_by_user_settings', array( $this, 'add_settings' ) );
+	}
+
+	/**
 	 * get_settings.
 	 *
 	 * @version 2.5.3
 	 * @since   2.5.2
 	 */
 	function get_settings() {
+		$settings = apply_filters( 'wcj_product_by_user_settings', array() );
+		return $this->add_standard_settings( $settings, __( 'Use [wcj_product_add_new] shortcode.', 'woocommerce-jetpack' ) );
+	}
+
+	/**
+	 * add_settings.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function add_settings() {
 
 		$fields = array(
 			'desc'          => __( 'Description', 'woocommerce-jetpack' ),
@@ -217,7 +240,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 				),
 			)
 		);
-		return $this->add_standard_settings( $settings, __( 'Use [wcj_product_add_new] shortcode.', 'woocommerce-jetpack' ) );
+		return $settings;
 	}
 }
 
