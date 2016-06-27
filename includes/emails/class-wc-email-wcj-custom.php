@@ -11,7 +11,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 2.4.8
+ * @version 2.5.3
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -21,7 +21,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Constructor
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.3
 	 */
 	function __construct( $id = 1 ) {
 
@@ -42,10 +42,10 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			$is_woocommerce_new_order_notification_added = false;
 			foreach ( $trigger_hooks as $trigger_hook ) {
 				if ( false !== strpos( $trigger_hook, 'woocommerce_new_order_notification' ) && false === $is_woocommerce_new_order_notification_added ) {
-					add_action( 'woocommerce_new_order_notification', array( $this, 'trigger' ) );
+					add_action( 'woocommerce_new_order_notification', array( $this, 'trigger' ), PHP_INT_MAX );
 					$is_woocommerce_new_order_notification_added = true;
 				} else {
-					add_action( $trigger_hook, array( $this, 'trigger' ) );
+					add_action( $trigger_hook, array( $this, 'trigger' ), PHP_INT_MAX );
 				}
 			}
 		}
@@ -80,12 +80,17 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Trigger.
 	 *
-	 * @version 2.4.5
+	 * @version 2.5.3
 	 */
 	function trigger( $order_id ) {
 
+		if ( ! $this->is_enabled() /* || ! $this->get_recipient() */ ) {
+			return;
+		}
+
 		if ( $order_id ) {
-			$this->object       = wc_get_order( $order_id );
+
+			$this->object = wc_get_order( $order_id );
 
 			if ( $this->customer_email ) {
 				$this->recipient = $this->object->billing_email;
@@ -96,13 +101,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 
 			$this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( $this->object->order_date ) );
 			$this->replace['order-number'] = $this->object->get_order_number();
-		}
 
-		if ( ! $this->is_enabled() || ! $this->get_recipient() ) {
-			return;
-		}
-
-		if ( $order_id ) {
 			global $post;
 			$order = wc_get_order( $order_id );
 			if ( 'woocommerce_new_order_notification' === current_filter() ) {
@@ -125,7 +124,18 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			$post = $order->post;
 			setup_postdata( $post );
 		}
+
+		$this->recipient = do_shortcode( $this->recipient );
+
+		if ( ! $this->get_recipient() ) {
+			if ( $order_id ) {
+				wp_reset_postdata();
+			}
+			return;
+		}
+
 		$this->send( $this->get_recipient(), $this->get_subject(), do_shortcode( $this->get_content() ), $this->get_headers(), $this->get_attachments() );
+
 		if ( $order_id ) {
 			wp_reset_postdata();
 		}
