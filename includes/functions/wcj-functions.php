@@ -16,7 +16,7 @@ if ( ! function_exists( 'wcj_get_rocket_icon' ) ) {
 	 * @since   2.5.3
 	 */
 	function wcj_get_rocket_icon() {
-		return '<img src="' . plugins_url() . '/' . 'woocommerce-jetpack' . '/assets/images/rocket-icon.png' . '" title="">';
+		return '<img class="wcj-rocket-icon" src="' . plugins_url() . '/' . 'woocommerce-jetpack' . '/assets/images/rocket-icon.png' . '" title="">';
 	}
 }
 

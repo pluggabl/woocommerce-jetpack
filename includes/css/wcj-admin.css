@@ -1,0 +1,16 @@
+/**
+ * wcj-admin
+ *
+ * @version 2.5.3
+ * @since   2.5.3
+ */
+
+img.wcj-rocket-icon {
+	opacity: 0.5;
+	filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+img.wcj-rocket-icon:hover {
+	opacity: 1.0;
+	filter: alpha(opacity=100); /* For IE8 and earlier */
+}

@@ -104,6 +104,7 @@ final class WC_Jetpack {
 
 		// Scripts
 		if ( is_admin() ) {
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_wcj_backend_scripts' ) );
 			if (
 				'yes' === get_option( 'wcj_purchase_data_enabled' ) ||
 				'yes' === get_option( 'wcj_pdf_invoicing_enabled' ) ||
@@ -129,6 +130,16 @@ final class WC_Jetpack {
 
 		// Loaded action
 		do_action( 'wcj_loaded' );
+	}
+
+	/**
+	 * enqueue_wcj_backend_scripts.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function enqueue_wcj_backend_scripts() {
+		wp_enqueue_style( 'wcj-admin', wcj_plugin_url() . '/includes/css/wcj-admin.css' );
 	}
 
 	/**
