@@ -39,10 +39,12 @@ class WCJ_Product_Listings extends WCJ_Module {
 
 			// Products per Page
 			if ( 'yes' === get_option( 'wcj_products_per_page_enabled', 'no' ) ) {
-				// todo: position; label; post or get;
-				add_filter( 'loop_shop_per_page',           array( $this, 'set_products_per_page_number' ), PHP_INT_MAX );
-				add_action( 'woocommerce_before_shop_loop', array( $this, 'add_products_per_page_form' ), 20 );
-				add_action( 'woocommerce_after_shop_loop',  array( $this, 'add_products_per_page_form' ), 20 );
+				// todo: +position priority; +label; post or get;
+				add_filter( 'loop_shop_per_page', array( $this, 'set_products_per_page_number' ), PHP_INT_MAX );
+				$position_hooks = get_option( 'wcj_products_per_page_position', array( 'woocommerce_before_shop_loop' ) );
+				foreach ( $position_hooks as $position_hook ) {
+					add_action( $position_hook, array( $this, 'add_products_per_page_form' ), get_option( 'wcj_products_per_page_position_priority', 40 ) );
+				}
 			}
 
 			// Settings to "WooCommerce > Settings > Products > Product Listings"
@@ -81,9 +83,12 @@ class WCJ_Product_Listings extends WCJ_Module {
 		$html .= '<div class="clearfix"></div>';
 		$html .= '<div>';
 		$html .= '<form action="' . remove_query_arg( 'paged' ) . '" method="POST">';
-		$html .= sprintf( __( 'Products <strong>%d - %d</strong> from <strong>%d</strong>.', 'woocommerce-jetpack' ), $products_from, $products_to, $products_total );
-		$html .= ' ' . __( 'Products on page', 'woocommerce-jetpack' ) . ' ';
-		$html .= '<select name="wcj_products_per_page" id="wcj_products_per_page" class="sortby rounded_corners_class" onchange="this.form.submit()">';
+//		$html .= sprintf( __( 'Products <strong>%d - %d</strong> from <strong>%d</strong>.', 'woocommerce-jetpack' ), $products_from, $products_to, $products_total );
+//		$html .= ' ' . __( 'Products on page', 'woocommerce-jetpack' ) . ' ';
+//		$html .= '<select name="wcj_products_per_page" id="wcj_products_per_page" class="sortby rounded_corners_class" onchange="this.form.submit()">';
+		$the_text = get_option( 'wcj_products_per_page_text', __( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ) );
+		$select_form = '<select name="wcj_products_per_page" id="wcj_products_per_page" class="sortby rounded_corners_class" onchange="this.form.submit()">';
+		$html .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $the_text );
 		$products_per_page_select_options = get_option( 'wcj_products_per_page_select_options' );
 		$products_per_page_select_options = explode( PHP_EOL, $products_per_page_select_options );
 		foreach ( $products_per_page_select_options as $products_per_page_select_option ) {
@@ -376,6 +381,31 @@ class WCJ_Product_Listings extends WCJ_Module {
 				'default'  => get_option( 'posts_per_page' ),
 				'type'     => 'number',
 				'custom_attributes' => array( 'min' => -1 ),
+			),
+			array(
+				'title'    => __( 'Position', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_products_per_page_position',
+				'default'  => array( 'woocommerce_before_shop_loop' ),
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'options'  => array(
+					'woocommerce_before_shop_loop' => __( 'Before shop loop', 'woocommerce-jetpack' ),
+					'woocommerce_after_shop_loop'  => __( 'After shop loop', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'title'    => __( 'Position Priority', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_products_per_page_position_priority',
+				'default'  => 40,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 0 ),
+			),
+			array(
+				'title'    => __( 'Text', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_products_per_page_text',
+				'default'  => __( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ),
+				'type'     => 'textarea',
+				'css'      => 'width:66%;min-width:300px;',
 			),
 			array(
 				'type'     => 'sectionend',
