@@ -125,6 +125,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.3 - 28/06/2016 =
+-* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price Filter widget fixed.
 ~* Dev - EMAILS & MISC. - Emails - Custom Emails - `do_shortcode` added to custom email recipient.
 * Fix - SHIPPING & ORDERS - Orders and PRODUCTS - Product by User - Settings moved to `init` hook. This caused "wp-admin show white screen and no errors" on some servers (or "Fatal error: Call to undefined function wp_get_current_user() in ..." message if debug enabled).
 * Dev - PRODUCTS - Bookings - "Hide Quantity Selector" option added.
@@ -133,7 +134,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - PRODUCTS - Product Input Fields - `output_custom_input_fields_in_admin_order()` for shipping bug fixed.
 ~* Dev - PRODUCTS - Product Addons - Initial module release.
 ~* Dev - EMAILS & MISC. - General - "Export Products" tool added.
-~$* Dev - PRODUCTS - Product Listings - "Products per Page" options added.
+~* Dev - PRODUCTS - Product Listings - "Products per Page" options added.
 ~* Dev - EMAILS & MISC. - Reports - Monthly Sales - Major code refactoring. New data added.
 ~* Tweak - Rating message added.
 ~$* Dev - SHIPPING & ORDERS - Orders - Order Minimum Amount - "By user role" options added.
