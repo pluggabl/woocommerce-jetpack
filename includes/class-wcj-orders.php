@@ -332,8 +332,15 @@ class WCJ_Orders extends WCJ_Module {
 				'title'    => __( 'Order Minimum Amount by User Role', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_order_minimum_amount_by_ser_role_options',
+				'desc'     => sprintf( __( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.', 'woocommerce-jetpack' ),
+					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ),
 			),
 		);
+		$c = array( 'guest', 'administrator', 'customer' );
+		$is_r = apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' );
+		if ( '' == $is_r ) {
+			$is_r = array();
+		}
 		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 			$settings = array_merge( $settings, array(
 				array(
@@ -341,7 +348,8 @@ class WCJ_Orders extends WCJ_Module {
 					'id'       => 'wcj_order_minimum_amount_by_user_role_' . $role_key,
 					'default'  => 0,
 					'type'     => 'number',
-					'custom_attributes' => array( 'step' => '0.0001', 'min'  => '0', ),
+					'custom_attributes' => ( ! in_array( $role_key, $c ) ? array_merge( array( 'step' => '0.0001', 'min'  => '0', ), $is_r ) : array( 'step' => '0.0001', 'min'  => '0', ) ),
+					'desc_tip' => ( ! in_array( $role_key, $c ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ) : '' ),
 				),
 			) );
 		}
