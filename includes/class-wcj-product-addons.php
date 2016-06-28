@@ -72,12 +72,17 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$the_price = $the_product->$get_price_method();
 		$parent_product_id = ( $the_product->is_type( 'variation' ) ) ? wp_get_post_parent_id( $_POST['product_id'] ) : $_POST['product_id'];
 		$addons = $this->get_product_addons( $parent_product_id );
+		$the_addons_price = 0;
 		foreach ( $addons as $addon ) {
 			if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
-				$the_price += $addon['price_value'];
+				$the_addons_price += $addon['price_value'];
 			}
 		}
-		echo wc_price( $the_price );
+		if ( 0 != $the_addons_price ) {
+			echo wc_price( $the_price + $the_addons_price );
+		} else {
+			echo $the_product->get_price_html();
+		}
 		wp_die();
 	}
 
@@ -96,7 +101,6 @@ class WCJ_Product_Addons extends WCJ_Module {
 				wp_localize_script( 'wcj-product-addons', 'ajax_object', array(
 					'ajax_url'            => admin_url( 'admin-ajax.php' ),
 					'product_id'          => get_the_ID(),
-					'original_price_html' => $the_product->get_price_html(),
 				) );
 			}
 		}

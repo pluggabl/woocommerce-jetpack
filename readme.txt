@@ -131,9 +131,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` shortcode added.
 * Dev - SHIPPING & ORDERS - Orders - "Custom Columns" options added.
 * Fix - PRODUCTS - Product Input Fields - `output_custom_input_fields_in_admin_order()` for shipping bug fixed.
-~~* Dev - PRODUCTS - Product Addons - Initial module release.
-~~* Dev - EMAILS & MISC. - General - "Export Products" tool added.
-~~$* Dev - PRODUCTS - Product Listings - "Products per Page" options added.
+~* Dev - PRODUCTS - Product Addons - Initial module release.
+~* Dev - EMAILS & MISC. - General - "Export Products" tool added.
+~$* Dev - PRODUCTS - Product Listings - "Products per Page" options added.
 ~* Dev - EMAILS & MISC. - Reports - Monthly Sales - Major code refactoring. New data added.
 ~* Tweak - Rating message added.
 ~$* Dev - SHIPPING & ORDERS - Orders - Order Minimum Amount - "By user role" options added.

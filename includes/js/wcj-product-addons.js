@@ -4,30 +4,6 @@
  * version 2.5.3
  * since   2.5.3
  */
-var product_addons_decodeEntities = (function () {
-	//create a new html document (doesn't execute script tags in child elements)
-	var doc = document.implementation.createHTMLDocument("");
-	var element = doc.createElement('div');
-
-	function getText(str) {
-		element.innerHTML = str;
-		str = element.textContent;
-		element.textContent = '';
-		return str;
-	}
-
-	function decodeHTMLEntities(str) {
-		if (str && typeof str === 'string') {
-			var x = getText(str);
-			while (str !== x) {
-				str = x;
-				x = getText(x);
-			}
-			return x;
-		}
-	}
-	return decodeHTMLEntities;
-})();
 
 function change_price() {
 	var is_variation_ok = true;
@@ -38,8 +14,12 @@ function change_price() {
 	}
 	if ( is_variation_ok ) {
 		var product_id = jQuery("input[type='hidden'][name='variation_id']").val();
+		var is_variable;
 		if ( ! product_id ) {
+			is_variable = false;
 			product_id = ajax_object.product_id;
+		} else {
+			is_variable = true;
 		}
 		var data = {
 			'action': 'product_addons_price_change',
@@ -57,11 +37,13 @@ function change_price() {
 		});
 		jQuery.post(ajax_object.ajax_url, data, function(response) {
 			if ( '' != response ) {
-				jQuery("p[class='price']").text(product_addons_decodeEntities(response));
+				if ( ! is_variable ) {
+					jQuery("p[class='price']").html(response);
+				} else {
+					jQuery("span[class='price']").html(response);
+				}
 			}
 		});
-	} else {
-		jQuery("p[class='price']").text(product_addons_decodeEntities(ajax_object.original_price_html));
 	}
 }
 
