@@ -27,6 +27,8 @@ class WCJ_Orders extends WCJ_Module {
 		$this->link       = 'http://booster.io/features/woocommerce-orders/';
 		parent::__construct();
 
+		add_action( 'init', array( $this, 'add_settings_hook' ) );
+
 		if ( $this->is_enabled() ) {
 
 			$is_order_minimum_amount_enabled = false;
@@ -244,11 +246,32 @@ class WCJ_Orders extends WCJ_Module {
 	}
 
 	/**
-	 * Add settings arrays to Jetpack Settings.
+	 * add_settings_hook.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function add_settings_hook() {
+		add_filter( 'wcj_orders_settings', array( $this, 'add_settings' ) );
+	}
+
+	/**
+	 * get_settings.
 	 *
 	 * @version 2.5.3
 	 */
 	function get_settings() {
+		$settings = apply_filters( 'wcj_orders_settings', array() );
+		return $this->add_standard_settings( $settings );
+	}
+
+	/**
+	 * add_settings.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function add_settings() {
 		$settings = array(
 			array(
 				'title'    => __( 'Order Minimum Amount', 'woocommerce-jetpack' ),
@@ -403,7 +426,7 @@ class WCJ_Orders extends WCJ_Module {
 				'id'       => 'wcj_orders_list_custom_columns_options',
 			),
 		) );
-		return $this->add_standard_settings( $settings );
+		return $settings;
 	}
 }
 
