@@ -124,7 +124,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.3 - 27/06/2016 =
+= 2.5.3 - 28/06/2016 =
 ~* Dev - EMAILS & MISC. - Emails - Custom Emails - `do_shortcode` added to custom email recipient.
 * Fix - SHIPPING & ORDERS - Orders and PRODUCTS - Product by User - Settings moved to `init` hook. This caused "wp-admin show white screen and no errors" on some servers (or "Fatal error: Call to undefined function wp_get_current_user() in ..." message if debug enabled).
 * Dev - PRODUCTS - Bookings - "Hide Quantity Selector" option added.
