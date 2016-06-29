@@ -23,7 +23,7 @@ class WCJ_Orders extends WCJ_Module {
 
 		$this->id         = 'orders';
 		$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Minimum WooCommerce order amount; orders auto-complete; custom admin order list columns.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Minimum WooCommerce order amount (optionally by user role); orders auto-complete; custom admin order list columns.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-orders/';
 		parent::__construct();
 

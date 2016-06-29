@@ -43,11 +43,12 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Bookings* - Add bookings products to WooCommerce.
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
 * *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Disable add to cart button on per product basis.
+* *Product Addons* - Add (paid/free/discount) addons to WooCommerce products.
 * *Product Cost Price* - Save WooCommerce product purchase costs data for admin reports.
 * *Product Images* - Customize WooCommerce products images, thumbnails and sale flashes.
 * *Product Info* - Add additional info to WooCommerce category and single product pages.
 * *Product Input Fields* - WooCommerce product input fields.
-* *Product Listings* - Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.
+* *Product Listings* - Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories. Add "products per page" selector.
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
 * *Product by Country* - Display WooCommerce products by customers country.
 * *Product by User* - Let users add new WooCommerce products from frontend.
@@ -73,6 +74,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Gateways Icons* - Change or completely remove icons (images) for any (default or custom) WooCommerce payment gateway.
 * *Gateways Min/Max* - Add min/max amounts for WooCommerce payment gateways to show up.
 * *Gateways by Country or State* - Set countries or states to include/exclude for WooCommerce payment gateways to show up.
+* *Gateways by User Role* - Set user roles to include/exclude for WooCommerce payment gateways to show up.
 * *Gateways per Product or Category* - Show WooCommerce gateway only if there is selected product or product category in cart.
 
 **Shipping & Orders**
@@ -80,7 +82,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Address Formats* - Set address format in WooCommerce orders on per country basis. Force base country display.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
-* *Orders* - Minimum WooCommerce order amount; orders auto-complete; custom admin order list columns.
+* *Orders* - Minimum WooCommerce order amount (optionally by user role); orders auto-complete; custom admin order list columns.
 * *Shipping* - Add multiple custom shipping methods to WooCommerce. Hide WooCommerce shipping when free is available. Display "left to free shipping" info.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 
@@ -94,7 +96,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
-* *General* - Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets.
+* *General* - Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets. Export tools. Custom roles tool.
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
 

@@ -24,7 +24,7 @@ class WCJ_General extends WCJ_Module {
 
 		$this->id         = 'general';
 		$this->short_desc = __( 'General', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets. Export tools. Custom roles tool.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-booster-general-tools/';
 		parent::__construct();
 
