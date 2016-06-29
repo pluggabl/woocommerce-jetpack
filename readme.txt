@@ -136,6 +136,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
  * Dev - PRODUCTS - Product by User - Class functions replaced with global functions.
  * Dev - PRODUCTS - Product Listings - "Products per Page" options added.
  * Fix - PRODUCTS - Product Input Fields - `output_custom_input_fields_in_admin_order()` for shipping bug fixed.
+ * Dev - PRODUCTS - SKU - "Allow Duplicate SKUs" option added.
  * Dev - PAYMENT GATEWAYS - Gateways by User Role - Initial module release.
  * Dev - SHIPPING & ORDERS - Orders - "Custom Columns" options added.
  * Dev - SHIPPING & ORDERS - Orders - Settings moved to `init` hook.
