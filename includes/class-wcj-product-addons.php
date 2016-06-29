@@ -7,7 +7,7 @@
  * @version 2.5.3
  * @since   2.5.3
  * @author  Algoritmika Ltd.
- * @todo    +per product (free limit); +ajax (variable); admin order view; description and docs url;
+ * @todo    +per product (free limit); admin order view; description and docs url;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

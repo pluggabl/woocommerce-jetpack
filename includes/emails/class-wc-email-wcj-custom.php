@@ -81,6 +81,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	 * Trigger.
 	 *
 	 * @version 2.5.3
+	 * @todo    do_shortcode doesn't work for new order notifications
 	 */
 	function trigger( $order_id ) {
 

@@ -124,7 +124,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.3 - 28/06/2016 =
+= 2.5.3 - 29/06/2016 =
  * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` shortcode added.
 -* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price Filter widget fixed.
  * Dev - PRICES & CURRENCIES - Price by User Role - Class functions replaced with global functions.
@@ -132,14 +132,14 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 ~* Dev - PRODUCTS - Product Addons - Initial module release.
  * Fix - PRODUCTS - Product by User - Settings moved to `init` hook. This caused "wp-admin show white screen and no errors" on some servers (or "Fatal error: Call to undefined function wp_get_current_user() in ..." message if debug enabled).
  * Dev - PRODUCTS - Product by User - Class functions replaced with global functions.
-~* Dev - PRODUCTS - Product Listings - "Products per Page" options added.
+ * Dev - PRODUCTS - Product Listings - "Products per Page" options added.
  * Fix - PRODUCTS - Product Input Fields - `output_custom_input_fields_in_admin_order()` for shipping bug fixed.
  * Dev - PAYMENT GATEWAYS - Gateways by User Role - Initial module release.
  * Dev - SHIPPING & ORDERS - Orders - "Custom Columns" options added.
  * Dev - SHIPPING & ORDERS - Orders - Settings moved to `init` hook.
-~* Dev - SHIPPING & ORDERS - Orders - Order Minimum Amount - "By user role" options added.
-~* Dev - EMAILS & MISC. - Emails - Custom Emails - `do_shortcode` added to custom email recipient.
-~* Dev - EMAILS & MISC. - General - "Export Products" tool added.
+ * Dev - SHIPPING & ORDERS - Orders - Order Minimum Amount - "By user role" options added.
+ * Dev - EMAILS & MISC. - Emails - Custom Emails - `do_shortcode` added to custom email recipient.
+ * Dev - EMAILS & MISC. - General - "Export Products" tool added.
  * Dev - EMAILS & MISC. - General - "Add/Manage Custom Roles" tool moved from "Price by User Role" module.
 ~* Dev - EMAILS & MISC. - Reports - Monthly Sales - Major code refactoring. New data added.
  * Tweak - Rating message added.

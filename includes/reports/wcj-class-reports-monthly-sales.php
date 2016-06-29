@@ -304,24 +304,17 @@ class WCJ_Reports_Monthly_Sales {
 		$menu .= '<br class="clear">';
 		$html .= $menu;
 		$html .= '<h4>' . __( 'Report currency', 'woocommerce-jetpack' ) . ': ' . $report_currency . '</h4>';
+		$months_styles = array();
+		for ( $i = 1; $i <= 12; $i++ ) {
+			$months_styles[] = 'width:6%;';
+		}
 		$html .= wcj_get_table_html( $table_data, array(
 				'table_class'        => 'widefat striped',
 				'table_heading_type' => 'horizontal',
-				'columns_styles'     => array(
-					'width:16%;',
-					'width:6%;',
-					'width:6%;',
-					'width:6%;',
-					'width:6%;',
-					'width:6%;',
-					'width:6%;',
-					'width:6%;',
-					'width:6%;',
-					'width:6%;',
-					'width:6%;',
-					'width:6%;',
-					'width:6%;',
-					'width:12%;font-weight:bold;',
+				'columns_styles'     => array_merge(
+					array( 'width:16%;' ),
+					$months_styles,
+					array( 'width:12%;font-weight:bold;' )
 				),
 		) );
 		$html .= '<p style="font-size:x-small;"><em>' . sprintf( __( 'Report generated in: %s s', 'woocommerce-jetpack' ),

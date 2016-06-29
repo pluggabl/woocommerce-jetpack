@@ -398,7 +398,7 @@ class WCJ_General extends WCJ_Module {
 					$_product->/* get_total_stock() */get_stock_quantity(),
 					$_product->get_regular_price(),
 					$_product->get_sale_price(),
-					$_product->get_price(),
+					( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? '' : $_product->get_price() ),
 					$_product->get_type(),
 //					( ! empty( $_product->get_attributes() ) ? serialize( $_product->get_attributes() ) : '' ),
 				);
