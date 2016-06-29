@@ -7,7 +7,7 @@
  * @version 2.5.3
  * @since   2.5.3
  * @author  Algoritmika Ltd.
- * @todo    +per product (free limit); admin order view; description and docs url;
+ * @todo    admin order view (names);
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -36,6 +36,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 				add_action( 'save_post_product',       array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 				add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
+				$this->co = 'wcj_product_addons_per_product_settings_enabled';
 			}
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				if ( 'yes' === get_option( 'wcj_product_addons_ajax_enabled', 'no' ) ) {
@@ -58,6 +59,16 @@ class WCJ_Product_Addons extends WCJ_Module {
 				add_action( 'woocommerce_add_order_item_meta',            array( $this, 'add_info_to_order_item_meta' ), PHP_INT_MAX, 3 );
 			}
 		}
+	}
+
+	/**
+	 * get_the_notice.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function get_the_notice() {
+		return __( 'Booster: Free plugin\'s version is limited to only three products with per product addons enabled at a time. You will need to get <a href="http://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of products with per product addons.', 'woocommerce-jetpack' );
 	}
 
 	/**
@@ -291,66 +302,6 @@ class WCJ_Product_Addons extends WCJ_Module {
 		if ( ! empty( $html ) ) {
 			echo '<div id="wcj_product_addons">' . $html . '</div>';
 		}
-	}
-
-	/**
-	 * save_meta_box_value.
-	 *
-	 * @version 2.5.3
-	 * @since   2.5.3
-	 */
-	function save_meta_box_value( $option_value, $option_name, $module_id ) {
-		if ( true === apply_filters( 'wcj_get_option_filter', false, true ) ) {
-			return $option_value;
-		}
-		if ( 'no' === $option_value ) {
-			return $option_value;
-		}
-		if ( $this->id === $module_id && 'wcj_product_addons_per_product_settings_enabled' === $option_name ) {
-			$args = array(
-				'post_type'      => 'product',
-				'post_status'    => 'any',
-				'posts_per_page' => 1,
-				'meta_key'       => '_' . 'wcj_product_addons_per_product_settings_enabled',
-				'meta_value'     => 'yes',
-				'post__not_in'   => array( get_the_ID() ),
-			);
-			$loop = new WP_Query( $args );
-			$c = $loop->found_posts + 1;
-			if ( $c >= 2 ) {
-				add_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-				return 'no';
-			}
-		}
-		return $option_value;
-	}
-
-	/**
-	 * add_notice_query_var.
-	 *
-	 * @version 2.5.3
-	 * @since   2.5.3
-	 */
-	function add_notice_query_var( $location ) {
-		remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
-		return add_query_arg( array( 'wcj_product_addons_admin_notice' => true ), $location );
-	}
-
-	/**
-	 * admin_notices.
-	 *
-	 * @version 2.5.3
-	 * @since   2.5.3
-	 */
-	function admin_notices() {
-		if ( ! isset( $_GET['wcj_product_addons_admin_notice'] ) ) {
-			return;
-		}
-		?><div class="error"><p><?php
-			echo '<div class="message">'
-				. __( 'Booster: Free plugin\'s version is limited to only one product with per product addons enabled at a time. You will need to get <a href="http://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of products with per product addons.', 'woocommerce-jetpack' )
-				. '</div>';
-		?></p></div><?php
 	}
 
 	/**

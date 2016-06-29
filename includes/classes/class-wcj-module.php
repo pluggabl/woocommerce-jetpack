@@ -38,6 +38,62 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	}
 
 	/**
+	 * save_meta_box_value.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function save_meta_box_value( $option_value, $option_name, $module_id ) {
+		if ( true === apply_filters( 'wcj_get_option_filter', false, true ) ) {
+			return $option_value;
+		}
+		if ( 'no' === $option_value ) {
+			return $option_value;
+		}
+		if ( $this->id === $module_id && $this->co === $option_name ) {
+			$args = array(
+				'post_type'      => 'product',
+				'post_status'    => 'any',
+				'posts_per_page' => 3,
+				'meta_key'       => '_' . $this->co,
+				'meta_value'     => 'yes',
+				'post__not_in'   => array( get_the_ID() ),
+			);
+			$loop = new WP_Query( $args );
+			$c = $loop->found_posts + 1;
+			if ( $c >= 4 ) {
+				add_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
+				return 'no';
+			}
+		}
+		return $option_value;
+	}
+
+	/**
+	 * add_notice_query_var.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function add_notice_query_var( $location ) {
+		remove_filter( 'redirect_post_location', array( $this, 'add_notice_query_var' ), 99 );
+		return add_query_arg( array( 'wcj_' . $this->id . '_admin_notice' => true ), $location );
+	}
+
+	/**
+	 * admin_notices.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function admin_notices() {
+		if ( ! isset( $_GET[ 'wcj_' . $this->id . '_admin_notice' ] ) ) {
+			return;
+		}
+		echo '<div class="error"><p><div class="message">' . $this->get_the_notice() . '</div></p></div>';
+	}
+
+	/**
 	 * reset_settings.
 	 *
 	 * @version 2.5.0
