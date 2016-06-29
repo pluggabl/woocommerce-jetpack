@@ -219,6 +219,7 @@ class WCJ_Orders extends WCJ_Module {
 	 * stop_from_seeing_checkout.
 	 *
 	 * @version 2.5.3
+	 * @todo    cart_contents_total - this is different from value in order_minimum_amount() function
 	 */
 	public function stop_from_seeing_checkout( $wp ) {
 //		if ( is_admin() ) return;
@@ -236,7 +237,7 @@ class WCJ_Orders extends WCJ_Module {
 		if ( 0 == $minimum ) {
 			return;
 		}
-		$the_cart_total = isset( $woocommerce->cart->cart_contents_total ) ? $woocommerce->cart->cart_contents_total : 0; // todo: this is different from value in order_minimum_amount() function
+		$the_cart_total = isset( $woocommerce->cart->cart_contents_total ) ? $woocommerce->cart->cart_contents_total : 0;
 		if ( 0 == $the_cart_total ) {
 			return;
 		}

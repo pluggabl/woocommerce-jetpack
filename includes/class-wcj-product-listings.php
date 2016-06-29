@@ -18,6 +18,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.5.3
+	 * @todo    products per page - position priority for every hook; post or get.
 	 */
 	public function __construct() {
 		$this->id         = 'product_listings';
@@ -39,7 +40,6 @@ class WCJ_Product_Listings extends WCJ_Module {
 
 			// Products per Page
 			if ( 'yes' === get_option( 'wcj_products_per_page_enabled', 'no' ) ) {
-				// todo: +position priority; post or get;
 				add_filter( 'loop_shop_per_page', array( $this, 'set_products_per_page_number' ), PHP_INT_MAX );
 				$position_hooks = get_option( 'wcj_products_per_page_position', array( 'woocommerce_before_shop_loop' ) );
 				foreach ( $position_hooks as $position_hook ) {
