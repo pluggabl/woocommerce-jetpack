@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -254,7 +254,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output the settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 */
 	function output() {
 
@@ -268,14 +268,14 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			? false : true;
 
 		// Depreciated message
-		$depreciated_modules = array(
-			'product_info' => 'Product Info V2',
+		$depreciated_modules_and_links = array(
+			'product_info' => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=products&section=product_custom_info' ) . '">' . __( 'Product Info', 'woocommerce-jetpack' ) . '</a>',
 		);
-		if ( array_key_exists( $current_section, $depreciated_modules ) ) {
+		if ( array_key_exists( $current_section, $depreciated_modules_and_links ) ) {
 			echo '<div id="wcj_message" class="error">';
 			echo '<p>';
 			echo '<strong>';
-			echo sprintf( __( 'Please note that current module is depreciated and will be removed in future updates. Please use <em>%s</em> module instead.', 'woocommerce-jetpack' ), $depreciated_modules[ $current_section ] );
+			echo sprintf( __( 'Please note that current <em>%s</em> module is depreciated and will be removed in future updates. Please use <em>%s</em> module instead.', 'woocommerce-jetpack' ), WCJ()->modules[ $current_section ]->short_desc, $depreciated_modules_and_links[ $current_section ] );
 			echo '</strong>';
 			echo '</p>';
 			echo '</div>';

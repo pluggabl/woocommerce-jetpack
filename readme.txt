@@ -144,8 +144,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 ~* Dev - EMAILS & MISC. - Reports - Monthly Sales - Major code refactoring. New data added.
  * Tweak - Rating message added.
  * Tweak - Module's documentation button on new line.
+ * Tweak - Depreciated module message updated.
  * Tweak - PRODUCTS - Product Add to Cart - Module description updated.
  * Tweak - PRODUCTS - Product by User - Module and admin settings descriptions updated.
+ * Tweak - PRODUCTS - Product Info - Moved to EMAILS & MISC. Renamed to "Product Info V1". "Product Info V2" renamed to "Product Info".
 
 = 2.5.2 - 21/06/2016 =
 * Dev - "Manage Settings" functionality added.

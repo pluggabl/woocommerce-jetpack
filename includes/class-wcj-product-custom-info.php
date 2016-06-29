@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Custom Info class.
  *
- * @version 2.5.0
+ * @version 2.5.3
  * @since   2.4.0
  * @author  Algoritmika Ltd.
  */
@@ -18,12 +18,12 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.3
 	 */
 	public function __construct() {
 
 		$this->id         = 'product_custom_info';
-		$this->short_desc = __( 'Product Info V2', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Product Info', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add additional info to WooCommerce category and single product pages.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-info/';
 		parent::__construct();

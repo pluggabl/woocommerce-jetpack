@@ -60,7 +60,6 @@ return array(
 			'product_listings',
 			'product_tabs',
 			'product_custom_info',
-			'product_info',
 			'related_products',
 			'sorting',
 			'sku',
@@ -147,6 +146,7 @@ return array(
 			'emails',
 			'wpml',
 //			'pdf_invoices',
+			'product_info',
 		),
 	),
 
