@@ -316,10 +316,11 @@ final class WC_Jetpack {
 	function admin_footer_text( $footer_text ) {
 		if ( isset( $_GET['page'] ) ) {
 			if ( 'wcj-tools' === $_GET['page'] || ( 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) ) {
-				$rocket_icons = '';
+				/* $rocket_icons = '';
 				for ( $i = 0; $i < 5; $i++ ) {
 					$rocket_icons .= wcj_get_rocket_icon();
-				}
+				} */
+				$rocket_icons = wcj_get_5_rocket_image();
 				$rating_link = '<a href="https://wordpress.org/support/view/plugin-reviews/woocommerce-jetpack?filter=5#postform" target="_blank">' . $rocket_icons . '</a>';
 				return sprintf(
 					__( 'If you like <strong>Booster for WooCommerce</strong> please leave us a %s rating. Thank you, we couldn\'t have done it without you!', 'woocommerce-jetpack' ),

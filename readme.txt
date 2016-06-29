@@ -142,7 +142,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 ~* Dev - EMAILS & MISC. - General - "Export Products" tool added.
  * Dev - EMAILS & MISC. - General - "Add/Manage Custom Roles" tool moved from "Price by User Role" module.
 ~* Dev - EMAILS & MISC. - Reports - Monthly Sales - Major code refactoring. New data added.
-~* Tweak - Rating message added.
+ * Tweak - Rating message added.
  * Tweak - Module's documentation button on new line.
  * Tweak - PRODUCTS - Product Add to Cart - Module description updated.
  * Tweak - PRODUCTS - Product by User - Module and admin settings descriptions updated.

@@ -20,6 +20,18 @@ if ( ! function_exists( 'wcj_get_rocket_icon' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_5_rocket_image' ) ) {
+	/**
+	 * wcj_get_5_rocket_image.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function wcj_get_5_rocket_image() {
+		return '<img class="wcj-rocket-icon" src="' . plugins_url() . '/' . 'woocommerce-jetpack' . '/assets/images/5-rockets.png' . '" title="">';
+	}
+}
+
 if ( ! function_exists( 'wcj_add_files_upload_form_to_checkout_frontend' ) ) {
 	/**
 	 * wcj_add_files_upload_form_to_checkout_frontend.
