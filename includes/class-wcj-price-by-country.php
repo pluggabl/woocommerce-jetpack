@@ -83,10 +83,8 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	 * @since   2.5.3
 	 */
 	function update_products_price_by_country_module_saved( $all_sections, $current_section ) {
-		if ( 'price_by_country' === $current_section || 'currency_exchange_rates' === $current_section ) {
-			if ( wcj_is_module_enabled( $current_section ) ) {
-				wcj_update_products_price_by_country();
-			}
+		if ( 'price_by_country' === $current_section && wcj_is_module_enabled( 'price_by_country' ) ) {
+			wcj_update_products_price_by_country();
 		}
 	}
 
