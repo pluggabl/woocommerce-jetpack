@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.3-dev-201606292337';
+	public $version = '2.5.3-dev-201607020040';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -664,7 +664,7 @@ final class WC_Jetpack {
 	/**
 	 * manage_options_export.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 * @since   2.5.2
 	 */
 	function manage_options_export() {
@@ -693,7 +693,6 @@ final class WC_Jetpack {
 		header( "Content-Description: File Transfer" );
 		header( "Content-Length: " . strlen( $export_settings ) );
 		echo $export_settings;
-		wcj_log( $export_counter );
 		die();
 	}
 

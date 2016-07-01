@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 */
 	public function __construct() {
 
@@ -56,6 +56,19 @@ class WCJ_Price_By_Country extends WCJ_Module {
 					include_once( 'price-by-country/class-wcj-price-by-country-local.php' );
 				}
 			}
+
+			// Price Filter Widget
+			if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
+				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
+					add_action( 'save_post_product', array( $this, 'update_products_price_by_country_product_saved' ), PHP_INT_MAX, 2 );
+					add_action( 'woocommerce_ajax_save_product_variations', array( $this, 'update_products_price_by_country_product_saved_ajax' ), PHP_INT_MAX, 1 );
+				}
+			}
+		}
+
+		// Price Filter Widget
+		if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
+			add_action( 'woojetpack_after_settings_save', array( $this, 'update_products_price_by_country_module_saved' ), PHP_INT_MAX, 2  );
 		}
 
 		if ( is_admin() ) {
@@ -64,9 +77,43 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	}
 
 	/**
+	 * update_products_price_by_country_module_saved.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function update_products_price_by_country_module_saved( $all_sections, $current_section ) {
+		if ( 'price_by_country' === $current_section || 'currency_exchange_rates' === $current_section ) {
+			if ( wcj_is_module_enabled( $current_section ) ) {
+				wcj_update_products_price_by_country();
+			}
+		}
+	}
+
+	/**
+	 * update_products_price_by_country_product_saved_ajax.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function update_products_price_by_country_product_saved_ajax( $post_id ) {
+		wcj_update_products_price_by_country_for_single_product( $post_id );
+	}
+
+	/**
+	 * update_products_price_by_country_product_saved.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function update_products_price_by_country_product_saved( $post_id, $post ) {
+		wcj_update_products_price_by_country_for_single_product( $post_id );
+	}
+
+	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 */
 	function get_settings() {
 
@@ -142,6 +189,14 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				'desc_tip' => __( 'This will add meta boxes in product edit.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_local_enabled',
 				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'title'    => __( 'Price Filter Widget Support', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_price_by_country_price_filter_widget_support_enabled',
+				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
 

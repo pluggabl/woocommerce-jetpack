@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exchange Rates Crons class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -23,7 +23,7 @@ class WCJ_Exchange_Rates_Crons {
 
 		add_action( 'wp', array( $this, 'schedule_the_events' ) );
 		$this->update_intervals  = array(
-			//'manual'     => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
+//			'manual'     => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
 			'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
 			'hourly'     => __( 'Update Hourly', 'woocommerce-jetpack' ),
 			'twicedaily' => __( 'Update Twice Daily', 'woocommerce-jetpack' ),
@@ -111,7 +111,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * On the scheduled action hook, run a function.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 */
 	function update_the_exchange_rates( $interval ) {
 
@@ -190,8 +190,14 @@ class WCJ_Exchange_Rates_Crons {
 			} else {
 				$result_message = __( 'Cron job: exchange rates update failed', 'woocommerce-jetpack' );
 			}
-			if ( 'yes' === get_option( 'wcj_currency_exchange_logging_enabled', 'no' ) ) {
+			/* if ( 'yes' === get_option( 'wcj_currency_exchange_logging_enabled', 'no' ) ) {
 				wcj_log( $result_message . ': ' . $currency_from . $currency_to . ': ' . $the_rate . ': ' . 'update_the_exchange_rates: ' . $interval );
+			} */
+		}
+
+		if ( wcj_is_module_enabled( 'price_by_country' ) ) {
+			if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
+				wcj_update_products_price_by_country();
 			}
 		}
 	}

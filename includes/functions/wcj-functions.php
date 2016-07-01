@@ -8,6 +8,186 @@
  * @author  Algoritmika Ltd.
  */
 
+if ( ! function_exists( 'wcj_price_by_country' ) ) {
+	/**
+	 * wcj_price_by_country.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function wcj_price_by_country( $price, $product, $group_id, $the_current_filter = '' ) {
+
+		$is_price_modified = false;
+
+		if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled' ) ) {
+			// Per product
+			$meta_box_id = 'price_by_country';
+			$scope = 'local';
+
+			if ( is_numeric( $product ) ) {
+				$the_product_id = $product;
+			} else {
+				$the_product_id = ( isset( $product->variation_id ) ) ? $product->variation_id : $product->id;
+			}
+
+			$meta_id = '_' . 'wcj_' . $meta_box_id . '_make_empty_price_' . $scope . '_' . $group_id;
+			if ( 'on' === get_post_meta( $the_product_id, $meta_id, true ) ) {
+				return '';
+			}
+
+			$price_by_country = '';
+			if ( '' == $the_current_filter ) {
+				$the_current_filter = current_filter();
+			}
+			if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
+				$_product = wc_get_product( $the_product_id );
+				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
+				return $_product->$get_price_method();
+
+			} elseif ( 'woocommerce_get_price' == $the_current_filter || 'woocommerce_variation_prices_price' == $the_current_filter ) {
+
+				$regular_or_sale = '_regular_price_';
+				$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
+				$regular_price = get_post_meta( $the_product_id, $meta_id, true );
+
+				$regular_or_sale = '_sale_price_';
+				$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
+				$sale_price = get_post_meta( $the_product_id, $meta_id, true );
+
+				if ( ! empty( $sale_price ) && $sale_price < $regular_price ) {
+					$price_by_country = $sale_price;
+				} else {
+					$price_by_country = $regular_price;
+				}
+
+			}
+			elseif (
+				'woocommerce_get_regular_price' == $the_current_filter ||
+				'woocommerce_get_sale_price' == $the_current_filter ||
+				'woocommerce_variation_prices_regular_price' == $the_current_filter ||
+				'woocommerce_variation_prices_sale_price' == $the_current_filter
+			) {
+				$regular_or_sale = (
+					'woocommerce_get_regular_price' == $the_current_filter || 'woocommerce_variation_prices_regular_price' == $the_current_filter
+				) ? '_regular_price_' : '_sale_price_';
+				$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
+				$price_by_country = get_post_meta( $the_product_id, $meta_id, true );
+			}
+
+			if ( '' != $price_by_country ) {
+				$modified_price = $price_by_country;
+				$is_price_modified = true;
+			}
+		}
+
+		if ( ! $is_price_modified ) {
+			if ( 'yes' === get_option( 'wcj_price_by_country_make_empty_price_group_' . $group_id, 1 ) || '' === $price ) {
+				return '';
+			}
+		}
+
+		if ( ! $is_price_modified ) {
+			// Globally
+			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
+			if ( 1 != $country_exchange_rate ) {
+				$modified_price = $price * $country_exchange_rate;
+				$rounding = get_option( 'wcj_price_by_country_rounding', 'none' );
+				$precision = get_option( 'woocommerce_price_num_decimals', 2 );
+				switch ( $rounding ) {
+					case 'round':
+						$modified_price = round( $modified_price );
+						break;
+					case 'floor':
+						$modified_price = floor( $modified_price );
+						break;
+					case 'ceil':
+						$modified_price = ceil( $modified_price );
+						break;
+					default: // case 'none':
+						$modified_price = round( $modified_price, $precision ); // $modified_price
+						break;
+				}
+				$is_price_modified = true;
+			}
+		}
+
+		return ( $is_price_modified ) ? $modified_price : $price;
+	}
+}
+
+if ( ! function_exists( 'wcj_update_products_price_by_country_for_single_product' ) ) {
+	/**
+	 * wcj_update_products_price_by_country_for_single_product.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function wcj_update_products_price_by_country_for_single_product( $product_id ) {
+		$_product = wc_get_product( $product_id );
+		if ( $_product->is_type( 'variable' ) ) {
+			$available_variations = $_product->get_available_variations();
+			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+				$min_variation_price = PHP_INT_MAX;
+				$max_variation_price = 0;
+				foreach ( $available_variations as $variation ) {
+					$variation_product_id = $variation['variation_id'];
+					$_old_variation_price = get_post_meta( $variation_product_id, '_price', true );
+					$price_by_country = wcj_price_by_country( $_old_variation_price, $variation_product_id, $i, 'woocommerce_get_price' );
+					update_post_meta( $variation_product_id, '_' . 'wcj_price_by_country_' . $i, $price_by_country );
+					if ( '' != $price_by_country && $price_by_country < $min_variation_price ) {
+						$min_variation_price = $price_by_country;
+					}
+					if ( $price_by_country > $max_variation_price ) {
+						$max_variation_price = $price_by_country;
+					}
+				}
+				delete_post_meta( $product_id, '_' . 'wcj_price_by_country_' . $i );
+				add_post_meta( $product_id, '_' . 'wcj_price_by_country_' . $i, $min_variation_price );
+				if ( $min_variation_price != $max_variation_price ) {
+					add_post_meta( $product_id, '_' . 'wcj_price_by_country_' . $i, $max_variation_price );
+				}
+			}
+		} else {
+			$_old_price = get_post_meta( $product_id, '_price', true );
+			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+				$price_by_country = wcj_price_by_country( $_old_price, $product_id, $i, 'woocommerce_get_price' );
+				update_post_meta( $product_id, '_' . 'wcj_price_by_country_' . $i, $price_by_country );
+			}
+		}
+	}
+}
+
+if ( ! function_exists( 'wcj_update_products_price_by_country' ) ) {
+	/**
+	 * wcj_update_products_price_by_country - all products.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function wcj_update_products_price_by_country() {
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+			$args = array(
+				'post_type'      => 'product',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) break;
+			while ( $loop->have_posts() ) : $loop->the_post();
+				$product_id = $loop->post->ID;
+				wcj_update_products_price_by_country_for_single_product( $product_id );
+			endwhile;
+			$offset += $block_size;
+		}
+		wp_reset_postdata();
+	}
+}
+
 if ( ! function_exists( 'wcj_get_rocket_icon' ) ) {
 	/**
 	 * wcj_get_rocket_icon.

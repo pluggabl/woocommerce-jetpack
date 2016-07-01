@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -16,16 +16,20 @@ class WCJ_Price_by_Country_Core {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 2.5.3
 	 */
 	public function __construct() {
 		$this->customer_country_group_id = null;
+		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 ); // so early because of price filter widget
+//		$this->add_hooks();
 		add_action( 'init', array( $this, 'add_hooks' ) );
 	}
 
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.3
 	 */
 	function add_hooks() {
 
@@ -62,11 +66,47 @@ class WCJ_Price_by_Country_Core {
 		add_filter( 'woocommerce_get_price_excluding_tax', array( $this, 'change_price_by_country_grouped' ), PHP_INT_MAX - 1, 3 );
 
 		// Currency hooks
-		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 );
+//		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 );
 		add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ),   PHP_INT_MAX - 1, 1 );
 
 		// Shipping
 		add_filter( 'woocommerce_package_rates', array( $this, 'change_shipping_price_by_country' ), PHP_INT_MAX - 1, 2 );
+
+		// Price Filter Widget
+		if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
+			add_filter( 'woocommerce_price_filter_meta_keys',   array( $this, 'price_filter_meta_keys' ), PHP_INT_MAX, 1 );
+			add_filter( 'woocommerce_product_query_meta_query', array( $this, 'price_filter_meta_query' ), PHP_INT_MAX, 2 );
+		}
+	}
+
+	/**
+	 * price_filter_meta_query.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function price_filter_meta_query( $meta_query, $_wc_query ) {
+		foreach ( $meta_query as $_key => $_query ) {
+			if ( isset( $_query['price_filter'] ) && true === $_query['price_filter'] && isset( $_query['key'] ) ) {
+				if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
+					$meta_query[ $_key ]['key'] = '_' . 'wcj_price_by_country_' . $group_id;
+				}
+			}
+		}
+		return $meta_query;
+	}
+
+	/**
+	 * price_filter_meta_keys.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function price_filter_meta_keys( $keys ) {
+		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
+			$keys = array( '_' . 'wcj_price_by_country_' . $group_id );
+		}
+		return $keys;
 	}
 
 	/**
@@ -261,107 +301,11 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_by_country.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.3
 	 */
 	function change_price_by_country( $price, $product ) {
-
-		if ( is_numeric( $product ) ) {
-			$the_product_id = $product;
-		} else {
-			$the_product_id = ( isset( $product->variation_id ) ) ? $product->variation_id : $product->id;
-		}
-
 		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
-
-			$is_price_modified = false;
-
-			if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled' ) ) {
-				// Per product
-				$meta_box_id = 'price_by_country';
-				$scope = 'local';
-
-				$meta_id = '_' . 'wcj_' . $meta_box_id . '_make_empty_price_' . $scope . '_' . $group_id;
-				if ( 'on' === get_post_meta( $the_product_id, $meta_id, true ) ) {
-					return '';
-				}
-
-				$price_by_country = '';
-				$the_current_filter = current_filter();
-				if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
-					$_product = wc_get_product( $the_product_id );
-					$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-					return $_product->$get_price_method();
-
-				} elseif ( 'woocommerce_get_price' == $the_current_filter || 'woocommerce_variation_prices_price' == $the_current_filter ) {
-
-					$regular_or_sale = '_regular_price_';
-					$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
-					$regular_price = get_post_meta( $the_product_id, $meta_id, true );
-
-					$regular_or_sale = '_sale_price_';
-					$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
-					$sale_price = get_post_meta( $the_product_id, $meta_id, true );
-
-					if ( ! empty( $sale_price ) && $sale_price < $regular_price ) {
-						$price_by_country = $sale_price;
-					} else {
-						$price_by_country = $regular_price;
-					}
-
-				}
-				elseif (
-					'woocommerce_get_regular_price' == $the_current_filter ||
-					'woocommerce_get_sale_price' == $the_current_filter ||
-					'woocommerce_variation_prices_regular_price' == $the_current_filter ||
-					'woocommerce_variation_prices_sale_price' == $the_current_filter
-				) {
-					$regular_or_sale = (
-						'woocommerce_get_regular_price' == $the_current_filter || 'woocommerce_variation_prices_regular_price' == $the_current_filter
-					) ? '_regular_price_' : '_sale_price_';
-					$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
-					$price_by_country = get_post_meta( $the_product_id, $meta_id, true );
-				}
-
-				if ( '' != $price_by_country ) {
-					$modified_price = $price_by_country;
-					$is_price_modified = true;
-				}
-			}
-
-			if ( ! $is_price_modified ) {
-				if ( 'yes' === get_option( 'wcj_price_by_country_make_empty_price_group_' . $group_id, 1 ) || '' === $price ) {
-					return '';
-				}
-			}
-
-			if ( ! $is_price_modified ) {
-				// Globally
-				$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
-				if ( 1 != $country_exchange_rate ) {
-					$modified_price = $price * $country_exchange_rate;
-					$rounding = get_option( 'wcj_price_by_country_rounding', 'none' );
-					$precision = get_option( 'woocommerce_price_num_decimals', 2 );
-					switch ( $rounding ) {
-						case 'round':
-							$modified_price = round( $modified_price );
-							break;
-						case 'floor':
-							$modified_price = floor( $modified_price );
-							break;
-						case 'ceil':
-							$modified_price = ceil( $modified_price );
-							break;
-						default: // case 'none':
-							$modified_price = round( $modified_price, $precision ); // $modified_price
-							break;
-					}
-					$is_price_modified = true;
-				}
-			}
-
-			if ( $is_price_modified ) {
-				return $modified_price;
-			}
+			return wcj_price_by_country( $price, $product, $group_id );
 		}
 		// No changes
 		return $price;

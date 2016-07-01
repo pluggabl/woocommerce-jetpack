@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency Exchange Rates class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -86,7 +86,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	/**
 	 * add_currency_exchange_rates_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 */
 	function add_currency_exchange_rates_settings() {
 
@@ -160,13 +160,13 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 			}
 		}
 
-		$settings[] = array(
+		/* $settings[] = array(
 			'title'    => __( 'Logging', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_currency_exchange_logging_enabled',
 			'default'  => 'no',
 			'type'     => 'checkbox',
-		);
+		); */
 
 		$settings[] = array(
 			'type'  => 'sectionend',
