@@ -31,26 +31,10 @@ class WCJ_Orders extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			$is_order_minimum_amount_enabled = false;
-			if ( get_option( 'wcj_order_minimum_amount', 0 ) > 0 ) {
-				$is_order_minimum_amount_enabled = true;
-			} else {
-				foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
-					if ( get_option( 'wcj_order_minimum_amount_by_user_role_' . $role_key, 0 ) > 0 ) {
-						$is_order_minimum_amount_enabled = true;
-						break;
-					}
-				}
-			}
-			if ( $is_order_minimum_amount_enabled ) {
-				add_action( 'woocommerce_checkout_process', array( $this, 'order_minimum_amount' ) );
-				add_action( 'woocommerce_before_cart',      array( $this, 'order_minimum_amount' ) );
-				if ( 'yes' === get_option( 'wcj_order_minimum_amount_stop_from_seeing_checkout' ) ) {
-					add_action( 'wp',                array( $this, 'stop_from_seeing_checkout' ), 100 );
-//					add_action( 'template_redirect', array( $this, 'stop_from_seeing_checkout' ), 100 );
-				}
-			}
+			// Order minimum amount
+			add_action( 'init', array( $this, 'add_order_minimum_amount_hooks' ) );
 
+			// Order auto complete
 			if ( 'yes' === get_option( 'wcj_order_auto_complete_enabled' ) ) {
 				add_action( 'woocommerce_thankyou', array( $this, 'auto_complete_order' ) );
 			}
@@ -62,6 +46,34 @@ class WCJ_Orders extends WCJ_Module {
 				// Country filtering
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
 				add_filter( 'parse_query',           array( $this, 'orders_by_country_admin_filter_query' ) );
+			}
+		}
+	}
+
+	/**
+	 * add_order_minimum_amount_hooks.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function add_order_minimum_amount_hooks() {
+		$is_order_minimum_amount_enabled = false;
+		if ( get_option( 'wcj_order_minimum_amount', 0 ) > 0 ) {
+			$is_order_minimum_amount_enabled = true;
+		} else {
+			foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
+				if ( get_option( 'wcj_order_minimum_amount_by_user_role_' . $role_key, 0 ) > 0 ) {
+					$is_order_minimum_amount_enabled = true;
+					break;
+				}
+			}
+		}
+		if ( $is_order_minimum_amount_enabled ) {
+			add_action( 'woocommerce_checkout_process', array( $this, 'order_minimum_amount' ) );
+			add_action( 'woocommerce_before_cart',      array( $this, 'order_minimum_amount' ) );
+			if ( 'yes' === get_option( 'wcj_order_minimum_amount_stop_from_seeing_checkout' ) ) {
+				add_action( 'wp',                array( $this, 'stop_from_seeing_checkout' ), 100 );
+//				add_action( 'template_redirect', array( $this, 'stop_from_seeing_checkout' ), 100 );
 			}
 		}
 	}
