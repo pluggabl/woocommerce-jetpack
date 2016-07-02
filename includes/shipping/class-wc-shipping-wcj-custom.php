@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Shipping class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -156,12 +156,12 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				/**
 				 * calculate_shipping function.
 				 *
-				 * @version 2.5.2
+				 * @version 2.5.3
 				 * @access  public
 				 * @param   mixed $package
 				 * @return  void
 				 */
-				function calculate_shipping( $package ) {
+				function calculate_shipping( $package = array() ) {
 					switch ( $this->type ) {
 						case 'by_total_cart_quantity':
 							$cart_quantity = 0;
