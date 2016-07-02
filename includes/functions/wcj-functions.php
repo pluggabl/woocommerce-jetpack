@@ -365,20 +365,38 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 		if ( '' == $content ) {
 			$content = __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' );
 		}
+		$min_free_shipping_amount = 0;
 		$current_wc_version = get_option( 'woocommerce_version', null );
-		$free_shipping = ( version_compare( $current_wc_version, '2.6.0', '<' ) ) ? new WC_Shipping_Free_Shipping() : new WC_Shipping_Legacy_Free_Shipping();
-		if ( in_array( $free_shipping->requires, array( 'min_amount', 'either', 'both' ) ) && isset( WC()->cart->cart_contents_total ) ) {
-			if ( WC()->cart->prices_include_tax ) {
-				$total = WC()->cart->cart_contents_total + array_sum( WC()->cart->taxes );
-			} else {
-				$total = WC()->cart->cart_contents_total;
+		if ( version_compare( $current_wc_version, '2.6.0', '<' ) ) {
+			$free_shipping = new WC_Shipping_Free_Shipping();
+			if ( in_array( $free_shipping->requires, array( 'min_amount', 'either', 'both' ) ) ) {
+				$min_free_shipping_amount = $free_shipping->min_amount;//
 			}
-			if ( $total >= $free_shipping->min_amount ) {
-				return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
-			} else {
-				$content = str_replace( '%left_to_free%',             wc_price( $free_shipping->min_amount - $total ), $content );
-				$content = str_replace( '%free_shipping_min_amount%', wc_price( $free_shipping->min_amount ),          $content );
-				return $content;
+		} else {
+			$wc_shipping = WC_Shipping::instance();
+			if ( $wc_shipping->enabled ) {
+				foreach ( $wc_shipping->shipping_methods as $shipping_method ) {
+					if ( 'yes' === $shipping_method->enabled ) {
+						if ( 'WC_Shipping_Free_Shipping' === get_class( $shipping_method ) || 'WC_Shipping_Legacy_Free_Shipping' === get_class( $shipping_method ) ) {
+							if ( in_array( $shipping_method->requires, array( 'min_amount', 'either', 'both' ) ) ) {
+								$min_free_shipping_amount = $shipping_method->min_amount;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		if ( 0 != $min_free_shipping_amount ) {
+			if ( isset( WC()->cart->cart_contents_total ) ) {
+				$total = ( WC()->cart->prices_include_tax ) ? WC()->cart->cart_contents_total + array_sum( WC()->cart->taxes ) : WC()->cart->cart_contents_total;
+				if ( $total >= $min_free_shipping_amount ) {
+					return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
+				} else {
+					$content = str_replace( '%left_to_free%',             wc_price( $min_free_shipping_amount - $total ), $content );
+					$content = str_replace( '%free_shipping_min_amount%', wc_price( $min_free_shipping_amount ),          $content );
+					return $content;
+				}
 			}
 		}
 	}
