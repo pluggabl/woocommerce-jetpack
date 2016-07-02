@@ -365,7 +365,8 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 		if ( '' == $content ) {
 			$content = __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' );
 		}
-		$free_shipping = new WC_Shipping_Legacy_Free_Shipping();
+		$current_wc_version = get_option( 'woocommerce_version', null );
+		$free_shipping = ( version_compare( $current_wc_version, '2.6.0', '<' ) ) ? new WC_Shipping_Free_Shipping() : new WC_Shipping_Legacy_Free_Shipping();
 		if ( in_array( $free_shipping->requires, array( 'min_amount', 'either', 'both' ) ) && isset( WC()->cart->cart_contents_total ) ) {
 			if ( WC()->cart->prices_include_tax ) {
 				$total = WC()->cart->cart_contents_total + array_sum( WC()->cart->taxes );

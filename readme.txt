@@ -143,7 +143,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
  * Dev - SHIPPING & ORDERS - Orders - "Custom Columns" options added.
  * Dev - SHIPPING & ORDERS - Orders - Settings moved to `init` hook.
  * Dev - SHIPPING & ORDERS - Orders - Order Minimum Amount - "By user role" options added. All order minimum amount hooks moved to `init` action.
- * Fix - SHIPPING & ORDERS - Shipping - Left to Free Shipping - `WC_Shipping_Free_Shipping` replaced with `WC_Shipping_Legacy_Free_Shipping` class.
+~* Fix - SHIPPING & ORDERS - Shipping - Left to Free Shipping - `WC_Shipping_Free_Shipping` replaced with `WC_Shipping_Legacy_Free_Shipping` class (if WC version is equal or above than 2.6.0).
  * Dev - EMAILS & MISC. - Emails - Custom Emails - `do_shortcode` added to custom email recipient.
  * Dev - EMAILS & MISC. - General - "Export Products" tool added.
  * Dev - EMAILS & MISC. - General - "Add/Manage Custom Roles" tool moved from "Price by User Role" module.
