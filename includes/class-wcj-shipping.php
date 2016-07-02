@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shipping class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -32,11 +32,14 @@ class WCJ_Shipping extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
+			// Custom Shipping
 			include_once( 'shipping/class-wc-shipping-wcj-custom.php' );
 
+			// Hide if free is available
 			add_filter( 'woocommerce_package_rates',     array( $this, 'hide_shipping_when_free_is_available' ), 10, 2 );
 			add_filter( 'woocommerce_shipping_settings', array( $this, 'add_hide_shipping_if_free_available_fields' ), 100 );
 
+			// Left to Free Shipping
 			if ( 'yes' === get_option( 'wcj_shipping_left_to_free_info_enabled_cart', 'no' ) ) {
 				add_action(
 					get_option( 'wcj_shipping_left_to_free_info_position_cart', 'woocommerce_after_cart_totals' ),
@@ -104,20 +107,22 @@ class WCJ_Shipping extends WCJ_Module {
 	/**
 	 * hide_shipping_when_free_is_available.
 	 *
-	 * @version 2.4.4
+	 * @version 2.5.3
 	 */
 	function hide_shipping_when_free_is_available( $rates, $package ) {
+		$current_wc_version = get_option( 'woocommerce_version', null );
+		$free_shipping_key = ( version_compare( $current_wc_version, '2.6.0', '<' ) ) ? 'free_shipping' : 'legacy_free_shipping';
 		// Only modify rates if free_shipping is present
-		if ( isset( $rates['free_shipping'] ) ) {
-			// Unset a single rate/method
+		if ( isset( $rates[ $free_shipping_key ] ) ) {
 			if ( 'yes' === get_option( 'wcj_shipping_hide_if_free_available_local_delivery' ) ) {
+				// Unset a single rate/method
 				unset( $rates['local_delivery'] );
 			}
 			if ( 'yes' === get_option( 'wcj_shipping_hide_if_free_available_all' ) ) {
 				// Unset all methods except for free_shipping
-				$free_shipping          = $rates['free_shipping'];
-				$rates                  = array();
-				$rates['free_shipping'] = $free_shipping;
+				$free_shipping               = $rates[ $free_shipping_key ];
+				$rates                       = array();
+				$rates[ $free_shipping_key ] = $free_shipping;
 			}
 		}
 		return $rates;

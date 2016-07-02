@@ -127,7 +127,6 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.3 - 02/07/2016 =
--* Fix - Shipping issues (https://wordpress.org/support/topic/booster-left-to-free-shipping-widget-is-not-working-after-update-to-woocommerce?replies=4).
  * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` shortcode added.
  * Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Logging" option removed.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price Filter widget fixed. `add_hooks()` function moved from `init` hook to constructor.
@@ -143,6 +142,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
  * Dev - SHIPPING & ORDERS - Orders - "Custom Columns" options added.
  * Dev - SHIPPING & ORDERS - Orders - Settings moved to `init` hook.
  * Dev - SHIPPING & ORDERS - Orders - Order Minimum Amount - "By user role" options added. All order minimum amount hooks moved to `init` action.
+~* Fix - SHIPPING & ORDERS - Shipping - Hide if free is available - `free_shipping` replaced with `legacy_free_shipping` class (if WC version is equal or above than 2.6.0).
 ~* Fix - SHIPPING & ORDERS - Shipping - Left to Free Shipping - `WC_Shipping_Free_Shipping` replaced with `WC_Shipping_Legacy_Free_Shipping` class (if WC version is equal or above than 2.6.0).
  * Dev - EMAILS & MISC. - Emails - Custom Emails - `do_shortcode` added to custom email recipient.
  * Dev - EMAILS & MISC. - General - "Export Products" tool added.
