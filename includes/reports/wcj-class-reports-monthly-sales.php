@@ -127,7 +127,7 @@ class WCJ_Reports_Monthly_Sales {
 	 *
 	 * @version 2.5.3
 	 * @since   2.4.7
-	 * @todo   take not monthly average, but "Close" of closest day; forecast for current month; $order_currencies_array;
+	 * @todo   take not monthly average, but "Close" of closest day; forecast for current month; $order_currencies_array; bug when no rates for current month (e.g. it's 03 day of the month, and 01-02 were holidays);
 	 */
 	function get_monthly_sales_report() {
 
