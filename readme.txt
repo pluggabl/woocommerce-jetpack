@@ -42,7 +42,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Bookings* - Add bookings products to WooCommerce.
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
-* *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Disable add to cart button on per product basis.
+* *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Disable add to cart button on per product basis. Open external products on add to cart in new window.
 * *Product Addons* - Add (paid/free/discount) addons to WooCommerce products.
 * *Product Cost Price* - Save WooCommerce product purchase costs data for admin reports.
 * *Product Images* - Customize WooCommerce products images, thumbnails and sale flashes.
@@ -126,7 +126,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.3 - 02/07/2016 =
+= 2.5.3 - 03/07/2016 =
+ * Dev - PRODUCTS - Product Add to Cart - "Open External Products on Add to Cart in New Window" option added.
  * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` shortcode added.
  * Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Logging" option removed.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price Filter widget fixed. `add_hooks()` function moved from `init` hook to constructor.

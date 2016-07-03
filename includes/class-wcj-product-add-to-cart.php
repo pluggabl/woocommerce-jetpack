@@ -28,7 +28,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			. ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Display radio buttons instead of drop box for variable products.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
-			. ' ' . __( 'Disable add to cart button on per product basis.', 'woocommerce-jetpack' );
+			. ' ' . __( 'Disable add to cart button on per product basis.', 'woocommerce-jetpack' )
+			. ' ' . __( 'Open external products on add to cart in new window.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-add-to-cart/';
 		parent::__construct();
 
@@ -62,7 +63,58 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				add_action( 'woocommerce_after_add_to_cart_button',  array( $this, 'add_to_cart_button_disable_end' ), PHP_INT_MAX, 0 );
 				add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'add_to_cart_button_loop_disable' ), PHP_INT_MAX, 2 );
 			}
+
+			// External Products
+			if ( 'yes' === get_option( 'wcj_add_to_cart_button_external_open_new_window_single', 'no' ) ) {
+				add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'replace_external_with_custom_add_to_cart_on_single_start' ), PHP_INT_MAX );
+				add_action( 'woocommerce_after_add_to_cart_button',  array( $this, 'replace_external_with_custom_add_to_cart_on_single_end' ), PHP_INT_MAX );
+			}
+			if ( 'yes' === get_option( 'wcj_add_to_cart_button_external_open_new_window_loop', 'no' ) ) {
+				add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'replace_external_with_custom_add_to_cart_in_loop' ), PHP_INT_MAX );
+			}
 		}
+	}
+
+	/**
+	 * replace_external_with_custom_add_to_cart_on_single_start.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function replace_external_with_custom_add_to_cart_on_single_start() {
+		global $product;
+		if ( $product->is_type( 'external' ) ) {
+			ob_start();
+		}
+	}
+
+	/**
+	 * replace_external_with_custom_add_to_cart_on_single_end.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function replace_external_with_custom_add_to_cart_on_single_end() {
+		global $product;
+		if ( $product->is_type( 'external' ) ) {
+			$button_html = ob_get_contents();
+			ob_end_clean();
+			echo str_replace( '<a href=', '<a target="_blank" href=', $button_html );
+		}
+	}
+
+	/**
+	 * replace_external_with_custom_add_to_cart_in_loop.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function replace_external_with_custom_add_to_cart_in_loop( $link_html ) {
+		global $product;
+		if ( $product->is_type( 'external' ) ) {
+			$link_html = str_replace( '<a rel=', '<a target="_blank" rel=', $link_html );
+		}
+		return $link_html;
 	}
 
 	/**
@@ -213,7 +265,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 */
 	function get_settings() {
 		$settings = array(
@@ -308,7 +360,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				'id'       => 'wcj_add_to_cart_button_options',
 			),
 			array(
-				'title'    => __( 'Add to Cart Buttons on per Product Basis', 'woocommerce-jetpack' ),
+				'title'    => __( 'Enable/Disable Add to Cart Buttons on per Product Basis', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_add_to_cart_button_per_product_enabled',
@@ -318,6 +370,30 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_add_to_cart_button_options',
+			),
+			array(
+				'title'    => __( 'External Products', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_add_to_cart_button_external_product_options',
+			),
+			array(
+				'title'    => __( 'Open External Products on Add to Cart in New Window', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable on Single Product Pages', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_add_to_cart_button_external_open_new_window_single',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => 'start',
+			),
+			array(
+				'desc'     => __( 'Enable on Category/Archive Pages', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_add_to_cart_button_external_open_new_window_loop',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'checkboxgroup' => 'end',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_add_to_cart_button_external_product_options',
 			),
 		);
 		return $this->add_standard_settings( $settings );
