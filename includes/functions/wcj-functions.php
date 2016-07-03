@@ -380,11 +380,9 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 				}
 			}
 			if ( 0 == $min_free_shipping_amount ) {
-				$wc_shipping = WC()->shipping;
-				if ( $wc_shipping ) {
+				if ( function_exists( 'WC' ) && ( $wc_shipping = WC()->shipping ) && ( $wc_cart = WC()->cart ) ) {
 					if ( $wc_shipping->enabled ) {
-						$packages = WC()->cart->get_shipping_packages();
-						if ( $packages ) {
+						if ( $packages = $wc_cart->get_shipping_packages() ) {
 							$shipping_methods = $wc_shipping->load_shipping_methods( $packages[0] );
 							foreach ( $shipping_methods as $shipping_method ) {
 								if ( 'yes' === $shipping_method->enabled && 0 != $shipping_method->instance_id ) {
