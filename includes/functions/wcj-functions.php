@@ -383,13 +383,16 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 				$wc_shipping = WC()->shipping;
 				if ( $wc_shipping ) {
 					if ( $wc_shipping->enabled ) {
-						$shipping_methods = $wc_shipping->get_shipping_methods();
-						foreach ( $shipping_methods as $shipping_method ) {
-							if ( 'yes' === $shipping_method->enabled && 0 != $shipping_method->instance_id ) {
-								if ( 'WC_Shipping_Free_Shipping' === get_class( $shipping_method ) ) {
-									if ( in_array( $shipping_method->requires, array( 'min_amount', 'either', 'both' ) ) ) {
-										$min_free_shipping_amount = $shipping_method->min_amount;
-										break;
+						$packages = WC()->cart->get_shipping_packages();
+						if ( $packages ) {
+							$shipping_methods = $wc_shipping->load_shipping_methods( $packages[0] );
+							foreach ( $shipping_methods as $shipping_method ) {
+								if ( 'yes' === $shipping_method->enabled && 0 != $shipping_method->instance_id ) {
+									if ( 'WC_Shipping_Free_Shipping' === get_class( $shipping_method ) ) {
+										if ( in_array( $shipping_method->requires, array( 'min_amount', 'either', 'both' ) ) ) {
+											$min_free_shipping_amount = $shipping_method->min_amount;
+											break;
+										}
 									}
 								}
 							}
