@@ -370,17 +370,28 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 		if ( version_compare( $current_wc_version, '2.6.0', '<' ) ) {
 			$free_shipping = new WC_Shipping_Free_Shipping();
 			if ( in_array( $free_shipping->requires, array( 'min_amount', 'either', 'both' ) ) ) {
-				$min_free_shipping_amount = $free_shipping->min_amount;//
+				$min_free_shipping_amount = $free_shipping->min_amount;
 			}
 		} else {
-			$wc_shipping = WC_Shipping::instance();
-			if ( $wc_shipping->enabled ) {
-				foreach ( $wc_shipping->shipping_methods as $shipping_method ) {
-					if ( 'yes' === $shipping_method->enabled ) {
-						if ( 'WC_Shipping_Free_Shipping' === get_class( $shipping_method ) || 'WC_Shipping_Legacy_Free_Shipping' === get_class( $shipping_method ) ) {
-							if ( in_array( $shipping_method->requires, array( 'min_amount', 'either', 'both' ) ) ) {
-								$min_free_shipping_amount = $shipping_method->min_amount;
-								break;
+			$legacy_free_shipping = new WC_Shipping_Legacy_Free_Shipping();
+			if ( 'yes' === $legacy_free_shipping->enabled ) {
+				if ( in_array( $legacy_free_shipping->requires, array( 'min_amount', 'either', 'both' ) ) ) {
+					$min_free_shipping_amount = $legacy_free_shipping->min_amount;
+				}
+			}
+			if ( 0 == $min_free_shipping_amount ) {
+				$wc_shipping = WC()->shipping;
+				if ( $wc_shipping ) {
+					if ( $wc_shipping->enabled ) {
+						$shipping_methods = $wc_shipping->get_shipping_methods();
+						foreach ( $shipping_methods as $shipping_method ) {
+							if ( 'yes' === $shipping_method->enabled && 0 != $shipping_method->instance_id ) {
+								if ( 'WC_Shipping_Free_Shipping' === get_class( $shipping_method ) ) {
+									if ( in_array( $shipping_method->requires, array( 'min_amount', 'either', 'both' ) ) ) {
+										$min_free_shipping_amount = $shipping_method->min_amount;
+										break;
+									}
+								}
 							}
 						}
 					}
