@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack,custom price labels,call for price,currency symbol,remove sorting,remove old product slugs,add to cart text,order number,sequential order numbering,email pdf invoice,pdf invoice,pdf invoices,already in cart,empty cart,redirect to checkout,minimum order amount,customize checkout fields,checkout fields,email,customize product tabs,product tabs,related products number,empty cart,redirect add to cart,redirect to checkout,product already in cart,custom payment gateway,payment gateway icon,auto-complete all orders,custom order statuses,custom order status,remove text from price,custom css,hide categories count,hide subcategories count,hide category count,hide subcategory count,display total sales,custom product tabs,remove product tab,payment gateway fee,vat,gateway by country,price by country,currency switcher
 Requires at least: 4.1
 Tested up to: 4.5
-Stable tag: 2.5.2
+Stable tag: 2.5.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -127,37 +127,37 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.3 - 04/07/2016 =
- * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report - Added "Refunds" column to the table.
- * Dev - Shortcodes - Orders - `[wcj_order_total_refunded]` shortcode added.
- * Dev - Shortcodes - Orders - `[wcj_order_taxes_html]` shortcode added.
- * Dev - PRODUCTS - Product Add to Cart - "Open External Products on Add to Cart in New Window" option added.
- * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` shortcode added.
- * Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Logging" option removed.
-~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price Filter widget fixed. `add_hooks()` function moved from `init` hook to constructor.
- * Dev - PRICES & CURRENCIES - Price by User Role - Class functions replaced with global functions.
- * Dev - PRODUCTS - Bookings - "Hide Quantity Selector" option added.
-+* Dev - PRODUCTS - Product Addons - Initial module release.
- * Fix - PRODUCTS - Product by User - Settings moved to `init` hook. This caused "wp-admin show white screen and no errors" on some servers (or "Fatal error: Call to undefined function wp_get_current_user() in ..." message if debug enabled).
- * Dev - PRODUCTS - Product by User - Class functions replaced with global functions.
- * Dev - PRODUCTS - Product Listings - "Products per Page" options added.
- * Fix - PRODUCTS - Product Input Fields - `output_custom_input_fields_in_admin_order()` for shipping bug fixed.
- * Dev - PRODUCTS - SKU - "Allow Duplicate SKUs" option added.
- * Dev - PAYMENT GATEWAYS - Gateways by User Role - Initial module release.
- * Dev - SHIPPING & ORDERS - Orders - "Custom Columns" options added.
- * Dev - SHIPPING & ORDERS - Orders - Settings moved to `init` hook.
- * Dev - SHIPPING & ORDERS - Orders - Order Minimum Amount - "By user role" options added. All order minimum amount hooks moved to `init` action.
-~* Fix - SHIPPING & ORDERS - Shipping - Hide if free is available - Fixed to work with WooCommerce since version 2.6.0. "Hide local delivery when free is available" option removed.
-~* Fix - SHIPPING & ORDERS - Shipping - Left to Free Shipping - Fixed to work with WooCommerce since version 2.6.0.
- * Dev - EMAILS & MISC. - Emails - Custom Emails - `do_shortcode` added to custom email recipient.
- * Dev - EMAILS & MISC. - General - "Export Products" tool added.
- * Dev - EMAILS & MISC. - General - "Add/Manage Custom Roles" tool moved from "Price by User Role" module.
-+* Dev - EMAILS & MISC. - Reports - Monthly Sales - Major code refactoring. New data added.
- * Tweak - Rating message added.
- * Tweak - Module's documentation button on new line.
- * Tweak - Depreciated module message updated.
- * Tweak - PRODUCTS - Product Add to Cart - Module description updated.
- * Tweak - PRODUCTS - Product by User - Module and admin settings descriptions updated.
- * Tweak - PRODUCTS - Product Info - Moved to EMAILS & MISC. Renamed to "Product Info V1". "Product Info V2" renamed to "Product Info".
+* Dev - Shortcodes - Orders - `[wcj_order_total_refunded]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_taxes_html]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_meta]` shortcode added.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Logging" option removed.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price Filter widget fixed. `add_hooks()` function moved from `init` hook to constructor.
+* Dev - PRICES & CURRENCIES - Price by User Role - Class functions replaced with global functions.
+* Dev - PRODUCTS - Bookings - "Hide Quantity Selector" option added.
+* Dev - PRODUCTS - Product Add to Cart - "Open External Products on Add to Cart in New Window" option added.
+* Dev - PRODUCTS - Product Addons - Initial module release.
+* Fix - PRODUCTS - Product by User - Settings moved to `init` hook. This caused "wp-admin show white screen and no errors" on some servers (or "Fatal error: Call to undefined function wp_get_current_user() in ..." message if debug enabled).
+* Dev - PRODUCTS - Product by User - Class functions replaced with global functions.
+* Dev - PRODUCTS - Product Listings - "Products per Page" options added.
+* Fix - PRODUCTS - Product Input Fields - `output_custom_input_fields_in_admin_order()` for shipping bug fixed.
+* Dev - PRODUCTS - SKU - "Allow Duplicate SKUs" option added.
+* Dev - PAYMENT GATEWAYS - Gateways by User Role - Initial module release.
+* Dev - SHIPPING & ORDERS - Orders - "Custom Columns" options added.
+* Dev - SHIPPING & ORDERS - Orders - Settings moved to `init` hook.
+* Dev - SHIPPING & ORDERS - Orders - Order Minimum Amount - "By user role" options added. All order minimum amount hooks moved to `init` action.
+* Fix - SHIPPING & ORDERS - Shipping - Hide if free is available - Fixed to work with WooCommerce since version 2.6.0. "Hide local delivery when free is available" option removed.
+* Fix - SHIPPING & ORDERS - Shipping - Left to Free Shipping - Fixed to work with WooCommerce since version 2.6.0.
+* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report - Added "Refunds" column to the table.
+* Dev - EMAILS & MISC. - Emails - Custom Emails - `do_shortcode` added to custom email recipient.
+* Dev - EMAILS & MISC. - General - "Export Products" tool added.
+* Dev - EMAILS & MISC. - General - "Add/Manage Custom Roles" tool moved from "Price by User Role" module.
+* Dev - EMAILS & MISC. - Reports - Monthly Sales - Major code refactoring. New data added.
+* Tweak - Rating message added.
+* Tweak - Module's documentation button on new line.
+* Tweak - Depreciated module message updated.
+* Tweak - PRODUCTS - Product Add to Cart - Module description updated.
+* Tweak - PRODUCTS - Product by User - Module and admin settings descriptions updated.
+* Tweak - PRODUCTS - Product Info - Moved to EMAILS & MISC. Renamed to "Product Info V1". "Product Info V2" renamed to "Product Info".
 
 = 2.5.2 - 21/06/2016 =
 * Dev - "Manage Settings" functionality added.
