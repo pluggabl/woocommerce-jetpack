@@ -43,6 +43,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_discount',
 //			'wcj_order_cart_discount',
 			'wcj_order_shipping_tax',
+			'wcj_order_taxes_html',
 			'wcj_order_total_tax',
 			'wcj_order_total_tax_percent',
 			'wcj_order_total',
@@ -466,6 +467,25 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$order_total_tax_percent = round( $order_total_tax_percent, $atts['precision'] );
 		apply_filters( 'wcj_order_total_tax_percent', $order_total_tax_percent, $this->the_order );
 		return number_format( $order_total_tax_percent, $atts['precision'] );
+	}
+
+	/**
+	 * wcj_order_taxes_html.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function wcj_order_taxes_html( $atts ) {
+		$order_taxes = $this->the_order->get_taxes();
+		$taxes_html = '';
+		foreach ( $order_taxes as $order_tax ) {
+			$taxes_html .= ( isset( $order_tax['label'] ) ) ? $order_tax['label'] . ': ' : '';
+			$amount = 0;
+			$amount += ( isset( $order_tax['tax_amount'] ) ) ? $order_tax['tax_amount'] : 0;
+			$amount += ( isset( $order_tax['shipping_tax_amount'] ) ) ? $order_tax['shipping_tax_amount'] : 0;
+			$taxes_html .= $this->wcj_price_shortcode( $amount, $atts ) . '<br>';
+		}
+		return $taxes_html;
 	}
 
 	/**
