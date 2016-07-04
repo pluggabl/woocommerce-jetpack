@@ -127,6 +127,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.3 - 04/07/2016 =
+ * Dev - Shortcodes - Orders - `[wcj_order_total_refunded]` shortcode added.
  * Dev - Shortcodes - Orders - `[wcj_order_taxes_html]` shortcode added.
  * Dev - PRODUCTS - Product Add to Cart - "Open External Products on Add to Cart in New Window" option added.
  * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` shortcode added.

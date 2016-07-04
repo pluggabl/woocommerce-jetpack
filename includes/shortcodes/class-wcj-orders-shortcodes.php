@@ -51,6 +51,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_in_words',
 			'wcj_order_total_excl_tax',
 			'wcj_order_shipping_price',
+			'wcj_order_total_refunded',
 
 			'wcj_order_total_fees',
 			'wcj_order_total_fees_incl_tax',
@@ -467,6 +468,16 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$order_total_tax_percent = round( $order_total_tax_percent, $atts['precision'] );
 		apply_filters( 'wcj_order_total_tax_percent', $order_total_tax_percent, $this->the_order );
 		return number_format( $order_total_tax_percent, $atts['precision'] );
+	}
+
+	/**
+	 * wcj_order_total_refunded.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function wcj_order_total_refunded( $atts ) {
+		return $this->wcj_price_shortcode( $this->the_order->get_total_refunded(), $atts );
 	}
 
 	/**
