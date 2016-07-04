@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Report Tool class.
  *
- * @version 2.5.2
+ * @version 2.5.3
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -195,7 +195,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Invoices Report function.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.3
 	 */
 	function get_invoices_report( $year, $month, $invoice_type_id ) {
 
@@ -213,6 +213,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			__( 'Order Taxes', 'woocommerce-jetpack' ),
 			__( 'Order Total', 'woocommerce-jetpack' ),
 			__( 'Order Currency', 'woocommerce-jetpack' ),
+			__( 'Refunds', 'woocommerce-jetpack' ),
 		);
 
 		$total_sum = 0;
@@ -287,6 +288,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 						$order_tax_html,
 						sprintf( '%.2f', $order_total ),
 						$the_order->get_order_currency(),
+						$the_order->get_total_refunded(),
 						//'<pre>' . print_r( get_post_meta( $order_id ), true ) . '</pre>',
 					);
 				}
