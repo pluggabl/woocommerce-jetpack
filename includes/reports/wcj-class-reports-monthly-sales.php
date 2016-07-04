@@ -127,7 +127,7 @@ class WCJ_Reports_Monthly_Sales {
 	 *
 	 * @version 2.5.3
 	 * @since   2.4.7
-	 * @todo   take not monthly average, but "Close" of closest day; forecast for current month; $order_currencies_array; bug when no rates for current month (e.g. it's 03 day of the month, and 01-02 were holidays);
+	 * @todo   take not monthly average, but "Close" of closest day; forecast for current month; $order_currencies_array;
 	 */
 	function get_monthly_sales_report() {
 
@@ -211,7 +211,13 @@ class WCJ_Reports_Monthly_Sales {
 						$end_date   = date( 'Y-m-t', strtotime( $start_date ) );
 						$the_rate   = $this->get_exchange_rate_average( $order_currency, $report_currency, $start_date, $end_date );
 						if ( false === $the_rate ) {
-							return '<p>' . sprintf( __( 'Error getting currency rate for %s', 'woocommerce-jetpack' ), $order_currency . $report_currency ) . '</p>';
+							// Try previous month
+							$start_date_prev_month = date( 'Y-m-d', strtotime( 'first day of last month', strtotime( $start_date ) ) );
+							$end_date_prev_month   = date( 'Y-m-t', strtotime( $start_date_prev_month ) );
+							$the_rate = $this->get_exchange_rate_average( $order_currency, $report_currency, $start_date_prev_month, $end_date_prev_month );
+							if ( false === $the_rate ) {
+								return '<p>' . sprintf( __( 'Error getting currency rate for %s', 'woocommerce-jetpack' ), $order_currency . $report_currency ) . '</p>';
+							}
 						}
 						$current_months_averages[ $order_currency ][ $report_currency ] = $the_rate;
 					}
