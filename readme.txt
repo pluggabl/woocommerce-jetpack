@@ -126,12 +126,16 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.5.4 - 05/07/2016 =
+~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` function moved from `init` hook to constructor.
+ * Fix - Manage Settings - Import - New line issue fixed.
+
 = 2.5.3 - 04/07/2016 =
 * Dev - Shortcodes - Orders - `[wcj_order_total_refunded]` shortcode added.
 * Dev - Shortcodes - Orders - `[wcj_order_taxes_html]` shortcode added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` shortcode added.
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Logging" option removed.
-* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price Filter widget fixed. `add_hooks()` function moved from `init` hook to constructor.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price Filter widget fixed. `woocommerce_currency_symbol` hook moved from `init` hook to constructor.
 * Dev - PRICES & CURRENCIES - Price by User Role - Class functions replaced with global functions.
 * Dev - PRODUCTS - Bookings - "Hide Quantity Selector" option added.
 * Dev - PRODUCTS - Product Add to Cart - "Open External Products on Add to Cart in New Window" option added.

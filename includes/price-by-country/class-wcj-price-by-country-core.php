@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.5.3
+ * @version 2.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -17,19 +17,17 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.4
 	 */
 	public function __construct() {
 		$this->customer_country_group_id = null;
-		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 ); // so early because of price filter widget
-//		$this->add_hooks();
-		add_action( 'init', array( $this, 'add_hooks' ) );
+		$this->add_hooks();
 	}
 
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.4
 	 */
 	function add_hooks() {
 
@@ -66,7 +64,7 @@ class WCJ_Price_by_Country_Core {
 		add_filter( 'woocommerce_get_price_excluding_tax', array( $this, 'change_price_by_country_grouped' ), PHP_INT_MAX - 1, 3 );
 
 		// Currency hooks
-//		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 );
+		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 );
 		add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ),   PHP_INT_MAX - 1, 1 );
 
 		// Shipping
@@ -183,7 +181,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.4
 	 */
 	public function get_customer_country_group_id() {
 
@@ -193,9 +191,9 @@ class WCJ_Price_by_Country_Core {
 		}
 
 		// We already know the group - nothing to calculate - return group
-		if ( null != $this->customer_country_group_id && $this->customer_country_group_id > 0 ) {
+		/* if ( null != $this->customer_country_group_id && $this->customer_country_group_id > 0 ) {
 			return $this->customer_country_group_id;
-		}
+		} */
 
 		// Get the country
 		if ( isset( $_GET['country'] ) && '' != $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {

@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: http://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.5.3
+Version: 2.5.4-dev
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Text Domain: woocommerce-jetpack
@@ -28,7 +28,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.5.3
+ * @version 2.5.4
  */
 
 final class WC_Jetpack {
@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.3';
+	public $version = '2.5.4-dev-201607052320';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -629,7 +629,7 @@ final class WC_Jetpack {
 	/**
 	 * manage_options_import.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.4
 	 * @since   2.5.2
 	 */
 	function manage_options_import() {
@@ -641,7 +641,7 @@ final class WC_Jetpack {
 		} else {
 			$import_counter = 0;
 			$import_settings = file_get_contents( $_FILES['booster_import_settings_file']['tmp_name'] );
-			$import_settings = explode( PHP_EOL, $import_settings );
+			$import_settings = explode( PHP_EOL, preg_replace( '~(*BSR_ANYCRLF)\R~', PHP_EOL, $import_settings ) );
 			if ( ! is_array( $import_settings ) || 2 !== count( $import_settings ) ) {
 				$wcj_notice .= __( 'Wrong file format!', 'woocommerce-jetpack' );
 			} else {
