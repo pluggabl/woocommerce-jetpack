@@ -127,7 +127,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.4 - 05/07/2016 =
-~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` function moved from `init` hook to constructor.
+~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Getting `customer_country_group_id` on every `get_customer_country_group_id()` function call.
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` function moved from `init` hook to constructor.
  * Fix - Manage Settings - Import - New line issue fixed.
 
 = 2.5.3 - 04/07/2016 =
