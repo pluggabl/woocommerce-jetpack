@@ -48,7 +48,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			add_action( 'wp_ajax_nopriv_wcj_validate_eu_vat_number',   array( $this, 'wcj_validate_eu_vat_number' ) );
 //			add_filter( 'woocommerce_form_field_text',                 array( $this, 'add_eu_vat_verify_button' ), PHP_INT_MAX, 4 );
 //			add_action( 'init',                                        array( $this, 'wcj_validate_eu_vat_number' ) );
-			add_filter( 'woocommerce_find_rates',                      array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX, 2 );
+//			add_filter( 'woocommerce_find_rates',                      array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX, 2 );
+			add_filter( 'init',                                        array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX );
 			add_action( 'woocommerce_after_checkout_validation',       array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_customer_meta_fields',            array( $this, 'add_eu_vat_number_customer_meta_field' ) );
 			add_filter( 'default_checkout_billing_eu_vat_number',      array( $this, 'add_default_checkout_billing_eu_vat_number' ), PHP_INT_MAX, 2 );
@@ -238,10 +239,12 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * maybe_exclude_vat.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.4
 	 */
-	function maybe_exclude_vat( $matched_tax_rates, $args ) {
+//	function maybe_exclude_vat( $matched_tax_rates, $args ) {
+	function maybe_exclude_vat() {
 		if (
+			! empty( WC()->customer ) &&
 			'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) &&
 			'yes' === get_option( 'wcj_eu_vat_number_disable_for_valid', 'yes' ) &&
 			isset( $_SESSION['wcj_is_eu_vat_number_valid'] ) && true === $_SESSION['wcj_is_eu_vat_number_valid'] && isset( $_SESSION['wcj_eu_vat_number_to_check'] )
@@ -256,15 +259,22 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				$preserve_base_country_check_passed = ( $location['country'] !== $selected_country ) ? true : false;
 			}
 			if ( $preserve_base_country_check_passed ) {
-				$modified_matched_tax_rates = array();
+				/* $modified_matched_tax_rates = array();
 				foreach ( $matched_tax_rates as $i => $matched_tax_rate ) {
 					$matched_tax_rate['rate'] = 0;
 					$modified_matched_tax_rates[ $i ] = $matched_tax_rate;
 				}
-				return $modified_matched_tax_rates;
+				return $modified_matched_tax_rates; */
+				WC()->customer->set_is_vat_exempt( true );
+			} else {
+				WC()->customer->set_is_vat_exempt( false );
+			}
+		} else {
+			if ( ! empty( WC()->customer ) ) {
+				WC()->customer->set_is_vat_exempt( false );
 			}
 		}
-		return $matched_tax_rates;
+//		return $matched_tax_rates;
 	}
 
 	/**

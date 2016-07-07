@@ -127,6 +127,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.4 - 07/07/2016 =
+~* Fix - EMAILS & MISC. - EU VAT Number - Started using WooCommerce customer `set_is_vat_exempt()` function.
 ~* Fix - EMAILS & MISC. - EU VAT Number - AJAX call fixed.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Getting `customer_country_group_id` on every `get_customer_country_group_id()` function call.
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` function moved from `init` hook to constructor.
@@ -206,7 +207,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Fix - PDF INVOICING & PACKING SLIPS - Report Tool - Querying by document date instead of order date.
 * Dev - EMAILS & MISC. - General - "PayPal Email per Product" option added.
 * Dev - EMAILS & MISC. - EU VAT Number - Option ("Display") to append EU VAT number to order and my account billing addresses added.
-* Fix - EMAILS & MISC. - EU VAT Number - `woocommerce_matched_rates` filter changed to `woocommerce_find_rates` - this fixes the issue with sipping tax not exempting.
+* Fix - EMAILS & MISC. - EU VAT Number - `woocommerce_matched_rates` filter changed to `woocommerce_find_rates` - this fixes the issue with shipping tax not exempting.
 * Tweak - "Unlock all" link modified.
 * Tweak - "No active modules found." message added.
 * Tweak - PRODUCTS - Product Images - Module settings rearranged.
