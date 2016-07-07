@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack EU VAT Number class.
  *
- * @version 2.5.2
+ * @version 2.5.4
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.4
 	 */
 	function __construct() {
 
@@ -44,8 +44,10 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			add_filter( 'woocommerce_checkout_fields',                 array( $this, 'add_eu_vat_number_checkout_field_to_frontend' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_admin_billing_fields',            array( $this, 'add_billing_eu_vat_number_field_to_admin_order_display' ), PHP_INT_MAX );
 			add_action( 'wp_enqueue_scripts',                          array( $this, 'enqueue_scripts' ) );
+			add_action( 'wp_ajax_wcj_validate_eu_vat_number',          array( $this, 'wcj_validate_eu_vat_number' ) );
+			add_action( 'wp_ajax_nopriv_wcj_validate_eu_vat_number',   array( $this, 'wcj_validate_eu_vat_number' ) );
 //			add_filter( 'woocommerce_form_field_text',                 array( $this, 'add_eu_vat_verify_button' ), PHP_INT_MAX, 4 );
-			add_action( 'init',                                        array( $this, 'wcj_validate_eu_vat_number' ) );
+//			add_action( 'init',                                        array( $this, 'wcj_validate_eu_vat_number' ) );
 			add_filter( 'woocommerce_find_rates',                      array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX, 2 );
 			add_action( 'woocommerce_after_checkout_validation',       array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_customer_meta_fields',            array( $this, 'add_eu_vat_number_customer_meta_field' ) );
@@ -191,21 +193,28 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 
 	/**
 	 * enqueue_scripts.
+	 *
+	 * @version 2.5.4
 	 */
 	function enqueue_scripts() {
 		if ( 'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) ) {
 			wp_enqueue_script( 'wcj-eu-vat-number', wcj_plugin_url() . '/includes/js/eu-vat-number.js', array(), false, true );
+			wp_localize_script( 'wcj-eu-vat-number', 'ajax_object', array(
+				'ajax_url'            => admin_url( 'admin-ajax.php' ),
+			) );
 		}
 	}
 
 	/**
 	 * wcj_validate_eu_vat_number.
+	 *
+	 * @version 2.5.4
 	 */
-	function wcj_validate_eu_vat_number() {
-		if ( ! isset( $_GET['wcj_validate_eu_vat_number'] ) ) return;
-		if ( isset( $_GET['wcj_eu_vat_number_to_check'] ) && '' != $_GET['wcj_eu_vat_number_to_check'] ) {
-			$eu_vat_number_to_check = substr( $_GET['wcj_eu_vat_number_to_check'], 2 );
-			$eu_vat_number_country_to_check = substr( $_GET['wcj_eu_vat_number_to_check'], 0, 2 );
+	function wcj_validate_eu_vat_number( $param ) {
+//		if ( ! isset( $_GET['wcj_validate_eu_vat_number'] ) ) return;
+		if ( isset( $_POST['wcj_eu_vat_number_to_check'] ) && '' != $_POST['wcj_eu_vat_number_to_check'] ) {
+			$eu_vat_number_to_check = substr( $_POST['wcj_eu_vat_number_to_check'], 2 );
+			$eu_vat_number_country_to_check = substr( $_POST['wcj_eu_vat_number_to_check'], 0, 2 );
 			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_eu_vat_number_check_ip_location_country', 'no' ) ) ) {
 				$location = WC_Geolocation::geolocate_ip();
 				if ( empty( $location['country'] ) ) {
@@ -221,7 +230,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			$is_valid = null;
 		}
 		$_SESSION['wcj_is_eu_vat_number_valid'] = $is_valid;
-		$_SESSION['wcj_eu_vat_number_to_check'] = $_GET['wcj_eu_vat_number_to_check'];
+		$_SESSION['wcj_eu_vat_number_to_check'] = $_POST['wcj_eu_vat_number_to_check'];
 		echo $is_valid;
 		die();
 	}
