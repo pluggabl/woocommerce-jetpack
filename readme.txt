@@ -127,6 +127,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.4 - 08/07/2016 =
+ * Dev - Shortcodes - Products - `[wcj_product_total_sales]` - `hide_if_zero` and `offset` attributes added.
  * Dev - Shortcodes - Orders - `[wcj_order_total_by_tax_class]` shortcode added.
  * Dev - Shortcodes - Orders - `[wcj_order_subtotal_by_tax_class]` shortcode added.
 ~* Fix - EMAILS & MISC. - EU VAT Number - Started using WooCommerce customer `set_is_vat_exempt()` function.

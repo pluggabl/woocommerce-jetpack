@@ -588,12 +588,16 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_total_sales.
 	 *
-	 * @version 2.4.0
+	 * @version 2.5.4
 	 * @since   2.2.6
 	 */
 	function wcj_product_total_sales( $atts ) {
 		$product_custom_fields = get_post_custom( $this->the_product->id );
-		return ( isset( $product_custom_fields['total_sales'][0] ) ) ? $product_custom_fields['total_sales'][0] : '';
+		$total_sales = ( isset( $product_custom_fields['total_sales'][0] ) ) ? $product_custom_fields['total_sales'][0] : '';
+		if ( 0 != $atts['offset'] ) {
+			$total_sales += $atts['offset'];
+		}
+		return ( 0 == $total_sales && 'yes' === $atts['hide_if_zero'] ) ? '' : $total_sales;
 	}
 
 	/**
