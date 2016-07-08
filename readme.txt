@@ -126,7 +126,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.4 - 07/07/2016 =
+= 2.5.4 - 08/07/2016 =
+ * Dev - Shortcodes - Orders - `[wcj_order_total_by_tax_class]` shortcode added.
+ * Dev - Shortcodes - Orders - `[wcj_order_subtotal_by_tax_class]` shortcode added.
 ~* Fix - EMAILS & MISC. - EU VAT Number - Started using WooCommerce customer `set_is_vat_exempt()` function.
 ~* Fix - EMAILS & MISC. - EU VAT Number - AJAX call fixed.
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Getting `customer_country_group_id` on every `get_customer_country_group_id()` function call.

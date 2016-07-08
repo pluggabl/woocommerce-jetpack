@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.5.3
+ * @version 2.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.4
 	 */
 	public function __construct() {
 
@@ -47,6 +47,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_tax',
 			'wcj_order_total_tax_percent',
 			'wcj_order_total',
+			'wcj_order_total_by_tax_class',
+			'wcj_order_subtotal_by_tax_class',
 			'wcj_order_currency',
 			'wcj_order_total_in_words',
 			'wcj_order_total_excl_tax',
@@ -478,6 +480,40 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_order_total_refunded( $atts ) {
 		return $this->wcj_price_shortcode( $this->the_order->get_total_refunded(), $atts );
+	}
+
+	/**
+	 * wcj_order_subtotal_by_tax_class.
+	 *
+	 * @version 2.5.4
+	 * @since   2.5.4
+	 */
+	function wcj_order_subtotal_by_tax_class( $atts ) {
+		$subtotal_by_tax_class = 0;
+		$tax_class = ( 'standard' === $atts['tax_class'] ) ? '' : $atts['tax_class'];
+		foreach ( $this->the_order->get_items() as $item ) {
+			if ( $tax_class === $item['tax_class'] ) {
+				$subtotal_by_tax_class += $item['line_subtotal'];
+			}
+		}
+		return $subtotal_by_tax_class;
+	}
+
+	/**
+	 * wcj_order_total_by_tax_class.
+	 *
+	 * @version 2.5.4
+	 * @since   2.5.4
+	 */
+	function wcj_order_total_by_tax_class( $atts ) {
+		$total_by_tax_class = 0;
+		$tax_class = ( 'standard' === $atts['tax_class'] ) ? '' : $atts['tax_class'];
+		foreach ( $this->the_order->get_items() as $item ) {
+			if ( $tax_class === $item['tax_class'] ) {
+				$total_by_tax_class += $item['line_total'];
+			}
+		}
+		return $total_by_tax_class;
 	}
 
 	/**
