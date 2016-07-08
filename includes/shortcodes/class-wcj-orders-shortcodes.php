@@ -496,7 +496,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 				$subtotal_by_tax_class += $item['line_subtotal'];
 			}
 		}
-		return $subtotal_by_tax_class;
+		return $this->wcj_price_shortcode( $subtotal_by_tax_class, $atts );
 	}
 
 	/**
@@ -513,7 +513,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 				$total_by_tax_class += $item['line_total'];
 			}
 		}
-		return $total_by_tax_class;
+		return $this->wcj_price_shortcode( $total_by_tax_class, $atts );
 	}
 
 	/**
