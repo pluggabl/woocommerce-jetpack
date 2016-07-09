@@ -48,6 +48,11 @@ class WCJ_Price_by_Country_Core {
 			}
 		}
 
+		// Select with flags
+		if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {
+			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_wselect_scripts' ) );
+		}
+
 		// Price hooks
 		add_filter( 'woocommerce_get_price',         array( $this, 'change_price_by_country' ), PHP_INT_MAX - 1, 2 );
 		add_filter( 'woocommerce_get_sale_price',    array( $this, 'change_price_by_country' ), PHP_INT_MAX - 1, 2 );
@@ -75,6 +80,18 @@ class WCJ_Price_by_Country_Core {
 			add_filter( 'woocommerce_price_filter_meta_keys',   array( $this, 'price_filter_meta_keys' ), PHP_INT_MAX, 1 );
 			add_filter( 'woocommerce_product_query_meta_query', array( $this, 'price_filter_meta_query' ), PHP_INT_MAX, 2 );
 		}
+	}
+
+	/**
+	 * enqueue_wselect_scripts.
+	 *
+	 * @version 2.5.4
+	 * @since   2.5.4
+	 */
+	function enqueue_wselect_scripts() {
+		wp_enqueue_style(  'wcj-wSelect-style', wcj_plugin_url() . '/includes/lib/wSelect/wSelect.css' );
+		wp_enqueue_script( 'wcj-wSelect',       wcj_plugin_url() . '/includes/lib/wSelect/wSelect.min.js', array(), false, true );
+		wp_enqueue_script( 'wcj-wcj-wSelect',   wcj_plugin_url() . '/includes/js/wcj-wSelect.js', array(), false, true );
 	}
 
 	/**

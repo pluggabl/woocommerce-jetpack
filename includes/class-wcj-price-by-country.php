@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.5.3
+ * @version 2.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -111,7 +111,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.4
 	 */
 	function get_settings() {
 
@@ -194,6 +194,15 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				'title'    => __( 'Price Filter Widget Support', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_price_filter_widget_support_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
+			array(
+				'title'    => __( 'Add Countries Flags Images to Select Drop-Down Box', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If you are using [wcj_country_select_drop_down_list] shortcode or "Booster: Country Switcher" widget, this will add country flags to these select boxes.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_price_by_country_jquery_wselect_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

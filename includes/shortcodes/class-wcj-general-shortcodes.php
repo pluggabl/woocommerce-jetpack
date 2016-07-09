@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.5.2
+ * @version 2.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -225,7 +225,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_country_select_drop_down_list.
 	 *
-	 * @version 2.4.0
+	 * @version 2.5.4
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
 
@@ -260,12 +260,20 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		if ( empty( $shortcode_countries ) ) {
 			foreach ( $countries as $country_code => $country_name ) {
-				$html .= '<option value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $country_name . '</option>';
+				$data_icon = '';
+				if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {
+					$data_icon = ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . $country_code . '.png"';
+				}
+				$html .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $country_name . '</option>';
 			}
 		} else {
 			foreach ( $shortcode_countries as $country_code ) {
 				if ( isset( $countries[ $country_code ] ) ) {
-					$html .= '<option value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $countries[ $country_code ] . '</option>';
+					$data_icon = '';
+					if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {
+						$data_icon = ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . $country_code . '.png"';
+					}
+					$html .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $countries[ $country_code ] . '</option>';
 				}
 			}
 		}
