@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Wholesale Price class.
  *
- * @version 2.5.2
+ * @version 2.5.4
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation;
@@ -273,7 +273,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.4
 	 */
 	function get_settings() {
 		$products = apply_filters( 'wcj_get_products_filter', array() );
@@ -333,6 +333,14 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'title'   => __( 'Products to include', 'woocommerce-jetpack' ),
 				'desc'    => __( 'Leave blank to include all products.', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_wholesale_price_products_to_include',
+				'default' => '',
+				'type'    => 'multiselect',
+				'class'   => 'chosen_select',
+				'options' => $products,
+			),
+			array(
+				'title'   => __( 'Products to exclude', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_wholesale_price_products_to_exclude',
 				'default' => '',
 				'type'    => 'multiselect',
 				'class'   => 'chosen_select',

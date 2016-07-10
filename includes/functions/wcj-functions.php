@@ -595,7 +595,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled_per_product' ) ) {
 /**
  * wcj_is_product_wholesale_enabled.
  *
- * @version 2.5.0
+ * @version 2.5.4
  */
 if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	function wcj_is_product_wholesale_enabled( $product_id ) {
@@ -603,15 +603,29 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 			if ( wcj_is_product_wholesale_enabled_per_product( $product_id ) ) {
 				return true;
 			} else {
+				$products_to_include_passed = false;
 				$products_to_include = get_option( 'wcj_wholesale_price_products_to_include', array() );
 				if ( empty ( $products_to_include ) ) {
-					return true;
-				}
-				foreach ( $products_to_include as $id ) {
-					if ( $product_id == $id ) {
-						return true;
+					$products_to_include_passed = true;
+				} else {
+					foreach ( $products_to_include as $id ) {
+						if ( $product_id == $id ) {
+							$products_to_include_passed = true;
+						}
 					}
 				}
+				$products_to_exclude_passed = false;
+				$products_to_exclude = get_option( 'wcj_wholesale_price_products_to_exclude', array() );
+				if ( empty ( $products_to_exclude ) ) {
+					$products_to_exclude_passed = true;
+				} else {
+					foreach ( $products_to_exclude as $id ) {
+						if ( $product_id == $id ) {
+							$products_to_exclude_passed = false;
+						}
+					}
+				}
+				return ( $products_to_include_passed && $products_to_exclude_passed );
 			}
 		}
 		return false;
