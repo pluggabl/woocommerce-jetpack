@@ -17,7 +17,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.4
 	 */
 	public function __construct() {
 
@@ -38,15 +38,16 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		);
 
 		$this->the_atts = array(
-			'date_format'    => get_option( 'date_format' ),
-			'lang'           => '',
-			'form_method'    => 'post',//'get',
-			'class'          => '',
-			'style'          => '',
-			'countries'      => '',
-			'currencies'     => '',
-			'content'        => '',
-			'heading_format' => 'from %level_qty% pcs.',
+			'date_format'           => get_option( 'date_format' ),
+			'lang'                  => '',
+			'form_method'           => 'post',//'get',
+			'class'                 => '',
+			'style'                 => '',
+			'countries'             => '',
+			'currencies'            => '',
+			'content'               => '',
+			'heading_format'        => 'from %level_qty% pcs.',
+			'replace_with_currency' => 'no',
 		);
 
 		parent::__construct();
@@ -231,9 +232,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		$html = '';
 
-		$form_method  = $atts['form_method'];//get_option( 'wcj_price_by_country_country_selection_box_method', 'get' );
-		$select_class = $atts['class'];//get_option( 'wcj_price_by_country_country_selection_box_class', '' );
-		$select_style = $atts['style'];//get_option( 'wcj_price_by_country_country_selection_box_style', '' );
+		$form_method  = $atts['form_method']; // get_option( 'wcj_price_by_country_country_selection_box_method', 'get' );
+		$select_class = $atts['class'];       // get_option( 'wcj_price_by_country_country_selection_box_class', '' );
+		$select_style = $atts['style'];       // get_option( 'wcj_price_by_country_country_selection_box_style', '' );
 
 		$html .= '<form action="" method="' . $form_method . '">';
 
@@ -258,22 +259,34 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		} */
 		$selected_country = ( isset( $_SESSION[ 'wcj-country' ] ) ) ? $_SESSION[ 'wcj-country' ] : '';
 
+		if ( 'yes' === $atts['replace_with_currency'] ) {
+			$currencies_names_and_symbols = wcj_get_currencies_names_and_symbols();
+		}
+
 		if ( empty( $shortcode_countries ) ) {
 			foreach ( $countries as $country_code => $country_name ) {
+
 				$data_icon = '';
 				if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {
 					$data_icon = ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . $country_code . '.png"';
 				}
-				$html .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $country_name . '</option>';
+
+				$option_label = ( 'yes' === $atts['replace_with_currency'] ) ? $currencies_names_and_symbols[ wcj_get_currency_by_country( $country_code ) ] : $country_name;
+
+				$html .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $option_label . '</option>';
 			}
 		} else {
 			foreach ( $shortcode_countries as $country_code ) {
 				if ( isset( $countries[ $country_code ] ) ) {
+
 					$data_icon = '';
 					if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {
 						$data_icon = ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . $country_code . '.png"';
 					}
-					$html .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $countries[ $country_code ] . '</option>';
+
+					$option_label = ( 'yes' === $atts['replace_with_currency'] ) ? $currencies_names_and_symbols[ wcj_get_currency_by_country( $country_code ) ] : $countries[ $country_code ];
+
+					$html .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $option_label . '</option>';
 				}
 			}
 		}

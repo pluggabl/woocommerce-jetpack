@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.5.3
+ * @version 2.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -239,6 +239,38 @@ if ( ! function_exists( 'wcj_get_current_currency_code' ) ) {
 			}
 		}
 		return $current_currency_code;
+	}
+}
+
+if ( ! function_exists( 'wcj_get_currency_by_country' ) ) {
+	/**
+	 * wcj_get_currency_by_country.
+	 *
+	 * @version 2.5.4
+	 * @since   2.5.4
+	 */
+	function wcj_get_currency_by_country( $country_code ) {
+		$currency_code = '';
+		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+			switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
+				case 'comma_list':
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
+					$country_exchange_rate_group = str_replace( ' ', '', $country_exchange_rate_group );
+					$country_exchange_rate_group = explode( ',', $country_exchange_rate_group );
+					break;
+				case 'multiselect':
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_' . $i );
+					break;
+				case 'chosen_select':
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i );
+					break;
+			}
+			if ( in_array( $country_code, $country_exchange_rate_group ) ) {
+				$currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
+				break;
+			}
+		}
+		return ( '' == $currency_code ) ? get_option( 'woocommerce_currency' ) : $currency_code;
 	}
 }
 
