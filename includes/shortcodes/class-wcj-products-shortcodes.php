@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.5.2
+ * @version 2.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -359,11 +359,16 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_list_attributes.
 	 *
-	 * @version 2.4.0
+	 * @version 2.5.4
 	 * @since   2.4.0
 	 */
 	function wcj_product_list_attributes( $atts ) {
-		return ( $this->the_product->has_attributes() ) ? $this->the_product->list_attributes() : '';
+		if ( $this->the_product->has_attributes() ) {
+			ob_start();
+			$this->the_product->list_attributes();
+			return ob_get_clean();
+		}
+		return '';
 	}
 
 	/**

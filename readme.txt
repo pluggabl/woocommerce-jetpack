@@ -126,7 +126,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.4 - 10/07/2016 =
+= 2.5.4 - 12/07/2016 =
+ * Fix - Shortcodes - Products - `[wcj_product_list_attributes]` fixed.
 ~* Dev - PRICES & CURRENCIES - Wholesale Price - "Products to exclude" option added.
 ~* Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - `replace_with_currency` attribute added.
  * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Add Flags Images to Select Drop-Down Box" option added (`[wcj_country_select_drop_down_list]` shortcode).
