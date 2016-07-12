@@ -484,11 +484,12 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_total_orders_sum.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.4
 	 * @since   2.2.6
 	 */
 	function wcj_product_total_orders_sum( $atts ) {
-		return $this->get_product_orders_data( 'orders_sum', $atts );
+		$total_orders_sum = $this->get_product_orders_data( 'orders_sum', $atts );
+		return ( 'yes' === $atts['hide_currency'] ) ? $total_orders_sum : wc_price( $total_orders_sum );
 	}
 
 	/**
@@ -561,32 +562,36 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_goal.
 	 *
-	 * @version 2.2.6
+	 * @version 2.5.4
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_goal( $atts ) {
-		return get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_goal_sum', true );
+		$goal = get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_goal_sum', true );
+		return ( 'yes' === $atts['hide_currency'] ) ? $goal : wc_price( $goal );
 	}
 
 	/**
 	 * wcj_product_crowdfunding_goal_remaining.
 	 *
-	 * @version 2.2.6
+	 * @version 2.5.4
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_goal_remaining( $atts ) {
-		return $this->wcj_product_crowdfunding_goal( $atts ) - $this->wcj_product_total_orders_sum( $atts );
+		$goal             = get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_goal_sum', true );
+		$total_orders_sum = $this->get_product_orders_data( 'orders_sum', $atts );
+		$goal_remaining   = $goal - $total_orders_sum;
+		return ( 'yes' === $atts['hide_currency'] ) ? $goal_remaining : wc_price( $goal_remaining );
 	}
 
 	/**
 	 * wcj_product_crowdfunding_goal_remaining_progress_bar.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.4
 	 * @since   2.5.0
 	 */
 	function wcj_product_crowdfunding_goal_remaining_progress_bar( $atts ) {
-		$current_value = $this->wcj_product_total_orders_sum( $atts );
-		$max_value     = $this->wcj_product_crowdfunding_goal( $atts );
+		$current_value = $this->get_product_orders_data( 'orders_sum', $atts );
+		$max_value     = get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_goal_sum', true );
 		return '<progress value="' . $current_value . '" max="' . $max_value . '"></progress>';
 	}
 
