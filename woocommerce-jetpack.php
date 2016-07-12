@@ -462,10 +462,9 @@ final class WC_Jetpack {
 	/**
 	 * include_shortcodes.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.4
 	 */
 	private function include_shortcodes() {
-		//if ( 'yes' === get_option( 'wcj_shortcodes_enabled', 'no' ) ) {
 		if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' ) && 'no' === get_option( 'wcj_general_shortcodes_disable_booster_shortcodes', 'no' ) ) ) {
 			include_once( 'includes/shortcodes/class-wcj-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-general-shortcodes.php' );
@@ -473,6 +472,7 @@ final class WC_Jetpack {
 			include_once( 'includes/shortcodes/class-wcj-orders-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-order-items-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-products-shortcodes.php' );
+			include_once( 'includes/shortcodes/class-wcj-products-crowdfunding-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-products-add-form-shortcodes.php' );
 			include_once( 'includes/shortcodes/class-wcj-input-field-shortcodes.php' );
 		}

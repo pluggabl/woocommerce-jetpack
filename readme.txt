@@ -127,6 +127,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.4 - 12/07/2016 =
+ * Dev - Shortcodes - Products - Crowdfunding - Moved to separate file.
+ * Fix - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` fixed.
  * Fix - Shortcodes - Products - `[wcj_product_crowdfunding_goal]`, `[wcj_product_crowdfunding_goal_remaining]`, `[wcj_product_total_orders_sum]` fixed (and `hide_currency` attribute added).
  * Fix - Shortcodes - Products - `[wcj_product_list_attributes]` fixed.
 ~* Dev - PRICES & CURRENCIES - Wholesale Price - "Products to exclude" option added.
