@@ -18,7 +18,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.4
 	 * @since   2.5.4
 	 */
 	public function __construct() {
