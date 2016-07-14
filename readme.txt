@@ -126,8 +126,11 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.4 - 12/07/2016 =
- * Dev - Shortcodes - Products - Crowdfunding - Moved to separate file.
+= 2.5.4 - 13/07/2016 =
+-* Fix - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - WooCommerce loop fixed.
+-* Fix - Shortcodes - Products - `[wcj_product_time_since_last_sale]` WooCommerce loop fixed.
+-* Dev - Shortcodes - Products - `[wcj_product_time_since_last_sale]` attributes added.
+ * Dev - Shortcodes - Products - Crowdfunding - Code refactoring - moved to separate file.
  * Fix - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` fixed.
  * Fix - Shortcodes - Products - `[wcj_product_crowdfunding_goal]`, `[wcj_product_crowdfunding_goal_remaining]`, `[wcj_product_total_orders_sum]` fixed (and `hide_currency` attribute added).
  * Fix - Shortcodes - Products - `[wcj_product_list_attributes]` fixed.
