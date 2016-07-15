@@ -73,6 +73,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'find'             => '',
 			'replace'          => '',
 			'offset'           => '',
+			'days_to_cover'    => 90,
+			'order_status'     => 'wc-completed',
+			'hide_if_no_sales' => 'no',
 		);
 
 		parent::__construct();
@@ -110,51 +113,56 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_time_since_last_sale.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.4
 	 * @since   2.4.0
-	 * @todo    not finished
 	 */
 	function wcj_product_time_since_last_sale( $atts ) {
-		// Constants
-		$days_to_cover = 90;
-		$do_use_only_completed_orders = true;
-		// Get the ID before new query
-		$the_ID = get_the_ID();
+		global $woocommerce_loop, $post;
+		$saved_wc_loop = $woocommerce_loop;
+		$saved_post    = $post;
 		$offset = 0;
 		$block_size = 96;
 		while( true ) {
 			// Create args for new query
 			$args = array(
 				'post_type'      => 'shop_order',
-				'post_status'    => ( true === $do_use_only_completed_orders ? 'wc-completed' : 'any' ),
+				'post_status'    => $atts['order_status'],
 				'posts_per_page' => $block_size,
 				'offset'         => $offset,
 				'orderby'        => 'date',
 				'order'          => 'DESC',
-				'date_query'     => array( array( 'after'   => strtotime( '-' . $days_to_cover . ' days' ) ) ),
+				'date_query'     => array( array( 'after' => strtotime( '-' . $atts['days_to_cover'] . ' days' ) ) ),
 			);
 			// Run new query
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
 			// Analyze the results, i.e. orders
 			while ( $loop->have_posts() ) : $loop->the_post();
 				$order = new WC_Order( $loop->post->ID );
 				$items = $order->get_items();
 				foreach ( $items as $item ) {
 					// Run through all order's items
-					if ( $item['product_id'] == $the_ID ) {
+					if ( $item['product_id'] == $atts['product_id'] ) {
 						// Found sale!
 						$result = sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) );
-						wp_reset_postdata();
+//						wp_reset_postdata();
+						$woocommerce_loop = $saved_wc_loop;
+						$post             = $saved_post;
+						setup_postdata( $post );
 						return $result;
 					}
 				}
 			endwhile;
 			$offset += $block_size;
 		}
-		wp_reset_postdata();
+//		wp_reset_postdata();
+		$woocommerce_loop = $saved_wc_loop;
+		$post             = $saved_post;
+		setup_postdata( $post );
 		// No sales found
-		return '';
+		return ( 'yes' === $atts['hide_if_no_sales'] ? '' : __( 'No sales yet.', 'woocommerce-jetpack' ) );
 	}
 
 	/**

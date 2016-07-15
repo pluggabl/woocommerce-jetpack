@@ -78,10 +78,13 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_product_orders_data.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.4
 	 * @since   2.2.6
 	 */
 	function get_product_orders_data( $return_value = 'total_orders', $atts ) {
+		global $woocommerce_loop, $post;
+		$saved_wc_loop = $woocommerce_loop;
+		$saved_post    = $post;
 		$total_orders = 0;
 		$total_qty    = 0;
 		$total_sum    = 0;
@@ -122,7 +125,10 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 			endwhile;
 			$offset += $block_size;
 		}
-		wp_reset_postdata();
+//		wp_reset_postdata();
+		$woocommerce_loop = $saved_wc_loop;
+		$post             = $saved_post;
+		setup_postdata( $post );
 		switch ( $return_value ) {
 			case 'orders_sum':
 				$return = $total_sum;
