@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.5.3
+ * @version 2.5.4
  * @author  Algoritmika Ltd.
  * @todo    import products tool;
  */
@@ -321,17 +321,22 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * export_orders.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.4
 	 * @since   2.4.8
 	 */
 	function export_orders() {
 		$data = array();
 		$data[] = array(
 			__( 'Order ID', 'woocommerce-jetpack' ),
+			__( 'Order Number', 'woocommerce-jetpack' ),
+			__( 'Order Status', 'woocommerce-jetpack' ),
 			__( 'Customer Email', 'woocommerce-jetpack' ),
 			__( 'Customer First Name', 'woocommerce-jetpack' ),
 			__( 'Customer Last Name', 'woocommerce-jetpack' ),
 			__( 'Order Date', 'woocommerce-jetpack' ),
+			__( 'Order Item Count', 'woocommerce-jetpack' ),
+			__( 'Order Total', 'woocommerce-jetpack' ),
+			__( 'Order Payment Method', 'woocommerce-jetpack' ),
 		);
 		$offset = 0;
 		$block_size = 96;
@@ -349,7 +354,18 @@ class WCJ_General extends WCJ_Module {
 			while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
 				$order_id = $loop_orders->post->ID;
 				$order = wc_get_order( $order_id );
-				$data[] = array( $order_id, $order->billing_email, $order->billing_first_name, $order->billing_last_name, get_the_date( 'Y/m/d' ), );
+				$data[] = array(
+					$order_id,
+					$order->get_order_number(),
+					$order->get_status(),
+					$order->billing_email,
+					$order->billing_first_name,
+					$order->billing_last_name,
+					get_the_date( 'Y/m/d' ),
+					$order->get_item_count(),
+					$order->get_total() . ' ' . $order->get_order_currency(),
+					$order->payment_method_title,
+				);
 			endwhile;
 			$offset += $block_size;
 		}
