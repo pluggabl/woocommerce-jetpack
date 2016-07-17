@@ -127,7 +127,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.4 - 17/07/2016 =
- * Dev - EMAILS & MISC. - General - Export Orders tool - Order number, status, item count, total and payment method columns added.
+ * Dev - EMAILS & MISC. - General - Export Orders tool - Order number, status, item count, total, payment method, billing and shipping info columns added.
 ~* Fix - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - WooCommerce loop fixed.
 ~* Fix - Shortcodes - Products - `[wcj_product_time_since_last_sale]` WooCommerce loop fixed.
 ~* Dev - Shortcodes - Products - `[wcj_product_time_since_last_sale]` attributes added.
