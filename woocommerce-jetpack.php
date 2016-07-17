@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.4-dev-201607102158';
+	public $version = '2.5.4-dev-201607180241';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -481,7 +481,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.4
 	 */
 	function include_modules() {
 		$modules_files = array(
@@ -543,6 +543,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-currency-exchange-rates.php',
 			'includes/class-wcj-price-formats.php',
 			'includes/class-wcj-general.php',
+			'includes/class-wcj-export-import.php',
 //			'includes/class-wcj-shortcodes-module.php',
 			'includes/class-wcj-eu-vat-number.php',
 			'includes/class-wcj-old-slugs.php',
