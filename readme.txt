@@ -95,8 +95,9 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
+* *Export* - WooCommerce export tools.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
-* *General* - Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets. Export tools. Custom roles tool.
+* *General* - Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets. Custom roles tool.
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
 
