@@ -126,7 +126,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.4 - 16/07/2016 =
+= 2.5.4 - 17/07/2016 =
  * Dev - EMAILS & MISC. - General - Export Orders tool - Order number, status, item count, total and payment method columns added.
 ~* Fix - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - WooCommerce loop fixed.
 ~* Fix - Shortcodes - Products - `[wcj_product_time_since_last_sale]` WooCommerce loop fixed.
@@ -139,6 +139,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 ~* Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - `replace_with_currency` attribute added.
  * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Add Flags Images to Select Drop-Down Box" option added (`[wcj_country_select_drop_down_list]` shortcode).
  * Dev - Shortcodes - Products - `[wcj_product_total_sales]` - `hide_if_zero` and `offset` attributes added.
+ * Dev - Shortcodes - Orders - `[wcj_order_tax_by_class]` shortcode added.
  * Dev - Shortcodes - Orders - `[wcj_order_total_by_tax_class]` shortcode added.
  * Dev - Shortcodes - Orders - `[wcj_order_subtotal_by_tax_class]` shortcode added.
 ~* Fix - EMAILS & MISC. - EU VAT Number - Started using WooCommerce customer `set_is_vat_exempt()` function.

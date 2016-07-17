@@ -22,12 +22,10 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	public function __construct() {
 
 		$this->the_shortcodes = array(
-
 			'wcj_order_date',
 			'wcj_order_time',
 			'wcj_order_number',
 			'wcj_order_id',
-
 			'wcj_order_billing_address',
 			'wcj_order_billing_phone',
 			'wcj_order_checkout_field',
@@ -37,13 +35,13 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_custom_meta_field',
 			'wcj_order_meta',
 			'wcj_order_items_meta',
-
 			'wcj_order_subtotal',
 			'wcj_order_subtotal_plus_shipping',
 			'wcj_order_total_discount',
 //			'wcj_order_cart_discount',
 			'wcj_order_shipping_tax',
 			'wcj_order_taxes_html',
+			'wcj_order_tax_by_class',
 			'wcj_order_total_tax',
 			'wcj_order_total_tax_percent',
 			'wcj_order_total',
@@ -54,16 +52,13 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_excl_tax',
 			'wcj_order_shipping_price',
 			'wcj_order_total_refunded',
-
 			'wcj_order_total_fees',
 			'wcj_order_total_fees_incl_tax',
 			'wcj_order_total_fees_tax',
 			'wcj_order_fee',
 			'wcj_order_fees_html',
-
 			'wcj_order_payment_method',
 			'wcj_order_shipping_method',
-
 			'wcj_order_items_total_weight',
 			'wcj_order_items_total_quantity',
 			'wcj_order_items_total_number',
@@ -514,6 +509,23 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			}
 		}
 		return $this->wcj_price_shortcode( $total_by_tax_class, $atts );
+	}
+
+	/**
+	 * wcj_order_tax_by_class.
+	 *
+	 * @version 2.5.4
+	 * @since   2.5.4
+	 */
+	function wcj_order_tax_by_class( $atts ) {
+		$tax_class = ( 'standard' === $atts['tax_class'] ) ? '' : $atts['tax_class'];
+		$total_tax_by_class = 0;
+		foreach ( $this->the_order->get_items() as $item ) {
+			if ( $tax_class === $item['tax_class'] ) {
+				$total_tax_by_class += $this->the_order->get_line_tax( $item );
+			}
+		}
+		return $this->wcj_price_shortcode( $total_tax_by_class, $atts );
 	}
 
 	/**
