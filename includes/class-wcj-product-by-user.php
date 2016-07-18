@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product by User class.
  *
- * @version 2.5.3
+ * @version 2.5.4
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -150,7 +150,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.4
 	 * @since   2.5.3
 	 */
 	function add_settings() {
@@ -226,6 +226,13 @@ class WCJ_Product_By_User extends WCJ_Module {
 					'default'  => 'draft',
 					'type'     => 'select',
 					'options'  => get_post_statuses(),
+				),
+				array(
+					'title'    => __( 'Require Unique Title', 'woocommerce-jetpack' ),
+					'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_by_user_require_unique_title',
+					'default'  => 'no',
+					'type'     => 'checkbox',
 				),
 				array(
 					'title'    => __( 'Add "My Products" Tab to User\'s My Account Page', 'woocommerce-jetpack' ),

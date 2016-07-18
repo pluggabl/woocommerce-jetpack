@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Add Form Shortcodes class.
  *
- * @version 2.5.2
+ * @version 2.5.4
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    refill on not validated; titles and messages; fields ids and label tags; other styling; custom fields;
@@ -129,13 +129,22 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * validate_args.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.4
 	 * @since   2.5.0
 	 */
 	function validate_args( $args, $shortcode_atts ) {
 		$errors = '';
 		if ( '' == $args['title'] ) {
 			$errors .= '<li>' . __( 'Title is required!', 'woocommerce-jetpack' ) . '</li>';
+		}
+
+		if ( 'yes' === get_option( 'wcj_product_by_user_require_unique_title', 'no' ) && 0 == $shortcode_atts['product_id'] ) {
+			if ( ! function_exists( 'post_exists' ) ) {
+				require_once( ABSPATH . 'wp-admin/includes/post.php' );
+			}
+			if ( post_exists( $args['title'] ) ) {
+				$errors .= '<li>' . __( 'Product exists!', 'woocommerce-jetpack' ) . '</li>';
+			}
 		}
 
 		$fields = array(
@@ -170,7 +179,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_add_new.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.4
 	 * @since   2.5.0
 	 */
 	function wcj_product_add_new( $atts ) {
@@ -193,9 +202,16 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			);
 			if ( true === ( $validate_args = $this->validate_args( $args, $atts ) ) ) {
 				$result = $this->wc_add_new_product( $args, $atts );
-				$notice_html .= ( 0 == $result )
-					? '<div class="woocommerce"><ul class="woocommerce-error"><li>' . __( 'Error!', 'woocommerce-jetpack' ) . '</li></ul></div>'
-					: '<div class="woocommerce"><div class="woocommerce-message">' . __( 'Success!', 'woocommerce-jetpack' ) . '</div></div>';
+				if ( 0 == $result ) {
+					$notice_html .= '<div class="woocommerce"><ul class="woocommerce-error"><li>' . __( 'Error!', 'woocommerce-jetpack' ) . '</li></ul></div>';
+				} else {
+					if ( 0 == $atts['product_id'] ) {
+						$notice_html .= '<div class="woocommerce"><div class="woocommerce-message">' . sprintf( __( '"%s" successfully added!', 'woocommerce-jetpack' ), $args['title'] ) . '</div></div>'; // todo: custom message
+					} else {
+						$notice_html .= '<div class="woocommerce"><div class="woocommerce-message">' . sprintf( __( '"%s" successfully edited!', 'woocommerce-jetpack' ), $args['title'] ) . '</div></div>'; // todo: custom message
+					}
+//					$atts['product_id'] = $result;
+				}
 			} else {
 				$notice_html .= '<div class="woocommerce"><ul class="woocommerce-error">' . $validate_args . '</ul></div>';
 			}
@@ -220,15 +236,17 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		$header_html .= '</h3>';
 		$header_html .= '<form method="post" action="' . remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) . '" enctype="multipart/form-data">'; // todo multipart only if image...
 
+		$required_mark_html_template = '&nbsp;<abbr class="required" title="required">*</abbr>';
+
 		$table_data = array();
 		$input_style = 'width:100%;';
 		$table_data[] = array(
-			__( 'Title', 'woocommerce-jetpack' ) . '&nbsp;<abbr class="required" title="required">*</abbr>',
+			__( 'Title', 'woocommerce-jetpack' ) . $required_mark_html_template,
 			'<input required type="text" style="' . $input_style . '" name="wcj_add_new_product_title" value="' . ( ( 0 != $atts['product_id'] ) ? $this->the_product->get_title() : '' ) . '">'
 		);
 		if ( 'yes' === $atts['desc_enabled'] ) {
 			$required_html      = ( 'yes' === $atts['desc_required'] ) ? ' required' : '';
-			$required_mark_html = ( 'yes' === $atts['desc_required'] ) ? '&nbsp;<abbr class="required" title="required">*</abbr>' : '';
+			$required_mark_html = ( 'yes' === $atts['desc_required'] ) ? $required_mark_html_template : '';
 			$table_data[] = array(
 				__( 'Description', 'woocommerce-jetpack' ) . $required_mark_html,
 				'<textarea' . $required_html . ' style="' . $input_style . '" name="wcj_add_new_product_desc">' . ( ( 0 != $atts['product_id'] ) ? get_post_field( 'post_content', $atts['product_id'] ) : '' ) . '</textarea>'
@@ -236,7 +254,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		}
 		if ( 'yes' === $atts['short_desc_enabled'] ) {
 			$required_html      = ( 'yes' === $atts['short_desc_required'] ) ? ' required' : '';
-			$required_mark_html = ( 'yes' === $atts['short_desc_required'] ) ? '&nbsp;<abbr class="required" title="required">*</abbr>' : '';
+			$required_mark_html = ( 'yes' === $atts['short_desc_required'] ) ? $required_mark_html_template : '';
 			$table_data[] = array(
 				__( 'Short Description', 'woocommerce-jetpack' ) . $required_mark_html,
 				'<textarea' . $required_html . ' style="' . $input_style . '" name="wcj_add_new_product_short_desc">' . ( ( 0 != $atts['product_id'] ) ? get_post_field( 'post_excerpt', $atts['product_id'] ) : '' ) . '</textarea>'
@@ -244,7 +262,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		}
 		if ( 'yes' === $atts['image_enabled'] ) {
 			$required_html      = ( 'yes' === $atts['image_required'] ) ? ' required' : '';
-			$required_mark_html = ( 'yes' === $atts['image_required'] ) ? '&nbsp;<abbr class="required" title="required">*</abbr>' : '';
+			$required_mark_html = ( 'yes' === $atts['image_required'] ) ? $required_mark_html_template : '';
 			$new_image_field = '<input' . $required_html . ' type="file" name="wcj_add_new_product_image" accept="image/*">';
 			if ( 0 != $atts['product_id'] ) {
 				$the_field = ( '' == get_post_thumbnail_id( $atts['product_id'] ) ) ?
@@ -260,7 +278,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		}
 		if ( 'yes' === $atts['regular_price_enabled'] ) {
 			$required_html      = ( 'yes' === $atts['regular_price_required'] ) ? ' required' : '';
-			$required_mark_html = ( 'yes' === $atts['regular_price_required'] ) ? '&nbsp;<abbr class="required" title="required">*</abbr>' : '';
+			$required_mark_html = ( 'yes' === $atts['regular_price_required'] ) ? $required_mark_html_template : '';
 			$table_data[] = array(
 				__( 'Regular Price', 'woocommerce-jetpack' ) . $required_mark_html,
 				'<input' . $required_html . ' type="number" min="0" step="0.01" name="wcj_add_new_product_regular_price" value="' . ( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_regular_price', true ) : '' ) . '">'
@@ -268,7 +286,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		}
 		if ( 'yes' === $atts['sale_price_enabled'] ) {
 			$required_html      = ( 'yes' === $atts['sale_price_required'] ) ? ' required' : '';
-			$required_mark_html = ( 'yes' === $atts['sale_price_required'] ) ? '&nbsp;<abbr class="required" title="required">*</abbr>' : '';
+			$required_mark_html = ( 'yes' === $atts['sale_price_required'] ) ? $required_mark_html_template : '';
 			$table_data[] = array(
 				__( 'Sale Price', 'woocommerce-jetpack' ) . $required_mark_html,
 				'<input' . $required_html . ' type="number" min="0" step="0.01" name="wcj_add_new_product_sale_price" value="' . ( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_sale_price', true ) : '' ) . '">'
@@ -276,7 +294,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		}
 		if ( 'yes' === $atts['cats_enabled'] ) {
 			$required_html      = ( 'yes' === $atts['cats_required'] ) ? ' required' : '';
-			$required_mark_html = ( 'yes' === $atts['cats_required'] ) ? '&nbsp;<abbr class="required" title="required">*</abbr>' : '';
+			$required_mark_html = ( 'yes' === $atts['cats_required'] ) ? $required_mark_html_template : '';
 			$current_product_categories = ( 0 != $atts['product_id'] ) ? get_the_terms( $atts['product_id'], 'product_cat' ) : array();
 			$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
 			$product_categories_as_select_options = '';
@@ -296,7 +314,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		}
 		if ( 'yes' === $atts['tags_enabled'] ) {
 			$required_html      = ( 'yes' === $atts['tags_required'] ) ? ' required' : '';
-			$required_mark_html = ( 'yes' === $atts['tags_required'] ) ? '&nbsp;<abbr class="required" title="required">*</abbr>' : '';
+			$required_mark_html = ( 'yes' === $atts['tags_required'] ) ? $required_mark_html_template : '';
 			$current_product_tags = ( 0 != $atts['product_id'] ) ? get_the_terms( $atts['product_id'], 'product_tag' ) : array();
 			$products_tags = get_terms( 'product_tag', 'orderby=name&hide_empty=0' );
 			$products_tags_as_select_options = '';

@@ -127,7 +127,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.4 - 17/07/2016 =
+= 2.5.4 - 18/07/2016 =
+ * Dev - PRODUCTS - Product by User - "Require Unique Title" option added.
  * Dev - EMAILS & MISC. - Export - Initial module release (all tools moved from General module).
  * Dev - EMAILS & MISC. - General - Export Orders tool - Order number, status, item count, total, payment method, billing and shipping info columns added.
 ~* Fix - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - WooCommerce loop fixed.
