@@ -242,6 +242,20 @@ class WCJ_Product_By_User extends WCJ_Module {
 					'type'     => 'checkbox',
 				),
 				array(
+					'title'    => __( 'Message: Product Successfully Added', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_by_user_message_product_successfully_added',
+					'default'  => __( '"%product_title%" successfully added!', 'woocommerce-jetpack' ),
+					'type'     => 'text',
+					'css'      => 'width:300px;',
+				),
+				array(
+					'title'    => __( 'Message: Product Successfully Edited', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_by_user_message_product_successfully_edited',
+					'default'  => __( '"%product_title%" successfully edited!', 'woocommerce-jetpack' ),
+					'type'     => 'text',
+					'css'      => 'width:300px;',
+				),
+				array(
 					'type'     => 'sectionend',
 					'id'       => 'wcj_product_by_user_options',
 				),
