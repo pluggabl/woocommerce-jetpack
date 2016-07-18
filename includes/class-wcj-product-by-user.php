@@ -44,7 +44,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	 *
 	 * @version 2.5.2
 	 * @since   2.5.2
-	 * @todo    check if user's products exist
+	 * @todo    check if any user's products exist
 	 */
 	function add_my_products_tab_my_account_page( $items ) {
 		$items['wcj-my-products'] = __( 'My Products', 'woocommerce-jetpack' );

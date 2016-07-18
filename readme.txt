@@ -128,6 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.4 - 18/07/2016 =
+ * Dev - PRODUCTS - Product by User - Fields ids; `label` tags added.
+ * Dev - PRODUCTS - Product by User - Fields refilled when validate returns false (all except Image field).
  * Dev - PRODUCTS - Product by User - "Require Unique Title" option added.
  * Dev - EMAILS & MISC. - Export - Initial module release (all tools moved from General module).
  * Dev - EMAILS & MISC. - General - Export Orders tool - Order number, status, item count, total, payment method, billing and shipping info columns added.
