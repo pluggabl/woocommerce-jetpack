@@ -128,31 +128,31 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.4 - 18/07/2016 =
+ * Fix - Manage Settings - Import - New line issue fixed.
+~* Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - `replace_with_currency` attribute added.
+ * Dev - Shortcodes - Orders - `[wcj_order_tax_by_class]` shortcode added.
+ * Dev - Shortcodes - Orders - `[wcj_order_total_by_tax_class]` shortcode added.
+ * Dev - Shortcodes - Orders - `[wcj_order_subtotal_by_tax_class]` shortcode added.
+~* Fix - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - WooCommerce loop fixed.
+~* Fix - Shortcodes - Products - `[wcj_product_time_since_last_sale]` WooCommerce loop fixed.
+ * Fix - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` fixed.
+ * Fix - Shortcodes - Products - `[wcj_product_crowdfunding_goal]`, `[wcj_product_crowdfunding_goal_remaining]`, `[wcj_product_total_orders_sum]` fixed (and `hide_currency` attribute added).
+ * Fix - Shortcodes - Products - `[wcj_product_list_attributes]` fixed.
+ * Dev - Shortcodes - Products - `[wcj_product_total_sales]` - `hide_if_zero` and `offset` attributes added.
+~* Dev - Shortcodes - Products - `[wcj_product_time_since_last_sale]` attributes added.
+ * Dev - Shortcodes - Products - Crowdfunding - Code refactoring - moved to separate file.
+~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Getting `customer_country_group_id` on every `get_customer_country_group_id()` function call.
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` function moved from `init` hook to constructor.
+ * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Add Flags Images to Select Drop-Down Box" option added (`[wcj_country_select_drop_down_list]` shortcode).
+~* Dev - PRICES & CURRENCIES - Wholesale Price - "Products to exclude" option added.
  * Dev - PRODUCTS - Product by User - Messages options added.
  * Dev - PRODUCTS - Product by User - Fields ids; `label` tags added.
  * Dev - PRODUCTS - Product by User - Fields (all except Image field) refilled when validate returns false and after product successfully added.
  * Dev - PRODUCTS - Product by User - "Require Unique Title" option added.
- * Dev - EMAILS & MISC. - Export - Initial module release (all tools moved from General module).
- * Dev - EMAILS & MISC. - General - Export Orders tool - Order number, status, item count, total, payment method, billing and shipping info columns added.
-~* Fix - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - WooCommerce loop fixed.
-~* Fix - Shortcodes - Products - `[wcj_product_time_since_last_sale]` WooCommerce loop fixed.
-~* Dev - Shortcodes - Products - `[wcj_product_time_since_last_sale]` attributes added.
- * Dev - Shortcodes - Products - Crowdfunding - Code refactoring - moved to separate file.
- * Fix - Shortcodes - Products - `[wcj_product_crowdfunding_time_remaining_progress_bar]` fixed.
- * Fix - Shortcodes - Products - `[wcj_product_crowdfunding_goal]`, `[wcj_product_crowdfunding_goal_remaining]`, `[wcj_product_total_orders_sum]` fixed (and `hide_currency` attribute added).
- * Fix - Shortcodes - Products - `[wcj_product_list_attributes]` fixed.
-~* Dev - PRICES & CURRENCIES - Wholesale Price - "Products to exclude" option added.
-~* Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - `replace_with_currency` attribute added.
- * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Add Flags Images to Select Drop-Down Box" option added (`[wcj_country_select_drop_down_list]` shortcode).
- * Dev - Shortcodes - Products - `[wcj_product_total_sales]` - `hide_if_zero` and `offset` attributes added.
- * Dev - Shortcodes - Orders - `[wcj_order_tax_by_class]` shortcode added.
- * Dev - Shortcodes - Orders - `[wcj_order_total_by_tax_class]` shortcode added.
- * Dev - Shortcodes - Orders - `[wcj_order_subtotal_by_tax_class]` shortcode added.
 ~* Fix - EMAILS & MISC. - EU VAT Number - Started using WooCommerce customer `set_is_vat_exempt()` function.
 ~* Fix - EMAILS & MISC. - EU VAT Number - AJAX call fixed.
-~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Getting `customer_country_group_id` on every `get_customer_country_group_id()` function call.
-~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` function moved from `init` hook to constructor.
- * Fix - Manage Settings - Import - New line issue fixed.
+ * Dev - EMAILS & MISC. - Export - Initial module release (all tools moved from General module).
+ * Dev - EMAILS & MISC. - General - Export Orders tool - Order number, status, item count, total, payment method, billing and shipping info columns added.
 
 = 2.5.3 - 04/07/2016 =
 * Dev - Shortcodes - Orders - `[wcj_order_total_refunded]` shortcode added.
