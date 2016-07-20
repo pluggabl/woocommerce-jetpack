@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Country Switcher Widget class.
  *
- * @version 2.5.0
+ * @version 2.5.5
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -29,7 +29,7 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 	/**
 	 * Outputs the content of the widget
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.5
 	 * @param array $args
 	 * @param array $instance
 	 */
@@ -44,7 +44,10 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 		} elseif ( 'by_ip' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
 			echo __( 'Customer Country Detection Method must include "by user selection"!', 'woocommerce-jetpack' );
 		} else {
-			echo do_shortcode( '[wcj_country_select_drop_down_list countries="' . $instance['countries'] . '"]' );
+			if ( ! isset( $instance['replace_with_currency'] ) ) {
+				$instance['replace_with_currency'] = 'no';
+			}
+			echo do_shortcode( '[wcj_country_select_drop_down_list countries="' . $instance['countries'] . '" replace_with_currency="' . $instance['replace_with_currency'] . '"]' );
 			/* switch ( $instance['switcher_type'] ) {
 				case 'link_list':
 					echo do_shortcode( '[wcj_currency_select_link_list]' );
@@ -63,14 +66,15 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 	/**
 	 * Outputs the options form on admin
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.5
 	 * @param array $instance The widget options
 	 */
 	public function form( $instance ) {
 		// outputs the options form on admin
-		$title         = ! empty( $instance['title'] )         ? $instance['title']         : '';
-		$countries     = ! empty( $instance['countries'] )     ? $instance['countries']     : '';
-//		$switcher_type = ! empty( $instance['switcher_type'] ) ? $instance['switcher_type'] : 'drop_down';
+		$title                 = ! empty( $instance['title'] )                 ? $instance['title']                 : '';
+		$countries             = ! empty( $instance['countries'] )             ? $instance['countries']             : '';
+		$replace_with_currency = ! empty( $instance['replace_with_currency'] ) ? $instance['replace_with_currency'] : 'no';
+//		$switcher_type         = ! empty( $instance['switcher_type'] )         ? $instance['switcher_type']         : 'drop_down';
 		?>
 		<p>
 		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
@@ -79,6 +83,13 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 		<p>
 		<label for="<?php echo $this->get_field_id( 'countries' ); ?>"><?php _e( 'Countries:' ); ?></label>
 		<input class="widefat" id="<?php echo $this->get_field_id( 'countries' ); ?>" name="<?php echo $this->get_field_name( 'countries' ); ?>" type="text" value="<?php echo esc_attr( $countries ); ?>">
+		</p>
+		<p>
+		<label for="<?php echo $this->get_field_id( 'replace_with_currency' ); ?>"><?php _e( 'Replace with currency:' ); ?></label>
+		<select class="widefat" id="<?php echo $this->get_field_id( 'replace_with_currency' ); ?>" name="<?php echo $this->get_field_name( 'replace_with_currency' ); ?>">
+			<option value="no" <?php  selected( $replace_with_currency, 'no' ); ?>><?php  echo __( 'No', 'woocommerce-jetpack' ); ?>
+			<option value="yes" <?php selected( $replace_with_currency, 'yes' ); ?>><?php echo __( 'Yes', 'woocommerce-jetpack' ); ?>
+		</select>
 		</p>
 		<?php /*<p>
 		<label for="<?php echo $this->get_field_id( 'switcher_type' ); ?>"><?php _e( 'Type:' ); ?></label>
@@ -94,16 +105,17 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 	/**
 	 * Processing widget options on save
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.5
 	 * @param array $new_instance The new options
 	 * @param array $old_instance The previous options
 	 */
 	public function update( $new_instance, $old_instance ) {
 		// processes widget options to be saved
 		$instance = array();
-		$instance['title']         = ( ! empty( $new_instance['title'] ) )         ? strip_tags( $new_instance['title'] )         : '';
-		$instance['countries']     = ( ! empty( $new_instance['countries'] ) )     ? $new_instance['countries']                   : '';
-//		$instance['switcher_type'] = ( ! empty( $new_instance['switcher_type'] ) ) ? $new_instance['switcher_type']               : 'drop_down';
+		$instance['title']                 = ( ! empty( $new_instance['title'] ) )                 ? strip_tags( $new_instance['title'] )         : '';
+		$instance['countries']             = ( ! empty( $new_instance['countries'] ) )             ? $new_instance['countries']                   : '';
+		$instance['replace_with_currency'] = ( ! empty( $new_instance['replace_with_currency'] ) ) ? $new_instance['replace_with_currency']       : 'no';
+//		$instance['switcher_type']         = ( ! empty( $new_instance['switcher_type'] ) )         ? $new_instance['switcher_type']               : 'drop_down';
 		return $instance;
 	}
 }

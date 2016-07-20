@@ -127,6 +127,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.5.5 - 20/07/2016 =
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Country Switcher Widget - "Replace with currency" option added.
+
 = 2.5.4 - 19/07/2016 =
 * Fix - Manage Settings - Import - New line issue fixed.
 * Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - `replace_with_currency` attribute added.
