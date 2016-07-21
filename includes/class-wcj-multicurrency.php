@@ -254,7 +254,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	}
 
 	/**
-	 * change_currency_code.
+	 * get_current_currency_code.
 	 *
 	 * @version 2.4.3
 	 */
