@@ -128,6 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 25/07/2016 =
+ * Dev - Products - SKU - "Automatically Generate SKU for New Products" option added.
+ * Dev - Products - SKU - "Add SKU to Customer Emails" option added.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Items" and "Order Notes" columns added.
  * Dev - PRICES & CURRENCIES - Price by User Role - "Show Roles on per Product Settings" option added.
  * Fix - `WCJ_Module` - `colspan` fixed in `create_meta_box()` function.

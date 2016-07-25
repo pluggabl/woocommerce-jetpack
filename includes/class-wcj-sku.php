@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack SKU class.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  * @todo    add "random number" option
  */
@@ -18,7 +18,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 */
 	function __construct() {
 
@@ -37,12 +37,29 @@ class WCJ_SKU extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			add_action( 'wp_insert_post', array( $this, 'set_sku_for_new_product' ), PHP_INT_MAX, 3 );
+			if ( 'yes' === get_option( 'wcj_sku_new_products_generate_enabled', 'yes' ) ) {
+				add_action( 'wp_insert_post', array( $this, 'set_sku_for_new_product' ), PHP_INT_MAX, 3 );
+			}
 
 			if ( 'yes' === get_option( 'wcj_sku_allow_duplicates_enabled', 'no' ) ) {
 				add_filter( 'wc_product_has_unique_sku', '__return_false', PHP_INT_MAX );
 			}
+
+			if ( 'yes' === get_option( 'wcj_sku_add_to_customer_emails', 'no' ) ) {
+				add_filter( 'woocommerce_email_order_items_args', array( $this, 'add_sku_to_customer_emails' ), PHP_INT_MAX, 1 );
+			}
 		}
+	}
+
+	/**
+	 * add_sku_to_customer_emails.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	function add_sku_to_customer_emails( $args ) {
+		$args['show_sku'] = true;
+		return $args;
 	}
 
 	/**
@@ -247,7 +264,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 */
 	function get_settings() {
 		$settings = array(
@@ -364,9 +381,24 @@ class WCJ_SKU extends WCJ_Module {
 				'id'       => 'wcj_sku_more_options',
 			),
 			array(
+				'title'    => __( 'Automatically Generate SKU for New Products', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If disabled you can use Autogenerate SKUs tool.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_sku_new_products_generate_enabled',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
 				'title'    => __( 'Allow Duplicate SKUs', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sku_allow_duplicates_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Add SKU to Customer Emails', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_sku_add_to_customer_emails',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
