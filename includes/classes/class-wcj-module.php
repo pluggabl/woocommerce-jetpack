@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -188,7 +188,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @since 2.5.0
+	 * @since 2.5.5
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -199,7 +199,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			if ( $is_enabled ) {
 				if ( 'title' === $option['type'] ) {
 					$html .= '<tr>';
-					$html .= '<th cospan="2" style="text-align:left;">' . $option['title'] . '</th>';
+					$html .= '<th colspan="2" style="text-align:left;">' . $option['title'] . '</th>';
 					$html .= '</tr>';
 				} else {
 					$custom_attributes = '';

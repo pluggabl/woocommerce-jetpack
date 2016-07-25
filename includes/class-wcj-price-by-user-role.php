@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by User Role class.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -108,7 +108,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.5
 	 * @since   2.5.0
 	 */
 	function get_meta_box_options() {
@@ -141,8 +141,14 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			),
 		);
 		if ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
+			$visible_roles = get_option( 'wcj_price_by_user_role_per_product_show_roles', '' );
 			foreach ( $products as $product_id => $desc ) {
 				foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
+					if ( ! empty( $visible_roles ) ) {
+						if ( ! in_array( $role_key, $visible_roles ) ) {
+							continue;
+						}
+					}
 					$options = array_merge( $options, array(
 						array(
 							'type'       => 'title',
@@ -351,7 +357,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.0
 	 */
 	function add_settings() {
@@ -369,6 +375,15 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 				'type'     => 'checkbox',
 				'id'       => 'wcj_price_by_user_role_per_product_enabled',
 				'default'  => 'yes',
+			),
+			array(
+				'title'    => __( 'Show Roles on per Product Settings', 'woocommerce-jetpack' ),
+				'desc'     => __( 'If per product settings is enabled, you can choose which roles to show on product\'s edit page. Leave blank to show all roles.', 'woocommerce-jetpack' ),
+				'type'     => 'multiselect',
+				'id'       => 'wcj_price_by_user_role_per_product_show_roles',
+				'default'  => '',
+				'class'    => 'chosen_select',
+				'options'  => wcj_get_user_roles_options(),
 			),
 			array(
 				'title'    => __( 'Shipping', 'woocommerce-jetpack' ),

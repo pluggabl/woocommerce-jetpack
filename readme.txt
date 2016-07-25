@@ -127,8 +127,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.5 - 20/07/2016 =
-* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Country Switcher Widget - "Replace with currency" option added.
+= 2.5.5 - 25/07/2016 =
+ * Dev - PRICES & CURRENCIES - Price by User Role - "Show Roles on per Product Settings" option added.
+ * Fix - `WCJ_Module` - `colspan` fixed in `create_meta_box()` function.
+ * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Country Switcher Widget - "Replace with currency" option added.
 
 = 2.5.4 - 19/07/2016 =
 * Fix - Manage Settings - Import - New line issue fixed.
