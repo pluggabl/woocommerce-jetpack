@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Export Import class.
  *
- * @version 2.5.4
+ * @version 2.5.5
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  * @todo    import products (maybe orders, customers) tool(s);
@@ -180,7 +180,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_orders.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.5
 	 * @since   2.4.8
 	 */
 	function export_orders() {
@@ -191,8 +191,10 @@ class WCJ_Export_Import extends WCJ_Module {
 			__( 'Order Status', 'woocommerce-jetpack' ),
 			__( 'Order Date', 'woocommerce-jetpack' ),
 			__( 'Order Item Count', 'woocommerce-jetpack' ),
+			__( 'Order Items', 'woocommerce-jetpack' ),
 			__( 'Order Total', 'woocommerce-jetpack' ),
 			__( 'Order Payment Method', 'woocommerce-jetpack' ),
+			__( 'Order Notes', 'woocommerce-jetpack' ),
 			__( 'Billing First Name', 'woocommerce-jetpack' ),
 			__( 'Billing Last Name', 'woocommerce-jetpack' ),
 			__( 'Billing Company', 'woocommerce-jetpack' ),
@@ -230,14 +232,21 @@ class WCJ_Export_Import extends WCJ_Module {
 			while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
 				$order_id = $loop_orders->post->ID;
 				$order = wc_get_order( $order_id );
+				$items = array();
+				foreach ( $order->get_items() as $item ) {
+					$items[] = $item['name'];
+				}
+				$items = implode( ' / ', $items );
 				$data[] = array(
 					$order_id,
 					$order->get_order_number(),
 					$order->get_status(),
 					get_the_date( 'Y/m/d' ),
 					$order->get_item_count(),
+					$items,
 					$order->get_total() . ' ' . $order->get_order_currency(),
 					$order->payment_method_title,
+					$order->customer_note,
 					$order->billing_first_name,
 					$order->billing_last_name,
 					$order->billing_company,
