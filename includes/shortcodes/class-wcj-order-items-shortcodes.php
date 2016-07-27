@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.5.1
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -129,7 +129,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.5.1
+	 * @version 2.5.5
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -217,13 +217,20 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$data[ $item_counter ][] = wcj_get_product_input_fields( $item );
 						break;
 					case 'item_key':
-						if ( isset( $item[ $column_param ] ) ) {
+						if ( isset( $column_param ) && '' != $column_param && isset( $item[ $column_param ] ) ) {
 							$maybe_unserialized_value = maybe_unserialize( $item[ $column_param ] );
 							if ( is_array( $maybe_unserialized_value ) ) {
 								$data[ $item_counter ][] = isset( $maybe_unserialized_value['name'] ) ? $maybe_unserialized_value['name'] : '';
 							} else {
 								$data[ $item_counter ][] = $maybe_unserialized_value;
 							}
+						} else {
+							$data[ $item_counter ][] = '';
+						}
+						break;
+					case 'item_attribute':
+						if ( isset( $column_param ) && '' != $column_param && is_object( $the_product ) ) {
+							$data[ $item_counter ][] = $the_product->get_attribute( $column_param );
 						} else {
 							$data[ $item_counter ][] = '';
 						}

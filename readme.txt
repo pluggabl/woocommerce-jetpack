@@ -128,6 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 27/07/2016 =
+ * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Additional `column_param` "not empty" check on `item_key` column.
+ * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_attribute` column added.
 ~* Dev - EMAILS & MISC. - Export - Export Orders - "Filter by Billing Country" and "Filter by Product Title" options added.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Total Tax" column added.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Currency" added as separate column.
