@@ -82,7 +82,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_csv.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.5
 	 * @since   2.4.8
 	 */
 	function export_csv() {
@@ -90,7 +90,7 @@ class WCJ_Export_Import extends WCJ_Module {
 			$data = $this->export( $_POST['wcj_export'] );
 			$csv = '';
 			foreach ( $data as $row ) {
-				$csv .= implode( ',', $row ) . PHP_EOL;
+				$csv .= implode( get_option( 'wcj_export_csv_separator', ',' ), $row ) . PHP_EOL;
 			}
 			header( "Content-Type: application/octet-stream" );
 			header( "Content-Disposition: attachment; filename=" . $_POST['wcj_export'] . ".csv" );
@@ -99,6 +99,7 @@ class WCJ_Export_Import extends WCJ_Module {
 			header( "Content-Description: File Transfer" );
 			header( "Content-Length: " . strlen( $csv ) );
 			echo $csv;
+			die();
 		}
 	}
 
@@ -192,7 +193,9 @@ class WCJ_Export_Import extends WCJ_Module {
 			__( 'Order Date', 'woocommerce-jetpack' ),
 			__( 'Order Item Count', 'woocommerce-jetpack' ),
 			__( 'Order Items', 'woocommerce-jetpack' ),
+			__( 'Order Currency', 'woocommerce-jetpack' ),
 			__( 'Order Total', 'woocommerce-jetpack' ),
+			__( 'Order Total Tax', 'woocommerce-jetpack' ),
 			__( 'Order Payment Method', 'woocommerce-jetpack' ),
 			__( 'Order Notes', 'woocommerce-jetpack' ),
 			__( 'Billing First Name', 'woocommerce-jetpack' ),
@@ -244,7 +247,9 @@ class WCJ_Export_Import extends WCJ_Module {
 					get_the_date( 'Y/m/d' ),
 					$order->get_item_count(),
 					$items,
-					$order->get_total() . ' ' . $order->get_order_currency(),
+					$order->get_order_currency(),
+					$order->get_total(),
+					$order->get_total_tax(),
 					$order->payment_method_title,
 					$order->customer_note,
 					$order->billing_first_name,
@@ -376,11 +381,27 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.5
 	 * @since   2.5.4
 	 */
 	function get_settings() {
-		$settings = array();
+		$settings = array(
+			array(
+				'title'   => __( 'Export Options', 'woocommerce-jetpack' ),
+				'type'    => 'title',
+				'id'      => 'wcj_export_options'
+			),
+			array(
+				'title'   => __( 'CSV Separator', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_export_csv_separator',
+				'default' => ',',
+				'type'    => 'text',
+			),
+			array(
+				'type'    => 'sectionend',
+				'id'      => 'wcj_export_options'
+			),
+		);
 		return $this->add_standard_settings( $settings );
 	}
 }

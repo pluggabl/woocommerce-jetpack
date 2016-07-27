@@ -127,7 +127,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.5 - 25/07/2016 =
+= 2.5.5 - 27/07/2016 =
+ * Dev - EMAILS & MISC. - Export - Export Orders - "Order Total Tax" column added.
+ * Dev - EMAILS & MISC. - Export - Export Orders - "Order Currency" added as separate column.
+ * Dev - EMAILS & MISC. - Export - Export "CSV Separator" option added.
  * Dev - Products - SKU - "Automatically Generate SKU for New Products" option added.
  * Dev - Products - SKU - "Add SKU to Customer Emails" option added.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Items" and "Order Notes" columns added.
