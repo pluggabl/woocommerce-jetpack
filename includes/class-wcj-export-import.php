@@ -104,16 +104,50 @@ class WCJ_Export_Import extends WCJ_Module {
 	}
 
 	/**
+	 * export_filter_fileds.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	function export_filter_fileds( $tool_id ) {
+		$fields = array();
+		switch ( $tool_id ) {
+			case 'orders':
+				$fields = array(
+					'wcj_filter_by_order_billing_country' => __( 'Filter by Billing Country', 'woocommerce-jetpack' ),
+					'wcj_filter_by_product_title'         => __( 'Filter by Product Title', 'woocommerce-jetpack' ),
+				);
+				break;
+		}
+		if ( ! empty( $fields ) ) {
+			$data = array();
+			foreach( $fields as $field_id => $field_desc ) {
+				$field_value = ( isset( $_POST[ $field_id ] ) ) ? $_POST[ $field_id ] : '';
+				$data[] = array(
+					'<label for="' . $field_id . '">' . $field_desc . '</label>',
+					'<input name="' . $field_id . '" id="' . $field_id . '" type="text" value="' . $field_value . '">',
+				);
+			}
+			$data[] = array(
+				'<button class="button-primary" type="submit" name="wcj_export_show" value="' . $tool_id . '">' . __( 'Show', 'woocommerce-jetpack' ) . '</button>',
+				'',
+			);
+			return wcj_get_table_html( $data, array( 'table_class' => 'widefat', 'table_style' => 'width:50%;min-width:300px;', 'table_heading_type' => 'vertical', ) );
+		}
+	}
+
+	/**
 	 * create_export_tool.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.5
 	 * @since   2.4.8
 	 */
 	function create_export_tool( $tool_id ) {
 		$data = $this->export( $tool_id );
-		echo '<p><form method="post" action="">';
-		echo '<button class="button-primary" type="submit" name="wcj_export" value="' . $tool_id . '">' . __( 'Download CSV', 'woocommerce-jetpack' ) . '</button>';
-		echo '</form></p>';
+		echo '<form method="post" action="">';
+		echo $this->export_filter_fileds( $tool_id );
+		echo '<p><button class="button-primary" type="submit" name="wcj_export" value="' . $tool_id . '">' . __( 'Download CSV', 'woocommerce-jetpack' ) . '</button></p>';
+		echo '</form>';
 		echo wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) );
 	}
 
@@ -235,11 +269,31 @@ class WCJ_Export_Import extends WCJ_Module {
 			while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
 				$order_id = $loop_orders->post->ID;
 				$order = wc_get_order( $order_id );
+
+				if ( isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' != $_POST['wcj_filter_by_order_billing_country'] ) {
+					if ( $order->billing_country != $_POST['wcj_filter_by_order_billing_country'] ) {
+						continue;
+					}
+				}
+
+				$filter_by_product_title = true;
+				if ( isset( $_POST['wcj_filter_by_product_title'] ) && '' != $_POST['wcj_filter_by_product_title'] ) {
+					$filter_by_product_title = false;
+				}
 				$items = array();
 				foreach ( $order->get_items() as $item ) {
 					$items[] = $item['name'];
+					if ( ! $filter_by_product_title ) {
+						if ( $item['name'] === $_POST['wcj_filter_by_product_title'] ) {
+							$filter_by_product_title = true;
+						}
+					}
 				}
 				$items = implode( ' / ', $items );
+				if ( ! $filter_by_product_title ) {
+					continue;
+				}
+
 				$data[] = array(
 					$order_id,
 					$order->get_order_number(),

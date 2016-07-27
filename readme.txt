@@ -128,6 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 27/07/2016 =
+~* Dev - EMAILS & MISC. - Export - Export Orders - "Filter by Billing Country" and "Filter by Product Title" options added.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Total Tax" column added.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Currency" added as separate column.
  * Dev - EMAILS & MISC. - Export - Export "CSV Separator" option added.
