@@ -284,7 +284,8 @@ class WCJ_Export_Import extends WCJ_Module {
 				foreach ( $order->get_items() as $item ) {
 					$items[] = $item['name'];
 					if ( ! $filter_by_product_title ) {
-						if ( $item['name'] === $_POST['wcj_filter_by_product_title'] ) {
+//						if ( $item['name'] === $_POST['wcj_filter_by_product_title'] ) {
+						if ( false !== strpos( $item['name'], $_POST['wcj_filter_by_product_title'] ) ) {
 							$filter_by_product_title = true;
 						}
 					}
