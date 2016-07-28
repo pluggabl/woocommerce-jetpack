@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Wholesale Price class.
  *
- * @version 2.5.4
+ * @version 2.5.5
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation;
@@ -148,7 +148,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * calculate_totals.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.5
 	 * @since   2.5.0
 	 */
 	function calculate_totals( $cart ) {
@@ -170,11 +170,17 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				continue;
 			}
 
-			$price = $_product->get_price();
-
+			// Prices
 			$tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
 			$get_price_method = 'get_price_' . $tax_display_mode . 'uding_tax';
-			$price_old = $_product->$get_price_method(); // used for display only
+			if ( 0 != ( $variation_id = WC()->cart->cart_contents[ $item_key ]['variation_id'] ) ) {
+				$variation = wc_get_product( $variation_id );
+				$price     = $variation->get_price();
+				$price_old = $variation->$get_price_method(); // used for display only
+			} else {
+				$price     = $_product->get_price();
+				$price_old = $_product->$get_price_method();  // used for display only
+			}
 
 			// If other discount was applied in cart...
 			if ( 'yes' === get_option( 'wcj_wholesale_price_apply_only_if_no_other_discounts', 'no' ) ) {
