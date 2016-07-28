@@ -128,7 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 28/07/2016 =
- * Fix - PRICES & CURRENCIES - Wholesale Price - Variable products fixed.
+~* Fix - PRICES & CURRENCIES - Wholesale Price - Variable products fixed.
  * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Additional `column_param` "not empty" check on `item_key` column.
  * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_attribute` column added.
 ~* Dev - EMAILS & MISC. - Export - Export Orders - "Filter by Billing Country" and "Filter by Product Title" options added.
