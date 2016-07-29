@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.5.4
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -514,7 +514,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_tax_by_class.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.5
 	 * @since   2.5.4
 	 */
 	function wcj_order_tax_by_class( $atts ) {
@@ -522,7 +522,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$total_tax_by_class = 0;
 		foreach ( $this->the_order->get_items() as $item ) {
 			if ( $tax_class === $item['tax_class'] ) {
-				$total_tax_by_class += $this->the_order->get_line_tax( $item );
+//				$total_tax_by_class += $this->the_order->get_line_tax( $item );
+				$total_tax_by_class += $item['line_tax'];
 			}
 		}
 		return $this->wcj_price_shortcode( $total_tax_by_class, $atts );

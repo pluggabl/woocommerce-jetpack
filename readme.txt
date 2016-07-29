@@ -128,6 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 29/07/2016 =
+~* Fix - Shortcodes - Orders - `[wcj_order_tax_by_class]` - Tax rounding per line bug fixed.
 ~* Dev - Shipping & Orders - Order Numbers - "Use MySQL Transaction" defaults to `yes` now.
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Variable products fixed.
  * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Additional `column_param` "not empty" check on `item_key` column.
