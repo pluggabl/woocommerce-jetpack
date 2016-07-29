@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Numbers class.
  *
- * @version 2.5.2
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -133,14 +133,14 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 2.4.4
+	 * @version 2.5.5
 	 */
 	public function add_order_number_meta( $order_id, $do_overwrite ) {
 		if ( 'shop_order' !== get_post_type( $order_id ) ) {
 			return;
 		}
 		if ( true === $do_overwrite || 0 == get_post_meta( $order_id, '_wcj_order_number', true ) ) {
-			if ( 'yes' === get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'no' ) ) {
+			if ( 'yes' === get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'yes' ) ) {
 				global $wpdb;
 				$wpdb->query( 'START TRANSACTION' );
 				$wp_options_table = $wpdb->prefix . 'options';
@@ -195,7 +195,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.5
 	 */
 	function get_settings() {
 		$settings = array(
@@ -273,7 +273,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'This should be enabled if you have a lot of simultaneous orders in your shop - to prevent duplicate order numbers (sequential).', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_order_number_use_mysql_transaction_enabled',
-				'default'  => 'no',
+				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
 			array(
