@@ -561,23 +561,36 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.5
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 
 		if ( ! wcj_is_product_wholesale_enabled( $this->the_product->id ) ) return '';
 
+		// Check for user role options
+		$role_option_name_addon = '';
+		$user_roles = get_option( 'wcj_wholesale_price_by_user_role_roles', '' );
+		if ( ! empty( $user_roles ) ) {
+			$current_user_role = wcj_get_current_user_first_role();
+			foreach ( $user_roles as $user_role_key ) {
+				if ( $current_user_role === $user_role_key ) {
+					$role_option_name_addon = '_' . $user_role_key;
+					break;
+				}
+			}
+		}
+
 		$wholesale_price_levels = array();
 		if ( wcj_is_product_wholesale_enabled_per_product( $this->the_product->id ) ) {
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_levels_number', true ) ); $i++ ) {
-				$level_qty                = get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_level_min_qty_' . $i, true );
-				$discount                 = get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_level_discount_' . $i, true );
+			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) ); $i++ ) {
+				$level_qty                = get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, true );
+				$discount                 = get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_level_discount' . $role_option_name_addon . '_' . $i, true );
 				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => $discount, );
 			}
 		} else {
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
-				$level_qty                = get_option( 'wcj_wholesale_price_level_min_qty_' . $i, PHP_INT_MAX );
-				$discount                 = get_option( 'wcj_wholesale_price_level_discount_percent_' . $i, 0 );
+			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
+				$level_qty                = get_option( 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX );
+				$discount                 = get_option( 'wcj_wholesale_price_level_discount_percent' . $role_option_name_addon . '_' . $i, 0 );
 				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => $discount, );
 			}
 		}

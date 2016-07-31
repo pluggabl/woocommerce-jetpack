@@ -128,6 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 31/07/2016 =
+T* Dev - PRICES & CURRENCIES - Wholesale Price - "Additional User Roles Options" section added.
+ * Dev - PRICES & CURRENCIES - Wholesale Price - Settings moved to `init` hook.
  * Dev - Shortcodes - `not_location` attribute added.
  * Dev - Shortcodes - Products - `[wcj_product_length]`, `[wcj_product_width]`, `[wcj_product_height]` shortcodes added.
 ~* Fix - Shortcodes - Orders - `[wcj_order_tax_by_class]` - Tax rounding per line bug fixed.
