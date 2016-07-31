@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.5.4
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.5
 	 */
 	public function __construct() {
 
@@ -37,6 +37,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_total_sales',
 			'wcj_product_shipping_class',
 			'wcj_product_dimensions',
+			'wcj_product_length',
+			'wcj_product_width',
+			'wcj_product_height',
 			'wcj_product_formatted_name',
 			'wcj_product_stock_availability',
 			'wcj_product_tax_class',
@@ -76,6 +79,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'days_to_cover'    => 90,
 			'order_status'     => 'wc-completed',
 			'hide_if_no_sales' => 'no',
+			'to_unit'          => '',
 		);
 
 		parent::__construct();
@@ -108,6 +112,36 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		if ( ! $this->the_product ) return false;
 
 		return $atts;
+	}
+
+	/**
+	 * wcj_product_length.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	function wcj_product_length( $atts ) {
+		return ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_length(), $atts['to_unit'] ) : $this->the_product->get_length();
+	}
+
+	/**
+	 * wcj_product_width.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	function wcj_product_width( $atts ) {
+		return ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_width(), $atts['to_unit'] ) : $this->the_product->get_width();
+	}
+
+	/**
+	 * wcj_product_height.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	function wcj_product_height( $atts ) {
+		return ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_height(), $atts['to_unit'] ) : $this->the_product->get_height();
 	}
 
 	/**

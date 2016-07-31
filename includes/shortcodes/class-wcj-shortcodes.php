@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shortcodes class.
  *
- * @version 2.5.2
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -59,7 +59,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.5
 	 */
 	function wcj_shortcode( $atts, $content, $shortcode ) {
 
@@ -77,6 +77,7 @@ class WCJ_Shortcodes {
 //			'login_text'          => __( 'Login', 'woocommerce-jetpack' ),
 			'site_visibility'     => '',
 			'location'            => '',//user_location
+			'not_location'        => '',//user_location
 			'wpml_language'       => '',
 			'wpml_not_language'   => '',
 			'billing_country'     => '',
@@ -132,7 +133,12 @@ class WCJ_Shortcodes {
 		}
 
 		// Check if location is ok
-		if ( '' != $atts['location'] && 'all' != $atts['location'] && $atts['location'] != $this->wcj_get_user_location() ) return '';
+		if ( '' != $atts['location'] && 'all' != $atts['location'] && $atts['location'] != $this->wcj_get_user_location() ) {
+			return '';
+		}
+		if ( '' != $atts['not_location'] && $atts['not_location'] === $this->wcj_get_user_location() ) {
+			return '';
+		}
 
 		// Check if language is ok
 		if ( 'wcj_wpml' === $shortcode || 'wcj_wpml_translate' === $shortcode ) $atts['wpml_language']     = isset( $atts['lang'] ) ? $atts['lang'] : '';

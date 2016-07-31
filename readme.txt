@@ -127,7 +127,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.5 - 29/07/2016 =
+= 2.5.5 - 31/07/2016 =
+ * Dev - Shortcodes - `not_location` attribute added.
+ * Dev - Shortcodes - Products - `[wcj_product_length]`, `[wcj_product_width]`, `[wcj_product_height]` shortcodes added.
 ~* Fix - Shortcodes - Orders - `[wcj_order_tax_by_class]` - Tax rounding per line bug fixed.
 ~* Dev - Shipping & Orders - Order Numbers - "Use MySQL Transaction" defaults to `yes` now.
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Variable products fixed.
