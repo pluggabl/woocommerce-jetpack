@@ -128,6 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 01/08/2016 =
+ * Dev - PDF INVOICING & PACKING SLIPS - `woocommerce_api_create_order` hook added (duplicates `woocommerce_new_order` hook).
  * Fix - Functions - `wcj_get_rocket_icon()` fixed.
  * Dev - PRODUCTS - Product Addons - "Tooltip" option added.
  * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()`.
