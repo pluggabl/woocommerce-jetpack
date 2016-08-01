@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Addons class.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -120,7 +120,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_product_addons.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.3
 	 */
 	function get_product_addons( $product_id ) {
@@ -138,6 +138,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 						'label_key'    => 'wcj_product_all_products_addons_label_' . $i,
 						'price_value'  => get_option( 'wcj_product_addons_all_products_price_' . $i ),
 						'label_value'  => get_option( 'wcj_product_addons_all_products_label_' . $i ),
+						'tooltip'      => get_option( 'wcj_product_addons_all_products_tooltip_' . $i, '' ),
 					);
 				}
 			}
@@ -285,7 +286,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {
@@ -293,9 +294,13 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$addons = $this->get_product_addons( get_the_ID() );
 		foreach ( $addons as $addon ) {
 			$is_checked = isset( $_POST[ $addon['checkbox_key'] ] ) ? ' checked' : '';
+			$maybe_tooltip = ( '' != $addon['tooltip'] ) ?
+				' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $addon['tooltip'] . '">' :
+				'';
 			$html .= '<p>' .
 					'<input type="checkbox" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '"' . $is_checked . '>' . ' ' .
 					'<label for="' . $addon['checkbox_key'] . '">' . $addon['label_value'] . ' ('. wc_price( $addon['price_value'] ) . ')' . '</label>' .
+					$maybe_tooltip .
 				'</p>';
 		}
 		// Output
@@ -362,7 +367,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.3
 	 */
 	function get_settings() {
@@ -436,6 +441,13 @@ class WCJ_Product_Addons extends WCJ_Module {
 					'type'     => 'number',
 					'css'      => 'width:300px;',
 					'custom_attributes' => array( 'step' => '0.0001' ),
+				),
+				array(
+					'desc'     => __( 'Tooltip', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_addons_all_products_tooltip_' . $i,
+					'default'  => '',
+					'type'     => 'textarea',
+					'css'      => 'width:300px;',
 				),
 			) );
 		}

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.5.4
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -192,11 +192,11 @@ if ( ! function_exists( 'wcj_get_rocket_icon' ) ) {
 	/**
 	 * wcj_get_rocket_icon.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.3
 	 */
 	function wcj_get_rocket_icon() {
-		return '<img class="wcj-rocket-icon" src="' . plugins_url() . '/' . 'woocommerce-jetpack' . '/assets/images/rocket-icon.png' . '" title="">';
+		return '<img class="wcj-rocket-icon" src="' . wcj_plugin_url() . '/assets/images/rocket-icon.png' . '" title="">';
 	}
 }
 
@@ -204,11 +204,11 @@ if ( ! function_exists( 'wcj_get_5_rocket_image' ) ) {
 	/**
 	 * wcj_get_5_rocket_image.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.3
 	 */
 	function wcj_get_5_rocket_image() {
-		return '<img class="wcj-rocket-icon" src="' . plugins_url() . '/' . 'woocommerce-jetpack' . '/assets/images/5-rockets.png' . '" title="">';
+		return '<img class="wcj-rocket-icon" src="' . wcj_plugin_url() . '/assets/images/5-rockets.png' . '" title="">';
 	}
 }
 

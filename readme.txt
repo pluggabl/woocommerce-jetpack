@@ -128,6 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 01/08/2016 =
+ * Fix - Functions - `wcj_get_rocket_icon()` fixed.
+-* Dev - Products - Product Addons - "Tooltip" option added.
  * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()`.
 T* Dev - PRICES & CURRENCIES - Wholesale Price - "Additional User Roles Options" section added.
  * Dev - PRICES & CURRENCIES - Wholesale Price - Settings moved to `init` hook.
