@@ -128,6 +128,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 01/08/2016 =
+ * Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` and `tooltip` options added.
+ * Fix - PRICES & CURRENCIES - Wholesale Price - Per product - Plus version message fixed.
+ * Fix - PRICES & CURRENCIES - Wholesale Price - Per product - Discount fixed to include decimal numbers.
  * Dev - PDF INVOICING & PACKING SLIPS - `woocommerce_api_create_order` hook added (duplicates `woocommerce_new_order` hook).
  * Fix - Functions - `wcj_get_rocket_icon()` fixed.
  * Dev - PRODUCTS - Product Addons - "Tooltip" option added.
