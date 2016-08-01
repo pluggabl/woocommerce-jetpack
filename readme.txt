@@ -127,7 +127,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.5 - 31/07/2016 =
+= 2.5.5 - 01/08/2016 =
+ * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()`.
 T* Dev - PRICES & CURRENCIES - Wholesale Price - "Additional User Roles Options" section added.
  * Dev - PRICES & CURRENCIES - Wholesale Price - Settings moved to `init` hook.
  * Dev - Shortcodes - `not_location` attribute added.
