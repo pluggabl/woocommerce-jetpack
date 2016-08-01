@@ -157,6 +157,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 							'label_key'    => 'wcj_product_per_product_addons_label_' . $i,
 							'price_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_price_' . $i, true ),
 							'label_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_label_' . $i, true ),
+							'tooltip'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_tooltip_' . $i, true ),
 						);
 					}
 				}
@@ -312,7 +313,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.3
 	 */
 	function get_meta_box_options() {
@@ -358,6 +359,12 @@ class WCJ_Product_Addons extends WCJ_Module {
 					'name'     => 'wcj_product_addons_per_product_price_' . $i,
 					'default'  => 0,
 					'type'     => 'price',
+				),
+				array(
+					'title'    => __( 'Tooltip', 'woocommerce-jetpack' ),
+					'name'     => 'wcj_product_addons_per_product_tooltip_' . $i,
+					'default'  => '',
+					'type'     => 'text',
 				),
 			) );
 		}
@@ -446,7 +453,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 					'desc'     => __( 'Tooltip', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_product_addons_all_products_tooltip_' . $i,
 					'default'  => '',
-					'type'     => 'textarea',
+					'type'     => 'text',
 					'css'      => 'width:300px;',
 				),
 			) );

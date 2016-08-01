@@ -129,14 +129,14 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 = 2.5.5 - 01/08/2016 =
  * Fix - Functions - `wcj_get_rocket_icon()` fixed.
--* Dev - Products - Product Addons - "Tooltip" option added.
+ * Dev - PRODUCTS - Product Addons - "Tooltip" option added.
  * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()`.
 T* Dev - PRICES & CURRENCIES - Wholesale Price - "Additional User Roles Options" section added.
  * Dev - PRICES & CURRENCIES - Wholesale Price - Settings moved to `init` hook.
  * Dev - Shortcodes - `not_location` attribute added.
  * Dev - Shortcodes - Products - `[wcj_product_length]`, `[wcj_product_width]`, `[wcj_product_height]` shortcodes added.
 ~* Fix - Shortcodes - Orders - `[wcj_order_tax_by_class]` - Tax rounding per line bug fixed.
-~* Dev - Shipping & Orders - Order Numbers - "Use MySQL Transaction" defaults to `yes` now.
+~* Dev - SHIPPING & ORDERS - Order Numbers - "Use MySQL Transaction" defaults to `yes` now.
 ~* Fix - PRICES & CURRENCIES - Wholesale Price - Variable products fixed.
  * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Additional `column_param` "not empty" check on `item_key` column.
  * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_attribute` column added.
@@ -144,8 +144,8 @@ T* Dev - PRICES & CURRENCIES - Wholesale Price - "Additional User Roles Options"
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Total Tax" column added.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Currency" added as separate column.
  * Dev - EMAILS & MISC. - Export - Export "CSV Separator" option added.
- * Dev - Products - SKU - "Automatically Generate SKU for New Products" option added.
- * Dev - Products - SKU - "Add SKU to Customer Emails" option added.
+ * Dev - PRODUCTS - SKU - "Automatically Generate SKU for New Products" option added.
+ * Dev - PRODUCTS - SKU - "Add SKU to Customer Emails" option added.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Items" and "Order Notes" columns added.
  * Dev - PRICES & CURRENCIES - Price by User Role - "Show Roles on per Product Settings" option added.
  * Fix - `WCJ_Module` - `colspan` fixed in `create_meta_box()` function.
