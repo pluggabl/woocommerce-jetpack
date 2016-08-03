@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Files Upload class.
  *
- * @version 2.5.2
+ * @version 2.5.5
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options;
@@ -19,7 +19,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.5
 	 * @since   2.4.5
 	 */
 	function __construct() {
@@ -49,7 +49,27 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 			add_action( 'woocommerce_after_checkout_validation',       array( $this, 'validate_on_checkout' ) );
 			add_action( 'woocommerce_order_details_after_order_table', array( $this, 'add_files_to_order_display' ), PHP_INT_MAX );
 			add_action( 'woocommerce_email_after_order_table',         array( $this, 'add_files_to_order_display' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_email_attachments',               array( $this, 'add_files_to_email_attachments' ), PHP_INT_MAX, 3 );
 		}
+	}
+
+	/**
+	 * add_files_to_email_attachments.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	function add_files_to_email_attachments( $attachments, $status, $order ) {
+		if (
+			( 'new_order'                 === $status && 'yes' === get_option( 'wcj_checkout_files_upload_attach_to_admin_new_order',           'yes' ) ) ||
+			( 'customer_processing_order' === $status && 'yes' === get_option( 'wcj_checkout_files_upload_attach_to_customer_processing_order', 'yes' ) )
+		) {
+			$total_files = get_post_meta( $order->id, '_' . 'wcj_checkout_files_total_files', true );
+			for ( $i = 1; $i <= $total_files; $i++ ) {
+				$attachments[] = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . get_post_meta( $order->id, '_' . 'wcj_checkout_files_upload_' . $i, true );
+			}
+		}
+		return $attachments;
 	}
 
 	/**
@@ -490,7 +510,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.5
 	 * @since   2.4.5
 	 */
 	function get_settings() {
@@ -684,6 +704,31 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_checkout_files_upload_options',
+			),
+		) );
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => __( 'Emails Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_checkout_files_upload_emails_options',
+			),
+			array(
+				'title'    => __( 'Attach Files to Admin\'s New Order Emails', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Attach', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_files_upload_attach_to_admin_new_order',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Attach Files to Customer\'s Processing Order Emails', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Attach', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_files_upload_attach_to_customer_processing_order',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_checkout_files_upload_emails_options',
 			),
 		) );
 		return $this->add_standard_settings( $settings );
