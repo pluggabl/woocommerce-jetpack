@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency Exchange Rates class.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -86,16 +86,26 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	/**
 	 * add_currency_exchange_rates_settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 */
 	function add_currency_exchange_rates_settings() {
 
 		$settings = array();
 
+		$desc = '';
+		if ( $this->is_enabled() ) {
+			if ( '' != get_option( 'wcj_currency_exchange_rate_cron_time', '' ) ) {
+				$scheduled_time_diff = get_option( 'wcj_currency_exchange_rate_cron_time', '' ) - time();
+				if ( $scheduled_time_diff > 0 ) {
+					$desc = '<br><em>' . sprintf( __( '%s seconds till next update.', 'woocommerce-jetpack' ), $scheduled_time_diff ) . '</em>';
+				}
+			}
+		}
+
 		$settings[] = array(
 			'title' => __( 'Exchange Rates', 'woocommerce-jetpack' ),
 			'type'  => 'title',
-			'desc'  => __( 'All currencies from all <strong>enabled</strong> modules will be automatically added to the list.', 'woocommerce-jetpack' ),
+			'desc'  => __( 'All currencies from all <strong>enabled</strong> modules will be automatically added to the list.', 'woocommerce-jetpack' ) . $desc,
 			'id'    => 'wcj_currency_exchange_rates_options',
 		);
 

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exchange Rates Crons class.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -17,44 +17,35 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.5.5
 	 */
 	public function __construct() {
-
-		add_action( 'wp', array( $this, 'schedule_the_events' ) );
 		$this->update_intervals  = array(
-//			'manual'     => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
 			'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
 			'hourly'     => __( 'Update Hourly', 'woocommerce-jetpack' ),
 			'twicedaily' => __( 'Update Twice Daily', 'woocommerce-jetpack' ),
 			'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
 			'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
 		);
-		/*foreach ( $this->update_intervals as $interval => $desc ) {
-			if ( 'manual' === $interval )
-				continue;
-			add_action( 'auto_update_exchange_rates_hook_' . $interval, array( $this, 'update_the_exchange_rates' ) );
-		}*/
-		//$selected_interval = get_option( 'wcj_currency_exchange_rates_auto', 'daily' );
-		//if ( 'manual' != $selected_interval ) {
-			//add_action( 'auto_update_exchange_rates_hook_' . $selected_interval,
-			add_action( 'auto_update_exchange_rates_hook', array( $this, 'update_the_exchange_rates' ) );
-		//}
-		add_filter( 'cron_schedules', array( $this, 'cron_add_custom_intervals' ) );
+		add_action( 'init',                            array( $this, 'schedule_the_events' ) );
+		add_action( 'admin_init',                      array( $this, 'schedule_the_events' ) );
+		add_action( 'auto_update_exchange_rates_hook', array( $this, 'update_the_exchange_rates' ) );
+		add_filter( 'cron_schedules',                  array( $this, 'cron_add_custom_intervals' ) );
 	}
 
 	/**
 	 * On an early action hook, check if the hook is scheduled - if not, schedule it.
 	 *
-	 * @version 2.3.0
+	 * @version 2.5.5
 	 */
 	function schedule_the_events() {
 		$selected_interval = get_option( 'wcj_currency_exchange_rates_auto', 'daily' );
 		foreach ( $this->update_intervals as $interval => $desc ) {
-			/* if ( 'manual' === $interval )
-				continue; */
-			$event_hook = 'auto_update_exchange_rates_hook';//_' . $interval;
+			$event_hook = 'auto_update_exchange_rates_hook';
 			$event_timestamp = wp_next_scheduled( $event_hook, array( $interval ) );
+			if ( $selected_interval === $interval ) {
+				update_option( 'wcj_currency_exchange_rate_cron_time', $event_timestamp );
+			}
 			if ( ! $event_timestamp && $selected_interval === $interval ) {
 				wp_schedule_event( time(), $selected_interval, $event_hook, array( $selected_interval ) );
 			} elseif ( $event_timestamp && $selected_interval !== $interval ) {
@@ -66,16 +57,17 @@ class WCJ_Exchange_Rates_Crons {
 	/*
 	 * get_exchange_rate.
 	 *
-	 * @return float rate on success, else 0
+	 * @version 2.5.5
+	 * @return  float rate on success, else 0
 	 */
 	function get_exchange_rate( $currency_from, $currency_to ) {
 
 		$url = "http://query.yahooapis.com/v1/public/yql?q=select%20rate%2Cname%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes%3Fs%3D" . $currency_from . $currency_to . "%253DX%26f%3Dl1n'%20and%20columns%3D'rate%2Cname'&format=json";
-		//$url = 'http://rate-exchange.appspot.com/currency?from=' . $currency_from . '&to=' . $currency_to;
+//		$url = 'http://rate-exchange.appspot.com/currency?from=' . $currency_from . '&to=' . $currency_to;
 
 		ob_start();
 		$max_execution_time = ini_get( 'max_execution_time' );
-		set_time_limit( 2 );
+		set_time_limit( 5 );
 
 		$exchange_rate = json_decode( file_get_contents( $url ) );
 
@@ -83,7 +75,7 @@ class WCJ_Exchange_Rates_Crons {
 		ob_end_clean();
 
 		return ( isset( $exchange_rate->query->results->row->rate ) ) ? floatval( $exchange_rate->query->results->row->rate ) : 0;
-		//return ( isset( $exchange_rate->rate ) ) ? $exchange_rate->rate : 0;
+//		return ( isset( $exchange_rate->rate ) ) ? $exchange_rate->rate : 0;
 	}
 
 	/**
@@ -206,17 +198,14 @@ class WCJ_Exchange_Rates_Crons {
 	 * cron_add_custom_intervals.
 	 */
 	function cron_add_custom_intervals( $schedules ) {
-
 		$schedules['weekly'] = array(
 			'interval' => 604800,
 			'display' => __( 'Once Weekly', 'woocommerce-jetpack' )
 		);
-
 		$schedules['minutely'] = array(
 			'interval' => 60,
 			'display' => __( 'Once a Minute', 'woocommerce-jetpack' )
 		);
-
 		return $schedules;
 	}
 }

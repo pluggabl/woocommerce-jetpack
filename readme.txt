@@ -128,6 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 03/08/2016 =
+ * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Crons max time limit increased to 5 sec.
+ * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Next rates update time info added.
 ~* Fix - EMAILS & MISC. - Emails - Custom Emails - `woocommerce_new_order` hook replaced with `woocommerce_checkout_order_processed` hook - this will fix issues with empty shortcodes.
  * Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` and `tooltip` options added.
  * Fix - PRICES & CURRENCIES - Wholesale Price - Per product - Plus version message fixed.
