@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.5.0
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -403,7 +403,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.5
 	 */
 	public function custom_price( $price, $product ) {
 
@@ -459,6 +459,19 @@ class WCJ_Price_Labels extends WCJ_Module {
 				foreach ( $product_categories as $product_category ) {
 					if ( in_array( $product_category->term_id, $product_categories_excl ) ) {
 						$do_apply_global = false;
+						break;
+					}
+				}
+			}
+		}
+		if ( $do_apply_global ) {
+			// Check product type
+			$product_types_incl = get_option( 'wcj_global_price_labels_product_types_incl', '' );
+			if ( ! empty( $product_types_incl ) ) {
+				$do_apply_global = false;
+				foreach ( $product_types_incl as $product_type_incl ) {
+					if ( $product->is_type( $product_type_incl ) ) {
+						$do_apply_global = true;
 						break;
 					}
 				}
@@ -593,7 +606,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * add_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.5
 	 * @since   2.3.7
 	 */
 	function add_settings() {
@@ -712,6 +725,16 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'class'     => 'chosen_select',
 				'css'       => 'width: 450px;',
 				'options'   => $product_cats,
+			),
+			array(
+				'title'     => __( 'Product Types - Include', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Apply global price labels only for selected product types. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_global_price_labels_product_types_incl',
+				'default'   => '',
+				'type'      => 'multiselect',
+				'class'     => 'chosen_select',
+				'css'       => 'width: 450px;',
+				'options'   => array_merge( wc_get_product_types(), array( 'variation' => __( 'Variable product\'s variation', 'woocommerce-jetpack' ) ) ),
 			),
 			array(
 				'type'      => 'sectionend',

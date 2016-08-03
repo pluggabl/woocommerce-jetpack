@@ -128,6 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 03/08/2016 =
+ * Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Product Types - Include" option added.
  * Dev - CART & CHECKOUT - Checkout Files Upload - "Attach Files to Emails" options added.
  * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Crons max time limit increased to 5 sec.
  * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Next rates update time info added.
