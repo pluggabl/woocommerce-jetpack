@@ -127,7 +127,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.5 - 01/08/2016 =
+= 2.5.5 - 03/08/2016 =
+~* Fix - EMAILS & MISC. - Emails - Custom Emails - `woocommerce_new_order` hook replaced with `woocommerce_checkout_order_processed` hook - this will fix issues with empty shortcodes.
  * Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` and `tooltip` options added.
  * Fix - PRICES & CURRENCIES - Wholesale Price - Per product - Plus version message fixed.
  * Fix - PRICES & CURRENCIES - Wholesale Price - Per product - Discount fixed to include decimal numbers.

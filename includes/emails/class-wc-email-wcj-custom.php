@@ -11,7 +11,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -21,7 +21,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Constructor
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 */
 	function __construct( $id = 1 ) {
 
@@ -39,11 +39,11 @@ class WC_Email_WCJ_Custom extends WC_Email {
 		// Triggers for this email
 		$trigger_hooks = $this->get_option( 'trigger' );
 		if ( ! empty( $trigger_hooks ) && is_array( $trigger_hooks ) ) {
-			$is_woocommerce_new_order_notification_added = false;
+			$is_woocommerce_checkout_order_processed_notification_added = false;
 			foreach ( $trigger_hooks as $trigger_hook ) {
-				if ( false !== strpos( $trigger_hook, 'woocommerce_new_order_notification' ) && false === $is_woocommerce_new_order_notification_added ) {
-					add_action( 'woocommerce_new_order_notification', array( $this, 'trigger' ), PHP_INT_MAX );
-					$is_woocommerce_new_order_notification_added = true;
+				if ( false !== strpos( $trigger_hook, 'woocommerce_new_order_notification' ) && false === $is_woocommerce_checkout_order_processed_notification_added ) {
+					add_action( 'woocommerce_checkout_order_processed_notification', array( $this, 'trigger' ), PHP_INT_MAX );
+					$is_woocommerce_checkout_order_processed_notification_added = true;
 				} else {
 					add_action( $trigger_hook, array( $this, 'trigger' ), PHP_INT_MAX );
 				}
@@ -80,8 +80,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Trigger.
 	 *
-	 * @version 2.5.3
-	 * @todo    do_shortcode doesn't work for new order notifications
+	 * @version 2.5.5
 	 */
 	function trigger( $order_id ) {
 
@@ -105,7 +104,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 
 			global $post;
 			$order = wc_get_order( $order_id );
-			if ( 'woocommerce_new_order_notification' === current_filter() ) {
+			if ( 'woocommerce_checkout_order_processed_notification' === current_filter() ) {
 				// Check status
 				$is_status_found = false;
 				$trigger_hooks = $this->get_option( 'trigger' );
