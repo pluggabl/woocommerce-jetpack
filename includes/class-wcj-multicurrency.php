@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency class.
  *
- * @version 2.5.0
+ * @version 2.5.5
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -256,10 +256,24 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * get_current_currency_code.
 	 *
-	 * @version 2.4.3
+	 * @version 2.5.5
 	 */
 	function get_current_currency_code( $default_currency = '' ) {
-		return ( isset( $_SESSION['wcj-currency'] ) ) ? $_SESSION['wcj-currency'] : $default_currency;
+		if ( isset( $_SESSION['wcj-currency'] ) ) {
+			return $_SESSION['wcj-currency'];
+		} else {
+			$module_roles = get_option( 'wcj_multicurrency_role_defaults_roles', '' );
+			if ( ! empty( $module_roles ) ) {
+				$current_user_role = wcj_get_current_user_first_role();
+				if ( in_array( $current_user_role, $module_roles ) ) {
+					$roles_default_currency = get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
+					if ( '' != $roles_default_currency ) {
+						return $roles_default_currency;
+					}
+				}
+			}
+		}
+		return $default_currency;
 	}
 
 	/**
@@ -321,7 +335,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.5
 	 * @todo    rounding (maybe)
 	 */
 	function add_settings() {
@@ -424,6 +438,48 @@ class WCJ_Multicurrency extends WCJ_Module {
 				'id'       => 'wcj_multicurrency_currencies_options',
 			),
 		) );
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => __( 'Role Defaults', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'desc'     => sprintf( __( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.', 'woocommerce-jetpack' ),
+					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ),
+				'id'       => 'wcj_multicurrency_role_defaults_options',
+			),
+			array(
+				'title'    => __( 'Roles', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Save settings after you change this option. Leave blank to disable.', 'woocommerce-jetpack' ),
+				'type'     => 'multiselect',
+				'id'       => 'wcj_multicurrency_role_defaults_roles',
+				'default'  => '',
+				'class'    => 'chosen_select',
+				'options'  => wcj_get_user_roles_options(),
+			),
+		) );
+		$module_currencies = array();
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$currency_code = get_option( 'wcj_multicurrency_currency_' . $i, $currency_from );
+			$module_currencies[ $currency_code ] = $all_currencies[ $currency_code ];
+		}
+		$module_currencies = array_unique( $module_currencies );
+		$module_roles = get_option( 'wcj_multicurrency_role_defaults_roles', '' );
+		if ( ! empty( $module_roles ) ) {
+			foreach ( $module_roles as $role_key ) { // wcj_get_user_roles() as $role_key => $role_data
+				$settings = array_merge( $settings, array(
+					array(
+						'title'    => $role_key, // $role_data['name'],
+						'id'       => 'wcj_multicurrency_role_defaults_' . $role_key,
+						'default'  => '',
+						'type'     => 'select',
+						'options'  => array_merge( array( '' => __( 'No default currency', 'woocommerce-jetpack' ) ), $module_currencies ),
+					),
+				) );
+			}
+		}
+		$settings[] = array(
+			'type'         => 'sectionend',
+			'id'           => 'wcj_multicurrency_role_defaults_options',
+		);
 		return $settings;
 	}
 

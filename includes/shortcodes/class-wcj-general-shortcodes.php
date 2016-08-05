@@ -128,7 +128,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_currency_select_link_list.
 	 *
-	 * @version 2.4.5
+	 * @version 2.5.5
 	 * @since   2.4.5
 	 */
 	function wcj_currency_select_link_list( $atts, $content ) {
@@ -136,7 +136,18 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$shortcode_currencies = $this->get_shortcode_currencies( $atts );
 		// Options
 		$currencies = wcj_get_currencies_names_and_symbols();
-		$selected_currency = ( isset( $_SESSION['wcj-currency'] ) ) ? $_SESSION['wcj-currency'] : '';
+		$selected_currency = '';
+		if ( isset( $_SESSION['wcj-currency'] ) ) {
+			$selected_currency = $_SESSION['wcj-currency'];
+		} else {
+			$module_roles = get_option( 'wcj_multicurrency_role_defaults_roles', '' );
+			if ( ! empty( $module_roles ) ) {
+				$current_user_role = wcj_get_current_user_first_role();
+				if ( in_array( $current_user_role, $module_roles ) ) {
+					$selected_currency = get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
+				}
+			}
+		}
 		$links = array();
 		$first_link = '';
 		foreach ( $shortcode_currencies as $currency_code ) {
@@ -179,7 +190,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_currency_selector.
 	 *
-	 * @version 2.4.5
+	 * @version 2.5.5
 	 * @since   2.4.5
 	 */
 	private function get_currency_selector( $atts, $content, $type = 'select' ) {
@@ -195,7 +206,18 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$shortcode_currencies = $this->get_shortcode_currencies( $atts );
 		// Options
 		$currencies = wcj_get_currencies_names_and_symbols();
-		$selected_currency = ( isset( $_SESSION['wcj-currency'] ) ) ? $_SESSION['wcj-currency'] : '';
+		$selected_currency = '';
+		if ( isset( $_SESSION['wcj-currency'] ) ) {
+			$selected_currency = $_SESSION['wcj-currency'];
+		} else {
+			$module_roles = get_option( 'wcj_multicurrency_role_defaults_roles', '' );
+			if ( ! empty( $module_roles ) ) {
+				$current_user_role = wcj_get_current_user_first_role();
+				if ( in_array( $current_user_role, $module_roles ) ) {
+					$selected_currency = get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
+				}
+			}
+		}
 		foreach ( $shortcode_currencies as $currency_code ) {
 			if ( isset( $currencies[ $currency_code ] ) ) {
 				if ( '' == $selected_currency ) {
