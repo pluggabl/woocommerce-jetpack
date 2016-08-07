@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Price by Formula class.
  *
- * @version 2.5.1
+ * @version 2.5.5
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -79,7 +79,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price_by_formula.
 	 *
-	 * @version 2.5.1
+	 * @version 2.5.5
 	 * @since   2.5.0
 	 */
 	function change_price_by_formula( $price, $_product, $output_errors = false ) {
@@ -88,6 +88,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 			$the_formula = ( $is_per_product )
 				? get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_eval', true )
 				: get_option( 'wcj_product_price_by_formula_eval', '' );
+			$the_formula = do_shortcode( $the_formula );
 			if ( '' != $the_formula ) {
 				$total_params = ( $is_per_product )
 					? get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_total_params', true )
@@ -104,6 +105,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 						$the_param = ( $is_per_product )
 							? get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_param_' . $i, true )
 							: get_option( 'wcj_product_price_by_formula_param_' . $i, '' );
+						$the_param = do_shortcode( $the_param );
 						if ( '' != $the_param ) {
 							$math->registerVariable( 'p' . $i, $the_param );
 						}

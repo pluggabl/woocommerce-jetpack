@@ -127,7 +127,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.5 - 05/08/2016 =
+= 2.5.5 - 07/08/2016 =
+ * Dev - PRICES & CURRENCIES - Product Price by Formula - `do_shortcode` added to formula and params.
  * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Role Defaults" section added (changes made to switcher shortcodes also).
  * Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Product Types - Include" option added.
  * Dev - CART & CHECKOUT - Checkout Files Upload - "Attach Files to Emails" options added.
