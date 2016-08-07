@@ -128,6 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 07/08/2016 =
+ * Dev - SHIPPING & ORDERS - Orders - "Exclude Shipping from Cart Total" option added.
  * Dev - PRICES & CURRENCIES - Product Price by Formula - `do_shortcode` added to formula and params.
  * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Role Defaults" section added (changes made to switcher shortcodes also).
  * Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Product Types - Include" option added.

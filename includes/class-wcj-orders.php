@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders class.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -194,16 +194,32 @@ class WCJ_Orders extends WCJ_Module {
 	}
 
 	/**
+	 * get_cart_total_for_minimal_order_amount.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	private function get_cart_total_for_minimal_order_amount() {
+		$cart_total = WC()->cart->total;
+		if ( 'yes' === get_option( 'wcj_order_minimum_amount_exclude_shipping', 'no' ) ) {
+			$shipping_total     = isset( WC()->cart->shipping_total )     ? WC()->cart->shipping_total     : 0;
+			$shipping_tax_total = isset( WC()->cart->shipping_tax_total ) ? WC()->cart->shipping_tax_total : 0;
+			$cart_total -= ( $shipping_total + $shipping_tax_total );
+		}
+		return $cart_total;
+	}
+
+	/**
 	 * order_minimum_amount.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 */
 	public function order_minimum_amount() {
 		$minimum = $this->get_order_minimum_amount_with_user_roles();
 		if ( 0 == $minimum ) {
 			return;
 		}
-		$cart_total = WC()->cart->total;
+		$cart_total = $this->get_cart_total_for_minimal_order_amount();
 		if ( $cart_total < $minimum ) {
 			if( is_cart() ) {
 				if ( 'yes' === get_option( 'wcj_order_minimum_amount_cart_notice_enabled' ) ) {
@@ -230,8 +246,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * stop_from_seeing_checkout.
 	 *
-	 * @version 2.5.3
-	 * @todo    cart_contents_total - this is different from value in order_minimum_amount() function
+	 * @version 2.5.5
 	 */
 	public function stop_from_seeing_checkout( $wp ) {
 //		if ( is_admin() ) return;
@@ -249,7 +264,7 @@ class WCJ_Orders extends WCJ_Module {
 		if ( 0 == $minimum ) {
 			return;
 		}
-		$the_cart_total = isset( $woocommerce->cart->cart_contents_total ) ? $woocommerce->cart->cart_contents_total : 0;
+		$the_cart_total = $this->get_cart_total_for_minimal_order_amount();
 		if ( 0 == $the_cart_total ) {
 			return;
 		}
@@ -281,7 +296,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.3
 	 */
 	function add_settings() {
@@ -302,6 +317,13 @@ class WCJ_Orders extends WCJ_Module {
 					'step' => '0.0001',
 					'min'  => '0',
 				),
+			),
+			array(
+				'title'    => __( 'Exclude Shipping from Cart Total', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Exclude', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_minimum_amount_exclude_shipping',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'title'    => __( 'Error message', 'woocommerce-jetpack' ),
