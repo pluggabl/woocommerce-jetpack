@@ -80,6 +80,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'order_status'     => 'wc-completed',
 			'hide_if_no_sales' => 'no',
 			'to_unit'          => '',
+			'round'            => 'no',
+			'precision'        => 2,
 		);
 
 		parent::__construct();
@@ -121,7 +123,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.5.5
 	 */
 	function wcj_product_length( $atts ) {
-		return ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_length(), $atts['to_unit'] ) : $this->the_product->get_length();
+		$return = ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_length(), $atts['to_unit'] ) : $this->the_product->get_length();
+		return ( 'yes' === $atts['round'] ) ? round( $return, $atts['precision'] ) : $return;
 	}
 
 	/**
@@ -131,7 +134,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.5.5
 	 */
 	function wcj_product_width( $atts ) {
-		return ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_width(), $atts['to_unit'] ) : $this->the_product->get_width();
+		$return = ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_width(), $atts['to_unit'] ) : $this->the_product->get_width();
+		return ( 'yes' === $atts['round'] ) ? round( $return, $atts['precision'] ) : $return;
 	}
 
 	/**
@@ -141,7 +145,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.5.5
 	 */
 	function wcj_product_height( $atts ) {
-		return ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_height(), $atts['to_unit'] ) : $this->the_product->get_height();
+		$return = ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_height(), $atts['to_unit'] ) : $this->the_product->get_height();
+		return ( 'yes' === $atts['round'] ) ? round( $return, $atts['precision'] ) : $return;
 	}
 
 	/**
