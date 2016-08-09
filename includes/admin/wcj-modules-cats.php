@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.5.4
+ * @version 2.5.5
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -71,6 +71,7 @@ return array(
 			'product_addons',
 			'product_images',
 			'product_by_country',
+			'product_by_user_role',
 			'product_by_user',
 		),
 	),

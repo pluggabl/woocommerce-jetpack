@@ -28,7 +28,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.5.4
+ * @version 2.5.5
  */
 
 final class WC_Jetpack {
@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.5-dev-201608080128';
+	public $version = '2.5.5-dev-201608091602';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -481,7 +481,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.5
 	 */
 	function include_modules() {
 		$modules_files = array(
@@ -507,6 +507,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-product-price-by-formula.php',
 			'includes/class-wcj-product-images.php',
 			'includes/class-wcj-product-by-country.php',
+			'includes/class-wcj-product-by-user-role.php',
 			'includes/class-wcj-product-by-user.php',
 			'includes/class-wcj-add-to-cart.php',
 			'includes/class-wcj-more-button-labels.php',
