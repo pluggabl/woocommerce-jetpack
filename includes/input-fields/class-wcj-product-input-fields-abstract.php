@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -486,7 +486,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.5
 	 */
 	public function add_product_input_fields_to_frontend() {
 		global $product;
@@ -574,7 +574,7 @@ class WCJ_Product_Input_Fields_Abstract {
 					case 'select':
 
 						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $product->id, '' );
-						$select_options = wcj_get_select_options( $select_options_raw );
+						$select_options = wcj_get_select_options( $select_options_raw, false );
 						if ( '' != $placeholder ) {
 							$select_options = array_merge( array( '' => $placeholder ), $select_options );
 						}
@@ -594,7 +594,7 @@ class WCJ_Product_Input_Fields_Abstract {
 					case 'radio':
 
 						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $product->id, '' );
-						$select_options = wcj_get_select_options( $select_options_raw );
+						$select_options = wcj_get_select_options( $select_options_raw, false );
 						$select_options_html = '';
 						//$label_id = current( array_keys( $args['options'] ) );
 						if ( ! empty( $select_options ) ) {

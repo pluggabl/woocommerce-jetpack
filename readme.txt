@@ -128,6 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 10/08/2016 =
+~* Dev - Products - Product Input Fields - No sanitization for `select` and `radio` values.
  * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` - `unique_only` attribute added.
  * Dev - PRODUCTS - Product by User Role - Initial module release.
  * Dev - SHIPPING & ORDERS - Orders - "Exclude Shipping from Cart Total" option added.

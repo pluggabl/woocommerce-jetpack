@@ -536,16 +536,16 @@ if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 /*
  * wcj_get_select_options()
  *
- * @version  2.3.0
+ * @version  2.5.5
  * @since    2.3.0
  * @return   array
  */
 if ( ! function_exists( 'wcj_get_select_options' ) ) {
-	function wcj_get_select_options( $select_options_raw ) {
+	function wcj_get_select_options( $select_options_raw, $do_sanitize = true ) {
 		$select_options_raw = explode( PHP_EOL, $select_options_raw );
 		$select_options = array();
 		foreach ( $select_options_raw as $select_options_title ) {
-			$select_options_key = sanitize_title( $select_options_title );
+			$select_options_key = ( $do_sanitize ) ? sanitize_title( $select_options_title ) : $select_options_title;
 			$select_options[ $select_options_key ] = $select_options_title;
 		}
 		return $select_options;
