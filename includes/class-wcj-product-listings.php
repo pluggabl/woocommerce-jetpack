@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Listings class.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @todo    products per page - position priority for every hook; post or get.
 	 */
 	public function __construct() {
@@ -26,6 +26,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 		$this->desc       = __( 'Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories. Add "products per page" selector.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-listings/';
 		parent::__construct();
+
+		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 
@@ -48,8 +50,61 @@ class WCJ_Product_Listings extends WCJ_Module {
 			}
 
 			// Settings to "WooCommerce > Settings > Products > Product Listings"
-			add_filter( 'woocommerce_product_settings', array( $this, 'add_fields_to_woocommerce_settings' ), 100 );
+//			add_filter( 'woocommerce_product_settings', array( $this, 'add_fields_to_woocommerce_settings' ), 100 );
+
+			// Tax Incl./Excl. by product/category
+			add_filter( 'option_woocommerce_tax_display_shop', array( $this, 'tax_display' ), PHP_INT_MAX );
 		}
+	}
+
+	/**
+	 * tax_display.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	function tax_display( $value ) {
+		$product_id = get_the_ID();
+		if ( 'product' === get_post_type( $product_id ) ) {
+			$products_incl_tax     = get_option( 'wcj_product_listings_display_taxes_products_incl_tax', '' );
+			$products_excl_tax     = get_option( 'wcj_product_listings_display_taxes_products_excl_tax', '' );
+			$product_cats_incl_tax = get_option( 'wcj_product_listings_display_taxes_product_cats_incl_tax', '' );
+			$product_cats_excl_tax = get_option( 'wcj_product_listings_display_taxes_product_cats_excl_tax', '' );
+			if ( '' != $products_incl_tax || '' != $products_incl_tax || '' != $products_incl_tax || '' != $products_incl_tax ) {
+				// Products
+				if ( ! empty( $products_incl_tax ) ) {
+					if ( in_array( $product_id, $products_incl_tax ) ) {
+						return 'incl';
+					}
+				}
+				if ( ! empty( $products_excl_tax ) ) {
+					if ( in_array( $product_id, $products_excl_tax ) ) {
+						return 'excl';
+					}
+				}
+				// Categories
+				$product_categories = get_the_terms( $product_id, 'product_cat' );
+				if ( ! empty( $product_cats_incl_tax ) ) {
+					if ( ! empty( $product_categories ) ) {
+						foreach ( $product_categories as $product_category ) {
+							if ( in_array( $product_category->term_id, $product_cats_incl_tax ) ) {
+								return 'incl';
+							}
+						}
+					}
+				}
+				if ( ! empty( $product_cats_excl_tax ) ) {
+					if ( ! empty( $product_categories ) ) {
+						foreach ( $product_categories as $product_category ) {
+							if ( in_array( $product_category->term_id, $product_cats_excl_tax ) ) {
+								return 'excl';
+							}
+						}
+					}
+				}
+			}
+		}
+		return $value;
 	}
 
 	/**
@@ -193,7 +248,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * add_fields_to_woocommerce_settings.
 	 */
-	function add_fields_to_woocommerce_settings( $settings ) {
+	/* function add_fields_to_woocommerce_settings( $settings ) {
 		$updated_settings = array();
 		foreach ( $settings as $section ) {
 			$updated_settings[] = $section;
@@ -263,14 +318,45 @@ class WCJ_Product_Listings extends WCJ_Module {
 			}
 		}
 		return $updated_settings;
-	}
+	} */
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 */
 	function get_settings() {
+		$settings = array();
+		$settings = apply_filters( 'wcj_product_listings_settings', $settings );
+		return $this->add_standard_settings( $settings );
+	}
+
+	/*
+	 * add_settings_hook.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	function add_settings_hook() {
+		add_filter( 'wcj_product_listings_settings', array( $this, 'add_settings' ) );
+	}
+
+	/*
+	 * add_settings.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	function add_settings() {
+
+		$product_cats = array();
+		$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+		foreach ( $product_categories as $product_category ) {
+			$product_cats[ $product_category->term_id ] = $product_category->name;
+		}
+
+		$products = wcj_get_products();
+
 		$settings = array(
 			array(
 				'title'    => __( 'Shop Page Display Options', 'woocommerce-jetpack' ),
@@ -410,8 +496,58 @@ class WCJ_Product_Listings extends WCJ_Module {
 				'type'     => 'sectionend',
 				'id'       => 'wcj_products_per_page_options',
 			),
+			array(
+				'title'    => __( 'TAX Display Prices in the Shop', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'desc'     => __( 'If you want to display part of your products including TAX and another part excluding TAX, you can set it here.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_listings_display_taxes_options',
+			),
+			array(
+				'title'    => __( 'Products - Including TAX', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_listings_display_taxes_products_incl_tax',
+				'desc_tip' => __( 'Select products to display including TAX.', 'woocommerce-jetpack' ),
+				'default'  => '',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'css'      => 'width: 450px;',
+				'options'  => $products,
+			),
+			array(
+				'title'    => __( 'Products - Excluding TAX', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_listings_display_taxes_products_excl_tax',
+				'desc_tip' => __( 'Select products to display excluding TAX.', 'woocommerce-jetpack' ),
+				'default'  => '',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'css'      => 'width: 450px;',
+				'options'  => $products,
+			),
+			array(
+				'title'    => __( 'Product Categories - Including TAX', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_listings_display_taxes_product_cats_incl_tax',
+				'desc_tip' => __( 'Select product categories to display including TAX.', 'woocommerce-jetpack' ),
+				'default'  => '',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'css'      => 'width: 450px;',
+				'options'  => $product_cats,
+			),
+			array(
+				'title'    => __( 'Product Categories - Excluding TAX', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_listings_display_taxes_product_cats_excl_tax',
+				'desc_tip' => __( 'Select product categories to display excluding TAX.', 'woocommerce-jetpack' ),
+				'default'  => '',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'css'      => 'width: 450px;',
+				'options'  => $product_cats,
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_listings_display_taxes_options',
+			),
 		);
-		return $this->add_standard_settings( $settings );
+		return $settings;
 	}
 
 }
