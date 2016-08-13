@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.5.3
+ * @version 2.5.5
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -127,13 +127,13 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_custom_number.
 	 *
-	 * @version 2.4.0
+	 * @version 2.5.5
 	 */
 	function output_custom_number( $value ) {
 		$type         = 'number';//$value['type'];
 		$option_value = get_option( $value['id'], $value['default'] );
 
-		$tooltip_html = '';
+		$tooltip_html = ( isset( $value['desc_tip'] ) && '' != $value['desc_tip'] ) ? '<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 //		$custom_attributes = ( is_array( $value['custom_attributes'] ) ) ? $value['custom_attributes'] : array();
 		$description = ' <span class="description">' . $value['desc'] . '</span>';
 		$save_button = apply_filters( 'wcj_get_option_filter', '', ' <input name="save" class="button-primary" type="submit" value="' . __( 'Save changes', 'woocommerce' ) . '">' );

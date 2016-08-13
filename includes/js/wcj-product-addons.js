@@ -1,7 +1,7 @@
 /**
  * wcj-product-addons.
  *
- * version 2.5.3
+ * version 2.5.5
  * since   2.5.3
  */
 
@@ -27,12 +27,12 @@ function change_price() {
 		};
 		jQuery("input[name^='wcj_product_all_products_addons_']").each( function () {
 			if (jQuery(this).is(':checked')) {
-				data[jQuery(this).attr('name')] = '1';
+				data[jQuery(this).attr('name')] = jQuery(this).val();
 			}
 		});
 		jQuery("input[name^='wcj_product_per_product_addons_']").each( function () {
 			if (jQuery(this).is(':checked')) {
-				data[jQuery(this).attr('name')] = '1';
+				data[jQuery(this).attr('name')] = jQuery(this).val();
 			}
 		});
 		jQuery.post(ajax_object.ajax_url, data, function(response) {

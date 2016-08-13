@@ -128,6 +128,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 13/08/2016 =
+~* Dev - PRODUCTS - Product Addons - "Default" and "Is required" options added.
+~* Dev - PRODUCTS - Product Addons - "Radio" type added.
+ * Tweak - Tooltip added for `custom_number` admin settings.
  * Dev - PRODUCTS - Product Listings - Settings removed from WooCommerce > Settings > Products > Display.
  * Dev - PRODUCTS - Product Listings - Settings moved to `init` hook.
 ~* Dev - PRODUCTS - Product Listings - "TAX Display Prices in the Shop" section added.

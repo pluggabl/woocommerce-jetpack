@@ -19,7 +19,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.3
 	 */
 	function __construct() {
@@ -51,6 +51,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 				add_filter( 'woocommerce_add_cart_item_data',             array( $this, 'add_addons_price_to_cart_item_data' ), PHP_INT_MAX, 3 );
 				add_filter( 'woocommerce_add_cart_item',                  array( $this, 'add_addons_price_to_cart_item' ), PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_get_cart_item_from_session',     array( $this, 'get_cart_item_addons_price_from_session' ), PHP_INT_MAX, 3 );
+				add_filter( 'woocommerce_add_to_cart_validation',         array( $this, 'validate_on_add_to_cart' ), PHP_INT_MAX, 2 );
 				// Prices
 				add_filter( 'woocommerce_get_price',                      array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
 				// Show details at cart, order details, emails
@@ -59,6 +60,25 @@ class WCJ_Product_Addons extends WCJ_Module {
 				add_action( 'woocommerce_add_order_item_meta',            array( $this, 'add_info_to_order_item_meta' ), PHP_INT_MAX, 3 );
 			}
 		}
+	}
+
+	/**
+	 * validate_on_add_to_cart.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.5
+	 */
+	function validate_on_add_to_cart( $passed, $product_id ) {
+		$addons = $this->get_product_addons( $product_id );
+		foreach ( $addons as $addon ) {
+			if ( 'yes' === $addon['is_required'] ) {
+				if ( ! isset( $_POST[ $addon['checkbox_key'] ] ) ) {
+					wc_add_notice( __( 'Some of the required addons are not selected!', 'woocommerce-jetpack' ), 'error' );
+					return false;
+				}
+			}
+		}
+		return $passed;
 	}
 
 	/**
@@ -74,7 +94,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.3
 	 */
 	function price_change_ajax( $param ) {
@@ -86,7 +106,20 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$the_addons_price = 0;
 		foreach ( $addons as $addon ) {
 			if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
-				$the_addons_price += $addon['price_value'];
+				if ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) {
+					$the_addons_price += $addon['price_value'];
+				} elseif ( 'radio' === $addon['type'] ) {
+					$labels = explode( PHP_EOL, $addon['label_value'] );
+					$prices = explode( PHP_EOL, $addon['price_value'] );
+					if ( count( $labels ) === count( $prices ) ) {
+						foreach ( $labels as $i => $label ) {
+							if ( $_POST[ $addon['checkbox_key'] ] == sanitize_title( $label ) ) {
+								$the_addons_price += $prices[ $i ];
+								break;
+							}
+						}
+					}
+				}
 			}
 		}
 		if ( 0 != $the_addons_price ) {
@@ -139,6 +172,9 @@ class WCJ_Product_Addons extends WCJ_Module {
 						'price_value'  => get_option( 'wcj_product_addons_all_products_price_' . $i ),
 						'label_value'  => get_option( 'wcj_product_addons_all_products_label_' . $i ),
 						'tooltip'      => get_option( 'wcj_product_addons_all_products_tooltip_' . $i, '' ),
+						'type'         => get_option( 'wcj_product_addons_all_products_type_' . $i, 'checkbox' ),
+						'default'      => get_option( 'wcj_product_addons_all_products_default_' . $i, '' ),
+						'is_required'  => get_option( 'wcj_product_addons_all_products_required_' . $i, 'no' ),
 					);
 				}
 			}
@@ -158,6 +194,9 @@ class WCJ_Product_Addons extends WCJ_Module {
 							'price_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_price_' . $i, true ),
 							'label_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_label_' . $i, true ),
 							'tooltip'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_tooltip_' . $i, true ),
+							'type'         => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_type_' . $i, true ),
+							'default'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_default_' . $i, true ),
+							'is_required'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_required_' . $i, true ),
 						);
 					}
 				}
@@ -270,15 +309,29 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item_data.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.3
 	 */
 	function add_addons_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 		$addons = $this->get_product_addons( $product_id );
 		foreach ( $addons as $addon ) {
 			if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
-				$cart_item_data[ $addon['price_key'] ] = $addon['price_value'];
-				$cart_item_data[ $addon['label_key'] ] = $addon['label_value'];
+				if ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) {
+					$cart_item_data[ $addon['price_key'] ] = $addon['price_value'];
+					$cart_item_data[ $addon['label_key'] ] = $addon['label_value'];
+				} elseif ( 'radio' === $addon['type'] ) {
+					$prices = explode( PHP_EOL, $addon['price_value'] );
+					$labels = explode( PHP_EOL, $addon['label_value'] );
+					if ( count( $labels ) === count( $prices ) ) {
+						foreach ( $labels as $i => $label ) {
+							if ( $_POST[ $addon['checkbox_key'] ] == sanitize_title( $label ) ) {
+								$cart_item_data[ $addon['price_key'] ] = $prices[ $i ];
+								$cart_item_data[ $addon['label_key'] ] = $labels[ $i ];
+								break;
+							}
+						}
+					}
+				}
 			}
 		}
 		return $cart_item_data;
@@ -294,15 +347,46 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$html = '';
 		$addons = $this->get_product_addons( get_the_ID() );
 		foreach ( $addons as $addon ) {
-			$is_checked = isset( $_POST[ $addon['checkbox_key'] ] ) ? ' checked' : '';
-			$maybe_tooltip = ( '' != $addon['tooltip'] ) ?
-				' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $addon['tooltip'] . '">' :
-				'';
-			$html .= '<p>' .
-					'<input type="checkbox" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '"' . $is_checked . '>' . ' ' .
-					'<label for="' . $addon['checkbox_key'] . '">' . $addon['label_value'] . ' ('. wc_price( $addon['price_value'] ) . ')' . '</label>' .
-					$maybe_tooltip .
-				'</p>';
+			$is_required = ( 'yes' === $addon['is_required'] ) ? ' required' : '';
+			if ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) {
+				$is_checked = '';
+				if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
+					$is_checked = ' checked';
+				} elseif ( 'checked' === $addon['default'] ) {
+					$is_checked = ' checked';
+				}
+				$maybe_tooltip = ( '' != $addon['tooltip'] ) ?
+					' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $addon['tooltip'] . '">' :
+					'';
+				$html .= '<p>' .
+						'<input type="checkbox" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '"' . $is_checked . $is_required . '>' . ' ' .
+						'<label for="' . $addon['checkbox_key'] . '">' . $addon['label_value'] . ' ('. wc_price( $addon['price_value'] ) . ')' . '</label>' .
+						$maybe_tooltip .
+					'</p>';
+			} elseif ( 'radio' === $addon['type'] ) {
+				$prices   = explode( PHP_EOL, $addon['price_value'] );
+				$labels   = explode( PHP_EOL, $addon['label_value'] );
+				$tooltips = explode( PHP_EOL, $addon['tooltip'] );
+				if ( count( $labels ) === count( $prices ) ) {
+					foreach ( $labels as $i => $label ) {
+						$label = sanitize_title( $label );
+						$is_checked = '';
+						if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
+							$is_checked = ( $label === $_POST[ $addon['checkbox_key'] ] ) ? ' checked' : '';
+						} elseif ( '' != $addon['default'] ) {
+							$is_checked = ( $label === sanitize_title( $addon['default'] ) ) ? ' checked' : '';
+						}
+						$maybe_tooltip = ( isset( $tooltips[ $i ] ) && '' != $tooltips[ $i ] ) ?
+							' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $tooltips[ $i ] . '">' :
+							'';
+						$html .= '<p>' .
+							'<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>' . ' ' .
+							'<label for="' . $addon['checkbox_key'] . '-' . $label . '">' . $labels[ $i ] . ' ('. wc_price( $prices[ $i ] ) . ')' . '</label>' .
+							$maybe_tooltip .
+						'</p>';
+					}
+				}
+			}
 		}
 		// Output
 		if ( ! empty( $html ) ) {
@@ -330,6 +414,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 			),
 			array(
 				'name'       => 'wcj_product_addons_per_product_total_number',
+				'tooltip'    => __( 'Save product after you change this number.', 'woocommerce-jetpack' ),
 				'default'    => 0,
 				'type'       => 'number',
 				'title'      => __( 'Product Addons Total Number', 'woocommerce-jetpack' ),
@@ -349,22 +434,52 @@ class WCJ_Product_Addons extends WCJ_Module {
 					),
 				),
 				array(
-					'title'    => __( 'Label', 'woocommerce-jetpack' ),
+					'title'    => __( 'Type', 'woocommerce-jetpack' ),
+					'name'     => 'wcj_product_addons_per_product_type_' . $i,
+					'default'  => 'checkbox',
+					'type'     => 'select',
+					'options'  => array(
+						'checkbox' => __( 'Checkbox', 'woocommerce-jetpack' ),
+						'radio'    => __( 'Radio Buttons', 'woocommerce-jetpack' ),
+					),
+				),
+				array(
+					'title'    => __( 'Label(s)', 'woocommerce-jetpack' ),
+					'tooltip'  => __( 'For radio enter one value per line.', 'woocommerce-jetpack' ),
 					'name'     => 'wcj_product_addons_per_product_label_' . $i,
 					'default'  => '',
-					'type'     => 'text',
+					'type'     => 'textarea',
 				),
 				array(
-					'title'    => __( 'Price', 'woocommerce-jetpack' ),
+					'title'    => __( 'Price(s)', 'woocommerce-jetpack' ),
+					'tooltip'  => __( 'For radio enter one value per line.', 'woocommerce-jetpack' ),
 					'name'     => 'wcj_product_addons_per_product_price_' . $i,
 					'default'  => 0,
-					'type'     => 'price',
+					'type'     => 'textarea',
 				),
 				array(
-					'title'    => __( 'Tooltip', 'woocommerce-jetpack' ),
+					'title'    => __( 'Tooltip(s)', 'woocommerce-jetpack' ),
+					'tooltip'  => __( 'For radio enter one value per line.', 'woocommerce-jetpack' ),
 					'name'     => 'wcj_product_addons_per_product_tooltip_' . $i,
 					'default'  => '',
+					'type'     => 'textarea',
+				),
+				array(
+					'title'    => __( 'Default Value', 'woocommerce-jetpack' ),
+					'tooltip'  => __( 'For checkbox use \'checked\'; for radio enter default label. Leave blank for no default value.', 'woocommerce-jetpack' ),
+					'name'     => 'wcj_product_addons_per_product_default_' . $i,
+					'default'  => '',
 					'type'     => 'text',
+				),
+				array(
+					'title'    => __( 'Is required', 'woocommerce-jetpack' ),
+					'name'     => 'wcj_product_addons_per_product_required_' . $i,
+					'default'  => 'no',
+					'type'     => 'select',
+					'options'  => array(
+						'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+						'no'  => __( 'No', 'woocommerce-jetpack' ),
+					),
 				),
 			) );
 		}
@@ -414,6 +529,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Product Addons Total Number', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Save changes after you change this number.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_addons_all_products_total_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
@@ -435,26 +551,54 @@ class WCJ_Product_Addons extends WCJ_Module {
 					'type'     => 'checkbox',
 				),
 				array(
-					'desc'     => __( 'Label', 'woocommerce-jetpack' ),
+					'desc'     => __( 'Type', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_addons_all_products_type_' . $i,
+					'default'  => 'checkbox',
+					'type'     => 'select',
+					'css'      => 'width:300px;',
+					'options'  => array(
+						'checkbox' => __( 'Checkbox', 'woocommerce-jetpack' ),
+						'radio'    => __( 'Radio Buttons', 'woocommerce-jetpack' ),
+					),
+				),
+				array(
+					'desc'     => __( 'Label(s)', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'For radio enter one value per line.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_product_addons_all_products_label_' . $i,
 					'default'  => '',
-					'type'     => 'text',
+					'type'     => 'textarea',
 					'css'      => 'width:300px;',
 				),
 				array(
-					'desc'     => __( 'Price', 'woocommerce-jetpack' ),
+					'desc'     => __( 'Price(s)', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'For radio enter one value per line.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_product_addons_all_products_price_' . $i,
 					'default'  => 0,
-					'type'     => 'number',
+					'type'     => 'textarea',
 					'css'      => 'width:300px;',
 					'custom_attributes' => array( 'step' => '0.0001' ),
 				),
 				array(
-					'desc'     => __( 'Tooltip', 'woocommerce-jetpack' ),
+					'desc'     => __( 'Tooltip(s)', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'For radio enter one value per line.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_product_addons_all_products_tooltip_' . $i,
+					'default'  => '',
+					'type'     => 'textarea',
+					'css'      => 'width:300px;',
+				),
+				array(
+					'desc'     => __( 'Default Value', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'For checkbox use \'checked\'; for radio enter default label. Leave blank for no default value.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_addons_all_products_default_' . $i,
 					'default'  => '',
 					'type'     => 'text',
 					'css'      => 'width:300px;',
+				),
+				array(
+					'desc'     => __( 'Is Required', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_addons_all_products_required_' . $i,
+					'default'  => 'no',
+					'type'     => 'checkbox',
 				),
 			) );
 		}
