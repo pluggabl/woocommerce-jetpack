@@ -128,49 +128,49 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.5 - 13/08/2016 =
+ * Fix - `WCJ_Module` - `colspan` fixed in `create_meta_box()` function.
+ * Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` and `tooltip` options added.
+ * Fix - Functions - `wcj_get_rocket_icon()` fixed.
+ * Dev - Shortcodes - `not_location` attribute added.
+~* Fix - Shortcodes - Orders - `[wcj_order_tax_by_class]` - Tax rounding per line bug fixed.
+ * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Additional `column_param` "not empty" check on `item_key` column.
+ * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_attribute` column added.
+ * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` - `unique_only` attribute added.
+ * Dev - Shortcodes - Products - `[wcj_product_length]`, `[wcj_product_width]`, `[wcj_product_height]` shortcodes added.
+ * Dev - PRICES & CURRENCIES - Price by User Role - "Show Roles on per Product Settings" option added.
+ * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()`.
+ * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Country Switcher Widget - "Replace with currency" option added.
+~* Fix - PRICES & CURRENCIES - Wholesale Price - Variable products fixed.
+ * Fix - PRICES & CURRENCIES - Wholesale Price - Per product - Plus version message fixed.
+ * Fix - PRICES & CURRENCIES - Wholesale Price - Per product - Discount fixed to include decimal numbers.
+T* Dev - PRICES & CURRENCIES - Wholesale Price - "Additional User Roles Options" section added.
+ * Dev - PRICES & CURRENCIES - Wholesale Price - Settings moved to `init` hook.
+ * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Crons max time limit increased to 5 sec.
+ * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Next rates update time info added.
+ * Dev - PRICES & CURRENCIES - Product Price by Formula - `do_shortcode` added to formula and params.
+ * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Role Defaults" section added (changes made to switcher shortcodes also).
+ * Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Product Types - Include" option added.
+ * Dev - PRODUCTS - SKU - "Automatically Generate SKU for New Products" option added.
+ * Dev - PRODUCTS - SKU - "Add SKU to Customer Emails" option added.
+ * Dev - PRODUCTS - Product Addons - "Tooltip" option added.
 ~* Dev - PRODUCTS - Product Addons - "Default" and "Is required" options added.
 ~* Dev - PRODUCTS - Product Addons - "Radio" type added.
- * Tweak - Tooltip added for `custom_number` admin settings.
  * Dev - PRODUCTS - Product Listings - Settings removed from WooCommerce > Settings > Products > Display.
  * Dev - PRODUCTS - Product Listings - Settings moved to `init` hook.
 ~* Dev - PRODUCTS - Product Listings - "TAX Display Prices in the Shop" section added.
 ~* Dev - PRODUCTS - Product Input Fields - No sanitization for `select` and `radio` values.
- * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` - `unique_only` attribute added.
  * Dev - PRODUCTS - Product by User Role - Initial module release.
- * Dev - SHIPPING & ORDERS - Orders - "Exclude Shipping from Cart Total" option added.
- * Dev - PRICES & CURRENCIES - Product Price by Formula - `do_shortcode` added to formula and params.
- * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Role Defaults" section added (changes made to switcher shortcodes also).
- * Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Product Types - Include" option added.
  * Dev - CART & CHECKOUT - Checkout Files Upload - "Attach Files to Emails" options added.
- * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Crons max time limit increased to 5 sec.
- * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Next rates update time info added.
-~* Fix - EMAILS & MISC. - Emails - Custom Emails - `woocommerce_new_order` hook replaced with `woocommerce_checkout_order_processed` hook - this will fix issues with empty shortcodes.
- * Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` and `tooltip` options added.
- * Fix - PRICES & CURRENCIES - Wholesale Price - Per product - Plus version message fixed.
- * Fix - PRICES & CURRENCIES - Wholesale Price - Per product - Discount fixed to include decimal numbers.
- * Dev - PDF INVOICING & PACKING SLIPS - `woocommerce_api_create_order` hook added (duplicates `woocommerce_new_order` hook).
- * Fix - Functions - `wcj_get_rocket_icon()` fixed.
- * Dev - PRODUCTS - Product Addons - "Tooltip" option added.
- * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Additional check in `get_customer_country_group_id()`.
-T* Dev - PRICES & CURRENCIES - Wholesale Price - "Additional User Roles Options" section added.
- * Dev - PRICES & CURRENCIES - Wholesale Price - Settings moved to `init` hook.
- * Dev - Shortcodes - `not_location` attribute added.
- * Dev - Shortcodes - Products - `[wcj_product_length]`, `[wcj_product_width]`, `[wcj_product_height]` shortcodes added.
-~* Fix - Shortcodes - Orders - `[wcj_order_tax_by_class]` - Tax rounding per line bug fixed.
+ * Dev - SHIPPING & ORDERS - Orders - "Exclude Shipping from Cart Total" option added.
 ~* Dev - SHIPPING & ORDERS - Order Numbers - "Use MySQL Transaction" defaults to `yes` now.
-~* Fix - PRICES & CURRENCIES - Wholesale Price - Variable products fixed.
- * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - Additional `column_param` "not empty" check on `item_key` column.
- * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_attribute` column added.
+ * Dev - PDF INVOICING & PACKING SLIPS - `woocommerce_api_create_order` hook added (duplicates `woocommerce_new_order` hook).
+~* Fix - EMAILS & MISC. - Emails - Custom Emails - `woocommerce_new_order` hook replaced with `woocommerce_checkout_order_processed` hook - this will fix issues with empty shortcodes.
+ * Dev - EMAILS & MISC. - Export - Export Orders - "Order Items" and "Order Notes" columns added.
 ~* Dev - EMAILS & MISC. - Export - Export Orders - "Filter by Billing Country" and "Filter by Product Title" options added.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Total Tax" column added.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Currency" added as separate column.
  * Dev - EMAILS & MISC. - Export - Export "CSV Separator" option added.
- * Dev - PRODUCTS - SKU - "Automatically Generate SKU for New Products" option added.
- * Dev - PRODUCTS - SKU - "Add SKU to Customer Emails" option added.
- * Dev - EMAILS & MISC. - Export - Export Orders - "Order Items" and "Order Notes" columns added.
- * Dev - PRICES & CURRENCIES - Price by User Role - "Show Roles on per Product Settings" option added.
- * Fix - `WCJ_Module` - `colspan` fixed in `create_meta_box()` function.
- * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Country Switcher Widget - "Replace with currency" option added.
+ * Tweak - Tooltip added for `custom_number` admin settings.
 
 = 2.5.4 - 19/07/2016 =
 * Fix - Manage Settings - Import - New line issue fixed.
