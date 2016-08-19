@@ -1,5 +1,5 @@
 === Booster for WooCommerce ===
-Contributors: algoritmika
+Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.1
 Tested up to: 4.5
@@ -171,6 +171,7 @@ T* Dev - PRICES & CURRENCIES - Wholesale Price - "Additional User Roles Options"
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Currency" added as separate column.
  * Dev - EMAILS & MISC. - Export - Export "CSV Separator" option added.
  * Tweak - Tooltip added for `custom_number` admin settings.
+ * Tweak - Contributors changed.
 
 = 2.5.4 - 19/07/2016 =
 * Fix - Manage Settings - Import - New line issue fixed.
