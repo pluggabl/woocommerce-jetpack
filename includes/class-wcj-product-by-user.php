@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product by User class.
  *
- * @version 2.5.4
+ * @version 2.5.5
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -18,13 +18,13 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.5
 	 * @since   2.5.2
 	 */
 	public function __construct() {
 
 		$this->id         = 'product_by_user';
-		$this->short_desc = __( 'Product by User', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'User Products', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Let users add new WooCommerce products from frontend.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-by-user/';
 		parent::__construct();
