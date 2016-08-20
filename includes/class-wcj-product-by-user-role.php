@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product by User Role class.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @since   2.5.5
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.5.5
 	 */
 	function __construct() {
@@ -26,7 +26,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 		$this->id         = 'product_by_user_role';
 		$this->short_desc = __( 'Product Visibility by User Role', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Display WooCommerce products by customers user role.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-visibility-product-by-user-role/';
+		$this->link       = 'http://booster.io/features/woocommerce-product-visibility-by-user-role/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

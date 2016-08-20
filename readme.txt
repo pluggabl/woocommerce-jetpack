@@ -128,6 +128,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.5.6 - 20/08/2016 =
+ * Tweak - PRODUCTS - Product Visibility by User Role - Link fixed.
+
 = 2.5.5 - 20/08/2016 =
 * Fix - `WCJ_Module` - `colspan` fixed in `create_meta_box()` function.
 * Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` and `tooltip` options added.
