@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @author  Algoritmika Ltd.
  */
 
@@ -17,11 +17,12 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.6
 	 */
 	public function __construct() {
 
 		$this->the_shortcodes = array(
+			'wcj_order_status',
 			'wcj_order_date',
 			'wcj_order_time',
 			'wcj_order_number',
@@ -353,6 +354,16 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_order_shipping_address( $atts ) {
 		return $this->the_order->get_formatted_shipping_address();
+	}
+
+	/**
+	 * wcj_order_status.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 */
+	function wcj_order_status( $atts ) {
+		return $this->the_order->get_status();
 	}
 
 	/**

@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 21/08/2016 =
+ * Dev - Shortcodes - Orders - `[wcj_order_status]` shortcode added.
  * Dev - PRODUCTS - Product Cost Price - "Profit" column - Now calculating profit for all orders statuses except cancelled, refunded or failed.
  * Tweak - PRODUCTS - Product Visibility by User Role - Link fixed.
 
