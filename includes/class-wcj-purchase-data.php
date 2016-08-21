@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Purchase Data class.
  *
- * @version 2.4.8
+ * @version 2.5.6
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -54,7 +54,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 * Output custom columns for orders
 	 *
 	 * @param   string $column
-	 * @version 2.4.5
+	 * @version 2.5.6
 	 * @since   2.2.4
 	 * @todo    forecasted profit
 	 */
@@ -62,7 +62,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 		if ( 'profit' === $column ) {
 			$total_profit = 0;
 			$the_order = wc_get_order( get_the_ID() );
-			if ( 'completed' === $the_order->get_status() ) {
+			if ( ! in_array( $the_order->get_status(), array( 'cancelled', 'refunded', 'failed' ) ) ) {
 				$is_forecasted = false;
 				foreach ( $the_order->get_items() as $item_id => $item ) {
 					$the_profit = 0;
