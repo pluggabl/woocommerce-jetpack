@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Custom Statuses class.
  *
- * @version 2.5.2
+ * @version 2.5.6
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.6
 	 */
 	public function __construct() {
 
@@ -34,16 +34,6 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				'desc'  => __( 'Tool lets you add or delete any custom status for WooCommerce orders.', 'woocommerce-jetpack' ),
 			),
 		) );
-
-		$this->default_statuses = array(
-			'wc-pending'    => _x( 'Pending payment', 'Order status', 'woocommerce' ),
-			'wc-processing' => _x( 'Processing', 'Order status', 'woocommerce' ),
-			'wc-on-hold'    => _x( 'On hold', 'Order status', 'woocommerce' ),
-			'wc-completed'  => _x( 'Completed', 'Order status', 'woocommerce' ),
-			'wc-cancelled'  => _x( 'Cancelled', 'Order status', 'woocommerce' ),
-			'wc-refunded'   => _x( 'Refunded', 'Order status', 'woocommerce' ),
-			'wc-failed'     => _x( 'Failed', 'Order status', 'woocommerce' ),
-		);
 
 		if ( $this->is_enabled() ) {
 
@@ -61,6 +51,24 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				add_action( 'admin_footer', array( $this, 'bulk_admin_footer' ), 11 );
 			}
 		}
+	}
+
+	/**
+	 * get_default_order_statuses.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 */
+	function get_default_order_statuses() {
+		return array(
+			'wc-pending'    => _x( 'Pending payment', 'Order status', 'woocommerce' ),
+			'wc-processing' => _x( 'Processing', 'Order status', 'woocommerce' ),
+			'wc-on-hold'    => _x( 'On hold', 'Order status', 'woocommerce' ),
+			'wc-completed'  => _x( 'Completed', 'Order status', 'woocommerce' ),
+			'wc-cancelled'  => _x( 'Cancelled', 'Order status', 'woocommerce' ),
+			'wc-refunded'   => _x( 'Refunded', 'Order status', 'woocommerce' ),
+			'wc-failed'     => _x( 'Failed', 'Order status', 'woocommerce' ),
+		);
 	}
 
 	/**
@@ -116,13 +124,14 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * hook_statuses_icons_css.
 	 *
-	 * @verison 2.5.2
+	 * @verison 2.5.6
 	 */
 	public function hook_statuses_icons_css() {
 		$output = '<style>';
 		$statuses = function_exists( 'wc_get_order_statuses' ) ? wc_get_order_statuses() : array();
+		$default_statuses = $this->get_default_order_statuses();
 		foreach( $statuses as $status => $status_name ) {
-			if ( ! array_key_exists( $status, $this->default_statuses ) ) {
+			if ( ! array_key_exists( $status, $default_statuses ) ) {
 				if ( '' != ( $icon_data = get_option( 'wcj_orders_custom_status_icon_data_' . substr( $status, 3 ), '' ) ) ) {
 					$content = $icon_data['content'];
 					$color   = $icon_data['color'];
@@ -180,7 +189,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * create_custom_statuses_tool.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.6
 	 */
 	public function create_custom_statuses_tool() {
 		$result_message = '';
@@ -211,11 +220,12 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				echo '<th>' . __( 'Delete', 'woocommerce-jetpack' ) . '</th>';
 				echo '</tr>';
 				$statuses = function_exists( 'wc_get_order_statuses' ) ? wc_get_order_statuses() : array();
+				$default_statuses = $this->get_default_order_statuses();
 				foreach( $statuses as $status => $status_name ) {
 					echo '<tr>';
 					echo '<td>' . esc_attr( $status ) . '</td>';
 					echo '<td>' . esc_html( $status_name ) . '</td>';
-					if ( array_key_exists( $status, $this->default_statuses ) ) {
+					if ( array_key_exists( $status, $default_statuses ) ) {
 						echo '<td></td>';
 						echo '<td></td>';
 						echo '<td></td>';
