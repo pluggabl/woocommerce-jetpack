@@ -50,12 +50,12 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Input Fields* - WooCommerce product input fields.
 * *Product Listings* - Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories. Add "products per page" selector.
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
-* *Product Visibility by Country* - Display WooCommerce products by customers country.
-* *Product Visibility by User Role* - Display WooCommerce products by customers user role.
-* *User Products* - Let users add new WooCommerce products from frontend.
+* *Product Visibility by Country* - Display WooCommerce products by customer's country.
+* *Product Visibility by User Role* - Display WooCommerce products by customer's user role.
 * *Related Products* - Change displayed WooCommerce related products number, columns, order, relate by tag and/or category, or hide related products completely.
 * *SKU* - Generate WooCommerce SKUs automatically.
 * *Sorting* - Add more WooCommerce sorting options or remove all sorting including default.
+* *User Products* - Let users add new WooCommerce products from frontend.
 
 **Cart & Checkout**
 
@@ -134,6 +134,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
  * Dev - Shortcodes - Orders - `[wcj_order_total_excl_shipping]` shortcode added.
  * Dev - Shortcodes - Orders - `[wcj_order_status]` shortcode added.
  * Dev - PRODUCTS - Product Cost Price - "Profit" column - Now calculating profit for all orders statuses except cancelled, refunded or failed.
+ * Tweak - PRODUCTS - Product Visibility by Country - Description fixed.
  * Tweak - PRODUCTS - Product Visibility by User Role - Link and description fixed.
  * Tweak - Language (POT) file updated.
 

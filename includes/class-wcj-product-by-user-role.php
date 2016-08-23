@@ -25,7 +25,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 
 		$this->id         = 'product_by_user_role';
 		$this->short_desc = __( 'Product Visibility by User Role', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Display WooCommerce products by customers user role.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Display WooCommerce products by customer\'s user role.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-visibility-by-user-role/';
 		parent::__construct();
 

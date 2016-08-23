@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product by Country class.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -18,14 +18,14 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.5.0
 	 */
 	function __construct() {
 
 		$this->id         = 'product_by_country';
 		$this->short_desc = __( 'Product Visibility by Country', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Display WooCommerce products by customers country.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Display WooCommerce products by customer\'s country.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-visibility-by-country/';
 		parent::__construct();
 
@@ -82,12 +82,12 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.6
 	 * @since   2.5.0
 	 */
 	function get_settings() {
 		$settings = array();
-		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Product by Country" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
+		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Product Visibility by Country" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
 	}
 }
 
