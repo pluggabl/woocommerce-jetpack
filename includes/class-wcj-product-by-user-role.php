@@ -76,12 +76,12 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.5.5
 	 */
 	function get_settings() {
 		$settings = array();
-		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Product by User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
+		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Product Visibility by User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
 	}
 }
 
