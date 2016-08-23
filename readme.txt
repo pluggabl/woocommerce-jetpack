@@ -128,13 +128,14 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 22/08/2016 =
+= 2.5.6 - 23/08/2016 =
 ~* Fix - SHIPPING & ORDERS - Order Custom Statuses - Default order statuses moved from constructor to separate function.
  * Dev - Shortcodes - Orders - `[wcj_order_shipping_price]`, `[wcj_order_total_excl_tax]` code refactoring.
  * Dev - Shortcodes - Orders - `[wcj_order_total_excl_shipping]` shortcode added.
  * Dev - Shortcodes - Orders - `[wcj_order_status]` shortcode added.
  * Dev - PRODUCTS - Product Cost Price - "Profit" column - Now calculating profit for all orders statuses except cancelled, refunded or failed.
  * Tweak - PRODUCTS - Product Visibility by User Role - Link fixed.
+ * Tweak - Language (POT) file updated.
 
 = 2.5.5 - 20/08/2016 =
 * Fix - `WCJ_Module` - `colspan` fixed in `create_meta_box()` function.
