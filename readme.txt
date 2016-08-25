@@ -83,7 +83,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Address Formats* - Set address format in WooCommerce orders on per country basis. Force base country display.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
-* *Orders* - Minimum WooCommerce order amount (optionally by user role); orders auto-complete; custom admin order list columns.
+* *Orders* - Minimum WooCommerce order amount (optionally by user role); orders auto-complete; custom admin order list columns; admin order currency.
 * *Shipping* - Add multiple custom shipping methods to WooCommerce. Hide WooCommerce shipping when free is available. Display "left to free shipping" info.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 
