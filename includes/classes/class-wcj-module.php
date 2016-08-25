@@ -149,7 +149,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 */
 	function save_meta_box( $post_id, $post ) {
 		// Check that we are saving with current metabox displayed.
-		if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) return;
+		if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
+			return;
+		}
 		// Save options
 		foreach ( $this->get_meta_box_options() as $option ) {
 			if ( 'title' === $option['type'] ) {
@@ -158,7 +160,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 			if ( $is_enabled ) {
 				$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : $option['default'];
-				$the_post_id   = ( isset( $option['product_id'] )     ) ? $option['product_id']     : $post_id;
+				$the_post_id   = ( isset( $option['product_id'] )     ) ? $option['product_id']     : $post_id; // todo: maybe also order_id?
 				$the_meta_name = ( isset( $option['meta_name'] ) )      ? $option['meta_name']      : '_' . $option['name'];
 				update_post_meta( $the_post_id, $the_meta_name, apply_filters( 'wcj_save_meta_box_value', $option_value, $option['name'], $this->id ) );
 			}
@@ -203,7 +205,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					$html .= '</tr>';
 				} else {
 					$custom_attributes = '';
-					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id;
+					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id; // todo: maybe also order_id?
 					$the_meta_name = ( isset( $option['meta_name'] ) )  ? $option['meta_name']  : '_' . $option['name'];
 					if ( get_post_meta( $the_post_id, $the_meta_name ) ) {
 						$option_value = get_post_meta( $the_post_id, $the_meta_name, true );

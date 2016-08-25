@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders class.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.6
 	 */
 	public function __construct() {
 
@@ -47,7 +47,49 @@ class WCJ_Orders extends WCJ_Module {
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
 				add_filter( 'parse_query',           array( $this, 'orders_by_country_admin_filter_query' ) );
 			}
+
+			// Order Currency
+			if ( 'yes' === get_option( 'wcj_order_admin_currency', 'no' ) ) {
+				$this->meta_box_screen = 'shop_order';
+				add_action( 'add_meta_boxes',       array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+				if ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ) {
+					add_filter( 'woocommerce_get_order_currency', array( $this, 'change_order_currency' ), PHP_INT_MAX, 2 );
+				}
+			}
 		}
+	}
+
+	/**
+	 * change_order_currency.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 */
+	function change_order_currency( $order_currency, $_order ) {
+		return ( '' != ( $wcj_order_currency = get_post_meta( $_order->id, '_' . 'wcj_order_currency', true ) ) ) ? $wcj_order_currency : $order_currency;
+	}
+
+	/**
+	 * get_meta_box_options.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 */
+	function get_meta_box_options() {
+		$order_id = get_the_ID();
+		$_order = wc_get_order( $order_id );
+		$options = array(
+			array(
+				'name'       => ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ? 'wcj_order_currency' : 'order_currency' ),
+				'default'    => $_order->get_order_currency(),
+				'type'       => 'select',
+				'options'    => wcj_get_currencies_names_and_symbols( 'names' ),
+				'title'      => __( 'Order Currency', 'woocommerce-jetpack' ),
+				'tooltip'    => __( 'Save order after you change this field.', 'woocommerce-jetpack' ),
+			),
+		);
+		return $options;
 	}
 
 	/**
@@ -296,11 +338,39 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.5.3
 	 */
 	function add_settings() {
 		$settings = array(
+			array(
+				'title'    => __( 'Admin Order Currency', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_order_admin_currency_options',
+			),
+			array(
+				'title'    => __( 'Admin Order Currency', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'When enabled this will add "Booster: Orders" metabox to each order\'s edit page.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_admin_currency',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Admin Order Currency Method', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Choose if you want changed order currency to be saved directly to DB, or if you want to use filter. When using <em>filter</em> method, changes will be active only when "Admin Order Currency" section is enabled. When using <em>directly to DB</em> method, changes will be permanent, that is even if Booster plugin is removed.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_admin_currency_method',
+				'default'  => 'filter',
+				'type'     => 'select',
+				'options'  => array(
+					'filter' => __( 'Filter', 'woocommerce-jetpack' ),
+					'db'     => __( 'Directly to DB', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_order_admin_currency_options',
+			),
 			array(
 				'title'    => __( 'Order Minimum Amount', 'woocommerce-jetpack' ),
 				'type'     => 'title',

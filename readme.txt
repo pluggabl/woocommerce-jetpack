@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 23/08/2016 =
+~* Dev - SHIPPING & ORDERS - Orders - Admin "Order Currency" section added.
 ~* Fix - SHIPPING & ORDERS - Order Custom Statuses - Default order statuses moved from constructor to separate function.
  * Dev - Shortcodes - Orders - `[wcj_order_shipping_price]`, `[wcj_order_total_excl_tax]` code refactoring.
  * Dev - Shortcodes - Orders - `[wcj_order_total_excl_shipping]` shortcode added.
