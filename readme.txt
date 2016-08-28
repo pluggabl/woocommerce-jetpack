@@ -128,7 +128,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 23/08/2016 =
+= 2.5.6 - 28/08/2016 =
+~* Dev - PDF INVOICING & PACKING SLIPS - Display - "Save as" disabled by default.
+~* Dev - PDF INVOICING & PACKING SLIPS - Added `die` after `generate_pdf_on_init`.
+-* Dev - PDF INVOICING & PACKING SLIPS - `woocommerce_cli_create_order` hook added (duplicates `woocommerce_new_order` hook).
  * Dev - SHIPPING & ORDERS - Orders - "Admin Order Currency" section added.
 ~* Fix - SHIPPING & ORDERS - Order Custom Statuses - Default order statuses moved from constructor to separate function.
  * Dev - Shortcodes - Orders - `[wcj_order_shipping_price]`, `[wcj_order_total_excl_tax]` code refactoring.

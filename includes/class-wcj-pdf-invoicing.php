@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing class.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 */
 	public function __construct() {
 
@@ -53,6 +53,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 					add_action( $the_hook, array( $this, 'create_' . $invoice_type['id'] ) );
 					if ( 'woocommerce_new_order' === $the_hook ) {
 						add_action( 'woocommerce_api_create_order', array( $this, 'create_' . $invoice_type['id'] ) );
+						add_action( 'woocommerce_cli_create_order', array( $this, 'create_' . $invoice_type['id'] ) );
 					}
 				}
 			}
@@ -157,6 +158,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	}
 	/**
 	 * generate_pdf_on_init.
+	 *
+	 * @version 2.5.6
 	 */
 	function generate_pdf_on_init() {
 
@@ -173,6 +176,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		$the_invoice = wcj_get_pdf_invoice( $this->order_id, $this->invoice_type_id );
 		$dest = ( true === $this->save_as_pdf ) ? 'D' : 'I';
 		$the_invoice->get_pdf( $dest );
+		die();
 	}
 	/**
 	 * get_settings.
