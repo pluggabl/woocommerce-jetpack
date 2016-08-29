@@ -128,7 +128,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 28/08/2016 =
+= 2.5.6 - 29/08/2016 =
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Recalculate price filter widget product prices" option added.
+-* Dev - Multicurrency Base Product price is calculated in Price by Country Price Filter widget.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Display - "Save as" disabled by default.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Added `die` after `generate_pdf_on_init`.
 -* Dev - PDF INVOICING & PACKING SLIPS - `woocommerce_cli_create_order` hook added (duplicates `woocommerce_new_order` hook).

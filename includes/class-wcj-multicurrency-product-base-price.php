@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency Product Base Price class.
  *
- * @version 2.5.2
+ * @version 2.5.6
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -61,8 +61,11 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 
 	/**
 	 * get_currency_exchange_rate.
+	 *
+	 * @version 2.5.6
 	 */
 	function get_currency_exchange_rate( $currency_code ) {
+		/*
 		$currency_exchange_rate = 1;
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
@@ -72,6 +75,8 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 			}
 		}
 		return $currency_exchange_rate;
+		*/
+		return wcj_get_currency_exchange_rate_product_base_currency( $currency_code );
 	}
 
 	/**
@@ -97,8 +102,11 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 
 	/**
 	 * change_price_by_currency.
+	 *
+	 * @version 2.5.6
 	 */
 	function change_price_by_currency( $price, $_product ) {
+		/*
 		$multicurrency_base_price_currency = get_post_meta( $_product->id, '_' . 'wcj_multicurrency_base_price_currency', true );
 		if ( '' != $multicurrency_base_price_currency ) {
 			if ( 1 != ( $currency_exchange_rate = $this->get_currency_exchange_rate( $multicurrency_base_price_currency ) ) ) {
@@ -106,6 +114,8 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 			}
 		}
 		return $price;
+		*/
+		return wcj_price_by_product_base_currency( $price, $_product->id );
 	}
 
 	/**
