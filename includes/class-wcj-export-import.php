@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Export Import class.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  * @todo    import products (maybe orders, customers) tool(s);
@@ -104,12 +104,12 @@ class WCJ_Export_Import extends WCJ_Module {
 	}
 
 	/**
-	 * export_filter_fileds.
+	 * export_filter_fields.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.5.5
 	 */
-	function export_filter_fileds( $tool_id ) {
+	function export_filter_fields( $tool_id ) {
 		$fields = array();
 		switch ( $tool_id ) {
 			case 'orders':
@@ -129,7 +129,7 @@ class WCJ_Export_Import extends WCJ_Module {
 				);
 			}
 			$data[] = array(
-				'<button class="button-primary" type="submit" name="wcj_export_show" value="' . $tool_id . '">' . __( 'Show', 'woocommerce-jetpack' ) . '</button>',
+				'<button class="button-primary" type="submit" name="wcj_export_filter" value="' . $tool_id . '">' . __( 'Filter', 'woocommerce-jetpack' ) . '</button>',
 				'',
 			);
 			return wcj_get_table_html( $data, array( 'table_class' => 'widefat', 'table_style' => 'width:50%;min-width:300px;', 'table_heading_type' => 'vertical', ) );
@@ -137,15 +137,100 @@ class WCJ_Export_Import extends WCJ_Module {
 	}
 
 	/**
+	 * get_order_export_fields.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 */
+	function get_order_export_fields() {
+		return array(
+			'order-id'                         => __( 'Order ID', 'woocommerce-jetpack' ),
+			'order-number'                     => __( 'Order Number', 'woocommerce-jetpack' ),
+			'order-status'                     => __( 'Order Status', 'woocommerce-jetpack' ),
+			'order-date'                       => __( 'Order Date', 'woocommerce-jetpack' ),
+			'order-item-count'                 => __( 'Order Item Count', 'woocommerce-jetpack' ),
+			'order-items'                      => __( 'Order Items', 'woocommerce-jetpack' ),
+			'order-items-product-input-fields' => __( 'Order Items Product Input Fields', 'woocommerce-jetpack' ),
+			'order-currency'                   => __( 'Order Currency', 'woocommerce-jetpack' ),
+			'order-total'                      => __( 'Order Total', 'woocommerce-jetpack' ),
+			'order-total-tax'                  => __( 'Order Total Tax', 'woocommerce-jetpack' ),
+			'order-payment-method'             => __( 'Order Payment Method', 'woocommerce-jetpack' ),
+			'order-notes'                      => __( 'Order Notes', 'woocommerce-jetpack' ),
+			'billing-first-name'               => __( 'Billing First Name', 'woocommerce-jetpack' ),
+			'billing-last-name'                => __( 'Billing Last Name', 'woocommerce-jetpack' ),
+			'billing-company'                  => __( 'Billing Company', 'woocommerce-jetpack' ),
+			'billing-address-1'                => __( 'Billing Address 1', 'woocommerce-jetpack' ),
+			'billing-address-2'                => __( 'Billing Address 2', 'woocommerce-jetpack' ),
+			'billing-city'                     => __( 'Billing City', 'woocommerce-jetpack' ),
+			'billing-state'                    => __( 'Billing State', 'woocommerce-jetpack' ),
+			'billing-postcode'                 => __( 'Billing Postcode', 'woocommerce-jetpack' ),
+			'billing-country'                  => __( 'Billing Country', 'woocommerce-jetpack' ),
+			'billing-phone'                    => __( 'Billing Phone', 'woocommerce-jetpack' ),
+			'billing-email'                    => __( 'Billing Email', 'woocommerce-jetpack' ),
+			'shipping-first-name'              => __( 'Shipping First Name', 'woocommerce-jetpack' ),
+			'shipping-last-name'               => __( 'Shipping Last Name', 'woocommerce-jetpack' ),
+			'shipping-company'                 => __( 'Shipping Company', 'woocommerce-jetpack' ),
+			'shipping-address-1'               => __( 'Shipping Address 1', 'woocommerce-jetpack' ),
+			'shipping-address-2'               => __( 'Shipping Address 2', 'woocommerce-jetpack' ),
+			'shipping-city'                    => __( 'Shipping City', 'woocommerce-jetpack' ),
+			'shipping-state'                   => __( 'Shipping State', 'woocommerce-jetpack' ),
+			'shipping-postcode'                => __( 'Shipping Postcode', 'woocommerce-jetpack' ),
+			'shipping-country'                 => __( 'Shipping Country', 'woocommerce-jetpack' ),
+		);
+	}
+
+	/**
+	 * get_order_export_default_fields_ids.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 */
+	function get_order_export_default_fields_ids() {
+		return array(
+			'order-id',
+			'order-number',
+			'order-status',
+			'order-date',
+			'order-item-count',
+			'order-items',
+			'order-currency',
+			'order-total',
+			'order-total-tax',
+			'order-payment-method',
+			'order-notes',
+			'billing-first-name',
+			'billing-last-name',
+			'billing-company',
+			'billing-address-1',
+			'billing-address-2',
+			'billing-city',
+			'billing-state',
+			'billing-postcode',
+			'billing-country',
+			'billing-phone',
+			'billing-email',
+			'shipping-first-name',
+			'shipping-last-name',
+			'shipping-company',
+			'shipping-address-1',
+			'shipping-address-2',
+			'shipping-city',
+			'shipping-state',
+			'shipping-postcode',
+			'shipping-country',
+		);
+	}
+
+	/**
 	 * create_export_tool.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.4.8
 	 */
 	function create_export_tool( $tool_id ) {
 		$data = $this->export( $tool_id );
 		echo '<form method="post" action="">';
-		echo $this->export_filter_fileds( $tool_id );
+		echo '<p>' . $this->export_filter_fields( $tool_id ) . '</p>';
 		echo '<p><button class="button-primary" type="submit" name="wcj_export" value="' . $tool_id . '">' . __( 'Download CSV', 'woocommerce-jetpack' ) . '</button></p>';
 		echo '</form>';
 		echo wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) );
@@ -215,46 +300,20 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_orders.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.4.8
 	 */
 	function export_orders() {
+		$all_fields = $this->get_order_export_fields();
+		$fields_ids = get_option( 'wcj_export_orders_fields', $this->get_order_export_default_fields_ids() );
+		$titles = array();
+		foreach( $fields_ids as $field_id ) {
+			$titles[] = $all_fields[ $field_id ];
+		}
 		$data = array();
-		$data[] = array(
-			__( 'Order ID', 'woocommerce-jetpack' ),
-			__( 'Order Number', 'woocommerce-jetpack' ),
-			__( 'Order Status', 'woocommerce-jetpack' ),
-			__( 'Order Date', 'woocommerce-jetpack' ),
-			__( 'Order Item Count', 'woocommerce-jetpack' ),
-			__( 'Order Items', 'woocommerce-jetpack' ),
-			__( 'Order Currency', 'woocommerce-jetpack' ),
-			__( 'Order Total', 'woocommerce-jetpack' ),
-			__( 'Order Total Tax', 'woocommerce-jetpack' ),
-			__( 'Order Payment Method', 'woocommerce-jetpack' ),
-			__( 'Order Notes', 'woocommerce-jetpack' ),
-			__( 'Billing First Name', 'woocommerce-jetpack' ),
-			__( 'Billing Last Name', 'woocommerce-jetpack' ),
-			__( 'Billing Company', 'woocommerce-jetpack' ),
-			__( 'Billing Address 1', 'woocommerce-jetpack' ),
-			__( 'Billing Address 2', 'woocommerce-jetpack' ),
-			__( 'Billing City', 'woocommerce-jetpack' ),
-			__( 'Billing State', 'woocommerce-jetpack' ),
-			__( 'Billing Postcode', 'woocommerce-jetpack' ),
-			__( 'Billing Country', 'woocommerce-jetpack' ),
-			__( 'Billing Phone', 'woocommerce-jetpack' ),
-			__( 'Billing Email', 'woocommerce-jetpack' ),
-			__( 'Shipping First Name', 'woocommerce-jetpack' ),
-			__( 'Shipping Last Name', 'woocommerce-jetpack' ),
-			__( 'Shipping Company', 'woocommerce-jetpack' ),
-			__( 'Shipping Address 1', 'woocommerce-jetpack' ),
-			__( 'Shipping Address 2', 'woocommerce-jetpack' ),
-			__( 'Shipping City', 'woocommerce-jetpack' ),
-			__( 'Shipping State', 'woocommerce-jetpack' ),
-			__( 'Shipping Postcode', 'woocommerce-jetpack' ),
-			__( 'Shipping Country', 'woocommerce-jetpack' ),
-		);
+		$data[] = $titles;
 		$offset = 0;
-		$block_size = 96;
+		$block_size = 1024;
 		while( true ) {
 			$args_orders = array(
 				'post_type'      => 'shop_order',
@@ -263,11 +322,11 @@ class WCJ_Export_Import extends WCJ_Module {
 				'orderby'        => 'date',
 				'order'          => 'DESC',
 				'offset'         => $offset,
+				'fields'         => 'ids',
 			);
 			$loop_orders = new WP_Query( $args_orders );
 			if ( ! $loop_orders->have_posts() ) break;
-			while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
-				$order_id = $loop_orders->post->ID;
+			foreach ( $loop_orders->posts as $order_id ) {
 				$order = wc_get_order( $order_id );
 
 				if ( isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' != $_POST['wcj_filter_by_order_billing_country'] ) {
@@ -281,8 +340,13 @@ class WCJ_Export_Import extends WCJ_Module {
 					$filter_by_product_title = false;
 				}
 				$items = array();
+				$items_product_input_fields = array();
 				foreach ( $order->get_items() as $item ) {
 					$items[] = $item['name'];
+					$item_product_input_fields = wcj_get_product_input_fields( $item );
+					if ( '' != $item_product_input_fields ) {
+						$items_product_input_fields[] = $item_product_input_fields;
+					}
 					if ( ! $filter_by_product_title ) {
 //						if ( $item['name'] === $_POST['wcj_filter_by_product_title'] ) {
 						if ( false !== strpos( $item['name'], $_POST['wcj_filter_by_product_title'] ) ) {
@@ -291,44 +355,114 @@ class WCJ_Export_Import extends WCJ_Module {
 					}
 				}
 				$items = implode( ' / ', $items );
+				$items_product_input_fields = implode( ' / ', $items_product_input_fields );
 				if ( ! $filter_by_product_title ) {
 					continue;
 				}
 
-				$data[] = array(
-					$order_id,
-					$order->get_order_number(),
-					$order->get_status(),
-					get_the_date( 'Y/m/d' ),
-					$order->get_item_count(),
-					$items,
-					$order->get_order_currency(),
-					$order->get_total(),
-					$order->get_total_tax(),
-					$order->payment_method_title,
-					$order->customer_note,
-					$order->billing_first_name,
-					$order->billing_last_name,
-					$order->billing_company,
-					$order->billing_address_1,
-					$order->billing_address_2,
-					$order->billing_city,
-					$order->billing_state,
-					$order->billing_postcode,
-					$order->billing_country,
-					$order->billing_phone,
-					$order->billing_email,
-					$order->shipping_first_name,
-					$order->shipping_last_name,
-					$order->shipping_company,
-					$order->shipping_address_1,
-					$order->shipping_address_2,
-					$order->shipping_city,
-					$order->shipping_state,
-					$order->shipping_postcode,
-					$order->shipping_country,
-				);
-			endwhile;
+				$row = array();
+				foreach( $fields_ids as $field_id ) {
+					switch ( $field_id ) {
+						case 'order-id':
+							$row[] = $order_id;
+							break;
+						case 'order-number':
+							$row[] = $order->get_order_number();
+							break;
+						case 'order-status':
+							$row[] = $order->get_status();
+							break;
+						case 'order-date':
+							$row[] = get_the_date( 'Y/m/d' );
+							break;
+						case 'order-item-count':
+							$row[] = $order->get_item_count();
+							break;
+						case 'order-items':
+							$row[] = $items;
+							break;
+						case 'order-items-product-input-fields':
+							$row[] = $items_product_input_fields;
+							break;
+						case 'order-currency':
+							$row[] = $order->get_order_currency();
+							break;
+						case 'order-total':
+							$row[] = $order->get_total();
+							break;
+						case 'order-total-tax':
+							$row[] = $order->get_total_tax();
+							break;
+						case 'order-payment-method':
+							$row[] = $order->payment_method_title;
+							break;
+						case 'order-notes':
+							$row[] = $order->customer_note;
+							break;
+						case 'billing-first-name':
+							$row[] = $order->billing_first_name;
+							break;
+						case 'billing-last-name':
+							$row[] = $order->billing_last_name;
+							break;
+						case 'billing-company':
+							$row[] = $order->billing_company;
+							break;
+						case 'billing-address-1':
+							$row[] = $order->billing_address_1;
+							break;
+						case 'billing-address-2':
+							$row[] = $order->billing_address_2;
+							break;
+						case 'billing-city':
+							$row[] = $order->billing_city;
+							break;
+						case 'billing-state':
+							$row[] = $order->billing_state;
+							break;
+						case 'billing-postcode':
+							$row[] = $order->billing_postcode;
+							break;
+						case 'billing-country':
+							$row[] = $order->billing_country;
+							break;
+						case 'billing-phone':
+							$row[] = $order->billing_phone;
+							break;
+						case 'billing-email':
+							$row[] = $order->billing_email;
+							break;
+						case 'shipping-first-name':
+							$row[] = $order->shipping_first_name;
+							break;
+						case 'shipping-last-name':
+							$row[] = $order->shipping_last_name;
+							break;
+						case 'shipping-company':
+							$row[] = $order->shipping_company;
+							break;
+						case 'shipping-address-1':
+							$row[] = $order->shipping_address_1;
+							break;
+						case 'shipping-address-2':
+							$row[] = $order->shipping_address_2;
+							break;
+						case 'shipping-city':
+							$row[] = $order->shipping_city;
+							break;
+						case 'shipping-state':
+							$row[] = $order->shipping_state;
+							break;
+						case 'shipping-postcode':
+							$row[] = $order->shipping_postcode;
+							break;
+						case 'shipping-country':
+							$row[] = $order->shipping_country;
+							break;
+					}
+				}
+				$data[] = $row;
+			}
 			$offset += $block_size;
 		}
 		return $data;
@@ -436,7 +570,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.5.4
 	 */
 	function get_settings() {
@@ -451,6 +585,14 @@ class WCJ_Export_Import extends WCJ_Module {
 				'id'      => 'wcj_export_csv_separator',
 				'default' => ',',
 				'type'    => 'text',
+			),
+			array(
+				'title'   => __( 'Export Orders Fields', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_export_orders_fields',
+				'default' => $this->get_order_export_default_fields_ids(),
+				'type'    => 'multiselect',
+				'options' => $this->get_order_export_fields(),
+				'css'     => 'height:300px;',
 			),
 			array(
 				'type'    => 'sectionend',

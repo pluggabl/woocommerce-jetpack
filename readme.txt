@@ -128,7 +128,11 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 29/08/2016 =
+= 2.5.6 - 31/08/2016 =
+ * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.
+ * Dev - EMAILS & MISC. - Export - Export Orders - Loop modified to return posts ids only.
+ * Dev - EMAILS & MISC. - Export - Export Orders - "Order Items Product Input Fields" column added.
+ * Dev - EMAILS & MISC. - Export - Export Orders - "Export Orders Fields" option added.
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Recalculate price filter widget product prices" option added.
 -* Dev - Multicurrency Base Product price is calculated in Price by Country Price Filter widget.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Display - "Save as" disabled by default.

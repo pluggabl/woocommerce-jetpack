@@ -413,7 +413,7 @@ if ( ! function_exists( 'wcj_current_filter_priority' ) ) {
 /*
  * wcj_get_product_input_fields.
  *
- * @version 2.4.4
+ * @version 2.5.6
  * @since   2.4.4
  * @return  string
  */
@@ -422,6 +422,12 @@ if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
 		$product_input_fields = array();
 		foreach ( $item as $key => $value ) {
 			if ( false !== strpos( $key, 'wcj_product_input_fields_' ) ) {
+				if ( is_serialized( $value ) ) {
+					$value = unserialize( $value );
+					if ( is_array( $value ) ) {
+						$value = implode( ' ', $value );
+					}
+				}
 				$product_input_fields[] = /* $key . ': ' . */ $value;
 			}
 		}
