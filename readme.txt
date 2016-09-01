@@ -128,7 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 31/08/2016 =
+= 2.5.6 - 01/09/2016 =
  * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.
  * Dev - EMAILS & MISC. - Export - Export Orders - Loop modified to return posts ids only.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Items Product Input Fields" column added.
@@ -137,7 +137,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 -* Dev - Multicurrency Base Product price is calculated in Price by Country Price Filter widget.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Display - "Save as" disabled by default.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Added `die` after `generate_pdf_on_init`.
--* Dev - PDF INVOICING & PACKING SLIPS - `woocommerce_cli_create_order` hook added (duplicates `woocommerce_new_order` hook).
+~* Dev - PDF INVOICING & PACKING SLIPS - `woocommerce_cli_create_order`, `kco_before_confirm_order` and `woocommerce_checkout_order_processed` hooks added (duplicates `woocommerce_new_order` hook).
  * Dev - SHIPPING & ORDERS - Orders - "Admin Order Currency" section added.
 ~* Fix - SHIPPING & ORDERS - Order Custom Statuses - Default order statuses moved from constructor to separate function.
  * Dev - Shortcodes - Orders - `[wcj_order_shipping_price]`, `[wcj_order_total_excl_tax]` code refactoring.

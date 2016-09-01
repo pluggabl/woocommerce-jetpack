@@ -52,8 +52,10 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				if ( 'disabled' != $the_hook && 'manual' != $the_hook && '' != $the_hook ) {
 					add_action( $the_hook, array( $this, 'create_' . $invoice_type['id'] ) );
 					if ( 'woocommerce_new_order' === $the_hook ) {
-						add_action( 'woocommerce_api_create_order', array( $this, 'create_' . $invoice_type['id'] ) );
-						add_action( 'woocommerce_cli_create_order', array( $this, 'create_' . $invoice_type['id'] ) );
+						add_action( 'woocommerce_api_create_order',         array( $this, 'create_' . $invoice_type['id'] ) );
+						add_action( 'woocommerce_cli_create_order',         array( $this, 'create_' . $invoice_type['id'] ) );
+						add_action( 'kco_before_confirm_order',             array( $this, 'create_' . $invoice_type['id'] ) );
+						add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_' . $invoice_type['id'] ) );
 					}
 				}
 			}
