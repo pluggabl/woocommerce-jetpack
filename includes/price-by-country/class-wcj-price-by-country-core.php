@@ -218,7 +218,7 @@ class WCJ_Price_by_Country_Core {
 		} elseif ( 'no' != ( $override_option = get_option( 'wcj_price_by_country_override_on_checkout_with_billing_country', 'no' ) )
 			/* && is_checkout() */
 			&& isset( WC()->customer )
-			&& '' != WC()->customer->get_country()
+			&& ( ( 'yes' === $override_option && '' != WC()->customer->get_country() ) || ( 'shipping_country' === $override_option && '' != WC()->customer->get_shipping_country() ) )
 		) {
 			$country = ( 'yes' === $override_option ) ? WC()->customer->get_country() : WC()->customer->get_shipping_country();
 		} else {
