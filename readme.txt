@@ -128,7 +128,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 04/09/2016 =
+= 2.5.6 - 05/09/2016 =
+~* Dev - CART & CHECKOUT - Checkout Files Upload - "No files uploaded" message added to admin's order edit page.
+~* Fix - CART & CHECKOUT - Checkout Files Upload - "Add to Thank You page" and "Add to My Account page" fixed (before was putting all fields even if only one was enabled).
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Override Country Options" - "Override Country with Customer's Checkout Shipping Country" option added.
  * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.
  * Dev - EMAILS & MISC. - Export - Export Orders - Loop modified to return posts ids only.

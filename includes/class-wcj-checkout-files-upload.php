@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Files Upload class.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options;
@@ -148,23 +148,28 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * create_file_admin_order_meta_box.
 	 *
-	 * @version 2.4.5
+	 * @version 2.5.6
 	 * @since   2.4.5
 	 */
 	function create_file_admin_order_meta_box() {
 		$order_id = get_the_ID();
 		$html = '';
 		$total_files = get_post_meta( $order_id, '_' . 'wcj_checkout_files_total_files', true );
+		$files_exists = false;
 		for ( $i = 1; $i <= $total_files; $i++ ) {
 			$order_file_name = get_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_'           . $i, true );
 			$real_file_name  = get_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_real_name_' . $i, true );
 			if ( '' != $order_file_name ) {
+				$files_exists = true;
 				$html .= '<p><a href="' . add_query_arg(
 					array(
 						'wcj_download_checkout_file_admin' => $order_file_name,
 						'wcj_checkout_file_number'         => $i,
 					) ) . '">' . $real_file_name . '</a></p>';
 			}
+		}
+		if ( ! $files_exists ) {
+			$html .= '<p><em>' . __( 'No files uploaded.', 'woocommerce-jetpack' ) . '</em></p>';
 		}
 		echo $html;
 	}
@@ -456,16 +461,22 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_upload_form_to_thankyou_and_myaccount_page.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.6
 	 * @since   2.5.0
 	 */
 	function add_files_upload_form_to_thankyou_and_myaccount_page( $order_id ) {
 		$html = '';
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+		$current_filter = current_filter();
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_files_upload_enabled_' . $i, 'yes' ) && $this->is_visible( $i, $order_id ) ) {
-				$file_name = get_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_real_name_' . $i, true );
-				$html .= $this->get_the_form( $i, $file_name, $order_id );
+				if (
+					( 'yes' === get_option( 'wcj_checkout_files_upload_add_to_thankyou_'  . $i, 'no' ) && 'woocommerce_thankyou'   === $current_filter ) ||
+					( 'yes' === get_option( 'wcj_checkout_files_upload_add_to_myaccount_' . $i, 'no' ) && 'woocommerce_view_order' === $current_filter )
+				) {
+					$file_name = get_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_real_name_' . $i, true );
+					$html .= $this->get_the_form( $i, $file_name, $order_id );
+				}
 			}
 		}
 		echo $html;
