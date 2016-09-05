@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways by Country class.
  *
- * @version 2.5.0
+ * @version 2.5.6
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -38,31 +38,33 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 2.4.4
+	 * @version 2.5.6
 	 */
 	function available_payment_gateways( $_available_gateways ) {
-		foreach ( $_available_gateways as $key => $gateway ) {
+		if ( isset( WC()->customer ) ) {
 			$customer_country = WC()->customer->get_country();
-			$include_countries = get_option( 'wcj_gateways_countries_include_' . $key, '' );
-			if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries ) ) {
-				unset( $_available_gateways[ $key ] );
-				continue;
-			}
-			$exclude_countries = get_option( 'wcj_gateways_countries_exclude_' . $key, '' );
-			if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries ) ) {
-				unset( $_available_gateways[ $key ] );
-				continue;
-			}
-			$customer_state = WC()->customer->get_state();
-			$include_states = get_option( 'wcj_gateways_states_include_' . $key, '' );
-			if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states ) ) {
-				unset( $_available_gateways[ $key ] );
-				continue;
-			}
-			$exclude_states = get_option( 'wcj_gateways_states_exclude_' . $key, '' );
-			if ( ! empty( $exclude_states ) && in_array( $customer_state, $exclude_states ) ) {
-				unset( $_available_gateways[ $key ] );
-				continue;
+			foreach ( $_available_gateways as $key => $gateway ) {
+				$include_countries = get_option( 'wcj_gateways_countries_include_' . $key, '' );
+				if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries ) ) {
+					unset( $_available_gateways[ $key ] );
+					continue;
+				}
+				$exclude_countries = get_option( 'wcj_gateways_countries_exclude_' . $key, '' );
+				if ( ! empty( $exclude_countries ) && in_array( $customer_country, $exclude_countries ) ) {
+					unset( $_available_gateways[ $key ] );
+					continue;
+				}
+				$customer_state = WC()->customer->get_state();
+				$include_states = get_option( 'wcj_gateways_states_include_' . $key, '' );
+				if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states ) ) {
+					unset( $_available_gateways[ $key ] );
+					continue;
+				}
+				$exclude_states = get_option( 'wcj_gateways_states_exclude_' . $key, '' );
+				if ( ! empty( $exclude_states ) && in_array( $customer_state, $exclude_states ) ) {
+					unset( $_available_gateways[ $key ] );
+					continue;
+				}
 			}
 		}
 		return $_available_gateways;
