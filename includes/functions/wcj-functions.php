@@ -757,6 +757,19 @@ if ( ! function_exists( 'is_shop_manager' ) ) {
 }
 
 /**
+ * wcj_get_current_user_all_roles.
+ *
+ * @version 2.5.6
+ * @since   2.5.6
+ */
+if ( ! function_exists( 'wcj_get_current_user_all_roles' ) ) {
+	function wcj_get_current_user_all_roles() {
+		$current_user = wp_get_current_user();
+		return ( ! empty( $current_user->roles ) ) ? $current_user->roles : array( 'guest' );
+	}
+}
+
+/**
  * wcj_get_current_user_first_role.
  *
  * @version 2.5.3

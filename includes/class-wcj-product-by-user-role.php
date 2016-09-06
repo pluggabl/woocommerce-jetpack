@@ -41,14 +41,17 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * product_by_user_role.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.5.5
 	 */
 	function product_by_user_role( $visible, $product_id ) {
-		$current_user_role = wcj_get_current_user_first_role();
 		$visible_user_roles = get_post_meta( $product_id, '_' . 'wcj_product_by_user_role_visible', true );
-		if ( is_array( $visible_user_roles ) && ! in_array( $current_user_role, $visible_user_roles ) ) {
-			return false;
+		if ( is_array( $visible_user_roles ) && ! empty( $visible_user_roles ) ) {
+			$current_user_roles = wcj_get_current_user_all_roles();
+			$the_intersect = array_intersect( $visible_user_roles, $current_user_roles );
+			if ( empty( $the_intersect ) ) {
+				return false;
+			}
 		}
 		return $visible;
 	}
@@ -56,7 +59,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.5.5
 	 */
 	function get_meta_box_options() {
@@ -68,6 +71,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 				'options'    => wcj_get_user_roles_options(),
 				'multiple'   => true,
 				'title'      => __( 'Visible for User Roles', 'woocommerce-jetpack' ),
+				'tooltip'    => __( 'Hold Control (Ctrl) key to select multiple roles.', 'woocommerce-jetpack' ),
 			),
 		);
 		return $options;
