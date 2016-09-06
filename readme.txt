@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 06/09/2016 =
+~* Dev - PRODUCTS - Product Addons - "Admin Order Page - Hide all addons" option added.
 ~* Dev - PRODUCTS - Product Addons - "Addon in Cart Format" and "Addon in Order Details Table Format" options added.
 ~* Dev - PRODUCTS - Product Visibility by User Role - Looking at all user's roles (not only first one).
 ~* Fix - PAYMENT GATEWAYS - Gateways by Country or State - Additional check added to `available_payment_gateways()` function.

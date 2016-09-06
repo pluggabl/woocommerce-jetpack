@@ -19,7 +19,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.5.3
 	 */
 	function __construct() {
@@ -59,7 +59,30 @@ class WCJ_Product_Addons extends WCJ_Module {
 				add_filter( 'woocommerce_order_item_name',                array( $this, 'add_info_to_order_item_name' ), PHP_INT_MAX, 2 );
 				add_action( 'woocommerce_add_order_item_meta',            array( $this, 'add_info_to_order_item_meta' ), PHP_INT_MAX, 3 );
 			}
+			if ( is_admin() ) {
+				if ( 'yes' === get_option( 'wcj_product_addons_hide_on_admin_order_page', 'no' ) ) {
+					add_filter( 'woocommerce_hidden_order_itemmeta', array( $this, 'hide_addons_in_admin_order' ), PHP_INT_MAX );
+				}
+			}
 		}
+	}
+
+	/**
+	 * hide_addons_in_admin_order.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 * @todo    get real number of addons (instead of max_addons = 100)
+	 */
+	function hide_addons_in_admin_order( $hidden_metas ) {
+		$max_addons = 100;
+		for ( $i = 1; $i <= $max_addons; $i++ ) {
+			$hidden_metas[] = '_' . 'wcj_product_all_products_addons_price_' . $i;
+			$hidden_metas[] = '_' . 'wcj_product_all_products_addons_label_' . $i;
+			$hidden_metas[] = '_' . 'wcj_product_per_product_addons_price_' . $i;
+			$hidden_metas[] = '_' . 'wcj_product_per_product_addons_label_' . $i;
+		}
+		return $hidden_metas;
 	}
 
 	/**
@@ -670,6 +693,13 @@ class WCJ_Product_Addons extends WCJ_Module {
 				'default'  => '',
 				'type'     => 'textarea',
 				'css'      => 'width:300px;',
+			),
+			array(
+				'title'    => __( 'Admin Order Page', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Hide all addons', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_addons_hide_on_admin_order_page',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'type'     => 'sectionend',
