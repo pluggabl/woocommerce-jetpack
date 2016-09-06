@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Addons class.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -224,27 +224,31 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Adds info to order details (and emails).
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.6
 	 * @since   2.5.3
 	 */
 	function add_info_to_order_item_name( $name, $item, $is_cart = false ) {
 		if ( $is_cart ) {
-			$name .= '<dl class="variation">';
+			$start_format = get_option( 'wcj_product_addons_cart_format_start', '<dl class="variation">' );
+			$item_format  = get_option( 'wcj_product_addons_cart_format_each_addon', '<dt>%addon_label%:</dt><dd>%addon_price%</dd>' );
+			$end_format   = get_option( 'wcj_product_addons_cart_format_end', '</dl>' );
+		} else {
+			$start_format = get_option( 'wcj_product_addons_order_details_format_start', '' );
+			$item_format  = get_option( 'wcj_product_addons_order_details_format_each_addon', '&nbsp;| %addon_label%: %addon_price%' );
+			$end_format   = get_option( 'wcj_product_addons_order_details_format_end', '' );
 		}
+		$name .= $start_format;
 		$addons = $this->get_product_addons( $item['product_id'] );
 		foreach ( $addons as $addon ) {
 			if ( isset( $item[ $addon['price_key'] ] ) ) {
-				if ( $is_cart ) {
-					$name .= '<dt>' . $item[ $addon['label_key'] ] . ':' . '</dt>';
-					$name .= '<dd>' . wc_price( $item[ $addon['price_key'] ] ) . '</dd>';
-				} else {
-					$name .= ' | ' . $item[ $addon['label_key'] ] . ': ' . wc_price( $item[ $addon['price_key'] ] );
-				}
+				$name .= str_replace(
+					array( '%addon_label%', '%addon_price%' ),
+					array( $item[ $addon['label_key'] ], wc_price( $item[ $addon['price_key'] ] ) ),
+					$item_format
+				);
 			}
 		}
-		if ( $is_cart ) {
-			$name .= '</dl>';
-		}
+		$name .= $end_format;
 		return $name;
 	}
 
@@ -489,7 +493,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.5.3
 	 */
 	function get_settings() {
@@ -620,6 +624,52 @@ class WCJ_Product_Addons extends WCJ_Module {
 				'id'       => 'wcj_product_addons_ajax_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Addon in Cart Format', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Before', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_addons_cart_format_start',
+				'default'  => '<dl class="variation">',
+				'type'     => 'textarea',
+				'css'      => 'width:300px;',
+			),
+			array(
+				'desc'     => __( 'Each Addon', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'You can use %addon_label% and %addon_price%.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_addons_cart_format_each_addon',
+				'default'  => '<dt>%addon_label%:</dt><dd>%addon_price%</dd>',
+				'type'     => 'textarea',
+				'css'      => 'width:300px;',
+			),
+			array(
+				'desc'     => __( 'After', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_addons_cart_format_end',
+				'default'  => '</dl>',
+				'type'     => 'textarea',
+				'css'      => 'width:300px;',
+			),
+			array(
+				'title'    => __( 'Addon in Order Details Table Format', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Before', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_addons_order_details_format_start',
+				'default'  => '',
+				'type'     => 'textarea',
+				'css'      => 'width:300px;',
+			),
+			array(
+				'desc'     => __( 'Each Addon', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'You can use %addon_label% and %addon_price%.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_addons_order_details_format_each_addon',
+				'default'  => '&nbsp;| %addon_label%: %addon_price%',
+				'type'     => 'textarea',
+				'css'      => 'width:300px;',
+			),
+			array(
+				'desc'     => __( 'After', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_addons_order_details_format_end',
+				'default'  => '',
+				'type'     => 'textarea',
+				'css'      => 'width:300px;',
 			),
 			array(
 				'type'     => 'sectionend',

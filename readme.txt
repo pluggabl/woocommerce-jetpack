@@ -129,7 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 06/09/2016 =
- * Tweak - PRODUCTS - Product Visibility by User Role - Tooltip added.
+~* Dev - PRODUCTS - Product Addons - "Addon in Cart Format" and "Addon in Order Details Table Format" options added.
 ~* Dev - PRODUCTS - Product Visibility by User Role - Looking at all user's roles (not only first one).
 ~* Fix - PAYMENT GATEWAYS - Gateways by Country or State - Additional check added to `available_payment_gateways()` function.
 ~* Dev - CART & CHECKOUT - Checkout Files Upload - "No files uploaded" message added to admin's order edit page.
@@ -151,6 +151,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
  * Dev - Shortcodes - Orders - `[wcj_order_status]` shortcode added.
  * Dev - PRODUCTS - Product Cost Price - "Profit" column - Now calculating profit for all orders statuses except cancelled, refunded or failed.
  * Tweak - PRODUCTS - Product Visibility by Country - Description fixed.
+ * Tweak - PRODUCTS - Product Visibility by User Role - Tooltip added to metabox (product edit page).
  * Tweak - PRODUCTS - Product Visibility by User Role - Link and description fixed.
  * Tweak - Language (POT) file updated.
 
