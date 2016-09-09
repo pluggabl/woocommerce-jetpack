@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency per Product class.
  *
- * @version 2.5.2
+ * @version 2.5.6
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -217,11 +217,12 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.6
 	 * @since   2.5.2
 	 */
 	function get_meta_box_options() {
 		$currency_codes = array();
+		$currency_codes[ get_option('woocommerce_currency') ] = get_option('woocommerce_currency');
 		$currency_codes[ get_woocommerce_currency() ] = get_woocommerce_currency();
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
@@ -234,6 +235,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 				'type'       => 'select',
 				'title'      => __( 'Product Currency', 'woocommerce-jetpack' ),
 				'options'    => $currency_codes,
+				'tooltip'    => __( 'Update product after you change this field\'s value.', 'woocommerce-jetpack' ),
 			),
 		);
 		return $options;
@@ -263,17 +265,17 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.6
 	 * @since   2.5.2
 	 */
 	function add_settings() {
 		$currency_from = get_woocommerce_currency();
 		$all_currencies = wcj_get_currencies_names_and_symbols();
-		foreach ( $all_currencies as $currency_key => $currency_name ) {
+		/* foreach ( $all_currencies as $currency_key => $currency_name ) {
 			if ( $currency_from == $currency_key ) {
 				unset( $all_currencies[ $currency_key ] );
 			}
-		}
+		} */
 		$settings = array(
 			array(
 				'title'    => __( 'Options', 'woocommerce-jetpack' ),

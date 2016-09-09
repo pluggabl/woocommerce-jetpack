@@ -128,7 +128,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 07/09/2016 =
+= 2.5.6 - 09/09/2016 =
+ * Tweak - PRICES & CURRENCIES - Currency per Product - Metabox tooltip added.
+ * Fix - PRICES & CURRENCIES - Currency per Product - Default WooCommerce currency added to metabox (and to module's settings).
 +* Fix - PRODUCTS - Product Addons - Addons tax display fixed (`get_display_price()` function).
 +* Fix - PRODUCTS - Product Addons - PHP 7 fix regarding "changes to the handling of indirect variables, properties, and methods" (http://php.net/manual/en/migration70.incompatible.php#migration70.incompatible.variable-handling.indirect).
 +* Dev - PRODUCTS - Product Addons - "Admin Order Page - Hide all addons" option added.
