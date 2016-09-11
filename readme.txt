@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 11/09/2016 =
+~* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - Restriction on max number (was 10) of custom shipping methods removed (using objects instead of class names in `woocommerce_shipping_methods` hook).
  * Dev - SHIPPING & ORDERS - Shipping - "Shipping Descriptions" section added. Settings moved to `init` hook.
  * Tweak - PRICES & CURRENCIES - Currency per Product - Metabox tooltip added.
  * Fix - PRICES & CURRENCIES - Currency per Product - Default WooCommerce currency added to metabox (and to module's settings).

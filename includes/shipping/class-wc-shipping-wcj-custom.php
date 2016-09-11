@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Shipping class.
  *
- * @version 2.5.3
+ * @version 2.5.6
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -17,6 +17,9 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 
 		if ( class_exists( 'WC_Shipping_Method' ) ) {
 
+			/*
+			 * WC_Shipping_WCJ_Custom_Template class.
+			 */
 			class WC_Shipping_WCJ_Custom_Template extends WC_Shipping_Method {
 
 				/**
@@ -191,24 +194,17 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				}
 			}
 
-			class WC_Shipping_WCJ_Custom_1  extends WC_Shipping_WCJ_Custom_Template { public function __construct() { $this->init( 1 );  } }
-			class WC_Shipping_WCJ_Custom_2  extends WC_Shipping_WCJ_Custom_Template { public function __construct() { $this->init( 2 );  } }
-			class WC_Shipping_WCJ_Custom_3  extends WC_Shipping_WCJ_Custom_Template { public function __construct() { $this->init( 3 );  } }
-			class WC_Shipping_WCJ_Custom_4  extends WC_Shipping_WCJ_Custom_Template { public function __construct() { $this->init( 4 );  } }
-			class WC_Shipping_WCJ_Custom_5  extends WC_Shipping_WCJ_Custom_Template { public function __construct() { $this->init( 5 );  } }
-			class WC_Shipping_WCJ_Custom_6  extends WC_Shipping_WCJ_Custom_Template { public function __construct() { $this->init( 6 );  } }
-			class WC_Shipping_WCJ_Custom_7  extends WC_Shipping_WCJ_Custom_Template { public function __construct() { $this->init( 7 );  } }
-			class WC_Shipping_WCJ_Custom_8  extends WC_Shipping_WCJ_Custom_Template { public function __construct() { $this->init( 8 );  } }
-			class WC_Shipping_WCJ_Custom_9  extends WC_Shipping_WCJ_Custom_Template { public function __construct() { $this->init( 9 );  } }
-			class WC_Shipping_WCJ_Custom_10 extends WC_Shipping_WCJ_Custom_Template { public function __construct() { $this->init( 10 ); } }
-
 			/*
 			 * add_wc_shipping_wcj_custom_class.
+			 *
+			 * @version 2.5.6
 			 */
 			function add_wc_shipping_wcj_custom_class( $methods ) {
 				$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_shipping_custom_shipping_total_number', 1 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
-					$methods[] = 'WC_Shipping_WCJ_Custom_' . $i;
+					$the_method = new WC_Shipping_WCJ_Custom_Template();
+					$the_method->init( $i );
+					$methods[] = $the_method;
 				}
 				return $methods;
 			}
