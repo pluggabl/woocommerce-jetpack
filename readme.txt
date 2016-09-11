@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 09/09/2016 =
+= 2.5.6 - 11/09/2016 =
+ * Dev - SHIPPING & ORDERS - Shipping - "Shipping Descriptions" section added. Settings moved to `init` hook.
  * Tweak - PRICES & CURRENCIES - Currency per Product - Metabox tooltip added.
  * Fix - PRICES & CURRENCIES - Currency per Product - Default WooCommerce currency added to metabox (and to module's settings).
 +* Fix - PRODUCTS - Product Addons - Addons tax display fixed (`get_display_price()` function).
