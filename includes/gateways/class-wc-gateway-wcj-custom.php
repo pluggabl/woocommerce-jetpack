@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Payment Gateway class.
  *
- * @version 2.5.2
+ * @version 2.5.6
  * @author  Algoritmika Ltd.
  */
 
@@ -16,6 +16,11 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 
 		if ( class_exists( 'WC_Payment_Gateway' ) ) {
 
+			/**
+			 * WC_Gateway_WCJ_Custom_Template class.
+			 *
+			 * @version 2.5.6
+			 */
 			class WC_Gateway_WCJ_Custom_Template extends WC_Payment_Gateway {
 
 				/**
@@ -31,7 +36,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * Initialise Gateway Settings Form Fields
 				 *
-				 * @version 2.5.2
+				 * @version 2.5.6
 				 */
 				public function init_form_fields() {
 					global $woocommerce;
@@ -104,7 +109,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 						'min_amount' => array(
 							'title'             => __( 'Minimum order amount', 'woocommerce-jetpack' ),
 							'type'              => 'number',
-							'desc_tip'          => __( 'If you want to set minimum order amount to show this gateway on frontend, enter a number here. Set to 0 to disable.', 'woocommerce-jetpack' ),
+							'desc_tip'          => __( 'If you want to set minimum order amount (excluding fees) to show this gateway on frontend, enter a number here. Set to 0 to disable.', 'woocommerce-jetpack' ),
 							'default'           => 0,
 							'description'       => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
 							'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
@@ -184,14 +189,16 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * Check If The Gateway Is Available For Use
 				 *
-				 * @version 2.3.9
+				 * @version 2.5.6
 				 * @return  bool
 				 */
 				public function is_available() {
+
 					// Check min amount
 					$min_amount = apply_filters( 'wcj_get_option_filter', 0, $this->min_amount );
-					if ( $min_amount > 0 ) {
-						if ( WC()->cart->total < $min_amount )
+					if ( $min_amount > 0 && isset( WC()->cart->total ) && '' != WC()->cart->total && isset( WC()->cart->fee_total ) ) {
+						$total_excluding_fees = WC()->cart->total - WC()->cart->fee_total;
+						if ( $total_excluding_fees < $min_amount )
 							return false;
 					}
 
@@ -375,35 +382,21 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				}
 			}
 
-			class WC_Gateway_WCJ_Custom    extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( 1 );  } } // required
-			class WC_Gateway_WCJ_Custom_2  extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( 2 );  } }
-			class WC_Gateway_WCJ_Custom_3  extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( 3 );  } }
-			class WC_Gateway_WCJ_Custom_4  extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( 4 );  } }
-			class WC_Gateway_WCJ_Custom_5  extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( 5 );  } }
-			class WC_Gateway_WCJ_Custom_6  extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( 6 );  } }
-			class WC_Gateway_WCJ_Custom_7  extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( 7 );  } }
-			class WC_Gateway_WCJ_Custom_8  extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( 8 );  } }
-			class WC_Gateway_WCJ_Custom_9  extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( 9 );  } }
-			class WC_Gateway_WCJ_Custom_10 extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( 10 ); } }
+			/**
+			 * add_wc_gateway_wcj_custom_classes.
+			 *
+			 * @version 2.5.6
+			 */
 			function add_wc_gateway_wcj_custom_classes( $methods ) {
-				$methods[] = 'WC_Gateway_WCJ_Custom'; // required
-				$the_number = apply_filters( 'wcj_get_option_filter', 0, get_option( 'wcj_custom_payment_gateways_number' ) );
-				if ( $the_number > 10 ) $the_number = 10;
-				for ( $i = 2; $i <= $the_number; $i++ )
-					$methods[] = 'WC_Gateway_WCJ_Custom_' . $i;
-				return $methods;
-			}
-			add_filter( 'woocommerce_payment_gateways', 'add_wc_gateway_wcj_custom_classes' );
-
-			/* function add_wc_gateway_wcj_custom_classes( $methods ) {
-				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 0, get_option( 'wcj_custom_payment_gateways_number' ) ); $i++ ) {
-					$class_name = ( 1 === $i ) ? 'WC_Gateway_WCJ_Custom' : 'WC_Gateway_WCJ_Custom_' . $i;
-					eval( 'class ' . $class_name . ' extends WC_Gateway_WCJ_Custom_Template { public function __construct() { $this->init( ' . $i . ' );  } }' );
-					$methods[] = $class_name;
+				$the_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_payment_gateways_number', 1 ) );
+				for ( $i = 1; $i <= $the_number; $i++ ) {
+					$the_method = new WC_Gateway_WCJ_Custom_Template();
+					$the_method->init( $i );
+					$methods[] = $the_method;
 				}
 				return $methods;
 			}
-			add_filter( 'woocommerce_payment_gateways', 'add_wc_gateway_wcj_custom_classes' ); */
+			add_filter( 'woocommerce_payment_gateways', 'add_wc_gateway_wcj_custom_classes' );
 		}
 	}
 }

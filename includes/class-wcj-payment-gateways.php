@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways class.
  *
- * @version 2.5.2
+ * @version 2.5.6
  * @author  Algoritmika Ltd.
  */
 
@@ -109,7 +109,7 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.6
 	 */
 	function get_settings() {
 		$wocommerce_checkout_settings_url = admin_url( 'admin.php?page=wc-settings&tab=checkout' );
@@ -129,10 +129,8 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 				'id'       => 'wcj_custom_payment_gateways_number',
 				'default'  => 1,
 				'type'     => 'number',
-				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
-					array( 'step' => '1', 'min' => '1', 'max' => '10', )
-				),
+				'custom_attributes' => is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
+					apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array( 'step' => '1', 'min' => '1' ),
 			),
 		);
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_payment_gateways_number', 1 ) );
