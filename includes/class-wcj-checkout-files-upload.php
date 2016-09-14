@@ -401,14 +401,24 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_the_form.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.6
 	 * @since   2.5.0
 	 */
 	function get_the_form( $i, $file_name, $order_id = 0 ) {
 		$html = '';
 		$html .= '<form enctype="multipart/form-data" action="" method="POST">';
-		$html .= '<table>';
+		$html .= get_option( 'wcj_checkout_files_upload_form_template_before', '<table>' );
 		if ( '' != ( $the_label = get_option( 'wcj_checkout_files_upload_label_' . $i, '' ) ) ) {
+			$template = get_option( 'wcj_checkout_files_upload_form_template_label',
+				'<tr><td colspan="2"><label for="%field_id%">%field_label%</label>%required_html%</td></tr>' );
+			$required_html = ( 'yes' === get_option( 'wcj_checkout_files_upload_required_' . $i, 'no' ) ) ?
+				'&nbsp;<abbr class="required" title="required">*</abbr>' : '';
+			$html .= str_replace(
+				array( '%field_id%', '%field_label%', '%required_html%' ),
+				array( 'wcj_checkout_files_upload_' . $i, $the_label, $required_html ),
+				$template
+			);
+			/*
 			$html .= '<tr>';
 			$html .= '<td colspan="2">';
 			$html .= '<label for="wcj_checkout_files_upload_' . $i . '">' . $the_label . '</label>';
@@ -417,8 +427,19 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 			}
 			$html .= '</td>';
 			$html .= '</tr>';
+			*/
 		}
 		if ( '' == $file_name ) {
+			$field_html = '<input type="file" name="wcj_checkout_files_upload_' . $i . '" id="wcj_checkout_files_upload_' . $i .
+				'" accept="' . get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' ) . '">';
+			$button_html = '<input type="submit"' .
+				' class="button alt"' .
+				' style="width:100%;"' .
+				' name="wcj_upload_checkout_file_' . $i . '"' .
+				' id="wcj_upload_checkout_file_' . $i . '"' .
+				' value="'      . get_option( 'wcj_checkout_files_upload_label_upload_button_' . $i, __( 'Upload', 'woocommerce-jetpack' ) ) . '"' .
+				' data-value="' . get_option( 'wcj_checkout_files_upload_label_upload_button_' . $i, __( 'Upload', 'woocommerce-jetpack' ) ) . '">';
+			/*
 			$html .= '<tr>';
 			$html .= '<td style="width:50%;">';
 			$html .= '<input type="file" name="wcj_checkout_files_upload_' . $i . '" id="wcj_checkout_files_upload_' . $i .
@@ -434,7 +455,17 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				' data-value="' . get_option( 'wcj_checkout_files_upload_label_upload_button_' . $i, __( 'Upload', 'woocommerce-jetpack' ) ) . '">';
 			$html .= '</td>';
 			$html .= '</tr>';
+			*/
 		} else {
+			$field_html = '<a href="' . add_query_arg( array( 'wcj_download_checkout_file' => $i, '_wpnonce' => wp_create_nonce( 'wcj_download_checkout_file' ) ) ) . '">' . $file_name . '</a>';
+			$button_html = '<input type="submit"' .
+				' class="button"' .
+				' style="width:100%;"' .
+				' name="wcj_remove_checkout_file_' . $i . '"' .
+				' id="wcj_remove_checkout_file_' . $i . '"' .
+				' value="'      . get_option( 'wcj_checkout_files_upload_label_remove_button_' . $i, __( 'Remove', 'woocommerce-jetpack' ) ) . '"' .
+				' data-value="' . get_option( 'wcj_checkout_files_upload_label_remove_button_' . $i, __( 'Remove', 'woocommerce-jetpack' ) ) . '">';;
+			/*
 			$html .= '<tr>';
 			$html .= '<td style="width:50%;">';
 			$html .= '<a href="' . add_query_arg( array( 'wcj_download_checkout_file' => $i, '_wpnonce' => wp_create_nonce( 'wcj_download_checkout_file' ) ) ) . '">' . $file_name . '</a>';
@@ -449,8 +480,16 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				' data-value="' . get_option( 'wcj_checkout_files_upload_label_remove_button_' . $i, __( 'Remove', 'woocommerce-jetpack' ) ) . '">';
 			$html .= '</td>';
 			$html .= '</tr>';
+			*/
 		}
-		$html .= '</table>';
+		$template = get_option( 'wcj_checkout_files_upload_form_template_field',
+			'<tr><td style="width:50%;">%field_html%</td><td style="width:50%;">%button_html%</td></tr>' );
+		$html .= str_replace(
+			array( '%field_html%', '%button_html%' ),
+			array( $field_html, $button_html ),
+			$template
+		);
+		$html .= get_option( 'wcj_checkout_files_upload_form_template_after', '</table>' );
 		if ( 0 != $order_id ) {
 			$html .= '<input type="hidden" name="wcj_checkout_files_upload_order_id_' . $i . '" value="' . $order_id . '">';
 		}
@@ -521,7 +560,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.4.5
 	 */
 	function get_settings() {
@@ -740,6 +779,47 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_checkout_files_upload_emails_options',
+			),
+		) );
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => __( 'Form Template Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_checkout_files_upload_form_template_options',
+			),
+			array(
+				'title'    => __( 'Before', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_files_upload_form_template_before',
+				'default'  => '<table>',
+				'type'     => 'textarea',
+				'css'      => 'width:66%;min-width:300px;',
+			),
+			array(
+				'title'    => __( 'Label', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Replaced values: %field_id%, %field_label%, %required_html%.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_files_upload_form_template_label',
+				'default'  => '<tr><td colspan="2"><label for="%field_id%">%field_label%</label>%required_html%</td></tr>',
+				'type'     => 'textarea',
+				'css'      => 'width:66%;min-width:300px;',
+			),
+			array(
+				'title'    => __( 'Field', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Replaced values: %field_html%, %button_html%.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_files_upload_form_template_field',
+				'default'  => '<tr><td style="width:50%;">%field_html%</td><td style="width:50%;">%button_html%</td></tr>',
+				'type'     => 'textarea',
+				'css'      => 'width:66%;min-width:300px;',
+			),
+			array(
+				'title'    => __( 'After', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_files_upload_form_template_after',
+				'default'  => '</table>',
+				'type'     => 'textarea',
+				'css'      => 'width:66%;min-width:300px;',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_checkout_files_upload_form_template_options',
 			),
 		) );
 		return $this->add_standard_settings( $settings );

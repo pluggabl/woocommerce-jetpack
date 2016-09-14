@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 11/09/2016 =
+= 2.5.6 - 14/09/2016 =
+ * Dev - CART & CHECKOUT - Checkout Files Upload - "Form Template Options" section added.
 ~* Dev - PAYMENT GATEWAYS - Custom Gateways - Minimum order amount - When checking cart total now excludes fees (including "Gateways Fees and Discounts" module's fees/discounts).
 ~* Dev - PAYMENT GATEWAYS - Custom Gateways - Minimum order amount - Checking if cart total is not empty (this fixes the issue with "Gateways Fees and Discounts" module).
 ~* Dev - PAYMENT GATEWAYS - Custom Gateways - Restriction on max number (was 10) of custom payment gateways removed (using objects instead of class names in `woocommerce_payment_gateways` hook).
