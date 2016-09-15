@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.6
 	 */
 	public function __construct() {
 
@@ -48,6 +48,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'content'               => '',
 			'heading_format'        => 'from %level_qty% pcs.',
 			'replace_with_currency' => 'no',
+			'hide_if_zero_quantity' => 'no',
+			'table_format'          => 'horizontal',
 		);
 
 		parent::__construct();
@@ -82,7 +84,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_wholesale_price_table (global only).
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 * @since   2.4.8
 	 */
 	function wcj_wholesale_price_table( $atts ) {
@@ -115,6 +117,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$data_discount         = array();
 		$columns_styles        = array();
 		foreach ( $wholesale_price_levels as $wholesale_price_level ) {
+			if ( 0 == $wholesale_price_level['quantity'] && 'yes' === $atts['hide_if_zero_quantity'] ) {
+				continue;
+			}
 			$data_qty[]              = str_replace( '%level_qty%', $wholesale_price_level['quantity'], $atts['heading_format'] ) ;
 			$data_discount[]         = ( 'fixed' === get_option( 'wcj_wholesale_price_discount_type', 'percent' ) )
 				? '-' . wc_price( $wholesale_price_level['discount'] ) : '-' . $wholesale_price_level['discount'] . '%';
@@ -122,7 +127,18 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		$table_rows = array( $data_qty, $data_discount, );
-		return wcj_get_table_html( $table_rows, array( 'table_class' => 'wcj_wholesale_price_table', 'columns_styles' => $columns_styles ) );
+
+		if ( 'vertical' === $atts['table_format'] ) {
+			$table_rows_modified = array();
+			foreach ( $table_rows as $row_number => $table_row ) {
+				foreach ( $table_row as $column_number => $cell ) {
+					$table_rows_modified[ $column_number ][ $row_number ] = $cell;
+				}
+			}
+			$table_rows = $table_rows_modified;
+		}
+
+		return wcj_get_table_html( $table_rows, array( 'table_class' => 'wcj_wholesale_price_table', 'columns_styles' => $columns_styles, 'table_heading_type' => $atts['table_format'] ) );
 	}
 
 	/**

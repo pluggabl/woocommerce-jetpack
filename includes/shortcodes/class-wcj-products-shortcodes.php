@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 */
 	public function __construct() {
 
@@ -57,31 +57,33 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		);
 
 		$this->the_atts = array(
-			'product_id'       => 0,
-			'image_size'       => 'shop_thumbnail',
-			'multiply_by'      => '',
-			'hide_currency'    => 'no',
-			'excerpt_length'   => 0,
-			'name'             => '',
-			'heading_format'   => 'from %level_qty% pcs.',
-			'price_row_format' => '<del>%old_price%</del> %price%',
-			'sep'              => ', ',
-			'add_links'        => 'yes',
-			'add_percent_row'  => 'no',
-			'add_discount_row' => 'no',
-			'add_price_row'    => 'yes',
-			'show_always'      => 'yes',
-			'hide_if_zero'     => 'no',
-			'reverse'          => 'no',
-			'find'             => '',
-			'replace'          => '',
-			'offset'           => '',
-			'days_to_cover'    => 90,
-			'order_status'     => 'wc-completed',
-			'hide_if_no_sales' => 'no',
-			'to_unit'          => '',
-			'round'            => 'no',
-			'precision'        => 2,
+			'product_id'            => 0,
+			'image_size'            => 'shop_thumbnail',
+			'multiply_by'           => '',
+			'hide_currency'         => 'no',
+			'excerpt_length'        => 0,
+			'name'                  => '',
+			'heading_format'        => 'from %level_qty% pcs.',
+			'price_row_format'      => '<del>%old_price%</del> %price%',
+			'sep'                   => ', ',
+			'add_links'             => 'yes',
+			'add_percent_row'       => 'no',
+			'add_discount_row'      => 'no',
+			'add_price_row'         => 'yes',
+			'show_always'           => 'yes',
+			'hide_if_zero'          => 'no',
+			'reverse'               => 'no',
+			'find'                  => '',
+			'replace'               => '',
+			'offset'                => '',
+			'days_to_cover'         => 90,
+			'order_status'          => 'wc-completed',
+			'hide_if_no_sales'      => 'no',
+			'to_unit'               => '',
+			'round'                 => 'no',
+			'precision'             => 2,
+			'hide_if_zero_quantity' => 'no',
+			'table_format'          => 'horizontal',
 		);
 
 		parent::__construct();
@@ -566,7 +568,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 
@@ -609,6 +611,11 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		$data_discount         = array();
 		$columns_styles        = array();
 		foreach ( $wholesale_price_levels as $wholesale_price_level ) {
+
+			if ( 0 == $wholesale_price_level['quantity'] && 'yes' === $atts['hide_if_zero_quantity'] ) {
+				continue;
+			}
+
 			$the_price = '';
 
 			if ( $this->the_product->is_type( 'variable' ) ) {
@@ -687,7 +694,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			$table_rows[] = $data_discount;
 		}
 
-		return wcj_get_table_html( $table_rows, array( 'table_class' => 'wcj_product_wholesale_price_table', 'columns_styles' => $columns_styles ) );
+		if ( 'vertical' === $atts['table_format'] ) {
+			$table_rows_modified = array();
+			foreach ( $table_rows as $row_number => $table_row ) {
+				foreach ( $table_row as $column_number => $cell ) {
+					$table_rows_modified[ $column_number ][ $row_number ] = $cell;
+				}
+			}
+			$table_rows = $table_rows_modified;
+		}
+
+		return wcj_get_table_html( $table_rows, array( 'table_class' => 'wcj_product_wholesale_price_table', 'columns_styles' => $columns_styles, 'table_heading_type' => $atts['table_format'] ) );
 	}
 
 	/**

@@ -128,7 +128,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 14/09/2016 =
+= 2.5.6 - 15/09/2016 =
+ * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.
+ * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.
+ * Tweak - PRICES & CURRENCIES - Wholesale Price - "If show discount info on cart page is enabled, set format here" option description tip added.
  * Dev - CART & CHECKOUT - Checkout Files Upload - "Form Template Options" section added.
 ~* Dev - PAYMENT GATEWAYS - Custom Gateways - Minimum order amount - When checking cart total now excludes fees (including "Gateways Fees and Discounts" module's fees/discounts).
 ~* Dev - PAYMENT GATEWAYS - Custom Gateways - Minimum order amount - Checking if cart total is not empty (this fixes the issue with "Gateways Fees and Discounts" module).
