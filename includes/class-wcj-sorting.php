@@ -4,12 +4,11 @@
  *
  * The WooCommerce Jetpack Sorting class.
  *
- * @version 2.4.8
+ * @version 2.5.6
  * @author  Algoritmika Ltd.
  */
 
-// Exit if accessed directly
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if ( ! class_exists( 'WCJ_Sorting' ) ) :
 
@@ -109,14 +108,13 @@ class WCJ_Sorting extends WCJ_Module {
 	/*
 	 * Add new sorting options to WooCommerce sorting.
 	 *
-	 * @version 2.2.4
+	 * @version 2.5.6
 	 */
 	function custom_woocommerce_get_catalog_ordering_args( $args ) {
 
-		global $woocommerce;
-		// Get ordering from query string unless defined
+		// Get ordering from query string
 		$orderby_value = isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
-		// Get order + orderby args from string
+		// Get orderby arg from string
 		$orderby_value = explode( '-', $orderby_value );
 		$orderby       = esc_attr( $orderby_value[0] );
 

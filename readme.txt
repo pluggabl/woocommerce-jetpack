@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 17/09/2016 =
+ * Tweak - PRODUCTS - Sorting - Unnecessary `global $woocommerce` removed.
 ~* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones added.
  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.
  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.
