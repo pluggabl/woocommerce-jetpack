@@ -212,10 +212,10 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			),
 
 			array(
-				'title'    => __( 'Price Filter Widget Support', 'woocommerce-jetpack' ),
+				'title'    => __( 'Price Filter Widget and Sorting by Price Support', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'desc_tip' => '<a href="' . add_query_arg( 'recalculate_price_filter_products_prices', '1', remove_query_arg( array( 'wcj_generate_country_groups', 'wcj_generate_country_groups_confirm' ) ) ) . '">' .
-					__( 'Recalculate price filter widget product prices', 'woocommerce-jetpack' ) . '</a>',
+					__( 'Recalculate price filter widget and sorting by price product prices', 'woocommerce-jetpack' ) . '</a>',
 				'id'       => 'wcj_price_by_country_price_filter_widget_support_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',

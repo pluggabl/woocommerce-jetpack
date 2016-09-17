@@ -27,7 +27,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.6
 	 */
 	function add_hooks() {
 
@@ -77,8 +77,9 @@ class WCJ_Price_by_Country_Core {
 
 		// Price Filter Widget
 		if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
-			add_filter( 'woocommerce_price_filter_meta_keys',   array( $this, 'price_filter_meta_keys' ), PHP_INT_MAX, 1 );
-			add_filter( 'woocommerce_product_query_meta_query', array( $this, 'price_filter_meta_query' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_price_filter_meta_keys',    array( $this, 'price_filter_meta_keys' ), PHP_INT_MAX, 1 );
+			add_filter( 'woocommerce_product_query_meta_query',  array( $this, 'price_filter_meta_query' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_get_catalog_ordering_args', array( $this, 'sorting_by_price_fix' ), PHP_INT_MAX ); // Sorting
 		}
 	}
 
@@ -92,6 +93,27 @@ class WCJ_Price_by_Country_Core {
 		wp_enqueue_style(  'wcj-wSelect-style', wcj_plugin_url() . '/includes/lib/wSelect/wSelect.css' );
 		wp_enqueue_script( 'wcj-wSelect',       wcj_plugin_url() . '/includes/lib/wSelect/wSelect.min.js', array(), false, true );
 		wp_enqueue_script( 'wcj-wcj-wSelect',   wcj_plugin_url() . '/includes/js/wcj-wSelect.js', array(), false, true );
+	}
+
+	/*
+	 * sorting_by_price_fix.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 */
+	function sorting_by_price_fix( $args ) {
+		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
+			// Get ordering from query string
+			$orderby_value = isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
+			// Get orderby arg from string
+			$orderby_value = explode( '-', $orderby_value );
+			$orderby       = esc_attr( $orderby_value[0] );
+			$orderby       = strtolower( $orderby );
+			if ( 'price' == $orderby ) {
+				$args['meta_key'] = '_' . 'wcj_price_by_country_' . $group_id;
+			}
+		}
+		return $args;
 	}
 
 	/**
