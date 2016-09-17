@@ -34,7 +34,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				/**
 				 * Init settings
 				 *
-				 * @version 2.5.2
+				 * @version 2.5.6
 				 * @access  public
 				 * @return  void
 				 */
@@ -56,9 +56,9 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 					$this->weight_table_total_rows = $this->get_option( 'weight_table_total_rows' );
 					for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 						$option_name = 'weight_table_weight_row_' . $i;
-						$this->$option_name = $this->get_option( $option_name );
+						$this->{$option_name} = $this->get_option( $option_name );
 						$option_name = 'weight_table_cost_row_' . $i;
-						$this->$option_name = $this->get_option( $option_name );
+						$this->{$option_name} = $this->get_option( $option_name );
 					}
 
 					// Save settings in admin
@@ -138,7 +138,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				/**
 				 * calculate_shipping_by_weight_table.
 				 *
-				 * @version 2.5.2
+				 * @version 2.5.6
 				 * @since   2.5.2
 				 */
 				function calculate_shipping_by_weight_table( $weight ) {
@@ -149,11 +149,11 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 					for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 						$option_name_weight = 'weight_table_weight_row_' . $i;
 						$option_name_cost = 'weight_table_cost_row_' . $i;
-						if ( $weight <= $this->$option_name_weight ) {
-							return $this->$option_name_cost;
+						if ( $weight <= $this->{$option_name_weight} ) {
+							return $this->{$option_name_cost};
 						}
 					}
-					return $this->$option_name_cost; // fallback - last row
+					return $this->{$option_name_cost}; // fallback - last row
 				}
 
 				/**
@@ -204,7 +204,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					$the_method = new WC_Shipping_WCJ_Custom_Template();
 					$the_method->init( $i );
-					$methods[] = $the_method;
+					$methods[ $the_method->id ] = $the_method;
 				}
 				return $methods;
 			}
