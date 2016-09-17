@@ -242,7 +242,7 @@ class WCJ_Shipping extends WCJ_Module {
 		) );
 		$settings = array_merge( $settings, array(
 			array(
-				'title'    => __( 'Custom Shipping (Legacy - witout Shipping Zones)', 'woocommerce-jetpack' ),
+				'title'    => __( 'Custom Shipping (Legacy - without Shipping Zones)', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_shipping_custom_shipping_options',
 				'desc'     => __( 'This section lets you set number of custom shipping methods to add.', 'woocommerce-jetpack' )
