@@ -6,7 +6,6 @@
  *
  * @version 2.5.6
  * @author  Algoritmika Ltd.
- * @todo    Redo custom shipping methods according to new (since WC v2.6.0) shipping zones mechanism
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -37,6 +36,7 @@ class WCJ_Shipping extends WCJ_Module {
 
 			// Custom Shipping
 			include_once( 'shipping/class-wc-shipping-wcj-custom.php' );
+			include_once( 'shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php' );
 
 			// Hide if free is available
 			if ( 'yes' === get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) ) {
@@ -211,6 +211,39 @@ class WCJ_Shipping extends WCJ_Module {
 			array(
 				'title'    => __( 'Custom Shipping', 'woocommerce-jetpack' ),
 				'type'     => 'title',
+				'id'       => 'wcj_shipping_custom_shipping_w_zones_options',
+				'desc'     => __( 'This section lets you set number of custom shipping methods to add.', 'woocommerce-jetpack' )
+					. ' ' . sprintf( __( 'After setting the number, visit %s to set each method options.', 'woocommerce-jetpack' ), $wocommerce_shipping_settings_url ),
+			),
+			array(
+				'title'    => __( 'Custom Shipping Methods Number', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_custom_shipping_w_zones_total_number',
+				'default'  => 1,
+				'type'     => 'custom_number',
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
+					apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array( 'step' => '1', 'min' => '0', 'max' => '10' ),
+			),
+		);
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_shipping_custom_shipping_w_zones_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$settings[] = array(
+				'title'    => __( 'Admin Title Custom Shipping', 'woocommerce-jetpack' ) . ' #' . $i,
+				'id'       => 'wcj_shipping_custom_shipping_w_zones_admin_title_' . $i,
+				'default'  => __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i,
+				'type'     => 'text',
+			);
+		}
+		$settings = array_merge( $settings, array(
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_shipping_custom_shipping_w_zones_options',
+			),
+		) );
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => __( 'Custom Shipping (Legacy - witout Shipping Zones)', 'woocommerce-jetpack' ),
+				'type'     => 'title',
 				'id'       => 'wcj_shipping_custom_shipping_options',
 				'desc'     => __( 'This section lets you set number of custom shipping methods to add.', 'woocommerce-jetpack' )
 					. ' ' . sprintf( __( 'After setting the number, visit %s to set each method options.', 'woocommerce-jetpack' ), $wocommerce_shipping_settings_url ),
@@ -224,10 +257,10 @@ class WCJ_Shipping extends WCJ_Module {
 				'custom_attributes' => is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
 					apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array( 'step' => '1', 'min' => '0' ),
 			),
-		);
+		) );
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_shipping_custom_shipping_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			$settings [] = array(
+			$settings[] = array(
 				'title'    => __( 'Admin Title Custom Shipping', 'woocommerce-jetpack' ) . ' #' . $i,
 				'id'       => 'wcj_shipping_custom_shipping_admin_title_' . $i,
 				'default'  => __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i,

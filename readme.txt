@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 15/09/2016 =
+= 2.5.6 - 17/09/2016 =
+~* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones added.
  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.
  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.
  * Tweak - PRICES & CURRENCIES - Wholesale Price - "If show discount info on cart page is enabled, set format here" option description tip added.
