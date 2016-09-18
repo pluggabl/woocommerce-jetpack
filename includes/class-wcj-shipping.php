@@ -36,7 +36,9 @@ class WCJ_Shipping extends WCJ_Module {
 
 			// Custom Shipping
 			include_once( 'shipping/class-wc-shipping-wcj-custom.php' );
-			include_once( 'shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php' );
+			if ( 'yes' === get_option( 'wcj_shipping_custom_shipping_w_zones_enabled', 'no' ) ) {
+				include_once( 'shipping/class-wc-shipping-wcj-custom-with-shipping-zones.php' );
+			}
 
 			// Hide if free is available
 			if ( 'yes' === get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) ) {
@@ -212,34 +214,28 @@ class WCJ_Shipping extends WCJ_Module {
 				'title'    => __( 'Custom Shipping', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_shipping_custom_shipping_w_zones_options',
-				'desc'     => __( 'This section lets you set number of custom shipping methods to add.', 'woocommerce-jetpack' )
-					. ' ' . sprintf( __( 'After setting the number, visit %s to set each method options.', 'woocommerce-jetpack' ), $wocommerce_shipping_settings_url ),
+				'desc'     => __( 'This section lets you add custom shipping method.', 'woocommerce-jetpack' )
+					. ' ' . sprintf( __( 'Visit %s to set method\'s options.', 'woocommerce-jetpack' ), $wocommerce_shipping_settings_url ),
 			),
 			array(
-				'title'    => __( 'Custom Shipping Methods Number', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_shipping_custom_shipping_w_zones_total_number',
-				'default'  => 1,
-				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
-					apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array( 'step' => '1', 'min' => '0', 'max' => '10' ),
+				'title'    => __( 'Custom Shipping', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_custom_shipping_w_zones_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
-		);
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_shipping_custom_shipping_w_zones_total_number', 1 ) );
-		for ( $i = 1; $i <= $total_number; $i++ ) {
-			$settings[] = array(
-				'title'    => __( 'Admin Title Custom Shipping', 'woocommerce-jetpack' ) . ' #' . $i,
-				'id'       => 'wcj_shipping_custom_shipping_w_zones_admin_title_' . $i,
-				'default'  => __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i,
+			array(
+				'title'    => __( 'Admin Title', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_custom_shipping_w_zones_admin_title',
+				'default'  => __( 'Booster: Custom Shipping', 'woocommerce-jetpack' ),
 				'type'     => 'text',
-			);
-		}
-		$settings = array_merge( $settings, array(
+				'css'      => 'width:300px;',
+			),
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_shipping_custom_shipping_w_zones_options',
 			),
-		) );
+		);
 		$settings = array_merge( $settings, array(
 			array(
 				'title'    => __( 'Custom Shipping (Legacy - without Shipping Zones)', 'woocommerce-jetpack' ),

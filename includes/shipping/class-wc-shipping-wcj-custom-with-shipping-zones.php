@@ -18,12 +18,12 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 		if ( class_exists( 'WC_Shipping_Method' ) ) {
 
 			/*
-			 * WC_Shipping_WCJ_Custom_Template_W_Zones class.
+			 * WC_Shipping_WCJ_Custom_W_Zones class.
 			 *
 			 * @version 2.5.6
 			 * @since   2.5.6
 			 */
-			abstract class WC_Shipping_WCJ_Custom_Template_W_Zones extends WC_Shipping_Method {
+			class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 
 				/**
 				 * Constructor shipping class
@@ -33,7 +33,9 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				 * @access  public
 				 * @return  void
 				 */
-				function __construct( $instance_id = 0 ) { }
+				function __construct( $instance_id = 0 ) {
+					$this->init( $instance_id );
+				}
 
 				/**
 				 * Init settings
@@ -43,11 +45,11 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				 * @access  public
 				 * @return  void
 				 */
-				function init( $id_count, $instance_id = 0 ) {
+				function init( $instance_id ) {
 
-					$this->id                 = 'booster_custom_shipping_w_zones_' . $id_count;
-					$this->method_title       = get_option( 'wcj_shipping_custom_shipping_w_zones_admin_title_' . $id_count, __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $id_count );
-					$this->method_description = __( 'Booster: Custom Shipping Method', 'woocommerce-jetpack' ) . ' #' . $id_count;
+					$this->id                 = 'booster_custom_shipping_w_zones';
+					$this->method_title       = get_option( 'wcj_shipping_custom_shipping_w_zones_admin_title', __( 'Booster: Custom Shipping', 'woocommerce-jetpack' ) );
+					$this->method_description = __( 'Booster: Custom Shipping Method', 'woocommerce-jetpack' );
 
 					$this->instance_id = absint( $instance_id );
 					$this->supports    = array(
@@ -201,17 +203,6 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				}
 			}
 
-			class WC_Shipping_WCJ_Custom_Template_W_Zones_1  extends WC_Shipping_WCJ_Custom_Template_W_Zones { function __construct( $instance_id = 0 ) { $this->init( 1, $instance_id ); } };
-			class WC_Shipping_WCJ_Custom_Template_W_Zones_2  extends WC_Shipping_WCJ_Custom_Template_W_Zones { function __construct( $instance_id = 0 ) { $this->init( 2, $instance_id ); } };
-			class WC_Shipping_WCJ_Custom_Template_W_Zones_3  extends WC_Shipping_WCJ_Custom_Template_W_Zones { function __construct( $instance_id = 0 ) { $this->init( 3, $instance_id ); } };
-			class WC_Shipping_WCJ_Custom_Template_W_Zones_4  extends WC_Shipping_WCJ_Custom_Template_W_Zones { function __construct( $instance_id = 0 ) { $this->init( 4, $instance_id ); } };
-			class WC_Shipping_WCJ_Custom_Template_W_Zones_5  extends WC_Shipping_WCJ_Custom_Template_W_Zones { function __construct( $instance_id = 0 ) { $this->init( 5, $instance_id ); } };
-			class WC_Shipping_WCJ_Custom_Template_W_Zones_6  extends WC_Shipping_WCJ_Custom_Template_W_Zones { function __construct( $instance_id = 0 ) { $this->init( 6, $instance_id ); } };
-			class WC_Shipping_WCJ_Custom_Template_W_Zones_7  extends WC_Shipping_WCJ_Custom_Template_W_Zones { function __construct( $instance_id = 0 ) { $this->init( 7, $instance_id ); } };
-			class WC_Shipping_WCJ_Custom_Template_W_Zones_8  extends WC_Shipping_WCJ_Custom_Template_W_Zones { function __construct( $instance_id = 0 ) { $this->init( 8, $instance_id ); } };
-			class WC_Shipping_WCJ_Custom_Template_W_Zones_9  extends WC_Shipping_WCJ_Custom_Template_W_Zones { function __construct( $instance_id = 0 ) { $this->init( 9, $instance_id ); } };
-			class WC_Shipping_WCJ_Custom_Template_W_Zones_10 extends WC_Shipping_WCJ_Custom_Template_W_Zones { function __construct( $instance_id = 0 ) { $this->init( 10, $instance_id ); } };
-
 			/*
 			 * add_wc_shipping_wcj_custom_w_zones_class.
 			 *
@@ -219,15 +210,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 			 * @since   2.5.6
 			 */
 			function add_wc_shipping_wcj_custom_w_zones_class( $methods ) {
-				$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_shipping_custom_shipping_w_zones_total_number', 1 ) );
-				for ( $i = 1; $i <= $total_number; $i++ ) {
-					/* Commented code is for declaring shipping methods with objects instead of class names (doesn't work for shipping with zones)
-					$the_method = new WC_Shipping_WCJ_Custom_Template_W_Zones();
-					$the_method->init( $i );
-					$methods[ $the_method->id ] = $the_method;
-					*/
-					$methods[ 'booster_custom_shipping_w_zones_' . $i ] = 'WC_Shipping_WCJ_Custom_Template_W_Zones_' . $i;
-				}
+				$methods[ 'booster_custom_shipping_w_zones' ] = 'WC_Shipping_WCJ_Custom_W_Zones';
 				return $methods;
 			}
 			add_filter( 'woocommerce_shipping_methods', 'add_wc_shipping_wcj_custom_w_zones_class' );
