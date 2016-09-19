@@ -73,7 +73,27 @@ class WCJ_Shipping extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_shipping_description_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_cart_shipping_method_full_label', array( $this, 'shipping_description' ), PHP_INT_MAX, 2 );
 			}
+
+			// Shipping Icons
+			if ( 'yes' === get_option( 'wcj_shipping_icons_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_cart_shipping_method_full_label', array( $this, 'shipping_icon' ), PHP_INT_MAX, 2 );
+			}
 		}
+	}
+
+	/**
+	 * shipping_icon.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 */
+	function shipping_icon( $label, $method ) {
+		if ( '' != ( $icon_url = get_option( 'wcj_shipping_icon_' . $method->method_id, '' ) ) ) {
+			$style_html = ( '' != ( $style = get_option( 'wcj_shipping_icons_style', 'display:inline;' ) ) ) ?  'style="' . $style . '" ' : '';
+			$img = '<img ' . $style_html . 'class="wcj_shipping_icon" id="wcj_shipping_icon_' . $method->method_id . '" src="' . $icon_url . '">';
+			$label = ( 'before' === get_option( 'wcj_shipping_icons_position', 'before' ) ) ? $img . ' ' . $label : $label . ' ' . $img;
+		}
+		return $label;
 	}
 
 	/**
@@ -453,6 +473,7 @@ class WCJ_Shipping extends WCJ_Module {
 					'id'       => 'wcj_shipping_description_' . $method->id,
 					'default'  => '',
 					'type'     => 'textarea',
+					'css'      => 'width:30%;min-width:300px;',
 				),
 			) );
 		}
@@ -460,6 +481,57 @@ class WCJ_Shipping extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_shipping_description_options',
+			),
+		) );
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => __( 'Shipping Icons', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'desc'     => __( 'This section will allow you to add icons for shipping method. Icons will be visible on cart and checkout pages.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_icons_options',
+			),
+			array(
+				'title'    => __( 'Shipping Icons', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_icons_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Icon Position', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_icons_position',
+				'default'  => 'before',
+				'type'     => 'select',
+				'options'  => array(
+					'before' => __( 'Before label', 'woocommerce-jetpack' ),
+					'after'  => __( 'After label', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'title'    => __( 'Icon Style', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'You can also style icons with CSS class "wcj_shipping_icon", or id "wcj_shipping_icon_method_id"', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_icons_style',
+				'default'  => 'display:inline;',
+				'type'     => 'text',
+				'css'      => 'width:20%;min-width:300px;',
+			),
+		) );
+		foreach ( WC()->shipping->get_shipping_methods() as $method ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => $method->method_title,
+					'desc_tip' => __( 'Image URL', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_shipping_icon_' . $method->id,
+					'default'  => '',
+					'type'     => 'text',
+					'css'      => 'width:30%;min-width:300px;',
+				),
+			) );
+		}
+		$settings = array_merge( $settings, array(
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_shipping_icons_options',
 			),
 		) );
 		return $settings;
