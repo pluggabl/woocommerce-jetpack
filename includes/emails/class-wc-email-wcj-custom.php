@@ -11,7 +11,7 @@ if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) :
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 2.5.5
+ * @version 2.5.6
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -60,6 +60,41 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			if ( ! $this->recipient )
 				$this->recipient = get_option( 'admin_email' );
 		}
+	}
+
+	/**
+	 * Validate Custom Textarea Field.
+	 *
+	 * @param   string $key
+	 * @param   string|null $value Posted Value
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 * @return  string
+	 */
+	public function validate_custom_textarea_field( $key, $value ) {
+		$value = is_null( $value ) ? '' : $value;
+		/* return wp_kses( trim( stripslashes( $value ) ),
+			array_merge(
+				array(
+					'iframe' => array( 'src' => true, 'style' => true, 'id' => true, 'class' => true )
+				),
+				wp_kses_allowed_html( 'post' )
+			)
+		); */
+		return stripslashes( $value );
+	}
+
+	/**
+	 * Generate Custom Textarea HTML.
+	 *
+	 * @param   mixed $key
+	 * @param   mixed $data
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 * @return  string
+	 */
+	public function generate_custom_textarea_html( $key, $data ) {
+		return $this->generate_textarea_html( $key, $data );
 	}
 
 	/**
@@ -197,7 +232,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Initialise settings form fields
 	 *
-	 * @version 2.4.5
+	 * @version 2.5.6
 	 */
 	function init_form_fields() {
 
@@ -283,7 +318,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			),
 			'content_html_template' => array(
 				'title'         => __( 'HTML template', 'woocommerce' ),
-				'type'          => 'textarea',
+				'type'          => 'custom_textarea',
 				'desc_tip'      => __( 'You can use shortcodes here. E.g. Booster\'s order shortcodes.', 'woocommerce' ),
 				'description'   => '',
 				'placeholder'   => '',

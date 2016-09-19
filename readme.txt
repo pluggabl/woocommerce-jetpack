@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 14/09/2016 =
+= 2.5.6 - 19/09/2016 =
+ * Dev - EMAILS & MISC. - Emails - Custom Emails - Settings field type `custom_textarea` added (this lets save HTML without removing any tags).
 ~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Sorting by price support added.
  * Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (without Zones) - PHP 7 fix regarding "changes to the handling of indirect variables, properties, and methods" (http://php.net/manual/en/migration70.incompatible.php#migration70.incompatible.variable-handling.indirect).
  * Tweak - PRODUCTS - Sorting - Unnecessary `global $woocommerce` removed.
