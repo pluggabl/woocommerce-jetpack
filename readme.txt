@@ -84,7 +84,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
 * *Orders* - Minimum WooCommerce order amount (optionally by user role); orders auto-complete; custom admin order list columns; admin order currency.
-* *Shipping* - Add multiple custom shipping methods to WooCommerce. Hide WooCommerce shipping when free is available. Display "left to free shipping" info.
+* *Shipping* - Add multiple custom shipping methods to WooCommerce. Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available. Display "left to free shipping" info.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 
 **PDF Invoicing & Packing Slips**
@@ -128,7 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 19/09/2016 =
+= 2.5.6 - 20/09/2016 =
  * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Decimal numbers now allowed in default, min and max prices metabox.
  * Dev - SHIPPING & ORDERS - Shipping - "Shipping Icons" section added.
  * Dev - EMAILS & MISC. - Emails - Custom Emails - Settings field type `custom_textarea` added (this lets save HTML without removing any tags).
