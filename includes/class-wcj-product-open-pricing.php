@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Open Pricing class.
  *
- * @version 2.5.1
+ * @version 2.5.6
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -162,7 +162,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.6
 	 * @since   2.4.8
 	 */
 	function get_meta_box_options() {
@@ -180,19 +180,19 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			array(
 				'name'       => 'wcj_product_open_price_default_price',
 				'default'    => '',
-				'type'       => 'number',
+				'type'       => 'price',
 				'title'      => __( 'Default Price', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
 			),
 			array(
 				'name'       => 'wcj_product_open_price_min_price',
 				'default'    => 1,
-				'type'       => 'number',
+				'type'       => 'price',
 				'title'      => __( 'Min Price', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
 			),
 			array(
 				'name'       => 'wcj_product_open_price_max_price',
 				'default'    => '',
-				'type'       => 'number',
+				'type'       => 'price',
 				'title'      => __( 'Max Price', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
 			),
 		);
