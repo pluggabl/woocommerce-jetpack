@@ -120,7 +120,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	function create_custom_doc( $order_id ) {
 		return $this->create_document( $order_id, 'custom_doc' );
 	}
-	/**
+
+	/**
 	 * create_document.
 	 */
 	function create_document( $order_id, $invoice_type ) {
@@ -140,7 +141,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 			wcj_delete_invoice( $order_id, $invoice_type );
 		}
 	}
-	/**
+
+	/**
 	 * catch_args.
 	 *
 	 * @version 2.5.0
@@ -158,7 +160,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 			$this->delete_document( $_GET['delete_invoice_for_order_id'], $this->invoice_type_id );
 		}
 	}
-	/**
+
+	/**
 	 * generate_pdf_on_init.
 	 *
 	 * @version 2.5.6
@@ -180,7 +183,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		$the_invoice->get_pdf( $dest );
 		die();
 	}
-	/**
+
+	/**
 	 * get_settings.
 	 *
 	 * @version 2.4.0
