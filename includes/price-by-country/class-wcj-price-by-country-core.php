@@ -17,11 +17,12 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.6
 	 */
 	public function __construct() {
 		$this->customer_country_group_id = null;
-		$this->add_hooks();
+		// `add_hooks()` moved to `init` hook, so in case we need to call `get_customer_country_by_ip()` `WC_Geolocation` class is ready
+		add_action( 'init', array( $this, 'add_hooks' ) );
 	}
 
 	/**

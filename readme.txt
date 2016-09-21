@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 20/09/2016 =
+= 2.5.6 - 21/09/2016 =
+ * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` moved to `init` hook.
  * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Decimal numbers now allowed in default, min and max prices metabox.
  * Dev - SHIPPING & ORDERS - Shipping - "Shipping Icons" section added.
  * Dev - EMAILS & MISC. - Emails - Custom Emails - Settings field type `custom_textarea` added (this lets save HTML without removing any tags).
