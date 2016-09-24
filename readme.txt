@@ -128,7 +128,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 21/09/2016 =
+= 2.5.6 - 25/09/2016 =
+ * Tweak - PRODUCTS - Product Add to Cart - "Add to Cart Button" section renamed to "Add to Cart Button Disabling".
+ * Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button Custom URL" section added.
  * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` moved to `init` hook.
  * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Decimal numbers now allowed in default, min and max prices metabox.
  * Dev - SHIPPING & ORDERS - Shipping - "Shipping Icons" section added.
