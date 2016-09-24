@@ -129,9 +129,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 25/09/2016 =
- * Dev - Shortcodes - Orders - `[wcj_order_payment_method_transaction_id]` shortcode added.
+ * Dev - EMAILS & MISC. - Emails - Custom Emails - "Low stock notification", "No stock notification", "Product on backorder notification", "Created customer notification" triggers added.
+D* Dev - Shortcodes - Orders - `[wcj_order_payment_method_transaction_id]` shortcode added.
  * Tweak - PRODUCTS - Product Add to Cart - "Add to Cart Button" section renamed to "Add to Cart Button Disabling".
- * Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button Custom URL" section added.
+D* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button Custom URL" section added.
  * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` moved to `init` hook.
  * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Decimal numbers now allowed in default, min and max prices metabox.
  * Dev - SHIPPING & ORDERS - Shipping - "Shipping Icons" section added.
@@ -172,8 +173,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
  * Dev - SHIPPING & ORDERS - Orders - "Admin Order Currency" section added.
 ~* Fix - SHIPPING & ORDERS - Order Custom Statuses - Default order statuses moved from constructor to separate function.
  * Dev - Shortcodes - Orders - `[wcj_order_shipping_price]`, `[wcj_order_total_excl_tax]` code refactoring.
- * Dev - Shortcodes - Orders - `[wcj_order_total_excl_shipping]` shortcode added.
- * Dev - Shortcodes - Orders - `[wcj_order_status]` shortcode added.
+D* Dev - Shortcodes - Orders - `[wcj_order_total_excl_shipping]` shortcode added.
+D* Dev - Shortcodes - Orders - `[wcj_order_status]` shortcode added.
  * Dev - PRODUCTS - Product Cost Price - "Profit" column - Now calculating profit for all orders statuses except cancelled, refunded or failed.
  * Tweak - PRODUCTS - Product Visibility by Country - Description fixed.
  * Tweak - PRODUCTS - Product Visibility by User Role - Tooltip added to metabox (product edit page).

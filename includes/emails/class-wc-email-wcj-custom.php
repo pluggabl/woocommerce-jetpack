@@ -281,6 +281,10 @@ class WC_Email_WCJ_Custom extends WC_Email {
 						'woocommerce_order_fully_refunded_notification'               => __( 'Order fully refunded notification', 'woocommerce-jetpack' ),
 						'woocommerce_order_partially_refunded_notification'           => __( 'Order partially refunded notification', 'woocommerce-jetpack' ),
 						'woocommerce_new_customer_note_notification'                  => __( 'New customer note notification', 'woocommerce-jetpack' ),
+						'woocommerce_low_stock_notification'                          => __( 'Low stock notification', 'woocommerce-jetpack' ),
+						'woocommerce_no_stock_notification'                           => __( 'No stock notification', 'woocommerce-jetpack' ),
+						'woocommerce_product_on_backorder_notification'               => __( 'Product on backorder notification', 'woocommerce-jetpack' ),
+						'woocommerce_created_customer_notification'                   => __( 'Created customer notification', 'woocommerce-jetpack' ),
 					),
 					$status_change_triggers
 				),
