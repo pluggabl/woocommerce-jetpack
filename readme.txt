@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 25/09/2016 =
+ * Dev - Shortcodes - Orders - `[wcj_order_payment_method_transaction_id]` shortcode added.
  * Tweak - PRODUCTS - Product Add to Cart - "Add to Cart Button" section renamed to "Add to Cart Button Disabling".
  * Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button Custom URL" section added.
  * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` moved to `init` hook.

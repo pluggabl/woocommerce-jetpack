@@ -60,6 +60,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_fee',
 			'wcj_order_fees_html',
 			'wcj_order_payment_method',
+			'wcj_order_payment_method_transaction_id',
 			'wcj_order_shipping_method',
 			'wcj_order_items_total_weight',
 			'wcj_order_items_total_quantity',
@@ -220,6 +221,16 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_order_shipping_method( $atts ) {
 		return $this->the_order->get_shipping_method();
+	}
+
+	/**
+	 * wcj_order_payment_method_transaction_id.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 */
+	function wcj_order_payment_method_transaction_id( $atts ) {
+		return $this->the_order->get_transaction_id();
 	}
 
 	/**
