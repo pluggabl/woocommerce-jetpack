@@ -230,6 +230,14 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				'type'     => 'checkbox',
 			),
 
+			array(
+				'title'    => __( 'Search Engine Bots', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Disable Price by Country for Bots', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_price_by_country_for_bots_disabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
 			array( 'type'  => 'sectionend', 'id' => 'wcj_price_by_country_options' ),
 
 			array(
