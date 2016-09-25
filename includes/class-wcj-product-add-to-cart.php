@@ -57,7 +57,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			// Button per product - Metaboxes
 			if (
 				'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ||
-				'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' )
+				'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' ) ||
+				'yes' === get_option( 'wcj_add_to_cart_button_ajax_per_product_enabled', 'no' )
 			) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
@@ -71,6 +72,10 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			// Button per product Custom URL
 			if ( 'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_product_add_to_cart_url', array( $this, 'custom_add_to_cart_loop_url' ), PHP_INT_MAX, 2 );
+			}
+			// Button per product AJAX
+			if ( 'yes' === get_option( 'wcj_add_to_cart_button_ajax_per_product_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_product_supports', array( $this, 'manage_add_to_cart_ajax' ), PHP_INT_MAX, 3 );
 			}
 
 			// External Products
@@ -124,6 +129,19 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			$link_html = str_replace( '<a rel=', '<a target="_blank" rel=', $link_html );
 		}
 		return $link_html;
+	}
+
+	/**
+	 * manage_add_to_cart_ajax.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 */
+	function manage_add_to_cart_ajax( $supports, $feature, $_product ) {
+		if ( 'ajax_add_to_cart' === $feature && 0 != get_the_ID() && 'as_shop_default' != ( $value = get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_ajax_disable', true ) ) ) {
+			return ( 'yes' === $value ) ? false : true;
+		}
+		return $supports;
 	}
 
 	/**
@@ -215,6 +233,21 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 					'default'    => '',
 					'type'       => 'text',
 					'title'      => __( 'Custom Add to Cart Button URL (Category/Archives)', 'woocommerce-jetpack' ),
+				),
+			) );
+		}
+		if ( 'yes' === get_option( 'wcj_add_to_cart_button_ajax_per_product_enabled', 'no' ) ) {
+			$options = array_merge( $options, array(
+				array(
+					'name'       => 'wcj_add_to_cart_button_ajax_disable',
+					'default'    => 'as_shop_default',
+					'type'       => 'select',
+					'options'    => array(
+						'as_shop_default' => __( 'As shop default (no changes)', 'woocommerce-jetpack' ),
+						'yes'             => __( 'Disable', 'woocommerce-jetpack' ),
+						'no'              => __( 'Enable', 'woocommerce-jetpack' ),
+					),
+					'title'      => __( 'Disable Add to Cart Button AJAX', 'woocommerce-jetpack' ),
 				),
 			) );
 		}
@@ -422,6 +455,23 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_add_to_cart_button_custom_url_options',
+			),
+			array(
+				'title'    => __( 'Add to Cart Button AJAX', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_add_to_cart_button_ajax_options',
+			),
+			array(
+				'title'    => __( 'Disable/Enable Add to Cart Button AJAX on per Product Basis', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_add_to_cart_button_ajax_per_product_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_add_to_cart_button_ajax_options',
 			),
 			array(
 				'title'    => __( 'External Products', 'woocommerce-jetpack' ),
