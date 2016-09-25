@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 25/09/2016 =
+~D* Dev - Shortcodes - Orders - `[wcj_order_function]` shortcode added.
 ~D* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button AJAX" section added.
  * Dev - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - `WP_Query` optimized to return `ids` only.
  * Dev - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - Grouped products support added.

@@ -65,6 +65,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_items_total_weight',
 			'wcj_order_items_total_quantity',
 			'wcj_order_items_total_number',
+			'wcj_order_function',
 		);
 
 		parent::__construct();
@@ -73,7 +74,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -91,6 +92,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'precision'     => get_option( 'woocommerce_price_num_decimals', 2 ),
 			'lang'          => 'EN',
 			'unique_only'   => 'no',
+			'function_name' => '',
 		), $atts );
 
 		return $modified_atts;
@@ -121,6 +123,20 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
 		return ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) ? '' : wcj_price( $raw_price, $this->the_order->get_order_currency(), $atts['hide_currency'] );
+	}
+
+	/**
+	 * wcj_order_function.
+	 *
+	 * @version 2.5.6
+	 * @since   2.5.6
+	 * @todo    add function_params attribute.
+	 */
+	function wcj_order_function( $atts ) {
+		$function_name = $atts['function_name'];
+		if ( '' != $function_name && method_exists( $this->the_order, $function_name ) ) {
+			return $this->the_order->$function_name();
+		}
 	}
 
 	/**
