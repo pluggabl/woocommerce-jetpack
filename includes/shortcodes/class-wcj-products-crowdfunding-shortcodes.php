@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Crowdfunding Shortcodes class.
  *
- * @version 2.5.4
+ * @version 2.5.6
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  */
@@ -78,10 +78,16 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_product_orders_data.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.6
 	 * @since   2.2.6
 	 */
 	function get_product_orders_data( $return_value = 'total_orders', $atts ) {
+		$product_ids = array();
+		if ( $this->the_product->is_type( 'grouped' ) ) {
+			$product_ids = $this->the_product->get_children();
+		} else {
+			$product_ids = array( $this->the_product->id );
+		}
 		global $woocommerce_loop, $post;
 		$saved_wc_loop = $woocommerce_loop;
 		$saved_post    = $post;
@@ -89,7 +95,8 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 		$total_qty    = 0;
 		$total_sum    = 0;
 		$offset = 0;
-		$block_size = 96;
+		$block_size = 256;
+		$date_query_after = get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_startdate', true );
 		while( true ) {
 			$args = array(
 				'post_type'      => 'shop_order',
@@ -100,20 +107,22 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 				'order'          => 'ASC',
 				'date_query'     => array(
 					array(
-						'after'     => get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_startdate', true ),
+						'after'     => $date_query_after,
 						'inclusive' => true,
 					),
 				),
+				'fields'         => 'ids',
 			);
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$order_id = $loop->post->ID;
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $order_id ) {
 				$the_order = wc_get_order( $order_id );
 				$the_items = $the_order->get_items();
 				$item_found = false;
 				foreach( $the_items as $item ) {
-					if ( $this->the_product->id == $item['product_id'] ) {
+					if ( in_array( $item['product_id'], $product_ids ) ) {
 						$total_sum += $item['line_total'] + $item['line_tax'];
 						$total_qty += $item['qty'];
 						$item_found = true;
@@ -122,7 +131,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 				if ( $item_found ) {
 					$total_orders++;
 				}
-			endwhile;
+			}
 			$offset += $block_size;
 		}
 //		wp_reset_postdata();

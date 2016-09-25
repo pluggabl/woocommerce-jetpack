@@ -129,6 +129,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 25/09/2016 =
+ * Dev - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - `WP_Query` optimized to return `ids` only.
+ * Dev - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - Grouped products support added.
  * Dev - EMAILS & MISC. - Emails - Custom Emails - "Low stock notification", "No stock notification", "Product on backorder notification", "Created customer notification" triggers added.
 D* Dev - Shortcodes - Orders - `[wcj_order_payment_method_transaction_id]` shortcode added.
  * Tweak - PRODUCTS - Product Add to Cart - "Add to Cart Button" section renamed to "Add to Cart Button Disabling".
