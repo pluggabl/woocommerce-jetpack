@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 28/09/2016 =
+= 2.5.6 - 29/09/2016 =
+ * Dev - EMAILS & MISC. - Reports - `WP_Query` optimized to return `ids` only.
  * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.
  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.
 D* Dev - Shortcodes - Orders - `[wcj_order_payment_method_transaction_id]` shortcode added.

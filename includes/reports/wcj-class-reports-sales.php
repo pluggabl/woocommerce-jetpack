@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Sales Reports class.
  *
- * @version 2.3.9
+ * @version 2.5.6
  * @author  Algoritmika Ltd.
  */
 
@@ -58,21 +58,18 @@ class WCJ_Reports_Sales {
 	/*
 	 * get_products_sales.
 	 *
-	 * @version 2.3.9
+	 * @version 2.5.6
 	 * @since   2.3.0
 	 */
 	function get_products_sales() {
 
 		$products_data = array();
-
 		$years = array();
-
 		$total_orders = 0;
 
 		$offset = 0;
-		$block_size = 96;
+		$block_size = 512;
 		while( true ) {
-
 			$args_orders = array(
 				'post_type'      => 'shop_order',
 				'post_status'    => 'wc-completed',
@@ -85,47 +82,38 @@ class WCJ_Reports_Sales {
 						'year'  => $this->year,
 					),
 				),
+				'fields'         => 'ids',
 			);
 			$loop_orders = new WP_Query( $args_orders );
-			if ( ! $loop_orders->have_posts() ) break;
-			while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
-
-				$order_id = $loop_orders->post->ID;
-				$order = new WC_Order( $order_id );
+			if ( ! $loop_orders->have_posts() ) {
+				break;
+			}
+			foreach ( $loop_orders->posts as $order_id ) {
+				$order = wc_get_order( $order_id );
 				$items = $order->get_items();
 				foreach ( $items as $item ) {
-
 					if ( ! isset( $products_data[ $item['product_id'] ][ 'sales' ] ) ) {
 						$products_data[ $item['product_id'] ][ 'sales' ] = 0;
 					}
 					$products_data[ $item['product_id'] ][ 'sales' ] += $item['qty'];
-
-					$month = date( 'n', get_the_time( 'U' ) );
-					$year  = date( 'Y', get_the_time( 'U' ) );
+					$month = date( 'n', get_the_time( 'U', $order_id ) );
+					$year  = date( 'Y', get_the_time( 'U', $order_id ) );
 					$years[ $year ] = true;
 					if ( ! isset( $products_data[ $item['product_id'] ][ 'sales_by_month' ][ $year ][ $month ] ) ) {
 						$products_data[ $item['product_id'] ][ 'sales_by_month' ][ $year ][ $month ] = 0;
 					}
 					$products_data[ $item['product_id'] ][ 'sales_by_month' ][ $year ][ $month ] += $item['qty'];
-
 					if ( ! isset( $products_data[ $item['product_id'] ][ 'title' ] ) ) {
 						$products_data[ $item['product_id'] ][ 'title' ] = get_the_title( $item['product_id'] );
 					}
-
 					if ( ! isset( $products_data[ $item['product_id'] ][ 'last_sale' ] ) ) {
-						$products_data[ $item['product_id'] ][ 'last_sale' ] = date( 'Y-m-d H:i:s', get_the_time( 'U' ) );
+						$products_data[ $item['product_id'] ][ 'last_sale' ] = date( 'Y-m-d H:i:s', get_the_time( 'U', $order_id ) );
 					}
-
 				}
-
 				$total_orders++;
-
-			endwhile;
-
+			}
 			$offset += $block_size;
-
 		}
-
 		usort( $products_data, array( $this, 'sort_by_total_sales' ) );
 
 		$table_data = array();
