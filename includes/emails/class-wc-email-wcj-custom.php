@@ -115,7 +115,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Trigger.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.6
 	 */
 	function trigger( $order_id ) {
 
@@ -169,7 +169,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			return;
 		}
 
-		$this->send( $this->get_recipient(), $this->get_subject(), do_shortcode( $this->get_content() ), $this->get_headers(), $this->get_attachments() );
+		$this->send( $this->get_recipient(), do_shortcode( $this->get_subject() ), do_shortcode( $this->get_content() ), $this->get_headers(), $this->get_attachments() );
 
 		if ( $order_id ) {
 			wp_reset_postdata();

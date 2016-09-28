@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.6 - 25/09/2016 =
+= 2.5.6 - 28/09/2016 =
+ * Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcode are now working in subject.
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Search Engine Bots" option added.
 ~* Dev - Shortcodes - Orders - `[wcj_order_function]` shortcode added.
 ~* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button AJAX" section added.
