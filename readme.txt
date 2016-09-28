@@ -129,62 +129,62 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.6 - 28/09/2016 =
- * Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcode are now working in subject.
-~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Search Engine Bots" option added.
+ * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.
+ * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.
+D* Dev - Shortcodes - Orders - `[wcj_order_payment_method_transaction_id]` shortcode added.
+ * Dev - Shortcodes - Orders - `[wcj_order_shipping_price]`, `[wcj_order_total_excl_tax]` code refactoring.
+D* Dev - Shortcodes - Orders - `[wcj_order_total_excl_shipping]` shortcode added.
+D* Dev - Shortcodes - Orders - `[wcj_order_status]` shortcode added.
 ~* Dev - Shortcodes - Orders - `[wcj_order_function]` shortcode added.
-~* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button AJAX" section added.
  * Dev - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - `WP_Query` optimized to return `ids` only.
  * Dev - Shortcodes - Products - Crowdfunding - `get_product_orders_data()` - Grouped products support added.
- * Dev - EMAILS & MISC. - Emails - Custom Emails - "Low stock notification", "No stock notification", "Product on backorder notification", "Created customer notification" triggers added.
-D* Dev - Shortcodes - Orders - `[wcj_order_payment_method_transaction_id]` shortcode added.
- * Tweak - PRODUCTS - Product Add to Cart - "Add to Cart Button" section renamed to "Add to Cart Button Disabling".
-D* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button Custom URL" section added.
- * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` moved to `init` hook.
- * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Decimal numbers now allowed in default, min and max prices metabox.
- * Dev - SHIPPING & ORDERS - Shipping - "Shipping Icons" section added.
- * Dev - EMAILS & MISC. - Emails - Custom Emails - Settings field type `custom_textarea` added (this lets save HTML without removing any tags).
-~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Sorting by price support added.
- * Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (without Zones) - PHP 7 fix regarding "changes to the handling of indirect variables, properties, and methods" (http://php.net/manual/en/migration70.incompatible.php#migration70.incompatible.variable-handling.indirect).
- * Tweak - PRODUCTS - Sorting - Unnecessary `global $woocommerce` removed.
-~* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones added.
- * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.
  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.
- * Tweak - PRICES & CURRENCIES - Wholesale Price - "If show discount info on cart page is enabled, set format here" option description tip added.
- * Dev - CART & CHECKOUT - Checkout Files Upload - "Form Template Options" section added.
-~* Dev - PAYMENT GATEWAYS - Custom Gateways - Minimum order amount - When checking cart total now excludes fees (including "Gateways Fees and Discounts" module's fees/discounts).
-~* Dev - PAYMENT GATEWAYS - Custom Gateways - Minimum order amount - Checking if cart total is not empty (this fixes the issue with "Gateways Fees and Discounts" module).
-~* Dev - PAYMENT GATEWAYS - Custom Gateways - Restriction on max number (was 10) of custom payment gateways removed (using objects instead of class names in `woocommerce_payment_gateways` hook).
-~* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - Restriction on max number (was 10) of custom shipping methods removed (using objects instead of class names in `woocommerce_shipping_methods` hook).
- * Dev - SHIPPING & ORDERS - Shipping - "Shipping Descriptions" section added. Settings moved to `init` hook.
- * Tweak - PRICES & CURRENCIES - Currency per Product - Metabox tooltip added.
  * Fix - PRICES & CURRENCIES - Currency per Product - Default WooCommerce currency added to metabox (and to module's settings).
+ * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `add_hooks()` moved to `init` hook.
+~* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Sorting by price support added.
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Override Country Options" - "Override Country with Customer's Checkout Shipping Country" option added.
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Recalculate price filter widget product prices" option added.
+-* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Multicurrency Base Product price is calculated in Price by Country Price Filter widget.
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Search Engine Bots" option added.
+ * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Decimal numbers now allowed in default, min and max prices metabox.
+~* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button AJAX" section added.
+D* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button Custom URL" section added.
 +* Fix - PRODUCTS - Product Addons - Addons tax display fixed (`get_display_price()` function).
 +* Fix - PRODUCTS - Product Addons - PHP 7 fix regarding "changes to the handling of indirect variables, properties, and methods" (http://php.net/manual/en/migration70.incompatible.php#migration70.incompatible.variable-handling.indirect).
 +* Dev - PRODUCTS - Product Addons - "Admin Order Page - Hide all addons" option added.
 +* Dev - PRODUCTS - Product Addons - "Addon in Cart Format" and "Addon in Order Details Table Format" options added.
+ * Dev - PRODUCTS - Product Cost Price - "Profit" column - Now calculating profit for all orders statuses except cancelled, refunded or failed.
 ~* Dev - PRODUCTS - Product Visibility by User Role - Looking at all user's roles (not only first one).
-~* Fix - PAYMENT GATEWAYS - Gateways by Country or State - Additional check added to `available_payment_gateways()` function.
-~* Dev - CART & CHECKOUT - Checkout Files Upload - "No files uploaded" message added to admin's order edit page.
 ~* Fix - CART & CHECKOUT - Checkout Files Upload - "Add to Thank You page" and "Add to My Account page" fixed (before was putting all fields even if only one was enabled).
-~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Override Country Options" - "Override Country with Customer's Checkout Shipping Country" option added.
- * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.
- * Dev - EMAILS & MISC. - Export - Export Orders - Loop modified to return posts ids only.
- * Dev - EMAILS & MISC. - Export - Export Orders - "Order Items Product Input Fields" column added.
- * Dev - EMAILS & MISC. - Export - Export Orders - "Export Orders Fields" option added.
-~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Recalculate price filter widget product prices" option added.
--* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Multicurrency Base Product price is calculated in Price by Country Price Filter widget.
+ * Dev - CART & CHECKOUT - Checkout Files Upload - "Form Template Options" section added.
+~* Dev - CART & CHECKOUT - Checkout Files Upload - "No files uploaded" message added to admin's order edit page.
+~* Dev - PAYMENT GATEWAYS - Custom Gateways - Minimum order amount - When checking cart total now excludes fees (including "Gateways Fees and Discounts" module's fees/discounts).
+~* Dev - PAYMENT GATEWAYS - Custom Gateways - Minimum order amount - Checking if cart total is not empty (this fixes the issue with "Gateways Fees and Discounts" module).
+~* Dev - PAYMENT GATEWAYS - Custom Gateways - Restriction on max number (was 10) of custom payment gateways removed (using objects instead of class names in `woocommerce_payment_gateways` hook).
+~* Fix - PAYMENT GATEWAYS - Gateways by Country or State - Additional check added to `available_payment_gateways()` function.
+~* Fix - SHIPPING & ORDERS - Order Custom Statuses - Default order statuses moved from constructor to separate function.
+ * Dev - SHIPPING & ORDERS - Orders - "Admin Order Currency" section added.
+ * Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (without Zones) - PHP 7 fix regarding "changes to the handling of indirect variables, properties, and methods" (http://php.net/manual/en/migration70.incompatible.php#migration70.incompatible.variable-handling.indirect).
+~* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones added.
+~* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - Restriction on max number (was 10) of custom shipping methods removed (using objects instead of class names in `woocommerce_shipping_methods` hook).
+ * Dev - SHIPPING & ORDERS - Shipping - "Shipping Descriptions" section added. Settings moved to `init` hook.
+ * Dev - SHIPPING & ORDERS - Shipping - "Shipping Icons" section added.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Display - "Save as" disabled by default.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Added `die` after `generate_pdf_on_init`.
 ~* Dev - PDF INVOICING & PACKING SLIPS - `woocommerce_cli_create_order`, `kco_before_confirm_order` and `woocommerce_checkout_order_processed` hooks added (duplicates `woocommerce_new_order` hook).
- * Dev - SHIPPING & ORDERS - Orders - "Admin Order Currency" section added.
-~* Fix - SHIPPING & ORDERS - Order Custom Statuses - Default order statuses moved from constructor to separate function.
- * Dev - Shortcodes - Orders - `[wcj_order_shipping_price]`, `[wcj_order_total_excl_tax]` code refactoring.
-D* Dev - Shortcodes - Orders - `[wcj_order_total_excl_shipping]` shortcode added.
-D* Dev - Shortcodes - Orders - `[wcj_order_status]` shortcode added.
- * Dev - PRODUCTS - Product Cost Price - "Profit" column - Now calculating profit for all orders statuses except cancelled, refunded or failed.
+ * Dev - EMAILS & MISC. - Emails - Custom Emails - Shortcode are now working in subject.
+ * Dev - EMAILS & MISC. - Emails - Custom Emails - "Low stock notification", "No stock notification", "Product on backorder notification", "Created customer notification" triggers added.
+ * Dev - EMAILS & MISC. - Emails - Custom Emails - Settings field type `custom_textarea` added (this lets save HTML without removing any tags).
+ * Dev - EMAILS & MISC. - Export - Export Orders - Loop modified to return posts ids only.
+ * Dev - EMAILS & MISC. - Export - Export Orders - "Order Items Product Input Fields" column added.
+ * Dev - EMAILS & MISC. - Export - Export Orders - "Export Orders Fields" option added.
+ * Tweak - PRICES & CURRENCIES - Currency per Product - Metabox tooltip added.
+ * Tweak - PRICES & CURRENCIES - Wholesale Price - "If show discount info on cart page is enabled, set format here" option description tip added.
+ * Tweak - PRODUCTS - Product Add to Cart - "Add to Cart Button" section renamed to "Add to Cart Button Disabling".
  * Tweak - PRODUCTS - Product Visibility by Country - Description fixed.
  * Tweak - PRODUCTS - Product Visibility by User Role - Tooltip added to metabox (product edit page).
  * Tweak - PRODUCTS - Product Visibility by User Role - Link and description fixed.
+ * Tweak - PRODUCTS - Sorting - Unnecessary `global $woocommerce` removed.
  * Tweak - Language (POT) file updated.
 
 = 2.5.5 - 20/08/2016 =
