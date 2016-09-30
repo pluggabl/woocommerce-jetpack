@@ -128,6 +128,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.5.7 - 01/10/2016 =
+ * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
+
 = 2.5.6 - 29/09/2016 =
 * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.
 * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `hide_if_zero_quantity` and `table_format` attributes added.

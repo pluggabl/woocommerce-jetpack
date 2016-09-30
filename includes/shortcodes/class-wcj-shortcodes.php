@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shortcodes class.
  *
- * @version 2.5.5
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -59,7 +59,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.7
 	 */
 	function wcj_shortcode( $atts, $content, $shortcode ) {
 
@@ -83,6 +83,8 @@ class WCJ_Shortcodes {
 			'billing_country'     => '',
 			'not_billing_country' => '',
 			'module'              => '',
+			'find'                => '',
+			'replace'             => '',
 		);
 		$atts = array_merge( $global_defaults, $atts );
 
@@ -168,8 +170,12 @@ class WCJ_Shortcodes {
 
 		// Run the shortcode function
 		$shortcode_function = $shortcode;
-		if ( '' !== ( $result = $this->$shortcode_function( $atts, $content ) ) )
+		if ( '' !== ( $result = $this->$shortcode_function( $atts, $content ) ) ) {
+			if ( '' != $atts['find'] ) {
+				$result = str_replace( $atts['find'], $atts['replace'], $result );
+			}
 			return $atts['before'] . $result . $atts['after'];
+		}
 		return '';
 	}
 
