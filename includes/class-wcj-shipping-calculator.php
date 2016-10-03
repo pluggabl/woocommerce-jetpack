@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shipping Calculator class.
  *
- * @version 2.4.6
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.6
+	 * @version 2.5.7
 	 */
 	public function __construct() {
 
@@ -32,8 +32,28 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 			add_filter( 'woocommerce_shipping_calculator_enable_postcode', array( $this, 'enable_postcode' ) );
 			add_action( 'wp_head',                                         array( $this, 'add_custom_styles' ) );
 //			add_filter( 'gettext',                                         array( $this, 'change_labels' ), 20, 3 );
+			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_shipping_calculator_labels_enabled', 'no' ) ) ) {
+				add_action( 'wp_enqueue_scripts',                          array( $this, 'change_labels' ) );
+			}
 		}
 	}
+
+	/**
+	 * change_labels.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	 function change_labels() {
+		if ( function_exists( 'is_cart' ) && is_cart() ) {
+			wp_enqueue_style(   'wcj-shipping-calculator',    wcj_plugin_url() . '/includes/css/wcj-shipping-calculator.css', array(),           WCJ()->version );
+			wp_enqueue_script(  'wcj-shipping-calculator-js', wcj_plugin_url() . '/includes/js/wcj-shipping-calculator.js',   array( 'jquery' ), WCJ()->version, true );
+			wp_localize_script( 'wcj-shipping-calculator-js', 'alg_object', array(
+				'calculate_shipping_label' => get_option( 'wcj_shipping_calculator_label_calculate_shipping', '' ),
+				'update_totals_label'      => get_option( 'wcj_shipping_calculator_label_update_totals', '' ),
+			) );
+		}
+	 }
 
 	/**
 	 * change_labels.
@@ -100,12 +120,10 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.6
+	 * @version 2.5.7
 	 */
 	function get_settings() {
-
 		$settings = array(
-
 			array(
 				'title'    => __( 'Shipping Calculator Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
@@ -151,21 +169,43 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 					'noclick' => __( 'Make non clickable', 'woocommerce-jetpack' ),
 				),
 			),
-			/*array(
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_shipping_calculator_options',
+			),
+			array(
+				'title'    => __( 'Labels Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_shipping_calculator_labels_options',
+			),
+			array(
+				'title'    => __( 'Labels', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_calculator_labels_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+			),
+			array(
 				'title'    => __( 'Label for Calculate Shipping', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_calculator_label_calculate_shipping',
-				'default'  => '',
+				'default'  => __( 'Calculate Shipping', 'woocommerce-jetpack' ),
 				'type'     => 'text',
+				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
 			),
 			array(
 				'title'    => __( 'Label for Update Totals', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_calculator_label_update_totals',
-				'default'  => '',
+				'default'  => __( 'Update Totals', 'woocommerce-jetpack' ),
 				'type'     => 'text',
-			),*/
+				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+			),
 			array(
 				'type'     => 'sectionend',
-				'id'       => 'wcj_shipping_calculator_options',
+				'id'       => 'wcj_shipping_calculator_labels_options',
 			),
 		);
 		return $this->add_standard_settings( $settings );

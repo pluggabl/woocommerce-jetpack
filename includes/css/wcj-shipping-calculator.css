@@ -1,0 +1,9 @@
+/**
+ * wcj-shipping-calculator.
+ *
+ * @version 2.5.7
+ * @since   2.5.7
+ */
+
+a.shipping-calculator-button { visibility: hidden; }
+button[name=calc_shipping] { visibility: hidden; }

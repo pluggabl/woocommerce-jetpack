@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 01/10/2016 =
+= 2.5.7 - 03/10/2016 =
+ * Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.
  * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
 
 = 2.5.6 - 29/09/2016 =
