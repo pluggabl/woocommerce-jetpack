@@ -129,6 +129,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 03/10/2016 =
+ * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
+ * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
 D* Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.
  * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
 

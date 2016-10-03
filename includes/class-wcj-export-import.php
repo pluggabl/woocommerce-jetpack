@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Export Import class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  * @todo    import products (maybe orders, customers) tool(s);
@@ -139,7 +139,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * get_order_export_fields.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 * @since   2.5.6
 	 */
 	function get_order_export_fields() {
@@ -148,6 +148,7 @@ class WCJ_Export_Import extends WCJ_Module {
 			'order-number'                     => __( 'Order Number', 'woocommerce-jetpack' ),
 			'order-status'                     => __( 'Order Status', 'woocommerce-jetpack' ),
 			'order-date'                       => __( 'Order Date', 'woocommerce-jetpack' ),
+			'order-time'                       => __( 'Order Time', 'woocommerce-jetpack' ),
 			'order-item-count'                 => __( 'Order Item Count', 'woocommerce-jetpack' ),
 			'order-items'                      => __( 'Order Items', 'woocommerce-jetpack' ),
 			'order-items-product-input-fields' => __( 'Order Items Product Input Fields', 'woocommerce-jetpack' ),
@@ -182,7 +183,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * get_order_export_default_fields_ids.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 * @since   2.5.6
 	 */
 	function get_order_export_default_fields_ids() {
@@ -191,6 +192,7 @@ class WCJ_Export_Import extends WCJ_Module {
 			'order-number',
 			'order-status',
 			'order-date',
+			'order-time',
 			'order-item-count',
 			'order-items',
 			'order-currency',
@@ -300,7 +302,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_orders.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 * @since   2.4.8
 	 */
 	function export_orders() {
@@ -373,7 +375,10 @@ class WCJ_Export_Import extends WCJ_Module {
 							$row[] = $order->get_status();
 							break;
 						case 'order-date':
-							$row[] = get_the_date( 'Y/m/d' );
+							$row[] = get_the_date( get_option( 'date_format' ), $order_id );
+							break;
+						case 'order-time':
+							$row[] = get_the_time( get_option( 'time_format' ), $order_id );
 							break;
 						case 'order-item-count':
 							$row[] = $order->get_item_count();
