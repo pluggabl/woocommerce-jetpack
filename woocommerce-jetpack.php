@@ -743,7 +743,7 @@ final class WC_Jetpack {
 		// Before init action
 		do_action( 'before_wcj_init' );
 		// Set up localisation
-		load_plugin_textdomain( 'woocommerce-jetpack',  false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
+		load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
 		// Init action
 		do_action( 'wcj_init' );
 	}
