@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 03/10/2016 =
+= 2.5.7 - 26/10/2016 =
+ * Dev - Made "Booster Tools" accessible to shop manager.
  * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
 D* Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.

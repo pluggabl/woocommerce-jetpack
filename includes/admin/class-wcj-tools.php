@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Tools class.
  *
- * @version 2.3.10
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -26,14 +26,14 @@ class WCJ_Tools {
 	/**
 	 * add_wcj_tools.
 	 *
-	 * @version 2.2.4
+	 * @version 2.5.7
 	 */
 	function add_wcj_tools() {
 		add_submenu_page(
 			'woocommerce',
 			__( 'Booster for WooCommerce Tools', 'woocommerce-jetpack' ),
 			__( 'Booster Tools', 'woocommerce-jetpack' ),
-			'manage_options',
+			'manage_woocommerce',
 			'wcj-tools',
 			array( $this, 'create_tools_page' )
 		);
