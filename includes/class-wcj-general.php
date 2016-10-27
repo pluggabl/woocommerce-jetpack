@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.5.4
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.7
 	 */
 	public function __construct() {
 
@@ -63,7 +63,32 @@ class WCJ_General extends WCJ_Module {
 
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'maybe_change_paypal_email' ) );
 			}
+
+			if ( 'yes' === get_option( 'wcj_session_expiration_section_enabled', 'no' ) ) {
+				add_filter( 'wc_session_expiring',   array( $this, 'change_session_expiring' ),   PHP_INT_MAX );
+				add_filter( 'wc_session_expiration', array( $this, 'change_session_expiration' ), PHP_INT_MAX );
+			}
 		}
+	}
+
+	/**
+	 * change_session_expiring.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function change_session_expiring( $the_time ) {
+		return get_option( 'wcj_session_expiring', 47 * 60 * 60 );
+	}
+
+	/**
+	 * change_session_expiration.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function change_session_expiration( $the_time ) {
+		return get_option( 'wcj_session_expiration', 48 * 60 * 60 );
 	}
 
 	/**
@@ -285,7 +310,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.7
 	 * @todo    add link to Booster's shortcodes list
 	 */
 	function get_settings() {
@@ -446,6 +471,38 @@ class WCJ_General extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_paypal_email_per_product_options',
+			),
+			array(
+				'title'    => __( 'Session Expiration Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_session_expiration_options',
+			),
+			array(
+				'title'    => __( 'Session Expiration', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_session_expiration_section_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Session Expiring', 'woocommerce-jetpack' ),
+				'desc'     => __( 'In seconds. Default: 47 hours (60 * 60 * 47)', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_session_expiring',
+				'default'  => 47 * 60 * 60,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 0 ),
+			),
+			array(
+				'title'    => __( 'Session Expiration', 'woocommerce-jetpack' ),
+				'desc'     => __( 'In seconds. Default: 48 hours (60 * 60 * 48)', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_session_expiration',
+				'default'  => 48 * 60 * 60,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 0 ),
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_session_expiration_options',
 			),
 			/* array(
 				'title'    => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),

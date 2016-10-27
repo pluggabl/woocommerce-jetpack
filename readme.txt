@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 26/10/2016 =
+= 2.5.7 - 27/10/2016 =
+ * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
  * Dev - Made "Booster Tools" accessible to shop manager.
  * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
