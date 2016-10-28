@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,24 +17,14 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 */
 	public function __construct() {
 		$this->customer_country_group_id = null;
-		if ( 'no' === get_option( 'wcj_price_by_country_for_bots_disabled', 'no' ) || ! $this->is_bot() ) {
+		if ( 'no' === get_option( 'wcj_price_by_country_for_bots_disabled', 'no' ) || ! wcj_is_bot() ) {
 			// `add_hooks()` moved to `init` hook, so in case we need to call `get_customer_country_by_ip()` `WC_Geolocation` class is ready
 			add_action( 'init', array( $this, 'add_hooks' ) );
 		}
-	}
-
-	/**
-	 * is_bot.
-	 *
-	 * @version 2.5.6
-	 * @since   2.5.6
-	 */
-	function is_bot() {
-		return ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) ) ? true : false;
 	}
 
 	/**

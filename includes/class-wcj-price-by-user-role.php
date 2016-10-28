@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by User Role class.
  *
- * @version 2.5.5
+ * @version 2.5.7
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -19,7 +19,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.7
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -38,7 +38,9 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-				$this->add_hooks();
+				if ( 'no' === get_option( 'wcj_price_by_user_role_for_bots_disabled', 'no' ) || ! wcj_is_bot() ) {
+					$this->add_hooks();
+				}
 			}
 			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
@@ -357,7 +359,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.7
 	 * @since   2.5.0
 	 */
 	function add_settings() {
@@ -392,6 +394,13 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 				'type'     => 'checkbox',
 				'id'       => 'wcj_price_by_user_role_shipping_enabled',
 				'default'  => 'no',
+			),
+			array(
+				'title'    => __( 'Search Engine Bots', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Disable Price by User Role for Bots', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_price_by_user_role_for_bots_disabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'type'         => 'sectionend',

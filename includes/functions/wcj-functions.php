@@ -8,6 +8,18 @@
  * @author  Algoritmika Ltd.
  */
 
+if ( ! function_exists( 'wcj_is_bot' ) ) {
+	/**
+	 * wcj_is_bot.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.6
+	 */
+	function wcj_is_bot() {
+		return ( isset( $_SERVER['HTTP_USER_AGENT'] ) && preg_match( '/Google-Structured-Data-Testing-Tool|bot|crawl|slurp|spider/i', $_SERVER['HTTP_USER_AGENT'] ) ) ? true : false;
+	}
+}
+
 if ( ! function_exists( 'wcj_get_currency_exchange_rate_product_base_currency' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate_product_base_currency.
