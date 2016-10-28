@@ -129,12 +129,13 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 27/10/2016 =
- * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
+~* Dev - EMAILS & MISC. - EU VAT Number - Validate VAT without SOAP fallback added (`validate_vat_no_soap` function).
+~D* Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
  * Dev - Made "Booster Tools" accessible to shop manager.
  * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
 D* Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.
- * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
+D* Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
 
 = 2.5.6 - 29/09/2016 =
 * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.

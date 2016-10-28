@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -843,25 +843,51 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 }
 
 /**
+ * validate_vat_no_soap.
+ *
+ * @version 2.5.7
+ * @since   2.5.7
+ * @return  mixed: bool on successful checking (can be true or false), null otherwise
+ */
+if ( ! function_exists( 'validate_vat_no_soap' ) ) {
+	function validate_vat_no_soap( $country_code, $vat_number ) {
+		$api_url = "http://ec.europa.eu/taxation_customs/vies/viesquer.do?ms=" . $country_code . "&vat=" . $vat_number;
+		if ( ini_get( 'allow_url_fopen' ) ) {
+			$response = file_get_contents( $api_url );
+		} elseif ( function_exists( 'curl_version' ) ) {
+			$curl = curl_init( $api_url );
+			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+			$response = curl_exec( $curl );
+			curl_close( $curl );
+		} else {
+			return null;
+		}
+		return ( false !== strpos( $response, '="validStyle"' ) ) ? true : false;
+	}
+}
+
+/**
  * validate_VAT.
  *
- * @return mixed: bool on successful checking (can be true or false), null otherwise
+ * @version 2.5.7
+ * @return  mixed: bool on successful checking (can be true or false), null otherwise
  */
 if ( ! function_exists( 'validate_VAT' ) ) {
 	function validate_VAT( $country_code, $vat_number ) {
 		try {
-			$client = new SoapClient(
-				'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl',
-				array( 'exceptions' => true )
-			);
-
-			$result = $client->checkVat( array(
-				'countryCode' => $country_code,
-				'vatNumber'   => $vat_number,
-			) );
-
-			return ( isset( $result->valid ) ) ? $result->valid : null;
-
+			if ( class_exists( 'SoapClient' ) ) {
+				$client = new SoapClient(
+					'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl',
+					array( 'exceptions' => true )
+				);
+				$result = $client->checkVat( array(
+					'countryCode' => $country_code,
+					'vatNumber'   => $vat_number,
+				) );
+				return ( isset( $result->valid ) ) ? $result->valid : null;
+			} else {
+				return validate_vat_no_soap( $country_code, $vat_number );
+			}
 		} catch( Exception $exception ) {
 			return null;
 		}
