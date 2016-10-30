@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Shipping with Shipping Zones class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @since   2.5.6
  * @author  Algoritmika Ltd.
  */
@@ -40,7 +40,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * Init settings
 				 *
-				 * @version 2.5.6
+				 * @version 2.5.7
 				 * @since   2.5.6
 				 * @access  public
 				 * @return  void
@@ -63,9 +63,11 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 //					$this->init_settings();
 
 					// Define user set variables
-					$this->title    = $this->get_option( 'title' );
-					$this->cost     = $this->get_option( 'cost' );
-					$this->type     = $this->get_option( 'type' );
+					$this->title      = $this->get_option( 'title' );
+					$this->cost       = $this->get_option( 'cost' );
+					$this->min_weight = $this->get_option( 'min_weight' );
+					$this->max_weight = $this->get_option( 'max_weight' );
+					$this->type       = $this->get_option( 'type' );
 					$this->weight_table_total_rows = $this->get_option( 'weight_table_total_rows' );
 					for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 						$option_name = 'weight_table_weight_row_' . $i;
@@ -79,9 +81,30 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				}
 
 				/**
+				 * Is this method available?
+				 *
+				 * @version 2.5.7
+				 * @since   2.5.7
+				 * @param   array $package
+				 * @return  bool
+				 */
+				public function is_available( $package ) {
+					$available = parent::is_available( $package );
+					if ( $available ) {
+						$total_weight = WC()->cart->get_cart_contents_weight();
+						if ( 0 != $this->min_weight && $total_weight < $this->min_weight ) {
+							$available = false;
+						} elseif ( 0 != $this->max_weight && $total_weight > $this->max_weight ) {
+							$available = false;
+						}
+					}
+					return $available;
+				}
+
+				/**
 				 * Initialise Settings Form Fields
 				 *
-				 * @version 2.5.6
+				 * @version 2.5.7
 				 * @since   2.5.6
 				 */
 				function init_instance_form_fields() {
@@ -110,6 +133,22 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 							'title'       => __( 'Cost', 'woocommerce' ),
 							'type'        => 'number',
 							'description' => __( 'Cost. If calculating by weight - then cost per one weight unit. If calculating by quantity - then cost per one piece.', 'woocommerce-jetpack' ),
+							'default'     => 0,
+							'desc_tip'    => true,
+							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+						),
+						'min_weight' => array(
+							'title'       => __( 'Min Weight', 'woocommerce' ),
+							'type'        => 'number',
+							'description' => __( 'Minimum total cart weight. Set zero to disable.', 'woocommerce-jetpack' ),
+							'default'     => 0,
+							'desc_tip'    => true,
+							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+						),
+						'max_weight' => array(
+							'title'       => __( 'Max Weight', 'woocommerce' ),
+							'type'        => 'number',
+							'description' => __( 'Maximum total cart weight. Set zero to disable.', 'woocommerce-jetpack' ),
 							'default'     => 0,
 							'desc_tip'    => true,
 							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
