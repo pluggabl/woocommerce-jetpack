@@ -128,7 +128,11 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 30/10/2016 =
+= 2.5.7 - 31/10/2016 =
+D* Dev - Shortcodes - Products - `[wcj_product_url]` shortcode added.
+D* Dev - Shortcodes - Products - `[wcj_product_image_url]` shortcode added.
+D* Dev - Shortcodes - Products - `[wcj_product_categories_names]` shortcode added.
+D* Dev - Shortcodes - Products - `[wcj_product_categories_urls]` shortcode added.
 ~* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
 ~* Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
 ~* Dev - EMAILS & MISC. - EU VAT Number - Validate VAT without SOAP fallback added (`validate_vat_no_soap` function).
