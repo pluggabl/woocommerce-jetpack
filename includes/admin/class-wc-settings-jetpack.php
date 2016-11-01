@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.5.5
+ * @version 2.5.7
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.8
+	 * @version 2.5.7
 	 */
 	function __construct() {
 
@@ -38,6 +38,17 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		add_action( 'woocommerce_admin_field_custom_link',     array( $this, 'output_custom_link' ) );
 		add_action( 'woocommerce_admin_field_module_tools',    array( $this, 'output_module_tools' ) );
 		add_action( 'woocommerce_admin_field_custom_textarea', array( $this, 'output_custom_textarea' ) );
+		add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'unclean_custom_textarea' ), PHP_INT_MAX, 3 );
+	}
+
+	/**
+	 * unclean_custom_textarea.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function unclean_custom_textarea( $value, $option, $raw_value ) {
+		return ( 'custom_textarea' === $option['type'] ) ? $raw_value : $value;
 	}
 
 	/**

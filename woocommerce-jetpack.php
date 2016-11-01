@@ -28,7 +28,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.5.5
+ * @version 2.5.7
  */
 
 final class WC_Jetpack {
@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.7-dev-201610312106';
+	public $version = '2.5.7-dev-201611010206';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -481,7 +481,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.7
 	 */
 	function include_modules() {
 		$modules_files = array(
@@ -544,6 +544,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-currency-exchange-rates.php',
 			'includes/class-wcj-price-formats.php',
 			'includes/class-wcj-general.php',
+			'includes/class-wcj-products-xml.php',
 			'includes/class-wcj-export-import.php',
 //			'includes/class-wcj-shortcodes-module.php',
 			'includes/class-wcj-eu-vat-number.php',

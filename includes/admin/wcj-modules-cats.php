@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.5.5
+ * @version 2.5.7
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -139,6 +139,7 @@ return array(
 		'default_cat_id' => 'general',
 		'all_cat_ids'    => array(
 			'general',
+			'products_xml',
 			'export',
 //			'shortcodes',
 			'eu_vat_number',

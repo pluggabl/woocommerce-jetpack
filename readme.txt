@@ -129,14 +129,16 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 31/10/2016 =
+ * Dev - `unclean_custom_textarea()` added.
+-$D* Dev - EMAILS & MISC. - Products XML - Initial module release.
 D* Dev - Shortcodes - Products - `[wcj_product_url]` shortcode added.
 D* Dev - Shortcodes - Products - `[wcj_product_image_url]` shortcode added.
 D* Dev - Shortcodes - Products - `[wcj_product_categories_names]` shortcode added.
 D* Dev - Shortcodes - Products - `[wcj_product_categories_urls]` shortcode added.
-~* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
+~D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
 ~* Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
 ~* Dev - EMAILS & MISC. - EU VAT Number - Validate VAT without SOAP fallback added (`validate_vat_no_soap` function).
-~* Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
+~D* Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
  * Dev - Made "Booster Tools" accessible to shop manager.
  * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
  * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
