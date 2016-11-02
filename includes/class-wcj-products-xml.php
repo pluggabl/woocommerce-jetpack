@@ -33,7 +33,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			add_action( 'init',                         array( $this, 'schedule_the_events' ) );
 			add_action( 'admin_init',                   array( $this, 'schedule_the_events' ) );
 			add_action( 'admin_init',                   array( $this, 'wcj_create_products_xml' ) );
-			add_action( 'wcj_create_products_xml_hook', array( $this, 'create_products_xml' ) );
+			add_action( 'wcj_create_products_xml_hook', array( $this, 'create_products_xml_cron' ) );
 			add_filter( 'cron_schedules',               array( $this, 'cron_add_custom_intervals' ) );
 		}
 	}
@@ -86,6 +86,26 @@ class WCJ_Products_XML extends WCJ_Module {
 	}
 
 	/**
+	 * admin_notice__success.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function admin_notice__success() {
+		echo '<div class="notice notice-success is-dismissible"><p>' . __( 'Products XML file created successfully.', 'woocommerce-jetpack' ) . '</p></div>';
+	}
+
+	/**
+	 * admin_notice__error.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function admin_notice__error() {
+		echo '<div class="notice notice-error"><p>' . __( 'An error has occurred while creating products XML file.', 'woocommerce-jetpack' ) . '</p></div>';
+	}
+
+	/**
 	 * wcj_create_products_xml.
 	 *
 	 * @version 2.5.7
@@ -93,8 +113,20 @@ class WCJ_Products_XML extends WCJ_Module {
 	 */
 	function wcj_create_products_xml() {
 		if ( isset( $_GET['wcj_create_products_xml'] ) ) {
-			$this->create_products_xml();
+			$result = $this->create_products_xml();
+			add_action( 'admin_notices', array( $this, ( ( false !== $result ) ? 'admin_notice__success' : 'admin_notice__error' ) ) );
 		}
+	}
+
+	/**
+	 * create_products_xml_cron.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function create_products_xml_cron() {
+		$this->create_products_xml();
+		die();
 	}
 
 	/**
@@ -130,8 +162,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			$offset += $block_size;
 		}
 		wp_reset_postdata();
-		file_put_contents( ABSPATH . get_option( 'wcj_products_xml_file_path', 'products.xml' ), $xml_header_template . $xml_items . $xml_footer_template );
-		die();
+		return file_put_contents( ABSPATH . get_option( 'wcj_products_xml_file_path', 'products.xml' ), $xml_header_template . $xml_items . $xml_footer_template );
 	}
 
 	/**
@@ -196,7 +227,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			array(
 				'title'    => __( 'Update Period', 'woocommerce-jetpack' ),
 				'desc'     => $products_xml_cron_desc .
-					'<br><a target="_blank" href="' . add_query_arg( 'wcj_create_products_xml', '1' ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>', // todo
+					'<br><a href="' . add_query_arg( 'wcj_create_products_xml', '1' ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>', // todo
 				'id'       => 'wcj_create_products_xml_period',
 				'default'  => 'daily',
 				'type'     => 'select',
