@@ -128,22 +128,23 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 31/10/2016 =
- * Dev - `unclean_custom_textarea()` added.
--$D* Dev - EMAILS & MISC. - Products XML - Initial module release.
-D* Dev - Shortcodes - Products - `[wcj_product_url]` shortcode added.
-D* Dev - Shortcodes - Products - `[wcj_product_image_url]` shortcode added.
-D* Dev - Shortcodes - Products - `[wcj_product_categories_names]` shortcode added.
-D* Dev - Shortcodes - Products - `[wcj_product_categories_urls]` shortcode added.
-~D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
-~* Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
-~* Dev - EMAILS & MISC. - EU VAT Number - Validate VAT without SOAP fallback added (`validate_vat_no_soap` function).
-~D* Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
- * Dev - Made "Booster Tools" accessible to shop manager.
- * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
- * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
-D* Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.
-D* Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
+= 2.5.7 - 02/11/2016 =
+-$D * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
+    * Dev - `unclean_custom_textarea()` added.
+-$D * Dev - EMAILS & MISC. - Products XML - Initial module release.
+D   * Dev - Shortcodes - Products - `[wcj_product_url]` shortcode added.
+D   * Dev - Shortcodes - Products - `[wcj_product_image_url]` shortcode added.
+D   * Dev - Shortcodes - Products - `[wcj_product_categories_names]` shortcode added.
+D   * Dev - Shortcodes - Products - `[wcj_product_categories_urls]` shortcode added.
+~D  * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
+~   * Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
+~   * Dev - EMAILS & MISC. - EU VAT Number - Validate VAT without SOAP fallback added (`validate_vat_no_soap` function).
+~D  * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
+    * Dev - Made "Booster Tools" accessible to shop manager.
+    * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
+    * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
+D   * Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.
+D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
 
 = 2.5.6 - 29/09/2016 =
 * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.

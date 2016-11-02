@@ -37,6 +37,7 @@ return array(
 			'product_open_pricing',
 			'price_by_user_role',
 			'product_price_by_formula',
+			'global_discount',
 			'currency_exchange_rates',
 			'price_formats',
 		),
