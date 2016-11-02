@@ -125,7 +125,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			}
 			while ( $loop->have_posts() ) {
 				$loop->the_post();
-				$xml_items .= html_entity_decode( do_shortcode( $xml_item_template ) );
+				$xml_items .= str_replace( '&', '&amp;', html_entity_decode( do_shortcode( $xml_item_template ) ) ); // todo
 			}
 			$offset += $block_size;
 		}
@@ -187,7 +187,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Result XML File Path and Name', 'woocommerce-jetpack' ),
-				'desc'     => '<a target="_blank" href="' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '">' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '</a>',
+				'desc'     => '<a target="_blank" href="' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '">' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '</a>', // todo
 				'id'       => 'wcj_products_xml_file_path',
 				'default'  => 'products.xml',
 				'type'     => 'text',
@@ -196,7 +196,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			array(
 				'title'    => __( 'Update Period', 'woocommerce-jetpack' ),
 				'desc'     => $products_xml_cron_desc .
-					'<br><a target="_blank" href="' . add_query_arg( 'wcj_create_products_xml', '1' ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>',
+					'<br><a target="_blank" href="' . add_query_arg( 'wcj_create_products_xml', '1' ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>', // todo
 				'id'       => 'wcj_create_products_xml_period',
 				'default'  => 'daily',
 				'type'     => 'select',
