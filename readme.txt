@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 02/11/2016 =
+~$D * Dev - BUTTON & PRICE LABELS - Call for Price - "Make All Products Call for Price" option added.
 -$D * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
     * Dev - `unclean_custom_textarea()` added.
 -$D * Dev - EMAILS & MISC. - Products XML - Initial module release.
