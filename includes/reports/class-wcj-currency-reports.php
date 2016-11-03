@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency Reports class.
  *
- * @version  2.5.2
+ * @version  2.5.7
  * @author   Algoritmika Ltd.
  */
 
@@ -104,18 +104,22 @@ class WCJ_Currency_Reports {
 
 	/**
 	 * filter_reports.
+	 *
+	 * @version 2.5.7
 	 */
 	function filter_reports( $args ) {
-		if ( isset( $_GET['currency'] ) && 'merge' === $_GET['currency'] ) {
-			return $args;
+		if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
+			if ( isset( $_GET['currency'] ) && 'merge' === $_GET['currency'] ) {
+				return $args;
+			}
+			$args['where_meta'] = array(
+				array(
+					'meta_key'   => '_order_currency',
+					'meta_value' => isset( $_GET['currency'] ) ? $_GET['currency'] : get_woocommerce_currency(),
+					'operator'   => '=',
+				),
+			);
 		}
-		$args['where_meta'] = array(
-			array(
-				'meta_key'   => '_order_currency',
-				'meta_value' => isset( $_GET['currency'] ) ? $_GET['currency'] : get_woocommerce_currency(),
-				'operator'   => '=',
-			),
-		);
 		return $args;
 	}
 }
