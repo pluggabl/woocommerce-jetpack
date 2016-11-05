@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Sales Reports class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -58,7 +58,7 @@ class WCJ_Reports_Sales {
 	/*
 	 * get_products_sales.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 * @since   2.3.0
 	 */
 	function get_products_sales() {
@@ -92,22 +92,40 @@ class WCJ_Reports_Sales {
 				$order = wc_get_order( $order_id );
 				$items = $order->get_items();
 				foreach ( $items as $item ) {
-					if ( ! isset( $products_data[ $item['product_id'] ][ 'sales' ] ) ) {
-						$products_data[ $item['product_id'] ][ 'sales' ] = 0;
+//					$product_id = ( 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
+					$product_ids = array( $item['product_id'] );
+					if ( 0 != $item['variation_id'] ) {
+						$product_ids[] = $item['variation_id'];
 					}
-					$products_data[ $item['product_id'] ][ 'sales' ] += $item['qty'];
-					$month = date( 'n', get_the_time( 'U', $order_id ) );
-					$year  = date( 'Y', get_the_time( 'U', $order_id ) );
-					$years[ $year ] = true;
-					if ( ! isset( $products_data[ $item['product_id'] ][ 'sales_by_month' ][ $year ][ $month ] ) ) {
-						$products_data[ $item['product_id'] ][ 'sales_by_month' ][ $year ][ $month ] = 0;
-					}
-					$products_data[ $item['product_id'] ][ 'sales_by_month' ][ $year ][ $month ] += $item['qty'];
-					if ( ! isset( $products_data[ $item['product_id'] ][ 'title' ] ) ) {
-						$products_data[ $item['product_id'] ][ 'title' ] = get_the_title( $item['product_id'] );
-					}
-					if ( ! isset( $products_data[ $item['product_id'] ][ 'last_sale' ] ) ) {
-						$products_data[ $item['product_id'] ][ 'last_sale' ] = date( 'Y-m-d H:i:s', get_the_time( 'U', $order_id ) );
+					foreach ( $product_ids as $product_id ) {
+						if ( ! isset( $products_data[ $product_id ][ 'sales' ] ) ) {
+							$products_data[ $product_id ][ 'sales' ] = 0;
+						}
+						$products_data[ $product_id ][ 'sales' ] += $item['qty'];
+						$month = date( 'n', get_the_time( 'U', $order_id ) );
+						$year  = date( 'Y', get_the_time( 'U', $order_id ) );
+						$years[ $year ] = true;
+						if ( ! isset( $products_data[ $product_id ][ 'sales_by_month' ][ $year ][ $month ] ) ) {
+							$products_data[ $product_id ][ 'sales_by_month' ][ $year ][ $month ] = 0;
+						}
+						$products_data[ $product_id ][ 'sales_by_month' ][ $year ][ $month ] += $item['qty'];
+						if ( ! isset( $products_data[ $product_id ][ 'title' ] ) ) {
+							$products_data[ $product_id ][ 'title' ] = '[ID: ' . $product_id . '] ';
+							$_product = wc_get_product( $product_id );
+							if ( is_object( $_product ) ) {
+								$products_data[ $product_id ][ 'title' ] .= /* $_product->get_title(); // */ get_the_title( $product_id );
+								if ( 'WC_Product_Variation' === get_class( $_product ) && is_object( $_product->parent ) ) {
+									$products_data[ $product_id ][ 'title' ] .= '<br><em>' . $_product->get_formatted_variation_attributes( true ) . '</em>';
+								} elseif ( 'WC_Product_Variation' === get_class( $_product ) ) {
+									$products_data[ $product_id ][ 'title' ] .= ' [PARENT PRODUCT DELETED]'; // todo
+								}
+							} else {
+								$products_data[ $product_id ][ 'title' ] .= $item['name'] . ' [PRODUCT DELETED]'; // todo
+							}
+						}
+						if ( ! isset( $products_data[ $product_id ][ 'last_sale' ] ) ) {
+							$products_data[ $product_id ][ 'last_sale' ] = date( 'Y-m-d H:i:s', get_the_time( 'U', $order_id ) );
+						}
 					}
 				}
 				$total_orders++;
