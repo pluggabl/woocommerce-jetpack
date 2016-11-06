@@ -128,7 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 05/11/2016 =
+= 2.5.7 - 06/11/2016 =
 -   * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - Variations added in report.
 ~   * Fix - `class-wcj-currency-reports.php` - `filter_reports` is now applied on `wc-reports` page only.
 ~$D * Dev - BUTTON & PRICE LABELS - Call for Price - "Make All Products Call for Price" option added.
