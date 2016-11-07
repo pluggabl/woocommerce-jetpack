@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Admin Tools class.
  *
- * @version 2.5.0
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.7
 	 */
 	public function __construct() {
 
@@ -29,17 +29,25 @@ class WCJ_Admin_Tools extends WCJ_Module {
 
 		$this->add_tools( array(
 			'admin_tools' => array(
-				'title' => __( 'Admin Tools', 'woocommerce-jetpack' ),
-				'desc'  => __( 'Log.', 'woocommerce-jetpack' ),
+				'title'     => __( 'Admin Tools', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Log.', 'woocommerce-jetpack' ),
 				'tab_title' => __( 'Log', 'woocommerce-jetpack' ),
 			),
 		) );
+
+		$this->current_php_memory_limit = '';
+		if ( $this->is_enabled() ) {
+			if ( 0 != ( $php_memory_limit = get_option( 'wcj_admin_tools_php_memory_limit', 0 ) ) ) {
+				ini_set( 'memory_limit', $php_memory_limit . 'M' );
+			}
+			$this->current_php_memory_limit = sprintf( ' Current PHP memory limit: %s.', ini_get( 'memory_limit' ) );
+		}
 	}
 
 	/**
 	 * create_tool.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.7
 	 */
 	public function create_admin_tools_tool() {
 
@@ -50,24 +58,23 @@ class WCJ_Admin_Tools extends WCJ_Module {
 		}
 
 		$the_tools = '';
-		$the_tools .= $this->get_back_to_settings_link_html();
-		$the_tools .= '<br>';
-		$the_tools .= '<a href="' . add_query_arg( 'wcj_delete_log', '1' ) . '">' . __( 'Delete Log', 'woocommerce-jetpack' ) . '</a>';
+		$the_tools .= $this->get_tool_header_html( 'admin_tools' );
+		$the_tools .= '<p><a href="' . add_query_arg( 'wcj_delete_log', '1' ) . '">' . __( 'Delete Log', 'woocommerce-jetpack' ) . '</a></p>';
 
 		$the_log = '';
-//		if ( isset( $_GET['wcj_view_log'] ) ) {
-			$the_log .= '<pre>' . get_option( 'wcj_log', '' ) . '</pre>';
-//		}
+		$the_log .= '<pre>' . get_option( 'wcj_log', '' ) . '</pre>';
 
-		echo '<p>' . $the_tools  . '</p>';
-		echo '<p>' . $the_notice . '</p>';
-		echo '<p>' . $the_log    . '</p>';
+		$html = '';
+		$html .= '<p>' . $the_tools  . '</p>';
+		$html .= '<p>' . $the_notice . '</p>';
+		$html .= '<p>' . $the_log    . '</p>';
+		echo $html;
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.3.10
+	 * @version 2.5.7
 	 */
 	function get_settings() {
 
@@ -95,12 +102,24 @@ class WCJ_Admin_Tools extends WCJ_Module {
 				'type'     => 'checkbox',
 			),
 
-			/* array(
+			array(
+				'title'    => __( 'PHP Memory Limit', 'woocommerce-jetpack' ),
+				'desc'     => __( 'megabytes.', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Set zero to disable.', 'woocommerce-jetpack' ) . $this->current_php_memory_limit,
+				'id'       => 'wcj_admin_tools_php_memory_limit',
+				'default'  => 0,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 0 ),
+			),
+
+			/*
+			array(
 				'title'    => __( 'Custom Shortcode', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_custom_shortcode_1',
 				'default'  => '',
 				'type'     => 'textarea',
-			), */
+			),
+			*/
 
 			array(
 				'type'     => 'sectionend',
