@@ -40,7 +40,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 			if ( 0 != ( $php_memory_limit = get_option( 'wcj_admin_tools_php_memory_limit', 0 ) ) ) {
 				ini_set( 'memory_limit', $php_memory_limit . 'M' );
 			}
-			$this->current_php_memory_limit = sprintf( ' Current PHP memory limit: %s.', ini_get( 'memory_limit' ) );
+			$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );
 		}
 	}
 
