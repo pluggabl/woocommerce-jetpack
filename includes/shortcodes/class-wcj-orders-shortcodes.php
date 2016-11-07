@@ -331,8 +331,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 				case 'debug':
 					$items[] = '<pre>' . print_r( $item, true ) . '</pre>';
 					break;
-				default: // case 'name'
-					$items[] = $item['name'];
+				default: // case 'name' etc.
+					$items[] = ( isset( $item[ $atts['field'] ] ) ) ? $item[ $atts['field'] ] : '';
 					break;
 			}
 		}
