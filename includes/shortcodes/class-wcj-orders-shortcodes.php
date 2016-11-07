@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 */
 	public function __construct() {
 
@@ -36,6 +36,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_custom_meta_field',
 			'wcj_order_meta',
 			'wcj_order_items_meta',
+			'wcj_order_items',
 			'wcj_order_subtotal',
 			'wcj_order_subtotal_plus_shipping',
 			'wcj_order_total_discount',
@@ -74,7 +75,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -93,6 +94,9 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'lang'          => 'EN',
 			'unique_only'   => 'no',
 			'function_name' => '',
+			'sep'           => ', ',
+			'item_number'   => 'all',
+			'field'         => 'name',
 		), $atts );
 
 		return $modified_atts;
@@ -311,6 +315,48 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_order_billing_phone( $atts ) {
 		return $this->the_order->billing_phone;
+	}
+
+	/**
+	 * wcj_order_items
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function wcj_order_items( $atts ) {
+		$items = array();
+		$the_items = $this->the_order->get_items();
+		foreach ( $the_items as $item_id => $item ) {
+			switch ( $atts['field'] ) {
+				case 'debug':
+					$items[] = '<pre>' . print_r( $item, true ) . '</pre>';
+					break;
+				default: // case 'name'
+					$items[] = $item['name'];
+					break;
+			}
+		}
+		if ( empty( $items ) ) {
+			return '';
+		}
+		if ( 'all' === $atts['item_number'] ) {
+			return implode( $atts['sep'], $items );
+		} else {
+			switch ( $atts['item_number'] ) {
+				case 'first':
+					return current( $items );
+				case 'last':
+					return end( $items );
+				default:
+					$item_number = intval( $atts['item_number'] ) - 1;
+					if ( $item_number < 0 ) {
+						$item_number = 0;
+					} elseif ( $item_number >= count( $items ) ) {
+						$item_number = count( $items ) - 1;
+					}
+					return $items[ $item_number ];
+			}
+		}
 	}
 
 	/**
