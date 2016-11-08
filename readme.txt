@@ -128,7 +128,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 07/11/2016 =
+= 2.5.7 - 08/11/2016 =
+~   * Fix - PRODUCTS - User Products - "My Account > Products" fixed.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_items]` shortcode added.
 ~   * Dev - EMAILS & MISC. - Admin Tools - "PHP Memory Limit" option added.
 -   * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - Variations added in report.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product by User class.
  *
- * @version 2.5.5
+ * @version 2.5.7
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.7
 	 * @since   2.5.2
 	 */
 	public function __construct() {
@@ -33,34 +33,77 @@ class WCJ_Product_By_User extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === get_option( 'wcj_product_by_user_add_to_my_account', 'yes' ) ) {
-				add_filter( 'woocommerce_account_menu_items', array( $this, 'add_my_products_tab_my_account_page' ) );
-				add_action( 'woocommerce_account_content',    array( $this, 'add_my_products_content_my_account_page' ) );
+				add_filter( 'woocommerce_account_menu_items',               array( $this, 'add_my_products_tab_my_account_page' ) );
+				add_action( 'woocommerce_account_wcj-my-products_endpoint', array( $this, 'add_my_products_content_my_account_page' ) );
+				add_filter( 'the_title',                                    array( $this, 'change_my_products_endpoint_title' ) );
 			}
 		}
+	}
+
+	/*
+	 * Change endpoint title.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 * @param   string $title
+	 * @return  string
+	 * @see     https://github.com/woocommerce/woocommerce/wiki/2.6-Tabbed-My-Account-page
+	 */
+	function change_my_products_endpoint_title( $title ) {
+		global $wp_query;
+		$is_endpoint = isset( $wp_query->query_vars['wcj-my-products'] );
+		if ( $is_endpoint && ! is_admin() && is_main_query() && in_the_loop() && is_account_page() ) {
+			// New page title.
+			$title = __( 'Products', 'woocommerce-jetpack' );
+			remove_filter( 'the_title', array( $this, 'change_my_products_endpoint_title' ) );
+		}
+		return $title;
+	}
+
+	/**
+	 * Custom help to add new items into an array after a selected item.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 * @param   array $items
+	 * @param   array $new_items
+	 * @param   string $after
+	 * @return  array
+	 * @see     https://github.com/woocommerce/woocommerce/wiki/2.6-Tabbed-My-Account-page
+	 */
+	function insert_after_helper( $items, $new_items, $after ) {
+		// Search for the item position and +1 since is after the selected item key.
+		$position = array_search( $after, array_keys( $items ) ) + 1;
+		// Insert the new item.
+		$array = array_slice( $items, 0, $position, true );
+		$array += $new_items;
+		$array += array_slice( $items, $position, count( $items ) - $position, true );
+		return $array;
 	}
 
 	/**
 	 * add_my_products_tab_my_account_page.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.7
 	 * @since   2.5.2
 	 * @todo    check if any user's products exist
 	 */
 	function add_my_products_tab_my_account_page( $items ) {
-		$items['wcj-my-products'] = __( 'My Products', 'woocommerce-jetpack' );
-		return $items;
+//		$items['wcj-my-products'] = __( 'My Products', 'woocommerce-jetpack' );
+		$new_items = array( 'wcj-my-products' => __( 'Products', 'woocommerce-jetpack' ) );
+		return $this->insert_after_helper( $items, $new_items, 'orders' );
 	}
 
 	/**
 	 * add_my_products_content_my_account_page.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.7
 	 * @since   2.5.2
 	 */
 	function add_my_products_content_my_account_page() {
-		if ( ! isset( $_GET['wcj-my-products'] ) ) {
+		/* if ( ! isset( $_GET['wcj-my-products'] ) ) {
 			return;
-		}
+		} */
 		$user_ID = get_current_user_id();
 		if ( 0 == $user_ID ) {
 			return;
@@ -108,7 +151,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 		}
 		wp_reset_postdata();
 		if ( 0 != count( $products ) ) {
-			echo '<h2>' . __( 'My Products', 'woocommerce-jetpack' ) . '</h2>';
+//			echo '<h2>' . __( 'My Products', 'woocommerce-jetpack' ) . '</h2>';
 			$table_data = array();
 			$table_data[] = array( '', __( 'Status', 'woocommerce-jetpack' ), __( 'Title', 'woocommerce-jetpack' ), __( 'Actions', 'woocommerce-jetpack' ) );
 			$i = 0;
