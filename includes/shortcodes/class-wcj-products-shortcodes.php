@@ -691,6 +691,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 					// todo (maybe)
 				}
 			}
+			// TODO: if ( 'price_directly' === $discount_type ) ...
 
 			$columns_styles[] = 'text-align: center;';
 		}
