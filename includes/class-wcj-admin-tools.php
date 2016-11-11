@@ -81,6 +81,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 		$system_info = array();
 		$constants_array = array(
 			'WP_MEMORY_LIMIT',
+			'WP_MAX_MEMORY_LIMIT',
 //			'DB_NAME',
 //			'DB_USER',
 //			'DB_PASSWORD',
