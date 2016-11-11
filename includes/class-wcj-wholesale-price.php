@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Wholesale Price class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation;
@@ -51,7 +51,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * add_discount_info_to_cart_page.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.7
 	 */
 	function add_discount_info_to_cart_page( $price_html, $cart_item, $cart_item_key ) {
 
@@ -64,7 +64,11 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $cart_item['product_id'] ) )
 					? get_post_meta( $cart_item['product_id'], '_' . 'wcj_wholesale_price_discount_type', true )
 					: get_option( 'wcj_wholesale_price_discount_type', 'percent' );
-				if ( 'fixed' === $discount_type ) {
+				if ( 'price_directly' === $discount_type ) {
+					$_product = wc_get_product( $cart_item['product_id'] );
+					$discount = wc_price( $_product->get_price() - $discount );
+				}
+				elseif ( 'fixed' === $discount_type ) {
 					$discount = wc_price( $discount );
 				} else {
 					$discount = $discount . '%';
@@ -130,14 +134,21 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * get_wholesale_price.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.7
 	 */
 	private function get_wholesale_price( $price, $quantity, $product_id ) {
 		$discount = $this->get_discount_by_quantity( $quantity, $product_id );
 		$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $product_id ) )
 			? get_post_meta( $product_id, '_' . 'wcj_wholesale_price_discount_type', true )
 			: get_option( 'wcj_wholesale_price_discount_type', 'percent' );
-		if ( 'percent' === $discount_type ) {
+		if ( 'price_directly' === $discount_type ) {
+			if ( 0 != $discount ) {
+				$discount = apply_filters( 'wcj_get_wholesale_price', $discount, wc_get_product( $product_id ) );
+				return $discount;
+			} else {
+				return $price;
+			}
+		} elseif ( 'percent' === $discount_type ) {
 			$discount_koef = 1.0 - ( $discount / 100.0 );
 			return $price * $discount_koef;
 		} else {
@@ -235,11 +246,20 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.7
 	 * @since   2.5.0
 	 */
 	function get_meta_box_options() {
 		$product_id = get_the_ID();
+		$_product = wc_get_product( $product_id );
+		$discount_type_options = array(
+			'percent'        => __( 'Percent', 'woocommerce-jetpack' ),
+			'fixed'          => __( 'Fixed', 'woocommerce-jetpack' ),
+			'price_directly' => __( 'Price directly', 'woocommerce-jetpack' ),
+		);
+		if ( $_product->is_type( 'variable' ) ) {
+			unset( $discount_type_options['price_directly'] );
+		}
 		$options = array(
 			array(
 				'name'       => 'wcj_wholesale_price_per_product_enabled',
@@ -255,11 +275,9 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'name'       => 'wcj_wholesale_price_discount_type',
 				'default'    => 'percent',
 				'type'       => 'select',
-				'options'    => array(
-					'percent' => __( 'Percent', 'woocommerce-jetpack' ),
-					'fixed'   => __( 'Fixed', 'woocommerce-jetpack' ),
-				),
+				'options'    => $discount_type_options,
 				'title'      => __( 'Discount Type', 'woocommerce-jetpack' ),
+//				'tooltip'    => __( '\'Price directly\' option is only available for simple (i.e. non variable) product type.', 'woocommerce-jetpack' ),
 			),
 			array(
 				'name'    => 'wcj_wholesale_price_levels_number',
@@ -287,7 +305,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 					'name'    => 'wcj_wholesale_price_level_discount_' . $i,
 					'default' => 0,
 					'type'    => 'price',
-					'title'   => __( 'Level', 'woocommerce-jetpack' ) . ' #' . $i . ' ' . __( 'Discount', 'woocommerce-jetpack' ),
+					'title'   => __( 'Level', 'woocommerce-jetpack' ) . ' #' . $i . ' ' . ( 'price_directly' === get_post_meta( $product_id, '_' . 'wcj_wholesale_price_discount_type', true ) ? __( 'Price', 'woocommerce-jetpack' ) : __( 'Discount', 'woocommerce-jetpack' ) ),
 				),
 			) );
 		}

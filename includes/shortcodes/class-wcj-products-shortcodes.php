@@ -572,7 +572,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 
@@ -655,13 +655,18 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				// Simple etc.
 				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 				$the_price = $this->the_product->$get_price_method();
+				$the_price = apply_filters( 'wcj_product_wholesale_price_table_price_before', $the_price, $this->the_product );
 				$the_price_original = $the_price;
-				if ( 'fixed' === $discount_type ) {
+				if ( 'price_directly' === $discount_type ) {
+					$the_price = $wholesale_price_level['discount'];
+				} elseif ( 'fixed' === $discount_type ) {
 					$the_price = $the_price - $wholesale_price_level['discount'];
-				} else {
+				} else { // 'percent'
 					$coefficient = 1.0 - ( $wholesale_price_level['discount'] / 100.0 );
 					$the_price = $the_price * $coefficient;
 				}
+				$the_price_original = apply_filters( 'wcj_product_wholesale_price_table_price_after', $the_price_original, $this->the_product );
+				$the_price          = apply_filters( 'wcj_product_wholesale_price_table_price_after', $the_price,          $this->the_product );
 				if ( 'yes' !== $atts['hide_currency'] ) {
 					$the_price = wc_price( $the_price );
 					$the_price_original = wc_price( $the_price_original );
