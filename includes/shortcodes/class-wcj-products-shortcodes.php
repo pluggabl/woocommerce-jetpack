@@ -31,6 +31,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_title',
 			'wcj_product_weight',
 			'wcj_product_excerpt',
+			'wcj_product_short_description',
 			'wcj_product_custom_field',
 			'wcj_product_you_save',
 			'wcj_product_you_save_percent',
@@ -65,7 +66,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'image_size'            => 'shop_thumbnail',
 			'multiply_by'           => '',
 			'hide_currency'         => 'no',
-			'excerpt_length'        => 0,
+			'excerpt_length'        => 0, // deprecated
+			'length'                => 0,
+			'apply_filters'         => 'no',
 			'name'                  => '',
 			'heading_format'        => 'from %level_qty% pcs.',
 			'price_row_format'      => '<del>%old_price%</del> %price%',
@@ -718,29 +721,58 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
-	 * For wcj_product_excerpt function.
+	 * Get product short description.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 * @return  string
 	 */
-	/* private */ function custom_excerpt_length( $length ) {
-		global $product_excerpt_length;
-		return $product_excerpt_length;
+	function wcj_product_short_description( $atts ) {
+		$short_description = $this->the_product->post->post_excerpt;
+		if ( 'yes' === $atts['apply_filters'] ) {
+			apply_filters( 'woocommerce_short_description', $short_description );
+		}
+		if ( 0 != $atts['length'] ) {
+			$excerpt_more = apply_filters( 'excerpt_more', ' ' . '[&hellip;]' );
+			$short_description = wp_trim_words( $short_description, $atts['length'], $excerpt_more );
+		}
+		return $short_description;
 	}
+
+	/**
+	 * For wcj_product_excerpt function.
+	 *
+	 * @version 2.5.7
+	 */
+	function custom_excerpt_length( $length ) {
+		return $this->product_excerpt_length;
+	}
+
 	/**
 	 * Get product excerpt.
 	 *
-	 * @return string
+	 * @version 2.5.7
+	 * @return  string
 	 */
 	function wcj_product_excerpt( $atts ) {
-		global $post;
-		global $product_excerpt_length;
-		$post = get_post( $atts['product_id'] );
-		setup_postdata( $post );
-
-		$product_excerpt_length = $atts['excerpt_length'];
-		if ( 0 != $atts['excerpt_length'] )    add_filter( 'excerpt_length', array( $this, 'custom_excerpt_length' ), PHP_INT_MAX );
-		$the_excerpt = get_the_excerpt();
-		if ( 0 != $atts['excerpt_length'] ) remove_filter( 'excerpt_length', array( $this, 'custom_excerpt_length' ), PHP_INT_MAX );
-
-		wp_reset_postdata();
+		if ( 0 != $atts['excerpt_length'] ) {
+			$atts['length'] = $atts['excerpt_length'];
+		}
+		$the_excerpt = $this->wcj_product_short_description( $atts );
+		if ( '' === $the_excerpt ) {
+			global $post;
+			$post = get_post( $atts['product_id'] );
+			setup_postdata( $post );
+			$this->product_excerpt_length = $atts['length'];
+			if ( 0 != $atts['length'] ) {
+				add_filter(    'excerpt_length', array( $this, 'custom_excerpt_length' ), PHP_INT_MAX );
+				$the_excerpt = get_the_excerpt();
+				remove_filter( 'excerpt_length', array( $this, 'custom_excerpt_length' ), PHP_INT_MAX );
+			} else {
+				$the_excerpt = get_the_excerpt();
+			}
+			wp_reset_postdata();
+		}
 		return $the_excerpt;
 	}
 

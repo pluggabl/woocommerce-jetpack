@@ -129,6 +129,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 11/11/2016 =
+D   * Dev - Shortcodes - Products - `[wcj_product_short_description]` shortcode added.
+    * Tweak - Shortcodes - Products - `[wcj_product_excerpt]` - Using `product_excerpt_length` object property instead of global variable.
+    * Fix - Shortcodes - Products - `[wcj_product_excerpt]` - Manually checking for short description first (so `length` can be applied).
+D   * Dev - Shortcodes - Products - `[wcj_product_excerpt]` - `excerpt_length` attribute deprecated (replaced with `length`).
 -   * Tweak - PRICES & CURRENCIES - Wholesale Price - `get_wholesale_price()` - `price_directly` - `wcj_get_wholesale_price` filter added.
 -D  * Dev - PRICES & CURRENCIES - Wholesale Price - Per product - "Price directly" option added for non variable products.
     * Tweak - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `wcj_product_wholesale_price_table_price_before` and `wcj_product_wholesale_price_table_price_after` filters added.
