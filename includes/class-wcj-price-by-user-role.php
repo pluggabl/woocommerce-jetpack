@@ -272,7 +272,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price_by_role.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.7
 	 * @since   2.5.0
 	 */
 	function change_price_by_role( $price, $_product ) {
@@ -293,7 +293,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 						return $_product->$get_price_method();
 					} elseif ( 'woocommerce_get_price' == $the_current_filter || 'woocommerce_variation_prices_price' == $the_current_filter ) {
 						$sale_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_price_by_user_role_sale_price_' . $current_user_role, true );
-						return ( '' != $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
+						$return = ( '' != $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
+						return apply_filters( 'wcj_price_by_user_role_get_price', $return, $_product );
 					} elseif ( 'woocommerce_get_regular_price' == $the_current_filter || 'wcj_price_by_user_role_regular_price_' == $the_current_filter ) {
 						return $regular_price_per_product;
 					} elseif ( 'woocommerce_get_sale_price' == $the_current_filter || 'woocommerce_variation_prices_sale_price' == $the_current_filter ) {

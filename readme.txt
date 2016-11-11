@@ -129,8 +129,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 11/11/2016 =
-~   * Dev - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.
-    * Dev - `wcj_get_table_html()` - "row_styles" parameter added.
+~   * Tweak - PRICES & CURRENCIES - Price by User Role - `change_price_by_role()` - `wcj_price_by_user_role_get_price` filter added.
+~   * Tweak - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.
+    * Tweak - `wcj_get_table_html()` - "row_styles" parameter added.
     * Dev - EMAILS & MISC. - Admin Tools - "System Info" table added.
 ~D  * Dev - PDF INVOICING & PACKING SLIPS - "Generate" and "Download" bulk actions added to admin orders list.
 ~   * Fix - PRODUCTS - User Products - "My Account > Products" fixed.
@@ -149,7 +150,7 @@ D   * Dev - Shortcodes - Products - `[wcj_product_categories_urls]` shortcode ad
 ~D  * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
 ~   * Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
 ~   * Dev - EMAILS & MISC. - EU VAT Number - Validate VAT without SOAP fallback added (`validate_vat_no_soap` function).
-~D  * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
+-D  * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
     * Dev - Made "Booster Tools" accessible to shop manager.
     * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
     * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
