@@ -72,20 +72,44 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	}
 
 	/**
+	 * get_system_info_table_array.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function get_system_info_table_array() {
+		$system_info = array();
+		$constants_array = array(
+			'WP_MEMORY_LIMIT',
+//			'DB_NAME',
+//			'DB_USER',
+//			'DB_PASSWORD',
+//			'DB_HOST',
+//			'DB_CHARSET',
+//			'DB_COLLATE',
+			'WP_DEBUG',
+			'ABSPATH',
+			'DISABLE_WP_CRON',
+			'WP_CRON_LOCK_TIMEOUT',
+		);
+		foreach ( $constants_array as $the_constant ) {
+			$system_info[] = array( $the_constant, ( defined( $the_constant ) ? constant( $the_constant ) : __( 'NOT DEFINED', 'woocommerce-jetpack' ) ) );
+		}
+		return $system_info;
+	}
+
+	/**
 	 * get_settings.
 	 *
 	 * @version 2.5.7
 	 */
 	function get_settings() {
-
 		$settings = array(
-
 			array(
 				'title'    => __( 'Admin Tools Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_admin_tools_module_options',
 			),
-
 			array(
 				'title'    => __( 'Logging', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -93,7 +117,6 @@ class WCJ_Admin_Tools extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Debug', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -101,7 +124,6 @@ class WCJ_Admin_Tools extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'PHP Memory Limit', 'woocommerce-jetpack' ),
 				'desc'     => __( 'megabytes.', 'woocommerce-jetpack' ),
@@ -111,7 +133,6 @@ class WCJ_Admin_Tools extends WCJ_Module {
 				'type'     => 'number',
 				'custom_attributes' => array( 'min' => 0 ),
 			),
-
 			/*
 			array(
 				'title'    => __( 'Custom Shortcode', 'woocommerce-jetpack' ),
@@ -120,13 +141,18 @@ class WCJ_Admin_Tools extends WCJ_Module {
 				'type'     => 'textarea',
 			),
 			*/
-
+			array(
+				'title'    => __( 'System Info', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_admin_tools_system_info',
+				'default'  => '',
+				'type'     => 'custom_link',
+				'link'     => '<pre>' . wcj_get_table_html( $this->get_system_info_table_array(), array( 'columns_styles' => array( 'padding:0;', 'padding:0;' ), 'table_heading_type' => 'vertical' ) ) . '</pre>',
+			),
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_admin_tools_module_options',
 			),
 		);
-
 		return $this->add_standard_settings( $settings );
 	}
 }

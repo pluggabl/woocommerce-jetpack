@@ -128,7 +128,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 09/11/2016 =
+= 2.5.7 - 11/11/2016 =
+    * Dev - `wcj_get_table_html()` - "row_styles" parameter added.
+    * Dev - EMAILS & MISC. - Admin Tools - "System Info" table added.
 ~D  * Dev - PDF INVOICING & PACKING SLIPS - "Generate" and "Download" bulk actions added to admin orders list.
 ~   * Fix - PRODUCTS - User Products - "My Account > Products" fixed.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_items]` shortcode added.
