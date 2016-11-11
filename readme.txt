@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 11/11/2016 =
+D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_short_description` - now displays item's short description (may be different from `item_excerpt`). `item_description` attribute removed.
 D   * Dev - Shortcodes - Products - `[wcj_product_short_description]` shortcode added.
     * Tweak - Shortcodes - Products - `[wcj_product_excerpt]` - Using `product_excerpt_length` object property instead of global variable.
     * Fix - Shortcodes - Products - `[wcj_product_excerpt]` - Manually checking for short description first (so `length` can be applied).

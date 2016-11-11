@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.5.5
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -129,7 +129,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.7
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -236,8 +236,6 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						}
 						break;
 					case 'item_excerpt':
-					case 'item_description':
-					case 'item_short_description':
 						if ( true === $item['is_custom'] ) {
 							$data[ $item_counter ][] = '';
 						} else {
@@ -248,6 +246,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 							wp_reset_postdata();
 							$data[ $item_counter ][] = $the_excerpt;
 						}
+						break;
+					case 'item_short_description':
+						$data[ $item_counter ][] = ( true === $item['is_custom'] ) ? '' : $this->the_product->post->post_excerpt;
 						break;
 					case 'item_variation':
 						$data[ $item_counter ][] = ( is_object( $the_product ) && $the_product->is_type( 'variation' ) )
