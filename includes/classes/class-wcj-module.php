@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.5.5
+ * @version 2.5.7
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -190,7 +190,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @since 2.5.5
+	 * @since 2.5.7
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -240,7 +240,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					}
 					switch ( $option['type'] ) {
 						case 'price':
-							$field_html = '<input class="short wc_input_price" type="number" step="0.0001"' . $input_ending;
+							$field_html = '<input class="short wc_input_price" type="number" step="' . apply_filters( 'wcj_get_meta_box_options_type_price_step', '0.0001' ) . '"' . $input_ending;
 							break;
 						case 'date':
 							$field_html = '<input class="input-text" display="date" type="text"' . $input_ending;

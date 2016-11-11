@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 11/11/2016 =
+~   * Dev - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.
     * Dev - `wcj_get_table_html()` - "row_styles" parameter added.
     * Dev - EMAILS & MISC. - Admin Tools - "System Info" table added.
 ~D  * Dev - PDF INVOICING & PACKING SLIPS - "Generate" and "Download" bulk actions added to admin orders list.
