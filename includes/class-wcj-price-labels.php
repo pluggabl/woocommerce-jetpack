@@ -32,7 +32,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'title' => __( 'Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Tool lets you copy all the data (that is labels) from Custom Price labels (Pro) plugin to Booster.', 'woocommerce-jetpack' ),
 //				'tab_title' => __( 'Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ),
-				'depreciated' => true,
+				'deprecated' => true,
 			),
 		), array( 'tools_dashboard_hook_priority' => PHP_INT_MAX ) );
 

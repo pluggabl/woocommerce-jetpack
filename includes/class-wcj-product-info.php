@@ -15,13 +15,13 @@ if ( ! class_exists( 'WCJ_Product_Info' ) ) :
 class WCJ_Product_Info extends WCJ_Module {
 
 	/**
-	 * search_and_replace_depreciated_shortcodes.
+	 * search_and_replace_deprecated_shortcodes.
 	 *
 	 * @version 2.4.0
 	 * @since   2.4.0
 	 */
-	private function search_and_replace_depreciated_shortcodes( $data ) {
-		$search_and_replace_depreciated_shortcodes_array = array(
+	private function search_and_replace_deprecated_shortcodes( $data ) {
+		$search_and_replace_deprecated_shortcodes_array = array(
 			'%sku%'                                    => '[wcj_product_sku]',
 			'wcj_sku'                                  => 'wcj_product_sku',
 			'%title%'                                  => '[wcj_product_title]',
@@ -86,8 +86,8 @@ class WCJ_Product_Info extends WCJ_Module {
 			'wcj_available_variations'                 => 'wcj_product_available_variations',
 		);
 		return str_replace(
-			array_keys(   $search_and_replace_depreciated_shortcodes_array ),
-			array_values( $search_and_replace_depreciated_shortcodes_array ),
+			array_keys(   $search_and_replace_deprecated_shortcodes_array ),
+			array_values( $search_and_replace_deprecated_shortcodes_array ),
 			$data
 		);
 	}
@@ -168,12 +168,12 @@ class WCJ_Product_Info extends WCJ_Module {
 		$the_action_name = current_filter();
 		if ( array_key_exists( $the_action_name, $this->product_info_on_archive_filters_array ) ) {
 			$the_product_info = get_option( 'wcj_product_info_on_archive' );
-			$the_product_info = $this->search_and_replace_depreciated_shortcodes( $the_product_info );
+			$the_product_info = $this->search_and_replace_deprecated_shortcodes( $the_product_info );
 			$this->apply_product_info_short_codes( $the_product_info, false );
 		}
 		else if ( array_key_exists( $the_action_name, $this->product_info_on_single_filters_array ) ) {
 			$the_product_info = get_option( 'wcj_product_info_on_single' );
-			$the_product_info = $this->search_and_replace_depreciated_shortcodes( $the_product_info );
+			$the_product_info = $this->search_and_replace_deprecated_shortcodes( $the_product_info );
 			$this->apply_product_info_short_codes( $the_product_info, false );
 		}
 	}
@@ -199,7 +199,7 @@ class WCJ_Product_Info extends WCJ_Module {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 4, get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
 			$field_id = 'wcj_more_product_info_on_' . $single_or_archive . '_' . $i ;
 			$the_product_info = get_option( $field_id );
-			$the_product_info = $this->search_and_replace_depreciated_shortcodes( $the_product_info );
+			$the_product_info = $this->search_and_replace_deprecated_shortcodes( $the_product_info );
 			$this->apply_product_info_short_codes( $the_product_info, true );
 		}
 	}

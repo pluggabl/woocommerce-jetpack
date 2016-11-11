@@ -427,9 +427,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			$tool_desc  = $tool_data['desc'];
 			$additional_style_html = '';
 			$additional_info_html = '';
-			if ( isset( $tool_data['depreciated'] ) && true === $tool_data['depreciated'] ) {
+			if ( isset( $tool_data['deprecated'] ) && true === $tool_data['deprecated'] ) {
 				$additional_style_html = 'color:gray;font-style:italic;';
-				$additional_info_html  = ' - ' . __( 'Depreciated', 'woocommerce-jetpack' );
+				$additional_info_html  = ' - ' . __( 'Deprecated', 'woocommerce-jetpack' );
 			}
 			echo '<tr>';
 			echo '<td style="' . $additional_style_html . '">' . $tool_title . $additional_info_html . '</td>';

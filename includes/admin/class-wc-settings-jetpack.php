@@ -278,15 +278,15 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		$is_dashboard = ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section && 'manager' != $current_section )
 			? false : true;
 
-		// Depreciated message
-		$depreciated_modules_and_links = array(
+		// Deprecated message
+		$deprecated_modules_and_links = array(
 			'product_info' => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=products&section=product_custom_info' ) . '">' . __( 'Product Info', 'woocommerce-jetpack' ) . '</a>',
 		);
-		if ( array_key_exists( $current_section, $depreciated_modules_and_links ) ) {
+		if ( array_key_exists( $current_section, $deprecated_modules_and_links ) ) {
 			echo '<div id="wcj_message" class="error">';
 			echo '<p>';
 			echo '<strong>';
-			echo sprintf( __( 'Please note that current <em>%s</em> module is depreciated and will be removed in future updates. Please use <em>%s</em> module instead.', 'woocommerce-jetpack' ), WCJ()->modules[ $current_section ]->short_desc, $depreciated_modules_and_links[ $current_section ] );
+			echo sprintf( __( 'Please note that current <em>%s</em> module is deprecated and will be removed in future updates. Please use <em>%s</em> module instead.', 'woocommerce-jetpack' ), WCJ()->modules[ $current_section ]->short_desc, $deprecated_modules_and_links[ $current_section ] );
 			echo '</strong>';
 			echo '</p>';
 			echo '</div>';

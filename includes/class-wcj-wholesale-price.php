@@ -76,7 +76,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				$old_price_html = wc_price( $cart_item['wcj_wholesale_price_old'] );
 				$wholesale_price_html = get_option( 'wcj_wholesale_price_show_info_on_cart_format' );
 				$wholesale_price_html = str_replace(
-					array( '%old_price%',   '%price%',   '%discount_value%', '%discount_percent%' ), // '%discount_percent%' is depreciated
+					array( '%old_price%',   '%price%',   '%discount_value%', '%discount_percent%' ), // '%discount_percent%' is deprecated
 					array( $old_price_html, $price_html, $discount,          $discount ),
 					$wholesale_price_html
 				);

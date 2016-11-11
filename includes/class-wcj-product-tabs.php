@@ -623,7 +623,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					),
 					array(
 						'title'     => '',
-						'desc'      => __( 'Comma separated PRODUCT IDs to HIDE this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Depreciated', 'woocommerce-jetpack' ) . '!</em></strong>',
+						'desc'      => __( 'Comma separated PRODUCT IDs to HIDE this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 						'desc_tip'  => __( 'To hide this tab from some products, enter product IDs here.', 'woocommerce-jetpack' ),
 						'id'        => 'wcj_custom_product_tabs_title_global_hide_in_product_ids_' . $i,
 						'default'   => '',
@@ -632,7 +632,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					),
 					array(
 						'title'     => '',
-						'desc'      => __( 'Comma separated PRODUCT IDs to SHOW this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Depreciated', 'woocommerce-jetpack' ) . '!</em></strong>',
+						'desc'      => __( 'Comma separated PRODUCT IDs to SHOW this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 						'desc_tip'  => __( 'To show this tab only for some products, enter product IDs here.', 'woocommerce-jetpack' ),
 						'id'        => 'wcj_custom_product_tabs_title_global_show_in_product_ids_' . $i,
 						'default'   => '',
@@ -641,7 +641,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					),
 					array(
 						'title'     => '',
-						'desc'      => __( 'Comma separated CATEGORY IDs to HIDE this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Depreciated', 'woocommerce-jetpack' ) . '!</em></strong>',
+						'desc'      => __( 'Comma separated CATEGORY IDs to HIDE this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 						'desc_tip'  => __( 'To hide this tab from some categories, enter category IDs here.', 'woocommerce-jetpack' ),
 						'id'        => 'wcj_custom_product_tabs_title_global_hide_in_cats_ids_' . $i,
 						'default'   => '',
@@ -650,7 +650,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					),
 					array(
 						'title'     => '',
-						'desc'      => __( 'Comma separated CATEGORY IDs to SHOW this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Depreciated', 'woocommerce-jetpack' ) . '!</em></strong>',
+						'desc'      => __( 'Comma separated CATEGORY IDs to SHOW this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 						'desc_tip'  => __( 'To show this tab only for some categories, enter category IDs here.', 'woocommerce-jetpack' ),
 						'id'        => 'wcj_custom_product_tabs_title_global_show_in_cats_ids_' . $i,
 						'default'   => '',

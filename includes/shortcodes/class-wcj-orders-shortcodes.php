@@ -400,7 +400,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.3.0
 	 * @since   2.2.9
-	 * @depreciated
+	 * @deprecated
 	 */
 	function wcj_order_custom_meta_field( $atts ) {
 		return $this->wcj_order_checkout_field( $atts );

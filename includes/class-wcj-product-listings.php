@@ -195,10 +195,10 @@ class WCJ_Product_Listings extends WCJ_Module {
 	public function filter_subcategories( $args ) {
 		if ( is_shop() ) {
 			$args['exclude'] = get_option( 'wcj_product_listings_exclude_cats_on_shop' );
-			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_shop' ) ) ? 1 : 0;     // depreciated?
+			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_shop' ) ) ? 1 : 0;     // deprecated?
 		} else {
 			$args['exclude'] = get_option( 'wcj_product_listings_exclude_cats_on_archives' );
-			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_archives' ) ) ? 1 : 0; // depreciated?
+			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_archives' ) ) ? 1 : 0; // deprecated?
 		}
 		return $args;
 	}

@@ -36,9 +36,9 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 			// compatibility with 2.3.0 or below
 			$default_gateways = array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' );
 			foreach ( $default_gateways as $key ) {
-				$depreciated_option = get_option( 'wcj_payment_gateways_icons_' . 'woocommerce_' . $key . '_icon', '' );
-				if ( '' != $depreciated_option ) {
-					update_option( 'wcj_gateways_icons_' . $key . '_icon', $depreciated_option );
+				$deprecated_option = get_option( 'wcj_payment_gateways_icons_' . 'woocommerce_' . $key . '_icon', '' );
+				if ( '' != $deprecated_option ) {
+					update_option( 'wcj_gateways_icons_' . $key . '_icon', $deprecated_option );
 					delete_option( 'wcj_payment_gateways_icons_' . 'woocommerce_' . $key . '_icon' );
 				}
 			}

@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 11/11/2016 =
+    * Fix - Deprecated typo fixed.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_short_description` - now displays item's short description (may be different from `item_excerpt`). `item_description` attribute removed.
 D   * Dev - Shortcodes - Products - `[wcj_product_short_description]` shortcode added.
     * Tweak - Shortcodes - Products - `[wcj_product_excerpt]` - Using `product_excerpt_length` object property instead of global variable.
@@ -328,7 +329,7 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
 * Dev - EMAILS & MISC. - Reports - Monthly Sales - Major code refactoring. New data added.
 * Tweak - Rating message added.
 * Tweak - Module's documentation button on new line.
-* Tweak - Depreciated module message updated.
+* Tweak - Deprecated module message updated.
 * Tweak - PRODUCTS - Product Add to Cart - Module description updated.
 * Tweak - PRODUCTS - Product by User - Module and admin settings descriptions updated.
 * Tweak - PRODUCTS - Product Info - Moved to EMAILS & MISC. Renamed to "Product Info V1". "Product Info V2" renamed to "Product Info".
@@ -637,8 +638,8 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - `no_changes` currency bug fixed.
 * Fix - PRICES & CURRENCIES - Multicurrency and Currency Exchange Rates - Currency pairs added to Currency Exchange Rates module.
 * Dev - BUTTON & PRICE LABELS - Custom Price Labels - WooCommerce Subscription products support added.
-* Dev - PRODUCTS - Product Tabs - "CATEGORIES to HIDE this tab" and "CATEGORIES to SHOW this tab" options added, instead of depreciated "Comma separated CATEGORY IDs..." options.
-* Dev - PRODUCTS - Product Tabs - "PRODUCTS to HIDE this tab" and "PRODUCTS to SHOW this tab" options added, instead of depreciated "Comma separated PRODUCT IDs..." options.
+* Dev - PRODUCTS - Product Tabs - "CATEGORIES to HIDE this tab" and "CATEGORIES to SHOW this tab" options added, instead of deprecated "Comma separated CATEGORY IDs..." options.
+* Dev - PRODUCTS - Product Tabs - "PRODUCTS to HIDE this tab" and "PRODUCTS to SHOW this tab" options added, instead of deprecated "Comma separated PRODUCT IDs..." options.
 * Dev - PRODUCTS - Product Tabs - "TAGS to HIDE this tab" and "TAGS to SHOW this tab" options added.
 * Dev - PRODUCTS - Product Tabs - "Reset settings" button added.
 * Dev - PAYMENT GATEWAYS - Gateways by Country or State - "Include States (Base Country)" and "Exclude States (Base Country)" options added.
@@ -680,7 +681,7 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
 * Dev - Functions - General - `wcj_is_module_enabled()` function added.
 * Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - manual sorting when `countries` attribute is used.
 * Fix - Shortcodes - Orders - `[wcj_order_total_tax_percent]` fixed. `precision` attribute added.
-* Fix - Shortcodes - Orders - `get_cart_discount()` (depreciated since WooCommerce 2.3) removed from `[wcj_order_items_table]` shortcode (affected if `discount_as_item` option was used); removed from `[wcj_order_total_discount]` shortcode; `[wcj_order_cart_discount]` shortcode removed.
+* Fix - Shortcodes - Orders - `get_cart_discount()` (deprecated since WooCommerce 2.3) removed from `[wcj_order_items_table]` shortcode (affected if `discount_as_item` option was used); removed from `[wcj_order_total_discount]` shortcode; `[wcj_order_cart_discount]` shortcode removed.
 * Fix - Shortcodes - Orders - `[wcj_order_total_in_words]` - decimal part rounding bug fixed.
 * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `whole` and `decimal` attributes added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_short_description` option added.
@@ -697,7 +698,7 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - Code refactoring.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - Option to convert prices by *product category* added.
 * Dev - PRODUCTS - Product Info - Code refactoring.
-* Dev - PRODUCTS - Product Info V2 - Initial module release. Product Info marked as depreciated.
+* Dev - PRODUCTS - Product Info V2 - Initial module release. Product Info marked as deprecated.
 * Dev - PRODUCTS - Product Input Fields - Code refactoring.
 * Dev - PRODUCTS - Product Input Fields - Required field sign option added.
 * Dev - PRODUCTS - Product Input Fields - "time format", "interval" options for Timepicker added.
@@ -741,7 +742,7 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
 * Dev - PDF Invoicing - Display - Admin's "Orders" Page - "Column Title", "Create Button" and "Delete Button" options added.
 * Dev - PDF Invoicing - Display - "Misc." menu renamed to "Display & Misc.".
 * Dev - PDF Invoicing - Display - Customer's "My Account" Page - "Add link" and "Link text" options unlocked.
-* Dev - PDF Invoices (v1) marked as "Depreciated".
+* Dev - PDF Invoices (v1) marked as "Deprecated".
 * Fix - EMAILS & MISC. - General - Tabs on "Booster Tools" page fixed (caused other module's tools tabs disappear). Info on "Booster Tools Dashboard" page fixed.
 * Dev - EMAILS & MISC. - EU VAT Number - "EU Countries VAT Rates" tool added.
 * Dev - Donate link removed.
@@ -821,7 +822,7 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
 = 2.3.0 - 01/10/2015 =
 * Fix - `time` function calls replaced with `current_time` in: crowdfunding module and shortcode, invoicing, stock report.
 * Dev - `WCJ_Module` code refactoring.
-* Dev - Shortcodes - Orders - `[wcj_order_checkout_field]` shortcode modified. `[wcj_order_custom_meta_field]` depreciated (now duplicates `[wcj_order_checkout_field]`).
+* Dev - Shortcodes - Orders - `[wcj_order_checkout_field]` shortcode modified. `[wcj_order_custom_meta_field]` deprecated (now duplicates `[wcj_order_checkout_field]`).
 * Dev - PAYMENT GATEWAYS category added and modules renamed.
 * Dev - PAYMENT GATEWAYS - Gateways Currency - Initial module release.
 * Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Fee (or discount) type" option unlocked.
@@ -938,7 +939,7 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
 * Dev - Tools (SKU and Admin) moved to each module's settings.
 
 = 2.2.2 - 24/07/2015 =
-* Fix - DASHBOARD - White screen on dashboard issue, fixed. `wcj_features_status` filter depreciated.
+* Fix - DASHBOARD - White screen on dashboard issue, fixed. `wcj_features_status` filter deprecated.
 * Fix - PRICES & CURRENCIES - Price by Country - Variable onsale old price bug fixed.
 * Dev - PRICES & CURRENCIES - Wholesale Price Table Shortcode (`[wcj_product_wholesale_price_table]`) - Discount percent row added to the table.
 * Dev - PRICES & CURRENCIES - Wholesale Price - "Show discount info on cart page" and "Discount info on cart page format" options added.
@@ -949,7 +950,7 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
 * Dev - CART & CHECKOUT - Payment Gateways - Code refactoring, new modules created:
   Custom Payment Gateways, Payment Gateways Icons, Payment Gateways Fees, Payment Gateways per Category.
   Attaching PDF Invoice V1 to emails - code moved to PDF Invoice V1 module.
-  All settings (except depreciated "attaching PDF Invoice V1") moved from WooCommerce Checkout settings to module's settings.
+  All settings (except deprecated "attaching PDF Invoice V1") moved from WooCommerce Checkout settings to module's settings.
 * Fix - SHIPPING & ORDERS - Orders - Step in min order amount changed.
 * Fix - PDF Invoicing - Numbering - `[wcj_invoice_date]` in invoice number bug fixed.
 * Fix - PDF Invoicing - In TCPDF lib, `symlink` call changed to calling with variable function name to prevent autodeleting tcpdf_fonts.php file from some servers bug.
@@ -1033,7 +1034,7 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
 * Dev - PDF Invoicing - Option for `item_variation` column added to `[wcj_order_items_table]` shortcode. Suggested by Brad.
 * Dev - PDF Invoicing - Shop manager (not only admin) now is also allowed to see the invoices (`is_shop_manager` function). Also added to PDF Invoices (V1).
 * Dev - PDF Invoicing - Extra check on `fopen`. Also added to PDF Invoices (V1).
-* Dev - EMAILS & MISC. - PDF Invoices (V1) moved to "EMAILS & MISC." submenu and marked as "depreciated".
+* Dev - EMAILS & MISC. - PDF Invoices (V1) moved to "EMAILS & MISC." submenu and marked as "deprecated".
 * Dev - EMAILS & MISC. - PDF Invoices (V1) - `get_item_total` replaced with `get_item_subtotal`.
 * Dev - EMAILS & MISC. - Reports - Customers by Country - Total spent by country added.
 * Dev - EMAILS & MISC. - WPML - New module added. Support for some options added to wpml-config.xml file.
@@ -1155,7 +1156,7 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
   Fields can be added globally (i.e. for all products), or on per product basis.
   Currently only fields of `text` type are available.
 * Dev - PRODUCTS - **Product Info** - Wordpress shortcodes added for every WooJetpack shortcode.
-  WooJetpack shortcodes are now depreciated and will be removed in future releases. See v.1.9.0 changelog for more details.
+  WooJetpack shortcodes are now deprecated and will be removed in future releases. See v.1.9.0 changelog for more details.
   This covers Wordpress.org Support Forum thread by dudemcpek - https://wordpress.org/support/topic/not-displaying-shortcodes.
 * Dev - CART - **Add to Cart per Category** - Add to cart button text on *per category* basis (single or category view). Idea by Craig.
 * Dev - CART - **Add to Cart per Product** - Custom add to cart button text on *per product* basis (single or category view). Idea by Craig.
@@ -1204,7 +1205,7 @@ D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes
   Products with *empty price* only for archives (single view does not contain add to cart button at all, so nothing to cover).
 * Feature Upgraded - **Product Info** - Added `[wcjp_list_attribute]` shortcode.
   Now it is possible to display product's attribute values list (e.g. to list the different colour variations of a product). Idea by Tony.
-  This is the right way to display product info, so WooJetpack shortcodes (introduced in v.1.8.2) are depreciated and will be removed in feature releases.
+  This is the right way to display product info, so WooJetpack shortcodes (introduced in v.1.8.2) are deprecated and will be removed in feature releases.
   Shortcode has `visibility` parameter which gives the possibility to show shortcode's product info to admin only.
 * Feature Upgraded - **Product Info** - `%stock_quantity%` WooJetpack Shortcode added.
 * Dev - **Product Info** - `the_content` filter added to result. Now shortcodes will be displayed properly.

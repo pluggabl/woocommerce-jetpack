@@ -244,10 +244,10 @@ class WCJ_Add_To_Cart extends WCJ_Module {
 
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_add_to_cart_per_category_total_groups_number', 1 ) ); $i++ ) {
 
-			/* $depreciated = get_option( 'wcj_add_to_cart_per_category_group_' . $i );
-			if ( false !== $depreciated ) {
-				if ( '' != $depreciated ) {
-					update_option( 'wcj_add_to_cart_per_category_ids_group_' . $i, explode( ',', str_replace( ' ', '', $depreciated ) ) );
+			/* $deprecated = get_option( 'wcj_add_to_cart_per_category_group_' . $i );
+			if ( false !== $deprecated ) {
+				if ( '' != $deprecated ) {
+					update_option( 'wcj_add_to_cart_per_category_ids_group_' . $i, explode( ',', str_replace( ' ', '', $deprecated ) ) );
 				}
 				//delete_option( 'wcj_add_to_cart_per_category_group_' . $i );
 			} */
