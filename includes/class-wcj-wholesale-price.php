@@ -373,7 +373,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 * @since   2.5.5
 	 */
 	function add_settings() {
@@ -484,7 +484,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'id'       => 'wcj_wholesale_price_level_discount_percent_' . $i, // mislabeled - should be 'wcj_wholesale_price_level_discount_'
 				'default'  => 0,
 				'type'     => 'number',
-				'custom_attributes' => array('step' => '0.0001', 'min' => '0', ),
+				'custom_attributes' => array('step' => '0.0001', /* 'min' => '0', */ ),
 			);
 		}
 		$settings[] = array(
@@ -540,7 +540,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 							'id'      => 'wcj_wholesale_price_level_discount_percent_' . $user_role_key . '_' . $i, // mislabeled - should be 'wcj_wholesale_price_level_discount_'
 							'default' => 0,
 							'type'    => 'number',
-							'custom_attributes' => array('step' => '0.0001', 'min' => '0', ),
+							'custom_attributes' => array('step' => '0.0001', /* 'min' => '0', */ ),
 						),
 					) );
 				}
