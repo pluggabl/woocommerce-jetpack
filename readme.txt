@@ -128,7 +128,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 11/11/2016 =
+= 2.5.7 - 12/11/2016 =
+    * Tweak - EMAILS & MISC. - Export - Headers cleaned up.
+    * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.
     * Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - Empty array passed on apply `wc_order_statuses` filter (produced PHP warning).
     * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - User messages updated.
     * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - "Add new custom status" button label added to translation.

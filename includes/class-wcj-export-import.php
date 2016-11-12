@@ -82,7 +82,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_csv.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.7
 	 * @since   2.4.8
 	 */
 	function export_csv() {
@@ -92,12 +92,13 @@ class WCJ_Export_Import extends WCJ_Module {
 			foreach ( $data as $row ) {
 				$csv .= implode( get_option( 'wcj_export_csv_separator', ',' ), $row ) . PHP_EOL;
 			}
-			header( "Content-Type: application/octet-stream" );
 			header( "Content-Disposition: attachment; filename=" . $_POST['wcj_export'] . ".csv" );
-			header( "Content-Type: application/octet-stream" );
-			header( "Content-Type: application/download" );
+			header( "Content-Type: Content-Type: text/html; charset=utf-8" );
 			header( "Content-Description: File Transfer" );
 			header( "Content-Length: " . strlen( $csv ) );
+			if ( 'yes' === get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {
+				echo "\xEF\xBB\xBF"; // UTF-8 BOM
+			}
 			echo $csv;
 			die();
 		}
@@ -575,33 +576,41 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 * @since   2.5.4
 	 */
 	function get_settings() {
 		$settings = array(
 			array(
-				'title'   => __( 'Export Options', 'woocommerce-jetpack' ),
-				'type'    => 'title',
-				'id'      => 'wcj_export_options'
+				'title'    => __( 'Export Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_export_options',
 			),
 			array(
-				'title'   => __( 'CSV Separator', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_export_csv_separator',
-				'default' => ',',
-				'type'    => 'text',
+				'title'    => __( 'CSV Separator', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_export_csv_separator',
+				'default'  => ',',
+				'type'     => 'text',
 			),
 			array(
-				'title'   => __( 'Export Orders Fields', 'woocommerce-jetpack' ),
-				'id'      => 'wcj_export_orders_fields',
-				'default' => $this->get_order_export_default_fields_ids(),
-				'type'    => 'multiselect',
-				'options' => $this->get_order_export_fields(),
-				'css'     => 'height:300px;',
+				'title'    => __( 'UTF-8 BOM', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Add UTF-8 BOM sequence', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_export_csv_add_utf_8_bom',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
 			),
 			array(
-				'type'    => 'sectionend',
-				'id'      => 'wcj_export_options'
+				'title'    => __( 'Export Orders Fields', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_export_orders_fields',
+				'default'  => $this->get_order_export_default_fields_ids(),
+				'type'     => 'multiselect',
+				'options'  => $this->get_order_export_fields(),
+				'css'      => 'height:300px;',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_export_options',
 			),
 		);
 		return $this->add_standard_settings( $settings );
