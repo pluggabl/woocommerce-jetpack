@@ -129,6 +129,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 11/11/2016 =
+    * Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - Empty array passed on apply `wc_order_statuses` filter (produced PHP warning).
+    * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - User messages updated.
+    * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - "Add new custom status" button label added to translation.
 ~D  * Dev - PRICES & CURRENCIES - Wholesale Price - Global settings discount now can be negative.
     * Fix - Deprecated typo fixed.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_short_description` - now displays item's short description (may be different from `item_excerpt`). `item_description` attribute removed.
@@ -137,7 +140,7 @@ D   * Dev - Shortcodes - Products - `[wcj_product_short_description]` shortcode 
     * Fix - Shortcodes - Products - `[wcj_product_excerpt]` - Manually checking for short description first (so `length` can be applied).
 D   * Dev - Shortcodes - Products - `[wcj_product_excerpt]` - `excerpt_length` attribute deprecated (replaced with `length`).
 -   * Tweak - PRICES & CURRENCIES - Wholesale Price - `get_wholesale_price()` - `price_directly` - `wcj_get_wholesale_price` filter added.
--D  * Dev - PRICES & CURRENCIES - Wholesale Price - Per product - "Price directly" option added for non variable products.
+-D  * Dev - PRICES & CURRENCIES - Wholesale Price - Per product - "Price directly" option added (for non variable products only).
     * Tweak - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `wcj_product_wholesale_price_table_price_before` and `wcj_product_wholesale_price_table_price_after` filters added.
 ~   * Tweak - PRICES & CURRENCIES - Price by User Role - `change_price_by_role()` - `wcj_price_by_user_role_get_price` filter added.
 ~   * Tweak - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.

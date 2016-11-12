@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Custom Statuses class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -151,26 +151,26 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Add new custom status to wcj_orders_custom_statuses_array.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.7
 	 */
 	public function add_custom_status( $new_status, $new_status_label, $new_status_icon_content, $new_status_icon_color ) {
 
 		// Checking function arguments
 		if ( ! isset( $new_status ) || '' == $new_status ) {
-			return '<div class="error"><p>' . __( 'Status slug is empty. Status not added.', 'woocommerce-jetpack' ) . '</p></div>';
+			return '<div class="error"><p>' . __( 'Status slug is empty. Status was not added!', 'woocommerce-jetpack' ) . '</p></div>';
 		}
 		if ( strlen( $new_status ) > 17 ) {
-			return '<div class="error"><p>' . __( 'The length of status slug must be 17 or less characters.', 'woocommerce-jetpack' ) . '</p></div>';
+			return '<div class="error"><p>' . __( 'The length of status slug must be 17 or less characters. Status was not added!', 'woocommerce-jetpack' ) . '</p></div>';
 		}
 		if ( ! isset( $new_status_label ) || '' == $new_status_label ) {
-			return '<div class="error"><p>' . __( 'Status label is empty. Status not added.', 'woocommerce-jetpack' ) . '</p></div>';
+			return '<div class="error"><p>' . __( 'Status label is empty. Status was not added!', 'woocommerce-jetpack' ) . '</p></div>';
 		}
 
 		// Checking status
 		$statuses_updated = ( '' == get_option( 'wcj_orders_custom_statuses_array' ) ) ? array() : get_option( 'wcj_orders_custom_statuses_array' );
 		$new_key = 'wc-' . $_POST['new_status'];
 		if ( isset( $statuses_updated[ $new_key ] ) )
-			return '<div class="error"><p>' . __( 'Duplicate slug. Status not added.', 'woocommerce-jetpack' ) . '</p></div>';
+			return '<div class="error"><p>' . __( 'Duplicate slug. Status was not added!', 'woocommerce-jetpack' ) . '</p></div>';
 		$statuses_updated[ $new_key ] = $_POST['new_status_label'];
 
 		// Adding custom status
@@ -180,7 +180,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			'color'   => $new_status_icon_color,
 		) );
 		if ( true === $result ) {
-			return '<div class="updated"><p>' . __( 'New status have been successfully added!', 'woocommerce-jetpack' ) . '</p></div>';
+			return '<div class="updated"><p>' . __( 'New status has been successfully added!', 'woocommerce-jetpack' ) . '</p></div>';
 		} else {
 			return '<div class="error"><p>' . __( 'Status was not added.', 'woocommerce-jetpack' ) . '</p></div>';
 		}
@@ -189,18 +189,18 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * create_custom_statuses_tool.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 */
 	public function create_custom_statuses_tool() {
 		$result_message = '';
 		if ( isset( $_POST['add_custom_status'] ) ) {
 			$result_message = $this->add_custom_status( $_POST['new_status'], $_POST['new_status_label'], $_POST['new_status_icon_content'], $_POST['new_status_icon_color'] );
 		} elseif ( isset( $_GET['delete'] ) && ( '' != $_GET['delete'] ) ) {
-			$statuses_updated = apply_filters( 'wc_order_statuses', $statuses_updated );
+			$statuses_updated = apply_filters( 'wc_order_statuses', array() );
 			unset( $statuses_updated[ $_GET['delete'] ] );
 			$result = update_option( 'wcj_orders_custom_statuses_array', $statuses_updated );
 			if ( true === $result ) {
-				$result_message = '<div class="updated"><p>' . __( 'Status have been successfully deleted.', 'woocommerce-jetpack' ) . '</p></div>';
+				$result_message = '<div class="updated"><p>' . __( 'Status has been successfully deleted.', 'woocommerce-jetpack' ) . '</p></div>';
 			} else {
 				$result_message = '<div class="error"><p>' . __( 'Delete failed.', 'woocommerce-jetpack' ) . '</p></div>';
 			}
@@ -254,11 +254,11 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 							<ul>
 								<li><?php _e( 'Slug (without wc- prefix)', 'woocommerce-jetpack' ); ?> <input type="text" name="new_status" style="width:100%;"></li>
 								<li><?php _e( 'Label', 'woocommerce-jetpack' ); ?> <input type="text" name="new_status_label" style="width:100%;"></li>
-								<li><?php _e( 'Icon Code', 'woocommerce-jetpack' ); ?> <input type="text" name="new_status_icon_content" value="e011"></li>
-								<li><?php _e( 'Icon Color', 'woocommerce-jetpack' ); ?> <input type="color" name="new_status_icon_color" value="#999999"><br><?php
-									echo sprintf( __( 'You can check icon codes <a target="_blank" href="%s">here</a>.', 'woocommerce-jetpack' ), 'https://rawgit.com/woothemes/woocommerce-icons/master/demo.html' ); ?></li>
+								<li><?php _e( 'Icon Code', 'woocommerce-jetpack' ); ?> <input type="text" name="new_status_icon_content" value="e011"><br><?php
+									echo '<em>' . sprintf( __( 'You can check icon codes <a target="_blank" href="%s">here</a>.', 'woocommerce-jetpack' ), 'https://rawgit.com/woothemes/woocommerce-icons/master/demo.html' ) . '</em>'; ?></li>
+								<li><?php _e( 'Icon Color', 'woocommerce-jetpack' ); ?> <input type="color" name="new_status_icon_color" value="#999999"></li>
 							</ul>
-							<input class="button-primary" type="submit" name="add_custom_status" value="Add new custom status">
+							<input class="button-primary" type="submit" name="add_custom_status" value="<?php echo __( 'Add new custom status', 'woocommerce-jetpack' ); ?>">
 						</form>
 					</div>
 				</div>
