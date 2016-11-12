@@ -129,8 +129,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 12/11/2016 =
+    * Fix - EMAILS & MISC. - EU VAT Number - Preserve VAT in Base Country - `EL` replaced with `GR` for Greece when checking location.
     * Tweak - EMAILS & MISC. - Export - Headers cleaned up.
-    * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.
+D   * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.
     * Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - Empty array passed on apply `wc_order_statuses` filter (produced PHP warning).
     * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - User messages updated.
     * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - "Add new custom status" button label added to translation.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack EU VAT Number class.
  *
- * @version 2.5.4
+ * @version 2.5.7
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -239,7 +239,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * maybe_exclude_vat.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.7
 	 */
 //	function maybe_exclude_vat( $matched_tax_rates, $args ) {
 	function maybe_exclude_vat() {
@@ -257,6 +257,9 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
 				}
 				$selected_country = substr( $_SESSION['wcj_eu_vat_number_to_check'], 0, 2 );
+				if ( 'EL' === $selected_country ) {
+					$selected_country = 'GR';
+				}
 				$preserve_base_country_check_passed = ( $location['country'] !== $selected_country ) ? true : false;
 			}
 			if ( $preserve_base_country_check_passed ) {
