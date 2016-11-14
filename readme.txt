@@ -128,7 +128,11 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 12/11/2016 =
+= 2.5.7 - 14/11/2016 =
+    * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_data()` - `WP_Query` optimized to return `ids` only.
+    * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_zip()` - Headers cleaned up.
+    * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - Calling `get_tool_header_html()` instead of directly outputting header.
+~D  * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report tool - "Download monthly documents CSV" added.
     * Fix - EMAILS & MISC. - EU VAT Number - Preserve VAT in Base Country - `EL` replaced with `GR` for Greece when checking location.
     * Tweak - EMAILS & MISC. - Export - Headers cleaned up.
 D   * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.

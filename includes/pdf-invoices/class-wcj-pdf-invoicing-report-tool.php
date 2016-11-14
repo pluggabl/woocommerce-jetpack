@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Report Tool class.
  *
- * @version 2.5.3
+ * @version 2.5.7
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -18,11 +18,12 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.10
+	 * @version 2.5.7
 	 */
 	public function __construct() {
 		$this->notice = '';
 		add_action( 'init', array( $this, 'generate_report_zip' ) );
+		add_action( 'init', array( $this, 'export_csv' ) );
 	}
 
 	/**
@@ -52,7 +53,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Add Invoices Report tool to WooCommerce menu (the content).
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.7
 	 */
 	function create_invoices_report_tool() {
 		$result_message = '';
@@ -68,8 +69,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			}
 		}
 		?><div>
-			<h3><?php echo __( 'Booster - Invoices Report', 'woocommerce-jetpack' ); ?></h3>
-			<p><?php echo __( 'Invoices Monthly Reports.', 'woocommerce-jetpack' ); ?></p>
+			<?php echo WCJ()->modules['pdf_invoicing']->get_tool_header_html( 'invoices_report' ); ?>
 			<?php echo $result_message; ?>
 			<p><form method="post" action=""><?php
 
@@ -107,6 +107,11 @@ class WCJ_PDF_Invoicing_Report_Tool {
 						'',
 						'<input class="button-primary" type="submit" name="get_invoices_report_zip" value="' . __( 'Download all monthly documents PDFs in single ZIP file', 'woocommerce-jetpack' ) . '">',
 					),
+					// Get Report CSV Button
+					array(
+						'',
+						'<input class="button-primary" type="submit" name="get_invoices_report_csv" value="' . __( 'Download monthly documents CSV', 'woocommerce-jetpack' ) . '">',
+					),
 				);
 				// Print all
 				echo wcj_get_table_html( $data, array( 'table_heading_type' => 'vertical', ) );
@@ -117,7 +122,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * get_invoices_report_zip.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.7
 	 * @since   2.3.10
 	 */
 	function get_invoices_report_zip( $year, $month, $invoice_type_id ) {
@@ -173,9 +178,9 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		$output .=  "status: "   . $zip->getStatusString()   . "\n"; */
 		$zip->close();
 
-		header( "Content-Type: application/octet-stream" );
+//		header( "Content-Type: application/octet-stream" );
 		header( "Content-Disposition: attachment; filename=" . urlencode( $zip_file_name ) );
-		header( "Content-Type: application/octet-stream" );
+//		header( "Content-Type: application/octet-stream" );
 		header( "Content-Type: application/download" );
 		header( "Content-Description: File Transfer" );
 		header( "Content-Length: " . filesize( $zip_file_path ) );
@@ -193,14 +198,55 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	}
 
 	/**
+	 * export_csv.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function export_csv() {
+		$the_year         = ( ! empty( $_POST['report_year'] ) )  ? $_POST['report_year']  : date( 'Y' );
+		$the_month        = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : date( 'm' );
+		$the_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
+		if ( isset( $_POST['get_invoices_report_csv'] ) ) {
+			$data = $this->get_invoices_report_data( $the_year, $the_month, $the_invoice_type );
+			$csv = '';
+			foreach ( $data as $row ) {
+				$row = str_replace( '.', ',', $row );
+//				$csv .= implode( get_option( 'wcj_export_csv_separator', ',' ), $row ) . PHP_EOL;
+				$csv .= implode( ';', $row ) . PHP_EOL;
+			}
+			$filename = 'report_' . $the_year . '_' . $the_month . '_' . $the_invoice_type;
+			header( "Content-Disposition: attachment; filename=" . $filename . ".csv" );
+			header( "Content-Type: Content-Type: text/html; charset=utf-8" );
+			header( "Content-Description: File Transfer" );
+			header( "Content-Length: " . strlen( $csv ) );
+//			if ( 'yes' === get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {
+				echo "\xEF\xBB\xBF"; // UTF-8 BOM
+//			}
+			echo $csv;
+			die();
+		}
+	}
+
+	/**
 	 * Invoices Report function.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.7
 	 */
 	function get_invoices_report( $year, $month, $invoice_type_id ) {
-
 		$output = '';
+		$data = $this->get_invoices_report_data( $year, $month, $invoice_type_id );
+		$output .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', ) );
+		return $output;
+	}
 
+	/**
+	 * Invoices Report Data function.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function get_invoices_report_data( $year, $month, $invoice_type_id ) {
 		$data = array();
 		$data[] = array(
 			__( 'Document Nr.', 'woocommerce-jetpack' ),
@@ -224,7 +270,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		$last_minute  = mktime( 23, 59, 59, $month, date( 't', $first_minute ), $year );
 
 		$offset = 0;
-		$block_size = 96;
+		$block_size = 256;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'shop_order',
@@ -244,11 +290,13 @@ class WCJ_PDF_Invoicing_Report_Tool {
 					),
 				),
 				'offset'         => $offset,
+				'fields'         => 'ids',
 			);
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$order_id = $loop->post->ID;
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $order_id ) {
 
 				if ( wcj_is_invoice_created( $order_id, $invoice_type_id ) ) {
 
@@ -292,19 +340,13 @@ class WCJ_PDF_Invoicing_Report_Tool {
 						//'<pre>' . print_r( get_post_meta( $order_id ), true ) . '</pre>',
 					);
 				}
-			endwhile;
+			}
 			$offset += $block_size;
 		}
 
-		/* $output .= '<h3>' . 'Total Sum Excl. Tax: ' . sprintf( '$ %.2f', $total_sum_excl_tax ) . '</h3>';
-		$output .= '<h3>' . 'Total Sum: ' . sprintf( '$ %.2f', $total_sum ) . '</h3>';
-		$output .= '<h3>' . 'Total Tax: ' . sprintf( '$ %.2f', $total_tax ) . '</h3>'; */
-		$output .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', ) );
-
-//		$output .= date( "Y-m-d H:i:s", $first_minute ) . ' -> ' . date( "Y-m-d H:i:s", $last_minute );
-
-		return $output;
+		return $data;
 	}
+
 }
 
 endif;
