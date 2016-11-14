@@ -129,6 +129,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 14/11/2016 =
+~D  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
+~D  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
     * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_data()` - `WP_Query` optimized to return `ids` only.
     * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_zip()` - Headers cleaned up.
     * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - Calling `get_tool_header_html()` instead of directly outputting header.

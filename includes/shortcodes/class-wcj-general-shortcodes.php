@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 */
 	public function __construct() {
 
@@ -46,7 +46,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'countries'             => '',
 			'currencies'            => '',
 			'content'               => '',
-			'heading_format'        => 'from %level_qty% pcs.',
+			'heading_format'        => 'from %level_min_qty% pcs.',
 			'replace_with_currency' => 'no',
 			'hide_if_zero_quantity' => 'no',
 			'table_format'          => 'horizontal',
@@ -84,7 +84,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_wholesale_price_table (global only).
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 * @since   2.4.8
 	 */
 	function wcj_wholesale_price_table( $atts ) {
@@ -116,11 +116,18 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$data_qty              = array();
 		$data_discount         = array();
 		$columns_styles        = array();
+		$i = -1;
 		foreach ( $wholesale_price_levels as $wholesale_price_level ) {
+			$i++;
 			if ( 0 == $wholesale_price_level['quantity'] && 'yes' === $atts['hide_if_zero_quantity'] ) {
 				continue;
 			}
-			$data_qty[]              = str_replace( '%level_qty%', $wholesale_price_level['quantity'], $atts['heading_format'] ) ;
+			$level_max_qty = ( isset( $wholesale_price_levels[ $i + 1 ]['quantity'] ) ) ?  '-' . ( $wholesale_price_levels[ $i + 1 ]['quantity'] - 1 ) : '+';
+			$data_qty[] = str_replace(
+				array( '%level_qty%', '%level_min_qty%', '%level_max_qty%' ), // %level_qty% is deprecated
+				array( $wholesale_price_level['quantity'], $wholesale_price_level['quantity'], $level_max_qty ),
+				$atts['heading_format']
+			);
 			$data_discount[]         = ( 'fixed' === get_option( 'wcj_wholesale_price_discount_type', 'percent' ) )
 				? '-' . wc_price( $wholesale_price_level['discount'] ) : '-' . $wholesale_price_level['discount'] . '%';
 			$columns_styles[]        = 'text-align: center;';
