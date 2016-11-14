@@ -215,14 +215,14 @@ class WCJ_PDF_Invoicing_Report_Tool {
 //				$csv .= implode( get_option( 'wcj_export_csv_separator', ',' ), $row ) . PHP_EOL;
 				$csv .= implode( ';', $row ) . PHP_EOL;
 			}
+//			if ( 'yes' === get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {
+				$csv = "\xEF\xBB\xBF" . $csv; // UTF-8 BOM
+//			}
 			$filename = 'report_' . $the_year . '_' . $the_month . '_' . $the_invoice_type;
 			header( "Content-Disposition: attachment; filename=" . $filename . ".csv" );
 			header( "Content-Type: Content-Type: text/html; charset=utf-8" );
 			header( "Content-Description: File Transfer" );
 			header( "Content-Length: " . strlen( $csv ) );
-//			if ( 'yes' === get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {
-				echo "\xEF\xBB\xBF"; // UTF-8 BOM
-//			}
 			echo $csv;
 			die();
 		}

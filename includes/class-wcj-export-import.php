@@ -92,13 +92,13 @@ class WCJ_Export_Import extends WCJ_Module {
 			foreach ( $data as $row ) {
 				$csv .= implode( get_option( 'wcj_export_csv_separator', ',' ), $row ) . PHP_EOL;
 			}
+			if ( 'yes' === get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {
+				$csv = "\xEF\xBB\xBF" . $csv; // UTF-8 BOM
+			}
 			header( "Content-Disposition: attachment; filename=" . $_POST['wcj_export'] . ".csv" );
 			header( "Content-Type: Content-Type: text/html; charset=utf-8" );
 			header( "Content-Description: File Transfer" );
 			header( "Content-Length: " . strlen( $csv ) );
-			if ( 'yes' === get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {
-				echo "\xEF\xBB\xBF"; // UTF-8 BOM
-			}
 			echo $csv;
 			die();
 		}
