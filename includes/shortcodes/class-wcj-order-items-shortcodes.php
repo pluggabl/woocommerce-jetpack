@@ -161,9 +161,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		// Check all possible args
 		$columns_titles = ( '' == $atts['columns_titles'] ) ? array() : explode( '|', $atts['columns_titles'] );
 		$columns_styles = ( '' == $atts['columns_styles'] ) ? array() : explode( '|', $atts['columns_styles'] );
-		if ( $columns_total_number !== count( $columns_titles ) || $columns_total_number !== count( $columns_styles ) ) {
+		/* if ( $columns_total_number !== count( $columns_titles ) || $columns_total_number !== count( $columns_styles ) ) {
 			return __( 'Please recheck that there is the same number of columns in "columns", "columns_titles" and "columns_styles" attributes.', 'woocommerce-jetpack' );
-		}
+		} */
 
 		// The Items
 		$the_items = $the_order->get_items();
