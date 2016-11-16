@@ -127,6 +127,24 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	} */
 
 	/**
+	 * get_tax_class_name.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function get_tax_class_name( $tax_class ) {
+		$tax_classes       = WC_Tax::get_tax_classes();
+		$classes_names     = array();
+		$classes_names[''] = __( 'Standard', 'woocommerce' );
+		if ( ! empty( $tax_classes ) ) {
+			foreach ( $tax_classes as $class ) {
+				$classes_names[ sanitize_title( $class ) ] = esc_html( $class );
+			}
+		}
+		return ( isset( $classes_names[ $tax_class ] ) ) ? $classes_names[ $tax_class ] : '';
+	}
+
+	/**
 	 * wcj_order_items_table.
 	 *
 	 * @version 2.5.7
@@ -143,7 +161,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		// Check all possible args
 		$columns_titles = ( '' == $atts['columns_titles'] ) ? array() : explode( '|', $atts['columns_titles'] );
 		$columns_styles = ( '' == $atts['columns_styles'] ) ? array() : explode( '|', $atts['columns_styles'] );
-		//if ( ! ( $columns_total_number === count( $columns_titles ) === count( $columns_styles ) ) ) return '';
+		if ( $columns_total_number !== count( $columns_titles ) || $columns_total_number !== count( $columns_styles ) ) {
+			return __( 'Please recheck that there is the same number of columns in "columns", "columns_titles" and "columns_styles" attributes.', 'woocommerce-jetpack' );
+		}
 
 		// The Items
 		$the_items = $the_order->get_items();
@@ -194,6 +214,15 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 				switch ( $column ) {
 					case 'debug':
 						$data[ $item_counter ][] = print_r( $item, true );
+						break;
+					case 'product_regular_price':
+						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_regular_price(), $atts ) : '';
+						break;
+					case 'product_sale_price':
+						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_sale_price(), $atts ) : '';
+						break;
+					case 'tax_class':
+						$data[ $item_counter ][] = ( isset( $item['tax_class'] ) ) ? $this->get_tax_class_name( $item['tax_class'] ) : '';
 						break;
 					case 'item_number':
 						$data[ $item_counter ][] = $item_counter;

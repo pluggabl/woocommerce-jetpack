@@ -128,7 +128,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 14/11/2016 =
+= 2.5.7 - 16/11/2016 =
+~   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Check for same number of `columns`, `columns_titles` and `columns_styles` added.
+    * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_regular_price` and `product_sale_price` columns added.
+    * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `tax_class` column added.
 ~D  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
 ~D  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
     * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_data()` - `WP_Query` optimized to return `ids` only.
