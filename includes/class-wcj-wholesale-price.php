@@ -143,7 +143,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			: get_option( 'wcj_wholesale_price_discount_type', 'percent' );
 		if ( 'price_directly' === $discount_type ) {
 			if ( 0 != $discount ) {
-				$discount = apply_filters( 'wcj_get_wholesale_price', $discount, wc_get_product( $product_id ) );
+				$discount = apply_filters( 'wcj_get_wholesale_price', $discount, $product_id );
 				return $discount;
 			} else {
 				return $price;
