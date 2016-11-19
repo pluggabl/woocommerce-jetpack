@@ -129,8 +129,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 19/11/2016 =
-    * Dev - Emails & Misc. - Export - Export Products - `WP_Query` optimized to return `ids` only.
-~D  * Dev - Emails & Misc. - Export - Export Products - "Export Products Fields" option added.
+~D  * Dev - EMAILS & MISC. - Export - Export Products - "Export Products Fields" option added.
+D   * Dev - EMAILS & MISC. - Export - Export Products - "Image URL", "Short Description", "Description", "Status" and "URL" export fields added.
+    * Dev - EMAILS & MISC. - Export - Export Products - `WP_Query` optimized to return `ids` only.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_regular_price` and `product_sale_price` columns added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `tax_class` column added.
 ~D  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
