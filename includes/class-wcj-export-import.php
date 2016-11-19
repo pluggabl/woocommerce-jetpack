@@ -225,6 +225,54 @@ class WCJ_Export_Import extends WCJ_Module {
 	}
 
 	/**
+	 * get_product_export_fields.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function get_product_export_fields() {
+		return array(
+			'product-id'                         => __( 'Product ID', 'woocommerce-jetpack' ),
+			'product-name'                       => __( 'Name', 'woocommerce-jetpack' ),
+			'product-sku'                        => __( 'SKU', 'woocommerce-jetpack' ),
+			'product-stock'                      => __( 'Stock', 'woocommerce-jetpack' ),
+			'product-regular-price'              => __( 'Regular Price', 'woocommerce-jetpack' ),
+			'product-sale-price'                 => __( 'Sale Price', 'woocommerce-jetpack' ),
+			'product-price'                      => __( 'Price', 'woocommerce-jetpack' ),
+			'product-type'                       => __( 'Type', 'woocommerce-jetpack' ),
+//			'product-attributes'                 => __( 'Attributes', 'woocommerce-jetpack' ),
+			'product-image-url'                  => __( 'Image URL', 'woocommerce-jetpack' ),
+			'product-short-description'          => __( 'Short Description', 'woocommerce-jetpack' ),
+			'product-description'                => __( 'Description', 'woocommerce-jetpack' ),
+			'product-status'                     => __( 'Status', 'woocommerce-jetpack' ),
+			'product-url'                        => __( 'URL', 'woocommerce-jetpack' ),
+		);
+	}
+
+	/**
+	 * get_product_export_default_fields_ids.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function get_product_export_default_fields_ids() {
+		return array(
+			'product-id',
+			'product-name',
+			'product-sku',
+			'product-stock',
+			'product-regular-price',
+			'product-sale-price',
+			'product-price',
+			'product-type',
+			'product-image-url',
+			'product-short-description',
+			'product-status',
+			'product-url',
+		);
+	}
+
+	/**
 	 * create_export_tool.
 	 *
 	 * @version 2.5.6
@@ -477,24 +525,20 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_products.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.7
 	 * @since   2.5.3
 	 */
 	function export_products() {
+		$all_fields = $this->get_product_export_fields();
+		$fields_ids = get_option( 'wcj_export_products_fields', $this->get_product_export_default_fields_ids() );
+		$titles = array();
+		foreach( $fields_ids as $field_id ) {
+			$titles[] = $all_fields[ $field_id ];
+		}
 		$data = array();
-		$data[] = array(
-			__( 'Product ID', 'woocommerce-jetpack' ),
-			__( 'Name', 'woocommerce-jetpack' ),
-			__( 'SKU', 'woocommerce-jetpack' ),
-			__( 'Stock', 'woocommerce-jetpack' ),
-			__( 'Regular Price', 'woocommerce-jetpack' ),
-			__( 'Sale Price', 'woocommerce-jetpack' ),
-			__( 'Price', 'woocommerce-jetpack' ),
-			__( 'Type', 'woocommerce-jetpack' ),
-//			__( 'Attributes', 'woocommerce-jetpack' ),
-		);
+		$data[] = $titles;
 		$offset = 0;
-		$block_size = 96;
+		$block_size = 1024;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'product',
@@ -503,24 +547,65 @@ class WCJ_Export_Import extends WCJ_Module {
 				'orderby'        => 'date',
 				'order'          => 'DESC',
 				'offset'         => $offset,
+				'fields'         => 'ids',
 			);
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$product_id = $loop->post->ID;
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $product_id ) {
 				$_product = wc_get_product( $product_id );
-				$data[] = array(
-					$product_id,
-					$_product->get_title(),
-					$_product->get_sku(),
-					$_product->/* get_total_stock() */get_stock_quantity(),
-					$_product->get_regular_price(),
-					$_product->get_sale_price(),
-					( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? '' : $_product->get_price() ),
-					$_product->get_type(),
-//					( ! empty( $_product->get_attributes() ) ? serialize( $_product->get_attributes() ) : '' ),
-				);
-			endwhile;
+				$row = array();
+				foreach( $fields_ids as $field_id ) {
+					switch ( $field_id ) {
+						case 'product-id':
+							$row[] = $product_id;
+							break;
+						case 'product-name':
+							$row[] = $_product->get_title();
+							break;
+						case 'product-sku':
+							$row[] = $_product->get_sku();
+							break;
+						case 'product-stock':
+							$row[] = $_product->get_stock_quantity(); // get_total_stock()
+							break;
+						case 'product-regular-price':
+							$row[] = $_product->get_regular_price();
+							break;
+						case 'product-sale-price':
+							$row[] = $_product->get_sale_price();
+							break;
+						case 'product-price':
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? '' : $_product->get_price() );
+							break;
+						case 'product-type':
+							$row[] = $_product->get_type();
+							break;
+						/*
+						case 'product-attributes':
+							$row[] = ( ! empty( $_product->get_attributes() ) ? serialize( $_product->get_attributes() ) : '' );
+							break;
+						*/
+						case 'product-image-url':
+							$row[] = wcj_get_product_image_url( $product_id, 'full' );
+							break;
+						case 'product-short-description':
+							$row[] = $_product->post->post_excerpt;
+							break;
+						case 'product-description':
+							$row[] = $_product->post->post_content;
+							break;
+						case 'product-status':
+							$row[] = $_product->post->post_status;
+							break;
+						case 'product-url':
+							$row[] = $_product->post->guid;
+							break;
+					}
+				}
+				$data[] = $row;
+			}
 			$offset += $block_size;
 		}
 		return $data;
@@ -606,6 +691,14 @@ class WCJ_Export_Import extends WCJ_Module {
 				'default'  => $this->get_order_export_default_fields_ids(),
 				'type'     => 'multiselect',
 				'options'  => $this->get_order_export_fields(),
+				'css'      => 'height:300px;',
+			),
+			array(
+				'title'    => __( 'Export Products Fields', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_export_products_fields',
+				'default'  => $this->get_product_export_default_fields_ids(),
+				'type'     => 'multiselect',
+				'options'  => $this->get_product_export_fields(),
 				'css'      => 'height:300px;',
 			),
 			array(
