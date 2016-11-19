@@ -822,17 +822,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.5.7
 	 * @since   2.5.7
-	 * @todo    placeholder
 	 */
 	function wcj_product_image_url( $atts ) {
-		if ( has_post_thumbnail( $this->the_product->id ) ) {
-			$image_url = get_the_post_thumbnail_url( $this->the_product->id, $atts['image_size'] );
-		} elseif ( ( $parent_id = wp_get_post_parent_id( $this->the_product->id ) ) && has_post_thumbnail( $parent_id ) ) {
-			$image_url = get_the_post_thumbnail_url( $parent_id, $atts['image_size'] );
-		} else {
-			$image_url = '';
-		}
-		return $image_url;
+		return wcj_get_product_image_url( $this->the_product->id, $atts['image_size'] );
 	}
 
 	/**

@@ -8,6 +8,26 @@
  * @author  Algoritmika Ltd.
  */
 
+if ( ! function_exists( 'wcj_get_product_image_url' ) ) {
+ 	/**
+	 * wcj_get_product_image_url.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 * @todo    placeholder
+	 */
+	function wcj_get_product_image_url( $product_id, $image_size = 'shop_thumbnail' ) {
+		if ( has_post_thumbnail( $product_id ) ) {
+			$image_url = get_the_post_thumbnail_url( $product_id, $image_size );
+		} elseif ( ( $parent_id = wp_get_post_parent_id( $product_id ) ) && has_post_thumbnail( $parent_id ) ) {
+			$image_url = get_the_post_thumbnail_url( $parent_id, $image_size );
+		} else {
+			$image_url = '';
+		}
+		return $image_url;
+	}
+}
+
 if ( ! function_exists( 'wcj_is_bot' ) ) {
 	/**
 	 * wcj_is_bot.
