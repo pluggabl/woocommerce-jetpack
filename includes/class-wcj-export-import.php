@@ -529,6 +529,8 @@ class WCJ_Export_Import extends WCJ_Module {
 	 * @since   2.5.3
 	 */
 	function export_products() {
+
+		// Standard Fields
 		$all_fields = $this->get_product_export_fields();
 		$fields_ids = get_option( 'wcj_export_products_fields', $this->get_product_export_default_fields_ids() );
 		$titles = array();
@@ -536,6 +538,7 @@ class WCJ_Export_Import extends WCJ_Module {
 			$titles[] = $all_fields[ $field_id ];
 		}
 
+		// Additional Fields
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'yes' === get_option( 'wcj_export_products_fields_additional_enabled_' . $i, 'no' ) ) {
@@ -613,10 +616,19 @@ class WCJ_Export_Import extends WCJ_Module {
 					}
 				}
 
+				// Additional Fields
 				$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					if ( 'yes' === get_option( 'wcj_export_products_fields_additional_enabled_' . $i, 'no' ) ) {
-						$row[] = get_post_meta( $product_id, get_option( 'wcj_export_products_fields_additional_value_' . $i, '' ), true );
+						if ( 'meta' === get_option( 'wcj_export_products_fields_additional_type_' . $i, 'meta' ) ) {
+							$row[] = get_post_meta( $product_id, get_option( 'wcj_export_products_fields_additional_value_' . $i, '' ), true );
+						} else {
+							global $post;
+							$post = get_post( $product_id );
+							setup_postdata( $post );
+							$row[] = do_shortcode( get_option( 'wcj_export_products_fields_additional_value_' . $i, '' ) );
+							wp_reset_postdata();
+						}
 					}
 				}
 
@@ -747,8 +759,18 @@ class WCJ_Export_Import extends WCJ_Module {
 					'default'  => '',
 				),
 				array(
+					'desc'     => __( 'Type', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_export_products_fields_additional_type_' . $i,
+					'type'     => 'select',
+					'default'  => 'meta',
+					'options'  => array(
+						'meta'      => __( 'Meta', 'woocommerce-jetpack' ),
+						'shortcode' => __( 'Shortcode', 'woocommerce-jetpack' ),
+					),
+				),
+				array(
 					'desc'     => __( 'Value', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'Enter product meta key to retrieve. Can be custom field name.', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter product meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_export_products_fields_additional_value_' . $i,
 					'type'     => 'text',
 					'default'  => '',
