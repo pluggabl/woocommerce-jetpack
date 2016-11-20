@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,13 +17,13 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 */
 	public function __construct() {
 
 		$this->id         = 'orders';
 		$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Minimum WooCommerce order amount (optionally by user role); orders auto-complete; custom admin order list columns; admin order currency.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Minimum WooCommerce order amount (optionally by user role); orders auto-complete; custom admin order list columns; admin order currency; admin list multiple status filtering.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-orders/';
 		parent::__construct();
 
@@ -48,13 +48,128 @@ class WCJ_Orders extends WCJ_Module {
 				add_filter( 'parse_query',           array( $this, 'orders_by_country_admin_filter_query' ) );
 			}
 
-			// Order Currency
+			// Order currency
 			if ( 'yes' === get_option( 'wcj_order_admin_currency', 'no' ) ) {
 				$this->meta_box_screen = 'shop_order';
 				add_action( 'add_meta_boxes',       array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				if ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ) {
 					add_filter( 'woocommerce_get_order_currency', array( $this, 'change_order_currency' ), PHP_INT_MAX, 2 );
+				}
+			}
+
+			// Multiple status
+			if ( 'yes' === get_option( 'wcj_order_admin_list_multiple_status_not_completed_link', 'no' ) ) {
+				add_filter( 'views_edit-shop_order', array( $this, 'add_shop_order_multiple_statuses_not_completed_link' ) );
+				add_action( 'pre_get_posts',         array( $this, 'filter_shop_order_multiple_statuses_not_completed_link' ), PHP_INT_MAX, 1 );
+			}
+			if ( 'no' != get_option( 'wcj_order_admin_list_multiple_status_filter', 'no' ) ) {
+				add_action( 'restrict_manage_posts', array( $this, 'add_shop_order_multiple_statuses' ), PHP_INT_MAX, 2 );
+				add_action( 'pre_get_posts',         array( $this, 'filter_shop_order_multiple_statuses' ), PHP_INT_MAX, 1 );
+			}
+		}
+	}
+
+	/**
+	 * add_shop_order_multiple_statuses_not_completed_link.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function add_shop_order_multiple_statuses_not_completed_link( $views ) {
+		global $wp_query;
+		if ( ! current_user_can( 'edit_others_pages' ) ) {
+			return $views;
+		}
+		$all_not_completed_statuses          = wc_get_order_statuses();
+		unset( $all_not_completed_statuses['wc-completed'] );
+		$all_not_completed_statuses          = array_keys( $all_not_completed_statuses );
+		$all_not_completed_statuses_param    = urlencode( implode( ',', $all_not_completed_statuses ) );
+		$class                               = ( isset( $wp_query->query['post_status'] ) && is_array( $wp_query->query['post_status'] ) && $all_not_completed_statuses === $wp_query->query['post_status'] ) ? 'current' : '';
+		$query_string                        = remove_query_arg( array( 'post_status', 'wcj_admin_filter_statuses' ) );
+		$query_string                        = add_query_arg( 'post_status', $all_not_completed_statuses_param, $query_string );
+		$views['wcj_statuses_not_completed'] = '<a href="' . esc_url( $query_string ) . '" class="' . esc_attr( $class ) . '">' . __( 'Not Completed', 'woocommerce-jetpack' ) . '</a>';
+		return $views;
+	}
+
+	/**
+	 * filter_shop_order_multiple_statuses_not_completed_link.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function filter_shop_order_multiple_statuses_not_completed_link( $query ) {
+		if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) {
+			if ( current_user_can( 'edit_others_pages' ) ) {
+				if ( isset( $_GET['post_status'] ) && false !== strpos( $_GET['post_status'], ',' ) ) {
+					$post_statuses = explode( ',', $_GET['post_status'] );
+//					$query->set( 'post_status', $post_statuses );
+					$query->query['post_status']      = $post_statuses;
+					$query->query_vars['post_status'] = $post_statuses;
+				}
+			}
+		}
+	}
+
+	/**
+	 * multiple_shop_order_statuses_checkboxes.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function multiple_shop_order_statuses_checkboxes( $checked_post_statuses ) {
+		$html = '';
+		foreach ( wc_get_order_statuses() as $status_id => $status_title ) {
+			$html .= '<input type="checkbox" name="wcj_admin_filter_statuses[]" value="' . $status_id . '"' . checked( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . ' ';
+		}
+		return $html;
+	}
+
+	/**
+	 * multiple_shop_order_statuses_select_form.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function multiple_shop_order_statuses_select_form( $checked_post_statuses ) {
+		$html = '';
+		$html .= '<select multiple name="wcj_admin_filter_statuses[]">';
+		foreach ( wc_get_order_statuses() as $status_id => $status_title ) {
+			$html .= '<option value="' . $status_id . '"' . selected( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . '</option>';
+		}
+		$html .= '</select>';
+		return $html;
+	}
+
+	/**
+	 * add_shop_order_multiple_statuses.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function add_shop_order_multiple_statuses( $post_type, $which ) {
+		if ( 'shop_order' === $post_type ) {
+			$checked_post_statuses = isset( $_GET['wcj_admin_filter_statuses'] ) ? $_GET['wcj_admin_filter_statuses'] : array();
+			echo ( 'multiple_select' === get_option( 'wcj_order_admin_list_multiple_status_filter', 'no' ) ) ?
+				$this->multiple_shop_order_statuses_select_form( $checked_post_statuses ) :
+				$this->multiple_shop_order_statuses_checkboxes( $checked_post_statuses );
+		}
+	}
+
+	/**
+	 * filter_shop_order_multiple_statuses.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function filter_shop_order_multiple_statuses( $query ) {
+		if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) {
+			if ( current_user_can( 'edit_others_pages' ) ) {
+				if ( isset( $_GET['wcj_admin_filter_statuses'] ) ) {
+					$post_statuses = $_GET['wcj_admin_filter_statuses'];
+//					$query->set( 'post_status', $post_statuses );
+					$query->query['post_status']      = $post_statuses;
+					$query->query_vars['post_status'] = $post_statuses;
 				}
 			}
 		}
@@ -338,7 +453,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 * @since   2.5.3
 	 */
 	function add_settings() {
@@ -482,7 +597,7 @@ class WCJ_Orders extends WCJ_Module {
 				'id'       => 'wcj_order_auto_complete_options',
 			),
 			array(
-				'title'    => __( 'Orders List Custom Columns', 'woocommerce-jetpack' ),
+				'title'    => __( 'Admin Orders List Custom Columns', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => __( 'This section lets you add custom columns to WooCommerce orders list.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_orders_list_custom_columns_options',
@@ -537,6 +652,33 @@ class WCJ_Orders extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_orders_list_custom_columns_options',
+			),
+			array(
+				'title'    => __( 'Admin Orders List Multiple Status', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_order_admin_list_multiple_status_options',
+			),
+			array(
+				'title'    => __( 'Multiple Status Filtering', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_admin_list_multiple_status_filter',
+				'default'  => 'no',
+				'type'     => 'select',
+				'options'  => array(
+					'no'              => __( 'Do not add', 'woocommerce-jetpack' ),
+					'multiple_select' => __( 'Add as multiple select', 'woocommerce-jetpack' ),
+					'checkboxes'      => __( 'Add as checkboxes', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'title'    => __( '"Not Completed" Status Link', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_admin_list_multiple_status_not_completed_link',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_order_admin_list_multiple_status_options',
 			),
 		) );
 		return $settings;
