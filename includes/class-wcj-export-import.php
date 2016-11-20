@@ -620,14 +620,18 @@ class WCJ_Export_Import extends WCJ_Module {
 				$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					if ( 'yes' === get_option( 'wcj_export_products_fields_additional_enabled_' . $i, 'no' ) ) {
-						if ( 'meta' === get_option( 'wcj_export_products_fields_additional_type_' . $i, 'meta' ) ) {
-							$row[] = get_post_meta( $product_id, get_option( 'wcj_export_products_fields_additional_value_' . $i, '' ), true );
+						if ( '' != $additional_field_value = get_option( 'wcj_export_products_fields_additional_value_' . $i, '' ) ) {
+							if ( 'meta' === get_option( 'wcj_export_products_fields_additional_type_' . $i, 'meta' ) ) {
+								$row[] = get_post_meta( $product_id, $additional_field_value, true );
+							} else {
+								global $post;
+								$post = get_post( $product_id );
+								setup_postdata( $post );
+								$row[] = do_shortcode( $additional_field_value );
+								wp_reset_postdata();
+							}
 						} else {
-							global $post;
-							$post = get_post( $product_id );
-							setup_postdata( $post );
-							$row[] = do_shortcode( get_option( 'wcj_export_products_fields_additional_value_' . $i, '' ) );
-							wp_reset_postdata();
+							$row[] = '';
 						}
 					}
 				}
