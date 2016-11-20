@@ -114,6 +114,7 @@ return array(
 			'shipping_calculator',
 			'address_formats',
 			'orders',
+			'order_min_amount',
 			'order_numbers',
 			'order_custom_statuses',
 		),
