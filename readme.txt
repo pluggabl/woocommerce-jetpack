@@ -129,6 +129,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 20/11/2016 =
+D   * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
 ~$D * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Multiple Status" section added.
 ~D  * Dev - EMAILS & MISC. - Export - Export Products - "Additional Export Products Fields" section added.
 ~D  * Dev - EMAILS & MISC. - Export - Export Products - "Export Products Fields" option added.

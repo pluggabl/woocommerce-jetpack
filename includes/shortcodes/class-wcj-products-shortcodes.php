@@ -33,6 +33,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_excerpt',
 			'wcj_product_short_description',
 			'wcj_product_custom_field',
+			'wcj_product_meta',
 			'wcj_product_you_save',
 			'wcj_product_you_save_percent',
 			'wcj_product_tags',
@@ -532,6 +533,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * Get product meta.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 * @return  string
+	 */
+	function wcj_product_meta( $atts ) {
+		return get_post_meta( $atts['product_id'], $atts['name'], true );
+	}
+
+	/**
 	 * Get product custom field.
 	 *
 	 * @return string
@@ -539,7 +551,6 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	function wcj_product_custom_field( $atts ) {
 		$product_custom_fields = get_post_custom( $atts['product_id'] );
 		return ( isset( $product_custom_fields[ $atts['name'] ][0] ) ) ? $product_custom_fields[ $atts['name'] ][0] : '';
-		//return get_post_meta( $atts['product_id'], $atts['name'], true );
 	}
 
 	/**
