@@ -109,34 +109,29 @@ class WCJ_Orders extends WCJ_Module {
 	}
 
 	/**
-	 * multiple_shop_order_statuses_checkboxes.
+	 * multiple_shop_order_statuses.
 	 *
 	 * @version 2.5.7
 	 * @since   2.5.7
 	 */
-	function multiple_shop_order_statuses_checkboxes( $checked_post_statuses ) {
+	function multiple_shop_order_statuses( $type ) {
+		$checked_post_statuses = isset( $_GET['wcj_admin_filter_statuses'] ) ? $_GET['wcj_admin_filter_statuses'] : array();
 		$html = '';
-		$html .= '<span id="wcj_admin_filter_shop_order_statuses">';
+		$html .= ( 'checkboxes' === $type ) ?
+			'<span id="wcj_admin_filter_shop_order_statuses">' :
+			'<select multiple name="wcj_admin_filter_statuses[]" id="wcj_admin_filter_shop_order_statuses">';
+		$num_posts = wp_count_posts( 'shop_order', 'readable' );
 		foreach ( wc_get_order_statuses() as $status_id => $status_title ) {
-			$html .= '<input type="checkbox" name="wcj_admin_filter_statuses[]" value="' . $status_id . '"' . checked( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . ' ';
+			$total_number = ( isset( $num_posts->{$status_id} ) ) ? $num_posts->{$status_id} : 0;
+			if ( $total_number > 0 ) {
+				$html .= ( 'checkboxes' === $type ) ?
+					'<input type="checkbox" name="wcj_admin_filter_statuses[]" value="' . $status_id . '"' . checked( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . ' (' . $total_number . ') ' :
+					'<option value="' . $status_id . '"' . selected( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . ' (' . $total_number . ') ' . '</option>';
+			}
 		}
-		$html .= '</span>';
-		return $html;
-	}
-
-	/**
-	 * multiple_shop_order_statuses_select_form.
-	 *
-	 * @version 2.5.7
-	 * @since   2.5.7
-	 */
-	function multiple_shop_order_statuses_select_form( $checked_post_statuses ) {
-		$html = '';
-		$html .= '<select multiple name="wcj_admin_filter_statuses[]" id="wcj_admin_filter_shop_order_statuses">';
-		foreach ( wc_get_order_statuses() as $status_id => $status_title ) {
-			$html .= '<option value="' . $status_id . '"' . selected( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . '</option>';
-		}
-		$html .= '</select>';
+		$html .= ( 'checkboxes' === $type ) ?
+			'</span>' :
+			'</select>';
 		return $html;
 	}
 
@@ -148,10 +143,7 @@ class WCJ_Orders extends WCJ_Module {
 	 */
 	function add_shop_order_multiple_statuses( $post_type, $which ) {
 		if ( 'shop_order' === $post_type ) {
-			$checked_post_statuses = isset( $_GET['wcj_admin_filter_statuses'] ) ? $_GET['wcj_admin_filter_statuses'] : array();
-			echo ( 'multiple_select' === get_option( 'wcj_order_admin_list_multiple_status_filter', 'no' ) ) ?
-				$this->multiple_shop_order_statuses_select_form( $checked_post_statuses ) :
-				$this->multiple_shop_order_statuses_checkboxes( $checked_post_statuses );
+			echo $this->multiple_shop_order_statuses( get_option( 'wcj_order_admin_list_multiple_status_filter', 'no' ) );
 		}
 	}
 
