@@ -116,9 +116,11 @@ class WCJ_Orders extends WCJ_Module {
 	 */
 	function multiple_shop_order_statuses_checkboxes( $checked_post_statuses ) {
 		$html = '';
+		$html .= '<span id="wcj_admin_filter_shop_order_statuses">';
 		foreach ( wc_get_order_statuses() as $status_id => $status_title ) {
 			$html .= '<input type="checkbox" name="wcj_admin_filter_statuses[]" value="' . $status_id . '"' . checked( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . ' ';
 		}
+		$html .= '</span>';
 		return $html;
 	}
 
@@ -130,7 +132,7 @@ class WCJ_Orders extends WCJ_Module {
 	 */
 	function multiple_shop_order_statuses_select_form( $checked_post_statuses ) {
 		$html = '';
-		$html .= '<select multiple name="wcj_admin_filter_statuses[]">';
+		$html .= '<select multiple name="wcj_admin_filter_statuses[]" id="wcj_admin_filter_shop_order_statuses">';
 		foreach ( wc_get_order_statuses() as $status_id => $status_title ) {
 			$html .= '<option value="' . $status_id . '"' . selected( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . '</option>';
 		}
