@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Purchase Data class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.7
 	 */
 	function __construct() {
 
@@ -34,7 +34,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
 			if ( 'yes' === get_option( 'wcj_purchase_data_custom_columns_profit', 'no' ) ) {
-				add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_columns' ),     PHP_INT_MAX );
+				add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_columns' ),    PHP_INT_MAX - 2 );
 				add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
 			}
 		}

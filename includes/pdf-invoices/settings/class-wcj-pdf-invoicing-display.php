@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Display class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.7
 	 */
 	function __construct() {
 
@@ -29,7 +29,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Columns on Admin's Orders page
-			add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_column' ),     PHP_INT_MAX );
+			add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_column' ), PHP_INT_MAX - 3 );
 			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), 2 );
 			// Action Links on Customer's My Account page
 			add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'add_pdf_invoices_action_links' ), PHP_INT_MAX, 2 );

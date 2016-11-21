@@ -37,7 +37,7 @@ class WCJ_Orders extends WCJ_Module {
 			}
 
 			// Custom columns
-			add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_column' ),     PHP_INT_MAX );
+			add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_column' ),     PHP_INT_MAX - 1 );
 			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
 			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
 				// Country filtering
@@ -64,7 +64,35 @@ class WCJ_Orders extends WCJ_Module {
 				add_action( 'restrict_manage_posts', array( $this, 'add_shop_order_multiple_statuses' ), PHP_INT_MAX, 2 );
 				add_action( 'pre_get_posts',         array( $this, 'filter_shop_order_multiple_statuses' ), PHP_INT_MAX, 1 );
 			}
+
+			// Columns Order
+			if ( 'yes' === get_option( 'wcj_order_admin_list_columns_order_enabled', 'no' ) ) {
+				add_filter( 'manage_edit-shop_order_columns', array( $this, 'rearange_order_columns' ), PHP_INT_MAX );
+			}
 		}
+	}
+
+	/**
+	 * get_orders_default_columns_in_order.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function get_orders_default_columns_in_order() {
+		$columns = array(
+			'cb',
+			'order_status',
+			'order_title',
+			'order_items',
+			'billing_address',
+			'shipping_address',
+			'customer_message',
+			'order_notes',
+			'order_date',
+			'order_total',
+			'order_actions',
+		);
+		return implode( PHP_EOL, $columns );
 	}
 
 	/**
@@ -227,6 +255,27 @@ class WCJ_Orders extends WCJ_Module {
 			}
 			echo '</select>';
 		}
+	}
+
+	/**
+	 * rearange_order_columns.
+	 *
+	 * @version 2.5.7
+	 * @version 2.5.7
+	 */
+	function rearange_order_columns( $columns ) {
+		$reordered_columns = get_option( 'wcj_order_admin_list_columns_order', $this->get_orders_default_columns_in_order() );
+		$reordered_columns = explode( PHP_EOL, $reordered_columns );
+		$reordered_columns_result = array();
+		if ( ! empty( $reordered_columns ) ) {
+			foreach ( $reordered_columns as $column_id ) {
+				if ( '' != $column_id ) {
+					$reordered_columns_result[ $column_id ] = $columns[ $column_id ];
+					unset( $columns[ $column_id ] );
+				}
+			}
+		}
+		return array_merge( $reordered_columns_result, $columns );
 	}
 
 	/**
@@ -449,6 +498,29 @@ class WCJ_Orders extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_order_admin_list_multiple_status_options',
+			),
+			array(
+				'title'    => __( 'Admin Orders List Columns Order', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_order_admin_list_columns_order_options',
+			),
+			array(
+				'title'    => __( 'Columns Order', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_admin_list_columns_order_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'id'       => 'wcj_order_admin_list_columns_order',
+				'desc_tip' => __( 'Default columns order', 'woocommerce-jetpack' ) . ':<br>' . str_replace( PHP_EOL, '<br>', $this->get_orders_default_columns_in_order() ),
+				'default'  => $this->get_orders_default_columns_in_order(),
+				'type'     => 'textarea',
+				'css'      => 'height:300px;',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_order_admin_list_columns_order_options',
 			),
 		) );
 		return $settings;
