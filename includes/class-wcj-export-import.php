@@ -583,7 +583,7 @@ class WCJ_Export_Import extends WCJ_Module {
 						$all_variations_prices[]         = ( '' === $variation->get_price() )         ? '-' : $variation->get_price();
 						$all_variations_regular_prices[] = ( '' === $variation->get_regular_price() ) ? '-' : $variation->get_regular_price();
 						$all_variations_sale_prices[]    = ( '' === $variation->get_sale_price() )    ? '-' : $variation->get_sale_price();
-						$all_variations_stock[]          = ( '' === $variation->get_total_stock() )   ? '-' : $variation->get_total_stock();
+						$all_variations_stock[]          = ( null === $variation->get_total_stock() ) ? '-' : $variation->get_total_stock();
 					}
 					$all_variations_prices         = implode( '/', $all_variations_prices );
 					$all_variations_regular_prices = implode( '/', $all_variations_regular_prices );
