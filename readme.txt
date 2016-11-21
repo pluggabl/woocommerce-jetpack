@@ -128,7 +128,10 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 20/11/2016 =
+= 2.5.7 - 21/11/2016 =
+~   * Dev - EMAILS & MISC. - Export - Export Products - Stock - `get_stock_quantity()` replaced with `get_total_stock()`.
+~   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products price, regular price and sale price added.
+    * Tweak - EMAILS & MISC. - Export - Tool header added to all export tools.
 ~D  * Dev - SHIPPING & ORDERS - Order Minimum Amount - Initial module release (moved from Orders module).
 D   * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
 ~$D * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Multiple Status" section added.

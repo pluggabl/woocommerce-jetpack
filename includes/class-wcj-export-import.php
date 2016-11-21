@@ -275,11 +275,12 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * create_export_tool.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.7
 	 * @since   2.4.8
 	 */
 	function create_export_tool( $tool_id ) {
 		$data = $this->export( $tool_id );
+		echo $this->get_tool_header_html( 'export_' . $tool_id );
 		echo '<form method="post" action="">';
 		echo '<p>' . $this->export_filter_fields( $tool_id ) . '</p>';
 		echo '<p><button class="button-primary" type="submit" name="wcj_export" value="' . $tool_id . '">' . __( 'Download CSV', 'woocommerce-jetpack' ) . '</button></p>';
@@ -566,6 +567,26 @@ class WCJ_Export_Import extends WCJ_Module {
 			}
 			foreach ( $loop->posts as $product_id ) {
 				$_product = wc_get_product( $product_id );
+
+				// If variable or grouped - get all prices as single string
+				$all_variations_prices         = '';
+				$all_variations_regular_prices = '';
+				$all_variations_sale_prices    = '';
+				if ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ) {
+					$all_variations_prices         = array();
+					$all_variations_regular_prices = array();
+					$all_variations_sale_prices    = array();
+					foreach ( $_product->get_children() as $child_id ) {
+						$variation = $_product->get_child( $child_id );
+						$all_variations_prices[]         = ( '' === $variation->get_price() )         ? '-' : $variation->get_price();
+						$all_variations_regular_prices[] = ( '' === $variation->get_regular_price() ) ? '-' : $variation->get_regular_price();
+						$all_variations_sale_prices[]    = ( '' === $variation->get_sale_price() )    ? '-' : $variation->get_sale_price();
+					}
+					$all_variations_prices         = implode( '/', $all_variations_prices );
+					$all_variations_regular_prices = implode( '/', $all_variations_regular_prices );
+					$all_variations_sale_prices    = implode( '/', $all_variations_sale_prices );
+				}
+
 				$row = array();
 				foreach( $fields_ids as $field_id ) {
 					switch ( $field_id ) {
@@ -579,16 +600,16 @@ class WCJ_Export_Import extends WCJ_Module {
 							$row[] = $_product->get_sku();
 							break;
 						case 'product-stock':
-							$row[] = $_product->get_stock_quantity(); // get_total_stock()
+							$row[] = $_product->get_total_stock(); // get_stock_quantity
 							break;
 						case 'product-regular-price':
-							$row[] = $_product->get_regular_price();
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_regular_prices : $_product->get_regular_price() );
 							break;
 						case 'product-sale-price':
-							$row[] = $_product->get_sale_price();
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_sale_prices : $_product->get_sale_price() );
 							break;
 						case 'product-price':
-							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? '' : $_product->get_price() );
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_prices : $_product->get_price() );
 							break;
 						case 'product-type':
 							$row[] = $_product->get_type();
