@@ -572,19 +572,23 @@ class WCJ_Export_Import extends WCJ_Module {
 				$all_variations_prices         = '';
 				$all_variations_regular_prices = '';
 				$all_variations_sale_prices    = '';
+				$all_variations_stock          = '';
 				if ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ) {
 					$all_variations_prices         = array();
 					$all_variations_regular_prices = array();
 					$all_variations_sale_prices    = array();
+					$all_variations_stock          = array();
 					foreach ( $_product->get_children() as $child_id ) {
 						$variation = $_product->get_child( $child_id );
 						$all_variations_prices[]         = ( '' === $variation->get_price() )         ? '-' : $variation->get_price();
 						$all_variations_regular_prices[] = ( '' === $variation->get_regular_price() ) ? '-' : $variation->get_regular_price();
 						$all_variations_sale_prices[]    = ( '' === $variation->get_sale_price() )    ? '-' : $variation->get_sale_price();
+						$all_variations_stock[]          = ( '' === $variation->get_total_stock() )   ? '-' : $variation->get_total_stock();
 					}
 					$all_variations_prices         = implode( '/', $all_variations_prices );
 					$all_variations_regular_prices = implode( '/', $all_variations_regular_prices );
 					$all_variations_sale_prices    = implode( '/', $all_variations_sale_prices );
+					$all_variations_stock          = implode( '/', $all_variations_stock );
 				}
 
 				$row = array();
@@ -600,7 +604,8 @@ class WCJ_Export_Import extends WCJ_Module {
 							$row[] = $_product->get_sku();
 							break;
 						case 'product-stock':
-							$row[] = $_product->get_total_stock(); // get_stock_quantity
+//							$row[] = $_product->get_total_stock(); // get_stock_quantity
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_stock : $_product->get_total_stock() );
 							break;
 						case 'product-regular-price':
 							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_regular_prices : $_product->get_regular_price() );
