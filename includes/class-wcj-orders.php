@@ -64,12 +64,25 @@ class WCJ_Orders extends WCJ_Module {
 				add_action( 'restrict_manage_posts', array( $this, 'add_shop_order_multiple_statuses' ), PHP_INT_MAX, 2 );
 				add_action( 'pre_get_posts',         array( $this, 'filter_shop_order_multiple_statuses' ), PHP_INT_MAX, 1 );
 			}
+			if ( 'yes' === get_option( 'wcj_order_admin_list_hide_default_statuses_menu', 'no' ) ) {
+				add_action( 'admin_head', array( $this, 'hide_default_statuses_menu' ), PHP_INT_MAX );
+			}
 
 			// Columns Order
 			if ( 'yes' === get_option( 'wcj_order_admin_list_columns_order_enabled', 'no' ) ) {
 				add_filter( 'manage_edit-shop_order_columns', array( $this, 'rearange_order_columns' ), PHP_INT_MAX );
 			}
 		}
+	}
+
+	/**
+	 * hide_default_statuses_menu.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function hide_default_statuses_menu() {
+		echo '<style>body.post-type-shop_order ul.subsubsub {display: none !important;}</style>';
 	}
 
 	/**
@@ -489,7 +502,14 @@ class WCJ_Orders extends WCJ_Module {
 				),
 			),
 			array(
-				'title'    => __( '"Not Completed" Status Link', 'woocommerce-jetpack' ),
+				'title'    => __( 'Hide Default Statuses Menu', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_admin_list_hide_default_statuses_menu',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Add "Not Completed" Status Link to Default Statuses Menu', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_order_admin_list_multiple_status_not_completed_link',
 				'default'  => 'no',

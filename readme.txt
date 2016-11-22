@@ -128,7 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 21/11/2016 =
+= 2.5.7 - 22/11/2016 =
 ~$D * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Columns Order" section added. Priorities in all Booster's added `manage_edit-shop_order_columns` filters changed.
 -   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products stock for each variation added.
 ~   * Dev - EMAILS & MISC. - Export - Export Products - Stock - `get_stock_quantity()` replaced with `get_total_stock()`.
