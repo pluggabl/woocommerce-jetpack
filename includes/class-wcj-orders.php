@@ -282,7 +282,7 @@ class WCJ_Orders extends WCJ_Module {
 		$reordered_columns_result = array();
 		if ( ! empty( $reordered_columns ) ) {
 			foreach ( $reordered_columns as $column_id ) {
-				if ( '' != $column_id ) {
+				if ( '' != $column_id && isset( $columns[ $column_id ] ) ) {
 					$reordered_columns_result[ $column_id ] = $columns[ $column_id ];
 					unset( $columns[ $column_id ] );
 				}
