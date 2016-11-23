@@ -7,7 +7,7 @@
  * @version 2.5.7
  * @since   2.5.7
  * @author  Algoritmika Ltd.
- * @todo    products and products cats/tags to include/exclude; multiple groups; fixed (i.e. not percent) as option; fee instead of discount and regular price coefficient;
+ * @todo    products and products cats/tags to include/exclude; multiple groups; regular price coefficient; fee instead of discount;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -70,23 +70,38 @@ class WCJ_Global_Discount extends WCJ_Module {
 	}
 
 	/**
+	 * calculate_price.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function calculate_price( $price, $coefficient ) {
+		$return_price = ( 'percent' === get_option( 'wcj_global_discount_sale_coefficient_type_1', 'percent' ) ) ?
+			( $price + $price * ( $coefficient / 100 ) ) :
+			( $price + $coefficient );
+		return ( $return_price >= 0 ) ? $return_price : 0;
+	}
+
+	/**
 	 * add_global_discount_sale_price.
 	 *
 	 * @version 2.5.7
 	 * @since   2.5.7
 	 */
 	function add_global_discount_sale_price( $price, $_product ) {
-		/* if ( '' === $_product->get_price() ) {
-			return $price;
-		} */
-		$coefficient = get_option( 'wcj_global_discount_sale_coefficient_1', 1 );
-		if ( 1 != $coefficient ) {
+		$coefficient = get_option( 'wcj_global_discount_sale_coefficient_1', 0 );
+		if ( 0 != $coefficient ) {
 			if ( 0 == $price ) {
-				$price = $_product->get_regular_price();
+				// The product is currently not on sale
+				if ( 'only_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_1', 'all' ) ) {
+					return $price; // no changes
+				} else {
+					$price = $_product->get_regular_price();
+				}
 			}
-			return $price * $coefficient;
+			return $this->calculate_price( $price, $coefficient );
 		}
-		return $price;
+		return $price; // no changes
 	}
 
 	/**
@@ -97,10 +112,16 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 */
 	function add_global_discount_price( $price, $_product ) {
 		if ( '' === $price ) {
-			return $price;
+			return $price; // no changes
 		}
-		$coefficient = get_option( 'wcj_global_discount_sale_coefficient_1', 1 );
-		return ( 1 != $coefficient ) ? $price * $coefficient : $price;
+		$coefficient = get_option( 'wcj_global_discount_sale_coefficient_1', 0 );
+		if ( 0 != $coefficient ) {
+			if ( 0 == $_product->get_sale_price() && 'only_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_1', 'all' ) ) {
+				return $price; // no changes
+			}
+			return $this->calculate_price( $price, $coefficient );
+		}
+		return $price; // no changes
 	}
 
 	/**
@@ -110,8 +131,10 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		$price_hash['wcj_global_discount'] = array(
-			get_option( 'wcj_global_discount_sale_coefficient_1', 1 ),
+		$price_hash['wcj_global_discount_price_hash'] = array(
+			get_option( 'wcj_global_discount_sale_coefficient_type_1', 'percent' ),
+			get_option( 'wcj_global_discount_sale_coefficient_1', 0 ),
+			get_option( 'wcj_global_discount_sale_product_scope_1', 'all' ),
 		);
 		return $price_hash;
 	}
@@ -130,11 +153,31 @@ class WCJ_Global_Discount extends WCJ_Module {
 				'id'       => 'wcj_global_discount_options',
 			),
 			array(
+				'title'    => __( 'Global Discount Sale Coefficient Type', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_global_discount_sale_coefficient_type_1',
+				'default'  => 'percent',
+				'type'     => 'select',
+				'options'  => array(
+					'percent' => __( 'Percent', 'woocommerce-jetpack' ),
+					'fixed'   => __( 'Fixed', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
 				'title'    => __( 'Global Discount Sale Coefficient', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_global_discount_sale_coefficient_1',
-				'default'  => 1,
+				'default'  => 0,
 				'type'     => 'number',
-				'custom_attributes' => array( 'min' => 0, 'max' => 1, 'step' => 0.0001 ),
+				'custom_attributes' => array( /* 'min' => 0, */ 'max' => 0, 'step' => 0.0001 ), // todo
+			),
+			array(
+				'title'    => __( 'Product Scope', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_global_discount_sale_product_scope_1',
+				'default'  => 'all',
+				'type'     => 'select',
+				'options'  => array(
+					'all'          => __( 'All products', 'woocommerce-jetpack' ),
+					'only_on_sale' => __( 'Only products that are already on sale', 'woocommerce-jetpack' ),
+				),
 			),
 			array(
 				'type'     => 'sectionend',
