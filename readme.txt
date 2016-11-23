@@ -185,6 +185,7 @@ D   * Dev - EMAILS & MISC. - General - "Session Expiration Options" section adde
     * Tweak - Deprecated typo fixed.
 ~   * Tweak - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.
     * Tweak - `wcj_get_table_html()` - "row_styles" parameter added.
+    * Tweak - Language (POT) file updated.
     * Tweak - Shortcodes - Products - `[wcj_product_excerpt]` - Using `product_excerpt_length` object property instead of global variable.
     * Tweak - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `wcj_product_wholesale_price_table_price_before` and `wcj_product_wholesale_price_table_price_after` filters added.
 ~   * Tweak - PRICES & CURRENCIES - Price by User Role - `change_price_by_role()` - `wcj_price_by_user_role_get_price` filter added.
@@ -196,7 +197,6 @@ D   * Dev - EMAILS & MISC. - General - "Session Expiration Options" section adde
     * Tweak - EMAILS & MISC. - Export - Tool header added to all export tools.
     * Tweak - EMAILS & MISC. - Export - Headers cleaned up.
     * Tweak - EMAILS & MISC. - Reports - Button restyled in admin settings.
-    * Tweak - Language (POT) file updated.
 
 = 2.5.6 - 29/09/2016 =
 * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.
