@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Reports class.
  *
- * @version 2.5.3
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -308,15 +308,21 @@ class WCJ_Reports extends WCJ_Module {
 	/*
 	 * Add the settings.
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.7
 	 */
 	function get_settings() {
-		$reports = array(
+		$reports_and_settings = array(
 			array(
 				'title'     => __( 'Product Sales', 'woocommerce-jetpack' ),
 				'tab'       => 'orders',
 				'tab_title' => 'Orders',
 				'report'    => 'booster_products_sales',
+			),
+			array(
+				'id'        => 'wcj_reports_products_sales_count_variations',
+				'desc'      => __( 'Count variations in product sales report', 'woocommerce-jetpack' ),
+				'type'      => 'checkbox',
+				'default'   => 'no',
 			),
 			array(
 				'title'     => __( 'Monthly Sales (with currency conversions)', 'woocommerce-jetpack' ),
@@ -362,21 +368,24 @@ class WCJ_Reports extends WCJ_Module {
 				'id'        => 'wcj_reports_more_options'
 			),
 		);
-//		$button_style = "background: red; border-color: red; box-shadow: 0 1px 0 red; text-shadow: 0 -1px 1px #a00,1px 0 1px #a00,0 1px 1px #a00,-1px 0 1px #a00;";
-		$button_style = '';
-		foreach ( $reports as $report ) {
-			$settings = array_merge( $settings, array(
-				array(
-//					'title'    => 'WooCommerce > Reports > ' . $report['tab_title'] . ' > ' . $report['title'],
-					'title'    => '[' . $report['tab_title'] . '] ' . $report['title'],
-					'id'       => 'wcj_' . $report['report'] . '_link',
-					'type'     => 'custom_link',
-					'link'     => '<a class="button-primary" '
-						. 'style="' . $button_style . '" '
-						. 'href="' . get_admin_url() . 'admin.php?page=wc-reports&tab=' . $report['tab'] . '&report=' . $report['report'] . '">'
-						. __( 'View report', 'woocommerce-jetpack' ) . '</a>',
-				),
-			) );
+		$button_style = "background: orange; border-color: orange; box-shadow: 0 1px 0 orange; text-shadow: 0 -1px 1px orange,1px 0 1px orange,0 1px 1px orange,-1px 0 1px orange;";
+		foreach ( $reports_and_settings as $report ) {
+			if ( isset( $report['report'] ) ) {
+				$settings = array_merge( $settings, array(
+					array(
+//						'title'    => 'WooCommerce > Reports > ' . $report['tab_title'] . ' > ' . $report['title'],
+						'title'    => '[' . $report['tab_title'] . '] ' . $report['title'],
+						'id'       => 'wcj_' . $report['report'] . '_link',
+						'type'     => 'custom_link',
+						'link'     => '<a class="button-primary" '
+							. 'style="' . $button_style . '" '
+							. 'href="' . get_admin_url() . 'admin.php?page=wc-reports&tab=' . $report['tab'] . '&report=' . $report['report'] . '">'
+							. __( 'View report', 'woocommerce-jetpack' ) . '</a>',
+					),
+				) );
+			} else {
+				$settings = array_merge( $settings, array ( $report ) );
+			}
 		}
 		$settings = array_merge( $settings, array(
 			array(

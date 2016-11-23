@@ -102,9 +102,8 @@ class WCJ_Reports_Sales {
 				$order = wc_get_order( $order_id );
 				$items = $order->get_items();
 				foreach ( $items as $item ) {
-//					$product_id = ( 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
 					$product_ids = array( $item['product_id'] );
-					if ( 0 != $item['variation_id'] ) {
+					if ( 0 != $item['variation_id'] && 'yes' === get_option( 'wcj_reports_products_sales_count_variations', 'no' ) ) {
 						$product_ids[] = $item['variation_id'];
 					}
 					foreach ( $product_ids as $product_id ) {

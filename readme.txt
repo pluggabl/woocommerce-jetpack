@@ -131,7 +131,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 22/11/2016 =
+= 2.5.7 - 23/11/2016 =
 ~$D * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Columns Order" section added. Priorities in all Booster's added `manage_edit-shop_order_columns` filters changed.
 -   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products stock for each variation added.
 ~   * Dev - EMAILS & MISC. - Export - Export Products - Stock - `get_stock_quantity()` replaced with `get_total_stock()`.
@@ -176,7 +176,8 @@ D   * Dev - Shortcodes - Products - `[wcj_product_excerpt]` - `excerpt_length` a
 ~   * Fix - PRODUCTS - User Products - "My Account > Products" fixed.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_items]` shortcode added.
 ~   * Dev - EMAILS & MISC. - Admin Tools - "PHP Memory Limit" option added.
--   * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - Variations added in report.
+    * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - Variations added in report.
+    * Tweak - EMAILS & MISC. - Reports - Button restyled in admin settings.
 ~   * Fix - `class-wcj-currency-reports.php` - `filter_reports` is now applied on `wc-reports` page only.
 ~$D * Dev - BUTTON & PRICE LABELS - Call for Price - "Make All Products Call for Price" option added.
 -$D * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
@@ -189,7 +190,7 @@ D   * Dev - Shortcodes - Products - `[wcj_product_categories_urls]` shortcode ad
 ~D  * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
 ~   * Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
 ~   * Dev - EMAILS & MISC. - EU VAT Number - Validate VAT without SOAP fallback added (`validate_vat_no_soap` function).
--D  * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
+D   * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
     * Dev - Made "Booster Tools" accessible to shop manager.
     * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
     * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
