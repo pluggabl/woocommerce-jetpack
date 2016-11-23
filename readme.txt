@@ -196,6 +196,7 @@ D   * Dev - EMAILS & MISC. - General - "Session Expiration Options" section adde
     * Tweak - EMAILS & MISC. - Export - Tool header added to all export tools.
     * Tweak - EMAILS & MISC. - Export - Headers cleaned up.
     * Tweak - EMAILS & MISC. - Reports - Button restyled in admin settings.
+    * Tweak - Language (POT) file updated.
 
 = 2.5.6 - 29/09/2016 =
 * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.
