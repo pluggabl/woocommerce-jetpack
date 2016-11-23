@@ -223,8 +223,8 @@ class WCJ_Products_XML extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Result XML File Path and Name', 'woocommerce-jetpack' ),
-				'desc_tip' => ABSPATH . get_option( 'wcj_products_xml_file_path', 'products.xml' ),
-				'desc'     => '<a target="_blank" href="' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '">' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '</a>', // todo
+				'desc_tip' => __( 'Path on server:', 'woocommerce-jetpack' ) . ' ' . ABSPATH . get_option( 'wcj_products_xml_file_path', 'products.xml' ),
+				'desc'     => __( 'URL:', 'woocommerce-jetpack' ) . ' ' . '<a target="_blank" href="' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '">' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '</a>', // todo
 				'id'       => 'wcj_products_xml_file_path',
 				'default'  => 'products.xml',
 				'type'     => 'text',
