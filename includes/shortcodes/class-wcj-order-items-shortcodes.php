@@ -29,22 +29,24 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.7
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
-			'order_id'           => ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID(),
-			'hide_currency'      => 'no',
-			'table_class'        => '',
-			'shipping_as_item'   => '',//__( 'Shipping', 'woocommerce-jetpack' ),
-			'discount_as_item'   => '',//__( 'Discount', 'woocommerce-jetpack' ),
-			'columns'            => '',
-			'columns_titles'     => '',
-			'columns_styles'     => '',
-			'tax_percent_format' => '%.2f %%',
-			'item_image_width'   => 0,
-			'item_image_height'  => 0,
-			'price_prefix'       => '',
+			'order_id'             => ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID(),
+			'hide_currency'        => 'no',
+			'table_class'          => '',
+			'shipping_as_item'     => '', //__( 'Shipping', 'woocommerce-jetpack' ),
+			'discount_as_item'     => '', //__( 'Discount', 'woocommerce-jetpack' ),
+			'columns'              => '',
+			'columns_titles'       => '',
+			'columns_styles'       => '',
+			'tax_percent_format'   => '%.2f %%',
+			'item_image_width'     => 0, // deprecated
+			'item_image_height'    => 0, // deprecated
+			'product_image_width'  => 0,
+			'product_image_height' => 0,
+			'price_prefix'         => '',
 			'style_item_name_variation' => 'font-size:smaller;',
 		), $atts );
 		return $modified_atts;
@@ -52,10 +54,18 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * init_atts.
+	 *
+	 * @version 2.5.7
 	 */
 	function init_atts( $atts ) {
 		$this->the_order = ( 'shop_order' === get_post_type( $atts['order_id'] ) ) ? wc_get_order( $atts['order_id'] ) : null;
 		if ( ! $this->the_order ) return false;
+		if ( 0 != $atts['item_image_width'] ) {
+			$atts['product_image_width'] = $atts['item_image_width'];
+		}
+		if ( 0 != $atts['item_image_height'] ) {
+			$atts['product_image_height'] = $atts['item_image_height'];
+		}
 		return $atts;
 	}
 
@@ -212,15 +222,19 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					$column       = substr( $column, 0, $pos );
 				}
 				switch ( $column ) {
+					case 'item_debug':
 					case 'debug':
 						$data[ $item_counter ][] = print_r( $item, true );
 						break;
+					case 'item_regular_price':
 					case 'product_regular_price':
 						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_regular_price(), $atts ) : '';
 						break;
+					case 'item_sale_price':
 					case 'product_sale_price':
 						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_sale_price(), $atts ) : '';
 						break;
+					case 'item_tax_class':
 					case 'tax_class':
 						$data[ $item_counter ][] = ( isset( $item['tax_class'] ) ) ? $this->get_tax_class_name( $item['tax_class'] ) : '';
 						break;
@@ -228,6 +242,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$data[ $item_counter ][] = $item_counter;
 						break;
 					case 'item_name':
+					case 'product_name': // because of possible variation
 						//$data[ $item_counter ][] = ( true === $item['is_custom'] ) ? $item['name'] : $the_product->get_title();
 						if ( true === $item['is_custom'] ) {
 							$data[ $item_counter ][] = $item['name'];
@@ -258,6 +273,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						}
 						break;
 					case 'item_attribute':
+					case 'product_attribute':
 						if ( isset( $column_param ) && '' != $column_param && is_object( $the_product ) ) {
 							$data[ $item_counter ][] = $the_product->get_attribute( $column_param );
 						} else {
@@ -265,6 +281,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						}
 						break;
 					case 'item_excerpt':
+					case 'product_excerpt':
 						if ( true === $item['is_custom'] ) {
 							$data[ $item_counter ][] = '';
 						} else {
@@ -277,22 +294,26 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						}
 						break;
 					case 'item_short_description':
+					case 'product_short_description':
 						$data[ $item_counter ][] = ( true === $item['is_custom'] ) ? '' : $this->the_product->post->post_excerpt;
 						break;
 					case 'item_variation':
+					case 'product_variation':
 						$data[ $item_counter ][] = ( is_object( $the_product ) && $the_product->is_type( 'variation' ) )
 							? str_replace( 'pa_', '', urldecode( wc_get_formatted_variation( $the_product->variation_data, true ) ) ) : '';
 						break;
 					case 'item_thumbnail':
+					case 'product_thumbnail':
 						//$data[ $item_counter ][] = $the_product->get_image();
 						$image_id = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? 0 : $the_product->get_image_id();
 						$image_src = ( 0 != $image_id ) ? wp_get_attachment_image_src( $image_id ) : wc_placeholder_img_src();
 						if ( is_array( $image_src ) ) $image_src = $image_src[0];
-						$maybe_width  = ( 0 != $atts['item_image_width'] )  ? ' width="'  . $atts['item_image_width']  . '"' : '';
-						$maybe_height = ( 0 != $atts['item_image_height'] ) ? ' height="' . $atts['item_image_height'] . '"' : '';
+						$maybe_width  = ( 0 != $atts['product_image_width'] )  ? ' width="'  . $atts['product_image_width']  . '"' : '';
+						$maybe_height = ( 0 != $atts['product_image_height'] ) ? ' height="' . $atts['product_image_height'] . '"' : '';
 						$data[ $item_counter ][] = '<img src="' . $image_src . '"' . $maybe_width . $maybe_height . '>';
 						break;
 					case 'item_sku':
+					case 'product_sku':
 						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_sku();
 						break;
 					case 'item_quantity':
@@ -355,10 +376,19 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$data[ $item_counter ][] = sprintf( $atts['tax_percent_format'], $line_tax_percent );
 						break; */
 					case 'item_weight':
+					case 'product_weight':
 						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_weight();
 						break;
+					case 'item_width':
+					case 'product_width':
+						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_width();
+						break;
+					case 'item_height':
+					case 'product_height':
+						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_height();
+						break;
 					default:
-						$data[ $item_counter ][] = ''; //$column;
+						$data[ $item_counter ][] = ''; // $column;
 				}
 			}
 		}
