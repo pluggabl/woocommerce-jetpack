@@ -7,6 +7,7 @@
  * @version 2.5.7
  * @since   2.5.7
  * @author  Algoritmika Ltd.
+ * @todo    Move (maybe) to "PRODUCTS" category;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -45,7 +46,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function schedule_the_events() {
-		$selected_interval = get_option( 'wcj_create_products_xml_period', 'daily' );
+		$selected_interval = apply_filters( 'wcj_get_option_filter', 'weekly', get_option( 'wcj_create_products_xml_period', 'weekly' ) );
 		$update_intervals  = array(
 			'minutely',
 			'hourly',
@@ -196,6 +197,10 @@ class WCJ_Products_XML extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Products XML Item', 'woocommerce-jetpack' ),
+				'desc'     => sprintf(
+					__( 'You can use shortcodes here. Please take a look at <a target="_blank" href="%s">Booster\'s products shortcodes</a>.', 'woocommerce-jetpack' ),
+					'http://booster.io/category/shortcodes/products-shortcodes/'
+				),
 				'id'       => 'wcj_products_xml_item',
 				'default'  =>
 					'<item>' . PHP_EOL .
@@ -230,7 +235,7 @@ class WCJ_Products_XML extends WCJ_Module {
 				'desc'     => $products_xml_cron_desc .
 					( ( $this->is_enabled() ) ? '<br><a href="' . add_query_arg( 'wcj_create_products_xml', '1' ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>' : '' ),
 				'id'       => 'wcj_create_products_xml_period',
-				'default'  => 'daily',
+				'default'  => 'weekly',
 				'type'     => 'select',
 				'options'  => array(
 					'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
@@ -239,6 +244,8 @@ class WCJ_Products_XML extends WCJ_Module {
 					'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
 					'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
 				),
+				'desc_tip' => __( 'Possible update periods are: every minute, hourly, twice daily, daily and weekly.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
+				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			),
 			array(
 				'type'     => 'sectionend',

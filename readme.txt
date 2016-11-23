@@ -154,12 +154,12 @@ D   * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
 ~   * Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
 ~D  * Dev - PRICES & CURRENCIES - Wholesale Price - Global settings discount now can be negative.
 ~D  * Dev - PRICES & CURRENCIES - Wholesale Price - Per product - "Price directly" option added (for non variable products only).
-~$D * Dev - BUTTON & PRICE LABELS - Call for Price - "Make All Products Call for Price" option added.
+~D  * Dev - BUTTON & PRICE LABELS - Call for Price - "Make All Products Call for Price" option added.
 ~   * Fix - PRODUCTS - User Products - "My Account > Products" fixed.
     * Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - Empty array passed on apply `wc_order_statuses` filter (produced PHP warning).
 ~D  * Dev - SHIPPING & ORDERS - Order Minimum Amount - Initial module release (moved from Orders module).
-~$D * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Columns Order" section added. Priorities in all Booster's added `manage_edit-shop_order_columns` filters changed.
-~$D * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Multiple Status" section added.
+~D  * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Columns Order" section added. Priorities in all Booster's added `manage_edit-shop_order_columns` filters changed.
+~D  * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Multiple Status" section added.
 ~D  * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
 D   * Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.
 ~D  * Dev - PDF INVOICING & PACKING SLIPS - "Generate" and "Download" bulk actions added to admin orders list.
@@ -180,7 +180,7 @@ D   * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.
 D   * Dev - EMAILS & MISC. - Export - Export Products - "Image URL", "Short Description", "Description", "Status" and "URL" export fields added.
     * Dev - EMAILS & MISC. - Export - Export Products - `WP_Query` optimized to return `ids` only.
 D   * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
-~$D * Dev - EMAILS & MISC. - Products XML - Initial module release.
+~D  * Dev - EMAILS & MISC. - Products XML - Initial module release.
     * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - Variations added in report.
     * Tweak - Deprecated typo fixed.
 ~   * Tweak - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.
