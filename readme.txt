@@ -172,7 +172,7 @@ D   * Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section 
 D   * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.
     * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
     * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
--   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products stock for each variation added.
+~   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products stock for each variation added.
 ~   * Dev - EMAILS & MISC. - Export - Export Products - Stock - `get_stock_quantity()` replaced with `get_total_stock()`.
 ~   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products price, regular price and sale price added.
 ~D  * Dev - EMAILS & MISC. - Export - Export Products - "Additional Export Products Fields" section added.
