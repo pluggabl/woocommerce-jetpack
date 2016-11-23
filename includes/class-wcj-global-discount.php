@@ -7,7 +7,7 @@
  * @version 2.5.7
  * @since   2.5.7
  * @author  Algoritmika Ltd.
- * @todo    products, products cats/tags to include/exclude; multiple discount groups; fee instead of discount; regular price coefficient;
+ * @todo    products and products cats/tags to include/exclude; multiple groups; fixed (i.e. not percent) as option; fee instead of discount and regular price coefficient;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

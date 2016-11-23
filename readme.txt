@@ -150,7 +150,7 @@ D   * Dev - Shortcodes - Products - `[wcj_product_categories_names]` shortcode a
 D   * Dev - Shortcodes - Products - `[wcj_product_categories_urls]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
 ~D  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
--$D * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
+~$D * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
 ~   * Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
 ~D  * Dev - PRICES & CURRENCIES - Wholesale Price - Global settings discount now can be negative.
 -D  * Dev - PRICES & CURRENCIES - Wholesale Price - Per product - "Price directly" option added (for non variable products only).
