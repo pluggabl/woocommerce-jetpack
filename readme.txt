@@ -65,7 +65,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
 * *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
-* *Empty Cart Button* - Add and customize "Empty Cart" button to cart page.
+* *Empty Cart Button* - Add and customize "Empty Cart" button to WooCommerce cart page.
 * *Mini Cart* - Customize WooCommerce mini cart widget.
 
 **Payment Gateways**
@@ -190,6 +190,7 @@ D   * Dev - EMAILS & MISC. - General - "Session Expiration Options" section adde
     * Tweak - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `wcj_product_wholesale_price_table_price_before` and `wcj_product_wholesale_price_table_price_after` filters added.
 ~   * Tweak - PRICES & CURRENCIES - Price by User Role - `change_price_by_role()` - `wcj_price_by_user_role_get_price` filter added.
 ~   * Tweak - PRICES & CURRENCIES - Wholesale Price - `get_wholesale_price()` - `price_directly` - `wcj_get_wholesale_price` filter added.
+D   * Tweak - CART & CHECKOUT - Empty Cart Button - Description updated.
     * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - User messages updated.
     * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - "Add new custom status" button label added to translation.
     * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_zip()` - Headers cleaned up.
