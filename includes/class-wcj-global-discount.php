@@ -7,7 +7,7 @@
  * @version 2.5.7
  * @since   2.5.7
  * @author  Algoritmika Ltd.
- * @todo    products and cats/tags to include/exclude (cats to include - done); regular price coefficient; fee instead of discount;
+ * @todo    products and cats/tags to include/exclude (cats to include - done); (maybe) product scope - apply only to products that are NOT on sale; regular price coefficient; fee instead of discount;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
