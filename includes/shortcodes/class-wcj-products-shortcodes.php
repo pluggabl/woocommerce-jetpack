@@ -698,20 +698,19 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$data_price[] = str_replace( array( '%old_price%', '%price%' ), array( $the_price_original, $the_price ), $atts['price_row_format'] );
 			}
 			if ( 'yes' === $atts['add_percent_row'] ) {
-				if ( 'fixed' === $discount_type ) {
-					// todo (maybe)
-				} else {
+				if ( 'percent' === $discount_type ) {
 					$data_discount[] = '-' . $wholesale_price_level['discount'] . '%';
+				} else { // 'fixed' or 'price_directly'
+					// todo (maybe)
 				}
 			}
 			if ( 'yes' === $atts['add_discount_row'] ) {
 				if ( 'fixed' === $discount_type ) {
 					$data_discount[] = '-' . wc_price( $wholesale_price_level['discount'] );
-				} else {
+				} else { // 'percent' or 'price_directly'
 					// todo (maybe)
 				}
 			}
-			// TODO: if ( 'price_directly' === $discount_type ) ...
 
 			$columns_styles[] = 'text-align: center;';
 		}

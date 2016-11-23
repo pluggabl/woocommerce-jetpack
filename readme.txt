@@ -153,7 +153,7 @@ D   * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
 ~$D * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
 ~   * Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
 ~D  * Dev - PRICES & CURRENCIES - Wholesale Price - Global settings discount now can be negative.
--D  * Dev - PRICES & CURRENCIES - Wholesale Price - Per product - "Price directly" option added (for non variable products only).
+~D  * Dev - PRICES & CURRENCIES - Wholesale Price - Per product - "Price directly" option added (for non variable products only).
 ~$D * Dev - BUTTON & PRICE LABELS - Call for Price - "Make All Products Call for Price" option added.
 ~   * Fix - PRODUCTS - User Products - "My Account > Products" fixed.
     * Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - Empty array passed on apply `wc_order_statuses` filter (produced PHP warning).

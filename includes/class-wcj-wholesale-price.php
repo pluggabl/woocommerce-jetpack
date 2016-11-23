@@ -59,7 +59,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			$the_quantity = ( 'yes' === get_option( 'wcj_wholesale_price_use_total_cart_quantity', 'no' ) )
 				? WC()->cart->cart_contents_count
 				: $cart_item['quantity'];
-			$discount     = $this->get_discount_by_quantity( $the_quantity, $cart_item['product_id'] );
+			$discount = $this->get_discount_by_quantity( $the_quantity, $cart_item['product_id'] );
 			if ( 0 != $discount ) {
 				$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $cart_item['product_id'] ) )
 					? get_post_meta( $cart_item['product_id'], '_' . 'wcj_wholesale_price_discount_type', true )
@@ -142,15 +142,9 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			? get_post_meta( $product_id, '_' . 'wcj_wholesale_price_discount_type', true )
 			: get_option( 'wcj_wholesale_price_discount_type', 'percent' );
 		if ( 'price_directly' === $discount_type ) {
-			if ( 0 != $discount ) {
-				$discount = apply_filters( 'wcj_get_wholesale_price', $discount, $product_id );
-				return $discount;
-			} else {
-				return $price;
-			}
+			return ( 0 != $discount ) ? apply_filters( 'wcj_get_wholesale_price', $discount, $product_id ) : $price;
 		} elseif ( 'percent' === $discount_type ) {
-			$discount_koef = 1.0 - ( $discount / 100.0 );
-			return $price * $discount_koef;
+			return $price * ( 1.0 - ( $discount / 100.0 ) );
 		} else {
 			$discounted_price = $price - $discount;
 			return ( $discounted_price >= 0 ) ? $discounted_price : 0;
