@@ -22,6 +22,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Currency Exchange Rates* - Automatic currency exchange rates for WooCommerce.
 * *Currency for External Products* - Set different currency for external WooCommerce products.
 * *Currency per Product* - Display prices for WooCommerce products in different currencies.
+* *Global Discount* - Add global discount to all WooCommerce products.
 * *Multicurrency (Currency Switcher)* - Add multiple currencies (currency switcher) to WooCommerce.
 * *Multicurrency Product Base Price* - Enter prices for WooCommerce products in different currencies.
 * *Price Formats* - Set different WooCommerce price formats for different currencies.
@@ -82,8 +83,9 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Address Formats* - Set address format in WooCommerce orders on per country basis. Force base country display.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
+* *Order Minimum Amount* - Minimum WooCommerce order amount (optionally by user role).
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
-* *Orders* - Minimum WooCommerce order amount (optionally by user role); orders auto-complete; custom admin order list columns; admin order currency.
+* *Orders* - Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.
 * *Shipping* - Add multiple custom shipping methods to WooCommerce. Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available. Display "left to free shipping" info.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 
@@ -96,10 +98,11 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
-* *Export* - WooCommerce export tools.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
+* *Export* - WooCommerce export tools.
 * *General* - Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets. Custom roles tool.
 * *Old Slugs* - Remove old WooCommerce products slugs.
+* *Products XML* - WooCommerce products XML feed.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
 
 = Feedback =
