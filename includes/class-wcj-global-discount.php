@@ -7,7 +7,7 @@
  * @version 2.5.7
  * @since   2.5.7
  * @author  Algoritmika Ltd.
- * @todo    products and products cats/tags to include/exclude; multiple groups; regular price coefficient; fee instead of discount;
+ * @todo    products and products cats/tags to include/exclude (products cats to include - done); regular price coefficient; fee instead of discount;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -75,11 +75,70 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 * @version 2.5.7
 	 * @since   2.5.7
 	 */
-	function calculate_price( $price, $coefficient ) {
-		$return_price = ( 'percent' === get_option( 'wcj_global_discount_sale_coefficient_type_1', 'percent' ) ) ?
+	function calculate_price( $price, $coefficient, $group  ) {
+		$return_price = ( 'percent' === get_option( 'wcj_global_discount_sale_coefficient_type_' . $group, 'percent' ) ) ?
 			( $price + $price * ( $coefficient / 100 ) ) :
 			( $price + $coefficient );
 		return ( $return_price >= 0 ) ? $return_price : 0;
+	}
+
+	/**
+	 * check_product_categories.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 * @return  bool
+	 */
+	function check_product_categories( $_product, $group ) {
+		// Check product category - include
+		$categories_in = get_option( 'wcj_global_discount_sale_categories_incl_' . $group, '' );
+		if ( ! empty( $categories_in ) ) {
+			$product_categories = get_the_terms( $_product->id, 'product_cat' );
+			if ( empty( $product_categories ) ) {
+				return false; // option set to some categories, but product has no categories
+			}
+			foreach( $product_categories as $product_category ) {
+				if ( in_array( $product_category->term_id, $categories_in ) ) {
+					return true; // category found
+				}
+			}
+			return false; // no categories found
+		}
+		return true; // option not set (i.e. left blank)
+	}
+
+	/**
+	 * add_global_discount_any_price.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function add_global_discount_any_price( $price_type, $price, $_product ) {
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( ! $this->check_product_categories( $_product, $i ) ) {
+				continue; // no changes by current discount group
+			}
+			$coefficient = get_option( 'wcj_global_discount_sale_coefficient_' . $i, 0 );
+			if ( 0 != $coefficient ) {
+				if ( 'sale_price' === $price_type ) {
+					if ( 0 == $price ) {
+						// The product is currently not on sale
+						if ( 'only_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) ) {
+							continue; // no changes by current discount group
+						} else {
+							$price = $_product->get_regular_price();
+						}
+					}
+				} else { // if ( 'price' === $price_type )
+					if ( 'only_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) && 0 == $_product->get_sale_price() ) {
+						continue; // no changes by current discount group
+					}
+				}
+				return $this->calculate_price( $price, $coefficient, $i ); // discount applied
+			}
+		}
+		return $price; // no changes
 	}
 
 	/**
@@ -89,19 +148,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function add_global_discount_sale_price( $price, $_product ) {
-		$coefficient = get_option( 'wcj_global_discount_sale_coefficient_1', 0 );
-		if ( 0 != $coefficient ) {
-			if ( 0 == $price ) {
-				// The product is currently not on sale
-				if ( 'only_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_1', 'all' ) ) {
-					return $price; // no changes
-				} else {
-					$price = $_product->get_regular_price();
-				}
-			}
-			return $this->calculate_price( $price, $coefficient );
-		}
-		return $price; // no changes
+		return $this->add_global_discount_any_price( 'sale_price', $price, $_product );
 	}
 
 	/**
@@ -114,14 +161,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 		if ( '' === $price ) {
 			return $price; // no changes
 		}
-		$coefficient = get_option( 'wcj_global_discount_sale_coefficient_1', 0 );
-		if ( 0 != $coefficient ) {
-			if ( 0 == $_product->get_sale_price() && 'only_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_1', 'all' ) ) {
-				return $price; // no changes
-			}
-			return $this->calculate_price( $price, $coefficient );
-		}
-		return $price; // no changes
+		return $this->add_global_discount_any_price( 'price', $price, $_product );
 	}
 
 	/**
@@ -131,11 +171,16 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		$price_hash['wcj_global_discount_price_hash'] = array(
-			get_option( 'wcj_global_discount_sale_coefficient_type_1', 'percent' ),
-			get_option( 'wcj_global_discount_sale_coefficient_1', 0 ),
-			get_option( 'wcj_global_discount_sale_product_scope_1', 'all' ),
-		);
+		$wcj_global_discount_price_hash = array();
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+		$wcj_global_discount_price_hash['total_number'] = $total_number;
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$wcj_global_discount_price_hash[ 'type_'    . $i ] = get_option( 'wcj_global_discount_sale_coefficient_type_' . $i, 'percent' );
+			$wcj_global_discount_price_hash[ 'value_'   . $i ] = get_option( 'wcj_global_discount_sale_coefficient_'      . $i, 0 );
+			$wcj_global_discount_price_hash[ 'scope_'   . $i ] = get_option( 'wcj_global_discount_sale_product_scope_'    . $i, 'all' );
+			$wcj_global_discount_price_hash[ 'cats_in_' . $i ] = get_option( 'wcj_global_discount_sale_categories_incl_'  . $i, '' );
+		}
+		$price_hash['wcj_global_discount_price_hash'] = $wcj_global_discount_price_hash;
 		return $price_hash;
 	}
 
@@ -146,6 +191,13 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function get_settings() {
+		$product_cats_options = array();
+		$product_cats = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+		if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ){
+			foreach ( $product_cats as $product_cat ) {
+				$product_cats_options[ $product_cat->term_id ] = $product_cat->name;
+			}
+		}
 		$settings = array(
 			array(
 				'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -153,37 +205,65 @@ class WCJ_Global_Discount extends WCJ_Module {
 				'id'       => 'wcj_global_discount_options',
 			),
 			array(
-				'title'    => __( 'Global Discount Sale Coefficient Type', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_global_discount_sale_coefficient_type_1',
-				'default'  => 'percent',
-				'type'     => 'select',
-				'options'  => array(
-					'percent' => __( 'Percent', 'woocommerce-jetpack' ),
-					'fixed'   => __( 'Fixed', 'woocommerce-jetpack' ),
+				'title'    => __( 'Total Groups', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_global_discount_groups_total_number',
+				'default'  => 1,
+				'type'     => 'custom_number',
+				'desc_tip' => __( 'Press Save changes after you change this number.', 'woocommerce-jetpack' ),
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
+					apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
+			),
+		);
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => __( 'Dscount Group', 'woocommerce-jetpack' ) . ' #' . $i,
+					'desc'     => __( 'Type', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_global_discount_sale_coefficient_type_' . $i,
+					'default'  => 'percent',
+					'type'     => 'select',
+					'options'  => array(
+						'percent' => __( 'Percent', 'woocommerce-jetpack' ),
+						'fixed'   => __( 'Fixed', 'woocommerce-jetpack' ),
+					),
 				),
-			),
-			array(
-				'title'    => __( 'Global Discount Sale Coefficient', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_global_discount_sale_coefficient_1',
-				'default'  => 0,
-				'type'     => 'number',
-				'custom_attributes' => array( /* 'min' => 0, */ 'max' => 0, 'step' => 0.0001 ), // todo
-			),
-			array(
-				'title'    => __( 'Product Scope', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_global_discount_sale_product_scope_1',
-				'default'  => 'all',
-				'type'     => 'select',
-				'options'  => array(
-					'all'          => __( 'All products', 'woocommerce-jetpack' ),
-					'only_on_sale' => __( 'Only products that are already on sale', 'woocommerce-jetpack' ),
+				array(
+					'desc'     => __( 'Value', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Must be negative number.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_global_discount_sale_coefficient_' . $i,
+					'default'  => 0,
+					'type'     => 'number',
+					'custom_attributes' => array( /* 'min' => 0, */ 'max' => 0, 'step' => 0.0001 ), // todo
 				),
-			),
+				array(
+					'desc'     => __( 'Product Scope', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_global_discount_sale_product_scope_' . $i,
+					'default'  => 'all',
+					'type'     => 'select',
+					'options'  => array(
+						'all'          => __( 'All products', 'woocommerce-jetpack' ),
+						'only_on_sale' => __( 'Only products that are already on sale', 'woocommerce-jetpack' ),
+					),
+				),
+				array(
+					'desc'     => __( 'Include Product Categories', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Set this field to apply discount to selected categories only. Leave blank to apply to all categories.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_global_discount_sale_categories_incl_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_cats_options,
+				),
+			) );
+		}
+		$settings = array_merge( $settings, array(
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_global_discount_options',
 			),
-		);
+		) );
 		return $this->add_standard_settings( $settings );
 	}
 }
