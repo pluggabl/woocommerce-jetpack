@@ -218,6 +218,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Result XML File Path and Name', 'woocommerce-jetpack' ),
+				'desc_tip' => ABSPATH . get_option( 'wcj_products_xml_file_path', 'products.xml' ),
 				'desc'     => '<a target="_blank" href="' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '">' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '</a>', // todo
 				'id'       => 'wcj_products_xml_file_path',
 				'default'  => 'products.xml',
@@ -227,7 +228,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			array(
 				'title'    => __( 'Update Period', 'woocommerce-jetpack' ),
 				'desc'     => $products_xml_cron_desc .
-					'<br><a href="' . add_query_arg( 'wcj_create_products_xml', '1' ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>', // todo
+					( ( $this->is_enabled() ) ? '<br><a href="' . add_query_arg( 'wcj_create_products_xml', '1' ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>' : '' ),
 				'id'       => 'wcj_create_products_xml_period',
 				'default'  => 'daily',
 				'type'     => 'select',

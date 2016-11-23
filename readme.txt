@@ -180,7 +180,7 @@ D   * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.
 D   * Dev - EMAILS & MISC. - Export - Export Products - "Image URL", "Short Description", "Description", "Status" and "URL" export fields added.
     * Dev - EMAILS & MISC. - Export - Export Products - `WP_Query` optimized to return `ids` only.
 D   * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
--$D * Dev - EMAILS & MISC. - Products XML - Initial module release.
+~$D * Dev - EMAILS & MISC. - Products XML - Initial module release.
     * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - Variations added in report.
     * Tweak - Deprecated typo fixed.
 ~   * Tweak - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.
