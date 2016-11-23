@@ -132,70 +132,70 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 23/11/2016 =
-~$D * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Columns Order" section added. Priorities in all Booster's added `manage_edit-shop_order_columns` filters changed.
--   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products stock for each variation added.
-~   * Dev - EMAILS & MISC. - Export - Export Products - Stock - `get_stock_quantity()` replaced with `get_total_stock()`.
-~   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products price, regular price and sale price added.
-    * Tweak - EMAILS & MISC. - Export - Tool header added to all export tools.
-~D  * Dev - SHIPPING & ORDERS - Order Minimum Amount - Initial module release (moved from Orders module).
-D   * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
-~$D * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Multiple Status" section added.
-~D  * Dev - EMAILS & MISC. - Export - Export Products - "Additional Export Products Fields" section added.
-~D  * Dev - EMAILS & MISC. - Export - Export Products - "Export Products Fields" option added.
-D   * Dev - EMAILS & MISC. - Export - Export Products - "Image URL", "Short Description", "Description", "Status" and "URL" export fields added.
-    * Dev - EMAILS & MISC. - Export - Export Products - `WP_Query` optimized to return `ids` only.
+~   * Fix - `class-wcj-currency-reports.php` - `filter_reports` is now applied on `wc-reports` page only.
+    * Dev - `unclean_custom_textarea()` added.
+    * Dev - Made "Booster Tools" accessible to shop manager.
+D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
+~D  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
+~D  * Dev - Shortcodes - Orders - `[wcj_order_items]` shortcode added.
+D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_short_description` - now displays item's short description (may be different from `item_excerpt`). `item_description` attribute removed.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_regular_price` and `product_sale_price` columns added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `tax_class` column added.
-~D  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
-~D  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
-    * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_data()` - `WP_Query` optimized to return `ids` only.
-    * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_zip()` - Headers cleaned up.
-    * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - Calling `get_tool_header_html()` instead of directly outputting header.
-~D  * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report tool - "Download monthly documents CSV" added.
-    * Fix - EMAILS & MISC. - EU VAT Number - Preserve VAT in Base Country - `EL` replaced with `GR` for Greece when checking location.
-    * Tweak - EMAILS & MISC. - Export - Headers cleaned up.
-D   * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.
-    * Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - Empty array passed on apply `wc_order_statuses` filter (produced PHP warning).
-    * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - User messages updated.
-    * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - "Add new custom status" button label added to translation.
-~D  * Dev - PRICES & CURRENCIES - Wholesale Price - Global settings discount now can be negative.
-    * Fix - Deprecated typo fixed.
-D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_short_description` - now displays item's short description (may be different from `item_excerpt`). `item_description` attribute removed.
-D   * Dev - Shortcodes - Products - `[wcj_product_short_description]` shortcode added.
-    * Tweak - Shortcodes - Products - `[wcj_product_excerpt]` - Using `product_excerpt_length` object property instead of global variable.
     * Fix - Shortcodes - Products - `[wcj_product_excerpt]` - Manually checking for short description first (so `length` can be applied).
 D   * Dev - Shortcodes - Products - `[wcj_product_excerpt]` - `excerpt_length` attribute deprecated (replaced with `length`).
--   * Tweak - PRICES & CURRENCIES - Wholesale Price - `get_wholesale_price()` - `price_directly` - `wcj_get_wholesale_price` filter added.
--D  * Dev - PRICES & CURRENCIES - Wholesale Price - Per product - "Price directly" option added (for non variable products only).
-    * Tweak - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `wcj_product_wholesale_price_table_price_before` and `wcj_product_wholesale_price_table_price_after` filters added.
-~   * Tweak - PRICES & CURRENCIES - Price by User Role - `change_price_by_role()` - `wcj_price_by_user_role_get_price` filter added.
-~   * Tweak - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.
-    * Tweak - `wcj_get_table_html()` - "row_styles" parameter added.
-    * Dev - EMAILS & MISC. - Admin Tools - "System Info" table added.
-~D  * Dev - PDF INVOICING & PACKING SLIPS - "Generate" and "Download" bulk actions added to admin orders list.
-~   * Fix - PRODUCTS - User Products - "My Account > Products" fixed.
-~D  * Dev - Shortcodes - Orders - `[wcj_order_items]` shortcode added.
-~   * Dev - EMAILS & MISC. - Admin Tools - "PHP Memory Limit" option added.
-    * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - Variations added in report.
-    * Tweak - EMAILS & MISC. - Reports - Button restyled in admin settings.
-~   * Fix - `class-wcj-currency-reports.php` - `filter_reports` is now applied on `wc-reports` page only.
-~$D * Dev - BUTTON & PRICE LABELS - Call for Price - "Make All Products Call for Price" option added.
--$D * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
-    * Dev - `unclean_custom_textarea()` added.
--$D * Dev - EMAILS & MISC. - Products XML - Initial module release.
+D   * Dev - Shortcodes - Products - `[wcj_product_short_description]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_url]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_image_url]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_categories_names]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_categories_urls]` shortcode added.
-~D  * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
+D   * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
+~D  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
+-$D * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
 ~   * Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
+~D  * Dev - PRICES & CURRENCIES - Wholesale Price - Global settings discount now can be negative.
+-D  * Dev - PRICES & CURRENCIES - Wholesale Price - Per product - "Price directly" option added (for non variable products only).
+~$D * Dev - BUTTON & PRICE LABELS - Call for Price - "Make All Products Call for Price" option added.
+~   * Fix - PRODUCTS - User Products - "My Account > Products" fixed.
+    * Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - Empty array passed on apply `wc_order_statuses` filter (produced PHP warning).
+~D  * Dev - SHIPPING & ORDERS - Order Minimum Amount - Initial module release (moved from Orders module).
+~$D * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Columns Order" section added. Priorities in all Booster's added `manage_edit-shop_order_columns` filters changed.
+~$D * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Multiple Status" section added.
+~D  * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
+D   * Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.
+~D  * Dev - PDF INVOICING & PACKING SLIPS - "Generate" and "Download" bulk actions added to admin orders list.
+    * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_data()` - `WP_Query` optimized to return `ids` only.
+~D  * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report tool - "Download monthly documents CSV" added.
+    * Dev - EMAILS & MISC. - Admin Tools - "System Info" table added.
+~   * Dev - EMAILS & MISC. - Admin Tools - "PHP Memory Limit" option added.
+    * Fix - EMAILS & MISC. - EU VAT Number - Preserve VAT in Base Country - `EL` replaced with `GR` for Greece when checking location.
 ~   * Dev - EMAILS & MISC. - EU VAT Number - Validate VAT without SOAP fallback added (`validate_vat_no_soap` function).
-D   * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
-    * Dev - Made "Booster Tools" accessible to shop manager.
+D   * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.
     * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
     * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
-D   * Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.
-D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
+-   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products stock for each variation added.
+~   * Dev - EMAILS & MISC. - Export - Export Products - Stock - `get_stock_quantity()` replaced with `get_total_stock()`.
+~   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products price, regular price and sale price added.
+~D  * Dev - EMAILS & MISC. - Export - Export Products - "Additional Export Products Fields" section added.
+~D  * Dev - EMAILS & MISC. - Export - Export Products - "Export Products Fields" option added.
+D   * Dev - EMAILS & MISC. - Export - Export Products - "Image URL", "Short Description", "Description", "Status" and "URL" export fields added.
+    * Dev - EMAILS & MISC. - Export - Export Products - `WP_Query` optimized to return `ids` only.
+D   * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
+-$D * Dev - EMAILS & MISC. - Products XML - Initial module release.
+    * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - Variations added in report.
+    * Tweak - Deprecated typo fixed.
+~   * Tweak - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.
+    * Tweak - `wcj_get_table_html()` - "row_styles" parameter added.
+    * Tweak - Shortcodes - Products - `[wcj_product_excerpt]` - Using `product_excerpt_length` object property instead of global variable.
+    * Tweak - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `wcj_product_wholesale_price_table_price_before` and `wcj_product_wholesale_price_table_price_after` filters added.
+~   * Tweak - PRICES & CURRENCIES - Price by User Role - `change_price_by_role()` - `wcj_price_by_user_role_get_price` filter added.
+~   * Tweak - PRICES & CURRENCIES - Wholesale Price - `get_wholesale_price()` - `price_directly` - `wcj_get_wholesale_price` filter added.
+    * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - User messages updated.
+    * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - "Add new custom status" button label added to translation.
+    * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_zip()` - Headers cleaned up.
+    * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - Calling `get_tool_header_html()` instead of directly outputting header.
+    * Tweak - EMAILS & MISC. - Export - Tool header added to all export tools.
+    * Tweak - EMAILS & MISC. - Export - Headers cleaned up.
+    * Tweak - EMAILS & MISC. - Reports - Button restyled in admin settings.
 
 = 2.5.6 - 29/09/2016 =
 * Dev - Functions - `wcj_get_product_input_fields()` - `unserialize()` added for serialized values.
