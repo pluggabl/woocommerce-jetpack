@@ -134,7 +134,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 = 2.5.7 - 23/11/2016 =
     * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_image_width` and `item_image_height` replaced with `product_image_width` and `product_image_height`.
     * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - Added to all appropriate `item_` columns: `product_name`, `product_attribute`, `product_excerpt`, `product_short_description`, `product_variation`, `product_thumbnail`, `product_sku`, `product_weight`.
-    * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_width` and `product_height` columns added.
+    * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_length`, `product_width` and `product_height` columns added.
 ~   * Fix - `class-wcj-currency-reports.php` - `filter_reports` is now applied on `wc-reports` page only.
     * Dev - `unclean_custom_textarea()` added.
     * Dev - Made "Booster Tools" accessible to shop manager.

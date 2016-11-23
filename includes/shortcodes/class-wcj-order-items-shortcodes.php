@@ -387,6 +387,10 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					case 'product_height':
 						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_height();
 						break;
+					case 'item_length':
+					case 'product_length':
+						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_length();
+						break;
 					default:
 						$data[ $item_counter ][] = ''; // $column;
 				}
