@@ -7,7 +7,7 @@
  * @version 2.5.7
  * @since   2.5.7
  * @author  Algoritmika Ltd.
- * @todo    Move (maybe) to "PRODUCTS" category;
+ * @todo    create all files at once (manually and synchronize update); move (maybe) to "PRODUCTS" category;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -27,15 +27,18 @@ class WCJ_Products_XML extends WCJ_Module {
 		$this->id         = 'products_xml';
 		$this->short_desc = __( 'Products XML', 'woocommerce-jetpack' );
 		$this->desc       = __( 'WooCommerce products XML feed.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-booster-products-xml-feed/';
+		$this->link       = 'http://booster.io/features/woocommerce-products-xml-feed/';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_action( 'init',                         array( $this, 'schedule_the_events' ) );
-			add_action( 'admin_init',                   array( $this, 'schedule_the_events' ) );
-			add_action( 'admin_init',                   array( $this, 'wcj_create_products_xml' ) );
-			add_action( 'wcj_create_products_xml_hook', array( $this, 'create_products_xml_cron' ) );
-			add_filter( 'cron_schedules',               array( $this, 'cron_add_custom_intervals' ) );
+			add_action( 'init',           array( $this, 'schedule_the_events' ) );
+			add_action( 'admin_init',     array( $this, 'schedule_the_events' ) );
+			add_action( 'admin_init',     array( $this, 'wcj_create_products_xml' ) );
+			add_filter( 'cron_schedules', array( $this, 'cron_add_custom_intervals' ) );
+			$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
+			for ( $i = 1; $i <= $total_number; $i++ ) {
+				add_action( 'wcj_create_products_xml_hook_' . $i, array( $this, 'create_products_xml_cron' ), PHP_INT_MAX, 2 );
+			}
 		}
 	}
 
@@ -46,7 +49,6 @@ class WCJ_Products_XML extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function schedule_the_events() {
-		$selected_interval = apply_filters( 'wcj_get_option_filter', 'weekly', get_option( 'wcj_create_products_xml_period', 'weekly' ) );
 		$update_intervals  = array(
 			'minutely',
 			'hourly',
@@ -54,16 +56,30 @@ class WCJ_Products_XML extends WCJ_Module {
 			'daily',
 			'weekly',
 		);
-		foreach ( $update_intervals as $interval ) {
-			$event_hook = 'wcj_create_products_xml_hook';
-			$event_timestamp = wp_next_scheduled( $event_hook, array( $interval ) );
-			if ( $selected_interval === $interval ) {
-				update_option( 'wcj_create_products_xml_cron_time', $event_timestamp );
-			}
-			if ( ! $event_timestamp && $selected_interval === $interval ) {
-				wp_schedule_event( time(), $selected_interval, $event_hook, array( $selected_interval ) );
-			} elseif ( $event_timestamp && $selected_interval !== $interval ) {
-				wp_unschedule_event( $event_timestamp, $event_hook, array( $interval ) );
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$event_hook = 'wcj_create_products_xml_hook_' . $i;
+			if ( 'yes' === get_option( 'wcj_products_xml_enabled_' . $i, 'yes' ) ) {
+				$selected_interval = apply_filters( 'wcj_get_option_filter', 'weekly', get_option( 'wcj_create_products_xml_period_' . $i, 'weekly' ) );
+				foreach ( $update_intervals as $interval ) {
+					$event_timestamp = wp_next_scheduled( $event_hook, array( $interval, $i ) );
+					if ( $selected_interval === $interval ) {
+						update_option( 'wcj_create_products_xml_cron_time_' . $i, $event_timestamp );
+					}
+					if ( ! $event_timestamp && $selected_interval === $interval ) {
+						wp_schedule_event( time(), $selected_interval, $event_hook, array( $selected_interval, $i ) );
+					} elseif ( $event_timestamp && $selected_interval !== $interval ) {
+						wp_unschedule_event( $event_timestamp, $event_hook, array( $interval, $i ) );
+					}
+				}
+			} else { // unschedule all events
+				update_option( 'wcj_create_products_xml_cron_time_' . $i, '' );
+				foreach ( $update_intervals as $interval ) {
+					$event_timestamp = wp_next_scheduled( $event_hook, array( $interval, $i ) );
+					if ( $event_timestamp ) {
+						wp_unschedule_event( $event_timestamp, $event_hook, array( $interval, $i ) );
+					}
+				}
 			}
 		}
 	}
@@ -114,7 +130,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	 */
 	function wcj_create_products_xml() {
 		if ( isset( $_GET['wcj_create_products_xml'] ) ) {
-			$result = $this->create_products_xml();
+			$result = $this->create_products_xml( $_GET['wcj_create_products_xml'] );
 			add_action( 'admin_notices', array( $this, ( ( false !== $result ) ? 'admin_notice__success' : 'admin_notice__error' ) ) );
 		}
 	}
@@ -125,8 +141,8 @@ class WCJ_Products_XML extends WCJ_Module {
 	 * @version 2.5.7
 	 * @since   2.5.7
 	 */
-	function create_products_xml_cron() {
-		$this->create_products_xml();
+	function create_products_xml_cron( $interval, $file_num ) {
+		$this->create_products_xml( $file_num );
 		die();
 	}
 
@@ -136,13 +152,13 @@ class WCJ_Products_XML extends WCJ_Module {
 	 * @version 2.5.7
 	 * @since   2.5.7
 	 */
-	function create_products_xml() {
+	function create_products_xml( $file_num ) {
 		$xml_items = '';
-		$xml_header_template = get_option( 'wcj_products_xml_header', '' );
-		$xml_footer_template = get_option( 'wcj_products_xml_footer', '' );
-		$xml_item_template   = get_option( 'wcj_products_xml_item', '' );
+		$xml_header_template = get_option( 'wcj_products_xml_header_' . $file_num, '' );
+		$xml_footer_template = get_option( 'wcj_products_xml_footer_' . $file_num, '' );
+		$xml_item_template   = get_option( 'wcj_products_xml_item_'   . $file_num, '' );
 		$offset = 0;
-		$block_size = 1024;
+		$block_size = 256;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'product',
@@ -163,7 +179,10 @@ class WCJ_Products_XML extends WCJ_Module {
 			$offset += $block_size;
 		}
 		wp_reset_postdata();
-		return file_put_contents( ABSPATH . get_option( 'wcj_products_xml_file_path', 'products.xml' ), $xml_header_template . $xml_items . $xml_footer_template );
+		return file_put_contents(
+			ABSPATH . get_option( 'wcj_products_xml_file_path_' . $file_num, ( ( 1 == $file_num ) ? 'products.xml' : 'products_' . $file_num . '.xml' ) ),
+			$xml_header_template . $xml_items . $xml_footer_template
+		);
 	}
 
 	/**
@@ -173,85 +192,117 @@ class WCJ_Products_XML extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function get_settings() {
-		$products_xml_cron_desc = '';
-		if ( $this->is_enabled() ) {
-			if ( '' != get_option( 'wcj_create_products_xml_cron_time', '' ) ) {
-				$scheduled_time_diff = get_option( 'wcj_create_products_xml_cron_time', '' ) - time();
-				if ( $scheduled_time_diff > 0 ) {
-					$products_xml_cron_desc = '<em>' . sprintf( __( '%s seconds till next update.', 'woocommerce-jetpack' ), $scheduled_time_diff ) . '</em>';
-				}
-			}
-		}
 		$settings = array(
 			array(
-				'title'    => __( 'Products XML Options', 'woocommerce-jetpack' ),
+				'title'    => __( 'Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_products_xml_options',
 			),
 			array(
-				'title'    => __( 'Products XML Header', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_products_xml_header',
-				'default'  => '<?xml version = "1.0" encoding = "utf-8" ?>' . PHP_EOL . '<root>' . PHP_EOL,
-				'type'     => 'custom_textarea',
-				'css'      => 'width:66%;min-width:300px;min-height:300px;',
-			),
-			array(
-				'title'    => __( 'Products XML Item', 'woocommerce-jetpack' ),
-				'desc'     => sprintf(
-					__( 'You can use shortcodes here. Please take a look at <a target="_blank" href="%s">Booster\'s products shortcodes</a>.', 'woocommerce-jetpack' ),
-					'http://booster.io/category/shortcodes/products-shortcodes/'
-				),
-				'id'       => 'wcj_products_xml_item',
-				'default'  =>
-					'<item>' . PHP_EOL .
-						"\t" . '<name>[wcj_product_title]</name>' . PHP_EOL .
-						"\t" . '<link>[wcj_product_url]</link>' . PHP_EOL .
-						"\t" . '<price>[wcj_product_price hide_currency="yes"]</price>' . PHP_EOL .
-						"\t" . '<image>[wcj_product_image_url image_size="full"]</image>' . PHP_EOL .
-						"\t" . '<category_full>[wcj_product_categories_names]</category_full>' . PHP_EOL .
-						"\t" . '<category_link>[wcj_product_categories_urls]</category_link>' . PHP_EOL .
-					'</item>' . PHP_EOL,
-				'type'     => 'custom_textarea',
-				'css'      => 'width:66%;min-width:300px;min-height:300px;',
-			),
-			array(
-				'title'    => __( 'Products XML Footer', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_products_xml_footer',
-				'default'  => '</root>',
-				'type'     => 'custom_textarea',
-				'css'      => 'width:66%;min-width:300px;min-height:300px;',
-			),
-			array(
-				'title'    => __( 'Result XML File Path and Name', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Path on server:', 'woocommerce-jetpack' ) . ' ' . ABSPATH . get_option( 'wcj_products_xml_file_path', 'products.xml' ),
-				'desc'     => __( 'URL:', 'woocommerce-jetpack' ) . ' ' . '<a target="_blank" href="' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '">' . site_url() . '/' . get_option( 'wcj_products_xml_file_path', 'products.xml' ) . '</a>', // todo
-				'id'       => 'wcj_products_xml_file_path',
-				'default'  => 'products.xml',
-				'type'     => 'text',
-				'css'      => 'width:66%;min-width:300px;',
-			),
-			array(
-				'title'    => __( 'Update Period', 'woocommerce-jetpack' ),
-				'desc'     => $products_xml_cron_desc .
-					( ( $this->is_enabled() ) ? '<br><a href="' . add_query_arg( 'wcj_create_products_xml', '1' ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>' : '' ),
-				'id'       => 'wcj_create_products_xml_period',
-				'default'  => 'weekly',
-				'type'     => 'select',
-				'options'  => array(
-					'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
-					'hourly'     => __( 'Update Hourly', 'woocommerce-jetpack' ),
-					'twicedaily' => __( 'Update Twice Daily', 'woocommerce-jetpack' ),
-					'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
-					'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
-				),
-				'desc_tip' => __( 'Possible update periods are: every minute, hourly, twice daily, daily and weekly.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'title'    => __( 'Total Files', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_products_xml_total_files',
+				'default'  => 1,
+				'type'     => 'custom_number',
+				'desc_tip' => __( 'Press Save changes after you change this number.', 'woocommerce-jetpack' ),
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
+					apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
 			),
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_products_xml_options',
 			),
 		);
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$products_xml_cron_desc = '';
+			if ( $this->is_enabled() ) {
+				if ( '' != get_option( 'wcj_create_products_xml_cron_time_' . $i, '' ) ) {
+					$scheduled_time_diff = get_option( 'wcj_create_products_xml_cron_time_' . $i, '' ) - time();
+					if ( $scheduled_time_diff > 0 ) {
+						$products_xml_cron_desc = '<em>' . sprintf( __( '%s seconds till next update.', 'woocommerce-jetpack' ), $scheduled_time_diff ) . '</em>';
+					}
+				}
+				$products_xml_cron_desc .= '<br><a href="' . add_query_arg( 'wcj_create_products_xml', $i ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>';
+			}
+			$default_file_name = ( ( 1 == $i ) ? 'products.xml' : 'products_' . $i . '.xml' );
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => __( 'XML File', 'woocommerce-jetpack' ) . ' #' . $i,
+					'type'     => 'title',
+					'id'       => 'wcj_products_xml_options_' . $i,
+				),
+				array(
+					'title'    => __( 'Enabled', 'woocommerce-jetpack' ),
+					'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_products_xml_enabled_' . $i,
+					'default'  => 'yes',
+					'type'     => 'checkbox',
+				),
+				array(
+					'title'    => __( 'XML Header', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_products_xml_header_' . $i,
+					'default'  => '<?xml version = "1.0" encoding = "utf-8" ?>' . PHP_EOL . '<root>' . PHP_EOL,
+					'type'     => 'custom_textarea',
+					'css'      => 'width:66%;min-width:300px;min-height:150px;',
+				),
+				array(
+					'title'    => __( 'XML Item', 'woocommerce-jetpack' ),
+					'desc'     => sprintf(
+						__( 'You can use shortcodes here. Please take a look at <a target="_blank" href="%s">Booster\'s products shortcodes</a>.', 'woocommerce-jetpack' ),
+						'http://booster.io/category/shortcodes/products-shortcodes/'
+					),
+					'id'       => 'wcj_products_xml_item_' . $i,
+					'default'  =>
+						'<item>' . PHP_EOL .
+							"\t" . '<name>[wcj_product_title]</name>' . PHP_EOL .
+							"\t" . '<link>[wcj_product_url]</link>' . PHP_EOL .
+							"\t" . '<price>[wcj_product_price hide_currency="yes"]</price>' . PHP_EOL .
+							"\t" . '<image>[wcj_product_image_url image_size="full"]</image>' . PHP_EOL .
+							"\t" . '<category_full>[wcj_product_categories_names]</category_full>' . PHP_EOL .
+							"\t" . '<category_link>[wcj_product_categories_urls]</category_link>' . PHP_EOL .
+						'</item>' . PHP_EOL,
+					'type'     => 'custom_textarea',
+					'css'      => 'width:66%;min-width:300px;min-height:300px;',
+				),
+				array(
+					'title'    => __( 'XML Footer', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_products_xml_footer_' . $i,
+					'default'  => '</root>',
+					'type'     => 'custom_textarea',
+					'css'      => 'width:66%;min-width:300px;min-height:150px;',
+				),
+				array(
+					'title'    => __( 'XML File Path and Name', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Path on server:', 'woocommerce-jetpack' ) . ' ' . ABSPATH . get_option( 'wcj_products_xml_file_path_' . $i, $default_file_name ),
+					'desc'     => __( 'URL:', 'woocommerce-jetpack' ) . ' ' . '<a target="_blank" href="' . site_url() . '/' . get_option( 'wcj_products_xml_file_path_' . $i, $default_file_name ) . '">' . site_url() . '/' . get_option( 'wcj_products_xml_file_path_' . $i, $default_file_name ) . '</a>', // todo
+					'id'       => 'wcj_products_xml_file_path_' . $i,
+					'default'  => $default_file_name,
+					'type'     => 'text',
+					'css'      => 'width:66%;min-width:300px;',
+				),
+				array(
+					'title'    => __( 'Update Period', 'woocommerce-jetpack' ),
+					'desc'     => $products_xml_cron_desc,
+					'id'       => 'wcj_create_products_xml_period_' . $i,
+					'default'  => 'weekly',
+					'type'     => 'select',
+					'options'  => array(
+						'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
+						'hourly'     => __( 'Update Hourly', 'woocommerce-jetpack' ),
+						'twicedaily' => __( 'Update Twice Daily', 'woocommerce-jetpack' ),
+						'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
+						'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
+					),
+					'desc_tip' => __( 'Possible update periods are: every minute, hourly, twice daily, daily and weekly.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
+					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				),
+				array(
+					'type'     => 'sectionend',
+					'id'       => 'wcj_products_xml_options_' . $i,
+				),
+			) );
+		}
 		return $this->add_standard_settings( $settings );
 	}
 }
