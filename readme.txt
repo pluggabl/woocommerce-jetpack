@@ -132,6 +132,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 23/11/2016 =
+D   * Dev - Shortcodes - Orders - `[wcj_order_items_total_weight]` replaced with `[wcj_order_total_weight]`.
+D   * Dev - Shortcodes - Orders - `[wcj_order_total_width]`, `[wcj_order_total_height]` and `[wcj_order_total_length]` shortcodes added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_image_width` and `item_image_height` replaced with `product_image_width` and `product_image_height`.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - Added to all appropriate `item_` columns: `product_name`, `product_attribute`, `product_excerpt`, `product_short_description`, `product_variation`, `product_thumbnail`, `product_sku`, `product_weight`.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_length`, `product_width` and `product_height` columns added.

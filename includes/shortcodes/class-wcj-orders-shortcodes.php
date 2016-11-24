@@ -63,10 +63,14 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_payment_method',
 			'wcj_order_payment_method_transaction_id',
 			'wcj_order_shipping_method',
-			'wcj_order_items_total_weight',
+			'wcj_order_items_total_weight', // deprecated - use 'wcj_order_total_weight' instead
 			'wcj_order_items_total_quantity',
 			'wcj_order_items_total_number',
 			'wcj_order_function',
+			'wcj_order_total_width',
+			'wcj_order_total_height',
+			'wcj_order_total_length',
+			'wcj_order_total_weight',
 		);
 
 		parent::__construct();
@@ -262,16 +266,85 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * wcj_order_total_width
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function wcj_order_total_width( $atts ) {
+		return $this->get_order_total( $atts, 'width' );
+	}
+
+	/**
+	 * wcj_order_total_height
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function wcj_order_total_height( $atts ) {
+		return $this->get_order_total( $atts, 'height' );
+	}
+
+	/**
+	 * wcj_order_total_length
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function wcj_order_total_length( $atts ) {
+		return $this->get_order_total( $atts, 'length' );
+	}
+
+	/**
+	 * wcj_order_total_weight
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function wcj_order_total_weight( $atts ) {
+		return $this->get_order_total( $atts, 'weight' );
+	}
+
+	/**
+	 * get_order_total
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function get_order_total( $atts, $param ) {
+		$total = 0;
+		$the_items = $this->the_order->get_items();
+		foreach ( $the_items as $item_id => $item ) {
+			$product_id = ( 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
+			$_product = wc_get_product( $product_id );
+			if ( $_product ) {
+				switch ( $param ) {
+					case 'width':
+						$total += ( $item['qty'] * $_product->get_width() );
+						break;
+					case 'height':
+						$total += ( $item['qty'] * $_product->get_height() );
+						break;
+					case 'length':
+						$total += ( $item['qty'] * $_product->get_length() );
+						break;
+					case 'weight':
+						$total += ( $item['qty'] * $_product->get_weight() );
+						break;
+				}
+			}
+		}
+		return ( 0 == $total && 'yes' === $atts['hide_if_zero'] ) ? '' : $total;
+	}
+
+	/**
 	 * wcj_order_items_total_weight.
+	 *
+	 * @version    2.5.7
+	 * @deprecated 2.5.7
 	 */
 	function wcj_order_items_total_weight( $atts ) {
-		$total_weight = 0;
-		$the_items = $this->the_order->get_items();
-		foreach( $the_items as $the_item ) {
-			$the_product = wc_get_product( $the_item['product_id'] );
-			$total_weight += $the_item['qty'] * $the_product->get_weight();
-		}
-		return ( 0 == $total_weight && 'yes' === $atts['hide_if_zero'] ) ? '' : $total_weight;
+		return $this->get_order_total( $atts, 'weight' );
 	}
 
 	/**
