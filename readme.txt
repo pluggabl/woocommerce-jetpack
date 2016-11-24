@@ -131,18 +131,18 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 23/11/2016 =
-D   * Dev - Shortcodes - Orders - `[wcj_order_items_total_weight]` replaced with `[wcj_order_total_weight]`.
-D   * Dev - Shortcodes - Orders - `[wcj_order_total_width]`, `[wcj_order_total_height]` and `[wcj_order_total_length]` shortcodes added.
-D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_image_width` and `item_image_height` replaced with `product_image_width` and `product_image_height`.
-D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - Added to all appropriate `item_` columns: `product_name`, `product_attribute`, `product_excerpt`, `product_short_description`, `product_variation`, `product_thumbnail`, `product_sku`, `product_weight`.
-D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_length`, `product_width` and `product_height` columns added.
+= 2.5.7 - 24/11/2016 =
 ~   * Fix - `class-wcj-currency-reports.php` - `filter_reports` is now applied on `wc-reports` page only.
     * Dev - `unclean_custom_textarea()` added.
     * Dev - Made "Booster Tools" accessible to shop manager.
 D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
 ~D  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
+D   * Dev - Shortcodes - Orders - `[wcj_order_items_total_weight]` replaced with `[wcj_order_total_weight]`.
+D   * Dev - Shortcodes - Orders - `[wcj_order_total_width]`, `[wcj_order_total_height]` and `[wcj_order_total_length]` shortcodes added.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_items]` shortcode added.
+D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_image_width` and `item_image_height` replaced with `product_image_width` and `product_image_height`.
+D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - Added to all appropriate `item_` columns: `product_name`, `product_attribute`, `product_excerpt`, `product_short_description`, `product_variation`, `product_thumbnail`, `product_sku`, `product_weight`.
+D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_length`, `product_width` and `product_height` columns added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_short_description` - now displays item's short description (may be different from `item_excerpt`). `item_description` attribute removed.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_regular_price` and `product_sale_price` columns added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_tax_class` column added.
