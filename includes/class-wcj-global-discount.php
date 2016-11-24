@@ -226,19 +226,28 @@ class WCJ_Global_Discount extends WCJ_Module {
 				'custom_attributes' => is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
 					apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
 			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_global_discount_options',
+			),
 		);
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$settings = array_merge( $settings, array(
 				array(
 					'title'    => __( 'Discount Group', 'woocommerce-jetpack' ) . ' #' . $i,
+					'type'     => 'title',
+					'id'       => 'wcj_global_discount_options_' . $i,
+				),
+				array(
+					'title'    => __( 'Enabled', 'woocommerce-jetpack' ),
 					'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_global_discount_sale_enabled_' . $i,
 					'default'  => 'yes',
 					'type'     => 'checkbox',
 				),
 				array(
-					'desc'     => __( 'Type', 'woocommerce-jetpack' ),
+					'title'    => __( 'Type', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_global_discount_sale_coefficient_type_' . $i,
 					'default'  => 'percent',
 					'type'     => 'select',
@@ -248,7 +257,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 					),
 				),
 				array(
-					'desc'     => __( 'Value', 'woocommerce-jetpack' ),
+					'title'    => __( 'Value', 'woocommerce-jetpack' ),
 					'desc_tip' => __( 'Must be negative number.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_global_discount_sale_coefficient_' . $i,
 					'default'  => 0,
@@ -256,7 +265,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 					'custom_attributes' => array( /* 'min' => 0, */ 'max' => 0, 'step' => 0.0001 ), // todo
 				),
 				array(
-					'desc'     => __( 'Product Scope', 'woocommerce-jetpack' ),
+					'title'    => __( 'Product Scope', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_global_discount_sale_product_scope_' . $i,
 					'default'  => 'all',
 					'type'     => 'select',
@@ -266,7 +275,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 					),
 				),
 				array(
-					'desc'     => __( 'Include Product Categories', 'woocommerce-jetpack' ),
+					'title'    => __( 'Include Product Categories', 'woocommerce-jetpack' ),
 					'desc_tip' => __( 'Set this field to apply discount to selected categories only. Leave blank to apply to all categories.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_global_discount_sale_categories_incl_' . $i,
 					'default'  => '',
@@ -274,14 +283,12 @@ class WCJ_Global_Discount extends WCJ_Module {
 					'type'     => 'multiselect',
 					'options'  => $product_cats_options,
 				),
+				array(
+					'type'     => 'sectionend',
+					'id'       => 'wcj_global_discount_options_' . $i,
+				),
 			) );
 		}
-		$settings = array_merge( $settings, array(
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_global_discount_options',
-			),
-		) );
 		return $this->add_standard_settings( $settings );
 	}
 }
