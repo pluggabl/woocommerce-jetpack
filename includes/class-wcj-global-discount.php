@@ -83,6 +83,17 @@ class WCJ_Global_Discount extends WCJ_Module {
 	}
 
 	/**
+	 * check_if_applicable.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 * @return  bool
+	 */
+	function check_if_applicable( $_product, $group ) {
+		return ( 'yes' === get_option( 'wcj_global_discount_sale_enabled_' . $group, 'yes' ) && $this->check_product_categories( $_product, $group ) );
+	}
+
+	/**
 	 * check_product_categories.
 	 *
 	 * @version 2.5.7
@@ -116,7 +127,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	function add_global_discount_any_price( $price_type, $price, $_product ) {
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( ! $this->check_product_categories( $_product, $i ) ) {
+			if ( ! $this->check_if_applicable( $_product, $i ) ) {
 				continue; // no changes by current discount group
 			}
 			$coefficient = get_option( 'wcj_global_discount_sale_coefficient_' . $i, 0 );
@@ -175,6 +186,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 		$wcj_global_discount_price_hash['total_number'] = $total_number;
 		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$wcj_global_discount_price_hash[ 'enabled_' . $i ] = get_option( 'wcj_global_discount_sale_enabled_'          . $i, 'yes' );
 			$wcj_global_discount_price_hash[ 'type_'    . $i ] = get_option( 'wcj_global_discount_sale_coefficient_type_' . $i, 'percent' );
 			$wcj_global_discount_price_hash[ 'value_'   . $i ] = get_option( 'wcj_global_discount_sale_coefficient_'      . $i, 0 );
 			$wcj_global_discount_price_hash[ 'scope_'   . $i ] = get_option( 'wcj_global_discount_sale_product_scope_'    . $i, 'all' );
@@ -219,7 +231,13 @@ class WCJ_Global_Discount extends WCJ_Module {
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$settings = array_merge( $settings, array(
 				array(
-					'title'    => __( 'Dscount Group', 'woocommerce-jetpack' ) . ' #' . $i,
+					'title'    => __( 'Discount Group', 'woocommerce-jetpack' ) . ' #' . $i,
+					'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_global_discount_sale_enabled_' . $i,
+					'default'  => 'yes',
+					'type'     => 'checkbox',
+				),
+				array(
 					'desc'     => __( 'Type', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_global_discount_sale_coefficient_type_' . $i,
 					'default'  => 'percent',
