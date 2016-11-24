@@ -241,41 +241,30 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_price_excluding_tax.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.7
 	 * @since   2.4.0
 	 */
 	function wcj_product_price_excluding_tax( $atts ) {
-		if ( $this->the_product->is_type( 'variable' ) ) {
-			// Variable
-			$prices = $this->the_product->get_variation_prices( false );
-			$min_product_id = key( $prices['price'] );
-			end( $prices['price'] );
-			$max_product_id = key( $prices['price'] );
-			if ( 0 != $min_product_id && 0 != $max_product_id ) {
-				$min_variation_product = wc_get_product( $min_product_id );
-				$max_variation_product = wc_get_product( $max_product_id );
-				$min = $min_variation_product->get_price_excluding_tax();
-				$max = $max_variation_product->get_price_excluding_tax();
-				if ( 'yes' !== $atts['hide_currency'] ) {
-					$min = wc_price( $min );
-					$max = wc_price( $max );
-				}
-				return ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
-			}
-		} else {
-			 // Simple etc.
-			$the_price = $this->the_product->get_price_excluding_tax();
-			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
-		}
+		return $this->get_product_price_including_or_excluding_tax( $atts, 'excluding' );
 	}
 
 	/**
 	 * wcj_product_price_including_tax.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.7
 	 * @since   2.4.0
 	 */
 	function wcj_product_price_including_tax( $atts ) {
+		return $this->get_product_price_including_or_excluding_tax( $atts, 'including' );
+	}
+
+	/**
+	 * get_product_price_including_or_excluding_tax.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function get_product_price_including_or_excluding_tax( $atts, $including_or_excluding ) {
 		if ( $this->the_product->is_type( 'variable' ) ) {
 			// Variable
 			$prices = $this->the_product->get_variation_prices( false );
@@ -285,8 +274,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			if ( 0 != $min_product_id && 0 != $max_product_id ) {
 				$min_variation_product = wc_get_product( $min_product_id );
 				$max_variation_product = wc_get_product( $max_product_id );
-				$min = $min_variation_product->get_price_including_tax();
-				$max = $max_variation_product->get_price_including_tax();
+				if ( 'including' === $including_or_excluding ) {
+					$min = $min_variation_product->get_price_including_tax();
+					$max = $max_variation_product->get_price_including_tax();
+				} else { // 'excluding'
+					$min = $min_variation_product->get_price_excluding_tax();
+					$max = $max_variation_product->get_price_excluding_tax();
+				}
+				if ( 0 != $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
+					$min = $min * $atts['multiply_by'];
+					$max = $max * $atts['multiply_by'];
+				}
 				if ( 'yes' !== $atts['hide_currency'] ) {
 					$min = wc_price( $min );
 					$max = wc_price( $max );
@@ -295,7 +293,14 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			}
 		} else {
 			 // Simple etc.
-			$the_price = $this->the_product->get_price_including_tax();
+			if ( 'including' === $including_or_excluding ) {
+				$the_price = $this->the_product->get_price_including_tax();
+			} else { // 'excluding'
+				$the_price = $this->the_product->get_price_excluding_tax();
+			}
+			if ( 0 != $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
+				$the_price = $the_price * $atts['multiply_by'];
+			}
 			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
 		}
 	}
