@@ -47,6 +47,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'currencies'            => '',
 			'content'               => '',
 			'heading_format'        => 'from %level_min_qty% pcs.',
+			'before_level_max_qty'  => '-',
+			'last_level_max_qty'    => '+',
 			'replace_with_currency' => 'no',
 			'hide_if_zero_quantity' => 'no',
 			'table_format'          => 'horizontal',
@@ -122,7 +124,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			if ( 0 == $wholesale_price_level['quantity'] && 'yes' === $atts['hide_if_zero_quantity'] ) {
 				continue;
 			}
-			$level_max_qty = ( isset( $wholesale_price_levels[ $i + 1 ]['quantity'] ) ) ?  '-' . ( $wholesale_price_levels[ $i + 1 ]['quantity'] - 1 ) : '+';
+			$level_max_qty = ( isset( $wholesale_price_levels[ $i + 1 ]['quantity'] ) ) ? $atts['before_level_max_qty'] . ( $wholesale_price_levels[ $i + 1 ]['quantity'] - 1 ) : $atts['last_level_max_qty'];
 			$data_qty[] = str_replace(
 				array( '%level_qty%', '%level_min_qty%', '%level_max_qty%' ), // %level_qty% is deprecated
 				array( $wholesale_price_level['quantity'], $wholesale_price_level['quantity'], $level_max_qty ),

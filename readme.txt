@@ -137,7 +137,7 @@ D   * Dev - Shortcodes - Products - `[wcj_product_price_excluding_tax]` and `[wc
     * Dev - `unclean_custom_textarea()` added.
     * Dev - Made "Booster Tools" accessible to shop manager.
 D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
-~D  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
+D   * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_total_weight]` replaced with `[wcj_order_total_weight]`.
 D   * Dev - Shortcodes - Orders - `[wcj_order_total_width]`, `[wcj_order_total_height]` and `[wcj_order_total_length]` shortcodes added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items]` shortcode added.
@@ -155,7 +155,7 @@ D   * Dev - Shortcodes - Products - `[wcj_product_image_url]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_categories_names]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_categories_urls]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
-~D  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
+D   * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
 D   * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
     * Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
 D   * Dev - PRICES & CURRENCIES - Wholesale Price - Global settings discount now can be negative.

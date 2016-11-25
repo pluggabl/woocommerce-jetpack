@@ -72,6 +72,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'apply_filters'         => 'no',
 			'name'                  => '',
 			'heading_format'        => 'from %level_min_qty% pcs.',
+			'before_level_max_qty'  => '-',
+			'last_level_max_qty'    => '+',
 			'price_row_format'      => '<del>%old_price%</del> %price%',
 			'sep'                   => ', ',
 			'add_links'             => 'yes',
@@ -693,7 +695,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				}
 			}
 
-			$level_max_qty = ( isset( $wholesale_price_levels[ $i + 1 ]['quantity'] ) ) ?  '-' . ( $wholesale_price_levels[ $i + 1 ]['quantity'] - 1 ) : '+';
+			$level_max_qty = ( isset( $wholesale_price_levels[ $i + 1 ]['quantity'] ) ) ? $atts['before_level_max_qty'] . ( $wholesale_price_levels[ $i + 1 ]['quantity'] - 1 ) : $atts['last_level_max_qty'];
 			$data_qty[] = str_replace(
 				array( '%level_qty%', '%level_min_qty%', '%level_max_qty%' ), // %level_qty% is deprecated
 				array( $wholesale_price_level['quantity'], $wholesale_price_level['quantity'], $level_max_qty ),
