@@ -541,6 +541,37 @@ class WCJ_Export_Import extends WCJ_Module {
 	}
 
 	/**
+	 * get_variable_or_grouped_product_info.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function get_variable_or_grouped_product_info( $_product, $which_info ) {
+		$all_variations_data = array();
+		foreach ( $_product->get_children() as $child_id ) {
+			$variation = $_product->get_child( $child_id );
+			switch ( $which_info ) {
+				case 'price':
+					$all_variations_data[] = ( '' === $variation->get_price() ) ? '-' : $variation->get_price();
+					break;
+				case 'regular_price':
+					$all_variations_data[] = ( '' === $variation->get_regular_price() ) ? '-' : $variation->get_regular_price();
+					break;
+				case 'sale_price':
+					$all_variations_data[] = ( '' === $variation->get_sale_price() ) ? '-' : $variation->get_sale_price();
+					break;
+				case 'total_stock':
+					$all_variations_data[] = ( null === $variation->get_total_stock() ) ? '-' : $variation->get_total_stock();
+					break;
+				case 'stock_quantity':
+					$all_variations_data[] = ( null === $variation->get_stock_quantity() ) ? '-' : $variation->get_stock_quantity();
+					break;
+			}
+		}
+		return implode( '/', $all_variations_data );
+	}
+
+	/**
 	 * export_products.
 	 *
 	 * @version 2.5.7
@@ -585,29 +616,6 @@ class WCJ_Export_Import extends WCJ_Module {
 			}
 			foreach ( $loop->posts as $product_id ) {
 				$_product = wc_get_product( $product_id );
-
-				// If variable or grouped - get all prices as single string
-				if ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ) {
-					$all_variations_prices         = array();
-					$all_variations_regular_prices = array();
-					$all_variations_sale_prices    = array();
-					$all_variations_stock          = array();
-					$all_variations_stock_quantity = array();
-					foreach ( $_product->get_children() as $child_id ) {
-						$variation = $_product->get_child( $child_id );
-						$all_variations_prices[]         = ( '' === $variation->get_price() )            ? '-' : $variation->get_price();
-						$all_variations_regular_prices[] = ( '' === $variation->get_regular_price() )    ? '-' : $variation->get_regular_price();
-						$all_variations_sale_prices[]    = ( '' === $variation->get_sale_price() )       ? '-' : $variation->get_sale_price();
-						$all_variations_stock[]          = ( null === $variation->get_total_stock() )    ? '-' : $variation->get_total_stock();
-						$all_variations_stock_quantity[] = ( null === $variation->get_stock_quantity() ) ? '-' : $variation->get_stock_quantity();
-					}
-					$all_variations_prices         = implode( '/', $all_variations_prices );
-					$all_variations_regular_prices = implode( '/', $all_variations_regular_prices );
-					$all_variations_sale_prices    = implode( '/', $all_variations_sale_prices );
-					$all_variations_stock          = implode( '/', $all_variations_stock );
-					$all_variations_stock_quantity = implode( '/', $all_variations_stock_quantity );
-				}
-
 				$row = array();
 				foreach( $fields_ids as $field_id ) {
 					switch ( $field_id ) {
@@ -621,24 +629,29 @@ class WCJ_Export_Import extends WCJ_Module {
 							$row[] = $_product->get_sku();
 							break;
 						case 'product-stock-quantity':
-							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_stock_quantity : $_product->get_stock_quantity() );
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ?
+								$this->get_variable_or_grouped_product_info( $_product, 'stock_quantity' ) : $_product->get_stock_quantity() );
 							break;
 						case 'product-stock':
-							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_stock : $_product->get_total_stock() );
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ?
+								$this->get_variable_or_grouped_product_info( $_product, 'total_stock' ) : $_product->get_total_stock() );
 							break;
 						case 'product-regular-price':
-							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_regular_prices : $_product->get_regular_price() );
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ?
+								$this->get_variable_or_grouped_product_info( $_product, 'regular_price' ) : $_product->get_regular_price() );
 							break;
 						case 'product-sale-price':
-							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_sale_prices : $_product->get_sale_price() );
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ?
+								$this->get_variable_or_grouped_product_info( $_product, 'sale_price' ) : $_product->get_sale_price() );
 							break;
 						case 'product-price':
-							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_prices : $_product->get_price() );
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ?
+								$this->get_variable_or_grouped_product_info( $_product, 'price' ) : $_product->get_price() );
 							break;
 						case 'product-type':
 							$row[] = $_product->get_type();
 							break;
-						/*
+						/* todo
 						case 'product-attributes':
 							$row[] = ( ! empty( $_product->get_attributes() ) ? serialize( $_product->get_attributes() ) : '' );
 							break;
