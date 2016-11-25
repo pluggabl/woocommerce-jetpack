@@ -587,11 +587,6 @@ class WCJ_Export_Import extends WCJ_Module {
 				$_product = wc_get_product( $product_id );
 
 				// If variable or grouped - get all prices as single string
-				$all_variations_prices         = '';
-				$all_variations_regular_prices = '';
-				$all_variations_sale_prices    = '';
-				$all_variations_stock          = '';
-				$all_variations_stock_quantity = '';
 				if ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ) {
 					$all_variations_prices         = array();
 					$all_variations_regular_prices = array();
@@ -661,25 +656,25 @@ class WCJ_Export_Import extends WCJ_Module {
 							$row[] = $_product->post->post_status;
 							break;
 						case 'product-url':
-							$row[] = $_product->post->guid;
+							$row[] = $_product->get_permalink();
 							break;
 						case 'product-shipping-class':
-							$row[] = $_product->shipping_class;
+							$row[] = $_product->get_shipping_class();
 							break;
 						case 'product-shipping-class-id':
-							$row[] = $_product->shipping_class_id;
+							$row[] = $_product->get_shipping_class_id();
 							break;
 						case 'product-width':
-							$row[] = $_product->width;
+							$row[] = $_product->get_width();
 							break;
 						case 'product-length':
-							$row[] = $_product->length;
+							$row[] = $_product->get_length();
 							break;
 						case 'product-height':
-							$row[] = $_product->height;
+							$row[] = $_product->get_height();
 							break;
 						case 'product-weight':
-							$row[] = $_product->weight;
+							$row[] = $_product->get_weight();
 							break;
 						case 'product-downloadable':
 							$row[] = $_product->downloadable;
@@ -691,10 +686,10 @@ class WCJ_Export_Import extends WCJ_Module {
 							$row[] = $_product->sold_individually;
 							break;
 						case 'product-tax-status':
-							$row[] = $_product->tax_status;
+							$row[] = $_product->get_tax_status();
 							break;
 						case 'product-tax-class':
-							$row[] = $_product->tax_class;
+							$row[] = $_product->get_tax_class();
 							break;
 						case 'product-manage-stock':
 							$row[] = $_product->manage_stock;
@@ -711,6 +706,18 @@ class WCJ_Export_Import extends WCJ_Module {
 						case 'product-visibility':
 							$row[] = $_product->visibility;
 							break;
+						// todo
+						// get_price_including_tax
+						// get_price_excluding_tax
+						// get_display_price
+						// get_average_rating
+						// get_rating_count
+						// get_review_count
+						// get_categories
+						// get_tags
+						// get_dimensions
+						// get_formatted_name
+						// get_availability
 					}
 				}
 
