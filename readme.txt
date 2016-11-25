@@ -132,6 +132,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 25/11/2016 =
+~ * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Compatibility - "WooCommerce TM Extra Product Options" plugin.
 * Dev - Shortcodes - Products - `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` - `multiply_by` attribute added. And both functions code refactored.
 * Fix - `class-wcj-currency-reports.php` - `filter_reports` is now applied on `wc-reports` page only.
 * Dev - `unclean_custom_textarea()` added.

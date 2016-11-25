@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency class.
  *
- * @version 2.5.5
+ * @version 2.5.7
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -96,7 +96,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.7
 	 */
 	function add_hooks() {
 		// Session
@@ -107,6 +107,9 @@ class WCJ_Multicurrency extends WCJ_Module {
 			$_SESSION['wcj-currency'] = $_REQUEST['wcj-currency'];
 		}
 		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			// Prices - Compatibility - "WooCommerce TM Extra Product Options" plugin
+			add_filter( 'woocommerce_tm_epo_price_on_cart',           array( $this, 'change_price_by_currency_tm_extra_product_options_plugin_cart' ), PHP_INT_MAX - 1, 1 );
+			add_filter( 'wc_epo_price',                               array( $this, 'change_price_by_currency_tm_extra_product_options_plugin' ),      PHP_INT_MAX - 1, 3 );
 			// Prices
 			add_filter( 'woocommerce_get_price',                      array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
 			add_filter( 'woocommerce_get_sale_price',                 array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
@@ -125,6 +128,26 @@ class WCJ_Multicurrency extends WCJ_Module {
 			add_filter( 'woocommerce_get_price_including_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 1, 3 );
 			add_filter( 'woocommerce_get_price_excluding_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 1, 3 );
 		}
+	}
+
+	/**
+	 * change_price_by_currency_tm_extra_product_options_plugin_cart.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function change_price_by_currency_tm_extra_product_options_plugin_cart( $price ) {
+		return $this->change_price_by_currency( $price, null );
+	}
+
+	/**
+	 * change_price_by_currency_tm_extra_product_options_plugin.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function change_price_by_currency_tm_extra_product_options_plugin( $price, $type, $post_id ) {
+		return $this->change_price_by_currency( $price, null );
 	}
 
 	/**
