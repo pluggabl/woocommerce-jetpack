@@ -179,8 +179,7 @@ D   * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.
     * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
     * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
     * Dev - EMAILS & MISC. - Export - Export Products - Stock - `get_stock_quantity()` replaced with `get_total_stock()`. Separate "Stock Quantity" export field added.
-~   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products stock for each variation added.
-~   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products price, regular price and sale price added.
+~   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products price, regular price, sale price, stock quantity and total stock for each variation added.
 D   * Dev - EMAILS & MISC. - Export - Export Products - "Additional Export Products Fields" section added.
 D   * Dev - EMAILS & MISC. - Export - Export Products - "Export Products Fields" option added.
 D   * Dev - EMAILS & MISC. - Export - Export Products - "Image URL", "Short Description", "Description", "Status", "URL", "Shipping Class", "Shipping Class Id", "Width", "Length", "Height", "Weight", "Downloadable", "Virtual", "Sold Individually", "Tax Status", "Tax Class", "Manage Stock", "Stock Status", "Backorders", "Featured" and "Visibility" export fields added.
