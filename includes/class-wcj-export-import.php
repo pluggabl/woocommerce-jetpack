@@ -576,7 +576,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	 *
 	 * @version 2.5.7
 	 * @since   2.5.3
-	 * @todo    export variations;
+	 * @todo    export variations; product attributes; get_price_including_tax, get_price_excluding_tax, get_display_price, get_average_rating, get_rating_count, get_review_count, get_categories, get_tags, get_dimensions, get_formatted_name, get_availability;
 	 */
 	function export_products() {
 
