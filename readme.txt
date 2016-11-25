@@ -166,7 +166,7 @@ D   * Dev - BUTTON & PRICE LABELS - Call for Price - "Make All Products Call for
 D   * Dev - SHIPPING & ORDERS - Order Minimum Amount - Initial module release (moved from Orders module).
 D   * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Columns Order" section added. Priorities in all Booster's added `manage_edit-shop_order_columns` filters changed.
 D   * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Multiple Status" section added.
-~D  * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
+D   * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
 D   * Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.
 D   * Dev - PDF INVOICING & PACKING SLIPS - "Generate" and "Download" bulk actions added to admin orders list.
     * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_data()` - `WP_Query` optimized to return `ids` only.
@@ -198,6 +198,7 @@ D   * Dev - EMAILS & MISC. - Products XML - Initial module release.
 D   * Tweak - CART & CHECKOUT - Empty Cart Button - Description updated.
     * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - User messages updated.
     * Tweak - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - "Add new custom status" button label added to translation.
+    * Tweak - SHIPPING & ORDERS - Shipping - Custom Shipping - "Weight Table Total Rows" option description updated.
     * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_zip()` - Headers cleaned up.
     * Tweak - PDF INVOICING & PACKING SLIPS - Invoices Report tool - Calling `get_tool_header_html()` instead of directly outputting header.
     * Tweak - EMAILS & MISC. - Export - Tool header added to all export tools.
