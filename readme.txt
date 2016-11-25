@@ -131,13 +131,13 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 24/11/2016 =
+= 2.5.7 - 25/11/2016 =
 D   * Dev - Shortcodes - Products - `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` - `multiply_by` attribute added. And both functions code refactored.
 ~   * Fix - `class-wcj-currency-reports.php` - `filter_reports` is now applied on `wc-reports` page only.
     * Dev - `unclean_custom_textarea()` added.
     * Dev - Made "Booster Tools" accessible to shop manager.
 D   * Dev - Shortcodes - `find` and `replace` attributes added to all shortcodes.
-~D  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
+!D  * Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_total_weight]` replaced with `[wcj_order_total_weight]`.
 D   * Dev - Shortcodes - Orders - `[wcj_order_total_width]`, `[wcj_order_total_height]` and `[wcj_order_total_length]` shortcodes added.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_items]` shortcode added.
@@ -155,7 +155,7 @@ D   * Dev - Shortcodes - Products - `[wcj_product_image_url]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_categories_names]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_categories_urls]` shortcode added.
 D   * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
-~D  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
+!D  * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
 ~D  * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
 ~   * Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
 ~D  * Dev - PRICES & CURRENCIES - Wholesale Price - Global settings discount now can be negative.
@@ -166,7 +166,7 @@ D   * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
 ~D  * Dev - SHIPPING & ORDERS - Order Minimum Amount - Initial module release (moved from Orders module).
 ~D  * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Columns Order" section added. Priorities in all Booster's added `manage_edit-shop_order_columns` filters changed.
 ~D  * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Multiple Status" section added.
-~D  * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
+!D  * Dev - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - "Min Weight" and "Max Weight" options added.
 D   * Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section added.
 ~D  * Dev - PDF INVOICING & PACKING SLIPS - "Generate" and "Download" bulk actions added to admin orders list.
     * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report tool - `get_invoices_report_data()` - `WP_Query` optimized to return `ids` only.
@@ -178,18 +178,18 @@ D   * Dev - SHIPPING & ORDERS - Shipping Calculator - "Labels" settings section 
 D   * Dev - EMAILS & MISC. - Export - "UTF-8 BOM" option added.
     * Fix - EMAILS & MISC. - Export - Export Orders - "Order Date" column fixed.
     * Dev - EMAILS & MISC. - Export - Export Orders - "Order Time" column added.
+    * Dev - EMAILS & MISC. - Export - Export Products - Stock - `get_stock_quantity()` replaced with `get_total_stock()`. Separate "Stock Quantity" export field added.
 ~   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products stock for each variation added.
-~   * Dev - EMAILS & MISC. - Export - Export Products - Stock - `get_stock_quantity()` replaced with `get_total_stock()`.
 ~   * Dev - EMAILS & MISC. - Export - Export Products - Variable and grouped products price, regular price and sale price added.
-~D  * Dev - EMAILS & MISC. - Export - Export Products - "Additional Export Products Fields" section added.
-~D  * Dev - EMAILS & MISC. - Export - Export Products - "Export Products Fields" option added.
-D   * Dev - EMAILS & MISC. - Export - Export Products - "Image URL", "Short Description", "Description", "Status" and "URL" export fields added.
+D   * Dev - EMAILS & MISC. - Export - Export Products - "Additional Export Products Fields" section added.
+D   * Dev - EMAILS & MISC. - Export - Export Products - "Export Products Fields" option added.
+D   * Dev - EMAILS & MISC. - Export - Export Products - "Image URL", "Short Description", "Description", "Status", "URL", "Shipping Class", "Shipping Class Id", "Width", "Length", "Height", "Weight", "Downloadable", "Virtual", "Sold Individually", "Tax Status", "Tax Class", "Manage Stock", "Stock Status", "Backorders", "Featured" and "Visibility" export fields added.
     * Dev - EMAILS & MISC. - Export - Export Products - `WP_Query` optimized to return `ids` only.
 D   * Dev - EMAILS & MISC. - General - "Session Expiration Options" section added.
 ~D  * Dev - EMAILS & MISC. - Products XML - Initial module release.
     * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - Variations added in report.
     * Tweak - Deprecated typo fixed.
-~   * Tweak - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.
+    * Tweak - `WCJ_Module` - `create_meta_box()` - `wcj_get_meta_box_options_type_price_step` filter added.
     * Tweak - `wcj_get_table_html()` - "row_styles" parameter added.
     * Tweak - Language (POT) file updated.
     * Tweak - Shortcodes - Products - `[wcj_product_excerpt]` - Using `product_excerpt_length` object property instead of global variable.

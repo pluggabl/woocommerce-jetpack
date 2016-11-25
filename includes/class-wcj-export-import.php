@@ -235,7 +235,8 @@ class WCJ_Export_Import extends WCJ_Module {
 			'product-id'                         => __( 'Product ID', 'woocommerce-jetpack' ),
 			'product-name'                       => __( 'Name', 'woocommerce-jetpack' ),
 			'product-sku'                        => __( 'SKU', 'woocommerce-jetpack' ),
-			'product-stock'                      => __( 'Stock', 'woocommerce-jetpack' ),
+			'product-stock'                      => __( 'Total Stock', 'woocommerce-jetpack' ),
+			'product-stock-quantity'             => __( 'Stock Quantity', 'woocommerce-jetpack' ),
 			'product-regular-price'              => __( 'Regular Price', 'woocommerce-jetpack' ),
 			'product-sale-price'                 => __( 'Sale Price', 'woocommerce-jetpack' ),
 			'product-price'                      => __( 'Price', 'woocommerce-jetpack' ),
@@ -246,6 +247,22 @@ class WCJ_Export_Import extends WCJ_Module {
 			'product-description'                => __( 'Description', 'woocommerce-jetpack' ),
 			'product-status'                     => __( 'Status', 'woocommerce-jetpack' ),
 			'product-url'                        => __( 'URL', 'woocommerce-jetpack' ),
+			'product-shipping-class'             => __( 'Shipping Class', 'woocommerce-jetpack' ),
+			'product-shipping-class-id'          => __( 'Shipping Class ID', 'woocommerce-jetpack' ),
+			'product-width'                      => __( 'Width', 'woocommerce-jetpack' ),
+			'product-length'                     => __( 'Length', 'woocommerce-jetpack' ),
+			'product-height'                     => __( 'Height', 'woocommerce-jetpack' ),
+			'product-weight'                     => __( 'Weight', 'woocommerce-jetpack' ),
+			'product-downloadable'               => __( 'Downloadable', 'woocommerce-jetpack' ),
+			'product-virtual'                    => __( 'Virtual', 'woocommerce-jetpack' ),
+			'product-sold-individually'          => __( 'Sold Individually', 'woocommerce-jetpack' ),
+			'product-tax-status'                 => __( 'Tax Status', 'woocommerce-jetpack' ),
+			'product-tax-class'                  => __( 'Tax Class', 'woocommerce-jetpack' ),
+			'product-manage-stock'               => __( 'Manage Stock', 'woocommerce-jetpack' ),
+			'product-stock-status'               => __( 'Stock Status', 'woocommerce-jetpack' ),
+			'product-backorders'                 => __( 'Backorders', 'woocommerce-jetpack' ),
+			'product-featured'                   => __( 'Featured', 'woocommerce-jetpack' ),
+			'product-visibility'                 => __( 'Visibility', 'woocommerce-jetpack' ),
 		);
 	}
 
@@ -528,6 +545,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	 *
 	 * @version 2.5.7
 	 * @since   2.5.3
+	 * @todo    export variations;
 	 */
 	function export_products() {
 
@@ -573,22 +591,26 @@ class WCJ_Export_Import extends WCJ_Module {
 				$all_variations_regular_prices = '';
 				$all_variations_sale_prices    = '';
 				$all_variations_stock          = '';
+				$all_variations_stock_quantity = '';
 				if ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ) {
 					$all_variations_prices         = array();
 					$all_variations_regular_prices = array();
 					$all_variations_sale_prices    = array();
 					$all_variations_stock          = array();
+					$all_variations_stock_quantity = array();
 					foreach ( $_product->get_children() as $child_id ) {
 						$variation = $_product->get_child( $child_id );
-						$all_variations_prices[]         = ( '' === $variation->get_price() )         ? '-' : $variation->get_price();
-						$all_variations_regular_prices[] = ( '' === $variation->get_regular_price() ) ? '-' : $variation->get_regular_price();
-						$all_variations_sale_prices[]    = ( '' === $variation->get_sale_price() )    ? '-' : $variation->get_sale_price();
-						$all_variations_stock[]          = ( null === $variation->get_total_stock() ) ? '-' : $variation->get_total_stock();
+						$all_variations_prices[]         = ( '' === $variation->get_price() )            ? '-' : $variation->get_price();
+						$all_variations_regular_prices[] = ( '' === $variation->get_regular_price() )    ? '-' : $variation->get_regular_price();
+						$all_variations_sale_prices[]    = ( '' === $variation->get_sale_price() )       ? '-' : $variation->get_sale_price();
+						$all_variations_stock[]          = ( null === $variation->get_total_stock() )    ? '-' : $variation->get_total_stock();
+						$all_variations_stock_quantity[] = ( null === $variation->get_stock_quantity() ) ? '-' : $variation->get_stock_quantity();
 					}
 					$all_variations_prices         = implode( '/', $all_variations_prices );
 					$all_variations_regular_prices = implode( '/', $all_variations_regular_prices );
 					$all_variations_sale_prices    = implode( '/', $all_variations_sale_prices );
 					$all_variations_stock          = implode( '/', $all_variations_stock );
+					$all_variations_stock_quantity = implode( '/', $all_variations_stock_quantity );
 				}
 
 				$row = array();
@@ -603,8 +625,10 @@ class WCJ_Export_Import extends WCJ_Module {
 						case 'product-sku':
 							$row[] = $_product->get_sku();
 							break;
+						case 'product-stock-quantity':
+							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_stock_quantity : $_product->get_stock_quantity() );
+							break;
 						case 'product-stock':
-//							$row[] = $_product->get_total_stock(); // get_stock_quantity
 							$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ? $all_variations_stock : $_product->get_total_stock() );
 							break;
 						case 'product-regular-price':
@@ -638,6 +662,54 @@ class WCJ_Export_Import extends WCJ_Module {
 							break;
 						case 'product-url':
 							$row[] = $_product->post->guid;
+							break;
+						case 'product-shipping-class':
+							$row[] = $_product->shipping_class;
+							break;
+						case 'product-shipping-class-id':
+							$row[] = $_product->shipping_class_id;
+							break;
+						case 'product-width':
+							$row[] = $_product->width;
+							break;
+						case 'product-length':
+							$row[] = $_product->length;
+							break;
+						case 'product-height':
+							$row[] = $_product->height;
+							break;
+						case 'product-weight':
+							$row[] = $_product->weight;
+							break;
+						case 'product-downloadable':
+							$row[] = $_product->downloadable;
+							break;
+						case 'product-virtual':
+							$row[] = $_product->virtual;
+							break;
+						case 'product-sold-individually':
+							$row[] = $_product->sold_individually;
+							break;
+						case 'product-tax-status':
+							$row[] = $_product->tax_status;
+							break;
+						case 'product-tax-class':
+							$row[] = $_product->tax_class;
+							break;
+						case 'product-manage-stock':
+							$row[] = $_product->manage_stock;
+							break;
+						case 'product-stock-status':
+							$row[] = $_product->stock_status;
+							break;
+						case 'product-backorders':
+							$row[] = $_product->backorders;
+							break;
+						case 'product-featured':
+							$row[] = $_product->featured;
+							break;
+						case 'product-visibility':
+							$row[] = $_product->visibility;
 							break;
 					}
 				}
