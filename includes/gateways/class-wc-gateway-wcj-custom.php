@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Payment Gateway class.
  *
- * @version 2.5.6
+ * @version 2.5.7
  * @author  Algoritmika Ltd.
  */
 
@@ -19,7 +19,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 			/**
 			 * WC_Gateway_WCJ_Custom_Template class.
 			 *
-			 * @version 2.5.6
+			 * @version 2.5.7
 			 */
 			class WC_Gateway_WCJ_Custom_Template extends WC_Payment_Gateway {
 
@@ -36,7 +36,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * Initialise Gateway Settings Form Fields
 				 *
-				 * @version 2.5.6
+				 * @version 2.5.7
 				 */
 				public function init_form_fields() {
 					global $woocommerce;
@@ -45,7 +45,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 
 					if ( is_admin() ) {
 						foreach ( WC()->shipping->load_shipping_methods() as $method ) {
-							$shipping_methods[ $method->id ] = $method->get_title();
+							$shipping_methods[ $method->id ] = $method->get_method_title();
 						}
 					}
 
