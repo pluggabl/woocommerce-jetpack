@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.7-dev-201611261802';
+	public $version = '2.5.7-dev-201611261949';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -79,9 +79,12 @@ final class WC_Jetpack {
 	 * WC_Jetpack Constructor.
 	 *
 	 * @version 2.5.7
-	 * @access public
+	 * @access  public
 	 */
 	public function __construct() {
+
+		// Set up localisation
+		load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
 
 //		require_once( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' );
 
@@ -93,7 +96,7 @@ final class WC_Jetpack {
 		add_filter( 'query_vars',             array( $this, 'add_my_products_endpoint_query_var' ), 0 );
 		add_action( 'init',                   array( $this, 'add_my_products_endpoint' ) );
 
-		//register_activation_hook( __FILE__, array( $this, 'install' ) );
+//		register_activation_hook( __FILE__, array( $this, 'install' ) );
 //		add_action( 'admin_init', array( $this, 'install' ) );
 		add_action( 'init', array( $this, 'init' ), 0 );
 
@@ -781,12 +784,13 @@ final class WC_Jetpack {
 
 	/**
 	 * Init WC_Jetpack when WordPress initialises.
+	 *
+	 * @version 2.5.7
 	 */
 	public function init() {
 		// Before init action
 		do_action( 'before_wcj_init' );
-		// Set up localisation
-		load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
+
 		// Init action
 		do_action( 'wcj_init' );
 	}

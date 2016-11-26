@@ -132,6 +132,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.7 - 26/11/2016 =
+~ * Fix - `load_plugin_textdomain` moved from `init` hook to constructor (fixes the issue with module titles, descriptions not translating).
 ~ * Fix - PAYMENT GATEWAYS - Custom Gateways - Enable for shipping methods - Empty method title bug fixed.
 ~ * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Compatibility - "WooCommerce TM Extra Product Options" plugin.
 * Dev - Shortcodes - Products - `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` - `multiply_by` attribute added. And both functions code refactored.
