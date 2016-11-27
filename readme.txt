@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.6
-Stable tag: 2.5.6
+Stable tag: 2.5.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -131,11 +131,8 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
-= 2.5.7 - 26/11/2016 =
-~ * Fix - `load_plugin_textdomain` moved from `init` hook to constructor (fixes the issue with module titles, descriptions not translating).
-~ * Fix - PAYMENT GATEWAYS - Custom Gateways - Enable for shipping methods - Empty method title bug fixed.
-~ * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Compatibility - "WooCommerce TM Extra Product Options" plugin.
-* Dev - Shortcodes - Products - `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` - `multiply_by` attribute added. And both functions code refactored.
+= 2.5.7 - 27/11/2016 =
+* Fix - `load_plugin_textdomain` moved from `init` hook to constructor (fixes the issue with module titles, descriptions not translating).
 * Fix - `class-wcj-currency-reports.php` - `filter_reports` is now applied on `wc-reports` page only.
 * Dev - `unclean_custom_textarea()` added.
 * Dev - Made "Booster Tools" accessible to shop manager.
@@ -150,6 +147,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `item_short_description` - now displays item's short description (may be different from `item_excerpt`). `item_description` attribute removed.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_regular_price` and `product_sale_price` columns added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_tax_class` column added.
+* Dev - Shortcodes - Products - `[wcj_product_price_excluding_tax]` and `[wcj_product_price_including_tax]` - `multiply_by` attribute added. And both functions code refactored.
 * Fix - Shortcodes - Products - `[wcj_product_excerpt]` - Manually checking for short description first (so `length` can be applied).
 * Dev - Shortcodes - Products - `[wcj_product_excerpt]` - `excerpt_length` attribute deprecated (replaced with `length`).
 * Dev - Shortcodes - Products - `[wcj_product_short_description]` shortcode added.
@@ -160,11 +158,13 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 * Dev - Shortcodes - Products - `[wcj_product_meta]` shortcode added.
 * Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `%level_max_qty%` replace value added to `heading_format` attribute. `%level_qty%` marked as deprecated (`%level_min_qty%` should be used instead).
 * Dev - PRICES & CURRENCIES - Global Discount - Initial module release.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Compatibility - "WooCommerce TM Extra Product Options" plugin.
 * Dev - PRICES & CURRENCIES - Price by User Role - "Search Engine Bots" option added.
 * Dev - PRICES & CURRENCIES - Wholesale Price - Global settings discount now can be negative.
 * Dev - PRICES & CURRENCIES - Wholesale Price - Per product - "Price directly" option added (for non variable products only).
 * Dev - BUTTON & PRICE LABELS - Call for Price - "Make All Products Call for Price" option added.
 * Fix - PRODUCTS - User Products - "My Account > Products" fixed.
+* Fix - PAYMENT GATEWAYS - Custom Gateways - Enable for shipping methods - Empty method title bug fixed.
 * Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses tool - Empty array passed on apply `wc_order_statuses` filter (produced PHP warning).
 * Dev - SHIPPING & ORDERS - Order Minimum Amount - Initial module release (moved from Orders module).
 * Dev - SHIPPING & ORDERS - Orders - "Admin Orders List Columns Order" section added. Priorities in all Booster's added `manage_edit-shop_order_columns` filters changed.
