@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.5.6
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -128,7 +128,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.8
 	 */
 	function get_settings() {
 
@@ -205,7 +205,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			array(
 				'title'    => __( 'Price by Country on per Product Basis', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'This will add meta boxes in product edit.', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'This will add product data fields in product edit.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_local_enabled',
 				'default'  => 'yes',
 				'type'     => 'checkbox',

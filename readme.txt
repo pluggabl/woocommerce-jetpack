@@ -131,6 +131,9 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 == Changelog ==
 
+= 2.5.8 - 27/11/2016 =
+* Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Price by Country on per Product Basis - Description updated.
+
 = 2.5.7 - 27/11/2016 =
 * Fix - `load_plugin_textdomain` moved from `init` hook to constructor (fixes the issue with module titles, descriptions not translating).
 * Fix - `class-wcj-currency-reports.php` - `filter_reports` is now applied on `wc-reports` page only.
