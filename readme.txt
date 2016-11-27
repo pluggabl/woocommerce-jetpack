@@ -132,6 +132,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 == Changelog ==
 
 = 2.5.8 - 27/11/2016 =
+* Tweak - Language (POT) file updated.
 * Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Price by Country on per Product Basis - Description updated.
 
 = 2.5.7 - 27/11/2016 =
