@@ -116,15 +116,19 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 == Installation ==
 
-1. Upload the entire `woocommerce-jetpack` folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to WooCommerce > Settings > Booster
+1. Upload the entire `woocommerce-jetpack` folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the 'Plugins' menu in WordPress.
+3. Go to WooCommerce > Settings > Booster.
 
 == Frequently Asked Questions ==
 
 = How to unlock those some features settings that are locked? =
 
 To unlock all Booster for WooCommerce features, please install additional [Booster for WooCommerce Plus](http://booster.io/plus/) plugin.
+
+= What features are in free and what are in Plus version? =
+
+You can see the differences between version in this [table](http://booster.io/booster-woocommerce-free-vs-plus/).
 
 == Screenshots ==
 
