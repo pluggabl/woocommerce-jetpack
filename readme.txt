@@ -111,7 +111,8 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * For support visit the [contact page](http://booster.io/contact-us/).
 
 = More =
-* Visit the [Booster for WooCommerce plugin page](http://booster.io/)
+* Visit the [Booster for WooCommerce plugin page](http://booster.io/).
+* [Compare free and Plus version](http://booster.io/booster-woocommerce-free-vs-plus/).
 
 == Installation ==
 
