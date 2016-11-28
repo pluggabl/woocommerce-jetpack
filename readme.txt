@@ -128,7 +128,7 @@ To unlock all Booster for WooCommerce features, please install additional [Boost
 
 = What features are in free and what are in Plus version? =
 
-You can see the differences between version in this [table](http://booster.io/booster-woocommerce-free-vs-plus/).
+You can see the differences between versions in this [table](http://booster.io/booster-woocommerce-free-vs-plus/).
 
 == Screenshots ==
 
