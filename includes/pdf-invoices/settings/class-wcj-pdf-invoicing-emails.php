@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Emails class.
  *
- * @version 2.4.8
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -99,7 +99,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.8
 	 */
 	function get_settings() {
 
@@ -118,6 +118,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 				'new_order'                 => __( 'Admin - New Order', 'woocommerce' ),
 				'cancelled_order'           => __( 'Admin - Cancelled Order', 'woocommerce' ),
 				'customer_processing_order' => __( 'Customer - Processing Order', 'woocommerce' ),
+				'customer_on_hold_order'    => __( 'Customer - On-Hold Order', 'woocommerce' ),
 				'customer_completed_order'  => __( 'Customer - Completed Order', 'woocommerce' ),
 				'customer_invoice'          => __( 'Customer - Invoice', 'woocommerce' ),
 				'customer_refunded_order'   => __( 'Customer - Refunded Order', 'woocommerce' ),

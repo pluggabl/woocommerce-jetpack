@@ -137,6 +137,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.8 - 29/11/2016 =
+-   * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Customer - On-Hold Order" option added.
 -   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
     * Dev - EMAILS & MISC. - Admin Tools - "Show Order Meta" and "Show Product Meta" options added.
     * Tweak - Language (POT) file updated.
