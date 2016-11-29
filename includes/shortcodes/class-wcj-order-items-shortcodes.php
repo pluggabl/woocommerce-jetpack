@@ -254,6 +254,22 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 									. str_replace( 'pa_', '', urldecode( wc_get_formatted_variation( $the_product->variation_data, true ) ) )
 									. '</div>';
 							}
+							// "WooCommerce TM Extra Product Options" plugin options
+							// TODO: This will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency).
+							if ( isset( $item['tmcartepo_data'] ) ) {
+								$options = unserialize( $item['tmcartepo_data'] );
+								$options_prices = array();
+//								$order_currency = $the_order->get_order_currency();
+								foreach ( $options as $option ) {
+									/* if ( isset( $option['price_per_currency'][ $order_currency ] ) ) {
+										$options_prices[] = $this->wcj_price_shortcode( $option['price_per_currency'][ $order_currency ], $atts );
+									} */
+									if ( isset( $option['price'] ) ) {
+										$options_prices[] = ( $option['price'] > 0 ) ? '+' . wc_price( $option['price'] ) : wc_price( $option['price'] );
+									}
+								}
+								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">' . implode( ', ', $options_prices ) . '</div>';
+							}
 							$data[ $item_counter ][] = $the_item_title;
 						}
 						break;

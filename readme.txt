@@ -137,9 +137,10 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.8 - 29/11/2016 =
-* Dev - EMAILS & MISC. - Admin Tools - "Show Order Meta" and "Show Product Meta" options added.
-* Tweak - Language (POT) file updated.
-* Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Price by Country on per Product Basis - Description updated.
+-   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
+    * Dev - EMAILS & MISC. - Admin Tools - "Show Order Meta" and "Show Product Meta" options added.
+    * Tweak - Language (POT) file updated.
+    * Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Price by Country on per Product Basis - Description updated.
 
 = 2.5.7 - 27/11/2016 =
 * Fix - `load_plugin_textdomain` moved from `init` hook to constructor (fixes the issue with module titles, descriptions not translating).
