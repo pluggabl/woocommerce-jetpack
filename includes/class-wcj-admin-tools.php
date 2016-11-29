@@ -112,7 +112,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 			$table_data = array();
 			foreach ( $_order->get_items() as $item_key => $item ) {
 				foreach ( $item['item_meta'] as $item_meta_key => $item_meta_value ) {
-					$table_data[] = array( $item_key, $item_meta_key,implode( ', ', $item_meta_value ) );
+					$table_data[] = array( $item_key, $item_meta_key, implode( ', ', $item_meta_value ) );
 				}
 			}
 			$html .= '<h3>' . __( 'Order Items Meta', 'woocommerce-jetpack' ) . '</h3>';
