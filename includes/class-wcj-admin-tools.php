@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Admin Tools class.
  *
- * @version 2.5.7
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.8
 	 */
 	public function __construct() {
 
@@ -37,11 +37,89 @@ class WCJ_Admin_Tools extends WCJ_Module {
 
 		$this->current_php_memory_limit = '';
 		if ( $this->is_enabled() ) {
+
+			// PHP Memory Limit
 			if ( 0 != ( $php_memory_limit = get_option( 'wcj_admin_tools_php_memory_limit', 0 ) ) ) {
 				ini_set( 'memory_limit', $php_memory_limit . 'M' );
 			}
 			$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );
+
+			// Order Meta
+			if ( 'yes' === get_option( 'wcj_admin_tools_show_order_meta_enabled', 'no' ) ) {
+				add_action( 'add_meta_boxes', array( $this, 'add_order_meta_meta_box' ) );
+			}
+
+			// Product Meta
+			if ( 'yes' === get_option( 'wcj_admin_tools_show_product_meta_enabled', 'no' ) ) {
+				add_action( 'add_meta_boxes', array( $this, 'add_product_meta_meta_box' ) );
+			}
 		}
+	}
+
+	/**
+	 * add_product_meta_meta_box.
+	 *
+	 * @version 2.5.8
+	 * @since   2.5.8
+	 */
+	function add_product_meta_meta_box() {
+		add_meta_box(
+			'wcj-admin-tools-product-meta',
+			__( 'Product Meta', 'woocommerce-jetpack' ),
+			array( $this, 'create_meta_meta_box' ),
+			'product',
+			'normal',
+			'low'
+		);
+	}
+
+	/**
+	 * add_order_meta_meta_box.
+	 *
+	 * @version 2.5.8
+	 * @since   2.5.8
+	 */
+	function add_order_meta_meta_box() {
+		add_meta_box(
+			'wcj-admin-tools-order-meta',
+			__( 'Order Meta', 'woocommerce-jetpack' ),
+			array( $this, 'create_meta_meta_box' ),
+			'shop_order',
+			'normal',
+			'low'
+		);
+	}
+
+	/**
+	 * create_meta_meta_box.
+	 *
+	 * @version 2.5.8
+	 * @since   2.5.8
+	 */
+	function create_meta_meta_box( $post ) {
+		$html = '';
+		$post_id = get_the_ID();
+
+		$meta = get_post_meta( $post_id );
+		$table_data = array();
+		foreach ( $meta as $meta_key => $meta_values ) {
+			$table_data[] = array( $meta_key, implode( ', ', $meta_values ) );
+		}
+		$html .= wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
+
+		if ( 'shop_order' === $post->post_type ) {
+			$_order = wc_get_order( $post_id );
+			$table_data = array();
+			foreach ( $_order->get_items() as $item_key => $item ) {
+				foreach ( $item['item_meta'] as $item_meta_key => $item_meta_value ) {
+					$table_data[] = array( $item_key, $item_meta_key,implode( ', ', $item_meta_value ) );
+				}
+			}
+			$html .= '<h3>' . __( 'Order Items Meta', 'woocommerce-jetpack' ) . '</h3>';
+			$html .= wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
+		}
+
+		echo $html;
 	}
 
 	/**
@@ -102,7 +180,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.8
 	 */
 	function get_settings() {
 		$settings = array(
@@ -148,6 +226,20 @@ class WCJ_Admin_Tools extends WCJ_Module {
 				'default'  => '',
 				'type'     => 'custom_link',
 				'link'     => '<pre>' . wcj_get_table_html( $this->get_system_info_table_array(), array( 'columns_styles' => array( 'padding:0;', 'padding:0;' ), 'table_heading_type' => 'vertical' ) ) . '</pre>',
+			),
+			array(
+				'title'    => __( 'Show Order Meta', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_admin_tools_show_order_meta_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Show Product Meta', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_admin_tools_show_product_meta_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'type'     => 'sectionend',
