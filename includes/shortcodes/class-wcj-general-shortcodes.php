@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.5.7
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.8
 	 */
 	public function __construct() {
 
@@ -35,6 +35,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_tcpdf_pagebreak',
 			'wcj_get_left_to_free_shipping',
 			'wcj_wholesale_price_table',
+			'wcj_customer_billing_country',
+			'wcj_customer_shipping_country',
+			'wcj_customer_meta',
 		);
 
 		$this->the_atts = array(
@@ -52,10 +55,57 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'replace_with_currency' => 'no',
 			'hide_if_zero_quantity' => 'no',
 			'table_format'          => 'horizontal',
+			'key'                   => '',
+			'full_country_name'     => 'yes',
 		);
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_customer_billing_country.
+	 *
+	 * @version 2.5.8
+	 * @since   2.5.8
+	 */
+	function wcj_customer_billing_country( $atts ) {
+		if ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			if ( '' != ( $meta = get_user_meta( $current_user->ID, 'billing_country', true ) ) ) {
+				return ( 'yes' === $atts['full_country_name'] ) ? wcj_get_country_name_by_code( $meta ) : $meta;
+			}
+		}
+	}
+
+	/**
+	 * wcj_customer_shipping_country.
+	 *
+	 * @version 2.5.8
+	 * @since   2.5.8
+	 */
+	function wcj_customer_shipping_country( $atts ) {
+		if ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			if ( '' != ( $meta = get_user_meta( $current_user->ID, 'shipping_country', true ) ) ) {
+				return ( 'yes' === $atts['full_country_name'] ) ? wcj_get_country_name_by_code( $meta ) : $meta;
+			}
+		}
+	}
+
+	/**
+	 * wcj_customer_meta.
+	 *
+	 * @version 2.5.8
+	 * @since   2.5.8
+	 */
+	function wcj_customer_meta( $atts ) {
+		if ( '' != $atts['key'] && is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			if ( '' != ( $meta = get_user_meta( $current_user->ID, $atts['key'], true ) ) ) {
+				return $meta;
+			}
+		}
 	}
 
 	/**

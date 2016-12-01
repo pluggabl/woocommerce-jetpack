@@ -136,10 +136,11 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.5.8 - 29/11/2016 =
--   * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Customer - On-Hold Order" option added.
+= 2.5.8 - 01/12/2016 =
+~D  * Dev - Shortcodes - General - `[wcj_customer_billing_country]`, `[wcj_customer_shipping_country]`, `[wcj_customer_meta]` shortcodes added.
+-D  * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Customer - On-Hold Order" option added.
 -   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
-    * Dev - EMAILS & MISC. - Admin Tools - "Show Order Meta" and "Show Product Meta" options added.
+D   * Dev - EMAILS & MISC. - Admin Tools - "Show Order Meta" and "Show Product Meta" options added.
     * Tweak - Language (POT) file updated.
     * Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Price by Country on per Product Basis - Description updated.
 
