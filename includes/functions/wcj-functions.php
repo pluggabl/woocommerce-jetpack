@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.5.7
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -470,12 +470,12 @@ if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
 /*
  * wcj_get_left_to_free_shipping.
  *
- * @version 2.5.3
+ * @version 2.5.8
  * @since   2.4.4
  * @return  string
  */
 if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
-	function wcj_get_left_to_free_shipping( $content ) {
+	function wcj_get_left_to_free_shipping( $content, $multiply_by = 1 ) {
 		if ( '' == $content ) {
 			$content = __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' );
 		}
@@ -519,8 +519,8 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 				if ( $total >= $min_free_shipping_amount ) {
 					return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
 				} else {
-					$content = str_replace( '%left_to_free%',             wc_price( $min_free_shipping_amount - $total ), $content );
-					$content = str_replace( '%free_shipping_min_amount%', wc_price( $min_free_shipping_amount ),          $content );
+					$content = str_replace( '%left_to_free%',             wc_price( ( $min_free_shipping_amount - $total ) * $multiply_by ), $content );
+					$content = str_replace( '%free_shipping_min_amount%', wc_price( ( $min_free_shipping_amount )          * $multiply_by ), $content );
 					return $content;
 				}
 			}

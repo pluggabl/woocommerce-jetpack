@@ -57,6 +57,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'table_format'          => 'horizontal',
 			'key'                   => '',
 			'full_country_name'     => 'yes',
+			'multiply_by'           => 1,
 		);
 
 		parent::__construct();
@@ -248,11 +249,11 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 2.4.5
+	 * @version 2.5.8
 	 * @since   2.4.4
 	 */
 	function wcj_get_left_to_free_shipping( $atts, $content ) {
-		return wcj_get_left_to_free_shipping( $atts['content'] );
+		return wcj_get_left_to_free_shipping( $atts['content'], $atts['multiply_by'] );
 	}
 
 	/**
