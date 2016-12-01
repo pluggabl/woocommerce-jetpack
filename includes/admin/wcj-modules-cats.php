@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.5.7
+ * @version 2.5.8
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -111,6 +111,7 @@ return array(
 		'default_cat_id' => 'shipping',
 		'all_cat_ids'    => array(
 			'shipping',
+			'left_to_free_shipping',
 			'shipping_calculator',
 			'address_formats',
 			'orders',

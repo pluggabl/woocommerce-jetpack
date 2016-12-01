@@ -28,7 +28,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.5.7
+ * @version 2.5.8
  */
 
 final class WC_Jetpack {
@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.8-dev-201612012044';
+	public $version = '2.5.8-dev-201612012135';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -524,7 +524,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.8
 	 */
 	function include_modules() {
 		$modules_files = array(
@@ -571,6 +571,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-payment-gateways-by-country.php',
 			'includes/class-wcj-payment-gateways-by-user-role.php',
 			'includes/class-wcj-shipping.php',
+			'includes/class-wcj-left-to-free-shipping.php',
 			'includes/class-wcj-shipping-calculator.php',
 			'includes/class-wcj-address-formats.php',
 			'includes/class-wcj-orders.php',
