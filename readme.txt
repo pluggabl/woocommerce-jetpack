@@ -137,6 +137,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.8 - 01/12/2016 =
+~D  * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
 ~D  * Dev - Shortcodes - General - `[wcj_customer_billing_country]`, `[wcj_customer_shipping_country]`, `[wcj_customer_meta]` shortcodes added.
 -D  * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Customer - On-Hold Order" option added.
 -   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Files Upload class.
  *
- * @version 2.5.6
+ * @version 2.5.8
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options;
@@ -323,7 +323,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * is_visible.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.8
 	 * @since   2.4.7
 	 */
 	function is_visible( $i, $order_id = 0 ) {
@@ -345,6 +345,22 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				}
 			}
 			if ( $do_skip_by_products ) return false;
+		}
+
+		// Exclude by product id
+		$products_in = get_option( 'wcj_checkout_files_upload_hide_products_in_' . $i );
+		if ( ! empty( $products_in ) ) {
+			if ( 0 != $order_id ) {
+				$the_order = wc_get_order( $order_id );
+				$the_items = $the_order->get_items();
+			} else {
+				$the_items = WC()->cart->get_cart();
+			}
+			foreach ( $the_items as $cart_item_key => $values ) {
+				if ( in_array( $values['product_id'], $products_in ) ) {
+					return false;
+				}
+			}
 		}
 
 		// Include by product category
@@ -371,6 +387,26 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 			if ( $do_skip_by_cats ) return false;
 		}
 
+		// Exclude by product category
+		$categories_in = get_option( 'wcj_checkout_files_upload_hide_cats_in_' . $i );
+		if ( ! empty( $categories_in ) ) {
+			if ( 0 != $order_id ) {
+				$the_order = wc_get_order( $order_id );
+				$the_items = $the_order->get_items();
+			} else {
+				$the_items = WC()->cart->get_cart();
+			}
+			foreach ( $the_items as $cart_item_key => $values ) {
+				$product_categories = get_the_terms( $values['product_id'], 'product_cat' );
+				if ( empty( $product_categories ) ) continue;
+				foreach( $product_categories as $product_category ) {
+					if ( in_array( $product_category->term_id, $categories_in ) ) {
+						return false;
+					}
+				}
+			}
+		}
+
 		// Include by product tag
 		$tags_in = get_option( 'wcj_checkout_files_upload_show_tags_in_' . $i );
 		if ( ! empty( $tags_in ) ) {
@@ -393,6 +429,26 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				if ( ! $do_skip_by_tags ) break;
 			}
 			if ( $do_skip_by_tags ) return false;
+		}
+
+		// Exclude by product tag
+		$tags_in = get_option( 'wcj_checkout_files_upload_hide_tags_in_' . $i );
+		if ( ! empty( $tags_in ) ) {
+			if ( 0 != $order_id ) {
+				$the_order = wc_get_order( $order_id );
+				$the_items = $the_order->get_items();
+			} else {
+				$the_items = WC()->cart->get_cart();
+			}
+			foreach ( $the_items as $cart_item_key => $values ) {
+				$product_tags = get_the_terms( $values['product_id'], 'product_tag' );
+				if ( empty( $product_tags ) ) continue;
+				foreach( $product_tags as $product_tag ) {
+					if ( in_array( $product_tag->term_id, $tags_in ) ) {
+						return false;
+					}
+				}
+			}
 		}
 
 		return true;
@@ -517,7 +573,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.8
 	 * @since   2.4.5
 	 */
 	function get_settings() {
@@ -700,6 +756,36 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 					'desc'     => __( 'TAGS to show this field', 'woocommerce-jetpack' ),
 					'desc_tip' => __( 'To show this field only if at least one product of selected tag is in cart, enter tags here. Leave blank to show for all products.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_checkout_files_upload_show_tags_in_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_tags_options,
+				),
+				array(
+					'title'    => '',
+					'desc'     => __( 'PRODUCTS to hide this field', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To hide this field if at least one selected product is in cart, enter products here. Leave blank to show for all products.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_files_upload_hide_products_in_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $products_options,
+				),
+				array(
+					'title'    => '',
+					'desc'     => __( 'CATEGORIES to hide this field', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To hide this field if at least one product of selected category is in cart, enter categories here. Leave blank to show for all products.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_files_upload_hide_cats_in_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_cats_options,
+				),
+				array(
+					'title'    => '',
+					'desc'     => __( 'TAGS to hide this field', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To hide this field if at least one product of selected tag is in cart, enter tags here. Leave blank to show for all products.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_checkout_files_upload_hide_tags_in_' . $i,
 					'default'  => '',
 					'class'    => 'chosen_select',
 					'type'     => 'multiselect',
