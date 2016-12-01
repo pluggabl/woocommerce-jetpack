@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.5.7
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -157,7 +157,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.8
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -264,11 +264,21 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 									/* if ( isset( $option['price_per_currency'][ $order_currency ] ) ) {
 										$options_prices[] = $this->wcj_price_shortcode( $option['price_per_currency'][ $order_currency ], $atts );
 									} */
-									if ( isset( $option['price'] ) ) {
-										$options_prices[] = ( $option['price'] > 0 ) ? '+' . wc_price( $option['price'] ) : wc_price( $option['price'] );
+									$option_info = '';
+									if ( isset( $option['name'] ) && '' != $option['name'] ) {
+										$option_info .= $option['name'] . ': ';
+									}
+									if ( isset( $option['value'] ) && '' != $option['value'] ) {
+										$option_info .= $option['value'] /* . ' ' */;
+									}
+									/* if ( isset( $option['price'] ) ) { // todo
+										$option_info .= ( $option['price'] > 0 ) ? '+' . wc_price( $option['price'] ) : wc_price( $option['price'] );
+									} */
+									if ( '' != $option_info ) {
+										$options_prices[] = $option_info;
 									}
 								}
-								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">' . implode( ', ', $options_prices ) . '</div>';
+								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">' . implode( '<br>', $options_prices ) . '</div>';
 							}
 							$data[ $item_counter ][] = $the_item_title;
 						}
