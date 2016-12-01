@@ -76,6 +76,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 				return ( 'yes' === $atts['full_country_name'] ) ? wcj_get_country_name_by_code( $meta ) : $meta;
 			}
 		}
+		return '';
 	}
 
 	/**
@@ -91,6 +92,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 				return ( 'yes' === $atts['full_country_name'] ) ? wcj_get_country_name_by_code( $meta ) : $meta;
 			}
 		}
+		return '';
 	}
 
 	/**
@@ -106,6 +108,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 				return $meta;
 			}
 		}
+		return '';
 	}
 
 	/**
