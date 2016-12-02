@@ -82,11 +82,12 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Shipping & Orders**
 
 * *Address Formats* - Set address format in WooCommerce orders on per country basis. Force base country display.
+* *Left to Free Shipping* - Display "left to free shipping" info.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Minimum Amount* - Minimum WooCommerce order amount (optionally by user role).
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
 * *Orders* - Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.
-* *Shipping* - Add multiple custom shipping methods to WooCommerce. Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available. Display "left to free shipping" info.
+* *Shipping* - Add multiple custom shipping methods to WooCommerce. Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 
 **PDF Invoicing & Packing Slips**
@@ -136,7 +137,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.5.8 - 01/12/2016 =
+= 2.5.8 - 02/12/2016 =
+~   * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Admin order list columns are sortable now.
 ~D  * Dev - Shortcodes - General - `[wcj_get_left_to_free_shipping]` - `multiply_by` attribute added (and to `wcj_get_left_to_free_shipping()` function).
 D   * Dev - SHIPPING & ORDERS - Left to Free Shipping - Initial module release (moved from Shipping module).
 ~D  * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.

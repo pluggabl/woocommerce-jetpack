@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Display class.
  *
- * @version 2.5.7
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.8
 	 */
 	function __construct() {
 
@@ -29,15 +29,50 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Columns on Admin's Orders page
-			add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_column' ), PHP_INT_MAX - 3 );
-			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), 2 );
+			add_filter( 'manage_edit-shop_order_columns',           array( $this, 'add_order_column' ), PHP_INT_MAX - 3 );
+			add_action( 'manage_shop_order_posts_custom_column',    array( $this, 'render_order_columns' ), 2 );
 			// Action Links on Customer's My Account page
 			add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'add_pdf_invoices_action_links' ), PHP_INT_MAX, 2 );
 			// Action Buttons to Admin's Orders list
-			add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_pdf_invoices_admin_actions' ), PHP_INT_MAX, 2 );
-			add_filter( 'admin_head', array( $this, 'add_pdf_invoices_admin_actions_buttons_css' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_filter( 'woocommerce_admin_order_actions',          array( $this, 'add_pdf_invoices_admin_actions' ), PHP_INT_MAX, 2 );
+			add_filter( 'admin_head',                               array( $this, 'add_pdf_invoices_admin_actions_buttons_css' ) );
+			add_action( 'admin_enqueue_scripts',                    array( $this, 'enqueue_scripts' ) );
+			// Make Sortable Columns
+			add_filter( 'manage_edit-shop_order_sortable_columns',  array( $this, 'shop_order_sortable_columns' ) );
+			add_action( 'pre_get_posts',                            array( $this, 'shop_order_pre_get_posts_order_by_column' ), 1 );
 		}
+	}
+
+	/**
+	 * shop_order_pre_get_posts_order_by_column.
+	 *
+	 * @version 2.5.8
+	 * @since   2.5.8
+	 */
+	function shop_order_pre_get_posts_order_by_column( $query ) {
+		if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
+			if ( 'wcj_' === substr( $orderby, 0, 4 ) ) {
+				$invoice_type = substr( $orderby, 4 );
+				$query->set( 'meta_key', '_wcj_invoicing_' . $invoice_type . '_number_id' );
+				$query->set( 'orderby', 'meta_value_num' );
+			}
+		}
+	}
+
+	/**
+	 * Make columns sortable.
+	 *
+	 * @version 2.5.8
+	 * @since   2.5.8
+	 * @param   array $columns
+	 * @return  array
+	 */
+	function shop_order_sortable_columns( $columns ) {
+		$custom = array();
+		foreach ( wcj_get_enabled_invoice_types_ids() as $invoice_type_id ) {
+			$custom[ $invoice_type_id ] = 'wcj_' . $invoice_type_id;
+		}
+		return wp_parse_args( $custom, $columns );
 	}
 
 	/**
