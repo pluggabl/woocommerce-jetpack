@@ -328,6 +328,12 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	 */
 	function is_visible( $i, $order_id = 0 ) {
 
+		if ( 0 == $order_id && WC()->cart->is_empty() ) {
+			// This was added for "One Page Checkout" plugin compatibility.
+			// However I'm not sure about this - maybe it's better to return some other value, e.g. `empty`.
+			return true;
+		}
+
 		// Include by product id
 		$products_in = get_option( 'wcj_checkout_files_upload_show_products_in_' . $i );
 		if ( ! empty( $products_in ) ) {

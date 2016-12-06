@@ -2,7 +2,7 @@
 Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
-Tested up to: 4.6
+Tested up to: 4.7
 Stable tag: 2.5.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -147,7 +147,7 @@ D   * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Last Sale" and 
 ~   * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Admin order list columns are sortable now.
 ~D  * Dev - Shortcodes - General - `[wcj_get_left_to_free_shipping]` - `multiply_by` attribute added (and to `wcj_get_left_to_free_shipping()` function).
 D   * Dev - SHIPPING & ORDERS - Left to Free Shipping - Initial module release (moved from Shipping module).
-~D  * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
+-D  * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
 ~D  * Dev - Shortcodes - General - `[wcj_customer_billing_country]`, `[wcj_customer_shipping_country]`, `[wcj_customer_meta]` shortcodes added.
 -D  * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Customer - On-Hold Order" option added.
 -   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
