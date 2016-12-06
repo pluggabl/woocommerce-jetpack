@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.5.7
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.8
 	 */
 	public function __construct() {
 
@@ -71,6 +71,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_height',
 			'wcj_order_total_length',
 			'wcj_order_total_weight',
+			'wcj_order_coupons',
 		);
 
 		parent::__construct();
@@ -134,16 +135,27 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * wcj_order_coupons.
+	 *
+	 * @version 2.5.8
+	 * @since   2.5.8
+	 */
+	function wcj_order_coupons( $atts ) {
+		return implode( ', ', $this->the_order->get_used_coupons() );
+	}
+
+	/**
 	 * wcj_order_function.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.8
 	 * @since   2.5.6
 	 * @todo    add function_params attribute.
 	 */
 	function wcj_order_function( $atts ) {
 		$function_name = $atts['function_name'];
 		if ( '' != $function_name && method_exists( $this->the_order, $function_name ) ) {
-			return $this->the_order->$function_name();
+			$return = $this->the_order->$function_name();
+			return ( is_array( $return ) ) ? implode( ', ', $return ) : $return;
 		}
 	}
 

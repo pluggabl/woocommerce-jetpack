@@ -138,6 +138,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.8 - 06/12/2016 =
+~D  * Dev - Shortcodes - Orders - `[wcj_order_function]` - `implode()` added in case if returned value is an array.
+~D  * Dev - Shortcodes - Orders - `[wcj_order_coupons]` shortcode added.
     * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - "No sales data for current period" message added.
     * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - Link to two years back added.
     * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter" button renamed to "Filter products".
