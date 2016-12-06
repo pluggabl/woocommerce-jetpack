@@ -138,6 +138,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.8 - 06/12/2016 =
+~   * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
 ~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_check_on_applying_label` filter added.
 ~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_woocommerce_get_price_html_allowed_post_types` filter added.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_function]` - `implode()` added in case if returned value is an array.

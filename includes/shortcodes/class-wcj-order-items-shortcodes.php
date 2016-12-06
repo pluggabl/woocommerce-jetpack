@@ -251,7 +251,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 							// Variation (if needed)
 							if ( is_object( $the_product ) && $the_product->is_type( 'variation' ) && ! in_array( 'item_variation', $columns ) ) {
 								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">'
-									. str_replace( 'pa_', '', urldecode( wc_get_formatted_variation( $the_product->variation_data, true ) ) )
+//									. str_replace( 'pa_', '', urldecode( wc_get_formatted_variation( $the_product->variation_data, true ) ) )
+									. str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ) // todo - do we need pa_ replacement?
 									. '</div>';
 							}
 							// "WooCommerce TM Extra Product Options" plugin options
