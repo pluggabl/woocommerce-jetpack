@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Sales Reports class.
  *
- * @version 2.5.7
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -45,15 +45,18 @@ class WCJ_Reports_Sales {
 	/*
 	 * sort_by_total_sales.
 	 *
-	 * @version 2.3.0
-	 * @since   2.3.0
+	 * @version    2.3.0
+	 * @since      2.3.0
+	 * @deprecated 2.5.8
 	 */
+	/*
 	function sort_by_total_sales( $a, $b ) {
 		if ( $a['sales'] == $b['sales'] ) {
 			return 0;
 		}
 		return ( $a['sales'] < $b['sales'] ) ? 1 : -1;
 	}
+	*/
 
 	/*
 	 * sort_by_title.
@@ -68,7 +71,7 @@ class WCJ_Reports_Sales {
 	/*
 	 * get_products_sales.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.8
 	 * @since   2.3.0
 	 */
 	function get_products_sales() {
@@ -107,10 +110,17 @@ class WCJ_Reports_Sales {
 						$product_ids[] = $item['variation_id'];
 					}
 					foreach ( $product_ids as $product_id ) {
+						// Total Sales
 						if ( ! isset( $products_data[ $product_id ][ 'sales' ] ) ) {
 							$products_data[ $product_id ][ 'sales' ] = 0;
 						}
 						$products_data[ $product_id ][ 'sales' ] += $item['qty'];
+						// Total Sum
+						if ( ! isset( $products_data[ $product_id ][ 'total_sum' ] ) ) {
+							$products_data[ $product_id ][ 'total_sum' ] = 0;
+						}
+						$products_data[ $product_id ][ 'total_sum' ] += ( $item['line_total'] /* + $item['line_tax'] */ );
+						// Sales by Month
 						$month = date( 'n', get_the_time( 'U', $order_id ) );
 						$year  = date( 'Y', get_the_time( 'U', $order_id ) );
 						$years[ $year ] = true;
@@ -118,6 +128,7 @@ class WCJ_Reports_Sales {
 							$products_data[ $product_id ][ 'sales_by_month' ][ $year ][ $month ] = 0;
 						}
 						$products_data[ $product_id ][ 'sales_by_month' ][ $year ][ $month ] += $item['qty'];
+						// Title
 						if ( ! isset( $products_data[ $product_id ][ 'title' ] ) ) {
 							$products_data[ $product_id ][ 'title' ] = '';
 							$_product = wc_get_product( $product_id );
@@ -137,9 +148,11 @@ class WCJ_Reports_Sales {
 							}
 //							$products_data[ $product_id ][ 'title' ] .= ' [ID: ' . $product_id . ']';
 						}
+						// Last Sale Time
 						if ( ! isset( $products_data[ $product_id ][ 'last_sale' ] ) ) {
 							$products_data[ $product_id ][ 'last_sale' ] = date( 'Y-m-d H:i:s', get_the_time( 'U', $order_id ) );
 						}
+						// Product ID
 						if ( ! isset( $products_data[ $product_id ][ 'product_id' ] ) ) {
 							$products_data[ $product_id ][ 'product_id' ] = $product_id;
 						}
@@ -153,7 +166,13 @@ class WCJ_Reports_Sales {
 		usort( $products_data, array( $this, 'sort_by_title' ) );
 
 		$table_data = array();
-		$the_header = array( __( 'ID', 'woocommerce-jetpack' ), __( 'Product', 'woocommerce-jetpack' ), __( 'Total Sales', 'woocommerce-jetpack' ) );
+		$the_header = array(
+			__( 'ID', 'woocommerce-jetpack' ),
+			__( 'Product', 'woocommerce-jetpack' ),
+			__( 'Last Sale', 'woocommerce-jetpack' ),
+			__( 'Total Sales', 'woocommerce-jetpack' ),
+			__( 'Total Sum', 'woocommerce-jetpack' )
+		);
 		foreach ( $years as $year => $value ) {
 			if ( $year != $this->year ) continue;
 			for ( $i = 12; $i >= 1; $i-- ) {
@@ -163,7 +182,13 @@ class WCJ_Reports_Sales {
 		$table_data[] = $the_header;
 		foreach ( $products_data as /* $product_id => */ $the_data ) {
 			if ( '' == $this->product_title || false !== stripos( $the_data['title'], $this->product_title ) ) {
-				$the_row = array( $the_data['product_id'], $the_data['title'], $the_data['sales'] );
+				$the_row = array(
+					$the_data['product_id'],
+					$the_data['title'],
+					$the_data['last_sale'],
+					$the_data['sales'],
+					wc_price( $the_data['total_sum'] )
+				);
 				foreach ( $years as $year => $value ) {
 					if ( $year != $this->year ) continue;
 					for ( $i = 12; $i >= 1; $i-- ) {
@@ -190,6 +215,7 @@ class WCJ_Reports_Sales {
 		$menu .= '<ul class="subsubsub">';
 		$menu .= '<li><a href="' . add_query_arg( 'year', date( 'Y' ) )         . '" class="' . ( ( $this->year == date( 'Y' ) ) ? 'current' : '' ) . '">' . date( 'Y' ) . '</a> | </li>';
 		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 1 ) ) . '" class="' . ( ( $this->year == ( date( 'Y' ) - 1 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 1 ) . '</a> | </li>';
+		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 2 ) ) . '" class="' . ( ( $this->year == ( date( 'Y' ) - 2 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 2 ) . '</a></li>';
 		$menu .= '</ul>';
 		$menu .= '<br class="clear">';
 
@@ -198,10 +224,14 @@ class WCJ_Reports_Sales {
 		$filter_form .= '<input type="hidden" name="page" value="' . $_GET['page'] . '" />';
 		$filter_form .= '<input type="hidden" name="tab" value="' . $_GET['tab'] . '" />';
 		$filter_form .= '<input type="hidden" name="report" value="' . $_GET['report'] . '" />';
-		$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" /><input type="submit" value="' . __( 'Filter', 'woocommerce' ) . '" />';
+		$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" /><input type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';
 		$filter_form .= '</form>';
 
-		return '<p>' . $menu . '</p>' . '<p>' . $filter_form . '</p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
+		$the_results = ( ! empty( $products_data ) ) ?
+			wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) :
+			'<p><em>' . __( 'No sales data for current period.' ) . '</em></p>';
+
+		return '<p>' . $menu . '</p>' . '<p>' . $filter_form . '</p>' . $the_results;
 	}
 }
 

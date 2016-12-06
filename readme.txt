@@ -137,7 +137,11 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.5.8 - 02/12/2016 =
+= 2.5.8 - 06/12/2016 =
+    * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - "No sales data for current period" message added.
+    * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - Link to two years back added.
+    * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter" button renamed to "Filter products".
+D   * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Last Sale" and "Total Sum" columns added.
 ~   * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Admin order list columns are sortable now.
 ~D  * Dev - Shortcodes - General - `[wcj_get_left_to_free_shipping]` - `multiply_by` attribute added (and to `wcj_get_left_to_free_shipping()` function).
 D   * Dev - SHIPPING & ORDERS - Left to Free Shipping - Initial module release (moved from Shipping module).
