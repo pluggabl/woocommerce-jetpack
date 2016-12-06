@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.5.5
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -403,7 +403,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.8
 	 */
 	public function custom_price( $price, $product ) {
 
@@ -415,7 +415,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 			$product = $product['data'];
 		}
 
-		if ( 'woocommerce_get_price_html' === $current_filter_name && 'booking' !== $product->product_type ) {
+		if ( 'woocommerce_get_price_html' === $current_filter_name && ! in_array( $product->product_type, apply_filters( 'wcj_price_labels_woocommerce_get_price_html_allowed_post_types', array( 'booking' ), $product->product_type ) ) ) {
 			return $price;
 		}
 
@@ -480,12 +480,18 @@ class WCJ_Price_Labels extends WCJ_Module {
 		if ( $do_apply_global ) {
 			// Global price labels - Add text before price
 			$text_to_add_before = apply_filters( 'wcj_get_option_filter', '', get_option( 'wcj_global_price_labels_add_before_text' ) );
-			if ( '' != $text_to_add_before )
-				$price = $text_to_add_before . $price;
+			if ( '' != $text_to_add_before ) {
+				if ( apply_filters( 'wcj_price_labels_check_on_applying_label', true, $price, $text_to_add_before ) ) {
+					$price = $text_to_add_before . $price;
+				}
+			}
 			// Global price labels - Add text after price
 			$text_to_add_after = get_option( 'wcj_global_price_labels_add_after_text' );
-			if ( '' != $text_to_add_after )
-				$price = $price . $text_to_add_after;
+			if ( '' != $text_to_add_after ) {
+				if ( apply_filters( 'wcj_price_labels_check_on_applying_label', true, $price, $text_to_add_after ) ) {
+					$price = $price . $text_to_add_after;
+				}
+			}
 
 			// Global price labels - Between regular and sale prices
 			$text_to_add_between_regular_and_sale = get_option( 'wcj_global_price_labels_between_regular_and_sale_text' );

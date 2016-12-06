@@ -138,6 +138,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.8 - 06/12/2016 =
+~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_check_on_applying_label` filter added.
+~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_woocommerce_get_price_html_allowed_post_types` filter added.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_function]` - `implode()` added in case if returned value is an array.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_coupons]` shortcode added.
     * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - "No sales data for current period" message added.
