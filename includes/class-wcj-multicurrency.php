@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency class.
  *
- * @version 2.5.7
+ * @version 2.5.8
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -224,7 +224,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_by_currency.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.8
 	 */
 	function change_price_by_currency( $price, $_product ) {
 
@@ -244,6 +244,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 				if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
 					$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 					return $_product->$get_price_method();
+
 				} elseif ( 'woocommerce_get_price' == $the_current_filter || 'woocommerce_variation_prices_price' == $the_current_filter ) {
 					$sale_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
 					return ( '' != $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
@@ -260,7 +261,19 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 		// Global
 		if ( 1 != ( $currency_exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() ) ) ) {
-			return $price * $currency_exchange_rate;
+			$price = $price * $currency_exchange_rate;
+			switch ( get_option( 'wcj_multicurrency_rounding', 'no_round' ) ) {
+				case 'round':
+					$price = round( $price, get_option( 'wcj_multicurrency_rounding_precision', absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) ) );
+					break;
+				case 'round_up':
+					$price = ceil( $price );
+					break;
+				case 'round_down':
+					$price = floor( $price );
+					break;
+			}
+			return $price;
 		}
 
 		// No changes
@@ -361,7 +374,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.5.8
 	 * @todo    rounding (maybe)
 	 */
 	function add_settings() {
@@ -402,6 +415,27 @@ class WCJ_Multicurrency extends WCJ_Module {
 				'id'       => 'wcj_multicurrency_revert',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Rounding', 'woocommerce-jetpack' ),
+				'desc'     => __( 'If using exchange rates, choose rounding here.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_multicurrency_rounding',
+				'default'  => 'no_round',
+				'type'     => 'select',
+				'options'  => array(
+					'no_round'   => __( 'No rounding', 'woocommerce-jetpack' ),
+					'round'      => __( 'Round', 'woocommerce-jetpack' ),
+					'round_up'   => __( 'Round up', 'woocommerce-jetpack' ),
+					'round_down' => __( 'Round down', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'title'    => __( 'Rounding Precision', 'woocommerce-jetpack' ),
+				'desc'     => __( 'If rounding enabled, set precision here.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_multicurrency_rounding_precision',
+				'default'  => absint( get_option( 'woocommerce_price_num_decimals', 2 ) ),
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 0 ),
 			),
 			array(
 				'type'     => 'sectionend',
