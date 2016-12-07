@@ -138,6 +138,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.8 - 07/12/2016 =
+    * Tweak - EMAILS & MISC. - General - Typo fixed in description.
     * Dev - `wcj_current_filter_priority()` modified for compatibility with WordPress since v4.7.
 ~   * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
 ~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_check_on_applying_label` filter added.
