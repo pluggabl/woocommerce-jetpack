@@ -445,7 +445,6 @@ if ( ! function_exists( 'wcj_current_filter_priority' ) ) {
 			// before WordPress v4.7
 			return key( $current_filter_data );
 		}
-		return false;
 	}
 }
 
