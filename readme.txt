@@ -101,7 +101,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *Export* - WooCommerce export tools.
-* *General* - Separate custom CSS for front and back end. Shortcodes in Wordpress text widgets. Custom roles tool.
+* *General* - Separate custom CSS for front and back end. Shortcodes in WordPress text widgets. Custom roles tool.
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Products XML* - WooCommerce products XML feed.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
@@ -137,7 +137,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.5.8 - 06/12/2016 =
+= 2.5.8 - 07/12/2016 =
+    * Dev - `wcj_current_filter_priority()` modified for compatibility with WordPress since v4.7.
 ~   * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
 ~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_check_on_applying_label` filter added.
 ~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_woocommerce_get_price_html_allowed_post_types` filter added.
@@ -1224,9 +1225,9 @@ D   * Dev - EMAILS & MISC. - Admin Tools - "Show Order Meta" and "Show Product M
 * Dev - PRODUCTS - **Product Input Fields** - Fields to fill before adding product to cart. Idea by Mangesh.
   Fields can be added globally (i.e. for all products), or on per product basis.
   Currently only fields of `text` type are available.
-* Dev - PRODUCTS - **Product Info** - Wordpress shortcodes added for every WooJetpack shortcode.
+* Dev - PRODUCTS - **Product Info** - WordPress shortcodes added for every WooJetpack shortcode.
   WooJetpack shortcodes are now deprecated and will be removed in future releases. See v.1.9.0 changelog for more details.
-  This covers Wordpress.org Support Forum thread by dudemcpek - https://wordpress.org/support/topic/not-displaying-shortcodes.
+  This covers WordPress.org Support Forum thread by dudemcpek - https://wordpress.org/support/topic/not-displaying-shortcodes.
 * Dev - CART - **Add to Cart per Category** - Add to cart button text on *per category* basis (single or category view). Idea by Craig.
 * Dev - CART - **Add to Cart per Product** - Custom add to cart button text on *per product* basis (single or category view). Idea by Craig.
 * Dev - CART - **Cart** - Option to change position of `Empty cart` button. Suggested by Patryk.

@@ -431,14 +431,21 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 /*
  * wcj_current_filter_priority.
  *
- * @version 2.4.6
+ * @version 2.5.8
  * @since   2.4.6
  */
 if ( ! function_exists( 'wcj_current_filter_priority' ) ) {
 	function wcj_current_filter_priority() {
 		global $wp_filter;
-		$current_filter_priority = key( $wp_filter[ current_filter() ] );
-		return $current_filter_priority;
+		$current_filter_data = $wp_filter[ current_filter() ];
+		if ( class_exists( 'WP_Hook' ) && is_a( $current_filter_data, 'WP_Hook' ) ) {
+			// since WordPress v4.7
+			return $current_filter_data->current_priority();
+		} else {
+			// before WordPress v4.7
+			return key( $current_filter_data );
+		}
+		return false;
 	}
 }
 
