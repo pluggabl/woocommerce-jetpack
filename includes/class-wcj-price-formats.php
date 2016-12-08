@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Formats class.
  *
- * @version 2.5.2
+ * @version 2.5.8
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -39,16 +39,23 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * price_format.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.8
 	 * @since   2.5.2
 	 */
 	function price_format( $args ) {
 		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
 			if ( get_woocommerce_currency() === get_option( 'wcj_price_formats_currency_' . $i ) ) {
+				if ( defined( 'ICL_LANGUAGE_CODE' ) && '' != ( $wpml_language = get_option( 'wcj_price_formats_wpml_language_' . $i, '' ) ) ) {
+					$wpml_language = explode( ',', trim( str_replace( ' ', '', $wpml_language ), ',' ) );
+					if ( ! in_array( ICL_LANGUAGE_CODE, $wpml_language ) ) {
+						continue;
+					}
+				}
 				$args['price_format']       = $this->get_woocommerce_price_format( get_option( 'wcj_price_formats_currency_position_' . $i ) );
 				$args['decimal_separator']  = get_option( 'wcj_price_formats_decimal_separator_'  . $i );
 				$args['thousand_separator'] = get_option( 'wcj_price_formats_thousand_separator_' . $i );
 				$args['decimals']           = absint( get_option( 'wcj_price_formats_number_of_decimals_' . $i ) );
+				break;
 			}
 		}
 		return $args;
@@ -105,7 +112,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.5.8
 	 * @since   2.5.2
 	 */
 	function add_settings() {
@@ -175,6 +182,14 @@ class WCJ_Price_Formats extends WCJ_Module {
 						'min'  => 0,
 						'step' => 1
 					),
+					'css'      => 'width:300px;',
+				),
+				array(
+					'desc'     => __( 'WPML Language Code', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Option to set different price formats for different WPML languages. Can be comma separated list. Leave empty to disable.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_price_formats_wpml_language_' . $i,
+					'default'  => '',
+					'type'     => 'text',
 					'css'      => 'width:300px;',
 				),
 			) );

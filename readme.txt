@@ -137,7 +137,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.5.8 - 07/12/2016 =
+= 2.5.8 - 08/12/2016 =
+~D  * Dev - PRICES & CURRENCIES - Price Formats - "WPML Language Code" option added.
 ~D  * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Rounding" and "Rounding Precision" options added.
     * Tweak - EMAILS & MISC. - General - Typo fixed in description.
     * Dev - `wcj_current_filter_priority()` modified for compatibility with WordPress since v4.7.
