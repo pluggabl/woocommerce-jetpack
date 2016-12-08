@@ -142,11 +142,11 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~D  * Dev - Shortcodes - General - `[wcj_get_left_to_free_shipping]` - `multiply_by` attribute added (and to `wcj_get_left_to_free_shipping()` function).
 ~D  * Dev - Shortcodes - General - `[wcj_customer_billing_country]`, `[wcj_customer_shipping_country]`, `[wcj_customer_meta]` shortcodes added.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_function]` - `implode()` added in case if returned value is an array.
-~D  * Dev - Shortcodes - Orders - `[wcj_order_coupons]` shortcode added.
+D   * Dev - Shortcodes - Orders - `[wcj_order_coupons]` shortcode added.
 -   * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
 -   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
 ~D  * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Rounding" and "Rounding Precision" options added.
-~D  * Dev - PRICES & CURRENCIES - Price Formats - "WPML Language Code" option added.
+D   * Dev - PRICES & CURRENCIES - Price Formats - "WPML Language Code" option added.
 -D  * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
 D   * Dev - SHIPPING & ORDERS - Left to Free Shipping - Initial module release (moved from Shipping module).
 D   * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Admin - Failed Order", "Customer - On-Hold Order", "Customer - Note", "Customer - New Account", "Customer - Reset Password" options added.
