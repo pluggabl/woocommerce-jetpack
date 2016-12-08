@@ -100,6 +100,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 	 * get_settings.
 	 *
 	 * @version 2.5.8
+	 * @todo    add emails from Booster's "Emails" module.
 	 */
 	function get_settings() {
 
@@ -115,13 +116,17 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 			);
 
 			$available_emails = array(
-				'new_order'                 => __( 'Admin - New Order', 'woocommerce' ),
-				'cancelled_order'           => __( 'Admin - Cancelled Order', 'woocommerce' ),
-				'customer_processing_order' => __( 'Customer - Processing Order', 'woocommerce' ),
-				'customer_on_hold_order'    => __( 'Customer - On-Hold Order', 'woocommerce' ),
-				'customer_completed_order'  => __( 'Customer - Completed Order', 'woocommerce' ),
-				'customer_invoice'          => __( 'Customer - Invoice', 'woocommerce' ),
-				'customer_refunded_order'   => __( 'Customer - Refunded Order', 'woocommerce' ),
+				'new_order'                 => __( 'Admin - New Order', 'woocommerce-jetpack' ),
+				'cancelled_order'           => __( 'Admin - Cancelled Order', 'woocommerce-jetpack' ),
+				'failed_order'              => __( 'Admin - Failed Order', 'woocommerce-jetpack' ),
+				'customer_processing_order' => __( 'Customer - Processing Order', 'woocommerce-jetpack' ),
+				'customer_on_hold_order'    => __( 'Customer - On-Hold Order', 'woocommerce-jetpack' ),
+				'customer_completed_order'  => __( 'Customer - Completed Order', 'woocommerce-jetpack' ),
+				'customer_invoice'          => __( 'Customer - Invoice', 'woocommerce-jetpack' ),
+				'customer_refunded_order'   => __( 'Customer - Refunded Order', 'woocommerce-jetpack' ),
+				'customer_note'             => __( 'Customer - Note', 'woocommerce-jetpack' ),
+				'customer_new_account'      => __( 'Customer - New Account', 'woocommerce-jetpack' ),
+				'customer_reset_password'   => __( 'Customer - Reset Password', 'woocommerce-jetpack' ),
 			);
 			if ( 'yes' === get_option( 'wcj_emails_enabled', 'no' ) ) {
 				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {

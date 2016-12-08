@@ -142,7 +142,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~D  * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Rounding" and "Rounding Precision" options added.
     * Tweak - EMAILS & MISC. - General - Typo fixed in description.
     * Dev - `wcj_current_filter_priority()` modified for compatibility with WordPress since v4.7.
-~   * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
+-   * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
 ~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_check_on_applying_label` filter added.
 ~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_woocommerce_get_price_html_allowed_post_types` filter added.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_function]` - `implode()` added in case if returned value is an array.
@@ -156,7 +156,7 @@ D   * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Last Sale" and 
 D   * Dev - SHIPPING & ORDERS - Left to Free Shipping - Initial module release (moved from Shipping module).
 -D  * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
 ~D  * Dev - Shortcodes - General - `[wcj_customer_billing_country]`, `[wcj_customer_shipping_country]`, `[wcj_customer_meta]` shortcodes added.
--D  * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Customer - On-Hold Order" option added.
+D   * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Admin - Failed Order", "Customer - On-Hold Order", "Customer - Note", "Customer - New Account", "Customer - Reset Password" options added.
 -   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
 D   * Dev - EMAILS & MISC. - Admin Tools - "Show Order Meta" and "Show Product Meta" options added.
     * Tweak - Language (POT) file updated.
