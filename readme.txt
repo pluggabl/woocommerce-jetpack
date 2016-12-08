@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
   * Dev - Shortcodes - Orders - `[wcj_order_coupons]` shortcode added.
 - * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
 - * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
+! * Fix - Shortcodes - Products - `[wcj_product_excerpt]` - `wp_reset_postdata()` generates PHP error.
 ~ * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Rounding" and "Rounding Precision" options added.
   * Dev - PRICES & CURRENCIES - Price Formats - "WPML Language Code" option added.
 - * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
