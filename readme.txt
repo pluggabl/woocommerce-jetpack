@@ -138,29 +138,29 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.8 - 08/12/2016 =
-~D  * Dev - PRICES & CURRENCIES - Price Formats - "WPML Language Code" option added.
-~D  * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Rounding" and "Rounding Precision" options added.
-    * Tweak - EMAILS & MISC. - General - Typo fixed in description.
     * Dev - `wcj_current_filter_priority()` modified for compatibility with WordPress since v4.7.
--   * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
-~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_check_on_applying_label` filter added.
-~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_woocommerce_get_price_html_allowed_post_types` filter added.
+~D  * Dev - Shortcodes - General - `[wcj_get_left_to_free_shipping]` - `multiply_by` attribute added (and to `wcj_get_left_to_free_shipping()` function).
+~D  * Dev - Shortcodes - General - `[wcj_customer_billing_country]`, `[wcj_customer_shipping_country]`, `[wcj_customer_meta]` shortcodes added.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_function]` - `implode()` added in case if returned value is an array.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_coupons]` shortcode added.
+-   * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
+-   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
+~D  * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Rounding" and "Rounding Precision" options added.
+~D  * Dev - PRICES & CURRENCIES - Price Formats - "WPML Language Code" option added.
+-D  * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
+D   * Dev - SHIPPING & ORDERS - Left to Free Shipping - Initial module release (moved from Shipping module).
+D   * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Admin - Failed Order", "Customer - On-Hold Order", "Customer - Note", "Customer - New Account", "Customer - Reset Password" options added.
+~   * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Admin order list columns are sortable now.
+D   * Dev - EMAILS & MISC. - Admin Tools - "Show Order Meta" and "Show Product Meta" options added.
+D   * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Last Sale" and "Total Sum" columns added.
+    * Tweak - Language (POT) file updated.
+    * Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Price by Country on per Product Basis - Description updated.
+~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_check_on_applying_label` filter added.
+~D  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_woocommerce_get_price_html_allowed_post_types` filter added.
+    * Tweak - EMAILS & MISC. - General - Typo fixed in description.
     * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - "No sales data for current period" message added.
     * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - Link to two years back added.
     * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter" button renamed to "Filter products".
-D   * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Last Sale" and "Total Sum" columns added.
-~   * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Admin order list columns are sortable now.
-~D  * Dev - Shortcodes - General - `[wcj_get_left_to_free_shipping]` - `multiply_by` attribute added (and to `wcj_get_left_to_free_shipping()` function).
-D   * Dev - SHIPPING & ORDERS - Left to Free Shipping - Initial module release (moved from Shipping module).
--D  * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
-~D  * Dev - Shortcodes - General - `[wcj_customer_billing_country]`, `[wcj_customer_shipping_country]`, `[wcj_customer_meta]` shortcodes added.
-D   * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Admin - Failed Order", "Customer - On-Hold Order", "Customer - Note", "Customer - New Account", "Customer - Reset Password" options added.
--   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
-D   * Dev - EMAILS & MISC. - Admin Tools - "Show Order Meta" and "Show Product Meta" options added.
-    * Tweak - Language (POT) file updated.
-    * Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Price by Country on per Product Basis - Description updated.
 
 = 2.5.7 - 27/11/2016 =
 * Fix - `load_plugin_textdomain` moved from `init` hook to constructor (fixes the issue with module titles, descriptions not translating).
