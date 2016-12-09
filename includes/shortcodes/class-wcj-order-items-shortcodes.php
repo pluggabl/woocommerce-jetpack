@@ -29,7 +29,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.8
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -48,6 +48,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'product_image_height' => 0,
 			'price_prefix'         => '',
 			'style_item_name_variation' => 'font-size:smaller;',
+			'variation_as_metadata' => 'yes',
+			'wc_extra_product_options_show_price' => 'no',
 		), $atts );
 		return $modified_atts;
 	}
@@ -155,6 +157,56 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * get_meta_info.
+	 *
+	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
+	 *
+	 * @version 2.5.8
+	 * @since   2.5.8
+	 */
+	function get_meta_info( $item_id, $atts, $the_product ) {
+		$meta_info = '';
+		if ( $metadata = $this->the_order->has_meta( $item_id ) ) {
+			$meta_info = array();
+			foreach ( $metadata as $meta ) {
+
+				// Skip hidden core fields
+				if ( in_array( $meta['meta_key'], apply_filters( 'woocommerce_hidden_order_itemmeta', array(
+					'_qty',
+					'_tax_class',
+					'_product_id',
+					'_variation_id',
+					'_line_subtotal',
+					'_line_subtotal_tax',
+					'_line_total',
+					'_line_tax',
+					'method_id',
+					'cost'
+				) ) ) ) {
+					continue;
+				}
+
+				// Skip serialised meta
+				if ( is_serialized( $meta['meta_value'] ) ) {
+					continue;
+				}
+
+				// Get attribute data
+				if ( taxonomy_exists( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ) ) {
+					$term               = get_term_by( 'slug', $meta['meta_value'], wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
+					$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
+					$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value'];
+				} else {
+					$meta['meta_key']   = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key'];
+				}
+				$meta_info[] = wp_kses_post( rawurldecode( $meta['meta_key'] ) ) . ': ' . wp_kses_post( rawurldecode( $meta['meta_value'] ) );
+			}
+			$meta_info = implode( ', ', $meta_info );
+		}
+		return $meta_info;
+	}
+
+	/**
 	 * wcj_order_items_table.
 	 *
 	 * @version 2.5.8
@@ -211,7 +263,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		}
 		// Items to data[]
 		$item_counter = 0;
-		foreach ( $the_items as $item ) {
+		foreach ( $the_items as $item_id => $item ) {
 			$item['is_custom'] = ( isset( $item['is_custom'] ) ) ? true : false;
 			$the_product = ( true === $item['is_custom'] ) ? null : $the_order->get_product_from_item( $item );
 			$item_counter++;
@@ -242,21 +294,23 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$data[ $item_counter ][] = $item_counter;
 						break;
 					case 'item_name':
-					case 'product_name': // because of possible variation
-						//$data[ $item_counter ][] = ( true === $item['is_custom'] ) ? $item['name'] : $the_product->get_title();
+					case 'product_name': // "product_" because of possible variation
 						if ( true === $item['is_custom'] ) {
 							$data[ $item_counter ][] = $item['name'];
 						} else {
-							$the_item_title = $item['name'];//$the_product->get_title();
+							$the_item_title = $item['name'];
 							// Variation (if needed)
-							if ( is_object( $the_product ) && $the_product->is_type( 'variation' ) && ! in_array( 'item_variation', $columns ) ) {
-								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">'
-//									. str_replace( 'pa_', '', urldecode( wc_get_formatted_variation( $the_product->variation_data, true ) ) )
-									. str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ) // todo - do we need pa_ replacement?
-									. '</div>';
+							if ( is_object( $the_product ) && $the_product->is_type( 'variation' ) && ! in_array( 'item_variation', $columns ) ) { // todo - $the_product is not (always) required?
+								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">';
+								if ( 'yes' === $atts['variation_as_metadata'] ) {
+									$the_item_title .= $this->get_meta_info( $item_id, $atts, $the_product );
+								} else {
+									$the_item_title .= str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ); // todo - do we need pa_ replacement?
+								}
+								$the_item_title .= '</div>';
 							}
 							// "WooCommerce TM Extra Product Options" plugin options
-							// TODO: This will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency).
+							// todo - this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency).
 							if ( isset( $item['tmcartepo_data'] ) ) {
 								$options = unserialize( $item['tmcartepo_data'] );
 								$options_prices = array();
@@ -270,11 +324,11 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 										$option_info .= $option['name'] . ': ';
 									}
 									if ( isset( $option['value'] ) && '' != $option['value'] ) {
-										$option_info .= $option['value'] /* . ' ' */;
+										$option_info .= $option['value'];
 									}
-									/* if ( isset( $option['price'] ) ) { // todo
-										$option_info .= ( $option['price'] > 0 ) ? '+' . wc_price( $option['price'] ) : wc_price( $option['price'] );
-									} */
+									if ( isset( $option['price'] ) && 'yes' === $atts['wc_extra_product_options_show_price'] ) { // todo - wc_extra_product_options_show_price is temporary, until price_per_currency issue is solved
+										$option_info .= ( $option['price'] > 0 ) ? ' +' . wc_price( $option['price'] ) : ' ' . wc_price( $option['price'] );
+									}
 									if ( '' != $option_info ) {
 										$options_prices[] = $option_info;
 									}
@@ -326,12 +380,19 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						break;
 					case 'item_variation':
 					case 'product_variation':
-						$data[ $item_counter ][] = ( is_object( $the_product ) && $the_product->is_type( 'variation' ) )
-							? str_replace( 'pa_', '', urldecode( wc_get_formatted_variation( $the_product->variation_data, true ) ) ) : '';
+						if ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) { // todo - $the_product is not (always) required?
+							if ( 'yes' === $atts['variation_as_metadata'] ) {
+								$data[ $item_counter ][] = $this->get_meta_info( $item_id, $atts, $the_product );
+							} else {
+								$data[ $item_counter ][] = str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ); // todo - do we need pa_ replacement?
+							}
+						} else {
+							$data[ $item_counter ][] = '';
+						}
 						break;
 					case 'item_thumbnail':
 					case 'product_thumbnail':
-						//$data[ $item_counter ][] = $the_product->get_image();
+//						$data[ $item_counter ][] = $the_product->get_image();
 						$image_id = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? 0 : $the_product->get_image_id();
 						$image_src = ( 0 != $image_id ) ? wp_get_attachment_image_src( $image_id ) : wc_placeholder_img_src();
 						if ( is_array( $image_src ) ) $image_src = $image_src[0];

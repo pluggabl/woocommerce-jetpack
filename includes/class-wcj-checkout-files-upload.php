@@ -329,8 +329,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	function is_visible( $i, $order_id = 0 ) {
 
 		if ( apply_filters( 'wcj_checkout_files_always_visible_on_empty_cart', false ) && 0 == $order_id && WC()->cart->is_empty() ) {
-			// This was added for "One Page Checkout" plugin compatibility.
-			// However I'm not sure about this - maybe it's better to return some other value, e.g. `empty`.
+			// Added for "One Page Checkout" plugin compatibility.
 			return true;
 		}
 
