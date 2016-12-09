@@ -150,6 +150,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 * @version 2.5.8
 	 * @since   2.5.6
 	 * @todo    add function_params attribute.
+	 * @todo    fix when returning array of arrays or object etc.
 	 */
 	function wcj_order_function( $atts ) {
 		$function_name = $atts['function_name'];

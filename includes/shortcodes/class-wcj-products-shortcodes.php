@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.5.7
+ * @version 2.5.8
  * @author  Algoritmika Ltd.
  */
 
@@ -774,7 +774,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Get product excerpt.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.8
 	 * @return  string
 	 */
 	function wcj_product_excerpt( $atts ) {
@@ -783,18 +783,14 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		}
 		$the_excerpt = $this->wcj_product_short_description( $atts );
 		if ( '' === $the_excerpt ) {
-			global $post;
-			$post = get_post( $atts['product_id'] );
-			setup_postdata( $post );
-			$this->product_excerpt_length = $atts['length'];
 			if ( 0 != $atts['length'] ) {
+				$this->product_excerpt_length = $atts['length'];
 				add_filter(    'excerpt_length', array( $this, 'custom_excerpt_length' ), PHP_INT_MAX );
-				$the_excerpt = get_the_excerpt();
+				$the_excerpt = get_the_excerpt( $atts['product_id'] );
 				remove_filter( 'excerpt_length', array( $this, 'custom_excerpt_length' ), PHP_INT_MAX );
 			} else {
-				$the_excerpt = get_the_excerpt();
+				$the_excerpt = get_the_excerpt( $atts['product_id'] );
 			}
-			wp_reset_postdata();
 		}
 		return $the_excerpt;
 	}

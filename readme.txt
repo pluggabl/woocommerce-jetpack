@@ -137,27 +137,27 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.5.8 - 08/12/2016 =
+= 2.5.8 - 09/12/2016 =
   * Fix - `wcj_current_filter_priority()` modified for compatibility with WordPress since v4.7.
-+ * Dev - Shortcodes - General - `[wcj_get_left_to_free_shipping]` - `multiply_by` attribute added (and to `wcj_get_left_to_free_shipping()` function).
-+ * Dev - Shortcodes - General - `[wcj_customer_billing_country]`, `[wcj_customer_shipping_country]`, `[wcj_customer_meta]` shortcodes added.
-~ * Dev - Shortcodes - Orders - `[wcj_order_function]` - `implode()` added in case if returned value is an array.
+  * Dev - Shortcodes - General - `[wcj_get_left_to_free_shipping]` - `multiply_by` attribute added (and to `wcj_get_left_to_free_shipping()` function).
+  * Dev - Shortcodes - General - `[wcj_customer_billing_country]`, `[wcj_customer_shipping_country]`, `[wcj_customer_meta]` shortcodes added.
+  * Dev - Shortcodes - Orders - `[wcj_order_function]` - `implode()` added in case if returned value is an array.
   * Dev - Shortcodes - Orders - `[wcj_order_coupons]` shortcode added.
 - * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
 - * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
-! * Fix - Shortcodes - Products - `[wcj_product_excerpt]` - `wp_reset_postdata()` generates PHP error.
-~ * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Rounding" and "Rounding Precision" options added.
+  * Fix - Shortcodes - Products - `[wcj_product_excerpt]` - Function simplified by using `get_the_excerpt( $post_id )` directly (available since WordPress v4.5).
+  * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Rounding" and "Rounding Precision" options added.
   * Dev - PRICES & CURRENCIES - Price Formats - "WPML Language Code" option added.
 - * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
   * Dev - SHIPPING & ORDERS - Left to Free Shipping - Initial module release (moved from Shipping module).
   * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Admin - Failed Order", "Customer - On-Hold Order", "Customer - Note", "Customer - New Account", "Customer - Reset Password" options added.
-~ * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Admin order list columns are sortable now.
+  * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Admin order list columns are sortable now.
   * Dev - EMAILS & MISC. - Admin Tools - "Show Order Meta" and "Show Product Meta" options added.
   * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Last Sale" and "Total Sum" columns added.
   * Tweak - Language (POT) file updated.
   * Tweak - PRICES & CURRENCIES - Prices and Currencies by Country - Price by Country on per Product Basis - Description updated.
-+ * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_check_on_applying_label` filter added.
-+ * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_woocommerce_get_price_html_allowed_post_types` filter added.
+  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_check_on_applying_label` filter added.
+  * Tweak - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_price_labels_woocommerce_get_price_html_allowed_post_types` filter added.
   * Tweak - EMAILS & MISC. - General - Typo fixed in description.
   * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - "No sales data for current period" message added.
   * Tweak - EMAILS & MISC. - Reports - Booster: Product Sales - Link to two years back added.
