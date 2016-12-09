@@ -145,10 +145,11 @@ You can see the differences between versions in this [table](http://booster.io/b
   * Dev - Shortcodes - Orders - `[wcj_order_coupons]` shortcode added.
 - * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_name` - Using `get_formatted_variation_attributes` instead of `wc_get_formatted_variation`.
 - * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Compatibility - "WooCommerce TM Extra Product Options" plugin.
-  * Fix - Shortcodes - Products - `[wcj_product_excerpt]` - Function simplified by using `get_the_excerpt( $post_id )` directly (available since WordPress v4.5).
+  * Fix - Shortcodes - Products - `[wcj_product_excerpt]` - Function simplified by using `get_the_excerpt( $post_id )` directly (available since WordPress v4.5). However there is reported bug (see https://core.trac.wordpress.org/ticket/36934).
   * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Rounding" and "Rounding Precision" options added.
   * Dev - PRICES & CURRENCIES - Price Formats - "WPML Language Code" option added.
-- * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
+  * Dev - CART & CHECKOUT - Checkout Files Upload - "PRODUCTS to hide this field", "CATEGORIES to hide this field" and "TAGS to hide this field" options added.
+  * Dev - CART & CHECKOUT - Checkout Files Upload - Functionality to always return `true` in `is_visible` on empty cart (`wcj_checkout_files_always_visible_on_empty_cart` filter) added.
   * Dev - SHIPPING & ORDERS - Left to Free Shipping - Initial module release (moved from Shipping module).
   * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Attach PDF to emails - "Admin - Failed Order", "Customer - On-Hold Order", "Customer - Note", "Customer - New Account", "Customer - Reset Password" options added.
   * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - Admin order list columns are sortable now.
