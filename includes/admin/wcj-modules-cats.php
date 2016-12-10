@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.5.8
+ * @version 2.5.9
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -49,6 +49,7 @@ return array(
 		'all_cat_ids'    => array(
 			'price_labels',
 			'call_for_price',
+			'free_price',
 			'add_to_cart',
 			'more_button_labels',
 		),

@@ -37,6 +37,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Add to Cart Labels* - Change text for Add to Cart button by WooCommerce product type, by product category or for individual products.
 * *Call for Price* - Create any custom price label for all WooCommerce products with empty price.
 * *Custom Price Labels* - Create any custom price label for any WooCommerce product.
+* *Free Price* - WooCommerce free price.
 * *More Button Labels* - Set WooCommerce "Place order" button label.
 
 **Products**
@@ -136,6 +137,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 1. Plugin admin area.
 
 == Changelog ==
+
+= 2.5.9 - 10/12/2016 =
+~$D * Dev - BUTTON & PRICE LABELS - Free Price - Initial module release.
 
 = 2.5.8 - 09/12/2016 =
 * Fix - `wcj_current_filter_priority()` modified for compatibility with WordPress since v4.7.
