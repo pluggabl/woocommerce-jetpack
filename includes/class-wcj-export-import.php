@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Export Import class.
  *
- * @version 2.5.7
+ * @version 2.5.9
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  * @todo    import products (maybe orders, customers) tool(s);
@@ -367,10 +367,65 @@ class WCJ_Export_Import extends WCJ_Module {
 	}
 
 	/**
+	 * get_meta_info.
+	 *
+	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 * @todo    $atts param is not used
+	 * @todo    it's almost the same function as in class-wcj-order-items-shortcodes.php
+	 * @todo    (maybe) pass $item instead $the_product
+	 */
+	function get_meta_info( $item_id, $atts, $the_product, $_order ) {
+		$meta_info = '';
+		if ( $metadata = $_order->has_meta( $item_id ) ) {
+			$meta_info = array();
+			foreach ( $metadata as $meta ) {
+
+				// Skip hidden core fields
+				if ( in_array( $meta['meta_key'], apply_filters( 'woocommerce_hidden_order_itemmeta', array(
+					'_qty',
+					'_tax_class',
+					'_product_id',
+					'_variation_id',
+					'_line_subtotal',
+					'_line_subtotal_tax',
+					'_line_total',
+					'_line_tax',
+					'method_id',
+					'cost'
+				) ) ) ) {
+					continue;
+				}
+
+				// Skip serialised meta
+				if ( is_serialized( $meta['meta_value'] ) ) {
+					continue;
+				}
+
+				// Get attribute data
+				if ( taxonomy_exists( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ) ) {
+					$term               = get_term_by( 'slug', $meta['meta_value'], wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
+					$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
+					$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value'];
+				} else {
+					$meta['meta_key']   = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key'];
+				}
+				$meta_info[] = wp_kses_post( rawurldecode( $meta['meta_key'] ) ) . ': ' . wp_kses_post( rawurldecode( $meta['meta_value'] ) );
+			}
+			$meta_info = implode( ', ', $meta_info );
+		}
+		return $meta_info;
+	}
+
+	/**
 	 * export_orders.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.9
 	 * @since   2.4.8
+	 * @todo    (maybe) metainfo as separate column
+	 * @todo    metainfo only for variable products
 	 */
 	function export_orders() {
 		$all_fields = $this->get_order_export_fields();
@@ -410,11 +465,19 @@ class WCJ_Export_Import extends WCJ_Module {
 				}
 				$items = array();
 				$items_product_input_fields = array();
-				foreach ( $order->get_items() as $item ) {
-					$items[] = $item['name'];
-					$item_product_input_fields = wcj_get_product_input_fields( $item );
-					if ( '' != $item_product_input_fields ) {
-						$items_product_input_fields[] = $item_product_input_fields;
+				foreach ( $order->get_items() as $item_id => $item ) {
+					if ( in_array( 'order-items', $fields_ids ) ) {
+						$meta_info = $this->get_meta_info( $item_id, array(), $order->get_product_from_item( $item ), $order );
+						if ( '' != $meta_info ) {
+							$meta_info = ' [' . $meta_info . ']';
+						}
+						$items[] = $item['name'] . $meta_info;
+					}
+					if ( in_array( 'order-items-product-input-fields', $fields_ids ) ) {
+						$item_product_input_fields = wcj_get_product_input_fields( $item );
+						if ( '' != $item_product_input_fields ) {
+							$items_product_input_fields[] = $item_product_input_fields;
+						}
 					}
 					if ( ! $filter_by_product_title ) {
 //						if ( $item['name'] === $_POST['wcj_filter_by_product_title'] ) {
