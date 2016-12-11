@@ -21,7 +21,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	 * @version 2.5.9
 	 * @since   2.5.9
 	 * @todo    what's paid (if any)
-	 * @todo    add views: single, related, homepage, pages, archives
+	 * @todo    single in grouped is treated as "related"
 	 */
 	function __construct() {
 
@@ -42,15 +42,38 @@ class WCJ_Free_Price extends WCJ_Module {
 	}
 
 	/**
+	 * get_view_id
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function get_view_id( $product_id ) {
+		$view = 'single'; // default
+		if ( is_single( $product_id ) ) {
+			$view = 'single';
+		} elseif ( is_single() ) {
+			$view = 'related';
+		} elseif ( is_front_page() ) {
+			$view = 'home';
+		} elseif ( is_page() ) {
+			$view = 'page';
+		} elseif ( is_archive() ) {
+			$view = 'archive';
+		}
+		return $view;
+	}
+
+	/**
 	 * modify_free_price_simple_external_custom.
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.9
 	 */
 	function modify_free_price_simple_external_custom( $price, $_product ) {
+		$default = '<span class="amount">' . __( 'Free!', 'woocommerce' ) . '</span>';
 		return ( $_product->is_type( 'external' ) ) ?
-			get_option( 'wcj_free_price_external', '<span class="amount">' . __( 'Free!', 'woocommerce' ) . '</span>' ) :
-			get_option( 'wcj_free_price_simple',   '<span class="amount">' . __( 'Free!', 'woocommerce' ) . '</span>' );
+			get_option( 'wcj_free_price_external_' . $this->get_view_id( $_product->id ), $default ) :
+			get_option( 'wcj_free_price_simple_'   . $this->get_view_id( $_product->id ), $default );
 	}
 
 	/**
@@ -60,7 +83,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	 * @since   2.5.9
 	 */
 	function modify_free_price_grouped( $price, $_product ) {
-		return get_option( 'wcj_free_price_grouped', __( 'Free!', 'woocommerce' ) );
+		return get_option( 'wcj_free_price_grouped_' . $this->get_view_id( $_product->id ), __( 'Free!', 'woocommerce' ) );
 	}
 
 	/**
@@ -70,7 +93,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	 * @since   2.5.9
 	 */
 	function modify_free_price_variable( $price, $_product ) {
-		return get_option( 'wcj_free_price_variable', __( 'Free!', 'woocommerce' ) );
+		return get_option( 'wcj_free_price_variable_' . $this->get_view_id( $_product->id ), __( 'Free!', 'woocommerce' ) );
 	}
 
 	/**
@@ -80,7 +103,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	 * @since   2.5.9
 	 */
 	function modify_free_price_variation( $price, $_product ) {
-		return get_option( 'wcj_free_price_variation', __( 'Free!', 'woocommerce' ) );
+		return get_option( 'wcj_free_price_variable_variation', __( 'Free!', 'woocommerce' ) );
 	}
 
 	/**
@@ -112,52 +135,51 @@ class WCJ_Free_Price extends WCJ_Module {
 	 * @since   2.5.9
 	 */
 	function add_settings( $settings ) {
-		$settings = array(
-			array(
-				'title'    => __( 'Free Price Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_free_price_options',
-			),
-			array(
-				'title'    => __ ( 'Simple and Custom Products', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_free_price_simple',
-				'default'  => '<span class="amount">' . __( 'Free!', 'woocommerce' ) . '</span>',
-				'type'     => 'textarea',
-				'css'      => 'width:30%;min-width:300px;height:100px;',
-			),
-			array(
-				'title'    => __ ( 'Variable Products', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_free_price_variable',
-				'default'  => __( 'Free!', 'woocommerce' ),
-				'type'     => 'textarea',
-				'css'      => 'width:30%;min-width:300px;height:100px;',
-			),
-			array(
-				'title'    => __ ( 'Variable Products - Variation', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_free_price_variation',
-				'default'  => __( 'Free!', 'woocommerce' ),
-				'type'     => 'textarea',
-				'css'      => 'width:30%;min-width:300px;height:100px;',
-			),
-			array(
-				'title'    => __ ( 'Grouped Products', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_free_price_grouped',
-				'default'  => __( 'Free!', 'woocommerce' ),
-				'type'     => 'textarea',
-				'css'      => 'width:30%;min-width:300px;height:100px;',
-			),
-			array(
-				'title'    => __ ( 'External Products', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_free_price_external',
-				'default'  => '<span class="amount">' . __( 'Free!', 'woocommerce' ) . '</span>',
-				'type'     => 'textarea',
-				'css'      => 'width:30%;min-width:300px;height:100px;',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_free_price_options',
-			),
+		$product_types = array(
+			'simple'   => __( 'Simple and Custom Products', 'woocommerce-jetpack' ),
+			'variable' => __( 'Variable Products', 'woocommerce-jetpack' ),
+			'grouped'  => __( 'Grouped Products', 'woocommerce-jetpack' ),
+			'external' => __( 'External Products', 'woocommerce-jetpack' ),
 		);
+		$views = array(
+			'single'   => __( 'Single Product Page', 'woocommerce-jetpack' ),
+			'related'  => __( 'Related Products', 'woocommerce-jetpack' ),
+			'home'     => __( 'Homepage', 'woocommerce-jetpack' ),
+			'page'     => __( 'Pages (e.g. Shortcodes)', 'woocommerce-jetpack' ),
+			'archive'  => __( 'Archives (Product Categories)', 'woocommerce-jetpack' ),
+		);
+		$settings = array();
+		foreach ( $product_types as $product_type => $product_type_desc ) {
+			$default_value = ( 'simple' === $product_type || 'external' === $product_type ) ? '<span class="amount">' . __( 'Free!', 'woocommerce' ) . '</span>' : __( 'Free!', 'woocommerce' );
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => $product_type_desc,
+					'type'     => 'title',
+					'id'       => 'wcj_free_price_' . $product_type . 'options',
+				),
+			) );
+			$current_views = $views;
+			if ( 'variable' === $product_type ) {
+				$current_views['variation'] = __( 'Variations', 'woocommerce-jetpack' );
+			}
+			foreach ( $current_views as $view => $view_desc ) {
+				$settings = array_merge( $settings, array(
+					array(
+						'title'    => $view_desc,
+						'id'       => 'wcj_free_price_' . $product_type . '_' . $view,
+						'default'  => $default_value,
+						'type'     => 'textarea',
+						'css'      => 'width:30%;min-width:300px;min-height:50px;',
+					),
+				) );
+			}
+			$settings = array_merge( $settings, array(
+				array(
+					'type'     => 'sectionend',
+					'id'       => 'wcj_free_price_' . $product_type . 'options',
+				),
+			) );
+		}
 		return $settings;
 	}
 }
