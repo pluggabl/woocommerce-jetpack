@@ -138,7 +138,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.5.9 - 10/12/2016 =
+= 2.5.9 - 12/12/2016 =
+    * Tweak - EMAILS & MISC. - Export - Orders and Products settings as separate sections.
+~D  * Dev - EMAILS & MISC. - Export - Export Orders - "Additional Export Orders Fields" options added.
 ~   * Dev - EMAILS & MISC. - Export - Corresponding data is gathered only if "Order Items" or "Order Items Product Input Fields" columns are enabled.
 -   * Dev - EMAILS & MISC. - Export - Item meta info added to "Order Items" column.
 ~$D * Dev - BUTTON & PRICE LABELS - Free Price - Initial module release.

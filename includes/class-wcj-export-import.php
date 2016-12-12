@@ -428,12 +428,23 @@ class WCJ_Export_Import extends WCJ_Module {
 	 * @todo    metainfo only for variable products
 	 */
 	function export_orders() {
+
+		// Standard Fields
 		$all_fields = $this->get_order_export_fields();
 		$fields_ids = get_option( 'wcj_export_orders_fields', $this->get_order_export_default_fields_ids() );
 		$titles = array();
 		foreach( $fields_ids as $field_id ) {
 			$titles[] = $all_fields[ $field_id ];
 		}
+
+		// Additional Fields
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( 'yes' === get_option( 'wcj_export_orders_fields_additional_enabled_' . $i, 'no' ) ) {
+				$titles[] = get_option( 'wcj_export_orders_fields_additional_title_' . $i, '' );
+			}
+		}
+
 		$data = array();
 		$data[] = $titles;
 		$offset = 0;
@@ -596,6 +607,27 @@ class WCJ_Export_Import extends WCJ_Module {
 							break;
 					}
 				}
+
+				// Additional Fields
+				$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
+				for ( $i = 1; $i <= $total_number; $i++ ) {
+					if ( 'yes' === get_option( 'wcj_export_orders_fields_additional_enabled_' . $i, 'no' ) ) {
+						if ( '' != ( $additional_field_value = get_option( 'wcj_export_orders_fields_additional_value_' . $i, '' ) ) ) {
+							if ( 'meta' === get_option( 'wcj_export_orders_fields_additional_type_' . $i, 'meta' ) ) {
+								$row[] = get_post_meta( $order_id, $additional_field_value, true );
+							} else {
+								global $post;
+								$post = get_post( $order_id );
+								setup_postdata( $post );
+								$row[] = do_shortcode( $additional_field_value );
+								wp_reset_postdata();
+							}
+						} else {
+							$row[] = '';
+						}
+					}
+				}
+
 				$data[] = $row;
 			}
 			$offset += $block_size;
@@ -637,7 +669,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_products.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.9
 	 * @since   2.5.3
 	 * @todo    export variations; product attributes; get_price_including_tax, get_price_excluding_tax, get_display_price, get_average_rating, get_rating_count, get_review_count, get_categories, get_tags, get_dimensions, get_formatted_name, get_availability;
 	 */
@@ -801,7 +833,7 @@ class WCJ_Export_Import extends WCJ_Module {
 				$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					if ( 'yes' === get_option( 'wcj_export_products_fields_additional_enabled_' . $i, 'no' ) ) {
-						if ( '' != $additional_field_value = get_option( 'wcj_export_products_fields_additional_value_' . $i, '' ) ) {
+						if ( '' != ( $additional_field_value = get_option( 'wcj_export_products_fields_additional_value_' . $i, '' ) ) ) {
 							if ( 'meta' === get_option( 'wcj_export_products_fields_additional_type_' . $i, 'meta' ) ) {
 								$row[] = get_post_meta( $product_id, $additional_field_value, true );
 							} else {
@@ -874,7 +906,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.9
 	 * @since   2.5.4
 	 */
 	function get_settings() {
@@ -899,12 +931,79 @@ class WCJ_Export_Import extends WCJ_Module {
 				'type'     => 'checkbox',
 			),
 			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_export_options',
+			),
+			array(
+				'title'    => __( 'Export Orders Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_export_orders_options',
+			),
+			array(
 				'title'    => __( 'Export Orders Fields', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_export_orders_fields',
 				'default'  => $this->get_order_export_default_fields_ids(),
 				'type'     => 'multiselect',
 				'options'  => $this->get_order_export_fields(),
 				'css'      => 'height:300px;',
+			),
+			array(
+				'title'    => __( 'Additional Export Orders Fields', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_export_orders_fields_additional_total_number',
+				'default'  => 1,
+				'type'     => 'custom_number',
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => array_merge(
+					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
+						apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					array( 'step' => '1', 'min'  => '0', )
+				),
+			),
+		);
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => __( 'Field', 'woocommerce-jetpack' ) . ' #' . $i,
+					'id'       => 'wcj_export_orders_fields_additional_enabled_' . $i,
+					'desc'     => __( 'Enabled', 'woocommerce-jetpack' ),
+					'type'     => 'checkbox',
+					'default'  => 'no',
+				),
+				array(
+					'desc'     => __( 'Title', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_export_orders_fields_additional_title_' . $i,
+					'type'     => 'text',
+					'default'  => '',
+				),
+				array(
+					'desc'     => __( 'Type', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_export_orders_fields_additional_type_' . $i,
+					'type'     => 'select',
+					'default'  => 'meta',
+					'options'  => array(
+						'meta'      => __( 'Meta', 'woocommerce-jetpack' ),
+						'shortcode' => __( 'Shortcode', 'woocommerce-jetpack' ),
+					),
+				),
+				array(
+					'desc'     => __( 'Value', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter order meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_export_orders_fields_additional_value_' . $i,
+					'type'     => 'text',
+					'default'  => '',
+				),
+			) );
+		}
+		$settings = array_merge( $settings, array(
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_export_orders_options',
+			),
+			array(
+				'title'    => __( 'Export Products Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_export_products_options',
 			),
 			array(
 				'title'    => __( 'Export Products Fields', 'woocommerce-jetpack' ),
@@ -926,7 +1025,7 @@ class WCJ_Export_Import extends WCJ_Module {
 					array( 'step' => '1', 'min'  => '0', )
 				),
 			),
-		);
+		) );
 		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$settings = array_merge( $settings, array(
@@ -965,7 +1064,7 @@ class WCJ_Export_Import extends WCJ_Module {
 		$settings = array_merge( $settings, array(
 			array(
 				'type'     => 'sectionend',
-				'id'       => 'wcj_export_options',
+				'id'       => 'wcj_export_products_options',
 			),
 		) );
 		return $this->add_standard_settings( $settings );
