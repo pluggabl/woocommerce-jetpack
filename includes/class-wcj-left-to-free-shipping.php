@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Left to Free Shipping class.
  *
- * @version 2.5.8
+ * @version 2.5.9
  * @since   2.5.8
  * @author  Algoritmika Ltd.
  */
@@ -18,14 +18,14 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.8
+	 * @version 2.5.9
 	 * @since   2.5.8
 	 */
 	function __construct() {
 
 		$this->id         = 'left_to_free_shipping';
 		$this->short_desc = __( 'Left to Free Shipping', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Display "left to free shipping" info.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Display "left to free shipping" info in WooCommerce.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-left-to-free-shipping/';
 		parent::__construct();
 

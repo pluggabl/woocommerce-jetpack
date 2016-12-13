@@ -83,7 +83,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Shipping & Orders**
 
 * *Address Formats* - Set address format in WooCommerce orders on per country basis. Force base country display.
-* *Left to Free Shipping* - Display "left to free shipping" info.
+* *Left to Free Shipping* - Display "left to free shipping" info in WooCommerce.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Minimum Amount* - Minimum WooCommerce order amount (optionally by user role).
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
@@ -139,6 +139,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.9 - 13/12/2016 =
+D   * Tweak - SHIPPING & ORDERS - Left to Free Shipping - Description updated.
     * Tweak - Shortcodes - Orders - `[wcj_order_items_table]` - `get_meta_info` - unused `$atts` removed.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `quantity_prefix` attribute added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `LT` - Lithuanian language function added.
