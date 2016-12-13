@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.5.8
+ * @version 2.5.9
  * @author  Algoritmika Ltd.
  */
 
@@ -29,7 +29,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.5.8
+	 * @version 2.5.9
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -47,6 +47,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'product_image_width'  => 0,
 			'product_image_height' => 0,
 			'price_prefix'         => '',
+			'quantity_prefix'      => '',
 			'style_item_name_variation' => 'font-size:smaller;',
 			'variation_as_metadata' => 'yes',
 			'wc_extra_product_options_show_price' => 'no',
@@ -161,10 +162,10 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 	 *
-	 * @version 2.5.8
+	 * @version 2.5.9
 	 * @since   2.5.8
 	 */
-	function get_meta_info( $item_id, $atts, $the_product ) {
+	function get_meta_info( $item_id, $the_product ) {
 		$meta_info = '';
 		if ( $metadata = $this->the_order->has_meta( $item_id ) ) {
 			$meta_info = array();
@@ -209,7 +210,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.5.8
+	 * @version 2.5.9
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -405,7 +406,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_sku();
 						break;
 					case 'item_quantity':
-						$data[ $item_counter ][] = $item['qty'];
+						$data[ $item_counter ][] = $atts['quantity_prefix'] . $item['qty'];
 						break;
 					case 'item_total_tax_excl':
 						$data[ $item_counter ][] = $this->wcj_price_shortcode( $the_order->get_item_total( $item, false, true ), $atts );

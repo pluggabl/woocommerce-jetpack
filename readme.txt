@@ -138,9 +138,11 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.5.9 - 12/12/2016 =
-    * Dev - wcj_order_total_in_words - LT - Lithuanian language function added.
-    * Fix - wcj_order_total_in_words - BG - not including national currency; Upper-case for first letter.
+= 2.5.9 - 13/12/2016 =
+    * Tweak - Shortcodes - Orders - `[wcj_order_items_table]` - `get_meta_info` - unused `$atts` removed.
+D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `quantity_prefix` attribute added.
+D   * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `LT` - Lithuanian language function added.
+    * Fix - Shortcodes - Orders - `[wcj_order_total_in_words]` - `BG` - not including national currency; Upper-case for first letter.
     * Tweak - EMAILS & MISC. - Export - Orders and Products settings as separate sections.
 ~D  * Dev - EMAILS & MISC. - Export - Export Orders - "Additional Export Orders Fields" options added.
 ~   * Dev - EMAILS & MISC. - Export - Corresponding data is gathered only if "Order Items" or "Order Items Product Input Fields" columns are enabled.
