@@ -139,6 +139,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.9 - 13/12/2016 =
+~D  * Dev - PDF INVOICING & PACKING SLIPS - General - "Do not create if order total equals zero" option added.
 D   * Tweak - SHIPPING & ORDERS - Left to Free Shipping - Description updated.
     * Tweak - Shortcodes - Orders - `[wcj_order_items_table]` - `get_meta_info` - unused `$atts` removed.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `quantity_prefix` attribute added.

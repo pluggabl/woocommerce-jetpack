@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing class.
  *
- * @version 2.5.7
+ * @version 2.5.9
  * @author  Algoritmika Ltd.
  */
 
@@ -351,7 +351,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.0
+	 * @version 2.5.9
 	 */
 	function get_settings() {
 
@@ -384,6 +384,13 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				'class'    => 'chosen_select',
 				'options'  => $create_on_array,
 				'desc'     => ( 0 === $k ) ? '' : apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+			);
+			$settings[] = array(
+				'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_skip_zero_total',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'desc'     => __( 'Do not create if order total equals zero', 'woocommerce-jetpack' ),// . ( ( 0 === $k ) ? '' : ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) ),
 				'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
 			);
 		}

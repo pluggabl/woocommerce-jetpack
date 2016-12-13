@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Invoice class.
  *
- * @version 2.3.0
+ * @version 2.5.9
  * @author  Algoritmika Ltd.
  */
 
@@ -52,11 +52,18 @@ class WCJ_Invoice {
 	/**
 	 * create.
 	 *
-	 * @version 2.3.0
+	 * @version 2.5.9
+	 * @todo    use mysql transaction enabled (as in "wcj_order_number_use_mysql_transaction_enabled")
 	 */
 	function create( $date = '' ) {
 		$order_id = $this->order_id;
 		$invoice_type = $this->invoice_type;
+		if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_invoicing_' . $invoice_type . '_skip_zero_total', 'no' ) ) ) {
+			$_order = wc_get_order( $order_id );
+			if ( 0 == $_order->get_total() ) {
+				return;
+			}
+		}
 		//if ( '' == get_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number', true ) ) {
 			if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_sequential_enabled' ) ) {
 				$the_invoice_number = get_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', 1 );
@@ -66,7 +73,7 @@ class WCJ_Invoice {
 			}
 			$the_date = ( '' == $date ) ? current_time( 'timestamp' ) : $date;
 			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number_id', $the_invoice_number );
-			//update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number', $this->get_invoice_full_number( $the_invoice_number ) );
+//			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number', $this->get_invoice_full_number( $the_invoice_number ) );
 			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_date', $the_date );
 		//}
 	}
