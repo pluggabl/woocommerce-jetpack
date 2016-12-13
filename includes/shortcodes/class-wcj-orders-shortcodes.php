@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.5.8
+ * @version 2.5.9
  * @author  Algoritmika Ltd.
  */
 
@@ -799,9 +799,19 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * mb_ucfirst - for wcj_order_total_in_words.
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function mb_ucfirst( $string ) {
+		return mb_strtoupper( mb_substr( $string, 0, 1 ) ) . mb_substr( $string, 1 );
+	}
+
+	/**
 	 * wcj_order_total_in_words.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.9
 	 */
 	function wcj_order_total_in_words( $atts ) {
 
@@ -816,8 +826,18 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$cents = $atts['decimal'];
 
 		switch ( $atts['lang'] ) {
+			case 'LT':
+				return sprintf( $the_number_in_words,
+					$this->mb_ucfirst( convert_number_to_words_lt( $order_total_whole ) ),
+					$dollars,
+					$this->mb_ucfirst( convert_number_to_words_lt( $order_total_decimal ) ),
+					$cents );
 			case 'BG':
-				return convert_number_to_words_bg( $order_total );
+				return sprintf( $the_number_in_words,
+					$this->mb_ucfirst( trim( convert_number_to_words_bg( $order_total_whole ) ) ),
+					$dollars,
+					$this->mb_ucfirst( trim( convert_number_to_words_bg( $order_total_decimal ) ) ),
+					$cents );
 			default: // 'EN'
 				return sprintf( $the_number_in_words,
 					ucfirst( convert_number_to_words( $order_total_whole ) ),
