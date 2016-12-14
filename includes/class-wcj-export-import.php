@@ -425,7 +425,6 @@ class WCJ_Export_Import extends WCJ_Module {
 	 * @version 2.5.9
 	 * @since   2.4.8
 	 * @todo    (maybe) metainfo as separate column
-	 * @todo    metainfo only for variable products
 	 */
 	function export_orders() {
 
@@ -478,7 +477,7 @@ class WCJ_Export_Import extends WCJ_Module {
 				$items_product_input_fields = array();
 				foreach ( $order->get_items() as $item_id => $item ) {
 					if ( in_array( 'order-items', $fields_ids ) ) {
-						$meta_info = $this->get_meta_info( $item_id, array(), $order->get_product_from_item( $item ), $order );
+						$meta_info = ( 0 != $item['variation_id'] ) ? $this->get_meta_info( $item_id, array(), $order->get_product_from_item( $item ), $order ) : '';
 						if ( '' != $meta_info ) {
 							$meta_info = ' [' . $meta_info . ']';
 						}
