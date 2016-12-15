@@ -101,22 +101,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 */
 	function reset_settings() {
 		if ( isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) ) {
-			global $wcj_notice;
-			if ( ! isset( $_GET['wcj_confirm_reset_settings'] ) ) {
-				$wcj_notice .= __( 'Are you sure you want to reset current module\'s settings to default values?', 'woocommerce-jetpack' );
-				$yes_button_style = "background: green; border-color: green; box-shadow: 0 1px 0 green; text-shadow: 0 -1px 1px #0a0,1px 0 1px #0a0,0 1px 1px #0a0,-1px 0 1px #0a0;";
-				$no_button_style  = "background: red; border-color: red; box-shadow: 0 1px 0 red; text-shadow: 0 -1px 1px #a00,1px 0 1px #a00,0 1px 1px #a00,-1px 0 1px #a00;";
-				$wcj_notice .= ' ' . '<a class="button-primary" style="' . $yes_button_style . '" href="' . add_query_arg( 'wcj_confirm_reset_settings', 'yes' ) . '">' . __( 'Yes', 'woocommerce-jetpack' ) . '</a>';
-				$wcj_notice .= ' ' . '<a class="button-primary" style="' . $no_button_style  . '" href="' . remove_query_arg( 'wcj_reset_settings' )             . '">' . __( 'No', 'woocommerce-jetpack' )  . '</a>';
-			} else {
-				foreach ( $this->get_settings() as $settings ) {
-					$default_value = isset( $settings['default'] ) ? $settings['default'] : '';
-					update_option( $settings['id'], $default_value );
-				}
-				$wcj_notice .= __( 'Settings have been reset to defaults.', 'woocommerce-jetpack' );
-				wp_safe_redirect( remove_query_arg( array( 'wcj_reset_settings', 'wcj_confirm_reset_settings' ) ) );
-				exit();
+			foreach ( $this->get_settings() as $settings ) {
+				$default_value = isset( $settings['default'] ) ? $settings['default'] : '';
+				update_option( $settings['id'], $default_value );
 			}
+			wp_safe_redirect( remove_query_arg( 'wcj_reset_settings' ) );
+			exit();
 		}
 	}
 
@@ -462,7 +452,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * add_reset_settings_button.
 	 *
-	 * @version 2.4.7
+	 * @version 2.5.9
 	 * @since   2.4.0
 	 */
 	function add_reset_settings_button( $settings ) {
@@ -479,14 +469,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					__( 'Reset Submodule to Default Settings', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_' . $this->id . '_reset_settings',
 				'type'     => 'custom_link',
-				'link'     => '<a class="button-primary" style="' . $reset_button_style . '" href="' . add_query_arg( 'wcj_reset_settings', $this->id, remove_query_arg( 'wcj_confirm_reset_settings' ) ) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
+				'link'     => '<a onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')" class="button-primary" style="' .
+					$reset_button_style . '" href="' . add_query_arg( 'wcj_reset_settings', $this->id ) . '">' . __( 'Reset settings', 'woocommerce-jetpack' ) . '</a>',
 			),
-			/* array(
-				'title'    => __( 'Reset to Default Settings', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_' . $this->id . '_reset_settings',
-				'type'     => 'custom_link',
-				'link'     => '<input name="wcj_reset_settings" class="button-primary" type="submit" value="Reset settings">',
-			), */
 			array(
 				'type' => 'sectionend',
 				'id'   => 'wcj_' . $this->id . '_reset_settings_options',
