@@ -19,7 +19,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.9
 	 * @since   2.5.4
 	 */
 	public function __construct() {
@@ -43,6 +43,10 @@ class WCJ_Export_Import extends WCJ_Module {
 				'title'     => __( 'Export Orders', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Export Orders.', 'woocommerce-jetpack' ),
 			),
+			'export_orders_items' => array(
+				'title'     => __( 'Export Orders Items', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Export Orders Items.', 'woocommerce-jetpack' ),
+			),
 			'export_products' => array(
 				'title'     => __( 'Export Products', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Export Products.', 'woocommerce-jetpack' ),
@@ -57,7 +61,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export.
 	 *
-	 * @version 2.5.3
+	 * @version 2.5.9
 	 * @since   2.4.8
 	 */
 	function export( $tool_id ) {
@@ -71,6 +75,9 @@ class WCJ_Export_Import extends WCJ_Module {
 				break;
 			case 'orders':
 				$data = $this->export_orders();
+				break;
+			case 'orders_items':
+				$data = $this->export_orders_items();
 				break;
 			case 'products':
 				$data = $this->export_products();
@@ -135,6 +142,57 @@ class WCJ_Export_Import extends WCJ_Module {
 			);
 			return wcj_get_table_html( $data, array( 'table_class' => 'widefat', 'table_style' => 'width:50%;min-width:300px;', 'table_heading_type' => 'vertical', ) );
 		}
+	}
+
+	/**
+	 * get_order_items_export_fields.
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function get_order_items_export_fields() {
+		return array_merge( $this->get_order_export_fields(), array(
+			'item-name'                   => __( 'Item Name', 'woocommerce-jetpack' ),
+			'item-meta'                   => __( 'Item Meta', 'woocommerce-jetpack' ),
+			'item-variation-meta'         => __( 'Item Variation Meta', 'woocommerce-jetpack' ),
+			'item-qty'                    => __( 'Item Quantity', 'woocommerce-jetpack' ),
+			'item-tax-class'              => __( 'Item Tax Class', 'woocommerce-jetpack' ),
+			'item-product-id'             => __( 'Item Product ID', 'woocommerce-jetpack' ),
+			'item-variation-id'           => __( 'Item Variation ID', 'woocommerce-jetpack' ),
+			'item-line-subtotal'          => __( 'Item Line Subtotal', 'woocommerce-jetpack' ),
+			'item-line-total'             => __( 'Item Line Total', 'woocommerce-jetpack' ),
+			'item-line-subtotal-tax'      => __( 'Item Line Subtotal Tax', 'woocommerce-jetpack' ),
+			'item-line-tax'               => __( 'Item Line Tax', 'woocommerce-jetpack' ),
+			'item-line-subtotal-plus-tax' => __( 'Item Line Subtotal Plus Tax', 'woocommerce-jetpack' ),
+			'item-line-total-plus-tax'    => __( 'Item Line Total Plus Tax', 'woocommerce-jetpack' ),
+			'item-product-input-fields'   => __( 'Item Product Input Fields', 'woocommerce-jetpack' ),
+			'item-debug'                  => __( 'Item Debug', 'woocommerce-jetpack' ),
+		) );
+	}
+
+	/**
+	 * get_order_items_export_default_fields_ids.
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function get_order_items_export_default_fields_ids() {
+		return array(
+			'order-number',
+			'order-status',
+			'order-date',
+			'order-currency',
+			'order-payment-method',
+			'item-name',
+			'item-variation-meta',
+			'item-qty',
+			'item-tax-class',
+			'item-product-id',
+			'item-variation-id',
+			'item-line-total',
+			'item-line-tax',
+			'item-line-total-plus-tax',
+		);
 	}
 
 	/**
@@ -326,6 +384,16 @@ class WCJ_Export_Import extends WCJ_Module {
 	}
 
 	/**
+	 * create_export_orders_items_tool.
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function create_export_orders_items_tool() {
+		$this->create_export_tool( 'orders_items' );
+	}
+
+	/**
 	 * create_export_products_tool.
 	 *
 	 * @version 2.5.3
@@ -373,11 +441,10 @@ class WCJ_Export_Import extends WCJ_Module {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.9
-	 * @todo    $atts param is not used
 	 * @todo    it's almost the same function as in class-wcj-order-items-shortcodes.php
 	 * @todo    (maybe) pass $item instead $the_product
 	 */
-	function get_meta_info( $item_id, $atts, $the_product, $_order ) {
+	function get_meta_info( $item_id, $the_product, $_order, $exclude_wcj_meta = false ) {
 		$meta_info = '';
 		if ( $metadata = $_order->has_meta( $item_id ) ) {
 			$meta_info = array();
@@ -396,6 +463,10 @@ class WCJ_Export_Import extends WCJ_Module {
 					'method_id',
 					'cost'
 				) ) ) ) {
+					continue;
+				}
+
+				if ( $exclude_wcj_meta && ( 'wcj' === substr( $meta['meta_key'], 0, 3 ) || '_wcj' === substr( $meta['meta_key'], 0, 4 ) ) ) {
 					continue;
 				}
 
@@ -477,7 +548,7 @@ class WCJ_Export_Import extends WCJ_Module {
 				$items_product_input_fields = array();
 				foreach ( $order->get_items() as $item_id => $item ) {
 					if ( in_array( 'order-items', $fields_ids ) ) {
-						$meta_info = ( 0 != $item['variation_id'] ) ? $this->get_meta_info( $item_id, array(), $order->get_product_from_item( $item ), $order ) : '';
+						$meta_info = ( 0 != $item['variation_id'] ) ? $this->get_meta_info( $item_id, $order->get_product_from_item( $item ), $order ) : '';
 						if ( '' != $meta_info ) {
 							$meta_info = ' [' . $meta_info . ']';
 						}
@@ -635,6 +706,269 @@ class WCJ_Export_Import extends WCJ_Module {
 	}
 
 	/**
+	 * export_orders_items.
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 * @todo    products shortcodes in "Additional Fields"
+	 * @todo    clean up
+	 */
+	function export_orders_items() {
+
+		// Standard Fields
+		$all_fields = $this->get_order_items_export_fields();
+		$fields_ids = get_option( 'wcj_export_orders_items_fields', $this->get_order_items_export_default_fields_ids() );
+		$titles = array();
+		foreach( $fields_ids as $field_id ) {
+			$titles[] = $all_fields[ $field_id ];
+		}
+
+		// Additional Fields
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( 'yes' === get_option( 'wcj_export_orders_items_fields_additional_enabled_' . $i, 'no' ) ) {
+				$titles[] = get_option( 'wcj_export_orders_items_fields_additional_title_' . $i, '' );
+			}
+		}
+
+		$data = array();
+		$data[] = $titles;
+		$offset = 0;
+		$block_size = 1024;
+		while( true ) {
+			$args_orders = array(
+				'post_type'      => 'shop_order',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+				'offset'         => $offset,
+				'fields'         => 'ids',
+			);
+			$loop_orders = new WP_Query( $args_orders );
+			if ( ! $loop_orders->have_posts() ) break;
+			foreach ( $loop_orders->posts as $order_id ) {
+				$order = wc_get_order( $order_id );
+
+				/* if ( isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' != $_POST['wcj_filter_by_order_billing_country'] ) {
+					if ( $order->billing_country != $_POST['wcj_filter_by_order_billing_country'] ) {
+						continue;
+					}
+				}
+
+				$filter_by_product_title = true;
+				if ( isset( $_POST['wcj_filter_by_product_title'] ) && '' != $_POST['wcj_filter_by_product_title'] ) {
+					$filter_by_product_title = false;
+				}
+				$items = array();
+				$items_product_input_fields = array();
+				foreach ( $order->get_items() as $item_id => $item ) {
+					if ( in_array( 'order-items', $fields_ids ) ) {
+						$meta_info = ( 0 != $item['variation_id'] ) ? $this->get_meta_info( $item_id, $order->get_product_from_item( $item ), $order ) : '';
+						if ( '' != $meta_info ) {
+							$meta_info = ' [' . $meta_info . ']';
+						}
+						$items[] = $item['name'] . $meta_info;
+					}
+					if ( in_array( 'order-items-product-input-fields', $fields_ids ) ) {
+						$item_product_input_fields = wcj_get_product_input_fields( $item );
+						if ( '' != $item_product_input_fields ) {
+							$items_product_input_fields[] = $item_product_input_fields;
+						}
+					}
+					if ( ! $filter_by_product_title ) {
+//						if ( $item['name'] === $_POST['wcj_filter_by_product_title'] ) {
+						if ( false !== strpos( $item['name'], $_POST['wcj_filter_by_product_title'] ) ) {
+							$filter_by_product_title = true;
+						}
+					}
+				}
+				$items = implode( ' / ', $items );
+				$items_product_input_fields = implode( ' / ', $items_product_input_fields );
+				if ( ! $filter_by_product_title ) {
+					continue;
+				} */
+
+				foreach ( $order->get_items() as $item_id => $item ) {
+					$row = array();
+					foreach( $fields_ids as $field_id ) {
+						switch ( $field_id ) {
+							case 'item-product-input-fields':
+								$row[] = wcj_get_product_input_fields( $item );
+								break;
+							case 'item-debug':
+								$row[] = '<pre>' . print_r( $item, true ) . '</pre>';
+								break;
+							case 'item-name':
+								$row[] = $item['name'];
+								break;
+							case 'item-meta':
+								$row[] = $this->get_meta_info( $item_id, $order->get_product_from_item( $item ), $order );
+								break;
+							case 'item-variation-meta':
+								$row[] = ( 0 != $item['variation_id'] ) ? $this->get_meta_info( $item_id, $order->get_product_from_item( $item ), $order, true ) : '';
+								break;
+							case 'item-qty':
+								$row[] = $item['qty'];
+								break;
+							case 'item-tax-class':
+								$row[] = $item['tax_class'];
+								break;
+							case 'item-product-id':
+								$row[] = $item['product_id'];
+								break;
+							case 'item-variation-id':
+								$row[] = $item['variation_id'];
+								break;
+							case 'item-line-subtotal':
+								$row[] = $item['line_subtotal'];
+								break;
+							case 'item-line-total':
+								$row[] = $item['line_total'];
+								break;
+							case 'item-line-subtotal-tax':
+								$row[] = $item['line_subtotal_tax'];
+								break;
+							case 'item-line-tax':
+								$row[] = $item['line_tax'];
+								break;
+							case 'item-line-total-plus-tax':
+								$row[] = $item['line_total'] + $item['line_tax'];
+								break;
+							case 'item-line-subtotal-plus-tax':
+								$row[] = $item['line_subtotal'] + $item['line_subtotal_tax'];
+								break;
+							case 'order-id':
+								$row[] = $order_id;
+								break;
+							case 'order-number':
+								$row[] = $order->get_order_number();
+								break;
+							case 'order-status':
+								$row[] = $order->get_status();
+								break;
+							case 'order-date':
+								$row[] = get_the_date( get_option( 'date_format' ), $order_id );
+								break;
+							case 'order-time':
+								$row[] = get_the_time( get_option( 'time_format' ), $order_id );
+								break;
+							case 'order-item-count':
+								$row[] = $order->get_item_count();
+								break;
+							case 'order-items':
+								$row[] = $items;
+								break;
+							case 'order-items-product-input-fields':
+								$row[] = $items_product_input_fields;
+								break;
+							case 'order-currency':
+								$row[] = $order->get_order_currency();
+								break;
+							case 'order-total':
+								$row[] = $order->get_total();
+								break;
+							case 'order-total-tax':
+								$row[] = $order->get_total_tax();
+								break;
+							case 'order-payment-method':
+								$row[] = $order->payment_method_title;
+								break;
+							case 'order-notes':
+								$row[] = $order->customer_note;
+								break;
+							case 'billing-first-name':
+								$row[] = $order->billing_first_name;
+								break;
+							case 'billing-last-name':
+								$row[] = $order->billing_last_name;
+								break;
+							case 'billing-company':
+								$row[] = $order->billing_company;
+								break;
+							case 'billing-address-1':
+								$row[] = $order->billing_address_1;
+								break;
+							case 'billing-address-2':
+								$row[] = $order->billing_address_2;
+								break;
+							case 'billing-city':
+								$row[] = $order->billing_city;
+								break;
+							case 'billing-state':
+								$row[] = $order->billing_state;
+								break;
+							case 'billing-postcode':
+								$row[] = $order->billing_postcode;
+								break;
+							case 'billing-country':
+								$row[] = $order->billing_country;
+								break;
+							case 'billing-phone':
+								$row[] = $order->billing_phone;
+								break;
+							case 'billing-email':
+								$row[] = $order->billing_email;
+								break;
+							case 'shipping-first-name':
+								$row[] = $order->shipping_first_name;
+								break;
+							case 'shipping-last-name':
+								$row[] = $order->shipping_last_name;
+								break;
+							case 'shipping-company':
+								$row[] = $order->shipping_company;
+								break;
+							case 'shipping-address-1':
+								$row[] = $order->shipping_address_1;
+								break;
+							case 'shipping-address-2':
+								$row[] = $order->shipping_address_2;
+								break;
+							case 'shipping-city':
+								$row[] = $order->shipping_city;
+								break;
+							case 'shipping-state':
+								$row[] = $order->shipping_state;
+								break;
+							case 'shipping-postcode':
+								$row[] = $order->shipping_postcode;
+								break;
+							case 'shipping-country':
+								$row[] = $order->shipping_country;
+								break;
+						}
+					}
+
+					// Additional Fields
+					$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
+					for ( $i = 1; $i <= $total_number; $i++ ) {
+						if ( 'yes' === get_option( 'wcj_export_orders_items_fields_additional_enabled_' . $i, 'no' ) ) {
+							if ( '' != ( $additional_field_value = get_option( 'wcj_export_orders_items_fields_additional_value_' . $i, '' ) ) ) {
+								if ( 'meta' === get_option( 'wcj_export_orders_items_fields_additional_type_' . $i, 'meta' ) ) {
+									$row[] = get_post_meta( $order_id, $additional_field_value, true );
+								} else {
+									global $post;
+									$post = get_post( $order_id );
+									setup_postdata( $post );
+									$row[] = do_shortcode( $additional_field_value );
+									wp_reset_postdata();
+								}
+							} else {
+								$row[] = '';
+							}
+						}
+					}
+
+					$data[] = $row;
+				}
+			}
+			$offset += $block_size;
+		}
+		return $data;
+	}
+
+	/**
 	 * get_variable_or_grouped_product_info.
 	 *
 	 * @version 2.5.7
@@ -745,7 +1079,7 @@ class WCJ_Export_Import extends WCJ_Module {
 						case 'product-type':
 							$row[] = $_product->get_type();
 							break;
-						/* todo
+						/*
 						case 'product-attributes':
 							$row[] = ( ! empty( $_product->get_attributes() ) ? serialize( $_product->get_attributes() ) : '' );
 							break;
@@ -813,7 +1147,6 @@ class WCJ_Export_Import extends WCJ_Module {
 						case 'product-visibility':
 							$row[] = $_product->visibility;
 							break;
-						// todo
 						// get_price_including_tax
 						// get_price_excluding_tax
 						// get_display_price
@@ -907,6 +1240,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.4
+	 * @todo    Add info about shortcodes in "Additional Fields"
 	 */
 	function get_settings() {
 		$settings = array(
@@ -998,6 +1332,72 @@ class WCJ_Export_Import extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_export_orders_options',
+			),
+			array(
+				'title'    => __( 'Export Orders Items Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_export_orders_items_options',
+			),
+			array(
+				'title'    => __( 'Export Orders Items Fields', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_export_orders_items_fields',
+				'default'  => $this->get_order_items_export_default_fields_ids(),
+				'type'     => 'multiselect',
+				'options'  => $this->get_order_items_export_fields(),
+				'css'      => 'height:300px;',
+			),
+			array(
+				'title'    => __( 'Additional Export Orders Items Fields', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_export_orders_items_fields_additional_total_number',
+				'default'  => 1,
+				'type'     => 'custom_number',
+				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => array_merge(
+					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
+						apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					array( 'step' => '1', 'min'  => '0', )
+				),
+			),
+		) );
+		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => __( 'Field', 'woocommerce-jetpack' ) . ' #' . $i,
+					'id'       => 'wcj_export_orders_items_fields_additional_enabled_' . $i,
+					'desc'     => __( 'Enabled', 'woocommerce-jetpack' ),
+					'type'     => 'checkbox',
+					'default'  => 'no',
+				),
+				array(
+					'desc'     => __( 'Title', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_export_orders_items_fields_additional_title_' . $i,
+					'type'     => 'text',
+					'default'  => '',
+				),
+				array(
+					'desc'     => __( 'Type', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_export_orders_items_fields_additional_type_' . $i,
+					'type'     => 'select',
+					'default'  => 'meta',
+					'options'  => array(
+						'meta'      => __( 'Meta', 'woocommerce-jetpack' ),
+						'shortcode' => __( 'Shortcode', 'woocommerce-jetpack' ),
+					),
+				),
+				array(
+					'desc'     => __( 'Value', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter order meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_export_orders_items_fields_additional_value_' . $i,
+					'type'     => 'text',
+					'default'  => '',
+				),
+			) );
+		}
+		$settings = array_merge( $settings, array(
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_export_orders_items_options',
 			),
 			array(
 				'title'    => __( 'Export Products Options', 'woocommerce-jetpack' ),
