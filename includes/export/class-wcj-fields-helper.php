@@ -197,7 +197,7 @@ class WCJ_Export_Fields_Helper {
 	/**
 	 * get_product_export_fields.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.9
 	 * @since   2.5.7
 	 */
 	function get_product_export_fields() {
@@ -233,6 +233,18 @@ class WCJ_Export_Fields_Helper {
 			'product-backorders'                 => __( 'Backorders', 'woocommerce-jetpack' ),
 			'product-featured'                   => __( 'Featured', 'woocommerce-jetpack' ),
 			'product-visibility'                 => __( 'Visibility', 'woocommerce-jetpack' ),
+			'product-price-including-tax'        => __( 'Price Including Tax', 'woocommerce-jetpack' ),
+			'product-price-excluding-tax'        => __( 'Price Excluding Tax', 'woocommerce-jetpack' ),
+			'product-display-price'              => __( 'Display Price', 'woocommerce-jetpack' ),
+			'product-average-rating'             => __( 'Average Rating', 'woocommerce-jetpack' ),
+			'product-rating-count'               => __( 'Rating Count', 'woocommerce-jetpack' ),
+			'product-review-count'               => __( 'Review Count', 'woocommerce-jetpack' ),
+			'product-categories'                 => __( 'Categories', 'woocommerce-jetpack' ),
+			'product-tags'                       => __( 'Tags', 'woocommerce-jetpack' ),
+			'product-dimensions'                 => __( 'Dimensions', 'woocommerce-jetpack' ),
+			'product-formatted-name'             => __( 'Formatted Name', 'woocommerce-jetpack' ),
+			'product-availability'               => __( 'Availability', 'woocommerce-jetpack' ),
+			'product-availability-class'         => __( 'Availability Class', 'woocommerce-jetpack' ),
 		);
 	}
 

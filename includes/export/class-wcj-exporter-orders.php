@@ -33,8 +33,8 @@ class WCJ_Exporter_Orders {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.9
-	 * @todo    it's almost the same function as in class-wcj-order-items-shortcodes.php
-	 * @todo    (maybe) pass $item instead $the_product
+	 * @todo    ! it's almost the same function as in class-wcj-order-items-shortcodes.php
+	 * @todo    ! (maybe) pass $item instead $the_product
 	 */
 	function get_meta_info( $item_id, $the_product, $_order, $exclude_wcj_meta = false ) {
 		$meta_info = '';
@@ -358,8 +358,7 @@ class WCJ_Exporter_Orders {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.9
-	 * @todo    products shortcodes in "Additional Fields"
-	 * @todo    clean up
+	 * @todo    ! *products* meta and shortcodes in "Additional Fields"
 	 */
 	function export_orders_items( $fields_helper ) {
 
@@ -398,44 +397,11 @@ class WCJ_Exporter_Orders {
 			foreach ( $loop_orders->posts as $order_id ) {
 				$order = wc_get_order( $order_id );
 
-				/* if ( isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' != $_POST['wcj_filter_by_order_billing_country'] ) {
+				if ( isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' != $_POST['wcj_filter_by_order_billing_country'] ) {
 					if ( $order->billing_country != $_POST['wcj_filter_by_order_billing_country'] ) {
 						continue;
 					}
 				}
-
-				$filter_by_product_title = true;
-				if ( isset( $_POST['wcj_filter_by_product_title'] ) && '' != $_POST['wcj_filter_by_product_title'] ) {
-					$filter_by_product_title = false;
-				}
-				$items = array();
-				$items_product_input_fields = array();
-				foreach ( $order->get_items() as $item_id => $item ) {
-					if ( in_array( 'order-items', $fields_ids ) ) {
-						$meta_info = ( 0 != $item['variation_id'] ) ? $this->get_meta_info( $item_id, $order->get_product_from_item( $item ), $order ) : '';
-						if ( '' != $meta_info ) {
-							$meta_info = ' [' . $meta_info . ']';
-						}
-						$items[] = $item['name'] . $meta_info;
-					}
-					if ( in_array( 'order-items-product-input-fields', $fields_ids ) ) {
-						$item_product_input_fields = wcj_get_product_input_fields( $item );
-						if ( '' != $item_product_input_fields ) {
-							$items_product_input_fields[] = $item_product_input_fields;
-						}
-					}
-					if ( ! $filter_by_product_title ) {
-//						if ( $item['name'] === $_POST['wcj_filter_by_product_title'] ) {
-						if ( false !== strpos( $item['name'], $_POST['wcj_filter_by_product_title'] ) ) {
-							$filter_by_product_title = true;
-						}
-					}
-				}
-				$items = implode( ' / ', $items );
-				$items_product_input_fields = implode( ' / ', $items_product_input_fields );
-				if ( ! $filter_by_product_title ) {
-					continue;
-				} */
 
 				foreach ( $order->get_items() as $item_id => $item ) {
 

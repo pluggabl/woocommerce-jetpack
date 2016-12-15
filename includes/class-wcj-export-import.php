@@ -116,7 +116,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_filter_fields.
 	 *
-	 * @version 2.5.6
+	 * @version 2.5.9
 	 * @since   2.5.5
 	 */
 	function export_filter_fields( $tool_id ) {
@@ -126,6 +126,11 @@ class WCJ_Export_Import extends WCJ_Module {
 				$fields = array(
 					'wcj_filter_by_order_billing_country' => __( 'Filter by Billing Country', 'woocommerce-jetpack' ),
 					'wcj_filter_by_product_title'         => __( 'Filter by Product Title', 'woocommerce-jetpack' ),
+				);
+				break;
+			case 'orders_items':
+				$fields = array(
+					'wcj_filter_by_order_billing_country' => __( 'Filter by Billing Country', 'woocommerce-jetpack' ),
 				);
 				break;
 		}
@@ -217,7 +222,6 @@ class WCJ_Export_Import extends WCJ_Module {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.4
-	 * @todo    Add info about shortcodes in "Additional Fields"
 	 */
 	function get_settings() {
 		$settings = array(
@@ -251,6 +255,7 @@ class WCJ_Export_Import extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Export Orders Fields', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Hold "Control" key to select multiple fields.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_export_orders_fields',
 				'default'  => $this->fields_helper->get_order_export_default_fields_ids(),
 				'type'     => 'multiselect',
@@ -298,7 +303,8 @@ class WCJ_Export_Import extends WCJ_Module {
 				),
 				array(
 					'desc'     => __( 'Value', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter order meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter order meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ) .
+						' ' . __( 'If it\'s set to "Shortcode", use Booster\'s Orders shortcodes here.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_export_orders_fields_additional_value_' . $i,
 					'type'     => 'text',
 					'default'  => '',
@@ -317,6 +323,7 @@ class WCJ_Export_Import extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Export Orders Items Fields', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Hold "Control" key to select multiple fields.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_export_orders_items_fields',
 				'default'  => $this->fields_helper->get_order_items_export_default_fields_ids(),
 				'type'     => 'multiselect',
@@ -364,7 +371,8 @@ class WCJ_Export_Import extends WCJ_Module {
 				),
 				array(
 					'desc'     => __( 'Value', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter order meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter order meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ) .
+						' ' . __( 'If it\'s set to "Shortcode", use Booster\'s Orders shortcodes here.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_export_orders_items_fields_additional_value_' . $i,
 					'type'     => 'text',
 					'default'  => '',
@@ -383,6 +391,7 @@ class WCJ_Export_Import extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Export Products Fields', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Hold "Control" key to select multiple fields.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_export_products_fields',
 				'default'  => $this->fields_helper->get_product_export_default_fields_ids(),
 				'type'     => 'multiselect',
@@ -430,7 +439,8 @@ class WCJ_Export_Import extends WCJ_Module {
 				),
 				array(
 					'desc'     => __( 'Value', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter product meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter product meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ) .
+						' ' . __( 'If it\'s set to "Shortcode", use Booster\'s Products shortcodes here.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_export_products_fields_additional_value_' . $i,
 					'type'     => 'text',
 					'default'  => '',

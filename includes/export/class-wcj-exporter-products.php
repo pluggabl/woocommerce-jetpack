@@ -61,7 +61,7 @@ class WCJ_Exporter_Products {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.3
-	 * @todo    export variations; product attributes; get_price_including_tax, get_price_excluding_tax, get_display_price, get_average_rating, get_rating_count, get_review_count, get_categories, get_tags, get_dimensions, get_formatted_name, get_availability;
+	 * @todo    export variations; product attributes;
 	 */
 	function export_products( $fields_helper ) {
 
@@ -136,11 +136,9 @@ class WCJ_Exporter_Products {
 						case 'product-type':
 							$row[] = $_product->get_type();
 							break;
-						/*
-						case 'product-attributes':
+						/* case 'product-attributes':
 							$row[] = ( ! empty( $_product->get_attributes() ) ? serialize( $_product->get_attributes() ) : '' );
-							break;
-						*/
+							break; */
 						case 'product-image-url':
 							$row[] = wcj_get_product_image_url( $product_id, 'full' );
 							break;
@@ -204,17 +202,44 @@ class WCJ_Exporter_Products {
 						case 'product-visibility':
 							$row[] = $_product->visibility;
 							break;
-						// get_price_including_tax
-						// get_price_excluding_tax
-						// get_display_price
-						// get_average_rating
-						// get_rating_count
-						// get_review_count
-						// get_categories
-						// get_tags
-						// get_dimensions
-						// get_formatted_name
-						// get_availability
+						case 'product-price-including-tax':
+							$row[] = $_product->get_price_including_tax();
+							break;
+						case 'product-price-excluding-tax':
+							$row[] = $_product->get_price_excluding_tax();
+							break;
+						case 'product-display-price':
+							$row[] = $_product->get_display_price();
+							break;
+						case 'product-average-rating':
+							$row[] = $_product->get_average_rating();
+							break;
+						case 'product-rating-count':
+							$row[] = $_product->get_rating_count();
+							break;
+						case 'product-review-count':
+							$row[] = $_product->get_review_count();
+							break;
+						case 'product-categories':
+							$row[] = $_product->get_categories();
+							break;
+						case 'product-tags':
+							$row[] = $_product->get_tags();
+							break;
+						case 'product-dimensions':
+							$row[] = $_product->get_dimensions();
+							break;
+						case 'product-formatted-name':
+							$row[] = $_product->get_formatted_name();
+							break;
+						case 'product-availability':
+							$availability = $_product->get_availability();
+							$row[] = $availability['availability'];
+							break;
+						case 'product-availability-class':
+							$availability = $_product->get_availability();
+							$row[] = $availability['class'];
+							break;
 					}
 				}
 
