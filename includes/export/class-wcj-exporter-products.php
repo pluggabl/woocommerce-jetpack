@@ -22,6 +22,7 @@ class WCJ_Exporter_Products {
 	 * @since   2.5.9
 	 */
 	function __construct() {
+		return true;
 	}
 
 	/**

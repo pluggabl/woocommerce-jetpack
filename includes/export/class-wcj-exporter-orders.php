@@ -7,6 +7,7 @@
  * @version 2.5.9
  * @since   2.5.9
  * @author  Algoritmika Ltd.
+ * @todo    filter export by date
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -22,6 +23,7 @@ class WCJ_Exporter_Orders {
 	 * @since   2.5.9
 	 */
 	function __construct() {
+		return true;
 	}
 
 	/**
