@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.5.7
+ * @version 2.5.9
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -96,7 +96,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * reset_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.5.9
 	 * @since   2.4.0
 	 */
 	function reset_settings() {
@@ -114,6 +114,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					update_option( $settings['id'], $default_value );
 				}
 				$wcj_notice .= __( 'Settings have been reset to defaults.', 'woocommerce-jetpack' );
+				wp_safe_redirect( remove_query_arg( array( 'wcj_reset_settings', 'wcj_confirm_reset_settings' ) ) );
+				exit();
 			}
 		}
 	}

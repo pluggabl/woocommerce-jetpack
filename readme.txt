@@ -139,6 +139,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.9 - 15/12/2016 =
+~   * Dev - `WCJ_Module` - `wp_safe_redirect` added on `reset_settings`.
 ~D  * Dev - EMAILS & MISC. - Export - "Export Orders Items" tool added.
 ~D  * Dev - PDF INVOICING & PACKING SLIPS - General - "Do not create if order total equals zero" option added.
 D   * Tweak - SHIPPING & ORDERS - Left to Free Shipping - Description updated.
