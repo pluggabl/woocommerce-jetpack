@@ -34,7 +34,7 @@ class WCJ_Exporter_Orders {
 	 * @version 2.5.9
 	 * @since   2.5.9
 	 * @todo    ! it's almost the same function as in class-wcj-order-items-shortcodes.php
-	 * @todo    ! (maybe) pass $item instead $the_product
+	 * @todo    ! (maybe) pass $item instead of the $the_product
 	 */
 	function get_meta_info( $item_id, $the_product, $_order, $exclude_wcj_meta = false ) {
 		$meta_info = '';
