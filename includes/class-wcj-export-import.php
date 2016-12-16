@@ -57,6 +57,7 @@ class WCJ_Export_Import extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			add_action( 'init', array( $this, 'export_csv' ) );
+			add_action( 'init', array( $this, 'export_xml' ) );
 		}
 	}
 
@@ -86,6 +87,40 @@ class WCJ_Export_Import extends WCJ_Module {
 				return $exporter->export_products( $this->fields_helper );
 		}
 		return false;
+	}
+
+	/**
+	 * export_xml.
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function export_xml() {
+		if ( isset( $_POST['wcj_export_xml'] ) ) {
+			$data = $this->export( $_POST['wcj_export_xml'] );
+			$xml = '';
+			$xml .= '<?xml version = "1.0" encoding = "utf-8" ?>' . PHP_EOL . '<root>' . PHP_EOL;
+			foreach ( $data as $row_num => $row ) {
+				if ( 0 == $row_num ) {
+					foreach ( $row as $cell_id => $cell_value ) {
+						$cell_ids[ $cell_id ] = sanitize_title_with_dashes( $cell_value );
+					}
+					continue;
+				}
+				$xml .= '<item>' . PHP_EOL;
+				foreach ( $row as $cell_id => $cell_value ) {
+					$xml .= "\t" . '<' . $cell_ids[ $cell_id ] . '>' . $cell_value . '</' . $cell_ids[ $cell_id ] . '>' . PHP_EOL;
+				}
+				$xml .= '</item>' . PHP_EOL;
+			}
+			$xml .= '</root>';
+			header( "Content-Disposition: attachment; filename=" . $_POST['wcj_export_xml'] . ".xml" );
+			header( "Content-Type: Content-Type: text/html; charset=utf-8" );
+			header( "Content-Description: File Transfer" );
+			header( "Content-Length: " . strlen( $xml ) );
+			echo $xml;
+			die();
+		}
 	}
 
 	/**
@@ -154,7 +189,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * create_export_tool.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.9
 	 * @since   2.4.8
 	 */
 	function create_export_tool( $tool_id ) {
@@ -162,7 +197,11 @@ class WCJ_Export_Import extends WCJ_Module {
 		echo $this->get_tool_header_html( 'export_' . $tool_id );
 		echo '<form method="post" action="">';
 		echo '<p>' . $this->export_filter_fields( $tool_id ) . '</p>';
-		echo '<p><button class="button-primary" type="submit" name="wcj_export" value="' . $tool_id . '">' . __( 'Download CSV', 'woocommerce-jetpack' ) . '</button></p>';
+		echo '<p>';
+		echo '<button class="button-primary" type="submit" name="wcj_export" value="' . $tool_id . '">' . __( 'Download CSV', 'woocommerce-jetpack' ) . '</button>';
+		echo ' ';
+		echo '<button class="button-primary" type="submit" name="wcj_export_xml" value="' . $tool_id . '">' . __( 'Download XML', 'woocommerce-jetpack' ) . '</button>';
+		echo '</p>';
 		echo '</form>';
 		echo wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) );
 	}
