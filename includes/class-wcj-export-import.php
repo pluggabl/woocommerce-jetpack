@@ -94,6 +94,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.9
+	 * @todo    templates from xml_start, xml_end, xml_item.
 	 */
 	function export_xml() {
 		if ( isset( $_POST['wcj_export_xml'] ) ) {
