@@ -91,6 +91,7 @@ class WCJ_Exporter_Customers {
 	 *
 	 * @version 2.5.9
 	 * @since   2.4.8
+	 * @todo    add more order fields
 	 */
 	function export_customers_from_orders( $fields_helper ) {
 
