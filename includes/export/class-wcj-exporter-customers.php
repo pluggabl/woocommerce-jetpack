@@ -89,22 +89,26 @@ class WCJ_Exporter_Customers {
 	/**
 	 * export_customers_from_orders.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.9
 	 * @since   2.4.8
 	 */
-	function export_customers_from_orders() {
+	function export_customers_from_orders( $fields_helper ) {
+
+		// Standard Fields
+		$all_fields = $fields_helper->get_customer_from_order_export_fields();
+		$fields_ids = get_option( 'wcj_export_customers_from_orders_fields', $fields_helper->get_customer_from_order_export_default_fields_ids() );
+		$titles = array();
+		foreach( $fields_ids as $field_id ) {
+			$titles[] = $all_fields[ $field_id ];
+		}
+
+		// Get the Data
 		$data = array();
-		$data[] = array(
-			__( 'Nr.', 'woocommerce-jetpack' ),
-			__( 'Email', 'woocommerce-jetpack' ),
-			__( 'First Name', 'woocommerce-jetpack' ),
-			__( 'Last Name', 'woocommerce-jetpack' ),
-			__( 'Last Order Date', 'woocommerce-jetpack' ),
-		);
+		$data[] = $titles;
 		$total_customers = 0;
 		$orders = array();
 		$offset = 0;
-		$block_size = 96;
+		$block_size = 1024;
 		while( true ) {
 			$args_orders = array(
 				'post_type'      => 'shop_order',
@@ -113,21 +117,43 @@ class WCJ_Exporter_Customers {
 				'orderby'        => 'date',
 				'order'          => 'DESC',
 				'offset'         => $offset,
+				'fields'         => 'ids',
 			);
 			$loop_orders = new WP_Query( $args_orders );
-			if ( ! $loop_orders->have_posts() ) break;
-			while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
-				$order_id = $loop_orders->post->ID;
+			if ( ! $loop_orders->have_posts() ) {
+				break;
+			}
+			foreach ( $loop_orders->posts as $order_id ) {
 				$order = wc_get_order( $order_id );
 				if ( isset( $order->billing_email ) && '' != $order->billing_email && ! in_array( $order->billing_email, $orders ) ) {
-					$emails_to_skip = array();
+					$emails_to_skip = array(); // `emails_to_skip` is not really used...
 					if ( ! in_array( $order->billing_email, $emails_to_skip ) ) {
 						$total_customers++;
-						$data[] = array( $total_customers, $order->billing_email, $order->billing_first_name, $order->billing_last_name, get_the_date( 'Y/m/d' ), );
+						$row = array();
+						foreach( $fields_ids as $field_id ) {
+							switch ( $field_id ) {
+								case 'customer-nr':
+									$row[] = $total_customers;
+									break;
+								case 'customer-billing-email':
+									$row[] = $order->billing_email;
+									break;
+								case 'customer-billing-first-name':
+									$row[] = $order->billing_first_name;
+									break;
+								case 'customer-billing-last-name':
+									$row[] = $order->billing_last_name;
+									break;
+								case 'customer-last-order-date':
+									$row[] = get_the_date( get_option( 'date_format' ), $order_id );
+									break;
+							}
+						}
+						$data[] = $row;
 						$orders[] = $order->billing_email;
 					}
 				}
-			endwhile;
+			}
 			$offset += $block_size;
 		}
 		return $data;

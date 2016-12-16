@@ -25,6 +25,38 @@ class WCJ_Export_Fields_Helper {
 	}
 
 	/**
+	 * get_customer_from_order_export_fields.
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function get_customer_from_order_export_fields() {
+		return array(
+			'customer-nr'                 => __( 'Customer ID', 'woocommerce-jetpack' ),
+			'customer-billing-email'      => __( 'Billing Email', 'woocommerce-jetpack' ),
+			'customer-billing-first-name' => __( 'Billing First Name', 'woocommerce-jetpack' ),
+			'customer-billing-last-name'  => __( 'Billing Last Name', 'woocommerce-jetpack' ),
+			'customer-last-order-date'    => __( 'Last Order Date', 'woocommerce-jetpack' ),
+		);
+	}
+
+	/**
+	 * get_customer_from_order_export_default_fields_ids.
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function get_customer_from_order_export_default_fields_ids() {
+		return array(
+			'customer-nr',
+			'customer-billing-email',
+			'customer-billing-first-name',
+			'customer-billing-last-name',
+			'customer-last-order-date',
+		);
+	}
+
+	/**
 	 * get_customer_export_fields.
 	 *
 	 * @version 2.5.9
