@@ -32,7 +32,7 @@ class WCJ_Export_Fields_Helper {
 	 */
 	function get_customer_from_order_export_fields() {
 		return array(
-			'customer-nr'                 => __( 'Customer ID', 'woocommerce-jetpack' ),
+			'customer-nr'                 => __( 'Customer Nr.', 'woocommerce-jetpack' ),
 			'customer-billing-email'      => __( 'Billing Email', 'woocommerce-jetpack' ),
 			'customer-billing-first-name' => __( 'Billing First Name', 'woocommerce-jetpack' ),
 			'customer-billing-last-name'  => __( 'Billing Last Name', 'woocommerce-jetpack' ),
