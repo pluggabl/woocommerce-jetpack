@@ -139,6 +139,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.9 - 16/12/2016 =
+~   * Fix - PRODUCTS - Product Cost Price - Checking if order prices included taxes, when calculating "Profit" column.
 ~D  * Dev - EMAILS & MISC. - Export - "Download XML" button added.
 ~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - `WP_Query` optimized to return `ids` only.
 ~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - "Export Customers from Orders Fields" option added.

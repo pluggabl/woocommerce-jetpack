@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Purchase Data class.
  *
- * @version 2.5.7
+ * @version 2.5.9
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -54,7 +54,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 * Output custom columns for orders
 	 *
 	 * @param   string $column
-	 * @version 2.5.6
+	 * @version 2.5.9
 	 * @since   2.2.4
 	 * @todo    forecasted profit
 	 */
@@ -68,7 +68,9 @@ class WCJ_Purchase_Data extends WCJ_Module {
 					$the_profit = 0;
 					$product_id = ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
 					if ( 0 != ( $purchase_price = wc_get_product_purchase_price( $product_id ) ) ) {
-						$the_profit = ( $item['line_total'] + $item['line_tax'] ) - $purchase_price * $item['qty'];
+//						$line_total = ( 'yes' === get_option('woocommerce_prices_include_tax') ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
+						$line_total = ( $the_order->prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
+						$the_profit = $line_total - $purchase_price * $item['qty'];
 					} else {
 //						$the_profit = ( $item['line_total'] + $item['line_tax'] ) * $average_profit_margin;
 						$is_forecasted = true;
