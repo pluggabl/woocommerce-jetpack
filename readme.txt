@@ -153,7 +153,7 @@ D   * Tweak - SHIPPING & ORDERS - Left to Free Shipping - Description updated.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `quantity_prefix` attribute added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `LT` - Lithuanian language function added.
     * Fix - Shortcodes - Orders - `[wcj_order_total_in_words]` - `BG` - not including national currency; Upper-case for first letter.
-    * Tweak - EMAILS & MISC. - Export - Orders and Products settings as separate sections.
+    * Tweak - EMAILS & MISC. - Export - Divided settings into separate sections.
 ~D  * Dev - EMAILS & MISC. - Export - Export Orders - "Additional Export Orders Fields" options added.
 ~   * Dev - EMAILS & MISC. - Export - Corresponding data is gathered only if "Order Items" or "Order Items Product Input Fields" columns are enabled.
 -   * Dev - EMAILS & MISC. - Export - Item meta info added to "Order Items" column.
