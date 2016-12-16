@@ -28,20 +28,60 @@ class WCJ_Exporter_Customers {
 	/**
 	 * export_customers.
 	 *
-	 * @version 2.4.8
+	 * @version 2.5.9
 	 * @since   2.4.8
 	 */
-	function export_customers() {
+	function export_customers( $fields_helper ) {
+
+		// Standard Fields
+		$all_fields = $fields_helper->get_customer_export_fields();
+		$fields_ids = get_option( 'wcj_export_customers_fields', $fields_helper->get_customer_export_default_fields_ids() );
+		$titles = array();
+		foreach( $fields_ids as $field_id ) {
+			$titles[] = $all_fields[ $field_id ];
+		}
+
+		// Get the Data
 		$data = array();
-		$data[] = array(
-			__( 'Customer ID', 'woocommerce-jetpack' ),
-			__( 'Customer Email', 'woocommerce-jetpack' ),
-			__( 'Customer First Name', 'woocommerce-jetpack' ),
-			__( 'Customer Last Name', 'woocommerce-jetpack' ),
-		);
+		$data[] = $titles;
 		$customers = get_users( 'role=customer' );
 		foreach ( $customers as $customer ) {
-			$data[] = array( $customer->ID, $customer->user_email, $customer->first_name, $customer->last_name, );
+			$row = array();
+			foreach( $fields_ids as $field_id ) {
+				switch ( $field_id ) {
+					case 'customer-id':
+						$row[] = $customer->ID;
+						break;
+					case 'customer-email':
+						$row[] = $customer->user_email;
+						break;
+					case 'customer-login':
+						$row[] = $customer->user_login;
+						break;
+					case 'customer-nicename':
+						$row[] = $customer->user_nicename;
+						break;
+					case 'customer-url':
+						$row[] = $customer->user_url;
+						break;
+					case 'customer-registered':
+						$row[] = $customer->user_registered;
+						break;
+					case 'customer-display-name':
+						$row[] = $customer->display_name;
+						break;
+					case 'customer-first-name':
+						$row[] = $customer->first_name;
+						break;
+					case 'customer-last-name':
+						$row[] = $customer->last_name;
+						break;
+					case 'customer-debug':
+						$row[] = '<pre>' . print_r( $customer, true ) . '</pre>';
+						break;
+				}
+			}
+			$data[] = $row;
 		}
 		return $data;
 	}

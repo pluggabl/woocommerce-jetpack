@@ -25,6 +25,42 @@ class WCJ_Export_Fields_Helper {
 	}
 
 	/**
+	 * get_customer_export_fields.
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function get_customer_export_fields() {
+		return array(
+			'customer-id'           => __( 'Customer ID', 'woocommerce-jetpack' ),
+			'customer-email'        => __( 'Email', 'woocommerce-jetpack' ),
+			'customer-first-name'   => __( 'First Name', 'woocommerce-jetpack' ),
+			'customer-last-name'    => __( 'Last Name', 'woocommerce-jetpack' ),
+			'customer-login'        => __( 'Login', 'woocommerce-jetpack' ),
+			'customer-nicename'     => __( 'Nicename', 'woocommerce-jetpack' ),
+			'customer-url'          => __( 'URL', 'woocommerce-jetpack' ),
+			'customer-registered'   => __( 'Registered', 'woocommerce-jetpack' ),
+			'customer-display-name' => __( 'Display Name', 'woocommerce-jetpack' ),
+//			'customer-debug'        => __( 'Debug', 'woocommerce-jetpack' ),
+		);
+	}
+
+	/**
+	 * get_customer_export_default_fields_ids.
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function get_customer_export_default_fields_ids() {
+		return array(
+			'customer-id',
+			'customer-email',
+			'customer-first-name',
+			'customer-last-name',
+		);
+	}
+
+	/**
 	 * get_order_items_export_fields.
 	 *
 	 * @version 2.5.9

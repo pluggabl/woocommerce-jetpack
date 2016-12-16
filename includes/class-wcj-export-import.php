@@ -7,7 +7,7 @@
  * @version 2.5.9
  * @since   2.5.4
  * @author  Algoritmika Ltd.
- * @todo    import products (maybe orders, customers) tool(s);
+ * @todo    import products, (maybe) orders, customers tools;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -71,7 +71,7 @@ class WCJ_Export_Import extends WCJ_Module {
 		switch ( $tool_id ) {
 			case 'customers':
 				$exporter = require_once( 'export/class-wcj-exporter-customers.php' );
-				return $exporter->export_customers();
+				return $exporter->export_customers( $this->fields_helper );
 			case 'customers_from_orders':
 				$exporter = require_once( 'export/class-wcj-exporter-customers.php' );
 				return $exporter->export_customers_from_orders();
@@ -451,6 +451,24 @@ class WCJ_Export_Import extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_export_products_options',
+			),
+			array(
+				'title'    => __( 'Export Customers Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_export_customers_options',
+			),
+			array(
+				'title'    => __( 'Export Customers Fields', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Hold "Control" key to select multiple fields.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_export_customers_fields',
+				'default'  => $this->fields_helper->get_customer_export_default_fields_ids(),
+				'type'     => 'multiselect',
+				'options'  => $this->fields_helper->get_customer_export_fields(),
+				'css'      => 'height:300px;',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_export_customers_options',
 			),
 		) );
 		return $this->add_standard_settings( $settings );

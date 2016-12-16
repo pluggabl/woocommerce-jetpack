@@ -139,6 +139,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.9 - 16/12/2016 =
+~D  * Dev - EMAILS & MISC. - Export - Customers - New customer fields added: "Login", "Nicename", "URL", "Registered", "Display Name".
+~D  * Dev - EMAILS & MISC. - Export - Customers - "Export Customers Fields" option added.
 ~D  * Dev - EMAILS & MISC. - Export - Products - New product fields added: "Price Including Tax", "Price Excluding Tax", "Display Price", "Average Rating", "Rating Count", "Review Count", "Categories", "Tags", "Dimensions", "Formatted Name", "Availability", "Availability Class".
 ~   * Dev - EMAILS & MISC. - Export - Code refactoring.
 ~   * Dev - `WCJ_Module` - "Reset settings" button now uses JS confirmation; `wp_safe_redirect` added.
