@@ -358,7 +358,6 @@ class WCJ_Exporter_Orders {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.9
-	 * @todo    ! *products* meta and shortcodes in "Additional Fields"
 	 */
 	function export_orders_items( $fields_helper ) {
 
