@@ -337,8 +337,8 @@ class WCJ_Export_Import extends WCJ_Module {
 					'type'     => 'select',
 					'default'  => 'meta',
 					'options'  => array(
-						'meta'      => __( 'Meta', 'woocommerce-jetpack' ),
-						'shortcode' => __( 'Shortcode', 'woocommerce-jetpack' ),
+						'meta'      => __( 'Order Meta', 'woocommerce-jetpack' ),
+						'shortcode' => __( 'Order Shortcode', 'woocommerce-jetpack' ),
 					),
 				),
 				array(
@@ -405,14 +405,16 @@ class WCJ_Export_Import extends WCJ_Module {
 					'type'     => 'select',
 					'default'  => 'meta',
 					'options'  => array(
-						'meta'      => __( 'Meta', 'woocommerce-jetpack' ),
-						'shortcode' => __( 'Shortcode', 'woocommerce-jetpack' ),
+						'meta'              => __( 'Order Meta', 'woocommerce-jetpack' ),
+						'shortcode'         => __( 'Order Shortcode', 'woocommerce-jetpack' ),
+						'meta_product'      => __( 'Product Meta', 'woocommerce-jetpack' ),
+						'shortcode_product' => __( 'Product Shortcode', 'woocommerce-jetpack' ),
 					),
 				),
 				array(
 					'desc'     => __( 'Value', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter order meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ) .
-						' ' . __( 'If it\'s set to "Shortcode", use Booster\'s Orders shortcodes here.', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'If field\'s "Type" is set to "Meta", enter order/product meta key to retrieve (can be custom field name).', 'woocommerce-jetpack' ) .
+						' ' . __( 'If it\'s set to "Shortcode", use Booster\'s Orders/Products shortcodes here.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_export_orders_items_fields_additional_value_' . $i,
 					'type'     => 'text',
 					'default'  => '',
@@ -473,8 +475,8 @@ class WCJ_Export_Import extends WCJ_Module {
 					'type'     => 'select',
 					'default'  => 'meta',
 					'options'  => array(
-						'meta'      => __( 'Meta', 'woocommerce-jetpack' ),
-						'shortcode' => __( 'Shortcode', 'woocommerce-jetpack' ),
+						'meta'      => __( 'Product Meta', 'woocommerce-jetpack' ),
+						'shortcode' => __( 'Product Shortcode', 'woocommerce-jetpack' ),
 					),
 				),
 				array(
