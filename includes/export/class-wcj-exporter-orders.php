@@ -27,66 +27,10 @@ class WCJ_Exporter_Orders {
 	}
 
 	/**
-	 * get_meta_info.
-	 *
-	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
+	 * get_export_orders_row.
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.9
-	 * @todo    ! it's almost the same function as in class-wcj-order-items-shortcodes.php
-	 * @todo    ! (maybe) pass $item instead of the $the_product
-	 */
-	function get_meta_info( $item_id, $the_product, $_order, $exclude_wcj_meta = false ) {
-		$meta_info = '';
-		if ( $metadata = $_order->has_meta( $item_id ) ) {
-			$meta_info = array();
-			foreach ( $metadata as $meta ) {
-
-				// Skip hidden core fields
-				if ( in_array( $meta['meta_key'], apply_filters( 'woocommerce_hidden_order_itemmeta', array(
-					'_qty',
-					'_tax_class',
-					'_product_id',
-					'_variation_id',
-					'_line_subtotal',
-					'_line_subtotal_tax',
-					'_line_total',
-					'_line_tax',
-					'method_id',
-					'cost'
-				) ) ) ) {
-					continue;
-				}
-
-				if ( $exclude_wcj_meta && ( 'wcj' === substr( $meta['meta_key'], 0, 3 ) || '_wcj' === substr( $meta['meta_key'], 0, 4 ) ) ) {
-					continue;
-				}
-
-				// Skip serialised meta
-				if ( is_serialized( $meta['meta_value'] ) ) {
-					continue;
-				}
-
-				// Get attribute data
-				if ( taxonomy_exists( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ) ) {
-					$term               = get_term_by( 'slug', $meta['meta_value'], wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
-					$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
-					$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value'];
-				} else {
-					$meta['meta_key']   = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key'];
-				}
-				$meta_info[] = wp_kses_post( rawurldecode( $meta['meta_key'] ) ) . ': ' . wp_kses_post( rawurldecode( $meta['meta_value'] ) );
-			}
-			$meta_info = implode( ', ', $meta_info );
-		}
-		return $meta_info;
-	}
-
-	/**
-	 * get_export_orders_row.
-	 *
-	 * @version 2.5.7
-	 * @since   2.5.7
 	 */
 	function get_export_orders_row( $fields_ids, $order_id, $order, $items, $items_product_input_fields, $item, $item_id ) {
 		$row = array();
@@ -102,10 +46,10 @@ class WCJ_Exporter_Orders {
 					$row[] = $item['name'];
 					break;
 				case 'item-meta':
-					$row[] = $this->get_meta_info( $item_id, $order->get_product_from_item( $item ), $order );
+					$row[] = wcj_get_order_item_meta_info( $item_id, $item, $order );
 					break;
 				case 'item-variation-meta':
-					$row[] = ( 0 != $item['variation_id'] ) ? $this->get_meta_info( $item_id, $order->get_product_from_item( $item ), $order, true ) : '';
+					$row[] = ( 0 != $item['variation_id'] ) ? wcj_get_order_item_meta_info( $item_id, $item, $order, true ) : '';
 					break;
 				case 'item-qty':
 					$row[] = $item['qty'];
@@ -299,7 +243,7 @@ class WCJ_Exporter_Orders {
 				$items_product_input_fields = array();
 				foreach ( $order->get_items() as $item_id => $item ) {
 					if ( in_array( 'order-items', $fields_ids ) ) {
-						$meta_info = ( 0 != $item['variation_id'] ) ? $this->get_meta_info( $item_id, $order->get_product_from_item( $item ), $order, true ) : '';
+						$meta_info = ( 0 != $item['variation_id'] ) ? wcj_get_order_item_meta_info( $item_id, $item, $order, true ) : '';
 						if ( '' != $meta_info ) {
 							$meta_info = ' [' . $meta_info . ']';
 						}

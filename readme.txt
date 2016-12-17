@@ -138,7 +138,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.5.9 - 16/12/2016 =
+= 2.5.9 - 17/12/2016 =
+~D  * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_meta` column added.
 ~   * Fix - PRODUCTS - Product Cost Price - Checking if order prices included taxes, when calculating "Profit" column.
 ~D  * Dev - EMAILS & MISC. - Export - "Download XML" button added.
 ~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - `WP_Query` optimized to return `ids` only.
@@ -151,7 +152,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~D  * Dev - EMAILS & MISC. - Export - "Export Orders Items" tool added.
 ~D  * Dev - PDF INVOICING & PACKING SLIPS - General - "Do not create if order total equals zero" option added.
 D   * Tweak - SHIPPING & ORDERS - Left to Free Shipping - Description updated.
-    * Tweak - Shortcodes - Orders - `[wcj_order_items_table]` - `get_meta_info` - unused `$atts` removed.
+    * Tweak - Shortcodes - Orders - `[wcj_order_items_table]` - `get_meta_info` - replaced with `wcj_get_order_item_meta_info()`.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `quantity_prefix` attribute added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `LT` - Lithuanian language function added.
     * Fix - Shortcodes - Orders - `[wcj_order_total_in_words]` - `BG` - not including national currency; Upper-case for first letter.

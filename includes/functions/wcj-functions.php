@@ -4,9 +4,71 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.5.8
+ * @version 2.5.9
  * @author  Algoritmika Ltd.
  */
+
+if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
+	/**
+	 * wcj_get_order_item_meta_info.
+	 *
+	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
+	 *
+	 * @version 2.5.9
+	 * @since   2.5.9
+	 */
+	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null ) {
+		$meta_info = '';
+		if ( $metadata = $_order->has_meta( $item_id ) ) {
+			$meta_info = array();
+			foreach ( $metadata as $meta ) {
+
+				// Skip hidden core fields
+				if ( in_array( $meta['meta_key'], apply_filters( 'woocommerce_hidden_order_itemmeta', array(
+					'_qty',
+					'_tax_class',
+					'_product_id',
+					'_variation_id',
+					'_line_subtotal',
+					'_line_subtotal_tax',
+					'_line_total',
+					'_line_tax',
+					'method_id',
+					'cost'
+				) ) ) ) {
+					continue;
+				}
+
+				if ( $exclude_wcj_meta && ( 'wcj' === substr( $meta['meta_key'], 0, 3 ) || '_wcj' === substr( $meta['meta_key'], 0, 4 ) ) ) {
+					continue;
+				}
+
+				// Skip serialised meta
+				if ( is_serialized( $meta['meta_value'] ) ) {
+					continue;
+				}
+
+				// Get attribute data
+				if ( taxonomy_exists( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ) ) {
+					$term               = get_term_by( 'slug', $meta['meta_value'], wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
+					$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
+					$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value'];
+				} else {
+					$the_product = null;
+					if ( is_object( $_product ) ) {
+						$the_product = $_product;
+					} elseif ( is_object( $item ) ) {
+						$the_product = $_order->get_product_from_item( $item );
+					}
+					$meta['meta_key']   = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key'];
+				}
+				$meta_info[] = wp_kses_post( rawurldecode( $meta['meta_key'] ) ) . ': ' . wp_kses_post( rawurldecode( $meta['meta_value'] ) );
+			}
+			$meta_info = implode( ', ', $meta_info );
+		}
+		return $meta_info;
+	}
+}
 
 if ( ! function_exists( 'wcj_get_product_image_url' ) ) {
  	/**

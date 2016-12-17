@@ -294,6 +294,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					case 'item_number':
 						$data[ $item_counter ][] = $item_counter;
 						break;
+					case 'item_meta':
+						$data[ $item_counter ][] = wcj_get_order_item_meta_info( $item_id, null, $this->the_order, false, $the_product );
+						break;
 					case 'item_name':
 					case 'product_name': // "product_" because of possible variation
 						if ( true === $item['is_custom'] ) {
@@ -301,11 +304,11 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						} else {
 							$the_item_title = $item['name'];
 							// Variation (if needed)
-							if ( is_object( $the_product ) && $the_product->is_type( 'variation' ) && ! in_array( 'item_variation', $columns ) ) { // todo - $the_product is not (always) required?
+							if ( 0 != $item['variation_id'] && ! in_array( 'item_variation', $columns ) ) {
 								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">';
 								if ( 'yes' === $atts['variation_as_metadata'] ) {
-									$the_item_title .= $this->get_meta_info( $item_id, $atts, $the_product );
-								} else {
+									$the_item_title .= wcj_get_order_item_meta_info( $item_id, null, $this->the_order, true, $the_product );
+								} elseif ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) {
 									$the_item_title .= str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ); // todo - do we need pa_ replacement?
 								}
 								$the_item_title .= '</div>';
@@ -381,10 +384,10 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						break;
 					case 'item_variation':
 					case 'product_variation':
-						if ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) { // todo - $the_product is not (always) required?
+						if ( 0 != $item['variation_id'] ) {
 							if ( 'yes' === $atts['variation_as_metadata'] ) {
-								$data[ $item_counter ][] = $this->get_meta_info( $item_id, $atts, $the_product );
-							} else {
+								$data[ $item_counter ][] = wcj_get_order_item_meta_info( $item_id, null, $this->the_order, true, $the_product );
+							} elseif ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) {
 								$data[ $item_counter ][] = str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ); // todo - do we need pa_ replacement?
 							}
 						} else {
