@@ -138,7 +138,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.5.9 - 17/12/2016 =
+= 2.5.9 - 18/12/2016 =
+    * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Add Countries Flags Images to Select Drop-Down Box - Flag image missing bug fixed.
 ~D  * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_meta` column added.
 ~   * Fix - PRODUCTS - Product Cost Price - Checking if order prices included taxes, when calculating "Profit" column.
 ~D  * Dev - EMAILS & MISC. - Export - "Download XML" button added.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.5.8
+ * @version 2.5.9
  * @author  Algoritmika Ltd.
  */
 
@@ -340,7 +340,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_country_select_drop_down_list.
 	 *
-	 * @version 2.5.4
+	 * @version 2.5.9
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
 
@@ -382,7 +382,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 				$data_icon = '';
 				if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {
-					$data_icon = ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . $country_code . '.png"';
+					$data_icon = ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"';
 				}
 
 				$option_label = ( 'yes' === $atts['replace_with_currency'] ) ? $currencies_names_and_symbols[ wcj_get_currency_by_country( $country_code ) ] : $country_name;
@@ -395,7 +395,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 					$data_icon = '';
 					if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {
-						$data_icon = ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . $country_code . '.png"';
+						$data_icon = ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"';
 					}
 
 					$option_label = ( 'yes' === $atts['replace_with_currency'] ) ? $currencies_names_and_symbols[ wcj_get_currency_by_country( $country_code ) ] : $countries[ $country_code ];
