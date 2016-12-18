@@ -66,6 +66,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	 *
 	 * @version 2.5.9
 	 * @since   2.4.8
+	 * @todo    when filtering now using strpos, but other options would be stripos (case-insensitive) or strict equality
 	 */
 	function export( $tool_id ) {
 		$data = array();
