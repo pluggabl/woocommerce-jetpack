@@ -37,7 +37,7 @@ class WCJ_Export_Import extends WCJ_Module {
 			),
 			'export_customers_from_orders' => array(
 				'title'     => __( 'Export Customers from Orders', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Export Customers (extracted from orders).', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Export Customers (extracted from orders).', 'woocommerce-jetpack' ) . ' ' . __( 'Customers are identified by billing email.', 'woocommerce-jetpack' ),
 			),
 			'export_orders' => array(
 				'title'     => __( 'Export Orders', 'woocommerce-jetpack' ),

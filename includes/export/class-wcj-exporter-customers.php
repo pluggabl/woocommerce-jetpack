@@ -91,7 +91,7 @@ class WCJ_Exporter_Customers {
 	 *
 	 * @version 2.5.9
 	 * @since   2.4.8
-	 * @todo    add more order fields
+	 * @todo    (maybe) add more order fields (shipping)
 	 */
 	function export_customers_from_orders( $fields_helper ) {
 
@@ -144,6 +144,30 @@ class WCJ_Exporter_Customers {
 									break;
 								case 'customer-billing-last-name':
 									$row[] = $order->billing_last_name;
+									break;
+								case 'customer-billing-company':
+									$row[] = $order->billing_company;
+									break;
+								case 'customer-billing-address-1':
+									$row[] = $order->billing_address_1;
+									break;
+								case 'customer-billing-address-2':
+									$row[] = $order->billing_address_2;
+									break;
+								case 'customer-billing-city':
+									$row[] = $order->billing_city;
+									break;
+								case 'customer-billing-state':
+									$row[] = $order->billing_state;
+									break;
+								case 'customer-billing-postcode':
+									$row[] = $order->billing_postcode;
+									break;
+								case 'customer-billing-country':
+									$row[] = $order->billing_country;
+									break;
+								case 'customer-billing-phone':
+									$row[] = $order->billing_phone;
 									break;
 								case 'customer-last-order-date':
 									$row[] = get_the_date( get_option( 'date_format' ), $order_id );

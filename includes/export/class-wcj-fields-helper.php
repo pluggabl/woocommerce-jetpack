@@ -36,6 +36,14 @@ class WCJ_Export_Fields_Helper {
 			'customer-billing-email'      => __( 'Billing Email', 'woocommerce-jetpack' ),
 			'customer-billing-first-name' => __( 'Billing First Name', 'woocommerce-jetpack' ),
 			'customer-billing-last-name'  => __( 'Billing Last Name', 'woocommerce-jetpack' ),
+			'customer-billing-company'    => __( 'Billing Company', 'woocommerce-jetpack' ),
+			'customer-billing-address-1'  => __( 'Billing Address 1', 'woocommerce-jetpack' ),
+			'customer-billing-address-2'  => __( 'Billing Address 2', 'woocommerce-jetpack' ),
+			'customer-billing-city'       => __( 'Billing City', 'woocommerce-jetpack' ),
+			'customer-billing-state'      => __( 'Billing State', 'woocommerce-jetpack' ),
+			'customer-billing-postcode'   => __( 'Billing Postcode', 'woocommerce-jetpack' ),
+			'customer-billing-country'    => __( 'Billing Country', 'woocommerce-jetpack' ),
+			'customer-billing-phone'      => __( 'Billing Phone', 'woocommerce-jetpack' ),
 			'customer-last-order-date'    => __( 'Last Order Date', 'woocommerce-jetpack' ),
 		);
 	}
