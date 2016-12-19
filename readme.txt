@@ -138,6 +138,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
+= 2.6.0 - 19/12/2016 =
+* Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
+
 = 2.5.9 - 19/12/2016 =
 * Dev - `WCJ_Module` - "Reset settings" button now uses JS confirmation; `wp_safe_redirect` added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_meta` column added.

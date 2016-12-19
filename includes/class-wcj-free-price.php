@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Free Price class.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.0
 	 * @since   2.5.9
 	 * @todo    single in grouped is treated as "related"
 	 */
@@ -27,7 +27,7 @@ class WCJ_Free_Price extends WCJ_Module {
 		$this->id         = 'free_price';
 		$this->short_desc = __( 'Free Price Labels', 'woocommerce-jetpack' );
 		$this->desc       = __( 'WooCommerce free price labels.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-free-price/';
+		$this->link       = 'http://booster.io/features/woocommerce-free-price-labels/';
 		parent::__construct();
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );
