@@ -20,13 +20,12 @@ class WCJ_Free_Price extends WCJ_Module {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.9
-	 * @todo    what's paid (if any)
 	 * @todo    single in grouped is treated as "related"
 	 */
 	function __construct() {
 
 		$this->id         = 'free_price';
-		$this->short_desc = __( 'Free Price', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Free Price Labels', 'woocommerce-jetpack' );
 		$this->desc       = __( 'WooCommerce free price labels.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-free-price/';
 		parent::__construct();
@@ -72,8 +71,8 @@ class WCJ_Free_Price extends WCJ_Module {
 	function modify_free_price_simple_external_custom( $price, $_product ) {
 		$default = '<span class="amount">' . __( 'Free!', 'woocommerce' ) . '</span>';
 		return ( $_product->is_type( 'external' ) ) ?
-			get_option( 'wcj_free_price_external_' . $this->get_view_id( $_product->id ), $default ) :
-			get_option( 'wcj_free_price_simple_'   . $this->get_view_id( $_product->id ), $default );
+			do_shortcode( get_option( 'wcj_free_price_external_' . $this->get_view_id( $_product->id ), $default ) ) :
+			do_shortcode( get_option( 'wcj_free_price_simple_'   . $this->get_view_id( $_product->id ), $default ) );
 	}
 
 	/**
@@ -83,7 +82,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	 * @since   2.5.9
 	 */
 	function modify_free_price_grouped( $price, $_product ) {
-		return get_option( 'wcj_free_price_grouped_' . $this->get_view_id( $_product->id ), __( 'Free!', 'woocommerce' ) );
+		return do_shortcode( get_option( 'wcj_free_price_grouped_' . $this->get_view_id( $_product->id ), __( 'Free!', 'woocommerce' ) ) );
 	}
 
 	/**
@@ -93,7 +92,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	 * @since   2.5.9
 	 */
 	function modify_free_price_variable( $price, $_product ) {
-		return get_option( 'wcj_free_price_variable_' . $this->get_view_id( $_product->id ), __( 'Free!', 'woocommerce' ) );
+		return do_shortcode( apply_filters( 'wcj_get_option_filter', __( 'Free!', 'woocommerce' ), get_option( 'wcj_free_price_variable_' . $this->get_view_id( $_product->id ), __( 'Free!', 'woocommerce' ) ) ) );
 	}
 
 	/**
@@ -103,7 +102,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	 * @since   2.5.9
 	 */
 	function modify_free_price_variation( $price, $_product ) {
-		return get_option( 'wcj_free_price_variable_variation', __( 'Free!', 'woocommerce' ) );
+		return do_shortcode( apply_filters( 'wcj_get_option_filter', __( 'Free!', 'woocommerce' ), get_option( 'wcj_free_price_variable_variation', __( 'Free!', 'woocommerce' ) ) ) );
 	}
 
 	/**
@@ -125,7 +124,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	function get_settings() {
 		$settings = array();
 		$settings = apply_filters( 'wcj_' . $this->id . '_settings', $settings );
-		return $this->add_standard_settings( $settings );
+		return $this->add_standard_settings( $settings, __( 'Labels can contain shortcodes.', 'woocommerce-jetpack' ) );
 	}
 
 	/**
@@ -170,6 +169,9 @@ class WCJ_Free_Price extends WCJ_Module {
 						'default'  => $default_value,
 						'type'     => 'textarea',
 						'css'      => 'width:30%;min-width:300px;min-height:50px;',
+						'desc'     => ( 'variable' === $product_type ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) : '',
+						'custom_attributes' => ( 'variable' === $product_type ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : '',
+
 					),
 				) );
 			}

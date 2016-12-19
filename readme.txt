@@ -37,7 +37,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Add to Cart Labels* - Change text for Add to Cart button by WooCommerce product type, by product category or for individual products.
 * *Call for Price* - Create any custom price label for all WooCommerce products with empty price.
 * *Custom Price Labels* - Create any custom price label for any WooCommerce product.
-* *Free Price* - WooCommerce free price labels.
+* *Free Price Labels* - WooCommerce free price labels.
 * *More Button Labels* - Set WooCommerce "Place order" button label.
 
 **Products**
@@ -145,7 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `LT` - Lithuanian language function added.
 * Fix - Shortcodes - Orders - `[wcj_order_total_in_words]` - `BG` - not including national currency; Upper-case for first letter.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Add Countries Flags Images to Select Drop-Down Box - Flag image missing bug fixed.
-* Dev - BUTTON & PRICE LABELS - Free Price - Initial module release.
+* Dev - BUTTON & PRICE LABELS - Free Price Labels - Initial module release.
 * Fix - PRODUCTS - Product Cost Price - Checking if order prices included taxes, when calculating "Profit" column.
 * Dev - PDF INVOICING & PACKING SLIPS - General - "Do not create if order total equals zero" option added.
 * Dev - EMAILS & MISC. - Export - "Export Orders Items" tool added.
