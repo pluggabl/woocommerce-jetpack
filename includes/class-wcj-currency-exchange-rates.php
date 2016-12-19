@@ -128,7 +128,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 		if ( wcj_is_module_enabled( 'price_by_country' ) ) {
 			// Currency Pairs - Price by Country
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 				$currency_to = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
 				$settings = $this->add_currency_pair_setting( $currency_from, $currency_to, $settings );
 			}
@@ -136,7 +136,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 		if ( wcj_is_module_enabled( 'multicurrency' ) ) {
 			// Currency Pairs - Multicurrency
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
 				$currency_to = get_option( 'wcj_multicurrency_currency_' . $i );
 				$settings = $this->add_currency_pair_setting( $currency_from, $currency_to, $settings );
 			}
@@ -144,7 +144,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 		if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
 			// Currency Pairs - Multicurrency Product Base Price
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
 				$currency_to = get_option( 'wcj_multicurrency_base_price_currency_' . $i );
 				$settings = $this->add_currency_pair_setting( $currency_from, $currency_to, $settings );
 			}
@@ -152,7 +152,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 		if ( wcj_is_module_enabled( 'currency_per_product' ) ) {
 			// Currency Pairs - Currency per Product
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) ); $i++ ) {
 				$currency_to = get_option( 'wcj_currency_per_product_currency_' . $i );
 				$settings = $this->add_currency_pair_setting( $currency_from, $currency_to, $settings );
 			}

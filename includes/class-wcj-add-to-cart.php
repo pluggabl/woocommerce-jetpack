@@ -222,9 +222,9 @@ class WCJ_Add_To_Cart extends WCJ_Module {
 				'id'       => 'wcj_add_to_cart_per_category_total_groups_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array(
 						'step' => '1',
 						'min'  => '1',
@@ -242,7 +242,7 @@ class WCJ_Add_To_Cart extends WCJ_Module {
 			}
 		}
 
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_add_to_cart_per_category_total_groups_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_add_to_cart_per_category_total_groups_number', 1 ) ); $i++ ) {
 
 			/* $deprecated = get_option( 'wcj_add_to_cart_per_category_group_' . $i );
 			if ( false !== $deprecated ) {

@@ -141,7 +141,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 		$the_text = get_option( 'wcj_products_per_page_text', __( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ) );
 		$select_form = '<select name="wcj_products_per_page" id="wcj_products_per_page" class="sortby rounded_corners_class" onchange="this.form.submit()">';
 		$html .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $the_text );
-		$products_per_page_select_options = apply_filters( 'wcj_get_option_filter', '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1', get_option( 'wcj_products_per_page_select_options', '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1' ) );
+		$products_per_page_select_options = apply_filters( 'booster_get_option', '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1', get_option( 'wcj_products_per_page_select_options', '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1' ) );
 		$products_per_page_select_options = explode( PHP_EOL, $products_per_page_select_options );
 		foreach ( $products_per_page_select_options as $products_per_page_select_option ) {
 			$the_option = explode( '|', $products_per_page_select_option );
@@ -182,7 +182,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	public function remove_subcategory_count( $count_html ) {
 		if (
 			( is_shop() && 'yes' === get_option( 'wcj_product_listings_hide_cats_count_on_shop' ) ) ||
-			( ! is_shop() && 'yes' === apply_filters( 'wcj_get_option_filter', 'wcj', get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) )
+			( ! is_shop() && 'yes' === apply_filters( 'booster_get_option', 'wcj', get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) )
 		) {
 			return '';
 		}
@@ -290,8 +290,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 					'id'       => 'wcj_product_listings_hide_cats_count_on_archive',
 					'default'  => 'no',
 					'type'     => 'checkbox',
-					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-					'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+					'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+					'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 				);
 				$updated_settings[] = array(
 					'title'    => __( 'WooJetpack: Exclude Subcategories on Category Pages', 'woocommerce-jetpack' ),
@@ -409,8 +409,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 				'id'       => 'wcj_product_listings_hide_cats_count_on_archive',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 			),
 			array(
 				'title'    => __( 'Exclude Subcategories', 'woocommerce-jetpack' ),
@@ -457,8 +457,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 				'default'  => '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1',
 				'type'     => 'textarea',
 				'css'      => 'height:200px;',
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
-				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
 			),
 			array(
 				'title'    => __( 'Default', 'woocommerce-jetpack' ),

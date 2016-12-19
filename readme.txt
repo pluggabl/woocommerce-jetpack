@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 2.5.8
+Stable tag: 2.5.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -164,6 +164,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 * Tweak - Shortcodes - Orders - `[wcj_order_items_table]` - `get_meta_info` - replaced with `wcj_get_order_item_meta_info()`.
 * Tweak - SHIPPING & ORDERS - Left to Free Shipping - Description updated.
 * Tweak - EMAILS & MISC. - Export - Divided settings into separate sections.
+* Tweak - Filters renamed.
 
 = 2.5.8 - 09/12/2016 =
 * Fix - `wcj_current_filter_priority()` modified for compatibility with WordPress since v4.7.

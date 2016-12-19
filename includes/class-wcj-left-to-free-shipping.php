@@ -39,14 +39,14 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 					get_option( 'wcj_shipping_left_to_free_info_priority_cart', 10 )
 				);
 			}
-			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_shipping_left_to_free_info_enabled_mini_cart', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_shipping_left_to_free_info_enabled_mini_cart', 'no' ) ) ) {
 				add_action(
 					get_option( 'wcj_shipping_left_to_free_info_position_mini_cart', 'woocommerce_after_mini_cart' ),
 					array( $this, 'show_left_to_free_shipping_info_mini_cart' ),
 					get_option( 'wcj_shipping_left_to_free_info_priority_mini_cart', 10 )
 				);
 			}
-			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_shipping_left_to_free_info_enabled_checkout', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_shipping_left_to_free_info_enabled_checkout', 'no' ) ) ) {
 				add_action(
 					get_option( 'wcj_shipping_left_to_free_info_position_checkout', 'woocommerce_checkout_after_order_review' ),
 					array( $this, 'show_left_to_free_shipping_info_checkout' ),
@@ -172,8 +172,8 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 				'id'       => 'wcj_shipping_left_to_free_info_enabled_mini_cart',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 			),
 			array(
 				'title'    => '',
@@ -210,8 +210,8 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 				'id'       => 'wcj_shipping_left_to_free_info_enabled_checkout',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 			),
 			array(
 				'title'    => '',

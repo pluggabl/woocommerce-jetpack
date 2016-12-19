@@ -129,7 +129,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 				'customer_reset_password'   => __( 'Customer - Reset Password', 'woocommerce-jetpack' ),
 			);
 			if ( 'yes' === get_option( 'wcj_emails_enabled', 'no' ) ) {
-				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
 					$available_emails[ 'wcj_custom' . '_' . $i ] = __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i;
 				}
 			}

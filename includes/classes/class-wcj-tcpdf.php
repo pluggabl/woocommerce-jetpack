@@ -47,7 +47,7 @@ class WCJ_TCPDF extends TCPDF {
 		//$this->SetFont('helvetica', 'I', 8);
 
 		$invoice_type = $this->invoice_type;
-		$footer_text = apply_filters( 'wcj_get_option_filter', 'Page %page_number% / %total_pages%', get_option( 'wcj_invoicing_' . $invoice_type . '_footer_text' ) );
+		$footer_text = apply_filters( 'booster_get_option', 'Page %page_number% / %total_pages%', get_option( 'wcj_invoicing_' . $invoice_type . '_footer_text' ) );
 		//$this->Cell( 0, 0, do_shortcode( $footer_text ), 0, false, 'L', 0, '', 0, false, 'T', 'M' );
 		$footer_text = str_replace( '%page_number%', $this->getAliasNumPage(), $footer_text );
 		$footer_text = str_replace( '%total_pages%', $this->getAliasNbPages(), $footer_text );

@@ -203,7 +203,7 @@ class WCJ_Exporter_Orders {
 		}
 
 		// Additional Fields
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'yes' === get_option( 'wcj_export_orders_fields_additional_enabled_' . $i, 'no' ) ) {
 				$titles[] = get_option( 'wcj_export_orders_fields_additional_title_' . $i, '' );
@@ -271,7 +271,7 @@ class WCJ_Exporter_Orders {
 				$row = $this->get_export_orders_row( $fields_ids, $order_id, $order, $items, $items_product_input_fields, null, null );
 
 				// Additional Fields
-				$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
+				$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					if ( 'yes' === get_option( 'wcj_export_orders_fields_additional_enabled_' . $i, 'no' ) ) {
 						if ( '' != ( $additional_field_value = get_option( 'wcj_export_orders_fields_additional_value_' . $i, '' ) ) ) {
@@ -314,7 +314,7 @@ class WCJ_Exporter_Orders {
 		}
 
 		// Additional Fields
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'yes' === get_option( 'wcj_export_orders_items_fields_additional_enabled_' . $i, 'no' ) ) {
 				$titles[] = get_option( 'wcj_export_orders_items_fields_additional_title_' . $i, '' );
@@ -351,7 +351,7 @@ class WCJ_Exporter_Orders {
 					$row = $this->get_export_orders_row( $fields_ids, $order_id, $order, null, null, $item, $item_id );
 
 					// Additional Fields
-					$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
+					$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
 					for ( $i = 1; $i <= $total_number; $i++ ) {
 						if ( 'yes' === get_option( 'wcj_export_orders_items_fields_additional_enabled_' . $i, 'no' ) ) {
 							if ( '' != ( $additional_field_value = get_option( 'wcj_export_orders_items_fields_additional_value_' . $i, '' ) ) ) {

@@ -43,7 +43,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 	 * @since   2.5.2
 	 */
 	function price_format( $args ) {
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
 			if ( get_woocommerce_currency() === get_option( 'wcj_price_formats_currency_' . $i ) ) {
 				if ( defined( 'ICL_LANGUAGE_CODE' ) && '' != ( $wpml_language = get_option( 'wcj_price_formats_wpml_language_' . $i, '' ) ) ) {
 					$wpml_language = explode( ',', trim( str_replace( ' ', '', $wpml_language ), ',' ) );
@@ -127,14 +127,14 @@ class WCJ_Price_Formats extends WCJ_Module {
 				'id'       => 'wcj_price_formats_total_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array( 'step' => '1', 'min'  => '0', )
 				),
 			),
 		);
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
 			$currency_symbol = wcj_get_currency_symbol( get_option( 'wcj_price_formats_currency_' . $i, get_woocommerce_currency() ) );
 			$settings = array_merge( $settings, array(
 				array(

@@ -200,7 +200,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 			 * @version 2.5.6
 			 */
 			function add_wc_shipping_wcj_custom_class( $methods ) {
-				$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_shipping_custom_shipping_total_number', 1 ) );
+				$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_shipping_custom_shipping_total_number', 1 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					$the_method = new WC_Shipping_WCJ_Custom_Template();
 					$the_method->init( $i );

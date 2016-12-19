@@ -116,7 +116,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	 */
 	function get_currency_exchange_rate( $currency_code ) {
 		$currency_exchange_rate = 1;
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( $currency_code === get_option( 'wcj_currency_per_product_currency_' . $i ) ) {
 				$currency_exchange_rate = 1 / get_option( 'wcj_currency_per_product_exchange_rate_' . $i );
@@ -224,7 +224,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 		$currency_codes = array();
 		$currency_codes[ get_option('woocommerce_currency') ] = get_option('woocommerce_currency');
 		$currency_codes[ get_woocommerce_currency() ] = get_woocommerce_currency();
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$currency_codes[ get_option( 'wcj_currency_per_product_currency_' . $i ) ] = get_option( 'wcj_currency_per_product_currency_' . $i );
 		}
@@ -291,11 +291,11 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 					'manual' => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
 					'auto'   => __( 'Automatically via Currency Exchange Rates module', 'woocommerce-jetpack' ),
 				),
-				'desc'     => ( '' == apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) ) ?
+				'desc'     => ( '' == apply_filters( 'booster_get_message', '', 'desc' ) ) ?
 					__( 'Visit', 'woocommerce-jetpack' ) . ' <a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
 					:
-					apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+					apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'type'     => 'sectionend',
@@ -311,14 +311,14 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 				'id'       => 'wcj_currency_per_product_total_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array( 'step' => '1', 'min'  => '1', )
 				),
 			),
 		);
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$currency_to = get_option( 'wcj_currency_per_product_currency_' . $i, $currency_from );
 			$custom_attributes = array(

@@ -116,7 +116,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 			}
 
 			// Including by products
-			$products_in = apply_filters( 'wcj_get_option_filter', array(), get_option( 'wcj_gateways_per_products_' . $gateway_id ) );
+			$products_in = apply_filters( 'booster_get_option', array(), get_option( 'wcj_gateways_per_products_' . $gateway_id ) );
 			if ( ! empty( $products_in ) ) {
 				$do_skip = true;
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
@@ -134,7 +134,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 			}
 
 			// Excluding by products
-			$products_excl = apply_filters( 'wcj_get_option_filter', array(), get_option( 'wcj_gateways_per_products_excl_' . $gateway_id ) );
+			$products_excl = apply_filters( 'booster_get_option', array(), get_option( 'wcj_gateways_per_products_excl_' . $gateway_id ) );
 			if ( ! empty( $products_excl ) ) {
 				$do_skip = false;
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
@@ -203,7 +203,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 			);
 			$settings[] = array(
 				'title'     => '',
-				'desc'      => __( 'Products - Include', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'      => __( 'Products - Include', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'booster_get_message', '', 'desc' ),
 				'desc_tip'  => __( 'Show gateway only if there is selected products in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_gateways_per_products_' . $gateway_id,
 				'default'   => '',
@@ -211,11 +211,11 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 				'class'     => 'chosen_select',
 				'css'       => 'width: 450px;',
 				'options'   => $products,
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			);
 			$settings[] = array(
 				'title'     => '',
-				'desc'      => __( 'Products - Exclude', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'      => __( 'Products - Exclude', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'booster_get_message', '', 'desc' ),
 				'desc_tip'  => __( 'Hide gateway if there is selected products in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_gateways_per_products_excl_' . $gateway_id,
 				'default'   => '',
@@ -223,7 +223,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 				'class'     => 'chosen_select',
 				'css'       => 'width: 450px;',
 				'options'   => $products,
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			);
 		}
 

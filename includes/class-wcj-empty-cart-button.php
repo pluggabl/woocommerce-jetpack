@@ -31,7 +31,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			add_action( 'init', array( $this, 'empty_cart' ) );
 			add_action(
-				apply_filters( 'wcj_get_option_filter', 'woocommerce_after_cart', get_option( 'wcj_empty_cart_position', 'woocommerce_after_cart' ) ),
+				apply_filters( 'booster_get_option', 'woocommerce_after_cart', get_option( 'wcj_empty_cart_position', 'woocommerce_after_cart' ) ),
 				array( $this, 'add_empty_cart_link' )
 			);
 			if ( 'disable' != ( $empty_cart_checkout_position = get_option( 'wcj_empty_cart_checkout_position', 'disable' ) ) ) {
@@ -50,7 +50,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	 */
 	public function add_empty_cart_link() {
 		$confirmation_html = ( 'confirm_with_pop_up_box' == get_option( 'wcj_empty_cart_confirmation', 'no_confirmation' ) ) ? ' onclick="return confirm(\'' . get_option( 'wcj_empty_cart_confirmation_text' ) . '\')"' : '';
-		echo '<div style="' . get_option( 'wcj_empty_cart_div_style', 'float: right;' ) . '"><form action="" method="post"><input type="submit" class="button" name="empty_cart" value="' . apply_filters( 'wcj_get_option_filter', 'Empty Cart', get_option( 'wcj_empty_cart_text' ) ) . '"' . $confirmation_html . '></form></div>';
+		echo '<div style="' . get_option( 'wcj_empty_cart_div_style', 'float: right;' ) . '"><form action="" method="post"><input type="submit" class="button" name="empty_cart" value="' . apply_filters( 'booster_get_option', 'Empty Cart', get_option( 'wcj_empty_cart_text' ) ) . '"' . $confirmation_html . '></form></div>';
 	}
 
 	/**
@@ -81,8 +81,8 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 				'id'       => 'wcj_empty_cart_text',
 				'default'  => 'Empty Cart',
 				'type'     => 'text',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'title'    => __( 'Wrapping DIV style', 'woocommerce-jetpack' ),
@@ -102,8 +102,8 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 					'woocommerce_proceed_to_checkout' => __( 'After Proceed to Checkout button', 'woocommerce-jetpack' ),
 					'woocommerce_after_cart_totals'   => __( 'After Cart Totals', 'woocommerce-jetpack' ),
 				),
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'title'    => __( 'Button position on the Checkout page', 'woocommerce-jetpack' ),
@@ -122,8 +122,8 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 					'woocommerce_checkout_after_order_review'       => __( 'After order review', 'woocommerce-jetpack' ),
 					'woocommerce_after_checkout_form'               => __( 'After checkout form', 'woocommerce-jetpack' ),
 				),
-				/* 'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ), */
+				/* 'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ), */
 			),
 			array(
 				'title'    => __( 'Confirmation', 'woocommerce-jetpack' ),

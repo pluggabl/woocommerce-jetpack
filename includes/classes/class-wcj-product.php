@@ -42,7 +42,7 @@ class WCJ_Product {
 		if ( 'yes' === get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ) ) {
 			$purchase_price += get_post_meta( $this->id, '_' . 'wcj_purchase_price_affiliate_commission', true );
 		}
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( '' == get_option( 'wcj_purchase_data_custom_price_field_name_' . $i, '' ) ) {
 				continue;

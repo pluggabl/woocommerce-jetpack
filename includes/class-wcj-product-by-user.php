@@ -226,8 +226,8 @@ class WCJ_Product_By_User extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 				'checkboxgroup' => $checkboxgroup,
-				'custom_attributes' => ( ( 'image' === $field_id ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ) : '' ),
-				'desc_tip' => ( ( 'image' === $field_id ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) : '' ),
+				'custom_attributes' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_get_message', '', 'disabled' ) : '' ),
+				'desc_tip' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_get_message', '', 'desc' ) : '' ),
 			);
 			$fields_required_options[] = array(
 				'title'    => ( ( 1 === $i ) ? __( 'Is Required', 'woocommerce-jetpack' ) : '' ),
@@ -236,8 +236,8 @@ class WCJ_Product_By_User extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 				'checkboxgroup' => $checkboxgroup,
-				'custom_attributes' => ( ( 'image' === $field_id ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ) : '' ),
-				'desc_tip' => ( ( 'image' === $field_id ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) : '' ),
+				'custom_attributes' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_get_message', '', 'disabled' ) : '' ),
+				'desc_tip' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_get_message', '', 'desc' ) : '' ),
 			);
 		}
 

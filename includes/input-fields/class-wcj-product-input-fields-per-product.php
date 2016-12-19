@@ -80,7 +80,7 @@ class WCJ_Product_Input_Fields_Per_Product extends WCJ_Product_Input_Fields_Abst
 			return;
 
 		// Save enabled, required, title etc.
-		$default_total_input_fields = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
+		$default_total_input_fields = apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
 		$total_input_fields_before_saving = get_post_meta( $post_id, '_' . 'wcj_product_input_fields_local_total_number', true );
 		$total_input_fields_before_saving = ( '' != $total_input_fields_before_saving ) ? $total_input_fields_before_saving : $default_total_input_fields;
 		$options = $this->get_options();
@@ -132,15 +132,15 @@ class WCJ_Product_Input_Fields_Per_Product extends WCJ_Product_Input_Fields_Abst
 		$current_post_id = get_the_ID();
 		$option_name = 'wcj_' . $meta_box_id . '_local_total_number';
 		// If none total number set - check for the default
-		if ( ! ( $total_number = apply_filters( 'wcj_get_option_filter', 1, get_post_meta( $current_post_id, '_' . $option_name, true ) ) ) )
-			$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_' . $meta_box_id . '_local_total_number_default', 1 ) );
+		if ( ! ( $total_number = apply_filters( 'booster_get_option', 1, get_post_meta( $current_post_id, '_' . $option_name, true ) ) ) )
+			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_' . $meta_box_id . '_local_total_number_default', 1 ) );
 
 		// Start html
 		$html = '';
 
 		// Total number
-		$is_disabled = apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly_string' );
-		$is_disabled_message = apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' );
+		$is_disabled = apply_filters( 'booster_get_message', '', 'readonly_string' );
+		$is_disabled_message = apply_filters( 'booster_get_message', '', 'desc' );
 		$html .= '<table>';
 		$html .= '<tr>';
 		$html .= '<th>';

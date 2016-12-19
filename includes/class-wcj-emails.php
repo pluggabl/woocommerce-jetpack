@@ -88,7 +88,7 @@ class WCJ_Emails extends WCJ_Module {
 	 * @since   2.3.9
 	 */
 	function add_custom_emails_to_wc_resend_order_emails( $emails ) {
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
 			$emails[] =  'wcj_custom' . '_' . $i;
 		}
 		return $emails;
@@ -104,7 +104,7 @@ class WCJ_Emails extends WCJ_Module {
 		if ( ! class_exists( 'WC_Email_WCJ_Custom' ) ) {
 			require_once( 'emails/class-wc-email-wcj-custom.php' );
 		}
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
 			$emails[ 'WC_Email_WCJ_Custom_' . $i ] = new WC_Email_WCJ_Custom( $i );
 		}
 		return $emails;
@@ -195,11 +195,11 @@ class WCJ_Emails extends WCJ_Module {
 				'id'       => 'wcj_emails_custom_emails_total_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 		);
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$settings [] = array(
 				'title'    => __( 'Admin Title Custom Email', 'woocommerce-jetpack' ) . ' #' . $i,

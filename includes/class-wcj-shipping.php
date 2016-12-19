@@ -206,12 +206,12 @@ class WCJ_Shipping extends WCJ_Module {
 				'id'       => 'wcj_shipping_custom_shipping_total_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
-					apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array( 'step' => '1', 'min' => '0' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
+					apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min' => '0' ),
 			),
 		) );
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_shipping_custom_shipping_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_shipping_custom_shipping_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$settings[] = array(
 				'title'    => __( 'Admin Title Custom Shipping', 'woocommerce-jetpack' ) . ' #' . $i,

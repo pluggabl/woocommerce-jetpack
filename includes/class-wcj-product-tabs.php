@@ -54,17 +54,17 @@ class WCJ_Product_Tabs extends WCJ_Module {
 
 		// Priority and Title
 		if ( isset( $tabs['description'] ) ) {
-			$tabs['description']['priority'] = apply_filters( 'wcj_get_option_filter', 10, get_option( 'wcj_product_info_product_tabs_description_priority' ) );
+			$tabs['description']['priority'] = apply_filters( 'booster_get_option', 10, get_option( 'wcj_product_info_product_tabs_description_priority' ) );
 			if ( get_option( 'wcj_product_info_product_tabs_description_title' ) !== '' )
 				$tabs['description']['title'] = get_option( 'wcj_product_info_product_tabs_description_title' );
 		}
 		if ( isset( $tabs['reviews'] ) ) {
-			$tabs['reviews']['priority'] = apply_filters( 'wcj_get_option_filter', 20, get_option( 'wcj_product_info_product_tabs_reviews_priority' ) );
+			$tabs['reviews']['priority'] = apply_filters( 'booster_get_option', 20, get_option( 'wcj_product_info_product_tabs_reviews_priority' ) );
 			if ( get_option( 'wcj_product_info_product_tabs_reviews_title' ) !== '' )
 				$tabs['reviews']['title'] = get_option( 'wcj_product_info_product_tabs_reviews_title' );
 		}
 		if ( isset( $tabs['additional_information'] ) ) {
-			$tabs['additional_information']['priority'] = apply_filters( 'wcj_get_option_filter', 30, get_option( 'wcj_product_info_product_tabs_additional_information_priority' ) );
+			$tabs['additional_information']['priority'] = apply_filters( 'booster_get_option', 30, get_option( 'wcj_product_info_product_tabs_additional_information_priority' ) );
 			if ( get_option( 'wcj_product_info_product_tabs_additional_information_title' ) !== '' )
 				$tabs['additional_information']['title'] = get_option( 'wcj_product_info_product_tabs_additional_information_title' );
 		}
@@ -73,7 +73,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		// Add New
 		// Add New - Global
 		global $product;
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
 			$key = 'global_' . $i;
 			if ( '' != get_option( 'wcj_custom_product_tabs_title_' . $key, '' ) && '' != get_option( 'wcj_custom_product_tabs_content_' . $key, '' ) ) {
 
@@ -202,7 +202,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		$current_post_id = get_the_ID();
 		$option_name = 'wcj_custom_product_tabs_local_total_number';
 		if ( ! ( $total_custom_tabs = get_post_meta( $current_post_id, '_' . $option_name, true ) ) )
-			$total_custom_tabs = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
+			$total_custom_tabs = apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
 		if ( 'yes' !== get_option( 'wcj_custom_product_tabs_local_enabled' ) )
 			$total_custom_tabs = 0;
 
@@ -260,7 +260,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 			'wcj_custom_product_tabs_priority_local_',
 			'wcj_custom_product_tabs_content_local_',
 		);
-		$default_total_custom_tabs = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
+		$default_total_custom_tabs = apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
 		$total_custom_tabs_before_saving = get_post_meta( $post_id, '_' . 'wcj_custom_product_tabs_local_total_number', true );
 		$total_custom_tabs_before_saving = ( '' != $total_custom_tabs_before_saving ) ? $total_custom_tabs_before_saving : $default_total_custom_tabs;
 		for ( $i = 1; $i <= $total_custom_tabs_before_saving; $i++ ) {
@@ -393,11 +393,11 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		$current_post_id = get_the_ID();
 		$option_name = 'wcj_custom_product_tabs_local_total_number';
 		if ( ! ( $total_custom_tabs = get_post_meta( $current_post_id, '_' . $option_name, true ) ) )
-			$total_custom_tabs = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
+			$total_custom_tabs = apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
 		$html = '';
 
-		$is_disabled = apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly_string' );
-		$is_disabled_message = apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' );
+		$is_disabled = apply_filters( 'booster_get_message', '', 'readonly_string' );
+		$is_disabled_message = apply_filters( 'booster_get_message', '', 'desc' );
 
 		$html .= '<table>';
 		$html .= '<tr>';
@@ -505,9 +505,9 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'id'        => 'wcj_custom_product_tabs_global_total_number',
 				'default'   => 1,
 				'type'      => 'number',
-				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array(
 						'step' => '1',
 						'min'  => '0',
@@ -534,7 +534,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 
 		$products_options = apply_filters( 'wcj_get_products_filter', array() );
 
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
 			$settings = array_merge( $settings,
 				array(
 					array(
@@ -693,9 +693,9 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'id'        => 'wcj_custom_product_tabs_local_total_number_default',
 				'default'   => 1,
 				'type'      => 'number',
-				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array(
 						'step' => '1',
 						'min'  => '0',
@@ -704,7 +704,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 			),
 		) );
 
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) ); $i++ ) {
 			$settings = array_merge( $settings, array(
 				array(
 					'title'     => __( 'Custom Product Tab', 'woocommerce-jetpack' ) . ' #' . $i,
@@ -825,8 +825,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'id'        => 'wcj_product_info_product_tabs_description_priority',
 				'default'   => 10,
 				'type'      => 'number',
-				'desc'      => __( 'Priority (i.e. Order).', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'desc'      => __( 'Priority (i.e. Order).', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'title'     => __( 'Additional Information Tab', 'woocommerce-jetpack' ),
@@ -848,8 +848,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'id'        => 'wcj_product_info_product_tabs_additional_information_priority',
 				'default'   => 20,
 				'type'      => 'number',
-				'desc'      => __( 'Priority (i.e. Order).', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'desc'      => __( 'Priority (i.e. Order).', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'title'     => __( 'Reviews Tab', 'woocommerce-jetpack' ),
@@ -871,8 +871,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'id'        => 'wcj_product_info_product_tabs_reviews_priority',
 				'default'   => 30,
 				'type'      => 'number',
-				'desc'      => __( 'Priority (i.e. Order).', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'desc'      => __( 'Priority (i.e. Order).', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'type'      => 'sectionend',

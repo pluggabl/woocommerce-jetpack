@@ -85,10 +85,10 @@ class WCJ_SKU extends WCJ_Module {
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
 
-		/* if ( 'random' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+		/* if ( 'random' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$sku_number = rand();
 		} */
-		if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$sku_number = $this->sequential_counter;
 			$this->sequential_counter++;
 		} else { // if 'product_id'
@@ -98,7 +98,7 @@ class WCJ_SKU extends WCJ_Module {
 		$this->set_sku( $product_id, $sku_number, '', $is_preview, $product_id );
 
 		// Handling variable products
-		$variation_handling = apply_filters( 'wcj_get_option_filter', 'as_variable', get_option( 'wcj_sku_variations_handling', 'as_variable' ) );
+		$variation_handling = apply_filters( 'booster_get_option', 'as_variable', get_option( 'wcj_sku_variations_handling', 'as_variable' ) );
 		$product = wc_get_product( $product_id );
 		if ( $product->is_type( 'variable' ) ) {
 			$variations = $this->get_all_variations( $product );
@@ -109,7 +109,7 @@ class WCJ_SKU extends WCJ_Module {
 			}
 			else if ( 'as_variation' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
-					if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+					if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 						$sku_number = $this->sequential_counter;
 						$this->sequential_counter++;
 					} else { // if 'product_id'
@@ -152,7 +152,7 @@ class WCJ_SKU extends WCJ_Module {
 		}
 
 		$the_sku = sprintf( '%s%s%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 'd%s%s%s',
-			apply_filters( 'wcj_get_option_filter', '', $category_prefix ),
+			apply_filters( 'booster_get_option', '', $category_prefix ),
 			get_option( 'wcj_sku_prefix', '' ),
 			$sku_number,
 			get_option( 'wcj_sku_suffix', '' ),
@@ -179,8 +179,8 @@ class WCJ_SKU extends WCJ_Module {
 	 * @version 2.5.2
 	 */
 	function set_all_products_skus( $is_preview ) {
-		if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-			$this->sequential_counter = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
+		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+			$this->sequential_counter = apply_filters( 'booster_get_option', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
 		}
 		$limit = 96;
 		$offset = 0;
@@ -201,7 +201,7 @@ class WCJ_SKU extends WCJ_Module {
 			$offset += $limit;
 		}
 		wp_reset_postdata();
-		if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) && ! $is_preview ) {
+		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) && ! $is_preview ) {
 			update_option( 'wcj_sku_number_generation_sequential', $this->sequential_counter );
 		}
 	}
@@ -216,11 +216,11 @@ class WCJ_SKU extends WCJ_Module {
 			return;
 		}
 		if ( false === $update ) {
-			if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-				$this->sequential_counter = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
+			if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+				$this->sequential_counter = apply_filters( 'booster_get_option', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
 			}
 			$this->set_sku_with_variable( $post_ID, false );
-			if ( 'sequential' === apply_filters( 'wcj_get_option_filter', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+			if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 				update_option( 'wcj_sku_number_generation_sequential', $this->sequential_counter );
 			}
 		}
@@ -283,17 +283,17 @@ class WCJ_SKU extends WCJ_Module {
 					'sequential' => __( 'Sequential', 'woocommerce-jetpack' ),
 //					'random'     => __( 'Random (including variations)', 'woocommerce-jetpack' ),
 				),
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'title'    => __( 'Sequential Number Generation Counter', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sku_number_generation_sequential',
 				'default'  => 1,
 				'type'     => 'number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array( 'step' => '1', 'min'  => '0', )
 				),
 			),
@@ -314,8 +314,8 @@ class WCJ_SKU extends WCJ_Module {
 				'id'       => 'wcj_sku_suffix',
 				'default'  => '',
 				'type'     => 'text',
-//				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-//				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+//				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+//				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'title'    => __( 'Variable Products Variations', 'woocommerce-jetpack' ),
@@ -328,8 +328,8 @@ class WCJ_SKU extends WCJ_Module {
 					'as_variation'            => __( 'Generate different SKU for each variation', 'woocommerce-jetpack' ),
 					'as_variable_with_suffix' => __( 'SKU same as parent\'s product + variation letter suffix', 'woocommerce-jetpack' ),
 				),
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'type'     => 'sectionend',
@@ -353,8 +353,8 @@ class WCJ_SKU extends WCJ_Module {
 						'id'       => 'wcj_sku_prefix_cat_' . $product_category->term_id,
 						'default'  => '',
 						'type'     => 'text',
-						'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
-						'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+						'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
+						'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 					),
 					array(
 						'title'    => '',
@@ -362,8 +362,8 @@ class WCJ_SKU extends WCJ_Module {
 						'id'       => 'wcj_sku_suffix_cat_' . $product_category->term_id,
 						'default'  => '',
 						'type'     => 'text',
-//						'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
-//						'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+//						'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
+//						'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 					),
 				) );
 			}

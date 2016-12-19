@@ -155,7 +155,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	 * @since   2.5.0
 	 */
 	function save_meta_box_value( $option_value, $option_name, $module_id ) {
-		if ( true === apply_filters( 'wcj_get_option_filter', false, true ) ) {
+		if ( true === apply_filters( 'booster_get_option', false, true ) ) {
 			return $option_value;
 		}
 		if ( 'no' === $option_value ) {
@@ -321,8 +321,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 				'id'       => 'wcj_product_price_by_formula_total_params',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				/* 'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ), */
+				/* 'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ), */
 			),
 		);
 		$total_number = get_option( 'wcj_product_price_by_formula_total_params', 1 );

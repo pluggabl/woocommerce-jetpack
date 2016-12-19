@@ -74,16 +74,16 @@ class WCJ_Call_For_Price extends WCJ_module {
 	 */
 	public function on_empty_price( $price ) {
 		if ( ( get_option('wcj_call_for_price_text') !== '' ) && is_single( get_the_ID() ) ) {
-			return do_shortcode( apply_filters( 'wcj_get_option_filter', $this->default_empty_price_text, get_option('wcj_call_for_price_text') ) );
+			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option('wcj_call_for_price_text') ) );
 		}
 		if ( ( get_option('wcj_call_for_price_text_on_related') !== '' ) && ( is_single() ) && ( ! is_single( get_the_ID() ) ) ) {
-			return do_shortcode( apply_filters( 'wcj_get_option_filter', $this->default_empty_price_text, get_option('wcj_call_for_price_text_on_related') ) );
+			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option('wcj_call_for_price_text_on_related') ) );
 		}
 		if ( ( get_option('wcj_call_for_price_text_on_archive') !== '' ) && is_archive() ) {
-			return do_shortcode( apply_filters( 'wcj_get_option_filter', $this->default_empty_price_text, get_option('wcj_call_for_price_text_on_archive') ) );
+			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option('wcj_call_for_price_text_on_archive') ) );
 		}
 		if ( ( get_option('wcj_call_for_price_text_on_home') !== '' ) && is_front_page() ) {
-			return do_shortcode( apply_filters( 'wcj_get_option_filter', $this->default_empty_price_text, get_option('wcj_call_for_price_text_on_home') ) );
+			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option('wcj_call_for_price_text_on_home') ) );
 		}
 
 		// No changes
@@ -106,46 +106,46 @@ class WCJ_Call_For_Price extends WCJ_module {
 			array(
 				'title'     => __( 'Label to Show on Single', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'This sets the html to output on empty price. Leave blank to disable.', 'woocommerce-jetpack' ),
-				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'id'        => 'wcj_call_for_price_text',
 				'default'   => $this->default_empty_price_text,
 				'type'      => 'textarea',
 				'css'       => 'width:50%;min-width:300px;',
 				'custom_attributes'
-				            => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				            => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'title'     => __( 'Label to Show on Archives', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'This sets the html to output on empty price. Leave blank to disable.', 'woocommerce-jetpack' ),
-				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'id'        => 'wcj_call_for_price_text_on_archive',
 				'default'   => $this->default_empty_price_text,
 				'type'      => 'textarea',
 				'css'       => 'width:50%;min-width:300px;',
 				'custom_attributes'
-				            => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				            => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'title'     => __( 'Label to Show on Homepage', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'This sets the html to output on empty price. Leave blank to disable.', 'woocommerce-jetpack' ),
-				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'id'        => 'wcj_call_for_price_text_on_home',
 				'default'   => $this->default_empty_price_text,
 				'type'      => 'textarea',
 				'css'       => 'width:50%;min-width:300px;',
 				'custom_attributes'
-				            => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				            => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'title'     => __( 'Label to Show on Related', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'This sets the html to output on empty price. Leave blank to disable.', 'woocommerce-jetpack' ),
-				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'id'        => 'wcj_call_for_price_text_on_related',
 				'default'   => $this->default_empty_price_text,
 				'type'      => 'textarea',
 				'css'       => 'width:50%;min-width:300px;',
 				'custom_attributes'
-				            => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				            => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'title'     => __( 'Hide Sale! Tag', 'woocommerce-jetpack' ),

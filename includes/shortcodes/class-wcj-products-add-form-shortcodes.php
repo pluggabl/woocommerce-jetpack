@@ -38,7 +38,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			'sale_price_enabled'     => get_option( 'wcj_product_by_user_sale_price_enabled', 'no' ),
 			'cats_enabled'           => get_option( 'wcj_product_by_user_cats_enabled', 'no' ),
 			'tags_enabled'           => get_option( 'wcj_product_by_user_tags_enabled', 'no' ),
-			'image_enabled'          => apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_product_by_user_image_enabled', 'no' ) ),
+			'image_enabled'          => apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_user_image_enabled', 'no' ) ),
 
 			'desc_required'          => get_option( 'wcj_product_by_user_desc_required', 'no' ),
 			'short_desc_required'    => get_option( 'wcj_product_by_user_short_desc_required', 'no' ),
@@ -46,7 +46,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			'sale_price_required'    => get_option( 'wcj_product_by_user_sale_price_required', 'no' ),
 			'cats_required'          => get_option( 'wcj_product_by_user_cats_required', 'no' ),
 			'tags_required'          => get_option( 'wcj_product_by_user_tags_required', 'no' ),
-			'image_required'         => apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_product_by_user_image_required', 'no' ) ),
+			'image_required'         => apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_user_image_required', 'no' ) ),
 
 			'visibility'             => implode( ',', get_option( 'wcj_product_by_user_user_visibility', array() ) ),
 			'module'                 => 'product_by_user',

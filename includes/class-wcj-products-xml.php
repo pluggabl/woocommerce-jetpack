@@ -35,7 +35,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			add_action( 'admin_init',     array( $this, 'schedule_the_events' ) );
 			add_action( 'admin_init',     array( $this, 'wcj_create_products_xml' ) );
 			add_filter( 'cron_schedules', array( $this, 'cron_add_custom_intervals' ) );
-			$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
+			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				add_action( 'wcj_create_products_xml_hook_' . $i, array( $this, 'create_products_xml_cron' ), PHP_INT_MAX, 2 );
 			}
@@ -56,11 +56,11 @@ class WCJ_Products_XML extends WCJ_Module {
 			'daily',
 			'weekly',
 		);
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$event_hook = 'wcj_create_products_xml_hook_' . $i;
 			if ( 'yes' === get_option( 'wcj_products_xml_enabled_' . $i, 'yes' ) ) {
-				$selected_interval = apply_filters( 'wcj_get_option_filter', 'weekly', get_option( 'wcj_create_products_xml_period_' . $i, 'weekly' ) );
+				$selected_interval = apply_filters( 'booster_get_option', 'weekly', get_option( 'wcj_create_products_xml_period_' . $i, 'weekly' ) );
 				foreach ( $update_intervals as $interval ) {
 					$event_timestamp = wp_next_scheduled( $event_hook, array( $interval, $i ) );
 					if ( $selected_interval === $interval ) {
@@ -204,16 +204,16 @@ class WCJ_Products_XML extends WCJ_Module {
 				'default'  => 1,
 				'type'     => 'custom_number',
 				'desc_tip' => __( 'Press Save changes after you change this number.', 'woocommerce-jetpack' ),
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
-					apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
+					apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
 			),
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_products_xml_options',
 			),
 		);
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$products_xml_cron_desc = '';
 			if ( $this->is_enabled() ) {
@@ -294,8 +294,8 @@ class WCJ_Products_XML extends WCJ_Module {
 						'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
 						'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
 					),
-					'desc_tip' => __( 'Possible update periods are: every minute, hourly, twice daily, daily and weekly.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
-					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+					'desc_tip' => __( 'Possible update periods are: every minute, hourly, twice daily, daily and weekly.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc_no_link' ),
+					'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 				),
 				array(
 					'type'     => 'sectionend',

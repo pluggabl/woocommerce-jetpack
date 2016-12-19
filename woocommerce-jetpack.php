@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: http://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.5.9-dev
+Version: 2.5.9
 Author: Algoritmika Ltd
 Author URI: http://www.algoritmika.com
 Text Domain: woocommerce-jetpack
@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.5.9-dev-201612191157';
+	public $version = '2.5.9';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -78,7 +78,7 @@ final class WC_Jetpack {
 	/**
 	 * WC_Jetpack Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.5.9
 	 * @access  public
 	 */
 	public function __construct() {
@@ -103,11 +103,11 @@ final class WC_Jetpack {
 		// Settings
 		if ( is_admin() ) {
 			add_filter( 'woocommerce_get_settings_pages',                     array( $this, 'add_wcj_settings_tab' ), PHP_INT_MAX );
-			add_filter( 'get_wc_jetpack_plus_message',                        array( $this, 'get_wcj_plus_message' ), 100, 2 );
+			add_filter( 'booster_get_message',                                array( $this, 'get_wcj_plus_message' ), 100, 2 );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			add_action( 'admin_menu',                                         array( $this, 'jetpack_menu' ), 100 );
 			add_filter( 'admin_footer_text',                                  array( $this, 'admin_footer_text' ), 2 );
-//			add_action( 'admin_notices',                                      array( $this, 'name_changed_notice' ) );
+			add_action( 'admin_notices',                                      array( $this, 'check_plus_version' ) );
 		}
 
 		// Scripts
@@ -314,42 +314,43 @@ final class WC_Jetpack {
 	}
 
 	/**
-	 * name_changed_notice.
+	 * check_plus_version.
 	 *
-	 * @version 2.2.4
-	 * @since   2.2.4
+	 * @version 2.5.9
+	 * @since   2.5.9
 	 */
-	/* public function name_changed_notice() {
-
-		if ( ! is_admin() ) return;
-
-		//require_once( ABSPATH . 'wp-includes/pluggable.php' );
-		if ( ! wcj_is_user_role( 'administrator' ) ) return;
-
-		$user_id = get_current_user_id();
-
-		// Reset
-//		update_option( 'wcj_rename_message_hidden', 'no' );
-//		update_user_meta( $user_id, 'wcj_rename_message_hidden', 'no' );
-
-		if ( isset( $_GET['wcj_rename_message_hide'] ) ) {
-			// Hide message for current user
-			update_user_meta( $user_id, 'wcj_rename_message_hidden', 'yes' );
-//			update_option( 'wcj_rename_message_hidden', 'yes' );
-		} else {
-			$is_message_hidden = get_user_meta( $user_id, 'wcj_rename_message_hidden', true );
-//			$is_message_hidden = get_option( 'wcj_rename_message_hidden', 'no' );
-			if ( 'yes' != $is_message_hidden ) {
-				// Show message
-				$class = 'update-nag';
-				$message = __( '<strong>WooCommerce Jetpack</strong> plugin changed its name to <strong>Booster for WooCommerce</strong>.', 'woocommerce-jetpack' );
-				$button = '<a href="' . add_query_arg( 'wcj_rename_message_hide', '1' ) . '">'
-							. '<button>' . __( 'Got it! Hide this message', 'woocommerce-jetpack' ) . '</button>'
-							. '</a>';
-				echo '<div class="' . $class . '"><p>' . $message . '</p><p>' . $button . '</p></div>';
+	function check_plus_version() {
+		if ( ! is_admin() ) {
+			return;
+		}
+		// Check if Plus is installed and activated
+		$is_plus_active = false;
+		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) );
+		if ( is_multisite() ) {
+			$active_plugins = array_merge( $active_plugins, array_keys( get_site_option( 'active_sitewide_plugins', array() ) ) );
+		}
+		foreach ( $active_plugins as $active_plugin ) {
+			$active_plugin = explode( '/', $active_plugin );
+			if ( isset( $active_plugin[1] ) && 'woocommerce-jetpack-plus.php' === $active_plugin[1] ) {
+				$is_plus_active = true;
+				break;
 			}
 		}
-	} */
+		// Check Plus version
+		if ( $is_plus_active ) {
+			$plus_version = get_option( 'booster_plus_version', false );
+			$required_plus_version = '1.1.0';
+			if ( 0 != version_compare( $plus_version, $required_plus_version ) ) {
+				$class = 'notice notice-error';
+				$message = sprintf(
+					__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin to version %s. Please visit <a href="%s">your account</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
+					$required_plus_version,
+					'http://booster.io/my-account/?utm_source=plus_update'
+				);
+				echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
+			}
+		}
+	}
 
 	/**
 	 * admin_footer_text
@@ -359,10 +360,6 @@ final class WC_Jetpack {
 	function admin_footer_text( $footer_text ) {
 		if ( isset( $_GET['page'] ) ) {
 			if ( 'wcj-tools' === $_GET['page'] || ( 'wc-settings' === $_GET['page'] && isset( $_GET['tab'] ) && 'jetpack' === $_GET['tab'] ) ) {
-				/* $rocket_icons = '';
-				for ( $i = 0; $i < 5; $i++ ) {
-					$rocket_icons .= wcj_get_rocket_icon();
-				} */
 				$rocket_icons = wcj_get_5_rocket_image();
 				$rating_link = '<a href="https://wordpress.org/support/view/plugin-reviews/woocommerce-jetpack?filter=5#postform" target="_blank">' . $rocket_icons . '</a>';
 				return sprintf(
@@ -401,7 +398,7 @@ final class WC_Jetpack {
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
 			'<a href="' . esc_url( 'http://booster.io/' )                       . '">' . __( 'Docs', 'woocommerce' ) . '</a>',
 		);
-		if ( 1 === apply_filters( 'wcj_get_option_filter', 1, '' ) ) {
+		if ( 1 === apply_filters( 'booster_get_option', 1, '' ) ) {
 			$custom_links[] = '<a href="' . esc_url( 'http://booster.io/plus/' ) . '">' . __( 'Unlock all', 'woocommerce' ) . '</a>';
 		}
 		return array_merge( $custom_links, $links );

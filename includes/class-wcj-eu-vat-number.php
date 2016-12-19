@@ -217,7 +217,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		if ( isset( $_POST['wcj_eu_vat_number_to_check'] ) && '' != $_POST['wcj_eu_vat_number_to_check'] ) {
 			$eu_vat_number_to_check = substr( $_POST['wcj_eu_vat_number_to_check'], 2 );
 			$eu_vat_number_country_to_check = substr( $_POST['wcj_eu_vat_number_to_check'], 0, 2 );
-			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_eu_vat_number_check_ip_location_country', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_eu_vat_number_check_ip_location_country', 'no' ) ) ) {
 				$location = WC_Geolocation::geolocate_ip();
 				if ( empty( $location['country'] ) ) {
 					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
@@ -252,7 +252,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			isset( $_SESSION['wcj_is_eu_vat_number_valid'] ) && true === $_SESSION['wcj_is_eu_vat_number_valid'] && isset( $_SESSION['wcj_eu_vat_number_to_check'] )
 		) {
 			$preserve_base_country_check_passed = true;
-			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_eu_vat_number_preserve_in_base_country', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_eu_vat_number_preserve_in_base_country', 'no' ) ) ) {
 				$location = wc_get_base_location();
 				if ( empty( $location['country'] ) ) {
 					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
@@ -439,9 +439,9 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				'id'      => 'wcj_eu_vat_number_preserve_in_base_country',
 				'default' => 'no',
 				'type'    => 'checkbox',
-				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				           => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			/* array(
 				'title'   => '',
@@ -457,9 +457,9 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				'id'      => 'wcj_eu_vat_number_check_ip_location_country',
 				'default' => 'no',
 				'type'    => 'checkbox',
-				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes'
-				           => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				           => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			/* array(
 				'title'   => '',

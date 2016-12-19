@@ -143,9 +143,9 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'desc_tip' => __( 'You will be able to change this number later as well as define the fields, for each product individually, in product\'s "Edit".', 'woocommerce-jetpack' ),
 				'default'  => 1,
 				'type'     => 'number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array(
 						'step' => '1',
 						'min'  => '1',
@@ -180,9 +180,9 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'id'       => 'wcj_product_input_fields_global_total_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array(
 						'step' => '1',
 						'min'  => '1',
@@ -192,7 +192,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 		);
 
 		$options = $this->get_options();
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_product_input_fields_global_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_input_fields_global_total_number', 1 ) ); $i++ ) {
 			foreach( $options as $option ) {
 				$settings[] = array(
 					'title'    => ( 'wcj_product_input_fields_enabled_global_' === $option['id'] ) ? __( 'Product Input Field', 'woocommerce-jetpack' ) . ' #' . $i : '',

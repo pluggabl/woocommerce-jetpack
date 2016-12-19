@@ -147,7 +147,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		$tooltip_html = ( isset( $value['desc_tip'] ) && '' != $value['desc_tip'] ) ? '<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 //		$custom_attributes = ( is_array( $value['custom_attributes'] ) ) ? $value['custom_attributes'] : array();
 		$description = ' <span class="description">' . $value['desc'] . '</span>';
-		$save_button = apply_filters( 'wcj_get_option_filter', '', ' <input name="save" class="button-primary" type="submit" value="' . __( 'Save changes', 'woocommerce' ) . '">' );
+		$save_button = apply_filters( 'booster_get_option', '', ' <input name="save" class="button-primary" type="submit" value="' . __( 'Save changes', 'woocommerce' ) . '">' );
 
 		// Custom attribute handling
 		$custom_attributes = array();
@@ -525,7 +525,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		global $current_section;
 		$settings = $this->get_settings( $current_section );
 		WC_Admin_Settings::save_fields( $settings );
-		echo apply_filters('get_wc_jetpack_plus_message', '', 'global' );
+		echo apply_filters('booster_get_message', '', 'global' );
 		do_action( 'woojetpack_after_settings_save', $this->get_sections(), $current_section );
 	}
 

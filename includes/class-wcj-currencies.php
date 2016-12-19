@@ -57,7 +57,7 @@ class WCJ_Currencies extends WCJ_Module {
 		if ( 'yes' === get_option( 'wcj_currency_hide_symbol' ) ) {
 			return '';
 		}
-//		return apply_filters( 'wcj_get_option_filter', wcj_get_currency_symbol( $currency ), get_option( 'wcj_currency_' . $currency, $currency_symbol ) ); // TODO: custom currency
+//		return apply_filters( 'booster_get_option', wcj_get_currency_symbol( $currency ), get_option( 'wcj_currency_' . $currency, $currency_symbol ) ); // TODO: custom currency
 		return wcj_get_currency_symbol( $currency );
 	}
 
@@ -76,9 +76,9 @@ class WCJ_Currencies extends WCJ_Module {
 					'id'       => 'wcj_currency_' . get_woocommerce_currency(),
 					'type'     => 'text',
 					'default'  => get_woocommerce_currency_symbol(),
-					'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+					'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 					'css'      => 'width: 50px;',
-					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+					'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 				);
 			}
 			$updated_settings[] = $section;
@@ -116,11 +116,11 @@ class WCJ_Currencies extends WCJ_Module {
 		foreach ( $currency_names as $currency_code => $currency_name ) {
 			$settings[] = array(
 				'title'     => $currency_name,
-				'desc_tip'  => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
+				'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
 				'id'        => 'wcj_currency_' . $currency_code,
 				'default'   => $currency_symbols[ $currency_code ],
 				'type'      => 'text',
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 			);
 		}
 
@@ -140,11 +140,11 @@ class WCJ_Currencies extends WCJ_Module {
 				'id'        => 'wcj_currency_custom_currency_total_number',
 				'default'   => 1,
 				'type'      => 'custom_number',
-				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 		);
 
-		$custom_currency_total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
+		$custom_currency_total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
 		for ( $i = 1; $i <= $custom_currency_total_number; $i++) {
 
 			$settings[] = array(

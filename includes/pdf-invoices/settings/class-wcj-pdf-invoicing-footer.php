@@ -53,9 +53,9 @@ class WCJ_PDF_Invoicing_Footer extends WCJ_Module {
 					'default'  => 'Page %page_number% / %total_pages%',
 					'type'     => 'textarea',
 					'css'      => 'width:66%;min-width:300px;height:165px;',
-					'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+					'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 					'desc_tip' => __( 'You can use HTML here, as well as any WordPress shortcodes. There is two more predefined values you can use: %page_number% and %total_pages%.', 'woocommerce-jetpack' ),
-					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+					'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 				),
 				array(
 					'title'    => __( 'Footer Text Color', 'woocommerce-jetpack' ),

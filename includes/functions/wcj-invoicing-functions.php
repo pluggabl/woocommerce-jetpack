@@ -66,7 +66,7 @@ if ( ! function_exists( 'wcj_get_enabled_invoice_types' ) ) {
 		$invoice_types = wcj_get_invoice_types();
 		$enabled_invoice_types = array();
 		foreach ( $invoice_types as $k => $invoice_type ) {
-			$z = ( 0 === $k ) ? get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_create_on' ) : apply_filters( 'wcj_get_option_filter', 'disabled', get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_create_on' ) );
+			$z = ( 0 === $k ) ? get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_create_on' ) : apply_filters( 'booster_get_option', 'disabled', get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_create_on' ) );
 			if ( 'disabled' === $z )
 				continue;
 			$enabled_invoice_types[] = $invoice_type;

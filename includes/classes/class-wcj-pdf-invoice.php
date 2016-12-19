@@ -120,14 +120,14 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$pdf->setFontSubsetting( true );
 
 		// Set font
-		/* if ( 'DroidSansFallback' === apply_filters( 'wcj_get_option_filter', 'dejavusans', get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ) ) ) {
+		/* if ( 'DroidSansFallback' === apply_filters( 'booster_get_option', 'dejavusans', get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ) ) ) {
 			$pdf->addTTFfont( wcj_plugin_path() . '/includes/lib/tcpdf_min/fonts/' . 'DroidSansFallback.ttf' );
 		} */
 		// dejavusans is a UTF-8 Unicode font, if you only need to print standard ASCII chars, you can use core fonts like  helvetica or times to reduce file size.
 		$pdf->SetFont(
-			apply_filters( 'wcj_get_option_filter', 'dejavusans', get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ) ),
+			apply_filters( 'booster_get_option', 'dejavusans', get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ) ),
 			'',
-			apply_filters( 'wcj_get_option_filter', 8, get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_size', 8 ) ),
+			apply_filters( 'booster_get_option', 8, get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_size', 8 ) ),
 			'',
 			true );
 

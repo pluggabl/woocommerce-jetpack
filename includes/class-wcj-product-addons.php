@@ -183,7 +183,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$addons = array();
 		// All Products
 		if ( 'yes' === get_option( 'wcj_product_addons_all_products_enabled', 'no' ) ) {
-			$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_product_addons_all_products_total_number', 1 ) );
+			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_addons_all_products_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( 'yes' === get_option( 'wcj_product_addons_all_products_enabled_' . $i, 'yes' ) ) {
 					$addons[] = array(
@@ -562,14 +562,14 @@ class WCJ_Product_Addons extends WCJ_Module {
 				'id'       => 'wcj_product_addons_all_products_total_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array( 'step' => '1', 'min'  => '0', )
 				),
 			),
 		) );
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_product_addons_all_products_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_addons_all_products_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$settings = array_merge( $settings, array(
 				array(

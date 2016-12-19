@@ -38,7 +38,7 @@ class WCJ_Sorting extends WCJ_Module {
 
 			if ( 'yes' === get_option( 'wcj_sorting_remove_all_enabled' ) ) {
 				// Remove sorting
-				add_action( apply_filters( 'wcj_get_option_filter', 'wcj_empty_action', 'init' ), array( $this, 'remove_sorting' ), 100 );
+				add_action( apply_filters( 'booster_get_option', 'wcj_empty_action', 'init' ), array( $this, 'remove_sorting' ), 100 );
 			}
 
 			// Settings: Add 'Remove All Sorting' checkbox to WooCommerce > Settings > Products
@@ -69,8 +69,8 @@ class WCJ_Sorting extends WCJ_Module {
 					'type'     => 'checkbox',
 					'default'  => 'no',
 					'desc'     => __( 'Completely remove sorting from the shop front end', 'woocommerce-jetpack' ),
-					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
-					'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+					'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+					'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 				);
 			}
 			$updated_settings[] = $section;
@@ -130,12 +130,12 @@ class WCJ_Sorting extends WCJ_Module {
 				$args['meta_key'] = '';
 			break;
 			case 'sku_asc':
-				$args['orderby']  = ( 'no' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ? 'meta_value' : 'meta_value_num';
+				$args['orderby']  = ( 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ? 'meta_value' : 'meta_value_num';
 				$args['order']    = 'asc';
 				$args['meta_key'] = '_sku';
 			break;
 			case 'sku_desc':
-				$args['orderby']  = ( 'no' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ? 'meta_value' : 'meta_value_num';
+				$args['orderby']  = ( 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ? 'meta_value' : 'meta_value_num';
 				$args['order']    = 'desc';
 				$args['meta_key'] = '_sku';
 			break;
@@ -169,11 +169,11 @@ class WCJ_Sorting extends WCJ_Module {
 			array(
 				'title'     => __( 'Remove All Sorting', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Remove all sorting (including WooCommerce default)', 'woocommerce-jetpack' ),
-				'desc_tip'  => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
 				'id'        => 'wcj_sorting_remove_all_enabled',
 				'default'   => 'no',
 				'type'      => 'checkbox',
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'type'      => 'sectionend',
@@ -233,8 +233,8 @@ class WCJ_Sorting extends WCJ_Module {
 				'id'        => 'wcj_sorting_by_sku_num_enabled',
 				'default'   => 'no',
 				'type'      => 'checkbox',
-				'desc_tip'  => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'title'     => __( 'Sort by stock quantity', 'woocommerce-jetpack' ),

@@ -156,7 +156,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				array(
 					'title'     => '',
 					'desc'      => __( 'Fee (or discount) type.', 'woocommerce-jetpack' ),
-					'desc_tip'  => __( 'Percent or fixed value.', 'woocommerce-jetpack' )/*  . ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ) */,
+					'desc_tip'  => __( 'Percent or fixed value.', 'woocommerce-jetpack' )/*  . ' ' . apply_filters( 'booster_get_message', '', 'desc_no_link' ) */,
 					'id'        => 'wcj_gateways_fees_type_' . $key,
 					'default'   => 'fixed',
 					'type'      => 'select',

@@ -32,7 +32,7 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 			add_filter( 'woocommerce_shipping_calculator_enable_postcode', array( $this, 'enable_postcode' ) );
 			add_action( 'wp_head',                                         array( $this, 'add_custom_styles' ) );
 //			add_filter( 'gettext',                                         array( $this, 'change_labels' ), 20, 3 );
-			if ( 'yes' === apply_filters( 'wcj_get_option_filter', 'no', get_option( 'wcj_shipping_calculator_labels_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_shipping_calculator_labels_enabled', 'no' ) ) ) {
 				add_action( 'wp_enqueue_scripts',                          array( $this, 'change_labels' ) );
 			}
 		}
@@ -184,24 +184,24 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 				'id'       => 'wcj_shipping_calculator_labels_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'title'    => __( 'Label for Calculate Shipping', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_calculator_label_calculate_shipping',
 				'default'  => __( 'Calculate Shipping', 'woocommerce-jetpack' ),
 				'type'     => 'text',
-				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'title'    => __( 'Label for Update Totals', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_calculator_label_update_totals',
 				'default'  => __( 'Update Totals', 'woocommerce-jetpack' ),
 				'type'     => 'text',
-				'desc_tip' => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc_no_link' ),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'type'     => 'sectionend',

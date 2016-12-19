@@ -34,7 +34,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 			$single_or_archive_array = array( 'single', 'archive' );
 			foreach ( $single_or_archive_array as $single_or_archive ) {
 				$default_hook = ( 'single' === $single_or_archive ) ? 'woocommerce_after_single_product_summary' : 'woocommerce_after_shop_loop_item_title';
-				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
 					add_action(
 						get_option( 'wcj_product_custom_info_hook_' . $single_or_archive . '_' . $i, $default_hook ),
 						array( $this, 'add_product_custom_info' ),
@@ -56,7 +56,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 		$single_or_archive_array = array( 'single', 'archive' );
 		foreach ( $single_or_archive_array as $single_or_archive ) {
 			$default_hook = ( 'single' === $single_or_archive ) ? 'woocommerce_after_single_product_summary' : 'woocommerce_after_shop_loop_item_title';
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
 				if (
 					'' != get_option( 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i ) &&
 					$current_filter === get_option( 'wcj_product_custom_info_hook_' . $single_or_archive . '_' . $i, $default_hook ) &&
@@ -116,15 +116,15 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 					'id'       => 'wcj_product_custom_info_total_number_' . $single_or_archive,
 					'default'  => 1,
 					'type'     => 'custom_number',
-					'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-					'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ),
+					'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+					'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 				),
 				array(
 					'type'     => 'sectionend',
 					'id'       => 'wcj_product_custom_info_options_' . $single_or_archive,
 				),
 			) );
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
 				$settings = array_merge( $settings, array(
 					array(
 						'title'    => __( 'Info Block', 'woocommerce-jetpack' ) . ' #' . $i . ' - ' . $single_or_archive_desc,

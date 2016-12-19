@@ -302,7 +302,7 @@ class WCJ_Orders extends WCJ_Module {
 		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
 			$columns['country'] = __( 'Country', 'woocommerce-jetpack' );
 		}
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
 				$columns[ 'wcj_orders_custom_column_' . $i ] = get_option( 'wcj_orders_list_custom_columns_label_' . $i, '' );
@@ -334,7 +334,7 @@ class WCJ_Orders extends WCJ_Module {
 				? $this->wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code )
 				: wcj_get_country_name_by_code( $country_code );
 		}
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
 				if ( 'wcj_orders_custom_column_' . $i === $column ) {
@@ -448,14 +448,14 @@ class WCJ_Orders extends WCJ_Module {
 				'id'       => 'wcj_orders_list_custom_columns_total_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array( 'step' => '1', 'min'  => '0', )
 				),
 			),
 		);
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$settings = array_merge( $settings, array(
 				array(

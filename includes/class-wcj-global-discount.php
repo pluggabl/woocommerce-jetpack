@@ -125,7 +125,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 * @since   2.5.7
 	 */
 	function add_global_discount_any_price( $price_type, $price, $_product ) {
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( ! $this->check_if_applicable( $_product, $i ) ) {
 				continue; // no changes by current discount group
@@ -183,7 +183,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$wcj_global_discount_price_hash = array();
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 		$wcj_global_discount_price_hash['total_number'] = $total_number;
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$wcj_global_discount_price_hash[ 'enabled_' . $i ] = get_option( 'wcj_global_discount_sale_enabled_'          . $i, 'yes' );
@@ -222,16 +222,16 @@ class WCJ_Global_Discount extends WCJ_Module {
 				'default'  => 1,
 				'type'     => 'custom_number',
 				'desc_tip' => __( 'Press Save changes after you change this number.', 'woocommerce-jetpack' ),
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ?
-					apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
+					apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
 			),
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_global_discount_options',
 			),
 		);
-		$total_number = apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$settings = array_merge( $settings, array(
 				array(

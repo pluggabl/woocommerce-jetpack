@@ -383,15 +383,15 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				'type'     => 'select',
 				'class'    => 'chosen_select',
 				'options'  => $create_on_array,
-				'desc'     => ( 0 === $k ) ? '' : apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
-				'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc'     => ( 0 === $k ) ? '' : apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'booster_get_message', '', 'disabled' ),
 			);
 			$settings[] = array(
 				'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_skip_zero_total',
 				'default'  => 'no',
 				'type'     => 'checkbox',
-				'desc'     => __( 'Do not create if order total equals zero', 'woocommerce-jetpack' ),// . ( ( 0 === $k ) ? '' : ' ' . apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) ),
-				'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'desc'     => __( 'Do not create if order total equals zero', 'woocommerce-jetpack' ),// . ( ( 0 === $k ) ? '' : ' ' . apply_filters( 'booster_get_message', '', 'desc' ) ),
+				'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'booster_get_message', '', 'disabled' ),
 			);
 		}
 

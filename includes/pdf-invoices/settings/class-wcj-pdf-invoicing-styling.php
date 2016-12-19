@@ -59,7 +59,7 @@ class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
 
 			$settings[] = array(
 				'title'    => __( 'Font Family', 'woocommerce-jetpack' ),
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_general_font_family',
 				'default'  => 'dejavusans',
 				'type'     => 'select',
@@ -73,7 +73,7 @@ class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
 					'cordiaupc'         => 'CordiaUPC',
 					'thsarabun'         => 'THSarabunPSK',
 				),
-				'custom_attributes' => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			);
 
 			$settings[] = array(

@@ -111,7 +111,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 		$max_qty_level = 1;
 		$discount      = 0;
 		if ( wcj_is_product_wholesale_enabled_per_product( $product_id ) ) {
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) ); $i++ ) {
 				$level_qty = get_post_meta( $product_id, '_' . 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, true );
 				if ( $quantity >= $level_qty && $level_qty >= $max_qty_level ) {
 					$max_qty_level = $level_qty;
@@ -119,7 +119,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				}
 			}
 		} else {
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
 				$level_qty = get_option( 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX );
 				if ( $quantity >= $level_qty && $level_qty >= $max_qty_level ) {
 					$max_qty_level = $level_qty;
@@ -278,11 +278,11 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'default' => 0,
 				'type'    => 'number',
 				'title'   => __( 'Number of levels', 'woocommerce-jetpack' ),
-				'tooltip' => __( 'Save product after you change this number.', 'woocommerce-jetpack' ) . apply_filters( 'wcj_get_option_filter', ' ' . __( 'Free Booster\'s version is limited to one level maximum. Please visit http://booster.io to get full version.', 'woocommerce-jetpack' ), '' ),
-				'custom_attributes' => 'min="0" max="' . apply_filters( 'wcj_get_option_filter', 1, 1000 ) . '"',
+				'tooltip' => __( 'Save product after you change this number.', 'woocommerce-jetpack' ) . apply_filters( 'booster_get_option', ' ' . __( 'Free Booster\'s version is limited to one level maximum. Please visit http://booster.io to get full version.', 'woocommerce-jetpack' ), '' ),
+				'custom_attributes' => 'min="0" max="' . apply_filters( 'booster_get_option', 1, 1000 ) . '"',
 			),
 		);
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number', true ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number', true ) ); $i++ ) {
 			$options = array_merge( $options, array(
 				/* array(
 					'type'    => 'title',
@@ -313,11 +313,11 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 						'default' => 0,
 						'type'    => 'number',
 						'title'   => __( 'Number of levels', 'woocommerce-jetpack' ) . ' [' . $user_role_key . ']',
-						'tooltip' => __( 'Save product after you change this number.', 'woocommerce-jetpack' ) . apply_filters( 'wcj_get_option_filter', ' ' . __( 'Free Booster\'s version is limited to one level maximum. Please visit http://booster.io to get full version.', 'woocommerce-jetpack' ), '' ),
-						'custom_attributes' => 'min="0" max="' . apply_filters( 'wcj_get_option_filter', 1, 1000 ) . '"',
+						'tooltip' => __( 'Save product after you change this number.', 'woocommerce-jetpack' ) . apply_filters( 'booster_get_option', ' ' . __( 'Free Booster\'s version is limited to one level maximum. Please visit http://booster.io to get full version.', 'woocommerce-jetpack' ), '' ),
+						'custom_attributes' => 'min="0" max="' . apply_filters( 'booster_get_option', 1, 1000 ) . '"',
 					),
 				) );
-				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number_' . $user_role_key, true ) ); $i++ ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number_' . $user_role_key, true ) ); $i++ ) {
 					$options = array_merge( $options, array(
 						/* array(
 							'type'    => 'title',
@@ -456,14 +456,14 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				'id'       => 'wcj_wholesale_price_levels_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array('step' => '1', 'min' => '1', ) ),
 				'css'      => 'width:100px;',
 			),
 		);
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
 			$settings[] = array(
 				'title'    => __( 'Min quantity', 'woocommerce-jetpack' ) . ' #' . $i,
 				'desc'     => __( 'Minimum quantity to apply discount', 'woocommerce-jetpack' ),
@@ -511,14 +511,14 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 						'id'      => 'wcj_wholesale_price_levels_number_' . $user_role_key,
 						'default' => 1,
 						'type'    => 'custom_number',
-						'desc'    => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+						'desc'    => apply_filters( 'booster_get_message', '', 'desc' ),
 						'custom_attributes' => array_merge(
-							is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+							is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 							array('step' => '1', 'min' => '1', ) ),
 						'css'     => 'width:100px;',
 					),
 				) );
-				for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number_' . $user_role_key, 1 ) ); $i++ ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_wholesale_price_levels_number_' . $user_role_key, 1 ) ); $i++ ) {
 					$settings = array_merge( $settings, array(
 						array(
 							'title'   => __( 'Min quantity', 'woocommerce-jetpack' ) . ' #' . $i . ' [' . $user_role_key . ']',

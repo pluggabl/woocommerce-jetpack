@@ -55,7 +55,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 			add_filter( 'woocommerce_form_field_' . 'text',             array( $this, 'woocommerce_form_field_type_number' ), PHP_INT_MAX, 4 );
 
 			add_filter( 'woocommerce_customer_meta_fields',             array( $this, 'add_checkout_custom_fields_customer_meta_fields' ) );
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 				if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 					$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
 					$the_key     = 'wcj_checkout_field_' . $i;
@@ -73,7 +73,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 * @since   2.4.5
 	 */
 	function add_checkout_custom_fields_customer_meta_fields( $fields ) {
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
 				$the_key     = 'wcj_checkout_field_' . $i;
@@ -159,7 +159,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 * add_custom_fields_to_store_exporter.
 	 */
 	public function add_custom_fields_to_store_exporter( $fields ) {
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
 				$the_key = 'wcj_checkout_field_' . $i;
@@ -244,7 +244,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 * add_custom_shipping_fields_to_formatted_address.
 	 *
 	public function add_custom_shipping_fields_to_formatted_address( $fields, $order ) {
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			//if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
 				if ( 'shipping' === $the_section ) {
@@ -262,7 +262,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 * @version 2.4.7
 	 */
 	public function update_custom_checkout_fields_order_meta( $order_id ) {
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
 				$the_type = get_option( 'wcj_checkout_custom_field_type_' . $i );
@@ -387,7 +387,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 * @version 2.4.7
 	 */
 	public function add_woocommerce_admin_fields( $fields, $section ) {
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
 				if ( $section != $the_section ) {
@@ -490,7 +490,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 */
 	public function add_custom_checkout_fields( $fields ) {
 
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 
@@ -638,9 +638,9 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				'id'        => 'wcj_checkout_custom_fields_total_number',
 				'default'   => 1,
 				'type'      => 'custom_number',
-				'desc'      => apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) ) ? apply_filters( 'get_wc_jetpack_plus_message', '', 'readonly' ) : array(),
+					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 					array(
 						'step' => '1',
 						'min'  => '1',
@@ -660,7 +660,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 		$products_options = apply_filters( 'wcj_get_products_filter', array() );
 
-		for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			$settings = array_merge( $settings,
 				array(
 					array(

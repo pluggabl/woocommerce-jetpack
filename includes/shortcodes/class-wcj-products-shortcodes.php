@@ -614,13 +614,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 
 		$wholesale_price_levels = array();
 		if ( wcj_is_product_wholesale_enabled_per_product( $this->the_product->id ) ) {
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) ); $i++ ) {
 				$level_qty                = get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, true );
 				$discount                 = get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_level_discount' . $role_option_name_addon . '_' . $i, true );
 				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => $discount, );
 			}
 		} else {
-			for ( $i = 1; $i <= apply_filters( 'wcj_get_option_filter', 1, get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
 				$level_qty                = get_option( 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX );
 				$discount                 = get_option( 'wcj_wholesale_price_level_discount_percent' . $role_option_name_addon . '_' . $i, 0 );
 				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => $discount, );

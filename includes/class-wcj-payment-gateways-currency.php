@@ -287,12 +287,12 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 				'manual' => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
 				'auto'   => __( 'Automatically via Currency Exchange Rates module', 'woocommerce-jetpack' ),
 			),
-			'desc'     => ( '' == apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ) ) ?
+			'desc'     => ( '' == apply_filters( 'booster_get_message', '', 'desc' ) ) ?
 				__( 'Visit', 'woocommerce-jetpack' ) . ' <a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
 				:
-				apply_filters( 'get_wc_jetpack_plus_message', '', 'desc' ),
+				apply_filters( 'booster_get_message', '', 'desc' ),
 			'custom_attributes'
-			           => apply_filters( 'get_wc_jetpack_plus_message', '', 'disabled' ),
+			           => apply_filters( 'booster_get_message', '', 'disabled' ),
 		);
 
 		$settings[] = array(
