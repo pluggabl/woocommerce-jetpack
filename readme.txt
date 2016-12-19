@@ -156,6 +156,7 @@ D   * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `LT` - Lithuani
 ~D  * Dev - EMAILS & MISC. - Export - Customers - "Export Customers Fields" option added.
 ~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - `WP_Query` optimized to return `ids` only.
 ~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - "Export Customers from Orders Fields" option added.
+    * Dev - EMAILS & MISC. - Export - Customers from Orders - New fields added: "Billing Company", "Billing Address 1", "Billing Address 2", "Billing City", "Billing State", "Billing Postcode", "Billing Country", "Billing Phone".
 ~D  * Dev - EMAILS & MISC. - Export - Orders - "Additional Export Orders Fields" options added.
 ~   * Dev - EMAILS & MISC. - Export - Orders - Corresponding data is gathered only if "Order Items" or "Order Items Product Input Fields" columns are enabled.
 -   * Dev - EMAILS & MISC. - Export - Orders - Item meta info added to "Order Items" column.
