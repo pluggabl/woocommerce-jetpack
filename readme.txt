@@ -37,7 +37,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Add to Cart Labels* - Change text for Add to Cart button by WooCommerce product type, by product category or for individual products.
 * *Call for Price* - Create any custom price label for all WooCommerce products with empty price.
 * *Custom Price Labels* - Create any custom price label for any WooCommerce product.
-* *Free Price* - WooCommerce free price.
+* *Free Price* - WooCommerce free price labels.
 * *More Button Labels* - Set WooCommerce "Place order" button label.
 
 **Products**
@@ -139,30 +139,30 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.5.9 - 19/12/2016 =
-~   * Dev - `WCJ_Module` - "Reset settings" button now uses JS confirmation; `wp_safe_redirect` added.
-~D  * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_meta` column added.
+    * Dev - `WCJ_Module` - "Reset settings" button now uses JS confirmation; `wp_safe_redirect` added.
+D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_meta` column added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `quantity_prefix` attribute added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `LT` - Lithuanian language function added.
     * Fix - Shortcodes - Orders - `[wcj_order_total_in_words]` - `BG` - not including national currency; Upper-case for first letter.
     * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Add Countries Flags Images to Select Drop-Down Box - Flag image missing bug fixed.
-~$D * Dev - BUTTON & PRICE LABELS - Free Price - Initial module release.
-~   * Fix - PRODUCTS - Product Cost Price - Checking if order prices included taxes, when calculating "Profit" column.
-~D  * Dev - PDF INVOICING & PACKING SLIPS - General - "Do not create if order total equals zero" option added.
-~D  * Dev - EMAILS & MISC. - Export - "Export Orders Items" tool added.
-~   * Dev - EMAILS & MISC. - Export - "Filter by All Fields" added.
-~D  * Dev - EMAILS & MISC. - Export - "Download XML" button added.
-~   * Dev - EMAILS & MISC. - Export - Code refactoring.
-~D  * Dev - EMAILS & MISC. - Export - Customers - New customer fields added: "Login", "Nicename", "URL", "Registered", "Display Name".
-~D  * Dev - EMAILS & MISC. - Export - Customers - "Export Customers Fields" option added.
-~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - `WP_Query` optimized to return `ids` only.
-~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - "Export Customers from Orders Fields" option added.
-    * Dev - EMAILS & MISC. - Export - Customers from Orders - New fields added: "Billing Company", "Billing Address 1", "Billing Address 2", "Billing City", "Billing State", "Billing Postcode", "Billing Country", "Billing Phone".
-~D  * Dev - EMAILS & MISC. - Export - Orders - "Additional Export Orders Fields" options added.
-~   * Dev - EMAILS & MISC. - Export - Orders - Corresponding data is gathered only if "Order Items" or "Order Items Product Input Fields" columns are enabled.
--   * Dev - EMAILS & MISC. - Export - Orders - Item meta info added to "Order Items" column.
-~D  * Dev - EMAILS & MISC. - Export - Products - New product fields added: "Price Including Tax", "Price Excluding Tax", "Display Price", "Average Rating", "Rating Count", "Review Count", "Categories", "Tags", "Dimensions", "Formatted Name", "Availability", "Availability Class".
+$D  * Dev - BUTTON & PRICE LABELS - Free Price - Initial module release.
+    * Fix - PRODUCTS - Product Cost Price - Checking if order prices included taxes, when calculating "Profit" column.
+D   * Dev - PDF INVOICING & PACKING SLIPS - General - "Do not create if order total equals zero" option added.
+D   * Dev - EMAILS & MISC. - Export - "Export Orders Items" tool added.
+    * Dev - EMAILS & MISC. - Export - "Filter by All Fields" added.
+D   * Dev - EMAILS & MISC. - Export - "Download XML" button added.
+    * Dev - EMAILS & MISC. - Export - Code refactoring.
+D   * Dev - EMAILS & MISC. - Export - Customers - New customer fields added: "Login", "Nicename", "URL", "Registered", "Display Name".
+D   * Dev - EMAILS & MISC. - Export - Customers - "Export Customers Fields" option added.
+    * Dev - EMAILS & MISC. - Export - Customers from Orders - `WP_Query` optimized to return `ids` only.
+D   * Dev - EMAILS & MISC. - Export - Customers from Orders - "Export Customers from Orders Fields" option added.
+D   * Dev - EMAILS & MISC. - Export - Customers from Orders - New fields added: "Billing Company", "Billing Address 1", "Billing Address 2", "Billing City", "Billing State", "Billing Postcode", "Billing Country", "Billing Phone".
+D   * Dev - EMAILS & MISC. - Export - Orders - "Additional Export Orders Fields" options added.
+    * Dev - EMAILS & MISC. - Export - Orders - Corresponding data is gathered only if "Order Items" or "Order Items Product Input Fields" columns are enabled.
+    * Dev - EMAILS & MISC. - Export - Orders - Item meta info added to "Order Items" column.
+D   * Dev - EMAILS & MISC. - Export - Products - New product fields added: "Price Including Tax", "Price Excluding Tax", "Display Price", "Average Rating", "Rating Count", "Review Count", "Categories", "Tags", "Dimensions", "Formatted Name", "Availability", "Availability Class".
     * Tweak - Shortcodes - Orders - `[wcj_order_items_table]` - `get_meta_info` - replaced with `wcj_get_order_item_meta_info()`.
-D   * Tweak - SHIPPING & ORDERS - Left to Free Shipping - Description updated.
+    * Tweak - SHIPPING & ORDERS - Left to Free Shipping - Description updated.
     * Tweak - EMAILS & MISC. - Export - Divided settings into separate sections.
 
 = 2.5.8 - 09/12/2016 =

@@ -295,6 +295,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.4
+	 * @todo    add "Additional Export Fields" for "Customers from Orders" and (maybe) "Customers"
 	 */
 	function get_settings() {
 		$settings = array(
