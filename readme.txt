@@ -152,14 +152,14 @@ D   * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `LT` - Lithuani
 ~   * Dev - EMAILS & MISC. - Export - "Filter by All Fields" added.
 ~D  * Dev - EMAILS & MISC. - Export - "Download XML" button added.
 ~   * Dev - EMAILS & MISC. - Export - Code refactoring.
-~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - `WP_Query` optimized to return `ids` only.
-~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - "Export Customers from Orders Fields" option added.
 ~D  * Dev - EMAILS & MISC. - Export - Customers - New customer fields added: "Login", "Nicename", "URL", "Registered", "Display Name".
 ~D  * Dev - EMAILS & MISC. - Export - Customers - "Export Customers Fields" option added.
-~D  * Dev - EMAILS & MISC. - Export - Products - New product fields added: "Price Including Tax", "Price Excluding Tax", "Display Price", "Average Rating", "Rating Count", "Review Count", "Categories", "Tags", "Dimensions", "Formatted Name", "Availability", "Availability Class".
+~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - `WP_Query` optimized to return `ids` only.
+~D  * Dev - EMAILS & MISC. - Export - Customers from Orders - "Export Customers from Orders Fields" option added.
 ~D  * Dev - EMAILS & MISC. - Export - Orders - "Additional Export Orders Fields" options added.
 ~   * Dev - EMAILS & MISC. - Export - Orders - Corresponding data is gathered only if "Order Items" or "Order Items Product Input Fields" columns are enabled.
 -   * Dev - EMAILS & MISC. - Export - Orders - Item meta info added to "Order Items" column.
+~D  * Dev - EMAILS & MISC. - Export - Products - New product fields added: "Price Including Tax", "Price Excluding Tax", "Display Price", "Average Rating", "Rating Count", "Review Count", "Categories", "Tags", "Dimensions", "Formatted Name", "Availability", "Availability Class".
     * Tweak - Shortcodes - Orders - `[wcj_order_items_table]` - `get_meta_info` - replaced with `wcj_get_order_item_meta_info()`.
 D   * Tweak - SHIPPING & ORDERS - Left to Free Shipping - Description updated.
     * Tweak - EMAILS & MISC. - Export - Divided settings into separate sections.
