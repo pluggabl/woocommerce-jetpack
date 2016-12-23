@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Numbers class.
  *
- * @version 2.5.5
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 
@@ -35,14 +35,43 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			),
 		) );
 
-	    if ( $this->is_enabled() ) {
+		if ( $this->is_enabled() ) {
 //			add_action( 'woocommerce_new_order',    array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 			add_action( 'wp_insert_post',           array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_order_number', array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
 			if ( 'yes' === get_option( 'wcj_order_number_order_tracking_enabled', 'yes' ) ) {
 				add_filter( 'woocommerce_shortcode_order_tracking_order_id', array( $this, 'add_order_number_to_tracking' ), PHP_INT_MAX );
 			}
+			if ( 'yes' === get_option( 'wcj_order_number_search_by_custom_number_enabled', 'yes' ) ) {
+				add_action( 'pre_get_posts', array( $this, 'search_by_custom_number' ) );
+			}
 		}
+	}
+
+	/**
+	 * search_by_custom_number.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 * @see     https://github.com/pablo-pacheco/wc-booster-search-order-by-custom-number-fix
+	 */
+	function search_by_custom_number( $query ) {
+		if (
+			! is_admin() ||
+			! isset( $query->query ) ||
+			! isset( $query->query['s'] ) ||
+			false === is_numeric( $query->query['s'] ) ||
+			0 == $query->query['s'] ||
+			'shop_order' !== $query->query['post_type'] ||
+			! $query->query_vars['shop_order_search']
+		) {
+			return;
+		}
+		$custom_order_id = $query->query['s'];
+		$query->query_vars['post__in'] = array();
+		$query->query['s'] = '';
+		$query->set( 'meta_key', '_wcj_order_number' );
+		$query->set( 'meta_value', $custom_order_id );
 	}
 
 	/**
@@ -195,7 +224,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.0
 	 */
 	function get_settings() {
 		$settings = array(
@@ -280,6 +309,13 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'title'    => __( 'Enable Order Tracking by Custom Number', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_order_number_order_tracking_enabled',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Enable Order Admin Search by Custom Number', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_order_number_search_by_custom_number_enabled',
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
