@@ -1,10 +1,10 @@
 <?php
 /**
- * WooCommerce Jetpack Orders
+ * WooCommerce Jetpack Order Minimum Amount
  *
- * The WooCommerce Jetpack Orders class.
+ * The WooCommerce Jetpack Order Minimum Amount class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -88,10 +88,11 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * get_cart_total_for_minimal_order_amount.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.0
 	 * @since   2.5.5
 	 */
 	private function get_cart_total_for_minimal_order_amount() {
+		WC()->cart->calculate_totals();
 		$cart_total = WC()->cart->total;
 		if ( 'yes' === get_option( 'wcj_order_minimum_amount_exclude_shipping', 'no' ) ) {
 			$shipping_total     = isset( WC()->cart->shipping_total )     ? WC()->cart->shipping_total     : 0;

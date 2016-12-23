@@ -138,9 +138,10 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 19/12/2016 =
-* Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
-* Tweak - Language (POT) file updated.
+= 2.6.0 - 23/12/2016 =
+~   * Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
+    * Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
+    * Tweak - Language (POT) file updated.
 
 = 2.5.9 - 19/12/2016 =
 * Dev - `WCJ_Module` - "Reset settings" button now uses JS confirmation; `wp_safe_redirect` added.
