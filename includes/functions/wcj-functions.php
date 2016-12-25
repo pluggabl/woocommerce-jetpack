@@ -951,6 +951,7 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
  */
 if ( ! function_exists( 'validate_vat_no_soap' ) ) {
 	function validate_vat_no_soap( $country_code, $vat_number ) {
+		$country_code = strtoupper( $country_code );
 		$api_url = "http://ec.europa.eu/taxation_customs/vies/viesquer.do?ms=" . $country_code . "&vat=" . $vat_number;
 		if ( ini_get( 'allow_url_fopen' ) ) {
 			$response = file_get_contents( $api_url );
