@@ -95,6 +95,7 @@ class WCJ_Reports_Stock {
 	 * gather_products_data.
 	 *
 	 * @version 2.5.0
+	 * @todo    variable products?
 	 */
 	public function gather_products_data( &$products_info ) {
 

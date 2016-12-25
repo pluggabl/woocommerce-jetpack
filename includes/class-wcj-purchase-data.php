@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Purchase Data class.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -54,7 +54,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 * Output custom columns for orders
 	 *
 	 * @param   string $column
-	 * @version 2.5.9
+	 * @version 2.6.0
 	 * @since   2.2.4
 	 * @todo    forecasted profit
 	 */
@@ -66,7 +66,9 @@ class WCJ_Purchase_Data extends WCJ_Module {
 				$is_forecasted = false;
 				foreach ( $the_order->get_items() as $item_id => $item ) {
 					$the_profit = 0;
-					$product_id = ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
+					$product_id = ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) )
+						? $item['variation_id']
+						: $item['product_id'];
 					if ( 0 != ( $purchase_price = wc_get_product_purchase_price( $product_id ) ) ) {
 //						$line_total = ( 'yes' === get_option('woocommerce_prices_include_tax') ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
 						$line_total = ( $the_order->prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
@@ -89,7 +91,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.0
 	 * @since   2.4.5
 	 * @todo    wcj_purchase_price_currency
 	 */
@@ -97,7 +99,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 		$main_product_id = get_the_ID();
 		$_product = wc_get_product( $main_product_id );
 		$products = array();
-		if ( $_product->is_type( 'variable' ) ) {
+		if ( $_product->is_type( 'variable' ) && 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) ) {
 			$available_variations = $_product->get_available_variations();
 			foreach ( $available_variations as $variation ) {
 				$variation_product = wc_get_product( $variation['variation_id'] );
@@ -201,7 +203,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.4.5
+	 * @version 2.6.0
 	 * @since   2.4.5
 	 * @todo    min_profit
 	 */
@@ -213,7 +215,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 		$main_product_id = get_the_ID();
 		$_product = wc_get_product( $main_product_id );
 		$products = array();
-		if ( $_product->is_type( 'variable' ) ) {
+		if ( $_product->is_type( 'variable' ) && 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) ) {
 			$available_variations = $_product->get_available_variations();
 			foreach ( $available_variations as $variation ) {
 				$variation_product = wc_get_product( $variation['variation_id'] );
@@ -263,7 +265,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.0
 	 * @todo    add options to set fields and column titles
 	 */
 	function get_settings() {
@@ -381,9 +383,9 @@ class WCJ_Purchase_Data extends WCJ_Module {
 				'id'        => 'wcj_purchase_data_info_fields_options',
 			),
 			array(
-				'title'     => __( 'Orders List Custom Columns', 'woocommerce-jetpack' ),
+				'title'     => __( 'Admin Orders List Custom Columns', 'woocommerce-jetpack' ),
 				'type'      => 'title',
-				'desc'      => __( 'This section lets you add custom columns to WooCommerce orders list.', 'woocommerce-jetpack' ),
+				'desc'      => __( 'This section lets you add custom columns to WooCommerce admin orders list.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_purchase_data_custom_columns_options',
 			),
 			array(
@@ -396,6 +398,22 @@ class WCJ_Purchase_Data extends WCJ_Module {
 			array(
 				'type'      => 'sectionend',
 				'id'        => 'wcj_purchase_data_custom_columns_options',
+			),
+			array(
+				'title'     => __( 'More Options', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'id'        => 'wcj_purchase_data_options',
+			),
+			array(
+				'title'     => __( 'Treat Variable Products as Simple Products', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_purchase_data_variable_as_simple_enabled',
+				'default'   => 'no',
+				'type'      => 'checkbox',
+			),
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_purchase_data_options',
 			),
 		) );
 		return $this->add_standard_settings( $settings );
