@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -945,7 +945,7 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 /**
  * validate_vat_no_soap.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @since   2.5.7
  * @return  mixed: bool on successful checking (can be true or false), null otherwise
  */
@@ -960,6 +960,9 @@ if ( ! function_exists( 'validate_vat_no_soap' ) ) {
 			$response = curl_exec( $curl );
 			curl_close( $curl );
 		} else {
+			return null;
+		}
+		if ( false === $response ) {
 			return null;
 		}
 		return ( false !== strpos( $response, '="validStyle"' ) ) ? true : false;

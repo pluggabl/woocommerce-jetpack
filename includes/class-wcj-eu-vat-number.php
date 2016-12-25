@@ -4,10 +4,10 @@
  *
  * The WooCommerce Jetpack EU VAT Number class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
- * @todo    Move (maybe) to "CART & CHECKOUT" category;
+ * @todo    (maybe) move to "CART & CHECKOUT" category
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -196,13 +196,18 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.5.4
+	 * @version 2.6.0
 	 */
 	function enqueue_scripts() {
 		if ( 'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) ) {
-			wp_enqueue_script( 'wcj-eu-vat-number', wcj_plugin_url() . '/includes/js/eu-vat-number.js', array(), false, true );
+			wp_enqueue_script( 'wcj-eu-vat-number', wcj_plugin_url() . '/includes/js/eu-vat-number.js', array(), WCJ()->version, true );
 			wp_localize_script( 'wcj-eu-vat-number', 'ajax_object', array(
-				'ajax_url'            => admin_url( 'admin-ajax.php' ),
+				'ajax_url'                        => admin_url( 'admin-ajax.php' ),
+				'add_progress_text'               => get_option( 'wcj_eu_vat_number_add_progress_text', 'no' ),
+				'progress_text_validating'        => get_option( 'wcj_eu_vat_number_progress_text_validating', __( 'Validating VAT. Please wait...', 'woocommerce-jetpack' ) ),
+				'progress_text_valid'             => get_option( 'wcj_eu_vat_number_progress_text_valid', __( 'VAT is valid.', 'woocommerce-jetpack' ) ),
+				'progress_text_not_valid'         => get_option( 'wcj_eu_vat_number_progress_text_not_valid', __( 'VAT is not valid.', 'woocommerce-jetpack' ) ),
+				'progress_text_validation_failed' => get_option( 'wcj_eu_vat_number_progress_text_validation_failed', __( 'Validation failed. Please try again.', 'woocommerce-jetpack' ) ),
 			) );
 		}
 	}
@@ -210,7 +215,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * wcj_validate_eu_vat_number.
 	 *
-	 * @version 2.5.4
+	 * @version 2.6.0
 	 */
 	function wcj_validate_eu_vat_number( $param ) {
 //		if ( ! isset( $_GET['wcj_validate_eu_vat_number'] ) ) return;
@@ -233,7 +238,15 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		}
 		$_SESSION['wcj_is_eu_vat_number_valid'] = $is_valid;
 		$_SESSION['wcj_eu_vat_number_to_check'] = $_POST['wcj_eu_vat_number_to_check'];
-		echo $is_valid;
+		if ( false === $is_valid ) {
+			echo '0';
+		} elseif ( true === $is_valid ) {
+			echo '1';
+		} elseif ( null === $is_valid ) {
+			echo '2';
+		} else {
+			echo '3'; // unexpected
+		}
 		die();
 	}
 
@@ -350,7 +363,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.0
 	 */
 	function get_settings() {
 		$settings = array(
@@ -478,6 +491,42 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 					'after_order_table'  => __( 'After order table', 'woocommerce-jetpack' ),
 					'in_billing_address' => __( 'In billing address', 'woocommerce-jetpack' ),
 				),
+			),
+			array(
+				'title'   => __( 'Add Progress Messages', 'woocommerce-jetpack' ),
+				'desc'    => __( 'Add', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_eu_vat_number_add_progress_text',
+				'default' => 'no',
+				'type'    => 'checkbox',
+			),
+			array(
+				'title'   => __( 'Progress Message: Validating', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_eu_vat_number_progress_text_validating',
+				'default' => __( 'Validating VAT. Please wait...', 'woocommerce-jetpack' ),
+				'type'    => 'text',
+				'css'     => 'width:300px;',
+			),
+			array(
+				'title'   => __( 'Progress Message: Valid', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_eu_vat_number_progress_text_valid',
+				'default' => __( 'VAT is valid.', 'woocommerce-jetpack' ),
+				'type'    => 'text',
+				'css'     => 'width:300px;',
+			),
+			array(
+				'title'   => __( 'Progress Message: Not Valid', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_eu_vat_number_progress_text_not_valid',
+				'default' => __( 'VAT is not valid.', 'woocommerce-jetpack' ),
+				'type'    => 'text',
+				'css'     => 'width:300px;',
+			),
+			array(
+				'title'   => __( 'Progress Message: Validation Failed', 'woocommerce-jetpack' ),
+				'desc_tip'=> __( 'Message on VAT validation server timeout etc.', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_eu_vat_number_progress_text_validation_failed',
+				'default' => __( 'Validation failed. Please try again.', 'woocommerce-jetpack' ),
+				'type'    => 'text',
+				'css'     => 'width:300px;',
 			),
 			array(
 				'type'    => 'sectionend',

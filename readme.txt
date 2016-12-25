@@ -139,6 +139,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 23/12/2016 =
+~   * Dev - EMAILS & MISC. - EU VAT Number - "Progress Messages" added.
+-   * Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
 ~   * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
 ~   * Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
     * Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
