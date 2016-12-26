@@ -314,7 +314,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 						echo '<td>' . $content . '</td>';
 						echo '<td>' . '<input disabled type="color" value="' . $color . '">' . '</td>';
 						echo '<td>' . '<a class="button-primary" href="' . add_query_arg( 'delete', $status, remove_query_arg( 'edit' ) ) . '" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>';
-						echo    ' ' . '<a class="button-primary" href="' . add_query_arg( 'edit', $status, remove_query_arg( 'delete' ) ) . '">' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>' . '</td>';
+						echo    ' ' . '<a class="button-primary"' . ( '' != apply_filters( 'booster_get_message', '', 'desc' ) ? ' disabled title="' . __( 'Get Booster Plus to enable.', 'woocommerce-jetpack' ) . '"' : ' href="' . add_query_arg( 'edit', $status, remove_query_arg( 'delete' ) ) . '"' ) . '>' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>' . '</td>';
 					}
 					echo '</tr>';
 				}
@@ -432,12 +432,16 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions',
 				'default'  => 'yes',
 				'type'     => 'checkbox',
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'desc'     => __( 'Enable Colors', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions_colored',
 				'default'  => 'yes',
 				'type'     => 'checkbox',
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'type'     => 'sectionend',
