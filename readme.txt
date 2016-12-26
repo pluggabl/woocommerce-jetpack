@@ -138,7 +138,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 25/12/2016 =
+= 2.6.0 - 26/12/2016 =
+~$D * Dev - Shipping & Orders - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
 ~D  * Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
 ~   * Fix - EMAILS & MISC. - EU VAT Number - `validate_vat_no_soap()` - Country code lowercase not validated bug fixed.
 ~D  * Dev - EMAILS & MISC. - EU VAT Number - "Progress Messages" options added.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Custom Statuses class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 
@@ -49,6 +49,58 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 
 			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_bulk_actions' ) ) {
 				add_action( 'admin_footer', array( $this, 'bulk_admin_footer' ), 11 );
+			}
+
+			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions', 'yes' ) ) {
+				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_actions_buttons' ), PHP_INT_MAX, 2 );
+				add_action( 'admin_head',                      array( $this, 'add_custom_status_actions_buttons_css' ) );
+			}
+		}
+	}
+
+	/**
+	 * add_custom_status_actions_buttons.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function add_custom_status_actions_buttons( $actions, $_order ) {
+		$custom_order_statuses = get_option( 'wcj_orders_custom_statuses_array' );
+		if ( ! empty( $custom_order_statuses ) && is_array( $custom_order_statuses ) ) {
+			foreach ( $custom_order_statuses as $slug => $label ) {
+				$custom_order_status = substr( $slug, 3 );
+				if ( ! $_order->has_status( array( $custom_order_status ) ) ) { // if order status is not $custom_order_status
+					$actions[ $custom_order_status ] = array(
+						'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $custom_order_status . '&order_id=' . $_order->id ), 'woocommerce-mark-order-status' ),
+						'name'      => $label,
+						'action'    => "view " . $custom_order_status, // setting "view" for proper button CSS
+					);
+				}
+			}
+		}
+		return $actions;
+	}
+
+	/**
+	 * add_custom_status_actions_buttons_css.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function add_custom_status_actions_buttons_css() {
+		$custom_order_statuses = get_option( 'wcj_orders_custom_statuses_array' );
+		if ( ! empty( $custom_order_statuses ) && is_array( $custom_order_statuses ) ) {
+			foreach ( $custom_order_statuses as $slug => $label ) {
+				$custom_order_status = substr( $slug, 3 );
+				if ( '' != ( $icon_data = get_option( 'wcj_orders_custom_status_icon_data_' . $custom_order_status, '' ) ) ) {
+					$content = $icon_data['content'];
+					$color   = $icon_data['color'];
+				} else {
+					$content = 'e011';
+					$color   = '#999999';
+				}
+				$color_style = ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions_colored', 'yes' ) ) ? ' color: ' . $color . ' !important;' : '';
+				echo '<style>.view.' . $custom_order_status . '::after { font-family: WooCommerce !important;' . $color_style . ' content: "\\' . $content . '" !important; }</style>';
 			}
 		}
 	}
@@ -303,7 +355,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.0
 	 */
 	function get_settings() {
 		$settings = array(
@@ -332,6 +384,19 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				'title'    => __( 'Add Custom Statuses to Admin Reports', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_orders_custom_statuses_add_to_reports',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Add Custom Statuses to Admin Order List Action Buttons', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Enable Colors', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions_colored',
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
