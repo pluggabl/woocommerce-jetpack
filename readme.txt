@@ -139,6 +139,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 29/12/2016 =
+    * Fix - PRODUCTS - Products per Page - Default value changed.
     * Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.
 D   * Dev - PRODUCTS - Products per Page - Initial module release (moved from Product Listings).
 ~   * Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.

@@ -57,7 +57,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 		} elseif ( isset( $_COOKIE['wcj_products_per_page'] ) ) {
 			$products_per_page = $_COOKIE['wcj_products_per_page'];
 		} else {
-			$products_per_page = get_option( 'wcj_products_per_page_default', get_option( 'posts_per_page' ) ); // default
+			$products_per_page = get_option( 'wcj_products_per_page_default', 10 ); // default
 		}
 
 		$paged = get_query_var( 'paged' );
@@ -100,7 +100,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * set_products_per_page_number.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.0
 	 * @since   2.5.3
 	 */
 	function set_products_per_page_number( $the_number ) {
@@ -110,7 +110,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 		} elseif ( isset( $_COOKIE['wcj_products_per_page'] ) ) {
 			$the_number = $_COOKIE['wcj_products_per_page'];
 		} else {
-			$the_number = get_option( 'wcj_products_per_page_default', get_option( 'posts_per_page' ) );
+			$the_number = get_option( 'wcj_products_per_page_default', 10 );
 		}
 		return $the_number;
 	}
@@ -161,7 +161,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 			array(
 				'title'    => __( 'Default', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_products_per_page_default',
-				'default'  => get_option( 'posts_per_page' ),
+				'default'  => 10,
 				'type'     => 'number',
 				'custom_attributes' => array( 'min' => -1 ),
 			),
