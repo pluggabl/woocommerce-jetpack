@@ -4,10 +4,10 @@
  *
  * The WooCommerce Jetpack Global Discount class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
- * @todo    products and cats/tags to include/exclude (cats to include - done); (maybe) product scope - apply only to products that are NOT on sale; regular price coefficient; fee instead of discount;
+ * @todo    products and cats/tags to include/exclude (cats to include - done); regular price coefficient; fee instead of discount;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -121,7 +121,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * add_global_discount_any_price.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 * @since   2.5.7
 	 */
 	function add_global_discount_any_price( $price_type, $price, $_product ) {
@@ -140,9 +140,16 @@ class WCJ_Global_Discount extends WCJ_Module {
 						} else {
 							$price = $_product->get_regular_price();
 						}
+					} else {
+						// The product is currently on sale
+						if ( 'only_not_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) ) {
+							continue; // no changes by current discount group
+						}
 					}
 				} else { // if ( 'price' === $price_type )
 					if ( 'only_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) && 0 == $_product->get_sale_price() ) {
+						continue; // no changes by current discount group
+					} elseif ( 'only_not_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) && 0 != $_product->get_sale_price() ) {
 						continue; // no changes by current discount group
 					}
 				}
@@ -199,7 +206,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 * @since   2.5.7
 	 */
 	function get_settings() {
@@ -270,8 +277,9 @@ class WCJ_Global_Discount extends WCJ_Module {
 					'default'  => 'all',
 					'type'     => 'select',
 					'options'  => array(
-						'all'          => __( 'All products', 'woocommerce-jetpack' ),
-						'only_on_sale' => __( 'Only products that are already on sale', 'woocommerce-jetpack' ),
+						'all'              => __( 'All products', 'woocommerce-jetpack' ),
+						'only_on_sale'     => __( 'Only products that are already on sale', 'woocommerce-jetpack' ),
+						'only_not_on_sale' => __( 'Only products that are not on sale', 'woocommerce-jetpack' ),
 					),
 				),
 				array(
