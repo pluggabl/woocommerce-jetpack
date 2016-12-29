@@ -39,9 +39,6 @@ class WCJ_Product_Listings extends WCJ_Module {
 				add_filter( 'woocommerce_subcategory_count_html', array( $this, 'remove_subcategory_count' ), 100 );
 			}
 
-			// Settings to "WooCommerce > Settings > Products > Product Listings"
-//			add_filter( 'woocommerce_product_settings', array( $this, 'add_fields_to_woocommerce_settings' ), 100 );
-
 			// Tax Incl./Excl. by product/category
 			add_filter( 'option_woocommerce_tax_display_shop', array( $this, 'tax_display' ), PHP_INT_MAX );
 		}
@@ -167,89 +164,12 @@ class WCJ_Product_Listings extends WCJ_Module {
 	}
 
 	/**
-	 * add_fields_to_woocommerce_settings.
-	 */
-	/* function add_fields_to_woocommerce_settings( $settings ) {
-		$updated_settings = array();
-		foreach ( $settings as $section ) {
-			$updated_settings[] = $section;
-			if ( isset( $section['id'] ) && 'woocommerce_shop_page_display' == $section['id'] ) {
-				$updated_settings[] = array(
-					'title'    => __( 'WooJetpack: Categories Count', 'woocommerce-jetpack' ),
-					'desc'     => __( 'Hide categories count on shop page', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_product_listings_hide_cats_count_on_shop',
-					'default'  => 'no',
-					'type'     => 'checkbox',
-				);
-				$updated_settings[] = array(
-					'title'    => __( 'WooJetpack: Exclude Categories on Shop Page', 'woocommerce-jetpack' ),
-					'desc_tip' => __(' Excludes one or more categories from the shop page. This parameter takes a comma-separated list of categories by unique ID, in ascending order. Leave blank to disable.', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_product_listings_exclude_cats_on_shop',
-					'default'  => '',
-					'type'     => 'text',
-					'css'      => 'width:50%;min-width:300px;',
-				);
-				$updated_settings[] = array(
-					'title'    => __( 'WooJetpack: Hide Empty', 'woocommerce-jetpack' ),
-					'desc'     => __( 'Hide empty categories on shop page', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_product_listings_hide_empty_cats_on_shop',
-					'default'  => 'yes',
-					'type'     => 'checkbox',
-				);
-				$updated_settings[] = array(
-					'title'    => __( 'WooJetpack: Show Products', 'woocommerce-jetpack' ),
-					'desc'     => __( 'Show products if no categories are displayed on shop page', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_product_listings_show_products_if_no_cats_on_shop',
-					'default'  => 'yes',
-					'type'     => 'checkbox',
-				);
-			}
-			if ( isset( $section['id'] ) && 'woocommerce_category_archive_display' == $section['id'] ) {
-				$updated_settings[] = array(
-					'title'    => __( 'WooJetpack: Subcategories Count', 'woocommerce-jetpack' ),
-					'desc'     => __( 'Hide subcategories count on category pages', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_product_listings_hide_cats_count_on_archive',
-					'default'  => 'no',
-					'type'     => 'checkbox',
-					'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-					'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
-				);
-				$updated_settings[] = array(
-					'title'    => __( 'WooJetpack: Exclude Subcategories on Category Pages', 'woocommerce-jetpack' ),
-					'desc_tip' => __(' Excludes one or more categories from the category (archive) pages. This parameter takes a comma-separated list of categories by unique ID, in ascending order. Leave blank to disable.', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_product_listings_exclude_cats_on_archives',
-					'default'  => '',
-					'type'     => 'text',
-					'css'      => 'width:50%;min-width:300px;',
-				);
-				$updated_settings[] = array(
-					'title'    => __( 'WooJetpack: Hide Empty', 'woocommerce-jetpack' ),
-					'desc'     => __( 'Hide empty subcategories on category pages', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_product_listings_hide_empty_cats_on_archives',
-					'default'  => 'yes',
-					'type'     => 'checkbox',
-				);
-				$updated_settings[] = array(
-					'title'    => __( 'WooJetpack: Show Products', 'woocommerce-jetpack' ),
-					'desc'     => __( 'Show products if no categories are displayed on category page', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_product_listings_show_products_if_no_cats_on_archives',
-					'default'  => 'yes',
-					'type'     => 'checkbox',
-				);
-			}
-		}
-		return $updated_settings;
-	} */
-
-	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.0
 	 */
 	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_product_listings_settings', $settings );
-		return $this->add_standard_settings( $settings );
+		return $this->add_standard_settings( apply_filters( 'wcj_product_listings_settings', array() ) );
 	}
 
 	/*
