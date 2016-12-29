@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Listings class.
  *
- * @version 2.5.5
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -110,7 +110,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * add_products_per_page_form.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.0
 	 * @since   2.5.3
 	 */
 	function add_products_per_page_form() {
@@ -148,6 +148,10 @@ class WCJ_Product_Listings extends WCJ_Module {
 			if ( 2 === count( $the_option ) ) {
 				$sort_id   = $the_option[1];
 				$sort_name = $the_option[0];
+				$sort_id = str_replace( "\n", '', $sort_id );
+				$sort_id = str_replace( "\r", '', $sort_id );
+				$sort_name = str_replace( "\n", '', $sort_name );
+				$sort_name = str_replace( "\r", '', $sort_name );
 				$html .= '<option value="' . $sort_id . '" ' . selected( $products_per_page, $sort_id, false ) . ' >' . $sort_name . '</option>';
 			}
 		}

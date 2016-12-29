@@ -138,7 +138,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 26/12/2016 =
+= 2.6.0 - 29/12/2016 =
+    * Fix - PRODUCTS - Product Listings - Products per Page - `PHP_EOL` issue fixed.
 ~   * Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.
 ~$D * Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Edit" custom status button added.
 ~$D * Dev - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
