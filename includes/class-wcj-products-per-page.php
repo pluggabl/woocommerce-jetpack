@@ -20,7 +20,8 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 * @since   2.6.0
-	 * @todo    position priority for every hook; post or get.
+	 * @todo    position priority for every hook
+	 * @todo    post or get
 	 */
 	function __construct() {
 
@@ -33,12 +34,10 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
-			if ( 'yes' === get_option( 'wcj_products_per_page_enabled', 'no' ) ) {
-				add_filter( 'loop_shop_per_page', array( $this, 'set_products_per_page_number' ), PHP_INT_MAX );
-				$position_hooks = get_option( 'wcj_products_per_page_position', array( 'woocommerce_before_shop_loop' ) );
-				foreach ( $position_hooks as $position_hook ) {
-					add_action( $position_hook, array( $this, 'add_products_per_page_form' ), get_option( 'wcj_products_per_page_position_priority', 40 ) );
-				}
+			add_filter( 'loop_shop_per_page', array( $this, 'set_products_per_page_number' ), PHP_INT_MAX );
+			$position_hooks = get_option( 'wcj_products_per_page_position', array( 'woocommerce_before_shop_loop' ) );
+			foreach ( $position_hooks as $position_hook ) {
+				add_action( $position_hook, array( $this, 'add_products_per_page_form' ), get_option( 'wcj_products_per_page_position_priority', 40 ) );
 			}
 		}
 	}
