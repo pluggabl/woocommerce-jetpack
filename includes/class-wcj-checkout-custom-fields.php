@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.5.0
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -484,9 +484,54 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	}
 
 	/**
+	 * is_visible.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function is_visible( $i ) {
+
+		if ( apply_filters( 'wcj_checkout_custom_field_always_visible_on_empty_cart', false ) && WC()->cart->is_empty() ) {
+			// Added for "One Page Checkout" plugin compatibility.
+			return true;
+		}
+
+		// Checking categories
+		$categories_in = get_option( 'wcj_checkout_custom_field_categories_in_' . $i );
+		if ( ! empty( $categories_in ) ) {
+			foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+				$product_categories = get_the_terms( $values['product_id'], 'product_cat' );
+				if ( empty( $product_categories ) ) {
+					continue;
+				}
+				foreach( $product_categories as $product_category ) {
+					if ( in_array( $product_category->term_id, $categories_in ) ) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		// Checking products
+		$products_in = get_option( 'wcj_checkout_custom_field_products_in_' . $i );
+		if ( ! empty( $products_in ) ) {
+			foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+				if ( in_array( $values['product_id'], $products_in ) ) {
+					return true;
+				}
+			}
+			return false;
+		}
+
+		// There were nothing to check
+		return true;
+	}
+
+	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.0
 	 */
 	public function add_custom_checkout_fields( $fields ) {
 
@@ -494,33 +539,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 
-				$categories_in = get_option( 'wcj_checkout_custom_field_categories_in_' . $i );
-				if ( ! empty( $categories_in ) ) {
-					$do_skip = true;
-					foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-						$product_categories = get_the_terms( $values['product_id'], 'product_cat' );
-						if ( empty( $product_categories ) ) continue;
-						foreach( $product_categories as $product_category ) {
-							if ( in_array( $product_category->term_id, $categories_in ) ) {
-								$do_skip = false;
-								break;
-							}
-						}
-						if ( ! $do_skip ) break;
-					}
-					if ( $do_skip ) continue;
-				}
-
-				$products_in = get_option( 'wcj_checkout_custom_field_products_in_' . $i );
-				if ( ! empty( $products_in ) ) {
-					$do_skip = true;
-					foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-						if ( in_array( $values['product_id'], $products_in ) ) {
-							$do_skip = false;
-							break;
-						}
-					}
-					if ( $do_skip ) continue;
+				if ( ! $this->is_visible( $i ) ) {
+					continue;
 				}
 
 				$the_type = get_option( 'wcj_checkout_custom_field_type_' . $i );
