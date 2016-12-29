@@ -139,14 +139,15 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 29/12/2016 =
-    * Fix - PRODUCTS - Product Listings - Products per Page - `PHP_EOL` issue fixed.
+    * Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.
+D   * Dev - PRODUCTS - Products per Page - Initial module release (moved from Product Listings).
 ~   * Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.
 ~$D * Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Edit" custom status button added.
 ~$D * Dev - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
 ~D  * Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
 ~   * Fix - EMAILS & MISC. - EU VAT Number - `validate_vat_no_soap()` - Country code lowercase not validated bug fixed.
 ~D  * Dev - EMAILS & MISC. - EU VAT Number - "Progress Messages" options added.
--   * Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
+~   * Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
 ~D  * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
 ~   * Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
 D   * Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.

@@ -28,7 +28,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.5.9
+ * @version 2.6.0
  */
 
 final class WC_Jetpack {
@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.0-dev-201612291659';
+	public $version = '2.6.0-dev-201612291733';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -522,7 +522,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.0
 	 */
 	function include_modules() {
 		$modules_files = array(
@@ -530,6 +530,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-call-for-price.php',
 			'includes/class-wcj-free-price.php',
 			'includes/class-wcj-product-listings.php',
+			'includes/class-wcj-products-per-page.php',
 			'includes/class-wcj-sorting.php',
 			'includes/class-wcj-product-custom-info.php',
 			'includes/class-wcj-product-info.php',
