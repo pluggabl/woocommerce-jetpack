@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Reports class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -308,7 +308,7 @@ class WCJ_Reports extends WCJ_Module {
 	/*
 	 * Add the settings.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 */
 	function get_settings() {
 		$reports_and_settings = array(
@@ -319,10 +319,39 @@ class WCJ_Reports extends WCJ_Module {
 				'report'    => 'booster_products_sales',
 			),
 			array(
+				'id'        => 'wcj_reports_products_sales_display_sales',
+				'desc'      => __( 'Display item sales', 'woocommerce-jetpack' ),
+				'type'      => 'checkbox',
+				'checkboxgroup' => 'start',
+				'default'   => 'yes',
+			),
+			array(
+				'id'        => 'wcj_reports_products_sales_display_sales_sum',
+				'desc'      => __( 'Display sales sum', 'woocommerce-jetpack' ),
+				'type'      => 'checkbox',
+				'default'   => 'yes',
+				'checkboxgroup' => '',
+			),
+			array(
+				'id'        => 'wcj_reports_products_sales_display_profit',
+				'desc'      => __( 'Display profit', 'woocommerce-jetpack' ),
+				'type'      => 'checkbox',
+				'default'   => 'no',
+				'checkboxgroup' => '',
+			),
+			array(
+				'id'        => 'wcj_reports_products_sales_include_taxes',
+				'desc'      => __( 'Include taxes', 'woocommerce-jetpack' ),
+				'type'      => 'checkbox',
+				'default'   => 'no',
+				'checkboxgroup' => '',
+			),
+			array(
 				'id'        => 'wcj_reports_products_sales_count_variations',
 				'desc'      => __( 'Count variations in product sales report', 'woocommerce-jetpack' ),
 				'type'      => 'checkbox',
 				'default'   => 'no',
+				'checkboxgroup' => 'end',
 			),
 			array(
 				'title'     => __( 'Monthly Sales (with currency conversions)', 'woocommerce-jetpack' ),

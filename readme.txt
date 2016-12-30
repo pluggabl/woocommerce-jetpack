@@ -138,7 +138,12 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 29/12/2016 =
+= 2.6.0 - 30/12/2016 =
+-D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
+-D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
+-D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
+-D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display profit" option added.
+-D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by product title" moved to "gather product data" section.
 ~D  * Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 ~   * Dev - CART & CHECKOUT - Checkout Custom Fields - `is_visible()` - `wcj_checkout_custom_field_always_visible_on_empty_cart` filter added.
     * Fix - PRODUCTS - Products per Page - Default value changed.
