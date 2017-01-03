@@ -4,10 +4,10 @@
  *
  * The WooCommerce Jetpack Export Import class.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @since   2.5.4
  * @author  Algoritmika Ltd.
- * @todo    import products, (maybe) orders, customers tools;
+ * @todo    import products, customers and (maybe) orders
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -184,7 +184,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	 *
 	 * @version 2.5.9
 	 * @since   2.5.5
-	 * @todo    filter each field.
+	 * @todo    filter each field separately
 	 */
 	function export_filter_fields( $tool_id ) {
 		$fields = array();
@@ -293,7 +293,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.0
 	 * @since   2.5.4
 	 * @todo    add "Additional Export Fields" for "Customers from Orders" and (maybe) "Customers"
 	 */
@@ -473,6 +473,17 @@ class WCJ_Export_Import extends WCJ_Module {
 				'type'     => 'multiselect',
 				'options'  => $this->fields_helper->get_product_export_fields(),
 				'css'      => 'height:300px;',
+			),
+			array(
+				'title'    => __( 'Variable Products', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_export_products_variable',
+				'default'  => 'variable_only',
+				'type'     => 'select',
+				'options'  => array(
+					'variable_only'           => __( 'Export variable (main) product only', 'woocommerce-jetpack' ),
+					'variations_only'         => __( 'Export variation products only', 'woocommerce-jetpack' ),
+					'variable_and_variations' => __( 'Export variable (main) and variation products', 'woocommerce-jetpack' ),
+				),
 			),
 			array(
 				'title'    => __( 'Additional Export Products Fields', 'woocommerce-jetpack' ),

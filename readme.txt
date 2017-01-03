@@ -54,6 +54,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
 * *Product Visibility by Country* - Display WooCommerce products by customer's country.
 * *Product Visibility by User Role* - Display WooCommerce products by customer's user role.
+* *Products per Page* - WooCommerce products per page.
 * *Related Products* - Change displayed WooCommerce related products number, columns, order, relate by tag and/or category, or hide related products completely.
 * *SKU* - Generate WooCommerce SKUs automatically.
 * *Sorting* - Add more WooCommerce sorting options or remove all sorting including default.
@@ -138,7 +139,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 30/12/2016 =
+= 2.6.0 - 03/01/2017 =
+~D  * Dev - EMAILS & MISC. - Export - Export Products - "Variable Products" option added.
 -D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
 -D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
 -D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
