@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Export Fields Helper class.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -273,12 +273,13 @@ class WCJ_Export_Fields_Helper {
 	/**
 	 * get_product_export_fields.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.0
 	 * @since   2.5.7
 	 */
 	function get_product_export_fields() {
 		return array(
 			'product-id'                         => __( 'Product ID', 'woocommerce-jetpack' ),
+			'parent-product-id'                  => __( 'Parent Product ID', 'woocommerce-jetpack' ),
 			'product-name'                       => __( 'Name', 'woocommerce-jetpack' ),
 			'product-sku'                        => __( 'SKU', 'woocommerce-jetpack' ),
 			'product-stock'                      => __( 'Total Stock', 'woocommerce-jetpack' ),

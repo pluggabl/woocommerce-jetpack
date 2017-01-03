@@ -102,7 +102,9 @@ class WCJ_Exporter_Products {
 			foreach ( $loop->posts as $product_id ) {
 				$_product = wc_get_product( $product_id );
 				$products = array( $product_id => $_product );
+				$parent_product_id = '';
 				if ( $_product->is_type( 'variable' ) ) {
+					$parent_product_id = $product_id;
 					$export_products_variable = get_option( 'wcj_export_products_variable', 'variable_only' );
 					if ( 'variations_only' === $export_products_variable || 'variable_and_variations' === $export_products_variable ) {
 						if ( 'variations_only' === $export_products_variable ) {
@@ -119,6 +121,9 @@ class WCJ_Exporter_Products {
 						switch ( $field_id ) {
 							case 'product-id':
 								$row[] = $product_id;
+								break;
+							case 'parent-product-id':
+								$row[] = $parent_product_id;
 								break;
 							case 'product-name':
 								$row[] = $_product->get_title();

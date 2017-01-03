@@ -140,7 +140,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 03/01/2017 =
-~D  * Dev - EMAILS & MISC. - Export - Export Products - "Variable Products" option added.
+~D  * Dev - EMAILS & MISC. - Export - Export Products - "Variable Products" option added (and "Parent Product ID" field added).
 -D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
 -D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
 -D  * Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
