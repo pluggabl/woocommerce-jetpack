@@ -23,6 +23,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		$this->the_shortcodes = array(
 			'wcj_current_date',
+			'wcj_current_time',
+			'wcj_current_datetime',
 			'wcj_current_timestamp',
 //			'wcj_image',
 			'wcj_cart_items_total_weight',
@@ -43,6 +45,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		$this->the_atts = array(
 			'date_format'           => get_option( 'date_format' ),
+			'time_format'           => get_option( 'time_format' ),
+			'datetime_format'       => get_option( 'date_format' ) . ' ' . get_option( 'time_format' ),
 			'lang'                  => '',
 			'form_method'           => 'post',//'get',
 			'class'                 => '',
@@ -63,6 +67,26 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_current_time.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function wcj_current_time( $atts ) {
+		return date_i18n( $atts['time_format'], current_time( 'timestamp' ) );
+	}
+
+	/**
+	 * wcj_current_datetime.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function wcj_current_datetime( $atts ) {
+		return date_i18n( $atts['datetime_format'], current_time( 'timestamp' ) );
 	}
 
 	/**
