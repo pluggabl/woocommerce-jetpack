@@ -244,7 +244,7 @@ class WCJ_Products_XML extends WCJ_Module {
 		wp_reset_postdata();
 		return file_put_contents(
 			ABSPATH . get_option( 'wcj_products_xml_file_path_' . $file_num, ( ( 1 == $file_num ) ? 'products.xml' : 'products_' . $file_num . '.xml' ) ),
-			$xml_header_template . $xml_items . $xml_footer_template
+			do_shortcode( $xml_header_template ) . $xml_items . do_shortcode( $xml_footer_template )
 		);
 	}
 

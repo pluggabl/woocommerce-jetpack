@@ -140,6 +140,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 05/01/2017 =
+    * Dev - EMAILS & MISC. - Products XML - `do_shortcode` added to XML header and footer.
     * Dev - EMAILS & MISC. - Products XML - "Recent file was created on ..." info added.
 ~D  * Dev - EMAILS & MISC. - Products XML - "Products/Categories/Tags to Include/Exclude" options added.
 ~D  * Dev - PRODUCTS - Sorting - Code refactoring: "Remove All Sorting" section moved to the bottom; description updated.
