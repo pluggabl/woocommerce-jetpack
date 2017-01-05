@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products XML class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    create all files at once (manually and synchronize update); move (maybe) to "PRODUCTS" category;
@@ -125,38 +125,51 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * wcj_create_products_xml.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 * @since   2.5.7
 	 */
 	function wcj_create_products_xml() {
 		if ( isset( $_GET['wcj_create_products_xml'] ) ) {
-			$result = $this->create_products_xml( $_GET['wcj_create_products_xml'] );
+			$file_num = $_GET['wcj_create_products_xml'];
+			$result = $this->create_products_xml( $file_num );
 			add_action( 'admin_notices', array( $this, ( ( false !== $result ) ? 'admin_notice__success' : 'admin_notice__error' ) ) );
+			if ( false !== $result ) {
+				update_option( 'wcj_products_time_file_created_' . $file_num, current_time( 'timestamp' ) );
+			}
 		}
 	}
 
 	/**
 	 * create_products_xml_cron.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 * @since   2.5.7
 	 */
 	function create_products_xml_cron( $interval, $file_num ) {
-		$this->create_products_xml( $file_num );
+		$result = $this->create_products_xml( $file_num );
+		if ( false !== $result ) {
+			update_option( 'wcj_products_time_file_created_' . $file_num, current_time( 'timestamp' ) );
+		}
 		die();
 	}
 
 	/**
 	 * create_products_xml.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 * @since   2.5.7
 	 */
 	function create_products_xml( $file_num ) {
 		$xml_items = '';
-		$xml_header_template = get_option( 'wcj_products_xml_header_' . $file_num, '' );
-		$xml_footer_template = get_option( 'wcj_products_xml_footer_' . $file_num, '' );
-		$xml_item_template   = get_option( 'wcj_products_xml_item_'   . $file_num, '' );
+		$xml_header_template  = get_option( 'wcj_products_xml_header_' . $file_num, '' );
+		$xml_footer_template  = get_option( 'wcj_products_xml_footer_' . $file_num, '' );
+		$xml_item_template    = get_option( 'wcj_products_xml_item_'   . $file_num, '' );
+		$products_in_ids      = get_option( 'wcj_products_xml_products_incl_' . $file_num, '' );
+		$products_ex_ids      = get_option( 'wcj_products_xml_products_excl_' . $file_num, '' );
+		$products_cats_in_ids = get_option( 'wcj_products_xml_cats_incl_' . $file_num, '' );
+		$products_cats_ex_ids = get_option( 'wcj_products_xml_cats_excl_' . $file_num, '' );
+		$products_tags_in_ids = get_option( 'wcj_products_xml_tags_incl_' . $file_num, '' );
+		$products_tags_ex_ids = get_option( 'wcj_products_xml_tags_excl_' . $file_num, '' );
 		$offset = 0;
 		$block_size = 256;
 		while( true ) {
@@ -168,6 +181,56 @@ class WCJ_Products_XML extends WCJ_Module {
 				'order'          => 'DESC',
 				'offset'         => $offset,
 			);
+			if ( ! empty( $products_in_ids ) ) {
+				$args['post__in'] = $products_in_ids;
+			}
+			if ( ! empty( $products_ex_ids ) ) {
+				$args['post__not_in'] = $products_ex_ids;
+			}
+			if ( ! empty( $products_cats_in_ids ) ) {
+				if ( ! isset( $args['tax_query'] ) ) {
+					$args['tax_query'] = array();
+				}
+				$args['tax_query'][] = array(
+					'taxonomy' => 'product_cat',
+					'field'    => 'term_id',
+					'terms'    => $products_cats_in_ids,
+					'operator' => 'IN',
+				);
+			}
+			if ( ! empty( $products_cats_ex_ids ) ) {
+				if ( ! isset( $args['tax_query'] ) ) {
+					$args['tax_query'] = array();
+				}
+				$args['tax_query'][] = array(
+					'taxonomy' => 'product_cat',
+					'field'    => 'term_id',
+					'terms'    => $products_cats_ex_ids,
+					'operator' => 'NOT IN',
+				);
+			}
+			if ( ! empty( $products_tags_in_ids ) ) {
+				if ( ! isset( $args['tax_query'] ) ) {
+					$args['tax_query'] = array();
+				}
+				$args['tax_query'][] = array(
+					'taxonomy' => 'product_tag',
+					'field'    => 'term_id',
+					'terms'    => $products_tags_in_ids,
+					'operator' => 'IN',
+				);
+			}
+			if ( ! empty( $products_tags_ex_ids ) ) {
+				if ( ! isset( $args['tax_query'] ) ) {
+					$args['tax_query'] = array();
+				}
+				$args['tax_query'][] = array(
+					'taxonomy' => 'product_tag',
+					'field'    => 'term_id',
+					'terms'    => $products_tags_ex_ids,
+					'operator' => 'NOT IN',
+				);
+			}
 			$loop = new WP_Query( $args );
 			if ( ! $loop->have_posts() ) {
 				break;
@@ -188,10 +251,29 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 * @since   2.5.7
 	 */
 	function get_settings() {
+
+		$product_cats_options = array();
+		$product_cats = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+		if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ){
+			foreach ( $product_cats as $product_cat ) {
+				$product_cats_options[ $product_cat->term_id ] = $product_cat->name;
+			}
+		}
+
+		$product_tags_options = array();
+		$product_tags = get_terms( 'product_tag', 'orderby=name&hide_empty=0' );
+		if ( ! empty( $product_tags ) && ! is_wp_error( $product_tags ) ){
+			foreach ( $product_tags as $product_tag ) {
+				$product_tags_options[ $product_tag->term_id ] = $product_tag->name;
+			}
+		}
+
+		$products_options = apply_filters( 'wcj_get_products_filter', array() );
+
 		$settings = array(
 			array(
 				'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -225,11 +307,19 @@ class WCJ_Products_XML extends WCJ_Module {
 				}
 				$products_xml_cron_desc .= '<br><a href="' . add_query_arg( 'wcj_create_products_xml', $i ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>';
 			}
+			$products_time_file_created_desc = '';
+			if ( '' != get_option( 'wcj_products_time_file_created_' . $i, '' ) ) {
+				$products_time_file_created_desc = sprintf(
+					__( 'Recent file was created on %s', 'woocommerce-jetpack' ),
+					date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), get_option( 'wcj_products_time_file_created_' . $i, '' ) )
+				);
+			}
 			$default_file_name = ( ( 1 == $i ) ? 'products.xml' : 'products_' . $i . '.xml' );
 			$settings = array_merge( $settings, array(
 				array(
 					'title'    => __( 'XML File', 'woocommerce-jetpack' ) . ' #' . $i,
 					'type'     => 'title',
+					'desc'     => $products_time_file_created_desc,
 					'id'       => 'wcj_products_xml_options_' . $i,
 				),
 				array(
@@ -296,6 +386,60 @@ class WCJ_Products_XML extends WCJ_Module {
 					),
 					'desc_tip' => __( 'Possible update periods are: every minute, hourly, twice daily, daily and weekly.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc_no_link' ),
 					'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+				),
+				array(
+					'title'    => __( 'Products to Include', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To include selected products only, enter products here. Leave blank to include all products.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_products_xml_products_incl_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $products_options,
+				),
+				array(
+					'title'    => __( 'Products to Exclude', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To exclude selected products, enter products here. Leave blank to include all products.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_products_xml_products_excl_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $products_options,
+				),
+				array(
+					'title'    => __( 'Categories to Include', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To include products from selected categories only, enter categories here. Leave blank to include all products.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_products_xml_cats_incl_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_cats_options,
+				),
+				array(
+					'title'    => __( 'Categories to Exclude', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To exclude products from selected categories, enter categories here. Leave blank to include all products.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_products_xml_cats_excl_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_cats_options,
+				),
+				array(
+					'title'    => __( 'Tags to Include', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To include products from selected tags only, enter tags here. Leave blank to include all products.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_products_xml_tags_incl_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_tags_options,
+				),
+				array(
+					'title'    => __( 'Tags to Exclude', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'To exclude products from selected tags, enter tags here. Leave blank to include all products.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_products_xml_tags_excl_' . $i,
+					'default'  => '',
+					'class'    => 'chosen_select',
+					'type'     => 'multiselect',
+					'options'  => $product_tags_options,
 				),
 				array(
 					'type'     => 'sectionend',

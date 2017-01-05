@@ -139,7 +139,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 04/01/2017 =
+= 2.6.0 - 05/01/2017 =
+    * Dev - EMAILS & MISC. - Products XML - "Recent file was created on ..." info added.
+~D  * Dev - EMAILS & MISC. - Products XML - "Products/Categories/Tags to Include/Exclude" options added.
 ~D  * Dev - PRODUCTS - Sorting - Code refactoring: "Remove All Sorting" section moved to the bottom; description updated.
 ~D  * Dev - PRODUCTS - Sorting - Remove All Sorting - "Empty template" method added (for maximum compatibility); `init` hook replaced with `wp_loaded`.
 ~D  * Dev - PRODUCTS - Sorting - "Rearrange Sorting" section added.
