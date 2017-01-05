@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,12 +17,13 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 
 		$this->the_shortcodes = array(
 			'wcj_current_date',
+			'wcj_current_timestamp',
 //			'wcj_image',
 			'wcj_cart_items_total_weight',
 			'wcj_wpml',
@@ -62,6 +63,16 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_current_timestamp.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function wcj_current_timestamp( $atts ) {
+		return current_time( 'timestamp' );
 	}
 
 	/**
@@ -449,9 +460,11 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_current_date.
+	 *
+	 * @version 2.6.0
 	 */
 	function wcj_current_date( $atts ) {
-		return date_i18n( $atts['date_format'] );
+		return date_i18n( $atts['date_format'], current_time( 'timestamp' ) );
 	}
 
 	/**
