@@ -139,7 +139,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 05/01/2017 =
+= 2.6.0 - 06/01/2017 =
+~D  * Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
 D   * Dev - Shortcodes - General - `[wcj_current_datetime]` shortcode added.
 D   * Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
     * Dev - Shortcodes - General - `[wcj_current_date]` - `current_time( 'timestamp' )` added.

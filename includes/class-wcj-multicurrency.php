@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency class.
  *
- * @version 2.5.8
+ * @version 2.6.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -224,7 +224,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_by_currency.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.0
 	 */
 	function change_price_by_currency( $price, $_product ) {
 
@@ -237,7 +237,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 		}
 
 		// Per product
-		if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) ) {
+		if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) && null != $_product ) {
 			$the_product_id = ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
 			if ( '' != ( $regular_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_multicurrency_per_product_regular_price_' . $this->get_current_currency_code(), true ) ) ) {
 				$the_current_filter = current_filter();

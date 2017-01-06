@@ -39,7 +39,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * add_order_minimum_amount_hooks.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.0
 	 * @since   2.5.3
 	 */
 	function add_order_minimum_amount_hooks() {
@@ -57,7 +57,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		if ( $is_order_minimum_amount_enabled ) {
 			add_action( 'woocommerce_checkout_process', array( $this, 'order_minimum_amount' ) );
 			add_action( 'woocommerce_before_cart',      array( $this, 'order_minimum_amount' ) );
-			if ( 'yes' === get_option( 'wcj_order_minimum_amount_stop_from_seeing_checkout' ) ) {
+			if ( 'yes' === get_option( 'wcj_order_minimum_amount_stop_from_seeing_checkout', 'no' ) ) {
 				add_action( 'wp',                array( $this, 'stop_from_seeing_checkout' ), 100 );
 //				add_action( 'template_redirect', array( $this, 'stop_from_seeing_checkout' ), 100 );
 			}
@@ -67,11 +67,11 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * get_order_minimum_amount_with_user_roles.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.0
 	 * @since   2.5.3
 	 */
 	function get_order_minimum_amount_with_user_roles() {
-		$minimum = get_option( 'wcj_order_minimum_amount' );
+		$minimum = get_option( 'wcj_order_minimum_amount', 0 );
 		$current_user_role = wcj_get_current_user_first_role();
 		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 			if ( $role_key === $current_user_role ) {
@@ -81,6 +81,10 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 				}
 				break;
 			}
+		}
+		// Multicurrency (Currency Switcher) module
+		if ( WCJ()->modules['multicurrency']->is_enabled() ) {
+			$minimum = WCJ()->modules['multicurrency']->change_price_by_currency( $minimum, null );
 		}
 		return $minimum;
 	}
@@ -105,7 +109,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * order_minimum_amount.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.0
 	 */
 	public function order_minimum_amount() {
 		$minimum = $this->get_order_minimum_amount_with_user_roles();
@@ -115,7 +119,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		$cart_total = $this->get_cart_total_for_minimal_order_amount();
 		if ( $cart_total < $minimum ) {
 			if( is_cart() ) {
-				if ( 'yes' === get_option( 'wcj_order_minimum_amount_cart_notice_enabled' ) ) {
+				if ( 'yes' === get_option( 'wcj_order_minimum_amount_cart_notice_enabled', 'no' ) ) {
 					wc_print_notice(
 						sprintf( apply_filters( 'booster_get_option', 'You must have an order with a minimum of %s to place your order, your current order total is %s.', get_option( 'wcj_order_minimum_amount_cart_notice_message' ) ),
 							woocommerce_price( $minimum ),
