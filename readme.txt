@@ -139,7 +139,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 08/01/2017 =
+= 2.6.0 - 09/01/2017 =
+-   * Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
 -   * Dev - Compatibility issue fixed.
 ~D  * Dev - EMAILS & MISC. - Products XML - "Products Scope" option added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_customer_user]` shortcode added.

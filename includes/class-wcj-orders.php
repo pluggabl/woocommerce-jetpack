@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 
@@ -70,7 +70,7 @@ class WCJ_Orders extends WCJ_Module {
 
 			// Columns Order
 			if ( 'yes' === get_option( 'wcj_order_admin_list_columns_order_enabled', 'no' ) ) {
-				add_filter( 'manage_edit-shop_order_columns', array( $this, 'rearange_order_columns' ), PHP_INT_MAX );
+				add_filter( 'manage_edit-shop_order_columns', array( $this, 'rearange_order_columns' ), PHP_INT_MAX - 1 );
 			}
 		}
 	}
