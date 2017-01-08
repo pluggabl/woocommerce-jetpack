@@ -170,6 +170,7 @@ class WCJ_Products_XML extends WCJ_Module {
 		$products_cats_ex_ids = get_option( 'wcj_products_xml_cats_excl_' . $file_num, '' );
 		$products_tags_in_ids = get_option( 'wcj_products_xml_tags_incl_' . $file_num, '' );
 		$products_tags_ex_ids = get_option( 'wcj_products_xml_tags_excl_' . $file_num, '' );
+		$products_scope       = get_option( 'wcj_products_xml_scope_' . $file_num, 'all' );
 		$offset = 0;
 		$block_size = 256;
 		while( true ) {
@@ -181,6 +182,23 @@ class WCJ_Products_XML extends WCJ_Module {
 				'order'          => 'DESC',
 				'offset'         => $offset,
 			);
+			if ( 'all' != $products_scope ) {
+				$args['meta_query'] = WC()->query->get_meta_query();
+				switch ( $products_scope ) {
+					case 'sale_only':
+						$args['post__in']     = array_merge( array( 0 ), wc_get_product_ids_on_sale() );
+						break;
+					case 'not_sale_only':
+						$args['post__not_in'] = array_merge( array( 0 ), wc_get_product_ids_on_sale() );
+						break;
+					case 'featured_only':
+						$args['post__in']     = array_merge( array( 0 ), wc_get_featured_product_ids() );
+						break;
+					case 'not_featured_only':
+						$args['post__not_in'] = array_merge( array( 0 ), wc_get_featured_product_ids() );
+						break;
+				}
+			}
 			if ( ! empty( $products_in_ids ) ) {
 				$args['post__in'] = $products_in_ids;
 			}
@@ -440,6 +458,19 @@ class WCJ_Products_XML extends WCJ_Module {
 					'class'    => 'chosen_select',
 					'type'     => 'multiselect',
 					'options'  => $product_tags_options,
+				),
+				array(
+					'title'    => __( 'Products Scope', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_products_xml_scope_' . $i,
+					'default'  => 'all',
+					'type'     => 'select',
+					'options'  => array(
+						'all'               => __( 'All products', 'woocommerce-jetpack' ),
+						'sale_only'         => __( 'Only products that are on sale', 'woocommerce-jetpack' ),
+						'not_sale_only'     => __( 'Only products that are not on sale', 'woocommerce-jetpack' ),
+						'featured_only'     => __( 'Only products that are featured', 'woocommerce-jetpack' ),
+						'not_featured_only' => __( 'Only products that are not featured', 'woocommerce-jetpack' ),
+					),
 				),
 				array(
 					'type'     => 'sectionend',
