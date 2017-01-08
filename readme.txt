@@ -140,6 +140,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 08/01/2017 =
+-   * Dev - Compatibility issue fixed.
 ~D  * Dev - EMAILS & MISC. - Products XML - "Products Scope" option added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_customer_user]` shortcode added.
 ~D  * Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.

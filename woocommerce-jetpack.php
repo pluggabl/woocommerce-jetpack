@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.0-dev-201701061743';
+	public $version = '2.6.0-dev-201701081914';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -78,7 +78,7 @@ final class WC_Jetpack {
 	/**
 	 * WC_Jetpack Constructor.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.0
 	 * @access  public
 	 */
 	public function __construct() {
@@ -102,7 +102,15 @@ final class WC_Jetpack {
 
 		// Settings
 		if ( is_admin() ) {
-			add_filter( 'woocommerce_get_settings_pages',                     array( $this, 'add_wcj_settings_tab' ), PHP_INT_MAX );
+			$woocommerce_get_settings_pages_booster_priority = PHP_INT_MAX;
+			$plugin = 'more-woocommerce-options/morewoooptions.php';
+			if (
+				in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) ||
+				( is_multisite() && array_key_exists( $plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
+			) {
+				$woocommerce_get_settings_pages_booster_priority = 10;
+			}
+			add_filter( 'woocommerce_get_settings_pages',                     array( $this, 'add_wcj_settings_tab' ), $woocommerce_get_settings_pages_booster_priority );
 			add_filter( 'booster_get_message',                                array( $this, 'get_wcj_plus_message' ), 100, 2 );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			add_action( 'admin_menu',                                         array( $this, 'jetpack_menu' ), 100 );
