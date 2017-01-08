@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 
@@ -72,6 +72,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_length',
 			'wcj_order_total_weight',
 			'wcj_order_coupons',
+			'wcj_order_customer_user',
 		);
 
 		parent::__construct();
@@ -132,6 +133,16 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
 		return ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) ? '' : wcj_price( $raw_price, $this->the_order->get_order_currency(), $atts['hide_currency'] );
+	}
+
+	/**
+	 * wcj_order_customer_user.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function wcj_order_customer_user( $atts ) {
+		return $this->the_order->customer_user;
 	}
 
 	/**
