@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Related Products class.
  *
- * @version 2.4.8
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 
@@ -32,18 +32,21 @@ class WCJ_Related_Products extends WCJ_Module {
 			add_filter( 'woocommerce_related_products_args', array( $this, 'related_products_args' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_output_related_products_args', array( $this, 'output_related_products_args' ), PHP_INT_MAX );
 
-			if ( 'no' === get_option( 'wcj_product_info_related_products_relate_by_category' ) ) {
+			// Relate by Category
+			if ( 'no' === get_option( 'wcj_product_info_related_products_relate_by_category', 'yes' ) ) {
 				add_filter( 'woocommerce_product_related_posts_relate_by_category', '__return_false', PHP_INT_MAX );
 			} else {
 				add_filter( 'woocommerce_product_related_posts_relate_by_category', '__return_true',  PHP_INT_MAX );
 			}
 
-			if ( 'no' === get_option( 'wcj_product_info_related_products_relate_by_tag' ) ) {
+			// Relate by Tag
+			if ( 'no' === get_option( 'wcj_product_info_related_products_relate_by_tag', 'yes' ) ) {
 				add_filter( 'woocommerce_product_related_posts_relate_by_tag', '__return_false', PHP_INT_MAX );
 			} else {
 				add_filter( 'woocommerce_product_related_posts_relate_by_tag', '__return_true',  PHP_INT_MAX );
 			}
 
+			// Delete Transients
 			add_action( 'woojetpack_after_settings_save', array( $this, 'delete_product_transients' ), PHP_INT_MAX, 2 );
 		}
 	}
@@ -60,29 +63,33 @@ class WCJ_Related_Products extends WCJ_Module {
 	}
 
 	/**
-	 * Change number of related products on product page.
+	 * related_products_args.
 	 *
-	 * @version 2.2.6
+	 * @version 2.6.0
 	 */
 	function related_products_args( $args ) {
-		if ( 'yes' === get_option( 'wcj_product_info_related_products_hide' ) ) {
+		if ( 'yes' === get_option( 'wcj_product_info_related_products_hide', 'no' ) ) {
 			return array();
 		}
-		$args['posts_per_page'] = get_option( 'wcj_product_info_related_products_num' );
-		$args['orderby'] = get_option( 'wcj_product_info_related_products_orderby' );
-		if ( get_option( 'wcj_product_info_related_products_orderby' ) != 'rand' ) {
-			$args['order'] = get_option( 'wcj_product_info_related_products_order' );
+		$args['posts_per_page'] = get_option( 'wcj_product_info_related_products_num', 3 );
+		$orderby = get_option( 'wcj_product_info_related_products_orderby', 'rand' );
+		$args['orderby'] = $orderby;
+		if ( 'meta_value' === $orderby || 'meta_value_num' === $orderby ) {
+			$args['meta_key'] = get_option( 'wcj_product_info_related_products_orderby_meta_value_meta_key', '' );
+		}
+		if ( get_option( 'wcj_product_info_related_products_orderby', 'rand' ) != 'rand' ) {
+			$args['order'] = get_option( 'wcj_product_info_related_products_order', 'desc' );
 		}
 		return $args;
 	}
 
 	/**
-	 * Change number of related products on product page.
+	 * output_related_products_args.
 	 *
-	 * @version 2.2.6
+	 * @version 2.6.0
 	 */
 	function output_related_products_args( $args ) {
-		$args['columns'] = get_option( 'wcj_product_info_related_products_columns' );
+		$args['columns'] = get_option( 'wcj_product_info_related_products_columns', 3 );
 		$args = $this->related_products_args( $args );
 		return $args;
 	}
@@ -90,7 +97,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.0
 	 */
 	function get_settings() {
 		$settings = array(
@@ -118,14 +125,23 @@ class WCJ_Related_Products extends WCJ_Module {
 				'default'  => 'rand',
 				'type'     => 'select',
 				'options'  => array(
-					'rand'  => __( 'Random', 'woocommerce-jetpack' ),
-					'date'  => __( 'Date', 'woocommerce-jetpack' ),
-					'title' => __( 'Title', 'woocommerce-jetpack' ),
+					'rand'           => __( 'Random', 'woocommerce-jetpack' ),
+					'date'           => __( 'Date', 'woocommerce-jetpack' ),
+					'title'          => __( 'Title', 'woocommerce-jetpack' ),
+					'meta_value'     => __( 'Meta Value', 'woocommerce-jetpack' ),
+					'meta_value_num' => __( 'Meta Value (Numeric)', 'woocommerce-jetpack' ),
 				),
 			),
 			array(
+				'title'    => __( 'Meta Key', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Used only if order by "Meta Value" or "Meta Value (Numeric)" is selected in "Order by".', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_info_related_products_orderby_meta_value_meta_key',
+				'default'  => '',
+				'type'     => 'text',
+			),
+			array(
 				'title'    => __( 'Order', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Ignored if order by "Random" is selected above.', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Ignored if order by "Random" is selected in "Order by".', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_info_related_products_order',
 				'default'  => 'desc',
 				'type'     => 'select',
