@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency per Product class.
  *
- * @version 2.5.6
+ * @version 2.6.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -183,11 +183,14 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * change_currency_code.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.0
 	 * @since   2.5.2
 	 */
 	public function change_currency_code( $currency ) {
 		$the_ID = get_the_ID();
+		if ( 0 == $the_ID && isset( $_REQUEST['product_id'] ) ) {
+			$the_ID = $_REQUEST['product_id'];
+		}
 		if ( 0 != $the_ID && 'product' === get_post_type( $the_ID ) ) {
 			$currency_per_product_currency = get_post_meta( $the_ID, '_' . 'wcj_currency_per_product_currency', true );
 			if ( '' != $currency_per_product_currency ) {
@@ -200,11 +203,14 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * change_currency_symbol.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.0
 	 * @since   2.5.2
 	 */
 	function change_currency_symbol( $currency_symbol, $currency ) {
 		$the_ID = get_the_ID();
+		if ( 0 == $the_ID && isset( $_REQUEST['product_id'] ) ) {
+			$the_ID = $_REQUEST['product_id'];
+		}
 		if ( 0 != $the_ID && 'product' === get_post_type( $the_ID ) ) {
 			$currency_per_product_currency = get_post_meta( $the_ID, '_' . 'wcj_currency_per_product_currency', true );
 			if ( '' != $currency_per_product_currency ) {
