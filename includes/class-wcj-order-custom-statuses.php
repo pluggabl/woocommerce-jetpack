@@ -51,7 +51,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				add_action( 'admin_footer', array( $this, 'bulk_admin_footer' ), 11 );
 			}
 
-			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions', 'yes' ) ) {
+			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions', 'no' ) ) {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_actions_buttons' ), PHP_INT_MAX, 2 );
 				add_action( 'admin_head',                      array( $this, 'add_custom_status_actions_buttons_css' ) );
 			}
@@ -99,7 +99,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 					$content = 'e011';
 					$color   = '#999999';
 				}
-				$color_style = ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions_colored', 'yes' ) ) ? ' color: ' . $color . ' !important;' : '';
+				$color_style = ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions_colored', 'no' ) ) ? ' color: ' . $color . ' !important;' : '';
 				echo '<style>.view.' . $custom_order_status . '::after { font-family: WooCommerce !important;' . $color_style . ' content: "\\' . $content . '" !important; }</style>';
 			}
 		}
@@ -430,7 +430,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				'title'    => __( 'Add Custom Statuses to Admin Order List Action Buttons', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions',
-				'default'  => 'yes',
+				'default'  => 'no',
 				'type'     => 'checkbox',
 				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
@@ -438,7 +438,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			array(
 				'desc'     => __( 'Enable Colors', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions_colored',
-				'default'  => 'yes',
+				'default'  => 'no',
 				'type'     => 'checkbox',
 				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
