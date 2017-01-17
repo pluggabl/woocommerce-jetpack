@@ -247,6 +247,9 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 * create_custom_statuses_tool.
 	 *
 	 * @version 2.6.0
+	 * @todo    (from Custom Order Status for WooCommerce plugin) delete: change all orders to fallback status
+	 * @todo    (from Custom Order Status for WooCommerce plugin) delete: option to change fallback status from 'on-hold' to any other status
+	 * @todo    (from Custom Order Status for WooCommerce plugin) delete: delete icon data
 	 */
 	public function create_custom_statuses_tool() {
 		$result_message = '';
