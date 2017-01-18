@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.0-dev-201701130148';
+	public $version = '2.6.0-dev-201701182334';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -634,7 +634,7 @@ final class WC_Jetpack {
 	/**
 	 * add_options.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.0
 	 * @since   2.5.2
 	 */
 	function add_options() {
@@ -668,8 +668,8 @@ final class WC_Jetpack {
 			foreach ( $values as $value ) {
 				if ( isset( $value['default'] ) && isset( $value['id'] ) ) {
 
-					$autoload = isset( $value['autoload'] ) ? (bool) $value['autoload'] : true;
-					add_option( $value['id'], $value['default'], '', ( $autoload ? 'yes' : 'no' ) );
+//					$autoload = isset( $value['autoload'] ) ? (bool) $value['autoload'] : true;
+					add_option( $value['id'], $value['default'], '', 'no' );
 
 					/* if ( $this->is_wpml_value( $module, $value ) ) {
 						$wpml_keys[] = $value['id'];
