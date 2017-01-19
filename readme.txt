@@ -139,7 +139,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 13/01/2017 =
+= 2.6.0 - 19/01/2017 =
+~   * Dev - PRODUCTS - Related Products - "Relate Manually" option added.
 -   * Dev - Autoload set to `no` in `add_option`.
 ~   * Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
 ~D  * Dev - PRODUCTS - Related Products - Order by "Meta Value" and "Meta Value (Numeric)" options added.
