@@ -97,6 +97,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	 * related_products_args.
 	 *
 	 * @version 2.6.0
+	 * @todo    change related products: there will be issues if $product->get_related() will return empty array
 	 */
 	function related_products_args( $args ) {
 		// Hide Related
@@ -115,12 +116,24 @@ class WCJ_Related_Products extends WCJ_Module {
 		if ( get_option( 'wcj_product_info_related_products_orderby', 'rand' ) != 'rand' ) {
 			$args['order'] = get_option( 'wcj_product_info_related_products_order', 'desc' );
 		}
-		// Related per Product
+		// Change Related Products
 		if ( 'yes' === get_option( 'wcj_product_info_related_products_per_product' , 'yes' ) ) {
+			// Relate per Product (Manual)
 			$related_per_product = get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_ids', true );
 			if ( '' != $related_per_product ) {
 				$args['post__in'] = $related_per_product;
 			}
+		}
+		elseif ( 'yes' === get_option( 'wcj_product_info_related_products_by_attribute_enabled', 'no' ) ) {
+			// Relate by Global Attributes
+			unset( $args['post__in'] );
+			$args['tax_query'] = array(
+				array(
+					'taxonomy' => 'pa_' . get_option( 'wcj_product_info_related_products_by_attribute_attribute_name', '' ),
+					'field'    => 'slug',
+					'terms'    => get_option( 'wcj_product_info_related_products_by_attribute_attribute_value', '' ),
+				),
+			);
 		}
 		return $args;
 	}
@@ -213,6 +226,25 @@ class WCJ_Related_Products extends WCJ_Module {
 				'id'       => 'wcj_product_info_related_products_per_product',
 				'default'  => 'yes',
 				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Relate by Global Product Attribute', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_info_related_products_by_attribute_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Attribute Name Slug', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_info_related_products_by_attribute_attribute_name',
+				'default'  => '',
+				'type'     => 'text',
+			),
+			array(
+				'desc'     => __( 'Attribute Value Slug', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_info_related_products_by_attribute_attribute_value',
+				'default'  => '',
+				'type'     => 'text',
 			),
 			array(
 				'title'    => __( 'Hide Related Products', 'woocommerce-jetpack' ),
