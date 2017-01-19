@@ -84,6 +84,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	 * add_min_max_settings.
 	 *
 	 * @version 2.6.0
+	 * @todo    checkout notices - add %diff_amount% replaced values
 	 */
 	function add_min_max_settings( $settings ) {
 		$settings = array(
