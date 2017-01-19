@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Min Max class.
  *
- * @version 2.5.0
+ * @version 2.6.0
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -37,8 +37,13 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 
 	/**
 	 * available_payment_gateways.
+	 *
+	 * @version 2.6.0
 	 */
 	function available_payment_gateways( $_available_gateways ) {
+		$notices = array();
+		$notices_template_min = get_option( 'wcj_payment_gateways_min_max_notices_template_min', __( 'Minimum amount for %gateway_title% is %min_amount%', 'woocommerce-jetpack') );
+		$notices_template_max = get_option( 'wcj_payment_gateways_min_max_notices_template_max', __( 'Maximum amount for %gateway_title% is %max_amount%', 'woocommerce-jetpack') );
 		foreach ( $_available_gateways as $key => $gateway ) {
 			$min = get_option( 'wcj_payment_gateways_min_' . $key, 0 );
 			$max = get_option( 'wcj_payment_gateways_max_' . $key, 0 );
@@ -46,12 +51,23 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 			$total_in_cart = ( 'no' === get_option( 'wcj_payment_gateways_min_max_exclude_shipping', 'no' ) ) ?
 				$woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total : $woocommerce->cart->cart_contents_total;
 			if ( $min != 0 && $total_in_cart < $min ) {
+				$notices[] = str_replace( array( '%gateway_title%', '%min_amount%' ), array( $gateway->title, wc_price( $min ) ), $notices_template_min );
 				unset( $_available_gateways[ $key ] );
 				continue;
 			}
 			if ( $max != 0 && $total_in_cart > $max ) {
+				$notices[] = str_replace( array( '%gateway_title%', '%max_amount%' ), array( $gateway->title, wc_price( $max ) ), $notices_template_max );
 				unset( $_available_gateways[ $key ] );
 				continue;
+			}
+		}
+		if ( 'yes' === get_option( 'wcj_payment_gateways_min_max_notices_enable', 'yes' ) && ! empty( $notices ) ) {
+//			wc_clear_notices();
+			$notice_type = get_option( 'wcj_payment_gateways_min_max_notices_type', 'notice' );
+			foreach ( $notices as $notice ) {
+				if ( ! wc_has_notice( $notice, $notice_type ) ) {
+					wc_add_notice( $notice, $notice_type );
+				}
 			}
 		}
 		return $_available_gateways;
@@ -66,6 +82,8 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 
 	/**
 	 * add_min_max_settings.
+	 *
+	 * @version 2.6.0
 	 */
 	function add_min_max_settings( $settings ) {
 		$settings = array(
@@ -75,11 +93,45 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 				'id'        => 'wcj_payment_gateways_min_max_general_options',
 			),
 			array(
-				'title'     => __( 'Exclude Shipping', 'alg-woocommerce-fees' ),
-				'desc'      => __( 'Exclude shipping from total cart sum, when comparing with min/max amounts.', 'alg-woocommerce-fees' ),
+				'title'     => __( 'Exclude Shipping', 'woocommerce-jetpack'),
+				'desc'      => __( 'Exclude shipping from total cart sum, when comparing with min/max amounts.', 'woocommerce-jetpack'),
 				'id'        => 'wcj_payment_gateways_min_max_exclude_shipping',
 				'default'   => 'no',
 				'type'      => 'checkbox',
+			),
+			array(
+				'title'     => __( 'Notices on Checkout', 'woocommerce-jetpack'),
+				'desc'      => __( 'Enable Notices', 'woocommerce-jetpack'),
+				'id'        => 'wcj_payment_gateways_min_max_notices_enable',
+				'default'   => 'yes',
+				'type'      => 'checkbox',
+			),
+			array(
+				'desc'      => __( 'Notice Template (Minimum Amount)', 'woocommerce-jetpack'),
+				'desc_tip'  => __( 'Replaced values: %gateway_title%, %min_amount%.', 'woocommerce-jetpack'),
+				'id'        => 'wcj_payment_gateways_min_max_notices_template_min',
+				'default'   => __( 'Minimum amount for %gateway_title% is %min_amount%', 'woocommerce-jetpack'),
+				'type'      => 'textarea',
+				'css'       => 'width:90%;min-width:300px',
+			),
+			array(
+				'desc'      => __( 'Notice Template (Maximum Amount)', 'woocommerce-jetpack'),
+				'desc_tip'  => __( 'Replaced values: %gateway_title%, %max_amount%.', 'woocommerce-jetpack'),
+				'id'        => 'wcj_payment_gateways_min_max_notices_template_max',
+				'default'   => __( 'Maximum amount for %gateway_title% is %max_amount%', 'woocommerce-jetpack'),
+				'type'      => 'textarea',
+				'css'       => 'width:90%;min-width:300px',
+			),
+			array(
+				'desc'      => __( 'Notice Styling', 'woocommerce-jetpack'),
+				'id'        => 'wcj_payment_gateways_min_max_notices_type',
+				'default'   => 'notice',
+				'type'      => 'select',
+				'options'   => array(
+					'notice'  => __( 'Notice', 'woocommerce-jetpack'),
+					'error'   => __( 'Error', 'woocommerce-jetpack'),
+					'success' => __( 'Success', 'woocommerce-jetpack'),
+				),
 			),
 			array(
 				'type'      => 'sectionend',
