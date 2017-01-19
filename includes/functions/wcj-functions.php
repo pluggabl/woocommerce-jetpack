@@ -795,26 +795,29 @@ if ( ! function_exists( 'add_wcj_get_products_filter' ) ) {
 /**
  * wcj_get_products.
  *
- * @version 2.4.4
+ * @version 2.6.0
  */
 if ( ! function_exists( 'wcj_get_products' ) ) {
-	function wcj_get_products( $products = array() ) {
+	function wcj_get_products( $products = array(), $post_status = 'any' ) {
 		$offset = 0;
-		$block_size = 96;
+		$block_size = 256;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'product',
-				'post_status'    => 'any',
+				'post_status'    => $post_status,
 				'posts_per_page' => $block_size,
 				'offset'         => $offset,
 				'orderby'        => 'title',
 				'order'          => 'ASC',
+				'fields'         => 'ids',
 			);
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$products[ strval( $loop->post->ID ) ] = get_the_title( $loop->post->ID );
-			endwhile;
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $post_id ) {
+				$products[ $post_id ] = get_the_title( $post_id );
+			}
 			$offset += $block_size;
 		}
 		wp_reset_postdata();
