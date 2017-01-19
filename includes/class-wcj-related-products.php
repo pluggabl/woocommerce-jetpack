@@ -153,6 +153,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	 * get_settings.
 	 *
 	 * @version 2.6.0
+	 * @todo    add "Relate by Local (i.e. Product Specific) Product Attribute" - http://snippet.fm/snippets/query-woocommerce-products-product-specific-custom-attribute/
 	 */
 	function get_settings() {
 		$settings = array(
