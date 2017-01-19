@@ -110,6 +110,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	 * order_minimum_amount.
 	 *
 	 * @version 2.6.0
+	 * @todo    wc_print_notice or wc_add_notice?
 	 */
 	public function order_minimum_amount() {
 		$minimum = $this->get_order_minimum_amount_with_user_roles();
