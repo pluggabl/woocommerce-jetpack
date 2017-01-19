@@ -18,12 +18,12 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.0
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_min_max';
-		$this->short_desc = __( 'Gateways Min/Max', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Gateways Min/Max Amounts', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add min/max amounts for WooCommerce payment gateways to show up.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-min-max/';
 		parent::__construct();
