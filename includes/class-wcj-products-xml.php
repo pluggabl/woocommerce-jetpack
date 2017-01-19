@@ -158,6 +158,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 * @since   2.5.7
+	 * @todo    strip_tags from shortcodes
 	 */
 	function create_products_xml( $file_num ) {
 		$xml_items = '';
