@@ -126,6 +126,7 @@ class WCJ_Related_Products extends WCJ_Module {
 		}
 		elseif ( 'yes' === get_option( 'wcj_product_info_related_products_by_attribute_enabled', 'no' ) ) {
 			// Relate by Global Attributes
+			// from http://snippet.fm/snippets/query-for-woocommerce-products-by-global-product-attributes/
 			unset( $args['post__in'] );
 			$args['tax_query'] = array(
 				array(
