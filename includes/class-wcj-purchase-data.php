@@ -18,7 +18,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 */
 	function __construct() {
 
@@ -33,7 +33,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
-			if ( 'yes' === get_option( 'wcj_purchase_data_custom_columns_profit', 'no' ) ) {
+			if ( 'yes' === get_option( 'wcj_purchase_data_custom_columns_profit', 'yes' ) || 'yes' === get_option( 'wcj_purchase_data_custom_columns_purchase_cost', 'no' ) ) {
 				add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_columns' ),    PHP_INT_MAX - 2 );
 				add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
 			}
@@ -43,10 +43,16 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * add_order_columns.
 	 *
-	 * @since 2.2.4
+	 * @version 2.6.0
+	 * @since   2.2.4
 	 */
 	function add_order_columns( $columns ) {
-		$columns['profit'] = __( 'Profit', 'woocommerce-jetpack' );
+		if ( 'yes' === get_option( 'wcj_purchase_data_custom_columns_profit', 'yes' ) ) {
+			$columns['profit'] = __( 'Profit', 'woocommerce-jetpack' );
+		}
+		if ( 'yes' === get_option( 'wcj_purchase_data_custom_columns_purchase_cost', 'no' ) ) {
+			$columns['purchase_cost'] = __( 'Purchase Cost', 'woocommerce-jetpack' );
+		}
 		return $columns;
 	}
 
@@ -59,30 +65,34 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 * @todo    forecasted profit
 	 */
 	function render_order_columns( $column ) {
-		if ( 'profit' === $column ) {
-			$total_profit = 0;
+		if ( 'profit' === $column || 'purchase_cost' === $column ) {
+			$total = 0;
 			$the_order = wc_get_order( get_the_ID() );
 			if ( ! in_array( $the_order->get_status(), array( 'cancelled', 'refunded', 'failed' ) ) ) {
 				$is_forecasted = false;
 				foreach ( $the_order->get_items() as $item_id => $item ) {
-					$the_profit = 0;
+					$value = 0;
 					$product_id = ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) )
 						? $item['variation_id']
 						: $item['product_id'];
 					if ( 0 != ( $purchase_price = wc_get_product_purchase_price( $product_id ) ) ) {
-//						$line_total = ( 'yes' === get_option('woocommerce_prices_include_tax') ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
-						$line_total = ( $the_order->prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
-						$the_profit = $line_total - $purchase_price * $item['qty'];
+						if ( 'profit' === $column ) {
+//							$line_total = ( 'yes' === get_option('woocommerce_prices_include_tax') ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
+							$line_total = ( $the_order->prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
+							$value = $line_total - $purchase_price * $item['qty'];
+						} else { // if ( 'purchase_cost' === $column )
+							$value = $purchase_price * $item['qty'];
+						}
 					} else {
-//						$the_profit = ( $item['line_total'] + $item['line_tax'] ) * $average_profit_margin;
+//						$value = ( $item['line_total'] + $item['line_tax'] ) * $average_profit_margin;
 						$is_forecasted = true;
 					}
-					$total_profit += $the_profit;
+					$total += $value;
 				}
 			}
-			if ( 0 != $total_profit ) {
+			if ( 0 != $total ) {
 				if ( ! $is_forecasted ) echo '<span style="color:green;">';
-				echo wc_price( $total_profit );
+				echo wc_price( $total );
 				if ( ! $is_forecasted ) echo '</span>';
 			}
 		}
@@ -393,6 +403,13 @@ class WCJ_Purchase_Data extends WCJ_Module {
 				'desc'      => __( 'Add', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_purchase_data_custom_columns_profit',
 				'default'   => 'yes',
+				'type'      => 'checkbox',
+			),
+			array(
+				'title'     => __( 'Purchase Cost', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Add', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_purchase_data_custom_columns_purchase_cost',
+				'default'   => 'no',
 				'type'      => 'checkbox',
 			),
 			array(

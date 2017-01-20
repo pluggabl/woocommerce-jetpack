@@ -140,6 +140,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 20/01/2017 =
+    * Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
 ~   * Dev - EMAILS & MISC. - Products XML - `strip_tags="yes"` added to all shortcodes in default item template.
 ~   * Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
 -   * Dev - PRODUCTS - Related Products - "Relate by Global Product Attribute" options section added.
