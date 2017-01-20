@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shortcodes class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -59,7 +59,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 */
 	function wcj_shortcode( $atts, $content, $shortcode ) {
 
@@ -85,6 +85,7 @@ class WCJ_Shortcodes {
 			'module'              => '',
 			'find'                => '',
 			'replace'             => '',
+			'strip_tags'          => 'no',
 		);
 		$atts = array_merge( $global_defaults, $atts );
 
@@ -173,6 +174,9 @@ class WCJ_Shortcodes {
 		if ( '' !== ( $result = $this->$shortcode_function( $atts, $content ) ) ) {
 			if ( '' != $atts['find'] ) {
 				$result = str_replace( $atts['find'], $atts['replace'], $result );
+			}
+			if ( 'yes' === $atts['strip_tags'] ) {
+				$result = strip_tags( $result );
 			}
 			return $atts['before'] . $result . $atts['after'];
 		}
