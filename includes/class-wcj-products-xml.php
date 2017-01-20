@@ -364,12 +364,12 @@ class WCJ_Products_XML extends WCJ_Module {
 					'id'       => 'wcj_products_xml_item_' . $i,
 					'default'  =>
 						'<item>' . PHP_EOL .
-							"\t" . '<name>[wcj_product_title]</name>' . PHP_EOL .
-							"\t" . '<link>[wcj_product_url]</link>' . PHP_EOL .
-							"\t" . '<price>[wcj_product_price hide_currency="yes"]</price>' . PHP_EOL .
-							"\t" . '<image>[wcj_product_image_url image_size="full"]</image>' . PHP_EOL .
-							"\t" . '<category_full>[wcj_product_categories_names]</category_full>' . PHP_EOL .
-							"\t" . '<category_link>[wcj_product_categories_urls]</category_link>' . PHP_EOL .
+							"\t" . '<name>[wcj_product_title strip_tags="yes"]</name>' . PHP_EOL .
+							"\t" . '<link>[wcj_product_url strip_tags="yes"]</link>' . PHP_EOL .
+							"\t" . '<price>[wcj_product_price hide_currency="yes" strip_tags="yes"]</price>' . PHP_EOL .
+							"\t" . '<image>[wcj_product_image_url image_size="full" strip_tags="yes"]</image>' . PHP_EOL .
+							"\t" . '<category_full>[wcj_product_categories_names strip_tags="yes"]</category_full>' . PHP_EOL .
+							"\t" . '<category_link>[wcj_product_categories_urls strip_tags="yes"]</category_link>' . PHP_EOL .
 						'</item>' . PHP_EOL,
 					'type'     => 'custom_textarea',
 					'css'      => 'width:66%;min-width:300px;min-height:300px;',

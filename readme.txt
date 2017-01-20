@@ -140,6 +140,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 20/01/2017 =
+~   * Dev - EMAILS & MISC. - Products XML - `strip_tags="yes"` added to all shortcodes in default item template.
 ~   * Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
 -   * Dev - PRODUCTS - Related Products - "Relate by Global Product Attribute" options section added.
 ~   * Dev - PAYMENT GATEWAYS - Gateways Min/Max - "Notices on Checkout" options section added.
