@@ -67,7 +67,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
 * *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
-* *Empty Cart Button* - Add and customize "Empty Cart" button to WooCommerce cart page.
+* *Empty Cart Button* - Add (and customize) "Empty Cart" button to WooCommerce cart and checkout pages.
 * *Mini Cart* - Customize WooCommerce mini cart widget.
 
 **Payment Gateways**
@@ -140,6 +140,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 22/01/2017 =
+D   * Tweak - CART & CHECKOUT - Empty Cart Button - Description updated.
 ~D  * Dev - Shortcodes - `[wcj_order_items_table]` - "product_regular_price_multiply_qty" and "product_sale_price_multiply_qty" columns added.
     * Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
 ~   * Dev - EMAILS & MISC. - Products XML - `strip_tags="yes"` added to all shortcodes in default item template.

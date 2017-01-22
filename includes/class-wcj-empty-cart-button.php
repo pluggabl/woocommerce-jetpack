@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Empty Cart Button class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -18,13 +18,13 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 */
 	function __construct() {
 
 		$this->id         = 'empty_cart';
 		$this->short_desc = __( 'Empty Cart Button', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add and customize "Empty Cart" button to WooCommerce cart page.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add (and customize) "Empty Cart" button to WooCommerce cart and checkout pages.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-empty-cart-button/';
 		parent::__construct();
 
@@ -66,14 +66,14 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.0
 	 */
 	function get_settings() {
 		$settings = array(
 			array(
-				'title'    => __( 'Empty Cart Options', 'woocommerce-jetpack' ),
+				'title'    => __( 'Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => __( 'This section lets you add and customize "Empty Cart" button to cart page.', 'woocommerce-jetpack' ),
+//				'desc'     => __( 'This section lets you add (and customize) "Empty Cart" button to cart and checkout pages.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_empty_cart_customization_options',
 			),
 			array(
