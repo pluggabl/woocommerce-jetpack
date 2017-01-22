@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -210,7 +210,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.0
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -286,6 +286,14 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					case 'item_sale_price':
 					case 'product_sale_price':
 						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_sale_price(), $atts ) : '';
+						break;
+					case 'item_regular_price_multiply_qty':
+					case 'product_regular_price_multiply_qty':
+						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_regular_price() * $item['qty'], $atts ) : '';
+						break;
+					case 'item_sale_price_multiply_qty':
+					case 'product_sale_price_multiply_qty':
+						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_sale_price() * $item['qty'], $atts ) : '';
 						break;
 					case 'item_tax_class':
 					case 'tax_class':
