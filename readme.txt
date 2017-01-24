@@ -116,6 +116,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 = More =
 * Visit the [Booster for WooCommerce plugin page](http://booster.io/).
 * [Compare free and Plus version](http://booster.io/booster-woocommerce-free-vs-plus/).
+* If you wish to contribute - please visit [Booster for WooCommerce GitHub repository](https://github.com/algoritmika/woocommerce-jetpack).
 
 == Installation ==
 
@@ -140,6 +141,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 24/01/2017 =
+    * Tweak - Link to Booster's GitHub repository added.
 -D  * Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
 D   * Tweak - CART & CHECKOUT - Empty Cart Button - Description updated.
 ~D  * Dev - Shortcodes - `[wcj_order_items_table]` - "product_regular_price_multiply_qty" and "product_sale_price_multiply_qty" columns added.
