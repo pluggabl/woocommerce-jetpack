@@ -139,7 +139,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 22/01/2017 =
+= 2.6.0 - 24/01/2017 =
+-D  * Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
 D   * Tweak - CART & CHECKOUT - Empty Cart Button - Description updated.
 ~D  * Dev - Shortcodes - `[wcj_order_items_table]` - "product_regular_price_multiply_qty" and "product_sale_price_multiply_qty" columns added.
     * Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.

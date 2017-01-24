@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product by User Role class.
  *
- * @version 2.5.6
+ * @version 2.6.0
  * @since   2.5.5
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 * @since   2.5.5
 	 */
 	function __construct() {
@@ -33,18 +33,77 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-				add_filter( 'woocommerce_product_is_visible', array( $this, 'product_by_user_role' ), PHP_INT_MAX, 2 );
+				if ( 'yes' === get_option( 'wcj_product_by_user_role_visibility', 'yes' ) ) {
+					add_filter( 'woocommerce_product_is_visible', array( $this, 'product_by_user_role_visibility' ), PHP_INT_MAX, 2 );
+				}
+				if ( 'yes' === get_option( 'wcj_product_by_user_role_purchasable', 'no' ) ) {
+					add_filter( 'woocommerce_is_purchasable',     array( $this, 'product_by_user_role_purchasable' ), PHP_INT_MAX, 2 );
+				}
+				if ( 'yes' === get_option( 'wcj_product_by_user_role_query', 'no' ) ) {
+					add_action( 'pre_get_posts',                  array( $this, 'product_by_user_role_pre_get_posts' ) );
+				}
 			}
 		}
 	}
 
 	/**
-	 * product_by_user_role.
+	 * product_by_user_role_pre_get_posts.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function product_by_user_role_pre_get_posts( $query ) {
+
+		if ( is_admin() ) {
+			return;
+		}
+
+		remove_action( 'pre_get_posts', array( $this, 'product_by_user_role_pre_get_posts' ) );
+		$current_user_roles = wcj_get_current_user_all_roles();
+		$post__not_in = array();
+		$args = $query->query;
+		$offset = 0;
+		$block_size = 256;
+		while( true ) {
+			$args['posts_per_page'] = $block_size;
+			$args['offset']         = $offset;
+			$args['fields']         = 'ids';
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $product_id ) {
+				$visible_user_roles = get_post_meta( $product_id, '_' . 'wcj_product_by_user_role_visible', true );
+				if ( is_array( $visible_user_roles ) && ! empty( $visible_user_roles ) ) {
+					$the_intersect = array_intersect( $visible_user_roles, $current_user_roles );
+					if ( empty( $the_intersect ) ) {
+						$post__not_in[] = $product_id;
+					}
+				}
+			}
+			$offset += $block_size;
+		}
+		$query->set( 'post__not_in', $post__not_in );
+		add_action( 'pre_get_posts', array( $this, 'product_by_user_role_pre_get_posts' ) );
+	}
+
+	/**
+	 * product_by_user_role_purchasable.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function product_by_user_role_purchasable( $purchasable, $_product ) {
+		return $this->product_by_user_role_visibility( $purchasable, $_product->id );
+	}
+
+	/**
+	 * product_by_user_role_visibility.
+	 *
+	 * @version 2.6.0
 	 * @since   2.5.5
 	 */
-	function product_by_user_role( $visible, $product_id ) {
+	function product_by_user_role_visibility( $visible, $product_id ) {
 		$visible_user_roles = get_post_meta( $product_id, '_' . 'wcj_product_by_user_role_visible', true );
 		if ( is_array( $visible_user_roles ) && ! empty( $visible_user_roles ) ) {
 			$current_user_roles = wcj_get_current_user_all_roles();
@@ -80,11 +139,39 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 * @since   2.5.5
 	 */
 	function get_settings() {
-		$settings = array();
+		$settings = array(
+			array(
+				'title'    => __( 'Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_by_user_role_options',
+			),
+			array(
+				'title'    => __( 'Visibility', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_by_user_role_visibility',
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Purchasable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_by_user_role_purchasable',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Query', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_by_user_role_query',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_by_user_role_options',
+			),
+		);
 		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Product Visibility by User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
 	}
 }
