@@ -17,7 +17,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 		$this->update_intervals  = array(
@@ -102,18 +102,26 @@ class WCJ_Exchange_Rates_Crons {
 				if ( isset( $attributes['CurrencyCode'] ) ) {
 					$currency_code = (string) $attributes['CurrencyCode'];
 					if ( $currency_code === $currency_from  ) {
-						if ( isset( $the_rate->ForexSelling ) ) {
-							$rate = (float) $the_rate->ForexSelling;
-						} elseif ( isset( $the_rate->ForexBuying ) ) {
-							$rate = (float) $the_rate->ForexBuying;
-						} elseif ( isset( $the_rate->BanknoteSelling ) ) {
-							$rate = (float) $the_rate->BanknoteSelling;
-						} elseif ( isset( $the_rate->BanknoteBuying ) ) {
-							$rate = (float) $the_rate->BanknoteBuying;
+						// Possible values: ForexSelling, ForexBuying, BanknoteSelling, BanknoteBuying. Not used: CrossRateUSD, CrossRateOther.
+						if ( 'ForexSelling' != ( $property_to_check = apply_filters( 'wcj_currency_exchange_rates_tcmb_property_to_check', 'ForexSelling' ) ) ) {
+							if ( isset( $the_rate->{$property_to_check} ) ) {
+								$rate = (float) $the_rate->{$property_to_check};
+							} else {
+								continue;
+							}
 						} else {
-							continue;
+							if ( isset( $the_rate->ForexSelling ) ) {
+								$rate = (float) $the_rate->ForexSelling;
+							} elseif ( isset( $the_rate->ForexBuying ) ) {
+								$rate = (float) $the_rate->ForexBuying;
+							} elseif ( isset( $the_rate->BanknoteSelling ) ) {
+								$rate = (float) $the_rate->BanknoteSelling;
+							} elseif ( isset( $the_rate->BanknoteBuying ) ) {
+								$rate = (float) $the_rate->BanknoteBuying;
+							} else {
+								continue;
+							}
 						}
-						// not used: CrossRateUSD, CrossRateOther
 						$unit = ( isset( $the_rate->Unit ) ) ? (float) $the_rate->Unit : 1;
 						return ( $rate / $unit );
 					}
