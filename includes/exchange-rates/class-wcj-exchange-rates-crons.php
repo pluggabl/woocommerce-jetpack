@@ -103,7 +103,7 @@ class WCJ_Exchange_Rates_Crons {
 					$currency_code = (string) $attributes['CurrencyCode'];
 					if ( $currency_code === $currency_from  ) {
 						// Possible values: ForexSelling, ForexBuying, BanknoteSelling, BanknoteBuying. Not used: CrossRateUSD, CrossRateOther.
-						if ( 'ForexSelling' != ( $property_to_check = apply_filters( 'wcj_currency_exchange_rates_tcmb_property_to_check', 'ForexSelling' ) ) ) {
+						if ( '' != ( $property_to_check = apply_filters( 'wcj_currency_exchange_rates_tcmb_property_to_check', '' ) ) ) {
 							if ( isset( $the_rate->{$property_to_check} ) ) {
 								$rate = (float) $the_rate->{$property_to_check};
 							} else {
