@@ -97,7 +97,9 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			if ( '' != get_option( 'wcj_currency_exchange_rate_cron_time', '' ) ) {
 				$scheduled_time_diff = get_option( 'wcj_currency_exchange_rate_cron_time', '' ) - time();
-				if ( $scheduled_time_diff > 0 ) {
+				if ( $scheduled_time_diff > 60 ) {
+					$desc = '<br><em>' . sprintf( __( '%s till next update.', 'woocommerce-jetpack' ), human_time_diff( 0, $scheduled_time_diff ) ) . '</em>';
+				} elseif ( $scheduled_time_diff > 0 ) {
 					$desc = '<br><em>' . sprintf( __( '%s seconds till next update.', 'woocommerce-jetpack' ), $scheduled_time_diff ) . '</em>';
 				}
 			}
