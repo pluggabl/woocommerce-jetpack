@@ -8,6 +8,21 @@
  * @author  Algoritmika Ltd.
  */
 
+if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
+	/**
+	 * wcj_get_currency_exchange_rate_servers.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function wcj_get_currency_exchange_rate_servers() {
+		return array(
+			'yahoo' => __( 'Yahoo', 'woocommerce-jetpack' ),
+			'tcmb'  => __( 'TCMB', 'woocommerce-jetpack' ),
+		);
+	}
+}
+
 if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	/**
 	 * wcj_get_order_item_meta_info.

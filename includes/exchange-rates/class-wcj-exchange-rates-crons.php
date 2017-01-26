@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exchange Rates Crons class.
  *
- * @version 2.5.5
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -31,6 +31,21 @@ class WCJ_Exchange_Rates_Crons {
 		add_action( 'admin_init',                      array( $this, 'schedule_the_events' ) );
 		add_action( 'auto_update_exchange_rates_hook', array( $this, 'update_the_exchange_rates' ) );
 		add_filter( 'cron_schedules',                  array( $this, 'cron_add_custom_intervals' ) );
+
+		add_action( 'wp_ajax_'        . 'wcj_tcmb_get_exchange_rates', array( $this, 'wcj_tcmb_get_exchange_rates' ) );
+		add_action( 'wp_ajax_nopriv_' . 'wcj_tcmb_get_exchange_rates', array( $this, 'wcj_tcmb_get_exchange_rates' ) );
+	}
+
+	/**
+	 * wcj_tcmb_get_exchange_rates.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 * @todo    this shouldn't be in crons
+	 */
+	function wcj_tcmb_get_exchange_rates() {
+		echo $this->tcmb_get_exchange_rate( $_POST['wcj_tcmb_currency_from'], $_POST['wcj_tcmb_currency_to'] );
+		die();
 	}
 
 	/**
@@ -57,10 +72,85 @@ class WCJ_Exchange_Rates_Crons {
 	/*
 	 * get_exchange_rate.
 	 *
-	 * @version 2.5.5
-	 * @return  float rate on success, else 0
+	 * @version 2.6.0
+	 * @since   2.6.0
 	 */
 	function get_exchange_rate( $currency_from, $currency_to ) {
+		$exchange_rates_server = get_option( 'wcj_currency_exchange_rates_server', 'yahoo' );
+		switch ( $exchange_rates_server ) {
+			case 'tcmb':
+				return $this->tcmb_get_exchange_rate( $currency_from, $currency_to );
+			default: // 'yahoo'
+				return $this->yahoo_get_exchange_rate( $currency_from, $currency_to );
+		}
+	}
+
+	/*
+	 * tcmb_get_exchange_rate_TRY.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function tcmb_get_exchange_rate_TRY( $currency_from ) {
+		if ( 'TRY' === $currency_from ) {
+			return 1;
+		}
+		$xml = simplexml_load_file( 'http://www.tcmb.gov.tr/kurlar/today.xml' );
+		if ( isset( $xml->Currency ) ) {
+			foreach ( $xml->Currency as $the_rate ) {
+				$attributes = $the_rate->attributes();
+				if ( isset( $attributes['CurrencyCode'] ) ) {
+					$currency_code = (string) $attributes['CurrencyCode'];
+					if ( $currency_code === $currency_from  ) {
+						if ( isset( $the_rate->ForexSelling ) ) {
+							$rate = (float) $the_rate->ForexSelling;
+						} elseif ( isset( $the_rate->ForexBuying ) ) {
+							$rate = (float) $the_rate->ForexBuying;
+						} elseif ( isset( $the_rate->BanknoteSelling ) ) {
+							$rate = (float) $the_rate->BanknoteSelling;
+						} elseif ( isset( $the_rate->BanknoteBuying ) ) {
+							$rate = (float) $the_rate->BanknoteBuying;
+						} else {
+							continue;
+						}
+						// not used: CrossRateUSD, CrossRateOther
+						$unit = ( isset( $the_rate->Unit ) ) ? (float) $the_rate->Unit : 1;
+						return ( $rate / $unit );
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	/*
+	 * tcmb_get_exchange_rate.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function tcmb_get_exchange_rate( $currency_from, $currency_to ) {
+		$currency_from_TRY = $this->tcmb_get_exchange_rate_TRY( strtoupper( $currency_from ) );
+		if ( false == $currency_from_TRY  ) {
+			return false;
+		}
+		$currency_to_TRY = $this->tcmb_get_exchange_rate_TRY( strtoupper( $currency_to )  );
+		if ( false == $currency_to_TRY ) {
+			return false;
+		}
+		if ( 1 == $currency_to_TRY ) {
+			return round( $currency_from_TRY, 6 );
+		}
+		return round( ( $currency_from_TRY / $currency_to_TRY ), 6 );
+	}
+
+	/*
+	 * yahoo_get_exchange_rate.
+	 *
+	 * @version 2.6.0
+	 * @return  float rate on success, else 0
+	 */
+	function yahoo_get_exchange_rate( $currency_from, $currency_to ) {
 
 		$url = "http://query.yahooapis.com/v1/public/yql?q=select%20rate%2Cname%20from%20csv%20where%20url%3D'http%3A%2F%2Fdownload.finance.yahoo.com%2Fd%2Fquotes%3Fs%3D" . $currency_from . $currency_to . "%253DX%26f%3Dl1n'%20and%20columns%3D'rate%2Cname'&format=json";
 //		$url = 'http://rate-exchange.appspot.com/currency?from=' . $currency_from . '&to=' . $currency_to;

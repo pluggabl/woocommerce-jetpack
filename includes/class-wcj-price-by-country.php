@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.5.8
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -128,7 +128,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.0
 	 */
 	function get_settings() {
 
@@ -385,7 +385,6 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
 				'custom_attributes_button' => $custom_attributes,
 				'value'    => $currency_from . '/' . $currency_to,
-				'value_title' => sprintf( __( 'Grab %s rate from Yahoo.com', 'woocommerce-jetpack' ),  $currency_from . '/' . $currency_to ),
 			);
 
 			/* $settings[] = array(
@@ -394,7 +393,6 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				'class'    => 'exchage_rate_button',
 				'type'     => 'custom_number',
 				'css'      => 'width:300px;',
-				'value'    => sprintf( __( '%s rate from Yahoo.com', 'woocommerce-jetpack' ),  $currency_from . '/' . $currency_to ),
 				'custom_attributes'	=> $custom_attributes,
 			); */
 

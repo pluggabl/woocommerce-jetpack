@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exchange Rates class.
  *
- * @version  2.5.2
+ * @version  2.6.0
  * @author   Algoritmika Ltd.
  */
 
@@ -28,7 +28,7 @@ class WCJ_Exchange_Rates {
 	/**
 	 * register_script.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.0
 	 */
 	public function register_script() {
 		if (
@@ -42,14 +42,25 @@ class WCJ_Exchange_Rates {
 				'currency_exchange_rates',
 			) )
 		) {
-			wp_register_script( 'wcj-exchange-rates', trailingslashit( WCJ()->plugin_url() ) . 'includes/js/exchange_rates.js', array( 'jquery' ), false, true );
+			$exchange_rates_server = get_option( 'wcj_currency_exchange_rates_server', 'yahoo' );
+			switch ( $exchange_rates_server ) {
+				case 'tcmb':
+					wp_register_script( 'wcj-exchange-rates-tcmb',  trailingslashit( WCJ()->plugin_url() ) . 'includes/js/tcmb_exchange_rates.js', array( 'jquery' ), WCJ()->version, true );
+					wp_localize_script( 'wcj-exchange-rates-tcmb', 'ajax_object', array(
+						'ajax_url' => admin_url( 'admin-ajax.php' ),
+					) );
+					break;
+				default: // 'yahoo'
+					wp_register_script( 'wcj-exchange-rates-yahoo', trailingslashit( WCJ()->plugin_url() ) . 'includes/js/exchange_rates.js',      array( 'jquery' ), WCJ()->version, true );
+					break;
+			}
 		}
 	}
 
 	/**
 	 * enqueue_exchange_rates_script.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.0
 	 */
 	public function enqueue_exchange_rates_script() {
 	    if (
@@ -63,12 +74,22 @@ class WCJ_Exchange_Rates {
 				'currency_exchange_rates',
 			) )
 		) {
-			wp_enqueue_script( 'wcj-exchange-rates' );
+			$exchange_rates_server = get_option( 'wcj_currency_exchange_rates_server', 'yahoo' );
+			switch ( $exchange_rates_server ) {
+				case 'tcmb':
+					wp_enqueue_script( 'wcj-exchange-rates-tcmb' );
+					break;
+				default: // 'yahoo'
+					wp_enqueue_script( 'wcj-exchange-rates-yahoo' );
+					break;
+			}
 		}
 	}
 
 	/**
 	 * output_settings_button.
+	 *
+	 * @version 2.6.0
 	 */
 	function output_settings_button( $value ) {
 
@@ -78,6 +99,7 @@ class WCJ_Exchange_Rates {
 
 		// Custom attribute handling
 		$custom_attributes = array();
+//		$value['custom_attributes'] = array( 'step' => '0.000001', 'min'  => '0' );
 		if ( ! empty( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) {
 			foreach ( $value['custom_attributes'] as $attribute => $attribute_value ) {
 				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
@@ -91,6 +113,9 @@ class WCJ_Exchange_Rates {
 		}
 		$tip = '';
 		$description = '';
+		$exchange_rate_servers = wcj_get_currency_exchange_rate_servers();
+		$exchange_rate_server = $exchange_rate_servers[ get_option( 'wcj_currency_exchange_rates_server', 'yahoo' ) ];
+		$value_title = sprintf( __( 'Grab %s rate from %s', 'woocommerce-jetpack' ), $value['value'], $exchange_rate_server );
 		?>
 		<tr valign="top">
 			<th scope="row" class="titledesc">
@@ -112,7 +137,7 @@ class WCJ_Exchange_Rates {
 					id="<?php echo esc_attr( $value['id'] . '_button' ); ?>"
 					type="button"
 					value="<?php echo esc_attr( $value['value'] ); ?>"
-					title="<?php echo esc_attr( $value['value_title'] ); ?>"
+					title="<?php echo esc_attr( $value_title ); ?>"
 					class="exchage_rate_button"
 					<?php echo implode( ' ', $custom_attributes_button ); ?>
 					/>

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Currency class.
  *
- * @version 2.5.0
+ * @version 2.6.0
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -220,7 +220,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * add_currency_settings.
 	 *
-	 * @version 2.4.2
+	 * @version 2.6.0
 	 */
 	function add_currency_settings( $settings ) {
 
@@ -272,7 +272,6 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 					'custom_attributes_button' => $custom_attributes,
 					'css'                      => 'width:100px;',
 					'value'                    => $currency_from . '/' . $currency_to,
-					'value_title'              => sprintf( __( 'Grab %s rate from Yahoo.com', 'woocommerce-jetpack' ), $currency_from . '/' . $currency_to ),
 				),
 
 			) );

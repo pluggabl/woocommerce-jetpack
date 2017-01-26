@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency Exchange Rates class.
  *
- * @version 2.5.5
+ * @version 2.6.0
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -56,6 +56,8 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 	/**
 	 * add_currency_pair_setting.
+	 *
+	 * @version 2.6.0
 	 */
 	function add_currency_pair_setting( $currency_from, $currency_to, $settings ) {
 		if ( $currency_from != $currency_to ) {
@@ -77,7 +79,6 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				'custom_attributes_button' => $custom_attributes,
 				'css'                      => 'width:100px;',
 				'value'                    => $currency_from . '/' . $currency_to,
-				'value_title'              => sprintf( __( 'Grab %s rate from Yahoo.com', 'woocommerce-jetpack' ), $currency_from . '/' . $currency_to ),
 			);
 		}
 		return $settings;
@@ -86,7 +87,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	/**
 	 * add_currency_exchange_rates_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.0
 	 */
 	function add_currency_exchange_rates_settings() {
 
@@ -122,6 +123,14 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
 				'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
 			),
+		);
+
+		$settings[] = array(
+			'title'    => __( 'Exchange Rates Server', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_currency_exchange_rates_server',
+			'default'  => 'yahoo',
+			'type'     => 'select',
+			'options'  => wcj_get_currency_exchange_rate_servers(),
 		);
 
 		$currency_from = get_option( 'woocommerce_currency' );

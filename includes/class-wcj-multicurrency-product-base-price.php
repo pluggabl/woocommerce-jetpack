@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency Product Base Price class.
  *
- * @version 2.5.6
+ * @version 2.6.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -222,6 +222,8 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 
 	/**
 	 * add_settings.
+	 *
+	 * @version 2.6.0
 	 */
 	function add_settings() {
 		$currency_from = get_woocommerce_currency();
@@ -302,7 +304,6 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 					'custom_attributes_button' => $custom_attributes,
 					'css'                      => 'width:100px;',
 					'value'                    => $currency_from . '/' . $currency_to,
-					'value_title'              => sprintf( __( 'Grab %s rate from Yahoo.com', 'woocommerce-jetpack' ), $currency_from . '/' . $currency_to ),
 				),
 			) );
 		}

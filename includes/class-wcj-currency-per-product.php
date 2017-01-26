@@ -271,7 +271,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 * @since   2.5.2
 	 */
 	function add_settings() {
@@ -353,7 +353,6 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 					'custom_attributes_button' => $custom_attributes,
 					'css'                      => 'width:100px;',
 					'value'                    => $currency_from . '/' . $currency_to,
-					'value_title'              => sprintf( __( 'Grab %s rate from Yahoo.com', 'woocommerce-jetpack' ), $currency_from . '/' . $currency_to ),
 				),
 			) );
 		}

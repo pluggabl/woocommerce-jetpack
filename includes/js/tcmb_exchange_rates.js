@@ -1,0 +1,24 @@
+/**
+ * tcmb_exchange_rates.js
+ *
+ * @version 2.6.0
+ */
+jQuery(document).ready(function() {
+	jQuery(".exchage_rate_button").click(function(){
+		var input_id = '#'+this.getAttribute('multiply_by_field_id');//+' input';
+		var data = {
+			'action': 'wcj_tcmb_get_exchange_rates',
+			'wcj_tcmb_currency_from': this.getAttribute('currency_from'),
+			'wcj_tcmb_currency_to': this.getAttribute('currency_to')
+		};
+		jQuery.ajax({
+			type: "POST",
+			url: ajax_object.ajax_url,
+			data: data,
+			success: function(response) {
+				jQuery(input_id).val(parseFloat(response));
+			},
+		});
+		return false;
+	});
+});
