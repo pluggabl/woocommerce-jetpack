@@ -393,6 +393,7 @@ class WCJ_Exporter_Orders {
 	 *
 	 * @version 2.6.0
 	 * @since   2.6.0
+	 * @todo    handle multidimensional arrays
 	 */
 	function safely_get_post_meta( $post_id, $key ) {
 		$meta = get_post_meta( $post_id, $key, true );
