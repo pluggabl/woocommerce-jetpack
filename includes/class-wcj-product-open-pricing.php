@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Open Pricing class.
  *
- * @version 2.5.6
+ * @version 2.6.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -252,7 +252,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * validate_open_price_on_add_to_cart.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.0
 	 * @since   2.4.8
 	 */
 	function validate_open_price_on_add_to_cart( $passed, $product_id ) {
@@ -266,13 +266,13 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 					return false;
 				}
 				if ( $_POST['wcj_open_price'] < $min_price ) {
-					wc_add_notice( get_option( 'wcj_product_open_price_messages_to_small', __( 'Entered price is to small!', 'woocommerce-jetpack' ) ), 'error' );
+					wc_add_notice( get_option( 'wcj_product_open_price_messages_to_small', __( 'Entered price is too small!', 'woocommerce-jetpack' ) ), 'error' );
 					return false;
 				}
 			}
 			if ( $max_price > 0 ) {
 				if ( isset( $_POST['wcj_open_price'] ) && $_POST['wcj_open_price'] > $max_price ) {
-					wc_add_notice( get_option( 'wcj_product_open_price_messages_to_big', __( 'Entered price is to big!', 'woocommerce-jetpack' ) ), 'error' );
+					wc_add_notice( get_option( 'wcj_product_open_price_messages_to_big', __( 'Entered price is too big!', 'woocommerce-jetpack' ) ), 'error' );
 					return false;
 				}
 			}
@@ -360,7 +360,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.1
+	 * @version 2.6.0
 	 * @since   2.4.8
 	 */
 	function get_settings() {
@@ -393,16 +393,16 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				'css'      => 'width:250px;',
 			),
 			array(
-				'title'    => __( 'Message on Price to Small', 'woocommerce-jetpack' ),
+				'title'    => __( 'Message on Price too Small', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_open_price_messages_to_small',
-				'default'  => __( 'Entered price is to small!', 'woocommerce-jetpack' ),
+				'default'  => __( 'Entered price is too small!', 'woocommerce-jetpack' ),
 				'type'     => 'text',
 				'css'      => 'width:250px;',
 			),
 			array(
-				'title'    => __( 'Message on Price to Big', 'woocommerce-jetpack' ),
+				'title'    => __( 'Message on Price too Big', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_open_price_messages_to_big',
-				'default'  => __( 'Entered price is to big!', 'woocommerce-jetpack' ),
+				'default'  => __( 'Entered price is too big!', 'woocommerce-jetpack' ),
 				'type'     => 'text',
 				'css'      => 'width:250px;',
 			),
