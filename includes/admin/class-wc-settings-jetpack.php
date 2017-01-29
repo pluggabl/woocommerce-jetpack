@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -69,7 +69,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_custom_textarea.
 	 *
-	 * @version 2.2.6
+	 * @version 2.6.0
 	 * @since   2.2.6
 	 */
 	function output_custom_textarea( $value ) {
@@ -77,9 +77,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 
 		$custom_attributes = ( isset( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) ? $value['custom_attributes'] : array();
 		$description = ' <p class="description">' . $value['desc'] . '</p>';
-		$tooltip_html = '';//' <p class="description">' . $value['desc_tip'] . '</p>';
-//		$tooltip_html = $value['desc_tip'];
-//		$tooltip_html = '<img class="help_tip" data-tip="' . esc_attr( $tooltip_html ) . '" src="' . WC()->plugin_url() . '/assets/images/help.png" height="16" width="16" />';
+		$tooltip_html = ( isset( $value['desc_tip'] ) && '' != $value['desc_tip'] ) ? '<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 
 		?><tr valign="top">
 			<th scope="row" class="titledesc">
