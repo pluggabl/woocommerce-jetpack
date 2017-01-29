@@ -307,7 +307,7 @@ class WCJ_Exporter_Orders {
 
 		// Standard Fields
 		$all_fields = $fields_helper->get_order_items_export_fields();
-		$fields_ids = get_option( 'wcj_export_orders_items_fields', $fields_helper->get_order_items_export_default_fields_ids() );
+		$fields_ids = apply_filters( 'wcj_export_orders_items_fields', get_option( 'wcj_export_orders_items_fields', $fields_helper->get_order_items_export_default_fields_ids() ) );
 		$titles = array();
 		foreach( $fields_ids as $field_id ) {
 			$titles[] = $all_fields[ $field_id ];
