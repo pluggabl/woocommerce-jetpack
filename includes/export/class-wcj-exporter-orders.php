@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exporter Orders class.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  * @todo    filter export by date
@@ -300,7 +300,7 @@ class WCJ_Exporter_Orders {
 	/**
 	 * export_orders_items.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.0
 	 * @since   2.5.9
 	 */
 	function export_orders_items( $fields_helper ) {
@@ -356,10 +356,10 @@ class WCJ_Exporter_Orders {
 						if ( 'yes' === get_option( 'wcj_export_orders_items_fields_additional_enabled_' . $i, 'no' ) ) {
 							if ( '' != ( $additional_field_value = get_option( 'wcj_export_orders_items_fields_additional_value_' . $i, '' ) ) ) {
 								if ( 'meta' === get_option( 'wcj_export_orders_items_fields_additional_type_' . $i, 'meta' ) ) {
-									$row[] = get_post_meta( $order_id, $additional_field_value, true );
+									$row[] = $this->safely_get_post_meta( $order_id, $additional_field_value );
 								} elseif ( 'meta_product' === get_option( 'wcj_export_orders_items_fields_additional_type_' . $i, 'meta' ) ) {
 									$product_id = ( 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
-									$row[] = get_post_meta( $product_id, $additional_field_value, true );
+									$row[] = $this->safely_get_post_meta( $product_id, $additional_field_value );
 								} elseif ( 'shortcode' === get_option( 'wcj_export_orders_items_fields_additional_type_' . $i, 'meta' ) ) {
 									global $post;
 									$post = get_post( $order_id );
@@ -386,6 +386,20 @@ class WCJ_Exporter_Orders {
 			$offset += $block_size;
 		}
 		return $data;
+	}
+
+	/**
+	 * safely_get_post_meta.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function safely_get_post_meta( $post_id, $key ) {
+		$meta = get_post_meta( $post_id, $key, true );
+		if ( is_array( $meta ) ) {
+			$meta = implode( ', ', $meta );
+		}
+		return $meta;
 	}
 
 }
