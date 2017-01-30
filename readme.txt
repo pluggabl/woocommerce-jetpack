@@ -140,7 +140,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 29/01/2017 =
+= 2.6.0 - 31/01/2017 =
+~D  * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Price Step" option added.
+~   * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Minimum frontend input value set to zero.
 ~   * Dev - `output_custom_textarea` - Tooltip added.
     * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Grammar errors ("to" replaced with "too") fixed.
 ~D  * Dev - EMAILS & MISC. - Export - Export Orders Items - `wcj_export_orders_items_fields` filter added.

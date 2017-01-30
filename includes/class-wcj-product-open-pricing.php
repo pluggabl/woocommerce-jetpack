@@ -322,7 +322,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_open_price_input_field_to_frontend.
 	 *
-	 * @version 2.5.1
+	 * @version 2.6.0
 	 * @since   2.4.8
 	 */
 	function add_open_price_input_field_to_frontend() {
@@ -334,10 +334,13 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			$value = ( isset( $_POST['wcj_open_price'] ) ) ? $_POST['wcj_open_price'] : get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_default_price', true );
 //			$placeholder = $the_product->get_price();
 			$custom_attributes = '';
-			$wc_price_decimals = wc_get_price_decimals();
+			/* $wc_price_decimals = wc_get_price_decimals();
 			if ( $wc_price_decimals > 0 ) {
 				$custom_attributes .= sprintf( 'step="0.%0' . ( $wc_price_decimals ) . 'd" ', 1 );
-			}
+			} */
+			$default_price_step = 1 / pow( 10, absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) );
+			$custom_attributes .= 'step="' . get_option( 'wcj_product_open_price_price_step', $default_price_step ) . '" ';
+			$custom_attributes .= 'min="0" ';
 			$input_field = '<input '
 				. 'type="number" '
 				. 'class="text" '
@@ -364,6 +367,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	 * @since   2.4.8
 	 */
 	function get_settings() {
+		$default_price_step = 1 / pow( 10, absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) );
 		$settings = array(
 			array(
 				'title'    => __( 'Labels and Messages', 'woocommerce-jetpack' ),
@@ -384,6 +388,13 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				'default'  => '<label for="wcj_open_price">%frontend_label%</label> %open_price_input% %currency_symbol%',
 				'type'     => 'textarea',
 				'css'      => 'min-width:300px;width:50%;',
+			),
+			array(
+				'title'    => __( 'Price Step', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_open_price_price_step',
+				'default'  => $default_price_step,
+				'type'     => 'number',
+				'custom_attributes' => array( 'step' => '0.0001', 'min' => '0.0001' ),
 			),
 			array(
 				'title'    => __( 'Message on Empty Price', 'woocommerce-jetpack' ),
