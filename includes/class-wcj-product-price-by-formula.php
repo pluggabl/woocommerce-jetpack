@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Price by Formula class.
  *
- * @version 2.5.5
+ * @version 2.6.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -211,11 +211,14 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * is_price_by_formula_product.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.0
 	 * @since   2.5.0
 	 */
 	function is_price_by_formula_product( $_product ) {
-		return ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_enabled', true ) ) ? true : false;
+		return (
+			'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_price_by_formula_enable_for_all_products', 'no' ) ) ||
+			'yes' === get_post_meta( $_product->id, '_' . 'wcj_product_price_by_formula_enabled', true )
+		);
 	}
 
 	/**
@@ -298,7 +301,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.0
 	 * @since   2.5.0
 	 */
 	function get_settings() {
@@ -315,6 +318,15 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 				'type'     => 'text',
 				'id'       => 'wcj_product_price_by_formula_eval',
 				'default'  => '',
+			),
+			array(
+				'title'    => __( 'Enable Price Calculation By Formula For All Products', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'type'     => 'checkbox',
+				'id'       => 'wcj_product_price_by_formula_enable_for_all_products',
+				'default'  => 'no',
+				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 			),
 			array(
 				'title'    => __( 'Total Params', 'woocommerce-jetpack' ),
