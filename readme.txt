@@ -141,6 +141,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 31/01/2017 =
+~   * Dev - `WCJ_Module` - Fixed `selected` for multiple select in `create_meta_box`.
 ~D  * Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option added.
 ~D  * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Price Step" option added.
 ~   * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Minimum frontend input value set to zero.

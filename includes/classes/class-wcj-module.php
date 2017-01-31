@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -182,7 +182,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @since 2.5.7
+	 * @version 2.6.0
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -217,7 +217,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 							$selected = '';
 							if ( is_array( $option_value ) ) {
 								foreach ( $option_value as $single_option_value ) {
-									$selected .= selected( $single_option_value, $select_option_key, false );
+									if ( '' != ( $selected = selected( $single_option_value, $select_option_key, false ) ) ) {
+										break;
+									}
 								}
 							} else {
 								$selected = selected( $option_value, $select_option_key, false );
