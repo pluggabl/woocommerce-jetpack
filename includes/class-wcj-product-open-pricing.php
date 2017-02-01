@@ -370,7 +370,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 		$default_price_step = 1 / pow( 10, absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) );
 		$settings = array(
 			array(
-				'title'    => __( 'Labels and Messages', 'woocommerce-jetpack' ),
+				'title'    => __( 'Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_product_open_price_messages_options',
 			),
