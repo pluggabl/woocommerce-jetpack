@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shipping class.
  *
- * @version 2.5.8
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Shipping extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.0
 	 */
 	function __construct() {
 
@@ -55,7 +55,42 @@ class WCJ_Shipping extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_shipping_icons_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_cart_shipping_method_full_label', array( $this, 'shipping_icon' ), PHP_INT_MAX, 2 );
 			}
+
+			// Free shipping by product
+			if ( 'yes' === get_option( 'wcj_shipping_free_shipping_by_product_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_shipping_free_shipping_is_available', array( $this, 'free_shipping_by_product' ), PHP_INT_MAX, 2 );
+			}
 		}
+	}
+
+	/**
+	 * free_shipping_by_product.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 * @return  bool
+	 */
+	function free_shipping_by_product( $is_available, $package ) {
+		$free_shipping_granting_products = get_option( 'wcj_shipping_free_shipping_by_product_products', '' );
+		if ( empty( $free_shipping_granting_products ) ) {
+			return $is_available;
+		}
+		$free_shipping_granting_products_type = get_option( 'wcj_shipping_free_shipping_by_product_type', 'all' );
+		$package_grants_free_shipping = false;
+		foreach( $package['contents'] as $item ) {
+			if ( in_array( $item['product_id'], $free_shipping_granting_products ) ) {
+				if ( 'at_least_one' === $free_shipping_granting_products_type ) {
+					return true;
+				} elseif ( ! $package_grants_free_shipping ) {
+					$package_grants_free_shipping = true;
+				}
+			} else {
+				if ( 'all' === $free_shipping_granting_products_type ) {
+					return $is_available;
+				}
+			}
+		}
+		return ( $package_grants_free_shipping ) ? true : $is_available;
 	}
 
 	/**
@@ -160,7 +195,7 @@ class WCJ_Shipping extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 * @since   2.5.6
 	 */
 	function add_settings( $settings ) {
@@ -252,6 +287,42 @@ class WCJ_Shipping extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_shipping_hide_if_free_available_options',
+			),
+		) );
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => __( 'Free Shipping by Product', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_shipping_free_shipping_by_product_options',
+			),
+			array(
+				'title'    => __( 'Free Shipping by Product', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_free_shipping_by_product_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Products', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_free_shipping_by_product_products',
+				'default'  => '',
+				'type'     => 'multiselect',
+				'options'  => wcj_get_products(),
+				'class'    => 'chosen_select',
+			),
+			array(
+				'title'    => __( 'Type', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_free_shipping_by_product_type',
+				'default'  => 'all',
+				'type'     => 'select',
+				'options'  => array(
+					'all'          => __( 'All products in cart must grant free shipping', 'woocommerce-jetpack' ),
+					'at_least_one' => __( 'At least one product in cart must grant free shipping', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_shipping_free_shipping_by_product_options',
 			),
 		) );
 		$settings = array_merge( $settings, array(
