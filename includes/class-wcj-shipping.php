@@ -75,7 +75,7 @@ class WCJ_Shipping extends WCJ_Module {
 		if ( empty( $free_shipping_granting_products ) ) {
 			return $is_available;
 		}
-		$free_shipping_granting_products_type = get_option( 'wcj_shipping_free_shipping_by_product_type', 'all' );
+		$free_shipping_granting_products_type = apply_filters( 'booster_get_option', 'all', get_option( 'wcj_shipping_free_shipping_by_product_type', 'all' ) );
 		$package_grants_free_shipping = false;
 		foreach( $package['contents'] as $item ) {
 			if ( in_array( $item['product_id'], $free_shipping_granting_products ) ) {
@@ -292,6 +292,7 @@ class WCJ_Shipping extends WCJ_Module {
 		$settings = array_merge( $settings, array(
 			array(
 				'title'    => __( 'Free Shipping by Product', 'woocommerce-jetpack' ),
+				'desc'     => __( 'In this section you can select products which grant free shipping when added to cart.', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_shipping_free_shipping_by_product_options',
 			),
@@ -312,6 +313,7 @@ class WCJ_Shipping extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Type', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Select either <strong>all products</strong> or <strong>at least one product</strong> in cart must grant free shipping.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_free_shipping_by_product_type',
 				'default'  => 'all',
 				'type'     => 'select',
@@ -319,6 +321,8 @@ class WCJ_Shipping extends WCJ_Module {
 					'all'          => __( 'All products in cart must grant free shipping', 'woocommerce-jetpack' ),
 					'at_least_one' => __( 'At least one product in cart must grant free shipping', 'woocommerce-jetpack' ),
 				),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'type'     => 'sectionend',

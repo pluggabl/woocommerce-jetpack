@@ -140,8 +140,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 02/02/2017 =
-~D  * Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
+= 2.6.0 - 03/02/2017 =
+~D$ * Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
 ~   * Dev - `WCJ_Module` - Fixed `selected` for multiple select in `create_meta_box`.
 ~D  * Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option added.
 ~D  * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Price Step" option added.
