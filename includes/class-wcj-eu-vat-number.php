@@ -19,7 +19,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.4
+	 * @version 2.6.0
 	 */
 	function __construct() {
 
@@ -66,7 +66,105 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			}
 
 			$this->eu_countries_vat_rates_tool = include_once( 'tools/class-wcj-eu-countries-vat-rates-tool.php' );
+
+			// EU VAT number summary on order edit page
+			if ( 'yes' === get_option( 'wcj_eu_vat_number_add_order_edit_metabox', 'no' ) ) {
+				add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
+			}
 		}
+	}
+
+	/**
+	 * add_meta_box.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function add_meta_box() {
+		$screen   = ( isset( $this->meta_box_screen ) )   ? $this->meta_box_screen   : 'shop_order';
+		$context  = ( isset( $this->meta_box_context ) )  ? $this->meta_box_context  : 'side';
+		$priority = ( isset( $this->meta_box_priority ) ) ? $this->meta_box_priority : 'low';
+		add_meta_box(
+			'wc-jetpack-' . $this->id,
+			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . $this->short_desc,
+			array( $this, 'create_meta_box' ),
+			$screen,
+			$context,
+			$priority
+		);
+	}
+
+	/**
+	 * create_meta_box.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function create_meta_box() {
+		$order_id = get_the_ID();
+		$_order = wc_get_order( $order_id );
+
+		// Country by IP
+		if ( class_exists( 'WC_Geolocation' ) ) {
+			// Get the country by IP
+			$location = WC_Geolocation::geolocate_ip( $_order->customer_ip_address );
+			// Base fallback
+			if ( empty( $location['country'] ) ) {
+				$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
+			}
+			$customer_country = ( isset( $location['country'] ) ) ? $location['country'] : '';
+		} else {
+			$customer_country = '';
+		}
+
+		// Country flag
+		$img_src = plugins_url() . '/' . 'woocommerce-jetpack' . '/assets/images/flag-icons/' . strtolower( $customer_country ) . '.png';
+		$img_html = '<img src="' . $img_src . '" title="' . wcj_get_country_name_by_code( $customer_country ) . '">';
+
+		// Customer EU VAT number
+		$customer_eu_vat_number = get_post_meta( $order_id, '_billing_eu_vat_number', true );
+		if ( '' == $customer_eu_vat_number ) {
+			$customer_eu_vat_number = '-';
+		}
+
+		// Taxes
+		$taxes = '';
+		$taxes_array = $_order->get_tax_totals();
+		if ( empty( $taxes_array ) ) {
+			$taxes = '-';
+		} else {
+			foreach ( $taxes_array as $tax ) {
+				$taxes .= $tax->label . ': ' . $tax->formatted_amount . '<br>';
+			}
+		}
+
+		// Results table
+		$table_data = array(
+			array(
+				__( 'Customer IP', 'woocommerce-jetpack' ),
+				$_order->customer_ip_address
+			),
+			array(
+				__( 'Country by IP', 'woocommerce-jetpack' ),
+				$img_html
+					. ' ' . wcj_get_country_name_by_code( $customer_country )
+					. ' [' . $customer_country . ']'
+			),
+			array(
+				__( 'Customer EU VAT Number', 'woocommerce-jetpack' ),
+				$customer_eu_vat_number
+			),
+			array(
+				__( 'Taxes', 'woocommerce-jetpack' ),
+				$taxes,
+			),
+			/* array(
+				__( 'Customer Meta', 'woocommerce-jetpack' ),
+//				'<pre>' . print_r( get_user_meta( $_order->customer_user ), true ). '</pre>',
+				'<pre>' . print_r( get_user_by( 'ID', $_order->customer_user ), true ). '</pre>',
+			), */
+		);
+		echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
 	}
 
 	/**
@@ -527,6 +625,13 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				'default' => __( 'Validation failed. Please try again.', 'woocommerce-jetpack' ),
 				'type'    => 'text',
 				'css'     => 'width:300px;',
+			),
+			array(
+				'title'   => __( 'Add EU VAT Number Summary Metabox to Order Edit Page', 'woocommerce-jetpack' ),
+				'desc'    => __( 'Add', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_eu_vat_number_add_order_edit_metabox',
+				'default' => 'no',
+				'type'    => 'checkbox',
 			),
 			array(
 				'type'    => 'sectionend',
