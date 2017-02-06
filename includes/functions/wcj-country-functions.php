@@ -4,9 +4,21 @@
  *
  * The WooCommerce Country Jetpack Functions.
  *
- * @version  2.4.4
+ * @version  2.6.0
  * @author   Algoritmika Ltd.
  */
+
+if ( ! function_exists( 'wcj_get_country_flag_by_code' ) ) {
+	/**
+	 * wcj_get_country_flag_by_code.
+	 *
+	 @version  2.6.0
+	 */
+	function wcj_get_country_flag_by_code( $country_code ) {
+		$img_src = wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png';
+		return '<img src="' . $img_src . '" title="' . wcj_get_country_name_by_code( $country_code ) . '">';
+	}
+}
 
 /**
  * wcj_get_customer_country.

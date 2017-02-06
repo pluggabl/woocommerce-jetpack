@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.0-dev-201702051930';
+	public $version = '2.6.0-dev-201702062235';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -846,6 +846,18 @@ if ( ! function_exists( 'WCJ' ) ) {
 if ( ! function_exists( 'wcj_plugin_file' ) ) {
 	function wcj_plugin_file() {
 		return __FILE__;
+	}
+}
+
+/**
+ * Get the plugin url.
+ *
+ * @version 2.6.0
+ * @since   2.6.0
+ */
+if ( ! function_exists( 'wcj_plugin_url' ) ) {
+	function wcj_plugin_url() {
+		return untrailingslashit( plugin_dir_url( __FILE__ ) );
 	}
 }
 

@@ -312,17 +312,9 @@ class WCJ_Orders extends WCJ_Module {
 	}
 
 	/**
-	 * wcj_get_country_flag_by_code.
-	 */
-	public function wcj_get_country_flag_by_code( $country_code ) {
-		$img_src = plugins_url() . '/' . 'woocommerce-jetpack' . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png';
-		return '<img src="' . $img_src . '" title="' . wcj_get_country_name_by_code( $country_code ) . '">';
-	}
-
-	/**
 	 * Output custom columns for orders
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.0
 	 * @param   string $column
 	 */
 	public function render_order_columns( $column ) {
@@ -331,7 +323,7 @@ class WCJ_Orders extends WCJ_Module {
 //			$country_code = wcj_get_customer_country( $order->customer_user );
 			$country_code = $order->billing_country;
 			echo ( 2 == strlen( $country_code ) )
-				? $this->wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code )
+				? wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code )
 				: wcj_get_country_name_by_code( $country_code );
 		}
 		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );

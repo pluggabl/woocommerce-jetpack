@@ -140,7 +140,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 05/02/2017 =
+= 2.6.0 - 06/02/2017 =
 ~D  * Dev - EMAILS & MISC. - EU VAT Number - "Add EU VAT Number Summary Metabox to Order Edit Page" option added.
 ~D$ * Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
 ~   * Dev - `WCJ_Module` - Fixed `selected` for multiple select in `create_meta_box`.

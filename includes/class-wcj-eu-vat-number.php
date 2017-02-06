@@ -117,10 +117,6 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			$customer_country = '';
 		}
 
-		// Country flag
-		$img_src = plugins_url() . '/' . 'woocommerce-jetpack' . '/assets/images/flag-icons/' . strtolower( $customer_country ) . '.png';
-		$img_html = '<img src="' . $img_src . '" title="' . wcj_get_country_name_by_code( $customer_country ) . '">';
-
 		// Customer EU VAT number
 		$customer_eu_vat_number = get_post_meta( $order_id, '_billing_eu_vat_number', true );
 		if ( '' == $customer_eu_vat_number ) {
@@ -146,9 +142,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			),
 			array(
 				__( 'Country by IP', 'woocommerce-jetpack' ),
-				$img_html
-					. ' ' . wcj_get_country_name_by_code( $customer_country )
-					. ' [' . $customer_country . ']'
+				wcj_get_country_flag_by_code( $customer_country ) . ' ' . wcj_get_country_name_by_code( $customer_country ) . ' [' . $customer_country . ']'
 			),
 			array(
 				__( 'Customer EU VAT Number', 'woocommerce-jetpack' ),
