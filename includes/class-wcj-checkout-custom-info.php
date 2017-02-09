@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Info class.
  *
- * @version 2.4.7
+ * @version 2.6.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -62,7 +62,7 @@ class WCJ_Checkout_Custom_Info extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.7
+	 * @version 2.6.0
 	 */
 	function get_settings() {
 		$settings = array();
@@ -132,6 +132,7 @@ class WCJ_Checkout_Custom_Info extends WCJ_Module {
 						'woocommerce_review_order_before_order_total'   => __( 'woocommerce_review_order_before_order_total', 'woocommerce-jetpack' ),
 						'woocommerce_review_order_after_order_total'    => __( 'woocommerce_review_order_after_order_total', 'woocommerce-jetpack' ),
 						*/
+						'woocommerce_thankyou'                          => __( 'Order Received (Thank You) page', 'woocommerce-jetpack' ),
 					),
 					'css'      => 'width:250px;',
 				),
