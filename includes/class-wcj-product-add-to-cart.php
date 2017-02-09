@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Add To Cart class.
  *
- * @version 2.5.6
+ * @version 2.6.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 
@@ -35,12 +35,25 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			if ( 'yes' === get_option( 'wcj_add_to_cart_redirect_enabled' ) ) {
-				add_filter( 'woocommerce_add_to_cart_redirect', array( $this, 'redirect_to_url' ), 100 );
+			// Metaboxes
+			if (
+				'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ||
+				'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' ) ||
+				'yes' === get_option( 'wcj_add_to_cart_button_ajax_per_product_enabled', 'no' ) ||
+				'per_product' === get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' )
+			) {
+				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
 
-			if ( 'yes' === get_option( 'wcj_add_to_cart_on_visit_enabled' ) ) {
-				add_action( 'woocommerce_before_single_product', array( $this, 'add_to_cart_on_visit' ), 100 );
+			// Local Redirect
+			if ( 'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_add_to_cart_redirect', array( $this, 'redirect_to_url' ), PHP_INT_MAX );
+			}
+
+			// Add to Cart on Visit
+			if ( 'no' != get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) {
+				add_action( 'wp', array( $this, 'add_to_cart_on_visit' ), 98 );
 			}
 
 			// Variable Add to Cart Template
@@ -54,15 +67,6 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_disable_quantity_add_to_cart_script' ) );
 			}
 
-			// Button per product - Metaboxes
-			if (
-				'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ||
-				'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' ) ||
-				'yes' === get_option( 'wcj_add_to_cart_button_ajax_per_product_enabled', 'no' )
-			) {
-				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
-			}
 			// Button per product - Disabling
 			if ( 'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ) {
 				add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_to_cart_button_disable_start' ), PHP_INT_MAX, 0 );
@@ -197,11 +201,25 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 * @since   2.5.2
 	 */
 	function get_meta_box_options() {
 		$options = array();
+		if ( 'per_product' === get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) {
+			$options = array_merge( $options, array(
+				array(
+					'name'       => 'wcj_add_to_cart_on_visit_enabled',
+					'default'    => 'no',
+					'type'       => 'select',
+					'options'    => array(
+						'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+						'no'  => __( 'No', 'woocommerce-jetpack' ),
+					),
+					'title'      => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ),
+				),
+			) );
+		}
 		if ( 'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ) {
 			$options = array_merge( $options, array(
 				array(
@@ -305,27 +323,33 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
 	/*
 	 * Add item to cart on visit.
+	 *
+	 * @version 2.6.0
 	 */
 	function add_to_cart_on_visit() {
-		if ( is_product() ) {
-			global $woocommerce;
-			$product_id = get_the_ID();
-			$found = false;
-			//check if product already in cart
-			if ( sizeof( $woocommerce->cart->get_cart() ) > 0 ) {
-				foreach ( $woocommerce->cart->get_cart() as $cart_item_key => $values ) {
-					$_product = $values['data'];
-					if ( $_product->id == $product_id ) {
-						$found = true;
+		if ( ! is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && is_product() && ( $product_id = get_the_ID() ) ) {
+			// If "per product" is selected - check product's settings (i.e. meta)
+			if ( 'per_product' === get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) {
+				if ( 'yes' !== get_post_meta( $product_id, '_' . 'wcj_add_to_cart_on_visit_enabled', true ) ) {
+					return;
+				}
+			}
+			if ( isset( WC()->cart ) ) {
+				// Check if product already in cart
+				if ( sizeof( WC()->cart->get_cart() ) > 0 ) {
+					foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+						$_product = $values['data'];
+						if ( $_product->id == $product_id ) {
+							// Product found - do not add it
+							return;
+						}
 					}
+					// Product not found - add it
+					WC()->cart->add_to_cart( $product_id );
+				} else {
+					// No products in cart - add it
+					WC()->cart->add_to_cart( $product_id );
 				}
-				// if product not found, add it
-				if ( ! $found ) {
-					$woocommerce->cart->add_to_cart( $product_id );
-				}
-			} else {
-				// if no products in cart, add it
-				$woocommerce->cart->add_to_cart( $product_id );
 			}
 		}
 	}
@@ -333,7 +357,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 */
 	function get_settings() {
 		$settings = array(
@@ -371,10 +395,15 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If "Per Product" is selected - meta box will be added to each product\'s edit page.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_add_to_cart_on_visit_enabled',
 				'default'  => 'no',
-				'type'     => 'checkbox',
+				'type'     => 'select',
+				'options'  => array(
+					'no'          => __( 'Disabled', 'woocommerce-jetpack' ),
+					'yes'         => __( 'All Products', 'woocommerce-jetpack' ),
+					'per_product' => __( 'Per Product', 'woocommerce-jetpack' ),
+				),
 			),
 			array(
 				'type'     => 'sectionend',

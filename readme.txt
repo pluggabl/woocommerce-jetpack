@@ -140,7 +140,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 09/02/2017 =
+= 2.6.0 - 10/02/2017 =
+~D$ * Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
+~   * Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
 ~D  * Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) page" position added.
 ~D  * Dev - EMAILS & MISC. - EU VAT Number - "Add EU VAT Number Summary Metabox to Order Edit Page" option added.
 ~D$ * Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
