@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Shipping with Shipping Zones class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @since   2.5.6
  * @author  Algoritmika Ltd.
  */
@@ -20,7 +20,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 			/*
 			 * WC_Shipping_WCJ_Custom_W_Zones class.
 			 *
-			 * @version 2.5.6
+			 * @version 2.6.0
 			 * @since   2.5.6
 			 */
 			class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
@@ -40,7 +40,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * Init settings
 				 *
-				 * @version 2.5.7
+				 * @version 2.6.0
 				 * @since   2.5.6
 				 * @access  public
 				 * @return  void
@@ -78,6 +78,43 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 
 					// Save settings in admin
 					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
+
+					// Add weight table rows
+					add_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_weight_table_rows' ) );
+				}
+
+				/**
+				 * add_weight_table_rows.
+				 *
+				 * @version 2.6.0
+				 * @since   2.6.0
+				 */
+				function add_weight_table_rows( $instance_form_fields ) {
+					if ( $this->instance_id ) {
+						$settings = get_option( 'woocommerce_' . $this->id . '_' . $this->instance_id . '_settings' );
+						$this->weight_table_total_rows = $settings['weight_table_total_rows'];
+						for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
+							if ( ! isset( $instance_form_fields[ 'weight_table_weight_row_' . $i ] ) ) {
+								$instance_form_fields = array_merge( $instance_form_fields, array(
+									'weight_table_weight_row_' . $i => array(
+										'title'       => __( 'Max Weight', 'woocommerce' ) . ' #' . $i,
+										'type'        => 'number',
+										'default'     => 0,
+										'desc_tip'    => true,
+										'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+									),
+									'weight_table_cost_row_' . $i => array(
+										'title'       => __( 'Cost', 'woocommerce' ) . ' #' . $i,
+										'type'        => 'number',
+										'default'     => 0,
+										'desc_tip'    => true,
+										'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+									),
+								) );
+							}
+						}
+					}
+					return $instance_form_fields;
 				}
 
 				/**
@@ -104,7 +141,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * Initialise Settings Form Fields
 				 *
-				 * @version 2.5.7
+				 * @version 2.6.0
 				 * @since   2.5.6
 				 */
 				function init_instance_form_fields() {
@@ -162,7 +199,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 							'custom_attributes' => array( 'min'  => '0', ),
 						),
 					);
-					for ( $i = 1; $i <= $this->get_option( 'weight_table_total_rows' ); $i++ ) {
+					/* for ( $i = 1; $i <= $this->get_option( 'weight_table_total_rows' ); $i++ ) {
 						$this->instance_form_fields = array_merge( $this->instance_form_fields, array(
 							'weight_table_weight_row_' . $i => array(
 								'title'       => __( 'Max Weight', 'woocommerce' ) . ' #' . $i,
@@ -179,7 +216,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 								'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
 							),
 						) );
-					}
+					} */
 				}
 
 				/**

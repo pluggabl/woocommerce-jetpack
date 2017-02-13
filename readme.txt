@@ -140,7 +140,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 10/02/2017 =
+= 2.6.0 - 13/02/2017 =
+~!  * Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
 ~D$ * Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
 ~   * Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
 ~D  * Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) page" position added.
