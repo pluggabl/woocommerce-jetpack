@@ -141,6 +141,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 15/02/2017 =
+~   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
 ~D  * Dev - EMAILS & MISC. - General - General Checkout Options - "Hide "Order Again" Button on "View Order" Page" option added.
 ~D  * Dev - EMAILS & MISC. - General - General Cart Options - "Hide Coupon on Cart Page" option added.
 ~!  * Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.

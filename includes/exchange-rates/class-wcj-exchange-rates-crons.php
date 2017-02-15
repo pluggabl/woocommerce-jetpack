@@ -167,7 +167,16 @@ class WCJ_Exchange_Rates_Crons {
 		$max_execution_time = ini_get( 'max_execution_time' );
 		set_time_limit( 5 );
 
-		$exchange_rate = json_decode( file_get_contents( $url ) );
+		$response = '';
+		if ( ini_get( 'allow_url_fopen' ) ) {
+			$response = file_get_contents( $url );
+		} elseif ( function_exists( 'curl_version' ) ) {
+			$curl = curl_init( $url );
+			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+			$response = curl_exec( $curl );
+			curl_close( $curl );
+		}
+		$exchange_rate = json_decode( $response );
 
 		set_time_limit( $max_execution_time );
 		ob_end_clean();
