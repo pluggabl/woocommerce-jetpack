@@ -76,9 +76,19 @@ class WCJ_General extends WCJ_Module {
 
 			// General Checkout options - Hide "Order Again" button
 			if ( 'yes' === get_option( 'wcj_checkout_hide_order_again', 'no' ) ) {
-				remove_action( 'woocommerce_order_details_after_order_table', 'woocommerce_order_again_button' );
+				add_action( 'init', array( $this, 'checkout_hide_order_again' ), PHP_INT_MAX );
 			}
 		}
+	}
+
+	/**
+	 * checkout_hide_order_again.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function checkout_hide_order_again() {
+		remove_action( 'woocommerce_order_details_after_order_table', 'woocommerce_order_again_button' );
 	}
 
 	/**
@@ -546,7 +556,7 @@ class WCJ_General extends WCJ_Module {
 				'id'       => 'wcj_general_checkout_options',
 			),
 			array(
-				'title'    => __( 'Hide "Order Again" Button on Post-Checkout Page', 'woocommerce-jetpack' ),
+				'title'    => __( 'Hide "Order Again" Button on "View Order" Page', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_checkout_hide_order_again',
 				'default'  => 'no',
