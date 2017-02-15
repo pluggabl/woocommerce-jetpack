@@ -140,7 +140,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 13/02/2017 =
+= 2.6.0 - 15/02/2017 =
+~D  * Dev - EMAILS & MISC. - General - General Checkout Options - "Hide "Order Again" Button on Post-Checkout Page" option added.
+~D  * Dev - EMAILS & MISC. - General - General Cart Options - "Hide Coupon on Cart Page" option added.
 ~!  * Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
 ~D$ * Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
 ~   * Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.5.8
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 
@@ -68,7 +68,27 @@ class WCJ_General extends WCJ_Module {
 				add_filter( 'wc_session_expiring',   array( $this, 'change_session_expiring' ),   PHP_INT_MAX );
 				add_filter( 'wc_session_expiration', array( $this, 'change_session_expiration' ), PHP_INT_MAX );
 			}
+
+			// General Cart options - Hide coupon
+			if ( 'yes' === get_option( 'wcj_cart_hide_coupon', 'no' ) ) {
+				add_filter( 'woocommerce_coupons_enabled', array( $this, 'hide_coupon_field_on_cart' ), PHP_INT_MAX );
+			}
+
+			// General Checkout options - Hide "Order Again" button
+			if ( 'yes' === get_option( 'wcj_checkout_hide_order_again', 'no' ) ) {
+				remove_action( 'woocommerce_order_details_after_order_table', 'woocommerce_order_again_button' );
+			}
 		}
+	}
+
+	/**
+	 * hide_coupon_field_on_cart.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function hide_coupon_field_on_cart( $enabled ) {
+		return ( is_cart() ) ? false : $enabled;
 	}
 
 	/**
@@ -310,7 +330,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 * @todo    add link to Booster's shortcodes list
 	 */
 	function get_settings() {
@@ -503,6 +523,38 @@ class WCJ_General extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_session_expiration_options',
+			),
+			array(
+				'title'    => __( 'General Cart Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_general_cart_options',
+			),
+			array(
+				'title'    => __( 'Hide Coupon on Cart Page', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_cart_hide_coupon',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_general_cart_options',
+			),
+			array(
+				'title'    => __( 'General Checkout Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_general_checkout_options',
+			),
+			array(
+				'title'    => __( 'Hide "Order Again" Button on Post-Checkout Page', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_hide_order_again',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_general_checkout_options',
 			),
 			/* array(
 				'title'    => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),
