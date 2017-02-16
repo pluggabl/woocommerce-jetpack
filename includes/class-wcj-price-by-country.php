@@ -203,6 +203,15 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			),
 
 			array(
+				'title'    => __( 'Make Pretty Price', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If enabled, this will be applied if exchange rates are used. Final converted price will be rounded, then decreased by smallest possible value. For example: $9,75 -> $10,00 -> $9,99.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_price_by_country_make_pretty',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+
+			array(
 				'title'    => __( 'Price by Country on per Product Basis', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'This will add product data fields in product edit.', 'woocommerce-jetpack' ),

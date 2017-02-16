@@ -140,7 +140,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 15/02/2017 =
+= 2.6.0 - 16/02/2017 =
+~D  * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Make Pretty Price" option added.
 ~   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
 ~D  * Dev - EMAILS & MISC. - General - General Checkout Options - "Hide "Order Again" Button on "View Order" Page" option added.
 ~D  * Dev - EMAILS & MISC. - General - General Cart Options - "Hide Coupon on Cart Page" option added.

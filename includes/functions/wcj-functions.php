@@ -159,7 +159,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 	/**
 	 * wcj_price_by_country.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.0
 	 * @since   2.5.3
 	 */
 	function wcj_price_by_country( $price, $product, $group_id, $the_current_filter = '' ) {
@@ -236,7 +236,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 		if ( ! $is_price_modified ) {
 			// Globally
 			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
-			if ( 1 != $country_exchange_rate ) {
+//			if ( 1 != $country_exchange_rate ) {
 				$modified_price = $price * $country_exchange_rate;
 				$rounding = get_option( 'wcj_price_by_country_rounding', 'none' );
 				$precision = get_option( 'woocommerce_price_num_decimals', 2 );
@@ -255,6 +255,9 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 						break;
 				}
 				$is_price_modified = true;
+//			}
+			if ( 'yes' === get_option( 'wcj_price_by_country_make_pretty', 'no' ) && $modified_price >= 0.5 && $precision > 0 ) {
+				$modified_price = round( $modified_price ) - ( 1 / pow( 10, $precision ) );
 			}
 		}
 

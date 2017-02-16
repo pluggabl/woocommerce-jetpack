@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.5.7
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -318,7 +318,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.0
 	 * @since   2.4.3
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
@@ -326,6 +326,7 @@ class WCJ_Price_by_Country_Core {
 		$price_hash['wcj_price_by_country_group_id_data'] = array(
 			$group_id,
 			get_option( 'wcj_price_by_country_rounding' ),
+			get_option( 'wcj_price_by_country_make_pretty', 'no' ),
 			get_option( 'wcj_price_by_country_local_enabled' ),
 //			get_option( 'wcj_price_by_country_selection' ),
 //			get_option( 'wcj_price_by_country_total_groups_number' ),
