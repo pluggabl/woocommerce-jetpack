@@ -29,7 +29,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			. ' ' . __( 'Display radio buttons instead of drop box for variable products.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Disable add to cart button on per product basis.', 'woocommerce-jetpack' )
-			. ' ' . __( 'Open external products on add to cart in new window.', 'woocommerce-jetpack' );
+			. ' ' . __( 'Open external products on add to cart in new window.', 'woocommerce-jetpack' )
+			. ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-add-to-cart/';
 		parent::__construct();
 
