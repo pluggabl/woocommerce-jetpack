@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Left to Free Shipping class.
  *
- * @version 2.5.9
+ * @version 2.6.0
  * @since   2.5.8
  * @author  Algoritmika Ltd.
  */
@@ -121,7 +121,7 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.0
 	 * @since   2.5.8
 	 */
 	function add_settings( $settings ) {
@@ -144,6 +144,7 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 			array(
 				'title'    => '',
 				'desc'     => __( 'Content', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'You can use HTML and/or shortcodes (e.g. [wcj_wpml]) here.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_left_to_free_info_content_cart',
 				'default'  => __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ),
 				'type'     => 'textarea',
@@ -178,6 +179,7 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 			array(
 				'title'    => '',
 				'desc'     => __( 'Content', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'You can use HTML and/or shortcodes (e.g. [wcj_wpml]) here.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_left_to_free_info_content_mini_cart',
 				'default'  => __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ),
 				'type'     => 'textarea',
@@ -216,6 +218,7 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 			array(
 				'title'    => '',
 				'desc'     => __( 'Content', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'You can use HTML and/or shortcodes (e.g. [wcj_wpml]) here.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_left_to_free_info_content_checkout',
 				'default'  => __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ),
 				'type'     => 'textarea',
@@ -250,7 +253,8 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Message on Free Shipping Reached', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'You can set it empty', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'You can use HTML and/or shortcodes (e.g. [wcj_wpml]) here.', 'woocommerce-jetpack' ) . ' ' .
+					__( 'Set empty to disable.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_shipping_left_to_free_info_content_reached',
 				'default'  => __( 'You have Free delivery', 'woocommerce-jetpack' ),
 				'type'     => 'textarea',
