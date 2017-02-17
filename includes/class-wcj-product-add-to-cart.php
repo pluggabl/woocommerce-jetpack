@@ -62,6 +62,13 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				add_filter( 'wc_get_template', array( $this, 'change_variable_add_to_cart_template' ), PHP_INT_MAX, 5 );
 			}
 
+			// Replace Add to Cart Loop with Single
+			if ( 'yes' === get_option( 'wcj_add_to_cart_replace_loop_w_single_enabled', 'no' ) ) {
+				add_action( 'init', array( $this, 'add_to_cart_replace_loop_w_single' ), PHP_INT_MAX );
+			} elseif ( 'variable_only' === get_option( 'wcj_add_to_cart_replace_loop_w_single_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'add_to_cart_variable_replace_loop_w_single' ), PHP_INT_MAX );
+			}
+
 			// Quantity
 			if ( 'yes' === get_option( 'wcj_add_to_cart_quantity_disable', 'no' ) || 'yes' === get_option( 'wcj_add_to_cart_quantity_disable_cart', 'no' ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_disable_quantity_add_to_cart_script' ) );
@@ -91,6 +98,32 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'replace_external_with_custom_add_to_cart_in_loop' ), PHP_INT_MAX );
 			}
 		}
+	}
+
+	/**
+	 * add_to_cart_variable_replace_loop_w_single.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function add_to_cart_variable_replace_loop_w_single( $link ) {
+		global $product;
+		if ( $product->is_type( 'variable' ) ) {
+			do_action( 'woocommerce_variable_add_to_cart' );
+			return '';
+		}
+		return $link;
+	}
+
+	/**
+	 * add_to_cart_replace_loop_w_single.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function add_to_cart_replace_loop_w_single() {
+		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart',   10 );
+		add_action(    'woocommerce_after_shop_loop_item', 'woocommerce_template_single_add_to_cart', 30 );
 	}
 
 	/**
@@ -426,6 +459,27 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_add_to_cart_variable_options',
+			),
+			array(
+				'title'    => __( 'Replace Add to Cart Button on Archives with Single', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_add_to_cart_replace_loop_w_single_options',
+			),
+			array(
+				'title'    => __( 'Replace Add to Cart Button on Archives with Button from Single Product Pages', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_add_to_cart_replace_loop_w_single_enabled',
+				'default'  => 'no',
+				'type'     => 'select',
+				'options'  => array(
+					'no'            => __( 'Disable', 'woocommerce-jetpack' ),
+					'yes'           => __( 'Enable', 'woocommerce-jetpack' ),
+					'variable_only' => __( 'Variable products only', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_add_to_cart_replace_loop_w_single_options',
 			),
 			array(
 				'title'    => __( 'Add to Cart Quantity', 'woocommerce-jetpack' ),
