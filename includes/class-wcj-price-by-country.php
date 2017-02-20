@@ -17,7 +17,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 
@@ -52,7 +52,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			if ( is_admin() ) {
 				// Backend
 				include_once( 'reports/class-wcj-currency-reports.php' );
-				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled' ) ) {
+				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
 					include_once( 'price-by-country/class-wcj-price-by-country-local.php' );
 				}
 

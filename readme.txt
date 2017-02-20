@@ -140,7 +140,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 17/02/2017 =
+= 2.6.0 - 20/02/2017 =
 ~D$	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
 	* Tweak - SHIPPING & ORDERS - Left to Free Shipping - Admin descriptions added to "Content" fields.
 ~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Make Pretty Price" option added.

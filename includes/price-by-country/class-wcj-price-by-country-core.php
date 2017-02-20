@@ -152,12 +152,12 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_by_country_grouped.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.0
 	 * @since   2.5.0
 	 */
 	function change_price_by_country_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
-			if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled' ) ) {
+			if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
 				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 				foreach ( $_product->get_children() as $child_id ) {
 					$the_price = get_post_meta( $child_id, '_price', true );
@@ -325,9 +325,9 @@ class WCJ_Price_by_Country_Core {
 		$group_id = $this->get_customer_country_group_id();
 		$price_hash['wcj_price_by_country_group_id_data'] = array(
 			$group_id,
-			get_option( 'wcj_price_by_country_rounding' ),
+			get_option( 'wcj_price_by_country_rounding', 'none' ),
 			get_option( 'wcj_price_by_country_make_pretty', 'no' ),
-			get_option( 'wcj_price_by_country_local_enabled' ),
+			get_option( 'wcj_price_by_country_local_enabled', 'yes' ),
 //			get_option( 'wcj_price_by_country_selection' ),
 //			get_option( 'wcj_price_by_country_total_groups_number' ),
 //			get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $group_id ),

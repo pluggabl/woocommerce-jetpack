@@ -166,7 +166,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 
 		$is_price_modified = false;
 
-		if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled' ) ) {
+		if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
 			// Per product
 			$meta_box_id = 'price_by_country';
 			$scope = 'local';
