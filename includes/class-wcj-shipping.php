@@ -96,10 +96,17 @@ class WCJ_Shipping extends WCJ_Module {
 	/**
 	 * shipping_icon.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 * @since   2.5.6
 	 */
 	function shipping_icon( $label, $method ) {
+		$shipping_icons_visibility = apply_filters( 'booster_get_option', 'both', get_option( 'wcj_shipping_icons_visibility', 'both' ) );
+		if ( 'checkout_only' === $shipping_icons_visibility && is_cart() ) {
+			return $label;
+		}
+		if ( 'cart_only' === $shipping_icons_visibility && is_checkout() ) {
+			return $label;
+		}
 		if ( '' != ( $icon_url = get_option( 'wcj_shipping_icon_' . $method->method_id, '' ) ) ) {
 			$style_html = ( '' != ( $style = get_option( 'wcj_shipping_icons_style', 'display:inline;' ) ) ) ?  'style="' . $style . '" ' : '';
 			$img = '<img ' . $style_html . 'class="wcj_shipping_icon" id="wcj_shipping_icon_' . $method->method_id . '" src="' . $icon_url . '">';
@@ -111,10 +118,17 @@ class WCJ_Shipping extends WCJ_Module {
 	/**
 	 * shipping_description.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.0
 	 * @since   2.5.6
 	 */
 	function shipping_description( $label, $method ) {
+		$shipping_descriptions_visibility = apply_filters( 'booster_get_option', 'both', get_option( 'wcj_shipping_descriptions_visibility', 'both' ) );
+		if ( 'checkout_only' === $shipping_descriptions_visibility && is_cart() ) {
+			return $label;
+		}
+		if ( 'cart_only' === $shipping_descriptions_visibility && is_checkout() ) {
+			return $label;
+		}
 		if ( '' != ( $desc = get_option( 'wcj_shipping_description_' . $method->method_id, '' ) ) ) {
 			$label .= $desc;
 		}
@@ -343,6 +357,20 @@ class WCJ_Shipping extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
+			array(
+				'title'    => __( 'Description Visibility', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_descriptions_visibility',
+				'default'  => 'both',
+				'type'     => 'select',
+				'options'  => array(
+					'both'          => __( 'On both cart and checkout pages', 'woocommerce-jetpack' ),
+					'cart_only'     => __( 'Only on cart page', 'woocommerce-jetpack' ),
+					'checkout_only' => __( 'Only on checkout page', 'woocommerce-jetpack' ),
+				),
+				'desc_tip' => __( 'Possible values: on both cart and checkout pages; only on cart page; only on checkout page', 'woocommerce-jetpack' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+			),
 		) );
 		foreach ( WC()->shipping->get_shipping_methods() as $method ) {
 			$settings = array_merge( $settings, array(
@@ -384,6 +412,20 @@ class WCJ_Shipping extends WCJ_Module {
 					'before' => __( 'Before label', 'woocommerce-jetpack' ),
 					'after'  => __( 'After label', 'woocommerce-jetpack' ),
 				),
+			),
+			array(
+				'title'    => __( 'Icon Visibility', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_icons_visibility',
+				'default'  => 'both',
+				'type'     => 'select',
+				'options'  => array(
+					'both'          => __( 'On both cart and checkout pages', 'woocommerce-jetpack' ),
+					'cart_only'     => __( 'Only on cart page', 'woocommerce-jetpack' ),
+					'checkout_only' => __( 'Only on checkout page', 'woocommerce-jetpack' ),
+				),
+				'desc_tip' => __( 'Possible values: on both cart and checkout pages; only on cart page; only on checkout page', 'woocommerce-jetpack' ),
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'title'    => __( 'Icon Style', 'woocommerce-jetpack' ),
