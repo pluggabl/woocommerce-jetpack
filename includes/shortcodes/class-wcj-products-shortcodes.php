@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.5.8
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,11 +17,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 */
 	public function __construct() {
 
 		$this->the_shortcodes = array(
+			'wcj_product_author',
+			'wcj_product_author_link',
 			'wcj_product_image',
 			'wcj_product_image_url',
 			'wcj_product_url',
@@ -126,6 +128,27 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		if ( ! $this->the_product ) return false;
 
 		return $atts;
+	}
+
+	/**
+	 * wcj_product_author.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function wcj_product_author( $atts ) {
+		return get_the_author();
+	}
+
+	/**
+	 * wcj_product_author_link.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function wcj_product_author_link( $atts ) {
+		global $post;
+		return get_author_posts_url( $post->post_author );
 	}
 
 	/**
