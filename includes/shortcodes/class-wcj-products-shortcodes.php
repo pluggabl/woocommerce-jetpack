@@ -22,6 +22,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	public function __construct() {
 
 		$this->the_shortcodes = array(
+			'wcj_product_author_avatar',
 			'wcj_product_author',
 			'wcj_product_author_link',
 			'wcj_product_image',
@@ -96,6 +97,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'precision'             => 2,
 			'hide_if_zero_quantity' => 'no',
 			'table_format'          => 'horizontal',
+			'avatar_size'           => 96,
 		);
 
 		parent::__construct();
@@ -128,6 +130,16 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		if ( ! $this->the_product ) return false;
 
 		return $atts;
+	}
+
+	/**
+	 * wcj_product_author_avatar.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function wcj_product_author_avatar( $atts ) {
+		return get_avatar( get_the_author_meta( 'ID' ), $atts['avatar_size'] );
 	}
 
 	/**

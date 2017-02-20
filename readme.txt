@@ -141,6 +141,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 20/02/2017 =
+~D	* Dev - Shortcodes - Products - `[wcj_product_author_avatar]` shortcode added.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author_link]` shortcode added.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author]` shortcode added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
