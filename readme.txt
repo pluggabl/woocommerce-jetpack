@@ -170,8 +170,8 @@ D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Fronte
 ~D	* Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option added.
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Single Product Pages" option added.
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Category/Archives Pages" option added.
-~	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
-~$D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
+	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
+$D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
 ~$D	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
 	* Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
 ~D	* Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
