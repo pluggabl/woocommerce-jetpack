@@ -141,86 +141,86 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 21/02/2017 =
-~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Single Product Pages" option added.
-~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Category/Archives Pages" option added.
-~D	* Dev - Shortcodes - Products - `[wcj_product_author_avatar]` shortcode added.
-~D	* Dev - Shortcodes - Products - `[wcj_product_author_link]` shortcode added.
-~D	* Dev - Shortcodes - Products - `[wcj_product_author]` shortcode added.
-~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
-~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
-	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
-~D$	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
-	* Tweak - SHIPPING & ORDERS - Left to Free Shipping - Admin descriptions added to "Content" fields.
-~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Make Pretty Price" option added.
-~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
-~D	* Dev - EMAILS & MISC. - General - General Checkout Options - "Hide "Order Again" Button on "View Order" Page" option added.
-~D	* Dev - EMAILS & MISC. - General - General Cart Options - "Hide Coupon on Cart Page" option added.
-~!	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
-~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
-~	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
-~D	* Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) page" position added.
-~D	* Dev - EMAILS & MISC. - EU VAT Number - "Add EU VAT Number Summary Metabox to Order Edit Page" option added.
-~D$	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
-~	* Dev - `WCJ_Module` - Fixed `selected` for multiple select in `create_meta_box`.
-~D	* Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option added.
-~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Price Step" option added.
-~	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Minimum frontend input value set to zero.
-~	* Dev - `output_custom_textarea` - Tooltip added.
-	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Grammar errors ("to" replaced with "too") fixed.
-~D	* Dev - EMAILS & MISC. - Export - Export Orders Items - `wcj_export_orders_items_fields` filter added.
-~	* Dev - EMAILS & MISC. - Export - Export Orders Items - `get_post_meta()` replaced with `safely_get_post_meta()`.
-~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "TCMB" option).
-	* Tweak - Link to Booster's GitHub repository added (readme.txt).
--D	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
-D	* Tweak - CART & CHECKOUT - Empty Cart Button - Description updated.
-~D	* Dev - Shortcodes - `[wcj_order_items_table]` - "product_regular_price_multiply_qty" and "product_sale_price_multiply_qty" columns added.
-	* Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
-~	* Dev - EMAILS & MISC. - Products XML - `strip_tags="yes"` added to all shortcodes in default item template.
-~	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
--	* Dev - PRODUCTS - Related Products - "Relate by Global Product Attribute" options section added.
-~	* Dev - PAYMENT GATEWAYS - Gateways Min/Max - "Notices on Checkout" options section added.
--	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
 -	* Dev - Autoload set to `no` in `add_option`.
-~	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
-~D	* Dev - PRODUCTS - Related Products - Order by "Meta Value" and "Meta Value (Numeric)" options added.
--	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
+~	* Dev - `WCJ_Module` - Fixed `selected` for multiple select in `create_meta_box`.
+~	* Dev - `output_custom_textarea` - Tooltip added.
 -	* Dev - Compatibility issue fixed.
-~D	* Dev - EMAILS & MISC. - Products XML - "Products Scope" option added.
-D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user]` shortcode added.
-~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
+~	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
 D	* Dev - Shortcodes - General - `[wcj_current_datetime]` shortcode added.
 D	* Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
 	* Dev - Shortcodes - General - `[wcj_current_date]` - `current_time( 'timestamp' )` added.
 D	* Dev - Shortcodes - General - `[wcj_current_timestamp]` shortcode added.
-	* Dev - EMAILS & MISC. - Products XML - `do_shortcode` added to XML header and footer.
-	* Dev - EMAILS & MISC. - Products XML - "Recent file was created on ..." info added.
-~D	* Dev - EMAILS & MISC. - Products XML - "Products/Categories/Tags to Include/Exclude" options added.
+D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user]` shortcode added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "product_regular_price_multiply_qty" and "product_sale_price_multiply_qty" columns added.
+~D	* Dev - Shortcodes - Products - `[wcj_product_author_avatar]` shortcode added.
+~D	* Dev - Shortcodes - Products - `[wcj_product_author_link]` shortcode added.
+~D	* Dev - Shortcodes - Products - `[wcj_product_author]` shortcode added.
+~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
+~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "TCMB" option).
+~	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
+~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
+	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
+~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Make Pretty Price" option added.
+~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Price Step" option added.
+~	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Minimum frontend input value set to zero.
+	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Grammar errors ("to" replaced with "too") fixed.
+~D	* Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option added.
+~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Single Product Pages" option added.
+~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Category/Archives Pages" option added.
+~D$	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
+~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
+~	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
+	* Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
+~D	* Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
+-D	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
+	* Fix - PRODUCTS - Products per Page - Default value changed.
+	* Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.
+D	* Dev - PRODUCTS - Products per Page - Initial module release (moved from Product Listings).
+-	* Dev - PRODUCTS - Related Products - "Relate by Global Product Attribute" options section added.
+-	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
+~D	* Dev - PRODUCTS - Related Products - Order by "Meta Value" and "Meta Value (Numeric)" options added.
 ~D	* Dev - PRODUCTS - Sorting - Code refactoring: "Remove All Sorting" section moved to the bottom; description updated.
 ~D	* Dev - PRODUCTS - Sorting - Remove All Sorting - "Empty template" method added (for maximum compatibility); `init` hook replaced with `wp_loaded`.
 ~D	* Dev - PRODUCTS - Sorting - "Rearrange Sorting" section added.
 ~D	* Dev - PRODUCTS - Sorting - "Default WooCommerce Sorting" section added.
+~	* Dev - CART & CHECKOUT - Checkout Custom Fields - `is_visible()` - `wcj_checkout_custom_field_always_visible_on_empty_cart` filter added.
+~D	* Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) page" position added.
+~	* Dev - PAYMENT GATEWAYS - Gateways Min/Max - "Notices on Checkout" options section added.
+~	* Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.
+~$D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Edit" custom status button added.
+~$D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
+~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
+~	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
+~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
+-	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
+~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
+~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
+~!	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
+~D$	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
+~D	* Dev - EMAILS & MISC. - EU VAT Number - "Add EU VAT Number Summary Metabox to Order Edit Page" option added.
+~	* Fix - EMAILS & MISC. - EU VAT Number - `validate_vat_no_soap()` - Country code lowercase not validated bug fixed.
+~D	* Dev - EMAILS & MISC. - EU VAT Number - "Progress Messages" options added.
+~	* Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
+~D	* Dev - EMAILS & MISC. - Export - Export Orders Items - `wcj_export_orders_items_fields` filter added.
+~	* Dev - EMAILS & MISC. - Export - Export Orders Items - `get_post_meta()` replaced with `safely_get_post_meta()`.
 ~D	* Dev - EMAILS & MISC. - Export - Export Products - "Variable Products" option added (and "Parent Product ID" field added).
+~D	* Dev - EMAILS & MISC. - General - General Checkout Options - "Hide "Order Again" Button on "View Order" Page" option added.
+~D	* Dev - EMAILS & MISC. - General - General Cart Options - "Hide Coupon on Cart Page" option added.
+~	* Dev - EMAILS & MISC. - Products XML - `strip_tags="yes"` added to all shortcodes in default item template.
+~D	* Dev - EMAILS & MISC. - Products XML - "Products Scope" option added.
+	* Dev - EMAILS & MISC. - Products XML - `do_shortcode` added to XML header and footer.
+	* Dev - EMAILS & MISC. - Products XML - "Recent file was created on ..." info added.
+~D	* Dev - EMAILS & MISC. - Products XML - "Products/Categories/Tags to Include/Exclude" options added.
 -D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
 -D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
 -D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
 -D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display profit" option added.
 -D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by product title" moved to "gather product data" section.
-~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
-~	* Dev - CART & CHECKOUT - Checkout Custom Fields - `is_visible()` - `wcj_checkout_custom_field_always_visible_on_empty_cart` filter added.
-	* Fix - PRODUCTS - Products per Page - Default value changed.
-	* Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.
-D	* Dev - PRODUCTS - Products per Page - Initial module release (moved from Product Listings).
-~	* Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.
-~$D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Edit" custom status button added.
-~$D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
-~D	* Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
-~	* Fix - EMAILS & MISC. - EU VAT Number - `validate_vat_no_soap()` - Country code lowercase not validated bug fixed.
-~D	* Dev - EMAILS & MISC. - EU VAT Number - "Progress Messages" options added.
-~	* Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
-~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
-~	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
-D	* Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
+	* Tweak - Link to Booster's GitHub repository added to readme.txt.
 	* Tweak - Language (POT) file updated.
+D	* Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
+D	* Tweak - CART & CHECKOUT - Empty Cart Button - Description updated.
+	* Tweak - SHIPPING & ORDERS - Left to Free Shipping - Admin descriptions added to "Content" fields.
 
 = 2.5.9 - 19/12/2016 =
 * Dev - `WCJ_Module` - "Reset settings" button now uses JS confirmation; `wp_safe_redirect` added.
