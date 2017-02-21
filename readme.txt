@@ -151,7 +151,7 @@ D	* Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
 	* Dev - Shortcodes - General - `[wcj_current_date]` - `current_time( 'timestamp' )` added.
 D	* Dev - Shortcodes - General - `[wcj_current_timestamp]` shortcode added.
 D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user]` shortcode added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "product_regular_price_multiply_qty" and "product_sale_price_multiply_qty" columns added.
+D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "product_regular_price_multiply_qty" and "product_sale_price_multiply_qty" columns added.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author_avatar]` shortcode added.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author_link]` shortcode added.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author]` shortcode added.
@@ -172,6 +172,7 @@ D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user]` shortcode added.
 ~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
 	* Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
 ~D	* Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
+	* Dev - PRODUCTS - Product Info - `textarea` replaced with `custom_textarea` in "Content" fields.
 -D	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
 	* Fix - PRODUCTS - Products per Page - Default value changed.
 	* Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.

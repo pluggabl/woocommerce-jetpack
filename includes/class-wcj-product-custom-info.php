@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Custom Info class.
  *
- * @version 2.5.3
+ * @version 2.6.0
  * @since   2.4.0
  * @author  Algoritmika Ltd.
  */
@@ -95,7 +95,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.0
 	 */
 	function add_settings() {
 
@@ -135,8 +135,9 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 						'title'    => __( 'Content', 'woocommerce-jetpack' ),
 						'id'       => 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i,
 						'default'  => '[wcj_product_total_sales before="Total sales: " after=" pcs."]',
-						'type'     => 'textarea',
-						'css'      => 'width:30%;min-width:300px;height:100px;',
+						'type'     => 'custom_textarea',
+						'desc_tip' => __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
+						'css'      => 'width:60%;min-width:300px;height:100px;',
 					),
 					array(
 						'title'    => __( 'Position', 'woocommerce-jetpack' ),
