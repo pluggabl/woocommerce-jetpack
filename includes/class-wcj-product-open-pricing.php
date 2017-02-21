@@ -327,6 +327,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 * @since   2.4.8
+	 * @todo    make JS min/max optional
 	 */
 	function add_open_price_input_field_to_frontend() {
 		$the_product = wc_get_product();

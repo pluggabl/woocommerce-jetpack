@@ -162,7 +162,7 @@ D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server
 ~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
 ~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Make Pretty Price" option added.
-	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Minimum frontend input value set to backend's minimum or zero (if not set). Maximum - set to backend's maximum.
+-	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Minimum frontend input value set to backend's minimum or zero (if not set). Maximum - set to backend's maximum.
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - All prices minimum values in backend set to zero.
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Grammar errors ("to" replaced with "too") fixed.
 D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Frontend Template - Replacement values added: `%min_price_simple%`, `%max_price_simple%`, `%default_price_simple%`, `%min_price%`, `%max_price%`, `%default_price%`.
