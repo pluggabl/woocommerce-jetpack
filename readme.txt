@@ -181,10 +181,10 @@ D	* Dev - PRODUCTS - Products per Page - Initial module release (moved from Prod
 -	* Dev - PRODUCTS - Related Products - "Relate by Global Product Attribute" options section added.
 -	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
 ~D	* Dev - PRODUCTS - Related Products - Order by "Meta Value" and "Meta Value (Numeric)" options added.
-~D	* Dev - PRODUCTS - Sorting - Code refactoring: "Remove All Sorting" section moved to the bottom; description updated.
-~D	* Dev - PRODUCTS - Sorting - Remove All Sorting - "Empty template" method added (for maximum compatibility); `init` hook replaced with `wp_loaded`.
-~D	* Dev - PRODUCTS - Sorting - "Rearrange Sorting" section added.
-~D	* Dev - PRODUCTS - Sorting - "Default WooCommerce Sorting" section added.
+D	* Dev - PRODUCTS - Sorting - Code refactoring: "Remove All Sorting" section moved to the bottom; description updated.
+D	* Dev - PRODUCTS - Sorting - Remove All Sorting - "Empty template" method added (for maximum compatibility); `init` hook replaced with `wp_loaded`.
+D	* Dev - PRODUCTS - Sorting - "Rearrange Sorting" section added.
+D	* Dev - PRODUCTS - Sorting - "Default WooCommerce Sorting" section added.
 ~	* Dev - CART & CHECKOUT - Checkout Custom Fields - `is_visible()` - `wcj_checkout_custom_field_always_visible_on_empty_cart` filter added.
 ~D	* Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) page" position added.
 ~	* Dev - PAYMENT GATEWAYS - Gateways Min/Max - "Notices on Checkout" options section added.

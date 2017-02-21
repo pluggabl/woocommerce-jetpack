@@ -20,7 +20,7 @@ class WCJ_Sorting extends WCJ_Module {
 	 * @access  public
 	 * @version 2.6.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'sorting';
 		$this->short_desc = __( 'Sorting', 'woocommerce-jetpack' );
@@ -178,7 +178,7 @@ class WCJ_Sorting extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 */
-	public function remove_sorting() {
+	function remove_sorting() {
 		remove_action( 'woocommerce_before_shop_loop', 'woocommerce_catalog_ordering', 30 );
 		remove_action( 'mpcth_before_shop_loop',       'woocommerce_catalog_ordering', 40 ); // Blaszok theme
 		remove_action( 'woocommerce_after_shop_loop',  'woocommerce_catalog_ordering', 10 ); // Storefront
@@ -188,9 +188,10 @@ class WCJ_Sorting extends WCJ_Module {
 	/*
 	 * maybe_add_sorting.
 	 *
-	 * @since 2.2.4
+	 * @version 2.2.4
+	 * @since   2.2.4
 	 */
-	private function maybe_add_sorting( $sortby, $option_name, $key ) {
+	function maybe_add_sorting( $sortby, $option_name, $key ) {
 		if ( '' != get_option( $option_name ) ) {
 			$sortby[ $key ] = get_option( $option_name );
 		}
@@ -417,7 +418,7 @@ class WCJ_Sorting extends WCJ_Module {
 			),
 			array(
 				'title'     => __( 'Remove All Sorting', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Remove all sorting (including WooCommerce default)', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Remove all sorting (including WooCommerce default) from shop\'s frontend', 'woocommerce-jetpack' ),
 				'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
 				'id'        => 'wcj_sorting_remove_all_enabled',
 				'default'   => 'no',
