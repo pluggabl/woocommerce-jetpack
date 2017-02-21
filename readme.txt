@@ -155,6 +155,7 @@ D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "product_regular_pri
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author_avatar]` shortcode added.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author_link]` shortcode added.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author]` shortcode added.
+~D	* Dev - Shortcodes - Products - `[wcj_product_author_link_all_posts]` shortcode added.
 ~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "TCMB" option).
 ~	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.

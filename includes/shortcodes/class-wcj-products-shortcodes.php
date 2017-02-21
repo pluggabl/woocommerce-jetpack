@@ -25,6 +25,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_author_avatar',
 			'wcj_product_author',
 			'wcj_product_author_link',
+			'wcj_product_author_link_all_posts',
 			'wcj_product_image',
 			'wcj_product_image_url',
 			'wcj_product_url',
@@ -159,6 +160,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.6.0
 	 */
 	function wcj_product_author_link( $atts ) {
+		global $post;
+		return add_query_arg( 'post_type', 'product', get_author_posts_url( $post->post_author ) );
+	}
+
+	/**
+	 * wcj_product_author_link_all_posts.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function wcj_product_author_link_all_posts( $atts ) {
 		global $post;
 		return get_author_posts_url( $post->post_author );
 	}
