@@ -145,7 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - `WCJ_Module` - Fixed `selected` for multiple select in `create_meta_box`.
 	* Dev - `output_custom_textarea` - Tooltip added.
 -	* Dev - Compatibility issue fixed.
-~	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
+~D	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
 D	* Dev - Shortcodes - General - `[wcj_current_datetime]` shortcode added.
 D	* Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
 	* Dev - Shortcodes - General - `[wcj_current_date]` - `current_time( 'timestamp' )` added.
@@ -157,7 +157,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_author_avatar]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author_link]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author_link_all_posts]` shortcode added.
 ~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
-~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "TCMB" option).
+D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "TCMB" option).
 ~	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
 ~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
