@@ -333,13 +333,18 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 		if ( $this->is_open_price_product( $the_product ) ) {
 			// Title
 			$title = get_option( 'wcj_product_open_price_label_frontend', __( 'Name Your Price', 'woocommerce-jetpack' ) );
+			// Prices
+			$min_price     = get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_min_price', true );
+			$max_price     = get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_max_price', true );
+			$default_price = get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_default_price', true );
 			// Input field
-			$value = ( isset( $_POST['wcj_open_price'] ) ) ? $_POST['wcj_open_price'] : get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_default_price', true );
+			$value = ( isset( $_POST['wcj_open_price'] ) ) ? $_POST['wcj_open_price'] : $default_price;
 //			$placeholder = $the_product->get_price();
 			$default_price_step = 1 / pow( 10, absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) );
 			$custom_attributes = '';
 			$custom_attributes .= 'step="' . get_option( 'wcj_product_open_price_price_step', $default_price_step ) . '" ';
-			$custom_attributes .= 'min="0" ';
+			$custom_attributes .= ( '' == $min_price ) ? 'min="0" ' : 'min="' . $min_price . '" ';
+			$custom_attributes .= ( '' == $max_price ) ? ''         : 'max="' . $max_price . '" ';
 			$input_field = '<input '
 				. 'type="number" '
 				. 'class="text" '
@@ -351,9 +356,20 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				. $custom_attributes . '>';
 			// Currency symbol
 			$currency_symbol = get_woocommerce_currency_symbol();
+			$replacement_values = array(
+				'%frontend_label%'       => $title,
+				'%open_price_input%'     => $input_field,
+				'%currency_symbol%'      => $currency_symbol,
+				'%min_price_simple%'     => $min_price,
+				'%max_price_simple%'     => $max_price,
+				'%default_price_simple%' => $default_price,
+				'%min_price%'            => wc_price( $min_price ),
+				'%max_price%'            => wc_price( $max_price ),
+				'%default_price%'        => wc_price( $default_price ),
+			);
 			echo str_replace(
-				array( '%frontend_label%', '%open_price_input%', '%currency_symbol%' ),
-				array( $title,             $input_field,         $currency_symbol ),
+				array_keys( $replacement_values ),
+				array_values( $replacement_values ),
 				get_option( 'wcj_product_open_price_frontend_template', '<label for="wcj_open_price">%frontend_label%</label> %open_price_input% %currency_symbol%' )
 			);
 		}
@@ -382,7 +398,8 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Frontend Template', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Here you can use' ) . ': ' . '%frontend_label%, %open_price_input%, %currency_symbol%',
+				'desc_tip' => __( 'Here you can use' ) . ': ' .
+					'%frontend_label%, %open_price_input%, %currency_symbol%, %min_price_simple%, %max_price_simple%, %default_price_simple%, %min_price%, %max_price%, %default_price%.',
 				'id'       => 'wcj_product_open_price_frontend_template',
 				'default'  => '<label for="wcj_open_price">%frontend_label%</label> %open_price_input% %currency_symbol%',
 				'type'     => 'textarea',
