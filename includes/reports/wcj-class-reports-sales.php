@@ -17,11 +17,11 @@ class WCJ_Reports_Sales {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.3.0
+	 * @version 2.6.0
 	 * @since   2.3.0
 	 */
 	public function __construct( $args = null ) {
-
+		return true;
 	}
 
 	/**

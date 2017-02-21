@@ -348,7 +348,7 @@ class WCJ_Reports extends WCJ_Module {
 			),
 			array(
 				'id'        => 'wcj_reports_products_sales_count_variations',
-				'desc'      => __( 'Count variations in product sales report', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Count variations for variable products', 'woocommerce-jetpack' ),
 				'type'      => 'checkbox',
 				'default'   => 'no',
 				'checkboxgroup' => 'end',
