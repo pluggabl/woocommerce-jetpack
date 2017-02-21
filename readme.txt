@@ -161,15 +161,15 @@ D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user]` shortcode added.
 ~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
 ~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Make Pretty Price" option added.
-~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Price Step" option added.
 ~	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Minimum frontend input value set to zero.
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Grammar errors ("to" replaced with "too") fixed.
+~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Price Step" option added.
 ~D	* Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option added.
+~	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
 ~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Single Product Pages" option added.
 ~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Category/Archives Pages" option added.
 ~D$	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
 ~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
-~	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
 	* Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
 ~D	* Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
 -D	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
@@ -189,18 +189,18 @@ D	* Dev - PRODUCTS - Products per Page - Initial module release (moved from Prod
 ~	* Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.
 ~$D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Edit" custom status button added.
 ~$D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
-~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
 ~	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
+~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
 ~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
 -	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
+~!	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
-~!	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
 ~D$	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
-~D	* Dev - EMAILS & MISC. - EU VAT Number - "Add EU VAT Number Summary Metabox to Order Edit Page" option added.
 ~	* Fix - EMAILS & MISC. - EU VAT Number - `validate_vat_no_soap()` - Country code lowercase not validated bug fixed.
-~D	* Dev - EMAILS & MISC. - EU VAT Number - "Progress Messages" options added.
 ~	* Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
+~D	* Dev - EMAILS & MISC. - EU VAT Number - "Add EU VAT Number Summary Metabox to Order Edit Page" option added.
+~D	* Dev - EMAILS & MISC. - EU VAT Number - "Progress Messages" options added.
 ~D	* Dev - EMAILS & MISC. - Export - Export Orders Items - `wcj_export_orders_items_fields` filter added.
 ~	* Dev - EMAILS & MISC. - Export - Export Orders Items - `get_post_meta()` replaced with `safely_get_post_meta()`.
 ~D	* Dev - EMAILS & MISC. - Export - Export Products - "Variable Products" option added (and "Parent Product ID" field added).
