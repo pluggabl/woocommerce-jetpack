@@ -350,6 +350,7 @@ class WCJ_Products_XML extends WCJ_Module {
 				),
 				array(
 					'title'    => __( 'XML Header', 'woocommerce-jetpack' ),
+					'desc'     => __( 'You can use shortcodes here. For example [wcj_current_datetime].', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_products_xml_header_' . $i,
 					'default'  => '<?xml version = "1.0" encoding = "utf-8" ?>' . PHP_EOL . '<root>' . PHP_EOL,
 					'type'     => 'custom_textarea',
@@ -376,6 +377,7 @@ class WCJ_Products_XML extends WCJ_Module {
 				),
 				array(
 					'title'    => __( 'XML Footer', 'woocommerce-jetpack' ),
+					'desc'     => __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_products_xml_footer_' . $i,
 					'default'  => '</root>',
 					'type'     => 'custom_textarea',
