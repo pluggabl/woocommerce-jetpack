@@ -238,7 +238,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 					'no'  => __( 'No', 'woocommerce-jetpack' ),
 				),
 				'title'      => __( 'Enabled', 'woocommerce-jetpack' ),
-				'tooltip'    => __( 'This is ignored if \'Enable Price Calculation By Formula For All Products\' option is checked in module\'s settings.', 'woocommerce-jetpack' ),
+				'tooltip'    => __( '\'Enabled\' option is ignored if \'Enable Price Calculation By Formula For All Products\' option is checked in module\'s settings.', 'woocommerce-jetpack' ),
 			),
 			array(
 				'name'       => 'wcj_product_price_by_formula_calculation',
