@@ -75,6 +75,14 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_disable_quantity_add_to_cart_script' ) );
 			}
 
+			// Button - Disabling - Archives
+			if ( 'yes' === get_option( 'wcj_add_to_cart_button_disable_archives', 'no' ) ) {
+				add_action( 'init', array( $this, 'add_to_cart_button_disable_archives' ), PHP_INT_MAX );
+			}
+			// Button - Disabling - Single Product
+			if ( 'yes' === get_option( 'wcj_add_to_cart_button_disable_single', 'no' ) ) {
+				add_action( 'init', array( $this, 'add_to_cart_button_disable_single' ), PHP_INT_MAX );
+			}
 			// Button per product - Disabling
 			if ( 'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ) {
 				add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_to_cart_button_disable_start' ), PHP_INT_MAX, 0 );
@@ -99,6 +107,26 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'replace_external_with_custom_add_to_cart_in_loop' ), PHP_INT_MAX );
 			}
 		}
+	}
+
+	/**
+	 * add_to_cart_button_disable_single.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function add_to_cart_button_disable_single() {
+		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
+	}
+
+	/**
+	 * add_to_cart_button_disable_archives.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function add_to_cart_button_disable_archives() {
+		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
 	}
 
 	/**
@@ -516,6 +544,20 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_add_to_cart_button_per_product_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Disable Add to Cart Buttons on All Category/Archives Pages', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Disable Buttons', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_add_to_cart_button_disable_archives',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Disable Add to Cart Buttons on All Single Product Pages', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Disable Buttons', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_add_to_cart_button_disable_single',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

@@ -140,7 +140,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 20/02/2017 =
+= 2.6.0 - 21/02/2017 =
+~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Single Product Pages" option added.
+~D$	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Category/Archives Pages" option added.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author_avatar]` shortcode added.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author_link]` shortcode added.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_author]` shortcode added.
