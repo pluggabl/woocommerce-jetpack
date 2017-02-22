@@ -456,6 +456,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	 * get_settings.
 	 *
 	 * @version 2.6.0
+	 * @todo    set default value for "wcj_eu_vat_number_add_progress_text" to "yes"
 	 */
 	function get_settings() {
 		$settings = array(

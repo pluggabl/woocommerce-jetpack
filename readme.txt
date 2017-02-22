@@ -141,12 +141,12 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 22/02/2017 =
--	* Dev - Autoload set to `no` in `add_option`.
+-!	* Dev - Autoload set to `no` in `add_option`.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
 	* Dev - `output_custom_textarea` - Tooltip added.
--	* Dev - Compatibility issue fixed.
+-?	* Dev - Compatibility issue fixed.
 D	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
 D	* Dev - Shortcodes - General - `[wcj_current_datetime]` shortcode added.
 D	* Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
@@ -163,7 +163,7 @@ D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server
 ~	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
 ~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
-~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Make Pretty Price" option added.
+-D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Make Pretty Price" option added.
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - All prices minimum values in backend set to zero.
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Grammar errors ("to" replaced with "too") fixed.
 D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Frontend Template - Replacement values added: `%min_price_simple%`, `%max_price_simple%`, `%default_price_simple%`, `%min_price%`, `%max_price%`, `%default_price%`.
@@ -200,7 +200,7 @@ D	* Dev - PRODUCTS - Sorting - "Default WooCommerce Sorting" section added.
 ~	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
 ~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
 ~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
--	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
+-!	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
 ~!	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
