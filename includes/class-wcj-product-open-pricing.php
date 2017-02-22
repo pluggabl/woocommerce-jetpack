@@ -327,7 +327,6 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 * @since   2.4.8
-	 * @todo    make JS min/max optional
 	 */
 	function add_open_price_input_field_to_frontend() {
 		$the_product = wc_get_product();
@@ -340,7 +339,6 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			$default_price = get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_default_price', true );
 			// Input field
 			$value = ( isset( $_POST['wcj_open_price'] ) ) ? $_POST['wcj_open_price'] : $default_price;
-//			$placeholder = $the_product->get_price();
 			$default_price_step = 1 / pow( 10, absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) );
 			$custom_attributes = '';
 			$custom_attributes .= 'step="' . get_option( 'wcj_product_open_price_price_step', $default_price_step ) . '" ';
@@ -352,7 +350,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				. 'style="' . get_option( 'wcj_product_open_price_input_style', 'width:75px;text-align:center;' ). '" '
 				. 'name="wcj_open_price" '
 				. 'id="wcj_open_price" '
-//				. 'placeholder="' . $placeholder . '" '
+				. 'placeholder="' . get_option( 'wcj_product_open_price_input_placeholder', '' ) . '" '
 				. 'value="' . $value . '" '
 				. $custom_attributes . '>';
 			// Currency symbol
@@ -409,14 +407,21 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				'css'      => 'min-width:300px;width:50%;',
 			),
 			array(
-				'title'    => __( 'Input Style', 'woocommerce-jetpack' ),
+				'title'    => __( 'Frontend Input Style', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_open_price_input_style',
 				'default'  => 'width:75px;text-align:center;',
 				'type'     => 'text',
 				'css'      => 'width:250px;',
 			),
 			array(
-				'title'    => __( 'Frontend Price Step', 'woocommerce-jetpack' ),
+				'title'    => __( 'Frontend Input Placeholder', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_open_price_input_placeholder',
+				'default'  => '',
+				'type'     => 'text',
+				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Frontend Input Price Step', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_open_price_price_step',
 				'default'  => $default_price_step,
 				'type'     => 'number',
@@ -444,7 +449,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				'css'      => 'width:250px;',
 			),
 			array(
-				'title'    => __( 'Enable JS Validation', 'woocommerce-jetpack' ),
+				'title'    => __( 'Enable JS Min/Max Validation', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_open_price_enable_js_validation',
 				'default'  => 'no',
