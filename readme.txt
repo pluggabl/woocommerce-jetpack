@@ -140,9 +140,11 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 21/02/2017 =
+= 2.6.0 - 22/02/2017 =
 -	* Dev - Autoload set to `no` in `add_option`.
-~	* Dev - `WCJ_Module` - Fixed `selected` for multiple select in `create_meta_box`.
+~	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
+~	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
+~	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
 	* Dev - `output_custom_textarea` - Tooltip added.
 -	* Dev - Compatibility issue fixed.
 D	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.

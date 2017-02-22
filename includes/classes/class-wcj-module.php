@@ -187,13 +187,13 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
 		$html = '';
-		$html .= '<table>';
+		$html .= '<table class="widefat striped">';
 		foreach ( $this->get_meta_box_options() as $option ) {
 			$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 			if ( $is_enabled ) {
 				if ( 'title' === $option['type'] ) {
 					$html .= '<tr>';
-					$html .= '<th colspan="2" style="text-align:left;">' . $option['title'] . '</th>';
+					$html .= '<th colspan="3" style="text-align:left;font-weight:bold;">' . $option['title'] . '</th>';
 					$html .= '</tr>';
 				} else {
 					$custom_attributes = '';
@@ -211,6 +211,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 							$option_name       = $option['name'] . '[]';
 						} else {
 							$option_name       = $option['name'];
+						}
+						if ( isset( $option['custom_attributes'] ) ) {
+							$custom_attributes .= ' ' . $option['custom_attributes'];
 						}
 						$options = '';
 						foreach ( $option['options'] as $select_option_key => $select_option_value ) {
@@ -253,9 +256,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					$maybe_tooltip = ( isset( $option['tooltip'] ) && '' != $option['tooltip'] ) ?
 						' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $option['tooltip'] . '">' :
 						'';
-					$html .= '<th style="text-align:left;">' . $option['title'] . $maybe_tooltip . '</th>';
+					$html .= '<th style="text-align:left;width:25%;">' . $option['title'] . $maybe_tooltip . '</th>';
 					if ( isset( $option['desc'] ) && '' != $option['desc'] ) {
-						$html .= '<td style="font-style:italic;">' . $option['desc'] . '</td>';
+						$html .= '<td style="font-style:italic;width:25%;">' . $option['desc'] . '</td>';
 					}
 					$html .= '<td>' . $field_html . '</td>';
 					$html .= '</tr>';
