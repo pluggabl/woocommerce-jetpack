@@ -210,7 +210,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * On the scheduled action hook, run a function.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.0
 	 */
 	function update_the_exchange_rates( $interval ) {
 
@@ -271,11 +271,22 @@ class WCJ_Exchange_Rates_Crons {
 		}
 
 		// Currency Pairs - Final
+		$rate_offset_percent = get_option( 'wcj_currency_exchange_rates_offset_percent', 0 );
+		if ( 0 != $rate_offset_percent ) {
+			$rate_offset_percent = 1 + ( $rate_offset_percent / 100 );
+		}
+		$rate_offset_fixed = get_option( 'wcj_currency_exchange_rates_offset_fixed', 0 );
 		foreach ( $currency_pairs as $currency_pair ) {
 			$currency_from = $currency_pair['currency_from'];
 			$currency_to   = $currency_pair['currency_to'];
 			$the_rate = $this->get_exchange_rate( $currency_from, $currency_to );
 			if ( 0 != $the_rate ) {
+				if ( 0 != $rate_offset_percent ) {
+					$the_rate = round( $the_rate * $rate_offset_percent, 6 );
+				}
+				if ( 0 != $rate_offset_fixed ) {
+					$the_rate = $the_rate + $rate_offset_fixed;
+				}
 				if ( $currency_from != $currency_to ) {
 					foreach ( $currency_pair['option_name'] as $option_name ) {
 						update_option( $option_name, $the_rate );

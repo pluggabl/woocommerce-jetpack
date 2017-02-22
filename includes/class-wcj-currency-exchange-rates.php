@@ -135,6 +135,22 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 			'options'  => wcj_get_currency_exchange_rate_servers(),
 		);
 
+		$settings[] = array(
+			'title'    => __( 'Exchange Rates Offset - Percent', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_currency_exchange_rates_offset_percent',
+			'default'  => 0,
+			'type'     => 'number',
+			'custom_attributes' => array( 'step' => '0.001' ),
+		);
+
+		$settings[] = array(
+			'title'    => __( 'Exchange Rates Offset - Fixed', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_currency_exchange_rates_offset_fixed',
+			'default'  => 0,
+			'type'     => 'number',
+			'custom_attributes' => array( 'step' => '0.000001' ),
+		);
+
 		$currency_from = get_option( 'woocommerce_currency' );
 
 		if ( wcj_is_module_enabled( 'price_by_country' ) ) {
