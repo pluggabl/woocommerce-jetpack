@@ -18,6 +18,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 	function wcj_get_currency_exchange_rate_servers() {
 		return array(
 			'yahoo' => __( 'Yahoo', 'woocommerce-jetpack' ),
+			'ecb'   => __( 'European Central Bank (ECB)', 'woocommerce-jetpack' ),
 			'tcmb'  => __( 'TCMB', 'woocommerce-jetpack' ),
 		);
 	}

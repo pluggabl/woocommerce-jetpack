@@ -80,9 +80,47 @@ class WCJ_Exchange_Rates_Crons {
 		switch ( $exchange_rates_server ) {
 			case 'tcmb':
 				return $this->tcmb_get_exchange_rate( $currency_from, $currency_to );
+			case 'ecb':
+				return $this->ecb_get_exchange_rate( $currency_from, $currency_to );
 			default: // 'yahoo'
 				return $this->yahoo_get_exchange_rate( $currency_from, $currency_to );
 		}
+	}
+
+	/*
+	 * ecb_get_exchange_rate.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function ecb_get_exchange_rate( $currency_from, $currency_to ) {
+		$final_rate = false;
+		if ( function_exists( 'simplexml_load_file' ) ) {
+			$xml = simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
+			if ( isset( $xml->Cube->Cube->Cube ) ) {
+				if ( 'EUR' === $currency_from ) {
+					$EUR_currency_from_rate = 1;
+				}
+				if ( 'EUR' === $currency_to ) {
+					$EUR_currency_to_rate = 1;
+				}
+				foreach ( $xml->Cube->Cube->Cube as $currency_rate ) {
+					$currency_rate = $currency_rate->attributes();
+					if ( ! isset( $EUR_currency_from_rate ) && $currency_from == $currency_rate->currency ) {
+						$EUR_currency_from_rate = (float) $currency_rate->rate;
+					}
+					if ( ! isset( $EUR_currency_to_rate ) && $currency_to == $currency_rate->currency ) {
+						$EUR_currency_to_rate = (float) $currency_rate->rate;
+					}
+				}
+				if ( isset( $EUR_currency_from_rate ) && isset( $EUR_currency_to_rate ) && 0 != $EUR_currency_from_rate ) {
+					$final_rate = round( $EUR_currency_to_rate / $EUR_currency_from_rate, 6 );
+				} else {
+					$final_rate = false;
+				}
+			}
+		}
+		return $final_rate;
 	}
 
 	/*
