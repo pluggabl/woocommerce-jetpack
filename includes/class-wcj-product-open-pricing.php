@@ -357,6 +357,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				. $custom_attributes . '>';
 			// Currency symbol
 			$currency_symbol = get_woocommerce_currency_symbol();
+			// Replacing final values
 			$replacement_values = array(
 				'%frontend_label%'       => $title,
 				'%open_price_input%'     => $input_field,
