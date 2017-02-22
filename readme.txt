@@ -169,7 +169,7 @@ D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Grammar errors ("to" replaced with "too") fixed.
 D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Frontend Template - Replacement values added: `%min_price_simple%`, `%max_price_simple%`, `%default_price_simple%`, `%min_price%`, `%max_price%`, `%default_price%`.
 D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Frontend Price Step" option added.
-~D	* Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option added.
+D	* Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option added.
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Single Product Pages" option added.
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Category/Archives Pages" option added.
 	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
