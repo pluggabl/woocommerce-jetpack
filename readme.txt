@@ -159,6 +159,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_author_avatar]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author_link]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author_link_all_posts]` shortcode added.
 ~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
+~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - JS replaced with AJAX from "Grab rate" button.
 D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "TCMB" option).
 -D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset" options added.
 ~	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.

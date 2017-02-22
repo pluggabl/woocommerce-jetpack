@@ -32,19 +32,19 @@ class WCJ_Exchange_Rates_Crons {
 		add_action( 'auto_update_exchange_rates_hook', array( $this, 'update_the_exchange_rates' ) );
 		add_filter( 'cron_schedules',                  array( $this, 'cron_add_custom_intervals' ) );
 
-		add_action( 'wp_ajax_'        . 'wcj_tcmb_get_exchange_rates', array( $this, 'wcj_tcmb_get_exchange_rates' ) );
-		add_action( 'wp_ajax_nopriv_' . 'wcj_tcmb_get_exchange_rates', array( $this, 'wcj_tcmb_get_exchange_rates' ) );
+		add_action( 'wp_ajax_'        . 'wcj_ajax_get_exchange_rates', array( $this, 'wcj_ajax_get_exchange_rates' ) );
+		add_action( 'wp_ajax_nopriv_' . 'wcj_ajax_get_exchange_rates', array( $this, 'wcj_ajax_get_exchange_rates' ) );
 	}
 
 	/**
-	 * wcj_tcmb_get_exchange_rates.
+	 * wcj_ajax_get_exchange_rates.
 	 *
 	 * @version 2.6.0
 	 * @since   2.6.0
 	 * @todo    this shouldn't be in crons
 	 */
-	function wcj_tcmb_get_exchange_rates() {
-		echo $this->tcmb_get_exchange_rate( $_POST['wcj_tcmb_currency_from'], $_POST['wcj_tcmb_currency_to'] );
+	function wcj_ajax_get_exchange_rates() {
+		echo $this->get_exchange_rate( $_POST['wcj_currency_from'], $_POST['wcj_currency_to'] );
 		die();
 	}
 

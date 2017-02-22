@@ -42,18 +42,10 @@ class WCJ_Exchange_Rates {
 				'currency_exchange_rates',
 			) )
 		) {
-			$exchange_rates_server = get_option( 'wcj_currency_exchange_rates_server', 'yahoo' );
-			switch ( $exchange_rates_server ) {
-				case 'tcmb':
-					wp_register_script( 'wcj-exchange-rates-tcmb',  trailingslashit( WCJ()->plugin_url() ) . 'includes/js/tcmb_exchange_rates.js', array( 'jquery' ), WCJ()->version, true );
-					wp_localize_script( 'wcj-exchange-rates-tcmb', 'ajax_object', array(
-						'ajax_url' => admin_url( 'admin-ajax.php' ),
-					) );
-					break;
-				default: // 'yahoo'
-					wp_register_script( 'wcj-exchange-rates-yahoo', trailingslashit( WCJ()->plugin_url() ) . 'includes/js/exchange_rates.js',      array( 'jquery' ), WCJ()->version, true );
-					break;
-			}
+			wp_register_script( 'wcj-exchange-rates-ajax',  trailingslashit( WCJ()->plugin_url() ) . 'includes/js/ajax_exchange_rates.js', array( 'jquery' ), WCJ()->version, true );
+			wp_localize_script( 'wcj-exchange-rates-ajax', 'ajax_object', array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+			) );
 		}
 	}
 
@@ -74,15 +66,7 @@ class WCJ_Exchange_Rates {
 				'currency_exchange_rates',
 			) )
 		) {
-			$exchange_rates_server = get_option( 'wcj_currency_exchange_rates_server', 'yahoo' );
-			switch ( $exchange_rates_server ) {
-				case 'tcmb':
-					wp_enqueue_script( 'wcj-exchange-rates-tcmb' );
-					break;
-				default: // 'yahoo'
-					wp_enqueue_script( 'wcj-exchange-rates-yahoo' );
-					break;
-			}
+			wp_enqueue_script( 'wcj-exchange-rates-ajax' );
 		}
 	}
 
