@@ -327,6 +327,8 @@ class WCJ_Price_by_Country_Core {
 			$group_id,
 			get_option( 'wcj_price_by_country_rounding', 'none' ),
 			get_option( 'wcj_price_by_country_make_pretty', 'no' ),
+			get_option( 'wcj_price_by_country_make_pretty_min_amount_multiplier', 1 ),
+			get_option( 'woocommerce_price_num_decimals', 2 ),
 			get_option( 'wcj_price_by_country_local_enabled', 'yes' ),
 //			get_option( 'wcj_price_by_country_selection' ),
 //			get_option( 'wcj_price_by_country_total_groups_number' ),

@@ -205,10 +205,19 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			array(
 				'title'    => __( 'Make Pretty Price', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'If enabled, this will be applied if exchange rates are used. Final converted price will be rounded, then decreased by smallest possible value. For example: $9,75 -> $10,00 -> $9,99.', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If enabled, this will be applied if exchange rates are used. Final converted price will be rounded, then decreased by smallest possible value. For example: $9,75 -> $10,00 -> $9,99. Please note that as smallest possible value is calculated from shop\'s "Precision" option, this option must be above zero.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_make_pretty',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+
+			array(
+				'desc'     => __( 'Min Amount Multiplier', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If "Make Pretty Price" is enabled, here you can set by how many smallest possible values (e.g. cents) final price should be decreased.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_price_by_country_make_pretty_min_amount_multiplier',
+				'default'  => 1,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => '1' ),
 			),
 
 			array(

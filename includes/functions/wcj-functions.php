@@ -257,7 +257,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 				$is_price_modified = true;
 //			}
 			if ( 'yes' === get_option( 'wcj_price_by_country_make_pretty', 'no' ) && $modified_price >= 0.5 && $precision > 0 ) {
-				$modified_price = round( $modified_price ) - ( 1 / pow( 10, $precision ) );
+				$modified_price = round( $modified_price ) - ( get_option( 'wcj_price_by_country_make_pretty_min_amount_multiplier', 1 ) / pow( 10, $precision ) );
 			}
 		}
 
