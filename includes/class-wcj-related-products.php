@@ -189,6 +189,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	 * related_products_args.
 	 *
 	 * @version 2.6.0
+	 * @todo    save custom results as product transient
 	 */
 	function related_products_args( $args ) {
 		// Hide Related
@@ -217,16 +218,32 @@ class WCJ_Related_Products extends WCJ_Module {
 				return array();
 			}
 		} elseif ( 'yes' === get_option( 'wcj_product_info_related_products_by_attribute_enabled', 'no' ) ) {
-			// Relate by Global Attributes
-			// from http://snippet.fm/snippets/query-for-woocommerce-products-by-global-product-attributes/
 			unset( $args['post__in'] );
-			$args['tax_query'] = array(
-				array(
-					'taxonomy' => 'pa_' . get_option( 'wcj_product_info_related_products_by_attribute_attribute_name', '' ),
-					'field'    => 'slug',
-					'terms'    => get_option( 'wcj_product_info_related_products_by_attribute_attribute_value', '' ),
-				),
-			);
+			$attribute_name   = get_option( 'wcj_product_info_related_products_by_attribute_attribute_name', '' );
+			$attribute_value  = get_option( 'wcj_product_info_related_products_by_attribute_attribute_value', '' );
+			if ( 'global' === get_option( 'wcj_product_info_related_products_by_attribute_attribute_type', 'global' ) ) {
+				// Relate by Global Attributes
+				// http://snippet.fm/snippets/query-for-woocommerce-products-by-global-product-attributes/
+				$args['tax_query'] = array(
+					array(
+						'taxonomy' => 'pa_' . $attribute_name,
+						'field'    => 'slug',
+						'terms'    => $attribute_value,
+					),
+				);
+			} else {
+				// Relate by Local Product Attributes
+				// http://snippet.fm/snippets/query-woocommerce-products-product-specific-custom-attribute/
+				$serialized_value = serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value );
+				// extended version: $serialized_value = serialize( $attribute_name ) . 'a:6:{' . serialize( 'name' ) . serialize( $attribute_name ) . serialize( 'value' ) . serialize( $attribute_value ) . serialize( 'position' );
+				$args['meta_query'] = array(
+					array(
+						'key'     => '_product_attributes',
+						'value'   => $serialized_value,
+						'compare' => 'LIKE',
+					),
+				);
+			}
 		}
 		return $args;
 	}
@@ -246,7 +263,6 @@ class WCJ_Related_Products extends WCJ_Module {
 	 * get_settings.
 	 *
 	 * @version 2.6.0
-	 * @todo    add "Relate by Local (i.e. Product Specific) Product Attribute" - http://snippet.fm/snippets/query-woocommerce-products-product-specific-custom-attribute/
 	 */
 	function get_settings() {
 		$settings = array(
@@ -325,11 +341,21 @@ class WCJ_Related_Products extends WCJ_Module {
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Relate by Global Product Attribute', 'woocommerce-jetpack' ),
+				'title'    => __( 'Relate by Product Attribute', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_info_related_products_by_attribute_enabled',
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'Attribute Type', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_info_related_products_by_attribute_attribute_type',
+				'default'  => 'global',
+				'type'     => 'select',
+				'options'  => array(
+					'global' => __( 'Global Attribute', 'woocommerce-jetpack' ),
+					'local'  => __( 'Local Attribute', 'woocommerce-jetpack' ),
+				),
 			),
 			array(
 				'desc'     => __( 'Attribute Name Slug', 'woocommerce-jetpack' ),
