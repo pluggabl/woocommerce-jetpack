@@ -267,13 +267,9 @@ class WCJ_Related_Products extends WCJ_Module {
 	function get_settings() {
 		$settings = array(
 			array(
-				'title'    => __( 'Options', 'woocommerce-jetpack' ),
+				'title'    => __( 'General', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => sprintf(
-					__( 'You may need to <a href="%s">clear all products transients</a> to see results on frontend immediately after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
-					add_query_arg( 'wcj_clear_all_products_transients', 'yes' )
-				),
-				'id'       => 'wcj_product_info_related_products_options',
+				'id'       => 'wcj_product_info_related_products_general_options',
 			),
 			array(
 				'title'    => __( 'Related Products Number', 'woocommerce-jetpack' ),
@@ -286,6 +282,15 @@ class WCJ_Related_Products extends WCJ_Module {
 				'id'       => 'wcj_product_info_related_products_columns',
 				'default'  => 3,
 				'type'     => 'number',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_info_related_products_general_options',
+			),
+			array(
+				'title'    => __( 'Order', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_info_related_products_order_options',
 			),
 			array(
 				'title'    => __( 'Order by', 'woocommerce-jetpack' ),
@@ -317,6 +322,19 @@ class WCJ_Related_Products extends WCJ_Module {
 					'asc'  => __( 'Ascending', 'woocommerce-jetpack' ),
 					'desc' => __( 'Descending', 'woocommerce-jetpack' ),
 				),
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_info_related_products_order_options',
+			),
+			array(
+				'title'    => __( 'Relate', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'desc'     => sprintf(
+					__( 'You may need to <a class="button" href="%s">clear all products transients</a> to see results on frontend immediately after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
+					add_query_arg( 'wcj_clear_all_products_transients', 'yes' )
+				),
+				'id'       => 'wcj_product_info_related_products_relate_options',
 			),
 			array(
 				'title'    => __( 'Relate by Category', 'woocommerce-jetpack' ),
@@ -370,6 +388,15 @@ class WCJ_Related_Products extends WCJ_Module {
 				'type'     => 'text',
 			),
 			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_info_related_products_relate_options',
+			),
+			array(
+				'title'    => __( 'Hide', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_info_related_products_hide_options',
+			),
+			array(
 				'title'    => __( 'Hide Related Products', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_info_related_products_hide',
@@ -378,7 +405,7 @@ class WCJ_Related_Products extends WCJ_Module {
 			),
 			array(
 				'type'     => 'sectionend',
-				'id'       => 'wcj_product_info_related_products_options',
+				'id'       => 'wcj_product_info_related_products_hide_options',
 			),
 		);
 		return $this->add_standard_settings( $settings );

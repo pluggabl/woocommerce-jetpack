@@ -232,6 +232,7 @@ N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by produc
 	* Tweak - Link to Booster's GitHub repository added to readme.txt.
 	* Tweak - Language (POT) file updated.
 D	* Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
+	* Tweak - PRODUCTS - Related Products - Admin settings divided in sections.
 D	* Tweak - CART & CHECKOUT - Empty Cart Button - Description updated.
 	* Tweak - SHIPPING & ORDERS - Left to Free Shipping - Admin descriptions added to "Content" fields.
 
