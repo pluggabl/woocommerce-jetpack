@@ -76,7 +76,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Gateways Currency* - Currency per WooCommerce payment gateway.
 * *Gateways Fees and Discounts* - Enable extra fees or discounts for WooCommerce payment gateways.
 * *Gateways Icons* - Change or completely remove icons (images) for any (default or custom) WooCommerce payment gateway.
-* *Gateways Min/Max* - Add min/max amounts for WooCommerce payment gateways to show up.
+* *Gateways Min/Max Amounts* - Add min/max amounts for WooCommerce payment gateways to show up.
 * *Gateways by Country or State* - Set countries or states to include/exclude for WooCommerce payment gateways to show up.
 * *Gateways by User Role* - Set user roles to include/exclude for WooCommerce payment gateways to show up.
 * *Gateways per Product or Category* - Show WooCommerce gateway only if there is selected product or product category in cart.
@@ -142,7 +142,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 = 2.6.0 - 23/02/2017 =
 	* Dev - Dashboard - Manage Settings - Restyled.
-~	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
+~F	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
 A	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
 A	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
 A	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
