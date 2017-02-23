@@ -227,7 +227,7 @@ class WCJ_Related_Products extends WCJ_Module {
 				$args['tax_query'] = array(
 					array(
 						'taxonomy' => 'pa_' . $attribute_name,
-						'field'    => 'slug',
+						'field'    => 'name',
 						'terms'    => $attribute_value,
 					),
 				);
@@ -330,10 +330,6 @@ class WCJ_Related_Products extends WCJ_Module {
 			array(
 				'title'    => __( 'Relate', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => sprintf(
-					__( 'You may need to <a class="button" href="%s">clear all products transients</a> to see results on frontend immediately after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
-					add_query_arg( 'wcj_clear_all_products_transients', 'yes' )
-				),
 				'id'       => 'wcj_product_info_related_products_relate_options',
 			),
 			array(
@@ -367,6 +363,7 @@ class WCJ_Related_Products extends WCJ_Module {
 			),
 			array(
 				'desc'     => __( 'Attribute Type', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If using "Global Attribute" enter attribute\'s <em>slug</em> in "Attribute Name"', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_info_related_products_by_attribute_attribute_type',
 				'default'  => 'global',
 				'type'     => 'select',
@@ -376,13 +373,13 @@ class WCJ_Related_Products extends WCJ_Module {
 				),
 			),
 			array(
-				'desc'     => __( 'Attribute Name Slug', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Attribute Name', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_info_related_products_by_attribute_attribute_name',
 				'default'  => '',
 				'type'     => 'text',
 			),
 			array(
-				'desc'     => __( 'Attribute Value Slug', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Attribute Value', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_info_related_products_by_attribute_attribute_value',
 				'default'  => '',
 				'type'     => 'text',
@@ -408,7 +405,10 @@ class WCJ_Related_Products extends WCJ_Module {
 				'id'       => 'wcj_product_info_related_products_hide_options',
 			),
 		);
-		return $this->add_standard_settings( $settings );
+		return $this->add_standard_settings( $settings, sprintf(
+			__( 'You may need to <a class="button" href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
+			add_query_arg( 'wcj_clear_all_products_transients', 'yes' )
+		) );
 	}
 }
 
