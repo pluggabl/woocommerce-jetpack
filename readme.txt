@@ -140,13 +140,14 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 22/02/2017 =
--!	* Dev - Autoload set to `no` in `add_option`.
-~	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
-~	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
-~	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
+= 2.6.0 - 23/02/2017 =
+	* Dev - Dashboard - Manage Settings - Restyled.
+~	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
+A	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
+A	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
+A	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
 	* Dev - `output_custom_textarea` - Tooltip added.
--?	* Dev - Compatibility issue fixed.
+N?	* Dev - Compatibility issue fixed.
 D	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
 D	* Dev - Shortcodes - General - `[wcj_current_datetime]` shortcode added.
 D	* Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
@@ -158,10 +159,10 @@ D	* Dev - Shortcodes - Products - `[wcj_product_author]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author_avatar]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author_link]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author_link_all_posts]` shortcode added.
-~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
-~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - JS replaced with AJAX from "Grab rate" button.
-~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "ECB" and "TCMB" options).
--D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset" options added.
+A	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
+A	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - JS replaced with AJAX from "Grab rate" button.
+A*	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "ECB" and "TCMB" options).
+N*	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset" options added.
 ~	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
 ~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
@@ -177,17 +178,17 @@ D	* Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calcula
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Single Product Pages" option added.
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Category/Archives Pages" option added.
 	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
-$D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
+P*	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
 ~$D	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
 	* Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
 ~D	* Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
 	* Dev - PRODUCTS - Product Info - `textarea` replaced with `custom_textarea` in "Content" fields.
--D	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
+N*	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
 	* Fix - PRODUCTS - Products per Page - Default value changed.
 	* Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.
 D	* Dev - PRODUCTS - Products per Page - Initial module release (moved from Product Listings).
--	* Dev - PRODUCTS - Related Products - "Relate by Global Product Attribute" options section added.
--	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
+N	* Dev - PRODUCTS - Related Products - "Relate by Global Product Attribute" options section added.
+N	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
 ~D	* Dev - PRODUCTS - Related Products - Order by "Meta Value" and "Meta Value (Numeric)" options added.
 D	* Dev - PRODUCTS - Sorting - Code refactoring: "Remove All Sorting" section moved to the bottom; description updated.
 D	* Dev - PRODUCTS - Sorting - Remove All Sorting - "Empty template" method added (for maximum compatibility); `init` hook replaced with `wp_loaded`.
@@ -202,7 +203,7 @@ D	* Dev - PRODUCTS - Sorting - "Default WooCommerce Sorting" section added.
 ~	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
 ~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
 ~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
--!	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
+N!	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
 ~!	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
@@ -221,11 +222,11 @@ D	* Dev - PRODUCTS - Sorting - "Default WooCommerce Sorting" section added.
 	* Dev - EMAILS & MISC. - Products XML - `do_shortcode` added to XML header and footer.
 	* Dev - EMAILS & MISC. - Products XML - "Recent file was created on ..." info added.
 ~D	* Dev - EMAILS & MISC. - Products XML - "Products/Categories/Tags to Include/Exclude" options added.
--D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
--D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
--D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
--D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display profit" option added.
--D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by product title" moved to "gather product data" section.
+N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
+N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
+N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
+N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display profit" option added.
+N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by product title" moved to "gather product data" section.
 	* Tweak - Link to Booster's GitHub repository added to readme.txt.
 	* Tweak - Language (POT) file updated.
 D	* Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.

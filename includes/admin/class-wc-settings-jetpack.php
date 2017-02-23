@@ -385,7 +385,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.0
 	 */
 	function output_dashboard( $current_section ) {
 
@@ -415,10 +415,30 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		} elseif ( 'active' === $current_section ) {
 			$this->output_dashboard_modules( $the_settings, 'active_modules_only' );
 		} elseif ( 'manager' === $current_section ) {
-			echo '<p><button class="button-primary" type="submit" name="booster_export_settings">' . __( 'Export', 'woocommerce-jetpack' ) . '</button></p>';
-			echo '<p><button class="button-primary" type="submit" name="booster_import_settings">' . __( 'Import', 'woocommerce-jetpack' ) . '</button>';
-			echo ' ' . '<input type="file" name="booster_import_settings_file"></p>';
-			echo '<p><button class="button-primary" type="submit" name="booster_reset_settings" onclick="return confirm(\'' . __( 'This will reset settings to defaults for all Booster modules. Are you sure?', 'woocommerce-jetpack' ) . '\')">'  . __( 'Reset', 'woocommerce-jetpack' )  . '</button></p>';
+			$autoload_settings = $this->get_autoload_settings();
+			$table_data = array(
+				array(
+					'<button style="width:100px;" class="button-primary" type="submit" name="booster_export_settings">' . __( 'Export', 'woocommerce-jetpack' ) . '</button>',
+					'<em>' . __( 'Export all Booster\'s options to a file.', 'woocommerce-jetpack' ) . '</em>',
+				),
+				array(
+					'<button style="width:100px;" class="button-primary" type="submit" name="booster_import_settings">' . __( 'Import', 'woocommerce-jetpack' ) . '</button>' .
+						' ' . '<input type="file" name="booster_import_settings_file">',
+					'<em>' . __( 'Import all Booster\'s options from a file.', 'woocommerce-jetpack' ) . '</em>',
+				),
+				array(
+					'<button style="width:100px;" class="button-primary" type="submit" name="booster_reset_settings" onclick="return confirm(\'' . __( 'This will reset settings to defaults for all Booster modules. Are you sure?', 'woocommerce-jetpack' ) . '\')">'  . __( 'Reset', 'woocommerce-jetpack' )  . '</button>',
+					'<em>' . __( 'Reset all Booster\'s options.', 'woocommerce-jetpack' ) . '</em>',
+				),
+				array(
+					'<label for="' . $autoload_settings['id'] . '">' .
+						'<input name="' . $autoload_settings['id'] . '" id="' . $autoload_settings['id'] . '" type="' . $autoload_settings['type'] . '" class="" value="1" ' . checked( get_option( $autoload_settings['id'], $autoload_settings['default'] ), 'yes', false ) . '>' .
+						' ' . '<strong>' . $autoload_settings['title'] . '</strong>' .
+					'</label>',
+					'<em>' . $autoload_settings['desc'] . '</em>',
+				),
+			);
+			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'none' ) );
 		}
 
 		echo '<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . __( 'Version' ) . ': ' . get_option( 'booster_for_woocommerce_version', 'N/A' ) . '</p>';
@@ -528,16 +548,34 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	}
 
 	/**
+	 * get_autoload_settings.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 * @return  array
+	 */
+	function get_autoload_settings() {
+		return array(
+			'title'   => __( 'Autoload Booster\'s Options', 'woocommerce-jetpack' ),
+			'type'    => 'checkbox',
+			'desc'    => __( 'Choose if you want Booster\'s options to be autoloaded when calling add_option. After saving this option, you need to Reset all Booster\'s settings. Leave default value (i.e. Enabled) if not sure.', 'woocommerce-jetpack' ),
+			'id'      => 'wcj_autoload_options',
+			'default' => 'yes',
+		);
+	}
+
+	/**
 	 * Get settings array
 	 *
-	 * @version 2.3.8
+	 * @version 2.6.0
 	 * @return  array
 	 */
 	function get_settings( $current_section = '' ) {
-		if ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section ) {
+		if ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section && 'manager' != $current_section ) {
 			return apply_filters( 'wcj_settings_' . $current_section, array() );
-		}
-		else {
+		} elseif ( 'manager' === $current_section ) {
+			return array( $this->get_autoload_settings() );
+		} else {
 			$settings[] = array(
 				'title' => __( 'Booster for WooCommerce - Dashboard', 'woocommerce-jetpack' ),
 				'type'  => 'title',

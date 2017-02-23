@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.0-dev-201702222338';
+	public $version = '2.6.0-dev-201702231526';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -638,7 +638,6 @@ final class WC_Jetpack {
 	 * @since   2.5.2
 	 */
 	function add_options() {
-
 		// Modules statuses
 		$submodules_classes = array(
 			'WCJ_PDF_Invoicing_Display',
@@ -650,34 +649,27 @@ final class WC_Jetpack {
 			'WCJ_PDF_Invoicing_Styling',
 			'WCJ_PDF_Invoicing_Templates',
 		);
-
 		foreach ( $this->modules as $module ) {
-
 			if ( ! in_array( get_class( $module ), $submodules_classes ) ) {
 				$status_settings = $module->add_enable_module_setting( array() );
 				$this->module_statuses[] = $status_settings[1];
 			}
-
 			if ( get_option( 'booster_for_woocommerce_version' ) === $this->version ) {
 				continue;
 			}
-
 			$values = $module->get_settings();
-
 			// Adding options
 			foreach ( $values as $value ) {
 				if ( isset( $value['default'] ) && isset( $value['id'] ) ) {
-
-//					$autoload = isset( $value['autoload'] ) ? (bool) $value['autoload'] : true;
-					add_option( $value['id'], $value['default'], '', 'no' );
-
-					/* if ( $this->is_wpml_value( $module, $value ) ) {
-						$wpml_keys[] = $value['id'];
-					} */
+					if ( 'yes' === get_option( 'wcj_autoload_options', 'yes' ) ) {
+						$autoload = isset( $value['autoload'] ) ? (bool) $value['autoload'] : true;
+					} else {
+						$autoload = false;
+					}
+					add_option( $value['id'], $value['default'], '', $autoload );
 				}
 			}
 		}
-
 		if ( get_option( 'booster_for_woocommerce_version' ) !== $this->version ) {
 			update_option( 'booster_for_woocommerce_version', $this->version );
 		}
