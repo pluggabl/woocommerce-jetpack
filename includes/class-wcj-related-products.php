@@ -10,6 +10,21 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! class_exists( 'WCJ_Dummy_Term' ) ) {
+	/**
+	 * WCJ_Dummy_Term class.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	class WCJ_Dummy_Term {
+		public $term_id;
+		function __construct() {
+			$this->term_id = 0;
+		}
+	}
+}
+
 if ( ! class_exists( 'WCJ_Related_Products' ) ) :
 
 class WCJ_Related_Products extends WCJ_Module {
@@ -23,9 +38,12 @@ class WCJ_Related_Products extends WCJ_Module {
 
 		$this->id         = 'related_products';
 		$this->short_desc = __( 'Related Products', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Change displayed WooCommerce related products number, columns, order, relate by tag and/or category, or hide related products completely.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Change displayed WooCommerce related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-related-products/';
 		parent::__construct();
+
+		// Delete Transients
+		add_action( 'admin_init', array( $this, 'maybe_delete_product_transients' ), PHP_INT_MAX, 2 );
 
 		if ( $this->is_enabled() ) {
 
@@ -36,8 +54,9 @@ class WCJ_Related_Products extends WCJ_Module {
 			}
 
 			// Related Args
-			add_filter( 'woocommerce_related_products_args', array( $this, 'related_products_args' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_related_products_args',        array( $this, 'related_products_args' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_output_related_products_args', array( $this, 'output_related_products_args' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_related_products_columns',     array( $this, 'related_products_columns' ), PHP_INT_MAX );
 
 			// Relate by Category
 			if ( 'no' === get_option( 'wcj_product_info_related_products_relate_by_category', 'yes' ) ) {
@@ -53,9 +72,48 @@ class WCJ_Related_Products extends WCJ_Module {
 				add_filter( 'woocommerce_product_related_posts_relate_by_tag', '__return_true',  PHP_INT_MAX );
 			}
 
-			// Delete Transients
-			add_action( 'woojetpack_after_settings_save', array( $this, 'delete_product_transients' ), PHP_INT_MAX, 2 );
+			// Fix Empty Initial Related Products Issue
+			add_filter( 'woocommerce_get_related_product_tag_terms', array( $this, 'fix_empty_initial_related_products' ), PHP_INT_MAX, 2 );
+
 		}
+	}
+
+	/**
+	 * fix_empty_initial_related_products.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function fix_empty_initial_related_products( $terms, $product_id ) {
+		$do_fix = false;
+		if ( 'yes' === get_option( 'wcj_product_info_related_products_by_attribute_enabled', 'no' ) ) {
+			$do_fix = true;
+		} elseif (
+			'yes' === get_option( 'wcj_product_info_related_products_per_product' , 'yes' ) &&
+			'yes' === get_post_meta( $product_id, '_' . 'wcj_product_info_related_products_enabled', true ) &&
+			'' != get_post_meta( $product_id, '_' . 'wcj_product_info_related_products_ids', true )
+		) {
+			$do_fix = true;
+		}
+		if ( $do_fix ) {
+			add_filter( 'woocommerce_product_related_posts_relate_by_category', '__return_false', PHP_INT_MAX );
+			add_filter( 'woocommerce_product_related_posts_relate_by_tag',      '__return_false', PHP_INT_MAX );
+			if ( empty( $terms ) ) {
+				$dummy_term = new WCJ_Dummy_Term();
+				$terms[] = $dummy_term;
+			}
+		}
+		return $terms;
+	}
+
+	/**
+	 * related_products_columns.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function related_products_columns( $columns ) {
+		return get_option( 'wcj_product_info_related_products_columns', 3 );
 	}
 
 	/**
@@ -70,6 +128,17 @@ class WCJ_Related_Products extends WCJ_Module {
 		unset( $products[ $product_id  ] );
 		$options = array(
 			array(
+				'name'       => 'wcj_product_info_related_products_enabled',
+				'default'    => 'no',
+				'type'       => 'select',
+				'options'    => array(
+					'no'  => __( 'No', 'woocommerce-jetpack' ),
+					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+				),
+				'title'      => __( 'Enable', 'woocommerce-jetpack' ),
+				'tooltip'    => __( 'If enabled and no products selected - will hide related products section on frontend for current product.', 'woocommerce-jetpack' ),
+			),
+			array(
 				'name'       => 'wcj_product_info_related_products_ids',
 				'default'    => '',
 				'type'       => 'select',
@@ -83,13 +152,36 @@ class WCJ_Related_Products extends WCJ_Module {
 	}
 
 	/**
-	 * delete_product_transients.
+	 * maybe_delete_product_transients.
 	 *
-	 * @since 2.2.6
+	 * @since   2.6.0
+	 * @version 2.6.0
 	 */
-	function delete_product_transients( $sections, $current_section ) {
-		if ( 'related_products' === $current_section ) {
-			wc_delete_product_transients();
+	function maybe_delete_product_transients() {
+		if ( isset( $_GET['wcj_clear_all_products_transients'] ) ) {
+			$offset = 0;
+			$block_size = 256;
+			while( true ) {
+				$args = array(
+					'post_type'      => 'product',
+					'post_status'    => $post_status,
+					'posts_per_page' => $block_size,
+					'offset'         => $offset,
+					'orderby'        => 'title',
+					'order'          => 'ASC',
+					'fields'         => 'ids',
+				);
+				$loop = new WP_Query( $args );
+				if ( ! $loop->have_posts() ) {
+					break;
+				}
+				foreach ( $loop->posts as $post_id ) {
+					wc_delete_product_transients( $post_id );
+				}
+				$offset += $block_size;
+			}
+			wp_safe_redirect( remove_query_arg( 'wcj_clear_all_products_transients' ) );
+			exit;
 		}
 	}
 
@@ -97,7 +189,6 @@ class WCJ_Related_Products extends WCJ_Module {
 	 * related_products_args.
 	 *
 	 * @version 2.6.0
-	 * @todo    change related products: there will be issues if $product->get_related() will return empty array
 	 */
 	function related_products_args( $args ) {
 		// Hide Related
@@ -117,14 +208,15 @@ class WCJ_Related_Products extends WCJ_Module {
 			$args['order'] = get_option( 'wcj_product_info_related_products_order', 'desc' );
 		}
 		// Change Related Products
-		if ( 'yes' === get_option( 'wcj_product_info_related_products_per_product' , 'yes' ) ) {
+		if ( 'yes' === get_option( 'wcj_product_info_related_products_per_product' , 'yes' ) && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) ) {
 			// Relate per Product (Manual)
 			$related_per_product = get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_ids', true );
 			if ( '' != $related_per_product ) {
 				$args['post__in'] = $related_per_product;
+			} else {
+				return array();
 			}
-		}
-		elseif ( 'yes' === get_option( 'wcj_product_info_related_products_by_attribute_enabled', 'no' ) ) {
+		} elseif ( 'yes' === get_option( 'wcj_product_info_related_products_by_attribute_enabled', 'no' ) ) {
 			// Relate by Global Attributes
 			// from http://snippet.fm/snippets/query-for-woocommerce-products-by-global-product-attributes/
 			unset( $args['post__in'] );
@@ -161,7 +253,10 @@ class WCJ_Related_Products extends WCJ_Module {
 			array(
 				'title'    => __( 'Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => '',
+				'desc'     => sprintf(
+					__( 'You may need to <a href="%s">clear all products transients</a> to see results on frontend immediately after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
+					add_query_arg( 'wcj_clear_all_products_transients', 'yes' )
+				),
 				'id'       => 'wcj_product_info_related_products_options',
 			),
 			array(

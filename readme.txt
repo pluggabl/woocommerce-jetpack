@@ -55,7 +55,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Visibility by Country* - Display WooCommerce products by customer's country.
 * *Product Visibility by User Role* - Display WooCommerce products by customer's user role.
 * *Products per Page* - WooCommerce products per page.
-* *Related Products* - Change displayed WooCommerce related products number, columns, order, relate by tag and/or category, or hide related products completely.
+* *Related Products* - Change displayed WooCommerce related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.
 * *SKU* - Generate WooCommerce SKUs automatically.
 * *Sorting* - Add more WooCommerce sorting options; rename or remove default sorting options; rearrange sorting options on frontend.
 * *User Products* - Let users add new WooCommerce products from frontend.
@@ -187,9 +187,11 @@ N*	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is
 	* Fix - PRODUCTS - Products per Page - Default value changed.
 	* Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.
 D	* Dev - PRODUCTS - Products per Page - Initial module release (moved from Product Listings).
-N	* Dev - PRODUCTS - Related Products - "Relate by Global Product Attribute" options section added.
-N	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
+~D	* Dev - PRODUCTS - Related Products - "Relate by Global Product Attribute" options section added.
+~D	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
 ~D	* Dev - PRODUCTS - Related Products - Order by "Meta Value" and "Meta Value (Numeric)" options added.
+~	* Dev - PRODUCTS - Related Products - `woocommerce_related_products_columns` filter added.
+~D	* Dev - PRODUCTS - Related Products - "Delete Products Transients" link added.
 D	* Dev - PRODUCTS - Sorting - Code refactoring: "Remove All Sorting" section moved to the bottom; description updated.
 D	* Dev - PRODUCTS - Sorting - Remove All Sorting - "Empty template" method added (for maximum compatibility); `init` hook replaced with `wp_loaded`.
 D	* Dev - PRODUCTS - Sorting - "Rearrange Sorting" section added.
