@@ -48,7 +48,7 @@ class WCJ_Related_Products extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			// Related per Product
-			if ( 'yes' === get_option( 'wcj_product_info_related_products_per_product' , 'yes' ) ) {
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
@@ -89,7 +89,7 @@ class WCJ_Related_Products extends WCJ_Module {
 		if ( 'yes' === get_option( 'wcj_product_info_related_products_by_attribute_enabled', 'no' ) ) {
 			$do_fix = true;
 		} elseif (
-			'yes' === get_option( 'wcj_product_info_related_products_per_product' , 'yes' ) &&
+			'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) &&
 			'yes' === get_post_meta( $product_id, '_' . 'wcj_product_info_related_products_enabled', true ) &&
 			'' != get_post_meta( $product_id, '_' . 'wcj_product_info_related_products_ids', true )
 		) {
@@ -209,7 +209,7 @@ class WCJ_Related_Products extends WCJ_Module {
 			$args['order'] = get_option( 'wcj_product_info_related_products_order', 'desc' );
 		}
 		// Change Related Products
-		if ( 'yes' === get_option( 'wcj_product_info_related_products_per_product' , 'yes' ) && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) ) {
+		if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) ) {
 			// Relate per Product (Manual)
 			$related_per_product = get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_ids', true );
 			if ( '' != $related_per_product ) {
@@ -347,14 +347,6 @@ class WCJ_Related_Products extends WCJ_Module {
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Relate Manually', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'This will add metabox to each product\'s edit page.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_info_related_products_per_product',
-				'default'  => 'yes',
-				'type'     => 'checkbox',
-			),
-			array(
 				'title'    => __( 'Relate by Product Attribute', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_info_related_products_by_attribute_enabled',
@@ -383,6 +375,17 @@ class WCJ_Related_Products extends WCJ_Module {
 				'id'       => 'wcj_product_info_related_products_by_attribute_attribute_value',
 				'default'  => '',
 				'type'     => 'text',
+			),
+			array(
+				'title'    => __( 'Relate Manually', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'This will add metabox to each product\'s edit page.', 'woocommerce-jetpack' ) .
+					' ' . __( 'You will be able to select related products manually for each product individually. There is also an option to remove related products on per product basis.', 'woocommerce-jetpack' ) .
+					' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+				'id'       => 'wcj_product_info_related_products_per_product',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 			),
 			array(
 				'type'     => 'sectionend',

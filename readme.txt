@@ -187,9 +187,9 @@ N*	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is
 	* Fix - PRODUCTS - Products per Page - Default value changed.
 	* Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.
 D	* Dev - PRODUCTS - Products per Page - Initial module release (moved from Product Listings).
-~$D	* Dev - PRODUCTS - Related Products - "Relate by Product Attribute" options section added.
-~$D	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
-~$D	* Dev - PRODUCTS - Related Products - Order by "Meta Value" and "Meta Value (Numeric)" options added.
+~D	* Dev - PRODUCTS - Related Products - "Relate by Product Attribute" options section added.
+~D	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
+~D	* Dev - PRODUCTS - Related Products - Order by "Meta Value" and "Meta Value (Numeric)" options added.
 ~	* Dev - PRODUCTS - Related Products - `woocommerce_related_products_columns` filter added.
 ~D	* Dev - PRODUCTS - Related Products - "Delete Products Transients" link added.
 D	* Dev - PRODUCTS - Sorting - Code refactoring: "Remove All Sorting" section moved to the bottom; description updated.
