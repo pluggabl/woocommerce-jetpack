@@ -141,6 +141,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 24/02/2017 =
+~D	* Dev - Shortcodes - `find` and `replace` attributes now accept comma separated lists.
 ~D	* Dev - EMAILS & MISC. - Admin Tools - "PHP Time Limit" option added. And "Admin Tools" module moved to the first position in main file's `include_modules()` function.
 	* Dev - Dashboard - Manage Settings - Restyled.
 ~F	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.

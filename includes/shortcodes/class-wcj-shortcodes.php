@@ -173,6 +173,10 @@ class WCJ_Shortcodes {
 		$shortcode_function = $shortcode;
 		if ( '' !== ( $result = $this->$shortcode_function( $atts, $content ) ) ) {
 			if ( '' != $atts['find'] ) {
+				if ( false !== strpos( $atts['find'], ',' ) ) {
+					$atts['find']    = explode( ',', $atts['find'] );
+					$atts['replace'] = explode( ',', $atts['replace'] );
+				}
 				$result = str_replace( $atts['find'], $atts['replace'], $result );
 			}
 			if ( 'yes' === $atts['strip_tags'] ) {
