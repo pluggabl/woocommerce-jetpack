@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Admin Tools class.
  *
- * @version 2.5.8
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,9 +17,9 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'admin_tools';
 		$this->short_desc = __( 'Admin Tools', 'woocommerce-jetpack' );
@@ -36,6 +36,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 		) );
 
 		$this->current_php_memory_limit = '';
+		$this->current_php_time_limit = '';
 		if ( $this->is_enabled() ) {
 
 			// PHP Memory Limit
@@ -43,6 +44,12 @@ class WCJ_Admin_Tools extends WCJ_Module {
 				ini_set( 'memory_limit', $php_memory_limit . 'M' );
 			}
 			$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );
+
+			// PHP Time Limit
+			if ( 0 != ( $php_time_limit = get_option( 'wcj_admin_tools_php_time_limit', 0 ) ) ) {
+				set_time_limit( $php_time_limit );
+			}
+			$this->current_php_time_limit = sprintf( ' ' . __( 'Current PHP time limit: %s seconds.', 'woocommerce-jetpack' ), ini_get( 'max_execution_time' ) );
 
 			// Order Meta
 			if ( 'yes' === get_option( 'wcj_admin_tools_show_order_meta_enabled', 'no' ) ) {
@@ -180,7 +187,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.0
 	 */
 	function get_settings() {
 		$settings = array(
@@ -208,6 +215,15 @@ class WCJ_Admin_Tools extends WCJ_Module {
 				'desc'     => __( 'megabytes.', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Set zero to disable.', 'woocommerce-jetpack' ) . $this->current_php_memory_limit,
 				'id'       => 'wcj_admin_tools_php_memory_limit',
+				'default'  => 0,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 0 ),
+			),
+			array(
+				'title'    => __( 'PHP Time Limit', 'woocommerce-jetpack' ),
+				'desc'     => __( 'seconds.', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Set zero to disable.', 'woocommerce-jetpack' ) . $this->current_php_time_limit,
+				'id'       => 'wcj_admin_tools_php_time_limit',
 				'default'  => 0,
 				'type'     => 'number',
 				'custom_attributes' => array( 'min' => 0 ),
