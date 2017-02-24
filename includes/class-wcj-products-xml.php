@@ -158,22 +158,21 @@ class WCJ_Products_XML extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 * @since   2.5.7
-	 * @todo    strip_tags from shortcodes
 	 */
 	function create_products_xml( $file_num ) {
 		$xml_items = '';
-		$xml_header_template  = get_option( 'wcj_products_xml_header_' . $file_num, '' );
-		$xml_footer_template  = get_option( 'wcj_products_xml_footer_' . $file_num, '' );
-		$xml_item_template    = get_option( 'wcj_products_xml_item_'   . $file_num, '' );
+		$xml_header_template  = get_option( 'wcj_products_xml_header_'        . $file_num, '' );
+		$xml_footer_template  = get_option( 'wcj_products_xml_footer_'        . $file_num, '' );
+		$xml_item_template    = get_option( 'wcj_products_xml_item_'          . $file_num, '' );
 		$products_in_ids      = get_option( 'wcj_products_xml_products_incl_' . $file_num, '' );
 		$products_ex_ids      = get_option( 'wcj_products_xml_products_excl_' . $file_num, '' );
-		$products_cats_in_ids = get_option( 'wcj_products_xml_cats_incl_' . $file_num, '' );
-		$products_cats_ex_ids = get_option( 'wcj_products_xml_cats_excl_' . $file_num, '' );
-		$products_tags_in_ids = get_option( 'wcj_products_xml_tags_incl_' . $file_num, '' );
-		$products_tags_ex_ids = get_option( 'wcj_products_xml_tags_excl_' . $file_num, '' );
-		$products_scope       = get_option( 'wcj_products_xml_scope_' . $file_num, 'all' );
+		$products_cats_in_ids = get_option( 'wcj_products_xml_cats_incl_'     . $file_num, '' );
+		$products_cats_ex_ids = get_option( 'wcj_products_xml_cats_excl_'     . $file_num, '' );
+		$products_tags_in_ids = get_option( 'wcj_products_xml_tags_incl_'     . $file_num, '' );
+		$products_tags_ex_ids = get_option( 'wcj_products_xml_tags_excl_'     . $file_num, '' );
+		$products_scope       = get_option( 'wcj_products_xml_scope_'         . $file_num, 'all' );
 		$offset = 0;
-		$block_size = 256;
+		$block_size = get_option( 'wcj_products_xml_block_size', 256 );
 		while( true ) {
 			$args = array(
 				'post_type'      => 'product',
@@ -308,6 +307,14 @@ class WCJ_Products_XML extends WCJ_Module {
 				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
 					apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
+			),
+			array(
+				'title'    => __( 'Advanced: Block Size', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If you have large number of products you may want to modify block size for WP_Query call. Leave default value if not sure.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_products_xml_block_size',
+				'default'  => 256,
+				'type'     => 'number',
+				'custom_attributes' => array( 'step' => '1', 'min'  => '1', ),
 			),
 			array(
 				'type'     => 'sectionend',
