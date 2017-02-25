@@ -140,18 +140,16 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 24/02/2017 =
-~D	* Dev - EMAILS & MISC. - Products XML - "Advanced: Block Size" option added.
-~D	* Dev - Shortcodes - `find` and `replace` attributes now accept comma separated lists.
-~D	* Dev - EMAILS & MISC. - Admin Tools - "PHP Time Limit" option added. And "Admin Tools" module moved to the first position in main file's `include_modules()` function.
+= 2.6.0 - 25/02/2017 =
 	* Dev - Dashboard - Manage Settings - Restyled.
 ~F	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
-A	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
-A	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
-A	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
+~	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
+~	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
+~	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
 	* Dev - `output_custom_textarea` - Tooltip added.
-N?	* Dev - Compatibility issue fixed.
+-?	* Dev - Compatibility issue fixed.
 D	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
+~D	* Dev - Shortcodes - `find` and `replace` attributes now accept comma separated lists.
 D	* Dev - Shortcodes - General - `[wcj_current_datetime]` shortcode added.
 D	* Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
 	* Dev - Shortcodes - General - `[wcj_current_date]` - `current_time( 'timestamp' )` added.
@@ -162,10 +160,10 @@ D	* Dev - Shortcodes - Products - `[wcj_product_author]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author_avatar]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author_link]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author_link_all_posts]` shortcode added.
-A	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
-A	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - JS replaced with AJAX from "Grab rate" button.
-A*	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "ECB" and "TCMB" options).
-N*	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset" options added.
+~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - cURL fallback added.
+~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - JS replaced with AJAX from "Grab rate" button.
+~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "ECB" and "TCMB" options).
+-D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset" options added.
 ~	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
 ~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
@@ -181,12 +179,12 @@ D	* Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calcula
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Single Product Pages" option added.
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Category/Archives Pages" option added.
 	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
-P*	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
+$D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
 ~$D	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
 	* Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
 ~D	* Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
 	* Dev - PRODUCTS - Product Info - `textarea` replaced with `custom_textarea` in "Content" fields.
-N*	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
+-D	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
 	* Fix - PRODUCTS - Products per Page - Default value changed.
 	* Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.
 D	* Dev - PRODUCTS - Products per Page - Initial module release (moved from Product Listings).
@@ -199,7 +197,7 @@ D	* Dev - PRODUCTS - Sorting - Code refactoring: "Remove All Sorting" section mo
 D	* Dev - PRODUCTS - Sorting - Remove All Sorting - "Empty template" method added (for maximum compatibility); `init` hook replaced with `wp_loaded`.
 D	* Dev - PRODUCTS - Sorting - "Rearrange Sorting" section added.
 D	* Dev - PRODUCTS - Sorting - "Default WooCommerce Sorting" section added.
-~	* Dev - CART & CHECKOUT - Checkout Custom Fields - `is_visible()` - `wcj_checkout_custom_field_always_visible_on_empty_cart` filter added.
+D	* Dev - CART & CHECKOUT - Checkout Custom Fields - `is_visible()` - `wcj_checkout_custom_field_always_visible_on_empty_cart` filter added.
 ~D	* Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) page" position added.
 ~	* Dev - PAYMENT GATEWAYS - Gateways Min/Max - "Notices on Checkout" options section added.
 ~	* Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.
@@ -208,11 +206,12 @@ D	* Dev - PRODUCTS - Sorting - "Default WooCommerce Sorting" section added.
 ~	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
 ~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
 ~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
-N!	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
+-!	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
 ~!	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
-~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
-~D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
+D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
+D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
 ~$D	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
+D	* Dev - EMAILS & MISC. - Admin Tools - "PHP Time Limit" option added. And "Admin Tools" module moved to the first position in main file's `include_modules()` function.
 ~	* Fix - EMAILS & MISC. - EU VAT Number - `validate_vat_no_soap()` - Country code lowercase not validated bug fixed.
 ~	* Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
 ~D	* Dev - EMAILS & MISC. - EU VAT Number - "Add EU VAT Number Summary Metabox to Order Edit Page" option added.
@@ -222,16 +221,17 @@ N!	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter
 ~D	* Dev - EMAILS & MISC. - Export - Export Products - "Variable Products" option added (and "Parent Product ID" field added).
 ~D	* Dev - EMAILS & MISC. - General - General Checkout Options - "Hide "Order Again" Button on "View Order" Page" option added.
 ~D	* Dev - EMAILS & MISC. - General - General Cart Options - "Hide Coupon on Cart Page" option added.
-~	* Dev - EMAILS & MISC. - Products XML - `strip_tags="yes"` added to all shortcodes in default item template.
-~D	* Dev - EMAILS & MISC. - Products XML - "Products Scope" option added.
-	* Dev - EMAILS & MISC. - Products XML - `do_shortcode` added to XML header and footer.
+	* Dev - EMAILS & MISC. - Products XML - `strip_tags="yes"` added to all shortcodes in default item template.
+D	* Dev - EMAILS & MISC. - Products XML - "Products Scope" option added.
+D	* Dev - EMAILS & MISC. - Products XML - `do_shortcode` added to XML header and footer.
 	* Dev - EMAILS & MISC. - Products XML - "Recent file was created on ..." info added.
-~D	* Dev - EMAILS & MISC. - Products XML - "Products/Categories/Tags to Include/Exclude" options added.
-N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
-N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
-N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
-N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display profit" option added.
-N*	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by product title" moved to "gather product data" section.
+D	* Dev - EMAILS & MISC. - Products XML - "Products/Categories/Tags to Include/Exclude" options added.
+D	* Dev - EMAILS & MISC. - Products XML - "Advanced: Block Size" option added.
+-D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
+-D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
+-D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
+-D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display profit" option added.
+-D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by product title" moved to "gather product data" section.
 	* Tweak - Link to Booster's GitHub repository added to readme.txt.
 	* Tweak - Language (POT) file updated.
 D	* Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
