@@ -73,6 +73,8 @@ class WCJ_Reports_Sales {
 	 *
 	 * @version 2.6.0
 	 * @since   2.3.0
+	 * @todo    (maybe) currency conversion
+	 * @todo    fix when variable and variations are all (wrongfully) counted in total sums
 	 */
 	function get_products_sales() {
 

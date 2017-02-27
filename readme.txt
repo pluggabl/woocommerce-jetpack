@@ -210,7 +210,7 @@ D	* Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) p
 ~!	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
-~$D	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
+~D	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
 D	* Dev - EMAILS & MISC. - Admin Tools - "PHP Time Limit" option added. And "Admin Tools" module moved to the first position in main file's `include_modules()` function.
 ~	* Fix - EMAILS & MISC. - EU VAT Number - `validate_vat_no_soap()` - Country code lowercase not validated bug fixed.
 ~	* Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
@@ -227,11 +227,11 @@ D	* Dev - EMAILS & MISC. - Products XML - `do_shortcode` added to XML header and
 	* Dev - EMAILS & MISC. - Products XML - "Recent file was created on ..." info added.
 D	* Dev - EMAILS & MISC. - Products XML - "Products/Categories/Tags to Include/Exclude" options added.
 D	* Dev - EMAILS & MISC. - Products XML - "Advanced: Block Size" option added.
--D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
--D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
--D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
--D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display profit" option added.
--D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by product title" moved to "gather product data" section.
+~D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
+~D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
+~D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
+~D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display profit" option added.
+~D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by product title" moved to "gather product data" section.
 	* Tweak - Link to Booster's GitHub repository added to readme.txt.
 	* Tweak - Language (POT) file updated.
 D	* Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
