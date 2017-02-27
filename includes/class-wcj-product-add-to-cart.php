@@ -496,7 +496,6 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Replace Add to Cart Button on Archives with Button from Single Product Pages', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_add_to_cart_replace_loop_w_single_enabled',
 				'default'  => 'no',
 				'type'     => 'select',

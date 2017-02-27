@@ -51,7 +51,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				add_action( 'admin_footer', array( $this, 'bulk_admin_footer' ), 11 );
 			}
 
-			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions', 'no' ) ) ) {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_actions_buttons' ), PHP_INT_MAX, 2 );
 				add_action( 'admin_head',                      array( $this, 'add_custom_status_actions_buttons_css' ) );
 			}
@@ -99,7 +99,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 					$content = 'e011';
 					$color   = '#999999';
 				}
-				$color_style = ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions_colored', 'no' ) ) ? ' color: ' . $color . ' !important;' : '';
+				$color_style = ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions_colored', 'no' ) ) ) ? ' color: ' . $color . ' !important;' : '';
 				echo '<style>.view.' . $custom_order_status . '::after { font-family: WooCommerce !important;' . $color_style . ' content: "\\' . $content . '" !important; }</style>';
 			}
 		}

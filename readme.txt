@@ -142,7 +142,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 = 2.6.0 - 27/02/2017 =
 	* Dev - Dashboard - Manage Settings - Restyled.
-~F	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
+~D	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
@@ -179,8 +179,8 @@ D	* Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calcula
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Single Product Pages" option added.
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Category/Archives Pages" option added.
 	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
-$D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
-~$D	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
+D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
+~D	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
 	* Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
 ~D	* Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
 	* Dev - PRODUCTS - Product Info - `textarea` replaced with `custom_textarea` in "Content" fields.
@@ -201,8 +201,8 @@ D	* Dev - CART & CHECKOUT - Checkout Custom Fields - `is_visible()` - `wcj_check
 D	* Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) page" position added.
 	* Dev - PAYMENT GATEWAYS - Gateways Min/Max - "Notices on Checkout" options section added.
 ~	* Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.
-~$D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Edit" custom status button added.
-~$D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
+~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Edit" custom status button added.
+~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
 ~	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
 ~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
 ~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
