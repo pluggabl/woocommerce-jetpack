@@ -32,7 +32,7 @@ class WCJ_Sorting extends WCJ_Module {
 
 			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_remove_all_enabled', 'no' ) ) ) {
 				// Remove All Sorting
-				add_action( 'wp_loaded', array( $this, 'remove_sorting' ), PHP_INT_MAX );
+				add_action( 'wp_loaded',       array( $this, 'remove_sorting' ),          PHP_INT_MAX );
 				add_filter( 'wc_get_template', array( $this, 'remove_sorting_template' ), PHP_INT_MAX, 5 );
 
 			} else {
