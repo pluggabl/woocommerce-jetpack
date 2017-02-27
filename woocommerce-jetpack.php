@@ -787,6 +787,7 @@ final class WC_Jetpack {
 	 * Init WC_Jetpack when WordPress initialises.
 	 *
 	 * @version 2.5.7
+	 * @todo    remove this function
 	 */
 	public function init() {
 		// Before init action
