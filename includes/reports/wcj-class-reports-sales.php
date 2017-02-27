@@ -340,9 +340,10 @@ class WCJ_Reports_Sales {
 
 		$filter_form = '';
 		$filter_form .= '<form method="get" action="">';
-		$filter_form .= '<input type="hidden" name="page" value="' . $_GET['page'] . '" />';
-		$filter_form .= '<input type="hidden" name="tab" value="' . $_GET['tab'] . '" />';
+		$filter_form .= '<input type="hidden" name="page" value="'   . $_GET['page']   . '" />';
+		$filter_form .= '<input type="hidden" name="tab" value="'    . $_GET['tab']    . '" />';
 		$filter_form .= '<input type="hidden" name="report" value="' . $_GET['report'] . '" />';
+		$filter_form .= '<input type="hidden" name="year" value="'   . $_GET['year']   . '" />';
 		$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" /><input type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';
 		$filter_form .= '</form>';
 
