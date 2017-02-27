@@ -147,11 +147,15 @@ class WCJ_Global_Discount extends WCJ_Module {
 						}
 					}
 				} else { // if ( 'price' === $price_type )
+					remove_filter( 'woocommerce_get_sale_price',              array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
+					remove_filter( 'woocommerce_variation_prices_sale_price', array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
 					if ( 'only_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) && 0 == $_product->get_sale_price() ) {
 						continue; // no changes by current discount group
 					} elseif ( 'only_not_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) && 0 != $_product->get_sale_price() ) {
 						continue; // no changes by current discount group
 					}
+					add_filter( 'woocommerce_get_sale_price',              array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
+					add_filter( 'woocommerce_variation_prices_sale_price', array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
 				}
 				return $this->calculate_price( $price, $coefficient, $i ); // discount applied
 			}

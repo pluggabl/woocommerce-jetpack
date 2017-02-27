@@ -140,7 +140,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 25/02/2017 =
+= 2.6.0 - 27/02/2017 =
 	* Dev - Dashboard - Manage Settings - Restyled.
 ~F	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
@@ -165,7 +165,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_author_link_all_posts]` shortcod
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "European Central Bank (ECB)" and "TCMB" options/servers).
 -D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset" options added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
--!D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
+~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
 ~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Make Pretty Price" option added.
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - All prices minimum values in backend set to zero.
