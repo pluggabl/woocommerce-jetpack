@@ -69,12 +69,12 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 					$this->max_weight = $this->get_option( 'max_weight' );
 					$this->type       = $this->get_option( 'type' );
 					$this->weight_table_total_rows = $this->get_option( 'weight_table_total_rows' );
-					for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
+					/* for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 						$option_name = 'weight_table_weight_row_' . $i;
 						$this->{$option_name} = $this->get_option( $option_name );
 						$option_name = 'weight_table_cost_row_' . $i;
 						$this->{$option_name} = $this->get_option( $option_name );
-					}
+					} */
 
 					// Save settings in admin
 					add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
@@ -222,7 +222,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * calculate_shipping_by_weight_table.
 				 *
-				 * @version 2.5.6
+				 * @version 2.6.0
 				 * @since   2.5.6
 				 */
 				function calculate_shipping_by_weight_table( $weight ) {
@@ -233,11 +233,11 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 					for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 						$option_name_weight = 'weight_table_weight_row_' . $i;
 						$option_name_cost = 'weight_table_cost_row_' . $i;
-						if ( $weight <= $this->{$option_name_weight} ) {
-							return $this->{$option_name_cost};
+						if ( $weight <= $this->get_option( $option_name_weight ) ) {
+							return $this->get_option( $option_name_cost );
 						}
 					}
-					return $this->{$option_name_cost}; // fallback - last row
+					return $this->get_option( $option_name_cost ); // fallback - last row
 				}
 
 				/**

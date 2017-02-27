@@ -207,7 +207,7 @@ D	* Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) p
 ~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
 ~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
 -!	* Fix - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
-~!	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
+~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
