@@ -212,7 +212,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 			),
 
 			array(
-				'desc'     => __( 'Min Amount Multiplier', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Discount Min Amount Multiplier', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'If "Make Pretty Price" is enabled, here you can set by how many smallest possible values (e.g. cents) final price should be decreased.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_make_pretty_min_amount_multiplier',
 				'default'  => 1,
@@ -319,7 +319,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				case 'comma_list':
 					$settings[] = array(
 						'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
-						'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predifined sets visit <a href="http://booster.io/features/prices-and-currencies-by-customers-country" target="_blank">http://booster.io</a>', 'woocommerce-jetpack' ),
+						'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predifined sets visit <a href="http://booster.io/country-codes/" target="_blank">http://booster.io/country-codes/</a>', 'woocommerce-jetpack' ),
 						'id'       => 'wcj_price_by_country_exchange_rate_countries_group_' . $i,
 						'default'  => '',
 						'type'     => 'textarea',

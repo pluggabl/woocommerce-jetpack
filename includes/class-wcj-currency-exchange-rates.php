@@ -137,6 +137,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 		$settings[] = array(
 			'title'    => __( 'Exchange Rates Offset - Percent', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'If both percent and fixed offsets are set - percent offset is applied first and fixed offset after that.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_currency_exchange_rates_offset_percent',
 			'default'  => 0,
 			'type'     => 'number',
@@ -145,6 +146,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 		$settings[] = array(
 			'title'    => __( 'Exchange Rates Offset - Fixed', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'If both percent and fixed offsets are set - percent offset is applied first and fixed offset after that.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_currency_exchange_rates_offset_fixed',
 			'default'  => 0,
 			'type'     => 'number',
