@@ -156,7 +156,7 @@ D	* Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
 	* Dev - Shortcodes - General - `[wcj_current_date]` - `current_time( 'timestamp' )` added.
 D	* Dev - Shortcodes - General - `[wcj_current_timestamp]` shortcode added.
 ~D	* Dev - Shortcodes - Orders - `order_user_roles` attribute added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user_roles]` shortcode added.
+D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user_roles]` shortcode added.
 D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user]` shortcode added.
 D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "product_regular_price_multiply_qty" and "product_sale_price_multiply_qty" columns added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author]` shortcode added.
