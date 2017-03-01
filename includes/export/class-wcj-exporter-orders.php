@@ -188,7 +188,7 @@ class WCJ_Exporter_Orders {
 	/**
 	 * export_orders.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.0
 	 * @since   2.4.8
 	 * @todo    (maybe) metainfo as separate column
 	 */
@@ -276,7 +276,7 @@ class WCJ_Exporter_Orders {
 					if ( 'yes' === get_option( 'wcj_export_orders_fields_additional_enabled_' . $i, 'no' ) ) {
 						if ( '' != ( $additional_field_value = get_option( 'wcj_export_orders_fields_additional_value_' . $i, '' ) ) ) {
 							if ( 'meta' === get_option( 'wcj_export_orders_fields_additional_type_' . $i, 'meta' ) ) {
-								$row[] = get_post_meta( $order_id, $additional_field_value, true );
+								$row[] = $this->safely_get_post_meta( $order_id, $additional_field_value );
 							} else {
 								global $post;
 								$post = get_post( $order_id );

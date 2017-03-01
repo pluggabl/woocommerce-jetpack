@@ -221,9 +221,9 @@ D	* Dev - EMAILS & MISC. - Admin Tools - "PHP Time Limit" option added. And "Adm
 ~	* Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
 ~D	* Dev - EMAILS & MISC. - EU VAT Number - "Add EU VAT Number Summary Metabox to Order Edit Page" option added.
 ~D	* Dev - EMAILS & MISC. - EU VAT Number - "Progress Messages" options added.
-~D	* Dev - EMAILS & MISC. - Export - Export Orders Items - `wcj_export_orders_items_fields` filter added.
-~	* Dev - EMAILS & MISC. - Export - Export Orders Items - `get_post_meta()` replaced with `safely_get_post_meta()`.
-~D	* Dev - EMAILS & MISC. - Export - Export Products - "Variable Products" option added (and "Parent Product ID" field added).
+D	* Dev - EMAILS & MISC. - Export - Export Orders Items - `wcj_export_orders_items_fields` filter added.
+	* Dev - EMAILS & MISC. - Export - Export Orders Items - `get_post_meta()` replaced with `safely_get_post_meta()`.
+D	* Dev - EMAILS & MISC. - Export - Export Products - "Variable Products" option added (and "Parent Product ID" field added).
 D	* Dev - EMAILS & MISC. - General - General Checkout Options - "Hide "Order Again" Button on "View Order" Page" option added.
 D	* Dev - EMAILS & MISC. - General - General Cart Options - "Hide Coupon on Cart Page" option added.
 	* Dev - EMAILS & MISC. - Products XML - `strip_tags="yes"` added to all shortcodes in default item template.
