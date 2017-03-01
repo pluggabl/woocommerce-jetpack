@@ -141,7 +141,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 01/03/2017 =
-~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Crons - Check for "not `manual`" is disabled.
+~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Check for "not `manual`" is added when creating currency pairs list.
 ~D	* Dev - Shortcodes - Orders - `order_user_roles` attribute added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user_roles]` shortcode added.
 ~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - `calculate_shipping()` - `get_rate_id()` added (this fixes the issue with only one custom shipping method appearing at the frontend).
