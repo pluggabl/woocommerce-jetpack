@@ -241,6 +241,7 @@ D	* Dev - EMAILS & MISC. - Products XML - "Advanced: Block Size" option added.
 	* Tweak - Language (POT) file updated.
 D	* Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
 	* Tweak - PRODUCTS - Related Products - Admin settings divided in sections.
+D	* Tweak - CART & CHECKOUT - Cart - Module renamed to "Cart Custom Info". Documentation link updated.
 D	* Tweak - CART & CHECKOUT - Empty Cart Button - Description updated.
 	* Tweak - SHIPPING & ORDERS - Left to Free Shipping - Admin descriptions added to "Content" fields.
 

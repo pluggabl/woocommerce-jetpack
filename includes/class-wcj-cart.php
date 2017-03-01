@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Cart class.
  *
- * @version 2.4.6
+ * @version 2.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,14 +17,14 @@ class WCJ_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.6
+	 * @version 2.6.0
 	 */
 	function __construct() {
 
 		$this->id         = 'cart';
-		$this->short_desc = __( 'Cart', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Cart Custom Info', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add custom info to WooCommerce cart page.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-cart/';
+		$this->link       = 'http://booster.io/features/woocommerce-cart-custom-info/';
 		parent::__construct();
 
 		$this->full_desc  =
