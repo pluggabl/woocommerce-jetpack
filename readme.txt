@@ -141,16 +141,12 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 01/03/2017 =
-~D	* Dev - German (`de_DE`) translation added.
-~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Check for "not `manual`" is added when creating currency pairs list.
-~D	* Dev - Shortcodes - Orders - `order_user_roles` attribute added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user_roles]` shortcode added.
-~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - `calculate_shipping()` - `get_rate_id()` added (this fixes the issue with only one custom shipping method appearing at the frontend).
 	* Dev - Dashboard - Manage Settings - Restyled.
 ~D	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
+~D	* Dev - German (`de_DE`) translation added.
 	* Dev - `output_custom_textarea` - Tooltip added.
 ~	* Dev - Compatibility issue fixed (morewoooptions).
 D	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
@@ -159,6 +155,8 @@ D	* Dev - Shortcodes - General - `[wcj_current_datetime]` shortcode added.
 D	* Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
 	* Dev - Shortcodes - General - `[wcj_current_date]` - `current_time( 'timestamp' )` added.
 D	* Dev - Shortcodes - General - `[wcj_current_timestamp]` shortcode added.
+~D	* Dev - Shortcodes - Orders - `order_user_roles` attribute added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user_roles]` shortcode added.
 D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user]` shortcode added.
 D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "product_regular_price_multiply_qty" and "product_sale_price_multiply_qty" columns added.
 D	* Dev - Shortcodes - Products - `[wcj_product_author]` shortcode added.
@@ -169,6 +167,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_author_link_all_posts]` shortcod
 	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - JS replaced with AJAX from "Grab rate" button.
 D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "European Central Bank (ECB)" and "TCMB" options/servers).
 D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset" options added.
+~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Check for "not `manual`" is added when creating currency pairs list.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
 ~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
@@ -213,6 +212,7 @@ D	* Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) p
 ~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
 ~	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
 ~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
+~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - `calculate_shipping()` - `get_rate_id()` added (this fixes the issue with only one custom shipping method appearing at the frontend).
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
