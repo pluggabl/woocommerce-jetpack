@@ -169,6 +169,11 @@ class WCJ_Shortcodes {
 			}
 		}
 
+		// Additional (child class specific) checks
+		if ( ! $this->extra_check( $atts ) ) {
+			return '';
+		}
+
 		// Run the shortcode function
 		$shortcode_function = $shortcode;
 		if ( '' !== ( $result = $this->$shortcode_function( $atts, $content ) ) ) {
@@ -185,6 +190,16 @@ class WCJ_Shortcodes {
 			return $atts['before'] . $result . $atts['after'];
 		}
 		return '';
+	}
+
+	/**
+	 * extra_check.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function extra_check( $atts ) {
+		return true;
 	}
 
 	/**

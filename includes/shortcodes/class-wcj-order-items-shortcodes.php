@@ -29,7 +29,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.0
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -51,6 +51,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'style_item_name_variation' => 'font-size:smaller;',
 			'variation_as_metadata' => 'yes',
 			'wc_extra_product_options_show_price' => 'no',
+			'order_user_roles'     => '',
 		), $atts );
 		return $modified_atts;
 	}
@@ -70,6 +71,27 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			$atts['product_image_height'] = $atts['item_image_height'];
 		}
 		return $atts;
+	}
+
+	/**
+	 * extra_check.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function extra_check( $atts ) {
+		if ( '' != $atts['order_user_roles'] ) {
+			$user_info = get_userdata( $this->the_order->customer_user );
+			$user_roles = $user_info->roles;
+			$user_roles_to_check = explode( ',', $atts['order_user_roles'] );
+			foreach ( $user_roles_to_check as $user_role_to_check ) {
+				if ( in_array( $user_role_to_check, $user_roles ) ) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return true;
 	}
 
 	/**

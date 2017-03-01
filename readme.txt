@@ -141,6 +141,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 01/03/2017 =
+~D	* Dev - Shortcodes - Orders - `order_user_roles` attribute added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user_roles]` shortcode added.
 ~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - `calculate_shipping()` - `get_rate_id()` added (this fixes the issue with only one custom shipping method appearing at the frontend).
 	* Dev - Dashboard - Manage Settings - Restyled.
 ~D	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.

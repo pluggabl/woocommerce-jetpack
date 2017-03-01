@@ -73,6 +73,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_weight',
 			'wcj_order_coupons',
 			'wcj_order_customer_user',
+			'wcj_order_customer_user_roles',
 		);
 
 		parent::__construct();
@@ -81,7 +82,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.0
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -103,6 +104,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'sep'           => ', ',
 			'item_number'   => 'all',
 			'field'         => 'name',
+			'order_user_roles' => '',
 		), $atts );
 
 		return $modified_atts;
@@ -129,10 +131,42 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * extra_check.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function extra_check( $atts ) {
+		if ( '' != $atts['order_user_roles'] ) {
+			$user_info = get_userdata( $this->the_order->customer_user );
+			$user_roles = $user_info->roles;
+			$user_roles_to_check = explode( ',', $atts['order_user_roles'] );
+			foreach ( $user_roles_to_check as $user_role_to_check ) {
+				if ( in_array( $user_role_to_check, $user_roles ) ) {
+					return true;
+				}
+			}
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * wcj_price_shortcode.
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
 		return ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) ? '' : wcj_price( $raw_price, $this->the_order->get_order_currency(), $atts['hide_currency'] );
+	}
+
+	/**
+	 * wcj_order_customer_user_roles.
+	 *
+	 * @version 2.6.0
+	 * @since   2.6.0
+	 */
+	function wcj_order_customer_user_roles( $atts ) {
+		$user_info = get_userdata( $this->the_order->customer_user );
+		return implode( ', ', $user_info->roles );
 	}
 
 	/**
