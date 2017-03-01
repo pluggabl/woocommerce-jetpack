@@ -232,11 +232,11 @@ D	* Dev - EMAILS & MISC. - Products XML - `do_shortcode` added to XML header and
 	* Dev - EMAILS & MISC. - Products XML - "Recent file was created on ..." info added.
 D	* Dev - EMAILS & MISC. - Products XML - "Products/Categories/Tags to Include/Exclude" options added.
 D	* Dev - EMAILS & MISC. - Products XML - "Advanced: Block Size" option added.
-~D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
-~D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
-~D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
-~D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display profit" option added.
-~D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by product title" moved to "gather product data" section.
+D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Include taxes" option added.
+D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display item sales" option added.
+D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display sales sum" option added.
+D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Display profit" option added.
+D	* Dev - EMAILS & MISC. - Reports - Booster: Product Sales - "Filter by product title" moved to "gather product data" section.
 	* Tweak - Link to Booster's GitHub repository added to readme.txt.
 	* Tweak - Language (POT) file updated.
 D	* Tweak - BUTTON & PRICE LABELS - Free Price Labels - Documentation link updated.
