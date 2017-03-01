@@ -140,7 +140,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.0 - 28/02/2017 =
+= 2.6.0 - 01/03/2017 =
+~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - `calculate_shipping()` - `get_rate_id()` added (this fixes the issue with only one custom shipping method appearing at the frontend).
 	* Dev - Dashboard - Manage Settings - Restyled.
 ~D	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.

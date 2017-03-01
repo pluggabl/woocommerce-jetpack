@@ -243,7 +243,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * calculate_shipping function.
 				 *
-				 * @version 2.5.6
+				 * @version 2.6.0
 				 * @since   2.5.6
 				 * @access  public
 				 * @param   mixed $package
@@ -269,7 +269,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 							break;
 					}
 					$rate = array(
-						'id'       => $this->id,
+						'id'       => $this->get_rate_id(),
 						'label'    => $this->title,
 						'cost'     => $cost,
 						'calc_tax' => 'per_order',
