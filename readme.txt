@@ -206,16 +206,16 @@ D	* Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) p
 	* Dev - PAYMENT GATEWAYS - Gateways Min/Max - "Notices on Checkout" options section added.
 ~	* Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.
 ~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Edit" custom status button added.
-~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
+D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
 ~	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
 ~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
-~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
-~	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
+D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
+	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
 ~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
 ~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - `calculate_shipping()` - `get_rate_id()` added (this fixes the issue with only one custom shipping method appearing at the frontend).
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
-~D	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
+D	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
 D	* Dev - EMAILS & MISC. - Admin Tools - "PHP Time Limit" option added. And "Admin Tools" module moved to the first position in main file's `include_modules()` function.
 ~	* Fix - EMAILS & MISC. - EU VAT Number - `validate_vat_no_soap()` - Country code lowercase not validated bug fixed.
 ~	* Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
