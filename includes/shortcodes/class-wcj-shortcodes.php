@@ -178,9 +178,13 @@ class WCJ_Shortcodes {
 		$shortcode_function = $shortcode;
 		if ( '' !== ( $result = $this->$shortcode_function( $atts, $content ) ) ) {
 			if ( '' != $atts['find'] ) {
-				if ( false !== strpos( $atts['find'], ',' ) ) {
-					$atts['find']    = explode( ',', $atts['find'] );
-					$atts['replace'] = explode( ',', $atts['replace'] );
+				if ( false !== strpos( $atts['find'], ',' ) && strlen( $atts['find'] ) > 2 ) {
+					$find    = explode( ',', $atts['find'] );
+					$replace = explode( ',', $atts['replace'] );
+					if ( count( $find ) === count( $replace ) ) {
+						$atts['find']    = $find;
+						$atts['replace'] = $replace;
+					}
 				}
 				$result = str_replace( $atts['find'], $atts['replace'], $result );
 			}

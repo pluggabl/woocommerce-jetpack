@@ -150,7 +150,7 @@ D	* Dev - German (`de_DE`) translation added.
 	* Dev - `output_custom_textarea` - Tooltip added.
 	* Dev - Compatibility issue fixed (`morewoooptions`).
 D	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
-~D	* Dev - Shortcodes - `find` and `replace` attributes now accept comma separated lists.
+D	* Dev - Shortcodes - `find` and `replace` attributes now accept comma separated lists.
 D	* Dev - Shortcodes - General - `[wcj_current_datetime]` shortcode added.
 D	* Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
 	* Dev - Shortcodes - General - `[wcj_current_date]` - `current_time( 'timestamp' )` added.
