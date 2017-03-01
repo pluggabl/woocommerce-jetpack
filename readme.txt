@@ -141,6 +141,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.0 - 01/03/2017 =
+~D	* Dev - German (`de_DE`) translation added.
 ~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Check for "not `manual`" is added when creating currency pairs list.
 ~D	* Dev - Shortcodes - Orders - `order_user_roles` attribute added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user_roles]` shortcode added.
