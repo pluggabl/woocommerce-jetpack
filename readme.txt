@@ -142,7 +142,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 = 2.6.0 - 01/03/2017 =
 	* Dev - Dashboard - Manage Settings - Restyled.
-~D	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
+D	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
 	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
 	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
 	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
@@ -155,7 +155,7 @@ D	* Dev - Shortcodes - General - `[wcj_current_datetime]` shortcode added.
 D	* Dev - Shortcodes - General - `[wcj_current_time]` shortcode added.
 	* Dev - Shortcodes - General - `[wcj_current_date]` - `current_time( 'timestamp' )` added.
 D	* Dev - Shortcodes - General - `[wcj_current_timestamp]` shortcode added.
-~D	* Dev - Shortcodes - Orders - `order_user_roles` attribute added.
+D	* Dev - Shortcodes - Orders - `order_user_roles` attribute added.
 D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user_roles]` shortcode added.
 D	* Dev - Shortcodes - Orders - `[wcj_order_customer_user]` shortcode added.
 D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "product_regular_price_multiply_qty" and "product_sale_price_multiply_qty" columns added.
@@ -169,7 +169,7 @@ D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server
 D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset" options added.
 	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Check for "not `manual`" is added when creating currency pairs list.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
-~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
+D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
 D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Make Pretty Price" option added.
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - All prices minimum values in backend set to zero.
@@ -178,17 +178,17 @@ D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Fronten
 D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Frontend Input Price Step" option added.
 D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Frontend Input Placeholder" option added.
 D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Frontend Input Style" option added.
-~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Minimum frontend input value set to backend's minimum or zero (if not set). Maximum - set to backend's maximum. "Enable JS Min/Max Validation" option added.
+D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Minimum frontend input value set to backend's minimum or zero (if not set). Maximum - set to backend's maximum. "Enable JS Min/Max Validation" option added.
 D	* Dev - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option added.
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Single Product Pages" option added.
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - "Disable Add to Cart Buttons on All Category/Archives Pages" option added.
 	* Fix - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Hook changed to `wp` (fixes the issue with PHP notice regarding cookies already set).
 D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" option added.
-~D	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
+D	* Dev - PRODUCTS - Product Add to Cart - "Replace Add to Cart Button on Archives with Single" option added.
 	* Dev - PRODUCTS - Product Cost Price - Admin Orders List Custom Columns - "Purchase Cost" column added.
-~D	* Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
+D	* Dev - PRODUCTS - Product Cost Price - "Treat Variable Products as Simple Products" option added.
 	* Dev - PRODUCTS - Product Info - `textarea` replaced with `custom_textarea` in "Content" fields.
-~D	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
+D	* Dev - PRODUCTS - Product Visibility by User Role - Optional `woocommerce_is_purchasable` and `pre_get_posts` filters added.
 	* Fix - PRODUCTS - Products per Page - Default value changed.
 	* Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.
 D	* Dev - PRODUCTS - Products per Page - Initial module release (moved from Product Listings).
