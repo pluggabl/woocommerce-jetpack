@@ -143,12 +143,12 @@ You can see the differences between versions in this [table](http://booster.io/b
 = 2.6.0 - 01/03/2017 =
 	* Dev - Dashboard - Manage Settings - Restyled.
 ~D	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
-~	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
-~	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
+	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
+	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
 ~	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
-~D	* Dev - German (`de_DE`) translation added.
+D	* Dev - German (`de_DE`) translation added.
 	* Dev - `output_custom_textarea` - Tooltip added.
-~	* Dev - Compatibility issue fixed (morewoooptions).
+	* Dev - Compatibility issue fixed (`morewoooptions`).
 D	* Dev - Shortcodes - `strip_tags` attribute added to all shortcodes.
 ~D	* Dev - Shortcodes - `find` and `replace` attributes now accept comma separated lists.
 D	* Dev - Shortcodes - General - `[wcj_current_datetime]` shortcode added.
