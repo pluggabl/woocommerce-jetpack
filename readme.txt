@@ -224,8 +224,8 @@ D	* Dev - EMAILS & MISC. - Admin Tools - "PHP Time Limit" option added. And "Adm
 ~D	* Dev - EMAILS & MISC. - Export - Export Orders Items - `wcj_export_orders_items_fields` filter added.
 ~	* Dev - EMAILS & MISC. - Export - Export Orders Items - `get_post_meta()` replaced with `safely_get_post_meta()`.
 ~D	* Dev - EMAILS & MISC. - Export - Export Products - "Variable Products" option added (and "Parent Product ID" field added).
-~D	* Dev - EMAILS & MISC. - General - General Checkout Options - "Hide "Order Again" Button on "View Order" Page" option added.
-~D	* Dev - EMAILS & MISC. - General - General Cart Options - "Hide Coupon on Cart Page" option added.
+D	* Dev - EMAILS & MISC. - General - General Checkout Options - "Hide "Order Again" Button on "View Order" Page" option added.
+D	* Dev - EMAILS & MISC. - General - General Cart Options - "Hide Coupon on Cart Page" option added.
 	* Dev - EMAILS & MISC. - Products XML - `strip_tags="yes"` added to all shortcodes in default item template.
 D	* Dev - EMAILS & MISC. - Products XML - "Products Scope" option added.
 D	* Dev - EMAILS & MISC. - Products XML - `do_shortcode` added to XML header and footer.

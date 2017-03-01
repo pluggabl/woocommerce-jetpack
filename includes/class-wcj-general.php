@@ -342,6 +342,7 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 * @todo    add link to Booster's shortcodes list
+	 * @todo    move "General Cart Options" and "General Checkout Options" to separate modules
 	 */
 	function get_settings() {
 		/* $links_html = '';
