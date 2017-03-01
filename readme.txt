@@ -217,10 +217,10 @@ D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" opti
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
 D	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
 D	* Dev - EMAILS & MISC. - Admin Tools - "PHP Time Limit" option added. And "Admin Tools" module moved to the first position in main file's `include_modules()` function.
-~	* Fix - EMAILS & MISC. - EU VAT Number - `validate_vat_no_soap()` - Country code lowercase not validated bug fixed.
-~	* Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
-~D	* Dev - EMAILS & MISC. - EU VAT Number - "Add EU VAT Number Summary Metabox to Order Edit Page" option added.
-~D	* Dev - EMAILS & MISC. - EU VAT Number - "Progress Messages" options added.
+	* Fix - EMAILS & MISC. - EU VAT Number - `validate_vat_no_soap()` - Country code lowercase not validated bug fixed.
+	* Fix - EMAILS & MISC. - EU VAT Number - JS fixed (https://wordpress.org/support/topic/incomplete-refresh-of-checkout-after-leaving-the-billing_eu_vat_number-input/).
+D	* Dev - EMAILS & MISC. - EU VAT Number - "Add EU VAT Number Summary Metabox to Order Edit Page" option added.
+D	* Dev - EMAILS & MISC. - EU VAT Number - "Progress Messages" options added.
 D	* Dev - EMAILS & MISC. - Export - Export Orders Items - `wcj_export_orders_items_fields` filter added.
 	* Dev - EMAILS & MISC. - Export - Export Orders Items - `get_post_meta()` replaced with `safely_get_post_meta()`.
 D	* Dev - EMAILS & MISC. - Export - Export Products - "Variable Products" option added (and "Parent Product ID" field added).
