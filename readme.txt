@@ -145,7 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~D	* Dev - Dashboard - Manage Settings - "Autoload Booster's Options" option added.
 	* Dev - `WCJ_Module` - `create_meta_box` - Fixed `selected` for multiple `select`.
 	* Dev - `WCJ_Module` - `create_meta_box` - `custom_attributes` added to `select`.
-~	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
+	* Dev - `WCJ_Module` - `create_meta_box` - Table restyled.
 D	* Dev - German (`de_DE`) translation added.
 	* Dev - `output_custom_textarea` - Tooltip added.
 	* Dev - Compatibility issue fixed (`morewoooptions`).
@@ -167,7 +167,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_author_link_all_posts]` shortcod
 	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - JS replaced with AJAX from "Grab rate" button.
 D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Server" selection added (and new "European Central Bank (ECB)" and "TCMB" options/servers).
 D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset" options added.
-~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Check for "not `manual`" is added when creating currency pairs list.
+	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Check for "not `manual`" is added when creating currency pairs list.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Fallback to `$_REQUEST['product_id']` added.
 ~D	* Dev - PRICES & CURRENCIES - Global Discount - Product Scope - "Only products that are not on sale" option added.
 	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Adding default values to `get_option` calls.
@@ -192,11 +192,11 @@ D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - "Per Product" 
 	* Fix - PRODUCTS - Products per Page - Default value changed.
 	* Fix - PRODUCTS - Products per Page - `PHP_EOL` issue fixed.
 D	* Dev - PRODUCTS - Products per Page - Initial module release (moved from Product Listings).
-~D	* Dev - PRODUCTS - Related Products - "Relate by Product Attribute" options section added.
-~D	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
-~D	* Dev - PRODUCTS - Related Products - Order by "Meta Value" and "Meta Value (Numeric)" options added.
-~	* Dev - PRODUCTS - Related Products - `woocommerce_related_products_columns` filter added.
-~D	* Dev - PRODUCTS - Related Products - "Delete Products Transients" link added.
+D	* Dev - PRODUCTS - Related Products - "Relate by Product Attribute" options section added.
+D	* Dev - PRODUCTS - Related Products - "Relate Manually" option added.
+D	* Dev - PRODUCTS - Related Products - Order by "Meta Value" and "Meta Value (Numeric)" options added.
+	* Dev - PRODUCTS - Related Products - `woocommerce_related_products_columns` filter added.
+D	* Dev - PRODUCTS - Related Products - "Delete Products Transients" link added.
 D	* Dev - PRODUCTS - Sorting - Code refactoring: "Remove All Sorting" section moved to the bottom; description updated.
 D	* Dev - PRODUCTS - Sorting - Remove All Sorting - "Empty template" method added (for maximum compatibility); `init` hook replaced with `wp_loaded`.
 D	* Dev - PRODUCTS - Sorting - "Rearrange Sorting" section added.
@@ -204,15 +204,15 @@ D	* Dev - PRODUCTS - Sorting - "Default WooCommerce Sorting" section added.
 D	* Dev - CART & CHECKOUT - Checkout Custom Fields - `is_visible()` - `wcj_checkout_custom_field_always_visible_on_empty_cart` filter added.
 D	* Dev - CART & CHECKOUT - Checkout Custom Info - "Order Received (Thank You) page" position added.
 	* Dev - PAYMENT GATEWAYS - Gateways Min/Max - "Notices on Checkout" options section added.
-~	* Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.
-~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Edit" custom status button added.
+	* Fix - SHIPPING & ORDERS - Order Custom Statuses - Tool - Add - Checking for duplicate default WooCommerce status added.
+D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Edit" custom status button added.
 D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses to Admin Order List Action Buttons" options added.
-~	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
-~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
+	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `calculate_totals()` function call added before getting cart totals.
+D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - If needed, minimum order amount recalculated by "Multicurrency (Currency Switcher)" module.
 D	* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Order Admin Search by Custom Number" option added.
 	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Columns Order - Filter priority changed.
-~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
-~	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - `calculate_shipping()` - `get_rate_id()` added (this fixes the issue with only one custom shipping method appearing at the frontend).
+	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - Weight Table Total Rows - Adding table rows on hook instead of in `init` function.
+	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping with Zones - `calculate_shipping()` - `get_rate_id()` added (this fixes the issue with only one custom shipping method appearing at the frontend).
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Icons - "Icon Visibility" option added.
 D	* Dev - SHIPPING & ORDERS - Shipping - Shipping Descriptions - "Description Visibility" option added.
 D	* Dev - SHIPPING & ORDERS - Shipping - "Free Shipping by Product" settings section added.
