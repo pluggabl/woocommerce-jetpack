@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Listings class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,12 +17,12 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	public function __construct() {
 		$this->id         = 'product_listings';
 		$this->short_desc = __( 'Product Listings', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories. Add "products per page" selector.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-listings/';
 		parent::__construct();
 

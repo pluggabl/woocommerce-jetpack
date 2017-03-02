@@ -50,11 +50,11 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Images* - Customize WooCommerce products images, thumbnails and sale flashes.
 * *Product Info* - Add additional info to WooCommerce category and single product pages.
 * *Product Input Fields* - WooCommerce product input fields.
-* *Product Listings* - Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories. Add "products per page" selector.
+* *Product Listings* - Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
 * *Product Visibility by Country* - Display WooCommerce products by customer's country.
 * *Product Visibility by User Role* - Display WooCommerce products by customer's user role.
-* *Products per Page* - WooCommerce products per page.
+* *Products per Page* - Add "products per page" selector to WooCommerce.
 * *Related Products* - Change displayed WooCommerce related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.
 * *SKU* - Generate WooCommerce SKUs automatically.
 * *Sorting* - Add more WooCommerce sorting options; rename or remove default sorting options; rearrange sorting options on frontend.
@@ -62,7 +62,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 **Cart & Checkout**
 
-* *Cart* - Add custom info to WooCommerce cart page.
+* *Cart Custom Info* - Add custom info to WooCommerce cart page.
 * *Checkout Core Fields* - Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders.
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
@@ -139,6 +139,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 1. Plugin admin area.
 
 == Changelog ==
+
+= 2.6.1 - 02/03/2017 =
+~D	* Tweak - PRODUCTS - Product Listings and Products per Page - Descriptions updated.
 
 = 2.6.0 - 02/03/2017 =
 * Dev - Dashboard - Manage Settings - Restyled.

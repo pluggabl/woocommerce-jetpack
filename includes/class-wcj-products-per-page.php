@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products per Page class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.6.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.6.0
 	 * @todo    position priority for every hook
 	 * @todo    post or get
@@ -27,7 +27,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 
 		$this->id         = 'products_per_page';
 		$this->short_desc = __( 'Products per Page', 'woocommerce-jetpack' );
-		$this->desc       = __( 'WooCommerce products per page.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add "products per page" selector to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-products-per-page/';
 		parent::__construct();
 
