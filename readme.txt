@@ -141,7 +141,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 02/03/2017 =
-~D	* Tweak - PRODUCTS - Product Listings and Products per Page - Descriptions updated.
+	* Tweak - PRODUCTS - Product Listings and Products per Page - Descriptions updated.
 
 = 2.6.0 - 02/03/2017 =
 * Dev - Dashboard - Manage Settings - Restyled.
