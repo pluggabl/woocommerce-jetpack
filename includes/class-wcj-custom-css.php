@@ -45,18 +45,20 @@ class WCJ_Custom_CSS extends WCJ_Module {
 
 	/**
 	 * hook_custom_css.
+	 *
+	 * @version 2.6.1
 	 */
-	public function hook_custom_css() {
-		$output = '<style>' . get_option( 'wcj_general_custom_css', '' ) . '</style>';
-		echo $output;
+	function hook_custom_css() {
+		echo '<style>' . get_option( 'wcj_general_custom_css', '' ) . '</style>';
 	}
 
 	/**
 	 * hook_custom_admin_css.
+	 *
+	 * @version 2.6.1
 	 */
-	public function hook_custom_admin_css() {
-		$output = '<style>' . get_option( 'wcj_general_custom_admin_css', '' ) . '</style>';
-		echo $output;
+	function hook_custom_admin_css() {
+		echo '<style>' . get_option( 'wcj_general_custom_admin_css', '' ) . '</style>';
 	}
 
 	/**
