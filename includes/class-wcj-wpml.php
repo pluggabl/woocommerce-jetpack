@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack WPML class.
  *
- * @version 2.5.0
+ * @version 2.6.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -41,7 +41,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.4
+	 * @version 2.6.1
 	 */
 	function get_settings() {
 		$settings = array(
@@ -69,6 +69,7 @@ class WCJ_WPML extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_' . $this->id . '_module_tools',
 				'type'     => 'custom_link',
 				'link'     => ( $this->is_enabled() ) ?

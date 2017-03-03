@@ -102,13 +102,14 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_module_tools.
 	 *
-	 * @version 2.2.3
+	 * @version 2.6.1
 	 * @since   2.2.3
 	 */
 	function output_module_tools( $value ) {
 		?><tr valign="top">
 			<th scope="row" class="titledesc">
 				<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
+				<span class="woocommerce-help-tip" data-tip="<?php echo __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ); ?>"></span>
 			</th>
 			<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 				<?php if ( isset( $_GET['section'] ) ) do_action( 'wcj_module_tools_' . $_GET['section'] ); ?>
@@ -119,13 +120,14 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_custom_link.
 	 *
-	 * @version 2.2.8
+	 * @version 2.6.1
 	 * @since   2.2.8
 	 */
 	function output_custom_link( $value ) {
+		$tooltip_html = ( isset( $value['desc_tip'] ) && '' != $value['desc_tip'] ) ? '<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 		?><tr valign="top">
 			<th scope="row" class="titledesc">
-				<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
+				<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label><?php echo $tooltip_html; ?>
 			</th>
 			<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
 				<?php echo $value['link']; ?>
