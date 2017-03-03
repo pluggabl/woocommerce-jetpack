@@ -29,7 +29,7 @@ class WCJ_General extends WCJ_Module {
 
 		$this->add_tools( array(
 			'products_atts'    => array(
-				'title'     => __( 'Products Atts', 'woocommerce-jetpack' ),
+				'title'     => __( 'Products Attributes', 'woocommerce-jetpack' ),
 				'desc'      => __( 'All Products and All Attributes.', 'woocommerce-jetpack' ),
 			),
 			'custom_roles' => array(
