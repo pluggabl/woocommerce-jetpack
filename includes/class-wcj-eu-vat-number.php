@@ -7,7 +7,6 @@
  * @version 2.6.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
- * @todo    (maybe) move to "CART & CHECKOUT" category
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

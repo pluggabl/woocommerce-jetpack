@@ -54,6 +54,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
 * *Product Visibility by Country* - Display WooCommerce products by customer's country.
 * *Product Visibility by User Role* - Display WooCommerce products by customer's user role.
+* *Products XML* - WooCommerce products XML feed.
 * *Products per Page* - Add "products per page" selector to WooCommerce.
 * *Related Products* - Change displayed WooCommerce related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.
 * *SKU* - Generate WooCommerce SKUs automatically.
@@ -69,6 +70,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
 * *Checkout Customization* - Customize WooCommerce checkout - hide "Order Again" button on "View Order" page.
 * *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
+* *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to WooCommerce cart and checkout pages.
 * *Mini Cart Custom Info* - Add custom info to WooCommerce mini cart widget.
 
@@ -103,12 +105,10 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
 * *Custom CSS* - Another custom CSS, if you need one.
-* *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *Export* - WooCommerce export tools.
 * *General* - Separate custom CSS for front and back end. Shortcodes in WordPress text widgets. Custom roles tool.
 * *Old Slugs* - Remove old WooCommerce products slugs.
-* *Products XML* - WooCommerce products XML feed.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
 
 = Feedback =
@@ -148,6 +148,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
 ~D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
 D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
+D	* Tweak - EMAILS & MISC. - EU VAT Number - Moved to "CART & CHECKOUT" category.
+D	* Tweak - EMAILS & MISC. - Products XML - Moved to "PRODUCTS" category.
 D	* Tweak - CART & CHECKOUT - Mini Cart - Module renamed to "Mini Cart Custom Info". Description updated.
 	* Tweak - Tooltip for admin added to all "Module Tools" sections.
 	* Tweak - Language (POT) file updated.

@@ -76,6 +76,7 @@ return array(
 			'product_by_country',
 			'product_by_user_role',
 			'product_by_user',
+			'products_xml',
 		),
 	),
 
@@ -92,6 +93,7 @@ return array(
 			'checkout_files_upload',
 			'checkout_custom_info',
 			'checkout_customization',
+			'eu_vat_number',
 		),
 	),
 
@@ -146,10 +148,8 @@ return array(
 		'desc'           => __( 'Emails, Reports, Export, Admin Tools, General Options and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'general',
-			'products_xml',
 			'export',
 //			'shortcodes',
-			'eu_vat_number',
 			'old_slugs',
 			'reports',
 			'admin_tools',

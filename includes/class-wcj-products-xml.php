@@ -7,7 +7,7 @@
  * @version 2.6.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
- * @todo    create all files at once (manually and synchronize update); move (maybe) to "PRODUCTS" category;
+ * @todo    create all files at once (manually and synchronize update)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
