@@ -144,11 +144,11 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 04/03/2017 =
-~	* Tweak - Tooltip for admin added to all "Module Tools" sections.
 ~D	* Dev - EMAILS & MISC. - Custom CSS - Initial module release. CSS options moved from "General" module.
 -!	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
 ~!D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
 ~!D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
+~	* Tweak - Tooltip for admin added to all "Module Tools" sections.
 	* Tweak - Language (POT) file updated.
 	* Tweak - PRODUCTS - Product Listings and Products per Page - Descriptions updated.
 
