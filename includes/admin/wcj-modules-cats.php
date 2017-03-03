@@ -13,7 +13,7 @@ return array(
 
 	'dashboard' => array(
 		'label'          => __( 'Dashboard', 'woocommerce-jetpack' ),
-		'default_cat_id' => 'by_category',
+		'desc'           => __( 'This dashboard lets you enable/disable any Booster\'s module. Each checkbox comes with short module\'s description. Please visit <a href="http://booster.io" target="_blank">http://booster.io</a> for detailed info on each feature.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'alphabetically',
 			'by_category',
@@ -24,7 +24,7 @@ return array(
 
 	'prices_and_currencies' => array(
 		'label'          => __( 'Prices & Currencies', 'woocommerce-jetpack' ),
-		'default_cat_id' => 'price_by_country',
+		'desc'           => __( 'Prices & Currencies', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'price_by_country',
 			'multicurrency',
@@ -45,7 +45,7 @@ return array(
 
 	'labels' => array(
 		'label'          => __( 'Button & Price Labels', 'woocommerce-jetpack' ),
-		'default_cat_id' => 'price_labels',
+		'desc'           => __( 'Button & Price Labels', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'price_labels',
 			'call_for_price',
@@ -57,7 +57,7 @@ return array(
 
 	'products' => array(
 		'label'          => __( 'Products', 'woocommerce-jetpack' ),
-		'default_cat_id' => 'product_listings',
+		'desc'           => __( 'Products', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'product_listings',
 			'products_per_page',
@@ -81,7 +81,7 @@ return array(
 
 	'cart_and_checkout' => array(
 		'label'          => __( 'Cart & Checkout', 'woocommerce-jetpack' ),
-		'default_cat_id' => 'cart',
+		'desc'           => __( 'Cart & Checkout', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'cart',
 			'cart_customization',
@@ -97,7 +97,7 @@ return array(
 
 	'payment_gateways' => array(
 		'label'          => __( 'Payment Gateways', 'woocommerce-jetpack' ),
-		'default_cat_id' => 'payment_gateways',
+		'desc'           => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'payment_gateways',
 			'payment_gateways_icons',
@@ -112,7 +112,7 @@ return array(
 
 	'shipping_and_orders' => array(
 		'label'          => __( 'Shipping & Orders', 'woocommerce-jetpack' ),
-		'default_cat_id' => 'shipping',
+		'desc'           => __( 'Shipping & Orders', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'shipping',
 			'left_to_free_shipping',
@@ -127,7 +127,7 @@ return array(
 
 	'pdf_invoicing' => array(
 		'label'          => __( 'PDF Invoicing & Packing Slips', 'woocommerce-jetpack' ),
-		'default_cat_id' => 'pdf_invoicing',
+		'desc'           => __( 'PDF Invoicing & Packing Slips', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'pdf_invoicing',
 			'pdf_invoicing_numbering',
@@ -143,7 +143,7 @@ return array(
 
 	'emails_and_misc' => array(
 		'label'          => __( 'Emails & Misc.', 'woocommerce-jetpack' ),
-		'default_cat_id' => 'general',
+		'desc'           => __( 'Emails, Reports, Export, Admin Tools, General Options and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'general',
 			'products_xml',

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -178,7 +178,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output cats
 	 *
-	 * @version 2.3.9
+	 * @version 2.6.1
 	 */
 	function output_cats_submenu() {
 		$current_cat = empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( $_REQUEST['wcj-cat'] );
@@ -188,7 +188,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		echo '<ul class="subsubsub" style="text-transform: uppercase !important; font-weight: bold; margin-bottom: 10px !important;">';
 		$array_keys = array_keys( $this->cats );
 		foreach ( $this->cats as $id => $label_info ) {
-			echo '<li><a href="' . admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . sanitize_title( $id ) ) . '&section=' . $label_info['default_cat_id'] . '" class="' . ( $current_cat == $id ? 'current' : '' ) . '">' . $label_info['label'] . '</a> ' . ( end( $array_keys ) == $id ? '' : '|' ) . ' </li>';
+			echo '<li><a href="' . admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . sanitize_title( $id ) ) . '" class="' . ( $current_cat == $id ? 'current' : '' ) . '">' . $label_info['label'] . '</a> ' . ( end( $array_keys ) == $id ? '' : '|' ) . ' </li>';
 		}
 		echo '</ul>' . '<br class="clear" />';
 	}
@@ -263,7 +263,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output the settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.1
 	 */
 	function output() {
 
@@ -361,6 +361,9 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 					break;
 				}
 			}
+			if ( $is_dashboard && isset( $_GET['wcj-cat'] ) && 'dashboard' != $_GET['wcj-cat'] ) {
+				$breadcrumbs_html .= $this->cats[ $_GET['wcj-cat'] ]['label'];
+			}
 			//$breadcrumbs_html .= $settings[0]['title'];
 			if ( ! $is_dashboard ) {
 				$breadcrumbs_html .= ' > ';
@@ -385,7 +388,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	function output_dashboard( $current_section ) {
 
@@ -407,8 +410,16 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			$this->output_dashboard_modules( $the_settings );
 		} elseif ( 'by_category' === $current_section ) {
 			foreach ( $this->cats as $cat_id => $cat_label_info ) {
-				if ( 'dashboard' === $cat_id ) continue;
-				echo '<h4>' . $cat_label_info['label'] . '</h4>';
+				if ( 'dashboard' === $cat_id ) {
+					continue;
+				}
+				if ( isset( $_GET['wcj-cat'] ) && 'dashboard' != $_GET['wcj-cat'] ) {
+					if ( $cat_id != $_GET['wcj-cat'] ) {
+						continue;
+					}
+				} else {
+					echo '<h4>' . $cat_label_info['label'] . '</h4>';
+				}
 				$readme_html .= PHP_EOL . '**' . $cat_label_info['label'] . '**' . PHP_EOL . PHP_EOL;
 				$readme_html .= $this->output_dashboard_modules( $the_settings, $cat_id );
 			}
@@ -567,7 +578,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Get settings array
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @return  array
 	 */
 	function get_settings( $current_section = '' ) {
@@ -576,15 +587,20 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		} elseif ( 'manager' === $current_section ) {
 			return array( $this->get_autoload_settings() );
 		} else {
+			$cat_id = ( isset( $_GET['wcj-cat'] ) && '' != $_GET['wcj-cat'] ) ? $_GET['wcj-cat'] : 'dashboard';
 			$settings[] = array(
-				'title' => __( 'Booster for WooCommerce - Dashboard', 'woocommerce-jetpack' ),
+				'title' => __( 'Booster for WooCommerce', 'woocommerce-jetpack' ) . ' - ' . $this->cats[ $cat_id ]['label'],
 				'type'  => 'title',
-				'desc'  => __( 'This dashboard lets you enable/disable any Booster\'s module. Each checkbox comes with short module\'s description. Please visit <a href="http://booster.io" target="_blank">http://booster.io</a> for detailed info on each feature.', 'woocommerce-jetpack' ),
-				'id'    => 'wcj_options'
+				'desc'  => $this->cats[ $cat_id ]['desc'],
+				'id'    => 'wcj_' . $cat_id . '_options',
 			);
-			//$settings = apply_filters( 'wcj_features_status', $settings );
+//			$settings = apply_filters( 'wcj_features_status', $settings );
 			$settings = array_merge( $settings, $this->module_statuses );
-			$settings[] = array( 'type' => 'sectionend', 'id' => 'wcj_options', 'title' => '', 'desc' => '', );
+			$settings[] = array(
+				'type'  => 'sectionend',
+				'id'    => 'wcj_' . $cat_id . '_options',
+				'title' => '', // for usort
+			);
 			return $settings;
 		}
 	}
