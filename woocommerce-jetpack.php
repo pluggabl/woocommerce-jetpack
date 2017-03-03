@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.1-dev-201703032001';
+	public $version = '2.6.1-dev-201703032109';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -572,6 +572,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-checkout-custom-fields.php',
 			'includes/class-wcj-checkout-files-upload.php',
 			'includes/class-wcj-checkout-custom-info.php',
+			'includes/class-wcj-checkout-customization.php',
 			'includes/class-wcj-payment-gateways.php',
 			'includes/class-wcj-payment-gateways-icons.php',
 			'includes/class-wcj-payment-gateways-fees.php',

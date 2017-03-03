@@ -69,21 +69,7 @@ class WCJ_General extends WCJ_Module {
 				add_filter( 'wc_session_expiration', array( $this, 'change_session_expiration' ), PHP_INT_MAX );
 			}
 
-			// General Checkout options - Hide "Order Again" button
-			if ( 'yes' === get_option( 'wcj_checkout_hide_order_again', 'no' ) ) {
-				add_action( 'init', array( $this, 'checkout_hide_order_again' ), PHP_INT_MAX );
-			}
 		}
-	}
-
-	/**
-	 * checkout_hide_order_again.
-	 *
-	 * @version 2.6.0
-	 * @since   2.6.0
-	 */
-	function checkout_hide_order_again() {
-		remove_action( 'woocommerce_order_details_after_order_table', 'woocommerce_order_again_button' );
 	}
 
 	/**
@@ -327,7 +313,6 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.6.1
 	 * @todo    add link to Booster's shortcodes list
-	 * @todo    move "General Checkout Options" to separate modules
 	 */
 	function get_settings() {
 		/* $links_html = '';
@@ -519,22 +504,6 @@ class WCJ_General extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_session_expiration_options',
-			),
-			array(
-				'title'    => __( 'General Checkout Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_general_checkout_options',
-			),
-			array(
-				'title'    => __( 'Hide "Order Again" Button on "View Order" Page', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_hide_order_again',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_general_checkout_options',
 			),
 			/* array(
 				'title'    => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),

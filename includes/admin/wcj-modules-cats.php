@@ -91,6 +91,7 @@ return array(
 			'checkout_custom_fields',
 			'checkout_files_upload',
 			'checkout_custom_info',
+			'checkout_customization',
 		),
 	),
 
