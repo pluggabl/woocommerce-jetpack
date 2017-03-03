@@ -70,7 +70,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Checkout Customization* - Customize WooCommerce checkout - hide "Order Again" button on "View Order" page.
 * *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to WooCommerce cart and checkout pages.
-* *Mini Cart* - Customize WooCommerce mini cart widget.
+* *Mini Cart Custom Info* - Add custom info to WooCommerce mini cart widget.
 
 **Payment Gateways**
 
@@ -145,10 +145,11 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 = 2.6.1 - 04/03/2017 =
 ~D	* Dev - EMAILS & MISC. - Custom CSS - Initial module release. CSS options moved from "General" module.
--!	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
-~!D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
-~!D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
-~	* Tweak - Tooltip for admin added to all "Module Tools" sections.
+	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
+~D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
+D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
+D	* Tweak - CART & CHECKOUT - Mini Cart - Module renamed to "Mini Cart Custom Info". Description updated.
+	* Tweak - Tooltip for admin added to all "Module Tools" sections.
 	* Tweak - Language (POT) file updated.
 	* Tweak - PRODUCTS - Product Listings and Products per Page - Descriptions updated.
 

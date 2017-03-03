@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Mini Cart class.
  *
- * @version 2.4.6
+ * @version 2.6.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,13 +18,13 @@ class WCJ_Mini_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.6
+	 * @version 2.6.1
 	 */
 	public function __construct() {
 
 		$this->id         = 'mini_cart';
-		$this->short_desc = __( 'Mini Cart', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce mini cart widget.', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Mini Cart Custom Info', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add custom info to WooCommerce mini cart widget.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-mini-cart/';
 		parent::__construct();
 
