@@ -102,6 +102,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
+* *Custom CSS* - Another custom CSS, if you need one.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *Export* - WooCommerce export tools.
@@ -143,9 +144,10 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 03/03/2017 =
-~	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
-~D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
-~D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
+~D	* Dev - EMAILS & MISC. - Custom CSS - Initial module release. CSS options moved from "General" module.
+-!	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
+~!D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
+~!D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
 	* Tweak - Language (POT) file updated.
 	* Tweak - PRODUCTS - Product Listings and Products per Page - Descriptions updated.
 

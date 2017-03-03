@@ -49,13 +49,6 @@ class WCJ_General extends WCJ_Module {
 				add_filter( 'widget_text', 'do_shortcode' );
 			}
 
-			if ( '' != get_option( 'wcj_general_custom_css' ) ) {
-				add_action( 'wp_head', array( $this, 'hook_custom_css' ) );
-			}
-			if ( '' != get_option( 'wcj_general_custom_admin_css' ) ) {
-				add_action( 'admin_head', array( $this, 'hook_custom_admin_css' ) );
-			}
-
 			if ( 'yes' === get_option( 'wcj_paypal_email_per_product_enabled', 'no' ) ) {
 
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
@@ -293,22 +286,6 @@ class WCJ_General extends WCJ_Module {
 	}
 
 	/**
-	 * hook_custom_css.
-	 */
-	public function hook_custom_css() {
-		$output = '<style>' . get_option( 'wcj_general_custom_css' ) . '</style>';
-		echo $output;
-	}
-
-	/**
-	 * hook_custom_admin_css.
-	 */
-	public function hook_custom_admin_css() {
-		$output = '<style>' . get_option( 'wcj_general_custom_admin_css' ) . '</style>';
-		echo $output;
-	}
-
-	/**
 	 * get_settings.
 	 *
 	 * @version 2.6.1
@@ -357,30 +334,6 @@ class WCJ_General extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_general_shortcodes_options',
-			),
-			array(
-				'title'    => __( 'Custom CSS Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'desc'     => __( 'Another custom CSS, if you need one.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_general_custom_css_options',
-			),
-			array(
-				'title'    => __( 'Custom CSS - Front end (Customers)', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_general_custom_css',
-				'default'  => '',
-				'type'     => 'custom_textarea',
-				'css'      => 'width:66%;min-width:300px;min-height:300px;',
-			),
-			array(
-				'title'    => __( 'Custom CSS - Back end (Admin)', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_general_custom_admin_css',
-				'default'  => '',
-				'type'     => 'custom_textarea',
-				'css'      => 'width:66%;min-width:300px;min-height:300px;',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_general_custom_css_options',
 			),
 			array(
 				'title'    => __( 'Product Revisions', 'woocommerce-jetpack' ),

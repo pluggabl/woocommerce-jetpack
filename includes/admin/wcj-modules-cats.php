@@ -155,6 +155,7 @@ return array(
 			'admin_tools',
 			'emails',
 			'wpml',
+			'custom_css',
 //			'pdf_invoices',
 			'product_info',
 		),
