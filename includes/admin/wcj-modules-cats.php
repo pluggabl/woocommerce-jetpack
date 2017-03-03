@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -84,6 +84,7 @@ return array(
 		'default_cat_id' => 'cart',
 		'all_cat_ids'    => array(
 			'cart',
+			'cart_customization',
 			'empty_cart',
 			'mini_cart',
 			'checkout_core_fields',

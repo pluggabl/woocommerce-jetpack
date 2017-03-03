@@ -28,7 +28,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.6.0
+ * @version 2.6.1
  */
 
 final class WC_Jetpack {
@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.1-dev-201703021138';
+	public $version = '2.6.1-dev-201703032001';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -530,7 +530,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	function include_modules() {
 		$modules_files = array(
@@ -565,6 +565,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-add-to-cart.php',
 			'includes/class-wcj-more-button-labels.php',
 			'includes/class-wcj-cart.php',
+			'includes/class-wcj-cart-customization.php',
 			'includes/class-wcj-empty-cart-button.php',
 			'includes/class-wcj-mini-cart.php',
 			'includes/class-wcj-checkout-core-fields.php',

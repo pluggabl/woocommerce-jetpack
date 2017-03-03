@@ -63,6 +63,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Cart & Checkout**
 
 * *Cart Custom Info* - Add custom info to WooCommerce cart page.
+* *Cart Customization* - Customize WooCommerce cart - remove coupon field; item remove link.
 * *Checkout Core Fields* - Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders.
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
@@ -140,7 +141,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 02/03/2017 =
+= 2.6.1 - 03/03/2017 =
+D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
 	* Tweak - Language (POT) file updated.
 	* Tweak - PRODUCTS - Product Listings and Products per Page - Descriptions updated.
 
