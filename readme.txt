@@ -151,7 +151,8 @@ D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hi
 D	* Tweak - CART & CHECKOUT - Mini Cart - Module renamed to "Mini Cart Custom Info". Description updated.
 	* Tweak - Tooltip for admin added to all "Module Tools" sections.
 	* Tweak - Language (POT) file updated.
-	* Tweak - PRODUCTS - Product Listings and Products per Page - Descriptions updated.
+	* Tweak - PRODUCTS - Product Listings - Description updated.
+	* Tweak - PRODUCTS - Products per Page - Description updated.
 
 = 2.6.0 - 02/03/2017 =
 * Dev - Dashboard - Manage Settings - Restyled.
