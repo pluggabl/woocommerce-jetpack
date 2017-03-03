@@ -25,7 +25,7 @@ class WCJ_Cart_Customization extends WCJ_Module {
 
 		$this->id         = 'cart_customization';
 		$this->short_desc = __( 'Cart Customization', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce cart - remove coupon field; item remove link.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize WooCommerce cart - hide coupon field; item remove link.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-cart-customization/';
 		parent::__construct();
 
