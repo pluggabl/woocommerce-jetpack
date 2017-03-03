@@ -556,7 +556,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		global $current_section;
 		$settings = $this->get_settings( $current_section );
 		WC_Admin_Settings::save_fields( $settings );
-		echo apply_filters('booster_get_message', '', 'global' );
+		echo apply_filters( 'booster_get_message', '', 'global' );
 		do_action( 'woojetpack_after_settings_save', $this->get_sections(), $current_section );
 	}
 
@@ -597,7 +597,20 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				'id'    => 'wcj_' . $cat_id . '_options',
 			);
 //			$settings = apply_filters( 'wcj_features_status', $settings );
-			$settings = array_merge( $settings, $this->module_statuses );
+			if ( 'dashboard' === $cat_id ) {
+				$settings = array_merge( $settings, $this->module_statuses );
+			} else {
+				$cat_module_statuses = array();
+				foreach ( $this->module_statuses as $module_status ) {
+					$section = $module_status['id'];
+					$section = str_replace( 'wcj_', '', $section );
+					$section = str_replace( '_enabled', '', $section );
+					if ( $cat_id === $this->get_cat_by_section( $section ) ) {
+						$cat_module_statuses[] = $module_status;
+					}
+				}
+				$settings = array_merge( $settings, $cat_module_statuses );
+			}
 			$settings[] = array(
 				'type'  => 'sectionend',
 				'id'    => 'wcj_' . $cat_id . '_options',
