@@ -24,7 +24,7 @@ return array(
 
 	'prices_and_currencies' => array(
 		'label'          => __( 'Prices & Currencies', 'woocommerce-jetpack' ),
-		'desc'           => __( 'Prices & Currencies', 'woocommerce-jetpack' ),
+		'desc'           => __( 'Multicurrency, Price Converter, Wholesale Pricing, Name You Price, Price by User Role and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'price_by_country',
 			'multicurrency',
@@ -45,7 +45,7 @@ return array(
 
 	'labels' => array(
 		'label'          => __( 'Button & Price Labels', 'woocommerce-jetpack' ),
-		'desc'           => __( 'Button & Price Labels', 'woocommerce-jetpack' ),
+		'desc'           => __( 'Add to Cart Labels, Call for Price, Custom Price Labels and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'price_labels',
 			'call_for_price',
@@ -57,7 +57,7 @@ return array(
 
 	'products' => array(
 		'label'          => __( 'Products', 'woocommerce-jetpack' ),
-		'desc'           => __( 'Products', 'woocommerce-jetpack' ),
+		'desc'           => __( 'Bookings, Crowdfunding Products, Product Addons and Input Fields, Product Listings, Product Tabs and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'product_listings',
 			'products_per_page',
@@ -81,7 +81,7 @@ return array(
 
 	'cart_and_checkout' => array(
 		'label'          => __( 'Cart & Checkout', 'woocommerce-jetpack' ),
-		'desc'           => __( 'Cart & Checkout', 'woocommerce-jetpack' ),
+		'desc'           => __( 'Cart and Checkout Customization, Empty Cart Button, Mini Cart and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'cart',
 			'cart_customization',
@@ -97,7 +97,7 @@ return array(
 
 	'payment_gateways' => array(
 		'label'          => __( 'Payment Gateways', 'woocommerce-jetpack' ),
-		'desc'           => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+		'desc'           => __( 'Custom Payment Gateways, Gateways Currency, Gateways Fees and Discounts and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'payment_gateways',
 			'payment_gateways_icons',
@@ -112,7 +112,7 @@ return array(
 
 	'shipping_and_orders' => array(
 		'label'          => __( 'Shipping & Orders', 'woocommerce-jetpack' ),
-		'desc'           => __( 'Shipping & Orders', 'woocommerce-jetpack' ),
+		'desc'           => __( 'Order Custom Statuses, Order Minimum Amount, Order Numbers, Custom Shipping Methods and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'shipping',
 			'left_to_free_shipping',
@@ -127,7 +127,7 @@ return array(
 
 	'pdf_invoicing' => array(
 		'label'          => __( 'PDF Invoicing & Packing Slips', 'woocommerce-jetpack' ),
-		'desc'           => __( 'PDF Invoicing & Packing Slips', 'woocommerce-jetpack' ),
+		'desc'           => __( 'PDF Documents', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'pdf_invoicing',
 			'pdf_invoicing_numbering',
