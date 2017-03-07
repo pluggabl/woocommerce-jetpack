@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	public function __construct() {
 
@@ -32,8 +32,9 @@ class WCJ_Orders extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			// Order auto complete
-			if ( 'yes' === get_option( 'wcj_order_auto_complete_enabled' ) ) {
-				add_action( 'woocommerce_thankyou', array( $this, 'auto_complete_order' ) );
+			if ( 'yes' === get_option( 'wcj_order_auto_complete_enabled', 'no' ) ) {
+				add_action( 'woocommerce_thankyou',         array( $this, 'auto_complete_order' ), PHP_INT_MAX );
+				add_action( 'woocommerce_payment_complete', array( $this, 'auto_complete_order' ), PHP_INT_MAX );
 			}
 
 			// Custom columns
@@ -338,13 +339,14 @@ class WCJ_Orders extends WCJ_Module {
 
 	/**
 	* Auto Complete all WooCommerce orders.
+	*
+	* @version 2.6.1
 	*/
-	public function auto_complete_order( $order_id ) {
-		global $woocommerce;
-		if ( !$order_id ) {
+	function auto_complete_order( $order_id ) {
+		if ( ! $order_id ) {
 			return;
 		}
-		$order = new WC_Order( $order_id );
+		$order = wc_get_order( $order_id );
 		$order->update_status( 'completed' );
 	}
 
