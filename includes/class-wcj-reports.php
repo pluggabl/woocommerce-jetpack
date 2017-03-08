@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Reports class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -96,6 +96,8 @@ class WCJ_Reports extends WCJ_Module {
 
 	/**
 	 * add_custom_order_reports_ranges_to_admin_bar.
+	 *
+	 * @version 2.6.1
 	 */
 	public function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
 		$is_reports = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) ? true : false;
@@ -161,6 +163,13 @@ class WCJ_Reports extends WCJ_Module {
 					'title' => __( 'Same Days Last Month', 'woocommerce-jetpack' ),
 					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-01', strtotime( '-1 month' ) ), 'end_date' => date( 'Y-m-d', strtotime( '-1 month' ) ), ) ),
 					'meta' => array( 'title' => __( 'Same Days Last Month', 'woocommerce-jetpack' ), ),
+				),
+				array(
+					'parent' => $parent,
+					'id' => $parent . '_' . 'same_days_last_year',
+					'title' => __( 'Same Days Last Year', 'woocommerce-jetpack' ),
+					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-01', strtotime( '-1 year' ) ), 'end_date' => date( 'Y-m-d', strtotime( '-1 year' ) ), ) ),
+					'meta' => array( 'title' => __( 'Same Days Last Year', 'woocommerce-jetpack' ), ),
 				),
 				/* array(
 					'parent' => $parent,

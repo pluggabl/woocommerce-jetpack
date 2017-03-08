@@ -143,7 +143,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 07/03/2017 =
+= 2.6.1 - 09/03/2017 =
+D	* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Same Days Last Year" option added.
 ~T	* Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - `woocommerce_payment_complete` hook added.
 ~D	* Dev - EMAILS & MISC. - Custom CSS - Initial module release. CSS options moved from "General" module.
 	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
