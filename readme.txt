@@ -144,6 +144,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 09/03/2017 =
+~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Code refactoring. Exchange rates functions moved to separate file. JS "Grab rate" button now works even if module is disabled.
 D	* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Same Days Last Year" option added.
 ~T	* Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - `woocommerce_payment_complete` hook added.
 ~D	* Dev - EMAILS & MISC. - Custom CSS - Initial module release. CSS options moved from "General" module.

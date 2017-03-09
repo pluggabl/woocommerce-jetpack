@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency Exchange Rates class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
 	function __construct() {
 
@@ -30,10 +30,24 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 		add_filter( 'init', array( $this, 'add_hooks' ) );
 
+		add_action( 'wp_ajax_'        . 'wcj_ajax_get_exchange_rates', array( $this, 'wcj_ajax_get_exchange_rates' ) );
+		add_action( 'wp_ajax_nopriv_' . 'wcj_ajax_get_exchange_rates', array( $this, 'wcj_ajax_get_exchange_rates' ) );
+
 		if ( $this->is_enabled() ) {
 			include_once( 'exchange-rates/class-wcj-exchange-rates-crons.php' );
 		}
 		include_once( 'exchange-rates/class-wcj-exchange-rates.php' );
+	}
+
+	/**
+	 * wcj_ajax_get_exchange_rates.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.0
+	 */
+	function wcj_ajax_get_exchange_rates() {
+		echo alg_get_exchange_rate( $_POST['wcj_currency_from'], $_POST['wcj_currency_to'] );
+		die();
 	}
 
 	/**
