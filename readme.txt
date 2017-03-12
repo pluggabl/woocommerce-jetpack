@@ -145,7 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 = 2.6.1 - 12/03/2017 =
 ~	* Dev - PRODUCTS - SKU - `WP_Query` optimized to return `ids` only.
-~D	* Dev - PRODUCTS - SKU - "Generate SKUs Only for Products with Empty SKU" option added.
+~$D	* Dev - PRODUCTS - SKU - "Generate SKUs Only for Products with Empty SKU" option added.
 ~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Code refactoring. Exchange rates functions moved to separate file. JS "Grab rate" button now works even if module is disabled.
 D	* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Same Days Last Year" option added.
 ~T	* Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - `woocommerce_payment_complete` hook added.

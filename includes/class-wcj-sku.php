@@ -393,7 +393,7 @@ class WCJ_SKU extends WCJ_Module {
 			array(
 				'title'    => __( 'Automatically Generate SKU for New Products', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'If disabled you can use Autogenerate SKUs tool.', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Alternatively you can use Autogenerate SKUs tool.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sku_new_products_generate_enabled',
 				'default'  => 'yes',
 				'type'     => 'checkbox',
