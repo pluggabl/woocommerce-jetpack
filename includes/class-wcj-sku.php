@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack SKU class.
  *
- * @version 2.5.5
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  * @todo    add "random number" option
  */
@@ -80,7 +80,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku_with_variable.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.1
 	 * @todo    Handle cases with more than 26 variations
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
@@ -95,16 +95,17 @@ class WCJ_SKU extends WCJ_Module {
 			$sku_number = $product_id;
 		}
 
-		$this->set_sku( $product_id, $sku_number, '', $is_preview, $product_id );
+		$product = wc_get_product( $product_id );
+
+		$this->set_sku( $product_id, $sku_number, '', $is_preview, $product_id, $product );
 
 		// Handling variable products
 		$variation_handling = apply_filters( 'booster_get_option', 'as_variable', get_option( 'wcj_sku_variations_handling', 'as_variable' ) );
-		$product = wc_get_product( $product_id );
 		if ( $product->is_type( 'variable' ) ) {
 			$variations = $this->get_all_variations( $product );
 			if ( 'as_variable' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
-					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id );
+					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id, $product );
 				}
 			}
 			else if ( 'as_variation' === $variation_handling ) {
@@ -115,14 +116,14 @@ class WCJ_SKU extends WCJ_Module {
 					} else { // if 'product_id'
 						$sku_number = $variation['variation_id'];
 					}
-					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id );
+					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id, $product );
 				}
 			}
 			else if ( 'as_variable_with_suffix' === $variation_handling ) {
 				$variation_suffixes = 'abcdefghijklmnopqrstuvwxyz';
 				$abc = 0;
 				foreach ( $variations as $variation ) {
-					$this->set_sku( $variation['variation_id'], $sku_number, $variation_suffixes[ $abc++ ], $is_preview, $product_id );
+					$this->set_sku( $variation['variation_id'], $sku_number, $variation_suffixes[ $abc++ ], $is_preview, $product_id, $product );
 					if ( 26 == $abc ) {
 						$abc = 0;
 					}
@@ -134,9 +135,12 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku.
 	 *
-	 * @version 2.4.0
+	 * @version 2.6.1
 	 */
-	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview, $parent_product_id ) {
+	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview, $parent_product_id, $_product ) {
+
+		$old_sku = $_product->get_sku();
+		$do_generate_new_sku = ( 'no' === get_option( 'wcj_sku_generate_only_for_empty_sku', 'no' ) || '' === $old_sku );
 
 		$category_prefix = '';
 		$category_suffix = '';
@@ -151,14 +155,14 @@ class WCJ_SKU extends WCJ_Module {
 			}
 		}
 
-		$the_sku = sprintf( '%s%s%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 'd%s%s%s',
+		$the_sku = ( $do_generate_new_sku ) ? sprintf( '%s%s%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 'd%s%s%s',
 			apply_filters( 'booster_get_option', '', $category_prefix ),
 			get_option( 'wcj_sku_prefix', '' ),
 			$sku_number,
 			get_option( 'wcj_sku_suffix', '' ),
 			$variation_suffix,
 			$category_suffix
-		);
+		) : $old_sku;
 
 		if ( $is_preview ) {
 			echo '<tr>' .
@@ -166,9 +170,10 @@ class WCJ_SKU extends WCJ_Module {
 					'<td>' . get_the_title( $product_id ) . ' (' . __( 'ID', 'woocommerce-jetpack' ) . ':' . $product_id . ')' . '</td>' .
 					'<td>' . $product_cat                   . '</td>' .
 					'<td>' . $the_sku                       . '</td>' .
+					'<td>' . $old_sku                       . '</td>' .
 				'</tr>';
 		}
-		else {
+		elseif ( $do_generate_new_sku ) {
 			update_post_meta( $product_id, '_' . 'sku', $the_sku );
 		}
 	}
@@ -229,7 +234,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * create_sku_tool
 	 *
-	 * @version 2.4.0
+	 * @version 2.6.1
 	 */
 	function create_sku_tool() {
 		$result_message = '';
@@ -243,6 +248,7 @@ class WCJ_SKU extends WCJ_Module {
 					'<th>' . __( 'Product', 'woocommerce-jetpack' )    . '</th>' .
 					'<th>' . __( 'Categories', 'woocommerce-jetpack' ) . '</th>' .
 					'<th>' . __( 'SKU', 'woocommerce-jetpack' )        . '</th>' .
+					'<th>' . __( 'Old SKU', 'woocommerce-jetpack' )        . '</th>' .
 				'</tr>';
 			ob_start();
 			$this->set_all_products_skus( $is_preview );
@@ -264,7 +270,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.1
 	 */
 	function get_settings() {
 		$settings = array(
@@ -392,6 +398,13 @@ class WCJ_SKU extends WCJ_Module {
 				'title'    => __( 'Allow Duplicate SKUs', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_sku_allow_duplicates_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Generate SKUs Only for Products with Empty SKU', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_sku_generate_only_for_empty_sku',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
