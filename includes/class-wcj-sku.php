@@ -166,11 +166,12 @@ class WCJ_SKU extends WCJ_Module {
 
 		if ( $is_preview ) {
 			echo '<tr>' .
-					'<td>' . $this->product_counter++       . '</td>' .
-					'<td>' . get_the_title( $product_id ) . ' (' . __( 'ID', 'woocommerce-jetpack' ) . ':' . $product_id . ')' . '</td>' .
-					'<td>' . $product_cat                   . '</td>' .
-					'<td>' . $the_sku                       . '</td>' .
-					'<td>' . $old_sku                       . '</td>' .
+					'<td>' . $this->product_counter++ . '</td>' .
+					'<td>' . $product_id              . '</td>' .
+					'<td>' . $_product->get_title()   . '</td>' .
+					'<td>' . $product_cat             . '</td>' .
+					'<td>' . $the_sku                 . '</td>' .
+					'<td>' . $old_sku                 . '</td>' .
 				'</tr>';
 		}
 		elseif ( $do_generate_new_sku ) {
@@ -181,13 +182,13 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_all_products_skus.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.1
 	 */
 	function set_all_products_skus( $is_preview ) {
 		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$this->sequential_counter = apply_filters( 'booster_get_option', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
 		}
-		$limit = 96;
+		$limit = 256;
 		$offset = 0;
 		while ( TRUE ) {
 			$posts = new WP_Query( array(
@@ -197,11 +198,13 @@ class WCJ_SKU extends WCJ_Module {
 				'post_status'    => 'any',
 				'order'          => 'ASC',
 				'orderby'        => 'date',
+				'fields'         => 'ids',
 			));
-			if ( ! $posts->have_posts() ) break;
-			while ( $posts->have_posts() ) {
-				$posts->the_post();
-				$this->set_sku_with_variable( $posts->post->ID, $is_preview );
+			if ( ! $posts->have_posts() ) {
+				break;
+			}
+			foreach ( $posts->posts as $post_id ) {
+				$this->set_sku_with_variable( $post_id, $is_preview );
 			}
 			$offset += $limit;
 		}
@@ -245,10 +248,11 @@ class WCJ_SKU extends WCJ_Module {
 			$preview_html .=
 				'<tr>' .
 					'<th></th>' .
+					'<th>' . __( 'ID', 'woocommerce-jetpack' )         . '</th>' .
 					'<th>' . __( 'Product', 'woocommerce-jetpack' )    . '</th>' .
 					'<th>' . __( 'Categories', 'woocommerce-jetpack' ) . '</th>' .
 					'<th>' . __( 'SKU', 'woocommerce-jetpack' )        . '</th>' .
-					'<th>' . __( 'Old SKU', 'woocommerce-jetpack' )        . '</th>' .
+					'<th>' . __( 'Old SKU', 'woocommerce-jetpack' )    . '</th>' .
 				'</tr>';
 			ob_start();
 			$this->set_all_products_skus( $is_preview );
