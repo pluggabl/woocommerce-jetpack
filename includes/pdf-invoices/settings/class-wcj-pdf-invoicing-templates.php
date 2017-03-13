@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Templates class.
  *
- * @version 2.5.2
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -30,7 +30,7 @@ class WCJ_PDF_Invoicing_Templates extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.1
 	 */
 	function get_settings() {
 
@@ -40,8 +40,18 @@ class WCJ_PDF_Invoicing_Templates extends WCJ_Module {
 		foreach ( $invoice_types as $invoice_type ) {
 
 			ob_start();
-			include( 'defaults/wcj-content-template-' . $invoice_type['id'] . '.php' );
+			if ( false === strpos( $invoice_type['id'], 'custom_doc_' ) ) {
+				include( 'defaults/wcj-content-template-' . $invoice_type['id'] . '.php' );
+			} else {
+				include( 'defaults/wcj-content-template-' . 'custom_doc' . '.php' );
+			}
 			$default_template = ob_get_clean();
+
+			if ( false !== strpos( $invoice_type['id'], 'custom_doc' ) ) {
+				$custom_doc_nr = ( 'custom_doc' === $invoice_type['id'] ) ? '1' : str_replace( 'custom_doc_', '', $invoice_type['id'] );
+				$default_template = str_replace( '[wcj_custom_doc_number]', '[wcj_custom_doc_number doc_nr="' . $custom_doc_nr . '"]', $default_template );
+				$default_template = str_replace( '[wcj_custom_doc_date]',   '[wcj_custom_doc_date doc_nr="'   . $custom_doc_nr . '"]', $default_template );
+			}
 
 			$settings = array_merge( $settings, array(
 				array(

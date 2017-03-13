@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing class.
  *
- * @version 2.5.9
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 */
 	public function __construct() {
 
@@ -55,12 +55,12 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 			foreach ( $invoice_types as $invoice_type ) {
 				$the_hook = get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_create_on', 'woocommerce_new_order' );
 				if ( 'disabled' != $the_hook && 'manual' != $the_hook && '' != $the_hook ) {
-					add_action( $the_hook, array( $this, 'create_' . $invoice_type['id'] ) );
+					add_action( $the_hook, array( $this, 'create_document_hook' ) );
 					if ( 'woocommerce_new_order' === $the_hook ) {
-						add_action( 'woocommerce_api_create_order',         array( $this, 'create_' . $invoice_type['id'] ) );
-						add_action( 'woocommerce_cli_create_order',         array( $this, 'create_' . $invoice_type['id'] ) );
-						add_action( 'kco_before_confirm_order',             array( $this, 'create_' . $invoice_type['id'] ) );
-						add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_' . $invoice_type['id'] ) );
+						add_action( 'woocommerce_api_create_order',         array( $this, 'create_document_hook' ) );
+						add_action( 'woocommerce_cli_create_order',         array( $this, 'create_document_hook' ) );
+						add_action( 'kco_before_confirm_order',             array( $this, 'create_document_hook' ) );
+						add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_document_hook' ) );
 					}
 				}
 			}
@@ -244,41 +244,25 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	}
 
 	/**
-	 * create_invoice.
-	 */
-	function create_invoice( $order_id ) {
-		return $this->create_document( $order_id, 'invoice' );
-	}
-
-	/**
-	 * create_proforma_invoice.
-	 */
-	function create_proforma_invoice( $order_id ) {
-		return $this->create_document( $order_id, 'proforma_invoice' );
-	}
-
-	/**
-	 * create_packing_slip.
-	 */
-	function create_packing_slip( $order_id ) {
-		return $this->create_document( $order_id, 'packing_slip' );
-	}
-
-	/**
-	 * create_credit_note.
-	 */
-	function create_credit_note( $order_id ) {
-		return $this->create_document( $order_id, 'credit_note' );
-	}
-
-	/**
-	 * create_custom_doc.
+	 * create_document_hook.
 	 *
-	 * @version 2.2.7
-	 * @since   2.2.7
+	 * @version 2.6.1
+	 * @since   2.6.1
 	 */
-	function create_custom_doc( $order_id ) {
-		return $this->create_document( $order_id, 'custom_doc' );
+	function create_document_hook( $order_id ) {
+		$current_filter = current_filter();
+		if ( in_array( $current_filter, array( 'woocommerce_api_create_order', 'woocommerce_cli_create_order', 'kco_before_confirm_order', 'woocommerce_checkout_order_processed', ) ) ) {
+			$current_filter = 'woocommerce_new_order';
+		}
+		$invoice_types = wcj_get_enabled_invoice_types();
+		foreach ( $invoice_types as $invoice_type ) {
+			$the_hook = get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_create_on', 'woocommerce_new_order' );
+			if ( 'disabled' != $the_hook && 'manual' != $the_hook && '' != $the_hook ) {
+				if ( $current_filter === $the_hook ) {
+					$this->create_document( $order_id, $invoice_type['id'] );
+				}
+			}
+		}
 	}
 
 	/**
@@ -351,7 +335,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.1
 	 */
 	function get_settings() {
 
@@ -376,6 +360,18 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		// Settings
 		$invoice_types = wcj_get_invoice_types();
 		foreach ( $invoice_types as $k => $invoice_type ) {
+
+			if ( 'custom_doc' === $invoice_type['id'] ) {
+				$settings[] = array(
+					'title'    => __( 'Number of Custom Documents', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Save changes after setting this number.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_invoicing_custom_doc_total_number',
+					'default'  => 1,
+					'type'     => 'custom_number',
+					'custom_attributes' => array( 'min' => '1' ),
+				);
+			}
+
 			$settings[] = array(
 				'title'    => $invoice_type['title'],
 				'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_create_on',
@@ -386,6 +382,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				'desc'     => ( 0 === $k ) ? '' : apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'booster_get_message', '', 'disabled' ),
 			);
+
 			$settings[] = array(
 				'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_skip_zero_total',
 				'default'  => 'no',
@@ -396,16 +393,16 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		}
 
 		$settings[] = array(
-			'title'    => __( 'Hide Disabled Docs Settings', 'woocommerce-jetpack' ),
-			'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_invoicing_hide_disabled_docs_settings',
-			'default'  => 'no',
-			'type'     => 'checkbox',
+			'title'     => __( 'Hide Disabled Docs Settings', 'woocommerce-jetpack' ),
+			'desc'      => __( 'Hide', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_invoicing_hide_disabled_docs_settings',
+			'default'   => 'no',
+			'type'      => 'checkbox',
 		);
 
 		$settings[] = array(
-			'type' => 'sectionend',
-			'id'   => 'wcj_pdf_invoicing_options',
+			'type'      => 'sectionend',
+			'id'        => 'wcj_pdf_invoicing_options',
 		);
 
 		return $this->add_standard_settings( $settings );

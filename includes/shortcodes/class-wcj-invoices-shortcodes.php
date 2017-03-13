@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Invoices Shortcodes class.
  *
- * @version 2.2.7
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.2.7
+	 * @version 2.6.1
 	 */
 	public function __construct() {
 
@@ -42,6 +42,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 			'date_format'  => get_option( 'date_format' ),
 			'days'         => 0,
 			'invoice_type' => 'invoice',
+			'doc_nr'       => 1,
 		);
 
 		parent::__construct();
@@ -73,17 +74,36 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
     function wcj_invoice_date( $atts ) {
 		return wcj_get_invoice_date( $atts['order_id'], $atts['invoice_type'], $atts['days'], $atts['date_format'] );
 	}
+
+	/**
+	 * wcj_proforma_invoice_date.
+	 */
 	function wcj_proforma_invoice_date( $atts ) {
 		return wcj_get_invoice_date( $atts['order_id'], 'proforma_invoice', $atts['days'], $atts['date_format'] );
 	}
+
+	/**
+	 * wcj_packing_slip_date.
+	 */
 	function wcj_packing_slip_date( $atts ) {
 		return wcj_get_invoice_date( $atts['order_id'], 'packing_slip', $atts['days'], $atts['date_format'] );
 	}
+
+	/**
+	 * wcj_credit_note_date.
+	 */
 	function wcj_credit_note_date( $atts ) {
 		return wcj_get_invoice_date( $atts['order_id'], 'credit_note', $atts['days'], $atts['date_format'] );
 	}
+
+	/**
+	 * wcj_custom_doc_date.
+	 *
+	 * @version 2.6.1
+	 */
 	function wcj_custom_doc_date( $atts ) {
-		return wcj_get_invoice_date( $atts['order_id'], 'custom_doc', $atts['days'], $atts['date_format'] );
+		$invoice_type_id = ( 1 == $atts['doc_nr'] ) ? 'custom_doc' :  'custom_doc' . '_' . $atts['doc_nr'];
+		return wcj_get_invoice_date( $atts['order_id'], $invoice_type_id, $atts['days'], $atts['date_format'] );
 	}
 
 	/**
@@ -92,18 +112,38 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 	function wcj_invoice_number( $atts ) {
 		return wcj_get_invoice_number( $atts['order_id'], $atts['invoice_type'] );
 	}
+
+	/**
+	 * wcj_proforma_invoice_number.
+	 */
 	function wcj_proforma_invoice_number( $atts ) {
 		return wcj_get_invoice_number( $atts['order_id'], 'proforma_invoice' );
 	}
+
+	/**
+	 * wcj_packing_slip_number.
+	 */
 	function wcj_packing_slip_number( $atts ) {
 		return wcj_get_invoice_number( $atts['order_id'], 'packing_slip' );
 	}
+
+	/**
+	 * wcj_credit_note_number.
+	 */
 	function wcj_credit_note_number( $atts ) {
 		return wcj_get_invoice_number( $atts['order_id'], 'credit_note' );
 	}
+
+	/**
+	 * wcj_custom_doc_number.
+	 *
+	 * @version 2.6.1
+	 */
 	function wcj_custom_doc_number( $atts ) {
-		return wcj_get_invoice_number( $atts['order_id'], 'custom_doc' );
+		$invoice_type_id = ( 1 == $atts['doc_nr'] ) ? 'custom_doc' :  'custom_doc' . '_' . $atts['doc_nr'];
+		return wcj_get_invoice_number( $atts['order_id'], $invoice_type_id );
 	}
+
 }
 
 endif;
