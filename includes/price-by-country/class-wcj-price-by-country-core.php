@@ -224,6 +224,7 @@ class WCJ_Price_by_Country_Core {
 	 * get_customer_country_group_id.
 	 *
 	 * @version 2.6.1
+	 * @todo    (maybe) add `cart_and_checkout` override option
 	 */
 	public function get_customer_country_group_id() {
 
