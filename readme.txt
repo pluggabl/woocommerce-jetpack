@@ -144,6 +144,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 14/03/2017 =
+~$D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Override Country Options - "Override Scope" option added.
 	* Dev - Dashboard - Modules count (all and active) added.
 ~TD	* Dev - PDF INVOICING & PACKING SLIPS - Multiple custom documents added.
 ~	* Dev - PRODUCTS - SKU - `WP_Query` optimized to return `ids` only.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -223,7 +223,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 */
 	public function get_customer_country_group_id() {
 
@@ -241,7 +241,11 @@ class WCJ_Price_by_Country_Core {
 		if ( isset( $_GET['country'] ) && '' != $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
 			$country = $_GET['country'];
 		} elseif ( 'no' != ( $override_option = get_option( 'wcj_price_by_country_override_on_checkout_with_billing_country', 'no' ) )
-			/* && is_checkout() */
+			&& (
+				( 'all'               === get_option( 'wcj_price_by_country_override_scope', 'all' ) ) ||
+//				( 'cart_and_checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && ( is_cart() || is_checkout() ) ) ||
+				( 'checkout'          === get_option( 'wcj_price_by_country_override_scope', 'all' ) && is_checkout() )
+			)
 			&& isset( WC()->customer )
 			&& ( ( 'yes' === $override_option && '' != WC()->customer->get_country() ) || ( 'shipping_country' === $override_option && '' != WC()->customer->get_shipping_country() ) )
 		) {

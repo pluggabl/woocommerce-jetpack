@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -128,7 +128,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	function get_settings() {
 
@@ -177,6 +177,18 @@ class WCJ_Price_By_Country extends WCJ_Module {
 					'no'               => __( 'No Override', 'woocommerce-jetpack' ),
 					'yes'              => __( 'Override Country with Customer\'s Checkout Billing Country', 'woocommerce-jetpack' ),
 					'shipping_country' => __( 'Override Country with Customer\'s Checkout Shipping Country', 'woocommerce-jetpack' ),
+				),
+			),
+
+			array(
+				'desc'     => __( 'Override Scope', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_price_by_country_override_scope',
+				'default'  => 'all',
+				'type'     => 'select',
+				'options'  => array(
+					'all'               => __( 'All site', 'woocommerce-jetpack' ),
+//					'cart_and_checkout' => __( 'Cart and checkout only', 'woocommerce-jetpack' ),
+					'checkout'          => __( 'Checkout only', 'woocommerce-jetpack' ),
 				),
 			),
 
