@@ -219,8 +219,8 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			}
 
 			$sections['alphabetically'] = __( 'Alphabetically', 'woocommerce-jetpack' ) . ' <span class="count">(' . $all . ')</span>';
-			$sections['by_category']    = __( 'By Category', 'woocommerce-jetpack' );
-			$sections['active']         = __( 'Active', 'woocommerce-jetpack' ) . ' <span class="count">(' . $active . ')</span>';
+			$sections['by_category']    = __( 'By Category', 'woocommerce-jetpack' )    . ' <span class="count">(' . $all . ')</span>';
+			$sections['active']         = __( 'Active', 'woocommerce-jetpack' )         . ' <span class="count">(' . $active . ')</span>';
 			$sections['manager']        = __( 'Manage Settings', 'woocommerce-jetpack' );
 			if ( '' == $current_section ) {
 				$current_section = 'by_category';
