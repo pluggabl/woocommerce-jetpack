@@ -198,16 +198,29 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output sections (modules) sub menu
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.1
 	 */
 	function output_sections_submenu() {
 		global $current_section;
 		$sections = $this->get_sections();
 		$current_cat = empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( $_REQUEST['wcj-cat'] );
 		if ( 'dashboard' === $current_cat ) {
-			$sections['alphabetically'] = __( 'Alphabetically', 'woocommerce-jetpack' );
+
+			// Counting modules
+			$all    = 0;
+			$active = 0;
+			foreach ( $this->module_statuses as $module_status ) {
+				if ( isset( $module_status['id'] ) && isset( $module_status['default'] ) ) {
+					if ( 'yes' === get_option( $module_status['id'], $module_status['default'] ) ) {
+						$active++;
+					}
+					$all++;
+				}
+			}
+
+			$sections['alphabetically'] = __( 'Alphabetically', 'woocommerce-jetpack' ) . ' <span class="count">(' . $all . ')</span>';
 			$sections['by_category']    = __( 'By Category', 'woocommerce-jetpack' );
-			$sections['active']         = __( 'Active', 'woocommerce-jetpack' );
+			$sections['active']         = __( 'Active', 'woocommerce-jetpack' ) . ' <span class="count">(' . $active . ')</span>';
 			$sections['manager']        = __( 'Manage Settings', 'woocommerce-jetpack' );
 			if ( '' == $current_section ) {
 				$current_section = 'by_category';
