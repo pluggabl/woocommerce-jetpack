@@ -143,7 +143,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 14/03/2017 =
+= 2.6.1 - 15/03/2017 =
+~D	* Dev - Shortcodes - `on_empty` attribute added to all shortcodes.
 ~$D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Override Country Options - "Override Scope" option added.
 	* Dev - Dashboard - Modules count (all and active) added.
 ~TD	* Dev - PDF INVOICING & PACKING SLIPS - Multiple custom documents added.
