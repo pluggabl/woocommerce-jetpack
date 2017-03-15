@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	public function __construct() {
 
@@ -28,6 +28,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_author_link_all_posts',
 			'wcj_product_image',
 			'wcj_product_image_url',
+			'wcj_product_gallery_image_url',
 			'wcj_product_url',
 			'wcj_product_price',
 			'wcj_product_wholesale_price_table', // WooCommerce Wholesale Price
@@ -69,6 +70,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		$this->the_atts = array(
 			'product_id'            => 0,
 			'image_size'            => 'shop_thumbnail',
+			'image_nr'              => 1,
 			'multiply_by'           => '',
 			'hide_currency'         => 'no',
 			'excerpt_length'        => 0, // deprecated
@@ -885,6 +887,23 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_product_image_url( $atts ) {
 		return wcj_get_product_image_url( $this->the_product->id, $atts['image_size'] );
+	}
+
+	/**
+	 * wcj_product_gallery_image_url.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function wcj_product_gallery_image_url( $atts ) {
+		$attachment_ids = $this->the_product->get_gallery_attachment_ids();
+		if ( $attachment_ids && isset( $attachment_ids[ ( $atts['image_nr'] - 1 ) ] ) ) {
+			$props = wc_get_product_attachment_props( $attachment_ids[ ( $atts['image_nr'] - 1 ) ] );
+			if ( isset( $props['url'] ) ) {
+				return $props['url'];
+			}
+		}
+		return '';
 	}
 
 	/**
