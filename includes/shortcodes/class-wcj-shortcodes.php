@@ -192,7 +192,7 @@ class WCJ_Shortcodes {
 			if ( 'yes' === $atts['strip_tags'] ) {
 				$result = strip_tags( $result );
 			}
-			return $atts['before'] . $result . $atts['after'];
+			return $atts['before'] . apply_filters( 'wcj_shortcode_result', $result, $atts, $content, $shortcode ) . $atts['after'];
 		}
 		return $atts['on_empty'];
 	}
