@@ -109,6 +109,7 @@ return array(
 			'payment_gateways_min_max',
 			'payment_gateways_by_country',
 			'payment_gateways_by_user_role',
+			'payment_gateways_by_shipping',
 		),
 	),
 

@@ -143,7 +143,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 15/03/2017 =
+= 2.6.1 - 16/03/2017 =
+~D	* Dev - PAYMENT GATEWAYS - Gateways by Shipping - Initial module release.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_gallery_image_url]` shortcode added.
 ~D	* Dev - Shortcodes - `wcj_shortcode_result` filter added to all shortcodes.
 ~D	* Dev - Shortcodes - `on_empty` attribute added to all shortcodes.
