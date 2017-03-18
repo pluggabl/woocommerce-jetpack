@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields class.
  *
- * @version 2.5.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -114,7 +114,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
 	function get_settings() {
 
@@ -176,7 +176,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 
 			array(
 				'title'    => __( 'Product Input Fields Number', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Click "Save changes" after you change this number.', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Click Save changes after you change this number.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_input_fields_global_total_number',
 				'default'  => 1,
 				'type'     => 'custom_number',

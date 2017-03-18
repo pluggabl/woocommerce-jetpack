@@ -144,7 +144,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 16/03/2017 =
+= 2.6.1 - 18/03/2017 =
+	* Fix - PRODUCTS - Product Input Fields - Product Input Fields Global Options - Product Input Fields Number - Tooltip fixed.
 ~D	* Dev - PRICES & CURRENCIES - Currency per Product - WooCommerce Bookings plugin support added.
 ~$D	* Dev - PAYMENT GATEWAYS - Gateways by Shipping - Initial module release.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_gallery_image_url]` shortcode added.
