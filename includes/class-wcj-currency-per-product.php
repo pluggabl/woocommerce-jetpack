@@ -181,12 +181,12 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	}
 
 	/**
-	 * get_product_id.
+	 * get_current_product_id_and_currency.
 	 *
 	 * @version 2.6.1
 	 * @since   2.6.1
 	 */
-	function get_product_id() {
+	function get_current_product_id_and_currency() {
 		$the_ID = get_the_ID();
 		if ( 0 == $the_ID && isset( $_REQUEST['product_id'] ) ) {
 			$the_ID = $_REQUEST['product_id'];
@@ -196,7 +196,11 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			parse_str( $_POST['form'], $posted );
 			$the_ID = isset( $posted['add-to-cart'] ) ? $posted['add-to-cart'] : 0;
 		}
-		return $the_ID;
+		if ( 0 != $the_ID && 'product' === get_post_type( $the_ID ) ) {
+			$currency_per_product_currency = get_post_meta( $the_ID, '_' . 'wcj_currency_per_product_currency', true );
+			return ( '' != $currency_per_product_currency ) ? $currency_per_product_currency : false;
+		}
+		return false;
 	}
 
 	/**
@@ -206,14 +210,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	 * @since   2.5.2
 	 */
 	function change_currency_code( $currency ) {
-		$the_ID = $this->get_product_id();
-		if ( 0 != $the_ID && 'product' === get_post_type( $the_ID ) ) {
-			$currency_per_product_currency = get_post_meta( $the_ID, '_' . 'wcj_currency_per_product_currency', true );
-			if ( '' != $currency_per_product_currency ) {
-				return $currency_per_product_currency;
-			}
-		}
-		return $currency;
+		return ( false != ( $_currency = $this->get_current_product_id_and_currency() ) ) ? $_currency : $currency;
 	}
 
 	/**
@@ -223,14 +220,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	 * @since   2.5.2
 	 */
 	function change_currency_symbol( $currency_symbol, $currency ) {
-		$the_ID = $this->get_product_id();
-		if ( 0 != $the_ID && 'product' === get_post_type( $the_ID ) ) {
-			$currency_per_product_currency = get_post_meta( $the_ID, '_' . 'wcj_currency_per_product_currency', true );
-			if ( '' != $currency_per_product_currency ) {
-				return wcj_get_currency_symbol( $currency_per_product_currency );
-			}
-		}
-		return $currency_symbol;
+		return ( false != ( $_currency = $this->get_current_product_id_and_currency() ) ) ? wcj_get_currency_symbol( $_currency ) : $currency_symbol;
 	}
 
 	/**
