@@ -250,7 +250,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'options'  => array(
 					'yes'        => __( 'Sequential', 'woocommerce-jetpack' ),
 					'no'         => __( 'Order ID', 'woocommerce-jetpack' ),
-					'hash_crc32' => __( 'Pseudorandom - Hash (10 digits)', 'woocommerce-jetpack' ),
+					'hash_crc32' => __( 'Pseudorandom - Hash (max 10 digits)', 'woocommerce-jetpack' ),
 				),
 			),
 			array(
