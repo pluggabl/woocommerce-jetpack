@@ -68,7 +68,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	 * @since   2.6.1
 	 */
 	function change_shipping_price( $package_rates, $package ) {
-		if ( is_cart() || is_checkout() ) {
+		if ( $this->is_cart_or_checkout_or_ajax() ) {
 			if ( WC()->cart->is_empty() ) {
 				return $package_rates;
 			}
@@ -339,16 +339,28 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	}
 
 	/**
+	 * is_cart_or_checkout_or_ajax.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function is_cart_or_checkout_or_ajax() {
+		return ( ( function_exists( 'is_cart' ) && is_cart() ) || ( function_exists( 'is_checkout' ) && is_checkout() ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) );
+	}
+
+	/**
 	 * change_currency_code.
 	 *
 	 * @version 2.6.1
 	 * @since   2.5.2
 	 */
 	function change_currency_code( $currency ) {
-		if ( is_cart() || is_checkout() ) {
+		if ( false != ( $_currency = $this->get_current_product_id_and_currency() ) ) {
+			return $_currency;
+		} elseif ( $this->is_cart_or_checkout_or_ajax() ) {
 			return ( false != ( $_currency = $this->get_cart_checkout_currency() ) ) ? $_currency : $currency;
 		}
-		return ( false != ( $_currency = $this->get_current_product_id_and_currency() ) ) ? $_currency : $currency;
+		return  $currency;
 	}
 
 	/**
@@ -358,10 +370,12 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	 * @since   2.5.2
 	 */
 	function change_currency_symbol( $currency_symbol, $currency ) {
-		if ( is_cart() || is_checkout() ) {
+		if ( false != ( $_currency = $this->get_current_product_id_and_currency() ) ) {
+			return wcj_get_currency_symbol( $_currency );
+		} elseif ( $this->is_cart_or_checkout_or_ajax() ) {
 			return ( false != ( $_currency = $this->get_cart_checkout_currency() ) ) ? wcj_get_currency_symbol( $_currency ) : $currency_symbol;
 		}
-		return ( false != ( $_currency = $this->get_current_product_id_and_currency() ) ) ? wcj_get_currency_symbol( $_currency ) : $currency_symbol;
+		return $currency_symbol;
 	}
 
 	/**
