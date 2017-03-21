@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Numbers class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -19,7 +19,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'order_numbers';
 		$this->short_desc = __( 'Order Numbers', 'woocommerce-jetpack' );
@@ -79,6 +79,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 *
 	 * @version 2.5.2
 	 * @since   2.5.2
+	 * @todo    optimize WP_Query to return only `ids` for `fields`
 	 */
 	function add_order_number_to_tracking( $order_number ) {
 		$offset = 0;
@@ -110,11 +111,11 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Display order number.
 	 *
-	 * @version 2.2.7
+	 * @version 2.6.1
 	 */
-	public function display_order_number( $order_number, $order ) {
+	function display_order_number( $order_number, $order ) {
 		$order_number_meta = get_post_meta( $order->id, '_wcj_order_number', true );
-		if ( '' == $order_number_meta || 'no' === get_option( 'wcj_order_number_sequential_enabled' ) ) {
+		if ( '' == $order_number_meta || 'no' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
 			$order_number_meta = $order->id;
 		}
 		$order_timestamp = strtotime( $order->post->post_date );
@@ -136,7 +137,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 *
 	 * @version 2.4.4
 	 */
-	public function create_renumerate_orders_tool() {
+	function create_renumerate_orders_tool() {
 		$result_message = '';
 		if ( isset( $_POST['renumerate_orders'] ) ) {
 			$this->renumerate_orders();
@@ -155,16 +156,16 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * add_new_order_number.
 	 */
-	public function add_new_order_number( $order_id ) {
+	function add_new_order_number( $order_id ) {
 		$this->add_order_number_meta( $order_id, false );
 	}
 
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.1
 	 */
-	public function add_order_number_meta( $order_id, $do_overwrite ) {
+	function add_order_number_meta( $order_id, $do_overwrite ) {
 		if ( 'shop_order' !== get_post_type( $order_id ) ) {
 			return;
 		}
@@ -187,7 +188,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 					$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback
 				}
 			} else {
-				$current_order_number = get_option( 'wcj_order_number_counter' );
+				$current_order_number = get_option( 'wcj_order_number_counter', 1 );
 				update_option( 'wcj_order_number_counter', ( $current_order_number + 1 ) );
 				update_post_meta( $order_id, '_wcj_order_number', $current_order_number );
 			}
@@ -198,8 +199,10 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * Renumerate orders function.
 	 *
 	 * @version 2.5.0
+	 * @todo    renumerate in date range only
+	 * @todo    optimize WP_Query to return only `ids` for `fields`
 	 */
-	public function renumerate_orders() {
+	function renumerate_orders() {
 		$offset = 0;
 		$block_size = 96;
 		while( true ) {
@@ -225,6 +228,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * get_settings.
 	 *
 	 * @version 2.6.0
+	 * @todo    add "random number" option
 	 */
 	function get_settings() {
 		$settings = array(
