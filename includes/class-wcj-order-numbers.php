@@ -54,6 +54,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * @version 2.6.0
 	 * @since   2.6.0
 	 * @see     https://github.com/pablo-pacheco/wc-booster-search-order-by-custom-number-fix
+	 * @todo    `_wcj_order_number` is used for `sequential` and `hash` only
 	 */
 	function search_by_custom_number( $query ) {
 		if (
@@ -120,8 +121,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 		}
 		$order_timestamp = strtotime( $order->post->post_date );
 		$order_number = apply_filters( 'booster_get_option',
-			sprintf( '%s%d', do_shortcode( get_option( 'wcj_order_number_prefix', '' ) ), $order_number_meta ),
-			sprintf( '%s%s%0' . get_option( 'wcj_order_number_min_width', 0 ) . 'd%s%s',
+			sprintf( '%s%s', do_shortcode( get_option( 'wcj_order_number_prefix', '' ) ), $order_number_meta ),
+			sprintf( '%s%s%0' . get_option( 'wcj_order_number_min_width', 0 ) . 's%s%s',
 				do_shortcode( get_option( 'wcj_order_number_prefix', '' ) ),
 				date_i18n( get_option( 'wcj_order_number_date_prefix', '' ), $order_timestamp ),
 				$order_number_meta,
@@ -170,7 +171,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			return;
 		}
 		if ( true === $do_overwrite || 0 == get_post_meta( $order_id, '_wcj_order_number', true ) ) {
-			if ( 'yes' === get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'yes' ) ) {
+			if ( 'yes' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) && 'yes' === get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'yes' ) ) {
 				global $wpdb;
 				$wpdb->query( 'START TRANSACTION' );
 				$wp_options_table = $wpdb->prefix . 'options';
@@ -188,8 +189,12 @@ class WCJ_Order_Numbers extends WCJ_Module {
 					$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback
 				}
 			} else {
-				$current_order_number = get_option( 'wcj_order_number_counter', 1 );
-				update_option( 'wcj_order_number_counter', ( $current_order_number + 1 ) );
+				if ( 'hash_crc32' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
+					$current_order_number = sprintf( "%u", crc32( $order_id ) );
+				} else { // sequential
+					$current_order_number = get_option( 'wcj_order_number_counter', 1 );
+					update_option( 'wcj_order_number_counter', ( $current_order_number + 1 ) );
+				}
 				update_post_meta( $order_id, '_wcj_order_number', $current_order_number );
 			}
 		}
@@ -227,8 +232,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.0
-	 * @todo    add "random number" option
+	 * @version 2.6.1
 	 */
 	function get_settings() {
 		$settings = array(
@@ -239,11 +243,15 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'id'       => 'wcj_order_numbers_options',
 			),
 			array(
-				'title'    => __( 'Make Order Numbers Sequential', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'title'    => __( 'Number Generation', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_order_number_sequential_enabled',
 				'default'  => 'yes',
-				'type'     => 'checkbox',
+				'type'     => 'select',
+				'options'  => array(
+					'yes'        => __( 'Sequential', 'woocommerce-jetpack' ),
+					'no'         => __( 'Order ID', 'woocommerce-jetpack' ),
+					'hash_crc32' => __( 'Pseudorandom - Hash (10 digits)', 'woocommerce-jetpack' ),
+				),
 			),
 			array(
 				'title'    => __( 'Next Order Number', 'woocommerce-jetpack' ),

@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 21/03/2017 =
+~!$D* Dev - SHIPPING & ORDERS - Order Numbers - "Number Generation" selection added (and "Pseudorandom - Hash (10 digits)" option).
 ~	* Dev - SHIPPING & ORDERS - Order Numbers - Default values added to all `get_option()` calls. Code cleaned up.
 ~!$D* Dev - PRICES & CURRENCIES - Currency per Product - "Cart and Checkout Behaviour Options" settings section added.
 	* Fix - PRODUCTS - Product Input Fields - Product Input Fields Global Options - Product Input Fields Number - Tooltip fixed.
