@@ -343,9 +343,10 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	 *
 	 * @version 2.6.1
 	 * @since   2.6.1
+	 * @todo    fix AJAX issue (for minicart)
 	 */
 	function is_cart_or_checkout_or_ajax() {
-		return ( ( function_exists( 'is_cart' ) && is_cart() ) || ( function_exists( 'is_checkout' ) && is_checkout() ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) );
+		return ( ( function_exists( 'is_cart' ) && is_cart() ) || ( function_exists( 'is_checkout' ) && is_checkout() ) /* || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) */ );
 	}
 
 	/**
