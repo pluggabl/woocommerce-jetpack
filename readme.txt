@@ -145,6 +145,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 27/03/2017 =
+~	* Dev - PRODUCTS - Product Input Fields - Check for enabled fields added in `add_product_input_fields_to_cart_item_data()`.
+~	* Fix - PRODUCTS - Product Input Fields - Check for enabled fields fixed (in `validate_product_input_fields_on_add_to_cart()` and `add_product_input_fields_to_order_item_name()`.
 ~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Calculate with Inversion" option added.
 ~!$D* Dev - SHIPPING & ORDERS - Order Numbers - "Number Generation" selection added (and "Pseudorandom - Hash (max 10 digits)" option).
 ~	* Dev - SHIPPING & ORDERS - Order Numbers - Default values added to all `get_option()` calls. Code cleaned up.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.5.5
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -27,7 +27,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * get_options.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.1
 	 */
 	public function get_options() {
 		$options = array(
@@ -102,10 +102,10 @@ class WCJ_Product_Input_Fields_Abstract {
 				),
 			),
 
-			// TODO http://www.w3schools.com/tags/att_input_accept.asp
 			array(
 				'id'                => 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_',
-				'title'             => __( 'If file is selected, set accepted file types here. E.g.: ".jpg,.jpeg,.png". Leave blank to accept all files', 'woocommerce-jetpack' ),
+				'title'             => __( 'If file is selected, set accepted file types here. E.g.: ".jpg,.jpeg,.png". Leave blank to accept all files', 'woocommerce-jetpack' )
+					. '. ' . __( 'Visit <a href="https://www.w3schools.com/tags/att_input_accept.asp" target="_blank">documentation on input accept attribute</a> for valid option formats', 'woocommerce-jetpack' ),
 				'short_title'       => __( 'File: Accepted types', 'woocommerce-jetpack' ),
 				'type'              => 'text',
 				'default'           => __( '.jpg,.jpeg,.png', 'woocommerce-jetpack' ),
@@ -121,7 +121,7 @@ class WCJ_Product_Input_Fields_Abstract {
 
 			array(
 				'id'                => 'wcj_product_input_fields_type_datepicker_format_' . $this->scope . '_',
-				'title'             => __( 'If datepicker/weekpicker is selected, set date format here. Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats.', 'woocommerce-jetpack' ),
+				'title'             => __( 'If datepicker/weekpicker is selected, set date format here. Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats', 'woocommerce-jetpack' ),
 				'desc_tip'          => __( 'Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
 				'short_title'       => __( 'Datepicker/Weekpicker: Date format', 'woocommerce-jetpack' ),
 				'type'              => 'text',
@@ -180,7 +180,7 @@ class WCJ_Product_Input_Fields_Abstract {
 
 			array(
 				'id'                => 'wcj_product_input_fields_type_timepicker_format_' . $this->scope . '_',
-				'title'             => __( 'If timepicker is selected, set time format here. Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid time formats.', 'woocommerce-jetpack' ),
+				'title'             => __( 'If timepicker is selected, set time format here. Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid time formats', 'woocommerce-jetpack' ),
 				'short_title'       => __( 'Timepicker: Time format', 'woocommerce-jetpack' ),
 				'type'              => 'text',
 				'default'           => 'hh:mm p',
@@ -265,7 +265,8 @@ class WCJ_Product_Input_Fields_Abstract {
 
 	/**
 	 * hide_custom_input_fields_default_output_in_admin_order.
-	 * @todo Get actual (max) number of fields in case of local scape.
+	 *
+	 * @todo Get actual (max) number of fields in case of local scope.
 	 */
 	function hide_custom_input_fields_default_output_in_admin_order( $hidden_metas ) {
 		$total_number = 0;
@@ -273,7 +274,7 @@ class WCJ_Product_Input_Fields_Abstract {
 			$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', 0, 1 ) );
 		} else {
 			$max_number_of_fields_for_local = 100;
-			$total_number = $max_number_of_fields_for_local; // TODO: not the best solution!
+			$total_number = $max_number_of_fields_for_local;
 		}
 
 		for ( $i = 1; $i <= $total_number; $i++ ) {
@@ -416,21 +417,21 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * get_value.
 	 */
-	public function get_value( $option_name, $product_id, $default ) {
+	function get_value( $option_name, $product_id, $default ) {
 		return false;
 	}
 
 	/**
 	 * validate_product_input_fields_on_add_to_cart.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.1
 	 */
-	public function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
+	function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
-			$is_enabled  = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $product_id, 'no' );
-			if ( ! $is_enabled ) {
+			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $product_id, 'no' );
+			if ( ! ( 'on' === $is_enabled || 'yes' === $is_enabled ) ) {
 				continue;
 			}
 
@@ -488,7 +489,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	 *
 	 * @version 2.5.5
 	 */
-	public function add_product_input_fields_to_frontend() {
+	function add_product_input_fields_to_frontend() {
 		global $product;
 		//if ( ! $product ) // return;
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product->id, 1 ) );
@@ -663,10 +664,16 @@ class WCJ_Product_Input_Fields_Abstract {
 
 	/**
 	 * add_product_input_fields_to_cart_item_data - from $_POST to $cart_item_data
+	 *
+	 * @version 2.6.1
 	 */
-	public function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
+	function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $product_id, 'no' );
+			if ( ! ( 'on' === $is_enabled || 'yes' === $is_enabled ) ) {
+				continue;
+			}
 			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $product_id, '' );
 			$value_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
 			if ( 'file' === $type ) {
@@ -688,7 +695,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * get_cart_item_product_input_fields_from_session.
 	 */
-	public function get_cart_item_product_input_fields_from_session( $item, $values, $key ) {
+	function get_cart_item_product_input_fields_from_session( $item, $values, $key ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $values ) )
@@ -700,9 +707,9 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Adds product input values to order details (and emails).
 	 *
-	 * @version 2.4.7
+	 * @version 2.6.1
 	 */
-	public function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
+	function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
 
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
 		if ( $total_number < 1 ) {
@@ -714,8 +721,8 @@ class WCJ_Product_Input_Fields_Abstract {
 		}
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
-			$is_enabled  = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $item['product_id'], 'no' );
-			if ( ! $is_enabled ) {
+			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $item['product_id'], 'no' );
+			if ( ! ( 'on' === $is_enabled || 'yes' === $is_enabled ) ) {
 				continue;
 			}
 
@@ -772,7 +779,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	 *
 	 * @version 2.4.0
 	 */
-	public function add_product_input_fields_to_cart_item_name( $name, $cart_item, $cart_item_key  ) {
+	function add_product_input_fields_to_cart_item_name( $name, $cart_item, $cart_item_key  ) {
 		return $this->add_product_input_fields_to_order_item_name( $name, $cart_item, true );
 	}
 
@@ -781,7 +788,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	 *
 	 * @version 2.5.0
 	 */
-	public function add_product_input_fields_to_order_item_meta(  $item_id, $values, $cart_item_key  ) {
+	function add_product_input_fields_to_order_item_meta(  $item_id, $values, $cart_item_key  ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i , $values ) ) {
