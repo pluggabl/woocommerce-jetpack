@@ -104,9 +104,6 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	 * @version 2.6.1
 	 */
 	function add_currency_exchange_rates_settings() {
-
-		$settings = array();
-
 		$desc = '';
 		if ( $this->is_enabled() ) {
 			if ( '' != get_option( 'wcj_currency_exchange_rate_cron_time', '' ) ) {
@@ -118,65 +115,59 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				}
 			}
 		}
-
-		$settings[] = array(
-			'title' => __( 'Exchange Rates', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'desc'  => __( 'All currencies from all <strong>enabled</strong> modules (with "Exchange Rates Updates" set to "Automatically via Currency Exchange Rates module") will be automatically added to the list.', 'woocommerce-jetpack' ) . $desc,
-			'id'    => 'wcj_currency_exchange_rates_options',
-		);
-
-		$settings[] = array(
-			'title'    => __( 'Exchange Rates Updates', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_currency_exchange_rates_auto',
-			'default'  => 'daily',
-			'type'     => 'select',
-			'options'  => array(
-//				'manual'     => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
-				'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
-				'hourly'     => __( 'Update Hourly', 'woocommerce-jetpack' ),
-				'twicedaily' => __( 'Update Twice Daily', 'woocommerce-jetpack' ),
-				'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
-				'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
+		$settings = array(
+			array(
+				'title'    => __( 'Exchange Rates', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'desc'     => __( 'All currencies from all <strong>enabled</strong> modules (with "Exchange Rates Updates" set to "Automatically via Currency Exchange Rates module") will be automatically added to the list.', 'woocommerce-jetpack' ) . $desc,
+				'id'       => 'wcj_currency_exchange_rates_options',
+			),
+			array(
+				'title'    => __( 'Exchange Rates Updates', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_currency_exchange_rates_auto',
+				'default'  => 'daily',
+				'type'     => 'select',
+				'options'  => array(
+	//				'manual'     => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
+					'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
+					'hourly'     => __( 'Update Hourly', 'woocommerce-jetpack' ),
+					'twicedaily' => __( 'Update Twice Daily', 'woocommerce-jetpack' ),
+					'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
+					'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'title'    => __( 'Exchange Rates Server', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_currency_exchange_rates_server',
+				'default'  => 'yahoo',
+				'type'     => 'select',
+				'options'  => wcj_get_currency_exchange_rate_servers(),
+			),
+			array(
+				'title'    => __( 'Exchange Rates Offset - Percent', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If both percent and fixed offsets are set - percent offset is applied first and fixed offset after that.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_currency_exchange_rates_offset_percent',
+				'default'  => 0,
+				'type'     => 'number',
+				'custom_attributes' => array( 'step' => '0.001' ),
+			),
+			array(
+				'title'    => __( 'Exchange Rates Offset - Fixed', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If both percent and fixed offsets are set - percent offset is applied first and fixed offset after that.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_currency_exchange_rates_offset_fixed',
+				'default'  => 0,
+				'type'     => 'number',
+				'custom_attributes' => array( 'step' => '0.000001' ),
+			),
+			array(
+				'title'    => __( 'Calculate with Inversion', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If your currency pair have very small exchange rate, you may want to invert currencies before calculating the rate.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_currency_exchange_rates_calculate_by_invert',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 		);
-
-		$settings[] = array(
-			'title'    => __( 'Exchange Rates Server', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_currency_exchange_rates_server',
-			'default'  => 'yahoo',
-			'type'     => 'select',
-			'options'  => wcj_get_currency_exchange_rate_servers(),
-		);
-
-		$settings[] = array(
-			'title'    => __( 'Exchange Rates Offset - Percent', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'If both percent and fixed offsets are set - percent offset is applied first and fixed offset after that.', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_currency_exchange_rates_offset_percent',
-			'default'  => 0,
-			'type'     => 'number',
-			'custom_attributes' => array( 'step' => '0.001' ),
-		);
-
-		$settings[] = array(
-			'title'    => __( 'Exchange Rates Offset - Fixed', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'If both percent and fixed offsets are set - percent offset is applied first and fixed offset after that.', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_currency_exchange_rates_offset_fixed',
-			'default'  => 0,
-			'type'     => 'number',
-			'custom_attributes' => array( 'step' => '0.000001' ),
-		);
-
-		$settings[] = array(
-			'title'    => __( 'Calculate with Inversion', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'If your currency pair have very small exchange rate, you may want to invert currencies before calculating the rate.', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_currency_exchange_rates_calculate_by_invert',
-			'default'  => 'no',
-			'type'     => 'checkbox',
-		);
-
 		$currency_from = get_option( 'woocommerce_currency' );
-
 		if ( wcj_is_module_enabled( 'price_by_country' ) ) {
 			// Currency Pairs - Price by Country
 			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_price_by_country_auto_exchange_rates', 'manual' ) ) ) {
@@ -186,7 +177,6 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				}
 			}
 		}
-
 		if ( wcj_is_module_enabled( 'multicurrency' ) ) {
 			// Currency Pairs - Multicurrency
 			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_multicurrency_exchange_rate_update_auto', 'manual' ) ) ) {
@@ -196,7 +186,6 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				}
 			}
 		}
-
 		if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
 			// Currency Pairs - Multicurrency Product Base Price
 			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_multicurrency_base_price_exchange_rate_update', 'manual' ) ) ) {
@@ -206,7 +195,6 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				}
 			}
 		}
-
 		if ( wcj_is_module_enabled( 'currency_per_product' ) ) {
 			// Currency Pairs - Currency per Product
 			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_currency_per_product_exchange_rate_update', 'manual' ) ) ) {
@@ -216,7 +204,6 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				}
 			}
 		}
-
 		if ( wcj_is_module_enabled( 'payment_gateways_currency' ) ) {
 			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_gateways_currency_exchange_rate_update_auto', 'manual' ) ) ) {
 				// Currency Pairs - Gateway Currency
@@ -230,20 +217,21 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				}
 			}
 		}
-
-		/* $settings[] = array(
-			'title'    => __( 'Logging', 'woocommerce-jetpack' ),
-			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_currency_exchange_logging_enabled',
-			'default'  => 'no',
-			'type'     => 'checkbox',
-		); */
-
-		$settings[] = array(
-			'type'  => 'sectionend',
-			'id'    => 'wcj_currency_exchange_rates_options',
-		);
-
+		$settings = array_merge( $settings, array(
+			/*
+			array(
+				'title'    => __( 'Logging', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_currency_exchange_logging_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			*/
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_currency_exchange_rates_options',
+			),
+		) );
 		return $settings;
 	}
 }
