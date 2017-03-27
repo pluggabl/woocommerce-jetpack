@@ -144,7 +144,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 21/03/2017 =
+= 2.6.1 - 27/03/2017 =
+~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Calculate with Inversion" option added.
 ~!$D* Dev - SHIPPING & ORDERS - Order Numbers - "Number Generation" selection added (and "Pseudorandom - Hash (max 10 digits)" option).
 ~	* Dev - SHIPPING & ORDERS - Order Numbers - Default values added to all `get_option()` calls. Code cleaned up.
 ~!$D* Dev - PRICES & CURRENCIES - Currency per Product - "Cart and Checkout Behaviour Options" settings section added.
@@ -1192,7 +1193,7 @@ D	* Tweak - CART & CHECKOUT - Mini Cart - Module renamed to "Mini Cart Custom In
 * Dev - PRICES & CURRENCIES - Wholesale Price - "Use total cart quantity instead of product quantity" option added.
 * Dev - PRODUCTS - Product Input Fields - "File upload" field type added.
 * Dev - CART & CHECKOUT - Custom Payment Gateways - Limit raised from 10 to unlimited custom gateways.
-* Dev - CART & CHECKOUT - Payment Gateways Fees - "Is taxable" and "Tax class" options addded.
+* Dev - CART & CHECKOUT - Payment Gateways Fees - "Is taxable" and "Tax class" options added.
 * Dev - CART & CHECKOUT - Payment Gateways - Code refactoring, new modules created:
   Custom Payment Gateways, Payment Gateways Icons, Payment Gateways Fees, Payment Gateways per Category.
   Attaching PDF Invoice V1 to emails - code moved to PDF Invoice V1 module.

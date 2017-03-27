@@ -74,6 +74,7 @@ class WCJ_Exchange_Rates {
 	 * output_settings_button.
 	 *
 	 * @version 2.6.0
+	 * @todo    (maybe) wcj_currency_exchange_rates_precision
 	 */
 	function output_settings_button( $value ) {
 
@@ -83,7 +84,8 @@ class WCJ_Exchange_Rates {
 
 		// Custom attribute handling
 		$custom_attributes = array();
-//		$value['custom_attributes'] = array( 'step' => '0.000001', 'min'  => '0' );
+//		$step = sprintf( "%f", ( 1 / pow( 10, absint( get_option( 'wcj_currency_exchange_rates_precision', 6 ) ) ) ) );
+//		$value['custom_attributes'] = array( 'step' => $step, 'min'  => '0' );
 		if ( ! empty( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) {
 			foreach ( $value['custom_attributes'] as $attribute => $attribute_value ) {
 				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';

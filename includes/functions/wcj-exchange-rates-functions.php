@@ -33,15 +33,24 @@ if ( ! function_exists( 'alg_get_exchange_rate' ) ) {
 	 * @since   2.6.0
 	 */
 	function alg_get_exchange_rate( $currency_from, $currency_to ) {
+		if ( 'yes' === ( $calculate_by_invert = get_option( 'wcj_currency_exchange_rates_calculate_by_invert', 'no' ) ) ) {
+			$_currency_to  = $currency_to;
+			$currency_to   = $currency_from;
+			$currency_from = $_currency_to;
+		}
 		$exchange_rates_server = get_option( 'wcj_currency_exchange_rates_server', 'yahoo' );
 		switch ( $exchange_rates_server ) {
 			case 'tcmb':
-				return alg_tcmb_get_exchange_rate( $currency_from, $currency_to );
+				$return = alg_tcmb_get_exchange_rate( $currency_from, $currency_to );
+				break;
 			case 'ecb':
-				return alg_ecb_get_exchange_rate( $currency_from, $currency_to );
+				$return = alg_ecb_get_exchange_rate( $currency_from, $currency_to );
+				break;
 			default: // 'yahoo'
-				return alg_yahoo_get_exchange_rate( $currency_from, $currency_to );
+				$return = alg_yahoo_get_exchange_rate( $currency_from, $currency_to );
+				break;
 		}
+		return ( 'yes' === $calculate_by_invert ) ? round( ( 1 / $return ), 6 ) : $return;
 	}
 }
 

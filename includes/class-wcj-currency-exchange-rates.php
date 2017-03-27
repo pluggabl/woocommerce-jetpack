@@ -101,7 +101,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	/**
 	 * add_currency_exchange_rates_settings.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	function add_currency_exchange_rates_settings() {
 
@@ -165,6 +165,14 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 			'default'  => 0,
 			'type'     => 'number',
 			'custom_attributes' => array( 'step' => '0.000001' ),
+		);
+
+		$settings[] = array(
+			'title'    => __( 'Calculate with Inversion', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'If your currency pair have very small exchange rate, you may want to invert currencies before calculating the rate.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_currency_exchange_rates_calculate_by_invert',
+			'default'  => 'no',
+			'type'     => 'checkbox',
 		);
 
 		$currency_from = get_option( 'woocommerce_currency' );
