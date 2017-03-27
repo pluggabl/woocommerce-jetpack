@@ -145,7 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 27/03/2017 =
-~!T	* Fix - SHIPPING & ORDERS - Shipping - `woocommerce_shipping_init` hook replaced with `init` hook.
+~!T	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (legacy and with zones) - `woocommerce_shipping_init` hook replaced with `init` hook.
 ~!	* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added.
 	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
 ~D	* Dev - Shortcodes - `on_empty` attribute added to all shortcodes.
