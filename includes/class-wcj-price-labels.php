@@ -19,7 +19,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	 *
 	 * @version 2.6.1
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'price_labels';
 		$this->short_desc = __( 'Custom Price Labels', 'woocommerce-jetpack' );
@@ -105,7 +105,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * save_custom_price_labels.
 	 */
-	public function save_custom_price_labels( $post_id, $post ) {
+	function save_custom_price_labels( $post_id, $post ) {
 
 //		$product = get_product( $post );TODO - do I need it?
 
@@ -139,7 +139,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	 *
 	 * @version 2.4.8
 	 */
-	public function add_price_label_meta_box() {
+	function add_price_label_meta_box() {
 		add_meta_box(
 			'wc-jetpack-price-labels',
 			__( 'Booster: Custom Price Labels', 'woocommerce-jetpack' ),
@@ -155,7 +155,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	 *
 	 * @version 2.4.8
 	 */
-	public function create_price_label_meta_box() {
+	function create_price_label_meta_box() {
 
 		$current_post_id = get_the_ID();
 		echo '<table style="width:100%;">';
@@ -250,7 +250,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * customize_price
 	 */
-	public function customize_price( $price, $custom_tab_section, $custom_label ) {
+	function customize_price( $price, $custom_tab_section, $custom_label ) {
 
 		switch ( $custom_tab_section ) {
 
@@ -279,7 +279,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	 *
 	 * @version 2.6.1
 	 */
-	public function custom_price( $price, $product ) {
+	function custom_price( $price, $product ) {
 
 		if ( ! wcj_is_frontend() ) return $price;
 
