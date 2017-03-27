@@ -25,13 +25,21 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 
 		$this->id         = 'checkout_customization';
 		$this->short_desc = __( 'Checkout Customization', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce checkout - hide "Order Again" button on "View Order" page.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize WooCommerce checkout - hide "Order Again" button etc.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-checkout-customization/';
 		parent::__construct();
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
+			// "Create an account?" Checkbox
+			if ( 'default' != ( $create_account_default = get_option( 'wcj_checkout_create_account_default_checked', 'default' ) ) ) {
+				if ( 'checked' === $create_account_default ) {
+					add_filter( 'woocommerce_create_account_default_checked', '__return_true' );
+				} elseif ( 'not_checked' === $create_account_default ) {
+					add_filter( 'woocommerce_create_account_default_checked', '__return_false' );
+				}
+			}
 			// Hide "Order Again" button
 			if ( 'yes' === get_option( 'wcj_checkout_hide_order_again', 'no' ) ) {
 				add_action( 'init', array( $this, 'checkout_hide_order_again' ), PHP_INT_MAX );
@@ -61,6 +69,18 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 				'title'    => __( 'Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_checkout_customization_options',
+			),
+			array(
+				'title'    => __( '"Create an account?" Checkbox', 'woocommerce-jetpack' ),
+				'desc_tip' => __( '"Create an account?" checkbox default value', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_create_account_default_checked',
+				'default'  => 'default',
+				'type'     => 'select',
+				'options'  => array(
+					'default'     => __( 'WooCommerce default', 'woocommerce-jetpack' ),
+					'checked'     => __( 'Checked', 'woocommerce-jetpack' ),
+					'not_checked' => __( 'Not checked', 'woocommerce-jetpack' ),
+				),
 			),
 			array(
 				'title'    => __( 'Hide "Order Again" Button on "View Order" Page', 'woocommerce-jetpack' ),

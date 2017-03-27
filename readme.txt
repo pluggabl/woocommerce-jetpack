@@ -68,7 +68,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Checkout Core Fields* - Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders.
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
-* *Checkout Customization* - Customize WooCommerce checkout - hide "Order Again" button on "View Order" page.
+* *Checkout Customization* - Customize WooCommerce checkout - hide "Order Again" button etc.
 * *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to WooCommerce cart and checkout pages.
