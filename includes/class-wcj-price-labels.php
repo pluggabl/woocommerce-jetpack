@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.5.8
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
 	public function __construct() {
 
@@ -26,15 +26,6 @@ class WCJ_Price_Labels extends WCJ_Module {
 		$this->desc       = __( 'Create any custom price label for any WooCommerce product.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-custom-price-labels/';
 		parent::__construct();
-
-		$this->add_tools( array(
-			'migrate_from_custom_price_labels' => array(
-				'title' => __( 'Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ),
-				'desc'  => __( 'Tool lets you copy all the data (that is labels) from Custom Price labels (Pro) plugin to Booster.', 'woocommerce-jetpack' ),
-//				'tab_title' => __( 'Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ),
-				'deprecated' => true,
-			),
-		), array( 'tools_dashboard_hook_priority' => PHP_INT_MAX ) );
 
 		// Custom Price Labels - fields array
 		$this->custom_tab_group_name = 'wcj_price_labels';// for compatibility with Custom Price Label Pro plugin should use 'simple_is_custom_pricing_label'
@@ -105,127 +96,10 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'woocommerce_subscriptions_product_price_string',
 				'woocommerce_variable_subscription_price_html',
 			);
-			foreach ( $this->prices_filters as $the_filter )
+			foreach ( $this->prices_filters as $the_filter ) {
 				add_filter( $the_filter, array( $this, 'custom_price' ), 100, 2 );
+			}
 		}
-	}
-
-	/**
-	 * get_migration_new_meta_name.
-	 */
-	/* public function get_migration_new_meta_name( $old_meta_name ) {
-		$new_meta_name = str_replace( 'simple_is_custom_pricing_label', 'wcj_price_labels', $old_meta_name );
-		return $new_meta_name;
-	} */
-
-	/**
-	 * create_migrate_from_custom_price_labels_tool.
-	 *
-	 * @version 2.5.0
-	 */
-	public function create_migrate_from_custom_price_labels_tool() {
-
-		echo '<h2>' . __( 'Booster - Migrate from Custom Price Labels (Pro)', 'woocommerce-jetpack' ) . '</h2>';
-
-		$migrate = isset( $_POST['migrate'] ) ? true : false;
-
-		$migration_data = array(
-			'_simple_is_custom_pricing_label'                  => '_wcj_price_labels_instead_enabled',
-			'_simple_is_custom_pricing_label_home'             => '_wcj_price_labels_instead_home',
-			'_simple_is_custom_pricing_label_products'         => '_wcj_price_labels_instead_products',
-			'_simple_is_custom_pricing_label_single'           => '_wcj_price_labels_instead_single',
-			'_simple_is_custom_pricing_label_text'             => '_wcj_price_labels_instead_text',
-
-			'_simple_is_custom_pricing_label_before'           => '_wcj_price_labels_before_enabled',
-			'_simple_is_custom_pricing_label_before_home'      => '_wcj_price_labels_before_home',
-			'_simple_is_custom_pricing_label_before_products'  => '_wcj_price_labels_before_products',
-			'_simple_is_custom_pricing_label_before_single'    => '_wcj_price_labels_before_single',
-			'_simple_is_custom_pricing_label_text_before'      => '_wcj_price_labels_before_text',
-
-			'_simple_is_custom_pricing_label_between'          => '_wcj_price_labels_between_enabled',
-			'_simple_is_custom_pricing_label_between_home'     => '_wcj_price_labels_between_home',
-			'_simple_is_custom_pricing_label_between_products' => '_wcj_price_labels_between_products',
-			'_simple_is_custom_pricing_label_between_single'   => '_wcj_price_labels_between_single',
-			'_simple_is_custom_pricing_label_text_between'     => '_wcj_price_labels_between_text',
-
-			'_simple_is_custom_pricing_label_after'            => '_wcj_price_labels_after_enabled',
-			'_simple_is_custom_pricing_label_after_home'       => '_wcj_price_labels_after_home',
-			'_simple_is_custom_pricing_label_after_products'   => '_wcj_price_labels_after_products',
-			'_simple_is_custom_pricing_label_after_single'     => '_wcj_price_labels_after_single',
-			'_simple_is_custom_pricing_label_text_after'       => '_wcj_price_labels_after_text',
-		);
-		$offset = 0;
-		$block_size = 96;
-		$html = '<pre><ul>';
-		while( true ) {
-			$args = array(
-				'post_type'      => 'product',
-				'posts_per_page' => $block_size,
-				'offset'         => $offset,
-			);
-			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$the_product_id = get_the_ID();
-				foreach ( $migration_data as $old_meta_name => $new_meta_name ) {
-					$old_meta_value = get_post_meta( $the_product_id, $old_meta_name, true );
-					if ( '' != $old_meta_value ) {
-						// Found Old (Custom Price Labels Plugin) meta to migrate from
-						$new_meta_value = get_post_meta( $the_product_id, $new_meta_name, true );
-						if ( $new_meta_value !== $old_meta_value ) {
-							// Found Old (Custom Price Labels Plugin) meta to migrate to
-							if ( true === $migrate ) {
-								// Migrating
-								$html .= '<li>' . __( 'Migrating (product ID ', 'woocommerce-jetpack' ) . $the_product_id . '): ' .  $old_meta_name . '[' . $old_meta_value . ']' . ' -> ' . $new_meta_name . '[' . $new_meta_value . ']. ';// . '</li>';
-								$html .= __( 'Result: ', 'woocommerce-jetpack' ) . update_post_meta( $the_product_id, $new_meta_name, $old_meta_value );
-								$html .= '</li>';
-
-								//wp_update_post( array( 'ID' => $the_product_id ) );
-
-								// Fill all data with defaults
-								foreach ( $this->custom_tab_sections as $custom_tab_section ) {
-									foreach ( $this->custom_tab_section_variations as $custom_tab_section_variation ) {
-										$option_name = $this->custom_tab_group_name . $custom_tab_section . $custom_tab_section_variation;
-										if ( '' == get_post_meta( $the_product_id, '_' . $option_name, true ) ) {
-											if ( '_text' === $custom_tab_section_variation )
-												update_post_meta( $the_product_id, '_' . $option_name, '' );
-											else
-												update_post_meta( $the_product_id, '_' . $option_name, 'off' );
-
-											//$html .= '<li>' . __( 'Setting defaults for: ', 'woocommerce-jetpack' ) . '_' . $option_name . '</li>';
-										}
-									}
-								}
-							}
-							else {
-								// Info only
-								$html .= '<li>' . __( 'Found data to migrate (product ID ', 'woocommerce-jetpack' ) . $the_product_id . '): ' . $old_meta_name . '[' . $old_meta_value . ']' . ' -> ' . $new_meta_name . '[' . $new_meta_value . ']' . '</li>';
-							}
-							/*if ( true === $do_delete_old ) {
-								// Delete Old (Custom Price Labels Plugin) meta
-								$html .= '<li>' . __( 'Deleting: ', 'woocommerce-jetpack' ) . $old_meta_name . '[' . $old_meta_value . ']. ';// . '</li>';
-								$html .= __( ' Result: ', 'woocommerce-jetpack' ) . delete_post_meta( $the_product_id, $old_meta_name, $old_meta_value );
-								$html .= '</li>';
-							}*/
-						}
-						//wp_update_post( array( 'ID' => $the_product_id ) );
-					}
-				}
-			endwhile;
-			$offset += $block_size;
-		}
-		if ( '<pre><ul>' == $html )
-			$html = __( 'No data to migrate found', 'woocommerce-jetpack' );
-		else
-			$html .= '</ul></pre>';
-		wp_reset_postdata();
-
-		$form_html =  '<form method="post" action="">';
-		$form_html .= '<p>' . __( 'Press button below to copy all labels from Custom Price Labels (Pro) plugin. Old labels will NOT be deleted. New labels will be overwritten.', 'woocommerce-jetpack' ) . '</p>';
-		$form_html .= '<p><input type="submit" class="button-primary" name="migrate" value="' . __( 'Migrate data', 'woocommerce-jetpack' ) . '" /></p>';
-		$form_html .= '</form>';
-
-		echo $form_html . $html;
 	}
 
 	/**
@@ -403,7 +277,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.1
 	 */
 	public function custom_price( $price, $product ) {
 
@@ -507,6 +381,10 @@ class WCJ_Price_Labels extends WCJ_Module {
 			$text_to_replace_with = apply_filters( 'booster_get_option', '', get_option( 'wcj_global_price_labels_replace_with_text' ) );
 			if ( '' != $text_to_replace && '' != $text_to_replace_with )
 				$price = str_replace( $text_to_replace, $text_to_replace_with, $price );
+			// Global price labels - Instead of the price
+			if ( '' != ( $text_instead = get_option( 'wcj_global_price_labels_instead_text', '' ) ) ) {
+				$price = $text_instead;
+			}
 		}
 
 		// Per product
@@ -612,7 +490,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * add_settings.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.1
 	 * @since   2.3.7
 	 */
 	function add_settings() {
@@ -637,7 +515,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'desc_tip'  => __( 'Enter text to add before all products prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_global_price_labels_add_before_text',
 				'default'   => '',
-				'type'      => 'textarea',
+				'type'      => 'custom_textarea',
 				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 				'css'       => 'width:30%;min-width:300px;',
@@ -647,7 +525,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'desc_tip'  => __( 'Enter text to add after all products prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_global_price_labels_add_after_text',
 				'default'   => '',
-				'type'      => 'textarea',
+				'type'      => 'custom_textarea',
 				'css'       => 'width:30%;min-width:300px;',
 			),
 			array(
@@ -655,7 +533,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'desc_tip'  => __( 'Enter text to add between regular and sale prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_global_price_labels_between_regular_and_sale_text',
 				'default'   => '',
-				'type'      => 'textarea',
+				'type'      => 'custom_textarea',
 				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 				'css'       => 'width:30%;min-width:300px;',
@@ -666,7 +544,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'desc_tip'  => __( 'Enter text to remove from all products prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_global_price_labels_remove_text',
 				'default'   => '',
-				'type'      => 'textarea',
+				'type'      => 'custom_textarea',
 				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 				'css'       => 'width:30%;min-width:300px;',
@@ -676,7 +554,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'desc_tip'  => __( 'Enter text to replace in all products prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_global_price_labels_replace_text',
 				'default'   => '',
-				'type'      => 'textarea',
+				'type'      => 'custom_textarea',
 				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes'
 				            => apply_filters( 'booster_get_message', '', 'readonly' ),
@@ -687,9 +565,17 @@ class WCJ_Price_Labels extends WCJ_Module {
 				'desc_tip'  => __( 'Enter text to replace with. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_global_price_labels_replace_with_text',
 				'default'   => '',
-				'type'      => 'textarea',
+				'type'      => 'custom_textarea',
 				'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+				'css'       => 'width:30%;min-width:300px;',
+			),
+			array(
+				'title'     => __( 'Instead of the price', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Enter text to display instead of the price. Leave blank to disable.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_global_price_labels_instead_text',
+				'default'   => '',
+				'type'      => 'custom_textarea',
 				'css'       => 'width:30%;min-width:300px;',
 			),
 			array(

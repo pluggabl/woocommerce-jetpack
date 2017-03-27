@@ -145,6 +145,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 27/03/2017 =
+~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Migrate from Custom Price Labels (Pro)" tool removed.
+~	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - `textarea` replaced with `custom_textarea`.
+~$D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - "Instead of the price" option added.
 ~!T	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (legacy and with zones) - `woocommerce_shipping_init` hook replaced with `init` hook.
 ~!	* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added.
 	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
