@@ -4,12 +4,12 @@
  *
  * The WooCommerce Jetpack Custom Shipping with Shipping Zones class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.5.6
  * @author  Algoritmika Ltd.
  */
 
-add_action( 'woocommerce_shipping_init', 'init_wc_shipping_wcj_custom_w_zones_class' );
+add_action( 'init', 'init_wc_shipping_wcj_custom_w_zones_class' );
 
 if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 

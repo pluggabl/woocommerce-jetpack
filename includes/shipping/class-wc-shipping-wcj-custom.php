@@ -4,12 +4,12 @@
  *
  * The WooCommerce Jetpack Custom Shipping class.
  *
- * @version 2.5.6
+ * @version 2.6.1
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
 
-add_action( 'woocommerce_shipping_init', 'init_wc_shipping_wcj_custom_class' );
+add_action( 'init', 'init_wc_shipping_wcj_custom_class' );
 
 if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 
