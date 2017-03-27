@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 27/03/2017 =
+~!	* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added.
 	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
 ~D	* Dev - Shortcodes - `on_empty` attribute added to all shortcodes.
 ~D	* Dev - Shortcodes - `wcj_shortcode_result` filter added to all shortcodes.
@@ -152,7 +153,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Calculate with Inversion" option added.
 ~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Code refactoring. Exchange rates functions moved to separate file. JS "Grab rate" button now works even if module is disabled.
 ~!$D* Dev - PRICES & CURRENCIES - Currency per Product - "Cart and Checkout Behaviour Options" settings section added.
-~D	* Dev - PRICES & CURRENCIES - Currency per Product - WooCommerce Bookings plugin support added.
+~D	* Dev - PRICES & CURRENCIES - Currency per Product - "WooCommerce Bookings" plugin support added.
 ~$D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Override Country Options - "Override Scope" option added.
 ~	* Dev - PRODUCTS - Product Input Fields - Check for enabled fields added in `add_product_input_fields_to_cart_item_data()`.
 ~	* Fix - PRODUCTS - Product Input Fields - Check for enabled fields fixed (in `validate_product_input_fields_on_add_to_cart()` and `add_product_input_fields_to_order_item_name()`.
