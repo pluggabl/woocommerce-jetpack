@@ -145,37 +145,37 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 27/03/2017 =
+	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
+~D	* Dev - Shortcodes - `on_empty` attribute added to all shortcodes.
+~D	* Dev - Shortcodes - `wcj_shortcode_result` filter added to all shortcodes.
+~D	* Dev - Shortcodes - Products - `[wcj_product_gallery_image_url]` shortcode added.
+~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Calculate with Inversion" option added.
+~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Code refactoring. Exchange rates functions moved to separate file. JS "Grab rate" button now works even if module is disabled.
+~!$D* Dev - PRICES & CURRENCIES - Currency per Product - "Cart and Checkout Behaviour Options" settings section added.
+~D	* Dev - PRICES & CURRENCIES - Currency per Product - WooCommerce Bookings plugin support added.
+~$D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Override Country Options - "Override Scope" option added.
 ~	* Dev - PRODUCTS - Product Input Fields - Check for enabled fields added in `add_product_input_fields_to_cart_item_data()`.
 ~	* Fix - PRODUCTS - Product Input Fields - Check for enabled fields fixed (in `validate_product_input_fields_on_add_to_cart()` and `add_product_input_fields_to_order_item_name()`.
-~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Calculate with Inversion" option added.
-~!$D* Dev - SHIPPING & ORDERS - Order Numbers - "Number Generation" selection added (and "Pseudorandom - Hash (max 10 digits)" option).
-~	* Dev - SHIPPING & ORDERS - Order Numbers - Default values added to all `get_option()` calls. Code cleaned up.
-~!$D* Dev - PRICES & CURRENCIES - Currency per Product - "Cart and Checkout Behaviour Options" settings section added.
 	* Fix - PRODUCTS - Product Input Fields - Product Input Fields Global Options - Product Input Fields Number - Tooltip fixed.
-~D	* Dev - PRICES & CURRENCIES - Currency per Product - WooCommerce Bookings plugin support added.
-~$D	* Dev - PAYMENT GATEWAYS - Gateways by Shipping - Initial module release.
-~D	* Dev - Shortcodes - Products - `[wcj_product_gallery_image_url]` shortcode added.
-~D	* Dev - Shortcodes - `wcj_shortcode_result` filter added to all shortcodes.
-~D	* Dev - Shortcodes - `on_empty` attribute added to all shortcodes.
-~$D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Override Country Options - "Override Scope" option added.
-	* Dev - Dashboard - Modules count (all and active) added.
-~TD	* Dev - PDF INVOICING & PACKING SLIPS - Multiple custom documents added.
 ~	* Dev - PRODUCTS - SKU - `WP_Query` optimized to return `ids` only.
 ~$D	* Dev - PRODUCTS - SKU - "Generate SKUs Only for Products with Empty SKU" option added.
-~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Code refactoring. Exchange rates functions moved to separate file. JS "Grab rate" button now works even if module is disabled.
-D	* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Same Days Last Year" option added.
-~T	* Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - `woocommerce_payment_complete` hook added.
-~D	* Dev - EMAILS & MISC. - Custom CSS - Initial module release. CSS options moved from "General" module.
-	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
-~D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
 D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
-D	* Tweak - EMAILS & MISC. - EU VAT Number - Moved to "CART & CHECKOUT" category.
-D	* Tweak - EMAILS & MISC. - Products XML - Moved to "PRODUCTS" category.
-D	* Tweak - CART & CHECKOUT - Mini Cart - Module renamed to "Mini Cart Custom Info". Description updated.
+~D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
+~$D	* Dev - PAYMENT GATEWAYS - Gateways by Shipping - Initial module release.
+~!$D* Dev - SHIPPING & ORDERS - Order Numbers - "Number Generation" selection added (and "Pseudorandom - Hash (max 10 digits)" option).
+~	* Dev - SHIPPING & ORDERS - Order Numbers - Default values added to all `get_option()` calls. Code cleaned up.
+~T	* Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - `woocommerce_payment_complete` hook added.
+~TD	* Dev - PDF INVOICING & PACKING SLIPS - Multiple custom documents added.
+~D	* Dev - EMAILS & MISC. - Custom CSS - Initial module release. CSS options moved from "General" module.
+D	* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Same Days Last Year" option added.
+	* Tweak - Dashboard - Modules count (all and active) added.
 	* Tweak - Tooltip for admin added to all "Module Tools" sections.
 	* Tweak - Language (POT) file updated.
 	* Tweak - PRODUCTS - Product Listings - Description updated.
 	* Tweak - PRODUCTS - Products per Page - Description updated.
+D	* Tweak - CART & CHECKOUT - Mini Cart - Module renamed to "Mini Cart Custom Info". Description updated.
+D	* Tweak - EMAILS & MISC. - EU VAT Number - Moved to "CART & CHECKOUT" category.
+D	* Tweak - EMAILS & MISC. - Products XML - Moved to "PRODUCTS" category.
 
 = 2.6.0 - 02/03/2017 =
 * Dev - Dashboard - Manage Settings - Restyled.
