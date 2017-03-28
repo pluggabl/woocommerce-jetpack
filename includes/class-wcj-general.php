@@ -62,6 +62,30 @@ class WCJ_General extends WCJ_Module {
 				add_filter( 'wc_session_expiration', array( $this, 'change_session_expiration' ), PHP_INT_MAX );
 			}
 
+			// URL Coupons
+			if ( 'yes' === get_option( 'wcj_url_coupons_enabled', 'no' ) ) {
+				add_action( 'wp_loaded', array( $this, 'maybe_apply_url_coupon' ), PHP_INT_MAX );
+			}
+
+		}
+	}
+
+	/**
+	 * maybe_apply_url_coupon.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 * @todo    (maybe) predefined $arg_key
+	 * @todo    (maybe) additional $_GET['coupon_code']
+	 * @todo    (maybe) if ( ! WC()->cart->has_discount( $coupon_code ) ) {}
+	 */
+	function maybe_apply_url_coupon() {
+		$arg_key = get_option( 'wcj_url_coupons_key', 'wcj_apply_coupon' );
+		if ( isset( $_GET[ $arg_key ] ) && '' != $_GET[ $arg_key ] ) {
+			$coupon_code = sanitize_text_field( $_GET[ $arg_key ] );
+			WC()->cart->add_discount( $coupon_code );
+			wp_safe_redirect( remove_query_arg( $arg_key ) );
+			exit;
 		}
 	}
 
@@ -457,6 +481,32 @@ class WCJ_General extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_session_expiration_options',
+			),
+			array(
+				'title'    => __( 'URL Coupons Options', 'woocommerce-jetpack' ),
+				'desc'     => sprintf( __( 'Additionally you can hide standard coupon field on cart page in Booster\'s <a href="%s">Cart Customization</a> module.', 'woocommerce-jetpack' ),
+					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=cart_and_checkout&section=cart_customization' ) ),
+				'type'     => 'title',
+				'id'       => 'wcj_url_coupons_options',
+			),
+			array(
+				'title'    => __( 'URL Coupons', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'When enabled, your users can apply shop\'s standard coupons, by visiting URL. E.g.: http://yoursite.com/?wcj_apply_coupon=couponcode.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_url_coupons_enabled',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'URL Coupons Key', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'URL key. If you change this, make sure it\'s unique and is not used anywhere on your site (e.g. by another plugin).', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_url_coupons_key',
+				'default'  => 'wcj_apply_coupon',
+				'type'     => 'text',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_url_coupons_options',
 			),
 			/* array(
 				'title'    => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),
