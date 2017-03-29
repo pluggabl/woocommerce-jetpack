@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -232,7 +232,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -292,45 +292,47 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			$item_counter++;
 			// Columns
 			foreach( $columns as $column ) {
+				$column_param = '';
 				if ( false !== ( $pos = strpos( $column, '=' ) ) ) {
 					$column_param = substr( $column, $pos + 1 );
 					$column       = substr( $column, 0, $pos );
 				}
+				$cell_data = '';
 				switch ( $column ) {
 					case 'item_debug':
 					case 'debug':
-						$data[ $item_counter ][] = print_r( $item, true );
+						$cell_data = print_r( $item, true );
 						break;
 					case 'item_regular_price':
 					case 'product_regular_price':
-						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_regular_price(), $atts ) : '';
+						$cell_data = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_regular_price(), $atts ) : '';
 						break;
 					case 'item_sale_price':
 					case 'product_sale_price':
-						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_sale_price(), $atts ) : '';
+						$cell_data = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_sale_price(), $atts ) : '';
 						break;
 					case 'item_regular_price_multiply_qty':
 					case 'product_regular_price_multiply_qty':
-						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_regular_price() * $item['qty'], $atts ) : '';
+						$cell_data = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_regular_price() * $item['qty'], $atts ) : '';
 						break;
 					case 'item_sale_price_multiply_qty':
 					case 'product_sale_price_multiply_qty':
-						$data[ $item_counter ][] = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_sale_price() * $item['qty'], $atts ) : '';
+						$cell_data = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_sale_price() * $item['qty'], $atts ) : '';
 						break;
 					case 'item_tax_class':
 					case 'tax_class':
-						$data[ $item_counter ][] = ( isset( $item['tax_class'] ) ) ? $this->get_tax_class_name( $item['tax_class'] ) : '';
+						$cell_data = ( isset( $item['tax_class'] ) ) ? $this->get_tax_class_name( $item['tax_class'] ) : '';
 						break;
 					case 'item_number':
-						$data[ $item_counter ][] = $item_counter;
+						$cell_data = $item_counter;
 						break;
 					case 'item_meta':
-						$data[ $item_counter ][] = wcj_get_order_item_meta_info( $item_id, null, $this->the_order, false, $the_product );
+						$cell_data = wcj_get_order_item_meta_info( $item_id, null, $this->the_order, false, $the_product );
 						break;
 					case 'item_name':
 					case 'product_name': // "product_" because of possible variation
 						if ( true === $item['is_custom'] ) {
-							$data[ $item_counter ][] = $item['name'];
+							$cell_data = $item['name'];
 						} else {
 							$the_item_title = $item['name'];
 							// Variation (if needed)
@@ -369,153 +371,161 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 								}
 								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">' . implode( '<br>', $options_prices ) . '</div>';
 							}
-							$data[ $item_counter ][] = $the_item_title;
+							$cell_data = $the_item_title;
 						}
 						break;
 					case 'item_product_input_fields':
-						$data[ $item_counter ][] = wcj_get_product_input_fields( $item );
+						$cell_data = wcj_get_product_input_fields( $item );
 						break;
 					case 'item_key':
 						if ( isset( $column_param ) && '' != $column_param && isset( $item[ $column_param ] ) ) {
 							$maybe_unserialized_value = maybe_unserialize( $item[ $column_param ] );
 							if ( is_array( $maybe_unserialized_value ) ) {
-								$data[ $item_counter ][] = isset( $maybe_unserialized_value['name'] ) ? $maybe_unserialized_value['name'] : '';
+								$cell_data = isset( $maybe_unserialized_value['name'] ) ? $maybe_unserialized_value['name'] : '';
 							} else {
-								$data[ $item_counter ][] = $maybe_unserialized_value;
+								$cell_data = $maybe_unserialized_value;
 							}
 						} else {
-							$data[ $item_counter ][] = '';
+							$cell_data = '';
 						}
 						break;
 					case 'item_attribute':
 					case 'product_attribute':
 						if ( isset( $column_param ) && '' != $column_param && is_object( $the_product ) ) {
-							$data[ $item_counter ][] = $the_product->get_attribute( $column_param );
+							$cell_data = $the_product->get_attribute( $column_param );
 						} else {
-							$data[ $item_counter ][] = '';
+							$cell_data = '';
 						}
 						break;
 					case 'item_excerpt':
 					case 'product_excerpt':
 						if ( true === $item['is_custom'] ) {
-							$data[ $item_counter ][] = '';
+							$cell_data = '';
 						} else {
 							global $post;
 							$post = get_post( $item['product_id'] );
 							setup_postdata( $post );
 							$the_excerpt = get_the_excerpt();
 							wp_reset_postdata();
-							$data[ $item_counter ][] = $the_excerpt;
+							$cell_data = $the_excerpt;
 						}
 						break;
 					case 'item_short_description':
 					case 'product_short_description':
-						$data[ $item_counter ][] = ( true === $item['is_custom'] ) ? '' : $this->the_product->post->post_excerpt;
+						$cell_data = ( true === $item['is_custom'] ) ? '' : $this->the_product->post->post_excerpt;
 						break;
 					case 'item_variation':
 					case 'product_variation':
 						if ( 0 != $item['variation_id'] ) {
 							if ( 'yes' === $atts['variation_as_metadata'] ) {
-								$data[ $item_counter ][] = wcj_get_order_item_meta_info( $item_id, null, $this->the_order, true, $the_product );
+								$cell_data = wcj_get_order_item_meta_info( $item_id, null, $this->the_order, true, $the_product );
 							} elseif ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) {
-								$data[ $item_counter ][] = str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ); // todo - do we need pa_ replacement?
+								$cell_data = str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ); // todo - do we need pa_ replacement?
 							}
 						} else {
-							$data[ $item_counter ][] = '';
+							$cell_data = '';
 						}
 						break;
 					case 'item_thumbnail':
 					case 'product_thumbnail':
-//						$data[ $item_counter ][] = $the_product->get_image();
+//						$cell_data = $the_product->get_image();
 						$image_id = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? 0 : $the_product->get_image_id();
 						$image_src = ( 0 != $image_id ) ? wp_get_attachment_image_src( $image_id ) : wc_placeholder_img_src();
 						if ( is_array( $image_src ) ) $image_src = $image_src[0];
 						$maybe_width  = ( 0 != $atts['product_image_width'] )  ? ' width="'  . $atts['product_image_width']  . '"' : '';
 						$maybe_height = ( 0 != $atts['product_image_height'] ) ? ' height="' . $atts['product_image_height'] . '"' : '';
-						$data[ $item_counter ][] = '<img src="' . $image_src . '"' . $maybe_width . $maybe_height . '>';
+						$cell_data = '<img src="' . $image_src . '"' . $maybe_width . $maybe_height . '>';
 						break;
 					case 'item_sku':
 					case 'product_sku':
-						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_sku();
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_sku();
 						break;
 					case 'item_quantity':
-						$data[ $item_counter ][] = $atts['quantity_prefix'] . $item['qty'];
+						$cell_data = $atts['quantity_prefix'] . $item['qty'];
 						break;
 					case 'item_total_tax_excl':
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $the_order->get_item_total( $item, false, true ), $atts );
+						$cell_data = $this->wcj_price_shortcode( $the_order->get_item_total( $item, false, true ), $atts );
 						break;
 					case 'item_total_tax_incl':
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $the_order->get_item_total( $item, true, true ), $atts );
+						$cell_data = $this->wcj_price_shortcode( $the_order->get_item_total( $item, true, true ), $atts );
 						break;
 					case 'item_subtotal_tax_excl':
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $the_order->get_item_subtotal( $item, false, true ), $atts );
+						$cell_data = $this->wcj_price_shortcode( $the_order->get_item_subtotal( $item, false, true ), $atts );
 						break;
 					case 'item_subtotal_tax_incl':
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $the_order->get_item_subtotal( $item, true, true ), $atts );
+						$cell_data = $this->wcj_price_shortcode( $the_order->get_item_subtotal( $item, true, true ), $atts );
 						break;
 					case 'item_tax':
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $the_order->get_item_tax( $item, true ), $atts );
+						$cell_data = $this->wcj_price_shortcode( $the_order->get_item_tax( $item, true ), $atts );
 						break;
 					case 'line_total_tax_excl':
 						$line_total_tax_excl = $the_order->get_line_total( $item, false, true );
 						$line_total_tax_excl = apply_filters( 'wcj_line_total_tax_excl', $line_total_tax_excl, $the_order );
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $line_total_tax_excl, $atts );
+						$cell_data = $this->wcj_price_shortcode( $line_total_tax_excl, $atts );
 						break;
 					case 'line_total_tax_incl':
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $the_order->get_line_total( $item, true, true ), $atts );
+						$cell_data = $this->wcj_price_shortcode( $the_order->get_line_total( $item, true, true ), $atts );
 						break;
 					case 'line_subtotal_tax_excl':
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $the_order->get_line_subtotal( $item, false, true ), $atts );
+						$cell_data = $this->wcj_price_shortcode( $the_order->get_line_subtotal( $item, false, true ), $atts );
 						break;
 					case 'line_subtotal_tax_incl':
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $the_order->get_line_subtotal( $item, true, true ), $atts );
+						$cell_data = $this->wcj_price_shortcode( $the_order->get_line_subtotal( $item, true, true ), $atts );
 						break;
 					case 'line_tax':
 						$line_tax = $the_order->get_line_tax( $item );
 						$line_tax = apply_filters( 'wcj_line_tax', $line_tax, $the_order );
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $line_tax, $atts );
+						$cell_data = $this->wcj_price_shortcode( $line_tax, $atts );
 						break;
 					case 'line_subtax':
 						$line_subtax = $the_order->get_line_subtotal( $item, true, false ) - $the_order->get_line_subtotal( $item, false, false );
-						$data[ $item_counter ][] = $this->wcj_price_shortcode( $line_subtax, $atts );
+						$cell_data = $this->wcj_price_shortcode( $line_subtax, $atts );
 						break;
 					case 'item_tax_percent':
 					case 'line_tax_percent':
 						$item_total = $the_order->get_item_total( $item, false, /* true */ false );
 						$item_tax_percent = ( 0 != $item_total ) ? $the_order->get_item_tax( $item, false ) / $item_total * 100 : 0;
 						$item_tax_percent = apply_filters( 'wcj_line_tax_percent', $item_tax_percent, $the_order );
-						$data[ $item_counter ][] = sprintf( $atts['tax_percent_format'], $item_tax_percent );
+						$cell_data = sprintf( $atts['tax_percent_format'], $item_tax_percent );
 						/* $tax_labels = array();
 						foreach ( $the_order->get_taxes() as $the_tax ) {
 							$tax_labels[] = $the_tax['label'];
 						}
-						$data[ $item_counter ][] = implode( ', ', $tax_labels ); */
+						$cell_data = implode( ', ', $tax_labels ); */
 						break;
 					/* case 'line_tax_percent':
 						$line_total = $the_order->get_line_total( $item, false, true );
 						$line_tax_percent = ( 0 != $line_total ) ? $the_order->get_line_tax( $item ) / $line_total * 100 : 0;
 						$line_tax_percent = apply_filters( 'wcj_line_tax_percent', $line_tax_percent, $the_order );
-						$data[ $item_counter ][] = sprintf( $atts['tax_percent_format'], $line_tax_percent );
+						$cell_data = sprintf( $atts['tax_percent_format'], $line_tax_percent );
 						break; */
 					case 'item_weight':
 					case 'product_weight':
-						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_weight();
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_weight();
 						break;
 					case 'item_width':
 					case 'product_width':
-						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_width();
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_width();
 						break;
 					case 'item_height':
 					case 'product_height':
-						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_height();
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_height();
 						break;
 					case 'item_length':
 					case 'product_length':
-						$data[ $item_counter ][] = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_length();
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_length();
 						break;
 					default:
-						$data[ $item_counter ][] = ''; // $column;
+						$cell_data = ''; // $column;
 				}
+				$data[ $item_counter ][] = apply_filters( 'wcj_pdf_invoicing_cell_data', $cell_data, array(
+					'column'       => $column,
+					'column_param' => $column_param,
+					'item'         => $item,
+					'item_id'      => $item_id,
+					'item_counter' => $item_counter,
+					'product'      => $the_product,
+				) );
 			}
 		}
 

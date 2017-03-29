@@ -144,7 +144,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 28/03/2017 =
+= 2.6.1 - 29/03/2017 =
+~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter added.
 ~!D$* Dev - EMAILS & MISC. - General - "URL Coupons" options added.
 -!	* Dev - Filter (Plus) issue.
 ~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Migrate from Custom Price Labels (Pro)" tool removed.
