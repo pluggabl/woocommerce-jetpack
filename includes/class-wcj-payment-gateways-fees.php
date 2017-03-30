@@ -124,7 +124,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				array(
 					'title'     => $gateway->title,
 					'type'      => 'title',
-					'desc'      => ( $gateway->is_available() ? __( 'Available', 'woocommerce-jetpack' ) : __( 'Not available', 'woocommerce-jetpack' ) ),
+//					'desc'      => ( $gateway->is_available() ? __( 'Available', 'woocommerce-jetpack' ) : __( 'Not available', 'woocommerce-jetpack' ) ),
 					'id'        => 'wcj_gateways_fees_options_' . $key,
 				),
 				array(
