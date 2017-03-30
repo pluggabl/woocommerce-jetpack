@@ -146,7 +146,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 	/**
 	 * wcj_price_by_country.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 */
 	function wcj_price_by_country( $price, $product, $group_id, $the_current_filter = '' ) {
@@ -161,7 +161,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 			if ( is_numeric( $product ) ) {
 				$the_product_id = $product;
 			} else {
-				$the_product_id = ( isset( $product->variation_id ) ) ? $product->variation_id : $product->id;
+				$the_product_id = ( isset( $product->variation_id ) && 0 != $product->variation_id ) ? $product->variation_id : $product->id;
 			}
 
 			$meta_id = '_' . 'wcj_' . $meta_box_id . '_make_empty_price_' . $scope . '_' . $group_id;
