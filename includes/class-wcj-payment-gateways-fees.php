@@ -18,7 +18,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
 	function __construct() {
 
@@ -28,32 +28,13 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-fees-and-discounts/';
 		parent::__construct();
 
-		add_filter( 'init',  array( $this, 'add_hooks' ) );
+		add_filter( 'init',  array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 			add_action( 'woocommerce_cart_calculate_fees', array( $this, 'gateways_fees' ) );
-			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_checkout_script' ) );
-//			add_filter( 'woocommerce_payment_gateways_settings', array( $this, 'add_fees_settings' ), 100 );
-			add_action( 'init', array( $this, 'register_script' ) );
+			add_action( 'wp_enqueue_scripts',              array( $this, 'enqueue_checkout_script' ) );
+			add_action( 'init',                            array( $this, 'register_script' ) );
 		}
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.0
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_payment_gateways_fees_settings', $settings );
-		return $this->add_standard_settings( $settings );
-	}
-
-	/**
-	 * add_hooks.
-	 */
-	function add_hooks() {
-		add_filter( 'wcj_payment_gateways_fees_settings', array( $this, 'add_fees_settings' ) );
 	}
 
 	/**
@@ -123,7 +104,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 						}
 						break;
 				}
-				if ( '' != $fee_text && 0 != $final_fee_to_add ) {
+				if ( 0 != $final_fee_to_add ) {
 					$taxable = ( 'yes' === get_option( 'wcj_gateways_fees_is_taxable_' . $current_gateway ) ) ? true : false;
 					$tax_class_name = '';
 					if ( $taxable ) {
@@ -140,9 +121,9 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * add_fees_settings.
 	 *
-	 * @version 2.3.0
+	 * @version 2.6.1
 	 */
-	function add_fees_settings( $settings ) {
+	function add_settings( $settings ) {
 		$settings[] = array(
 			'title' => __( 'Payment Gateways Fees and Discounts Options', 'woocommerce-jetpack' ),
 			'type'  => 'title',
