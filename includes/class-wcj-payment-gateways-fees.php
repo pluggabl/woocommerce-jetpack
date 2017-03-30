@@ -33,25 +33,19 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			add_action( 'woocommerce_cart_calculate_fees', array( $this, 'gateways_fees' ) );
 			add_action( 'wp_enqueue_scripts',              array( $this, 'enqueue_checkout_script' ) );
-			add_action( 'init',                            array( $this, 'register_script' ) );
 		}
-	}
-
-	/**
-	 * register_script.
-	 */
-	public function register_script() {
-		wp_register_script( 'wcj-payment-gateways-checkout', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/checkout.js', array( 'jquery' ), false, true );
 	}
 
 	/**
 	 * enqueue_checkout_script.
+	 *
+	 * @version 2.6.1
 	 */
-	public function enqueue_checkout_script() {
+	function enqueue_checkout_script() {
 		if( ! is_checkout() ) {
 			return;
 		}
-		wp_enqueue_script( 'wcj-payment-gateways-checkout' );
+		wp_enqueue_script( 'wcj-payment-gateways-checkout', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/checkout.js', array( 'jquery' ), WCJ()->version, true );
 	}
 
 	/**
@@ -124,19 +118,20 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	 * @version 2.6.1
 	 */
 	function add_settings( $settings ) {
-		$settings[] = array(
-			'title' => __( 'Payment Gateways Fees and Discounts Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'desc'  => __( 'This section lets you set extra fees for payment gateways.', 'woocommerce-jetpack' ),
-			'id'    => 'wcj_payment_gateways_fees_options',
-		);
-//		$available_gateways = WC()->payment_gateways->payment_gateways();
-		global $woocommerce;
-		$available_gateways = $woocommerce->payment_gateways->payment_gateways();
+		$settings = array_merge( $settings, array(
+			array(
+				'title'     => __( 'Payment Gateways Fees and Discounts Options', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'desc'      => __( 'This section lets you set extra fees for payment gateways.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_payment_gateways_fees_options',
+			),
+		) );
+		$available_gateways = WC()->payment_gateways->payment_gateways();
 		foreach ( $available_gateways as $key => $gateway ) {
 			$settings = array_merge( $settings, array(
 				array(
-					'title'     => $gateway->title, // . ' [' . ( $gateway->is_available() ? __( 'Available', 'woocommerce-jetpack' ) : __( 'Not available', 'woocommerce-jetpack' ) ) . ']',
+					'title'     => $gateway->title,
+//						'<em>' . ( $gateway->is_available() ? __( 'Available', 'woocommerce-jetpack' ) : __( 'Not available', 'woocommerce-jetpack' ) ) . '</em>',
 					'desc'      => __( 'Fee (or discount) title to show to customer.', 'woocommerce-jetpack' ),
 					'desc_tip'  => __( 'Leave blank to disable.', 'woocommerce-jetpack' ),
 					'id'        => 'wcj_gateways_fees_text_' . $key,
@@ -146,7 +141,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				array(
 					'title'     => '',
 					'desc'      => __( 'Fee (or discount) type.', 'woocommerce-jetpack' ),
-					'desc_tip'  => __( 'Percent or fixed value.', 'woocommerce-jetpack' )/*  . ' ' . apply_filters( 'booster_get_message', '', 'desc_no_link' ) */,
+					'desc_tip'  => __( 'Percent or fixed value.', 'woocommerce-jetpack' ),
 					'id'        => 'wcj_gateways_fees_type_' . $key,
 					'default'   => 'fixed',
 					'type'      => 'select',
@@ -193,7 +188,6 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				array(
 					'title'     => '',
 					'desc'      => __( 'Round the fee (or discount) value before adding to the cart.', 'woocommerce-jetpack' ),
-//					'desc_tip'  => __( 'Set 0 to disable.', 'woocommerce-jetpack' ),
 					'id'        => 'wcj_gateways_fees_round_' . $key,
 					'default'   => 'no',
 					'type'      => 'checkbox',
@@ -201,7 +195,6 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				array(
 					'title'     => '',
 					'desc'      => __( 'If rounding is enabled, set precision here.', 'woocommerce-jetpack' ),
-//					'desc_tip'  => __( 'Set 0 to disable.', 'woocommerce-jetpack' ),
 					'id'        => 'wcj_gateways_fees_round_precision_' . $key,
 					'default'   => 0,
 					'type'      => 'number',
@@ -227,10 +220,12 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				),
 			) );
 		}
-		$settings[] = array(
-			'type'  => 'sectionend',
-			'id'    => 'wcj_payment_gateways_fees_options',
-		);
+		$settings = array_merge( $settings, array(
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_payment_gateways_fees_options',
+			),
+		) );
 		return $settings;
 	}
 }
