@@ -199,7 +199,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 					),
 				),
 				array(
-					'title'     => __( 'Is taxable?', 'woocommerce-jetpack' ),
+					'title'     => __( 'Taxing', 'woocommerce-jetpack' ),
 					'desc'      => __( 'Taxable', 'woocommerce-jetpack' ),
 					'id'        => 'wcj_gateways_fees_is_taxable_' . $key,
 					'default'   => 'no',
@@ -207,7 +207,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				),
 				array(
 					'title'     => __( 'Tax Class', 'woocommerce-jetpack' ),
-					'desc_tip'  => __( 'If Taxable is enabled, set tax class here.', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'If Taxing is enabled, set tax class here.', 'woocommerce-jetpack' ),
 					'id'        => 'wcj_gateways_fees_tax_class_id_' . $key,
 					'default'   => '',
 					'type'      => 'select',
