@@ -144,7 +144,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 30/03/2017 =
+= 2.6.1 - 31/03/2017 =
+	* Fix - CART & CHECKOUT - Checkout Custom Fields - Custom Fields Number - Tooltip fixed.
 ~	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `wcj_price_by_country()` - Additional check `0 != $product->variation_id` added.
 ~	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Code refactoring.
 ~	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Multicurrency (Currency Switcher)" module support added.

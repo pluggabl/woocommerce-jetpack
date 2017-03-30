@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -610,7 +610,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
 	public function get_settings() {
 
@@ -654,7 +654,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 			),
 			array(
 				'title'     => __( 'Custom Fields Number', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Click "Save changes" after you change this number.', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'Click Save changes after you change this number.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_checkout_custom_fields_total_number',
 				'default'   => 1,
 				'type'      => 'custom_number',
