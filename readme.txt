@@ -144,7 +144,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 29/03/2017 =
+= 2.6.1 - 30/03/2017 =
+~	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Multicurrency (Currency Switcher)" module support added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter added.
 ~!D$* Dev - EMAILS & MISC. - General - "URL Coupons" options added.
 -!	* Dev - Filter (Plus) issue.

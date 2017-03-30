@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Fees class.
  *
- * @version 2.5.0
+ * @version 2.6.1
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -76,7 +76,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * gateways_fees.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
 	function gateways_fees() {
 		global $woocommerce;
@@ -98,6 +98,11 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 			$fee_text  = get_option( 'wcj_gateways_fees_text_' . $current_gateway );
 			$min_cart_amount = get_option( 'wcj_gateways_fees_min_cart_amount_' . $current_gateway );
 			$max_cart_amount = get_option( 'wcj_gateways_fees_max_cart_amount_' . $current_gateway );
+			// Multicurrency (Currency Switcher) module
+			if ( WCJ()->modules['multicurrency']->is_enabled() ) {
+				$min_cart_amount = WCJ()->modules['multicurrency']->change_price_by_currency( $min_cart_amount, null );
+				$max_cart_amount = WCJ()->modules['multicurrency']->change_price_by_currency( $max_cart_amount, null );
+			}
 			$total_in_cart = $woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total;
 			if ( '' != $fee_text && $total_in_cart >= $min_cart_amount  && ( 0 == $max_cart_amount || $total_in_cart <= $max_cart_amount ) ) {
 				$fee_value = get_option( 'wcj_gateways_fees_value_' . $current_gateway );
@@ -105,6 +110,10 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				$final_fee_to_add = 0;
 				switch ( $fee_type ) {
 					case 'fixed':
+						// Multicurrency (Currency Switcher) module
+						if ( WCJ()->modules['multicurrency']->is_enabled() ) {
+							$fee_value = WCJ()->modules['multicurrency']->change_price_by_currency( $fee_value, null );
+						}
 						$final_fee_to_add = $fee_value;
 						break;
 					case 'percent':
