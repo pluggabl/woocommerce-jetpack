@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,12 +17,13 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	public function __construct() {
 
 		$this->the_shortcodes = array(
 			'wcj_order_status',
+			'wcj_order_status_label',
 			'wcj_order_date',
 			'wcj_order_time',
 			'wcj_order_number',
@@ -569,6 +570,17 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_order_status( $atts ) {
 		return $this->the_order->get_status();
+	}
+
+	/**
+	 * wcj_order_status_label.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function wcj_order_status_label( $atts ) {
+		$status_object = get_post_status_object( 'wc-' . $this->the_order->get_status() );
+		return ( isset( $status_object->label ) ) ? $status_object->label : '';
 	}
 
 	/**
