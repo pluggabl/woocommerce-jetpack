@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Emails class.
  *
- * @version 2.5.5
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
 	public function __construct() {
 
@@ -37,10 +37,30 @@ class WCJ_Emails extends WCJ_Module {
 			if ( '' != get_option( 'wcj_emails_cc_email' ) ) {
 				add_filter( 'woocommerce_email_headers', array( $this, 'add_cc_email' ) );
 			}
+			// Product Categories
+			if ( 'yes' === get_option( 'wcj_add_product_categories_to_email_order_item_name', 'no' ) ) {
+				add_filter( 'woocommerce_order_item_name', array( $this, 'add_product_categories_to_email_order_item_name' ), PHP_INT_MAX, 2 );
+			}
 //			add_action( 'woocommerce_email_after_order_table', array( $this, 'add_payment_method_to_new_order_email' ), 15, 2 );
 			// Settings
 			add_filter( 'woocommerce_email_settings', array( $this, 'add_email_forwarding_fields_to_wc_standard_settings' ), 100 );
 		}
+	}
+
+	/**
+	 * add_product_categories_to_email_order_item_name.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function add_product_categories_to_email_order_item_name( $item_name, $item ) {
+		if ( $item['product_id'] ) {
+			$_product = wc_get_product( $item['product_id'] );
+			if ( $_product ) {
+				$item_name .= '<br><em>' . strip_tags( $_product->get_categories() ) . '</em>';
+			}
+		}
+		return $item_name;
 	}
 
 	/**
@@ -180,7 +200,7 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.1
 	 */
 	function get_settings() {
 		$settings = array(
@@ -212,6 +232,22 @@ class WCJ_Emails extends WCJ_Module {
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_emails_custom_emails_options',
+			),
+			array(
+				'title'    => __( 'More Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_emails_more_options',
+			),
+			array(
+				'title'    => __( 'Add Product Categories to Item Name', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+				'type'     => 'checkbox',
+				'id'       => 'wcj_add_product_categories_to_email_order_item_name',
+				'default'  => 'no',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_emails_more_options',
 			),
 		) );
 		$settings = array_merge( $settings, $this->get_emails_forwarding_settings() );
