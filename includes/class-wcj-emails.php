@@ -37,9 +37,9 @@ class WCJ_Emails extends WCJ_Module {
 			if ( '' != get_option( 'wcj_emails_cc_email' ) ) {
 				add_filter( 'woocommerce_email_headers', array( $this, 'add_cc_email' ) );
 			}
-			// Product Categories
-			if ( 'yes' === get_option( 'wcj_add_product_categories_to_email_order_item_name', 'no' ) ) {
-				add_filter( 'woocommerce_order_item_name', array( $this, 'add_product_categories_to_email_order_item_name' ), PHP_INT_MAX, 2 );
+			// Product Info
+			if ( 'yes' === get_option( 'wcj_product_info_in_email_order_item_name_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_order_item_name', array( $this, 'add_product_info_to_email_order_item_name' ), PHP_INT_MAX, 2 );
 			}
 //			add_action( 'woocommerce_email_after_order_table', array( $this, 'add_payment_method_to_new_order_email' ), 15, 2 );
 			// Settings
@@ -48,17 +48,18 @@ class WCJ_Emails extends WCJ_Module {
 	}
 
 	/**
-	 * add_product_categories_to_email_order_item_name.
+	 * add_product_info_to_email_order_item_name.
 	 *
 	 * @version 2.6.1
 	 * @since   2.6.1
 	 */
-	function add_product_categories_to_email_order_item_name( $item_name, $item ) {
+	function add_product_info_to_email_order_item_name( $item_name, $item ) {
 		if ( $item['product_id'] ) {
-			$_product = wc_get_product( $item['product_id'] );
-			if ( $_product ) {
-				$item_name .= '<br><em>' . strip_tags( $_product->get_categories() ) . '</em>';
-			}
+			global $post;
+			$post = get_post( $item['product_id'] );
+			setup_postdata( $post );
+			$item_name .= do_shortcode( get_option( 'wcj_product_info_in_email_order_item_name', '[wcj_product_categories strip_tags="yes" before="<hr><em>" after="</em>"]' ) );
+			wp_reset_postdata();
 		}
 		return $item_name;
 	}
@@ -234,20 +235,28 @@ class WCJ_Emails extends WCJ_Module {
 				'id'       => 'wcj_emails_custom_emails_options',
 			),
 			array(
-				'title'    => __( 'More Options', 'woocommerce-jetpack' ),
+				'title'    => __( 'Product Info in Item Name', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'id'       => 'wcj_emails_more_options',
+				'id'       => 'wcj_product_info_in_email_order_item_name_options',
 			),
 			array(
-				'title'    => __( 'Add Product Categories to Item Name', 'woocommerce-jetpack' ),
+				'title'    => __( 'Add Product Info to Item Name', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 				'type'     => 'checkbox',
-				'id'       => 'wcj_add_product_categories_to_email_order_item_name',
+				'id'       => 'wcj_product_info_in_email_order_item_name_enabled',
 				'default'  => 'no',
 			),
 			array(
+				'title'    => __( 'Info', 'woocommerce-jetpack' ),
+				'desc'     => sprintf( __( 'You can use <a target="_blank" href="%s">Booster\'s products shortcodes</a> here.', 'woocommerce-jetpack' ), 'http://booster.io/category/shortcodes/products-shortcodes/' ),
+				'type'     => 'custom_textarea',
+				'id'       => 'wcj_product_info_in_email_order_item_name',
+				'default'  => '[wcj_product_categories strip_tags="yes" before="<hr><em>" after="</em>"]',
+				'css'      => 'width:66%;min-width:300px;height:150px;',
+			),
+			array(
 				'type'     => 'sectionend',
-				'id'       => 'wcj_emails_more_options',
+				'id'       => 'wcj_product_info_in_email_order_item_name_options',
 			),
 		) );
 		$settings = array_merge( $settings, $this->get_emails_forwarding_settings() );
