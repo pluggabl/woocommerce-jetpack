@@ -144,7 +144,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 05/04/2017 =
+= 2.6.1 - 06/04/2017 =
 ~!D	* Dev - PRODUCTS - Product Input Fields - Timepicker - "Min time" and "Max time" options added.
 ~	* Dev - Shortcodes - Products - `[wcj_product_categories]` - WooCommerce v3.0.0 compatibility.
 ~D	* Dev - EMAILS & MISC. - Emails - "Product Info in Item Name" options added.
@@ -155,7 +155,6 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Multicurrency (Currency Switcher)" module support added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter added.
 ~!D$* Dev - EMAILS & MISC. - General - "URL Coupons" options added.
--!	* Dev - Filter (Plus) issue.
 ~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Migrate from Custom Price Labels (Pro)" tool removed.
 ~	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - `textarea` replaced with `custom_textarea`.
 ~$D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - "Instead of the price" option added.
