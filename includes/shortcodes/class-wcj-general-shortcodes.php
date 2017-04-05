@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	public function __construct() {
 
@@ -28,6 +28,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_current_timestamp',
 //			'wcj_image',
 			'wcj_cart_items_total_weight',
+			'wcj_cart_items_total_quantity',
 			'wcj_wpml',
 			'wcj_wpml_translate',
 			'wcj_country_select_drop_down_list',
@@ -472,6 +473,21 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_wpml_translate( $atts, $content ) {
 		return $this->wcj_wpml( $atts, $content );
+	}
+
+	/**
+	 * wcj_cart_items_total_quantity.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function wcj_cart_items_total_quantity( $atts ) {
+		$total_quantity = 0;
+		$_items = WC()->cart->get_cart();
+		foreach( $_items as $_item ) {
+			$total_quantity += $_item['quantity'];
+		}
+		return $total_quantity;
 	}
 
 	/**
