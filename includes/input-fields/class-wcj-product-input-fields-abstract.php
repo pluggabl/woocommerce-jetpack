@@ -187,6 +187,22 @@ class WCJ_Product_Input_Fields_Abstract {
 			),
 
 			array(
+				'id'                => 'wcj_product_input_fields_type_timepicker_mintime_' . $this->scope . '_',
+				'title'             => __( 'If timepicker is selected, set min time here. Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid option formats', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Timepicker: Min Time', 'woocommerce-jetpack' ),
+				'type'              => 'text',
+				'default'           => '',
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_type_timepicker_maxtime_' . $this->scope . '_',
+				'title'             => __( 'If timepicker is selected, set max time here. Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid option formats', 'woocommerce-jetpack' ),
+				'short_title'       => __( 'Timepicker: Max Time', 'woocommerce-jetpack' ),
+				'type'              => 'text',
+				'default'           => '',
+			),
+
+			array(
 				'id'                => 'wcj_product_input_fields_type_timepicker_interval_' . $this->scope . '_',
 				'title'             => __( 'If timepicker is selected, set interval (in minutes) here', 'woocommerce-jetpack' ),
 				'short_title'       => __( 'Timepicker: Interval', 'woocommerce-jetpack' ),
@@ -487,7 +503,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.1
 	 */
 	function add_product_input_fields_to_frontend() {
 		global $product;
@@ -520,6 +536,14 @@ class WCJ_Product_Input_Fields_Abstract {
 
 			$timepicker_format = $this->get_value( 'wcj_product_input_fields_type_timepicker_format_' . $this->scope . '_' . $i, $product->id, 'hh:mm p' );
 			$timepicker_interval = $this->get_value( 'wcj_product_input_fields_type_timepicker_interval_' . $this->scope . '_' . $i, $product->id, 15 );
+			$timepicker_mintime = $this->get_value( 'wcj_product_input_fields_type_timepicker_mintime_' . $this->scope . '_' . $i, $product->id, '' );
+			$timepicker_maxtime = $this->get_value( 'wcj_product_input_fields_type_timepicker_maxtime_' . $this->scope . '_' . $i, $product->id, '' );
+			if ( '' != $timepicker_mintime ) {
+				$timepicker_mintime = ' mintime="' . $timepicker_mintime . '"';
+			}
+			if ( '' != $timepicker_maxtime ) {
+				$timepicker_maxtime = ' maxtime="' . $timepicker_maxtime . '"';
+			}
 
 			$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product->id, '' );
 			$custom_attributes = ( 'file' === $type ) ? ' accept="' . $file_accept . '"' : '';
@@ -564,7 +588,7 @@ class WCJ_Product_Input_Fields_Abstract {
 
 					case 'timepicker':
 
-						echo '<p>' . $title . '<input interval="' . $timepicker_interval . '" timeformat="' . $timepicker_format . '" type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						echo '<p>' . $title . '<input' . $timepicker_mintime . $timepicker_maxtime . ' interval="' . $timepicker_interval . '" timeformat="' . $timepicker_format . '" type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'textarea':

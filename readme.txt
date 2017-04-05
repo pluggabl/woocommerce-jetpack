@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 05/04/2017 =
+~!D	* Dev - PRODUCTS - Product Input Fields - Timepicker - "Min time" and "Max time" options added.
 ~	* Dev - Shortcodes - Products - `[wcj_product_categories]` - WooCommerce v3.0.0 compatibility.
 ~D	* Dev - EMAILS & MISC. - Emails - "Product Info in Item Name" options added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_status_label]` shortcode added.
