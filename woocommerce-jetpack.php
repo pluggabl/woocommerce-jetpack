@@ -39,7 +39,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.1-dev-201704050454';
+	public $version = '2.6.1-dev-201704050501';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -276,7 +276,7 @@ final class WC_Jetpack {
 	/**
 	 * maybe_enqueue_timepicker_scripts.
 	 *
-	 * @version 2.4.0
+	 * @version 2.6.1
 	 * @since   2.4.0
 	 */
 	function maybe_enqueue_timepicker_scripts() {
@@ -284,11 +284,11 @@ final class WC_Jetpack {
 			wp_enqueue_script( 'jquery-ui-timepicker',
 				wcj_plugin_url() . '/includes/js/jquery.timepicker.min.js',
 				array( 'jquery' ),
-				false,
+				$this->version,
 				true );
 			wp_enqueue_script( 'wcj-timepicker', wcj_plugin_url() . '/includes/js/wcj-timepicker.js',
 				array( 'jquery' ),
-				false,
+				$this->version,
 				true );
 		}
 	}
