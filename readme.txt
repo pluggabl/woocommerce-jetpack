@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 06/04/2017 =
+-!	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - WooCommerce v3.0.0 compatibility.
 ~D	* Dev - Shortcodes - General - `[wcj_cart_items_total_quantity]` shortcode added.
 ~!D	* Dev - PRODUCTS - Product Input Fields - Timepicker - "Min time" and "Max time" options added.
 ~	* Dev - Shortcodes - Products - `[wcj_product_categories]` - WooCommerce v3.0.0 compatibility.
