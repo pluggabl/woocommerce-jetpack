@@ -447,8 +447,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.4.0
 	 */
 	function wcj_product_categories( $atts ) {
-		$current_wc_version = get_option( 'woocommerce_version', null );
-		$return = ( version_compare( $current_wc_version, '3.0.0', '<' ) ) ? $this->the_product->get_categories() : wc_get_product_category_list( $atts['product_id'] );
+		$return = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? $this->the_product->get_categories() : wc_get_product_category_list( $atts['product_id'] );
 		return ( false === $return ) ? '' : $return;
 	}
 
