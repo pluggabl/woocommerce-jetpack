@@ -145,7 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 06/04/2017 =
--!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_price` filters replaced for for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0.
+-!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_price` filters replaced for for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0. `wc_get_formatted_variation()` used for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.
 -!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_categories]` - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
 ~D	* Dev - Shortcodes - General - `[wcj_cart_items_total_quantity]` shortcode added.

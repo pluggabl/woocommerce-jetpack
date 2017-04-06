@@ -48,7 +48,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.4.3
+	 * @version 2.6.1
 	 */
 	function get_meta_box_options() {
 		$main_product_id = get_the_ID();
@@ -58,7 +58,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 			$available_variations = $_product->get_available_variations();
 			foreach ( $available_variations as $variation ) {
 				$variation_product = wc_get_product( $variation['variation_id'] );
-				$products[ $variation['variation_id'] ] = ' (' . $variation_product->get_formatted_variation_attributes( true ) . ')';
+				if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
+					$products[ $variation['variation_id'] ] = ' (' . $variation_product->get_formatted_variation_attributes( true ) . ')';
+				} else {
+					$products[ $variation['variation_id'] ] = ' (' . wc_get_formatted_variation( $variation_product, true ) . ')';
+				}
 			}
 		} else {
 			$products[ $main_product_id ] = '';
@@ -127,6 +131,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 			add_filter( 'woocommerce_variation_prices_regular_price', array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
 			add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
 			add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 1, 3 );
+			if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+				add_filter( 'woocommerce_product_variation_get_price',         array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
+				add_filter( 'woocommerce_product_variation_get_regular_price', array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
+				add_filter( 'woocommerce_product_variation_get_sale_price',    array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
+			}
 			// Grouped products
 			add_filter( 'woocommerce_get_price_including_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 1, 3 );
 			add_filter( 'woocommerce_get_price_excluding_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 1, 3 );
@@ -238,25 +247,21 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 		// Per product
 		if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) && null != $_product ) {
-			if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
-				$_product_id = ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
-			} else {
-				$_product_id = $_product->get_id(); // TODO: WC 3.0.0
-			}
+			$_product_id = wcj_get_product_id( $_product );
 			if ( '' != ( $regular_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_regular_price_' . $this->get_current_currency_code(), true ) ) ) {
-				$the_current_filter = current_filter();
-				if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
+				$_current_filter = current_filter();
+				if ( 'woocommerce_get_price_including_tax' == $_current_filter || 'woocommerce_get_price_excluding_tax' == $_current_filter ) {
 					$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 					return $_product->$get_price_method();
 
-				} elseif ( 'woocommerce_get_price' == $the_current_filter || 'woocommerce_variation_prices_price' == $the_current_filter ) {
+				} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER == $_current_filter || 'woocommerce_variation_prices_price' == $_current_filter || 'woocommerce_product_variation_get_price' == $_current_filter ) {
 					$sale_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
 					return ( '' != $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
 
-				} elseif ( 'woocommerce_get_regular_price' == $the_current_filter || 'woocommerce_variation_prices_regular_price' == $the_current_filter ) {
+				} elseif ( WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER == $_current_filter || 'woocommerce_variation_prices_regular_price' == $_current_filter || 'woocommerce_product_variation_get_regular_price' == $_current_filter ) {
 					return $regular_price_per_product;
 
-				} elseif ( 'woocommerce_get_sale_price' == $the_current_filter || 'woocommerce_variation_prices_sale_price' == $the_current_filter ) {
+				} elseif ( WCJ_PRODUCT_GET_SALE_PRICE_FILTER == $_current_filter || 'woocommerce_variation_prices_sale_price' == $_current_filter || 'woocommerce_product_variation_get_sale_price' == $_current_filter ) {
 					$sale_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
 					return ( '' != $sale_price_per_product ) ? $sale_price_per_product : $price;
 				}
