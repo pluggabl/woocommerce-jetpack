@@ -541,6 +541,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'global_discount',
 						'multicurrency',
 						'price_formats',
+						'price_by_user_role',
 					);
 					$html .= '<td class="plugin-title"><strong>' . $the_feature['title'] . ( in_array( $section, $wc_3_compatible_modules ) ? '<span title="WooCommerce 3.x.x compatible" style="color:green;"> &#10003;</span>' : '' ) . '</strong>';
 					$html .= '<div class="row-actions visible">';
