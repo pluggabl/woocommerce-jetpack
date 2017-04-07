@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by User Role class.
  *
- * @version 2.5.7
+ * @version 2.6.1
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -334,27 +334,6 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ),
 		);
 		return $price_hash;
-	}
-
-	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.0
-	 * @since   2.5.0
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_price_by_user_role_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.0
-	 * @since   2.5.0
-	 */
-	function get_settings() {
-		$settings = apply_filters( 'wcj_price_by_user_role_settings', array() );
-		return $this->add_standard_settings( $settings );
 	}
 
 	/**
