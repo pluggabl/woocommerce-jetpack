@@ -155,6 +155,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `add_settings_hook()`.
+~	* Fix - PRICES & CURRENCIES - Price by User Role - `woocommerce_variation_prices_regular_price` hook.
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `add_settings_hook()`.
 ~	* Dev - PRICES & CURRENCIES - Price Formats - Code refactoring - `add_settings_hook()`.
 ~D	* Dev - Shortcodes - General - `[wcj_cart_items_total_quantity]` shortcode added.
