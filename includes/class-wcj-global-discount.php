@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Global Discount class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    products and cats/tags to include/exclude (cats to include - done); regular price coefficient; fee instead of discount;
@@ -19,7 +19,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 * @since   2.5.7
 	 */
 	function __construct() {
@@ -33,9 +33,9 @@ class WCJ_Global_Discount extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				// Prices
-				add_filter( 'woocommerce_get_price',                      array( $this, 'add_global_discount_price' ),         PHP_INT_MAX, 2 );
-				add_filter( 'woocommerce_get_sale_price',                 array( $this, 'add_global_discount_sale_price' ),    PHP_INT_MAX, 2 );
-//				add_filter( 'woocommerce_get_regular_price',              array( $this, 'add_global_discount_regular_price' ), PHP_INT_MAX, 2 );
+				add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                 array( $this, 'add_global_discount_price' ),         PHP_INT_MAX, 2 );
+				add_filter( WCJ_PRODUCT_GET_SALE_PRICE_FILTER,            array( $this, 'add_global_discount_sale_price' ),    PHP_INT_MAX, 2 );
+//				add_filter( WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,         array( $this, 'add_global_discount_regular_price' ), PHP_INT_MAX, 2 );
 				// Variations
 				add_filter( 'woocommerce_variation_prices_price',         array( $this, 'add_global_discount_price' ),         PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'add_global_discount_sale_price' ),    PHP_INT_MAX, 2 );
@@ -44,6 +44,11 @@ class WCJ_Global_Discount extends WCJ_Module {
 				// Grouped products
 				add_filter( 'woocommerce_get_price_including_tax',        array( $this, 'add_global_discount_grouped' ),       PHP_INT_MAX, 3 );
 				add_filter( 'woocommerce_get_price_excluding_tax',        array( $this, 'add_global_discount_grouped' ),       PHP_INT_MAX, 3 );
+				if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+					add_filter( 'woocommerce_product_variation_get_price',         array( $this, 'add_global_discount_price' ),         PHP_INT_MAX, 2 );
+					add_filter( 'woocommerce_product_variation_get_sale_price',    array( $this, 'add_global_discount_sale_price' ),    PHP_INT_MAX, 2 );
+//					add_filter( 'woocommerce_product_variation_get_regular_price', array( $this, 'add_global_discount_regular_price' ), PHP_INT_MAX, 2 );
+				}
 			}
 		}
 	}
@@ -121,7 +126,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * add_global_discount_any_price.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.5.7
 	 */
 	function add_global_discount_any_price( $price_type, $price, $_product ) {
@@ -147,15 +152,21 @@ class WCJ_Global_Discount extends WCJ_Module {
 						}
 					}
 				} else { // if ( 'price' === $price_type )
-					remove_filter( 'woocommerce_get_sale_price',              array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
+					remove_filter( WCJ_PRODUCT_GET_SALE_PRICE_FILTER,         array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
 					remove_filter( 'woocommerce_variation_prices_sale_price', array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
+					if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+						remove_filter( 'woocommerce_product_variation_get_sale_price', array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
+					}
 					if ( 'only_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) && 0 == $_product->get_sale_price() ) {
 						continue; // no changes by current discount group
 					} elseif ( 'only_not_on_sale' === get_option( 'wcj_global_discount_sale_product_scope_' . $i, 'all' ) && 0 != $_product->get_sale_price() ) {
 						continue; // no changes by current discount group
 					}
-					add_filter( 'woocommerce_get_sale_price',              array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
+					add_filter( WCJ_PRODUCT_GET_SALE_PRICE_FILTER,         array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
 					add_filter( 'woocommerce_variation_prices_sale_price', array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
+					if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+						add_filter( 'woocommerce_product_variation_get_sale_price', array( $this, 'add_global_discount_sale_price' ), PHP_INT_MAX, 2 );
+					}
 				}
 				return $this->calculate_price( $price, $coefficient, $i ); // discount applied
 			}
