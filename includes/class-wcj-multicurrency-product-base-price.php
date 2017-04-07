@@ -18,7 +18,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.1
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -39,18 +39,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 			add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_on_product_edit' ), PHP_INT_MAX, 2 );
 
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-				// Prices
-				add_filter( 'woocommerce_get_price',                      array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 10, 2 );
-				add_filter( 'woocommerce_get_sale_price',                 array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 10, 2 );
-				add_filter( 'woocommerce_get_regular_price',              array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 10, 2 );
-				// Variations
-				add_filter( 'woocommerce_variation_prices_price',         array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 10, 2 );
-				add_filter( 'woocommerce_variation_prices_regular_price', array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 10, 2 );
-				add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 10, 2 );
-				add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 10, 3 );
-				// Grouped products
-				add_filter( 'woocommerce_get_price_including_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 10, 3 );
-				add_filter( 'woocommerce_get_price_excluding_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 10, 3 );
+				wcj_add_change_price_hooks( $this, PHP_INT_MAX - 10, false );
 			}
 
 			/* if ( is_admin() ) {
@@ -80,12 +69,12 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	}
 
 	/**
-	 * change_price_by_currency_grouped.
+	 * change_price_grouped.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 * @since   2.5.0
 	 */
-	function change_price_by_currency_grouped( $price, $qty, $_product ) {
+	function change_price_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
 			$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 			foreach ( $_product->get_children() as $child_id ) {
@@ -93,7 +82,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 				$the_product = wc_get_product( $child_id );
 				$the_price = $the_product->$get_price_method( 1, $the_price );
 				if ( $the_price == $price ) {
-					return $this->change_price_by_currency( $price, $the_product );
+					return $this->change_price( $price, $the_product );
 				}
 			}
 		}
@@ -101,11 +90,11 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	}
 
 	/**
-	 * change_price_by_currency.
+	 * change_price.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 */
-	function change_price_by_currency( $price, $_product ) {
+	function change_price( $price, $_product ) {
 		/*
 		$multicurrency_base_price_currency = get_post_meta( $_product->id, '_' . 'wcj_multicurrency_base_price_currency', true );
 		if ( '' != $multicurrency_base_price_currency ) {

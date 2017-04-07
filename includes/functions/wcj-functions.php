@@ -49,7 +49,7 @@ if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 	 * @version 2.6.1
 	 * @since   2.6.1
 	 */
-	function wcj_add_change_price_hooks( $module_object, $priority ) {
+	function wcj_add_change_price_hooks( $module_object, $priority, $include_shipping = true ) {
 		// Prices
 		add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                          array( $module_object, 'change_price' ),              $priority, 2 );
 		add_filter( WCJ_PRODUCT_GET_SALE_PRICE_FILTER,                     array( $module_object, 'change_price' ),              $priority, 2 );
@@ -65,7 +65,9 @@ if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 			add_filter( 'woocommerce_product_variation_get_sale_price',    array( $module_object, 'change_price' ),              $priority, 2 );
 		}
 		// Shipping
-		add_filter( 'woocommerce_package_rates',                           array( $module_object, 'change_price_shipping' ),     $priority, 2 );
+		if ( $include_shipping ) {
+			add_filter( 'woocommerce_package_rates',                       array( $module_object, 'change_price_shipping' ),     $priority, 2 );
+		}
 		// Grouped products
 		add_filter( 'woocommerce_get_price_including_tax',                 array( $module_object, 'change_price_grouped' ),      $priority, 3 );
 		add_filter( 'woocommerce_get_price_excluding_tax',                 array( $module_object, 'change_price_grouped' ),      $priority, 3 );
