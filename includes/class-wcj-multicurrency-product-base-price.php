@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency Product Base Price class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -203,21 +203,6 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 			}
 		}
 		return $currency_symbol;
-	}
-
-	/**
-	 * add_settings_hook.
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_multicurrency_base_price_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 */
-	function get_settings() {
-		$settings = apply_filters( 'wcj_multicurrency_base_price_settings', array() );
-		return $this->add_standard_settings( $settings );
 	}
 
 	/**
