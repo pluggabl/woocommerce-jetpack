@@ -21,23 +21,23 @@ if ( ! function_exists( 'wcj_get_product_id' ) ) {
 		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
 			return ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
 		} else {
-			return $_product->get_id(); // TODO: WC 3.0.0
+			return $_product->get_id(); // TODO: WC 3.0.0? done?
 		}
 	}
 }
 
-if ( ! function_exists( 'wcj_get_product_parent_id' ) ) {
+if ( ! function_exists( 'wcj_get_product_id_or_variation_parent_id' ) ) {
 	/**
-	 * wcj_get_product_parent_id.
+	 * wcj_get_product_id_or_variation_parent_id.
 	 *
 	 * @version 2.6.1
 	 * @since   2.6.1
 	 */
-	function wcj_get_product_parent_id( $_product ) {
+	function wcj_get_product_id_or_variation_parent_id( $_product ) {
 		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
 			return $_product->id;
 		} else {
-			return $_product->get_parent_id();
+			return ( $_product->is_type( 'variation' ) ) ? $_product->get_parent_id() : $_product->get_id();
 		}
 	}
 }
@@ -192,10 +192,13 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 	/**
 	 * wcj_price_by_product_base_currency.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.5.6
 	 */
 	function wcj_price_by_product_base_currency( $price, $product_id ) {
+		if ( '' == $price ) {
+			return $price;
+		}
 		$multicurrency_base_price_currency = get_post_meta( $product_id, '_' . 'wcj_multicurrency_base_price_currency', true );
 		if ( '' != $multicurrency_base_price_currency ) {
 			if ( 1 != ( $currency_exchange_rate = wcj_get_currency_exchange_rate_product_base_currency( $multicurrency_base_price_currency ) ) ) {

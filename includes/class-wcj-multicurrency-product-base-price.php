@@ -104,16 +104,16 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 		}
 		return $price;
 		*/
-		return wcj_price_by_product_base_currency( $price, $_product->id );
+		return wcj_price_by_product_base_currency( $price, wcj_get_product_id_or_variation_parent_id( $_product ) );
 	}
 
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		$multicurrency_base_price_currency = get_post_meta( $_product->id, '_' . 'wcj_multicurrency_base_price_currency', true );
+		$multicurrency_base_price_currency = get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product, true ), '_' . 'wcj_multicurrency_base_price_currency', true );
 		$currency_exchange_rate = $this->get_currency_exchange_rate( $multicurrency_base_price_currency );
 		$price_hash['wcj_base_currency'] = array(
 			$multicurrency_base_price_currency,

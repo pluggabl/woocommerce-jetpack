@@ -262,7 +262,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 
 		// Per product
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {
-			if ( 'yes' === get_post_meta( wcj_get_product_parent_id( $_product ), '_' . 'wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
+			if ( 'yes' === get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_' . 'wcj_price_by_user_role_per_product_settings_enabled', true ) ) {
 				$the_product_id = wcj_get_product_id( $_product );
 				if ( 'yes' === get_post_meta( $the_product_id, '_' . 'wcj_price_by_user_role_empty_price_' . $current_user_role, true ) ) {
 					return '';

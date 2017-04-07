@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 07/04/2017 =
+~	* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Empty sale price issue fixed.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Price by User Role - `get_price` filters replaced for for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0. `wc_get_formatted_variation()` used for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Global Discount - `get_price` filters replaced for for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Currency for External Products - `product_type` property replaced with `is_type()` function.
