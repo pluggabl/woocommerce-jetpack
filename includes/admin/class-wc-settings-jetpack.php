@@ -544,8 +544,9 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'price_by_user_role',
 						'multicurrency_base_price',
 					);
-					$html .= '<td class="plugin-title"><strong>' . $the_feature['title'] . ( in_array( $section, $wc_3_compatible_modules ) ?
-						'<span title="' . __( 'WooCommerce 3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;"> &#9745;</span>' : '' ) . '</strong>';
+					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
+						'<span title="' . __( 'WooCommerce 3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;">&#9745; </span>' : '' );
+					$html .= '<td class="plugin-title">' . '<strong>' . $is_wc_3_compatible . $the_feature['title'] . '</strong>';
 					$html .= '<div class="row-actions visible">';
 
 					$html .= '<span class="0"><a href="' . admin_url() . 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">' . __( 'Settings', 'woocommerce' ) . '</a></span>';
