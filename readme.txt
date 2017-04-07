@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 07/04/2017 =
+~	* Dev - PRICES & CURRENCIES - Price Formats - Code refactoring - `add_settings_hook`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Currency for External Products - `product_type` property replaced with `is_type()` function.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_price` filters replaced for for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0. `wc_get_formatted_variation()` used for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.

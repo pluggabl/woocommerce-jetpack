@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Formats class.
  *
- * @version 2.5.8
+ * @version 2.6.1
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -86,27 +86,6 @@ class WCJ_Price_Formats extends WCJ_Module {
 		}
 
 		return apply_filters( 'woocommerce_price_format', $format, $currency_pos );
-	}
-
-	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.2
-	 * @since   2.5.2
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_price_formats_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.2
-	 * @since   2.5.2
-	 */
-	function get_settings() {
-		$settings = apply_filters( 'wcj_price_formats_settings', array() );
-		return $this->add_standard_settings( $settings );
 	}
 
 	/**
