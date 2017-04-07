@@ -6,6 +6,7 @@
  *
  * @version 2.5.0
  * @author  Algoritmika Ltd.
+ * @todo    clear products transients after converting prices
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
