@@ -117,58 +117,43 @@ class WCJ_Multicurrency extends WCJ_Module {
 //			add_filter( 'woocommerce_tm_epo_price_per_currency_diff', array( $this, 'change_price_by_currency_tm_extra_product_options_plugin_cart' ), PHP_INT_MAX - 1, 1 );
 //			add_filter( 'woocommerce_tm_epo_price_add_on_cart',       array( $this, 'change_price_by_currency_tm_extra_product_options_plugin_cart' ), PHP_INT_MAX - 1, 1 );
 //			add_filter( 'wc_aelia_cs_enabled_currencies',             array( $this, 'add_currency' ), PHP_INT_MAX - 1, 1 );
-			// Prices
-			add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                 array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
-			add_filter( WCJ_PRODUCT_GET_SALE_PRICE_FILTER,            array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
-			add_filter( WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,         array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
+
 			// Currency hooks
 			add_filter( 'woocommerce_currency_symbol',                array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 );
 			add_filter( 'woocommerce_currency',                       array( $this, 'change_currency_code' ),   PHP_INT_MAX - 1, 1 );
-			// Shipping
-			add_filter( 'woocommerce_package_rates',                  array( $this, 'change_shipping_price_by_currency' ), PHP_INT_MAX - 1, 2 );
-			// Variations
-			add_filter( 'woocommerce_variation_prices_price',         array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
-			add_filter( 'woocommerce_variation_prices_regular_price', array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
-			add_filter( 'woocommerce_variation_prices_sale_price',    array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
-			add_filter( 'woocommerce_get_variation_prices_hash',      array( $this, 'get_variation_prices_hash' ), PHP_INT_MAX - 1, 3 );
-			if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
-				add_filter( 'woocommerce_product_variation_get_price',         array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
-				add_filter( 'woocommerce_product_variation_get_regular_price', array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
-				add_filter( 'woocommerce_product_variation_get_sale_price',    array( $this, 'change_price_by_currency' ), PHP_INT_MAX - 1, 2 );
-			}
-			// Grouped products
-			add_filter( 'woocommerce_get_price_including_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 1, 3 );
-			add_filter( 'woocommerce_get_price_excluding_tax',        array( $this, 'change_price_by_currency_grouped' ), PHP_INT_MAX - 1, 3 );
+
+			// Add "Change Price" hooks
+			wcj_add_change_price_hooks( $this, PHP_INT_MAX - 1 );
 		}
 	}
 
 	/**
 	 * change_price_by_currency_tm_extra_product_options_plugin_cart.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 * @since   2.5.7
 	 */
 	function change_price_by_currency_tm_extra_product_options_plugin_cart( $price ) {
-		return $this->change_price_by_currency( $price, null );
+		return $this->change_price( $price, null );
 	}
 
 	/**
 	 * change_price_by_currency_tm_extra_product_options_plugin.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 * @since   2.5.7
 	 */
 	function change_price_by_currency_tm_extra_product_options_plugin( $price, $type, $post_id ) {
-		return $this->change_price_by_currency( $price, null );
+		return $this->change_price( $price, null );
 	}
 
 	/**
-	 * change_price_by_currency_grouped.
+	 * change_price_grouped.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 * @since   2.5.0
 	 */
-	function change_price_by_currency_grouped( $price, $qty, $_product ) {
+	function change_price_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
 			if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) ) {
 				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
@@ -177,11 +162,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 					$the_product = wc_get_product( $child_id );
 					$the_price = $the_product->$get_price_method( 1, $the_price );
 					if ( $the_price == $price ) {
-						return $this->change_price_by_currency( $price, $the_product );
+						return $this->change_price( $price, $the_product );
 					}
 				}
 			} else {
-				return $this->change_price_by_currency( $price, null );
+				return $this->change_price( $price, null );
 			}
 		}
 		return $price;
@@ -231,11 +216,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 	}
 
 	/**
-	 * change_price_by_currency.
+	 * change_price.
 	 *
 	 * @version 2.6.1
 	 */
-	function change_price_by_currency( $price, $_product ) {
+	function change_price( $price, $_product ) {
 
 		if ( '' === $price ) {
 			return $price;
@@ -337,11 +322,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 	}
 
 	/**
-	 * change_shipping_price_by_currency.
+	 * change_price_shipping.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
-	function change_shipping_price_by_currency( $package_rates, $package ) {
+	function change_price_shipping( $package_rates, $package ) {
 		if ( $this->do_revert() ) {
 			return $package_rates;
 		}

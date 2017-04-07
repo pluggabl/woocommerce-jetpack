@@ -39,38 +39,6 @@ if ( ! defined( 'WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER' ) ) {
 	define( 'WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER', $filter );
 }
 
-if ( ! function_exists( 'wcj_get_product_id' ) ) {
-	/**
-	 * wcj_get_product_id.
-	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
-	 */
-	function wcj_get_product_id( $_product ) {
-		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
-			return ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
-		} else {
-			return $_product->get_id(); // TODO: WC 3.0.0
-		}
-	}
-}
-
-if ( ! function_exists( 'wcj_get_product_parent_id' ) ) {
-	/**
-	 * wcj_get_product_parent_id.
-	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
-	 */
-	function wcj_get_product_parent_id( $_product ) {
-		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
-			return $_product->id;
-		} else {
-			return $_product->get_parent_id();
-		}
-	}
-}
-
 if ( ! class_exists( 'WC_Jetpack' ) ) :
 
 /**
@@ -88,7 +56,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.1-dev-201704071047';
+	public $version = '2.6.1-dev-201704071118';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class

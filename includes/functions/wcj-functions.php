@@ -10,6 +10,68 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_product_id' ) ) {
+	/**
+	 * wcj_get_product_id.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function wcj_get_product_id( $_product ) {
+		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
+			return ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
+		} else {
+			return $_product->get_id(); // TODO: WC 3.0.0
+		}
+	}
+}
+
+if ( ! function_exists( 'wcj_get_product_parent_id' ) ) {
+	/**
+	 * wcj_get_product_parent_id.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function wcj_get_product_parent_id( $_product ) {
+		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
+			return $_product->id;
+		} else {
+			return $_product->get_parent_id();
+		}
+	}
+}
+
+if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
+	/**
+	 * wcj_add_change_price_hooks.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function wcj_add_change_price_hooks( $module_object, $priority ) {
+		// Prices
+		add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                          array( $module_object, 'change_price' ),              $priority, 2 );
+		add_filter( WCJ_PRODUCT_GET_SALE_PRICE_FILTER,                     array( $module_object, 'change_price' ),              $priority, 2 );
+		add_filter( WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,                  array( $module_object, 'change_price' ),              $priority, 2 );
+		// Variations
+		add_filter( 'woocommerce_variation_prices_price',                  array( $module_object, 'change_price' ),              $priority, 2 );
+		add_filter( 'woocommerce_variation_prices_regular_price',          array( $module_object, 'change_price' ),              $priority, 2 );
+		add_filter( 'woocommerce_variation_prices_sale_price',             array( $module_object, 'change_price' ),              $priority, 2 );
+		add_filter( 'woocommerce_get_variation_prices_hash',               array( $module_object, 'get_variation_prices_hash' ), $priority, 3 );
+		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+			add_filter( 'woocommerce_product_variation_get_price',         array( $module_object, 'change_price' ),              $priority, 2 );
+			add_filter( 'woocommerce_product_variation_get_regular_price', array( $module_object, 'change_price' ),              $priority, 2 );
+			add_filter( 'woocommerce_product_variation_get_sale_price',    array( $module_object, 'change_price' ),              $priority, 2 );
+		}
+		// Shipping
+		add_filter( 'woocommerce_package_rates',                           array( $module_object, 'change_price_shipping' ),     $priority, 2 );
+		// Grouped products
+		add_filter( 'woocommerce_get_price_including_tax',                 array( $module_object, 'change_price_grouped' ),      $priority, 3 );
+		add_filter( 'woocommerce_get_price_excluding_tax',                 array( $module_object, 'change_price_grouped' ),      $priority, 3 );
+	}
+}
+
 if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	/**
 	 * wcj_get_order_item_meta_info.

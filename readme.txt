@@ -151,8 +151,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_price` filters replaced for for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0. `wc_get_formatted_variation()` used for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.
 -!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_categories]` - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
-~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `add_settings_hook`.
-~	* Dev - PRICES & CURRENCIES - Price Formats - Code refactoring - `add_settings_hook`.
+~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
+~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `add_settings_hook()`.
+~	* Dev - PRICES & CURRENCIES - Price Formats - Code refactoring - `add_settings_hook()`.
 ~D	* Dev - Shortcodes - General - `[wcj_cart_items_total_quantity]` shortcode added.
 ~!D	* Dev - PRODUCTS - Product Input Fields - Timepicker - "Min time" and "Max time" options added.
 ~D	* Dev - EMAILS & MISC. - Emails - "Product Info in Item Name" options added.
