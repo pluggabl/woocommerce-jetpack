@@ -542,6 +542,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'multicurrency',
 						'price_formats',
 						'price_by_user_role',
+						'multicurrency_base_price',
 					);
 					$html .= '<td class="plugin-title"><strong>' . $the_feature['title'] . ( in_array( $section, $wc_3_compatible_modules ) ?
 						'<span title="' . __( 'WooCommerce 3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;"> &#10003;</span>' : '' ) . '</strong>';
