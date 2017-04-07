@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency for External Products class.
  *
- * @version 2.5.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,9 +17,9 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'currency_external_products';
 		$this->short_desc = __( 'Currency for External Products', 'woocommerce-jetpack' );
@@ -28,7 +28,7 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			if ( '' != get_option( 'wcj_currency_external_products_symbol' ) ) {
+			if ( '' != get_option( 'wcj_currency_external_products_symbol', 'EUR' ) ) {
 				add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ),   PHP_INT_MAX, 1 );
 			}
@@ -38,13 +38,13 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 	/**
 	 * change_currency_code.
 	 *
-	 * @version 2.4.4
+	 * @version 2.6.1
 	 * @since   2.4.4
 	 */
-	public function change_currency_code( $currency ) {
+	function change_currency_code( $currency ) {
 		global $product;
-		if ( is_object( $product ) && isset( $product->product_type ) && 'external' === $product->product_type ) {
-			return get_option( 'wcj_currency_external_products_symbol' );
+		if ( is_object( $product ) && $product->is_type( 'external' ) ) {
+			return get_option( 'wcj_currency_external_products_symbol', 'EUR' );
 		}
 		return $currency;
 	}
@@ -52,12 +52,12 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 	/**
 	 * change_currency_symbol.
 	 *
-	 * @version 2.4.4
+	 * @version 2.6.1
 	 */
-	public function change_currency_symbol( $currency_symbol, $currency ) {
+	function change_currency_symbol( $currency_symbol, $currency ) {
 		global $product;
-		if ( is_object( $product ) && isset( $product->product_type ) && 'external' === $product->product_type ) {
-			return wcj_get_currency_symbol( get_option( 'wcj_currency_external_products_symbol' ) );
+		if ( is_object( $product ) && $product->is_type( 'external' ) ) {
+			return wcj_get_currency_symbol( get_option( 'wcj_currency_external_products_symbol', 'EUR' ) );
 		}
 		return $currency_symbol;
 	}
