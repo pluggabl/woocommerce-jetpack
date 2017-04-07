@@ -145,7 +145,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 07/04/2017 =
-~	* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Empty sale price issue fixed.
+-!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `get_price` filters replaced for for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
+-!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Wholesale Price - `get_price` filters replaced for for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency Product Base Price - `get_price` filters replaced for for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Price by User Role - `get_price` filters replaced for for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0. `wc_get_formatted_variation()` used for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Global Discount - `get_price` filters replaced for for WC >= v3.0.0.
@@ -153,9 +154,11 @@ You can see the differences between versions in this [table](http://booster.io/b
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_price` filters replaced for for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0. `wc_get_formatted_variation()` used for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.
 -!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_categories]` - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
+~	* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Empty sale price issue fixed.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
+~	* Dev - PRICES & CURRENCIES - Wholesale Price - Code refactoring - `add_settings_hook()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `add_settings_hook()`.
 ~	* Fix - PRICES & CURRENCIES - Price by User Role - `woocommerce_variation_prices_regular_price` hook.
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `add_settings_hook()`.

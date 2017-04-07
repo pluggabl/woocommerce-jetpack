@@ -4,10 +4,10 @@
  *
  * The WooCommerce Jetpack Wholesale Price class.
  *
- * @version 2.5.7
+ * @version 2.6.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
- * @todo    per variation;
+ * @todo    per variation
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -19,7 +19,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.1
 	 */
 	function __construct() {
 
@@ -40,7 +40,10 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 
 			add_action( 'woocommerce_cart_loaded_from_session', array( $this, 'cart_loaded_from_session' ), PHP_INT_MAX, 1 );
 			add_action( 'woocommerce_before_calculate_totals',  array( $this, 'calculate_totals' ), PHP_INT_MAX, 1 );
-			add_filter( 'woocommerce_get_price',                array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
+			add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,           array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
+			if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+				add_filter( 'woocommerce_product_variation_get_price', array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
+			}
 
 			if ( 'yes' === get_option( 'wcj_wholesale_price_show_info_on_cart', 'no' ) ) {
 				add_filter( 'woocommerce_cart_item_price', array( $this, 'add_discount_info_to_cart_page' ), PHP_INT_MAX, 3 );
@@ -168,7 +171,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * calculate_totals.
 	 *
-	 * @version 2.5.5
+	 * @version 2.6.1
 	 * @since   2.5.0
 	 */
 	function calculate_totals( $cart ) {
@@ -186,20 +189,20 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			}
 
 			$_product = wc_get_product( $item['product_id'] );
-			if ( ! wcj_is_product_wholesale_enabled( $_product->id ) ) {
+			if ( ! wcj_is_product_wholesale_enabled( wcj_get_product_id_or_variation_parent_id( $_product ) ) ) {
 				continue;
 			}
 
 			// Prices
 			$tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
-			$get_price_method = 'get_price_' . $tax_display_mode . 'uding_tax';
+			$get_price_method = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? 'get_price_' . $tax_display_mode . 'uding_tax' : 'wc_' . 'get_price_' . $tax_display_mode . 'uding_tax';
 			if ( 0 != ( $variation_id = WC()->cart->cart_contents[ $item_key ]['variation_id'] ) ) {
 				$variation = wc_get_product( $variation_id );
 				$price     = $variation->get_price();
-				$price_old = $variation->$get_price_method(); // used for display only
+				$price_old = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? $variation->$get_price_method() : $get_price_method( $variation ); // used for display only
 			} else {
 				$price     = $_product->get_price();
-				$price_old = $_product->$get_price_method();  // used for display only
+				$price_old = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? $_product->$get_price_method()  : $get_price_method( $_product );  // used for display only
 			}
 
 			// If other discount was applied in cart...
@@ -214,7 +217,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				? $cart->cart_contents_count
 				: $item['quantity'];
 			if ( $the_quantity > 1 ) {
-				$wholesale_price = $this->get_wholesale_price( $price, $the_quantity, $_product->id );
+				$wholesale_price = $this->get_wholesale_price( $price, $the_quantity, wcj_get_product_id_or_variation_parent_id( $_product ) );
 				if ( $wholesale_price != $price ) {
 					// Setting wholesale price
 					$precision = get_option( 'woocommerce_price_num_decimals', 2 );
@@ -231,10 +234,10 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * wholesale_price.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
 	function wholesale_price( $price, $_product ) {
-		return ( wcj_is_product_wholesale_enabled( $_product->id ) && isset( $_product->wcj_wholesale_price ) ) ? $_product->wcj_wholesale_price : $price;
+		return ( wcj_is_product_wholesale_enabled( wcj_get_product_id_or_variation_parent_id( $_product ) ) && isset( $_product->wcj_wholesale_price ) ) ? $_product->wcj_wholesale_price : $price;
 	}
 
 	/**
@@ -342,26 +345,6 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 		}
 
 		return $options;
-	}
-
-	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.5
-	 * @since   2.5.5
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_wholesale_price_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.5
-	 */
-	function get_settings() {
-		$settings = apply_filters( 'wcj_wholesale_price_settings', array() );
-		return $this->add_standard_settings( $settings );
 	}
 
 	/**

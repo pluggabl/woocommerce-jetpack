@@ -643,11 +643,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 
-		if ( ! wcj_is_product_wholesale_enabled( $this->the_product->id ) ) return '';
+		$product_id = wcj_get_product_id_or_variation_parent_id( $this->the_product );
+
+		if ( ! wcj_is_product_wholesale_enabled( $product_id ) ) return '';
 
 		// Check for user role options
 		$role_option_name_addon = '';
@@ -663,10 +665,10 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		$wholesale_price_levels = array();
-		if ( wcj_is_product_wholesale_enabled_per_product( $this->the_product->id ) ) {
-			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) ); $i++ ) {
-				$level_qty                = get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, true );
-				$discount                 = get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_level_discount' . $role_option_name_addon . '_' . $i, true );
+		if ( wcj_is_product_wholesale_enabled_per_product( $product_id ) ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) ); $i++ ) {
+				$level_qty                = get_post_meta( $product_id, '_' . 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, true );
+				$discount                 = get_post_meta( $product_id, '_' . 'wcj_wholesale_price_level_discount' . $role_option_name_addon . '_' . $i, true );
 				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => $discount, );
 			}
 		} else {
@@ -677,8 +679,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			}
 		}
 
-		$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $this->the_product->id ) )
-			? get_post_meta( $this->the_product->id, '_' . 'wcj_wholesale_price_discount_type', true )
+		$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $product_id ) )
+			? get_post_meta( $product_id, '_' . 'wcj_wholesale_price_discount_type', true )
 			: get_option( 'wcj_wholesale_price_discount_type', 'percent' );
 
 		$data_qty              = array();
@@ -703,8 +705,11 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$min_product = wc_get_product( $min_key );
 				$max_product = wc_get_product( $max_key );
 				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-				$min = $min_product->$get_price_method();
-				$max = $max_product->$get_price_method();
+				if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+					$get_price_method = 'wc_' . $get_price_method;
+				}
+				$min = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? $min_product->$get_price_method() : $get_price_method( $min_product );
+				$max = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? $max_product->$get_price_method() : $get_price_method( $max_product );
 				$min_original = $min;
 				$max_original = $max;
 				if ( 'fixed' === $discount_type ) {
@@ -726,7 +731,10 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			} else {
 				// Simple etc.
 				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-				$the_price = $this->the_product->$get_price_method();
+				if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+					$get_price_method = 'wc_' . $get_price_method;
+				}
+				$the_price = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? $this->the_product->$get_price_method() : $get_price_method( $this->the_product );
 				$the_price = apply_filters( 'wcj_product_wholesale_price_table_price_before', $the_price, $this->the_product );
 				$the_price_original = $the_price;
 				if ( 'price_directly' === $discount_type ) {
