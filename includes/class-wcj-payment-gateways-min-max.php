@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Min Max class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	function __construct() {
 
@@ -28,7 +28,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-min-max/';
 		parent::__construct();
 
-		add_filter( 'init', array( $this, 'add_hooks' ) );
+		add_filter( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'available_payment_gateways' ), PHP_INT_MAX, 1 );
@@ -74,19 +74,12 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	}
 
 	/**
-	 * add_hooks.
-	 */
-	function add_hooks() {
-		add_filter( 'wcj_payment_gateways_min_max_settings', array( $this, 'add_min_max_settings' ) );
-	}
-
-	/**
-	 * add_min_max_settings.
+	 * add_settings.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @todo    checkout notices - add %diff_amount% replaced values (wc_has_notice won't work then, probably will need to use wc_clear_notices)
 	 */
-	function add_min_max_settings( $settings ) {
+	function add_settings( $settings ) {
 		$settings = array(
 			array(
 				'title'     => __( 'General Options', 'woocommerce-jetpack' ),
@@ -138,12 +131,12 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 				'type'      => 'sectionend',
 				'id'        => 'wcj_payment_gateways_min_max_general_options',
 			),
-		);
-		$settings[] = array(
-			'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'desc'  => __( 'Leave zero to disable.', 'woocommerce-jetpack' ),
-			'id'    => 'wcj_payment_gateways_min_max_gateways_options',
+			array(
+				'title'     => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'desc'      => __( 'Leave zero to disable.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_payment_gateways_min_max_gateways_options',
+			),
 		);
 		$gateways = WC()->payment_gateways->payment_gateways();
 		foreach ( $gateways as $key => $gateway ) {
@@ -158,40 +151,36 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 				$custom_attributes = array();
 				$desc_tip = '';
 			}
-			$settings[] = array(
-				'title'     => $gateway->title,
-				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Min', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_payment_gateways_min_' . $key,
-				'default'   => 0,
-				'type'      => 'number',
-				'custom_attributes' => array_merge( array( 'step' => '0.000001', 'min'  => '0', ), $custom_attributes ),
-			);
-			$settings[] = array(
-				'title'     => '',
-				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Max', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_payment_gateways_max_' . $key,
-				'default'   => 0,
-				'type'      => 'number',
-				'custom_attributes' => array_merge( array( 'step' => '0.000001', 'min'  => '0', ), $custom_attributes ),
-			);
+			$settings = array_merge( $settings, array(
+				array(
+					'title'     => $gateway->title,
+					'desc_tip'  => $desc_tip,
+					'desc'      => __( 'Min', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_payment_gateways_min_' . $key,
+					'default'   => 0,
+					'type'      => 'number',
+					'custom_attributes' => array_merge( array( 'step' => '0.000001', 'min'  => '0', ), $custom_attributes ),
+				),
+				array(
+					'title'     => '',
+					'desc_tip'  => $desc_tip,
+					'desc'      => __( 'Max', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_payment_gateways_max_' . $key,
+					'default'   => 0,
+					'type'      => 'number',
+					'custom_attributes' => array_merge( array( 'step' => '0.000001', 'min'  => '0', ), $custom_attributes ),
+				),
+			) );
 		}
-		$settings[] = array(
-			'type'  => 'sectionend',
-			'id'    => 'wcj_payment_gateways_min_max_gateways_options',
-		);
+		$settings = array_merge( $settings, array(
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_payment_gateways_min_max_gateways_options',
+			),
+		) );
 		return $settings;
 	}
 
-	/**
-	 * get_settings.
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_payment_gateways_min_max_settings', $settings );
-		return $this->add_standard_settings( $settings );
-	}
 }
 
 endif;
