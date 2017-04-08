@@ -161,8 +161,17 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Calculate with Inversion', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'If your currency pair have very small exchange rate, you may want to invert currencies before calculating the rate.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_currency_exchange_rates_calculate_by_invert',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Always Use cURL', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'If for some reason currency exchange rates are not updating, try enabling this option.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_currency_exchange_rates_always_curl',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),

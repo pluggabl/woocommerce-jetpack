@@ -180,7 +180,7 @@ if ( ! function_exists( 'alg_yahoo_get_exchange_rate' ) ) {
 		set_time_limit( 5 );
 
 		$response = '';
-		if ( ini_get( 'allow_url_fopen' ) ) {
+		if ( 'no' === get_option( 'wcj_currency_exchange_rates_always_curl', 'no' ) && ini_get( 'allow_url_fopen' ) ) {
 			$response = file_get_contents( $url );
 		} elseif ( function_exists( 'curl_version' ) ) {
 			$curl = curl_init( $url );
