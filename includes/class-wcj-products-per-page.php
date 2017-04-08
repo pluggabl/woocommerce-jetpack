@@ -83,8 +83,8 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 			if ( 2 === count( $the_option ) ) {
 				$sort_id   = $the_option[1];
 				$sort_name = $the_option[0];
-				$sort_id = str_replace( "\n", '', $sort_id );
-				$sort_id = str_replace( "\r", '', $sort_id );
+				$sort_id   = str_replace( "\n", '', $sort_id );
+				$sort_id   = str_replace( "\r", '', $sort_id );
 				$sort_name = str_replace( "\n", '', $sort_name );
 				$sort_name = str_replace( "\r", '', $sort_name );
 				$html .= '<option value="' . $sort_id . '" ' . selected( $products_per_page, $sort_id, false ) . ' >' . $sort_name . '</option>';
@@ -113,26 +113,6 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 			$the_number = get_option( 'wcj_products_per_page_default', 10 );
 		}
 		return $the_number;
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.6.0
-	 * @since   2.6.0
-	 */
-	function get_settings() {
-		return $this->add_standard_settings( apply_filters( 'wcj_products_per_page_settings', array() ) );
-	}
-
-	/*
-	 * add_settings_hook.
-	 *
-	 * @version 2.6.0
-	 * @since   2.6.0
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_products_per_page_settings', array( $this, 'add_settings' ) );
 	}
 
 	/*
