@@ -20,7 +20,7 @@ class WCJ_Checkout_Custom_Info extends WCJ_Module {
 	 *
 	 * @version 2.4.7
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'checkout_custom_info';
 		$this->short_desc = __( 'Checkout Custom Info', 'woocommerce-jetpack' );
@@ -45,10 +45,10 @@ class WCJ_Checkout_Custom_Info extends WCJ_Module {
 	 * @version 2.4.7
 	 */
 	function add_checkout_custom_info() {
-		$current_filter = current_filter();
+		$current_filter          = current_filter();
 		$current_filter_priority = wcj_current_filter_priority();
 		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_info_total_number', 1 ) );
-		for ( $i = 1; $i <= $total_number; $i++) {
+		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if (
 				'' != get_option( 'wcj_checkout_custom_info_content_' . $i ) &&
 				$current_filter === get_option( 'wcj_checkout_custom_info_hook_' . $i ) &&
@@ -65,23 +65,24 @@ class WCJ_Checkout_Custom_Info extends WCJ_Module {
 	 * @version 2.6.0
 	 */
 	function get_settings() {
-		$settings = array();
-		$settings[] = array(
-			'title'    => __( 'Checkout Custom Info Blocks', 'woocommerce-jetpack' ),
-			'type'     => 'title',
-			'id'       => 'wcj_checkout_custom_info_blocks_options',
-		);
-		$settings[] = array(
-			'title'    => __( 'Total Blocks', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_checkout_custom_info_total_number',
-			'default'  => 1,
-			'type'     => 'custom_number',
-			'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-			'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-		);
-		$settings[] = array(
-			'type'     => 'sectionend',
-			'id'       => 'wcj_checkout_custom_info_blocks_options',
+		$settings = array(
+			array(
+				'title'    => __( 'Checkout Custom Info Blocks', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_checkout_custom_info_blocks_options',
+			),
+			array(
+				'title'    => __( 'Total Blocks', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_custom_info_total_number',
+				'default'  => 1,
+				'type'     => 'custom_number',
+				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_checkout_custom_info_blocks_options',
+			),
 		);
 		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_info_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++) {

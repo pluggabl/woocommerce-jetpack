@@ -84,7 +84,7 @@ class WCJ_Old_Slugs extends WCJ_Module {
 
 				$recheck_result = $wpdb->get_results("SELECT * FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug'");
 				$recheck_result_count = count( $recheck_result );
-				$remove_result_html = '<div class="updated"><p><strong>Removing old slugs from database finished! ' . ($num_old_slugs-$recheck_result_count) . ' old slug(s) deleted. Please <a href="">refresh</a> the page.</strong></p></div>';
+				$remove_result_html = '<div class="updated"><p><strong>Removing old slugs from database finished! ' . ($num_old_slugs - $recheck_result_count) . ' old slug(s) deleted. Please <a href="">refresh</a> the page.</strong></p></div>';
 			}
 		}
 
