@@ -95,15 +95,6 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	 * @version 2.6.1
 	 */
 	function change_price( $price, $_product ) {
-		/*
-		$multicurrency_base_price_currency = get_post_meta( $_product->id, '_' . 'wcj_multicurrency_base_price_currency', true );
-		if ( '' != $multicurrency_base_price_currency ) {
-			if ( 1 != ( $currency_exchange_rate = $this->get_currency_exchange_rate( $multicurrency_base_price_currency ) ) ) {
-				return $price / $currency_exchange_rate;
-			}
-		}
-		return $price;
-		*/
 		return wcj_price_by_product_base_currency( $price, wcj_get_product_id_or_variation_parent_id( $_product ) );
 	}
 
