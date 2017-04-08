@@ -568,6 +568,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'payment_gateways_by_user_role',
 						'payment_gateways_min_max',
 						'payment_gateways_per_category',
+						'payment_gateways_fees',
 					);
 					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
 						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;">&#9745; </span>' : '' );

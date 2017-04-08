@@ -75,8 +75,8 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 			$max_cart_amount = get_option( 'wcj_gateways_fees_max_cart_amount_' . $current_gateway );
 			// Multicurrency (Currency Switcher) module
 			if ( WCJ()->modules['multicurrency']->is_enabled() ) {
-				$min_cart_amount = WCJ()->modules['multicurrency']->change_price_by_currency( $min_cart_amount, null );
-				$max_cart_amount = WCJ()->modules['multicurrency']->change_price_by_currency( $max_cart_amount, null );
+				$min_cart_amount = WCJ()->modules['multicurrency']->change_price( $min_cart_amount, null );
+				$max_cart_amount = WCJ()->modules['multicurrency']->change_price( $max_cart_amount, null );
 			}
 			$total_in_cart = $woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total;
 			if ( '' != $fee_text && $total_in_cart >= $min_cart_amount  && ( 0 == $max_cart_amount || $total_in_cart <= $max_cart_amount ) ) {
@@ -87,7 +87,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 					case 'fixed':
 						// Multicurrency (Currency Switcher) module
 						if ( WCJ()->modules['multicurrency']->is_enabled() ) {
-							$fee_value = WCJ()->modules['multicurrency']->change_price_by_currency( $fee_value, null );
+							$fee_value = WCJ()->modules['multicurrency']->change_price( $fee_value, null );
 						}
 						$final_fee_to_add = $fee_value;
 						break;
@@ -113,7 +113,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	}
 
 	/**
-	 * add_fees_settings.
+	 * add_settings.
 	 *
 	 * @version 2.6.1
 	 */
