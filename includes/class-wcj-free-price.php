@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Free Price class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -106,31 +106,9 @@ class WCJ_Free_Price extends WCJ_Module {
 	}
 
 	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.9
-	 * @since   2.5.9
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_' . $this->id . '_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.9
-	 * @since   2.5.9
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_' . $this->id . '_settings', $settings );
-		return $this->add_standard_settings( $settings, __( 'Labels can contain shortcodes.', 'woocommerce-jetpack' ) );
-	}
-
-	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.1
 	 * @since   2.5.9
 	 */
 	function add_settings( $settings ) {
@@ -153,6 +131,7 @@ class WCJ_Free_Price extends WCJ_Module {
 			$settings = array_merge( $settings, array(
 				array(
 					'title'    => $product_type_desc,
+					'desc'     => __( 'Labels can contain shortcodes.', 'woocommerce-jetpack' ),
 					'type'     => 'title',
 					'id'       => 'wcj_free_price_' . $product_type . 'options',
 				),
