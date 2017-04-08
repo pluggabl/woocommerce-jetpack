@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Admin Tools class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -100,7 +100,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * create_meta_meta_box.
 	 *
-	 * @version 2.5.8
+	 * @version 2.6.1
 	 * @since   2.5.8
 	 */
 	function create_meta_meta_box( $post ) {
@@ -119,7 +119,10 @@ class WCJ_Admin_Tools extends WCJ_Module {
 			$table_data = array();
 			foreach ( $_order->get_items() as $item_key => $item ) {
 				foreach ( $item['item_meta'] as $item_meta_key => $item_meta_value ) {
-					$table_data[] = array( $item_key, $item_meta_key, implode( ', ', $item_meta_value ) );
+					if ( is_array( $item_meta_value ) ) {
+						$item_meta_value = implode( ', ', $item_meta_value );
+					}
+					$table_data[] = array( $item_key, $item_meta_key, $item_meta_value );
 				}
 			}
 			$html .= '<h3>' . __( 'Order Items Meta', 'woocommerce-jetpack' ) . '</h3>';
@@ -134,7 +137,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	 *
 	 * @version 2.5.7
 	 */
-	public function create_admin_tools_tool() {
+	function create_admin_tools_tool() {
 
 		$the_notice = '';
 		if ( isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) ) {
