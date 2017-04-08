@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Images class.
  *
- * @version 2.5.2
+ * @version 2.6.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -169,13 +169,15 @@ class WCJ_Product_Images extends WCJ_Module {
 
 	/**
 	 * customize_sale_flash.
+	 *
+	 * @version 2.6.1
 	 */
 	function customize_sale_flash( $sale_flash_html, $post, $product ) {
 		// Hiding
 		if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_on_archives', 'no' ) && is_archive() ) {
 			return '';
 		}
-		if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_on_single', 'no' )   && is_single() && get_the_ID() === $product->id ) {
+		if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_on_single', 'no' )   && is_single() && get_the_ID() === wcj_get_product_id_or_variation_parent_id( $product ) ) {
 			return '';
 		}
 		// Content
