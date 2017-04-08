@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Add to Cart per Product Type class.
  *
- * @version 2.2.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -28,6 +28,8 @@ class WCJ_Add_To_Cart_Per_Product_Type {
 
 	/**
 	 * custom_add_to_cart_button_text.
+	 *
+	 * @version 2.6.1
 	 */
 	public function custom_add_to_cart_button_text( $add_to_cart_text ) {
 
@@ -36,7 +38,7 @@ class WCJ_Add_To_Cart_Per_Product_Type {
 		if ( ! $product )
 			return $add_to_cart_text;
 
-		$product_type = $product->product_type;
+		$product_type = ( WCJ_IS_WC_VERSION_BELOW_3 ? $product->product_type : $product->get_type() );
 
 		if ( ! in_array( $product_type, array( 'external', 'grouped', 'simple', 'variable' ) ) )
 			$product_type = 'other';
@@ -51,7 +53,7 @@ class WCJ_Add_To_Cart_Per_Product_Type {
 			if ( '' != get_option( 'wcj_add_to_cart_text_on_' . $single_or_archive . '_in_cart_' . $product_type, '' ) ) {
 				foreach( $woocommerce->cart->get_cart() as $cart_item_key => $values ) {
 					$_product = $values['data'];
-					if( get_the_ID() == $_product->id )
+					if( get_the_ID() == wcj_get_product_id_or_variation_parent_id( $_product ) )
 						return get_option( 'wcj_add_to_cart_text_on_' . $single_or_archive . '_in_cart_' . $product_type );
 				}
 			}

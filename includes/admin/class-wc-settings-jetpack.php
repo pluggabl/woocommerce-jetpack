@@ -560,6 +560,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'shipping_calculator',
 						'more_button_labels',
 						'free_price',
+						'add_to_cart',
 					);
 					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
 						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;">&#9745; </span>' : '' );

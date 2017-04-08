@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Add to Cart per Product class.
  *
- * @version 2.4.8
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -42,6 +42,8 @@ class WCJ_Add_To_Cart_Per_Product {
 
 	/**
 	 * change_add_to_cart_button_text.
+	 *
+	 * @version 2.6.1
 	 */
 	public function change_add_to_cart_button_text( $add_to_cart_text, $single_or_archive ) {
 		global $product;
@@ -49,7 +51,7 @@ class WCJ_Add_To_Cart_Per_Product {
 			return $add_to_cart_text;
 		}
 		$local_custom_add_to_cart_option_id = 'wcj_custom_add_to_cart_local_' . $single_or_archive;
-		$local_custom_add_to_cart_option_value = get_post_meta( $product->id, '_' . $local_custom_add_to_cart_option_id, true );
+		$local_custom_add_to_cart_option_value = get_post_meta( wcj_get_product_id_or_variation_parent_id( $product ), '_' . $local_custom_add_to_cart_option_id, true );
 		if ( '' != $local_custom_add_to_cart_option_value ) {
 			return $local_custom_add_to_cart_option_value;
 		}
