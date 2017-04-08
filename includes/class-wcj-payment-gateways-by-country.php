@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways by Country class.
  *
- * @version 2.5.6
+ * @version 2.6.1
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -28,7 +28,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-by-country-or-state/';
 		parent::__construct();
 
-		add_filter( 'init', array( $this, 'add_hooks' ) );
+		add_filter( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'available_payment_gateways' ), PHP_INT_MAX, 1 );
@@ -38,11 +38,11 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 */
 	function available_payment_gateways( $_available_gateways ) {
 		if ( isset( WC()->customer ) ) {
-			$customer_country = WC()->customer->get_country();
+			$customer_country = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? WC()->customer->get_country() : WC()->customer->get_billing_country();
 			foreach ( $_available_gateways as $key => $gateway ) {
 				$include_countries = get_option( 'wcj_gateways_countries_include_' . $key, '' );
 				if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries ) ) {
@@ -54,7 +54,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 					unset( $_available_gateways[ $key ] );
 					continue;
 				}
-				$customer_state = WC()->customer->get_state();
+				$customer_state = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? WC()->customer->get_state() : WC()->customer->get_billing_state();
 				$include_states = get_option( 'wcj_gateways_states_include_' . $key, '' );
 				if ( ! empty( $include_states ) && ! in_array( $customer_state, $include_states ) ) {
 					unset( $_available_gateways[ $key ] );
@@ -71,18 +71,11 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	}
 
 	/**
-	 * add_hooks.
-	 */
-	function add_hooks() {
-		add_filter( 'wcj_payment_gateways_by_country_settings', array( $this, 'add_countries_settings' ) );
-	}
-
-	/**
-	 * add_countries_settings.
+	 * add_settings.
 	 *
-	 * @version 2.4.4
+	 * @version 2.6.1
 	 */
-	function add_countries_settings( $settings ) {
+	function add_settings() {
 		$settings = array();
 		$settings[] = array(
 			'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
@@ -161,14 +154,6 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 		return $settings;
 	}
 
-	/**
-	 * get_settings.
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_payment_gateways_by_country_settings', $settings );
-		return $this->add_standard_settings( $settings );
-	}
 }
 
 endif;

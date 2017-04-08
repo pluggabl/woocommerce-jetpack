@@ -25,6 +25,9 @@ if (
 if ( ! defined( 'WCJ_WC_VERSION' ) ) {
 	define( 'WCJ_WC_VERSION', get_option( 'woocommerce_version', null ) );
 }
+if ( ! defined( 'WCJ_IS_WC_VERSION_BELOW_3' ) ) {
+	define( 'WCJ_IS_WC_VERSION_BELOW_3', version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) );
+}
 
 if ( ! defined( 'WCJ_PRODUCT_GET_PRICE_FILTER' ) ) {
 	$filter = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? 'woocommerce_get_price' : 'woocommerce_product_get_price';
@@ -56,7 +59,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.1-dev-201704071420';
+	public $version = '2.6.1-dev-201704080424';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class

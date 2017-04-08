@@ -545,6 +545,8 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'multicurrency_base_price',
 						'wholesale_price',
 						'payment_gateways',
+						'payment_gateways_icons',
+						'payment_gateways_by_country',
 					);
 					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
 						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;">&#9745; </span>' : '' );
