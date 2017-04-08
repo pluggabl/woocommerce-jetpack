@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 08/04/2017 =
+~!	* Dev - WooCommerce v3.0.0 compatibility - SHIPPING & ORDERS - Orders - Order ID replaced with `get_id()`; `woocommerce_get_order_currency` -> `woocommerce_order_get_currency`; `get_order_currency()` -> `get_currency()`; `billing_country` -> `get_billing_country()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Orders - `[wcj_order_date]` and `[wcj_order_time]` - `get_date_created()` for WC >= v3.0.0.
 ~!	* Dev - WooCommerce v3.0.0 compatibility - SHIPPING & ORDERS - Order Numbers - Order ID replaced with `get_id()`; order date replaced with `get_date_created()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Admin Tools - Order Meta - Additional check if `$item_meta_value` is array added.
@@ -163,6 +164,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
+~	* Dev - SHIPPING & ORDERS - Orders - Code refactoring - `add_settings_hook()`.
 ~	* Dev - PAYMENT GATEWAYS - Gateways by Country or State - Code refactoring - `add_settings_hook()`.
 ~	* Dev - PRICES & CURRENCIES - Wholesale Price - Code refactoring - `add_settings_hook()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `add_settings_hook()`.

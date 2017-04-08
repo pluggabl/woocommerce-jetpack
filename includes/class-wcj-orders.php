@@ -52,7 +52,8 @@ class WCJ_Orders extends WCJ_Module {
 				add_action( 'add_meta_boxes',       array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				if ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ) {
-					add_filter( 'woocommerce_get_order_currency', array( $this, 'change_order_currency' ), PHP_INT_MAX, 2 );
+					$woocommerce_get_order_currency_filter = ( WCJ_IS_WC_VERSION_BELOW_3 ? 'woocommerce_get_order_currency' : 'woocommerce_order_get_currency' );
+					add_filter( $woocommerce_get_order_currency_filter, array( $this, 'change_order_currency' ), PHP_INT_MAX, 2 );
 				}
 			}
 
@@ -211,17 +212,17 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * change_order_currency.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.5.6
 	 */
 	function change_order_currency( $order_currency, $_order ) {
-		return ( '' != ( $wcj_order_currency = get_post_meta( $_order->id, '_' . 'wcj_order_currency', true ) ) ) ? $wcj_order_currency : $order_currency;
+		return ( '' != ( $wcj_order_currency = get_post_meta( wcj_get_order_id( $_order ), '_' . 'wcj_order_currency', true ) ) ) ? $wcj_order_currency : $order_currency;
 	}
 
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.5.6
 	 */
 	function get_meta_box_options() {
@@ -230,7 +231,7 @@ class WCJ_Orders extends WCJ_Module {
 		$options = array(
 			array(
 				'name'       => ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ? 'wcj_order_currency' : 'order_currency' ),
-				'default'    => $_order->get_order_currency(),
+				'default'    => ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->get_order_currency() : $_order->get_currency() ),
 				'type'       => 'select',
 				'options'    => wcj_get_currencies_names_and_symbols( 'names' ),
 				'title'      => __( 'Order Currency', 'woocommerce-jetpack' ),
@@ -315,14 +316,14 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Output custom columns for orders
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @param   string $column
 	 */
-	public function render_order_columns( $column ) {
+	function render_order_columns( $column ) {
 		if ( 'country' === $column && 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
 			$order = wc_get_order( get_the_ID() );
 //			$country_code = wcj_get_customer_country( $order->customer_user );
-			$country_code = $order->billing_country;
+			$country_code = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_country : $order->get_billing_country() );
 			echo ( 2 == strlen( $country_code ) )
 				? wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code )
 				: wcj_get_country_name_by_code( $country_code );
@@ -348,26 +349,6 @@ class WCJ_Orders extends WCJ_Module {
 		}
 		$order = wc_get_order( $order_id );
 		$order->update_status( 'completed' );
-	}
-
-	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.3
-	 * @since   2.5.3
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_orders_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.3
-	 */
-	function get_settings() {
-		$settings = apply_filters( 'wcj_orders_settings', array() );
-		return $this->add_standard_settings( $settings );
 	}
 
 	/**
