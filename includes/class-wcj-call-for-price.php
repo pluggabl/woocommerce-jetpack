@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Call for Price class.
  *
- * @version 2.5.7
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,9 +17,9 @@ class WCJ_Call_For_Price extends WCJ_module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'call_for_price';
 		$this->short_desc = __( 'Call for Price', 'woocommerce-jetpack' );
@@ -35,7 +35,7 @@ class WCJ_Call_For_Price extends WCJ_module {
 			add_filter( 'woocommerce_sale_flash', array( $this, 'hide_sales_flash' ), 100, 3 );
 
 			if ( 'yes' === get_option( 'wcj_call_for_price_make_all_empty', 'no' ) ) {
-				add_filter( 'woocommerce_get_price', array( $this, 'make_empty_price' ), PHP_INT_MAX, 2 );
+				add_filter( WCJ_PRODUCT_GET_PRICE_FILTER, array( $this, 'make_empty_price' ), PHP_INT_MAX, 2 );
 			}
 		}
 	}
@@ -53,14 +53,14 @@ class WCJ_Call_For_Price extends WCJ_module {
 	/**
 	 * add_hook.
 	 */
-	public function add_hook() {
+	function add_hook() {
 		add_filter( 'woocommerce_empty_price_html', array( $this, 'on_empty_price' ), PHP_INT_MAX );
 	}
 
 	/**
 	 * Hide "sales" icon for empty price products.
 	 */
-	public function hide_sales_flash( $onsale_html, $post, $product ) {
+	function hide_sales_flash( $onsale_html, $post, $product ) {
 		if ( get_option('wcj_call_for_price_hide_sale_sign') === 'yes' ) {
 			if ( $product->get_price() === '' ) {
 				return '';
@@ -72,18 +72,18 @@ class WCJ_Call_For_Price extends WCJ_module {
 	/**
 	 * On empty price filter - return the label.
 	 */
-	public function on_empty_price( $price ) {
-		if ( ( get_option('wcj_call_for_price_text') !== '' ) && is_single( get_the_ID() ) ) {
-			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option('wcj_call_for_price_text') ) );
+	function on_empty_price( $price ) {
+		if ( ( get_option( 'wcj_call_for_price_text' ) !== '' ) && is_single( get_the_ID() ) ) {
+			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option( 'wcj_call_for_price_text' ) ) );
 		}
-		if ( ( get_option('wcj_call_for_price_text_on_related') !== '' ) && ( is_single() ) && ( ! is_single( get_the_ID() ) ) ) {
-			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option('wcj_call_for_price_text_on_related') ) );
+		if ( ( get_option( 'wcj_call_for_price_text_on_related' ) !== '' ) && ( is_single() ) && ( ! is_single( get_the_ID() ) ) ) {
+			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option( 'wcj_call_for_price_text_on_related' ) ) );
 		}
-		if ( ( get_option('wcj_call_for_price_text_on_archive') !== '' ) && is_archive() ) {
-			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option('wcj_call_for_price_text_on_archive') ) );
+		if ( ( get_option( 'wcj_call_for_price_text_on_archive' ) !== '' ) && is_archive() ) {
+			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option( 'wcj_call_for_price_text_on_archive' ) ) );
 		}
-		if ( ( get_option('wcj_call_for_price_text_on_home') !== '' ) && is_front_page() ) {
-			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option('wcj_call_for_price_text_on_home') ) );
+		if ( ( get_option( 'wcj_call_for_price_text_on_home' ) !== '' ) && is_front_page() ) {
+			return do_shortcode( apply_filters( 'booster_get_option', $this->default_empty_price_text, get_option( 'wcj_call_for_price_text_on_home' ) ) );
 		}
 
 		// No changes
@@ -93,14 +93,15 @@ class WCJ_Call_For_Price extends WCJ_module {
 	/**
 	 * Get settings array.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 */
 	function get_settings() {
 		$settings = array(
 			array(
 				'title'     => __( 'Call for Price Options', 'woocommerce-jetpack' ),
 				'type'      => 'title',
-				'desc'      => __( 'Leave price empty when adding or editing products. Then set the options here.', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Leave price empty when adding or editing products. Then set the options here.', 'woocommerce-jetpack' ) .
+					' ' . __( 'You can use shortcodes in options.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_call_for_price_options',
 			),
 			array(
