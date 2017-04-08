@@ -164,25 +164,26 @@ You can see the differences between versions in this [table](http://booster.io/b
 -!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.
 -!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_categories]` - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
 
-	* Dev - Products - Products per Page - Code refactoring - `add_settings_hook()`.
+	* Dev - PRODUCTS - Products per Page - Code refactoring - `add_settings_hook()`.
 	* Dev - SHIPPING & ORDERS - Order Minimum Amount - Code refactoring - `add_settings_hook()`.
 	* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - Code refactoring - `add_settings_hook()`.
 	* Dev - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Code refactoring - `add_settings_hook()`.
 	* Dev - PAYMENT GATEWAYS - Gateways by User Role - Code refactoring - `add_settings_hook()`.
 	* Dev - BUTTON & PRICE LABELS - Free Price Labels - Code refactoring - `add_settings_hook()`.
+~	* Dev - SHIPPING & ORDERS - Orders - Code refactoring - `add_settings_hook()`.
+~	* Dev - PAYMENT GATEWAYS - Gateways by Country or State - Code refactoring - `add_settings_hook()`.
+~	* Dev - PRICES & CURRENCIES - Wholesale Price - Code refactoring - `add_settings_hook()`.
+~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `add_settings_hook()`.
+~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `add_settings_hook()`.
+~	* Dev - PRICES & CURRENCIES - Price Formats - Code refactoring - `add_settings_hook()`.
+
 	* Dev - BUTTON & PRICE LABELS - More Button Labels - Hook priority changed. Default value for `get_option()` added.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Always Use cURL" option added.
 ~	* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Empty sale price issue fixed.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
-~	* Dev - SHIPPING & ORDERS - Orders - Code refactoring - `add_settings_hook()`.
-~	* Dev - PAYMENT GATEWAYS - Gateways by Country or State - Code refactoring - `add_settings_hook()`.
-~	* Dev - PRICES & CURRENCIES - Wholesale Price - Code refactoring - `add_settings_hook()`.
-~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `add_settings_hook()`.
 ~	* Fix - PRICES & CURRENCIES - Price by User Role - `woocommerce_variation_prices_regular_price` hook.
-~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `add_settings_hook()`.
-~	* Dev - PRICES & CURRENCIES - Price Formats - Code refactoring - `add_settings_hook()`.
 ~D	* Dev - Shortcodes - General - `[wcj_cart_items_total_quantity]` shortcode added.
 ~!D	* Dev - PRODUCTS - Product Input Fields - Timepicker - "Min time" and "Max time" options added.
 ~D	* Dev - EMAILS & MISC. - Emails - "Product Info in Item Name" options added.
@@ -197,6 +198,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - `textarea` replaced with `custom_textarea`.
 ~$D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - "Instead of the price" option added.
 ~!T	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (legacy and with zones) - `woocommerce_shipping_init` hook replaced with `init` hook.
+
 ~!	* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added.
 	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
 ~D	* Dev - Shortcodes - `on_empty` attribute added to all shortcodes.
