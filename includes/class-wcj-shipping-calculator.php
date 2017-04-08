@@ -19,7 +19,7 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 	 *
 	 * @version 2.5.7
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'shipping_calculator';
 		$this->short_desc = __( 'Shipping Calculator', 'woocommerce-jetpack' );
@@ -80,7 +80,7 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 	/**
 	 * add_custom_styles.
 	 */
-	public function add_custom_styles() {
+	function add_custom_styles() {
 
 		$html = '<style type="text/css">';
 
@@ -106,14 +106,14 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 	/**
 	 * enable_city.
 	 */
-	public function enable_city() {
+	function enable_city() {
 		return ( 'yes' === get_option( 'wcj_shipping_calculator_enable_city' ) ) ? true : false;
 	}
 
 	/**
 	 * enable_postcode.
 	 */
-	public function enable_postcode() {
+	function enable_postcode() {
 		return ( 'yes' === get_option( 'wcj_shipping_calculator_enable_postcode' ) ) ? true : false;
 	}
 
