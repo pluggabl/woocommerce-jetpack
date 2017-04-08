@@ -76,16 +76,17 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	 * @version 2.6.1
 	 */
 	function add_settings() {
-		$settings = array();
-		$settings[] = array(
-			'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ),
-			'id'    => 'wcj_payment_gateways_by_country_gateways_options',
+		$settings = array(
+			array(
+				'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+				'type'  => 'title',
+				'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ),
+				'id'    => 'wcj_payment_gateways_by_country_gateways_options',
+			),
 		);
 		$countries = wcj_get_countries();
-		$states = wcj_get_states();
-		$gateways = WC()->payment_gateways->payment_gateways();
+		$states    = wcj_get_states();
+		$gateways  = WC()->payment_gateways->payment_gateways();
 		foreach ( $gateways as $key => $gateway ) {
 			$default_gateways = array( 'bacs' );
 			if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
@@ -98,59 +99,63 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 				$custom_attributes = array();
 				$desc_tip = '';
 			}
-			$settings[] = array(
-				'title'     => $gateway->title,
-				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Include Countries', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_gateways_countries_include_' . $key,
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $countries,
-				'custom_attributes' => $custom_attributes,
-			);
-			$settings[] = array(
-				'title'     => '',
-				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Exclude Countries', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_gateways_countries_exclude_' . $key,
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $countries,
-				'custom_attributes' => $custom_attributes,
-			);
-			$settings[] = array(
-				'title'     => '',
-				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Include States (Base Country)', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_gateways_states_include_' . $key,
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $states,
-				'custom_attributes' => $custom_attributes,
-			);
-			$settings[] = array(
-				'title'     => '',
-				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Exclude States (Base Country)', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_gateways_states_exclude_' . $key,
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $states,
-				'custom_attributes' => $custom_attributes,
-			);
+			$settings = array_merge( $settings, array(
+				array(
+					'title'     => $gateway->title,
+					'desc_tip'  => $desc_tip,
+					'desc'      => __( 'Include Countries', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_countries_include_' . $key,
+					'default'   => '',
+					'type'      => 'multiselect',
+					'class'     => 'chosen_select',
+					'css'       => 'width: 450px;',
+					'options'   => $countries,
+					'custom_attributes' => $custom_attributes,
+				),
+				array(
+					'title'     => '',
+					'desc_tip'  => $desc_tip,
+					'desc'      => __( 'Exclude Countries', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_countries_exclude_' . $key,
+					'default'   => '',
+					'type'      => 'multiselect',
+					'class'     => 'chosen_select',
+					'css'       => 'width: 450px;',
+					'options'   => $countries,
+					'custom_attributes' => $custom_attributes,
+				),
+				array(
+					'title'     => '',
+					'desc_tip'  => $desc_tip,
+					'desc'      => __( 'Include States (Base Country)', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_states_include_' . $key,
+					'default'   => '',
+					'type'      => 'multiselect',
+					'class'     => 'chosen_select',
+					'css'       => 'width: 450px;',
+					'options'   => $states,
+					'custom_attributes' => $custom_attributes,
+				),
+				array(
+					'title'     => '',
+					'desc_tip'  => $desc_tip,
+					'desc'      => __( 'Exclude States (Base Country)', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_states_exclude_' . $key,
+					'default'   => '',
+					'type'      => 'multiselect',
+					'class'     => 'chosen_select',
+					'css'       => 'width: 450px;',
+					'options'   => $states,
+					'custom_attributes' => $custom_attributes,
+				),
+			) );
 		}
-		$settings[] = array(
-			'type'  => 'sectionend',
-			'id'    => 'wcj_payment_gateways_by_country_gateways_options',
-		);
+		$settings = array_merge( $settings, array(
+			array(
+				'type'  => 'sectionend',
+				'id'    => 'wcj_payment_gateways_by_country_gateways_options',
+			),
+		) );
 		return $settings;
 	}
 
