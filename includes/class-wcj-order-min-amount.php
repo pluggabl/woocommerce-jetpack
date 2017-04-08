@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Minimum Amount class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -21,7 +21,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	 * @version 2.5.7
 	 * @since   2.5.7
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'order_min_amount';
 		$this->short_desc = __( 'Order Minimum Amount', 'woocommerce-jetpack' );
@@ -67,7 +67,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * get_order_minimum_amount_with_user_roles.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 */
 	function get_order_minimum_amount_with_user_roles() {
@@ -84,7 +84,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		}
 		// Multicurrency (Currency Switcher) module
 		if ( WCJ()->modules['multicurrency']->is_enabled() ) {
-			$minimum = WCJ()->modules['multicurrency']->change_price_by_currency( $minimum, null );
+			$minimum = WCJ()->modules['multicurrency']->change_price( $minimum, null );
 		}
 		return $minimum;
 	}
@@ -112,7 +112,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	 * @version 2.6.0
 	 * @todo    wc_print_notice or wc_add_notice?
 	 */
-	public function order_minimum_amount() {
+	function order_minimum_amount() {
 		$minimum = $this->get_order_minimum_amount_with_user_roles();
 		if ( 0 == $minimum ) {
 			return;
@@ -146,7 +146,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	 *
 	 * @version 2.5.5
 	 */
-	public function stop_from_seeing_checkout( $wp ) {
+	function stop_from_seeing_checkout( $wp ) {
 //		if ( is_admin() ) return;
 		global $woocommerce;
 		if ( ! isset( $woocommerce ) || ! is_object( $woocommerce ) ) {
@@ -169,27 +169,6 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		if ( $the_cart_total < $minimum ) {
 			wp_safe_redirect( $woocommerce->cart->get_cart_url() );
 		}
-	}
-
-	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.7
-	 * @since   2.5.7
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_order_min_amount_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.7
-	 * @since   2.5.7
-	 */
-	function get_settings() {
-		$settings = apply_filters( 'wcj_order_min_amount_settings', array() );
-		return $this->add_standard_settings( $settings );
 	}
 
 	/**
