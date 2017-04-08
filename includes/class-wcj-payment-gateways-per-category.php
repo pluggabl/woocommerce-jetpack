@@ -39,13 +39,15 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	/**
 	 * filter_available_payment_gateways_per_category.
 	 *
-	 * @version 2.4.7
+	 * @version 2.6.1
 	 */
 	function filter_available_payment_gateways_per_category( $available_gateways ) {
 
 //		if ( ! is_checkout() ) return $available_gateways;
 
-		if ( ! isset( WC()->cart ) ) return $available_gateways;
+		if ( ! isset( WC()->cart ) ) {
+			return $available_gateways;
+		}
 
 		foreach ( $available_gateways as $gateway_id => $gateway ) {
 
@@ -55,7 +57,9 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 				$do_skip = true;
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
 					$product_categories = get_the_terms( $values['product_id'], 'product_cat' );
-					if ( empty( $product_categories ) ) continue; // ... to next product in the cart
+					if ( empty( $product_categories ) ) {
+						continue; // ... to next product in the cart
+					}
 					foreach( $product_categories as $product_category ) {
 						if ( in_array( $product_category->term_id, $categories_in ) ) {
 							// Current gateway is OK, breaking to check next gateway (no need to check other categories of the product)
@@ -70,7 +74,9 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 				}
 				if ( $do_skip ) {
 					// Skip (i.e. hide/unset) current gateway - no products of needed categories found in the cart
-					if ( isset( $available_gateways[ $gateway_id ] ) ) unset( $available_gateways[ $gateway_id ] );
+					if ( isset( $available_gateways[ $gateway_id ] ) ) {
+						unset( $available_gateways[ $gateway_id ] );
+					}
 					continue; // ... to next gateway
 				}
 			}
@@ -81,16 +87,22 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 				$do_skip = false;
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
 					$product_categories = get_the_terms( $values['product_id'], 'product_cat' );
-					if ( empty( $product_categories ) ) continue; // ... to next product in the cart
+					if ( empty( $product_categories ) ) {
+						continue; // ... to next product in the cart
+					}
 					foreach( $product_categories as $product_category ) {
 						if ( in_array( $product_category->term_id, $categories_excl ) ) {
 							// Skip (i.e. hide/unset) current gateway
-							if ( isset( $available_gateways[ $gateway_id ] ) ) unset( $available_gateways[ $gateway_id ] );
+							if ( isset( $available_gateways[ $gateway_id ] ) ) {
+								unset( $available_gateways[ $gateway_id ] );
+							}
 							$do_skip = true;
 							break;
 						}
 					}
-					if ( $do_skip ) break;
+					if ( $do_skip ) {
+						break;
+					}
 				}
 				if ( $do_skip ) {
 					continue; // ... to next gateway
@@ -110,7 +122,9 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 				}
 				if ( $do_skip ) {
 					// Skip (i.e. hide/unset) current gateway
-					if ( isset( $available_gateways[ $gateway_id ] ) ) unset( $available_gateways[ $gateway_id ] );
+					if ( isset( $available_gateways[ $gateway_id ] ) ) {
+						unset( $available_gateways[ $gateway_id ] );
+					}
 					continue; // ... to next gateway
 				}
 			}
@@ -122,7 +136,9 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
 					if ( in_array( $values['product_id'], $products_excl ) ) {
 						// Skip (i.e. hide/unset) current gateway
-						if ( isset( $available_gateways[ $gateway_id ] ) ) unset( $available_gateways[ $gateway_id ] );
+						if ( isset( $available_gateways[ $gateway_id ] ) ) {
+							unset( $available_gateways[ $gateway_id ] );
+						}
 						$do_skip = true;
 						break;
 					}
@@ -140,14 +156,16 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 */
 	function add_settings( $settings ) {
 
-		$settings[] = array(
-			'title' => __( 'Options', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'id'    => 'wcj_gateways_per_category_options',
+		$settings = array(
+			array(
+				'title'     => __( 'Options', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'id'        => 'wcj_gateways_per_category_options',
+			),
 		);
 
 		$product_cats = array();
@@ -161,58 +179,62 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 		global $woocommerce;
 		$available_gateways = $woocommerce->payment_gateways->payment_gateways();
 		foreach ( $available_gateways as $gateway_id => $gateway ) {
-			$settings[] = array(
-				'title'     => $gateway->title,
-				'desc'      => __( 'Product Categories - Include', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Show gateway only if there is product of selected category in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_gateways_per_category_' . $gateway_id,
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $product_cats,
-			);
-			$settings[] = array(
-				'title'     => '',
-				'desc'      => __( 'Product Categories - Exclude', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Hide gateway if there is product of selected category in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_gateways_per_category_excl_' . $gateway_id,
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $product_cats,
-			);
-			$settings[] = array(
-				'title'     => '',
-				'desc'      => __( 'Products - Include', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'booster_get_message', '', 'desc' ),
-				'desc_tip'  => __( 'Show gateway only if there is selected products in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_gateways_per_products_' . $gateway_id,
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $products,
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-			);
-			$settings[] = array(
-				'title'     => '',
-				'desc'      => __( 'Products - Exclude', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'booster_get_message', '', 'desc' ),
-				'desc_tip'  => __( 'Hide gateway if there is selected products in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_gateways_per_products_excl_' . $gateway_id,
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $products,
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-			);
+			$settings = array_merge( $settings, array(
+				array(
+					'title'     => $gateway->title,
+					'desc'      => __( 'Product Categories - Include', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'Show gateway only if there is product of selected category in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_per_category_' . $gateway_id,
+					'default'   => '',
+					'type'      => 'multiselect',
+					'class'     => 'chosen_select',
+					'css'       => 'width: 450px;',
+					'options'   => $product_cats,
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'Product Categories - Exclude', 'woocommerce-jetpack' ),
+					'desc_tip'  => __( 'Hide gateway if there is product of selected category in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_per_category_excl_' . $gateway_id,
+					'default'   => '',
+					'type'      => 'multiselect',
+					'class'     => 'chosen_select',
+					'css'       => 'width: 450px;',
+					'options'   => $product_cats,
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'Products - Include', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'booster_get_message', '', 'desc' ),
+					'desc_tip'  => __( 'Show gateway only if there is selected products in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_per_products_' . $gateway_id,
+					'default'   => '',
+					'type'      => 'multiselect',
+					'class'     => 'chosen_select',
+					'css'       => 'width: 450px;',
+					'options'   => $products,
+					'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+				),
+				array(
+					'title'     => '',
+					'desc'      => __( 'Products - Exclude', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'booster_get_message', '', 'desc' ),
+					'desc_tip'  => __( 'Hide gateway if there is selected products in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_per_products_excl_' . $gateway_id,
+					'default'   => '',
+					'type'      => 'multiselect',
+					'class'     => 'chosen_select',
+					'css'       => 'width: 450px;',
+					'options'   => $products,
+					'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+				),
+			) );
 		}
 
-		$settings[] = array(
-			'type' => 'sectionend',
-			'id'   => 'wcj_gateways_per_category_options',
-		);
+		$settings = array_merge( $settings, array(
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_gateways_per_category_options',
+			),
+		) );
 
 		return $settings;
 	}
