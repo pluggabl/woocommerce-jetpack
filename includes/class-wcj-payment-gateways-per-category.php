@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways per Category class.
  *
- * @version 2.5.0
+ * @version 2.6.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.7
+	 * @version 2.6.1
 	 */
 	function __construct() {
 
@@ -28,30 +28,12 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 		$this->link       = 'http://booster.io/features/woocommerce-gateways-per-product-or-category/';
 		parent::__construct();
 
-		add_filter( 'init',  array( $this, 'add_hooks' ) );
+		add_filter( 'init',  array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 //			add_filter( 'woocommerce_payment_gateways_settings',  array( $this, 'add_per_category_settings' ), 100 );
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'filter_available_payment_gateways_per_category' ), 100 );
 		}
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.4.7
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_payment_gateways_per_category_settings', $settings );
-		return $this->add_standard_settings( $settings );
-	}
-
-	/**
-	 * add_hooks.
-	 */
-	function add_hooks() {
-		add_filter( 'wcj_payment_gateways_per_category_settings', array( $this, 'add_per_category_settings' ) );
 	}
 
 	/**
@@ -156,11 +138,11 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	}
 
 	/**
-	 * add_per_category_settings.
+	 * add_settings.
 	 *
 	 * @version 2.5.0
 	 */
-	function add_per_category_settings( $settings ) {
+	function add_settings( $settings ) {
 
 		$settings[] = array(
 			'title' => __( 'Options', 'woocommerce-jetpack' ),
