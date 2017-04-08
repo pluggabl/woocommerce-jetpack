@@ -29,7 +29,7 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-by-shipping/';
 		parent::__construct();
 
-		add_filter( 'init', array( $this, 'add_hooks' ) );
+		add_filter( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'available_payment_gateways' ), PHP_INT_MAX, 1 );
@@ -138,26 +138,6 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 			}
 		}
 		return $_available_gateways;
-	}
-
-	/**
-	 * add_hooks.
-	 *
-	 * @version 2.6.1
-	 * @version 2.6.1
-	 */
-	function add_hooks() {
-		add_filter( 'wcj_payment_gateways_by_shipping_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.6.1
-	 * @version 2.6.1
-	 */
-	function get_settings() {
-		return $this->add_standard_settings( apply_filters( 'wcj_payment_gateways_by_shipping_settings', array() ) );
 	}
 
 	/**
