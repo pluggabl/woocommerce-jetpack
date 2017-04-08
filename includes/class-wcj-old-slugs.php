@@ -19,7 +19,7 @@ class WCJ_Old_Slugs extends WCJ_Module {
 	 *
 	 * @version 2.5.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'old_slugs';
 		$this->short_desc = __( 'Old Slugs', 'woocommerce-jetpack' );
@@ -72,8 +72,11 @@ class WCJ_Old_Slugs extends WCJ_Module {
 
 			if ( ( isset( $_POST['remove_old_products_slugs'] ) ) || ( isset( $_POST['remove_old_none_products_slugs'] ) ) ) {
 
-				if ( isset( $_POST['remove_old_products_slugs'] ) ) $post_ids_to_delete = join( ',', $posts_ids['products'] );
-				else if ( isset( $_POST['remove_old_none_products_slugs'] ) ) $post_ids_to_delete = join( ',', $posts_ids['none_products'] );
+				if ( isset( $_POST['remove_old_products_slugs'] ) ) {
+					$post_ids_to_delete = join( ',', $posts_ids['products'] );
+				} elseif ( isset( $_POST['remove_old_none_products_slugs'] ) ) {
+					$post_ids_to_delete = join( ',', $posts_ids['none_products'] );
+				}
 
 				$the_delete_query = "DELETE FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug' AND post_id IN ($post_ids_to_delete)";
 
