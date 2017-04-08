@@ -289,31 +289,34 @@ class WCJ_Price_Labels extends WCJ_Module {
 			$product = $product['data'];
 		}
 
-		/* if ( 'woocommerce_get_price_html' === $current_filter_name && ! in_array( $product->product_type, apply_filters( 'wcj_price_labels_woocommerce_get_price_html_allowed_post_types', array( 'booking' ), $product->product_type ) ) ) {
-			return $price;
-		} */ //  TODO: WC 3.0.0
+		$_product_id = wcj_get_product_id_or_variation_parent_id( $product );
+		$_product_type = ( WCJ_IS_WC_VERSION_BELOW_3 ? $product->product_type : $product->get_type() );
 
-		if ( 'subscription' === $product->product_type && 'woocommerce_subscriptions_product_price_string' !== $current_filter_name ) {
+		if ( WCJ_IS_WC_VERSION_BELOW_3 && 'woocommerce_get_price_html' === $current_filter_name && ! in_array( $_product_type, apply_filters( 'wcj_price_labels_woocommerce_get_price_html_allowed_post_types', array( 'booking' ), $_product_type ) ) ) {
+			return $price;
+		} //  TODO: WC 3.0.0
+
+		if ( 'subscription' === $_product_type && 'woocommerce_subscriptions_product_price_string' !== $current_filter_name ) {
 			return $price;
 		}
 
-		if ( 'variable-subscription' === $product->product_type && 'woocommerce_variable_subscription_price_html' !== $current_filter_name ) {
+		if ( 'variable-subscription' === $_product_type && 'woocommerce_variable_subscription_price_html' !== $current_filter_name ) {
 			return $price;
 		}
 
-		if ( 'subscription_variation' === $product->product_type && 'woocommerce_subscriptions_product_price_string' !== $current_filter_name ) {
+		if ( 'subscription_variation' === $_product_type && 'woocommerce_subscriptions_product_price_string' !== $current_filter_name ) {
 			return $price;
 		}
-		if ( 'subscription_variation' === $product->product_type && 'woocommerce_subscriptions_product_price_string' === $current_filter_name ) {
+		if ( 'subscription_variation' === $_product_type && 'woocommerce_subscriptions_product_price_string' === $current_filter_name ) {
 			$current_filter_name = 'woocommerce_variation_subscription_price_html';
 		}
 
 		$do_apply_global = true;
 		$products_incl = get_option( 'wcj_global_price_labels_products_incl', array() );
-		if ( ! empty( $products_incl ) ) $do_apply_global = ( in_array( $product->id, $products_incl ) ) ? true : false;
+		if ( ! empty( $products_incl ) ) $do_apply_global = ( in_array( $_product_id, $products_incl ) ) ? true : false;
 		$products_excl = get_option( 'wcj_global_price_labels_products_excl', array() );
-		if ( ! empty( $products_excl ) ) $do_apply_global = ( in_array( $product->id, $products_excl ) ) ? false : true;
-		$product_categories = get_the_terms( $product->id, 'product_cat' );
+		if ( ! empty( $products_excl ) ) $do_apply_global = ( in_array( $_product_id, $products_excl ) ) ? false : true;
+		$product_categories = get_the_terms( $_product_id, 'product_cat' );
 		$product_categories_incl = get_option( 'wcj_global_price_labels_product_cats_incl', array() );
 		if ( ! empty( $product_categories_incl ) ) {
 			$do_apply_global = false;
@@ -398,7 +401,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 
 					//$option_name = $this->custom_tab_group_name;
 					$option_name = $this->custom_tab_group_name . $custom_tab_section . $custom_tab_section_variation;
-					$labels_array[ 'variation' . $custom_tab_section_variation ] = get_post_meta( $product->post->ID, '_' . $option_name, true );
+					$labels_array[ 'variation' . $custom_tab_section_variation ] = get_post_meta( $_product_id, '_' . $option_name, true );
 
 					/* if ( $custom_tab_section_variation == '_text' ) {
 
@@ -460,7 +463,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 
 //		return do_shortcode( $price . $current_filter_name . $product->product_type . $labels_array['variation_variable'] . $labels_array['variation_variation'] );
 		global $wcj_product_id_for_shortcode;
-		$wcj_product_id_for_shortcode = ( isset( $product->variation_id ) ) ? $product->variation_id : $product->id;
+		$wcj_product_id_for_shortcode = wcj_get_product_id( $product );
 		$result = do_shortcode( $price );
 		$wcj_product_id_for_shortcode = 0;
 		return $result;

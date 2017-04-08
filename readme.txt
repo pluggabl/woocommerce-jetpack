@@ -146,7 +146,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 = 2.6.1 - 08/04/2017 =
 ~	* Dev - WooCommerce v3.0.0 compatibility - Button & Price Labels - Call for Price - `woocommerce_get_price` -> `woocommerce_product_get_price` for WC >= v3.0.0.
-~!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Add to Cart Labels - `wcj_get_product_id_or_variation_parent_id()`; `product_type` -> `get_type()`.
+~!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Add to Cart Labels - `wcj_get_product_id_or_variation_parent_id()`; `product_type` -> `get_type()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Free Price Labels - `wcj_get_product_id_or_variation_parent_id()`; "free price" filters;
 ~!	* Dev - WooCommerce v3.0.0 compatibility - SHIPPING & ORDERS - Orders - Order ID replaced with `get_id()`; `woocommerce_get_order_currency` -> `woocommerce_order_get_currency`; `get_order_currency()` -> `get_currency()`; `billing_country` -> `get_billing_country()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Orders - `[wcj_order_date]` and `[wcj_order_time]` - `get_date_created()` for WC >= v3.0.0.
@@ -160,6 +160,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Global Discount - `get_price` filters replaced for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Currency for External Products - `product_type` property replaced with `is_type()` function.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_price` filters replaced for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0. `wc_get_formatted_variation()` used for WC >= v3.0.0.
+~!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_get_product_id_or_variation_parent_id()`; `wcj_get_product_id()`; `product_type` -> `get_type()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.
 -!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_categories]` - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
 
