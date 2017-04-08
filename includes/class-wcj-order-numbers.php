@@ -115,11 +115,12 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * @version 2.6.1
 	 */
 	function display_order_number( $order_number, $order ) {
-		$order_number_meta = get_post_meta( $order->id, '_wcj_order_number', true );
+		$order_id = wcj_get_order_id( $order );
+		$order_number_meta = get_post_meta( $order_id , '_wcj_order_number', true );
 		if ( '' == $order_number_meta || 'no' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
-			$order_number_meta = $order->id;
+			$order_number_meta = $order_id;
 		}
-		$order_timestamp = strtotime( $order->post->post_date );
+		$order_timestamp = strtotime( ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->post->post_date : $order->get_date_created() ) );
 		$order_number = apply_filters( 'booster_get_option',
 			sprintf( '%s%s', do_shortcode( get_option( 'wcj_order_number_prefix', '' ) ), $order_number_meta ),
 			sprintf( '%s%s%0' . get_option( 'wcj_order_number_min_width', 0 ) . 's%s%s',

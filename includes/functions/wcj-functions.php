@@ -42,6 +42,18 @@ if ( ! function_exists( 'wcj_get_product_id_or_variation_parent_id' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_order_id' ) ) {
+	/**
+	 * wcj_get_order_id.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function wcj_get_order_id( $_order ) {
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $_order->id : $_order->get_id();
+	}
+}
+
 if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 	/**
 	 * wcj_add_change_price_hooks.
