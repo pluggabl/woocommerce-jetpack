@@ -564,6 +564,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'call_for_price',
 						'wpml',
 						'checkout_customization',
+						'empty_cart',
 					);
 					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
 						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;">&#9745; </span>' : '' );

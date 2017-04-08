@@ -48,7 +48,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	 *
 	 * @version 2.5.0
 	 */
-	public function add_empty_cart_link() {
+	function add_empty_cart_link() {
 		$confirmation_html = ( 'confirm_with_pop_up_box' == get_option( 'wcj_empty_cart_confirmation', 'no_confirmation' ) ) ? ' onclick="return confirm(\'' . get_option( 'wcj_empty_cart_confirmation_text' ) . '\')"' : '';
 		echo '<div style="' . get_option( 'wcj_empty_cart_div_style', 'float: right;' ) . '"><form action="" method="post"><input type="submit" class="button" name="empty_cart" value="' . apply_filters( 'booster_get_option', 'Empty Cart', get_option( 'wcj_empty_cart_text' ) ) . '"' . $confirmation_html . '></form></div>';
 	}
@@ -56,7 +56,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	/**
 	 * empty_cart.
 	 */
-	public function empty_cart() {
+	function empty_cart() {
 		if ( isset( $_POST['empty_cart'] ) ) {
 			global $woocommerce;
 			$woocommerce->cart->empty_cart();
