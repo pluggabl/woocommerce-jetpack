@@ -77,7 +77,8 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	 * add_settings.
 	 *
 	 * @version 2.6.1
-	 * @todo    checkout notices - add %diff_amount% replaced values (wc_has_notice won't work then, probably will need to use wc_clear_notices)
+	 * @todo    checkout notices - add %total_in_cart% replaced values
+	 * @todo    checkout notices - add %diff_amount% replaced values (wc_has_notice won't work then?, probably will need to use wc_clear_notices)
 	 */
 	function add_settings( $settings ) {
 		$settings = array(
