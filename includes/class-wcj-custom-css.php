@@ -20,6 +20,7 @@ class WCJ_Custom_CSS extends WCJ_Module {
 	 *
 	 * @version 2.6.1
 	 * @since   2.6.1
+	 * @todo    wp_safe_redirect after saving settings
 	 * @todo    automatically enable the module if v <= 2.6.0 and General module enabled and `wcj_general_custom_css` or `wcj_general_custom_admin_css` are not empty
 	 * @todo    (maybe) set `add_action` `priority` to `PHP_INT_MAX`
 	 */
@@ -59,26 +60,6 @@ class WCJ_Custom_CSS extends WCJ_Module {
 	 */
 	function hook_custom_admin_css() {
 		echo '<style>' . get_option( 'wcj_general_custom_admin_css', '' ) . '</style>';
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
-	 */
-	function get_settings() {
-		return $this->add_standard_settings( apply_filters( 'wcj_custom_css_settings', array() ) );
-	}
-
-	/*
-	 * add_settings_hook.
-	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_custom_css_settings', array( $this, 'add_settings' ) );
 	}
 
 	/*

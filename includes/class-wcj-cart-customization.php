@@ -53,26 +53,6 @@ class WCJ_Cart_Customization extends WCJ_Module {
 		return ( is_cart() ) ? false : $enabled;
 	}
 
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
-	 */
-	function get_settings() {
-		return $this->add_standard_settings( apply_filters( 'wcj_cart_customization_settings', array() ) );
-	}
-
-	/*
-	 * add_settings_hook.
-	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_cart_customization_settings', array( $this, 'add_settings' ) );
-	}
-
 	/*
 	 * add_settings.
 	 *
