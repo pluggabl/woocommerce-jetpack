@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack More Button Labels class.
  *
- * @version 2.4.8
+ * @version 2.6.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,9 +18,9 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.1
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'more_button_labels';
 		$this->short_desc = __( 'More Button Labels', 'woocommerce-jetpack' );
@@ -29,15 +29,17 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_order_button_text', array( $this, 'set_order_button_text' ) );
+			add_filter( 'woocommerce_order_button_text', array( $this, 'set_order_button_text' ), PHP_INT_MAX );
 		}
 	}
 
 	/**
 	 * set_order_button_text.
+	 *
+	 * @version 2.6.1
 	 */
-	public function set_order_button_text( $current_text ) {
-		$new_text = get_option( 'wcj_checkout_place_order_button_text' );
+	function set_order_button_text( $current_text ) {
+		$new_text = get_option( 'wcj_checkout_place_order_button_text', '' );
 		return ( '' != $new_text ) ? $new_text : $current_text;
 	}
 
@@ -56,7 +58,7 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Text', 'woocommerce-jetpack' ),
-				'desc'     => __( 'leave blank for WooCommerce default', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Leave blank for WooCommerce default.', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Button on the checkout page.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_checkout_place_order_button_text',
 				'default'  => '',
