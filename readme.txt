@@ -145,7 +145,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 08/04/2017 =
--!	* Dev - WooCommerce v3.0.0 compatibility - PAYMENT GATEWAYS - Gateways by Country or State - `get_country()` and `get_state()` replaced for for WC >= v3.0.0.
+~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Admin Tools - Order Meta - Additional check if `$item_meta_value` is array added.
+~	* Dev - WooCommerce v3.0.0 compatibility - PAYMENT GATEWAYS - Gateways by Country or State - `get_country()` and `get_state()` replaced for for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `get_price` filters replaced for for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Wholesale Price - `get_price` filters replaced for for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency Product Base Price - `get_price` filters replaced for for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
