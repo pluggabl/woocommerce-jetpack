@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways by User Role class.
  *
- * @version 2.5.3
+ * @version 2.6.1
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  */
@@ -60,30 +60,21 @@ class WCJ_Payment_Gateways_By_User_Role extends WCJ_Module {
 	}
 
 	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.3
-	 * @since   2.5.3
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_payment_gateways_by_user_role_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 */
 	function add_settings( $settings ) {
-		$settings = array();
-		$settings[] = array(
-			'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ) . ' ' .
-				sprintf( __( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module', 'woocommerce-jetpack' ),
-					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ),
-			'id'    => 'wcj_payment_gateways_by_user_role_gateways_options',
+		$settings = array(
+			array(
+				'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+				'type'  => 'title',
+				'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ) . ' ' .
+					sprintf( __( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module', 'woocommerce-jetpack' ),
+						admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ),
+				'id'    => 'wcj_payment_gateways_by_user_role_gateways_options',
+			),
 		);
 		$user_roles = wcj_get_user_roles_options();
 		$gateways = WC()->payment_gateways->payment_gateways();
@@ -99,49 +90,42 @@ class WCJ_Payment_Gateways_By_User_Role extends WCJ_Module {
 				$custom_attributes = array();
 				$desc_tip = '';
 			}
-			$settings[] = array(
-				'title'     => $gateway->title,
-				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Include User Roles', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_gateways_user_roles_include_' . $key,
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $user_roles,
-				'custom_attributes' => $custom_attributes,
-			);
-			$settings[] = array(
-				'title'     => '',
-				'desc_tip'  => $desc_tip,
-				'desc'      => __( 'Exclude User Roles', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_gateways_user_roles_exclude_' . $key,
-				'default'   => '',
-				'type'      => 'multiselect',
-				'class'     => 'chosen_select',
-				'css'       => 'width: 450px;',
-				'options'   => $user_roles,
-				'custom_attributes' => $custom_attributes,
-			);
+			$settings = array_merge( $settings, array(
+				array(
+					'title'     => $gateway->title,
+					'desc_tip'  => $desc_tip,
+					'desc'      => __( 'Include User Roles', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_user_roles_include_' . $key,
+					'default'   => '',
+					'type'      => 'multiselect',
+					'class'     => 'chosen_select',
+					'css'       => 'width: 450px;',
+					'options'   => $user_roles,
+					'custom_attributes' => $custom_attributes,
+				),
+				$settings[] = array(
+					'title'     => '',
+					'desc_tip'  => $desc_tip,
+					'desc'      => __( 'Exclude User Roles', 'woocommerce-jetpack' ),
+					'id'        => 'wcj_gateways_user_roles_exclude_' . $key,
+					'default'   => '',
+					'type'      => 'multiselect',
+					'class'     => 'chosen_select',
+					'css'       => 'width: 450px;',
+					'options'   => $user_roles,
+					'custom_attributes' => $custom_attributes,
+				),
+			) );
 		}
-		$settings[] = array(
-			'type'  => 'sectionend',
-			'id'    => 'wcj_payment_gateways_by_user_role_gateways_options',
-		);
+		$settings = array_merge( $settings, array(
+			array(
+				'type'  => 'sectionend',
+				'id'    => 'wcj_payment_gateways_by_user_role_gateways_options',
+			),
+		) );
 		return $settings;
 	}
 
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.3
-	 * @since   2.5.3
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_payment_gateways_by_user_role_settings', $settings );
-		return $this->add_standard_settings( $settings );
-	}
 }
 
 endif;
