@@ -585,16 +585,20 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_date.
+	 *
+	 * @version 2.6.1
 	 */
 	function wcj_order_date( $atts ) {
-		return date_i18n( $atts['date_format'], strtotime( $this->the_order->order_date ) );
+		return date_i18n( $atts['date_format'], strtotime( ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->order_date : $this->the_order->get_date_created() ) ) );
 	}
 
 	/**
 	 * wcj_order_time.
+	 *
+	 * @version 2.6.1
 	 */
 	function wcj_order_time( $atts ) {
-		return date_i18n( $atts['time_format'], strtotime( $this->the_order->order_date ) );
+		return date_i18n( $atts['time_format'], strtotime( ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->order_date : $this->the_order->get_date_created() ) ) );
 	}
 
 	/**

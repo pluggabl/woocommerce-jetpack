@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 08/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Orders - `[wcj_order_date]` and `[wcj_order_time]` - `get_date_created()` for WC >= v3.0.0.
 ~!	* Dev - WooCommerce v3.0.0 compatibility - SHIPPING & ORDERS - Order Numbers - Order ID replaced with `get_id()`; order date replaced with `get_date_created()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Admin Tools - Order Meta - Additional check if `$item_meta_value` is array added.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PAYMENT GATEWAYS - Gateways by Country or State - `get_country()` and `get_state()` replaced for WC >= v3.0.0.
