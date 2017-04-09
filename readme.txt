@@ -171,6 +171,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 -!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.
 -!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_categories]` - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
 
+	* Dev - PRODUCTS - Product Listings - Code refactoring - `add_settings_hook()`.
 	* Dev - PAYMENT GATEWAYS - Gateways Currency - Code refactoring - `add_settings_hook()`.
 	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Code refactoring - `add_settings_hook()`.
 	* Dev - PRODUCTS - Products per Page - Code refactoring - `add_settings_hook()`.

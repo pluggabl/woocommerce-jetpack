@@ -19,7 +19,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	 *
 	 * @version 2.6.1
 	 */
-	public function __construct() {
+	function __construct() {
 		$this->id         = 'product_listings';
 		$this->short_desc = __( 'Product Listings', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.', 'woocommerce-jetpack' );
@@ -97,7 +97,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * remove_subcategory_count.
 	 */
-	public function remove_subcategory_count( $count_html ) {
+	function remove_subcategory_count( $count_html ) {
 		if (
 			( is_shop() && 'yes' === get_option( 'wcj_product_listings_hide_cats_count_on_shop' ) ) ||
 			( ! is_shop() && 'yes' === apply_filters( 'booster_get_option', 'wcj', get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) )
@@ -110,7 +110,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * filter_subcategories.
 	 */
-	public function filter_subcategories( $args ) {
+	function filter_subcategories( $args ) {
 		if ( is_shop() ) {
 			$args['exclude'] = get_option( 'wcj_product_listings_exclude_cats_on_shop' );
 			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_shop' ) ) ? 1 : 0;     // deprecated?
@@ -124,7 +124,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * hide_products_by_disabling_loop.
 	 */
-	public function hide_products_by_disabling_loop() {
+	function hide_products_by_disabling_loop() {
 		// If we are hiding products disable the loop and pagination
 		global $wp_query;
 		if (
@@ -148,7 +148,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * filter_subcategories_show_empty.
 	 */
-	public function filter_subcategories_show_empty() {
+	function filter_subcategories_show_empty() {
 
 		// Not the best solution, but it's the only place I found to put it...
 		$this->hide_products_by_disabling_loop();
@@ -161,25 +161,6 @@ class WCJ_Product_Listings extends WCJ_Module {
 		}
 
 		return $show_empty;
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.6.0
-	 */
-	function get_settings() {
-		return $this->add_standard_settings( apply_filters( 'wcj_product_listings_settings', array() ) );
-	}
-
-	/*
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.5
-	 * @since   2.5.5
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_product_listings_settings', array( $this, 'add_settings' ) );
 	}
 
 	/*
