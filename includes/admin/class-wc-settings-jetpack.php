@@ -576,6 +576,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'left_to_free_shipping',
 						'order_custom_statuses',
 						'payment_gateways_currency',
+						'product_custom_info',
 						// almost ?
 						//'product_bookings',
 						//'product_listings',

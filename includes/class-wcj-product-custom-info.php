@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Custom Info class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.4.0
  * @author  Algoritmika Ltd.
  */
@@ -20,7 +20,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 	 *
 	 * @version 2.5.3
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'product_custom_info';
 		$this->short_desc = __( 'Product Info', 'woocommerce-jetpack' );
@@ -74,22 +74,6 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 				}
 			}
 		}
-	}
-
-	/**
-	 * get_settings.
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_product_custom_info_settings', $settings );
-		return $this->add_standard_settings( $settings );
-	}
-
-	/*
-	 * add_settings_hook.
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_product_custom_info_settings', array( $this, 'add_settings' ) );
 	}
 
 	/**
