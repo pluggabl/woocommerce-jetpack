@@ -146,7 +146,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * add_product_info_filters.
 	 */
-	public function add_product_info_filters( $single_or_archive ) {
+	function add_product_info_filters( $single_or_archive ) {
 		// Product Info
 		if ( ( 'yes' === get_option( 'wcj_product_info_on_' . $single_or_archive . '_enabled' ) ) &&
 			 ( '' != get_option( 'wcj_product_info_on_' . $single_or_archive ) ) &&
@@ -164,7 +164,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	 *
 	 * @version 2.4.0
 	 */
-	public function product_info() {
+	function product_info() {
 		$the_action_name = current_filter();
 		if ( array_key_exists( $the_action_name, $this->product_info_on_archive_filters_array ) ) {
 			$the_product_info = get_option( 'wcj_product_info_on_archive' );
@@ -181,7 +181,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	/**
 	 * more_product_info.
 	 */
-	public function more_product_info() {
+	function more_product_info() {
 		$the_action_name = current_filter();
 		if ( array_key_exists( $the_action_name, $this->product_info_on_archive_filters_array ) )
 			$this->add_more_product_info( 'archive' );
@@ -194,7 +194,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	 *
 	 * @version 2.4.0
 	 */
-	public function add_more_product_info( $single_or_archive ) {
+	function add_more_product_info( $single_or_archive ) {
 		//$single_or_archive = 'archive';
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 4, get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
 			$field_id = 'wcj_more_product_info_on_' . $single_or_archive . '_' . $i ;
@@ -209,7 +209,7 @@ class WCJ_Product_Info extends WCJ_Module {
 	 *
 	 * @version 2.4.0
 	 */
-	public function apply_product_info_short_codes( $the_product_info, $remove_on_empty ) {
+	function apply_product_info_short_codes( $the_product_info, $remove_on_empty ) {
 
 		$product_ids_to_exclude = get_option( 'wcj_product_info_products_to_exclude', '' );
 		if ( '' != $product_ids_to_exclude ) {
