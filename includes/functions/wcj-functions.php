@@ -240,7 +240,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 			if ( is_numeric( $product ) ) {
 				$the_product_id = $product;
 			} else {
-				$the_product_id = ( isset( $product->variation_id ) && 0 != $product->variation_id ) ? $product->variation_id : $product->id;
+				$the_product_id = wcj_get_product_id( $product );
 			}
 
 			$meta_id = '_' . 'wcj_' . $meta_box_id . '_make_empty_price_' . $scope . '_' . $group_id;
@@ -257,7 +257,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 				return $_product->$get_price_method();
 
-			} elseif ( 'woocommerce_get_price' == $the_current_filter || 'woocommerce_variation_prices_price' == $the_current_filter ) {
+			} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER == $the_current_filter || 'woocommerce_variation_prices_price' == $the_current_filter || 'woocommerce_product_variation_get_price' == $the_current_filter ) {
 
 				$regular_or_sale = '_regular_price_';
 				$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
@@ -275,13 +275,15 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 
 			}
 			elseif (
-				'woocommerce_get_regular_price' == $the_current_filter ||
-				'woocommerce_get_sale_price' == $the_current_filter ||
-				'woocommerce_variation_prices_regular_price' == $the_current_filter ||
-				'woocommerce_variation_prices_sale_price' == $the_current_filter
+				WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER              == $the_current_filter ||
+				WCJ_PRODUCT_GET_SALE_PRICE_FILTER                 == $the_current_filter ||
+				'woocommerce_variation_prices_regular_price'      == $the_current_filter ||
+				'woocommerce_variation_prices_sale_price'         == $the_current_filter ||
+				'woocommerce_product_variation_get_regular_price' == $the_current_filter ||
+				'woocommerce_product_variation_get_sale_price'    == $the_current_filter
 			) {
 				$regular_or_sale = (
-					'woocommerce_get_regular_price' == $the_current_filter || 'woocommerce_variation_prices_regular_price' == $the_current_filter
+					WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER == $the_current_filter || 'woocommerce_variation_prices_regular_price' == $the_current_filter || 'woocommerce_product_variation_get_regular_price' == $the_current_filter
 				) ? '_regular_price_' : '_sale_price_';
 				$meta_id = '_' . 'wcj_' . $meta_box_id . $regular_or_sale . $scope . '_' . $group_id;
 				$price_by_country = get_post_meta( $the_product_id, $meta_id, true );
