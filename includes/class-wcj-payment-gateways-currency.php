@@ -51,7 +51,8 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 
 		add_filter( 'woocommerce_paypal_supported_currencies', array( $this, 'extend_paypal_supported_currencies' ), PHP_INT_MAX, 1 );
 
-		add_filter( WCJ_PRODUCT_GET_PRICE_FILTER, array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
+		add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,              array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
+		add_filter( 'woocommerce_product_variation_get_price', array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
 
 		add_filter( 'woocommerce_package_rates', array( $this, 'change_shipping_price_by_gateway' ), PHP_INT_MAX, 2 );
 
