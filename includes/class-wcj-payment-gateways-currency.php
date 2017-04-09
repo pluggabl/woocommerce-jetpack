@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Currency class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -141,7 +141,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	 *
 	 * @version 2.4.0
 	 */
-	public function change_currency_symbol( $currency_symbol, $currency ) {
+	function change_currency_symbol( $currency_symbol, $currency ) {
 		if ( $this->is_cart_or_checkout() ) {
 			global $woocommerce;
 			$current_gateway = $woocommerce->session->chosen_payment_method;
@@ -160,7 +160,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	 *
 	 * @version 2.4.0
 	 */
-	public function change_currency_code( $currency ) {
+	function change_currency_code( $currency ) {
 		if ( $this->is_cart_or_checkout() ) {
 			global $woocommerce;
 			$current_gateway = $woocommerce->session->chosen_payment_method;
@@ -183,46 +183,27 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	}
 
 	/**
-	 * get_settings.
-	 *
-	 * @version 2.4.3
-	 */
-	function get_settings() {
-		$settings = apply_filters( 'wcj_payment_gateways_currency_settings', array() );
-		return $this->add_standard_settings( $settings );
-	}
-
-	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.3.2
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_payment_gateways_currency_settings', array( $this, 'add_currency_settings' ) );
-	}
-
-	/**
 	 * register_script.
 	 */
-	public function register_script() {
+	function register_script() {
 		wp_register_script( 'wcj-payment-gateways-checkout', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/checkout.js', array( 'jquery' ), false, true );
 	}
 
 	/**
 	 * enqueue_checkout_script.
 	 */
-	public function enqueue_checkout_script() {
+	function enqueue_checkout_script() {
 		if( ! is_checkout() )
 			return;
 		wp_enqueue_script( 'wcj-payment-gateways-checkout' );
 	}
 
 	/**
-	 * add_currency_settings.
+	 * add_settings.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
-	function add_currency_settings( $settings ) {
+	function add_settings( $settings ) {
 
 		$settings[] = array(
 			'title' => __( 'Payment Gateways Currency Options', 'woocommerce-jetpack' ),
