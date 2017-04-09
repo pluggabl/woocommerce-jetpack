@@ -575,7 +575,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'address_formats',
 						'left_to_free_shipping',
 						'order_custom_statuses',
-						'payment_gateways_currency',
+//						'payment_gateways_currency', - works, but I don't understand previous shipping issue..
 						'product_custom_info',
 						'product_info',
 						// almost ?
