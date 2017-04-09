@@ -40,6 +40,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 				add_action( 'wp_ajax_nopriv_price_change',                array( $this, 'price_change_ajax' ) );
 				// Prices
 				add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                 array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
+				add_filter( 'woocommerce_product_variation_get_price',    array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
 				// Single Page
 				add_action( 'woocommerce_before_add_to_cart_button',      array( $this, 'add_input_fields_to_frontend' ), PHP_INT_MAX );
 				// Add to cart
