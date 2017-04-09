@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Left to Free Shipping class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.5.8
  * @author  Algoritmika Ltd.
  */
@@ -94,28 +94,6 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 	 */
 	function show_left_to_free_shipping_info( $content ) {
 		echo wcj_get_left_to_free_shipping( $content );
-	}
-
-	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.8
-	 * @since   2.5.8
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_' . $this->id . '_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.8
-	 * @since   2.5.8
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_' . $this->id . '_settings', $settings );
-		return $this->add_standard_settings( $settings );
 	}
 
 	/**
