@@ -928,11 +928,11 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_categories_names.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 * @since   2.5.7
 	 */
 	function wcj_product_categories_names( $atts ) {
-		$product_cats = get_the_terms( $this->the_product->id, 'product_cat' );
+		$product_cats = get_the_terms( wcj_get_product_id_or_variation_parent_id( $this->the_product ), 'product_cat' );
 		$cats = array();
 		if ( ! empty( $product_cats ) && is_array( $product_cats ) ) {
 			foreach ( $product_cats as $product_cat ) {
@@ -945,11 +945,11 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_categories_urls.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 * @since   2.5.7
 	 */
 	function wcj_product_categories_urls( $atts ) {
-		$product_cats = get_the_terms( $this->the_product->id, 'product_cat' );
+		$product_cats = get_the_terms( wcj_get_product_id_or_variation_parent_id( $this->the_product ), 'product_cat' );
 		$cats = array();
 		if ( ! empty( $product_cats ) && is_array( $product_cats ) ) {
 			foreach ( $product_cats as $product_cat ) {
