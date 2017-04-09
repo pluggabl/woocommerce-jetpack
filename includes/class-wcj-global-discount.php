@@ -101,7 +101,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * check_product_categories.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 * @since   2.5.7
 	 * @return  bool
 	 */
@@ -109,7 +109,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 		// Check product category - include
 		$categories_in = get_option( 'wcj_global_discount_sale_categories_incl_' . $group, '' );
 		if ( ! empty( $categories_in ) ) {
-			$product_categories = get_the_terms( $_product->id, 'product_cat' );
+			$product_categories = get_the_terms( wcj_get_product_id_or_variation_parent_id( $_product ), 'product_cat' );
 			if ( empty( $product_categories ) ) {
 				return false; // option set to some categories, but product has no categories
 			}

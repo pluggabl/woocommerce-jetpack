@@ -144,7 +144,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 08/04/2017 =
+= 2.6.1 - 09/04/2017 =
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Images - `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - Button & Price Labels - Call for Price - `woocommerce_get_price` -> `woocommerce_product_get_price` for WC >= v3.0.0.
 ~!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Add to Cart Labels - `wcj_get_product_id_or_variation_parent_id()`; `product_type` -> `get_type()` for WC >= v3.0.0.
@@ -158,7 +158,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Wholesale Price - `get_price` filters replaced for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency Product Base Price - `get_price` filters replaced for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Price by User Role - `get_price` filters replaced for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0. `wc_get_formatted_variation()` used for WC >= v3.0.0. Get parent product ID replaced with `get_parent_id()` for WC >= v3.0.0.
--!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Global Discount - `get_price` filters replaced for WC >= v3.0.0.
+-!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Global Discount - `get_price` filters replaced for WC >= v3.0.0. `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Currency for External Products - `product_type` property replaced with `is_type()` function.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_price` filters replaced for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0. `wc_get_formatted_variation()` used for WC >= v3.0.0.
 ~!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_get_product_id_or_variation_parent_id()`; `wcj_get_product_id()`; `product_type` -> `get_type()` for WC >= v3.0.0.
