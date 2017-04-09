@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 09/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - SHIPPING & ORDERS - Order Custom Statuses - `wcj_get_order_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Images - `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - Button & Price Labels - Call for Price - `woocommerce_get_price` -> `woocommerce_product_get_price` for WC >= v3.0.0.
 ~!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Add to Cart Labels - `wcj_get_product_id_or_variation_parent_id()`; `product_type` -> `get_type()` for WC >= v3.0.0.

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Custom Statuses class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -20,7 +20,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'order_custom_statuses';
 		$this->short_desc = __( 'Order Custom Statuses', 'woocommerce-jetpack' );
@@ -61,7 +61,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * add_custom_status_actions_buttons.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.6.0
 	 */
 	function add_custom_status_actions_buttons( $actions, $_order ) {
@@ -71,7 +71,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				$custom_order_status = substr( $slug, 3 );
 				if ( ! $_order->has_status( array( $custom_order_status ) ) ) { // if order status is not $custom_order_status
 					$actions[ $custom_order_status ] = array(
-						'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $custom_order_status . '&order_id=' . $_order->id ), 'woocommerce-mark-order-status' ),
+						'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $custom_order_status . '&order_id=' . wcj_get_order_id( $_order ) ), 'woocommerce-mark-order-status' ),
 						'name'      => $label,
 						'action'    => "view " . $custom_order_status, // setting "view" for proper button CSS
 					);
@@ -128,7 +128,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 *
 	 * @version 2.3.8
 	 */
-	public function add_custom_order_statuses_to_reports( $order_statuses ) {
+	function add_custom_order_statuses_to_reports( $order_statuses ) {
 		if ( is_array( $order_statuses ) && in_array( 'completed', $order_statuses ) ) {
 			$custom_order_statuses = get_option( 'wcj_orders_custom_statuses_array' );
 			if ( ! empty( $custom_order_statuses ) && is_array( $custom_order_statuses ) ) {
@@ -143,14 +143,14 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * set_default_order_status.
 	 */
-	public function set_default_order_status() {
+	function set_default_order_status() {
 		return get_option( 'wcj_orders_custom_statuses_default_status', 'pending' );
 	}
 
 	/**
 	 * register_custom_post_statuses.
 	 */
-	public function register_custom_post_statuses() {
+	function register_custom_post_statuses() {
 		$wcj_orders_custom_statuses_array = ( '' == get_option( 'wcj_orders_custom_statuses_array' ) ) ? array() : get_option( 'wcj_orders_custom_statuses_array' );
 		foreach ( $wcj_orders_custom_statuses_array as $slug => $label )
 			register_post_status( $slug, array(
@@ -167,7 +167,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * add_custom_statuses_to_filter.
 	 */
-	public function add_custom_statuses_to_filter( $order_statuses ) {
+	function add_custom_statuses_to_filter( $order_statuses ) {
 		$wcj_orders_custom_statuses_array = ( '' == get_option( 'wcj_orders_custom_statuses_array' ) ) ? array() : get_option( 'wcj_orders_custom_statuses_array' );
 		$order_statuses = ( '' == $order_statuses ) ? array() : $order_statuses;
 		return array_merge( $order_statuses, $wcj_orders_custom_statuses_array );
@@ -178,7 +178,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 *
 	 * @verison 2.5.6
 	 */
-	public function hook_statuses_icons_css() {
+	function hook_statuses_icons_css() {
 		$output = '<style>';
 		$statuses = function_exists( 'wc_get_order_statuses' ) ? wc_get_order_statuses() : array();
 		$default_statuses = $this->get_default_order_statuses();
@@ -205,7 +205,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 */
-	public function add_custom_status( $new_status, $new_status_label, $new_status_icon_content, $new_status_icon_color ) {
+	function add_custom_status( $new_status, $new_status_label, $new_status_icon_content, $new_status_icon_color ) {
 
 		// Checking function arguments
 		if ( ! isset( $new_status ) || '' == $new_status ) {
@@ -251,7 +251,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 * @todo    (from Custom Order Status for WooCommerce plugin) delete: option to change fallback status from 'on-hold' to any other status
 	 * @todo    (from Custom Order Status for WooCommerce plugin) delete: delete icon data
 	 */
-	public function create_custom_statuses_tool() {
+	function create_custom_statuses_tool() {
 		$result_message = '';
 		if ( isset( $_POST['add_custom_status'] ) ) {
 			$result_message = $this->add_custom_status( $_POST['new_status'], $_POST['new_status_label'], $_POST['new_status_icon_content'], $_POST['new_status_icon_color'] );
@@ -367,7 +367,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 * @version 2.2.7
 	 * @since   2.2.7
 	 */
-	public function bulk_admin_footer() {
+	function bulk_admin_footer() {
 		global $post_type;
 		if ( 'shop_order' == $post_type ) {
 			?><script type="text/javascript"><?php
