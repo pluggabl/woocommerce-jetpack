@@ -19,7 +19,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'price_by_country';
 		$this->short_desc = __( 'Prices and Currencies by Country', 'woocommerce-jetpack' );
