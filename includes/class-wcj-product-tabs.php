@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Tabs class.
  *
- * @version 2.5.2
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -39,7 +39,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Customize the product tabs.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.1
 	 */
 	function customize_product_tabs( $tabs ) {
 
@@ -77,6 +77,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 			$key = 'global_' . $i;
 			if ( '' != get_option( 'wcj_custom_product_tabs_title_' . $key, '' ) && '' != get_option( 'wcj_custom_product_tabs_content_' . $key, '' ) ) {
 
+				$_product_id = wcj_get_product_id_or_variation_parent_id( $product );
+
 				// Exclude by product id
 				$array_to_exclude = get_option( 'wcj_custom_product_tabs_global_hide_in_products_' . $i );
 				if ( '' == $array_to_exclude || empty( $array_to_exclude ) ) {
@@ -86,7 +88,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					}
 				}
 				if ( '' != $array_to_exclude && ! empty( $array_to_exclude ) ) {
-					if ( $product && $array_to_exclude && in_array( $product->id, $array_to_exclude ) ) {
+					if ( $product && $array_to_exclude && in_array( $_product_id, $array_to_exclude ) ) {
 						continue;
 					}
 				}
@@ -101,7 +103,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				}
 				if ( '' != $array_to_exclude && ! empty( $array_to_exclude ) ) {
 					$do_exclude = false;
-					$product_categories_objects = get_the_terms( $product->id, 'product_cat' );
+					$product_categories_objects = get_the_terms( $_product_id, 'product_cat' );
 					if ( $product_categories_objects && ! empty( $product_categories_objects ) ) {
 						foreach ( $product_categories_objects as $product_categories_object ) {
 							if ( $product && $array_to_exclude && in_array( $product_categories_object->term_id, $array_to_exclude ) ) {
@@ -119,7 +121,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				$array_to_exclude = get_option( 'wcj_custom_product_tabs_global_hide_in_tags_' . $i );
 				if ( '' != $array_to_exclude && ! empty( $array_to_exclude ) ) {
 					$do_exclude = false;
-					$product_tags_objects = get_the_terms( $product->id, 'product_tag' );
+					$product_tags_objects = get_the_terms( $_product_id, 'product_tag' );
 					if ( $product_tags_objects && ! empty( $product_tags_objects ) ) {
 						foreach ( $product_tags_objects as $product_tags_object ) {
 							if ( $product && $array_to_exclude && in_array( $product_tags_object->term_id, $array_to_exclude ) ) {
@@ -143,7 +145,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				}
 				if ( '' != $array_to_include && ! empty( $array_to_include ) ) {
 					// If NOT in array then hide this tab for this product
-					if ( $product && $array_to_include && ! in_array( $product->id, $array_to_include ) ) {
+					if ( $product && $array_to_include && ! in_array( $_product_id, $array_to_include ) ) {
 						continue;
 					}
 				}
@@ -158,7 +160,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				}
 				if ( '' != $array_to_include && ! empty( $array_to_include ) ) {
 					$do_include = false;
-					$product_categories_objects = get_the_terms( $product->id, 'product_cat' );
+					$product_categories_objects = get_the_terms( $_product_id, 'product_cat' );
 					if ( $product_categories_objects && ! empty( $product_categories_objects ) ) {
 						foreach ( $product_categories_objects as $product_categories_object ) {
 							if ( $product && $array_to_include && in_array( $product_categories_object->term_id, $array_to_include ) ) {
@@ -176,7 +178,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				$array_to_include = get_option( 'wcj_custom_product_tabs_global_show_in_tags_' . $i );
 				if ( '' != $array_to_include && ! empty( $array_to_include ) ) {
 					$do_include = false;
-					$product_tags_objects = get_the_terms( $product->id, 'product_tag' );
+					$product_tags_objects = get_the_terms( $_product_id, 'product_tag' );
 					if ( $product_tags_objects && ! empty( $product_tags_objects ) ) {
 						foreach ( $product_tags_objects as $product_tags_object ) {
 							if ( $product && $array_to_include && in_array( $product_tags_object->term_id, $array_to_include ) ) {
