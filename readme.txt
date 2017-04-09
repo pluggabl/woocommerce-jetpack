@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 09/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_total_sales]` - `wcj_get_product_id_or_variation_parent_id()`.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Bookings - `WCJ_PRODUCT_GET_PRICE_FILTER`; `wcj_get_product_id_or_variation_parent_id()`.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Product Price by Formula - `get_price` filters; `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PAYMENT GATEWAYS - Gateways Currency - `WCJ_PRODUCT_GET_PRICE_FILTER`.

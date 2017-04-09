@@ -503,11 +503,11 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_total_sales.
 	 *
-	 * @version 2.5.4
+	 * @version 2.6.1
 	 * @since   2.2.6
 	 */
 	function wcj_product_total_sales( $atts ) {
-		$product_custom_fields = get_post_custom( $this->the_product->id );
+		$product_custom_fields = get_post_custom( wcj_get_product_id_or_variation_parent_id( $this->the_product ) );
 		$total_sales = ( isset( $product_custom_fields['total_sales'][0] ) ) ? $product_custom_fields['total_sales'][0] : '';
 		if ( 0 != $atts['offset'] ) {
 			$total_sales += $atts['offset'];
