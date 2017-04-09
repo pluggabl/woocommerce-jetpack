@@ -42,7 +42,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.1
 	 * @since   2.3.2
 	 */
 	function add_hooks() {
@@ -51,7 +51,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 
 		add_filter( 'woocommerce_paypal_supported_currencies', array( $this, 'extend_paypal_supported_currencies' ), PHP_INT_MAX, 1 );
 
-		add_filter( 'woocommerce_get_price', array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
+		add_filter( WCJ_PRODUCT_GET_PRICE_FILTER, array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
 
 		add_filter( 'woocommerce_package_rates', array( $this, 'change_shipping_price_by_gateway' ), PHP_INT_MAX, 2 );
 
@@ -97,7 +97,9 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	function is_cart_or_checkout() {
 		//if ( wcj_is_frontend() ) {
 		if ( ! is_admin() ) {
-			if ( is_cart() || is_checkout() ) return true;
+			if ( is_cart() || is_checkout() ) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -193,8 +195,9 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	 * enqueue_checkout_script.
 	 */
 	function enqueue_checkout_script() {
-		if( ! is_checkout() )
+		if( ! is_checkout() ) {
 			return;
+		}
 		wp_enqueue_script( 'wcj-payment-gateways-checkout' );
 	}
 
