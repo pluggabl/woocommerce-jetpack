@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Bookings class.
  *
- * @version 2.5.3
+ * @version 2.6.1
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.1
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -39,7 +39,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 				add_action( 'wp_ajax_price_change',                       array( $this, 'price_change_ajax' ) );
 				add_action( 'wp_ajax_nopriv_price_change',                array( $this, 'price_change_ajax' ) );
 				// Prices
-				add_filter( 'woocommerce_get_price',                      array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
+				add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                 array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
 				// Single Page
 				add_action( 'woocommerce_before_add_to_cart_button',      array( $this, 'add_input_fields_to_frontend' ), PHP_INT_MAX );
 				// Add to cart
@@ -96,18 +96,21 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 * @since   2.5.0
 	 */
 	function price_change_ajax( $param ) {
-		if ( isset( $_POST['date_from'] ) && '' != $_POST['date_from'] && isset( $_POST['date_to'] ) && '' != $_POST['date_to'] ) {
+		if ( isset( $_POST['date_from'] ) && '' != $_POST['date_from'] && isset( $_POST['date_to'] ) && '' != $_POST['date_to']  && isset( $_POST['product_id'] ) && '' != $_POST['product_id'] ) {
 			$date_to       = strtotime( $_POST['date_to'] );
 			$date_from     = strtotime( $_POST['date_from'] );
 			$seconds_diff  = $date_to - $date_from;
 			$days_diff     = ( $seconds_diff / 60 / 60 / 24 );
 			$the_product   = wc_get_product( $_POST['product_id'] );
 			$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-			$price_per_day = $the_product->$get_price_method();
+			if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
+				$get_price_method = 'wc_' . $get_price_method;
+			}
+			$price_per_day = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->$get_price_method() : $get_price_method( $the_product ) );
 			$the_price     = $days_diff * $price_per_day;
 			echo wc_price( $the_price );
 		}
@@ -117,14 +120,14 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.5.2
+	 * @version 2.6.1
 	 * @since   2.5.0
 	 */
 	function enqueue_scripts() {
 		if ( is_product() ) {
 			$the_product = wc_get_product();
 			if ( $this->is_bookings_product( $the_product ) ) {
-				wp_enqueue_script( 'wcj-bookings', wcj_plugin_url() . '/includes/js/wcj-bookings.js', array(), false, true );
+				wp_enqueue_script(  'wcj-bookings', wcj_plugin_url() . '/includes/js/wcj-bookings.js', array(), WCJ()->version, true );
 				wp_localize_script( 'wcj-bookings', 'ajax_object', array(
 					'ajax_url'            => admin_url( 'admin-ajax.php' ),
 					'product_id'          => get_the_ID(),
@@ -148,11 +151,11 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * add_to_cart_url.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 * @since   2.5.0
 	 */
 	function add_to_cart_url( $url, $_product ) {
-		return ( $this->is_bookings_product( $_product ) ) ? get_permalink( $_product->id ) : $url;
+		return ( $this->is_bookings_product( $_product ) ) ? get_permalink( wcj_get_product_id_or_variation_parent_id( $_product ) ) : $url;
 	}
 
 	/**
@@ -391,11 +394,11 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * is_bookings_product.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 * @since   2.5.0
 	 */
 	function is_bookings_product( $_product ) {
-		return ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_product_bookings_enabled', true ) ) ? true : false;
+		return ( 'yes' === get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_' . 'wcj_product_bookings_enabled', true ) ) ? true : false;
 	}
 
 	/**

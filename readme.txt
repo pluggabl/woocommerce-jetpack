@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 09/04/2017 =
+-!	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Bookings - `WCJ_PRODUCT_GET_PRICE_FILTER`; `wcj_get_product_id_or_variation_parent_id()`.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Product Price by Formula - `get_price` filters; `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PAYMENT GATEWAYS - Gateways Currency - `WCJ_PRODUCT_GET_PRICE_FILTER`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Tabs - `wcj_get_product_id_or_variation_parent_id()`.
@@ -191,6 +192,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
 
+	* Fix - PRODUCTS - Bookings - `wcj-bookings.js` - `_ajax_object`.
 	* Dev - BUTTON & PRICE LABELS - More Button Labels - Hook priority changed. Default value for `get_option()` added.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Always Use cURL" option added.
 ~	* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Empty sale price issue fixed.
