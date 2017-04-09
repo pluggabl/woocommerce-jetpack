@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Address Formats class.
  *
- * @version 2.4.8
+ * @version 2.6.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -29,26 +29,24 @@ class WCJ_Address_Formats extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_localisation_address_formats',            array( $this, 'customize_address_formats' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_localisation_address_formats',            array( $this, 'customize_address_formats' ),       PHP_INT_MAX );
 			add_filter( 'woocommerce_formatted_address_force_country_display', array( $this, 'customize_force_country_display' ), PHP_INT_MAX );
 		}
 	}
 
 	/**
 	 * customize_force_country_display.
+	 *
+	 * @version 2.6.1
 	 */
 	function customize_force_country_display( $display ) {
-		if ( '' != ( $customized_display = get_option( 'wcj_address_formats_force_country_display', '' ) ) ) {
-			return ( 'yes' === $customized_display ) ? true : false;
-		}
-		return $display;
+		return ( 'yes' === get_option( 'wcj_address_formats_force_country_display', 'no' ) );
 	}
 
 	/**
 	 * customize_address_formats.
 	 */
 	function customize_address_formats( $formats ) {
-		//$formats['LT'] = "{name}\n{company}\n{address_1}\n{address_2}\n{city} {postcode}\n{state}\n{country}";
 		$modified_formats = array();
 		$default_formats = $this->get_default_address_formats();
 		foreach ( $default_formats as $country_code => $format ) {
@@ -61,14 +59,13 @@ class WCJ_Address_Formats extends WCJ_Module {
 
 	/**
 	 * Get country address formats
+	 *
 	 * @return array
 	 */
-	public function get_default_address_formats() {
-
+	function get_default_address_formats() {
 		// Common formats
 		$postcode_before_city = "{company}\n{name}\n{address_1}\n{address_2}\n{postcode} {city}\n{country}";
 		$default              = "{name}\n{company}\n{address_1}\n{address_2}\n{city}\n{state}\n{postcode}\n{country}";
-
 		// Define address formats
 		$formats = array(
 			'default' => $default,
@@ -105,68 +102,66 @@ class WCJ_Address_Formats extends WCJ_Module {
 			'US' => "{name}\n{company}\n{address_1}\n{address_2}\n{city}, {state_code} {postcode}\n{country}",
 			'VN' => "{name}\n{company}\n{address_1}\n{city}\n{country}",
 		);
-
 		$all_countries = wcj_get_countries();
 		foreach ( $all_countries as $country_code => $country_name ) {
-			if ( ! isset( $formats[ $country_code ] ) ) $formats[ $country_code ] = $default;
+			if ( ! isset( $formats[ $country_code ] ) ) {
+				$formats[ $country_code ] = $default;
+			}
 		}
-
 		ksort( $formats );
-
 		return $formats;
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.1
 	 */
 	function get_settings() {
-
-		$settings = array();
-
-		// Force country display
-		$settings[] = array(
-			'title' => __( 'Force Base Country Display', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'desc'  => __( 'Force Base Country Display Options.', 'woocommerce-jetpack' ),
-			'id'    => 'wcj_address_formats_force_country_display_options'
+		$settings = array(
+			// Force country display
+			array(
+				'title'     => __( 'Force Base Country Display', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'id'        => 'wcj_address_formats_force_country_display_options',
+			),
+			array(
+				'title'     => __( 'Force Base Country Display', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_address_formats_force_country_display',
+				'default'   => 'no',
+				'type'      => 'checkbox',
+			),
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_address_formats_force_country_display_options',
+			),
+			// Formats by Country
+			array(
+				'title'     => __( 'Address Formats by Country', 'woocommerce-jetpack' ),
+				'type'      => 'title',
+				'id'        => 'wcj_address_formats_country_options',
+			),
 		);
-		$settings[] = array(
-			'title'   => __( 'Force Base Country Display', 'woocommerce-jetpack' ),
-			'id'      => 'wcj_address_formats_force_country_display',
-			'default' => 'no',
-			'type'    => 'checkbox',
-		);
-		$settings[] = array(
-			'type' => 'sectionend',
-			'id'   => 'wcj_address_formats_force_country_display_options'
-		);
-
-		// Formats by Country
-		$settings[] = array(
-			'title' => __( 'Address Formats by Country', 'woocommerce-jetpack' ),
-			'type'  => 'title',
-			'desc'  => __( 'Address Formats by Country Options.', 'woocommerce-jetpack' ),
-			'id'    => 'wcj_address_formats_country_options'
-		);
-//		$formats = apply_filters( 'wcj_get_address_formats_filter', array() );
 //		$formats = WC()->countries->get_address_formats();
 		$formats = $this->get_default_address_formats();
 		foreach ( $formats as $country_code => $format ) {
-			$settings[] = array(
-				'title'   => ( 'default' === $country_code ) ? $country_code : $country_code . ' - ' . wcj_get_country_name_by_code( $country_code ),
-				'id'      => 'wcj_address_formats_country_' . $country_code,
-				'default' => $format,
-				'type'    => 'textarea',
-				'css'     => 'width:300px;height:200px;',
-			);
+			$settings = array_merge( $settings, array(
+				array(
+					'title'     => ( 'default' === $country_code ) ? $country_code : $country_code . ' - ' . wcj_get_country_name_by_code( $country_code ),
+					'id'        => 'wcj_address_formats_country_' . $country_code,
+					'default'   => $format,
+					'type'      => 'textarea',
+					'css'       => 'width:300px;height:200px;',
+				),
+			) );
 		}
-		$settings[] = array(
-			'type' => 'sectionend',
-			'id'   => 'wcj_address_formats_country_options'
-		);
-
+		$settings = array_merge( $settings, array(
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_address_formats_country_options',
+			),
+		) );
 		return $this->add_standard_settings( $settings );
 	}
 }

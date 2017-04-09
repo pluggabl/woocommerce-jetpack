@@ -572,6 +572,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'order_min_amount',
 						'products_per_page',
 						'product_by_country',
+						'address_formats',
 					);
 					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
 						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;">&#9745; </span>' : '' );
