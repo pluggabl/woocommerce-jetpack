@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 09/04/2017 =
+-!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Product Price by Formula - `get_price` filters; `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PAYMENT GATEWAYS - Gateways Currency - `WCJ_PRODUCT_GET_PRICE_FILTER`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Tabs - `wcj_get_product_id_or_variation_parent_id()`.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `get_price` filters; `wcj_get_product_id()`.
@@ -184,6 +185,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `add_settings_hook()`.
 ~	* Dev - PRICES & CURRENCIES - Price Formats - Code refactoring - `add_settings_hook()`.
 
+~	* Dev - PRICES & CURRENCIES - Product Price by Formula - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
