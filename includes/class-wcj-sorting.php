@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Sorting class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -216,12 +216,15 @@ class WCJ_Sorting extends WCJ_Module {
 	/*
 	 * Add new sorting options to WooCommerce sorting.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 */
 	function custom_woocommerce_get_catalog_ordering_args( $args ) {
 
 		// Get ordering from query string
-		$orderby_value = isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
+		$orderby_value = ( WCJ_IS_WC_VERSION_BELOW_3 ?
+			( isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) ) ) :
+			( isset( $_GET['orderby'] ) ? wc_clean( $_GET['orderby'] )          : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) ) )
+		);
 		// Get orderby arg from string
 		$orderby_value = explode( '-', $orderby_value );
 		$orderby       = esc_attr( $orderby_value[0] );

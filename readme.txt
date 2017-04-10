@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 10/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Sorting - `woocommerce_clean()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products Crowdfunding - `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Crowdfunding - `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" (removed from `woocommerce_product_subcategories_args` hook).
