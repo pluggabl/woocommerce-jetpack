@@ -579,6 +579,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'product_info',
 						'product_by_user_role',
 						'product_listings',
+						'crowdfunding',
 					);
 					$alsmost_wc_3_compatible_modules = array(
 						'payment_gateways_currency', // works, but I don't understand previous shipping issue..

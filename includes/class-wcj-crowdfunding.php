@@ -93,18 +93,18 @@ class WCJ_Crowdfunding extends WCJ_Module {
  	 */
 	function get_settings() {
 		$module_desc = __( 'When enabled, module will add Crowdfunding metabox to product edit.', 'woocommerce-jetpack' ) . '<br>' .
-					sprintf(
-						__( 'To add crowdfunding info to the product, use <a href="%s" target="_blank">Booster\'s crowdfunding shortcodes</a>.', 'woocommerce-jetpack' ),
-						'http://booster.io/category/shortcodes/products-crowdfunding/'
-					) . ' ' .
-					sprintf(
-						__( 'Shortcodes could be used for example in <a href="%s">Product Info module</a>.', 'woocommerce-jetpack' ),
-						admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=products&section=product_custom_info' )
-					) . '<br>' .
-					sprintf(
-						__( 'To change add to cart button labels use <a href="%s">Add to Cart Labels module</a>.', 'woocommerce-jetpack' ),
-						admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=labels&section=add_to_cart' )
-					);
+			sprintf(
+				__( 'To add crowdfunding info to the product, use <a href="%s" target="_blank">Booster\'s crowdfunding shortcodes</a>.', 'woocommerce-jetpack' ),
+				'http://booster.io/category/shortcodes/products-crowdfunding/'
+			) . ' ' .
+			sprintf(
+				__( 'Shortcodes could be used for example in <a href="%s">Product Info module</a>.', 'woocommerce-jetpack' ),
+				admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=products&section=product_custom_info' )
+			) . '<br>' .
+			sprintf(
+				__( 'To change add to cart button labels use <a href="%s">Add to Cart Labels module</a>.', 'woocommerce-jetpack' ),
+				admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=labels&section=add_to_cart' )
+			);
 		return $this->add_standard_settings( array(), $module_desc );
 	}
 }

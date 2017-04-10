@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Crowdfunding Shortcodes class.
  *
- * @version 2.5.6
+ * @version 2.6.1
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  */
@@ -78,7 +78,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_product_orders_data.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.2.6
 	 */
 	function get_product_orders_data( $return_value = 'total_orders', $atts ) {
@@ -86,17 +86,17 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 		if ( $this->the_product->is_type( 'grouped' ) ) {
 			$product_ids = $this->the_product->get_children();
 		} else {
-			$product_ids = array( $this->the_product->id );
+			$product_ids = array( wcj_get_product_id_or_variation_parent_id( $this->the_product ) );
 		}
 		global $woocommerce_loop, $post;
 		$saved_wc_loop = $woocommerce_loop;
 		$saved_post    = $post;
-		$total_orders = 0;
-		$total_qty    = 0;
-		$total_sum    = 0;
-		$offset = 0;
-		$block_size = 256;
-		$date_query_after = get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_startdate', true );
+		$total_orders  = 0;
+		$total_qty     = 0;
+		$total_sum     = 0;
+		$offset        = 0;
+		$block_size    = 256;
+		$date_query_after = get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_startdate', true );
 		while( true ) {
 			$args = array(
 				'post_type'      => 'shop_order',
@@ -189,21 +189,21 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_startdate.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_startdate( $atts ) {
-		return date_i18n( get_option( 'date_format' ), strtotime( get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_startdate', true ) ) );
+		return date_i18n( get_option( 'date_format' ), strtotime( get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_startdate', true ) ) );
 	}
 
 	/**
 	 * wcj_product_crowdfunding_deadline.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_deadline( $atts ) {
-		return date_i18n( get_option( 'date_format' ), strtotime( get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_deadline', true ) ) );
+		return date_i18n( get_option( 'date_format' ), strtotime( get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_deadline', true ) ) );
 	}
 
 	/**
@@ -238,12 +238,12 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_time_remaining_progress_bar.
 	 *
-	 * @version 2.5.4
+	 * @version 2.6.1
 	 * @since   2.5.0
 	 */
 	function wcj_product_crowdfunding_time_remaining_progress_bar( $atts ) {
-		$deadline_seconds  = strtotime( get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_deadline', true ) );
-		$startdate_seconds = strtotime( get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_startdate', true ) );
+		$deadline_seconds  = strtotime( get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_deadline', true ) );
+		$startdate_seconds = strtotime( get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_startdate', true ) );
 
 		$seconds_remaining = $deadline_seconds - current_time( 'timestamp' );
 		$seconds_total     = $deadline_seconds - $startdate_seconds;
@@ -256,22 +256,22 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_goal.
 	 *
-	 * @version 2.5.4
+	 * @version 2.6.1
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_goal( $atts ) {
-		$goal = get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_goal_sum', true );
+		$goal = get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_goal_sum', true );
 		return ( 'yes' === $atts['hide_currency'] ) ? $goal : wc_price( $goal );
 	}
 
 	/**
 	 * wcj_product_crowdfunding_goal_remaining.
 	 *
-	 * @version 2.5.4
+	 * @version 2.6.1
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_goal_remaining( $atts ) {
-		$goal             = get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_goal_sum', true );
+		$goal             = get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_goal_sum', true );
 		$total_orders_sum = $this->get_product_orders_data( 'orders_sum', $atts );
 		$goal_remaining   = $goal - $total_orders_sum;
 		return ( 'yes' === $atts['hide_currency'] ) ? $goal_remaining : wc_price( $goal_remaining );
@@ -280,12 +280,12 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_goal_remaining_progress_bar.
 	 *
-	 * @version 2.5.4
+	 * @version 2.6.1
 	 * @since   2.5.0
 	 */
 	function wcj_product_crowdfunding_goal_remaining_progress_bar( $atts ) {
 		$current_value = $this->get_product_orders_data( 'orders_sum', $atts );
-		$max_value     = get_post_meta( $this->the_product->id, '_' . 'wcj_crowdfunding_goal_sum', true );
+		$max_value     = get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_goal_sum', true );
 		return '<progress value="' . $current_value . '" max="' . $max_value . '"></progress>';
 	}
 
