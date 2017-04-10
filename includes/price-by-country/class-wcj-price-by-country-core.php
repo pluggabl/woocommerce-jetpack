@@ -86,13 +86,16 @@ class WCJ_Price_by_Country_Core {
 	/*
 	 * sorting_by_price_fix.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.5.6
 	 */
 	function sorting_by_price_fix( $args ) {
 		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
 			// Get ordering from query string
-			$orderby_value = isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) );
+			$orderby_value = ( WCJ_IS_WC_VERSION_BELOW_3 ?
+				( isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) ) ) :
+				( isset( $_GET['orderby'] ) ? wc_clean( $_GET['orderby'] )          : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) ) )
+			);
 			// Get orderby arg from string
 			$orderby_value = explode( '-', $orderby_value );
 			$orderby       = esc_attr( $orderby_value[0] );
