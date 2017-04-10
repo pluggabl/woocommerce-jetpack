@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Addons class.
  *
- * @version 2.5.6
+ * @version 2.6.1
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -19,7 +19,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 */
 	function __construct() {
@@ -53,7 +53,8 @@ class WCJ_Product_Addons extends WCJ_Module {
 				add_filter( 'woocommerce_get_cart_item_from_session',     array( $this, 'get_cart_item_addons_price_from_session' ), PHP_INT_MAX, 3 );
 				add_filter( 'woocommerce_add_to_cart_validation',         array( $this, 'validate_on_add_to_cart' ), PHP_INT_MAX, 2 );
 				// Prices
-				add_filter( 'woocommerce_get_price',                      array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
+				add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                 array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
+				add_filter( 'woocommerce_product_variation_get_price',    array( $this, 'change_price' ), PHP_INT_MAX - 100, 2 );
 				// Show details at cart, order details, emails
 				add_filter( 'woocommerce_cart_item_name',                 array( $this, 'add_info_to_cart_item_name' ), PHP_INT_MAX, 3 );
 				add_filter( 'woocommerce_order_item_name',                array( $this, 'add_info_to_order_item_name' ), PHP_INT_MAX, 2 );
@@ -117,7 +118,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 */
 	function price_change_ajax( $param ) {
@@ -145,7 +146,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 		}
 		if ( 0 != $the_addons_price ) {
 			$the_price = $the_product->get_price();
-			$the_display_price = $the_product->get_display_price( $the_price + $the_addons_price );
+			$the_display_price = wcj_get_display_price( $the_product, ( $the_price + $the_addons_price ) );
 			echo wc_price( $the_display_price );
 		} else {
 			echo $the_product->get_price_html();
@@ -156,15 +157,15 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 */
 	function enqueue_scripts() {
 		if ( is_product() ) {
 			$the_product = wc_get_product();
-			$addons = $this->get_product_addons( $the_product->id );
+			$addons = $this->get_product_addons( wcj_get_product_id_or_variation_parent_id( $the_product ) );
 			if ( ! empty( $addons ) ) {
-				wp_enqueue_script(  'wcj-product-addons', wcj_plugin_url() . '/includes/js/wcj-product-addons.js', array(), false, true );
+				wp_enqueue_script(  'wcj-product-addons', wcj_plugin_url() . '/includes/js/wcj-product-addons.js', array(), WCJ()->version, true );
 				wp_localize_script( 'wcj-product-addons', 'ajax_object', array(
 					'ajax_url'            => admin_url( 'admin-ajax.php' ),
 					'product_id'          => get_the_ID(),
@@ -247,7 +248,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Adds info to order details (and emails).
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 */
 	function add_info_to_order_item_name( $name, $item, $is_cart = false ) {
@@ -267,7 +268,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 			if ( isset( $item[ $addon['price_key'] ] ) ) {
 				$name .= str_replace(
 					array( '%addon_label%', '%addon_price%' ),
-					array( $item[ $addon['label_key'] ], wc_price( $_product->get_display_price( $item[ $addon['price_key'] ] ) ) ),
+					array( $item[ $addon['label_key'] ], wc_price( wcj_get_display_price( $_product, $item[ $addon['price_key'] ] ) ) ),
 					$item_format
 				);
 			}
@@ -289,11 +290,11 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 */
 	function change_price( $price, $_product ) {
-		$addons = $this->get_product_addons( $_product->id );
+		$addons = $this->get_product_addons( wcj_get_product_id_or_variation_parent_id( $_product ) );
 		foreach ( $addons as $addon ) {
 			if ( isset( $_product->{$addon['price_key']} ) ) {
 				$price += $_product->{$addon['price_key']};
@@ -305,11 +306,11 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 */
 	function add_addons_price_to_cart_item( $cart_item_data, $cart_item_key ) {
-		$addons = $this->get_product_addons( $cart_item_data['data']->product_id );
+		$addons = $this->get_product_addons( ( WCJ_IS_WC_VERSION_BELOW_3 ? $cart_item_data['data']->product_id : $cart_item_data['data']->get_id() ) );
 		foreach ( $addons as $addon ) {
 			if ( isset( $cart_item_data[ $addon['price_key'] ] ) ) {
 				$cart_item_data['data']->{$addon['price_key']} = $cart_item_data[ $addon['price_key'] ];
@@ -368,7 +369,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 2.5.6
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {
@@ -389,7 +390,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 					'';
 				$html .= '<p>' .
 						'<input type="checkbox" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '"' . $is_checked . $is_required . '>' . ' ' .
-						'<label for="' . $addon['checkbox_key'] . '">' . $addon['label_value'] . ' ('. wc_price( $_product->get_display_price( $addon['price_value'] ) ) . ')' . '</label>' .
+						'<label for="' . $addon['checkbox_key'] . '">' . $addon['label_value'] . ' ('. wc_price( wcj_get_display_price( $_product, $addon['price_value'] ) ) . ')' . '</label>' .
 						$maybe_tooltip .
 					'</p>';
 			} elseif ( 'radio' === $addon['type'] ) {
@@ -410,7 +411,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 							'';
 						$html .= '<p>' .
 							'<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>' . ' ' .
-							'<label for="' . $addon['checkbox_key'] . '-' . $label . '">' . $labels[ $i ] . ' ('. wc_price( $_product->get_display_price( $prices[ $i ] ) ) . ')' . '</label>' .
+							'<label for="' . $addon['checkbox_key'] . '-' . $label . '">' . $labels[ $i ] . ' ('. wc_price( wcj_get_display_price( $_product, $prices[ $i ] ) ) . ')' . '</label>' .
 							$maybe_tooltip .
 						'</p>';
 					}

@@ -575,19 +575,25 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'address_formats',
 						'left_to_free_shipping',
 						'order_custom_statuses',
-//						'payment_gateways_currency', - works, but I don't understand previous shipping issue..
 						'product_custom_info',
 						'product_info',
 						'product_by_user_role',
-						// almost ?
-						//'product_bookings',
-						//'product_listings',
-						//'product_add_to_cart',
-						//'product_open_pricing',
+					);
+					$alsmost_wc_3_compatible_modules = array(
+						'payment_gateways_currency', // works, but I don't understand previous shipping issue..
+						'product_bookings',
+						'product_listings',
+						'product_add_to_cart',
+						'product_open_pricing',
+						'product_addons',
 					);
 					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
-						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;">&#9745; </span>' : '' );
-					$html .= '<td class="plugin-title">' . '<strong>' . $is_wc_3_compatible . $the_feature['title'] . '</strong>';
+						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;margin-right: 5px;padding-left: 5px;">&#9745; </span>' : '' );
+					$is_almost_wc_3_compatible = ( in_array( $section, $alsmost_wc_3_compatible_modules ) ?
+						'<span title="' . __( 'Almost WooCommerce v3.x.x compatible (needs more testing)', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;margin-right: 5px;padding-left: 5px;border: 1px dashed red;">&#9745; </span>' : '' );
+					$todo_wc_3_compatible = ( ( '' == $is_wc_3_compatible && '' == $is_almost_wc_3_compatible ) ?
+						'<span title="' . __( 'TODO', 'woocommerce-jetpack' ) . '" style="color:red;margin-right: 5px;padding-left: 5px;">&#9746; </span>' : '' );
+					$html .= '<td class="plugin-title">' . '<strong>' . $is_wc_3_compatible . $is_almost_wc_3_compatible . $todo_wc_3_compatible . $the_feature['title'] . '</strong>';
 					$html .= '<div class="row-actions visible">';
 
 					$html .= '<span class="0"><a href="' . admin_url() . 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">' . __( 'Settings', 'woocommerce' ) . '</a></span>';

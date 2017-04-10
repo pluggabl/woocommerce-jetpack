@@ -54,6 +54,18 @@ if ( ! function_exists( 'wcj_get_product_status' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_display_price' ) ) {
+	/**
+	 * wcj_get_display_price.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function wcj_get_display_price( $_product, $price = '', $qty = 1 ) {
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $_product->get_display_price( $price, $qty ) : wc_get_price_to_display( $_product, array( 'price' => $price, 'qty' => $qty ) );
+	}
+}
+
 if ( ! function_exists( 'wcj_get_order_id' ) ) {
 	/**
 	 * wcj_get_order_id.

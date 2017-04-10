@@ -1,9 +1,11 @@
 /**
  * wcj-product-addons.
  *
- * version 2.5.5
+ * version 2.6.1
  * since   2.5.3
  */
+
+var _ajax_object = ajax_object;
 
 function change_price() {
 	var is_variation_ok = true;
@@ -17,7 +19,7 @@ function change_price() {
 		var is_variable;
 		if ( ! product_id ) {
 			is_variable = false;
-			product_id = ajax_object.product_id;
+			product_id = _ajax_object.product_id;
 		} else {
 			is_variable = true;
 		}
@@ -35,7 +37,7 @@ function change_price() {
 				data[jQuery(this).attr('name')] = jQuery(this).val();
 			}
 		});
-		jQuery.post(ajax_object.ajax_url, data, function(response) {
+		jQuery.post(_ajax_object.ajax_url, data, function(response) {
 			if ( '' != response ) {
 				if ( ! is_variable ) {
 					jQuery("p[class='price']").html(response);
