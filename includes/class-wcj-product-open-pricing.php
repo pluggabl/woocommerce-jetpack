@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Open Pricing class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -32,7 +32,8 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			add_action( 'add_meta_boxes',                         array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product',                      array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
-			add_filter( 'woocommerce_get_price',                  array( $this, 'get_open_price' ), PHP_INT_MAX, 2 );
+			add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,             array( $this, 'get_open_price' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_product_variation_get_price',array( $this, 'get_open_price' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_get_price_html',             array( $this, 'hide_original_price' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_get_variation_price_html',   array( $this, 'hide_original_price' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_is_sold_individually',       array( $this, 'hide_quantity_input_field' ), PHP_INT_MAX, 2 );
@@ -53,11 +54,11 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * is_open_price_product.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.1
 	 * @since   2.4.8
 	 */
 	function is_open_price_product( $_product ) {
-		return ( 'yes' === get_post_meta( $_product->id, '_' . 'wcj_product_open_price_enabled', true ) ) ? true : false;
+		return ( 'yes' === get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_' . 'wcj_product_open_price_enabled', true ) ) ? true : false;
 	}
 
 	/**
@@ -136,8 +137,9 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * is_purchasable.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.1
 	 * @since   2.4.8
+	 * @todo    maybe `wcj_get_product_id()` instead of `wcj_get_product_id_or_variation_parent_id()` - check `is_purchasable()` in `WC_Product` class.
 	 */
 	function is_purchasable( $purchasable, $_product ) {
 		if ( $this->is_open_price_product( $_product ) ) {
@@ -152,7 +154,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				$purchasable = false; */
 
 			// Check the product is published
-			} elseif ( $_product->post->post_status !== 'publish' && ! current_user_can( 'edit_post', $_product->id ) ) {
+			} elseif ( wcj_get_product_status( $_product ) !== 'publish' && ! current_user_can( 'edit_post', wcj_get_product_id_or_variation_parent_id( $_product ) ) ) {
 				$purchasable = false;
 			}
 		}
@@ -215,11 +217,11 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_to_cart_url.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.1
 	 * @since   2.4.8
 	 */
 	function add_to_cart_url( $url, $_product ) {
-		return ( $this->is_open_price_product( $_product ) ) ? get_permalink( $_product->id ) : $url;
+		return ( $this->is_open_price_product( $_product ) ) ? get_permalink( wcj_get_product_id_or_variation_parent_id( $_product ) ) : $url;
 	}
 
 	/**
@@ -325,7 +327,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_open_price_input_field_to_frontend.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.4.8
 	 */
 	function add_open_price_input_field_to_frontend() {
@@ -334,9 +336,10 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			// Title
 			$title = get_option( 'wcj_product_open_price_label_frontend', __( 'Name Your Price', 'woocommerce-jetpack' ) );
 			// Prices
-			$min_price     = get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_min_price', true );
-			$max_price     = get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_max_price', true );
-			$default_price = get_post_meta( $the_product->id, '_' . 'wcj_product_open_price_default_price', true );
+			$_product_id = wcj_get_product_id_or_variation_parent_id( $the_product );
+			$min_price     = get_post_meta( $_product_id, '_' . 'wcj_product_open_price_min_price', true );
+			$max_price     = get_post_meta( $_product_id, '_' . 'wcj_product_open_price_max_price', true );
+			$default_price = get_post_meta( $_product_id, '_' . 'wcj_product_open_price_default_price', true );
 			// Input field
 			$value = ( isset( $_POST['wcj_open_price'] ) ) ? $_POST['wcj_open_price'] : $default_price;
 			$default_price_step = 1 / pow( 10, absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) );
