@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 10/04/2017 =
+-!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Currency per Product - `WCJ_PRODUCT_GET_PRICE_FILTER`.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Addons - `WCJ_PRODUCT_GET_PRICE_FILTER`. `wcj_get_product_id_or_variation_parent_id()`. `wcj_get_display_price()`.
 ~!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `WCJ_PRODUCT_GET_PRICE_FILTER`. `wcj_get_product_id_or_variation_parent_id()`. `wcj_get_product_status()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Add to Cart - `wcj_get_product_id_or_variation_parent_id()`.
@@ -179,6 +180,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 -!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.
 -!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_categories]` - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
 
+	* Dev - PRICES & CURRENCIES - Currency per Product - Code refactoring - `add_settings_hook()`.
 	* Dev - PRODUCTS - Product Info - Code refactoring - `add_settings_hook()`.
 	* Dev - PRODUCTS - Product Listings - Code refactoring - `add_settings_hook()`.
 	* Dev - PAYMENT GATEWAYS - Gateways Currency - Code refactoring - `add_settings_hook()`.

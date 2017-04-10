@@ -49,7 +49,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 				add_filter( 'woocommerce_add_to_cart_validation',         array( $this, 'validate_on_add_to_cart' ),    PHP_INT_MAX, 2 );
 
 				// Price
-				add_filter( 'woocommerce_get_price',                      array( $this, 'change_price' ),               PHP_INT_MAX, 2 );
+				add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                 array( $this, 'change_price' ),               PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_product_variation_get_price',    array( $this, 'change_price' ),               PHP_INT_MAX, 2 );
 
 				// Grouped
 				add_filter( 'woocommerce_grouped_price_html',             array( $this, 'grouped_price_html' ),         PHP_INT_MAX, 2 );
@@ -404,27 +405,6 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			),
 		);
 		return $options;
-	}
-
-	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.2
-	 * @since   2.5.2
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_currency_per_product_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.2
-	 * @since   2.5.2
-	 */
-	function get_settings() {
-		$settings = apply_filters( 'wcj_currency_per_product_settings', array() );
-		return $this->add_standard_settings( $settings );
 	}
 
 	/**
