@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Stock Reports class.
  *
- * @version 2.5.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -94,7 +94,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * gather_products_data.
 	 *
-	 * @version 2.5.0
+	 * @version 2.6.1
 	 * @todo    variable products?
 	 */
 	public function gather_products_data( &$products_info ) {
@@ -114,11 +114,11 @@ class WCJ_Reports_Stock {
 				$the_ID = get_the_ID();
 				$the_product = wc_get_product( $the_ID );
 				$the_price = $the_product->get_price();
-				$the_stock = $the_product->get_total_stock();
+				$the_stock = wcj_get_product_total_stock( $the_product );
 				//if ( 0 == $the_stock )
 					//$the_stock = get_post_meta( $the_ID, '_stock', true );
 				$the_title = get_the_title();
-				$the_categories = $the_product->get_categories();
+				$the_categories = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $the_ID ) );
 				$the_date = get_the_date();
 				$the_permalink = get_the_permalink();
 
