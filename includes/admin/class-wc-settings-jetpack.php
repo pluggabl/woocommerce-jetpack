@@ -578,11 +578,11 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'product_custom_info',
 						'product_info',
 						'product_by_user_role',
+						'product_listings',
 					);
 					$alsmost_wc_3_compatible_modules = array(
 						'payment_gateways_currency', // works, but I don't understand previous shipping issue..
 						'product_bookings',
-						'product_listings',
 						'product_add_to_cart',
 						'product_open_pricing',
 						'product_addons',

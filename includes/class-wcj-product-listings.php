@@ -32,7 +32,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 
 			// Exclude and Hide Empty
 			add_filter( 'woocommerce_product_subcategories_args',       array( $this, 'filter_subcategories' ), 100 );
-			add_filter( 'woocommerce_product_subcategories_hide_empty', array( $this, 'filter_subcategories_show_empty' ), 100 );
+			add_filter( 'woocommerce_product_subcategories_hide_empty', array( $this, 'filter_subcategories_hide_empty' ), 100 );
 
 			// Hide Count
 			if ( 'yes' === get_option( 'wcj_product_listings_hide_cats_count_on_shop' ) || 'yes' === get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) {
@@ -109,15 +109,13 @@ class WCJ_Product_Listings extends WCJ_Module {
 
 	/**
 	 * filter_subcategories.
+	 *
+	 * @version 2.6.1
 	 */
 	function filter_subcategories( $args ) {
-		if ( is_shop() ) {
-			$args['exclude'] = get_option( 'wcj_product_listings_exclude_cats_on_shop' );
-			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_shop' ) ) ? 1 : 0;     // deprecated?
-		} else {
-			$args['exclude'] = get_option( 'wcj_product_listings_exclude_cats_on_archives' );
-			$args['hide_empty'] = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_archives' ) ) ? 1 : 0; // deprecated?
-		}
+		$args['exclude'] = ( is_shop() ) ?
+			get_option( 'wcj_product_listings_exclude_cats_on_shop',     '' ) :
+			get_option( 'wcj_product_listings_exclude_cats_on_archives', '' );
 		return $args;
 	}
 
@@ -146,44 +144,59 @@ class WCJ_Product_Listings extends WCJ_Module {
 	}
 
 	/**
-	 * filter_subcategories_show_empty.
+	 * filter_subcategories_hide_empty.
+	 *
+	 * @version 2.6.1
 	 */
-	function filter_subcategories_show_empty() {
+	function filter_subcategories_hide_empty() {
 
 		// Not the best solution, but it's the only place I found to put it...
 		$this->hide_products_by_disabling_loop();
 
-		$show_empty = false;
-		if ( is_shop() ) {
-			$show_empty = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_shop' ) ) ? false : true;
-		} else {
-			$show_empty = ( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_archives' ) ) ? false : true;
-		}
+		$hide_empty = ( is_shop() ) ?
+			( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_shop',     'yes' ) ) :
+			( 'yes' === get_option( 'wcj_product_listings_hide_empty_cats_on_archives', 'yes' ) );
 
-		return $show_empty;
+		return $hide_empty;
 	}
 
 	/*
 	 * add_settings.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.5.5
 	 */
 	function add_settings() {
 
+		// Handle deprecated option types
+		$options = array(
+			'wcj_product_listings_exclude_cats_on_shop',
+			'wcj_product_listings_exclude_cats_on_archives',
+		);
+		foreach ( $options as $option ) {
+			$value = get_option( $option, '' );
+			if ( ! is_array( $value ) ) {
+				$value = explode( ',', str_replace( ' ', '', $value ) );
+				update_option( $option, $value );
+			}
+		}
+
+		// Prepare categories
 		$product_cats = array();
 		$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
 		foreach ( $product_categories as $product_category ) {
 			$product_cats[ $product_category->term_id ] = $product_category->name;
 		}
 
+		// Prepare products
 		$products = wcj_get_products();
 
+		// Settings
 		$settings = array(
 			array(
 				'title'    => __( 'Shop Page Display Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => __( 'This will work only when "Shop Page Display" in "WooCommerce > Settings > Products > Product Listings" is set to "Show subcategories" or "Show both".', 'woocommerce-jetpack' ),
+//				'desc'     => __( 'This will work only when "Shop Page Display" in "WooCommerce > Settings > Products > Product Listings" is set to "Show subcategories" or "Show both".', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_listings_shop_page_options',
 			),
 			array(
@@ -195,11 +208,13 @@ class WCJ_Product_Listings extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Exclude Categories', 'woocommerce-jetpack' ),
-				'desc_tip' => __(' Excludes one or more categories from the shop page. This parameter takes a comma-separated list of categories by unique ID, in ascending order. Leave blank to disable.', 'woocommerce-jetpack' ),
+				'desc_tip' => __(' Excludes one or more categories from the shop page. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_listings_exclude_cats_on_shop',
 				'default'  => '',
-				'type'     => 'text',
-				'css'      => 'width:50%;min-width:300px;',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'css'      => 'width: 450px;',
+				'options'  => $product_cats,
 			),
 			array(
 				'title'    => __( 'Hide Empty', 'woocommerce-jetpack' ),
@@ -222,7 +237,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 			array(
 				'title'    => __( 'Category Display Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-				'desc'     => __( 'This will work only when "Default Category Display" in "WooCommerce > Settings > Products > Product Listings" is set to "Show subcategories" or "Show both".', 'woocommerce-jetpack' ),
+//				'desc'     => __( 'This will work only when "Default Category Display" in "WooCommerce > Settings > Products > Product Listings" is set to "Show subcategories" or "Show both".', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_listings_archive_pages_options',
 			),
 			array(
@@ -236,11 +251,13 @@ class WCJ_Product_Listings extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Exclude Subcategories', 'woocommerce-jetpack' ),
-				'desc_tip' => __(' Excludes one or more categories from the category (archive) pages. This parameter takes a comma-separated list of categories by unique ID, in ascending order. Leave blank to disable.', 'woocommerce-jetpack' ),
+				'desc_tip' => __(' Excludes one or more categories from the category (archive) pages. Leave blank to disable.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_listings_exclude_cats_on_archives',
 				'default'  => '',
-				'type'     => 'text',
-				'css'      => 'width:50%;min-width:300px;',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'css'      => 'width: 450px;',
+				'options'  => $product_cats,
 			),
 			array(
 				'title'    => __( 'Hide Empty', 'woocommerce-jetpack' ),

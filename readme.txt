@@ -145,7 +145,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 10/04/2017 =
-~!	* Dev - WooCommerce v3.0.0 compatibility - Products - SKU - `get_child()`.
+~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" (removed from `woocommerce_product_subcategories_args` hook).
+~!	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - SKU - `get_child()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Orders - Monthly Sales - `get_order_currency()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Stock - `wcj_get_product_total_stock()`. `wc_get_product_category_list()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Custom Ranges - `wp_create_nonce` added.
@@ -208,6 +209,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
 
+~	* Fix - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" fixed (was giving reverse results).
+~	* Dev - PRODUCTS - Product Listings - "Exclude Categories" option for "Shop Page Display Options" and "Category Display Options" changed from comma separated string to multiselect.
 ~	* Fix - EMAILS & MISC. - Reports - Orders - Product Sales - "year not set" notice fixed.
 ~	* Fix - PRODUCTS - Product Visibility by User Role - Query - Fixed (`offset` and `posts_per_page` removed).
 	* Fix - PRODUCTS - Product Addons - `wcj-product-addons.js` - `_ajax_object`.
