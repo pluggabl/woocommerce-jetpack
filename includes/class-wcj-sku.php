@@ -65,13 +65,13 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_available_variations.
 	 *
-	 * @version 2.4.8
+	 * @version 2.6.1
 	 * @since   2.4.8
 	 */
 	function get_all_variations( $_product ) {
 		$all_variations = array();
 		foreach ( $_product->get_children() as $child_id ) {
-			$variation = $_product->get_child( $child_id );
+			$variation = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_child( $child_id ) : wc_get_product( $child_id ) );
 			$all_variations[] = $_product->get_available_variation( $variation );
 		}
 		return $all_variations;
@@ -81,6 +81,7 @@ class WCJ_SKU extends WCJ_Module {
 	 * set_sku_with_variable.
 	 *
 	 * @version 2.6.1
+	 * @todo    add "pseudorandom" option (check "Order Numbers" module)
 	 * @todo    Handle cases with more than 26 variations
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {

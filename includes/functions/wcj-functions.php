@@ -18,7 +18,7 @@ if ( ! function_exists( 'wcj_get_product_id' ) ) {
 	 * @since   2.6.1
 	 */
 	function wcj_get_product_id( $_product ) {
-		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 			return ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
 		} else {
 			return $_product->get_id(); // TODO: WC 3.0.0? done?
@@ -34,7 +34,7 @@ if ( ! function_exists( 'wcj_get_product_id_or_variation_parent_id' ) ) {
 	 * @since   2.6.1
 	 */
 	function wcj_get_product_id_or_variation_parent_id( $_product ) {
-		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 			return $_product->id;
 		} else {
 			return ( $_product->is_type( 'variation' ) ) ? $_product->get_parent_id() : $_product->get_id();
