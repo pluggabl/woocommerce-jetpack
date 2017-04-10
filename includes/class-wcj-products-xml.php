@@ -22,7 +22,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	 * @version 2.5.7
 	 * @since   2.5.7
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'products_xml';
 		$this->short_desc = __( 'Products XML', 'woocommerce-jetpack' );

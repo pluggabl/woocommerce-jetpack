@@ -591,6 +591,8 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'currency_per_product',
 						'reports',
 						'sku',                       // "Allow Duplicate SKUs" - seem not to have any effect; "Add SKU to Customer Emails" - didn't check.
+						'products_xml',
+						'product_by_user',
 					);
 					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
 						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;margin-right: 5px;padding-left: 5px;">&#9745; </span>' : '' );

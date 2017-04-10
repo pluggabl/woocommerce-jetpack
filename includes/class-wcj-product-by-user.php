@@ -21,7 +21,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	 * @version 2.5.7
 	 * @since   2.5.2
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'product_by_user';
 		$this->short_desc = __( 'User Products', 'woocommerce-jetpack' );
