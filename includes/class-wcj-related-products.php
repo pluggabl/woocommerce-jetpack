@@ -34,7 +34,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'related_products';
 		$this->short_desc = __( 'Related Products', 'woocommerce-jetpack' );
