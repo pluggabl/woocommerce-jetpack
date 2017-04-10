@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Mothly Sales Reports class.
  *
- * @version 2.5.3
+ * @version 2.6.1
  * @since   2.4.7
  * @author  Algoritmika Ltd.
  */
@@ -18,11 +18,11 @@ class WCJ_Reports_Monthly_Sales {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.7
+	 * @version 2.6.1
 	 * @since   2.4.7
 	 */
-	public function __construct( $args = null ) {
-
+	function __construct( $args = null ) {
+		return true;
 	}
 
 	/**
@@ -31,7 +31,7 @@ class WCJ_Reports_Monthly_Sales {
 	 * @version 2.5.3
 	 * @since   2.4.7
 	 */
-	public function get_report() {
+	function get_report() {
 		$html = '';
 		$this->year = isset( $_GET['year'] ) ? $_GET['year'] : date( 'Y' );
 		if ( isset( $_POST['wcj_reset_currency_rates'] ) ) {
@@ -125,9 +125,9 @@ class WCJ_Reports_Monthly_Sales {
 	/*
 	 * get_monthly_sales_report.
 	 *
-	 * @version 2.5.3
+	 * @version 2.6.1
 	 * @since   2.4.7
-	 * @todo   take not monthly average, but "Close" of closest day; forecast for current month; $order_currencies_array;
+	 * @todo    take not monthly average, but "Close" of closest day; forecast for current month; $order_currencies_array;
 	 */
 	function get_monthly_sales_report() {
 
@@ -198,7 +198,7 @@ class WCJ_Reports_Monthly_Sales {
 				while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
 					$order_id = $loop_orders->post->ID;
 					$order = new WC_Order( $order_id );
-					$order_currency = $order->get_order_currency();
+					$order_currency = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->get_order_currency() : $order->get_currency() );
 					if ( ! isset( $order_currencies_array[ $order_currency ] ) ) {
 						$order_currencies_array[ $order_currency ] = 0;
 					}

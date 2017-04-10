@@ -145,8 +145,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 10/04/2017 =
--!	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Stock - `wcj_get_product_total_stock()`. `wc_get_product_category_list()`.
--!	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Custom Ranges - `wp_create_nonce` added.
+~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Orders - Monthly Sales - `get_order_currency()`.
+~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Stock - `wcj_get_product_total_stock()`. `wc_get_product_category_list()`.
+~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Custom Ranges - `wp_create_nonce` added.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Currency per Product - `WCJ_PRODUCT_GET_PRICE_FILTER`.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Addons - `WCJ_PRODUCT_GET_PRICE_FILTER`. `wcj_get_product_id_or_variation_parent_id()`. `wcj_get_product_display_price()`.
 ~!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `WCJ_PRODUCT_GET_PRICE_FILTER`. `wcj_get_product_id_or_variation_parent_id()`. `wcj_get_product_status()`.
