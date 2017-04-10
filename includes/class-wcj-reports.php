@@ -28,7 +28,7 @@ class WCJ_Reports extends WCJ_Module {
 	 *
 	 * @version 2.5.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'reports';
 		$this->short_desc = __( 'Reports', 'woocommerce-jetpack' );
@@ -58,24 +58,25 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * add_custom_order_reports_ranges_by_month_to_admin_bar.
 	 *
-	 * @version 2.2.4
+	 * @version 2.6.1
 	 * @since   2.2.4
 	 */
-	public function add_custom_order_reports_ranges_by_month_to_admin_bar( $wp_admin_bar ) {
-		$is_reports = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) ? true : false;
-		$is_orders_reports = ( isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] || ! isset( $_GET['tab'] ) ) ? true : false;
+	function add_custom_order_reports_ranges_by_month_to_admin_bar( $wp_admin_bar ) {
+		$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
+		$is_orders_reports = ( isset( $_GET['tab'] )  && 'orders'     === $_GET['tab'] || ! isset( $_GET['tab'] ) );
 		if ( $is_reports && $is_orders_reports ) {
 
 			$parent = 'reports_orders_more_ranges_months';
 			$args = array(
 				'parent' => false,
-				'id' => $parent,
-				'title' => __( 'Booster: More Ranges - Months', 'woocommerce-jetpack' ),
-				'href'  => false,
-				'meta' => array( 'title' => __( 'Select Range', 'woocommerce-jetpack' ), ),
+				'id'     => $parent,
+				'title'  => __( 'Booster: More Ranges - Months', 'woocommerce-jetpack' ),
+				'href'   => false,
+				'meta'   => array( 'title' => __( 'Select Range', 'woocommerce-jetpack' ) ),
 			);
 			$wp_admin_bar->add_node( $args );
 
+			$custom_range_nonce = wp_create_nonce( 'custom_range' );
 			for ( $i = 1; $i <= 12; $i++ ) {
 				$month_start_date = date( 'Y-m-01' ) . "-$i months";
 				$month_num  = date( 'm',      strtotime( $month_start_date ) );
@@ -86,7 +87,12 @@ class WCJ_Reports extends WCJ_Module {
 					'parent' => $parent,
 					'id'     => $parent . '_' . $month_num,
 					'title'  => $month_name,
-					'href'   => add_query_arg( array( 'range' => 'custom', 'start_date' => $start_date, 'end_date' => $end_date ) ),
+					'href'   => add_query_arg( array(
+						'range'            => 'custom',
+						'start_date'       => $start_date,
+						'end_date'         => $end_date,
+						'wc_reports_nonce' => $custom_range_nonce,
+					) ),
 					'meta'   => array( 'title' => $month_name ),
 				);
 				$wp_admin_bar->add_node( $node );
@@ -99,94 +105,87 @@ class WCJ_Reports extends WCJ_Module {
 	 *
 	 * @version 2.6.1
 	 */
-	public function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
-		$is_reports = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) ? true : false;
-		$is_orders_reports = ( isset( $_GET['tab'] ) && 'orders' === $_GET['tab'] || ! isset( $_GET['tab'] ) ) ? true : false;
+	function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
+		$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
+		$is_orders_reports = ( isset( $_GET['tab'] )  && 'orders'     === $_GET['tab'] || ! isset( $_GET['tab'] ) );
 		if ( $is_reports && $is_orders_reports ) {
 
 			$parent = 'reports_orders_more_ranges';
 			$args = array(
 				'parent' => false,
-				'id' => $parent,
-				'title' => __( 'Booster: More Ranges', 'woocommerce-jetpack' ),
-				'href'  => false,
-				'meta' => array( 'title' => __( 'Select Range', 'woocommerce-jetpack' ), ),
+				'id'     => $parent,
+				'title'  => __( 'Booster: More Ranges', 'woocommerce-jetpack' ),
+				'href'   => false,
+				'meta'   => array( 'title' => __( 'Select Range', 'woocommerce-jetpack' ) ),
 			);
 			$wp_admin_bar->add_node( $args );
 
-			$nodes = array(
-				array(
-					'parent' => $parent,
-					'id' => $parent . '_' . 'last_14_days',
-					'title' => __( 'Last 14 Days', 'woocommerce-jetpack' ),
-					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-d', strtotime( '-14 days' ) ), 'end_date' => date( 'Y-m-d' ), ) ),
-					'meta' => array( 'title' => __( 'Last 14 Days', 'woocommerce-jetpack' ), ),
+			$custom_ranges = array(
+				'last_14_days' => array(
+					'title'      => __( 'Last 14 Days', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-m-d', strtotime( '-14 days' ) ),
+					'end_date'   => date( 'Y-m-d' ),
 				),
-				array(
-					'parent' => $parent,
-					'id' => $parent . '_' . 'last_30_days',
-					'title' => __( 'Last 30 Days', 'woocommerce-jetpack' ),
-					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-d', strtotime( '-30 days' ) ), 'end_date' => date( 'Y-m-d' ), ) ),
-					'meta' => array( 'title' => __( 'Last 30 Days', 'woocommerce-jetpack' ), ),
+				'last_30_days' => array(
+					'title'      => __( 'Last 30 Days', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-m-d', strtotime( '-30 days' ) ),
+					'end_date'   => date( 'Y-m-d' ),
 				),
-				array(
-					'parent' => $parent,
-					'id' => $parent . '_' . 'last_3_months',
-					'title' => __( 'Last 3 Months', 'woocommerce-jetpack' ),
-					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-d', strtotime( '-3 months' ) ), 'end_date' => date( 'Y-m-d' ), ) ),
-					'meta' => array( 'title' => __( 'Last 3 Months', 'woocommerce-jetpack' ), ),
+				'last_3_months' => array(
+					'title'      => __( 'Last 3 Months', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-m-d', strtotime( '-3 months' ) ),
+					'end_date'   => date( 'Y-m-d' ),
 				),
-				array(
-					'parent' => $parent,
-					'id' => $parent . '_' . 'last_6_months',
-					'title' => __( 'Last 6 Months', 'woocommerce-jetpack' ),
-					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-d', strtotime( '-6 months' ) ), 'end_date' => date( 'Y-m-d' ), ) ),
-					'meta' => array( 'title' => __( 'Last 6 Months', 'woocommerce-jetpack' ), ),
+				'last_6_months' => array(
+					'title'      => __( 'Last 6 Months', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-m-d', strtotime( '-6 months' ) ),
+					'end_date'   => date( 'Y-m-d' ),
 				),
-				array(
-					'parent' => $parent,
-					'id' => $parent . '_' . 'last_12_months',
-					'title' => __( 'Last 12 Months', 'woocommerce-jetpack' ),
-					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-d', strtotime( '-12 months' ) ), 'end_date' => date( 'Y-m-d' ), ) ),
-					'meta' => array( 'title' => __( 'Last 12 Months', 'woocommerce-jetpack' ), ),
+				'last_12_months' => array(
+					'title'      => __( 'Last 12 Months', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-m-d', strtotime( '-12 months' ) ),
+					'end_date'   => date( 'Y-m-d' ),
 				),
-				array(
-					'parent' => $parent,
-					'id' => $parent . '_' . 'last_24_months',
-					'title' => __( 'Last 24 Months', 'woocommerce-jetpack' ),
-					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-d', strtotime( '-24 months' ) ), 'end_date' => date( 'Y-m-d' ), ) ),
-					'meta' => array( 'title' => __( 'Last 24 Months', 'woocommerce-jetpack' ), ),
+				'last_24_months' => array(
+					'title'      => __( 'Last 24 Months', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-m-d', strtotime( '-24 months' ) ),
+					'end_date'   => date( 'Y-m-d' ),
 				),
-				array(
-					'parent' => $parent,
-					'id' => $parent . '_' . 'same_days_last_month',
-					'title' => __( 'Same Days Last Month', 'woocommerce-jetpack' ),
-					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-01', strtotime( '-1 month' ) ), 'end_date' => date( 'Y-m-d', strtotime( '-1 month' ) ), ) ),
-					'meta' => array( 'title' => __( 'Same Days Last Month', 'woocommerce-jetpack' ), ),
+				'same_days_last_month' => array(
+					'title'      => __( 'Same Days Last Month', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-m-01', strtotime( '-1 month' ) ),
+					'end_date'   => date( 'Y-m-d', strtotime( '-1 month' ) ),
 				),
-				array(
-					'parent' => $parent,
-					'id' => $parent . '_' . 'same_days_last_year',
-					'title' => __( 'Same Days Last Year', 'woocommerce-jetpack' ),
-					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-01', strtotime( '-1 year' ) ), 'end_date' => date( 'Y-m-d', strtotime( '-1 year' ) ), ) ),
-					'meta' => array( 'title' => __( 'Same Days Last Year', 'woocommerce-jetpack' ), ),
+				'same_days_last_year' => array(
+					'title'      => __( 'Same Days Last Year', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-m-01', strtotime( '-1 year' ) ),
+					'end_date'   => date( 'Y-m-d', strtotime( '-1 year' ) ),
 				),
-				/* array(
-					'parent' => $parent,
-					'id' => $parent . '_' . 'last_week',
-					'title' => __( 'Last Week', 'woocommerce-jetpack' ),
-					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-m-d', strtotime( 'last monday' ) ), 'end_date' => date( 'Y-m-d', strtotime( 'last sunday' ) ), ) ),
-					'meta' => array( 'title' => __( 'Last Week', 'woocommerce-jetpack' ), ),
+				'last_year' => array(
+					'title'      => __( 'Last Year', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-01-01', strtotime( '-1 year' ) ),
+					'end_date'   => date( 'Y-12-31', strtotime( '-1 year' ) ),
+				),
+				/* 'last_week' => array(
+					'title'      => __( 'Last Week', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-m-d', strtotime( 'last monday' ) ),
+					'end_date'   => date( 'Y-m-d', strtotime( 'last sunday' ) ),
 				), */
-				array(
-					'parent' => $parent,
-					'id' => $parent . '_' . 'last_year',
-					'title' => __( 'Last Year', 'woocommerce-jetpack' ),
-					'href'  => add_query_arg( array( 'range' => 'custom', 'start_date' => date( 'Y-01-01', strtotime( '-1 year' ) ), 'end_date' => date( 'Y-12-31', strtotime( '-1 year' ) ), ) ),
-					'meta' => array( 'title' => __( 'Last Year', 'woocommerce-jetpack' ), ),
-				),
 			);
-			foreach ( $nodes as $node ) {
+			$custom_range_nonce = wp_create_nonce( 'custom_range' );
+			foreach ( $custom_ranges as $custom_range_id => $custom_range ) {
+				$node = array(
+					'parent' => $parent,
+					'id'     => $parent . '_' . $custom_range_id,
+					'title'  => $custom_range['title'],
+					'href'   => add_query_arg( array(
+						'range'            => 'custom',
+						'start_date'       => $custom_range['start_date'],
+						'end_date'         => $custom_range['end_date'],
+						'wc_reports_nonce' => $custom_range_nonce,
+					) ),
+					'meta'   => array( 'title' => $custom_range['title'] ),
+				);
 				$wp_admin_bar->add_node( $node );
 			}
 		}
@@ -195,7 +194,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * catch_arguments.
 	 */
-	public function catch_arguments() {
+	function catch_arguments() {
 		$this->report_id       = isset( $_GET['report'] )                             ? $_GET['report'] : 'on_stock';
 		$this->range_days      = isset( $_GET['period'] )                             ? $_GET['period'] : 30;
 		$this->group_countries = ( 'customers_by_country_sets' === $this->report_id ) ? 'yes'           : 'no';
@@ -204,7 +203,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * get_report_sales.
 	 */
-	public function get_report_sales() {
+	function get_report_sales() {
 		$report = new WCJ_Reports_Sales();
 		echo $report->get_report();
 	}
@@ -222,7 +221,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * get_report_stock.
 	 */
-	public function get_report_stock() {
+	function get_report_stock() {
 		$report = new WCJ_Reports_Stock( array (
 			'report_id'  => $this->report_id,
 			'range_days' => $this->range_days,
@@ -233,7 +232,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * get_report_customers.
 	 */
-	public function get_report_customers() {
+	function get_report_customers() {
 		$report = new WCJ_Reports_Customers( array ( 'group_countries' => $this->group_countries ) );
 		echo $report->get_report();
 	}
@@ -244,7 +243,7 @@ class WCJ_Reports extends WCJ_Module {
 	 * @version 2.5.3
 	 * @since   2.3.0
 	 */
-	public function add_sales_reports( $reports ) {
+	function add_sales_reports( $reports ) {
 
 		$reports['orders']['reports']['booster_products_sales'] = array(
 			'title'       => __( 'Booster: Product Sales', 'woocommerce-jetpack' ),
@@ -266,7 +265,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Add reports to WooCommerce > Reports > Stock
 	 */
-	public function add_stock_reports( $reports ) {
+	function add_stock_reports( $reports ) {
 
 		$reports['stock']['reports']['on_stock'] = array(
 			'title'       => __( 'Booster: All in stock', 'woocommerce-jetpack' ),
@@ -295,7 +294,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Add reports to WooCommerce > Reports > Customers
 	 */
-	public function add_customers_by_country_report( $reports ) {
+	function add_customers_by_country_report( $reports ) {
 
 		$reports['customers']['reports']['customers_by_country'] = array(
 			'title'       => __( 'Booster: Customers by Country', 'woocommerce-jetpack' ),
