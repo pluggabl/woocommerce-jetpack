@@ -196,7 +196,10 @@ class WCJ_Product_Listings extends WCJ_Module {
 			array(
 				'title'    => __( 'Shop Page Display Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-//				'desc'     => __( 'This will work only when "Shop Page Display" in "WooCommerce > Settings > Products > Product Listings" is set to "Show subcategories" or "Show both".', 'woocommerce-jetpack' ),
+				'desc'     => sprintf(
+					__( 'You can control what is shown on the product archive in <a href="%s">WooCommerce > Settings > Products > Display > Shop page display</a>.', 'woocommerce-jetpack' ),
+					admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
+				),
 				'id'       => 'wcj_product_listings_shop_page_options',
 			),
 			array(
@@ -237,7 +240,10 @@ class WCJ_Product_Listings extends WCJ_Module {
 			array(
 				'title'    => __( 'Category Display Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
-//				'desc'     => __( 'This will work only when "Default Category Display" in "WooCommerce > Settings > Products > Product Listings" is set to "Show subcategories" or "Show both".', 'woocommerce-jetpack' ),
+				'desc'     => sprintf(
+					__( 'You can control what is shown on category archives in <a href="%s">WooCommerce > Settings > Products > Display > Default category display</a>.', 'woocommerce-jetpack' ),
+					admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
+				),
 				'id'       => 'wcj_product_listings_archive_pages_options',
 			),
 			array(
