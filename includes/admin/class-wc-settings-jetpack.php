@@ -578,6 +578,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 //						'payment_gateways_currency', - works, but I don't understand previous shipping issue..
 						'product_custom_info',
 						'product_info',
+						'product_by_user_role',
 						// almost ?
 						//'product_bookings',
 						//'product_listings',
