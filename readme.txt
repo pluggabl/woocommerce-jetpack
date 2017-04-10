@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 10/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Crowdfunding - `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" (removed from `woocommerce_product_subcategories_args` hook).
 ~!	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - SKU - `get_child()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Orders - Monthly Sales - `get_order_currency()`.
@@ -209,6 +210,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
 
+	* Tweak - PRODUCTS - Crowdfunding - Module description updated.
 ~	* Fix - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" fixed (was giving reverse results).
 ~	* Dev - PRODUCTS - Product Listings - "Exclude Categories" option for "Shop Page Display Options" and "Category Display Options" changed from comma separated string to multiselect.
 ~	* Fix - EMAILS & MISC. - Reports - Orders - Product Sales - "year not set" notice fixed.
