@@ -146,7 +146,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 		}
 		if ( 0 != $the_addons_price ) {
 			$the_price = $the_product->get_price();
-			$the_display_price = wcj_get_display_price( $the_product, ( $the_price + $the_addons_price ) );
+			$the_display_price = wcj_get_product_display_price( $the_product, ( $the_price + $the_addons_price ) );
 			echo wc_price( $the_display_price );
 		} else {
 			echo $the_product->get_price_html();
@@ -268,7 +268,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 			if ( isset( $item[ $addon['price_key'] ] ) ) {
 				$name .= str_replace(
 					array( '%addon_label%', '%addon_price%' ),
-					array( $item[ $addon['label_key'] ], wc_price( wcj_get_display_price( $_product, $item[ $addon['price_key'] ] ) ) ),
+					array( $item[ $addon['label_key'] ], wc_price( wcj_get_product_display_price( $_product, $item[ $addon['price_key'] ] ) ) ),
 					$item_format
 				);
 			}
@@ -390,7 +390,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 					'';
 				$html .= '<p>' .
 						'<input type="checkbox" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '"' . $is_checked . $is_required . '>' . ' ' .
-						'<label for="' . $addon['checkbox_key'] . '">' . $addon['label_value'] . ' ('. wc_price( wcj_get_display_price( $_product, $addon['price_value'] ) ) . ')' . '</label>' .
+						'<label for="' . $addon['checkbox_key'] . '">' . $addon['label_value'] . ' ('. wc_price( wcj_get_product_display_price( $_product, $addon['price_value'] ) ) . ')' . '</label>' .
 						$maybe_tooltip .
 					'</p>';
 			} elseif ( 'radio' === $addon['type'] ) {
@@ -411,7 +411,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 							'';
 						$html .= '<p>' .
 							'<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>' . ' ' .
-							'<label for="' . $addon['checkbox_key'] . '-' . $label . '">' . $labels[ $i ] . ' ('. wc_price( wcj_get_display_price( $_product, $prices[ $i ] ) ) . ')' . '</label>' .
+							'<label for="' . $addon['checkbox_key'] . '-' . $label . '">' . $labels[ $i ] . ' ('. wc_price( wcj_get_product_display_price( $_product, $prices[ $i ] ) ) . ')' . '</label>' .
 							$maybe_tooltip .
 						'</p>';
 					}

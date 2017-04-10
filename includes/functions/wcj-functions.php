@@ -54,14 +54,39 @@ if ( ! function_exists( 'wcj_get_product_status' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wcj_get_display_price' ) ) {
+if ( ! function_exists( 'wcj_get_product_total_stock' ) ) {
 	/**
-	 * wcj_get_display_price.
+	 * wcj_get_product_total_stock.
 	 *
 	 * @version 2.6.1
 	 * @since   2.6.1
 	 */
-	function wcj_get_display_price( $_product, $price = '', $qty = 1 ) {
+	function wcj_get_product_total_stock( $_product ) {
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+			return $_product->get_total_stock();
+		} else {
+			if ( $_product->is_type( array( 'variable', 'grouped' ) ) ) {
+				$total_stock = 0;
+				foreach ( $_product->get_children() as $child_id ) {
+					$child = wc_get_product( $child_id );
+					$total_stock += $child->get_stock_quantity();
+				}
+				return $total_stock;
+			} else {
+				return $_product->get_stock_quantity();
+			}
+		}
+	}
+}
+
+if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
+	/**
+	 * wcj_get_product_display_price.
+	 *
+	 * @version 2.6.1
+	 * @since   2.6.1
+	 */
+	function wcj_get_product_display_price( $_product, $price = '', $qty = 1 ) {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $_product->get_display_price( $price, $qty ) : wc_get_price_to_display( $_product, array( 'price' => $price, 'qty' => $qty ) );
 	}
 }
