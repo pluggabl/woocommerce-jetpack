@@ -20,7 +20,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'product_add_to_cart';
 		$this->short_desc = __( 'Product Add to Cart', 'woocommerce-jetpack' );
@@ -339,6 +339,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	 *
 	 * @version 2.5.2
 	 * @since   2.5.2
+	 * @todo    add "hide" (not just disable) option
 	 */
 	function enqueue_disable_quantity_add_to_cart_script() {
 		if (
@@ -364,6 +365,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	 *
 	 * @version 2.4.8
 	 * @since   2.4.8
+	 * @todo    fix - variations images to changing (maybe check Crowdfunding plugin)
 	 */
 	function change_variable_add_to_cart_template( $located, $template_name, $args, $template_path, $default_path ) {
 		if ( 'single-product/add-to-cart/variable.php' == $template_name ) {
@@ -371,6 +373,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 		}
 		return $located;
 	}
+
 	/*
 	 * redirect_to_url.
 	 */
@@ -386,7 +389,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/*
 	 * Add item to cart on visit.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	function add_to_cart_on_visit() {
 		if ( ! is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && is_product() && ( $product_id = get_the_ID() ) ) {
@@ -401,7 +404,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				if ( sizeof( WC()->cart->get_cart() ) > 0 ) {
 					foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
 						$_product = $values['data'];
-						if ( $_product->id == $product_id ) {
+						if ( wcj_get_product_id_or_variation_parent_id( $_product ) == $product_id ) {
 							// Product found - do not add it
 							return;
 						}
@@ -419,7 +422,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	function get_settings() {
 		$settings = array(
@@ -439,7 +442,11 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			array(
 				'title'    => __( 'Local Redirect URL', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Performs a safe (local) redirect, using wp_redirect().', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Local redirect URL. Leave empty to redirect to checkout.', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Local redirect URL. Leave empty to redirect to checkout.', 'woocommerce-jetpack' ) .
+					' ' . sprintf(
+						__( 'For archives - "Enable AJAX add to cart buttons on archives" checkbox in <a href="%s">WooCommerce > Settings > Products > Display</a> must be disabled.', 'woocommerce-jetpack' ),
+						admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
+					),
 				'id'       => 'wcj_add_to_cart_redirect_url',
 				'default'  => '',
 				'type'     => 'text',
@@ -463,8 +470,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				'type'     => 'select',
 				'options'  => array(
 					'no'          => __( 'Disabled', 'woocommerce-jetpack' ),
-					'yes'         => __( 'All Products', 'woocommerce-jetpack' ),
-					'per_product' => __( 'Per Product', 'woocommerce-jetpack' ),
+					'yes'         => __( 'All products', 'woocommerce-jetpack' ),
+					'per_product' => __( 'Per product', 'woocommerce-jetpack' ),
 				),
 			),
 			array(

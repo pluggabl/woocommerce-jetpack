@@ -2,7 +2,7 @@
 /**
  * Variable product add to cart - radio inputs
  *
- * @version 2.4.8
+ * @version 2.6.1
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -17,7 +17,7 @@ $attribute_keys = array_keys( $attributes );
 
 do_action( 'woocommerce_before_add_to_cart_form' ); ?>
 
-<form class="variations_form cart" method="post" enctype='multipart/form-data' data-product_id="<?php echo absint( $product->id ); ?>" data-product_variations="<?php echo esc_attr( json_encode( $available_variations ) ) ?>">
+<form class="variations_form cart" method="post" enctype='multipart/form-data' data-product_id="<?php echo absint( wcj_get_product_id_or_variation_parent_id( $product ) ); ?>" data-product_variations="<?php echo esc_attr( json_encode( $available_variations ) ) ?>">
 	<?php do_action( 'woocommerce_before_variations_form' ); ?>
 
 	<?php if ( empty( $available_variations ) && false !== $available_variations ) : ?>
