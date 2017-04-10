@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product by User Role class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.5.5
  * @author  Algoritmika Ltd.
  */
@@ -90,11 +90,11 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * product_by_user_role_purchasable.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.6.0
 	 */
 	function product_by_user_role_purchasable( $purchasable, $_product ) {
-		return $this->product_by_user_role_visibility( $purchasable, $_product->id );
+		return $this->product_by_user_role_visibility( $purchasable, wcj_get_product_id_or_variation_parent_id( $_product ) );
 	}
 
 	/**
