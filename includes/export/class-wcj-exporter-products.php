@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exporter Products class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -28,7 +28,7 @@ class WCJ_Exporter_Products {
 	/**
 	 * get_variable_or_grouped_product_info.
 	 *
-	 * @version 2.5.7
+	 * @version 2.6.1
 	 * @since   2.5.7
 	 */
 	function get_variable_or_grouped_product_info( $_product, $which_info ) {
@@ -46,7 +46,7 @@ class WCJ_Exporter_Products {
 					$all_variations_data[] = ( '' === $variation->get_sale_price() ) ? '-' : $variation->get_sale_price();
 					break;
 				case 'total_stock':
-					$all_variations_data[] = ( null === $variation->get_total_stock() ) ? '-' : $variation->get_total_stock();
+					$all_variations_data[] = ( null === wcj_get_product_total_stock( $variation ) ) ? '-' : wcj_get_product_total_stock( $variation );
 					break;
 				case 'stock_quantity':
 					$all_variations_data[] = ( null === $variation->get_stock_quantity() ) ? '-' : $variation->get_stock_quantity();
@@ -59,7 +59,7 @@ class WCJ_Exporter_Products {
 	/**
 	 * export_products.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.5.3
 	 * @todo    product attributes
 	 */
@@ -137,7 +137,7 @@ class WCJ_Exporter_Products {
 								break;
 							case 'product-stock':
 								$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ?
-									$this->get_variable_or_grouped_product_info( $_product, 'total_stock' ) : $_product->get_total_stock() );
+									$this->get_variable_or_grouped_product_info( $_product, 'total_stock' ) : wcj_get_product_total_stock( $_product ) );
 								break;
 							case 'product-regular-price':
 								$row[] = ( $_product->is_type( 'variable' ) || $_product->is_type( 'grouped' ) ?

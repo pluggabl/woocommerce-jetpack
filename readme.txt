@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 10/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Products - `wcj_get_product_total_stock()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `woocommerce_clean()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Sorting - `woocommerce_clean()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products Crowdfunding - `wcj_get_product_id_or_variation_parent_id()`.
