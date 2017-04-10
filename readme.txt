@@ -207,6 +207,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
 
+~	* Fix - EMAILS & MISC. - Reports - Orders - Product Sales - "year not set" notice fixed.
 ~	* Fix - PRODUCTS - Product Visibility by User Role - Query - Fixed (`offset` and `posts_per_page` removed).
 	* Fix - PRODUCTS - Product Addons - `wcj-product-addons.js` - `_ajax_object`.
 	* Fix - PRODUCTS - Bookings - `wcj-bookings.js` - `_ajax_object`.
