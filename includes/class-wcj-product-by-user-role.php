@@ -49,39 +49,27 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * product_by_user_role_pre_get_posts.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.6.0
 	 */
 	function product_by_user_role_pre_get_posts( $query ) {
-
 		if ( is_admin() ) {
 			return;
 		}
-
 		remove_action( 'pre_get_posts', array( $this, 'product_by_user_role_pre_get_posts' ) );
 		$current_user_roles = wcj_get_current_user_all_roles();
 		$post__not_in = array();
 		$args = $query->query;
-		$offset = 0;
-		$block_size = 256;
-		while( true ) {
-			$args['posts_per_page'] = $block_size;
-			$args['offset']         = $offset;
-			$args['fields']         = 'ids';
-			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) {
-				break;
-			}
-			foreach ( $loop->posts as $product_id ) {
-				$visible_user_roles = get_post_meta( $product_id, '_' . 'wcj_product_by_user_role_visible', true );
-				if ( is_array( $visible_user_roles ) && ! empty( $visible_user_roles ) ) {
-					$the_intersect = array_intersect( $visible_user_roles, $current_user_roles );
-					if ( empty( $the_intersect ) ) {
-						$post__not_in[] = $product_id;
-					}
+		$args['fields'] = 'ids';
+		$loop = new WP_Query( $args );
+		foreach ( $loop->posts as $product_id ) {
+			$visible_user_roles = get_post_meta( $product_id, '_' . 'wcj_product_by_user_role_visible', true );
+			if ( is_array( $visible_user_roles ) && ! empty( $visible_user_roles ) ) {
+				$the_intersect = array_intersect( $visible_user_roles, $current_user_roles );
+				if ( empty( $the_intersect ) ) {
+					$post__not_in[] = $product_id;
 				}
 			}
-			$offset += $block_size;
 		}
 		$query->set( 'post__not_in', $post__not_in );
 		add_action( 'pre_get_posts', array( $this, 'product_by_user_role_pre_get_posts' ) );

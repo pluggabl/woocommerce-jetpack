@@ -199,6 +199,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
 
+~	* Fix - PRODUCTS - Product Visibility by User Role - Query - Fixed (`offset` and `posts_per_page` removed).
 	* Fix - PRODUCTS - Bookings - `wcj-bookings.js` - `_ajax_object`.
 	* Dev - BUTTON & PRICE LABELS - More Button Labels - Hook priority changed. Default value for `get_option()` added.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Always Use cURL" option added.
