@@ -518,10 +518,12 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_purchase_price.
 	 *
-	 * @return string
+	 * @version 2.7.0
+	 * @return  string
+	 * @todo    maybe just `wcj_get_product_id` instead of `wcj_get_product_id_or_variation_parent_id`
 	 */
 	function wcj_product_purchase_price( $atts ) {
-		$purchase_price = wc_get_product_purchase_price( $the_product->id );
+		$purchase_price = wc_get_product_purchase_price( wcj_get_product_id_or_variation_parent_id( $this->the_product ) );
 		return wc_price( $purchase_price );
 	}
 

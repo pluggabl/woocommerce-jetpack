@@ -91,6 +91,22 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_product_formatted_variation' ) ) {
+	/**
+	 * wcj_get_product_formatted_variation.
+	 *
+	 * @version 2.7.0
+	 * @since   2.7.0
+	 */
+	function wcj_get_product_formatted_variation( $variation, $flat = false, $include_names = true ) {
+		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
+			return $variation->get_formatted_variation_attributes( $flat );
+		} else {
+			return wc_get_formatted_variation( $variation, $flat, $include_names );
+		}
+	}
+}
+
 if ( ! function_exists( 'wcj_get_order_id' ) ) {
 	/**
 	 * wcj_get_order_id.

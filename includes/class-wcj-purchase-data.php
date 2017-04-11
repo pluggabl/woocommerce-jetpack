@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Purchase Data class.
  *
- * @version 2.6.0
+ * @version 2.7.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -60,7 +60,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 * Output custom columns for orders
 	 *
 	 * @param   string $column
-	 * @version 2.6.0
+	 * @version 2.7.0
 	 * @since   2.2.4
 	 * @todo    forecasted profit
 	 */
@@ -78,7 +78,8 @@ class WCJ_Purchase_Data extends WCJ_Module {
 					if ( 0 != ( $purchase_price = wc_get_product_purchase_price( $product_id ) ) ) {
 						if ( 'profit' === $column ) {
 //							$line_total = ( 'yes' === get_option('woocommerce_prices_include_tax') ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
-							$line_total = ( $the_order->prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
+							$_order_prices_include_tax = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->prices_include_tax : $the_order->get_prices_include_tax() );
+							$line_total = ( $_order_prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
 							$value = $line_total - $purchase_price * $item['qty'];
 						} else { // if ( 'purchase_cost' === $column )
 							$value = $purchase_price * $item['qty'];
@@ -101,7 +102,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.6.0
+	 * @version 2.7.0
 	 * @since   2.4.5
 	 * @todo    wcj_purchase_price_currency
 	 */
@@ -113,7 +114,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 			$available_variations = $_product->get_available_variations();
 			foreach ( $available_variations as $variation ) {
 				$variation_product = wc_get_product( $variation['variation_id'] );
-				$products[ $variation['variation_id'] ] = ' (' . $variation_product->get_formatted_variation_attributes( true ) . ')';
+				$products[ $variation['variation_id'] ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
 			}
 		} else {
 			$products[ $main_product_id ] = '';
@@ -213,7 +214,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.6.0
+	 * @version 2.7.0
 	 * @since   2.4.5
 	 * @todo    min_profit
 	 */
@@ -229,7 +230,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 			$available_variations = $_product->get_available_variations();
 			foreach ( $available_variations as $variation ) {
 				$variation_product = wc_get_product( $variation['variation_id'] );
-				$products[ $variation['variation_id'] ] = ' (' . $variation_product->get_formatted_variation_attributes( true ) . ')';
+				$products[ $variation['variation_id'] ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
 			}
 		} else {
 			$products[ $main_product_id ] = '';
