@@ -125,7 +125,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 			$available_variations = $_product->get_available_variations();
 			foreach ( $available_variations as $variation ) {
 				$variation_product = wc_get_product( $variation['variation_id'] );
-				$products[ $variation['variation_id'] ] = ' (' . $variation_product->get_formatted_variation_attributes( true ) . ')';
+				$products[ $variation['variation_id'] ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
 			}
 		} else {
 			$products[ $main_product_id ] = '';

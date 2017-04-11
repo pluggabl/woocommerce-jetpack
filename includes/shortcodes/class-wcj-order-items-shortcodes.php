@@ -343,7 +343,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 								if ( 'yes' === $atts['variation_as_metadata'] ) {
 									$the_item_title .= wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, true, $the_product );
 								} elseif ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) {
-									$the_item_title .= str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ); // todo - do we need pa_ replacement?
+									$the_item_title .= str_replace( 'pa_', '', urldecode( wcj_get_product_formatted_variation( $the_product, true ) ) ); // todo - do we need pa_ replacement?
 								}
 								$the_item_title .= '</div>';
 							}
@@ -422,7 +422,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 							if ( 'yes' === $atts['variation_as_metadata'] ) {
 								$cell_data = wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, true, $the_product );
 							} elseif ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) {
-								$cell_data = str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ); // todo - do we need pa_ replacement?
+								$cell_data = str_replace( 'pa_', '', urldecode( wcj_get_product_formatted_variation( $the_product, true ) ) ); // todo - do we need pa_ replacement?
 							}
 						} else {
 							$cell_data = '';

@@ -120,7 +120,7 @@ class WCJ_Reports_Sales {
 							if ( is_object( $_product ) ) {
 								$products_data[ $product_id ][ 'title' ] .= $_product->get_title(); // get_the_title( $product_id );
 								if ( 'WC_Product_Variation' === get_class( $_product ) && is_object( $_product->parent ) ) {
-									$products_data[ $product_id ][ 'title' ] .= '<br><em>' . $_product->get_formatted_variation_attributes( true ) . '</em>';
+									$products_data[ $product_id ][ 'title' ] .= '<br><em>' . wcj_get_product_formatted_variation( $_product, true ) . '</em>';
 								} elseif ( 'WC_Product_Variation' === get_class( $_product ) ) {
 //									$products_data[ $product_id ][ 'title' ] .= ' [PARENT PRODUCT DELETED]'; // todo
 									$products_data[ $product_id ][ 'title' ] .= $item['name'] . '<br><em>' . __( 'Variation', 'woocommerce-jetpack' ) . '</em>'; // get_the_title( $product_id );
