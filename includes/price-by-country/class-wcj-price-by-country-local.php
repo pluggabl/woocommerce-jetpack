@@ -19,7 +19,7 @@ class WCJ_Price_by_Country_Local {
 	 *
 	 * @version 2.3.9
 	 */
-	public function __construct() {
+	function __construct() {
 //		add_action( 'add_meta_boxes',                                   array( $this, 'add_custom_meta_box_to_product_edit' ) );
 		add_action( 'woocommerce_ajax_save_product_variations',         array( $this, 'save_custom_meta_box_on_product_edit_ajax' ), PHP_INT_MAX, 1 );
 		add_action( 'save_post_product',                                array( $this, 'save_custom_meta_box_on_product_edit' ), PHP_INT_MAX, 2 );
@@ -60,8 +60,7 @@ class WCJ_Price_by_Country_Local {
 	/**
 	 * create_custom_meta_box.
 	 */
-	//public function create_custom_meta_box() {
-	public function create_custom_meta_box( $simple_or_variable, $product_id = 0 ) {
+	function create_custom_meta_box( $simple_or_variable, $product_id = 0 ) {
 
 		$current_post_id = ( $product_id == 0) ? get_the_ID() : $product_id;
 		$the_product = wc_get_product( $current_post_id );
@@ -125,24 +124,24 @@ class WCJ_Price_by_Country_Local {
 		$options = array(
 
 			array(
-				'id'				=> 'wcj_' . $meta_box_id . '_regular_price_' . $this->scope . '_',
-				'title'				=> __( 'Regular Price', 'woocommerce' ),
-				'type'				=> 'text',
-				'default'			=> 0,
+				'id'      => 'wcj_' . $meta_box_id . '_regular_price_' . $this->scope . '_',
+				'title'   => __( 'Regular Price', 'woocommerce' ),
+				'type'    => 'text',
+				'default' => 0,
 			),
 
 			array(
-				'id'				=> 'wcj_' . $meta_box_id . '_sale_price_' . $this->scope . '_',
-				'title'				=> __( 'Sale Price', 'woocommerce' ),
-				'type'				=> 'text',
-				'default'			=> 0,
+				'id'      => 'wcj_' . $meta_box_id . '_sale_price_' . $this->scope . '_',
+				'title'   => __( 'Sale Price', 'woocommerce' ),
+				'type'    => 'text',
+				'default' => 0,
 			),
 
 			array(
-				'id'				=> 'wcj_' . $meta_box_id . '_make_empty_price_' . $this->scope . '_',
-				'title'				=> __( 'Make empty price', 'woocommerce' ),
-				'type'				=> 'checkbox',
-				'default'			=> 'off',
+				'id'      => 'wcj_' . $meta_box_id . '_make_empty_price_' . $this->scope . '_',
+				'title'   => __( 'Make empty price', 'woocommerce' ),
+				'type'    => 'checkbox',
+				'default' => 'off',
 			),
 
 		);
@@ -153,7 +152,6 @@ class WCJ_Price_by_Country_Local {
 	 * Save options.
 	 */
 	function save_options( $post_id, $total_options_groups, $variation_id_addon = '' ) {
-
 		$options = $this->get_prices_options();
 		for ( $i = 1; $i <= $total_options_groups; $i++ ) {
 			foreach ( $options as $option ) {
@@ -172,14 +170,14 @@ class WCJ_Price_by_Country_Local {
 	 * @version 2.3.9
 	 * @since   2.3.9
 	 */
-	public function save_custom_meta_box_on_product_edit_ajax( $product_id ) {
+	function save_custom_meta_box_on_product_edit_ajax( $product_id ) {
 		return $this->save_custom_meta_box_on_product_edit( $product_id, /* 'ajax' */ null );
 	}
 
 	/**
 	 * Save Custom Meta Box on Product Edit.
 	 */
-	public function save_custom_meta_box_on_product_edit( $post_id, $post ) {
+	function save_custom_meta_box_on_product_edit( $post_id, $post ) {
 
 		$meta_box_id = 'price_by_country';
 
@@ -235,7 +233,7 @@ class WCJ_Price_by_Country_Local {
 	 *
 	 * @version 2.4.4
 	 */
-	public function get_all_options_html( $simple_or_variable, $current_post_id, $total_number, $variation_id_addon = '' ) {
+	function get_all_options_html( $simple_or_variable, $current_post_id, $total_number, $variation_id_addon = '' ) {
 		$html = '';
 		$options = $this->get_prices_options();
 		for ( $i = 1; $i <= $total_number; $i++ ) {
