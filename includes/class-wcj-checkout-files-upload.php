@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Files Upload class.
  *
- * @version 2.5.8
+ * @version 2.7.0
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options;
@@ -56,7 +56,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_to_email_attachments.
 	 *
-	 * @version 2.5.5
+	 * @version 2.7.0
 	 * @since   2.5.5
 	 */
 	function add_files_to_email_attachments( $attachments, $status, $order ) {
@@ -64,9 +64,9 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 			( 'new_order'                 === $status && 'yes' === get_option( 'wcj_checkout_files_upload_attach_to_admin_new_order',           'yes' ) ) ||
 			( 'customer_processing_order' === $status && 'yes' === get_option( 'wcj_checkout_files_upload_attach_to_customer_processing_order', 'yes' ) )
 		) {
-			$total_files = get_post_meta( $order->id, '_' . 'wcj_checkout_files_total_files', true );
+			$total_files = get_post_meta( wcj_get_order_id( $order ), '_' . 'wcj_checkout_files_total_files', true );
 			for ( $i = 1; $i <= $total_files; $i++ ) {
-				$attachments[] = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . get_post_meta( $order->id, '_' . 'wcj_checkout_files_upload_' . $i, true );
+				$attachments[] = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . get_post_meta( wcj_get_order_id( $order ), '_' . 'wcj_checkout_files_upload_' . $i, true );
 			}
 		}
 		return $attachments;
@@ -75,11 +75,11 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_to_order_display.
 	 *
-	 * @version 2.4.7
+	 * @version 2.7.0
 	 * @since   2.4.7
 	 */
 	function add_files_to_order_display( $order ) {
-		$order_id = $order->id;
+		$order_id = wcj_get_order_id( $order );
 		$html = '';
 		$total_files = get_post_meta( $order_id, '_' . 'wcj_checkout_files_total_files', true );
 		for ( $i = 1; $i <= $total_files; $i++ ) {

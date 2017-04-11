@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.0 - 11/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - CART & CHECKOUT - Checkout Files Upload - `wcj_get_order_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - CART & CHECKOUT - Checkout Custom Fields - `wcj_get_order_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - CART & CHECKOUT - EU VAT Number - `wcj_get_order_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PDF INVOICING & PACKING SLIPS - Emails - `wcj_get_order_id()`.
