@@ -714,12 +714,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$max_key = key( $prices['price'] );
 				$min_product = wc_get_product( $min_key );
 				$max_product = wc_get_product( $max_key );
-				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-				if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
-					$get_price_method = 'wc_' . $get_price_method;
-				}
-				$min = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $min_product->$get_price_method() : $get_price_method( $min_product );
-				$max = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $max_product->$get_price_method() : $get_price_method( $max_product );
+				$min = wcj_get_product_display_price( $min_product );
+				$max = wcj_get_product_display_price( $max_product );
 				$min_original = $min;
 				$max_original = $max;
 				if ( 'fixed' === $discount_type ) {
@@ -740,11 +736,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$the_price_original = ( $min_original != $max_original ) ? sprintf( '%s-%s', $min_original, $max_original ) : $min_original;
 			} else {
 				// Simple etc.
-				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-				if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
-					$get_price_method = 'wc_' . $get_price_method;
-				}
-				$the_price = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $this->the_product->$get_price_method() : $get_price_method( $this->the_product );
+				$the_price = wcj_get_product_display_price( $this->the_product );
 				$the_price = apply_filters( 'wcj_product_wholesale_price_table_price_before', $the_price, $this->the_product );
 				$the_price_original = $the_price;
 				if ( 'price_directly' === $discount_type ) {

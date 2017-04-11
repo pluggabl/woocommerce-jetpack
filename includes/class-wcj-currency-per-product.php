@@ -148,24 +148,22 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * grouped_price_html.
 	 *
-	 * @version 2.5.2
+	 * @version 2.7.0
 	 * @since   2.5.2
 	 */
 	function grouped_price_html( $price_html, $_product ) {
-		$tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
-		$child_prices     = array();
-
-		foreach ( $_product->get_children() as $child_id )
+		$child_prices = array();
+		foreach ( $_product->get_children() as $child_id ) {
 			$child_prices[ $child_id ] = get_post_meta( $child_id, '_price', true );
-
-//		$child_prices     = array_unique( $child_prices );
-		$get_price_method = 'get_price_' . $tax_display_mode . 'uding_tax';
-
+		}
+//		$child_prices = array_unique( $child_prices );
 		if ( ! empty( $child_prices ) ) {
-			/* $min_price = min( $child_prices );
+			/*
+			$min_price = min( $child_prices );
 			$max_price = max( $child_prices );
 			$min_price_id = min( array_keys( $child_prices, min( $child_prices ) ) );
-			$max_price_id = max( array_keys( $child_prices, max( $child_prices ) ) ); */
+			$max_price_id = max( array_keys( $child_prices, max( $child_prices ) ) );
+			*/
 			asort( $child_prices );
 			$min_price = current( $child_prices );
 			$min_price_id = key( $child_prices );
@@ -181,15 +179,13 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 
 		if ( $min_price ) {
 			if ( $min_price == $max_price && $min_currency_per_product_currency === $max_currency_per_product_currency ) {
-				$display_price = wc_price( $_product->$get_price_method( 1, $min_price ), array( 'currency' => $min_currency_per_product_currency ) );
+				$display_price = wc_price( wcj_get_product_display_price( $_product, $min_price, 1 ), array( 'currency' => $min_currency_per_product_currency ) );
 			} else {
-				$from          = wc_price( $_product->$get_price_method( 1, $min_price ), array( 'currency' => $min_currency_per_product_currency ) );
-				$to            = wc_price( $_product->$get_price_method( 1, $max_price ), array( 'currency' => $max_currency_per_product_currency ) );
+				$from          = wc_price( wcj_get_product_display_price( $_product, $min_price, 1 ), array( 'currency' => $min_currency_per_product_currency ) );
+				$to            = wc_price( wcj_get_product_display_price( $_product, $max_price, 1 ), array( 'currency' => $max_currency_per_product_currency ) );
 				$display_price = sprintf( _x( '%1$s&ndash;%2$s', 'Price range: from-to', 'woocommerce' ), $from, $to );
 			}
-
 			$new_price_html = $display_price . $_product->get_price_suffix();
-
 			return $new_price_html;
 		}
 

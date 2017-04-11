@@ -194,15 +194,13 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			}
 
 			// Prices
-			$tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
-			$get_price_method = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? 'get_price_' . $tax_display_mode . 'uding_tax' : 'wc_' . 'get_price_' . $tax_display_mode . 'uding_tax';
 			if ( 0 != ( $variation_id = WC()->cart->cart_contents[ $item_key ]['variation_id'] ) ) {
 				$variation = wc_get_product( $variation_id );
 				$price     = $variation->get_price();
-				$price_old = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $variation->$get_price_method() : $get_price_method( $variation ); // used for display only
+				$price_old = wcj_get_product_display_price( $variation ); // used for display only
 			} else {
 				$price     = $_product->get_price();
-				$price_old = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $_product->$get_price_method()  : $get_price_method( $_product );  // used for display only
+				$price_old = wcj_get_product_display_price( $_product ); // used for display only
 			}
 
 			// If other discount was applied in cart...

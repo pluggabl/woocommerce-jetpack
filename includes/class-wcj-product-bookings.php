@@ -107,11 +107,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			$seconds_diff  = $date_to - $date_from;
 			$days_diff     = ( $seconds_diff / 60 / 60 / 24 );
 			$the_product   = wc_get_product( $_POST['product_id'] );
-			$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-			if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
-				$get_price_method = 'wc_' . $get_price_method;
-			}
-			$price_per_day = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->$get_price_method() : $get_price_method( $the_product ) );
+			$price_per_day = wcj_get_product_display_price( $the_product );
 			$the_price     = $days_diff * $price_per_day;
 			echo wc_price( $the_price );
 		}

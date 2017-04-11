@@ -152,11 +152,10 @@ class WCJ_Multicurrency extends WCJ_Module {
 	function change_price_grouped( $price, $qty, $_product ) {
 		if ( $_product->is_type( 'grouped' ) ) {
 			if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) ) {
-				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
 				foreach ( $_product->get_children() as $child_id ) {
 					$the_price = get_post_meta( $child_id, '_price', true );
 					$the_product = wc_get_product( $child_id );
-					$the_price = $the_product->$get_price_method( 1, $the_price );
+					$the_price = wcj_get_product_display_price( $the_product, $the_price, 1 );
 					if ( $the_price == $price ) {
 						return $this->change_price( $price, $the_product );
 					}
@@ -232,8 +231,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 			if ( '' != ( $regular_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_regular_price_' . $this->get_current_currency_code(), true ) ) ) {
 				$_current_filter = current_filter();
 				if ( 'woocommerce_get_price_including_tax' == $_current_filter || 'woocommerce_get_price_excluding_tax' == $_current_filter ) {
-					$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-					return $_product->$get_price_method();
+					return wcj_get_product_display_price( $_product );
 
 				} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER == $_current_filter || 'woocommerce_variation_prices_price' == $_current_filter || 'woocommerce_product_variation_get_price' == $_current_filter ) {
 					$sale_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );

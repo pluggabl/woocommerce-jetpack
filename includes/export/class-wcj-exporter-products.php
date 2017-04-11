@@ -227,7 +227,7 @@ class WCJ_Exporter_Products {
 								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_price_excluding_tax() : wc_get_price_excluding_tax( $_product ) );
 								break;
 							case 'product-display-price':
-								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_display_price() : wc_get_price_to_display( $_product ) );
+								$row[] = wcj_get_product_display_price( $_product );
 								break;
 							case 'product-average-rating':
 								$row[] = $_product->get_average_rating();

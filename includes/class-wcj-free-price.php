@@ -59,12 +59,11 @@ class WCJ_Free_Price extends WCJ_Module {
 				return ( 0 == $min_price && 0 == $max_price );
 			}
 		} elseif ( 'variable' === $type ) {
-			$tax_display_mode = get_option( 'woocommerce_tax_display_shop' );
 			$child_prices     = array();
 			foreach ( $_product->get_children() as $child_id ) {
 				$child = wc_get_product( $child_id );
 				if ( '' !== $child->get_price() ) {
-					$child_prices[] = 'incl' === $tax_display_mode ? wc_get_price_including_tax( $child ) : wc_get_price_excluding_tax( $child );
+					$child_prices[] = wcj_get_product_display_price( $child );
 				}
 			}
 			if ( ! empty( $child_prices ) ) {

@@ -117,8 +117,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 			}
 			if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
 				$_product = wc_get_product( $the_product_id );
-				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-				return $_product->$get_price_method();
+				return wcj_get_product_display_price( $_product );
 
 			} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER == $the_current_filter || 'woocommerce_variation_prices_price' == $the_current_filter || 'woocommerce_product_variation_get_price' == $the_current_filter ) {
 
