@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Export Fields Helper class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -18,10 +18,11 @@ class WCJ_Export_Fields_Helper {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.1
 	 * @since   2.5.9
 	 */
 	function __construct() {
+		return true;
 	}
 
 	/**

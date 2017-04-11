@@ -141,17 +141,21 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	 *
 	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.1
 	 * @since   2.5.9
 	 */
 	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null ) {
 		$meta_info = '';
-		if ( $metadata = $_order->has_meta( $item_id ) ) {
+		$metadata = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->has_meta( $item_id ) : $item->get_meta_data() );
+		if ( $metadata ) {
 			$meta_info = array();
 			foreach ( $metadata as $meta ) {
 
+				$_meta_key   = ( WCJ_IS_WC_VERSION_BELOW_3 ? $meta['meta_key']   : $meta->key );
+				$_meta_value = ( WCJ_IS_WC_VERSION_BELOW_3 ? $meta['meta_value'] : $meta->value );
+
 				// Skip hidden core fields
-				if ( in_array( $meta['meta_key'], apply_filters( 'woocommerce_hidden_order_itemmeta', array(
+				if ( in_array( $_meta_key, apply_filters( 'woocommerce_hidden_order_itemmeta', array(
 					'_qty',
 					'_tax_class',
 					'_product_id',
@@ -166,20 +170,20 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 					continue;
 				}
 
-				if ( $exclude_wcj_meta && ( 'wcj' === substr( $meta['meta_key'], 0, 3 ) || '_wcj' === substr( $meta['meta_key'], 0, 4 ) ) ) {
+				if ( $exclude_wcj_meta && ( 'wcj' === substr( $_meta_key, 0, 3 ) || '_wcj' === substr( $_meta_key, 0, 4 ) ) ) {
 					continue;
 				}
 
 				// Skip serialised meta
-				if ( is_serialized( $meta['meta_value'] ) ) {
+				if ( is_serialized( $_meta_value ) || is_array( $_meta_value ) ) {
 					continue;
 				}
 
 				// Get attribute data
-				if ( taxonomy_exists( wc_sanitize_taxonomy_name( $meta['meta_key'] ) ) ) {
-					$term               = get_term_by( 'slug', $meta['meta_value'], wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
-					$meta['meta_key']   = wc_attribute_label( wc_sanitize_taxonomy_name( $meta['meta_key'] ) );
-					$meta['meta_value'] = isset( $term->name ) ? $term->name : $meta['meta_value'];
+				if ( taxonomy_exists( wc_sanitize_taxonomy_name( $_meta_key ) ) ) {
+					$term        = get_term_by( 'slug', $_meta_value, wc_sanitize_taxonomy_name( $_meta_key ) );
+					$_meta_key   = wc_attribute_label( wc_sanitize_taxonomy_name( $_meta_key ) );
+					$_meta_value = isset( $term->name ) ? $term->name : $_meta_value;
 				} else {
 					$the_product = null;
 					if ( is_object( $_product ) ) {
@@ -187,9 +191,9 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 					} elseif ( is_object( $item ) ) {
 						$the_product = $_order->get_product_from_item( $item );
 					}
-					$meta['meta_key']   = ( is_object( $the_product ) ) ? wc_attribute_label( $meta['meta_key'], $the_product ) : $meta['meta_key'];
+					$_meta_key   = ( is_object( $the_product ) ) ? wc_attribute_label( $_meta_key, $the_product ) : $_meta_key;
 				}
-				$meta_info[] = wp_kses_post( rawurldecode( $meta['meta_key'] ) ) . ': ' . wp_kses_post( rawurldecode( $meta['meta_value'] ) );
+				$meta_info[] = wp_kses_post( rawurldecode( $_meta_key ) ) . ': ' . wp_kses_post( rawurldecode( $_meta_value ) );
 			}
 			$meta_info = implode( ', ', $meta_info );
 		}

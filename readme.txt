@@ -144,7 +144,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 10/04/2017 =
+= 2.6.1 - 11/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - `wcj_get_order_item_meta_info()` - `get_meta_data()` instead of `has_meta()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Products - `wcj_get_product_total_stock()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `woocommerce_clean()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Sorting - `woocommerce_clean()`.
