@@ -162,7 +162,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * get_system_info_table_array.
 	 *
-	 * @version 2.5.7
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function get_system_info_table_array() {
@@ -180,6 +180,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 			'ABSPATH',
 			'DISABLE_WP_CRON',
 			'WP_CRON_LOCK_TIMEOUT',
+			'WCJ_WC_VERSION',
 		);
 		foreach ( $constants_array as $the_constant ) {
 			$system_info[] = array( $the_constant, ( defined( $the_constant ) ? constant( $the_constant ) : __( 'NOT DEFINED', 'woocommerce-jetpack' ) ) );
