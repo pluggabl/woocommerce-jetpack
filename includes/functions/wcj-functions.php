@@ -99,7 +99,7 @@ if ( ! function_exists( 'wcj_get_product_formatted_variation' ) ) {
 	 * @since   2.7.0
 	 */
 	function wcj_get_product_formatted_variation( $variation, $flat = false, $include_names = true ) {
-		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 			return $variation->get_formatted_variation_attributes( $flat );
 		} else {
 			return wc_get_formatted_variation( $variation, $flat, $include_names );

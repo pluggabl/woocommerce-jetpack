@@ -121,7 +121,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			$available_variations = $_product->get_available_variations();
 			foreach ( $available_variations as $variation ) {
 				$variation_product = wc_get_product( $variation['variation_id'] );
-				if ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) {
+				if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 					$products[ $variation['variation_id'] ] = ' (' . $variation_product->get_formatted_variation_attributes( true ) . ')';
 				} else {
 					$products[ $variation['variation_id'] ] = ' (' . wc_get_formatted_variation( $variation_product, true ) . ')';

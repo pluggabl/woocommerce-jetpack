@@ -451,7 +451,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.4.0
 	 */
 	function wcj_product_categories( $atts ) {
-		$return = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? $this->the_product->get_categories() : wc_get_product_category_list( $atts['product_id'] );
+		$return = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $this->the_product->get_categories() : wc_get_product_category_list( $atts['product_id'] );
 		return ( false === $return ) ? '' : $return;
 	}
 
@@ -718,8 +718,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
 					$get_price_method = 'wc_' . $get_price_method;
 				}
-				$min = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? $min_product->$get_price_method() : $get_price_method( $min_product );
-				$max = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? $max_product->$get_price_method() : $get_price_method( $max_product );
+				$min = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $min_product->$get_price_method() : $get_price_method( $min_product );
+				$max = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $max_product->$get_price_method() : $get_price_method( $max_product );
 				$min_original = $min;
 				$max_original = $max;
 				if ( 'fixed' === $discount_type ) {
@@ -744,7 +744,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
 					$get_price_method = 'wc_' . $get_price_method;
 				}
-				$the_price = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? $this->the_product->$get_price_method() : $get_price_method( $this->the_product );
+				$the_price = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $this->the_product->$get_price_method() : $get_price_method( $this->the_product );
 				$the_price = apply_filters( 'wcj_product_wholesale_price_table_price_before', $the_price, $this->the_product );
 				$the_price_original = $the_price;
 				if ( 'price_directly' === $discount_type ) {
