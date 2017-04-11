@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -40,8 +40,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/*
 	 * add_settings_hook.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function add_settings_hook() {
 		add_filter( 'wcj_' . $this->id . '_settings', array( $this, 'add_settings' ) );
@@ -137,7 +137,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.2.6
 	 */
 	function get_settings() {

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -27,7 +27,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * get_options.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	public function get_options() {
 		$options = array(
@@ -440,7 +440,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * validate_product_input_fields_on_add_to_cart.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
@@ -503,7 +503,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function add_product_input_fields_to_frontend() {
 		global $product;
@@ -689,7 +689,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_cart_item_data - from $_POST to $cart_item_data
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
@@ -731,7 +731,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Adds product input values to order details (and emails).
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
 

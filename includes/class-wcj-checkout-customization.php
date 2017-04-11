@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Checkout Customization class.
  *
- * @version 2.6.1
- * @since   2.6.1
+ * @version 2.7.0
+ * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function __construct() {
 
@@ -60,8 +60,8 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/*
 	 * add_settings.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function add_settings() {
 		return array(

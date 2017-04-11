@@ -2,8 +2,8 @@
 /**
  * WooCommerce Jetpack Exchange Rates Functions
  *
- * @version 2.6.1
- * @since   2.6.1
+ * @version 2.7.0
+ * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -29,7 +29,7 @@ if ( ! function_exists( 'alg_get_exchange_rate' ) ) {
 	/*
 	 * alg_get_exchange_rate.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
 	function alg_get_exchange_rate( $currency_from, $currency_to ) {
@@ -58,7 +58,7 @@ if ( ! function_exists( 'alg_ecb_get_exchange_rate' ) ) {
 	/*
 	 * alg_ecb_get_exchange_rate.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
 	function alg_ecb_get_exchange_rate( $currency_from, $currency_to ) {
@@ -96,7 +96,7 @@ if ( ! function_exists( 'alg_tcmb_get_exchange_rate_TRY' ) ) {
 	/*
 	 * alg_tcmb_get_exchange_rate_TRY.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
 	function alg_tcmb_get_exchange_rate_TRY( $currency_from ) {
@@ -144,7 +144,7 @@ if ( ! function_exists( 'alg_tcmb_get_exchange_rate' ) ) {
 	/*
 	 * alg_tcmb_get_exchange_rate.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
 	function alg_tcmb_get_exchange_rate( $currency_from, $currency_to ) {
@@ -167,7 +167,7 @@ if ( ! function_exists( 'alg_yahoo_get_exchange_rate' ) ) {
 	/*
 	 * alg_yahoo_get_exchange_rate.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @return  float rate on success, else 0
 	 */
 	function alg_yahoo_get_exchange_rate( $currency_from, $currency_to ) {

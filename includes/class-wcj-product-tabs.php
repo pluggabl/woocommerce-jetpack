@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Tabs class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -39,7 +39,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Customize the product tabs.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function customize_product_tabs( $tabs ) {
 

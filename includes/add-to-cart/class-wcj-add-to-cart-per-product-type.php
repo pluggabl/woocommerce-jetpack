@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Add to Cart per Product Type class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -29,7 +29,7 @@ class WCJ_Add_To_Cart_Per_Product_Type {
 	/**
 	 * custom_add_to_cart_button_text.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	public function custom_add_to_cart_button_text( $add_to_cart_text ) {
 

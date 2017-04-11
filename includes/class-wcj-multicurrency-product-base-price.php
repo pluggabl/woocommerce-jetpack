@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency Product Base Price class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -71,7 +71,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * change_price_grouped.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function change_price_grouped( $price, $qty, $_product ) {
@@ -92,7 +92,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function change_price( $price, $_product ) {
 		return wcj_price_by_product_base_currency( $price, wcj_get_product_id_or_variation_parent_id( $_product ) );
@@ -101,7 +101,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$multicurrency_base_price_currency = get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product, true ), '_' . 'wcj_multicurrency_base_price_currency', true );

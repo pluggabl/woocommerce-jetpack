@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products per Page class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.6.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 * @todo    position priority for every hook
 	 * @todo    post or get

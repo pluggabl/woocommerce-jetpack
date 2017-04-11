@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exporter Products class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -28,7 +28,7 @@ class WCJ_Exporter_Products {
 	/**
 	 * get_variable_or_grouped_product_info.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function get_variable_or_grouped_product_info( $_product, $which_info ) {
@@ -59,7 +59,7 @@ class WCJ_Exporter_Products {
 	/**
 	 * export_products.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.3
 	 * @todo    product attributes
 	 */

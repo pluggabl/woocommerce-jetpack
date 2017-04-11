@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	public function __construct() {
 
@@ -212,7 +212,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * change_order_currency.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.6
 	 */
 	function change_order_currency( $order_currency, $_order ) {
@@ -222,7 +222,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.6
 	 */
 	function get_meta_box_options() {
@@ -316,7 +316,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Output custom columns for orders
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @param   string $column
 	 */
 	function render_order_columns( $column ) {
@@ -341,7 +341,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	* Auto Complete all WooCommerce orders.
 	*
-	* @version 2.6.1
+	* @version 2.7.0
 	*/
 	function auto_complete_order( $order_id ) {
 		if ( ! $order_id ) {

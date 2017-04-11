@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency per Product class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.2
 	 */
 	function __construct() {
@@ -65,8 +65,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * change_shipping_price.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function change_shipping_price( $package_rates, $package ) {
 		if ( $this->is_cart_or_checkout_or_ajax() ) {
@@ -113,8 +113,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * validate_on_add_to_cart.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function validate_on_add_to_cart( $passed, $product_id ) {
 		$cart_checkout_behaviour = get_option( 'wcj_currency_per_product_cart_checkout', 'convert_shop_default' );
@@ -217,7 +217,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.2
 	 */
 	function change_price( $price, $_product ) {
@@ -296,8 +296,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_current_product_id_and_currency.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function get_current_product_id_and_currency() {
 		$the_ID = get_the_ID();
@@ -319,8 +319,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_cart_checkout_currency.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function get_cart_checkout_currency() {
 		if ( WC()->cart->is_empty() ) {
@@ -342,8 +342,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * is_cart_or_checkout_or_ajax.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 * @todo    fix AJAX issue (for minicart)
 	 */
 	function is_cart_or_checkout_or_ajax() {
@@ -353,7 +353,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * change_currency_code.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.2
 	 */
 	function change_currency_code( $currency ) {
@@ -368,7 +368,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * change_currency_symbol.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.2
 	 */
 	function change_currency_symbol( $currency_symbol, $currency ) {
@@ -410,7 +410,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.2
 	 */
 	function add_settings() {

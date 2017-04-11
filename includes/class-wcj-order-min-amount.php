@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Minimum Amount class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -67,7 +67,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * get_order_minimum_amount_with_user_roles.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.3
 	 */
 	function get_order_minimum_amount_with_user_roles() {
@@ -109,7 +109,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * order_minimum_amount.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @todo    wc_print_notice or wc_add_notice?
 	 */
 	function order_minimum_amount() {
@@ -144,7 +144,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * stop_from_seeing_checkout.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function stop_from_seeing_checkout( $wp ) {
 //		if ( is_admin() ) return;

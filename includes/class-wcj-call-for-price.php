@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Call for Price class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Call_For_Price extends WCJ_module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function __construct() {
 
@@ -93,7 +93,7 @@ class WCJ_Call_For_Price extends WCJ_module {
 	/**
 	 * Get settings array.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function get_settings() {
 		$settings = array(

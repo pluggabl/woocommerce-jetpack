@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways by Country class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function __construct() {
 
@@ -38,7 +38,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function available_payment_gateways( $_available_gateways ) {
 		if ( isset( WC()->customer ) ) {
@@ -73,7 +73,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function add_settings() {
 		$settings = array(

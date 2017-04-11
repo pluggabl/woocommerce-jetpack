@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Fees class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function __construct() {
 
@@ -39,7 +39,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * enqueue_checkout_script.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function enqueue_checkout_script() {
 		if( ! is_checkout() ) {
@@ -51,7 +51,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * gateways_fees.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function gateways_fees() {
 		global $woocommerce;
@@ -115,7 +115,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function add_settings( $settings ) {
 		$available_gateways = WC()->payment_gateways->payment_gateways();

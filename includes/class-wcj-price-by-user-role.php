@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by User Role class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -19,7 +19,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -110,7 +110,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function get_meta_box_options() {
@@ -201,7 +201,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function change_price_shipping( $package_rates, $package ) {
@@ -228,7 +228,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price_grouped.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function change_price_grouped( $price, $qty, $_product ) {
@@ -253,7 +253,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product ) {

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -128,7 +128,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function get_settings() {
 

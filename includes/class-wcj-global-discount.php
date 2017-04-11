@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Global Discount class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    products and cats/tags to include/exclude (cats to include - done); regular price coefficient; fee instead of discount;
@@ -19,7 +19,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function __construct() {
@@ -101,7 +101,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * check_product_categories.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 * @return  bool
 	 */
@@ -126,7 +126,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * add_global_discount_any_price.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function add_global_discount_any_price( $price_type, $price, $_product ) {

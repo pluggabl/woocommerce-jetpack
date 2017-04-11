@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -102,7 +102,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_module_tools.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.2.3
 	 */
 	function output_module_tools( $value ) {
@@ -120,7 +120,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_custom_link.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.2.8
 	 */
 	function output_custom_link( $value ) {
@@ -180,7 +180,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output cats
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function output_cats_submenu() {
 		$current_cat = empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( $_REQUEST['wcj-cat'] );
@@ -198,7 +198,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output sections (modules) sub menu
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function output_sections_submenu() {
 		global $current_section;
@@ -278,7 +278,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output the settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function output() {
 
@@ -403,7 +403,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function output_dashboard( $current_section ) {
 
@@ -665,7 +665,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Get settings array
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @return  array
 	 */
 	function get_settings( $current_section = '' ) {

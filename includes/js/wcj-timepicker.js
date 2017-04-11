@@ -1,7 +1,7 @@
 /**
  * WooCommerce Jetpack - Timepicker JS
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 jQuery(document).ready(function() {

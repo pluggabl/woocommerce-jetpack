@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Crowdfunding Shortcodes class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  */
@@ -78,7 +78,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_product_orders_data.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.2.6
 	 */
 	function get_product_orders_data( $return_value = 'total_orders', $atts ) {
@@ -189,7 +189,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_startdate.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_startdate( $atts ) {
@@ -199,7 +199,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_deadline.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_deadline( $atts ) {
@@ -238,7 +238,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_time_remaining_progress_bar.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function wcj_product_crowdfunding_time_remaining_progress_bar( $atts ) {
@@ -256,7 +256,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_goal.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_goal( $atts ) {
@@ -267,7 +267,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_goal_remaining.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_crowdfunding_goal_remaining( $atts ) {
@@ -280,7 +280,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_crowdfunding_goal_remaining_progress_bar.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function wcj_product_crowdfunding_goal_remaining_progress_bar( $atts ) {

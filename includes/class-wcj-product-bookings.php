@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Bookings class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -97,7 +97,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function price_change_ajax( $param ) {
@@ -121,7 +121,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function enqueue_scripts() {
@@ -152,7 +152,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * add_to_cart_url.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function add_to_cart_url( $url, $_product ) {
@@ -395,7 +395,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * is_bookings_product.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function is_bookings_product( $_product ) {

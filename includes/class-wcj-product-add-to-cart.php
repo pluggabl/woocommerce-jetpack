@@ -389,7 +389,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/*
 	 * Add item to cart on visit.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function add_to_cart_on_visit() {
 		if ( ! is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && is_product() && ( $product_id = get_the_ID() ) ) {
@@ -422,7 +422,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function get_settings() {
 		$settings = array(

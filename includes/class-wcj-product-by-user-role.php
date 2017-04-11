@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product by User Role class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.5
  * @author  Algoritmika Ltd.
  */
@@ -49,7 +49,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * product_by_user_role_pre_get_posts.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 * @todo    add same option to all "Product Visibility" modules (e.g. "Product Visibility by Country")
 	 */
@@ -79,7 +79,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * product_by_user_role_purchasable.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
 	function product_by_user_role_purchasable( $purchasable, $_product ) {

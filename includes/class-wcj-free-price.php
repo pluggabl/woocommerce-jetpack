@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Free Price class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.9
 	 * @todo    single in grouped is treated as "related"
 	 */
@@ -47,8 +47,8 @@ class WCJ_Free_Price extends WCJ_Module {
 	/**
 	 * are_all_prices_free
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function are_all_prices_free( $_product, $type ) {
 		if ( 'variable' === $type ) {
@@ -84,8 +84,8 @@ class WCJ_Free_Price extends WCJ_Module {
 	/**
 	 * maybe_modify_price
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function maybe_modify_price( $price, $_product ) {
 		if ( '' !== $price ) {
@@ -129,7 +129,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	/**
 	 * modify_free_price_simple_external_custom.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.9
 	 */
 	function modify_free_price_simple_external_custom( $price, $_product ) {
@@ -142,7 +142,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	/**
 	 * modify_free_price_grouped.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.9
 	 */
 	function modify_free_price_grouped( $price, $_product ) {
@@ -152,7 +152,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	/**
 	 * modify_free_price_variable.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.9
 	 */
 	function modify_free_price_variable( $price, $_product ) {
@@ -172,7 +172,7 @@ class WCJ_Free_Price extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.9
 	 */
 	function add_settings( $settings ) {

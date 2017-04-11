@@ -144,7 +144,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.6.1 - 11/04/2017 =
+= 2.7.0 - 11/04/2017 =
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - General - Products Attributes - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - CART & CHECKOUT - EU VAT Number - `get_customer_ip_address()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Products - Functions instead of accessing order properties directly for WC >= v3.0.0. `wc_get_price_to_display()` and more.

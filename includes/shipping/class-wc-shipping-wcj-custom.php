@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Shipping class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */

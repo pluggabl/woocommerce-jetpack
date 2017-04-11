@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exporter Orders class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  * @todo    filter export by date
@@ -29,7 +29,7 @@ class WCJ_Exporter_Orders {
 	/**
 	 * get_export_orders_row.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.9
 	 */
 	function get_export_orders_row( $fields_ids, $order_id, $order, $items, $items_product_input_fields, $item, $item_id ) {

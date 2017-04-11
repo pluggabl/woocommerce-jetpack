@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency for External Products class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function __construct() {
 
@@ -38,7 +38,7 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 	/**
 	 * change_currency_code.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.4
 	 */
 	function change_currency_code( $currency ) {
@@ -52,7 +52,7 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 	/**
 	 * change_currency_symbol.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function change_currency_symbol( $currency_symbol, $currency ) {
 		global $product;

@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Payment Gateways by Shipping class.
  *
- * @version 2.6.1
- * @since   2.6.1
+ * @version 2.7.0
+ * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function __construct() {
 
@@ -39,8 +39,8 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 	/**
 	 * check_if_enabled_for_methods.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 * @see     `is_available()` function in WooCommerce `WC_Gateway_COD` class
 	 * @todo    virtual orders (`enable_for_virtual`)
 	 */
@@ -126,8 +126,8 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function available_payment_gateways( $_available_gateways ) {
 		foreach ( $_available_gateways as $key => $gateway ) {
@@ -143,8 +143,8 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.6.1
-	 * @version 2.6.1
+	 * @version 2.7.0
+	 * @version 2.7.0
 	 * @todo    (maybe) remove COD, Custom Booster Payment Gateways (and maybe other payment gateways) that already have `enable_for_methods` option
 	 */
 	function add_settings( $settings ) {

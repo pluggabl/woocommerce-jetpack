@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Open Pricing class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -54,7 +54,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * is_open_price_product.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.8
 	 */
 	function is_open_price_product( $_product ) {
@@ -137,7 +137,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * is_purchasable.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.8
 	 * @todo    maybe `wcj_get_product_id()` instead of `wcj_get_product_id_or_variation_parent_id()` - check `is_purchasable()` in `WC_Product` class.
 	 */
@@ -217,7 +217,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_to_cart_url.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.8
 	 */
 	function add_to_cart_url( $url, $_product ) {
@@ -327,7 +327,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_open_price_input_field_to_frontend.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.8
 	 */
 	function add_open_price_input_field_to_frontend() {

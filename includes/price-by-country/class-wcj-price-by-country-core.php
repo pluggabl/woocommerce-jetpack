@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price by Country Core class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -30,7 +30,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function add_hooks() {
 
@@ -86,7 +86,7 @@ class WCJ_Price_by_Country_Core {
 	/*
 	 * sorting_by_price_fix.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.6
 	 */
 	function sorting_by_price_fix( $args ) {
@@ -140,7 +140,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_grouped.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function change_price_grouped( $price, $qty, $_product ) {
@@ -185,7 +185,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function change_price_shipping( $package_rates, $package ) {
 		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
@@ -211,7 +211,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @todo    (maybe) add `cart_and_checkout` override option
 	 */
 	function get_customer_country_group_id() {
@@ -338,7 +338,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function change_price( $price, $product ) {
 		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -14,8 +14,8 @@ if ( ! function_exists( 'wcj_get_product_id' ) ) {
 	/**
 	 * wcj_get_product_id.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function wcj_get_product_id( $_product ) {
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
@@ -30,8 +30,8 @@ if ( ! function_exists( 'wcj_get_product_id_or_variation_parent_id' ) ) {
 	/**
 	 * wcj_get_product_id_or_variation_parent_id.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function wcj_get_product_id_or_variation_parent_id( $_product ) {
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
@@ -46,8 +46,8 @@ if ( ! function_exists( 'wcj_get_product_status' ) ) {
 	/**
 	 * wcj_get_product_status.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function wcj_get_product_status( $_product ) {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $_product->post->post_status : $_product->get_status();
@@ -58,8 +58,8 @@ if ( ! function_exists( 'wcj_get_product_total_stock' ) ) {
 	/**
 	 * wcj_get_product_total_stock.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function wcj_get_product_total_stock( $_product ) {
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
@@ -83,8 +83,8 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 	/**
 	 * wcj_get_product_display_price.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function wcj_get_product_display_price( $_product, $price = '', $qty = 1 ) {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $_product->get_display_price( $price, $qty ) : wc_get_price_to_display( $_product, array( 'price' => $price, 'qty' => $qty ) );
@@ -95,8 +95,8 @@ if ( ! function_exists( 'wcj_get_order_id' ) ) {
 	/**
 	 * wcj_get_order_id.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function wcj_get_order_id( $_order ) {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $_order->id : $_order->get_id();
@@ -109,7 +109,7 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	 *
 	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.9
 	 */
 	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null ) {

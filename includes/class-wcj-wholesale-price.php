@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Wholesale Price class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -19,7 +19,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function __construct() {
 
@@ -171,7 +171,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * calculate_totals.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function calculate_totals( $cart ) {
@@ -234,7 +234,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * wholesale_price.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function wholesale_price( $price, $_product ) {
 		return ( wcj_is_product_wholesale_enabled( wcj_get_product_id_or_variation_parent_id( $_product ) ) && isset( $_product->wcj_wholesale_price ) ) ? $_product->wcj_wholesale_price : $price;

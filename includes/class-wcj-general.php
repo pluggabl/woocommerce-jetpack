@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function __construct() {
 
@@ -73,8 +73,8 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * maybe_apply_url_coupon.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 * @todo    (maybe) predefined $arg_key
 	 * @todo    (maybe) additional $_GET['coupon_code']
 	 * @todo    (maybe) if ( ! WC()->cart->has_discount( $coupon_code ) ) {}
@@ -234,7 +234,7 @@ class WCJ_General extends WCJ_Module {
 	/*
 	 * get_products_atts.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.3.9
 	 */
 	function get_products_atts() {
@@ -312,7 +312,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @todo    add link to Booster's shortcodes list
 	 */
 	function get_settings() {

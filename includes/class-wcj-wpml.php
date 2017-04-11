@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack WPML class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -41,7 +41,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function get_settings() {
 		$settings = array(

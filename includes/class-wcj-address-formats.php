@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Address Formats class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -37,7 +37,7 @@ class WCJ_Address_Formats extends WCJ_Module {
 	/**
 	 * customize_force_country_display.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function customize_force_country_display( $display ) {
 		return ( 'yes' === get_option( 'wcj_address_formats_force_country_display', 'no' ) );
@@ -115,7 +115,7 @@ class WCJ_Address_Formats extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function get_settings() {
 		$settings = array(

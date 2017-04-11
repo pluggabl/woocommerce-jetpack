@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Listings class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function __construct() {
 		$this->id         = 'product_listings';
@@ -110,7 +110,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * filter_subcategories.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function filter_subcategories( $args ) {
 		$args['exclude'] = ( is_shop() ) ?
@@ -146,7 +146,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * filter_subcategories_hide_empty.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function filter_subcategories_hide_empty() {
 
@@ -163,7 +163,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/*
 	 * add_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.5
 	 */
 	function add_settings() {

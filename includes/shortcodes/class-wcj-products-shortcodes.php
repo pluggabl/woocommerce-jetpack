@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	public function __construct() {
 
@@ -443,7 +443,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_categories.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.0
 	 */
 	function wcj_product_categories( $atts ) {
@@ -503,7 +503,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_total_sales.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.2.6
 	 */
 	function wcj_product_total_sales( $atts ) {
@@ -643,7 +643,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 
@@ -891,7 +891,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_image_url.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function wcj_product_image_url( $atts ) {
@@ -901,8 +901,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_gallery_image_url.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function wcj_product_gallery_image_url( $atts ) {
 		$attachment_ids = $this->the_product->get_gallery_attachment_ids();
@@ -928,7 +928,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_categories_names.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function wcj_product_categories_names( $atts ) {
@@ -945,7 +945,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_categories_urls.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function wcj_product_categories_urls( $atts ) {

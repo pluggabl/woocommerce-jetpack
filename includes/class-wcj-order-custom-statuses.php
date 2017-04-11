@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Custom Statuses class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -61,7 +61,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * add_custom_status_actions_buttons.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
 	function add_custom_status_actions_buttons( $actions, $_order ) {

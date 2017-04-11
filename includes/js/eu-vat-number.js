@@ -1,7 +1,7 @@
 /**
  * eu-vat-number.
  *
- * @version 2.6.1
+ * @version 2.7.0
  */
 
 var _ajax_object = ajax_object;

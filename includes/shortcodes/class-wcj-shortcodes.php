@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shortcodes class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -59,7 +59,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function wcj_shortcode( $atts, $content, $shortcode ) {
 

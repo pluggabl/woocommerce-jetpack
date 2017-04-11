@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Invoices Shortcodes class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	public function __construct() {
 
@@ -99,7 +99,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_custom_doc_date.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function wcj_custom_doc_date( $atts ) {
 		$invoice_type_id = ( 1 == $atts['doc_nr'] ) ? 'custom_doc' :  'custom_doc' . '_' . $atts['doc_nr'];
@@ -137,7 +137,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_custom_doc_number.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function wcj_custom_doc_number( $atts ) {
 		$invoice_type_id = ( 1 == $atts['doc_nr'] ) ? 'custom_doc' :  'custom_doc' . '_' . $atts['doc_nr'];

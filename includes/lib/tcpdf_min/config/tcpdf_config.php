@@ -59,7 +59,7 @@
  */
 //define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
 ////////////////////////////////////////////
-// Algoritmika - Booster version 2.6.1
+// Algoritmika - Booster version 2.7.0
 // TODO - search for `check_tcpdf_fonts`
 /*
 $tcpdf_fonts_dir = wp_upload_dir();

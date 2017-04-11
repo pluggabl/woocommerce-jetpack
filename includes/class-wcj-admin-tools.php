@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Admin Tools class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -100,7 +100,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * create_meta_meta_box.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.8
 	 */
 	function create_meta_meta_box( $post ) {

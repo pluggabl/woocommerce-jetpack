@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Mothly Sales Reports class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.4.7
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Reports_Monthly_Sales {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.7
 	 */
 	function __construct( $args = null ) {
@@ -125,7 +125,7 @@ class WCJ_Reports_Monthly_Sales {
 	/*
 	 * get_monthly_sales_report.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.7
 	 * @todo    take not monthly average, but "Close" of closest day; forecast for current month; $order_currencies_array;
 	 */

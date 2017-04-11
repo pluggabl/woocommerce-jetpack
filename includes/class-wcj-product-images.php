@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Images class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -170,7 +170,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * customize_sale_flash.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function customize_sale_flash( $sale_flash_html, $post, $product ) {
 		// Hiding

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack SKU class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  * @todo    add "random number" option
  */
@@ -65,7 +65,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_available_variations.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.4.8
 	 */
 	function get_all_variations( $_product ) {
@@ -80,7 +80,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku_with_variable.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @todo    add "pseudorandom" option (check "Order Numbers" module)
 	 * @todo    Handle cases with more than 26 variations
 	 */
@@ -136,7 +136,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview, $parent_product_id, $_product ) {
 
@@ -183,7 +183,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_all_products_skus.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function set_all_products_skus( $is_preview ) {
 		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
@@ -238,7 +238,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * create_sku_tool
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function create_sku_tool() {
 		$result_message = '';
@@ -275,7 +275,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function get_settings() {
 		$settings = array(

@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Price and Currency functions.
  *
- * @version 2.6.1
- * @since   2.6.1
+ * @version 2.7.0
+ * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,8 +15,8 @@ if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 	/**
 	 * wcj_add_change_price_hooks.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function wcj_add_change_price_hooks( $module_object, $priority, $include_shipping = true ) {
 		// Prices
@@ -67,7 +67,7 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 	/**
 	 * wcj_price_by_product_base_currency.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.6
 	 */
 	function wcj_price_by_product_base_currency( $price, $product_id ) {
@@ -88,7 +88,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 	/**
 	 * wcj_price_by_country.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.3
 	 */
 	function wcj_price_by_country( $price, $product, $group_id, $the_current_filter = '' ) {
@@ -200,7 +200,7 @@ if ( ! function_exists( 'wcj_update_products_price_by_country_for_single_product
 	/**
 	 * wcj_update_products_price_by_country_for_single_product.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.3
 	 */
 	function wcj_update_products_price_by_country_for_single_product( $product_id ) {

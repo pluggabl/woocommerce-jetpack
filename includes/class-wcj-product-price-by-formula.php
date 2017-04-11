@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Price by Formula class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -47,7 +47,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price_grouped.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function change_price_grouped( $price, $qty, $_product ) {
@@ -68,7 +68,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product, $output_errors = false ) {
@@ -118,7 +118,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
@@ -201,7 +201,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * is_price_by_formula_product.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function is_price_by_formula_product( $_product ) {
@@ -273,7 +273,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function create_meta_box() {

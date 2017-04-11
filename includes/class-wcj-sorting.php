@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Sorting class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -216,7 +216,7 @@ class WCJ_Sorting extends WCJ_Module {
 	/*
 	 * Add new sorting options to WooCommerce sorting.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function custom_woocommerce_get_catalog_ordering_args( $args ) {
 

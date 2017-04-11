@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Numbers class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -112,7 +112,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Display order number.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function display_order_number( $order_number, $order ) {
 		$order_id = wcj_get_order_id( $order );
@@ -165,7 +165,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {
 		if ( 'shop_order' !== get_post_type( $order_id ) ) {
@@ -233,7 +233,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function get_settings() {
 		$settings = array(

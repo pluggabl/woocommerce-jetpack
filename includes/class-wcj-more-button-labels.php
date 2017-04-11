@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack More Button Labels class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function __construct() {
 
@@ -36,7 +36,7 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 	/**
 	 * set_order_button_text.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function set_order_button_text( $current_text ) {
 		$new_text = get_option( 'wcj_checkout_place_order_button_text', '' );

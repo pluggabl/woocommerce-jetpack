@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function __construct() {
 
@@ -277,7 +277,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function custom_price( $price, $product ) {
 
@@ -493,7 +493,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * add_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.3.7
 	 */
 	function add_settings() {

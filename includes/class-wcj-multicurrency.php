@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -48,7 +48,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function get_meta_box_options() {
 		$main_product_id = get_the_ID();
@@ -100,7 +100,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function add_hooks() {
 		// Session
@@ -130,7 +130,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_by_currency_tm_extra_product_options_plugin_cart.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function change_price_by_currency_tm_extra_product_options_plugin_cart( $price ) {
@@ -140,7 +140,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_by_currency_tm_extra_product_options_plugin.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function change_price_by_currency_tm_extra_product_options_plugin( $price, $type, $post_id ) {
@@ -150,7 +150,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_grouped.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.5.0
 	 */
 	function change_price_grouped( $price, $qty, $_product ) {
@@ -218,7 +218,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function change_price( $price, $_product ) {
 
@@ -324,7 +324,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function change_price_shipping( $package_rates, $package ) {
 		if ( $this->do_revert() ) {

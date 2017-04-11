@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways Min Max class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function __construct() {
 
@@ -76,7 +76,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @todo    checkout notices - add %diff_amount% and %total_in_cart% replaced values (wc_has_notice won't work then?, probably will need to use wc_clear_notices)
 	 */
 	function add_settings( $settings ) {

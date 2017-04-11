@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exchange Rates Crons class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	public function __construct() {
 		$this->update_intervals  = array(
@@ -79,7 +79,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * On the scheduled action hook, run a function.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function update_the_exchange_rates( $interval ) {
 

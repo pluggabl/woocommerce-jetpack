@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Emails class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	public function __construct() {
 
@@ -50,8 +50,8 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * add_product_info_to_email_order_item_name.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 */
 	function add_product_info_to_email_order_item_name( $item_name, $item ) {
 		if ( $item['product_id'] ) {
@@ -201,7 +201,7 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 */
 	function get_settings() {
 		$settings = array(

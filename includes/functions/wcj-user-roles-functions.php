@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack User Roles functions.
  *
- * @version 2.6.1
- * @since   2.6.1
+ * @version 2.7.0
+ * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
 

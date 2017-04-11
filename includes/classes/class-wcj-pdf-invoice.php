@@ -24,8 +24,8 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * check_tcpdf_fonts.
 	 *
-	 * @version 2.6.1
-	 * @since   2.6.1
+	 * @version 2.7.0
+	 * @since   2.7.0
 	 * @todo    use function - search for `check_tcpdf_fonts`
 	 * @todo    optional "do not download" (then default fonts directory with basic fonts)
 	 * @todo    check file size > 0 (not only if file exists in directory)

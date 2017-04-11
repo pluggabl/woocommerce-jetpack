@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Sales Reports class.
  *
- * @version 2.6.1
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -71,7 +71,7 @@ class WCJ_Reports_Sales {
 	/*
 	 * get_products_sales.
 	 *
-	 * @version 2.6.1
+	 * @version 2.7.0
 	 * @since   2.3.0
 	 * @todo    (maybe) currency conversion
 	 * @todo    fix when variable and variations are all (wrongfully) counted in total sums
