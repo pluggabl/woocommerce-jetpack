@@ -205,23 +205,23 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * add_eu_vat_number_to_order_billing_address.
 	 *
-	 * @version 2.5.2
+	 * @version 2.7.0
 	 * @since   2.5.2
 	 */
 	function add_eu_vat_number_to_order_billing_address( $fields, $_order ) {
 		$field_name = 'billing_' . $this->id;
-		$fields[ $field_name ] = get_post_meta( $_order->id, '_' . $field_name, true );
+		$fields[ $field_name ] = get_post_meta( wcj_get_order_id( $_order ), '_' . $field_name, true );
 		return $fields;
 	}
 
 	/**
 	 * add_eu_vat_number_to_order_display.
 	 *
-	 * @version 2.4.7
+	 * @version 2.7.0
 	 * @since   2.4.7
 	 */
 	function add_eu_vat_number_to_order_display( $order ) {
-		$order_id = $order->id;
+		$order_id = wcj_get_order_id( $order );
 		$html = '';
 		$option_name = '_billing_' . $this->id;
 		$the_eu_vat_number = get_post_meta( $order_id, $option_name, true );

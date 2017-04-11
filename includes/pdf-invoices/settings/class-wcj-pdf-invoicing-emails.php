@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Emails class.
  *
- * @version 2.5.8
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -54,6 +54,8 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 
 	/**
 	 * add_pdf_invoice_email_attachment.
+	 *
+	 * @version 2.7.0
 	 */
 	function add_pdf_invoice_email_attachment( $attachments, $status, $order ) {
 		$invoice_types_ids = wcj_get_enabled_invoice_types_ids();
@@ -64,7 +66,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 			$send_on_statuses = get_option( 'wcj_invoicing_' . $invoice_type_id . '_attach_to_emails', array() );
 			if ( '' == $send_on_statuses ) $send_on_statuses = array();
 			if ( in_array( $status, $send_on_statuses ) ) {
-				$the_invoice = wcj_get_pdf_invoice( $order->id, $invoice_type_id );
+				$the_invoice = wcj_get_pdf_invoice( wcj_get_order_id( $order ), $invoice_type_id );
 				$file_name = $the_invoice->get_pdf( 'F' );
 				if ( '' != $file_name ) {
 					$attachments[] = $file_name;
