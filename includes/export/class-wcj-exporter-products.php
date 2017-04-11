@@ -34,7 +34,7 @@ class WCJ_Exporter_Products {
 	function get_variable_or_grouped_product_info( $_product, $which_info ) {
 		$all_variations_data = array();
 		foreach ( $_product->get_children() as $child_id ) {
-			$variation = $_product->get_child( $child_id );
+			$variation = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_child( $child_id ) : wc_get_product( $child_id ) );
 			switch ( $which_info ) {
 				case 'price':
 					$all_variations_data[] = ( '' === $variation->get_price() ) ? '-' : $variation->get_price();
@@ -161,13 +161,13 @@ class WCJ_Exporter_Products {
 								$row[] = wcj_get_product_image_url( $product_id, 'full' );
 								break;
 							case 'product-short-description':
-								$row[] = $_product->post->post_excerpt;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->post->post_excerpt : $_product->get_short_description() );
 								break;
 							case 'product-description':
-								$row[] = $_product->post->post_content;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->post->post_content : $_product->get_description() );
 								break;
 							case 'product-status':
-								$row[] = $_product->post->post_status;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->post->post_status : $_product->get_status() );
 								break;
 							case 'product-url':
 								$row[] = $_product->get_permalink();
@@ -191,13 +191,13 @@ class WCJ_Exporter_Products {
 								$row[] = $_product->get_weight();
 								break;
 							case 'product-downloadable':
-								$row[] = $_product->downloadable;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->downloadable : $_product->get_downloadable() );
 								break;
 							case 'product-virtual':
-								$row[] = $_product->virtual;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->virtual : $_product->get_virtual() );
 								break;
 							case 'product-sold-individually':
-								$row[] = $_product->sold_individually;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->sold_individually : $_product->get_sold_individually() );
 								break;
 							case 'product-tax-status':
 								$row[] = $_product->get_tax_status();
@@ -206,28 +206,28 @@ class WCJ_Exporter_Products {
 								$row[] = $_product->get_tax_class();
 								break;
 							case 'product-manage-stock':
-								$row[] = $_product->manage_stock;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->manage_stock : $_product->get_manage_stock() );
 								break;
 							case 'product-stock-status':
-								$row[] = $_product->stock_status;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->stock_status : $_product->get_stock_status() );
 								break;
 							case 'product-backorders':
-								$row[] = $_product->backorders;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->backorders : $_product->get_backorders() );
 								break;
 							case 'product-featured':
-								$row[] = $_product->featured;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->featured : $_product->get_featured() );
 								break;
 							case 'product-visibility':
-								$row[] = $_product->visibility;
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->visibility : $_product->get_catalog_visibility() );
 								break;
 							case 'product-price-including-tax':
-								$row[] = $_product->get_price_including_tax();
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_price_including_tax() : wc_get_price_including_tax( $_product ) );
 								break;
 							case 'product-price-excluding-tax':
-								$row[] = $_product->get_price_excluding_tax();
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_price_excluding_tax() : wc_get_price_excluding_tax( $_product ) );
 								break;
 							case 'product-display-price':
-								$row[] = $_product->get_display_price();
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_display_price() : wc_get_price_to_display( $_product ) );
 								break;
 							case 'product-average-rating':
 								$row[] = $_product->get_average_rating();
@@ -239,13 +239,13 @@ class WCJ_Exporter_Products {
 								$row[] = $_product->get_review_count();
 								break;
 							case 'product-categories':
-								$row[] = $_product->get_categories();
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_categories() : wc_get_product_category_list( $_product ) );
 								break;
 							case 'product-tags':
-								$row[] = $_product->get_tags();
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_tags() : wc_get_product_tag_list( $_product ) );
 								break;
 							case 'product-dimensions':
-								$row[] = $_product->get_dimensions();
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_dimensions() : wc_format_dimensions( $_product->get_dimensions( false ) ) );
 								break;
 							case 'product-formatted-name':
 								$row[] = $_product->get_formatted_name();
