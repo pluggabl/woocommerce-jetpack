@@ -19,7 +19,7 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.6.1
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'general';
 		$this->short_desc = __( 'General', 'woocommerce-jetpack' );
@@ -234,7 +234,7 @@ class WCJ_General extends WCJ_Module {
 	/*
 	 * get_products_atts.
 	 *
-	 * @version 2.3.9
+	 * @version 2.6.1
 	 * @since   2.3.9
 	 */
 	function get_products_atts() {
@@ -267,7 +267,7 @@ class WCJ_General extends WCJ_Module {
 				$the_product = wc_get_product( $product_id );
 
 				$products_attributes[ $product_id ]['wcj_title']    = '<a href="' . get_permalink( $product_id ) . '">' . $the_product->get_title() . '</a>';
-				$products_attributes[ $product_id ]['wcj_category'] = $the_product->get_categories();
+				$products_attributes[ $product_id ]['wcj_category'] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $the_product ) );
 
 				foreach ( $the_product->get_attributes() as $attribute ) {
 					$products_attributes[ $product_id ][ $attribute['name'] ] = $the_product->get_attribute( $attribute['name'] );
