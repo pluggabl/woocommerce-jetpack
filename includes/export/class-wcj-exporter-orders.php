@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exporter Orders class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  * @todo    filter export by date
@@ -29,7 +29,7 @@ class WCJ_Exporter_Orders {
 	/**
 	 * get_export_orders_row.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.1
 	 * @since   2.5.9
 	 */
 	function get_export_orders_row( $fields_ids, $order_id, $order, $items, $items_product_input_fields, $item, $item_id ) {
@@ -106,7 +106,7 @@ class WCJ_Exporter_Orders {
 					$row[] = $items_product_input_fields;
 					break;
 				case 'order-currency':
-					$row[] = $order->get_order_currency();
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->get_order_currency() : $order->get_currency() );
 					break;
 				case 'order-total':
 					$row[] = $order->get_total();
@@ -115,70 +115,70 @@ class WCJ_Exporter_Orders {
 					$row[] = $order->get_total_tax();
 					break;
 				case 'order-payment-method':
-					$row[] = $order->payment_method_title;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->payment_method_title : $order->get_payment_method_title() );
 					break;
 				case 'order-notes':
-					$row[] = $order->customer_note;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->customer_note : $order->get_customer_note() );
 					break;
 				case 'billing-first-name':
-					$row[] = $order->billing_first_name;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_first_name : $order->get_billing_first_name() );
 					break;
 				case 'billing-last-name':
-					$row[] = $order->billing_last_name;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_last_name : $order->get_billing_last_name() );
 					break;
 				case 'billing-company':
-					$row[] = $order->billing_company;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_company : $order->get_billing_company() );
 					break;
 				case 'billing-address-1':
-					$row[] = $order->billing_address_1;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_address_1 : $order->get_billing_address_1() );
 					break;
 				case 'billing-address-2':
-					$row[] = $order->billing_address_2;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_address_2 : $order->get_billing_address_2() );
 					break;
 				case 'billing-city':
-					$row[] = $order->billing_city;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_city : $order->get_billing_city() );
 					break;
 				case 'billing-state':
-					$row[] = $order->billing_state;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_state : $order->get_billing_state() );
 					break;
 				case 'billing-postcode':
-					$row[] = $order->billing_postcode;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_postcode : $order->get_billing_postcode() );
 					break;
 				case 'billing-country':
-					$row[] = $order->billing_country;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_country : $order->get_billing_country() );
 					break;
 				case 'billing-phone':
-					$row[] = $order->billing_phone;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_phone : $order->get_billing_phone() );
 					break;
 				case 'billing-email':
-					$row[] = $order->billing_email;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_email : $order->get_billing_email() );
 					break;
 				case 'shipping-first-name':
-					$row[] = $order->shipping_first_name;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->shipping_first_name : $order->get_shipping_first_name() );
 					break;
 				case 'shipping-last-name':
-					$row[] = $order->shipping_last_name;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->shipping_last_name : $order->get_shipping_last_name() );
 					break;
 				case 'shipping-company':
-					$row[] = $order->shipping_company;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->shipping_company : $order->get_shipping_company() );
 					break;
 				case 'shipping-address-1':
-					$row[] = $order->shipping_address_1;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->shipping_address_1 : $order->get_shipping_address_1() );
 					break;
 				case 'shipping-address-2':
-					$row[] = $order->shipping_address_2;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->shipping_address_2 : $order->get_shipping_address_2() );
 					break;
 				case 'shipping-city':
-					$row[] = $order->shipping_city;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->shipping_city : $order->get_shipping_city() );
 					break;
 				case 'shipping-state':
-					$row[] = $order->shipping_state;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->shipping_state : $order->get_shipping_state() );
 					break;
 				case 'shipping-postcode':
-					$row[] = $order->shipping_postcode;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->shipping_postcode : $order->get_shipping_postcode() );
 					break;
 				case 'shipping-country':
-					$row[] = $order->shipping_country;
+					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->shipping_country : $order->get_shipping_country() );
 					break;
 			}
 		}

@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 11/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Orders - Functions instead of accessing order properties directly for WC >= v3.0.0. `get_order_currency()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Customers from Orders - Functions instead of accessing order properties directly for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - `wcj_get_order_item_meta_info()` - `get_meta_data()` instead of `has_meta()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Products - `wcj_get_product_total_stock()`.
