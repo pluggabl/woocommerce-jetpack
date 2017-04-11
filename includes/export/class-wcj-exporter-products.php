@@ -239,10 +239,10 @@ class WCJ_Exporter_Products {
 								$row[] = $_product->get_review_count();
 								break;
 							case 'product-categories':
-								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_categories() : wc_get_product_category_list( $_product ) );
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_categories() : wc_get_product_category_list( $product_id ) );
 								break;
 							case 'product-tags':
-								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_tags() : wc_get_product_tag_list( $_product ) );
+								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_tags() : wc_get_product_tag_list( $product_id ) );
 								break;
 							case 'product-dimensions':
 								$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_dimensions() : wc_format_dimensions( $_product->get_dimensions( false ) ) );
