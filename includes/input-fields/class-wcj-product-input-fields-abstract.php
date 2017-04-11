@@ -302,7 +302,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * output_custom_input_fields_in_admin_order.
 	 *
-	 * @version 2.5.3
+	 * @version 2.7.0
 	 */
 	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
 		if ( null === $_product ) {
@@ -310,15 +310,16 @@ class WCJ_Product_Input_Fields_Abstract {
 			return;
 		}
 		echo '<table cellspacing="0" class="display_meta">';
-		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product->id, 1 ) );
+		$_product_id = wcj_get_product_id_or_variation_parent_id( $_product );
+		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
-			$the_nice_name = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $_product->id, '' );
+			$the_nice_name = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $_product_id, '' );
 			if ( '' == $the_nice_name ) $the_nice_name = __( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #' . $i;
 
 			$the_value = isset( $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] ) ? $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] : '';
 
-			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $_product->id, '' );
+			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $_product_id, '' );
 			if ( 'file' === $type ) {
 				/* $file_name = $the_value;
 				$upload_dir = wp_upload_dir();
@@ -341,93 +342,6 @@ class WCJ_Product_Input_Fields_Abstract {
 			}
 		}
 		echo '</table>';
-	}
-
-	/**
-	 * starts_with.
-	 *
-	function starts_with( $haystack, $needle ) {
-		// search backwards starting from haystack length characters from the end
-		//return ( '' === $needle ) || ( strpos( $haystack, $needle, strlen( $haystack ) ) !== false );
-		return $needle === substr( $haystack, 0, strlen( $needle ) );
-		//return substr( $haystack, 0, strlen( $needle ) );
-		//return strpos( $haystack, $needle ) !== false;
-	}
-
-	/**
-	 * change_woocommerce_attribute_label.
-	 *
-	function change_woocommerce_attribute_label( $label, $name ) {
-
-		if ( $this->starts_with( $label, '_wcj_product_input_fields_global_' ) ) {
-			$title_option_id = trim( $label, '_' );
-			$title_option_id = str_replace( 'wcj_product_input_fields_global_', 'wcj_product_input_fields_title_global_', $title_option_id );
-			//$the_nice_name = $this->get_value( $label, 0, '' );
-			$title = get_option( $title_option_id, '' );
-
-			$label = ( '' == $title ) ?
-				str_replace(
-					'_wcj_product_input_fields_' . $this->scope . '_',
-					__( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #',
-					$label ) :
-				$title;
-
-		} elseif ( $this->starts_with( $label, '_wcj_product_input_fields_local_' ) ) {
-
-			$title = '';//$label;
-
-			$label = ( '' == $title ) ?
-				str_replace(
-					'_wcj_product_input_fields_' . $this->scope . '_',
-					__( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #',
-					$label ) :
-				$title;
-		}
-
-		return $label;
-	}
-
-	/**
-	 * finish_making_nicer_name_for_product_input_fields.
-	 *
-	public function finish_making_nicer_name_for_product_input_fields( $item_id, $item, $_product ) {
-		$buffer = ob_get_clean();
-		$the_ugly_name = '_wcj_product_input_fields_' . $this->scope . '_';
-		$the_nice_name = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . '1', $_product->id, '' );
-		if ( '' == $the_nice_name ) $the_nice_name = __( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #';
-		$buffer = str_replace(
-			$the_ugly_name,
-			$the_nice_name,
-			$buffer
-		);
-		echo $buffer;
-	}
-
-	/**
-	 * make_nicer_name.
-	 *
-	public function make_nicer_name( $buffer ) {
-		$the_ugly_name = '_wcj_product_input_fields_' . $this->scope . '_';
-		$the_nice_name = () ? : __( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #';
-		return str_replace(
-			$the_ugly_name,
-			$the_nice_name,
-			$buffer
-		);
-	}
-
-	/**
-	 * start_making_nicer_name_for_product_input_fields.
-	 *
-	public function start_making_nicer_name_for_product_input_fields( $item_id, $item, $_product ) {
-		ob_start( array( $this, 'make_nicer_name' ) );
-	}
-
-	/**
-	 * finish_making_nicer_name_for_product_input_fields.
-	 *
-	public function finish_making_nicer_name_for_product_input_fields( $item_id, $item, $_product ) {
-		ob_end_flush();
 	}
 
 	/**
@@ -507,37 +421,38 @@ class WCJ_Product_Input_Fields_Abstract {
 	 */
 	function add_product_input_fields_to_frontend() {
 		global $product;
+		$_product_id = wcj_get_product_id_or_variation_parent_id( $product );
 		//if ( ! $product ) // return;
-		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product->id, 1 ) );
+		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product_id, 1 ) );
 
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
-			$type        = $this->get_value( 'wcj_product_input_fields_type_' .        $this->scope . '_' . $i, $product->id, 'text' );
-			$is_enabled  = $this->get_value( 'wcj_product_input_fields_enabled_' .     $this->scope . '_' . $i, $product->id, 'no' );
-			$is_required = $this->get_value( 'wcj_product_input_fields_required_' .    $this->scope . '_' . $i, $product->id, 'no' );
-			$title       = $this->get_value( 'wcj_product_input_fields_title_' .       $this->scope . '_' . $i, $product->id, '' );
-			$placeholder = $this->get_value( 'wcj_product_input_fields_placeholder_' . $this->scope . '_' . $i, $product->id, '' );
+			$type        = $this->get_value( 'wcj_product_input_fields_type_' .        $this->scope . '_' . $i, $_product_id, 'text' );
+			$is_enabled  = $this->get_value( 'wcj_product_input_fields_enabled_' .     $this->scope . '_' . $i, $_product_id, 'no' );
+			$is_required = $this->get_value( 'wcj_product_input_fields_required_' .    $this->scope . '_' . $i, $_product_id, 'no' );
+			$title       = $this->get_value( 'wcj_product_input_fields_title_' .       $this->scope . '_' . $i, $_product_id, '' );
+			$placeholder = $this->get_value( 'wcj_product_input_fields_placeholder_' . $this->scope . '_' . $i, $_product_id, '' );
 
-			$datepicker_format = $this->get_value( 'wcj_product_input_fields_type_datepicker_format_'  . $this->scope . '_' . $i, $product->id, '' );
+			$datepicker_format = $this->get_value( 'wcj_product_input_fields_type_datepicker_format_'  . $this->scope . '_' . $i, $_product_id, '' );
 			if ( '' == $datepicker_format ) {
 				$datepicker_format = get_option( 'date_format' );
 			}
 			$datepicker_format     = wcj_date_format_php_to_js_v2( $datepicker_format );
-			$datepicker_mindate    = $this->get_value( 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_' . $i, $product->id, -365 );
-			$datepicker_maxdate    = $this->get_value( 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_' . $i, $product->id, 365 );
-			$datepicker_firstday   = $this->get_value( 'wcj_product_input_fields_type_datepicker_firstday_' . $this->scope . '_' . $i, $product->id, 0 );
-			$datepicker_changeyear = $this->get_value( 'wcj_product_input_fields_type_datepicker_changeyear_' . $this->scope . '_' . $i, $product->id, 'no' );
-			$datepicker_yearrange  = $this->get_value( 'wcj_product_input_fields_type_datepicker_yearrange_' . $this->scope . '_' . $i, $product->id, 'c-10:c+10' );
+			$datepicker_mindate    = $this->get_value( 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_' . $i, $_product_id, -365 );
+			$datepicker_maxdate    = $this->get_value( 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_' . $i, $_product_id, 365 );
+			$datepicker_firstday   = $this->get_value( 'wcj_product_input_fields_type_datepicker_firstday_' . $this->scope . '_' . $i, $_product_id, 0 );
+			$datepicker_changeyear = $this->get_value( 'wcj_product_input_fields_type_datepicker_changeyear_' . $this->scope . '_' . $i, $_product_id, 'no' );
+			$datepicker_yearrange  = $this->get_value( 'wcj_product_input_fields_type_datepicker_yearrange_' . $this->scope . '_' . $i, $_product_id, 'c-10:c+10' );
 			if ( 'on' === $datepicker_changeyear || 'yes' === $datepicker_changeyear ) {
 				$datepicker_year = 'changeyear="1" yearRange="' . $datepicker_yearrange . '" ';
 			} else {
 				$datepicker_year = '';
 			}
 
-			$timepicker_format = $this->get_value( 'wcj_product_input_fields_type_timepicker_format_' . $this->scope . '_' . $i, $product->id, 'hh:mm p' );
-			$timepicker_interval = $this->get_value( 'wcj_product_input_fields_type_timepicker_interval_' . $this->scope . '_' . $i, $product->id, 15 );
-			$timepicker_mintime = $this->get_value( 'wcj_product_input_fields_type_timepicker_mintime_' . $this->scope . '_' . $i, $product->id, '' );
-			$timepicker_maxtime = $this->get_value( 'wcj_product_input_fields_type_timepicker_maxtime_' . $this->scope . '_' . $i, $product->id, '' );
+			$timepicker_format = $this->get_value( 'wcj_product_input_fields_type_timepicker_format_' . $this->scope . '_' . $i, $_product_id, 'hh:mm p' );
+			$timepicker_interval = $this->get_value( 'wcj_product_input_fields_type_timepicker_interval_' . $this->scope . '_' . $i, $_product_id, 15 );
+			$timepicker_mintime = $this->get_value( 'wcj_product_input_fields_type_timepicker_mintime_' . $this->scope . '_' . $i, $_product_id, '' );
+			$timepicker_maxtime = $this->get_value( 'wcj_product_input_fields_type_timepicker_maxtime_' . $this->scope . '_' . $i, $_product_id, '' );
 			if ( '' != $timepicker_mintime ) {
 				$timepicker_mintime = ' mintime="' . $timepicker_mintime . '"';
 			}
@@ -545,7 +460,7 @@ class WCJ_Product_Input_Fields_Abstract {
 				$timepicker_maxtime = ' maxtime="' . $timepicker_maxtime . '"';
 			}
 
-			$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $product->id, '' );
+			$file_accept = $this->get_value( 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_' . $i, $_product_id, '' );
 			$custom_attributes = ( 'file' === $type ) ? ' accept="' . $file_accept . '"' : '';
 			$field_name = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
 
@@ -569,7 +484,7 @@ class WCJ_Product_Input_Fields_Abstract {
 					case 'checkbox':
 
 						$checked = checked(
-							$this->get_value( 'wcj_product_input_fields_type_checkbox_default_' . $this->scope . '_' . $i, $product->id, 'no' ),
+							$this->get_value( 'wcj_product_input_fields_type_checkbox_default_' . $this->scope . '_' . $i, $_product_id, 'no' ),
 							'yes',
 							false
 						);
@@ -598,7 +513,7 @@ class WCJ_Product_Input_Fields_Abstract {
 
 					case 'select':
 
-						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $product->id, '' );
+						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $_product_id, '' );
 						$select_options = wcj_get_select_options( $select_options_raw, false );
 						if ( '' != $placeholder ) {
 							$select_options = array_merge( array( '' => $placeholder ), $select_options );
@@ -618,7 +533,7 @@ class WCJ_Product_Input_Fields_Abstract {
 
 					case 'radio':
 
-						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $product->id, '' );
+						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $_product_id, '' );
 						$select_options = wcj_get_select_options( $select_options_raw, false );
 						$select_options_html = '';
 						//$label_id = current( array_keys( $args['options'] ) );

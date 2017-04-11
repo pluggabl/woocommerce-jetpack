@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.0 - 11/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Input Fields - `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Cost Price - `get_prices_include_tax()`. `wcj_get_product_formatted_variation()`. `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - CART & CHECKOUT - Checkout Files Upload - `wcj_get_order_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - CART & CHECKOUT - Checkout Custom Fields - `wcj_get_order_id()`.
