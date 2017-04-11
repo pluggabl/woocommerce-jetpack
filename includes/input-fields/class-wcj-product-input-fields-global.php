@@ -19,7 +19,7 @@ class WCJ_Product_Input_Fields_Global extends WCJ_Product_Input_Fields_Abstract 
 	 *
 	 * @version 2.5.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->scope = 'global';
 
@@ -62,47 +62,9 @@ class WCJ_Product_Input_Fields_Global extends WCJ_Product_Input_Fields_Abstract 
 	}
 
 	/**
-	 * replace_loop_add_to_cart_button.
-	 *
-	public function replace_loop_add_to_cart_button( $button, $product ) {
-		$html .= '<form class="cart" method="post" enctype=\'multipart/form-data\'>';
-		$html .= '<input type="hidden" name="add-to-cart" value="' . esc_attr( $product->id ) . '" />';
-		$html .= '<button type="submit" class="button add_to_cart_button product_type_simple">' . $product->single_add_to_cart_text() . '</button>';
-		$html .= $button;
-		$html .= '</form>';
-		return $html;
-	}
-
-	/**
-	 * ajax_add_to_cart.
-	 *
-	public function ajax_add_to_cart() {
-
-		$message = date( 'l jS \of F Y h:i:s A' ) . ' ' . print_r( $_POST, true );
-		update_option( 'wcj_log', $message );
-
-
-		// check if logo_text has been defined by the client
-		//if ( isset( $_POST['logo_text'] ) ) {
-			// do something
-		//}
-	}
-
-	/**
-	 * init.
-	 *
-	public function init() {
-
-		print_r( get_option( 'wcj_log', 'N/A' ) );
-
-		//remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 ); // remove that ajaxified Add To Cart button that automatically adds 1 item to the cart.
-		//add_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_single_add_to_cart', 30 ); // replace it with the Add To Cart Button, complete with QTY field.. the same one that is used on the Single Product page.
-	}
-
-	/**
 	 * get_value.
 	 */
-	public function get_value( $option_name, $product_id, $default ) {
+	function get_value( $option_name, $product_id, $default ) {
 		return get_option( $option_name, $default );
 	}
 
