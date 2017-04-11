@@ -715,7 +715,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$min_product = wc_get_product( $min_key );
 				$max_product = wc_get_product( $max_key );
 				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-				if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+				if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 					$get_price_method = 'wc_' . $get_price_method;
 				}
 				$min = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $min_product->$get_price_method() : $get_price_method( $min_product );
@@ -741,7 +741,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			} else {
 				// Simple etc.
 				$get_price_method = 'get_price_' . get_option( 'woocommerce_tax_display_shop' ) . 'uding_tax';
-				if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+				if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 					$get_price_method = 'wc_' . $get_price_method;
 				}
 				$the_price = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $this->the_product->$get_price_method() : $get_price_method( $this->the_product );

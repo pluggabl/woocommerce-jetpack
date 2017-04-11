@@ -41,7 +41,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			add_action( 'woocommerce_cart_loaded_from_session', array( $this, 'cart_loaded_from_session' ), PHP_INT_MAX, 1 );
 			add_action( 'woocommerce_before_calculate_totals',  array( $this, 'calculate_totals' ), PHP_INT_MAX, 1 );
 			add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,           array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
-			if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+			if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 				add_filter( 'woocommerce_product_variation_get_price', array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
 			}
 

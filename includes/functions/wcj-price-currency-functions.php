@@ -28,7 +28,7 @@ if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 		add_filter( 'woocommerce_variation_prices_regular_price',          array( $module_object, 'change_price' ),              $priority, 2 );
 		add_filter( 'woocommerce_variation_prices_sale_price',             array( $module_object, 'change_price' ),              $priority, 2 );
 		add_filter( 'woocommerce_get_variation_prices_hash',               array( $module_object, 'get_variation_prices_hash' ), $priority, 3 );
-		if ( version_compare( WCJ_WC_VERSION, '3.0.0', '>=' ) ) {
+		if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 			add_filter( 'woocommerce_product_variation_get_price',         array( $module_object, 'change_price' ),              $priority, 2 );
 			add_filter( 'woocommerce_product_variation_get_regular_price', array( $module_object, 'change_price' ),              $priority, 2 );
 			add_filter( 'woocommerce_product_variation_get_sale_price',    array( $module_object, 'change_price' ),              $priority, 2 );
