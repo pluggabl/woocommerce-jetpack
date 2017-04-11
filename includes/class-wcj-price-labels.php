@@ -294,7 +294,11 @@ class WCJ_Price_Labels extends WCJ_Module {
 
 		if ( WCJ_IS_WC_VERSION_BELOW_3 && 'woocommerce_get_price_html' === $current_filter_name && ! in_array( $_product_type, apply_filters( 'wcj_price_labels_woocommerce_get_price_html_allowed_post_types', array( 'booking' ), $_product_type ) ) ) {
 			return $price;
-		} //  TODO: WC 3.0.0
+		}
+
+		if ( ! WCJ_IS_WC_VERSION_BELOW_3 && 'woocommerce_variable_price_html' === $current_filter_name ) {
+			return $price;
+		}
 
 		if ( 'subscription' === $_product_type && 'woocommerce_subscriptions_product_price_string' !== $current_filter_name ) {
 			return $price;

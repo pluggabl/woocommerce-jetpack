@@ -608,6 +608,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'product_tabs',
 						'product_input_fields',      // didn't test "file" type etc. // check Product duplicate issue
 						'product_images',            // "Image on Single" (both "Hide" and "Replace" not working; when hiding thumbnails, image is also hidden
+						'price_labels',              // probably needs more testing
 					);
 					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
 						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;margin-right: 5px;padding-left: 5px;">&#9745; </span>' : '' );

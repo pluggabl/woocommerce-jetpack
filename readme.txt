@@ -204,7 +204,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Currency for External Products - `product_type` property replaced with `is_type()` function.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_price` filters replaced for WC >= v3.0.0. Get product ID replaced with `get_id()` for WC >= v3.0.0. `wc_get_formatted_variation()` used for WC >= v3.0.0.
 ~!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_get_product_id_or_variation_parent_id()`; `wcj_get_product_id()`; `product_type` -> `get_type()` for WC >= v3.0.0.
--!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.
+~!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.
 -!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_categories]` - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
 
 	* Dev - SHIPPING & ORDERS - Shipping - Code refactoring - `add_settings_hook()`.
