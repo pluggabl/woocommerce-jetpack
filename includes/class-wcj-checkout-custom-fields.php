@@ -249,7 +249,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
 				if ( 'shipping' === $the_section ) {
 					$option_name = $the_section . '_' . 'wcj_checkout_field_' . $i;
-					$fields[ $option_name ] = get_post_meta( $order->id, '_' . $option_name, true );
+					$fields[ $option_name ] = get_post_meta( wcj_get_order_id( $order ), '_' . $option_name, true );
 				}
 			//}
 		}
@@ -296,11 +296,11 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 2.5.0
+	 * @version 2.7.0
 	 * @since   2.3.0
 	 */
 	function add_custom_fields_to_order_display( $order, $section = '', $add_styling = false ) {
-		$post_meta = get_post_meta( $order->id );
+		$post_meta = get_post_meta( wcj_get_order_id( $order ) );
 		$final_output = '';
 		foreach( $post_meta as $key => $values ) {
 

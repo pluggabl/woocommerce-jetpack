@@ -583,6 +583,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'sorting',
 						'eu_vat_number',
 						'shipping',
+						'checkout_custom_fields',
 					);
 					$alsmost_wc_3_compatible_modules = array(
 						'payment_gateways_currency', // works, but I don't understand previous shipping issue..
