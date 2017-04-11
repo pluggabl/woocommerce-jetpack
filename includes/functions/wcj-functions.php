@@ -103,6 +103,18 @@ if ( ! function_exists( 'wcj_get_order_id' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_order_currency' ) ) {
+	/**
+	 * wcj_get_order_currency.
+	 *
+	 * @version 2.7.0
+	 * @since   2.7.0
+	 */
+	function wcj_get_order_currency( $_order ) {
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->get_order_currency() : $_order->get_currency() );
+	}
+}
+
 if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	/**
 	 * wcj_get_order_item_meta_info.
