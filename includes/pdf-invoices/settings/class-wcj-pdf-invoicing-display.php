@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoicing Display class.
  *
- * @version 2.5.8
+ * @version 2.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -125,16 +125,16 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * add_pdf_invoices_admin_actions.
 	 *
-	 * @version 2.5.2
+	 * @version 2.7.0
 	 * @since   2.4.7
 	 */
 	function add_pdf_invoices_admin_actions( $actions, $the_order ) {
 		$invoice_types = wcj_get_enabled_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
-			if ( wcj_is_invoice_created( $the_order->id, $invoice_type['id'] ) ) {
+			if ( wcj_is_invoice_created( wcj_get_order_id( $the_order ), $invoice_type['id'] ) ) {
 				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_view_btn', 'no' ) ) {
 					// Document (View) button
-					$query_args = array( 'order_id' => $the_order->id, 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
+					$query_args = array( 'order_id' => wcj_get_order_id( $the_order ), 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
 					if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
 						$query_args['save_pdf_invoice'] = '1';
 					}
@@ -146,7 +146,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				}
 				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn', 'yes' ) ) {
 					// Delete button
-					$query_args = array( 'delete_invoice_for_order_id' => $the_order->id, 'invoice_type_id' => $invoice_type['id'] );
+					$query_args = array( 'delete_invoice_for_order_id' => wcj_get_order_id( $the_order ), 'invoice_type_id' => $invoice_type['id'] );
 					$the_url       = add_query_arg( $query_args, remove_query_arg( 'create_invoice_for_order_id' ) );
 					$the_name      = __( 'Delete', 'woocommerce-jetpack' ) . ' ' . $invoice_type['title'];
 					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'delete' . ( ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn_confirm', 'yes' ) ) ? ' wcj_need_confirmation' : '' );
@@ -156,7 +156,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			} else {
 				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn', 'yes' ) ) {
 					// Create button
-					$query_args = array( 'create_invoice_for_order_id' => $the_order->id, 'invoice_type_id' => $invoice_type['id'] );
+					$query_args = array( 'create_invoice_for_order_id' => wcj_get_order_id( $the_order ), 'invoice_type_id' => $invoice_type['id'] );
 					$the_url       = add_query_arg( $query_args, remove_query_arg( 'delete_invoice_for_order_id' ) );
 					$the_name      = __( 'Create', 'woocommerce-jetpack' ) . ' ' . $invoice_type['title'];
 					$the_action    = 'view ' . $invoice_type['id'] . '_' . 'create' . ( ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn_confirm', 'yes' ) ) ? ' wcj_need_confirmation' : '' );
@@ -240,19 +240,19 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * add_pdf_invoices_action_links.
 	 *
-	 * @version 2.3.7
+	 * @version 2.7.0
 	 */
 	function add_pdf_invoices_action_links( $actions, $the_order ) {
 		$invoice_types = wcj_get_enabled_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
-			if ( ! wcj_is_invoice_created( $the_order->id, $invoice_type['id'] ) )
+			if ( ! wcj_is_invoice_created( wcj_get_order_id( $the_order ), $invoice_type['id'] ) )
 				continue;
 			$my_account_option_name = 'wcj_invoicing_' . $invoice_type['id'] . '_enabled_for_customers';
 			if ( 'yes' === get_option( $my_account_option_name, 'no' ) ) {
 
 				$the_action_id = $invoice_type['id'];
 
-				$query_args = array( 'order_id' => $the_order->id, 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
+				$query_args = array( 'order_id' => wcj_get_order_id( $the_order ), 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
 				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
 					$query_args['save_pdf_invoice'] = '1';
 				}
