@@ -22,25 +22,8 @@ if (
 	! ( is_multisite() && array_key_exists( $plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
 ) return;
 
-if ( ! defined( 'WCJ_WC_VERSION' ) ) {
-	define( 'WCJ_WC_VERSION', get_option( 'woocommerce_version', null ) );
-}
-if ( ! defined( 'WCJ_IS_WC_VERSION_BELOW_3' ) ) {
-	define( 'WCJ_IS_WC_VERSION_BELOW_3', version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) );
-}
-
-if ( ! defined( 'WCJ_PRODUCT_GET_PRICE_FILTER' ) ) {
-	$filter = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? 'woocommerce_get_price' : 'woocommerce_product_get_price';
-	define( 'WCJ_PRODUCT_GET_PRICE_FILTER', $filter );
-}
-if ( ! defined( 'WCJ_PRODUCT_GET_SALE_PRICE_FILTER' ) ) {
-	$filter = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? 'woocommerce_get_sale_price' : 'woocommerce_product_get_sale_price';
-	define( 'WCJ_PRODUCT_GET_SALE_PRICE_FILTER', $filter );
-}
-if ( ! defined( 'WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER' ) ) {
-	$filter = ( version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) ) ? 'woocommerce_get_regular_price' : 'woocommerce_product_get_regular_price';
-	define( 'WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER', $filter );
-}
+// Constants
+require_once( 'includes/constants/wcj-constants.php' );
 
 if ( ! class_exists( 'WC_Jetpack' ) ) :
 
@@ -59,7 +42,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.7.0-dev-201704111727';
+	public $version = '2.7.0-dev-201704111732';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
