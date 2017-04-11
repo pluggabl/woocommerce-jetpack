@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Exporter Customers class.
  *
- * @version 2.5.9
+ * @version 2.6.1
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -89,7 +89,7 @@ class WCJ_Exporter_Customers {
 	/**
 	 * export_customers_from_orders.
 	 *
-	 * @version 2.5.9
+	 * @version 2.6.1
 	 * @since   2.4.8
 	 * @todo    (maybe) add more order fields (shipping)
 	 */
@@ -126,9 +126,10 @@ class WCJ_Exporter_Customers {
 			}
 			foreach ( $loop_orders->posts as $order_id ) {
 				$order = wc_get_order( $order_id );
-				if ( isset( $order->billing_email ) && '' != $order->billing_email && ! in_array( $order->billing_email, $orders ) ) {
+				$_billing_email = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_email : $order->get_billing_email() );
+				if ( isset( $_billing_email ) && '' != $_billing_email && ! in_array( $_billing_email, $orders ) ) {
 					$emails_to_skip = array(); // `emails_to_skip` is not really used...
-					if ( ! in_array( $order->billing_email, $emails_to_skip ) ) {
+					if ( ! in_array( $_billing_email, $emails_to_skip ) ) {
 						$total_customers++;
 						$row = array();
 						foreach( $fields_ids as $field_id ) {
@@ -137,37 +138,37 @@ class WCJ_Exporter_Customers {
 									$row[] = $total_customers;
 									break;
 								case 'customer-billing-email':
-									$row[] = $order->billing_email;
+									$row[] = $_billing_email;
 									break;
 								case 'customer-billing-first-name':
-									$row[] = $order->billing_first_name;
+									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_first_name : $order->get_billing_first_name() );
 									break;
 								case 'customer-billing-last-name':
-									$row[] = $order->billing_last_name;
+									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_last_name : $order->get_billing_last_name() );
 									break;
 								case 'customer-billing-company':
-									$row[] = $order->billing_company;
+									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_company : $order->get_billing_company() );
 									break;
 								case 'customer-billing-address-1':
-									$row[] = $order->billing_address_1;
+									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_address_1 : $order->get_billing_address_1() );
 									break;
 								case 'customer-billing-address-2':
-									$row[] = $order->billing_address_2;
+									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_address_2 : $order->get_billing_address_2() );
 									break;
 								case 'customer-billing-city':
-									$row[] = $order->billing_city;
+									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_city : $order->get_billing_city() );
 									break;
 								case 'customer-billing-state':
-									$row[] = $order->billing_state;
+									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_state : $order->get_billing_state() );
 									break;
 								case 'customer-billing-postcode':
-									$row[] = $order->billing_postcode;
+									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_postcode : $order->get_billing_postcode() );
 									break;
 								case 'customer-billing-country':
-									$row[] = $order->billing_country;
+									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_country : $order->get_billing_country() );
 									break;
 								case 'customer-billing-phone':
-									$row[] = $order->billing_phone;
+									$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_phone : $order->get_billing_phone() );
 									break;
 								case 'customer-last-order-date':
 									$row[] = get_the_date( get_option( 'date_format' ), $order_id );
@@ -175,7 +176,7 @@ class WCJ_Exporter_Customers {
 							}
 						}
 						$data[] = $row;
-						$orders[] = $order->billing_email;
+						$orders[] = $_billing_email;
 					}
 				}
 			}
