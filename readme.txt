@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.0 - 11/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Orders - `get_customer_id()`. `wcj_get_order_currency()`. `wcj_get_order_id()`. `get_customer_note()`. `get_billing_phone()`. `wc_get_order_item_meta()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PDF INVOICING & PACKING SLIPS - Display & Misc. - `wcj_get_order_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PDF INVOICING & PACKING SLIPS - `get_billing_country()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - General - Products Attributes - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.

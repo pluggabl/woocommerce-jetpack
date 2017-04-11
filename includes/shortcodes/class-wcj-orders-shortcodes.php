@@ -83,29 +83,31 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.6.0
+	 * @version 2.7.0
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
-			'order_id'      => 0,
-			'hide_currency' => 'no',
-			'excl_tax'      => 'no',
-			'date_format'   => get_option( 'date_format' ),
-			'time_format'   => get_option( 'time_format' ),
-			'hide_if_zero'  => 'no',
-			'field_id'      => '',
-			'name'          => '',
-			'round_by_line' => 'no',
-			'whole'         => __( 'Dollars', 'woocommerce-jetpack' ),
-			'decimal'       => __( 'Cents', 'woocommerce-jetpack' ),
-			'precision'     => get_option( 'woocommerce_price_num_decimals', 2 ),
-			'lang'          => 'EN',
-			'unique_only'   => 'no',
-			'function_name' => '',
-			'sep'           => ', ',
-			'item_number'   => 'all',
-			'field'         => 'name',
-			'order_user_roles' => '',
+			'order_id'            => 0,
+			'hide_currency'       => 'no',
+			'excl_tax'            => 'no',
+			'date_format'         => get_option( 'date_format' ),
+			'time_format'         => get_option( 'time_format' ),
+			'hide_if_zero'        => 'no',
+			'field_id'            => '',
+			'name'                => '',
+			'round_by_line'       => 'no',
+			'whole'               => __( 'Dollars', 'woocommerce-jetpack' ),
+			'decimal'             => __( 'Cents', 'woocommerce-jetpack' ),
+			'precision'           => get_option( 'woocommerce_price_num_decimals', 2 ),
+			'lang'                => 'EN',
+			'unique_only'         => 'no',
+			'function_name'       => '',
+			'sep'                 => ', ',
+			'item_number'         => 'all',
+			'field'               => 'name',
+			'order_user_roles'    => '',
+			'meta_key'            => '',
+			'tax_class'           => '',
 		), $atts );
 
 		return $modified_atts;
@@ -134,12 +136,12 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * extra_check.
 	 *
-	 * @version 2.6.0
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
 	function extra_check( $atts ) {
 		if ( '' != $atts['order_user_roles'] ) {
-			$user_info = get_userdata( $this->the_order->customer_user );
+			$user_info = get_userdata( ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() ) );
 			$user_roles = $user_info->roles;
 			$user_roles_to_check = explode( ',', $atts['order_user_roles'] );
 			foreach ( $user_roles_to_check as $user_role_to_check ) {
@@ -154,30 +156,32 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_price_shortcode.
+	 *
+	 * @version 2.7.0
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
-		return ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) ? '' : wcj_price( $raw_price, $this->the_order->get_order_currency(), $atts['hide_currency'] );
+		return ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) ? '' : wcj_price( $raw_price, wcj_get_order_currency( $this->the_order ), $atts['hide_currency'] );
 	}
 
 	/**
 	 * wcj_order_customer_user_roles.
 	 *
-	 * @version 2.6.0
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
 	function wcj_order_customer_user_roles( $atts ) {
-		$user_info = get_userdata( $this->the_order->customer_user );
+		$user_info = get_userdata( ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() ) );
 		return implode( ', ', $user_info->roles );
 	}
 
 	/**
 	 * wcj_order_customer_user.
 	 *
-	 * @version 2.6.0
+	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
 	function wcj_order_customer_user( $atts ) {
-		return $this->the_order->customer_user;
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() );
 	}
 
 	/**
@@ -318,10 +322,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_payment_method.
+	 *
+	 * @version 2.7.0
 	 */
 	function wcj_order_payment_method( $atts ) {
-		//return $this->the_order->payment_method_title;
-		return get_post_meta( $this->the_order->id, '_payment_method_title', true );
+		return get_post_meta( wcj_get_order_id( $this->the_order ), '_payment_method_title', true );
 	}
 
 	/**
@@ -437,16 +442,20 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_customer_note.
+	 *
+	 * @version 2.7.0
 	 */
 	function wcj_order_customer_note( $atts ) {
-		return $this->the_order->customer_note;
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_note : $this->the_order->get_customer_note() );
 	}
 
 	/**
 	 * wcj_order_billing_phone.
+	 *
+	 * @version 2.7.0
 	 */
 	function wcj_order_billing_phone( $atts ) {
-		return $this->the_order->billing_phone;
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->billing_phone : $this->the_order->get_billing_phone() );
 	}
 
 	/**
@@ -494,14 +503,17 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_meta.
 	 *
-	 * @version 2.5.5
+	 * @version 2.7.0
 	 * @since   2.5.3
 	 */
 	function wcj_order_items_meta( $atts ) {
+		if ( '' === $atts['meta_key'] ) {
+			return '';
+		}
 		$items_metas = array();
 		$the_items = $this->the_order->get_items();
 		foreach ( $the_items as $item_id => $item ) {
-			$the_meta = $this->the_order->get_item_meta( $item_id, $atts['meta_key'], true );
+			$the_meta = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->get_item_meta( $item_id, $atts['meta_key'], true ) : wc_get_order_item_meta( $item_id, $atts['meta_key'], true ) );
 			if ( '' != $the_meta ) {
 				$items_metas[] = $the_meta;
 			}
@@ -520,11 +532,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_meta.
 	 *
-	 * @version 2.2.9
+	 * @version 2.7.0
 	 * @since   2.2.9
 	 */
 	function wcj_order_meta( $atts ) {
-		return get_post_meta( $this->the_order->id, $atts['meta_key'], true );
+		return ( '' != $atts['meta_key'] ? get_post_meta( wcj_get_order_id( $this->the_order ), $atts['meta_key'], true ) : '' );
 	}
 
 	/**
@@ -833,9 +845,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_currency.
+	 *
+	 * @version 2.7.0
 	 */
 	function wcj_order_currency( $atts ) {
-		return $this->the_order->get_order_currency();
+		return wcj_get_order_currency( $this->the_order );
 	}
 
 	/**
