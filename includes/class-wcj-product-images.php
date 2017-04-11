@@ -18,7 +18,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.7.0
 	 */
 	function __construct() {
 
@@ -48,7 +48,7 @@ class WCJ_Product_Images extends WCJ_Module {
 				add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'hide_per_product_image_on_archives_end' ), PHP_INT_MAX );
 
 				// Single Product Thumbnails Columns Number
-				add_filter( 'woocommerce_product_thumbnails_columns', array( $this, 'change_product_thumbnails_columns_number' ) );
+				add_filter( 'woocommerce_product_thumbnails_columns', array( $this, 'change_product_thumbnails_columns_number' ), PHP_INT_MAX );
 
 				// Per product options
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );

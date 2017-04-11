@@ -607,6 +607,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'emails',                    // module seems to be working fine, but there is some issue with default WC emails (new order, completed etc.)
 						'product_tabs',
 						'product_input_fields',      // didn't test "file" type etc. // check Product duplicate issue
+						'product_images',            // "Image on Single" (both "Hide" and "Replace" not working; when hiding thumbnails, image is also hidden
 					);
 					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
 						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;margin-right: 5px;padding-left: 5px;">&#9745; </span>' : '' );
