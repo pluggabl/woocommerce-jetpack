@@ -312,7 +312,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_product_price_including_or_excluding_tax.
 	 *
-	 * @version 2.5.7
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function get_product_price_including_or_excluding_tax( $atts, $including_or_excluding ) {
@@ -326,11 +326,11 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$min_variation_product = wc_get_product( $min_product_id );
 				$max_variation_product = wc_get_product( $max_product_id );
 				if ( 'including' === $including_or_excluding ) {
-					$min = $min_variation_product->get_price_including_tax();
-					$max = $max_variation_product->get_price_including_tax();
+					$min = ( WCJ_IS_WC_VERSION_BELOW_3 ? $min_variation_product->get_price_including_tax() : wc_get_price_including_tax( $min_variation_product ) );
+					$max = ( WCJ_IS_WC_VERSION_BELOW_3 ? $max_variation_product->get_price_including_tax() : wc_get_price_including_tax( $max_variation_product ) );
 				} else { // 'excluding'
-					$min = $min_variation_product->get_price_excluding_tax();
-					$max = $max_variation_product->get_price_excluding_tax();
+					$min = ( WCJ_IS_WC_VERSION_BELOW_3 ? $min_variation_product->get_price_excluding_tax() : wc_get_price_excluding_tax( $min_variation_product ) );
+					$max = ( WCJ_IS_WC_VERSION_BELOW_3 ? $max_variation_product->get_price_excluding_tax() : wc_get_price_excluding_tax( $max_variation_product ) );
 				}
 				if ( 0 != $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
 					$min = $min * $atts['multiply_by'];
@@ -345,9 +345,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		} else {
 			 // Simple etc.
 			if ( 'including' === $including_or_excluding ) {
-				$the_price = $this->the_product->get_price_including_tax();
+				$the_price = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_product->get_price_including_tax() : wc_get_price_including_tax( $this->the_product ) );
 			} else { // 'excluding'
-				$the_price = $this->the_product->get_price_excluding_tax();
+				$the_price = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_product->get_price_excluding_tax() : wc_get_price_excluding_tax( $this->the_product ) );
 			}
 			if ( 0 != $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
 				$the_price = $the_price * $atts['multiply_by'];
@@ -397,13 +397,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_list_attributes.
 	 *
-	 * @version 2.5.4
+	 * @version 2.7.0
 	 * @since   2.4.0
 	 */
 	function wcj_product_list_attributes( $atts ) {
 		if ( $this->the_product->has_attributes() ) {
 			ob_start();
-			$this->the_product->list_attributes();
+			if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+				$this->the_product->list_attributes();
+			} else {
+				wc_display_product_attributes( $this->the_product );
+			}
 			return ob_get_clean();
 		}
 		return '';
@@ -530,12 +534,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_tags.
 	 *
-	 * @return string
+	 * @version 2.7.0
+	 * @return  string
 	 */
 	function wcj_product_tags( $atts ) {
 
 		if ( 'yes' === $atts['add_links'] ) {
-			return $this->the_product->get_tags( $atts['sep'] );
+			return ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_product->get_tags( $atts['sep'] ) : wc_get_product_tag_list( $atts['product_id'], $atts['sep'] ) );
 		}
 
 		$product_tags = get_the_terms( $atts['product_id'], 'product_tag' );
@@ -594,11 +599,14 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Get product meta.
 	 *
-	 * @version 2.5.7
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 * @return  string
 	 */
 	function wcj_product_meta( $atts ) {
+		if ( '' == $atts['name'] ) {
+			return '';
+		}
 		return get_post_meta( $atts['product_id'], $atts['name'], true );
 	}
 
@@ -806,12 +814,12 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Get product short description.
 	 *
-	 * @version 2.5.7
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 * @return  string
 	 */
 	function wcj_product_short_description( $atts ) {
-		$short_description = $this->the_product->post->post_excerpt;
+		$short_description = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_product->post->post_excerpt : $this->the_product->get_short_description() );
 		if ( 'yes' === $atts['apply_filters'] ) {
 			apply_filters( 'woocommerce_short_description', $short_description );
 		}
@@ -907,7 +915,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.7.0
 	 */
 	function wcj_product_gallery_image_url( $atts ) {
-		$attachment_ids = $this->the_product->get_gallery_attachment_ids();
+		$attachment_ids = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_product->get_gallery_attachment_ids() : $this->the_product->get_gallery_image_ids() );
 		if ( $attachment_ids && isset( $attachment_ids[ ( $atts['image_nr'] - 1 ) ] ) ) {
 			$props = wc_get_product_attachment_props( $attachment_ids[ ( $atts['image_nr'] - 1 ) ] );
 			if ( isset( $props['url'] ) ) {
