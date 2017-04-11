@@ -231,7 +231,7 @@ class WCJ_Orders extends WCJ_Module {
 		$options = array(
 			array(
 				'name'       => ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ? 'wcj_order_currency' : 'order_currency' ),
-				'default'    => ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->get_order_currency() : $_order->get_currency() ),
+				'default'    => wcj_get_order_currency( $_order ),
 				'type'       => 'select',
 				'options'    => wcj_get_currencies_names_and_symbols( 'names' ),
 				'title'      => __( 'Order Currency', 'woocommerce-jetpack' ),

@@ -106,7 +106,7 @@ class WCJ_Exporter_Orders {
 					$row[] = $items_product_input_fields;
 					break;
 				case 'order-currency':
-					$row[] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->get_order_currency() : $order->get_currency() );
+					$row[] = wcj_get_order_currency( $order );
 					break;
 				case 'order-total':
 					$row[] = $order->get_total();

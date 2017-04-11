@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoices Report Tool class.
  *
- * @version 2.5.7
+ * @version 2.7.0
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -243,7 +243,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Invoices Report Data function.
 	 *
-	 * @version 2.5.7
+	 * @version 2.7.0
 	 * @since   2.5.7
 	 */
 	function get_invoices_report_data( $year, $month, $invoice_type_id ) {
@@ -335,7 +335,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 						sprintf( '%.2f', $order_total_exlc_tax ),
 						$order_tax_html,
 						sprintf( '%.2f', $order_total ),
-						$the_order->get_order_currency(),
+						wcj_get_order_currency( $the_order ),
 						$the_order->get_total_refunded(),
 						//'<pre>' . print_r( get_post_meta( $order_id ), true ) . '</pre>',
 					);

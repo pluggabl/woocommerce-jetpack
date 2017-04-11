@@ -198,7 +198,7 @@ class WCJ_Reports_Monthly_Sales {
 				while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
 					$order_id = $loop_orders->post->ID;
 					$order = new WC_Order( $order_id );
-					$order_currency = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->get_order_currency() : $order->get_currency() );
+					$order_currency = wcj_get_order_currency( $order );
 					if ( ! isset( $order_currencies_array[ $order_currency ] ) ) {
 						$order_currencies_array[ $order_currency ] = 0;
 					}

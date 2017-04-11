@@ -159,7 +159,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - General - Products Attributes - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - CART & CHECKOUT - EU VAT Number - `get_customer_ip_address()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Products - Functions instead of accessing order properties directly for WC >= v3.0.0. `wc_get_price_to_display()` and more.
-~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Orders - Functions instead of accessing order properties directly for WC >= v3.0.0. `get_order_currency()`.
+~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Orders - Functions instead of accessing order properties directly for WC >= v3.0.0. `wcj_get_order_currency()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Customers from Orders - Functions instead of accessing order properties directly for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - `wcj_get_order_item_meta_info()` - `get_meta_data()` instead of `has_meta()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Products - `wcj_get_product_total_stock()`.
@@ -169,7 +169,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Crowdfunding - `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" (removed from `woocommerce_product_subcategories_args` hook).
 ~!	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - SKU - `get_child()`.
-~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Orders - Monthly Sales - `get_order_currency()`.
+~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Orders - Monthly Sales - `wcj_get_order_currency()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Stock - `wcj_get_product_total_stock()`. `wc_get_product_category_list()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Reports - Custom Ranges - `wp_create_nonce` added.
 -!	* Dev - WooCommerce v3.0.0 compatibility - PRICES & CURRENCIES - Currency per Product - `WCJ_PRODUCT_GET_PRICE_FILTER`.
@@ -191,7 +191,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - WooCommerce v3.0.0 compatibility - Button & Price Labels - Call for Price - `woocommerce_get_price` -> `woocommerce_product_get_price` for WC >= v3.0.0.
 ~!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Add to Cart Labels - `wcj_get_product_id_or_variation_parent_id()`; `product_type` -> `get_type()` for WC >= v3.0.0.
 -!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Free Price Labels - `wcj_get_product_id_or_variation_parent_id()`; "free price" filters;
-~!	* Dev - WooCommerce v3.0.0 compatibility - SHIPPING & ORDERS - Orders - Order ID replaced with `get_id()`; `woocommerce_get_order_currency` -> `woocommerce_order_get_currency`; `get_order_currency()` -> `get_currency()`; `billing_country` -> `get_billing_country()` for WC >= v3.0.0.
+~!	* Dev - WooCommerce v3.0.0 compatibility - SHIPPING & ORDERS - Orders - Order ID replaced with `get_id()`; `woocommerce_get_order_currency` -> `woocommerce_order_get_currency`; `wcj_get_order_currency()`; `billing_country` -> `get_billing_country()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Orders - `[wcj_order_date]` and `[wcj_order_time]` - `get_date_created()` for WC >= v3.0.0.
 ~!	* Dev - WooCommerce v3.0.0 compatibility - SHIPPING & ORDERS - Order Numbers - Order ID replaced with `get_id()`; order date replaced with `get_date_created()` for WC >= v3.0.0.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Admin Tools - Order Meta - Additional check if `$item_meta_value` is array added.

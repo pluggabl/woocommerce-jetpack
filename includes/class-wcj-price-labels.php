@@ -465,7 +465,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 			}
 		}
 
-//		return do_shortcode( $price . $current_filter_name . $product->product_type . $labels_array['variation_variable'] . $labels_array['variation_variation'] );
+//		return do_shortcode( $price . $current_filter_name . ( WCJ_IS_WC_VERSION_BELOW_3 ? $product->product_type : $product->get_type() ) . $labels_array['variation_variable'] . $labels_array['variation_variation'] );
 		global $wcj_product_id_for_shortcode;
 		$wcj_product_id_for_shortcode = wcj_get_product_id( $product );
 		$result = do_shortcode( $price );
