@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack EU VAT Number class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -96,17 +96,18 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 * @since   2.6.0
 	 */
 	function create_meta_box() {
 		$order_id = get_the_ID();
 		$_order = wc_get_order( $order_id );
+		$_customer_ip_address = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->customer_ip_address : $_order->get_customer_ip_address() );
 
 		// Country by IP
 		if ( class_exists( 'WC_Geolocation' ) ) {
 			// Get the country by IP
-			$location = WC_Geolocation::geolocate_ip( $_order->customer_ip_address );
+			$location = WC_Geolocation::geolocate_ip( $_customer_ip_address );
 			// Base fallback
 			if ( empty( $location['country'] ) ) {
 				$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
@@ -137,7 +138,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		$table_data = array(
 			array(
 				__( 'Customer IP', 'woocommerce-jetpack' ),
-				$_order->customer_ip_address
+				$_customer_ip_address
 			),
 			array(
 				__( 'Country by IP', 'woocommerce-jetpack' ),

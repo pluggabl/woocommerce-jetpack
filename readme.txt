@@ -145,6 +145,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.6.1 - 11/04/2017 =
+~	* Dev - WooCommerce v3.0.0 compatibility - CART & CHECKOUT - EU VAT Number - `get_customer_ip_address()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Products - Functions instead of accessing order properties directly for WC >= v3.0.0. `wc_get_price_to_display()` and more.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Orders - Functions instead of accessing order properties directly for WC >= v3.0.0. `get_order_currency()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - EMAILS & MISC. - Export - Export Customers from Orders - Functions instead of accessing order properties directly for WC >= v3.0.0.
@@ -218,6 +219,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
 
+	* Fix - CART & CHECKOUT - EU VAT Number - `eu-vat-number.js` - `_ajax_object`.
 	* Tweak - PRODUCTS - Crowdfunding - Module description updated.
 ~	* Fix - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" fixed (was giving reverse results).
 ~	* Dev - PRODUCTS - Product Listings - "Exclude Categories" option for "Shop Page Display Options" and "Category Display Options" changed from comma separated string to multiselect.
