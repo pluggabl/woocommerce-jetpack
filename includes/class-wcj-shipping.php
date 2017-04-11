@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shipping class.
  *
- * @version 2.6.0
+ * @version 2.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Shipping extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.6.1
 	 */
 	function __construct() {
 
@@ -183,27 +183,6 @@ class WCJ_Shipping extends WCJ_Module {
 			}
 		}
 		return $updated_settings;
-	}
-
-	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.6
-	 * @since   2.5.6
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_' . $this->id . '_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.6
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_' . $this->id . '_settings', $settings );
-		return $this->add_standard_settings( $settings );
 	}
 
 	/**
