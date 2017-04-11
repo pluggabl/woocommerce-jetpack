@@ -585,6 +585,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'shipping',
 						'checkout_custom_fields',
 						'checkout_files_upload',
+						'checkout_core_fields',
 					);
 					$alsmost_wc_3_compatible_modules = array(
 						'payment_gateways_currency', // works, but I don't understand previous shipping issue..
@@ -602,6 +603,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 						'price_by_country',
 						'product_price_by_formula',
 						'pdf_invoicing',
+						'emails',                    // module seems to be working fine, but there is some issue with default WC emails (new order, completed etc.)
 					);
 					$is_wc_3_compatible = ( in_array( $section, $wc_3_compatible_modules ) ?
 						'<span title="' . __( 'WooCommerce v3.x.x compatible', 'woocommerce-jetpack' ) . '" style="color:green;font-weight: bold;margin-right: 5px;padding-left: 5px;">&#9745; </span>' : '' );

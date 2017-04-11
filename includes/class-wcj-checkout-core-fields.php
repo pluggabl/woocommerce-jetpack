@@ -19,7 +19,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	 *
 	 * @version 2.5.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'checkout_core_fields';
 		$this->short_desc = __( 'Checkout Core Fields', 'woocommerce-jetpack' );
