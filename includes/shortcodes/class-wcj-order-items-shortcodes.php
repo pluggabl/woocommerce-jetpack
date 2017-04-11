@@ -96,9 +96,11 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_price_shortcode.
+	 *
+	 * @version 2.7.0
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
-		return wcj_price( $atts['price_prefix'] . $raw_price, $this->the_order->get_order_currency(), $atts['hide_currency'] );
+		return wcj_price( $atts['price_prefix'] . $raw_price, wcj_get_order_currency( $this->the_order ), $atts['hide_currency'] );
 	}
 
 	/**
@@ -327,7 +329,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$cell_data = $item_counter;
 						break;
 					case 'item_meta':
-						$cell_data = wcj_get_order_item_meta_info( $item_id, null, $this->the_order, false, $the_product );
+						$cell_data = wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, false, $the_product );
 						break;
 					case 'item_name':
 					case 'product_name': // "product_" because of possible variation
@@ -339,7 +341,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 							if ( 0 != $item['variation_id'] && ! in_array( 'item_variation', $columns ) ) {
 								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">';
 								if ( 'yes' === $atts['variation_as_metadata'] ) {
-									$the_item_title .= wcj_get_order_item_meta_info( $item_id, null, $this->the_order, true, $the_product );
+									$the_item_title .= wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, true, $the_product );
 								} elseif ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) {
 									$the_item_title .= str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ); // todo - do we need pa_ replacement?
 								}
@@ -350,7 +352,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 							if ( isset( $item['tmcartepo_data'] ) ) {
 								$options = unserialize( $item['tmcartepo_data'] );
 								$options_prices = array();
-//								$order_currency = $the_order->get_order_currency();
+//								$order_currency = wcj_get_order_currency( $the_order );
 								foreach ( $options as $option ) {
 									/* if ( isset( $option['price_per_currency'][ $order_currency ] ) ) {
 										$options_prices[] = $this->wcj_price_shortcode( $option['price_per_currency'][ $order_currency ], $atts );
@@ -412,13 +414,13 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						break;
 					case 'item_short_description':
 					case 'product_short_description':
-						$cell_data = ( true === $item['is_custom'] ) ? '' : $this->the_product->post->post_excerpt;
+						$cell_data = ( true === $item['is_custom'] ) ? '' : ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->post->post_excerpt : $the_product->get_short_description() );
 						break;
 					case 'item_variation':
 					case 'product_variation':
 						if ( 0 != $item['variation_id'] ) {
 							if ( 'yes' === $atts['variation_as_metadata'] ) {
-								$cell_data = wcj_get_order_item_meta_info( $item_id, null, $this->the_order, true, $the_product );
+								$cell_data = wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, true, $the_product );
 							} elseif ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) {
 								$cell_data = str_replace( 'pa_', '', urldecode( $the_product->get_formatted_variation_attributes( true ) ) ); // todo - do we need pa_ replacement?
 							}
