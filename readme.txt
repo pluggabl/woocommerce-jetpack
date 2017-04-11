@@ -221,6 +221,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
 ~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
 
+	* Dev - Code refactoring - `wcj-price-currency-functions.php` and `wcj-user-roles-functions.php` added.
 	* Fix - CART & CHECKOUT - EU VAT Number - `eu-vat-number.js` - `_ajax_object`.
 	* Tweak - PRODUCTS - Crowdfunding - Module description updated.
 ~	* Fix - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" fixed (was giving reverse results).

@@ -59,7 +59,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.6.1-dev-201704111449';
+	public $version = '2.6.1-dev-201704111538';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -518,6 +518,8 @@ final class WC_Jetpack {
 	private function include_functions() {
 		include_once( 'includes/functions/wcj-debug-functions.php' );
 		include_once( 'includes/functions/wcj-functions.php' );
+		include_once( 'includes/functions/wcj-price-currency-functions.php' );
+		include_once( 'includes/functions/wcj-user-roles-functions.php' );
 		include_once( 'includes/functions/wcj-exchange-rates-functions.php' );
 		include_once( 'includes/functions/wcj-functions-number-to-words.php' );
 		include_once( 'includes/functions/wcj-functions-number-to-words-bg.php' );
