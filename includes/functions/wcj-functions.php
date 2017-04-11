@@ -21,7 +21,7 @@ if ( ! function_exists( 'wcj_get_product_id' ) ) {
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 			return ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
 		} else {
-			return $_product->get_id(); // TODO: WC 3.0.0? done?
+			return $_product->get_id();
 		}
 	}
 }

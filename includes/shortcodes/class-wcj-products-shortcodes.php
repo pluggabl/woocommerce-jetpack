@@ -905,7 +905,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.5.7
 	 */
 	function wcj_product_image_url( $atts ) {
-		return wcj_get_product_image_url( wcj_get_product_id_or_variation_parent_id( $this->the_product ), $atts['image_size'] ); // todo WC 3.0.0- or `wcj_get_product_id` ?
+		return wcj_get_product_image_url( wcj_get_product_id_or_variation_parent_id( $this->the_product ), $atts['image_size'] );
 	}
 
 	/**
