@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom CSS class.
  *
- * @version 2.7.0
+ * @version 2.7.1
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Custom_CSS extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.1
 	 * @since   2.7.0
 	 * @todo    wp_safe_redirect after saving settings
 	 * @todo    automatically enable the module if v <= 2.6.0 and General module enabled and `wcj_general_custom_css` or `wcj_general_custom_admin_css` are not empty
@@ -28,7 +28,8 @@ class WCJ_Custom_CSS extends WCJ_Module {
 
 		$this->id         = 'custom_css';
 		$this->short_desc = __( 'Custom CSS', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Another custom CSS, if you need one.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Separate custom CSS for front and back end.', 'woocommerce-jetpack' );
+//		$this->desc       = __( 'Another custom CSS, if you need one.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-booster-custom-css/';
 		parent::__construct();
 

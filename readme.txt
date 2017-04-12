@@ -152,8 +152,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.1 - 12/04/2017 =
-* Tweak - EMAILS & MISC. - General - Description updated.
-* Tweak - readme.txt - Screenshots added.
+D	* Tweak - EMAILS & MISC. - Custom CSS - Description updated.
+	* Tweak - EMAILS & MISC. - General - Description updated.
+	* Tweak - readme.txt - Screenshots added.
 
 = 2.7.0 - 12/04/2017 =
 * Dev - WooCommerce v3.x.x compatibility - `wcj_get_order_item_meta_info()` - `get_meta_data()` instead of `has_meta()`.
