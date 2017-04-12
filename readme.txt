@@ -152,6 +152,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.1 - 12/04/2017 =
+	* Dev - Code refactoring - `add_settings_hook()` - BUTTON & PRICE LABELS - Custom Price Labels.
 D	* Tweak - EMAILS & MISC. - Custom CSS - Description updated.
 	* Tweak - EMAILS & MISC. - General - Description updated.
 	* Tweak - readme.txt - Screenshots updated.

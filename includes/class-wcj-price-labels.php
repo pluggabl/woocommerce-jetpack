@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Price Labels class.
  *
- * @version 2.7.0
+ * @version 2.7.1
  * @author  Algoritmika Ltd.
  */
 
@@ -471,27 +471,6 @@ class WCJ_Price_Labels extends WCJ_Module {
 		$result = do_shortcode( $price );
 		$wcj_product_id_for_shortcode = 0;
 		return $result;
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.0
-	 */
-	function get_settings() {
-		$settings = array();
-		$settings = apply_filters( 'wcj_price_labels_settings', $settings );
-		return $this->add_standard_settings( $settings );
-	}
-
-	/*
-	 * add_settings_hook.
-	 *
-	 * @version 2.3.7
-	 * @since   2.3.7
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_price_labels_settings', array( $this, 'add_settings' ) );
 	}
 
 	/*
