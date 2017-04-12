@@ -140,9 +140,19 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Screenshots ==
 
-1. Plugin admin area.
+1. Booster for WooCommerce - Prices & Currencies.
+2. Booster for WooCommerce - Button & Price Labels.
+3. Booster for WooCommerce - Products.
+4. Booster for WooCommerce - Cart & Checkout.
+5. Booster for WooCommerce - Payment Gateways.
+6. Booster for WooCommerce - Shipping & Orders.
+7. Booster for WooCommerce - PDF Invoicing & Packing Slips.
+8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 2.7.1 - 12/04/2017 =
+* Tweak - readme.txt - Screenshots added.
 
 = 2.7.0 - 12/04/2017 =
 * Dev - WooCommerce v3.x.x compatibility - `wcj_get_order_item_meta_info()` - `get_meta_data()` instead of `has_meta()`.
