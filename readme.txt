@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 2.6.0
+Stable tag: 2.7.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -145,147 +145,147 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.0 - 12/04/2017 =
-	* Dev - WooCommerce v3.x.x compatibility - `wcj_get_order_item_meta_info()` - `get_meta_data()` instead of `has_meta()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_get_order_currency()`. `get_short_description()`. `wcj_get_order_item_meta_info()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `get_customer_id()`. `wcj_get_order_currency()`. `wcj_get_order_id()`. `get_customer_note()`. `get_billing_phone()`. `wc_get_order_item_meta()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_date]` and `[wcj_order_time]` - `get_date_created()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products Crowdfunding - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `wc_get_price_including_tax()`. `wc_get_price_excluding_tax()`. `wc_display_product_attributes()`. `wc_get_product_tag_list()`. `get_short_description()`. `get_gallery_image_ids()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_image_url]` - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_categories_urls]` - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_categories_names]` - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_total_sales]` - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `get_price` filters replaced. Get parent product ID replaced with `get_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_categories]` - `wc_get_product_category_list()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Currency for External Products - `product_type` property replaced with `is_type()` function.
-	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Currency per Product - `WCJ_PRODUCT_GET_PRICE_FILTER`.
-	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Global Discount - `get_price` filters replaced. `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_price` filters replaced. Get product ID replaced with `get_id()`. `wc_get_formatted_variation()` used.
-	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Multicurrency Product Base Price - `get_price` filters replaced. Get parent product ID replaced with `get_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Price by User Role - `get_price` filters replaced. Get product ID replaced with `get_id()`. `wc_get_formatted_variation()` used. Get parent product ID replaced with `get_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `get_price` filters; `wcj_get_product_id()`. `woocommerce_clean()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `WCJ_PRODUCT_GET_PRICE_FILTER`. `wcj_get_product_id_or_variation_parent_id()`. `wcj_get_product_status()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Product Price by Formula - `get_price` filters; `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Wholesale Price - `get_price` filters replaced. Get parent product ID replaced with `get_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Add to Cart Labels - `wcj_get_product_id_or_variation_parent_id()`; `product_type` -> `get_type()`.
-	* Dev - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Call for Price - `woocommerce_get_price` -> `woocommerce_product_get_price`.
-	* Dev - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_get_product_id_or_variation_parent_id()`; `wcj_get_product_id()`; `product_type` -> `get_type()`. `woocommerce_price_html` filter changed.
-	* Dev - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Free Price Labels - `wcj_get_product_id_or_variation_parent_id()`; "free price" filters;
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Bookings - `WCJ_PRODUCT_GET_PRICE_FILTER`; `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Crowdfunding - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Add to Cart - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `WCJ_PRODUCT_GET_PRICE_FILTER`. `wcj_get_product_id_or_variation_parent_id()`. `wcj_get_product_display_price()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Cost Price - `get_prices_include_tax()`. `wcj_get_product_formatted_variation()`. `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" (removed from `woocommerce_product_subcategories_args` hook).
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Tabs - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Visibility by User Role - `wcj_get_product_id_or_variation_parent_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - SKU - `get_child()`.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Sorting - `woocommerce_clean()`.
-	* Dev - WooCommerce v3.x.x compatibility - CART & CHECKOUT - Checkout Custom Fields - `wcj_get_order_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - CART & CHECKOUT - Checkout Files Upload - `wcj_get_order_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - CART & CHECKOUT - EU VAT Number - `get_customer_ip_address()`. `wcj_get_order_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Gateways by Country or State - `get_country()` and `get_state()`.
-	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Gateways Currency - `WCJ_PRODUCT_GET_PRICE_FILTER`.
-	* Dev - WooCommerce v3.x.x compatibility - SHIPPING & ORDERS - Order Custom Statuses - `wcj_get_order_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - SHIPPING & ORDERS - Order Numbers - `wcj_get_order_id()`; `get_date_created()`.
-	* Dev - WooCommerce v3.x.x compatibility - SHIPPING & ORDERS - Orders - `wcj_get_order_id()`; `woocommerce_order_get_currency`; `wcj_get_order_currency()`; `get_billing_country()`.
-	* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - `get_billing_country()`.
-	* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - Display & Misc. - `wcj_get_order_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - Emails - `wcj_get_order_id()`.
-	* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Admin Tools - Order Meta - Additional check "if `$item_meta_value` is array" added.
-	* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Export - Export Customers from Orders - Functions instead of accessing order properties directly.
-	* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Export - Export Orders - Functions instead of accessing order properties directly. `wcj_get_order_currency()`.
-	* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Export - Export Products - Functions instead of accessing order properties directly. `wcj_get_product_total_stock()`. `wc_get_price_to_display()` and more.
-	* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - General - Products Attributes - `wc_get_product_category_list()`.
-	* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Reports - Custom Ranges - `wp_create_nonce` added.
-	* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Reports - Orders - Monthly Sales - `wcj_get_order_currency()`.
-	* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Reports - Stock - `wcj_get_product_total_stock()`. `wc_get_product_category_list()`.
-	* Dev - Code refactoring - `wcj-price-currency-functions.php` and `wcj-user-roles-functions.php` added.
-	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
-D	* Dev - Shortcodes - `on_empty` attribute added to all shortcodes.
-D	* Dev - Shortcodes - `wcj_shortcode_result` filter added to all shortcodes.
-D	* Dev - Shortcodes - Products - `[wcj_product_gallery_image_url]` shortcode added.
-D	* Dev - Shortcodes - General - `[wcj_cart_items_total_quantity]` shortcode added.
-D	* Dev - Shortcodes - Orders - `[wcj_order_status_label]` shortcode added.
-D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter added.
-D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Migrate from Custom Price Labels (Pro)" tool removed.
-	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - `textarea` replaced with `custom_textarea`.
-D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - "Instead of the price" option added.
-	* Dev - BUTTON & PRICE LABELS - More Button Labels - Hook priority changed. Default value for `get_option()` added.
-D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Always Use cURL" option added.
-D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Calculate with Inversion" option added.
-	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Code refactoring. Exchange rates functions moved to separate file. JS "Grab rate" button now works even if module is disabled.
-D	* Dev - PRICES & CURRENCIES - Currency per Product - "Cart and Checkout Behaviour Options" settings section added.
-D	* Dev - PRICES & CURRENCIES - Currency per Product - "WooCommerce Bookings" plugin support added.
-	* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Empty sale price issue fixed.
-	* Fix - PRICES & CURRENCIES - Price by User Role - `woocommerce_variation_prices_regular_price` hook.
-	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `wcj_price_by_country()` - Additional check `0 != $product->variation_id` added.
-D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Override Country Options - "Override Scope" option added.
-	* Fix - PRODUCTS - Bookings - `wcj-bookings.js` - `_ajax_object`.
-	* Fix - PRODUCTS - Product Addons - `wcj-product-addons.js` - `_ajax_object`.
-	* Dev - PRODUCTS - Product Images - "Single Product Thumbnails Columns" - Filter priority changed.
-D	* Dev - PRODUCTS - Product Input Fields - Timepicker - "Min time" and "Max time" options added.
-	* Dev - PRODUCTS - Product Input Fields - Check for enabled fields added in `add_product_input_fields_to_cart_item_data()`.
-	* Fix - PRODUCTS - Product Input Fields - Check for enabled fields fixed (in `validate_product_input_fields_on_add_to_cart()` and `add_product_input_fields_to_order_item_name()`.
-	* Fix - PRODUCTS - Product Input Fields - Product Input Fields Global Options - Product Input Fields Number - Tooltip fixed.
-	* Fix - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" fixed (was giving reverse results).
-	* Dev - PRODUCTS - Product Listings - "Exclude Categories" option for "Shop Page Display Options" and "Category Display Options" changed from comma separated string to multiselect.
-	* Fix - PRODUCTS - Product Visibility by User Role - Query - Fixed (`offset` and `posts_per_page` removed).
-	* Dev - PRODUCTS - SKU - `WP_Query` optimized to return `ids` only.
-D	* Dev - PRODUCTS - SKU - "Generate SKUs Only for Products with Empty SKU" option added.
-D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
-	* Fix - CART & CHECKOUT - Checkout Custom Fields - Custom Fields Number - Tooltip fixed.
-D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
-	* Fix - CART & CHECKOUT - EU VAT Number - `eu-vat-number.js` - `_ajax_object`.
-D	* Dev - PAYMENT GATEWAYS - Gateways by Shipping - Initial module release.
-	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Code refactoring.
-	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Multicurrency (Currency Switcher)" module support added.
-D	* Dev - SHIPPING & ORDERS - Order Numbers - "Number Generation" selection added (and "Pseudorandom - Hash (max 10 digits)" option).
-	* Dev - SHIPPING & ORDERS - Order Numbers - Default values added to all `get_option()` calls. Code cleaned up.
-	* Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - `woocommerce_payment_complete` hook added.
-	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (legacy and with zones) - `woocommerce_shipping_init` hook replaced with `init` hook.
-D	* Dev - PDF INVOICING & PACKING SLIPS - Multiple custom documents added.
-D	* Dev - EMAILS & MISC. - Custom CSS - Initial module release. CSS options moved from "General" module.
-D	* Dev - EMAILS & MISC. - Emails - "Product Info in Item Name" options added.
-D	* Dev - EMAILS & MISC. - General - "URL Coupons" options added.
-	* Fix - EMAILS & MISC. - Reports - Orders - Product Sales - "year not set" notice fixed.
-D	* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Same Days Last Year" option added.
-	* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added.
-	* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Currency per Product.
-	* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Multicurrency Product Base Price.
-	* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Price by User Role.
-	* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Price Formats.
-	* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Wholesale Price.
-	* Dev - Code refactoring - `add_settings_hook()` - BUTTON & PRICE LABELS - Free Price Labels.
-	* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Product Info.
-	* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Product Listings.
-	* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Products per Page.
-	* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways Currency.
-	* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways by User Role.
-	* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways by Country or State.
-	* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways Min/Max Amounts.
-	* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways per Product or Category.
-	* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Left to Free Shipping.
-	* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Order Minimum Amount.
-	* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Orders.
-	* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Shipping.
-	* Dev - Code refactoring - `wcj_add_change_price_hooks()` function added.
-	* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Multicurrency (Currency Switcher).
-	* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Multicurrency Product Base Price.
-	* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Price by User Role.
-	* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Prices and Currencies by Country.
-	* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Product Price by Formula.
-	* Tweak - Dashboard - Modules count (all and active) added.
-	* Tweak - Tooltip for admin added to all "Module Tools" sections.
-	* Tweak - Language (POT) file updated.
-	* Tweak - PRODUCTS - Crowdfunding - Module description updated.
-	* Tweak - PRODUCTS - Product Listings - Description updated.
-	* Tweak - PRODUCTS - Products per Page - Description updated.
-D	* Tweak - CART & CHECKOUT - Mini Cart - Module renamed to "Mini Cart Custom Info". Description updated.
-D	* Tweak - EMAILS & MISC. - EU VAT Number - Moved to "CART & CHECKOUT" category.
-D	* Tweak - EMAILS & MISC. - Products XML - Moved to "PRODUCTS" category.
+* Dev - WooCommerce v3.x.x compatibility - `wcj_get_order_item_meta_info()` - `get_meta_data()` instead of `has_meta()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_get_order_currency()`. `get_short_description()`. `wcj_get_order_item_meta_info()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `get_customer_id()`. `wcj_get_order_currency()`. `wcj_get_order_id()`. `get_customer_note()`. `get_billing_phone()`. `wc_get_order_item_meta()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_date]` and `[wcj_order_time]` - `get_date_created()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products Crowdfunding - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `wc_get_price_including_tax()`. `wc_get_price_excluding_tax()`. `wc_display_product_attributes()`. `wc_get_product_tag_list()`. `get_short_description()`. `get_gallery_image_ids()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_image_url]` - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_categories_urls]` - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_categories_names]` - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_total_sales]` - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `get_price` filters replaced. Get parent product ID replaced with `get_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_categories]` - `wc_get_product_category_list()`.
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Currency for External Products - `product_type` property replaced with `is_type()` function.
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Currency per Product - `WCJ_PRODUCT_GET_PRICE_FILTER`.
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Global Discount - `get_price` filters replaced. `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `get_price` filters replaced. Get product ID replaced with `get_id()`. `wc_get_formatted_variation()` used.
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Multicurrency Product Base Price - `get_price` filters replaced. Get parent product ID replaced with `get_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Price by User Role - `get_price` filters replaced. Get product ID replaced with `get_id()`. `wc_get_formatted_variation()` used. Get parent product ID replaced with `get_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `get_price` filters; `wcj_get_product_id()`. `woocommerce_clean()`.
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - `WCJ_PRODUCT_GET_PRICE_FILTER`. `wcj_get_product_id_or_variation_parent_id()`. `wcj_get_product_status()`.
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Product Price by Formula - `get_price` filters; `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Wholesale Price - `get_price` filters replaced. Get parent product ID replaced with `get_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Add to Cart Labels - `wcj_get_product_id_or_variation_parent_id()`; `product_type` -> `get_type()`.
+* Dev - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Call for Price - `woocommerce_get_price` -> `woocommerce_product_get_price`.
+* Dev - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `wcj_get_product_id_or_variation_parent_id()`; `wcj_get_product_id()`; `product_type` -> `get_type()`. `woocommerce_price_html` filter changed.
+* Dev - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Free Price Labels - `wcj_get_product_id_or_variation_parent_id()`; "free price" filters;
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Bookings - `WCJ_PRODUCT_GET_PRICE_FILTER`; `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Crowdfunding - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Add to Cart - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `WCJ_PRODUCT_GET_PRICE_FILTER`. `wcj_get_product_id_or_variation_parent_id()`. `wcj_get_product_display_price()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Cost Price - `get_prices_include_tax()`. `wcj_get_product_formatted_variation()`. `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" (removed from `woocommerce_product_subcategories_args` hook).
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Tabs - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Visibility by User Role - `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - SKU - `get_child()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Sorting - `woocommerce_clean()`.
+* Dev - WooCommerce v3.x.x compatibility - CART & CHECKOUT - Checkout Custom Fields - `wcj_get_order_id()`.
+* Dev - WooCommerce v3.x.x compatibility - CART & CHECKOUT - Checkout Files Upload - `wcj_get_order_id()`.
+* Dev - WooCommerce v3.x.x compatibility - CART & CHECKOUT - EU VAT Number - `get_customer_ip_address()`. `wcj_get_order_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Gateways by Country or State - `get_country()` and `get_state()`.
+* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Gateways Currency - `WCJ_PRODUCT_GET_PRICE_FILTER`.
+* Dev - WooCommerce v3.x.x compatibility - SHIPPING & ORDERS - Order Custom Statuses - `wcj_get_order_id()`.
+* Dev - WooCommerce v3.x.x compatibility - SHIPPING & ORDERS - Order Numbers - `wcj_get_order_id()`; `get_date_created()`.
+* Dev - WooCommerce v3.x.x compatibility - SHIPPING & ORDERS - Orders - `wcj_get_order_id()`; `woocommerce_order_get_currency`; `wcj_get_order_currency()`; `get_billing_country()`.
+* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - `get_billing_country()`.
+* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - Display & Misc. - `wcj_get_order_id()`.
+* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - Emails - `wcj_get_order_id()`.
+* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Admin Tools - Order Meta - Additional check "if `$item_meta_value` is array" added.
+* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Export - Export Customers from Orders - Functions instead of accessing order properties directly.
+* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Export - Export Orders - Functions instead of accessing order properties directly. `wcj_get_order_currency()`.
+* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Export - Export Products - Functions instead of accessing order properties directly. `wcj_get_product_total_stock()`. `wc_get_price_to_display()` and more.
+* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - General - Products Attributes - `wc_get_product_category_list()`.
+* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Reports - Custom Ranges - `wp_create_nonce` added.
+* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Reports - Orders - Monthly Sales - `wcj_get_order_currency()`.
+* Dev - WooCommerce v3.x.x compatibility - EMAILS & MISC. - Reports - Stock - `wcj_get_product_total_stock()`. `wc_get_product_category_list()`.
+* Dev - Code refactoring - `wcj-price-currency-functions.php` and `wcj-user-roles-functions.php` added.
+* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
+* Dev - Shortcodes - `on_empty` attribute added to all shortcodes.
+* Dev - Shortcodes - `wcj_shortcode_result` filter added to all shortcodes.
+* Dev - Shortcodes - Products - `[wcj_product_gallery_image_url]` shortcode added.
+* Dev - Shortcodes - General - `[wcj_cart_items_total_quantity]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_status_label]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter added.
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Migrate from Custom Price Labels (Pro)" tool removed.
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - `textarea` replaced with `custom_textarea`.
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - "Instead of the price" option added.
+* Dev - BUTTON & PRICE LABELS - More Button Labels - Hook priority changed. Default value for `get_option()` added.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Always Use cURL" option added.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Calculate with Inversion" option added.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Code refactoring. Exchange rates functions moved to separate file. JS "Grab rate" button now works even if module is disabled.
+* Dev - PRICES & CURRENCIES - Currency per Product - "Cart and Checkout Behaviour Options" settings section added.
+* Dev - PRICES & CURRENCIES - Currency per Product - "WooCommerce Bookings" plugin support added.
+* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Empty sale price issue fixed.
+* Fix - PRICES & CURRENCIES - Price by User Role - `woocommerce_variation_prices_regular_price` hook.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `wcj_price_by_country()` - Additional check `0 != $product->variation_id` added.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Override Country Options - "Override Scope" option added.
+* Fix - PRODUCTS - Bookings - `wcj-bookings.js` - `_ajax_object`.
+* Fix - PRODUCTS - Product Addons - `wcj-product-addons.js` - `_ajax_object`.
+* Dev - PRODUCTS - Product Images - "Single Product Thumbnails Columns" - Filter priority changed.
+* Dev - PRODUCTS - Product Input Fields - Timepicker - "Min time" and "Max time" options added.
+* Dev - PRODUCTS - Product Input Fields - Check for enabled fields added in `add_product_input_fields_to_cart_item_data()`.
+* Fix - PRODUCTS - Product Input Fields - Check for enabled fields fixed (in `validate_product_input_fields_on_add_to_cart()` and `add_product_input_fields_to_order_item_name()`.
+* Fix - PRODUCTS - Product Input Fields - Product Input Fields Global Options - Product Input Fields Number - Tooltip fixed.
+* Fix - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" fixed (was giving reverse results).
+* Dev - PRODUCTS - Product Listings - "Exclude Categories" option for "Shop Page Display Options" and "Category Display Options" changed from comma separated string to multiselect.
+* Fix - PRODUCTS - Product Visibility by User Role - Query - Fixed (`offset` and `posts_per_page` removed).
+* Dev - PRODUCTS - SKU - `WP_Query` optimized to return `ids` only.
+* Dev - PRODUCTS - SKU - "Generate SKUs Only for Products with Empty SKU" option added.
+* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Custom Fields Number - Tooltip fixed.
+* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
+* Fix - CART & CHECKOUT - EU VAT Number - `eu-vat-number.js` - `_ajax_object`.
+* Dev - PAYMENT GATEWAYS - Gateways by Shipping - Initial module release.
+* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Code refactoring.
+* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Multicurrency (Currency Switcher)" module support added.
+* Dev - SHIPPING & ORDERS - Order Numbers - "Number Generation" selection added (and "Pseudorandom - Hash (max 10 digits)" option).
+* Dev - SHIPPING & ORDERS - Order Numbers - Default values added to all `get_option()` calls. Code cleaned up.
+* Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - `woocommerce_payment_complete` hook added.
+* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (legacy and with zones) - `woocommerce_shipping_init` hook replaced with `init` hook.
+* Dev - PDF INVOICING & PACKING SLIPS - Multiple custom documents added.
+* Dev - EMAILS & MISC. - Custom CSS - Initial module release. CSS options moved from "General" module.
+* Dev - EMAILS & MISC. - Emails - "Product Info in Item Name" options added.
+* Dev - EMAILS & MISC. - General - "URL Coupons" options added.
+* Fix - EMAILS & MISC. - Reports - Orders - Product Sales - "year not set" notice fixed.
+* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Same Days Last Year" option added.
+* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added.
+* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Currency per Product.
+* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Multicurrency Product Base Price.
+* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Price by User Role.
+* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Price Formats.
+* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Wholesale Price.
+* Dev - Code refactoring - `add_settings_hook()` - BUTTON & PRICE LABELS - Free Price Labels.
+* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Product Info.
+* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Product Listings.
+* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Products per Page.
+* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways Currency.
+* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways by User Role.
+* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways by Country or State.
+* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways Min/Max Amounts.
+* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways per Product or Category.
+* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Left to Free Shipping.
+* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Order Minimum Amount.
+* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Orders.
+* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Shipping.
+* Dev - Code refactoring - `wcj_add_change_price_hooks()` function added.
+* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Multicurrency (Currency Switcher).
+* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Multicurrency Product Base Price.
+* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Price by User Role.
+* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Prices and Currencies by Country.
+* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Product Price by Formula.
+* Tweak - Dashboard - Modules count (all and active) added.
+* Tweak - Tooltip for admin added to all "Module Tools" sections.
+* Tweak - Language (POT) file updated.
+* Tweak - PRODUCTS - Crowdfunding - Module description updated.
+* Tweak - PRODUCTS - Product Listings - Description updated.
+* Tweak - PRODUCTS - Products per Page - Description updated.
+* Tweak - CART & CHECKOUT - Mini Cart - Module renamed to "Mini Cart Custom Info". Description updated.
+* Tweak - EMAILS & MISC. - EU VAT Number - Moved to "CART & CHECKOUT" category.
+* Tweak - EMAILS & MISC. - Products XML - Moved to "PRODUCTS" category.
 
 = 2.6.0 - 02/03/2017 =
 * Dev - Dashboard - Manage Settings - Restyled.
