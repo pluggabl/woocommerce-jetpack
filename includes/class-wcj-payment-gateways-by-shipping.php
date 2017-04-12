@@ -164,7 +164,7 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 		);
 		$gateways = WC()->payment_gateways->payment_gateways();
 		foreach ( $gateways as $key => $gateway ) {
-			$default_gateways = array( 'bacs' );
+			$default_gateways = array( 'bacs', 'cod' );
 			if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
 				$custom_attributes = apply_filters( 'booster_get_message', '', 'disabled' );
 				if ( '' == $custom_attributes ) {

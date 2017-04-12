@@ -144,7 +144,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.0 - 11/04/2017 =
+= 2.7.0 - 12/04/2017 =
 ~	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `wc_get_price_including_tax()`. `wc_get_price_excluding_tax()`. `wc_display_product_attributes()`. `wc_get_product_tag_list()`. `get_short_description()`. `get_gallery_image_ids()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Input Fields - `wcj_get_product_id_or_variation_parent_id()`.
 ~	* Dev - WooCommerce v3.0.0 compatibility - PRODUCTS - Product Cost Price - `get_prices_include_tax()`. `wcj_get_product_formatted_variation()`. `wcj_get_product_id_or_variation_parent_id()`.
@@ -255,10 +255,10 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Code refactoring.
 ~	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Multicurrency (Currency Switcher)" module support added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter added.
-~!D$* Dev - EMAILS & MISC. - General - "URL Coupons" options added.
+~!D	* Dev - EMAILS & MISC. - General - "URL Coupons" options added.
 ~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Migrate from Custom Price Labels (Pro)" tool removed.
 ~	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - `textarea` replaced with `custom_textarea`.
-~$D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - "Instead of the price" option added.
+~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - "Instead of the price" option added.
 ~!T	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (legacy and with zones) - `woocommerce_shipping_init` hook replaced with `init` hook.
 
 ~!	* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added.
@@ -268,18 +268,18 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~D	* Dev - Shortcodes - Products - `[wcj_product_gallery_image_url]` shortcode added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Calculate with Inversion" option added.
 ~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Code refactoring. Exchange rates functions moved to separate file. JS "Grab rate" button now works even if module is disabled.
-~!$D* Dev - PRICES & CURRENCIES - Currency per Product - "Cart and Checkout Behaviour Options" settings section added.
+~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Cart and Checkout Behaviour Options" settings section added.
 ~D	* Dev - PRICES & CURRENCIES - Currency per Product - "WooCommerce Bookings" plugin support added.
-~$D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Override Country Options - "Override Scope" option added.
+~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Override Country Options - "Override Scope" option added.
 ~	* Dev - PRODUCTS - Product Input Fields - Check for enabled fields added in `add_product_input_fields_to_cart_item_data()`.
 ~	* Fix - PRODUCTS - Product Input Fields - Check for enabled fields fixed (in `validate_product_input_fields_on_add_to_cart()` and `add_product_input_fields_to_order_item_name()`.
 	* Fix - PRODUCTS - Product Input Fields - Product Input Fields Global Options - Product Input Fields Number - Tooltip fixed.
 ~	* Dev - PRODUCTS - SKU - `WP_Query` optimized to return `ids` only.
-~$D	* Dev - PRODUCTS - SKU - "Generate SKUs Only for Products with Empty SKU" option added.
+~D	* Dev - PRODUCTS - SKU - "Generate SKUs Only for Products with Empty SKU" option added.
 D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
 ~D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
-~$D	* Dev - PAYMENT GATEWAYS - Gateways by Shipping - Initial module release.
-~!$D* Dev - SHIPPING & ORDERS - Order Numbers - "Number Generation" selection added (and "Pseudorandom - Hash (max 10 digits)" option).
+~D	* Dev - PAYMENT GATEWAYS - Gateways by Shipping - Initial module release.
+~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Number Generation" selection added (and "Pseudorandom - Hash (max 10 digits)" option).
 ~	* Dev - SHIPPING & ORDERS - Order Numbers - Default values added to all `get_option()` calls. Code cleaned up.
 ~T	* Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - `woocommerce_payment_complete` hook added.
 ~TD	* Dev - PDF INVOICING & PACKING SLIPS - Multiple custom documents added.
