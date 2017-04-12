@@ -721,12 +721,13 @@ if ( ! function_exists( 'validate_VAT' ) ) {
 	}
 }
 
-/**
- * wcj_plugin_url.
- *
- * @version 2.3.0
- */
 if ( ! function_exists( 'wcj_plugin_url' ) ) {
+	/**
+	 * wcj_plugin_url.
+	 *
+	 * @version 2.3.0
+	 * @todo    remove this function
+	 */
 	function wcj_plugin_url() {
 		return untrailingslashit( plugin_dir_url( realpath( dirname( __FILE__ ) . '/..' ) ) );
 		//return untrailingslashit( realpath( dirname( __FILE__ ) . '/..' ) );
