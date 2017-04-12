@@ -108,7 +108,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Custom CSS* - Another custom CSS, if you need one.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *Export* - WooCommerce export tools.
-* *General* - Separate custom CSS for front and back end. Shortcodes in WordPress text widgets. Custom roles tool.
+* *General* - Custom roles tool. Shortcodes in WordPress text widgets.
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
 
@@ -152,6 +152,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.1 - 12/04/2017 =
+* Tweak - EMAILS & MISC. - General - Description updated.
 * Tweak - readme.txt - Screenshots added.
 
 = 2.7.0 - 12/04/2017 =
