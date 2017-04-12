@@ -207,87 +207,85 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~!	* Dev - WooCommerce v3.0.0 compatibility - BUTTON & PRICE LABELS - Custom Price Labels - `woocommerce_price_html` filter changed.
 -!	* Dev - WooCommerce v3.0.0 compatibility - Shortcodes - Products - `[wcj_product_categories]` - `get_categories()` replaced with `wc_get_product_category_list()` for WC >= v3.0.0.
 
-	* Dev - SHIPPING & ORDERS - Shipping - Code refactoring - `add_settings_hook()`.
-	* Dev - PRICES & CURRENCIES - Currency per Product - Code refactoring - `add_settings_hook()`.
-	* Dev - PRODUCTS - Product Info - Code refactoring - `add_settings_hook()`.
-	* Dev - PRODUCTS - Product Listings - Code refactoring - `add_settings_hook()`.
-	* Dev - PAYMENT GATEWAYS - Gateways Currency - Code refactoring - `add_settings_hook()`.
-	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Code refactoring - `add_settings_hook()`.
-	* Dev - PRODUCTS - Products per Page - Code refactoring - `add_settings_hook()`.
-	* Dev - SHIPPING & ORDERS - Order Minimum Amount - Code refactoring - `add_settings_hook()`.
-	* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - Code refactoring - `add_settings_hook()`.
-	* Dev - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Code refactoring - `add_settings_hook()`.
-	* Dev - PAYMENT GATEWAYS - Gateways by User Role - Code refactoring - `add_settings_hook()`.
-	* Dev - BUTTON & PRICE LABELS - Free Price Labels - Code refactoring - `add_settings_hook()`.
-~	* Dev - SHIPPING & ORDERS - Orders - Code refactoring - `add_settings_hook()`.
-~	* Dev - PAYMENT GATEWAYS - Gateways by Country or State - Code refactoring - `add_settings_hook()`.
-~	* Dev - PRICES & CURRENCIES - Wholesale Price - Code refactoring - `add_settings_hook()`.
-~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `add_settings_hook()`.
-~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `add_settings_hook()`.
-~	* Dev - PRICES & CURRENCIES - Price Formats - Code refactoring - `add_settings_hook()`.
-
-~	* Dev - PRICES & CURRENCIES - Product Price by Formula - Code refactoring - `wcj_add_change_price_hooks()`.
-~	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Code refactoring - `wcj_add_change_price_hooks()`.
-~	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Code refactoring - `wcj_add_change_price_hooks()`.
-~	* Dev - PRICES & CURRENCIES - Price by User Role - Code refactoring - `wcj_add_change_price_hooks()`.
-~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring - `wcj_add_change_price_hooks()`.
-
-	* Dev - PRODUCTS - Product Images - "Single Product Thumbnails Columns" - Filter priority changed.
 	* Dev - Code refactoring - `wcj-price-currency-functions.php` and `wcj-user-roles-functions.php` added.
-	* Fix - CART & CHECKOUT - EU VAT Number - `eu-vat-number.js` - `_ajax_object`.
-	* Tweak - PRODUCTS - Crowdfunding - Module description updated.
-~	* Fix - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" fixed (was giving reverse results).
-~	* Dev - PRODUCTS - Product Listings - "Exclude Categories" option for "Shop Page Display Options" and "Category Display Options" changed from comma separated string to multiselect.
-~	* Fix - EMAILS & MISC. - Reports - Orders - Product Sales - "year not set" notice fixed.
-~	* Fix - PRODUCTS - Product Visibility by User Role - Query - Fixed (`offset` and `posts_per_page` removed).
-	* Fix - PRODUCTS - Product Addons - `wcj-product-addons.js` - `_ajax_object`.
-	* Fix - PRODUCTS - Bookings - `wcj-bookings.js` - `_ajax_object`.
-	* Dev - BUTTON & PRICE LABELS - More Button Labels - Hook priority changed. Default value for `get_option()` added.
-~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Always Use cURL" option added.
-~	* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Empty sale price issue fixed.
-~	* Fix - PRICES & CURRENCIES - Price by User Role - `woocommerce_variation_prices_regular_price` hook.
-~D	* Dev - Shortcodes - General - `[wcj_cart_items_total_quantity]` shortcode added.
-~!D	* Dev - PRODUCTS - Product Input Fields - Timepicker - "Min time" and "Max time" options added.
-~D	* Dev - EMAILS & MISC. - Emails - "Product Info in Item Name" options added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_status_label]` shortcode added.
-	* Fix - CART & CHECKOUT - Checkout Custom Fields - Custom Fields Number - Tooltip fixed.
-~	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `wcj_price_by_country()` - Additional check `0 != $product->variation_id` added.
-~	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Code refactoring.
-~	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Multicurrency (Currency Switcher)" module support added.
-~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter added.
-~!D	* Dev - EMAILS & MISC. - General - "URL Coupons" options added.
-~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Migrate from Custom Price Labels (Pro)" tool removed.
-~	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - `textarea` replaced with `custom_textarea`.
-~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - "Instead of the price" option added.
-~!T	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (legacy and with zones) - `woocommerce_shipping_init` hook replaced with `init` hook.
-
-~!	* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added.
 	* Dev - Mini-dashboards added to modules categories (instead of displaying the default category module). Modules categories descriptions added.
 ~D	* Dev - Shortcodes - `on_empty` attribute added to all shortcodes.
 ~D	* Dev - Shortcodes - `wcj_shortcode_result` filter added to all shortcodes.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_gallery_image_url]` shortcode added.
+~D	* Dev - Shortcodes - General - `[wcj_cart_items_total_quantity]` shortcode added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_status_label]` shortcode added.
+~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter added.
+~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Migrate from Custom Price Labels (Pro)" tool removed.
+~	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - `textarea` replaced with `custom_textarea`.
+~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Global Custom Price Labels - "Instead of the price" option added.
+	* Dev - BUTTON & PRICE LABELS - More Button Labels - Hook priority changed. Default value for `get_option()` added.
+~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Always Use cURL" option added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Calculate with Inversion" option added.
 ~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Code refactoring. Exchange rates functions moved to separate file. JS "Grab rate" button now works even if module is disabled.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Cart and Checkout Behaviour Options" settings section added.
 ~D	* Dev - PRICES & CURRENCIES - Currency per Product - "WooCommerce Bookings" plugin support added.
+~	* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Empty sale price issue fixed.
+~	* Fix - PRICES & CURRENCIES - Price by User Role - `woocommerce_variation_prices_regular_price` hook.
+~	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - `wcj_price_by_country()` - Additional check `0 != $product->variation_id` added.
 ~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Override Country Options - "Override Scope" option added.
+	* Fix - PRODUCTS - Bookings - `wcj-bookings.js` - `_ajax_object`.
+	* Fix - PRODUCTS - Product Addons - `wcj-product-addons.js` - `_ajax_object`.
+	* Dev - PRODUCTS - Product Images - "Single Product Thumbnails Columns" - Filter priority changed.
+~!D	* Dev - PRODUCTS - Product Input Fields - Timepicker - "Min time" and "Max time" options added.
 ~	* Dev - PRODUCTS - Product Input Fields - Check for enabled fields added in `add_product_input_fields_to_cart_item_data()`.
 ~	* Fix - PRODUCTS - Product Input Fields - Check for enabled fields fixed (in `validate_product_input_fields_on_add_to_cart()` and `add_product_input_fields_to_order_item_name()`.
 	* Fix - PRODUCTS - Product Input Fields - Product Input Fields Global Options - Product Input Fields Number - Tooltip fixed.
+~	* Fix - PRODUCTS - Product Listings - "Hide Empty" option for "Shop Page Display Options" and "Category Display Options" fixed (was giving reverse results).
+~	* Dev - PRODUCTS - Product Listings - "Exclude Categories" option for "Shop Page Display Options" and "Category Display Options" changed from comma separated string to multiselect.
+~	* Fix - PRODUCTS - Product Visibility by User Role - Query - Fixed (`offset` and `posts_per_page` removed).
 ~	* Dev - PRODUCTS - SKU - `WP_Query` optimized to return `ids` only.
 ~D	* Dev - PRODUCTS - SKU - "Generate SKUs Only for Products with Empty SKU" option added.
 D	* Dev - CART & CHECKOUT - Cart Customization - Initial module release. And "Hide Coupon on Cart Page" option moved from "General" module.
+	* Fix - CART & CHECKOUT - Checkout Custom Fields - Custom Fields Number - Tooltip fixed.
 ~D	* Dev - CART & CHECKOUT - Checkout Customization - Initial module release. And "Hide "Order Again" Button on "View Order" Page" option moved from "General" module.
+	* Fix - CART & CHECKOUT - EU VAT Number - `eu-vat-number.js` - `_ajax_object`.
 ~D	* Dev - PAYMENT GATEWAYS - Gateways by Shipping - Initial module release.
+~	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Code refactoring.
+~	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Multicurrency (Currency Switcher)" module support added.
 ~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Number Generation" selection added (and "Pseudorandom - Hash (max 10 digits)" option).
 ~	* Dev - SHIPPING & ORDERS - Order Numbers - Default values added to all `get_option()` calls. Code cleaned up.
 ~T	* Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - `woocommerce_payment_complete` hook added.
+~!T	* Fix - SHIPPING & ORDERS - Shipping - Custom Shipping (legacy and with zones) - `woocommerce_shipping_init` hook replaced with `init` hook.
 ~TD	* Dev - PDF INVOICING & PACKING SLIPS - Multiple custom documents added.
 ~D	* Dev - EMAILS & MISC. - Custom CSS - Initial module release. CSS options moved from "General" module.
+~D	* Dev - EMAILS & MISC. - Emails - "Product Info in Item Name" options added.
+~!D	* Dev - EMAILS & MISC. - General - "URL Coupons" options added.
+~	* Fix - EMAILS & MISC. - Reports - Orders - Product Sales - "year not set" notice fixed.
 D	* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Same Days Last Year" option added.
+	* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added.
+	* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Currency per Product.
+	* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Multicurrency Product Base Price.
+	* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Price by User Role.
+	* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Price Formats.
+	* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Wholesale Price.
+	* Dev - Code refactoring - `add_settings_hook()` - BUTTON & PRICE LABELS - Free Price Labels.
+	* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Product Info.
+	* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Product Listings.
+	* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Products per Page.
+	* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways Currency.
+	* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways by User Role.
+	* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways by Country or State.
+	* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways Min/Max Amounts.
+	* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways per Product or Category.
+	* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Left to Free Shipping.
+	* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Order Minimum Amount.
+	* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Orders.
+	* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Shipping.
+	* Dev - Code refactoring - `wcj_add_change_price_hooks()` function added.
+	* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Multicurrency (Currency Switcher).
+	* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Multicurrency Product Base Price.
+	* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Price by User Role.
+	* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Prices and Currencies by Country.
+	* Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Product Price by Formula.
 	* Tweak - Dashboard - Modules count (all and active) added.
 	* Tweak - Tooltip for admin added to all "Module Tools" sections.
-	* Tweak - Language (POT) file updated.
+-	* Tweak - Language (POT) file updated.
+	* Tweak - PRODUCTS - Crowdfunding - Module description updated.
 	* Tweak - PRODUCTS - Product Listings - Description updated.
 	* Tweak - PRODUCTS - Products per Page - Description updated.
 D	* Tweak - CART & CHECKOUT - Mini Cart - Module renamed to "Mini Cart Custom Info". Description updated.
