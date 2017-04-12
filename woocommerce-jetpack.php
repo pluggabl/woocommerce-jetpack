@@ -5,7 +5,7 @@ Plugin URI: http://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
 Version: 2.7.1-dev
 Author: Algoritmika Ltd
-Author URI: http://www.algoritmika.com
+Author URI: http://booster.io
 Text Domain: woocommerce-jetpack
 Domain Path: /langs
 Copyright: © 2017 Algoritmika Ltd.
@@ -42,7 +42,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.7.1-dev-201704121918';
+	public $version = '2.7.1-dev-201704121930';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
