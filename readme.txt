@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 2.7.0
+Stable tag: 2.7.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -152,13 +152,13 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.1 - 13/04/2017 =
-	* Fix - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - "Variable products" visibility options fixed.
-	* Fix - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - "Hide on home page" visibility option fixed.
-	* Dev - Code refactoring - `add_settings_hook()` - BUTTON & PRICE LABELS - Custom Price Labels.
-D	* Tweak - EMAILS & MISC. - Custom CSS - Description updated.
-	* Tweak - EMAILS & MISC. - General - Description updated.
-	* Tweak - readme.txt - Screenshots updated.
-	* Tweak - Author URI changed.
+* Fix - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - "Variable products" visibility options fixed.
+* Fix - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - "Hide on home page" visibility option fixed.
+* Dev - Code refactoring - `add_settings_hook()` - BUTTON & PRICE LABELS - Custom Price Labels.
+* Tweak - EMAILS & MISC. - Custom CSS - Description updated.
+* Tweak - EMAILS & MISC. - General - Description updated.
+* Tweak - readme.txt - Screenshots updated.
+* Tweak - Author URI changed.
 
 = 2.7.0 - 12/04/2017 =
 * Dev - WooCommerce v3.x.x compatibility - `wcj_get_order_item_meta_info()` - `get_meta_data()` instead of `has_meta()`.
