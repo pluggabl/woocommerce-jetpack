@@ -105,7 +105,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
-* *Custom CSS* - Another custom CSS, if you need one.
+* *Custom CSS* - Separate custom CSS for front and back end.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *Export* - WooCommerce export tools.
 * *General* - Custom roles tool. Shortcodes in WordPress text widgets.
@@ -151,7 +151,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.1 - 12/04/2017 =
+= 2.7.1 - 13/04/2017 =
+	* Fix - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - Visibility options ("Hide on home page" and "Variable products") fixed.
 	* Dev - Code refactoring - `add_settings_hook()` - BUTTON & PRICE LABELS - Custom Price Labels.
 D	* Tweak - EMAILS & MISC. - Custom CSS - Description updated.
 	* Tweak - EMAILS & MISC. - General - Description updated.
