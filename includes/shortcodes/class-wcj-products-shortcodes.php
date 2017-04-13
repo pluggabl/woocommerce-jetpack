@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
 	public function __construct() {
 
@@ -36,6 +36,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_title',
 			'wcj_product_weight',
 			'wcj_product_excerpt',
+			'wcj_product_description',
 			'wcj_product_short_description',
 			'wcj_product_custom_field',
 			'wcj_product_meta',
@@ -807,6 +808,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		return wcj_get_table_html( $table_rows, array( 'table_class' => 'wcj_product_wholesale_price_table', 'columns_styles' => $columns_styles, 'table_heading_type' => $atts['table_format'] ) );
+	}
+
+	/**
+	 * Get product description.
+	 *
+	 * @version 2.7.2
+	 * @since   2.7.2
+	 * @return  string
+	 */
+	function wcj_product_description( $atts ) {
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_product->post->post_content : $this->the_product->get_description() );
 	}
 
 	/**

@@ -152,6 +152,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 13/04/2017 =
+D	* Dev - Shortcodes - Products - `[wcj_product_description]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_product_sale_price]` - `multiply_by` attribute added.
 
 = 2.7.1 - 13/04/2017 =
