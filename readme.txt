@@ -152,7 +152,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.1 - 13/04/2017 =
-	* Fix - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - Visibility options ("Hide on home page" and "Variable products") fixed.
+	* Fix - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - "Variable products" visibility options fixed.
+	* Fix - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - "Hide on home page" visibility option fixed.
 	* Dev - Code refactoring - `add_settings_hook()` - BUTTON & PRICE LABELS - Custom Price Labels.
 D	* Tweak - EMAILS & MISC. - Custom CSS - Description updated.
 	* Tweak - EMAILS & MISC. - General - Description updated.
