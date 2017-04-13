@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -66,6 +66,7 @@ return array(
 			'related_products',
 			'sorting',
 			'sku',
+			'stock',
 			'product_input_fields',
 			'product_add_to_cart',
 			'purchase_data',
