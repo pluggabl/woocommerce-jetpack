@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -359,12 +359,15 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_regular_price.
 	 *
-	 * @version 2.4.0
+	 * @version 2.7.2
 	 * @since   2.4.0
 	 */
 	function wcj_product_regular_price( $atts ) {
 		if ( $this->the_product->is_on_sale() || 'yes' === $atts['show_always'] ) {
 			$the_price = $this->the_product->get_regular_price();
+			if ( 0 != $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
+				$the_price = $the_price * $atts['multiply_by'];
+			}
 			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
 		}
 		return '';
@@ -373,12 +376,15 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_sale_price.
 	 *
-	 * @version 2.4.0
+	 * @version 2.7.2
 	 * @since   2.4.0
 	 */
 	function wcj_product_sale_price( $atts ) {
 		if ( $this->the_product->is_on_sale() ) {
 			$the_price = $this->the_product->get_sale_price();
+			if ( 0 != $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
+				$the_price = $the_price * $atts['multiply_by'];
+			}
 			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
 		}
 		return '';
