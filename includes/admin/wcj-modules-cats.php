@@ -76,6 +76,7 @@ return array(
 			'product_images',
 			'product_by_country',
 			'product_by_user_role',
+			'product_by_time',
 			'product_by_user',
 			'products_xml',
 		),

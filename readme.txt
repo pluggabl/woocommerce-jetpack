@@ -46,6 +46,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
 * *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Disable add to cart button on per product basis. Open external products on add to cart in new window. Replace Add to Cart button on archives with button from single product pages.
 * *Product Addons* - Add (paid/free/discount) addons to WooCommerce products.
+* *Product by Time* - WooCommerce product availability by time.
 * *Product Cost Price* - Save WooCommerce product purchase costs data for admin reports.
 * *Product Images* - Customize WooCommerce products images, thumbnails and sale flashes.
 * *Product Info* - Add additional info to WooCommerce category and single product pages.
@@ -153,6 +154,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 13/04/2017 =
+~!D	* Dev - PRODUCTS - Product by Time - Initial module release.
 ~D	* Dev - PRODUCTS - Stock - Initial module release.
 D	* Dev - Shortcodes - Products - `[wcj_product_description]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_product_sale_price]` - `multiply_by` attribute added.
