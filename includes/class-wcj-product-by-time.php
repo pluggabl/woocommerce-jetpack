@@ -31,12 +31,13 @@ class WCJ_Product_By_Time extends WCJ_Module {
 		$this->link       = 'http://booster.io/features/woocommerce-product-by-time/';
 		parent::__construct();
 
+		$this->time_now = current_time( 'timestamp' );
+
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === get_option( 'wcj_product_by_time_section_enabled', 'no' ) ) {
-				$time_now = time();
-				$this->day_of_week_now = intval( date( 'N', $time_now ) ) - 1;
-				$this->hours_now       = intval( date( 'H', $time_now ) );
-				$this->minutes_now     = intval( date( 'i', $time_now ) );
+				$this->day_of_week_now = intval( date( 'N', $this->time_now ) ) - 1;
+				$this->hours_now       = intval( date( 'H', $this->time_now ) );
+				$this->minutes_now     = intval( date( 'i', $this->time_now ) );
 				add_filter( 'woocommerce_is_purchasable',         array( $this, 'check_is_purchasable_by_time' ),          PHP_INT_MAX, 2 );
 				add_action( 'woocommerce_single_product_summary', array( $this, 'maybe_add_unavailable_by_time_message' ), 30 );
 			}
@@ -112,7 +113,7 @@ class WCJ_Product_By_Time extends WCJ_Module {
 		$settings = array(
 			array(
 				'title'    => __( 'Options', 'woocommerce-jetpack' ),
-				'desc'     => sprintf( __( 'Server time now: <em>%s</em>', 'woocommerce-jetpack' ), date( 'l, H:i:s' ) ),
+				'desc'     => '<span id="local-time">' . sprintf( __( 'Local time is <code>%s</code>.', 'woocommerce-jetpack' ), date( 'l, H:i:s', $this->time_now ) ) . '</span>',
 				'type'     => 'title',
 				'id'       => 'wcj_product_by_time_options',
 			),
