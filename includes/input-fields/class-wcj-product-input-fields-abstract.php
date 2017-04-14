@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -417,7 +417,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
 	function add_product_input_fields_to_frontend() {
 		global $product;
@@ -469,6 +469,7 @@ class WCJ_Product_Input_Fields_Abstract {
 			}
 
 			if ( 'on' === $is_enabled || 'yes' === $is_enabled ) {
+				$html = '';
 				switch ( $type ) {
 
 					case 'number':
@@ -478,7 +479,7 @@ class WCJ_Product_Input_Fields_Abstract {
 					case 'email':
 					case 'tel':
 
-						echo '<p>' . $title . '<input type="' . $type . '" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						$html = '<p>' . $title . '<input type="' . $type . '" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'checkbox':
@@ -488,27 +489,27 @@ class WCJ_Product_Input_Fields_Abstract {
 							'yes',
 							false
 						);
-						echo '<p>' . $title . '<input type="' . $type . '" name="' . $field_name . '"' . $custom_attributes . $checked . '>' . '</p>';
+						$html = '<p>' . $title . '<input type="' . $type . '" name="' . $field_name . '"' . $custom_attributes . $checked . '>' . '</p>';
 						break;
 
 					case 'datepicker':
 
-						echo '<p>' . $title . '<input ' . $datepicker_year . 'firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						$html = '<p>' . $title . '<input ' . $datepicker_year . 'firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'weekpicker':
 
-						echo '<p>' . $title . '<input ' . $datepicker_year . 'firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="week" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						$html = '<p>' . $title . '<input ' . $datepicker_year . 'firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="week" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'timepicker':
 
-						echo '<p>' . $title . '<input' . $timepicker_mintime . $timepicker_maxtime . ' interval="' . $timepicker_interval . '" timeformat="' . $timepicker_format . '" type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
+						$html = '<p>' . $title . '<input' . $timepicker_mintime . $timepicker_maxtime . ' interval="' . $timepicker_interval . '" timeformat="' . $timepicker_format . '" type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>' . '</p>';
 						break;
 
 					case 'textarea':
 
-						echo '<p>' . $title . '<textarea name="' . $field_name . '" placeholder="' . $placeholder . '">' . '</textarea>' . '</p>';
+						$html = '<p>' . $title . '<textarea name="' . $field_name . '" placeholder="' . $placeholder . '">' . '</textarea>' . '</p>';
 						break;
 
 					case 'select':
@@ -528,7 +529,7 @@ class WCJ_Product_Input_Fields_Abstract {
 								$select_options_html .= '</option>';
 							}
 						}
-						echo '<p>' . $title . '<select name="' . $field_name . '">' . $select_options_html . '</select>' . '</p>';
+						$html = '<p>' . $title . '<select name="' . $field_name . '">' . $select_options_html . '</select>' . '</p>';
 						break;
 
 					case 'radio':
@@ -546,7 +547,7 @@ class WCJ_Product_Input_Fields_Abstract {
 								$select_options_html .= '<label for="' . $field_name . '_' . esc_attr( $option_key ) .
 									'" class="radio">' . $option_text . '</label><br>';
 							}
-							echo '<p>' . $title . $select_options_html . '</p>';
+							$html = '<p>' . $title . $select_options_html . '</p>';
 						}
 						break;
 
@@ -561,7 +562,7 @@ class WCJ_Product_Input_Fields_Abstract {
 								$field .= '<option value="' . esc_attr( $ckey ) . '" '.selected( $value, $ckey, false ) .'>'.__( $cvalue, 'woocommerce' ) .'</option>';
 							}
 							$field .= '</select>';
-							echo '<p>' . $title . $field . '</p>';
+							$html = '<p>' . $title . $field . '</p>';
 						}
 						break;
 
@@ -597,6 +598,16 @@ class WCJ_Product_Input_Fields_Abstract {
 
 						break; */
 				}
+				echo apply_filters( 'wcj_product_input_field_frontend_html', $html, array(
+					'title'             => $title,
+					'type'              => $type,
+					'field_name'        => $field_name,
+					'placeholder'       => $placeholder,
+					'custom_attributes' => $custom_attributes,
+					'_product_id'       => $_product_id,
+					'_field_nr'         => $i,
+					'_scope'            => $this->scope,
+				) );
 			}
 		}
 	}

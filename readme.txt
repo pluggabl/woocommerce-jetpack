@@ -153,7 +153,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 13/04/2017 =
+= 2.7.2 - 14/04/2017 =
+~D	* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
 ~!D	* Dev - PRODUCTS - Product by Time - Initial module release.
 ~D	* Dev - PRODUCTS - Stock - Initial module release.
 D	* Dev - Shortcodes - Products - `[wcj_product_description]` shortcode added.
