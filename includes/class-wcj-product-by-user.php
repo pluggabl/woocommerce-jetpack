@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product by User class.
  *
- * @version 2.5.7
+ * @version 2.7.2
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -97,7 +97,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * add_my_products_content_my_account_page.
 	 *
-	 * @version 2.5.7
+	 * @version 2.7.2
 	 * @since   2.5.2
 	 */
 	function add_my_products_content_my_account_page() {
@@ -127,7 +127,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 			}
 		}
 		$offset = 0;
-		$block_size = 96;
+		$block_size = 256;
 		$products = array();
 		while( true ) {
 			$args = array(
@@ -138,18 +138,20 @@ class WCJ_Product_By_User extends WCJ_Module {
 				'orderby'        => 'date',
 				'order'          => 'DESC',
 				'author'         => $user_ID,
+				'fields'         => 'ids',
 			);
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$products[ strval( $loop->post->ID ) ] = array(
-					'title'  => get_the_title( $loop->post->ID ),
-					'status' => get_post_status( $loop->post->ID ),
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $post_id ) {
+				$products[ $post_id ] = array(
+					'title'  => get_the_title( $post_id ),
+					'status' => get_post_status( $post_id ),
 				);
-			endwhile;
+			}
 			$offset += $block_size;
 		}
-		wp_reset_postdata();
 		if ( 0 != count( $products ) ) {
 //			echo '<h2>' . __( 'My Products', 'woocommerce-jetpack' ) . '</h2>';
 			$table_data = array();
@@ -170,30 +172,20 @@ class WCJ_Product_By_User extends WCJ_Module {
 	}
 
 	/**
-	 * add_settings_hook.
-	 *
-	 * @version 2.5.3
-	 * @since   2.5.3
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_product_by_user_settings', array( $this, 'add_settings' ) );
-	}
-
-	/**
 	 * get_settings.
 	 *
-	 * @version 2.5.3
+	 * @version 2.7.2
 	 * @since   2.5.2
 	 */
 	function get_settings() {
 		$settings = apply_filters( 'wcj_product_by_user_settings', array() );
-		return $this->add_standard_settings( $settings, __( 'Use [wcj_product_add_new] shortcode.', 'woocommerce-jetpack' ) );
+		return $this->add_standard_settings( $settings, __( 'Use <strong>[wcj_product_add_new]</strong> shortcode to add product upload form to frontend.', 'woocommerce-jetpack' ) );
 	}
 
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.4
+	 * @version 2.7.2
 	 * @since   2.5.3
 	 */
 	function add_settings() {
@@ -204,6 +196,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 			'image'         => __( 'Image', 'woocommerce-jetpack' ),
 			'regular_price' => __( 'Regular Price', 'woocommerce-jetpack' ),
 			'sale_price'    => __( 'Sale Price', 'woocommerce-jetpack' ),
+			'external_url'  => __( 'Product URL (for "External/Affiliate" product type only)', 'woocommerce-jetpack' ),
 			'cats'          => __( 'Categories', 'woocommerce-jetpack' ),
 			'tags'          => __( 'Tags', 'woocommerce-jetpack' ),
 		);
@@ -262,6 +255,16 @@ class WCJ_Product_By_User extends WCJ_Module {
 					'type'     => 'multiselect',
 					'class'    => 'chosen_select',
 					'options'  => wcj_get_user_roles_options(),
+				),
+				array(
+					'title'    => __( 'Product Type', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_by_user_product_type',
+					'default'  => 'simple',
+					'type'     => 'select',
+					'options'  => array(
+						'simple'   => __( 'Simple product', 'woocommerce-jetpack' ),
+						'external' => __( 'External/Affiliate product', 'woocommerce-jetpack' ),
+					),
 				),
 				array(
 					'title'    => __( 'Product Status', 'woocommerce-jetpack' ),

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Add Form Shortcodes class.
  *
- * @version 2.5.4
+ * @version 2.7.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    refill image on not validated (or after successful addition); more messages options; more styling options; custom fields;
@@ -19,7 +19,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.7.2
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -36,6 +36,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			'short_desc_enabled'     => get_option( 'wcj_product_by_user_short_desc_enabled', 'no' ),
 			'regular_price_enabled'  => get_option( 'wcj_product_by_user_regular_price_enabled', 'no' ),
 			'sale_price_enabled'     => get_option( 'wcj_product_by_user_sale_price_enabled', 'no' ),
+			'external_url_enabled'   => get_option( 'wcj_product_by_user_external_url_enabled', 'no' ),
 			'cats_enabled'           => get_option( 'wcj_product_by_user_cats_enabled', 'no' ),
 			'tags_enabled'           => get_option( 'wcj_product_by_user_tags_enabled', 'no' ),
 			'image_enabled'          => apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_user_image_enabled', 'no' ) ),
@@ -44,6 +45,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			'short_desc_required'    => get_option( 'wcj_product_by_user_short_desc_required', 'no' ),
 			'regular_price_required' => get_option( 'wcj_product_by_user_regular_price_required', 'no' ),
 			'sale_price_required'    => get_option( 'wcj_product_by_user_sale_price_required', 'no' ),
+			'external_url_required'  => get_option( 'wcj_product_by_user_external_url_required', 'no' ),
 			'cats_required'          => get_option( 'wcj_product_by_user_cats_required', 'no' ),
 			'tags_required'          => get_option( 'wcj_product_by_user_tags_required', 'no' ),
 			'image_required'         => apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_user_image_required', 'no' ) ),
@@ -53,13 +55,18 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			'module_name'            => __( 'Product by User', 'woocommerce-jetpack' ),
 		);
 
+		if ( 'external' !== get_option( 'wcj_product_by_user_product_type', 'simple' ) ) {
+			$this->the_atts['external_url_enabled']  = 'no';
+			$this->the_atts['external_url_required'] = 'no';
+		}
+
 		parent::__construct();
 	}
 
 	/**
 	 * wc_add_new_product.
 	 *
-	 * @version 2.5.2
+	 * @version 2.7.2
 	 * @since   2.5.0
 	 */
 	function wc_add_new_product( $args, $shortcode_atts ) {
@@ -82,7 +89,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		// Insert the post into the database
 		if ( 0 != $product_id ) {
 
-			wp_set_object_terms( $product_id, 'simple', 'product_type' );
+			wp_set_object_terms( $product_id, get_option( 'wcj_product_by_user_product_type', 'simple' ), 'product_type' );
 			wp_set_object_terms( $product_id, $args['cats'], 'product_cat' );
 			wp_set_object_terms( $product_id, $args['tags'], 'product_tag' );
 
@@ -95,6 +102,10 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			}
 			update_post_meta( $product_id, '_visibility', 'visible' );
 			update_post_meta( $product_id, '_stock_status', 'instock' );
+
+			if ( 'external' === get_option( 'wcj_product_by_user_product_type', 'simple' ) ) {
+				update_post_meta( $product_id, '_product_url', $args['external_url'] );
+			}
 
 			// Image
 			if ( '' != $args['image'] && '' != $args['image']['tmp_name'] ) {
@@ -129,7 +140,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * validate_args.
 	 *
-	 * @version 2.5.4
+	 * @version 2.7.2
 	 * @since   2.5.0
 	 */
 	function validate_args( $args, $shortcode_atts ) {
@@ -153,6 +164,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			'image'         => __( 'Image', 'woocommerce-jetpack' ),
 			'regular_price' => __( 'Regular Price', 'woocommerce-jetpack' ),
 			'sale_price'    => __( 'Sale Price', 'woocommerce-jetpack' ),
+			'external_url'  => __( 'Product URL', 'woocommerce-jetpack' ),
 			'cats'          => __( 'Categories', 'woocommerce-jetpack' ),
 			'tags'          => __( 'Tags', 'woocommerce-jetpack' ),
 		);
@@ -179,7 +191,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_add_new.
 	 *
-	 * @version 2.5.4
+	 * @version 2.7.2
 	 * @since   2.5.0
 	 */
 	function wcj_product_add_new( $atts ) {
@@ -195,6 +207,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			'short_desc'        => isset( $_REQUEST['wcj_add_new_product_short_desc'] )    ? $_REQUEST['wcj_add_new_product_short_desc']    : '',
 			'regular_price'     => isset( $_REQUEST['wcj_add_new_product_regular_price'] ) ? $_REQUEST['wcj_add_new_product_regular_price'] : '',
 			'sale_price'        => isset( $_REQUEST['wcj_add_new_product_sale_price'] )    ? $_REQUEST['wcj_add_new_product_sale_price']    : '',
+			'external_url'      => isset( $_REQUEST['wcj_add_new_product_external_url'] )  ? $_REQUEST['wcj_add_new_product_external_url']  : '',
 			'cats'              => isset( $_REQUEST['wcj_add_new_product_cats'] )          ? $_REQUEST['wcj_add_new_product_cats']          : array(),
 			'tags'              => isset( $_REQUEST['wcj_add_new_product_tags'] )          ? $_REQUEST['wcj_add_new_product_tags']          : array(),
 			'image'             => isset( $_FILES['wcj_add_new_product_image'] )           ? $_FILES['wcj_add_new_product_image']           : '',
@@ -305,6 +318,14 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			$table_data[] = array(
 				'<label for="wcj_add_new_product_sale_price">' . __( 'Sale Price', 'woocommerce-jetpack' ) . $required_mark_html . '</label>',
 				'<input' . $required_html . ' type="number" min="0" step="0.01" id="wcj_add_new_product_sale_price" name="wcj_add_new_product_sale_price" value="' . ( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_sale_price', true ) : $args['sale_price'] ) . '">'
+			);
+		}
+		if ( 'yes' === $atts['external_url_enabled'] ) {
+			$required_html      = ( 'yes' === $atts['external_url_required'] ) ? ' required' : '';
+			$required_mark_html = ( 'yes' === $atts['external_url_required'] ) ? $required_mark_html_template : '';
+			$table_data[] = array(
+				'<label for="wcj_add_new_product_external_url">' . __( 'Product URL', 'woocommerce-jetpack' ) . $required_mark_html_template . '</label>',
+				'<input' . $required_html . ' style="' . $input_style . '" type="url" id="wcj_add_new_product_external_url" name="wcj_add_new_product_external_url" value="' . ( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_product_url', true ) : $args['external_url'] ) . '">',
 			);
 		}
 		if ( 'yes' === $atts['cats_enabled'] ) {
