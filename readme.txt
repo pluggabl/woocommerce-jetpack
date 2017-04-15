@@ -153,7 +153,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 14/04/2017 =
+= 2.7.2 - 15/04/2017 =
+	* Dev - CART & CHECKOUT - Checkout Custom Fields - Minor code refactoring.
 ~D	* Dev - PRODUCTS - Product User Products - "Product URL (for "External/Affiliate" product type only)" field added.
 ~D$	* Dev - PRODUCTS - Product User Products - "Product Type" option added.
 ~	* Dev - PRODUCTS - Product User Products - `WP_Query` optimized to return `ids` only.

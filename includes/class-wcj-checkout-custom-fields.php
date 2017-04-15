@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Checkout Custom Fields class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -158,7 +158,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_store_exporter.
 	 */
-	public function add_custom_fields_to_store_exporter( $fields ) {
+	function add_custom_fields_to_store_exporter( $fields ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
@@ -261,7 +261,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 *
 	 * @version 2.4.7
 	 */
-	public function update_custom_checkout_fields_order_meta( $order_id ) {
+	function update_custom_checkout_fields_order_meta( $order_id ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
@@ -386,7 +386,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 *
 	 * @version 2.4.7
 	 */
-	public function add_woocommerce_admin_fields( $fields, $section ) {
+	function add_woocommerce_admin_fields( $fields, $section ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
@@ -457,14 +457,14 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_billing_fields_to_admin_order_display.
 	 */
-	public function add_custom_billing_fields_to_admin_order_display( $fields ) {
+	function add_custom_billing_fields_to_admin_order_display( $fields ) {
 		return $this->add_woocommerce_admin_fields( $fields, 'billing' );
 	}
 
 	/**
 	 * add_custom_shipping_fields_to_admin_order_display.
 	 */
-	public function add_custom_shipping_fields_to_admin_order_display( $fields ) {
+	function add_custom_shipping_fields_to_admin_order_display( $fields ) {
 		return $this->add_woocommerce_admin_fields( $fields, 'shipping' );
 	}
 
@@ -473,7 +473,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 *
 	 * @version 2.5.0
 	 */
-	public function add_custom_order_and_account_fields_to_admin_order_display( $order ) {
+	function add_custom_order_and_account_fields_to_admin_order_display( $order ) {
 		$this->add_custom_fields_to_order_display( $order, 'order',   true );
 		$this->add_custom_fields_to_order_display( $order, 'account', true );
 		/*
@@ -533,7 +533,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 */
-	public function add_custom_checkout_fields( $fields ) {
+	function add_custom_checkout_fields( $fields ) {
 
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 
@@ -610,15 +610,15 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
-	public function get_settings() {
+	function get_settings() {
 
 		$settings = array(
 			array(
 				'title'     => __( 'Checkout Custom Fields Options', 'woocommerce-jetpack' ),
 				'type'      => 'title',
-				'desc'      => '',//__( 'This section lets you add custom checkout fields.', 'woocommerce-jetpack' ),
+				'desc'      => '', // __( 'This section lets you add custom checkout fields.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_checkout_custom_fields_options',
 			),
 			array(
@@ -906,7 +906,12 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				)
 			);
 		}
-		$settings[] = array( 'type'  => 'sectionend', 'id' => 'wcj_checkout_custom_fields_individual_options' );
+		$settings = array_merge( $settings, array(
+			array(
+				'type'      => 'sectionend',
+				'id'        => 'wcj_checkout_custom_fields_individual_options',
+			),
+		) );
 
 		return $this->add_standard_settings( $settings );
 	}
