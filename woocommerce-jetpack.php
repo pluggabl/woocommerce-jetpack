@@ -41,7 +41,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.7.2-dev-201704151845';
+	public $version = '2.7.2-dev-201704151851';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -258,7 +258,7 @@ final class WC_Jetpack {
 	/**
 	 * maybe_enqueue_datepicker_scripts.
 	 *
-	 * @version 2.4.0
+	 * @version 2.7.2
 	 * @since   2.4.0
 	 */
 	function maybe_enqueue_datepicker_scripts() {
@@ -266,11 +266,11 @@ final class WC_Jetpack {
 			wp_enqueue_script( 'jquery-ui-datepicker' );
 			wp_enqueue_script( 'wcj-datepicker', wcj_plugin_url() . '/includes/js/wcj-datepicker.js',
 				array( 'jquery' ),
-				false,
+				$this->version,
 				true );
 			wp_enqueue_script( 'wcj-weekpicker', wcj_plugin_url() . '/includes/js/wcj-weekpicker.js',
 				array( 'jquery' ),
-				false,
+				$this->version,
 				true );
 		}
 	}
