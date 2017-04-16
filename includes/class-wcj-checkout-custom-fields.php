@@ -17,7 +17,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.7.2
 	 */
 	function __construct() {
 
@@ -26,6 +26,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 		$this->desc       = __( 'Add custom fields to WooCommerce checkout page.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-checkout-custom-fields/';
 		parent::__construct();
+
+		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 
@@ -630,17 +632,15 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	}
 
 	/**
-	 * get_settings.
+	 * add_settings.
 	 *
 	 * @version 2.7.2
 	 */
-	function get_settings() {
-
+	function add_settings() {
 		$settings = array(
 			array(
 				'title'     => __( 'Options', 'woocommerce-jetpack' ),
 				'type'      => 'title',
-				'desc'      => '', // __( 'This section lets you add custom checkout fields.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_checkout_custom_fields_options',
 			),
 			array(
@@ -685,7 +685,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				'id'        => 'wcj_checkout_custom_fields_options',
 			),
 		);
-
 		$product_cats = array();
 		$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
 		if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ){
@@ -693,9 +692,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				$product_cats[ $product_category->term_id ] = $product_category->name;
 			}
 		}
-
-		$products_options = apply_filters( 'wcj_get_products_filter', array() );
-
+		$products = wcj_get_products();
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			$settings = array_merge( $settings,
 				array(
@@ -707,8 +704,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					array(
 						'title'     => __( 'Enable/Disable', 'woocommerce-jetpack' ),
 						'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
-						'desc_tip'  => /* __( 'Key', 'woocommerce-jetpack' ) . ': ' . */
-							get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ) . '_' . 'wcj_checkout_field_' . $i,
+						'desc_tip'  => __( 'Key', 'woocommerce-jetpack' ) . ': ' .
+							'<code>' . get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ) . '_' . 'wcj_checkout_field_' . $i . '</code>',
 						'id'        => 'wcj_checkout_custom_field_enabled_' . $i,
 						'default'   => 'no',
 						'type'      => 'checkbox',
@@ -872,7 +869,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						'type'      => 'text',
 						'default'   => 'hh:mm p',
 					),
-
 					array(
 						'title'     => __( 'Timepicker: Interval', 'woocommerce-jetpack' ),
 						'desc'      => __( 'minutes', 'woocommerce-jetpack' ),
@@ -905,7 +901,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						'default'   => '',
 						'type'      => 'multiselect',
 						'class'     => 'chosen_select',
-						'options'   => $products_options,
+						'options'   => $products,
 					),
 					array(
 						'title'     => __( 'Include Products', 'woocommerce-jetpack' ),
@@ -914,7 +910,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						'default'   => '',
 						'type'      => 'multiselect',
 						'class'     => 'chosen_select',
-						'options'   => $products_options,
+						'options'   => $products,
 					),
 					array(
 						'type'      => 'sectionend',
@@ -923,7 +919,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				)
 			);
 		}
-
 		return $this->add_standard_settings( $settings );
 	}
 
