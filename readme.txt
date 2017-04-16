@@ -153,7 +153,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 15/04/2017 =
+= 2.7.2 - 16/04/2017 =
+~!D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
 ~!	* Fix - `wcj-datepicker.js` - Check for empty values added (e.g. `mindate=0` was not working properly in e.g. Checkout Custom Fields).
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Minor code refactoring.
 ~D	* Dev - PRODUCTS - Product User Products - "Product URL (for "External/Affiliate" product type only)" field added.
