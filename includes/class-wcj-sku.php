@@ -6,7 +6,6 @@
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.
- * @todo    add "random number" option
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -19,6 +18,7 @@ class WCJ_SKU extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.5.5
+	 * @todo    `woocommerce_duplicate_product` (check SKU plugin)
 	 */
 	function __construct() {
 
@@ -81,8 +81,7 @@ class WCJ_SKU extends WCJ_Module {
 	 * set_sku_with_variable.
 	 *
 	 * @version 2.7.0
-	 * @todo    add "pseudorandom" option (check "Order Numbers" module)
-	 * @todo    Handle cases with more than 26 variations
+	 * @todo    `as_variable_with_suffix` - handle cases with more than 26 variations
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
 
@@ -275,6 +274,9 @@ class WCJ_SKU extends WCJ_Module {
 	 * get_settings.
 	 *
 	 * @version 2.7.0
+	 * @todo    pseudo-random (check SKU plugin)
+	 * @todo    tags
+	 * @todo    search by SKU (check SKU plugin)
 	 */
 	function get_settings() {
 		$settings = array(
