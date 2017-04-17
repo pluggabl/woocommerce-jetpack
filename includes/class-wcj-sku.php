@@ -174,8 +174,7 @@ class WCJ_SKU extends WCJ_Module {
 					'<td>' . $the_sku                 . '</td>' .
 					'<td>' . $old_sku                 . '</td>' .
 				'</tr>';
-		}
-		elseif ( $do_generate_new_sku ) {
+		} elseif ( $do_generate_new_sku ) {
 			update_post_meta( $product_id, '_' . 'sku', $the_sku );
 		}
 	}
