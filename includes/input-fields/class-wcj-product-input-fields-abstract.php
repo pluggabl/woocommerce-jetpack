@@ -253,20 +253,25 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_files_to_email_attachments.
 	 *
-	 * @version 2.5.0
+	 * @version 2.7.2
 	 * @since   2.5.0
 	 */
 	function add_files_to_email_attachments( $attachments, $status, $order ) {
 		if (
-			( 'new_order' === $status                 && 'yes' === get_option( 'wcj_product_input_fields_attach_to_admin_new_order',           'yes' ) ) ||
+			( 'new_order'                 === $status && 'yes' === get_option( 'wcj_product_input_fields_attach_to_admin_new_order',           'yes' ) ) ||
 			( 'customer_processing_order' === $status && 'yes' === get_option( 'wcj_product_input_fields_attach_to_customer_processing_order', 'yes' ) )
 		) {
 			foreach ( $order->get_items() as $item_key => $item ) {
 				$product_id = $item['product_id'];
 				$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
-					if ( isset( $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] ) ) {
-						$the_value = $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ];
+					$meta_key    = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
+					if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
+						$meta_key = '_' . $meta_key;
+					}
+					$meta_exists = ( WCJ_IS_WC_VERSION_BELOW_3 ? isset( $item[ $meta_key ] ) : $item->meta_exists( $meta_key ) );
+					if ( $meta_exists ) {
+						$the_value = ( WCJ_IS_WC_VERSION_BELOW_3 ? $item[ $meta_key ] : $item->get_meta( $meta_key ) );
 						$the_value = maybe_unserialize( $the_value );
 						if ( isset( $the_value['wcj_type'] ) && 'file' === $the_value['wcj_type'] && isset( $the_value['tmp_name'] ) ) {
 							$file_path = $the_value['tmp_name'];
@@ -657,56 +662,47 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Adds product input values to order details (and emails).
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
 	function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
-
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
 		if ( $total_number < 1 ) {
 			return $name;
 		}
-
 		if ( $is_cart ) {
 			$name .= '<dl style="font-size:smaller;">';
 		}
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-
 			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $item['product_id'], 'no' );
 			if ( ! ( 'on' === $is_enabled || 'yes' === $is_enabled ) ) {
 				continue;
 			}
-
 			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $item['product_id'], '' );
-
-			if ( 'checkbox' === $type && ! array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $item ) ) {
-				$item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] = 'off';
+			$meta_key = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
+			if ( ! WCJ_IS_WC_VERSION_BELOW_3 && ! $is_cart ) {
+				$meta_key = '_' . $meta_key;
 			}
-
-			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $item ) ) {
+			$meta_exists = ( WCJ_IS_WC_VERSION_BELOW_3 || $is_cart ? array_key_exists( $meta_key, $item ) : $item->meta_exists( $meta_key ) );
+			if ( $meta_exists ) {
+				$value = ( WCJ_IS_WC_VERSION_BELOW_3 || $is_cart ? $item[ $meta_key ] : $item->get_meta( $meta_key ) );
+			} elseif ( 'checkbox' === $type ) {
+				$value = 'off';
+				$meta_exists = true;
+			}
+			if ( $meta_exists ) {
 				$title = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $item['product_id'], '' );
-
-				$value = $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ];
-
 				$yes_value = $this->get_value( 'wcj_product_input_fields_type_checkbox_yes_' . $this->scope . '_' . $i, $item['product_id'], '' );
 				$no_value  = $this->get_value( 'wcj_product_input_fields_type_checkbox_no_'  . $this->scope . '_' . $i, $item['product_id'], '' );
-//				$type      = $this->get_value( 'wcj_product_input_fields_type_'              . $this->scope . '_' . $i, $item['product_id'], '' );
 				if ( 'checkbox' === $type ) {
 					$value = ( 'on' === $value ) ? $yes_value : $no_value;
 				}
-
 				if ( 'file' === $type ) {
 					$value = maybe_unserialize( $value );
 					$value = ( isset( $value['name'] ) ) ? $value['name'] : '';
 				}
-
 				if ( '' != $value ) {
 					if ( $is_cart ) {
-						$name .= '<dt>'
-							  . $title
-							  . '</dt>'
-							  . '<dd>'
-							  . $value
-							  . '</dd>';
+						$name .= '<dt>' . $title . '</dt>' . '<dd>' . $value . '</dd>';
 					} else {
 						$name .= str_replace(
 							array( '%title%', '%value%' ),
@@ -720,7 +716,6 @@ class WCJ_Product_Input_Fields_Abstract {
 		if ( $is_cart ) {
 			$name .= '</dl>';
 		}
-
 		return $name;
 	}
 
