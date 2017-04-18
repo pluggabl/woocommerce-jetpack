@@ -277,6 +277,7 @@ class WCJ_SKU extends WCJ_Module {
 	 * @todo    pseudo-random (check SKU plugin)
 	 * @todo    tags (check SKU plugin)
 	 * @todo    search by SKU (check SKU plugin)
+	 * @todo    template (check SKU plugin)
 	 */
 	function get_settings() {
 		$settings = array(
