@@ -97,7 +97,7 @@ class WCJ_Product_By_Time extends WCJ_Module {
 		if ( isset( $time_to[0] ) && $this->hours_now > $time_to[0] ) {
 			return false;
 		}
-		if ( isset( $time_to[1] ) && $time_to[0] == $this->hours_now && $this->minutes_now >= $time_to[1] ) {
+		if ( isset( $time_to[1] ) && $time_to[0] == $this->hours_now && $this->minutes_now > $time_to[1] ) {
 			return false;
 		}
 		return true;
@@ -175,13 +175,13 @@ class WCJ_Product_By_Time extends WCJ_Module {
 				'title'     => __( 'Time Table', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_by_time',
 				'default'  =>
-					'8:00-20:00' . PHP_EOL .
-					'8:00-20:00' . PHP_EOL .
-					'8:00-20:00' . PHP_EOL .
-					'8:00-20:00' . PHP_EOL .
-					'8:00-18:00' . PHP_EOL .
-					'-'          . PHP_EOL .
-					'-'          . PHP_EOL,
+					'8:00-19:59'            . PHP_EOL .
+					'8:00-19:59'            . PHP_EOL .
+					'8:00-19:59'            . PHP_EOL .
+					'8:00-19:59'            . PHP_EOL .
+					'8:00-9:59,12:00-17:59' . PHP_EOL .
+					'-'                     . PHP_EOL .
+					'-'                     . PHP_EOL,
 				'type'     => 'textarea',
 				'css'      => 'min-width:300px;height:200px;',
 			),
