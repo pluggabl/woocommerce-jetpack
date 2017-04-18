@@ -271,10 +271,10 @@ class WCJ_Product_Input_Fields_Abstract {
 					}
 					$meta_exists = ( WCJ_IS_WC_VERSION_BELOW_3 ? isset( $item[ $meta_key ] ) : $item->meta_exists( $meta_key ) );
 					if ( $meta_exists ) {
-						$the_value = ( WCJ_IS_WC_VERSION_BELOW_3 ? $item[ $meta_key ] : $item->get_meta( $meta_key ) );
-						$the_value = maybe_unserialize( $the_value );
-						if ( isset( $the_value['wcj_type'] ) && 'file' === $the_value['wcj_type'] && isset( $the_value['tmp_name'] ) ) {
-							$file_path = $the_value['tmp_name'];
+						$_value = ( WCJ_IS_WC_VERSION_BELOW_3 ? $item[ $meta_key ] : $item->get_meta( $meta_key ) );
+						$_value = maybe_unserialize( $_value );
+						if ( isset( $_value['wcj_type'] ) && 'file' === $_value['wcj_type'] && isset( $_value['tmp_name'] ) ) {
+							$file_path = $_value['tmp_name'];
 							$attachments[] = $file_path;
 						}
 					}
