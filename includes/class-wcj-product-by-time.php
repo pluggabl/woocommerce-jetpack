@@ -129,6 +129,7 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	 *
 	 * @version 2.7.2
 	 * @version 2.7.2
+	 * @todo    validate `wcj_product_by_time` option before checking (or even better when option is saved by admin)
 	 */
 	function check_is_purchasable_by_time( $purchasable, $_product ) {
 		if ( $purchasable ) {
