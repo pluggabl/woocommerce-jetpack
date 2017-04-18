@@ -29,9 +29,9 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'product_by_time';
-		$this->short_desc = __( 'Product by Time', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Product Availability by Time', 'woocommerce-jetpack' );
 		$this->desc       = __( 'WooCommerce product availability by time.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-product-by-time/';
+		$this->link       = 'http://booster.io/features/woocommerce-product-availability-by-time/';
 		parent::__construct();
 
 		$this->time_now = current_time( 'timestamp' );
