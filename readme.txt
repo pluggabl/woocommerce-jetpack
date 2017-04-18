@@ -153,7 +153,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 16/04/2017 =
+= 2.7.2 - 18/04/2017 =
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
 ~!D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.

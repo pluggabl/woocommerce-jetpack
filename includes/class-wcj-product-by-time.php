@@ -20,7 +20,10 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	 *
 	 * @version 2.7.2
 	 * @since   2.7.2
-	 * @todo    by date
+	 * @todo    per product
+	 * @todo    per category
+	 * @todo    per tag
+	 * @todo    by date (i.e. not time)
 	 * @todo    redirect to custom URL when product is not available
 	 */
 	function __construct() {
@@ -49,6 +52,7 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	 *
 	 * @version 2.7.2
 	 * @version 2.7.2
+	 * @todo    if ( '-' === %time_today% )
 	 */
 	function maybe_add_unavailable_by_time_message() {
 		if ( ! $this->check_is_purchasable_by_time( true, null ) ) {
@@ -66,6 +70,61 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	}
 
 	/**
+	 * check_time_from.
+	 *
+	 * @version 2.7.2
+	 * @version 2.7.2
+	 */
+	function check_time_from( $time_from ) {
+		$time_from = explode( ':', $time_from );
+		if ( isset( $time_from[0] ) && $this->hours_now < $time_from[0] ) {
+			return false;
+		}
+		if ( isset( $time_from[1] ) && $time_from[0] == $this->hours_now && $this->minutes_now < $time_from[1] ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * check_time_to.
+	 *
+	 * @version 2.7.2
+	 * @version 2.7.2
+	 */
+	function check_time_to( $time_to ) {
+		$time_to = explode( ':', $time_to );
+		if ( isset( $time_to[0] ) && $this->hours_now > $time_to[0] ) {
+			return false;
+		}
+		if ( isset( $time_to[1] ) && $time_to[0] == $this->hours_now && $this->minutes_now >= $time_to[1] ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * check_time.
+	 *
+	 * @version 2.7.2
+	 * @version 2.7.2
+	 */
+	function check_time( $_time ) {
+		$_time = explode( '-', $_time );
+		if ( isset( $_time[0] ) ) {
+			if ( ! $this->check_time_from( $_time[0] ) ) {
+				return false;
+			}
+		}
+		if ( isset( $_time[1] ) ) {
+			if ( ! $this->check_time_to( $_time[1] ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * check_is_purchasable_by_time.
 	 *
 	 * @version 2.7.2
@@ -79,25 +138,13 @@ class WCJ_Product_By_Time extends WCJ_Module {
 				if ( '-' === $_time ) {
 					return false;
 				}
-				$_time = explode( '-', $_time );
-				if ( isset( $_time[0] ) ) {
-					$time_from = explode( ':', $_time[0] );
-					if ( isset( $time_from[0] ) && $this->hours_now < $time_from[0] ) {
-						return false;
-					}
-					if ( isset( $time_from[1] ) && $time_from[0] == $this->hours_now && $this->minutes_now < $time_from[1] ) {
-						return false;
+				$_time = explode( ',', $_time );
+				foreach ( $_time as $_single_time ) {
+					if ( $this->check_time( $_single_time ) ) {
+						return true;
 					}
 				}
-				if ( isset( $_time[1] ) ) {
-					$time_to = explode( ':', $_time[1] );
-					if ( isset( $time_to[0] ) && $this->hours_now > $time_to[0] ) {
-						return false;
-					}
-					if ( isset( $time_to[1] ) && $time_to[0] == $this->hours_now && $this->minutes_now >= $time_to[1] ) {
-						return false;
-					}
-				}
+				return false;
 			}
 		}
 		return $purchasable;
@@ -136,7 +183,7 @@ class WCJ_Product_By_Time extends WCJ_Module {
 					'-'          . PHP_EOL .
 					'-'          . PHP_EOL,
 				'type'     => 'textarea',
-				'css'      => 'height:200px;',
+				'css'      => 'min-width:300px;height:200px;',
 			),
 			array(
 				'title'    => __( 'Message', 'woocommerce-jetpack' ),
