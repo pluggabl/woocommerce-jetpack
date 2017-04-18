@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack General Shortcodes class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -243,14 +243,14 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_currency_select_link_list.
 	 *
-	 * @version 2.5.5
+	 * @version 2.7.2
 	 * @since   2.4.5
 	 */
 	function wcj_currency_select_link_list( $atts, $content ) {
 		$html = '';
 		$shortcode_currencies = $this->get_shortcode_currencies( $atts );
 		// Options
-		$currencies = wcj_get_currencies_names_and_symbols();
+		$currencies = wcj_get_currencies_names_and_symbols( 'names' );
 		$selected_currency = '';
 		if ( isset( $_SESSION['wcj-currency'] ) ) {
 			$selected_currency = $_SESSION['wcj-currency'];
@@ -265,9 +265,16 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		}
 		$links = array();
 		$first_link = '';
+		$switcher_template = get_option( 'wcj_multicurrency_switcher_template', '%currency_name% (%currency_symbol%)' );
 		foreach ( $shortcode_currencies as $currency_code ) {
 			if ( isset( $currencies[ $currency_code ] ) ) {
-				$the_link = '<a href="' . add_query_arg( 'wcj-currency', $currency_code ) . '">' . $currencies[ $currency_code ] . '</a>';
+				$template_replaced_values = array(
+					'%currency_name%'   => $currencies[ $currency_code ],
+					'%currency_code%'   => $currency_code,
+					'%currency_symbol%' => wcj_get_currency_symbol( $currency_code ),
+				);
+				$currency_switcher_output = str_replace( array_keys( $template_replaced_values ), array_values( $template_replaced_values ), $switcher_template );
+				$the_link = '<a href="' . add_query_arg( 'wcj-currency', $currency_code ) . '">' . $currency_switcher_output . '</a>';
 				if ( $currency_code != $selected_currency ) {
 					$links[] = $the_link;
 				} else {
@@ -305,7 +312,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_currency_selector.
 	 *
-	 * @version 2.5.5
+	 * @version 2.7.2
 	 * @since   2.4.5
 	 */
 	private function get_currency_selector( $atts, $content, $type = 'select' ) {
@@ -320,7 +327,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		}
 		$shortcode_currencies = $this->get_shortcode_currencies( $atts );
 		// Options
-		$currencies = wcj_get_currencies_names_and_symbols();
+		$currencies = wcj_get_currencies_names_and_symbols( 'names' );
 		$selected_currency = '';
 		if ( isset( $_SESSION['wcj-currency'] ) ) {
 			$selected_currency = $_SESSION['wcj-currency'];
@@ -333,15 +340,22 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 				}
 			}
 		}
+		$switcher_template = get_option( 'wcj_multicurrency_switcher_template', '%currency_name% (%currency_symbol%)' );
 		foreach ( $shortcode_currencies as $currency_code ) {
 			if ( isset( $currencies[ $currency_code ] ) ) {
+				$template_replaced_values = array(
+					'%currency_name%'   => $currencies[ $currency_code ],
+					'%currency_code%'   => $currency_code,
+					'%currency_symbol%' => wcj_get_currency_symbol( $currency_code ),
+				);
+				$currency_switcher_output = str_replace( array_keys( $template_replaced_values ), array_values( $template_replaced_values ), $switcher_template );
 				if ( '' == $selected_currency ) {
 					$selected_currency = $currency_code;
 				}
 				if ( 'select' === $type ) {
-					$html .= '<option value="' . $currency_code . '" ' . selected( $currency_code, $selected_currency, false ) . '>' . $currencies[ $currency_code ] . '</option>';
+					$html .= '<option value="' . $currency_code . '" ' . selected( $currency_code, $selected_currency, false ) . '>' . $currency_switcher_output . '</option>';
 				} elseif ( 'radio' === $type ) {
-					$html .= '<input type="radio" name="wcj-currency" id="wcj-currency-radio" value="' . $currency_code . '" ' . checked( $currency_code, $selected_currency, false ) . ' onclick="this.form.submit()"> ' . $currencies[ $currency_code ] . '<br>';
+					$html .= '<input type="radio" name="wcj-currency" id="wcj-currency-radio" value="' . $currency_code . '" ' . checked( $currency_code, $selected_currency, false ) . ' onclick="this.form.submit()"> ' . $currency_switcher_output . '<br>';
 				}
 			}
 		}

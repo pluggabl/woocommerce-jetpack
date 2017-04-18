@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -362,8 +362,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.6.0
-	 * @todo    rounding (maybe)
+	 * @version 2.7.2
+	 * @todo    "pretty prices"
 	 */
 	function add_settings() {
 		$currency_from = get_woocommerce_currency();
@@ -424,6 +424,14 @@ class WCJ_Multicurrency extends WCJ_Module {
 				'default'  => absint( get_option( 'woocommerce_price_num_decimals', 2 ) ),
 				'type'     => 'number',
 				'custom_attributes' => array( 'min' => 0 ),
+			),
+			array(
+				'title'    => __( 'Currency Switcher Template', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Replaced values:', 'woocommerce-jetpack' ) . ' ' . '%currency_name%, %currency_symbol%, %currency_code%.',
+				'id'       => 'wcj_multicurrency_switcher_template',
+				'default'  => '%currency_name% (%currency_symbol%)',
+				'type'     => 'text',
+				'css'      => 'min-width:300px;width:66%;',
 			),
 			array(
 				'type'     => 'sectionend',

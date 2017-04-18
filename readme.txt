@@ -154,6 +154,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 18/04/2017 =
+~!	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Currency Switcher Template" option added.
 	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
