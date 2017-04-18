@@ -18,7 +18,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	 * Constructor.
 	 * @version 2.4.8
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'product_input_fields';
 		$this->short_desc = __( 'Product Input Fields', 'woocommerce-jetpack' );
@@ -50,7 +50,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	 * @version 2.2.2
 	 * @since   2.2.2
 	 */
-	public function delete_file_uploads( $postid ) {
+	function delete_file_uploads( $postid ) {
 		$the_order = wc_get_order( $postid );
 		$the_items = $the_order->get_items();
 		foreach ( $the_items as $item ) {
@@ -69,7 +69,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	 * @version 2.5.0
 	 * @since   2.2.2
 	 */
-	public function handle_downloads() {
+	function handle_downloads() {
 		if ( isset ( $_GET['wcj_download_file'] ) ) {
 			$file_name = $_GET['wcj_download_file'];
 			$upload_dir = wcj_get_wcj_uploads_dir( 'input_fields_uploads' );
@@ -90,14 +90,14 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * register_script.
 	 */
-	public function register_scripts() {
+	function register_scripts() {
 		wp_register_script( 'wcj-product-input-fields', WCJ()->plugin_url() . '/includes/js/product-input-fields.js', array( 'jquery' ), false, true );
 	}
 
 	/**
 	 * enqueue_checkout_script.
 	 */
-	public function enqueue_scripts() {
+	function enqueue_scripts() {
 		if( ! is_product() ) return;
 		wp_enqueue_script( 'wcj-product-input-fields' );
 	}
@@ -105,7 +105,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * get_options.
 	 */
-	public function get_options() {
+	function get_options() {
 		$product_input_fields_abstract = new WCJ_Product_Input_Fields_Abstract();
 		$product_input_fields_abstract->scope = 'global';
 		return $product_input_fields_abstract->get_options();
@@ -117,9 +117,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	 * @version 2.7.0
 	 */
 	function get_settings() {
-
 		$settings = array(
-
 			array(
 				'title'    => __( 'Product Input Fields per Product Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
@@ -127,7 +125,6 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 					. __( 'When enabled this module will add "Product Input Fields" tab to each product\'s "Edit" page.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_input_fields_local_options',
 			),
-
 			array(
 				'title'    => __( 'Product Input Fields - per Product', 'woocommerce-jetpack' ),
 				'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
@@ -136,7 +133,6 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Default Number of Product Input Fields per Product', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_input_fields_local_total_number_default',
@@ -152,19 +148,16 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 					)
 				),
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_input_fields_local_options',
 			),
-
 			array(
 				'title'    => __( 'Product Input Fields Global Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => __( 'Add custom input fields to product\'s single page for customer to fill before adding product to cart.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_input_fields_global_options',
 			),
-
 			array(
 				'title'    => __( 'Product Input Fields - All Products', 'woocommerce-jetpack' ),
 				'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
@@ -173,7 +166,6 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Product Input Fields Number', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Click Save changes after you change this number.', 'woocommerce-jetpack' ),
@@ -190,7 +182,6 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				),
 			),
 		);
-
 		$options = $this->get_options();
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_input_fields_global_total_number', 1 ) ); $i++ ) {
 			foreach( $options as $option ) {
@@ -206,19 +197,16 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				);
 			}
 		}
-
-		$settings[] = array(
+		$settings = array_merge( $settings, array(
+			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_input_fields_global_options',
-		);
-
-		$settings = array_merge( $settings, array(
+			),
 			array(
 				'title'    => __( 'Frontend View Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_product_input_fields_frontend_view_options',
 			),
-
 			array(
 				'title'    => __( 'HTML to add after required field title', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_input_fields_frontend_view_required_html',
@@ -226,7 +214,6 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'type'     => 'textarea',
 				'css'      => 'width:30%;min-width:300px;',
 			),
-
 			array(
 				'title'    => __( 'Item Name Order Table Format', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Affects Checkout, Emails and Admin Orders View', 'woocommerce-jetpack' ),
@@ -235,20 +222,17 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'type'     => 'textarea',
 				'css'      => 'width:30%;min-width:300px;',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_input_fields_frontend_view_options',
 			),
 		) );
-
 		$settings = array_merge( $settings, array(
 			array(
 				'title'    => __( 'Emails Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_product_input_fields_emails_options',
 			),
-
 			array(
 				'title'    => __( 'Attach Files to Admin\'s New Order Emails', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Attach', 'woocommerce-jetpack' ),
@@ -256,7 +240,6 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'title'    => __( 'Attach Files to Customer\'s Processing Order Emails', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Attach', 'woocommerce-jetpack' ),
@@ -264,20 +247,17 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_input_fields_emails_options',
 			),
 		) );
-
 		$settings = array_merge( $settings, array(
 			array(
 				'title'    => __( 'Admin Order View Options', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'id'       => 'wcj_product_input_fields_admin_view_options',
 			),
-
 			array(
 				'title'    => __( 'Replace Field ID with Field Label', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -285,13 +265,11 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),
-
 			array(
 				'type'     => 'sectionend',
 				'id'       => 'wcj_product_input_fields_admin_view_options',
 			),
 		) );
-
 		return $this->add_standard_settings( $settings );
 	}
 }
