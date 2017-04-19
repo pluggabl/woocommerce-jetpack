@@ -17,7 +17,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
 	public function __construct() {
 
@@ -29,6 +29,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 //			'wcj_image',
 			'wcj_cart_items_total_weight',
 			'wcj_cart_items_total_quantity',
+			'wcj_cart_total',
 			'wcj_wpml',
 			'wcj_wpml_translate',
 			'wcj_country_select_drop_down_list',
@@ -510,6 +511,19 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	function wcj_cart_items_total_weight( $atts ) {
 		$the_cart = WC()->cart;
 		return $the_cart->cart_contents_weight;
+	}
+
+	/**
+	 * wcj_cart_total.
+	 *
+	 * @version 2.7.2
+	 * @since   2.7.2
+	 */
+	function wcj_cart_total( $atts ) {
+		if ( $_cart = WC()->cart ) {
+			return $_cart->get_cart_total();
+		}
+		return '';
 	}
 
 	/**
