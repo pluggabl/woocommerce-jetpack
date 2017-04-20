@@ -846,7 +846,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				)
 			);
 		}
-		return $this->add_standard_settings( $settings );
+		return $settings;
 	}
 
 }

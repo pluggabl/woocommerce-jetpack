@@ -153,7 +153,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 20/04/2017 =
+= 2.7.2 - 21/04/2017 =
 ~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
 ~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
 ~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
