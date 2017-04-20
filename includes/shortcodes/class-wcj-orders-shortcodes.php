@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -553,18 +553,38 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_checkout_field.
 	 *
-	 * @version 2.4.5
+	 * @version 2.7.2
 	 */
 	function wcj_order_checkout_field( $atts ) {
 		$field_id = ( string ) $atts['field_id'];
 		if ( '' == $field_id ) {
 			return '';
 		}
-		if ( ! isset( $this->the_order->$field_id ) ) {
-			return '';
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+			if ( ! isset( $this->the_order->$field_id ) ) {
+				return '';
+			}
+			$field_value = $this->the_order->$field_id;
+			return ( is_array( $field_value ) && isset( $field_value['value'] ) ) ? $field_value['value'] : $field_value;
+		} else {
+			$order_data = $this->the_order->get_data();
+			if ( substr( $field_id, 0, 8 ) === 'billing_' ) {
+				$billing_field_id = substr( $field_id, 8 );
+				if ( isset( $order_data['billing'][ $billing_field_id ] ) ) {
+					return $order_data['billing'][ $billing_field_id ];
+				}
+			} elseif ( substr( $field_id, 0, 9 ) === 'shipping_' ) {
+				$shipping_field_id = substr( $field_id, 9 );
+				if ( isset( $order_data['shipping'][ $shipping_field_id ] ) ) {
+					return $order_data['shipping'][ $shipping_field_id ];
+				}
+			}
+			if ( isset( $order_data[ $field_id ] ) ) {
+				return ( is_array( $order_data[ $field_id ] ) && isset( $order_data[ $field_id ]['value'] ) ) ? $order_data[ $field_id ]['value'] : $order_data[ $field_id ];
+			} else {
+				return '';
+			}
 		}
-		$field_value = $this->the_order->$field_id;
-		return ( is_array( $field_value ) && isset( $field_value['value'] ) ) ? $field_value['value'] : $field_value;
 	}
 
 	/**
