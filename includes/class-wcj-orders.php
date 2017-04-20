@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -17,9 +17,9 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'orders';
 		$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
@@ -38,12 +38,12 @@ class WCJ_Orders extends WCJ_Module {
 			}
 
 			// Custom columns
-			add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_column' ),     PHP_INT_MAX - 1 );
-			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
-			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
-				// Country filtering
+			add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_columns' ),   PHP_INT_MAX - 1 );
+			add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_column' ), PHP_INT_MAX );
+			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) || 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
+				// Billing country or Currency filtering
 				add_action( 'restrict_manage_posts', array( $this, 'restrict_manage_posts' ) );
-				add_filter( 'parse_query',           array( $this, 'orders_by_country_admin_filter_query' ) );
+				add_filter( 'parse_query',           array( $this, 'parse_query' ) );
 			}
 
 			// Order currency
@@ -143,7 +143,6 @@ class WCJ_Orders extends WCJ_Module {
 			if ( current_user_can( 'edit_others_pages' ) ) {
 				if ( isset( $_GET['post_status'] ) && false !== strpos( $_GET['post_status'], ',' ) ) {
 					$post_statuses = explode( ',', $_GET['post_status'] );
-//					$query->set( 'post_status', $post_statuses );
 					$query->query['post_status']      = $post_statuses;
 					$query->query_vars['post_status'] = $post_statuses;
 				}
@@ -201,7 +200,6 @@ class WCJ_Orders extends WCJ_Module {
 			if ( current_user_can( 'edit_others_pages' ) ) {
 				if ( isset( $_GET['wcj_admin_filter_statuses'] ) ) {
 					$post_statuses = $_GET['wcj_admin_filter_statuses'];
-//					$query->set( 'post_status', $post_statuses );
 					$query->query['post_status']      = $post_statuses;
 					$query->query_vars['post_status'] = $post_statuses;
 				}
@@ -242,33 +240,58 @@ class WCJ_Orders extends WCJ_Module {
 	}
 
 	/**
-	 * Filter the orders in admin based on options
+	 * Filter the orders in admin based on options.
 	 *
-	 * @access public
-	 * @param mixed $query
-	 * @return void
+	 * @version 2.7.2
+	 * @access  public
+	 * @param   mixed $query
+	 * @return  void
 	 */
-	function orders_by_country_admin_filter_query( $query ) {
+	function parse_query( $query ) {
 		global $typenow, $wp_query;
-		if ( $typenow == 'shop_order' && isset( $_GET['country'] ) && 'all' != $_GET['country'] ) {
-			$query->query_vars['meta_value'] = $_GET['country'];//'FR';
-			$query->query_vars['meta_key']   = '_billing_country';
+		if ( $typenow != 'shop_order' ) {
+			return;
+		}
+		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) && isset( $_GET['country'] ) && 'all' != $_GET['country'] ) {
+			$query->query_vars['meta_query'][] = array(
+				'key'   => '_billing_country',
+				'value' => $_GET['country'],
+			);
+		}
+		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) && isset( $_GET['currency'] ) && 'all' != $_GET['currency'] ) {
+			$query->query_vars['meta_query'][] = array(
+				'key'   => '_order_currency',
+				'value' => $_GET['currency'],
+			);
 		}
 	}
 
 	/**
-	 * Filters for post types
+	 * Filters for post types.
+	 *
+	 * @version 2.7.2
 	 */
-	public function restrict_manage_posts() {
+	function restrict_manage_posts() {
 		global $typenow, $wp_query;
 		if ( in_array( $typenow, wc_get_order_types( 'order-meta-boxes' ) ) ) {
-			$selected_coutry = isset( $_GET['country'] ) ? $_GET['country'] : 'all';
-			$countries = array_merge( array( 'all' => __( 'All countries', 'woocommerce-jetpack' ) ), wcj_get_countries() );
-			echo '<select id="country" name="country">';
-			foreach ( $countries as $code => $name ) {
-				echo '<option value="' . $code . '" ' . selected( $code, $selected_coutry, false ) . '>' . $name . '</option>';
+			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
+				$selected_coutry = isset( $_GET['country'] ) ? $_GET['country'] : 'all';
+				$countries = array_merge( array( 'all' => __( 'All countries', 'woocommerce-jetpack' ) ), wcj_get_countries() );
+				echo '<select id="country" name="country">';
+				foreach ( $countries as $code => $name ) {
+					echo '<option value="' . $code . '" ' . selected( $code, $selected_coutry, false ) . '>' . $name . '</option>';
+				}
+				echo '</select>';
 			}
-			echo '</select>';
+			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
+				$selected_currency = isset( $_GET['currency'] ) ? $_GET['currency'] : 'all';
+				$currencies = array_merge( array( 'all' => __( 'All currencies', 'woocommerce-jetpack' ) ), wcj_get_currencies_names_and_symbols() );
+				echo '<select id="currency" name="currency">';
+				foreach ( $currencies as $code => $name ) {
+					echo '<option value="' . $code . '" ' . selected( $code, $selected_currency, false ) . '>' . $name . '</option>';
+				}
+				echo '</select>';
+			}
 		}
 	}
 
@@ -296,13 +319,16 @@ class WCJ_Orders extends WCJ_Module {
 	}
 
 	/**
-	 * add_order_column.
+	 * add_order_columns.
 	 *
-	 * @version 2.5.3
+	 * @version 2.7.2
 	 */
-	function add_order_column( $columns ) {
+	function add_order_columns( $columns ) {
 		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
 			$columns['country'] = __( 'Country', 'woocommerce-jetpack' );
+		}
+		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
+			$columns['currency'] = __( 'Currency', 'woocommerce-jetpack' );
 		}
 		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
@@ -316,23 +342,24 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Output custom columns for orders
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 * @param   string $column
 	 */
-	function render_order_columns( $column ) {
+	function render_order_column( $column ) {
 		if ( 'country' === $column && 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
-			$order = wc_get_order( get_the_ID() );
-//			$country_code = wcj_get_customer_country( $order->customer_user );
-			$country_code = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->billing_country : $order->get_billing_country() );
+			$country_code = do_shortcode( '[wcj_order_checkout_field field_id="billing_country"]' );
 			echo ( 2 == strlen( $country_code ) )
 				? wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code )
 				: wcj_get_country_name_by_code( $country_code );
-		}
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
-		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
-				if ( 'wcj_orders_custom_column_' . $i === $column ) {
-					echo do_shortcode( get_option( 'wcj_orders_list_custom_columns_value_' . $i, '' ) );
+		} elseif ( 'currency' === $column && 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
+			echo do_shortcode( '[wcj_order_currency]' );
+		} else {
+			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+			for ( $i = 1; $i <= $total_number; $i++ ) {
+				if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
+					if ( 'wcj_orders_custom_column_' . $i === $column ) {
+						echo do_shortcode( get_option( 'wcj_orders_list_custom_columns_value_' . $i, '' ) );
+					}
 				}
 			}
 		}
@@ -354,7 +381,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.5.7
+	 * @version 2.7.2
 	 * @since   2.5.3
 	 */
 	function add_settings() {
@@ -412,9 +439,16 @@ class WCJ_Orders extends WCJ_Module {
 				'id'       => 'wcj_orders_list_custom_columns_options',
 			),
 			array(
-				'title'    => __( 'Country', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+				'title'    => __( 'Billing Country', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Add column and filtering', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_orders_list_custom_columns_country',
+				'default'  => 'no',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Currency', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Add column and filtering', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_orders_list_custom_columns_currency',
 				'default'  => 'no',
 				'type'     => 'checkbox',
 			),
