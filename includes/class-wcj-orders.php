@@ -325,10 +325,10 @@ class WCJ_Orders extends WCJ_Module {
 	 */
 	function add_order_columns( $columns ) {
 		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
-			$columns['country'] = __( 'Country', 'woocommerce-jetpack' );
+			$columns['country'] = __( 'Billing Country', 'woocommerce-jetpack' );
 		}
 		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
-			$columns['currency'] = __( 'Currency', 'woocommerce-jetpack' );
+			$columns['currency'] = __( 'Currency Code', 'woocommerce-jetpack' );
 		}
 		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
@@ -446,7 +446,7 @@ class WCJ_Orders extends WCJ_Module {
 				'type'     => 'checkbox',
 			),
 			array(
-				'title'    => __( 'Currency', 'woocommerce-jetpack' ),
+				'title'    => __( 'Currency Code', 'woocommerce-jetpack' ),
 				'desc'     => __( 'Add column and filtering', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_orders_list_custom_columns_currency',
 				'default'  => 'no',

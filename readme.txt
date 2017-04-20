@@ -156,7 +156,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 = 2.7.2 - 20/04/2017 =
 ~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
 ~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
-~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency" column and filtering added.
+~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
 	* Dev - Shortcodes - General - `[wcj_cart_total]` shortcode added.
 ~!	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Currency Switcher Template" option added.
