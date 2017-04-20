@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -105,28 +105,60 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * add_item.
+	 *
+	 * @version 2.7.2
 	 */
 	private function add_item( $items, $new_item_args = array() ) {
-		if ( empty ( $new_item_args ) ) return $items;
+		if ( empty ( $new_item_args ) ) {
+			return $items;
+		}
 		extract( $new_item_args );
 		// Create item
-		$items[] = array(
-			'is_custom'         => true,
-			'name'              => $name,
-			'type'              => 'line_item',
-			'qty'               => $qty,
-			'line_subtotal'     => $line_subtotal,
-			'line_total'        => $line_total,
-			'line_tax'          => $line_tax,
-			'line_subtotal_tax' => $line_subtotal_tax,
-			'item_meta'         => array(
-				'_qty'               => array( $qty ),
-				'_line_subtotal'     => array( $line_subtotal ),
-				'_line_total'        => array( $line_total ),
-				'_line_tax'          => array( $line_tax ),
-				'_line_subtotal_tax' => array( $line_subtotal_tax ),
-			),
-		);
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+			$item = array(
+				'is_custom'         => true,
+				'name'              => $name,
+				'type'              => 'line_item',
+				'qty'               => $qty,
+				'line_subtotal'     => $line_subtotal,
+				'line_total'        => $line_total,
+				'line_tax'          => $line_tax,
+				'line_subtotal_tax' => $line_subtotal_tax,
+				'item_meta'         => array(
+					'_qty'               => array( $qty ),
+					'_line_subtotal'     => array( $line_subtotal ),
+					'_line_total'        => array( $line_total ),
+					'_line_tax'          => array( $line_tax ),
+					'_line_subtotal_tax' => array( $line_subtotal_tax ),
+				),
+			);
+		} else {
+			if ( 'shipping' === $type ) {
+				$item = new WC_Order_Item_Shipping();
+				$item->set_props( array(
+					'method_title' => $name,
+					'method_id'    => '',
+					'total'        => wc_format_decimal( $line_total ),
+					'total_tax'    => $line_tax,
+					'taxes'        => array(
+						'total' => array( $line_tax ),
+					),
+				) );
+			} else { // ( 'discount' === $type )
+				$item = new WC_Order_Item_Fee();
+				$item->set_props( array(
+					'name'         => $name,
+					'total'        => wc_format_decimal( $line_total ),
+					'total_tax'    => $line_tax,
+					'tax_class'    => '',
+					'tax_status'   => 'taxable',
+					'taxes'        => array(
+						'total' => array( $line_tax ),
+					),
+				) );
+			}
+		}
+		$items[] = $item;
 		return $items;
 	}
 
@@ -234,7 +266,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -261,7 +293,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			$total_shipping_tax_excl = $the_order->get_total_shipping();
 			$shipping_tax            = $the_order->get_shipping_tax();
 
-			$the_items = $this->add_item( $the_items, array( 'name' => $name, 'qty' => 1, 'line_subtotal' => $total_shipping_tax_excl, 'line_total' => $total_shipping_tax_excl, 'line_tax' => $shipping_tax, 'line_subtotal_tax' => $shipping_tax, ) );
+			$the_items = $this->add_item( $the_items, array( 'name' => $name, 'qty' => 1, 'line_subtotal' => $total_shipping_tax_excl, 'line_total' => $total_shipping_tax_excl, 'line_tax' => $shipping_tax, 'line_subtotal_tax' => $shipping_tax, 'type' => 'shipping' ) );
 		}
 
 		// Discount as item
@@ -278,7 +310,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			$total_discount_tax_excl *= -1;
 			$discount_tax *= -1;
 
-			$the_items = $this->add_item( $the_items, array( 'name' => $name, 'qty' => 1, 'line_subtotal' => $total_discount_tax_excl, 'line_total' => $total_discount_tax_excl, 'line_tax' => $discount_tax, 'line_subtotal_tax' => $discount_tax, ) );
+			$the_items = $this->add_item( $the_items, array( 'name' => $name, 'qty' => 1, 'line_subtotal' => $total_discount_tax_excl, 'line_total' => $total_discount_tax_excl, 'line_tax' => $discount_tax, 'line_subtotal_tax' => $discount_tax, 'type' => 'discount' ) );
 		}
 
 		// Starting data[] by adding columns titles
@@ -289,7 +321,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		// Items to data[]
 		$item_counter = 0;
 		foreach ( $the_items as $item_id => $item ) {
-			$item['is_custom'] = ( isset( $item['is_custom'] ) ) ? true : false;
+			$item['is_custom'] = ( isset( $item['is_custom'] ) ) ? true : false; // $item['is_custom'] may be defined only if WCJ_IS_WC_VERSION_BELOW_3
 			$the_product = ( true === $item['is_custom'] ) ? null : $the_order->get_product_from_item( $item );
 			$item_counter++;
 			// Columns
@@ -338,7 +370,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						} else {
 							$the_item_title = $item['name'];
 							// Variation (if needed)
-							if ( 0 != $item['variation_id'] && ! in_array( 'item_variation', $columns ) ) {
+							if ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && ! in_array( 'item_variation', $columns ) ) {
 								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">';
 								if ( 'yes' === $atts['variation_as_metadata'] ) {
 									$the_item_title .= wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, true, $the_product );
@@ -401,7 +433,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						break;
 					case 'item_excerpt':
 					case 'product_excerpt':
-						if ( true === $item['is_custom'] ) {
+						if ( true === $item['is_custom'] || ! isset( $item['product_id'] ) ) {
 							$cell_data = '';
 						} else {
 							global $post;
@@ -414,7 +446,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						break;
 					case 'item_short_description':
 					case 'product_short_description':
-						$cell_data = ( true === $item['is_custom'] ) ? '' : ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->post->post_excerpt : $the_product->get_short_description() );
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->post->post_excerpt : $the_product->get_short_description() );
 						break;
 					case 'item_variation':
 					case 'product_variation':

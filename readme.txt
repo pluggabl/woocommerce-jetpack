@@ -153,7 +153,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 19/04/2017 =
+= 2.7.2 - 20/04/2017 =
+~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
 	* Dev - Shortcodes - General - `[wcj_cart_total]` shortcode added.
 ~!	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Currency Switcher Template" option added.
 	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
@@ -166,8 +167,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~D$	* Dev - PRODUCTS - Product User Products - "Product Type" option added.
 ~	* Dev - PRODUCTS - Product User Products - `WP_Query` optimized to return `ids` only.
 ~D	* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
-~!D	* Dev - PRODUCTS - Product by Time - Initial module release.
-~D	* Dev - PRODUCTS - Stock - Initial module release.
+~!D$* Dev - PRODUCTS - Product by Time - Initial module release.
+~D$	* Dev - PRODUCTS - Stock - Initial module release.
 D	* Dev - Shortcodes - Products - `[wcj_product_description]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_product_sale_price]` - `multiply_by` attribute added.
 
