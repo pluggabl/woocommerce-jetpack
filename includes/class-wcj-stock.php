@@ -58,6 +58,7 @@ class WCJ_Stock extends WCJ_Module {
 	 *
 	 * @version 2.7.2
 	 * @version 2.7.2
+	 * @todo    html tags in < WC3
 	 */
 	function custom_out_of_stock( $availability, $_product ) {
 		if ( ! $_product->is_in_stock() ) {
