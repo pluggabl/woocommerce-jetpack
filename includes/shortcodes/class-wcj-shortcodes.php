@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Shortcodes class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -59,12 +59,16 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
+	 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
+	 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 	 */
 	function wcj_shortcode( $atts, $content, $shortcode ) {
 
 		// Init
-		if ( empty( $atts ) ) $atts = array();
+		if ( empty( $atts ) ) {
+			$atts = array();
+		}
 
 		// Add child class specific atts
 		$atts = $this->add_extra_atts( $atts );
@@ -73,11 +77,11 @@ class WCJ_Shortcodes {
 		$global_defaults = array(
 			'before'              => '',
 			'after'               => '',
-			'visibility'          => '',//user_visibility
+			'visibility'          => '', // user_visibility
 //			'login_text'          => __( 'Login', 'woocommerce-jetpack' ),
 			'site_visibility'     => '',
-			'location'            => '',//user_location
-			'not_location'        => '',//user_location
+			'location'            => '', // user_location
+			'not_location'        => '', // user_location
 			'wpml_language'       => '',
 			'wpml_not_language'   => '',
 			'billing_country'     => '',
@@ -87,15 +91,23 @@ class WCJ_Shortcodes {
 			'replace'             => '',
 			'strip_tags'          => 'no',
 			'on_empty'            => '',
+			'time'                => '',
 		);
 		$atts = array_merge( $global_defaults, $atts );
 
 		// Check for required atts
-		if ( false === ( $atts = $this->init_atts( $atts ) ) ) return '';
+		if ( false === ( $atts = $this->init_atts( $atts ) ) ) {
+			return '';
+		}
 
 		// Check for module enabled
 		if ( '' != $atts['module'] && ! wcj_is_module_enabled( $atts['module'] ) ) {
 			return '<p>' . sprintf( __( '%s module not enabled!', 'woocommerce-jetpack' ), $atts['module_name'] ) . '</p>';
+		}
+
+		// Check if time is ok
+		if ( '' != $atts['time'] && ! wcj_check_time( $atts['time'] ) ) {
+			return '';
 		}
 
 		// Check if privileges are ok
@@ -133,7 +145,6 @@ class WCJ_Shortcodes {
 			) {
 				return '';
 			}
-
 		}
 
 		// Check if location is ok
@@ -148,25 +159,37 @@ class WCJ_Shortcodes {
 		if ( 'wcj_wpml' === $shortcode || 'wcj_wpml_translate' === $shortcode ) $atts['wpml_language']     = isset( $atts['lang'] ) ? $atts['lang'] : '';
 		if ( 'wcj_wpml' === $shortcode || 'wcj_wpml_translate' === $shortcode ) $atts['wpml_not_language'] = isset( $atts['not_lang'] ) ? $atts['not_lang'] : '';
 		if ( '' != $atts['wpml_language'] ) {
-			if ( ! defined( 'ICL_LANGUAGE_CODE' ) ) return '';
-			if ( ! in_array( ICL_LANGUAGE_CODE, $this->custom_explode( $atts['wpml_language'] ) ) ) return '';
+			if ( ! defined( 'ICL_LANGUAGE_CODE' ) ) {
+				return '';
+			}
+			if ( ! in_array( ICL_LANGUAGE_CODE, $this->custom_explode( $atts['wpml_language'] ) ) ) {
+				return '';
+			}
 		}
 		// Check if language is ok (not in...)
 		if ( '' != $atts['wpml_not_language'] ) {
 			if ( defined( 'ICL_LANGUAGE_CODE' ) ) {
-				if ( in_array( ICL_LANGUAGE_CODE, $this->custom_explode( $atts['wpml_not_language'] ) ) ) return '';
+				if ( in_array( ICL_LANGUAGE_CODE, $this->custom_explode( $atts['wpml_not_language'] ) ) ) {
+					return '';
+				}
 			}
 		}
 
 		// Check if billing country by arg is ok
 		if ( '' != $atts['billing_country'] ) {
-			if ( ! isset( $_GET['billing_country'] ) ) return '';
-			if ( ! in_array( $_GET['billing_country'], $this->custom_explode( $atts['billing_country'] ) ) ) return '';
+			if ( ! isset( $_GET['billing_country'] ) ) {
+				return '';
+			}
+			if ( ! in_array( $_GET['billing_country'], $this->custom_explode( $atts['billing_country'] ) ) ) {
+				return '';
+			}
 		}
 		// Check if billing country by arg is ok (not in...)
 		if ( '' != $atts['not_billing_country'] ) {
 			if ( isset( $_GET['billing_country'] ) ) {
-				if ( in_array( $_GET['billing_country'], $this->custom_explode( $atts['not_billing_country'] ) ) ) return '';
+				if ( in_array( $_GET['billing_country'], $this->custom_explode( $atts['not_billing_country'] ) ) ) {
+					return '';
+				}
 			}
 		}
 

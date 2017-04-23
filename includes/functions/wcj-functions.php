@@ -4,11 +4,95 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_check_time_from' ) ) {
+	/**
+	 * wcj_check_time_from.
+	 *
+	 * @version 2.7.2
+	 * @version 2.7.2
+	 */
+	function wcj_check_time_from( $time_from, $args ) {
+		$time_from = explode( ':', $time_from );
+		if ( isset( $time_from[0] ) && $args['hours_now'] < $time_from[0] ) {
+			return false;
+		}
+		if ( isset( $time_from[1] ) && $time_from[0] == $args['hours_now'] && $args['minutes_now'] < $time_from[1] ) {
+			return false;
+		}
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wcj_check_time_to' ) ) {
+	/**
+	 * wcj_check_time_to.
+	 *
+	 * @version 2.7.2
+	 * @version 2.7.2
+	 */
+	function wcj_check_time_to( $time_to, $args ) {
+		$time_to = explode( ':', $time_to );
+		if ( isset( $time_to[0] ) && $args['hours_now'] > $time_to[0] ) {
+			return false;
+		}
+		if ( isset( $time_to[1] ) && $time_to[0] == $args['hours_now'] && $args['minutes_now'] > $time_to[1] ) {
+			return false;
+		}
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wcj_check_single_time' ) ) {
+	/**
+	 * wcj_check_single_time.
+	 *
+	 * @version 2.7.2
+	 * @version 2.7.2
+	 */
+	function wcj_check_single_time( $_time, $args ) {
+		$_time = explode( '-', $_time );
+		if ( isset( $_time[0] ) ) {
+			if ( ! wcj_check_time_from( $_time[0], $args ) ) {
+				return false;
+			}
+		}
+		if ( isset( $_time[1] ) ) {
+			if ( ! wcj_check_time_to( $_time[1], $args ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wcj_check_time' ) ) {
+	/**
+	 * wcj_check_time.
+	 *
+	 * @version 2.7.2
+	 * @version 2.7.2
+	 */
+	function wcj_check_time( $_time, $args = array() ) {
+		if ( empty( $args ) ) {
+			$time_now = current_time( 'timestamp' );
+			$args['hours_now']   = intval( date( 'H', $time_now ) );
+			$args['minutes_now'] = intval( date( 'i', $time_now ) );
+		}
+		$_time = explode( ',', $_time );
+		foreach ( $_time as $_single_time ) {
+			if ( wcj_check_single_time( $_single_time, $args ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
 
 if ( ! function_exists( 'wcj_get_product_id' ) ) {
 	/**

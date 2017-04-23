@@ -70,61 +70,6 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	}
 
 	/**
-	 * check_time_from.
-	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
-	 */
-	function check_time_from( $time_from ) {
-		$time_from = explode( ':', $time_from );
-		if ( isset( $time_from[0] ) && $this->hours_now < $time_from[0] ) {
-			return false;
-		}
-		if ( isset( $time_from[1] ) && $time_from[0] == $this->hours_now && $this->minutes_now < $time_from[1] ) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * check_time_to.
-	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
-	 */
-	function check_time_to( $time_to ) {
-		$time_to = explode( ':', $time_to );
-		if ( isset( $time_to[0] ) && $this->hours_now > $time_to[0] ) {
-			return false;
-		}
-		if ( isset( $time_to[1] ) && $time_to[0] == $this->hours_now && $this->minutes_now > $time_to[1] ) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * check_time.
-	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
-	 */
-	function check_time( $_time ) {
-		$_time = explode( '-', $_time );
-		if ( isset( $_time[0] ) ) {
-			if ( ! $this->check_time_from( $_time[0] ) ) {
-				return false;
-			}
-		}
-		if ( isset( $_time[1] ) ) {
-			if ( ! $this->check_time_to( $_time[1] ) ) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	/**
 	 * check_is_purchasable_by_time.
 	 *
 	 * @version 2.7.2
@@ -139,13 +84,7 @@ class WCJ_Product_By_Time extends WCJ_Module {
 				if ( '-' === $_time ) {
 					return false;
 				}
-				$_time = explode( ',', $_time );
-				foreach ( $_time as $_single_time ) {
-					if ( $this->check_time( $_single_time ) ) {
-						return true;
-					}
-				}
-				return false;
+				return wcj_check_time( $_time, array( 'hours_now' => $this->hours_now, 'minutes_now' => $this->minutes_now ) );
 			}
 		}
 		return $purchasable;

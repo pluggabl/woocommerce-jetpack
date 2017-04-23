@@ -154,6 +154,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 24/04/2017 =
+~!D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
 ~!	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
 ~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
