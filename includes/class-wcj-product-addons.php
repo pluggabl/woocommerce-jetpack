@@ -322,12 +322,11 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 * @since   2.5.3
-	 * @todo    check if `get_id()` is ok for >= WC3 (maybe should be `wcj_get_product_id_or_variation_parent_id()`)
 	 */
 	function add_addons_price_to_cart_item( $cart_item_data, $cart_item_key ) {
-		$addons = $this->get_product_addons( ( WCJ_IS_WC_VERSION_BELOW_3 ? $cart_item_data['data']->product_id : $cart_item_data['data']->get_id() ) );
+		$addons = $this->get_product_addons( ( WCJ_IS_WC_VERSION_BELOW_3 ? $cart_item_data['data']->product_id : wcj_get_product_id_or_variation_parent_id( $cart_item_data['data'] ) ) );
 		foreach ( $addons as $addon ) {
 			if ( isset( $cart_item_data[ $addon['price_key'] ] ) ) {
 				$cart_item_data['data']->{$addon['price_key']} = $cart_item_data[ $addon['price_key'] ];
