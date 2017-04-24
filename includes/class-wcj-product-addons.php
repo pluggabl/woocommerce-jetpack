@@ -137,6 +137,9 @@ class WCJ_Product_Addons extends WCJ_Module {
 	 * @since   2.5.3
 	 */
 	function price_change_ajax( $param ) {
+		if ( ! isset( $_POST['product_id'] ) || 0 == $_POST['product_id'] ) {
+			wp_die();
+		}
 		$the_product = wc_get_product( $_POST['product_id'] );
 		$parent_product_id = ( $the_product->is_type( 'variation' ) ) ? wp_get_post_parent_id( $_POST['product_id'] ) : $_POST['product_id'];
 		$addons = $this->get_product_addons( $parent_product_id );

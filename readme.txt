@@ -154,6 +154,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 25/04/2017 =
+~	* Fix - PRODUCTS - Product Addons - Checking for set `product_id` on ajax call.
 ~	* Fix - PRODUCTS - Product Addons - Variable product with equal variation prices ajax issue fixed.
 ~	* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
 ~!D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
