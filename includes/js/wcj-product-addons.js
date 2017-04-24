@@ -21,6 +21,10 @@ function change_price() {
 			is_variable = false;
 			product_id = _ajax_object.product_id;
 		} else {
+			if ( 0 == product_id ) {
+				setTimeout(change_price, 100);
+				return;
+			}
 			is_variable = true;
 		}
 		var data = {
