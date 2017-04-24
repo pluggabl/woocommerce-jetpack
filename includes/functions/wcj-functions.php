@@ -167,11 +167,20 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 	/**
 	 * wcj_get_product_display_price.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 * @since   2.7.0
 	 */
 	function wcj_get_product_display_price( $_product, $price = '', $qty = 1 ) {
-		return ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $_product->get_display_price( $price, $qty ) : wc_get_price_to_display( $_product, array( 'price' => $price, 'qty' => $qty ) );
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+			return $_product->get_display_price( $price, $qty );
+		} else {
+			$minus_sign = '';
+			if ( $price < 0 ) {
+				$minus_sign = '-';
+				$price *= -1;
+			}
+			return $minus_sign . wc_get_price_to_display( $_product, array( 'price' => $price, 'qty' => $qty ) );
+		}
 	}
 }
 

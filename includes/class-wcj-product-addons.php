@@ -172,7 +172,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 * @since   2.5.3
 	 */
 	function enqueue_scripts() {
@@ -180,10 +180,12 @@ class WCJ_Product_Addons extends WCJ_Module {
 			$the_product = wc_get_product();
 			$addons = $this->get_product_addons( wcj_get_product_id_or_variation_parent_id( $the_product ) );
 			if ( ! empty( $addons ) ) {
+				$is_variable_with_single_price = ( $the_product->is_type( 'variable' ) && ( $the_product->get_variation_price( 'min' ) == $the_product->get_variation_price( 'max' ) ) );
 				wp_enqueue_script(  'wcj-product-addons', wcj_plugin_url() . '/includes/js/wcj-product-addons.js', array(), WCJ()->version, true );
 				wp_localize_script( 'wcj-product-addons', 'ajax_object', array(
-					'ajax_url'            => admin_url( 'admin-ajax.php' ),
-					'product_id'          => get_the_ID(),
+					'ajax_url'                      => admin_url( 'admin-ajax.php' ),
+					'product_id'                    => get_the_ID(),
+					'is_variable_with_single_price' => $is_variable_with_single_price,
 				) );
 			}
 		}

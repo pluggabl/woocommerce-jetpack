@@ -153,7 +153,9 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 24/04/2017 =
+= 2.7.2 - 25/04/2017 =
+~	* Fix - PRODUCTS - Product Addons - Variable product with equal variation prices ajax issue fixed.
+~	* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
 ~!D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
 ~!	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.

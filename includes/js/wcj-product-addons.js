@@ -1,7 +1,7 @@
 /**
  * wcj-product-addons.
  *
- * version 2.7.0
+ * version 2.7.2
  * since   2.5.3
  */
 
@@ -39,9 +39,9 @@ function change_price() {
 		});
 		jQuery.post(_ajax_object.ajax_url, data, function(response) {
 			if ( '' != response ) {
-				if ( ! is_variable ) {
+				if ( ! is_variable || _ajax_object.is_variable_with_single_price ) {
 					jQuery("p[class='price']").html(response);
-				} else {
+				} else if ( is_variable ) {
 					jQuery("span[class='price']").html(response);
 				}
 			}
