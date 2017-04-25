@@ -102,6 +102,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'hide_if_zero_quantity' => 'no',
 			'table_format'          => 'horizontal',
 			'avatar_size'           => 96,
+			'count_variations'      => 'no',
 		);
 
 		parent::__construct();
@@ -433,11 +434,17 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_stock_quantity.
 	 *
-	 * @version 2.4.0
+	 * @version 2.7.2
 	 * @since   2.4.0
 	 */
 	function wcj_product_stock_quantity( $atts ) {
 		$stock_quantity = $this->the_product->get_stock_quantity();
+		if ( 'yes' === $atts['count_variations'] && $this->the_product->is_type( 'variable' ) ) {
+			foreach ( $this->the_product->get_available_variations() as $variation ) {
+				$variation_product = wc_get_product( $variation['variation_id'] );
+				$stock_quantity += $variation_product->get_stock_quantity();
+			}
+		}
 		return ( '' != $stock_quantity ) ? $stock_quantity : false;
 	}
 
