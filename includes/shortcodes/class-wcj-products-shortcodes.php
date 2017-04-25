@@ -445,7 +445,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$stock_quantity += $variation_product->get_stock_quantity();
 			}
 		}
-		return ( '' != $stock_quantity ) ? $stock_quantity : false;
+		return ( null !== $stock_quantity ) ? $stock_quantity : '';
 	}
 
 	/**
