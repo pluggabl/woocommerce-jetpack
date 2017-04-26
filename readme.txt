@@ -154,6 +154,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 26/04/2017 =
+~	* Dev - PRICES & CURRENCIES - Currency per Product - Additional check for if cart is set added to `get_cart_checkout_currency()`.
 ~!D$* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
 ~!D$* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - More Button Labels.
