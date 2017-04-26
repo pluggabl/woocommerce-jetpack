@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways by User Role class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  */
@@ -62,7 +62,7 @@ class WCJ_Payment_Gateways_By_User_Role extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 * @since   2.5.3
 	 */
 	function add_settings( $settings ) {
@@ -103,8 +103,7 @@ class WCJ_Payment_Gateways_By_User_Role extends WCJ_Module {
 					'options'   => $user_roles,
 					'custom_attributes' => $custom_attributes,
 				),
-				$settings[] = array(
-					'title'     => '',
+				array(
 					'desc_tip'  => $desc_tip,
 					'desc'      => __( 'Exclude User Roles', 'woocommerce-jetpack' ),
 					'id'        => 'wcj_gateways_user_roles_exclude_' . $key,
