@@ -39,6 +39,7 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module {
 	 *
 	 * @version 2.7.2
 	 * @since   2.7.2
+	 * @todo    apply_filters( 'booster_get_option' )
 	 */
 	function available_shipping_methods( $rates, $package ) {
 		foreach ( $rates as $rate_key => $rate ) {

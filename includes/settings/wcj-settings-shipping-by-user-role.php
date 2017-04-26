@@ -7,7 +7,6 @@
  * @version 2.7.2
  * @since   2.7.2
  * @author  Algoritmika Ltd.
- * @todo    paid?
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -26,8 +25,7 @@ $settings = array(
 );
 $user_roles = wcj_get_user_roles_options();
 foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
-	/* $default_gateways = array( 'bacs' );
-	if ( ! empty( $default_gateways ) && ! in_array( $method->id, $default_gateways ) ) {
+	if ( ! in_array( $method->id, array( 'flat_rate', 'free_shipping', 'local_pickup' ) ) ) {
 		$custom_attributes = apply_filters( 'booster_get_message', '', 'disabled' );
 		if ( '' == $custom_attributes ) {
 			$custom_attributes = array();
@@ -36,11 +34,11 @@ foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
 	} else {
 		$custom_attributes = array();
 		$desc_tip = '';
-	} */
+	}
 	$settings = array_merge( $settings, array(
 		array(
 			'title'     => $method->get_method_title(),
-//			'desc_tip'  => $desc_tip,
+			'desc_tip'  => $desc_tip,
 			'desc'      => __( 'Include User Roles', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_shipping_user_roles_include_' . $method->id,
 			'default'   => '',
@@ -48,10 +46,10 @@ foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
 			'class'     => 'chosen_select',
 			'css'       => 'width: 450px;',
 			'options'   => $user_roles,
-//			'custom_attributes' => $custom_attributes,
+			'custom_attributes' => $custom_attributes,
 		),
 		array(
-//			'desc_tip'  => $desc_tip,
+			'desc_tip'  => $desc_tip,
 			'desc'      => __( 'Exclude User Roles', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_shipping_user_roles_exclude_' . $method->id,
 			'default'   => '',
@@ -59,7 +57,7 @@ foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
 			'class'     => 'chosen_select',
 			'css'       => 'width: 450px;',
 			'options'   => $user_roles,
-//			'custom_attributes' => $custom_attributes,
+			'custom_attributes' => $custom_attributes,
 		),
 	) );
 }
