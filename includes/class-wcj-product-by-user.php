@@ -302,6 +302,49 @@ class WCJ_Product_By_User extends WCJ_Module {
 					'css'      => 'width:300px;',
 				),
 				array(
+					'title'    => __( 'Total Custom Taxonomies', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_by_user_custom_taxonomies_total',
+					'default'  => 1,
+					'type'     => 'custom_number',
+					'desc_tip' => __( 'Press Save changes after you change this number.', 'woocommerce-jetpack' ),
+					'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+					'custom_attributes' => is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
+						apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
+				),
+			)
+		);
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_by_user_custom_taxonomies_total', 1 ) ); $i++ ) {
+			$settings = array_merge( $settings, array(
+					array(
+						'title'    => __( 'Custom Taxonomy', 'woocommerce-jetpack' ) . ' #' . $i,
+						'desc'     => __( 'Enabled', 'woocommerce-jetpack' ),
+						'id'       => 'wcj_product_by_user_custom_taxonomy_' . $i . '_enabled',
+						'default'  => 'no',
+						'type'     => 'checkbox',
+					),
+					array(
+						'desc'     => __( 'Required', 'woocommerce-jetpack' ),
+						'id'       => 'wcj_product_by_user_custom_taxonomy_' . $i . '_required',
+						'default'  => 'no',
+						'type'     => 'checkbox',
+					),
+					array(
+						'desc'     => __( 'ID', 'woocommerce-jetpack' ),
+						'id'       => 'wcj_product_by_user_custom_taxonomy_' . $i . '_id',
+						'default'  => '',
+						'type'     => 'text',
+					),
+					array(
+						'desc'     => __( 'Title', 'woocommerce-jetpack' ),
+						'id'       => 'wcj_product_by_user_custom_taxonomy_' . $i . '_title',
+						'default'  => '',
+						'type'     => 'text',
+					),
+				)
+			);
+		}
+		$settings = array_merge( $settings, array(
+				array(
 					'type'     => 'sectionend',
 					'id'       => 'wcj_product_by_user_options',
 				),
