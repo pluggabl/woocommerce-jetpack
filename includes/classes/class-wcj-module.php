@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -25,7 +25,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.3
+	 * @version 2.7.2
 	 */
 	function __construct( $type = 'module' ) {
 		add_filter( 'wcj_settings_sections',     array( $this, 'settings_section' ) );
@@ -34,7 +34,33 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		if ( 'module' === $this->type ) {
 			$this->parent_id = '';
 		}
+		add_action( 'init', array( $this, 'add_settings_from_file_hook' ) );
 		add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
+	}
+
+	/**
+	 * add_settings.
+	 *
+	 * @version 2.7.2
+	 * @since   2.7.2
+	 */
+	function add_settings_from_file( $settings ) {
+		$filename = wcj_plugin_path() . '/includes/settings/wcj-settings-' . str_replace( '_', '-', $this->id ) . '.php';
+		if ( file_exists ( $filename ) ) {
+			return require( $filename );
+		} else {
+			return $settings;
+		}
+	}
+
+	/*
+	 * add_settings_from_file_hook.
+	 *
+	 * @version 2.7.2
+	 * @since   2.7.2
+	 */
+	function add_settings_from_file_hook() {
+		add_filter( 'wcj_' . $this->id . '_settings', array( $this, 'add_settings_from_file' ) );
 	}
 
 	/*

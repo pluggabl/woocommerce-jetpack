@@ -154,6 +154,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 26/04/2017 =
+~!$D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
+~!	* Dev - Code refactoring - Settings from file.
 ~!D	* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
 ~	* Fix - Shortcodes - Products - `[wcj_product_stock_quantity]` - Return empty string instead of `false` on `null`.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_stock_quantity]` - `count_variations` attribute added.

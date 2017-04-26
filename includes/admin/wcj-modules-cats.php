@@ -122,6 +122,7 @@ return array(
 			'shipping',
 			'left_to_free_shipping',
 			'shipping_calculator',
+			'shipping_by_user_role',
 			'address_formats',
 			'orders',
 			'order_min_amount',
