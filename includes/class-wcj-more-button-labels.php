@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack More Button Labels class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -36,41 +36,12 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 	/**
 	 * set_order_button_text.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
 	function set_order_button_text( $current_text ) {
-		$new_text = get_option( 'wcj_checkout_place_order_button_text', '' );
-		return ( '' != $new_text ) ? $new_text : $current_text;
+		return ( '' != ( $new_text = get_option( 'wcj_checkout_place_order_button_text', '' ) ) ) ? $new_text : $current_text;
 	}
 
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.4.8
-	 */
-	function get_settings() {
-		$settings = array(
-			array(
-				'title'    => __( 'Place order (Order now) Button', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'desc'     => '',
-				'id'       => 'wcj_checkout_place_order_button_options',
-			),
-			array(
-				'title'    => __( 'Text', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Leave blank for WooCommerce default.', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Button on the checkout page.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_checkout_place_order_button_text',
-				'default'  => '',
-				'type'     => 'text',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_checkout_place_order_button_options',
-			),
-		);
-		return $this->add_standard_settings( $settings );
-	}
 }
 
 endif;
