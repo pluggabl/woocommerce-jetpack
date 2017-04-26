@@ -525,11 +525,14 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * settings_section.
 	 * only for `module`
 	 *
-	 * @version 2.5.3
+	 * @version 2.7.2
 	 */
 	function add_enable_module_setting( $settings, $module_desc = '' ) {
 		if ( 'module' != $this->type ) {
 			return $settings;
+		}
+		if ( '' === $module_desc && isset( $this->extra_desc ) ) {
+			$module_desc = $this->extra_desc;
 		}
 		$the_link = '';
 		if ( isset( $this->link ) &&  '' != $this->link ) {

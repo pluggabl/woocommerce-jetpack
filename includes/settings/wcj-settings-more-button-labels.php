@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - Shipping by User Role
+ * WooCommerce Jetpack Settings - More Button Labels
  *
  * @version 2.7.2
  * @since   2.7.2
