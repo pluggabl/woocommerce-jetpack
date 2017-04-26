@@ -323,6 +323,8 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 
 		$required_mark_html_template = '&nbsp;<abbr class="required" title="required">*</abbr>';
 
+		$price_step = sprintf( "%f", ( 1 / pow( 10, get_option( 'wcj_product_by_user_price_step', get_option( 'woocommerce_price_num_decimals', 2 ) ) ) ) );
+
 		$table_data = array();
 		$input_style = 'width:100%;';
 		$table_data[] = array(
@@ -371,7 +373,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			$required_mark_html = ( 'yes' === $atts['regular_price_required'] ) ? $required_mark_html_template : '';
 			$table_data[] = array(
 				'<label for="wcj_add_new_product_regular_price">' . __( 'Regular Price', 'woocommerce-jetpack' ) . $required_mark_html . '</label>',
-				'<input' . $required_html . ' type="number" min="0" step="0.01" id="wcj_add_new_product_regular_price" name="wcj_add_new_product_regular_price" value="' .
+				'<input' . $required_html . ' type="number" min="0" step="' . $price_step . '" id="wcj_add_new_product_regular_price" name="wcj_add_new_product_regular_price" value="' .
 					( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_regular_price', true ) : $args['regular_price'] ) . '">'
 			);
 		}
@@ -380,7 +382,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			$required_mark_html = ( 'yes' === $atts['sale_price_required'] ) ? $required_mark_html_template : '';
 			$table_data[] = array(
 				'<label for="wcj_add_new_product_sale_price">' . __( 'Sale Price', 'woocommerce-jetpack' ) . $required_mark_html . '</label>',
-				'<input' . $required_html . ' type="number" min="0" step="0.01" id="wcj_add_new_product_sale_price" name="wcj_add_new_product_sale_price" value="' .
+				'<input' . $required_html . ' type="number" min="0" step="' . $price_step . '" id="wcj_add_new_product_sale_price" name="wcj_add_new_product_sale_price" value="' .
 					( ( 0 != $atts['product_id'] ) ? get_post_meta( $atts['product_id'], '_sale_price', true ) : $args['sale_price'] ) . '">'
 			);
 		}

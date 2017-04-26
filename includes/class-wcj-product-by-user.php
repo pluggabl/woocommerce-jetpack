@@ -247,6 +247,15 @@ class WCJ_Product_By_User extends WCJ_Module {
 			$fields_required_options,
 			array(
 				array(
+					'title'    => __( 'Price Step', 'woocommerce-jetpack' ),
+					'desc'     => __( 'Number of decimals', 'woocommerce' ),
+					'desc_tip' => __( 'Used for price fields only.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_by_user_price_step',
+					'default'  => get_option( 'woocommerce_price_num_decimals', 2 ),
+					'type'     => 'number',
+					'custom_attributes' => array( 'step' => '1', 'min'  => '0' ),
+				),
+				array(
 					'title'    => __( 'User Visibility', 'woocommerce-jetpack' ),
 					'desc'     => sprintf( __( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module', 'woocommerce-jetpack' ),
 						admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ),
@@ -309,7 +318,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 					'desc_tip' => __( 'Press Save changes after you change this number.', 'woocommerce-jetpack' ),
 					'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 					'custom_attributes' => is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
-						apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
+						apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1' ),
 				),
 			)
 		);
