@@ -145,6 +145,11 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 				set_post_thumbnail( $product_id, $attach_id );
 			}
 
+			// TODO:
+			// Image gallery
+			// <input type="file" multiple> or separate <input type="file"> for each file
+			// update_post_meta( $product_id, '_product_image_gallery', implode( ',', $attach_ids ) );
+
 			wp_update_post( array( 'ID' => $product_id, 'post_status' => $shortcode_atts['post_status'] ) );
 		}
 
@@ -321,7 +326,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		$header_html .= '<form method="post" action="' . remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) .
 			'" enctype="multipart/form-data">'; // todo multipart only if image...
 
-		$required_mark_html_template = '&nbsp;<abbr class="required" title="required">*</abbr>';
+		$required_mark_html_template = '&nbsp;<abbr class="required" title="' . __( 'required', 'woocommerce-jetpack' ) . '">*</abbr>';
 
 		$price_step = sprintf( "%f", ( 1 / pow( 10, get_option( 'wcj_product_by_user_price_step', get_option( 'woocommerce_price_num_decimals', 2 ) ) ) ) );
 
