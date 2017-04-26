@@ -153,7 +153,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 25/04/2017 =
+= 2.7.2 - 26/04/2017 =
+~!D	* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
 ~	* Fix - Shortcodes - Products - `[wcj_product_stock_quantity]` - Return empty string instead of `false` on `null`.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_stock_quantity]` - `count_variations` attribute added.
 ~	* Fix - PRODUCTS - Product Addons - Checking for set `product_id` on ajax call.

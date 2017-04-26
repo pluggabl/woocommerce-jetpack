@@ -91,6 +91,7 @@ class WCJ_Shortcodes {
 			'replace'             => '',
 			'strip_tags'          => 'no',
 			'on_empty'            => '',
+			'on_zero'             => 0,
 			'time'                => '',
 		);
 		$atts = array_merge( $global_defaults, $atts );
@@ -201,6 +202,9 @@ class WCJ_Shortcodes {
 		// Run the shortcode function
 		$shortcode_function = $shortcode;
 		if ( '' !== ( $result = $this->$shortcode_function( $atts, $content ) ) ) {
+			if ( 0 === $result && 0 !== $atts['on_zero'] ) {
+				return $atts['on_zero'];
+			}
 			if ( '' != $atts['find'] ) {
 				if ( false !== strpos( $atts['find'], ',' ) && strlen( $atts['find'] ) > 2 ) {
 					$find    = explode( ',', $atts['find'] );
