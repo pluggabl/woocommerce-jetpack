@@ -108,7 +108,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 * @since   2.5.0
 	 */
 	function get_meta_box_options() {
@@ -149,29 +149,48 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 							continue;
 						}
 					}
+					if ( 'fixed' === get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ) ) {
+						$prices_or_multiplier = array(
+							array(
+								'name'       => 'wcj_price_by_user_role_regular_price_' . $role_key . '_' . $product_id,
+								'default'    => '',
+								'type'       => 'price',
+								'title'      => /* '[' . $role_data['name'] . '] ' .  */__( 'Regular Price', 'woocommerce-jetpack' ),
+								'desc'       => $desc,
+								'product_id' => $product_id,
+								'meta_name'  => '_' . 'wcj_price_by_user_role_regular_price_' . $role_key,
+							),
+							array(
+								'name'       => 'wcj_price_by_user_role_sale_price_' . $role_key . '_' . $product_id,
+								'default'    => '',
+								'type'       => 'price',
+								'title'      => /* '[' . $role_data['name'] . '] ' .  */__( 'Sale Price', 'woocommerce-jetpack' ),
+								'desc'       => $desc,
+								'product_id' => $product_id,
+								'meta_name'  => '_' . 'wcj_price_by_user_role_sale_price_' . $role_key,
+							),
+						);
+					} else {
+						$prices_or_multiplier = array(
+							array(
+								'name'       => 'wcj_price_by_user_role_multiplier_' . $role_key . '_' . $product_id,
+								'default'    => '',
+								'type'       => 'price',
+								'title'      => __( 'Multiplier', 'woocommerce-jetpack' ),
+								'desc'       => $desc,
+								'product_id' => $product_id,
+								'meta_name'  => '_' . 'wcj_price_by_user_role_multiplier_' . $role_key,
+							),
+						);
+					}
 					$options = array_merge( $options, array(
 						array(
 							'type'       => 'title',
 							'title'      => '<em>' /* . __( 'Role', 'woocommerce-jetpack' ) . ': ' */ . $role_data['name'] . '</em>',
 						),
-						array(
-							'name'       => 'wcj_price_by_user_role_regular_price_' . $role_key . '_' . $product_id,
-							'default'    => '',
-							'type'       => 'price',
-							'title'      => /* '[' . $role_data['name'] . '] ' .  */__( 'Regular Price', 'woocommerce-jetpack' ),
-							'desc'       => $desc,
-							'product_id' => $product_id,
-							'meta_name'  => '_' . 'wcj_price_by_user_role_regular_price_' . $role_key,
-						),
-						array(
-							'name'       => 'wcj_price_by_user_role_sale_price_' . $role_key . '_' . $product_id,
-							'default'    => '',
-							'type'       => 'price',
-							'title'      => /* '[' . $role_data['name'] . '] ' .  */__( 'Sale Price', 'woocommerce-jetpack' ),
-							'desc'       => $desc,
-							'product_id' => $product_id,
-							'meta_name'  => '_' . 'wcj_price_by_user_role_sale_price_' . $role_key,
-						),
+					),
+					$prices_or_multiplier,
+					array(
 						array(
 							'name'       => 'wcj_price_by_user_role_empty_price_' . $role_key . '_' . $product_id,
 							'default'    => 'no',
@@ -246,7 +265,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product ) {
@@ -260,7 +279,11 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 				if ( 'yes' === get_post_meta( $the_product_id, '_' . 'wcj_price_by_user_role_empty_price_' . $current_user_role, true ) ) {
 					return '';
 				}
-				if ( '' != ( $regular_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_price_by_user_role_regular_price_' . $current_user_role, true ) ) ) {
+				if ( 'multiplier' === get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ) ) {
+					if ( '' !== ( $multiplier_per_product = get_post_meta( $the_product_id, '_' . 'wcj_price_by_user_role_multiplier_' . $current_user_role, true ) ) ) {
+						return ( '' === $price ) ? $price : $price * $multiplier_per_product;
+					}
+				} elseif ( '' != ( $regular_price_per_product = get_post_meta( $the_product_id, '_' . 'wcj_price_by_user_role_regular_price_' . $current_user_role, true ) ) ) {
 					$the_current_filter = current_filter();
 					if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
 						return wcj_get_product_display_price( $_product );
@@ -293,7 +316,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.5.3
+	 * @version 2.7.2
 	 * @since   2.5.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
@@ -305,6 +328,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			$koef,
 			$is_empty,
 			get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ),
+			get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ),
 		);
 		return $price_hash;
 	}

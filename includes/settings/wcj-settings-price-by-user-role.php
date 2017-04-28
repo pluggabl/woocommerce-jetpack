@@ -24,6 +24,16 @@ $settings = array(
 		'default'  => 'yes',
 	),
 	array(
+		'title'    => __( 'Per Product Settings Type', 'woocommerce-jetpack' ),
+		'type'     => 'select',
+		'id'       => 'wcj_price_by_user_role_per_product_type',
+		'default'  => 'fixed',
+		'options'  => array(
+			'fixed'      => __( 'Fixed', 'woocommerce-jetpack' ),
+			'multiplier' => __( 'Multiplier', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
 		'title'    => __( 'Show Roles on per Product Settings', 'woocommerce-jetpack' ),
 		'desc'     => __( 'If per product settings is enabled, you can choose which roles to show on product\'s edit page. Leave blank to show all roles.', 'woocommerce-jetpack' ),
 		'type'     => 'multiselect',
