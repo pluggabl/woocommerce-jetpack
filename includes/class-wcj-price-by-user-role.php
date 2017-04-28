@@ -285,15 +285,30 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 					}
 				} elseif ( '' != ( $regular_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_regular_price_' . $current_user_role, true ) ) ) {
 					$_current_filter = current_filter();
-					if ( in_array( $_current_filter, array( 'woocommerce_get_price_including_tax', 'woocommerce_get_price_excluding_tax' ) ) ) {
+					if ( in_array( $_current_filter, array(
+						'woocommerce_get_price_including_tax',
+						'woocommerce_get_price_excluding_tax'
+					) ) ) {
 						return wcj_get_product_display_price( $_product );
-					} elseif ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_PRICE_FILTER, 'woocommerce_variation_prices_price', 'woocommerce_product_variation_get_price' ) ) ) {
+					} elseif ( in_array( $_current_filter, array(
+						WCJ_PRODUCT_GET_PRICE_FILTER,
+						'woocommerce_variation_prices_price',
+						'woocommerce_product_variation_get_price'
+					) ) ) {
 						$sale_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_sale_price_' . $current_user_role, true );
 						$return = ( '' != $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
 						return apply_filters( 'wcj_price_by_user_role_get_price', $return, $_product );
-					} elseif ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER, 'woocommerce_variation_prices_regular_price', 'woocommerce_product_variation_get_regular_price' ) ) {
+					} elseif ( in_array( $_current_filter, array(
+						WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,
+						'woocommerce_variation_prices_regular_price',
+						'woocommerce_product_variation_get_regular_price'
+					) ) ) {
 						return $regular_price_per_product;
-					} elseif ( in_array( $_current_filter, array( WCJ_PRODUCT_GET_SALE_PRICE_FILTER, 'woocommerce_variation_prices_sale_price', 'woocommerce_product_variation_get_sale_price' ) ) {
+					} elseif ( in_array( $_current_filter, array(
+						WCJ_PRODUCT_GET_SALE_PRICE_FILTER,
+						'woocommerce_variation_prices_sale_price',
+						'woocommerce_product_variation_get_sale_price'
+					) ) ) {
 						$sale_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_sale_price_' . $current_user_role, true );
 						return ( '' != $sale_price_per_product ) ? $sale_price_per_product : $price;
 					}
