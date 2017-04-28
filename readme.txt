@@ -153,7 +153,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 26/04/2017 =
+= 2.7.2 - 28/04/2017 =
+	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
 ~D	* Dev - PRODUCTS - User Products - "Price Step" option added (`[wcj_product_add_new]`).
 ~!D$* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
