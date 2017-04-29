@@ -316,6 +316,24 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			}
 		}
 
+		// By category
+		$categories = get_option( 'wcj_price_by_user_role_categories', '' );
+		if ( ! empty( $categories ) ) {
+			$product_categories = get_the_terms( wcj_get_product_id_or_variation_parent_id( $_product ), 'product_cat' );
+			if ( ! empty( $product_categories ) ) {
+				foreach ( $product_categories as $product_category ) {
+					foreach ( $categories as $category ) {
+						if ( $product_category->term_id == $category ) {
+							if ( 'yes' === get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $current_user_role, 'no' ) ) {
+								return '';
+							}
+							return ( '' === $price ) ? $price : $price * get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $current_user_role, 1 );
+						}
+					}
+				}
+			}
+		}
+
 		// Global
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_empty_price_' . $current_user_role, 'no' ) ) {
 			return '';
@@ -336,15 +354,19 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$user_role = wcj_get_current_user_first_role();
-		$koef = get_option( 'wcj_price_by_user_role_' . $user_role, 1 );
-		$is_empty = get_option( 'wcj_price_by_user_role_empty_price_' . $user_role, 'no' );
+		$categories = get_option( 'wcj_price_by_user_role_categories', '' );
 		$price_hash['wcj_user_role'] = array(
 			$user_role,
-			$koef,
-			$is_empty,
+			get_option( 'wcj_price_by_user_role_' . $user_role, 1 ),
+			get_option( 'wcj_price_by_user_role_empty_price_' . $user_role, 'no' ),
 			get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ),
 			get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ),
+			$categories,
 		);
+		foreach ( $categories as $category ) {
+			$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $user_role, 'no' );
+			$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $user_role, 1 );
+		}
 		return $price_hash;
 	}
 

@@ -86,6 +86,45 @@ foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 		),
 	) );
 }
+$product_cats_options = array();
+$product_cats = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ){
+	foreach ( $product_cats as $product_cat ) {
+		$product_cats_options[ $product_cat->term_id ] = $product_cat->name;
+	}
+}
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Categories', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_categories',
+		'default'  => '',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => $product_cats_options,
+	),
+) );
+if ( ! empty( get_option( 'wcj_price_by_user_role_categories', '' ) ) ) {
+	$categories         = get_option( 'wcj_price_by_user_role_categories', '' );
+	foreach ( $categories as $category ) {
+		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'    => $product_cats_options[ $category ] . ': ' . $role_data['name'],
+					'id'       => 'wcj_price_by_user_role_cat_' . $category . '_' . $role_key,
+					'default'  => 1,
+					'type'     => 'number',
+					'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+				),
+				array(
+					'desc'     => __( 'Make Empty Price', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $role_key,
+					'default'  => 'no',
+					'type'     => 'checkbox',
+				),
+			) );
+		}
+	}
+}
 $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',

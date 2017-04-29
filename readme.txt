@@ -154,6 +154,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 29/04/2017 =
+~D$	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
 	* Dev - PRICES & CURRENCIES - Price by User Role - Minor code refactoring.
 ~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Per Product Settings Type" option added.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
