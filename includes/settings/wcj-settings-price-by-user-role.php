@@ -96,6 +96,7 @@ if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ){
 $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Categories', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save module\'s settings after changing this option to see new fields.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_categories',
 		'default'  => '',
 		'type'     => 'multiselect',

@@ -351,6 +351,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 *
 	 * @version 2.7.2
 	 * @since   2.5.0
+	 * @todo    only hash categories that is relevant to the product
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$user_role = wcj_get_current_user_first_role();
