@@ -13,7 +13,6 @@ return array(
 	array(
 		'title'    => __( 'Place order (Order now) Button', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'desc'     => '',
 		'id'       => 'wcj_checkout_place_order_button_options',
 	),
 	array(

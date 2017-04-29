@@ -79,6 +79,7 @@ return array(
 			'product_by_time',
 			'product_by_user',
 			'products_xml',
+			'product_bulk_meta_editor',
 		),
 	),
 
