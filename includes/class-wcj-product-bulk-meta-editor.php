@@ -44,6 +44,7 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 	 * @since   2.7.2
 	 * @todo    not all products, but only selected (one by one (select all); category; tag; custom taxonomy)
 	 * @todo    one value for all selected products meta
+	 * @todo    (maybe) sanitize meta value
 	 * @todo    (maybe) mark if not exists (on `'no' === get_option( 'wcj_product_bulk_meta_editor_check_if_exists', 'yes' )`)
 	 * @todo    (maybe) "save meta" button for each product
 	 * @todo    (maybe) checkboxes for each product
@@ -76,8 +77,8 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 			if ( $fail > 0 ) {
 				$result_message .= '<p><div class="error"><p>' . sprintf( __( 'Meta for <strong>%d</strong> product(s) not updated.', 'woocommerce-jetpack' ), $fail ) . '</p></div></p>';
 			}
-		} elseif ( isset( $_POST['wcj_product_bulk_meta_editor_show'] ) ) {
-			$meta_name = $_POST['wcj_product_bulk_meta_editor_new_meta'];
+		} elseif ( isset( $_GET['wcj_product_bulk_meta_editor_show'] ) ) {
+			$meta_name = $_GET['wcj_product_bulk_meta_editor_meta'];
 		}
 
 		// Output
@@ -86,14 +87,16 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 		$html .= $this->get_tool_header_html( 'product_bulk_meta_editor' );
 		$html .= $result_message;
 		// "Show meta" form
-		$html .= '<form method="post" action="">';
+		$html .= '<form method="get" action="">';
+		$html .= '<input type="hidden" name="page" value="' . $_GET['page'] . '" />';
+		$html .= '<input type="hidden" name="tab" value="'  . $_GET['tab']  . '" />';
 		$html .= '<p>';
 		$html .= __( 'Meta', 'woocommerce-jetpack' );
 		if ( '' == $meta_name ) {
 			$html .= ', ' . sprintf( __( 'for example %s', 'woocommerce-jetpack' ), '<code>_sku</code>' );
 		}
-		$html .= ' ' . '<input type="text" name="wcj_product_bulk_meta_editor_new_meta" value="' . $meta_name . '">';
-		$html .= ' ' . '<input class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_show" value="' . __( 'Show', 'woocommerce-jetpack' ) . '">';
+		$html .= ' ' . '<input type="text" name="wcj_product_bulk_meta_editor_meta" value="' . $meta_name . '">';
+		$html .= ' ' . '<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_show" value="show">' . __( 'Show', 'woocommerce-jetpack' ) . '</button>';
 		$html .= '</p>';
 		$html .= '</form>';
 		// "Meta table" form
@@ -101,8 +104,7 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 		if ( '' != $meta_name ) {
 			$table_data = array();
 			$table_data[] = array(
-				__( 'Product ID', 'woocommerce-jetpack' ),
-				__( 'Title', 'woocommerce-jetpack' ),
+				__( 'Product', 'woocommerce-jetpack' ),
 				__( 'Meta', 'woocommerce-jetpack' ) . ': <code>' . $meta_name . '</code>',
 			);
 			foreach ( wcj_get_products() as $product_id => $product_title ) {
@@ -117,8 +119,7 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 					}
 				}
 				$table_data[] = array(
-					'<a href="/?p=' . $product_id . '">' . $product_id . '</a>',
-					$product_title,
+					'<a href="/?p=' . $product_id . '"> ' . $product_title . '</a> <em>(ID: ' . $product_id . ')</em>',
 					$_post_meta,
 				);
 			}
