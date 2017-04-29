@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 return array(
 	array(
-		'title'    => __( 'Options', 'woocommerce-jetpack' ),
+		'title'    => __( 'Product Bulk Meta Editor Tool Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_product_bulk_meta_editor_options',
 	),
