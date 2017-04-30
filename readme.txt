@@ -168,6 +168,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
 	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
 
+~!D$* Dev - EMAILS & MISC. - Emails - "Email Verification" section added.
 -!D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added. "Do not add" option added to "Button position on the Cart page". Code refactoring.
 -!D$* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
 ~D$	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
