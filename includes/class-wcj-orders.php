@@ -486,7 +486,7 @@ class WCJ_Orders extends WCJ_Module {
 					'desc_tip' => __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_orders_list_custom_columns_value_' . $i,
 					'default'  => '',
-					'type'     => 'text',
+					'type'     => 'custom_textarea',
 					'css'      => 'width:300px;',
 				),
 			) );
