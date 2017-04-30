@@ -17,7 +17,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Default Order Status', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable Custom Statuses feature to add custom statuses to the list.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable the module to add custom statuses to the list.', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'You can change the default order status here. However payment gateways can change this status immediately on order creation. E.g. BACS gateway will change status to On-hold.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_orders_custom_statuses_default_status',
 		'default'  => apply_filters( 'woocommerce_default_order_status', 'pending' ),
