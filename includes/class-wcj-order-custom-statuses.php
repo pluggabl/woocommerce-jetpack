@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Custom Statuses class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,8 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.7.2
+	 * @todo    copy all changes from Custom Order Status plugin
 	 */
 	function __construct() {
 
@@ -55,7 +56,47 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_actions_buttons' ), PHP_INT_MAX, 2 );
 				add_action( 'admin_head',                      array( $this, 'add_custom_status_actions_buttons_css' ) );
 			}
+
+			if ( 'hide' != get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'show_both' ) ) {
+				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_to_processing_and_completed_actions' ), PHP_INT_MAX, 2 );
+			}
+
 		}
+	}
+
+	/**
+	 * add_custom_status_to_processing_and_completed_actions.
+	 *
+	 * @version 2.7.2
+	 * @since   2.7.2
+	 */
+	function add_custom_status_to_processing_and_completed_actions( $actions, $_order ) {
+		$custom_order_statuses = get_option( 'wcj_orders_custom_statuses_array' );
+		if ( ! empty( $custom_order_statuses ) && is_array( $custom_order_statuses ) ) {
+			$custom_order_statuses_without_wc_prefix = array();
+			foreach ( $custom_order_statuses as $slug => $label ) {
+				$custom_order_statuses_without_wc_prefix[] = substr( $slug, 3 );
+			}
+			global $post;
+			$default_actions = array();
+			$show = get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'show_both' );
+			if ( ( 'show_both' === $show || 'show_processing' === $show ) && $_order->has_status( array_merge( array( 'pending', 'on-hold' ), $custom_order_statuses_without_wc_prefix ) ) ) {
+				$default_actions['processing'] = array(
+					'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=processing&order_id=' . $post->ID ), 'woocommerce-mark-order-status' ),
+					'name'      => __( 'Processing', 'woocommerce' ),
+					'action'    => "processing",
+				);
+			}
+			if ( ( 'show_both' === $show || 'show_complete' === $show ) && $_order->has_status( array_merge( array( 'pending', 'on-hold', 'processing' ), $custom_order_statuses_without_wc_prefix ) ) ) {
+				$default_actions['complete'] = array(
+					'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=completed&order_id=' . $post->ID ), 'woocommerce-mark-order-status' ),
+					'name'      => __( 'Complete', 'woocommerce' ),
+					'action'    => "complete",
+				);
+			}
+			$actions = array_merge( $default_actions, $actions );
+		}
+		return $actions;
 	}
 
 	/**
@@ -397,7 +438,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.0
+	 * @version 2.7.2
 	 */
 	function get_settings() {
 		$settings = array(
@@ -437,6 +478,18 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				'type'     => 'checkbox',
 				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+			),
+			array(
+				'title'    => __( 'Default "Processing" and "Complete" Action Buttons', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_orders_custom_statuses_processing_and_completed_actions',
+				'default'  => 'show_both',
+				'type'     => 'select',
+				'options'  => array(
+					'show_both'       => __( 'Show both', 'woocommerce-jetpack' ),
+					'show_processing' => __( 'Show "Processing" only', 'woocommerce-jetpack' ),
+					'show_complete'   => __( 'Show "Complete" only', 'woocommerce-jetpack' ),
+					'hide'            => __( 'Hide', 'woocommerce-jetpack' ),
+				),
 			),
 			array(
 				'desc'     => __( 'Enable Colors', 'woocommerce-jetpack' ),
