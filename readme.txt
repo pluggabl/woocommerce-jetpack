@@ -155,6 +155,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 30/04/2017 =
+	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Emails.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Empty Cart Button.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.

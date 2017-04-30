@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Emails class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -28,9 +28,11 @@ class WCJ_Emails extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			// Custom Emails
 			add_filter( 'woocommerce_email_actions', array( $this, 'add_custom_woocommerce_email_actions' ) );
 			add_filter( 'woocommerce_email_classes', array( $this, 'add_custom_emails_to_wc' ) );
 			add_filter( 'woocommerce_resend_order_emails_available', array( $this, 'add_custom_emails_to_wc_resend_order_emails' ) );
+			// Email Forwarding
 			if ( '' != get_option( 'wcj_emails_bcc_email' ) ) {
 				add_filter( 'woocommerce_email_headers', array( $this, 'add_bcc_email' ) );
 			}
@@ -41,7 +43,6 @@ class WCJ_Emails extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_product_info_in_email_order_item_name_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_order_item_name', array( $this, 'add_product_info_to_email_order_item_name' ), PHP_INT_MAX, 2 );
 			}
-//			add_action( 'woocommerce_email_after_order_table', array( $this, 'add_payment_method_to_new_order_email' ), 15, 2 );
 			// Settings
 			add_filter( 'woocommerce_email_settings', array( $this, 'add_email_forwarding_fields_to_wc_standard_settings' ), 100 );
 		}
@@ -69,6 +70,7 @@ class WCJ_Emails extends WCJ_Module {
 	 *
 	 * @version 2.4.8
 	 * @since   2.4.8
+	 * @todo    use global wcj function
 	 */
 	function get_order_statuses() {
 		$result = array();
@@ -86,9 +88,7 @@ class WCJ_Emails extends WCJ_Module {
 	 * @since   2.4.5
 	 */
 	function add_custom_woocommerce_email_actions( $email_actions ) {
-
 		$email_actions[] = 'woocommerce_checkout_order_processed';
-
 		$order_statuses = $this->get_order_statuses();
 		foreach ( $order_statuses as $slug => $name ) {
 			$email_actions[] = 'woocommerce_order_status_' . $slug;
@@ -98,7 +98,6 @@ class WCJ_Emails extends WCJ_Module {
 				}
 			}
 		}
-
 		return $email_actions;
 	}
 
@@ -198,70 +197,6 @@ class WCJ_Emails extends WCJ_Module {
 		return $updated_settings;
 	}
 
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.7.0
-	 */
-	function get_settings() {
-		$settings = array(
-			array(
-				'title'    => __( 'Custom Emails', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_emails_custom_emails_options',
-				'desc'     => __( 'This section lets you set number of custom emails to add. After setting the number, visit "WooCommerce > Settings > Emails" to set each email options.', 'woocommerce-jetpack' ),
-			),
-			array(
-				'title'    => __( 'Custom Emails Number', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_emails_custom_emails_total_number',
-				'default'  => 1,
-				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-			),
-		);
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) );
-		for ( $i = 1; $i <= $total_number; $i++ ) {
-			$settings [] = array(
-				'title'    => __( 'Admin Title Custom Email', 'woocommerce-jetpack' ) . ' #' . $i,
-				'id'       => 'wcj_emails_custom_emails_admin_title_' . $i,
-				'default'  => __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i,
-				'type'     => 'text',
-			);
-		}
-		$settings = array_merge( $settings, array(
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_emails_custom_emails_options',
-			),
-			array(
-				'title'    => __( 'Product Info in Item Name', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_product_info_in_email_order_item_name_options',
-			),
-			array(
-				'title'    => __( 'Add Product Info to Item Name', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
-				'type'     => 'checkbox',
-				'id'       => 'wcj_product_info_in_email_order_item_name_enabled',
-				'default'  => 'no',
-			),
-			array(
-				'title'    => __( 'Info', 'woocommerce-jetpack' ),
-				'desc'     => sprintf( __( 'You can use <a target="_blank" href="%s">Booster\'s products shortcodes</a> here.', 'woocommerce-jetpack' ), 'http://booster.io/category/shortcodes/products-shortcodes/' ),
-				'type'     => 'custom_textarea',
-				'id'       => 'wcj_product_info_in_email_order_item_name',
-				'default'  => '[wcj_product_categories strip_tags="yes" before="<hr><em>" after="</em>"]',
-				'css'      => 'width:66%;min-width:300px;height:150px;',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_product_info_in_email_order_item_name_options',
-			),
-		) );
-		$settings = array_merge( $settings, $this->get_emails_forwarding_settings() );
-		return $this->add_standard_settings( $settings );
-	}
 }
 
 endif;
