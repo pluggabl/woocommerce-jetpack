@@ -39,15 +39,6 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Add Custom Statuses to Admin Order List Action Buttons', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-	),
-	array(
 		'title'    => __( 'Default "Processing" and "Complete" Action Buttons', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_orders_custom_statuses_processing_and_completed_actions',
 		'default'  => 'show_both',
@@ -58,6 +49,15 @@ return array(
 			'show_complete'   => __( 'Show "Complete" only', 'woocommerce-jetpack' ),
 			'hide'            => __( 'Hide', 'woocommerce-jetpack' ),
 		),
+	),
+	array(
+		'title'    => __( 'Add Custom Statuses to Admin Order List Action Buttons', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'desc'     => __( 'Enable Colors', 'woocommerce-jetpack' ),
