@@ -214,8 +214,8 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 		$html .= '<div class="wrap">';
 		$html .= $this->get_tool_header_html( 'product_bulk_meta_editor' );
 		$html .= $result_message;
-		// Products and Meta key
 		$html .= '<form method="post" action="">';
+		// Products and Meta key
 		/* $html .= __( 'Products', 'woocommerce-jetpack' );
 		$html .= '<br>';
 		$html .= '<em>';
@@ -238,29 +238,24 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 		$html .= ' ' . '<input type="text" name="wcj_product_bulk_meta_editor_show_meta" value="' . $meta_name . '">';
 		$html .= ' ' . '<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_show" value="show">' . __( 'Show', 'woocommerce-jetpack' ) . '</button>';
 		$html .= '</p>'; */
-
-
-$products_html = '';
-$products_html .= '<select name="wcj_product_bulk_meta_editor_products[]" multiple style="height:300px;">';
-foreach ( $_products as $product_id => $product_title ) {
-	$selected = ( empty( $selected_products ) || in_array( $product_id, $selected_products ) ? ' selected' : '' );
-	$products_html .= '<option' . $selected . ' value="' . $product_id . '">' . $product_title . '</option>';
-}
-$products_html .= '</select>';
-
-$meta_html = '';
-$meta_html .= '<p>';
-$meta_html .= __( 'Meta key', 'woocommerce-jetpack' );
-if ( '' == $meta_name ) {
-	$meta_html .= ', ' . sprintf( __( 'for example %s', 'woocommerce-jetpack' ), '<code>_sku</code>' );
-}
-$meta_html .= ' ' . '<input type="text" name="wcj_product_bulk_meta_editor_show_meta" value="' . $meta_name . '">';
-$meta_html .= ' ' . '<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_show" value="show">' . __( 'Show', 'woocommerce-jetpack' ) . '</button>';
-$meta_html .= '</p>';
-
-$tip = __( 'Hold <strong>Control</strong> key to select multiple products. Press <strong>Control</strong> + <strong>A</strong> to select all products.', 'woocommerce-jetpack' );
-$tip = ' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $tip . '">';
-
+		$products_html = '';
+		$products_html .= '<select name="wcj_product_bulk_meta_editor_products[]" multiple style="height:300px;">';
+		foreach ( $_products as $product_id => $product_title ) {
+			$selected = ( empty( $selected_products ) || in_array( $product_id, $selected_products ) ? ' selected' : '' );
+			$products_html .= '<option' . $selected . ' value="' . $product_id . '">' . $product_title . '</option>';
+		}
+		$products_html .= '</select>';
+		$meta_html = '';
+		$meta_html .= '<p>';
+		$meta_html .= __( 'Meta key', 'woocommerce-jetpack' );
+		if ( '' == $meta_name ) {
+			$meta_html .= ', ' . sprintf( __( 'for example %s', 'woocommerce-jetpack' ), '<code>_sku</code>' );
+		}
+		$meta_html .= ' ' . '<input type="text" name="wcj_product_bulk_meta_editor_show_meta" value="' . $meta_name . '">';
+		$meta_html .= ' ' . '<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_show" value="show">' . __( 'Show', 'woocommerce-jetpack' ) . '</button>';
+		$meta_html .= '</p>';
+		$tip = __( 'Hold <strong>Control</strong> key to select multiple products. Press <strong>Control</strong> + <strong>A</strong> to select all products.', 'woocommerce-jetpack' );
+		$tip = ' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $tip . '">';
 		$table_data = array();
 		$table_data[] = array(
 			__( 'Products', 'woocommerce-jetpack' ) . $tip,
