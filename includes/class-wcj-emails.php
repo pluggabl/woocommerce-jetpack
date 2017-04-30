@@ -19,7 +19,7 @@ class WCJ_Emails extends WCJ_Module {
 	 *
 	 * @version 2.7.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'emails';
 		$this->short_desc = __( 'Emails', 'woocommerce-jetpack' );
