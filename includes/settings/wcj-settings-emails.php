@@ -75,7 +75,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'title'    => __( 'Enable Email Verification', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
 		'type'     => 'checkbox',
 		'id'       => 'wcj_emails_verification_enabled',
 		'default'  => 'no',
