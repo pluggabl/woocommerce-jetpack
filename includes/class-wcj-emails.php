@@ -185,6 +185,7 @@ class WCJ_Emails extends WCJ_Module {
 	 * add_email_forwarding_fields_to_wc_standard_settings.
 	 *
 	 * @version 2.3.9
+	 * @todo    (maybe) remove this completely (and then move `get_emails_forwarding_settings()` to settings file)
 	 */
 	function add_email_forwarding_fields_to_wc_standard_settings( $settings ) {
 		$updated_settings = array();
