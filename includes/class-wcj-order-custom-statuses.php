@@ -20,6 +20,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 *
 	 * @version 2.7.2
 	 * @todo    copy all changes from Custom Order Status plugin
+	 * @todo    `wcj_orders_custom_statuses_processing_and_completed_actions` to Custom Order Status plugin
 	 */
 	function __construct() {
 
