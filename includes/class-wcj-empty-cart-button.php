@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Empty Cart Button class.
  *
- * @version 2.6.0
+ * @version 2.7.2
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,8 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.7.2
+	 * @todo    move shortcode to "General shortcodes"
 	 */
 	function __construct() {
 
@@ -29,44 +30,52 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_action( 'init', array( $this, 'empty_cart' ) );
-			add_action(
-				apply_filters( 'booster_get_option', 'woocommerce_after_cart', get_option( 'wcj_empty_cart_position', 'woocommerce_after_cart' ) ),
-				array( $this, 'add_empty_cart_link' )
-			);
-			if ( 'disable' != ( $empty_cart_checkout_position = get_option( 'wcj_empty_cart_checkout_position', 'disable' ) ) ) {
-				add_action(
-					$empty_cart_checkout_position,
-					array( $this, 'add_empty_cart_link' )
-				);
+			add_action( 'init', array( $this, 'maybe_empty_cart' ) );
+			if ( 'disable' != ( $empty_cart_cart_position = apply_filters( 'booster_get_option', 'woocommerce_after_cart', get_option( 'wcj_empty_cart_position', 'woocommerce_after_cart' ) ) ) ) {
+				add_action( $empty_cart_cart_position, array( $this, 'add_empty_cart_link' ) );
 			}
+			if ( 'disable' != ( $empty_cart_checkout_position = get_option( 'wcj_empty_cart_checkout_position', 'disable' ) ) ) {
+				add_action( $empty_cart_checkout_position, array( $this, 'add_empty_cart_link' ) );
+			}
+			add_shortcode( 'wcj_empty_cart_button', array( $this, 'get_empty_cart_link' ) );
 		}
+	}
+
+	/**
+	 * get_empty_cart_link.
+	 *
+	 * @version 2.7.2
+	 * @version 2.7.2
+	 */
+	function get_empty_cart_link() {
+		$confirmation_html = ( 'confirm_with_pop_up_box' == get_option( 'wcj_empty_cart_confirmation', 'no_confirmation' ) ) ? ' onclick="return confirm(\'' . get_option( 'wcj_empty_cart_confirmation_text' ) . '\')"' : '';
+		return '<div style="' . get_option( 'wcj_empty_cart_div_style', 'float: right;' ) . '"><form action="" method="post"><input type="submit" class="button" name="empty_cart" value="' . apply_filters( 'booster_get_option', 'Empty Cart', get_option( 'wcj_empty_cart_text' ) ) . '"' . $confirmation_html . '></form></div>';
 	}
 
 	/**
 	 * add_empty_cart_link.
 	 *
-	 * @version 2.5.0
+	 * @version 2.7.2
 	 */
 	function add_empty_cart_link() {
-		$confirmation_html = ( 'confirm_with_pop_up_box' == get_option( 'wcj_empty_cart_confirmation', 'no_confirmation' ) ) ? ' onclick="return confirm(\'' . get_option( 'wcj_empty_cart_confirmation_text' ) . '\')"' : '';
-		echo '<div style="' . get_option( 'wcj_empty_cart_div_style', 'float: right;' ) . '"><form action="" method="post"><input type="submit" class="button" name="empty_cart" value="' . apply_filters( 'booster_get_option', 'Empty Cart', get_option( 'wcj_empty_cart_text' ) ) . '"' . $confirmation_html . '></form></div>';
+		echo $this->get_empty_cart_link();
 	}
 
 	/**
-	 * empty_cart.
+	 * maybe_empty_cart.
+	 *
+	 * @version 2.7.2
 	 */
-	function empty_cart() {
-		if ( isset( $_POST['empty_cart'] ) ) {
-			global $woocommerce;
-			$woocommerce->cart->empty_cart();
+	function maybe_empty_cart() {
+		if ( isset( $_POST['empty_cart'] ) && isset( WC()->cart ) ) {
+			WC()->cart->empty_cart();
 		}
 	}
 
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.6.0
+	 * @version 2.7.2
 	 */
 	function get_settings() {
 		$settings = array(
@@ -97,6 +106,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 				'default'  => 'woocommerce_after_cart',
 				'type'     => 'select',
 				'options'  => array(
+					'disable'                         => __( 'Do not add', 'woocommerce-jetpack' ),
 					'woocommerce_after_cart'          => __( 'After Cart', 'woocommerce-jetpack' ),
 					'woocommerce_before_cart'         => __( 'Before Cart', 'woocommerce-jetpack' ),
 					'woocommerce_proceed_to_checkout' => __( 'After Proceed to Checkout button', 'woocommerce-jetpack' ),
