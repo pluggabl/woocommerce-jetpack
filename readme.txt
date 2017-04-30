@@ -154,7 +154,8 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 29/04/2017 =
+= 2.7.2 - 30/04/2017 =
+	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Empty Cart Button.
 -!D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added. "Do not add" option added to "Button position on the Cart page". Code refactoring.
 -!D$* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
 ~D$	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
