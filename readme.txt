@@ -156,22 +156,28 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 = 2.7.2 - 30/04/2017 =
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Empty Cart Button.
+	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
+	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - More Button Labels.
+~	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
+~!	* Dev - Code refactoring - Settings from file.
+
+~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
+~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
+~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
+	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
+
 -!D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added. "Do not add" option added to "Button position on the Cart page". Code refactoring.
 -!D$* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
 ~D$	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
 	* Dev - PRICES & CURRENCIES - Price by User Role - Minor code refactoring.
 ~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Per Product Settings Type" option added.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
 ~D	* Dev - PRODUCTS - User Products - "Price Step" option added (`[wcj_product_add_new]`).
 ~!D$* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
 ~	* Dev - PRICES & CURRENCIES - Currency per Product - Additional check for if cart is set added to `get_cart_checkout_currency()`.
 ~!D$* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
 ~!D$* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
-	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - More Button Labels.
-~	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
 ~!$D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
-~!	* Dev - Code refactoring - Settings from file.
 ~!D	* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
 ~	* Fix - Shortcodes - Products - `[wcj_product_stock_quantity]` - Return empty string instead of `false` on `null`.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_stock_quantity]` - `count_variations` attribute added.
@@ -179,15 +185,11 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Fix - PRODUCTS - Product Addons - Variable product with equal variation prices ajax issue fixed.
 ~	* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
 ~!D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
-~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
 ~!	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
-~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
 ~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
 ~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
-~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
 	* Dev - Shortcodes - General - `[wcj_cart_total]` shortcode added.
 ~!	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Currency Switcher Template" option added.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
 ~!D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
