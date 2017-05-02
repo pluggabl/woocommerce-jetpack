@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Images class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
 	function __construct() {
 
@@ -53,11 +53,29 @@ class WCJ_Product_Images extends WCJ_Module {
 				// Per product options
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+
+				// Per product - CSS
+				add_action( 'wp_head', array( $this, 'maybe_add_css' ) );
 			}
 
 			// Sale flash
 			if ( 'yes' === get_option( 'wcj_product_images_sale_flash_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_sale_flash', array( $this, 'customize_sale_flash' ), PHP_INT_MAX, 3 );
+			}
+		}
+	}
+
+	/**
+	 * maybe_add_css.
+	 *
+	 * @version 2.7.2
+	 * @since   2.7.2
+	 */
+	function maybe_add_css() {
+		$post_id = get_the_ID();
+		if ( $post_id > 0 && 'yes' === get_post_meta( $post_id, '_' . 'wcj_product_images_add_css', true ) ) {
+			if ( '' != ( $css = get_post_meta( $post_id, '_' . 'wcj_product_images_css', true ) ) ) {
+				echo '<style>' . $css . '</style>';
 			}
 		}
 	}
@@ -187,7 +205,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.5.2
+	 * @version 2.7.2
 	 * @since   2.2.6
 	 */
 	function get_meta_box_options() {
@@ -233,6 +251,22 @@ class WCJ_Product_Images extends WCJ_Module {
 					'no'  => __( 'No', 'woocommerce-jetpack' ),
 				),
 				'title'   => __( 'Hide Image on Archives', 'woocommerce-jetpack' ),
+			),
+			array(
+				'name'    => 'wcj_product_images_add_css',
+				'default' => 'no',
+				'type'    => 'select',
+				'options' => array(
+					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+					'no'  => __( 'No', 'woocommerce-jetpack' ),
+				),
+				'title'   => __( 'Add CSS', 'woocommerce-jetpack' ),
+			),
+			array(
+				'name'    => 'wcj_product_images_css',
+				'default' => 'div.summary { float:none !important; }',
+				'type'    => 'textarea',
+				'title'   => __( 'CSS', 'woocommerce-jetpack' ),
 			),
 		);
 	}
