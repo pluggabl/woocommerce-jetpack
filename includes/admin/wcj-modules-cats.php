@@ -161,6 +161,7 @@ return array(
 			'emails',
 			'wpml',
 			'custom_css',
+			'custom_js',
 //			'pdf_invoices',
 			'product_info',
 		),
