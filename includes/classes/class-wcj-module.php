@@ -39,7 +39,22 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	}
 
 	/**
-	 * add_settings.
+	 * get_meta_box_options.
+	 *
+	 * @version 2.7.2
+	 * @since   2.7.2
+	 */
+	function get_meta_box_options() {
+		$filename = wcj_plugin_path() . '/includes/settings/meta-box/wcj-settings-meta-box-' . str_replace( '_', '-', $this->id ) . '.php';
+		if ( file_exists ( $filename ) ) {
+			return require( $filename );
+		} else {
+			return array();
+		}
+	}
+
+	/**
+	 * add_settings_from_file.
 	 *
 	 * @version 2.7.2
 	 * @since   2.7.2

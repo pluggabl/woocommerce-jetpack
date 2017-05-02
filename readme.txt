@@ -155,6 +155,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 02/05/2017 =
+	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Images.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Custom CSS.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Tabs.
