@@ -86,6 +86,8 @@ class WCJ_Shortcodes {
 			'wpml_not_language'   => '',
 			'billing_country'     => '',
 			'not_billing_country' => '',
+			'payment_method'      => '',
+			'not_payment_method'  => '',
 			'module'              => '',
 			'find'                => '',
 			'replace'             => '',
@@ -189,6 +191,24 @@ class WCJ_Shortcodes {
 		if ( '' != $atts['not_billing_country'] ) {
 			if ( isset( $_GET['billing_country'] ) ) {
 				if ( in_array( $_GET['billing_country'], $this->custom_explode( $atts['not_billing_country'] ) ) ) {
+					return '';
+				}
+			}
+		}
+
+		// Check if payment method by arg is ok
+		if ( '' != $atts['payment_method'] ) {
+			if ( ! isset( $_GET['payment_method'] ) ) {
+				return '';
+			}
+			if ( ! in_array( $_GET['payment_method'], $this->custom_explode( $atts['payment_method'] ) ) ) {
+				return '';
+			}
+		}
+		// Check if payment method by arg is ok (not in...)
+		if ( '' != $atts['not_payment_method'] ) {
+			if ( isset( $_GET['payment_method'] ) ) {
+				if ( in_array( $_GET['payment_method'], $this->custom_explode( $atts['not_payment_method'] ) ) ) {
 					return '';
 				}
 			}

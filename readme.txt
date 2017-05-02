@@ -172,6 +172,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
 	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
 
+~D	* Dev - Shortcodes - `payment_method` and `not_payment_method` attributes added to all shortcodes when used in invoice.
 ~!	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
 ~D$	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
@@ -1300,7 +1301,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 * Dev - Shortcodes - General - `[wcj_text]` shortcode added.
 * Dev - Shortcodes - General - `not_lang` attribute added to `[wcj_wpml]` shortcode; `lang` modified to accept comma separated values.
 * Dev - Shortcodes - `wpml_not_language` attribute added to all shortcodes; `wpml_language` modified to accept comma separated values.
-* Dev - Shortcodes - `billing_country` and `not_billing_country` attributes added to all shortcodes.
+* Dev - Shortcodes - `billing_country` and `not_billing_country` attributes added to all shortcodes when used in invoice.
 * Fix - PRODUCTS - Product Input Fields - Local (i.e. per Product) Product Input Fields - Bug when increasing (and saving) the number of input fields, fixed.
 * Dev - PRODUCTS - Product Input Fields - Local (i.e. per Product) Product Input Fields - Meta box layout changed.
 * Dev - PRODUCTS - Product Tabs - Code refactoring.

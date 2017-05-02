@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoice class.
  *
- * @version 2.7.0
+ * @version 2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -247,14 +247,19 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
 	function get_pdf( $dest ) {
 
 		// Get invoice content HTML
 		$_GET['order_id'] = $this->order_id;
 		$the_order = wc_get_order( $this->order_id );
-		if ( ! isset( $_GET['billing_country'] ) ) $_GET['billing_country'] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->billing_country : $the_order->get_billing_country() );
+		if ( ! isset( $_GET['billing_country'] ) ) {
+			$_GET['billing_country'] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->billing_country : $the_order->get_billing_country() );
+		}
+		if ( ! isset( $_GET['payment_method'] ) ) {
+			$_GET['payment_method']  = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->payment_method  : $the_order->get_payment_method() );
+		}
 		$html = do_shortcode( get_option( 'wcj_invoicing_' . $this->invoice_type . '_template' ) );
 		$html = force_balance_tags( $html );
 		//$html = apply_filters( 'the_content', get_option( 'wcj_invoicing_' . $this->invoice_type . '_template' ) );
