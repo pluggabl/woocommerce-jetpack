@@ -230,7 +230,7 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	 *
 	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 * @since   2.5.9
 	 */
 	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null ) {
@@ -260,6 +260,10 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 				}
 
 				if ( $exclude_wcj_meta && ( 'wcj' === substr( $_meta_key, 0, 3 ) || '_wcj' === substr( $_meta_key, 0, 4 ) ) ) {
+					continue;
+				}
+
+				if ( $exclude_wcj_meta && 'is_custom' === $_meta_key ) {
 					continue;
 				}
 
