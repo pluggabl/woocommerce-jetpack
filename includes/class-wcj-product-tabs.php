@@ -19,7 +19,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 *
 	 * @version 2.4.8
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'product_tabs';
 		$this->short_desc = __( 'Product Tabs', 'woocommerce-jetpack' );
@@ -250,7 +250,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 *
 	 * @version 2.4.7
 	 */
-	public function save_custom_tabs_meta_box( $post_id, $post ) {
+	function save_custom_tabs_meta_box( $post_id, $post ) {
 
 		// Check that we are saving with custom tab metabox displayed.
 		if ( ! isset( $_POST['woojetpack_custom_tabs_save_post'] ) )
@@ -284,7 +284,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 *
 	 * @version 2.4.7
 	 */
-	public function add_custom_tabs_meta_box() {
+	function add_custom_tabs_meta_box() {
 		add_meta_box(
 			'wc-jetpack-custom-tabs',
 			__( 'Booster: Custom Tabs', 'woocommerce-jetpack' ),
@@ -390,7 +390,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 *
 	 * @version 2.5.0
 	 */
-	public function create_custom_tabs_meta_box() {
+	function create_custom_tabs_meta_box() {
 
 		$current_post_id = get_the_ID();
 		$option_name = 'wcj_custom_product_tabs_local_total_number';
