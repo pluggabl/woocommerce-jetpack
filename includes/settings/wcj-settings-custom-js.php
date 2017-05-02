@@ -20,14 +20,14 @@ return array(
 		'id'       => 'wcj_custom_js_frontend',
 		'default'  => '',
 		'type'     => 'custom_textarea',
-		'css'      => 'width:66%;min-width:300px;min-height:300px;',
+		'css'      => 'width:66%;min-width:300px;min-height:300px;font-family:monospace;',
 	),
 	array(
 		'title'    => __( 'Custom JS - Back end (Admin)', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_custom_js_backend',
 		'default'  => '',
 		'type'     => 'custom_textarea',
-		'css'      => 'width:66%;min-width:300px;min-height:300px;',
+		'css'      => 'width:66%;min-width:300px;min-height:300px;font-family:monospace;',
 	),
 	array(
 		'type'     => 'sectionend',
