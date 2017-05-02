@@ -33,7 +33,6 @@ $settings = array(
 		),
 	),
 );
-
 $product_tags_options = array();
 $product_tags = get_terms( 'product_tag', 'orderby=name&hide_empty=0' );
 if ( ! empty( $product_tags ) && ! is_wp_error( $product_tags ) ){
@@ -41,7 +40,6 @@ if ( ! empty( $product_tags ) && ! is_wp_error( $product_tags ) ){
 		$product_tags_options[ $product_tag->term_id ] = $product_tag->name;
 	}
 }
-
 $product_cats_options = array();
 $product_cats = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
 if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ){
@@ -49,9 +47,7 @@ if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ){
 		$product_cats_options[ $product_cat->term_id ] = $product_cat->name;
 	}
 }
-
 $products_options = apply_filters( 'wcj_get_products_filter', array() );
-
 for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings,
 		array(
@@ -178,7 +174,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 		)
 	);
 }
-
 $settings = array_merge( $settings, array(
 	array(
 		'type'      => 'sectionend',
@@ -221,7 +216,6 @@ $settings = array_merge( $settings, array(
 		),
 	),
 ) );
-
 for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -310,7 +304,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 		),
 	) );
 }
-
 $settings = array_merge( $settings, array(
 	array(
 		'type'      => 'sectionend',
@@ -397,5 +390,4 @@ $settings = array_merge( $settings, array(
 		'id'        => 'wcj_product_info_product_tabs_options',
 	),
 ) );
-
 return $settings;
