@@ -46,11 +46,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 */
 	function get_meta_box_options() {
 		$filename = wcj_plugin_path() . '/includes/settings/meta-box/wcj-settings-meta-box-' . str_replace( '_', '-', $this->id ) . '.php';
-		if ( file_exists ( $filename ) ) {
-			return require( $filename );
-		} else {
-			return array();
-		}
+		return ( file_exists ( $filename ) ? require( $filename ) : array() );
 	}
 
 	/**
@@ -61,11 +57,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 */
 	function add_settings_from_file( $settings ) {
 		$filename = wcj_plugin_path() . '/includes/settings/wcj-settings-' . str_replace( '_', '-', $this->id ) . '.php';
-		if ( file_exists ( $filename ) ) {
-			return require( $filename );
-		} else {
-			return $settings;
-		}
+		return ( file_exists ( $filename ) ? require( $filename ) : $settings );
 	}
 
 	/*
