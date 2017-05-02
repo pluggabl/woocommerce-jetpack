@@ -461,7 +461,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items
 	 *
-	 * @version 2.5.7
+	 * @version 2.7.2
 	 * @since   2.5.7
 	 */
 	function wcj_order_items( $atts ) {
@@ -469,8 +469,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$the_items = $this->the_order->get_items();
 		foreach ( $the_items as $item_id => $item ) {
 			switch ( $atts['field'] ) {
-				case 'debug':
+				case '_debug':
 					$items[] = '<pre>' . print_r( $item, true ) . '</pre>';
+					break;
+				case '_qty_x_name':
+					$items[] = ( isset( $item['qty'] ) && isset( $item['name'] ) ) ? $item['qty'] . ' x ' . $item['name'] : '';
 					break;
 				default: // case 'name' etc.
 					$items[] = ( isset( $item[ $atts['field'] ] ) ) ? $item[ $atts['field'] ] : '';
