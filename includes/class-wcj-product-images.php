@@ -73,8 +73,8 @@ class WCJ_Product_Images extends WCJ_Module {
 	 */
 	function maybe_add_css() {
 		$post_id = get_the_ID();
-		if ( $post_id > 0 && 'yes' === get_post_meta( $post_id, '_' . 'wcj_product_images_add_css', true ) ) {
-			if ( '' != ( $css = get_post_meta( $post_id, '_' . 'wcj_product_images_css', true ) ) ) {
+		if ( $post_id > 0 && 'yes' === get_post_meta( $post_id, '_' . 'wcj_product_css_enabled', true ) ) {
+			if ( '' != ( $css = get_post_meta( $post_id, '_' . 'wcj_product_css', true ) ) ) {
 				echo '<style>' . $css . '</style>';
 			}
 		}
@@ -253,7 +253,7 @@ class WCJ_Product_Images extends WCJ_Module {
 				'title'   => __( 'Hide Image on Archives', 'woocommerce-jetpack' ),
 			),
 			array(
-				'name'    => 'wcj_product_images_add_css',
+				'name'    => 'wcj_product_css_enabled',
 				'default' => 'no',
 				'type'    => 'select',
 				'options' => array(
@@ -263,8 +263,8 @@ class WCJ_Product_Images extends WCJ_Module {
 				'title'   => __( 'Add CSS', 'woocommerce-jetpack' ),
 			),
 			array(
-				'name'    => 'wcj_product_images_css',
-				'default' => 'div.summary { float:none !important; }',
+				'name'    => 'wcj_product_css',
+				'default' => 'div.summary { float:none !important; width: 100% !important; }',
 				'type'    => 'textarea',
 				'title'   => __( 'CSS', 'woocommerce-jetpack' ),
 			),
