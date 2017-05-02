@@ -17,7 +17,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.7.2
 	 */
 	function __construct() {
 
@@ -28,6 +28,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			add_action( 'wp_head', array( $this, 'maybe_add_js_links' ) );
 			add_filter( 'woocommerce_product_tabs', array( $this, 'customize_product_tabs' ), 98 );
 			if ( 'yes' === get_option( 'wcj_custom_product_tabs_local_enabled' ) ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_custom_tabs_meta_box' ) );
@@ -39,7 +40,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Customize the product tabs.
 	 *
-	 * @version 2.7.0
+	 * @version 2.7.2
 	 */
 	function customize_product_tabs( $tabs ) {
 
@@ -217,7 +218,10 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					$tab_priority = (50 + $i - 1);
 				}
 
-				if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) && '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_content_' . $key, true ) ) {
+				if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) && (
+					'' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_content_' . $key, true ) ||
+					'' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_link_' . $key, true )
+				) ) {
 					$tabs[ $key ] = array(
 						'title'    => do_shortcode( get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) ),
 						'priority' => $tab_priority,
@@ -228,6 +232,40 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		}
 
 		return $tabs;
+	}
+
+	/**
+	 * maybe_add_js_links.
+	 *
+	 * @version 2.7.2
+	 * @since   2.7.2
+	 * @todo    links for global custom tabs
+	 */
+	function maybe_add_js_links() {
+		if ( 'yes' !== get_option( 'wcj_custom_product_tabs_local_enabled' ) ) {
+			return;
+		}
+		$current_post_id = get_the_ID();
+		if ( ! ( $total_custom_tabs = get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_local_total_number', true ) ) ) {
+			$total_custom_tabs = apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
+		}
+		for ( $i = 1; $i <= $total_custom_tabs; $i++ ) {
+			if ( $this->is_local_tab_visible( $i, $current_post_id ) ) {
+				$key = 'local_' . $i;
+				if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) ) {
+					if ( '' != ( $link = get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_link_' . $key, true ) ) ) {
+						echo '<script>' .
+							'jQuery(document).ready(function() {
+								jQuery("li.' . $key . '_tab").click(function(){
+									window.location = "' . $link . '";
+									return false;
+								});
+							});' .
+						'</script>';
+					}
+				}
+			}
+		}
 	}
 
 	/**
@@ -248,7 +286,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * save_custom_tabs_meta_box.
 	 *
-	 * @version 2.4.7
+	 * @version 2.7.2
+	 * @todo    rewrite as standard `WCJ_Module` function
 	 */
 	function save_custom_tabs_meta_box( $post_id, $post ) {
 
@@ -261,6 +300,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 			'wcj_custom_product_tabs_title_local_',
 			'wcj_custom_product_tabs_priority_local_',
 			'wcj_custom_product_tabs_content_local_',
+			'wcj_custom_product_tabs_link_local_',
 		);
 		$default_total_custom_tabs = apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
 		$total_custom_tabs_before_saving = get_post_meta( $post_id, '_' . 'wcj_custom_product_tabs_local_total_number', true );
@@ -388,7 +428,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_custom_tabs_meta_box.
 	 *
-	 * @version 2.5.0
+	 * @version 2.7.2
 	 */
 	function create_custom_tabs_meta_box() {
 
@@ -432,6 +472,11 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'id'    => 'wcj_custom_product_tabs_content_local_',
 				'title' => __( 'Content', 'woocommerce-jetpack' ),
 				'type'  => 'textarea',
+			),
+			array(
+				'id'    => 'wcj_custom_product_tabs_link_local_',
+				'title' => __( 'Link', 'woocommerce-jetpack' ),
+				'type'  => 'text',
 			),
 		);
 		$enable_wp_editor = get_option( 'wcj_custom_product_tabs_local_wp_editor_enabled', 'yes' );

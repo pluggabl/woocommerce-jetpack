@@ -243,6 +243,14 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 			'css'       => 'width:50%;min-width:300px;height:200px;',
 		),
 		array(
+			'desc'      => __( 'Default Link', 'woocommerce-jetpack' ),
+			'desc_tip'  => __( 'Leave blank for default behaviour.', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_custom_product_tabs_link_local_default_' . $i,
+			'default'   => '',
+			'type'      => 'text',
+			'css'       => 'width:30%;min-width:300px;',
+		),
+		array(
 			'title'     => '',
 			'desc'      => __( 'PRODUCTS to HIDE this tab', 'woocommerce-jetpack' ),
 			'desc_tip'  => __( 'To hide this tab from some products, enter products here.', 'woocommerce-jetpack' ),
