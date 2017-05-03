@@ -227,6 +227,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~!$D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
 ~!D$* Dev - EMAILS & MISC. - Emails - "Email Verification" section added.
+	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in some files.
 
 = 2.7.1 - 13/04/2017 =
 * Fix - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - "Variable products" visibility options fixed.
@@ -1224,7 +1225,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 * Dev - EMAILS & MISC. - Remove Old Slugs - Some text from Jetpack to Booster renamed.
 
 = 2.3.8 - 26/10/2015 =
-* Dev - Link changed to https://booster.io
+* Dev - Link changed to http://booster.io
 * Fix - Shortcodes - Products - Crowdfunding - `[wcj_product_crowdfunding_time_remaining]` singular form bug fixed.
 * Dev - PRODUCTS - Product Input Fields - *Placeholder* for *select* type added.
 * Dev - PRODUCTS - Product Input Fields - *Default value* for *checkbox* type added.
