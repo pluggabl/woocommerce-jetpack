@@ -718,15 +718,14 @@ if ( ! function_exists( 'add_wcj_get_products_filter' ) ) {
 	}
 }
 
-/**
- * wcj_get_products.
- *
- * @version 2.6.0
- */
 if ( ! function_exists( 'wcj_get_products' ) ) {
-	function wcj_get_products( $products = array(), $post_status = 'any' ) {
+	/**
+	 * wcj_get_products.
+	 *
+	 * @version 2.7.2
+	 */
+	function wcj_get_products( $products = array(), $post_status = 'any', $block_size = 256, $add_variations = false ) {
 		$offset = 0;
-		$block_size = 256;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'product',
@@ -743,10 +742,17 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 			}
 			foreach ( $loop->posts as $post_id ) {
 				$products[ $post_id ] = get_the_title( $post_id );
+				if ( $add_variations ) {
+					$_product = wc_get_product( $post_id );
+					if ( $_product->is_type( 'variable' ) ) {
+						foreach ( $_product->get_children() as $child_id ) {
+							$products[ $child_id ] = get_the_title( $child_id );
+						}
+					}
+				}
 			}
 			$offset += $block_size;
 		}
-		wp_reset_postdata();
 		return $products;
 	}
 }
