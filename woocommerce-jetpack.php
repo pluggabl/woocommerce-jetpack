@@ -406,7 +406,7 @@ final class WC_Jetpack {
 	public function action_links( $links ) {
 		$custom_links = array(
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
-			'<a href="' . esc_url( 'https://booster.io/' )                       . '">' . __( 'Docs', 'woocommerce' ) . '</a>',
+			'<a href="' . esc_url( 'https://booster.io/' )                      . '">' . __( 'Docs', 'woocommerce' ) . '</a>',
 		);
 		if ( 1 === apply_filters( 'booster_get_option', 1, '' ) ) {
 			$custom_links[] = '<a href="' . esc_url( 'https://booster.io/plus/' ) . '">' . __( 'Unlock all', 'woocommerce' ) . '</a>';
