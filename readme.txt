@@ -228,7 +228,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~!$D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
 ~!D$* Dev - EMAILS & MISC. - Emails - "Email Verification" section added.
-	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in some files.
+	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt and main plugin file.
 
 = 2.7.1 - 13/04/2017 =
 * Fix - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - "Variable products" visibility options fixed.
