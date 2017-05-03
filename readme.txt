@@ -117,12 +117,12 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 = Feedback =
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!
-* If you have any ideas how to upgrade the plugin to make it better, or if you have ideas about the features that are missing from our plugin, please [fill the form](http://booster.io/submit-idea/).
-* For support visit the [contact page](http://booster.io/contact-us/).
+* If you have any ideas how to upgrade the plugin to make it better, or if you have ideas about the features that are missing from our plugin, please [fill the form](https://booster.io/submit-idea/).
+* For support visit the [contact page](https://booster.io/contact-us/).
 
 = More =
-* Visit the [Booster for WooCommerce plugin page](http://booster.io/).
-* [Compare free and Plus version](http://booster.io/booster-woocommerce-free-vs-plus/).
+* Visit the [Booster for WooCommerce plugin page](https://booster.io/).
+* [Compare free and Plus version](https://booster.io/booster-woocommerce-free-vs-plus/).
 * If you wish to contribute - please visit [Booster for WooCommerce GitHub repository](https://github.com/algoritmika/woocommerce-jetpack).
 
 == Installation ==
@@ -135,11 +135,11 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 = How to unlock those some features settings that are locked? =
 
-To unlock all Booster for WooCommerce features, please install additional [Booster for WooCommerce Plus](http://booster.io/plus/) plugin.
+To unlock all Booster for WooCommerce features, please install additional [Booster for WooCommerce Plus](https://booster.io/plus/) plugin.
 
 = What features are in free and what are in Plus version? =
 
-You can see the differences between versions in this [table](http://booster.io/booster-woocommerce-free-vs-plus/).
+You can see the differences between versions in this [table](https://booster.io/booster-woocommerce-free-vs-plus/).
 
 == Screenshots ==
 
@@ -1224,7 +1224,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 * Dev - EMAILS & MISC. - Remove Old Slugs - Some text from Jetpack to Booster renamed.
 
 = 2.3.8 - 26/10/2015 =
-* Dev - Link changed to http://booster.io
+* Dev - Link changed to https://booster.io
 * Fix - Shortcodes - Products - Crowdfunding - `[wcj_product_crowdfunding_time_remaining]` singular form bug fixed.
 * Dev - PRODUCTS - Product Input Fields - *Placeholder* for *select* type added.
 * Dev - PRODUCTS - Product Input Fields - *Default value* for *checkbox* type added.
@@ -1678,7 +1678,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
   %price%, %price_excluding_tax% (suggested by Josh),
   %stock_availability% (by https://wordpress.org/support/topic/custom-tabs-1),
   %time_since_last_sale%, %weight%, %list_attributes% etc.
-  For full list of short codes, please visit http://booster.io/features/product-info/
+  For full list of short codes, please visit https://booster.io/features/product-info/
 * Feature Upgraded - Product Listings - Option to change default WooCommerce behavior on displaying all products if none categories are dispalyed.
   Now it's possible to disable displaying the products. Suggested by Xavier.
 * Feature Upgraded - PDF Invoices - Order date and time added. Suggested by https://wordpress.org/support/topic/order-time
