@@ -155,6 +155,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 == Changelog ==
 
 = 2.7.2 - 03/05/2017 =
+
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
 
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Admin Tools.
@@ -170,13 +171,13 @@ You can see the differences between versions in this [table](http://booster.io/b
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - More Button Labels.
-~	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
-~!	* Dev - Code refactoring - Settings from file.
+	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
+	* Dev - Code refactoring - Settings from file.
 
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
+	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
 ~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
 
 ~!	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
 ~!	* Fix - `wcj-datepicker.js` - Check for empty values added (e.g. `mindate=0` was not working properly in e.g. Checkout Custom Fields).
