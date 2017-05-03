@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Images class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function __construct() {
 
@@ -68,8 +68,8 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * maybe_add_css.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function maybe_add_css() {
 		$post_id = get_the_ID();

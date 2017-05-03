@@ -1,7 +1,7 @@
 /**
  * wcj-datepicker.
  *
- * version 2.7.2
+ * version 2.8.0
  */
 jQuery(document).ready(function() {
 	jQuery("input[display='date']").each( function () {

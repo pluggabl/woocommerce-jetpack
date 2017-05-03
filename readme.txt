@@ -154,7 +154,7 @@ You can see the differences between versions in this [table](http://booster.io/b
 
 == Changelog ==
 
-= 2.7.2 - 03/05/2017 =
+= 2.8.0 - 03/05/2017 =
 
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
 

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Shipping with Shipping Zones class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.5.6
  * @author  Algoritmika Ltd.
  */
@@ -20,7 +20,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 			/*
 			 * WC_Shipping_WCJ_Custom_W_Zones class.
 			 *
-			 * @version 2.7.2
+			 * @version 2.8.0
 			 * @since   2.5.6
 			 */
 			class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
@@ -40,7 +40,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * Init settings
 				 *
-				 * @version 2.7.2
+				 * @version 2.8.0
 				 * @since   2.5.6
 				 * @access  public
 				 * @return  void
@@ -86,7 +86,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * add_table_rows.
 				 *
-				 * @version 2.7.2
+				 * @version 2.8.0
 				 * @since   2.6.0
 				 */
 				function add_table_rows( $instance_form_fields ) {
@@ -141,7 +141,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * Initialise Settings Form Fields
 				 *
-				 * @version 2.7.2
+				 * @version 2.8.0
 				 * @since   2.5.6
 				 */
 				function init_instance_form_fields() {
@@ -223,7 +223,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * calculate_shipping_by_table.
 				 *
-				 * @version 2.7.2
+				 * @version 2.8.0
 				 * @since   2.5.6
 				 */
 				function calculate_shipping_by_table( $weight ) {
@@ -244,8 +244,8 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * cget_total_cart_quantity.
 				 *
-				 * @version 2.7.2
-				 * @since   2.7.2
+				 * @version 2.8.0
+				 * @since   2.8.0
 				 */
 				function get_total_cart_quantity() {
 					$cart_quantity = 0;
@@ -258,7 +258,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * calculate_shipping function.
 				 *
-				 * @version 2.7.2
+				 * @version 2.8.0
 				 * @since   2.5.6
 				 * @access  public
 				 * @param   mixed $package

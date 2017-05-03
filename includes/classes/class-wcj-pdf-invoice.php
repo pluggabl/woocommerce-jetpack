@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack PDF Invoice class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -247,7 +247,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function get_pdf( $dest ) {
 

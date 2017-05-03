@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Product by Time class.
  *
- * @version 2.7.2
- * @since   2.7.2
+ * @version 2.8.0
+ * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 * @todo    per product
 	 * @todo    per category
 	 * @todo    per tag
@@ -50,8 +50,8 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	/**
 	 * maybe_add_unavailable_by_time_message.
 	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
+	 * @version 2.8.0
+	 * @version 2.8.0
 	 * @todo    if ( '-' === %time_today% )
 	 */
 	function maybe_add_unavailable_by_time_message() {
@@ -72,8 +72,8 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	/**
 	 * check_is_purchasable_by_time.
 	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
+	 * @version 2.8.0
+	 * @version 2.8.0
 	 * @todo    validate `wcj_product_by_time` option before checking (or even better when option is saved by admin)
 	 */
 	function check_is_purchasable_by_time( $purchasable, $_product ) {
@@ -93,8 +93,8 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
+	 * @version 2.8.0
+	 * @version 2.8.0
 	 */
 	function get_settings() {
 		$settings = array(

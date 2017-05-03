@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Address Formats class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */

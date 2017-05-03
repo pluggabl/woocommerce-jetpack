@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Payment Gateways by Shipping class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.7.0
 	 */
 	function __construct() {

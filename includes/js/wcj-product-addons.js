@@ -1,7 +1,7 @@
 /**
  * wcj-product-addons.
  *
- * version 2.7.2
+ * version 2.8.0
  * since   2.5.3
  */
 

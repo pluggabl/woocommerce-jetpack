@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Input Fields abstract class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -253,7 +253,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_files_to_email_attachments.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.0
 	 */
 	function add_files_to_email_attachments( $attachments, $status, $order ) {
@@ -422,7 +422,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function add_product_input_fields_to_frontend() {
 		global $product;
@@ -662,7 +662,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Adds product input values to order details (and emails).
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );

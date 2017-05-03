@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Shortcodes class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	public function __construct() {
 
@@ -361,7 +361,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_regular_price.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.4.0
 	 */
 	function wcj_product_regular_price( $atts ) {
@@ -378,7 +378,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_sale_price.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.4.0
 	 */
 	function wcj_product_sale_price( $atts ) {
@@ -434,7 +434,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_stock_quantity.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.4.0
 	 */
 	function wcj_product_stock_quantity( $atts ) {
@@ -820,8 +820,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Get product description.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 * @return  string
 	 */
 	function wcj_product_description( $atts ) {

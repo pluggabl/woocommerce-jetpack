@@ -2,8 +2,8 @@
 /**
  * WooCommerce Jetpack Settings - Payment Gateways by Shipping
  *
- * @version 2.7.2
- * @since   2.7.2
+ * @version 2.8.0
+ * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) remove COD, Custom Booster Payment Gateways (and maybe other payment gateways) that already have `enable_for_methods` option
  */

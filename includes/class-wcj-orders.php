@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function __construct() {
 
@@ -240,7 +240,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Filter the orders in admin based on options.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @access  public
 	 * @param   mixed $query
 	 * @return  void
@@ -267,7 +267,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Filters for post types.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function restrict_manage_posts() {
 		global $typenow, $wp_query;
@@ -319,7 +319,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * add_order_columns.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function add_order_columns( $columns ) {
 		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_country', 'no' ) ) {
@@ -340,7 +340,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Output custom columns for orders
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @param   string $column
 	 */
 	function render_order_column( $column ) {

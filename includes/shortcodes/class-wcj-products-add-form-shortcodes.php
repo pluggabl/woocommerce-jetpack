@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Products Add Form Shortcodes class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    refill image on not validated (or after successful addition); more messages options; more styling options; custom fields;
@@ -19,7 +19,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -74,7 +74,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wc_add_new_product.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.0
 	 */
 	function wc_add_new_product( $args, $shortcode_atts ) {
@@ -159,7 +159,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * validate_args.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.0
 	 */
 	function validate_args( $args, $shortcode_atts ) {
@@ -213,8 +213,8 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * maybe_add_taxonomy_field.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function maybe_add_taxonomy_field( $atts, $args, $option_id, $taxonomy_id, $title, $input_style, $required_mark_html_template, $table_data ) {
 		if ( 'yes' === $atts[ $option_id . '_enabled' ] ) {
@@ -248,7 +248,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_add_new.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.0
 	 */
 	function wcj_product_add_new( $atts ) {

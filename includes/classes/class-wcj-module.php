@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Module class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -25,7 +25,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function __construct( $type = 'module' ) {
 		add_filter( 'wcj_settings_sections',     array( $this, 'settings_section' ) );
@@ -41,8 +41,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function get_meta_box_options() {
 		$filename = wcj_plugin_path() . '/includes/settings/meta-box/wcj-settings-meta-box-' . str_replace( '_', '-', $this->id ) . '.php';
@@ -52,8 +52,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * add_settings_from_file.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function add_settings_from_file( $settings ) {
 		$filename = wcj_plugin_path() . '/includes/settings/wcj-settings-' . str_replace( '_', '-', $this->id ) . '.php';
@@ -63,8 +63,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/*
 	 * add_settings_from_file_hook.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function add_settings_from_file_hook() {
 		add_filter( 'wcj_' . $this->id . '_settings', array( $this, 'add_settings_from_file' ) );
@@ -532,7 +532,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * settings_section.
 	 * only for `module`
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function add_enable_module_setting( $settings, $module_desc = '' ) {
 		if ( 'module' != $this->type ) {

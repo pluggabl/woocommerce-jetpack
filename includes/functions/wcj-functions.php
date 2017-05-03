@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Functions.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -14,8 +14,8 @@ if ( ! function_exists( 'wcj_check_time_from' ) ) {
 	/**
 	 * wcj_check_time_from.
 	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
+	 * @version 2.8.0
+	 * @version 2.8.0
 	 */
 	function wcj_check_time_from( $time_from, $args ) {
 		$time_from = explode( ':', $time_from );
@@ -33,8 +33,8 @@ if ( ! function_exists( 'wcj_check_time_to' ) ) {
 	/**
 	 * wcj_check_time_to.
 	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
+	 * @version 2.8.0
+	 * @version 2.8.0
 	 */
 	function wcj_check_time_to( $time_to, $args ) {
 		$time_to = explode( ':', $time_to );
@@ -52,8 +52,8 @@ if ( ! function_exists( 'wcj_check_single_time' ) ) {
 	/**
 	 * wcj_check_single_time.
 	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
+	 * @version 2.8.0
+	 * @version 2.8.0
 	 */
 	function wcj_check_single_time( $_time, $args ) {
 		$_time = explode( '-', $_time );
@@ -75,8 +75,8 @@ if ( ! function_exists( 'wcj_check_time' ) ) {
 	/**
 	 * wcj_check_time.
 	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
+	 * @version 2.8.0
+	 * @version 2.8.0
 	 */
 	function wcj_check_time( $_time, $args = array() ) {
 		if ( empty( $args ) ) {
@@ -167,7 +167,7 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 	/**
 	 * wcj_get_product_display_price.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.7.0
 	 */
 	function wcj_get_product_display_price( $_product, $price = '', $qty = 1 ) {
@@ -230,7 +230,7 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	 *
 	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.9
 	 */
 	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null ) {

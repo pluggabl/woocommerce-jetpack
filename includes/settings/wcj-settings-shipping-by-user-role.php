@@ -2,8 +2,8 @@
 /**
  * WooCommerce Jetpack Settings - Shipping by User Role
  *
- * @version 2.7.2
- * @since   2.7.2
+ * @version 2.8.0
+ * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 

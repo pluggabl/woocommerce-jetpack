@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Emails class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function __construct() {
 
@@ -58,8 +58,8 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * prevent_user_login_automatically_after_register.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function prevent_user_login_automatically_after_register( $redirect_to ) {
 		wp_logout();
@@ -69,8 +69,8 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * check_if_user_email_is_verified.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function check_if_user_email_is_verified( $userdata ) {
 		$error_message = do_shortcode( get_option( 'wcj_emails_verification_error_message',
@@ -86,8 +86,8 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * reset_and_mail_activation_link.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
 	 */
 	function reset_and_mail_activation_link( $user_id ) {
@@ -107,8 +107,8 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * process_email_verification.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function process_email_verification(){
 		if ( isset( $_GET['wcj_verify_email'] ) ) {

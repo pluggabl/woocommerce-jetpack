@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Orders Shortcodes class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -461,7 +461,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.7
 	 */
 	function wcj_order_items( $atts ) {
@@ -556,7 +556,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_checkout_field.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function wcj_order_checkout_field( $atts ) {
 		$field_id = ( string ) $atts['field_id'];

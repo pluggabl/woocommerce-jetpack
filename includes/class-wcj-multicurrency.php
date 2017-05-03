@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Multicurrency class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -362,7 +362,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_settings.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @todo    "pretty prices"
 	 */
 	function add_settings() {

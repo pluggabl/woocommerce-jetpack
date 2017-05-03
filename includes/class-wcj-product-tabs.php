@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Tabs class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function __construct() {
 
@@ -40,7 +40,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Customize the product tabs.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function customize_product_tabs( $tabs ) {
 
@@ -237,8 +237,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * maybe_add_js_links.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 * @todo    links for global custom tabs
 	 */
 	function maybe_add_js_links() {
@@ -286,7 +286,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * save_custom_tabs_meta_box.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @todo    rewrite as standard `WCJ_Module` function
 	 */
 	function save_custom_tabs_meta_box( $post_id, $post ) {
@@ -428,7 +428,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_custom_tabs_meta_box.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function create_custom_tabs_meta_box() {
 

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Items Shortcodes class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -106,7 +106,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_item.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	private function add_item( $items, $new_item_args = array() ) {
 		if ( empty ( $new_item_args ) ) {
@@ -266,7 +266,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 

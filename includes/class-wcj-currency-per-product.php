@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Currency per Product class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -315,7 +315,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_cart_checkout_currency.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.7.0
 	 */
 	function get_cart_checkout_currency() {

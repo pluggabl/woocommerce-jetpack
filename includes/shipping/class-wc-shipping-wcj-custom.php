@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Custom Shipping class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -20,14 +20,14 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 			/*
 			 * WC_Shipping_WCJ_Custom_Template class.
 			 *
-			 * @version 2.7.2
+			 * @version 2.8.0
 			 */
 			class WC_Shipping_WCJ_Custom_Template extends WC_Shipping_Method {
 
 				/**
 				 * Constructor shipping class
 				 *
-				 * @version 2.7.2
+				 * @version 2.8.0
 				 * @access  public
 				 * @return  void
 				 */
@@ -38,7 +38,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				/**
 				 * Init settings
 				 *
-				 * @version 2.7.2
+				 * @version 2.8.0
 				 * @access  public
 				 * @return  void
 				 */
@@ -74,8 +74,8 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				/**
 				 * Is this method available?
 				 *
-				 * @version 2.7.2
-				 * @since   2.7.2
+				 * @version 2.8.0
+				 * @since   2.8.0
 				 * @param   array $package
 				 * @return  bool
 				 */
@@ -95,7 +95,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				/**
 				 * Initialise Settings Form Fields
 				 *
-				 * @version 2.7.2
+				 * @version 2.8.0
 				 */
 				function init_form_fields() {
 					$this->form_fields = array(
@@ -182,7 +182,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				/**
 				 * calculate_shipping_by_table.
 				 *
-				 * @version 2.7.2
+				 * @version 2.8.0
 				 * @since   2.5.2
 				 */
 				function calculate_shipping_by_table( $weight ) {
@@ -203,8 +203,8 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				/**
 				 * cget_total_cart_quantity.
 				 *
-				 * @version 2.7.2
-				 * @since   2.7.2
+				 * @version 2.8.0
+				 * @since   2.8.0
 				 */
 				function get_total_cart_quantity() {
 					$cart_quantity = 0;
@@ -217,7 +217,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				/**
 				 * calculate_shipping function.
 				 *
-				 * @version 2.7.2
+				 * @version 2.8.0
 				 * @access  public
 				 * @param   mixed $package
 				 * @return  void

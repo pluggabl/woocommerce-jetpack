@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Stock class.
  *
- * @version 2.7.2
- * @since   2.7.2
+ * @version 2.8.0
+ * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 * @todo    (maybe) products_stock or product_stock
 	 */
 	function __construct() {
@@ -43,8 +43,8 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_out_of_stock_class.
 	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
+	 * @version 2.8.0
+	 * @version 2.8.0
 	 */
 	function custom_out_of_stock_class( $class, $_product ) {
 		if ( ! $_product->is_in_stock() ) {
@@ -56,8 +56,8 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_out_of_stock.
 	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
+	 * @version 2.8.0
+	 * @version 2.8.0
 	 * @todo    html tags in < WC3
 	 */
 	function custom_out_of_stock( $availability, $_product ) {
@@ -70,8 +70,8 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * get_settings.
 	 *
-	 * @version 2.7.2
-	 * @version 2.7.2
+	 * @version 2.8.0
+	 * @version 2.8.0
 	 * @todo    get_stock_html: ( WCJ_IS_WC_VERSION_BELOW_3 ? `woocommerce_stock_html` : `woocommerce_get_stock_html` )
 	 * @todo    apply_filters( 'woocommerce_stock_html', $html, $availability['availability'], $product );
 	 * @todo    apply_filters( 'woocommerce_get_stock_html', $html, $product );

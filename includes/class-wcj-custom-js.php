@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Custom JS class.
  *
- * @version 2.7.2
- * @since   2.7.2
+ * @version 2.8.0
+ * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Custom_JS extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 * @todo    footer or head
 	 * @todo    (maybe) wp_safe_redirect after saving settings
 	 * @todo    (maybe) set `add_action` `priority` to `PHP_INT_MAX`
@@ -45,8 +45,8 @@ class WCJ_Custom_JS extends WCJ_Module {
 	/**
 	 * custom_frontend_js.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function custom_frontend_js() {
 		echo '<script>' . get_option( 'wcj_custom_js_frontend', '' ) . '</script>';
@@ -55,8 +55,8 @@ class WCJ_Custom_JS extends WCJ_Module {
 	/**
 	 * custom_backend_js.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function custom_backend_js() {
 		echo '<script>' . get_option( 'wcj_custom_js_backend', '' ) . '</script>';

@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product Addons class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -120,8 +120,8 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * maybe_convert_currency.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function maybe_convert_currency( $price ) {
 		// Multicurrency (Currency Switcher) module
@@ -135,7 +135,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.3
 	 */
 	function price_change_ajax( $param ) {
@@ -177,7 +177,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.3
 	 */
 	function enqueue_scripts() {
@@ -254,7 +254,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_info_to_order_item_meta.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.3
 	 */
 	function add_info_to_order_item_meta( $item_id, $values, $cart_item_key  ) {
@@ -270,7 +270,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Adds info to order details (and emails).
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.3
 	 */
 	function add_info_to_order_item_name( $name, $item, $is_cart = false ) {
@@ -329,7 +329,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.3
 	 */
 	function add_addons_price_to_cart_item( $cart_item_data, $cart_item_key ) {
@@ -392,7 +392,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {

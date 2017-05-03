@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Order Custom Statuses class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @todo    copy all changes from Custom Order Status plugin
 	 * @todo    `wcj_orders_custom_statuses_processing_and_completed_actions` to Custom Order Status plugin
 	 */
@@ -68,8 +68,8 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * add_custom_status_to_processing_and_completed_actions.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function add_custom_status_to_processing_and_completed_actions( $actions, $_order ) {
 		$custom_order_statuses = get_option( 'wcj_orders_custom_statuses_array' );

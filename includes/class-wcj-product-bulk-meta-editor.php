@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Product Bulk Meta Editor class.
  *
- * @version 2.7.2
- * @version 2.7.2
+ * @version 2.8.0
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function __construct() {
 
@@ -40,8 +40,8 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 	/**
 	 * get_result_message.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function get_result_message( $success, $fail ) {
 		$result_message = '';
@@ -57,8 +57,8 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 	/**
 	 * create_product_bulk_meta_editor_tool.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 * @todo    - tab order (go through input fields in meta table)
 	 * @todo    - options (variations$$$? columns? products(e.g. always select all)? etc.)
 	 * @todo    - restyle "Products and Meta key" (as table?)
@@ -168,8 +168,8 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 	/**
 	 * get_products.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 * @todo    use global function (and add "add_variations" param)
 	 */
 	function get_products( $products = array(), $post_status = 'any' ) {
@@ -206,8 +206,8 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 	/**
 	 * get_tool_html.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function get_tool_html( $meta_name, $result_message, $_products, $selected_products, $set_meta ) {
 		$html = '';

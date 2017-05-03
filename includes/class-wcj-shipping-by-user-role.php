@@ -4,8 +4,8 @@
  *
  * The WooCommerce Jetpack Shipping by User Role class.
  *
- * @version 2.7.2
- * @since   2.7.2
+ * @version 2.8.0
+ * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,8 +18,8 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function __construct() {
 
@@ -37,8 +37,8 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module {
 	/**
 	 * available_shipping_methods.
 	 *
-	 * @version 2.7.2
-	 * @since   2.7.2
+	 * @version 2.8.0
+	 * @since   2.8.0
 	 * @todo    apply_filters( 'booster_get_option' )
 	 */
 	function available_shipping_methods( $rates, $package ) {

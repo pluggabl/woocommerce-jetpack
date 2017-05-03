@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Product by User class.
  *
- * @version 2.7.2
+ * @version 2.8.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.2
 	 */
 	function __construct() {
@@ -96,7 +96,7 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * add_my_products_content_my_account_page.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 * @since   2.5.2
 	 */
 	function add_my_products_content_my_account_page() {
