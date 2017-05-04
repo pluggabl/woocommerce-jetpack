@@ -67,55 +67,6 @@ class WCJ_Stock extends WCJ_Module {
 		return $availability;
 	}
 
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.8.0
-	 * @version 2.8.0
-	 * @todo    get_stock_html: ( WCJ_IS_WC_VERSION_BELOW_3 ? `woocommerce_stock_html` : `woocommerce_get_stock_html` )
-	 * @todo    apply_filters( 'woocommerce_stock_html', $html, $availability['availability'], $product );
-	 * @todo    apply_filters( 'woocommerce_get_stock_html', $html, $product );
-	 */
-	function get_settings() {
-		$settings = array(
-			array(
-				'title'    => __( 'Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_stock_options',
-			),
-			array(
-				'title'    => __( 'Custom Out of Stock HTML', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_stock_custom_out_of_stock_enabled',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'id'       => 'wcj_stock_custom_out_of_stock',
-				'default'  => '',
-				'type'     => 'custom_textarea',
-				'css'      => 'width:66%;min-width:300px;',
-			),
-			array(
-				'title'    => __( 'Custom Out of Stock Class', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_stock_custom_out_of_stock_class_enabled',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'id'       => 'wcj_stock_custom_out_of_stock_class',
-				'default'  => '',
-				'type'     => 'text',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_stock_options',
-			),
-		);
-		return $this->add_standard_settings( $settings );
-	}
-
 }
 
 endif;
