@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Emails
- *
- * The WooCommerce Jetpack Emails class.
+ * Booster for WooCommerce - Module - Emails
  *
  * @version 2.8.0
  * @author  Algoritmika Ltd.
@@ -18,6 +16,7 @@ class WCJ_Emails extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.0
+	 * @todo    move "Email Verification" to new module
 	 */
 	function __construct() {
 
