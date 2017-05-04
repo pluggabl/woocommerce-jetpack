@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$settings = array(
+return array(
 	array(
 		'title'    => __( 'Admin Tools Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
@@ -81,4 +81,3 @@ $settings = array(
 		'id'       => 'wcj_admin_tools_module_options',
 	),
 );
-return $settings;
