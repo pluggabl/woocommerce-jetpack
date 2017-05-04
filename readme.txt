@@ -160,6 +160,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
 
+	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Listings.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Stock.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Cart Customization.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Call for Price.
