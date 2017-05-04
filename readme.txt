@@ -183,16 +183,16 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
 
-~	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
-~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_attribute__name` and `exclude_by_attribute__value` attributes added.
 ~!	* Dev - `wcj_get_products()` - Code refactoring and `add_variations` param added.
 ~!	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
 ~!	* Fix - `wcj-datepicker.js` - Check for empty values added (e.g. `mindate=0` was not working properly in e.g. Checkout Custom Fields).
+~	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
 ~!D	* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
 ~!D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
 ~D	* Dev - Shortcodes - `payment_method` and `not_payment_method` attributes added to all shortcodes when used in invoice.
 	* Dev - Shortcodes - General - `[wcj_cart_total]` shortcode added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items]` - `field` attribute's `_qty_x_name` special value added (and `debug` renamed to `_debug`).
+~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_attribute__name` and `exclude_by_attribute__value` attributes added.
 ~	* Fix - Shortcodes - Products - `[wcj_product_stock_quantity]` - Return empty string instead of `false` on `null`.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_stock_quantity]` - `count_variations` attribute added.
 D	* Dev - Shortcodes - Products - `[wcj_product_description]` shortcode added.
@@ -208,7 +208,6 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~!	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
 ~!D	* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
 ~!D$* Dev - PRODUCTS - Product by Time - Initial module release.
-~!DE* Dev - EMAILS & MISC. - Custom CSS - "Add CSS" and "CSS" per product options added.
 ~D	* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
 -!D$* Dev - PRODUCTS - Product Tabs - "Link" option added (on per product basis).
 ~D	* Dev - PRODUCTS - Product User Products - "Product URL (for "External/Affiliate" product type only)" field added.
@@ -231,6 +230,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~!D$* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
 ~!D$* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
 ~!$D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
+~!DE* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
 ~!D$* Dev - EMAILS & MISC. - Emails - "Email Verification" section added.
 	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt and main plugin file.
