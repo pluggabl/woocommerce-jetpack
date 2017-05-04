@@ -225,7 +225,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.6.0
+	 * @version 2.8.0
+	 * @todo    finish `$css` for all other types (now implemented only for `textarea`)
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -247,6 +248,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					} else {
 						$option_value = ( isset( $option['default'] ) ) ? $option['default'] : '';
 					}
+					$css = ( isset( $option['css'] ) ) ? $option['css']  : '';
 					$input_ending = '';
 					if ( 'select' === $option['type'] ) {
 						if ( isset( $option['multiple'] ) ) {
@@ -272,6 +274,10 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 							}
 							$options .= '<option value="' . $select_option_key . '" ' . $selected . '>' . $select_option_value . '</option>';
 						}
+					} elseif ( 'textarea' === $option['type'] ) {
+						if ( '' === $css ) {
+							$css = 'min-width:300px;';
+						}
 					} else {
 						$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
 						if ( isset( $option['custom_attributes'] ) ) {
@@ -286,7 +292,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 							$field_html = '<input class="input-text" display="date" type="text"' . $input_ending;
 							break;
 						case 'textarea':
-							$field_html = '<textarea style="min-width:300px;"' . ' id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
+							$field_html = '<textarea style="' . $css . '"' . ' id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
 							break;
 						case 'select':
 							$field_html = '<select' . $custom_attributes . ' id="' . $option['name'] . '" name="' . $option_name . '">' . $options . '</select>';

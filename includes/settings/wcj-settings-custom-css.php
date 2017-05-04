@@ -30,6 +30,21 @@ return array(
 		'css'      => 'width:66%;min-width:300px;min-height:300px;',
 	),
 	array(
+		'title'    => __( 'Custom CSS on per Product Basis', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_custom_css_per_product',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Custom CSS on per Product Basis - Default Field Value', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_custom_css_per_product_default_value',
+		'default'  => '',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:66%;min-width:300px;min-height:100px;',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_custom_css_options',
 	),

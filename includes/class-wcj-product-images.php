@@ -53,29 +53,11 @@ class WCJ_Product_Images extends WCJ_Module {
 				// Per product options
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
-
-				// Per product - CSS
-				add_action( 'wp_head', array( $this, 'maybe_add_css' ) );
 			}
 
 			// Sale flash
 			if ( 'yes' === get_option( 'wcj_product_images_sale_flash_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_sale_flash', array( $this, 'customize_sale_flash' ), PHP_INT_MAX, 3 );
-			}
-		}
-	}
-
-	/**
-	 * maybe_add_css.
-	 *
-	 * @version 2.8.0
-	 * @since   2.8.0
-	 */
-	function maybe_add_css() {
-		$post_id = get_the_ID();
-		if ( $post_id > 0 && 'yes' === get_post_meta( $post_id, '_' . 'wcj_product_css_enabled', true ) ) {
-			if ( '' != ( $css = get_post_meta( $post_id, '_' . 'wcj_product_css', true ) ) ) {
-				echo '<style>' . $css . '</style>';
 			}
 		}
 	}

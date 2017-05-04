@@ -46,8 +46,8 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
 * *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Disable add to cart button on per product basis. Open external products on add to cart in new window. Replace Add to Cart button on archives with button from single product pages.
 * *Product Addons* - Add (paid/free/discount) addons to WooCommerce products.
+* *Product Availability by Time* - WooCommerce product availability by time.
 * *Product Bulk Meta Editor* - Set WooCommerce products meta with bulk editor.
-* *Product by Time* - WooCommerce product availability by time.
 * *Product Cost Price* - Save WooCommerce product purchase costs data for admin reports.
 * *Product Images* - Customize WooCommerce products images, thumbnails and sale flashes.
 * *Product Info* - Add additional info to WooCommerce category and single product pages.
@@ -99,6 +99,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Orders* - Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.
 * *Shipping* - Add multiple custom shipping methods to WooCommerce. Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
+* *Shipping Methods by User Role* - Set user roles to include/exclude for WooCommerce shipping methods to show up.
 
 **PDF Invoicing & Packing Slips**
 
@@ -108,7 +109,8 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
-* *Custom CSS* - Separate custom CSS for front and back end.
+* *Custom CSS* - Separate custom CSS for front and back end. Per product CSS.
+* *Custom JS* - Separate custom JS for front and back end.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *Export* - WooCommerce export tools.
 * *General* - Custom roles tool. Shortcodes in WordPress text widgets.
@@ -181,6 +183,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
 
+~	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_attribute__name` and `exclude_by_attribute__value` attributes added.
 ~!	* Dev - `wcj_get_products()` - Code refactoring and `add_variations` param added.
 ~!	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
@@ -205,7 +208,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~!	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
 ~!D	* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
 ~!D$* Dev - PRODUCTS - Product by Time - Initial module release.
--!D$* Dev - PRODUCTS - Product Images - "Add CSS" and "CSS" per product options added.
+~!DE* Dev - EMAILS & MISC. - Custom CSS - "Add CSS" and "CSS" per product options added.
 ~D	* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
 -!D$* Dev - PRODUCTS - Product Tabs - "Link" option added (on per product basis).
 ~D	* Dev - PRODUCTS - Product User Products - "Product URL (for "External/Affiliate" product type only)" field added.

@@ -52,20 +52,4 @@ return array(
 		),
 		'title'   => __( 'Hide Image on Archives', 'woocommerce-jetpack' ),
 	),
-	array(
-		'name'    => 'wcj_product_css_enabled',
-		'default' => 'no',
-		'type'    => 'select',
-		'options' => array(
-			'yes' => __( 'Yes', 'woocommerce-jetpack' ),
-			'no'  => __( 'No', 'woocommerce-jetpack' ),
-		),
-		'title'   => __( 'Add CSS', 'woocommerce-jetpack' ),
-	),
-	array(
-		'name'    => 'wcj_product_css',
-		'default' => 'div.summary { float:none !important; width: 100% !important; }',
-		'type'    => 'textarea',
-		'title'   => __( 'CSS', 'woocommerce-jetpack' ),
-	),
 );
