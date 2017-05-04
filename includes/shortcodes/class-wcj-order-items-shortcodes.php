@@ -33,27 +33,27 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
-			'order_id'             => ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID(),
-			'hide_currency'        => 'no',
-			'table_class'          => '',
-			'shipping_as_item'     => '', //__( 'Shipping', 'woocommerce-jetpack' ),
-			'discount_as_item'     => '', //__( 'Discount', 'woocommerce-jetpack' ),
-			'columns'              => '',
-			'columns_titles'       => '',
-			'columns_styles'       => '',
-			'tax_percent_format'   => '%.2f %%',
-			'item_image_width'     => 0, // deprecated
-			'item_image_height'    => 0, // deprecated
-			'product_image_width'  => 0,
-			'product_image_height' => 0,
-			'price_prefix'         => '',
-			'quantity_prefix'      => '',
-			'style_item_name_variation' => 'font-size:smaller;',
-			'variation_as_metadata' => 'yes',
+			'order_id'                            => ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID(),
+			'hide_currency'                       => 'no',
+			'table_class'                         => '',
+			'shipping_as_item'                    => '', //__( 'Shipping', 'woocommerce-jetpack' ),
+			'discount_as_item'                    => '', //__( 'Discount', 'woocommerce-jetpack' ),
+			'columns'                             => '',
+			'columns_titles'                      => '',
+			'columns_styles'                      => '',
+			'tax_percent_format'                  => '%.2f %%',
+			'item_image_width'                    => 0, // deprecated
+			'item_image_height'                   => 0, // deprecated
+			'product_image_width'                 => 0,
+			'product_image_height'                => 0,
+			'price_prefix'                        => '',
+			'quantity_prefix'                     => '',
+			'style_item_name_variation'           => 'font-size:smaller;',
+			'variation_as_metadata'               => 'yes',
 			'wc_extra_product_options_show_price' => 'no',
-			'order_user_roles'     => '',
-			'exclude_by_attribute__name'  => '',
-			'exclude_by_attribute__value' => '',
+			'order_user_roles'                    => '',
+			'exclude_by_attribute__name'          => '',
+			'exclude_by_attribute__value'         => '',
 		), $atts );
 		return $modified_atts;
 	}
