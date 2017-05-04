@@ -17,7 +17,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->the_shortcodes = array(
 			'wcj_order_items_table',
@@ -36,8 +36,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'order_id'                            => ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID(),
 			'hide_currency'                       => 'no',
 			'table_class'                         => '',
-			'shipping_as_item'                    => '', //__( 'Shipping', 'woocommerce-jetpack' ),
-			'discount_as_item'                    => '', //__( 'Discount', 'woocommerce-jetpack' ),
+			'shipping_as_item'                    => '', // __( 'Shipping', 'woocommerce-jetpack' ),
+			'discount_as_item'                    => '', // __( 'Discount', 'woocommerce-jetpack' ),
 			'columns'                             => '',
 			'columns_titles'                      => '',
 			'columns_styles'                      => '',
