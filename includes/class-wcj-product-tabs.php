@@ -76,7 +76,9 @@ class WCJ_Product_Tabs extends WCJ_Module {
 		global $product;
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
 			$key = 'global_' . $i;
-			if ( '' != get_option( 'wcj_custom_product_tabs_title_' . $key, '' ) && '' != get_option( 'wcj_custom_product_tabs_content_' . $key, '' ) ) {
+			if ( '' != get_option( 'wcj_custom_product_tabs_title_' . $key, '' ) &&
+				( '' != get_option( 'wcj_custom_product_tabs_content_' . $key, '' ) || '' != get_option( 'wcj_custom_product_tabs_link_' . $key, '' ) )
+			) {
 
 				$_product_id = wcj_get_product_id_or_variation_parent_id( $product );
 
@@ -218,10 +220,10 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					$tab_priority = (50 + $i - 1);
 				}
 
-				if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) && (
-					'' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_content_' . $key, true ) ||
-					'' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_link_' . $key, true )
-				) ) {
+				if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) &&
+					( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_content_' . $key, true ) ||
+					  '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_link_' . $key, true ) )
+				) {
 					$tabs[ $key ] = array(
 						'title'    => do_shortcode( get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) ),
 						'priority' => $tab_priority,
@@ -235,13 +237,41 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	}
 
 	/**
+	 * get_js_link_script.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 */
+	function get_js_link_script( $link, $key, $do_open_in_new_window ) {
+		$command = ( 'yes' === $do_open_in_new_window ) ?
+			'window.open("' . $link . '","_blank");' :
+			'window.location = "' . $link . '";';
+		return '<script>' .
+			'jQuery(document).ready(function() {
+				jQuery("li.' . $key . '_tab").click(function(){
+					' . $command . '
+					return false;
+				});
+			});' .
+		'</script>';
+	}
+
+	/**
 	 * maybe_add_js_links.
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
-	 * @todo    links for global custom tabs
+	 * @todo    check if global custom tab is visible before adding the script for it
 	 */
 	function maybe_add_js_links() {
+		// Global tabs
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
+			$key = 'global_' . $i;
+			if ( '' != get_option( 'wcj_custom_product_tabs_title_' . $key, '' ) && '' != ( $link = get_option( 'wcj_custom_product_tabs_link_' . $key, '' ) ) ) {
+				echo $this->get_js_link_script( $link, $key, get_option( 'wcj_custom_product_tabs_link_new_tab_' . $key, true ) );
+			}
+		}
+		// Local tabs
 		if ( 'yes' !== get_option( 'wcj_custom_product_tabs_local_enabled' ) ) {
 			return;
 		}
@@ -254,19 +284,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				$key = 'local_' . $i;
 				if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) ) {
 					if ( '' != ( $link = get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_link_' . $key, true ) ) ) {
-						if ( 'yes' === get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_link_new_tab_' . $key, true ) ) {
-							$command = 'window.open("' . $link . '","_blank");';
-						} else {
-							$command = 'window.location = "' . $link . '";';
-						}
-						echo '<script>' .
-							'jQuery(document).ready(function() {
-								jQuery("li.' . $key . '_tab").click(function(){
-									' . $command . '
-									return false;
-								});
-							});' .
-						'</script>';
+						echo $this->get_js_link_script( $link, $key, get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_link_new_tab_' . $key, true ) );
 					}
 				}
 			}
@@ -465,38 +483,37 @@ class WCJ_Product_Tabs extends WCJ_Module {
 
 		$options = array(
 			array(
-				'id'    => 'wcj_custom_product_tabs_title_local_',
-				'title' => __( 'Title', 'woocommerce-jetpack' ),
-				'type'  => 'text',
+				'id'       => 'wcj_custom_product_tabs_title_local_',
+				'title'    => __( 'Title', 'woocommerce-jetpack' ),
+				'type'     => 'text',
 			),
 			array(
-				'id'    => 'wcj_custom_product_tabs_priority_local_',
-				'title' => __( 'Order', 'woocommerce-jetpack' ),
-				'type'  => 'number',
+				'id'       => 'wcj_custom_product_tabs_priority_local_',
+				'title'    => __( 'Order', 'woocommerce-jetpack' ),
+				'type'     => 'number',
 			),
 			array(
-				'id'    => 'wcj_custom_product_tabs_content_local_',
-				'title' => __( 'Content', 'woocommerce-jetpack' ),
-				'type'  => 'textarea',
+				'id'       => 'wcj_custom_product_tabs_content_local_',
+				'title'    => __( 'Content', 'woocommerce-jetpack' ),
+				'type'     => 'textarea',
 			),
 			array(
-				'id'    => 'wcj_custom_product_tabs_link_local_',
-				'title' => __( 'Link', 'woocommerce-jetpack' ),
-				'type'  => 'text',
+				'id'       => 'wcj_custom_product_tabs_link_local_',
+				'title'    => __( 'Link', 'woocommerce-jetpack' ),
+				'type'     => 'text',
 				'desc_tip' => __( 'If you wish to forward tab to new link, enter it here. In this case content is ignored. Leave blank to show content.', 'woocommerce-jetpack' ),
 			),
 			array(
-				'id'    => 'wcj_custom_product_tabs_link_new_tab_local_',
-				'title' => __( 'Link - Open in New Window', 'woocommerce-jetpack' ),
-				'type'  => 'select',
-				'options' => array(
+				'id'       => 'wcj_custom_product_tabs_link_new_tab_local_',
+				'title'    => __( 'Link - Open in New Window', 'woocommerce-jetpack' ),
+				'type'     => 'select',
+				'options'  => array(
 					'no'  => __( 'No', 'woocommerce-jetpack' ),
 					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
 				),
 			),
 		);
-		$enable_wp_editor = get_option( 'wcj_custom_product_tabs_local_wp_editor_enabled', 'yes' );
-		$enable_wp_editor = ( 'yes' === $enable_wp_editor ) ? true : false;
+		$enable_wp_editor = ( 'yes' === get_option( 'wcj_custom_product_tabs_local_wp_editor_enabled', 'yes' ) );
 		for ( $i = 1; $i <= $total_custom_tabs; $i++ ) {
 			$is_local_tab_visible = $this->is_local_tab_visible( $i, $current_post_id );
 			$readonly = ( $is_local_tab_visible ) ? '' : ' readonly'; // not really used
@@ -504,9 +521,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 			$data = array();
 			$html = '<hr>';
 			$html .= '<h4>' . __( 'Custom Product Tab', 'woocommerce-jetpack' ) . ' #' . $i . $disabled . '</h4>';
-			if ( $enable_wp_editor ) {
-				$the_field_wp_editor = array();
-			}
 			if ( $is_local_tab_visible ) {
 				foreach ( $options as $option ) {
 					$option_id = $option['id'] . $i;
@@ -532,8 +546,9 @@ class WCJ_Product_Tabs extends WCJ_Module {
 							break;
 						case 'textarea':
 							if ( $enable_wp_editor ) {
-								$the_field = '';
-								$the_field_wp_editor = array( $option_id => $option_value );
+								ob_start();
+								wp_editor( $option_value, $option_id );
+								$the_field = ob_get_clean();
 							} else {
 								$the_field = '<textarea style="width:100%;height:300px;" id="' . $option_id . '" name="' . $option_id . '"' . $readonly . '>' . $option_value . '</textarea>';
 							}
@@ -549,9 +564,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				$html .= wcj_get_table_html( $data, array( 'table_class' => 'widefat', 'table_style' => 'margin-bottom:20px;', 'table_heading_type' => 'vertical', 'columns_styles' => array( 'width:10%;', ) ) );
 			}
 			echo $html;
-			if ( $enable_wp_editor && ! empty( $the_field_wp_editor ) ) {
-				wp_editor( current( $the_field_wp_editor ), key( $the_field_wp_editor ) );
-			}
 		}
 		$html = '<input type="hidden" name="woojetpack_custom_tabs_save_post" value="woojetpack_custom_tabs_save_post">';
 		echo $html;

@@ -76,6 +76,20 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'css'       => 'width:50%;min-width:300px;height:200px;',
 			),
 			array(
+				'desc'      => __( 'Link', 'woocommerce-jetpack' ),
+				'desc_tip'  => __( 'If you wish to forward tab to new link, enter it here. In this case content is ignored. Leave blank to show content.', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_custom_product_tabs_link_global_' . $i,
+				'default'   => '',
+				'type'      => 'text',
+				'css'       => 'width:30%;min-width:300px;',
+			),
+			array(
+				'desc'      => __( 'Link - Open in New Window', 'woocommerce-jetpack' ),
+				'id'        => 'wcj_custom_product_tabs_link_new_tab_global_' . $i,
+				'default'   => 'no',
+				'type'      => 'checkbox',
+			),
+			array(
 				'title'     => '',
 				'desc'      => __( 'PRODUCTS to HIDE this tab', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'To hide this tab from some products, enter products here.', 'woocommerce-jetpack' ),
