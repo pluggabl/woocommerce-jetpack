@@ -213,7 +213,8 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~!D	* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
 ~!D$* Dev - PRODUCTS - Product by Time - Initial module release.
 ~D	* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
--!D$* Dev - PRODUCTS - Product Tabs - "Link" option added.
+~!D$* Dev - PRODUCTS - Product Tabs - "Link" option added.
+~!	* Dev - PRODUCTS - Product Tabs - Code refactoring.
 ~D	* Dev - PRODUCTS - Product User Products - "Product URL (for "External/Affiliate" product type only)" field added.
 ~D$	* Dev - PRODUCTS - Product User Products - "Product Type" option added.
 ~	* Dev - PRODUCTS - Product User Products - `WP_Query` optimized to return `ids` only.
