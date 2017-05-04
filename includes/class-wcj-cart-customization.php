@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Cart Customization class.
  *
- * @version 2.7.0
+ * @version 2.8.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WCJ_Cart_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 * @since   2.7.0
 	 */
 	function __construct() {
@@ -28,8 +28,6 @@ class WCJ_Cart_Customization extends WCJ_Module {
 		$this->desc       = __( 'Customize WooCommerce cart - hide coupon field; item remove link.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-cart-customization/';
 		parent::__construct();
-
-		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 			// Hide coupon
@@ -51,40 +49,6 @@ class WCJ_Cart_Customization extends WCJ_Module {
 	 */
 	function hide_coupon_field_on_cart( $enabled ) {
 		return ( is_cart() ) ? false : $enabled;
-	}
-
-	/*
-	 * add_settings.
-	 *
-	 * @version 2.7.0
-	 * @since   2.7.0
-	 */
-	function add_settings() {
-		return array(
-			array(
-				'title'    => __( 'Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_cart_customization_options',
-			),
-			array(
-				'title'    => __( 'Hide Coupon on Cart Page', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_cart_hide_coupon',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'Hide Item Remove Link', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_cart_hide_item_remove_link',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_cart_customization_options',
-			),
-		);
 	}
 
 }

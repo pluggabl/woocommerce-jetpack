@@ -154,10 +154,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.0 - 03/05/2017 =
+= 2.8.0 - 04/05/2017 =
 
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
 
+	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Cart Customization.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Call for Price.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Admin Tools.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Add to Cart Labels.
