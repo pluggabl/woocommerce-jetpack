@@ -265,6 +265,12 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 			'css'       => 'width:30%;min-width:300px;',
 		),
 		array(
+			'desc'      => __( 'Default "Link - Open in New Window"', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_custom_product_tabs_link_new_tab_local_default_' . $i,
+			'default'   => 'no',
+			'type'      => 'checkbox',
+		),
+		array(
 			'title'     => '',
 			'desc'      => __( 'PRODUCTS to HIDE this tab', 'woocommerce-jetpack' ),
 			'desc_tip'  => __( 'To hide this tab from some products, enter products here.', 'woocommerce-jetpack' ),
