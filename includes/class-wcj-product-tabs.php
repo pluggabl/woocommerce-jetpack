@@ -254,10 +254,15 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				$key = 'local_' . $i;
 				if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) ) {
 					if ( '' != ( $link = get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_link_' . $key, true ) ) ) {
+						if ( 'yes' === get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_link_new_tab_' . $key, true ) ) {
+							$command = 'window.open("' . $link . '","_blank");';
+						} else {
+							$command = 'window.location = "' . $link . '";';
+						}
 						echo '<script>' .
 							'jQuery(document).ready(function() {
 								jQuery("li.' . $key . '_tab").click(function(){
-									window.location = "' . $link . '";
+									' . $command . '
 									return false;
 								});
 							});' .
@@ -301,6 +306,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 			'wcj_custom_product_tabs_priority_local_',
 			'wcj_custom_product_tabs_content_local_',
 			'wcj_custom_product_tabs_link_local_',
+			'wcj_custom_product_tabs_link_new_tab_local_',
 		);
 		$default_total_custom_tabs = apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
 		$total_custom_tabs_before_saving = get_post_meta( $post_id, '_' . 'wcj_custom_product_tabs_local_total_number', true );
@@ -477,6 +483,16 @@ class WCJ_Product_Tabs extends WCJ_Module {
 				'id'    => 'wcj_custom_product_tabs_link_local_',
 				'title' => __( 'Link', 'woocommerce-jetpack' ),
 				'type'  => 'text',
+				'desc_tip' => __( 'If you wish to forward tab to new link, enter it here. In this case content is ignored. Leave blank to show content.', 'woocommerce-jetpack' ),
+			),
+			array(
+				'id'    => 'wcj_custom_product_tabs_link_new_tab_local_',
+				'title' => __( 'Link - Open in New Window', 'woocommerce-jetpack' ),
+				'type'  => 'select',
+				'options' => array(
+					'no'  => __( 'No', 'woocommerce-jetpack' ),
+					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+				),
 			),
 		);
 		$enable_wp_editor = get_option( 'wcj_custom_product_tabs_local_wp_editor_enabled', 'yes' );
@@ -501,6 +517,13 @@ class WCJ_Product_Tabs extends WCJ_Module {
 						}
 					}
 					switch ( $option['type'] ) {
+						case 'select':
+							$the_field = '<select type="' . $option['type'] . '" id="' . $option_id . '" name="' . $option_id . '"' . $readonly . '>';
+							foreach ( $option['options'] as $select_option_id => $select_option_title ) {
+								$the_field .= '<option value="' . $select_option_id . '" ' . selected( $option_value, $select_option_id, false ). '>' . $select_option_title . '</option>';
+							}
+							$the_field .= '</select>';
+							break;
 						case 'number':
 							$the_field = '<input style="width:25%;min-width:100px;" type="' . $option['type'] . '" id="' . $option_id . '" name="' . $option_id . '" value="' . $option_value . '"' . $readonly . '>';
 							break;
@@ -517,6 +540,9 @@ class WCJ_Product_Tabs extends WCJ_Module {
 							break;
 					}
 					if ( '' != $the_field ) {
+						if ( isset( $option['desc_tip'] ) && '' != $option['desc_tip'] ) {
+							$option['title'] .= '<span class="woocommerce-help-tip" data-tip="' . $option['desc_tip'] . '"></span>';
+						}
 						$data[] = array( $option['title'], $the_field );
 					}
 				}
