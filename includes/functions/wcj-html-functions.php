@@ -1,10 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack HTML Functions
+ * Booster for WooCommerce - Functions - HTML Functions
  *
- * The WooCommerce Jetpack HTML functions.
- *
- * @version 2.5.7
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -81,5 +79,24 @@ if ( ! function_exists( 'wcj_get_option_html' ) ) {
 		$html .= '<span class="description">' . $option_description . '</span>';
 
 		return $html;
+	}
+}
+
+if ( ! function_exists( 'wcj_empty_cart_button_html' ) ) {
+	/**
+	 * wcj_empty_cart_button_html.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 * @todo    optional function parameters instead of default `get_option()` calls
+	 */
+	function wcj_empty_cart_button_html() {
+		$confirmation_html = ( 'confirm_with_pop_up_box' == get_option( 'wcj_empty_cart_confirmation', 'no_confirmation' ) ) ?
+			' onclick="return confirm(\'' . get_option( 'wcj_empty_cart_confirmation_text', __( 'Are you sure?', 'woocommerce-jetpack' ) ) . '\')"' : '';
+		return '<div style="' . get_option( 'wcj_empty_cart_div_style', 'float: right;' ) . '">' .
+			'<form action="" method="post"><input type="submit" class="button" name="wcj_empty_cart" value="' .
+				apply_filters( 'booster_get_option', 'Empty Cart', get_option( 'wcj_empty_cart_text', 'Empty Cart' ) ) . '"' . $confirmation_html . '>' .
+			'</form>' .
+		'</div>';
 	}
 }

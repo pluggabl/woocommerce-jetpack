@@ -19,7 +19,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.8.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->the_shortcodes = array(
 			'wcj_current_date',
@@ -43,6 +43,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_customer_billing_country',
 			'wcj_customer_shipping_country',
 			'wcj_customer_meta',
+			'wcj_empty_cart_button',
 		);
 
 		$this->the_atts = array(
@@ -69,6 +70,19 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_empty_cart_button.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 */
+	function wcj_empty_cart_button( $atts ) {
+		if ( ! wcj_is_module_enabled( 'empty_cart' ) ) {
+			return '<p>' . sprintf( __( '"%s" module is not enabled!', 'woocommerce-jetpack' ), __( 'Empty Cart Button', 'woocommerce-jetpack' ) ) . '</p>';
+		}
+		return wcj_empty_cart_button_html();
 	}
 
 	/**

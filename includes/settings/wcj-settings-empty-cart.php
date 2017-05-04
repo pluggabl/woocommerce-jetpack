@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 return array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
+		'desc'     => __( 'You can also use <strong>[wcj_empty_cart_button]</strong> shortcode to place the button anywhere on your site.', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_empty_cart_customization_options',
 	),

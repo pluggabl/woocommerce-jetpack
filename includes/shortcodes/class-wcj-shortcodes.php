@@ -105,7 +105,7 @@ class WCJ_Shortcodes {
 
 		// Check for module enabled
 		if ( '' != $atts['module'] && ! wcj_is_module_enabled( $atts['module'] ) ) {
-			return '<p>' . sprintf( __( '%s module not enabled!', 'woocommerce-jetpack' ), $atts['module_name'] ) . '</p>';
+			return '<p>' . sprintf( __( '"%s" module is not enabled!', 'woocommerce-jetpack' ), $atts['module_name'] ) . '</p>';
 		}
 
 		// Check if time is ok

@@ -218,7 +218,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
 ~!D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Minor code refactoring.
--!D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
+~D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
 ~D	* Dev - CART & CHECKOUT - Empty Cart Button - "Do not add" option added to "Button position on the Cart page".
 	* Dev - CART & CHECKOUT - Empty Cart Button - Code refactoring.
 ~D$	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
