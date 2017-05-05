@@ -157,7 +157,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.0 - 05/05/2017 =
+= 2.8.0 - 06/05/2017 =
 
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
@@ -177,6 +177,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Stock.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Cart Customization.
+	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Files Upload.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Empty Cart Button.
 	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Address Formats.
