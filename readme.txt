@@ -158,32 +158,32 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 2.8.0 - 05/05/2017 =
 
-	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Visibility by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
+	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Visibility by User Role.
 
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Visibility by User Role.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currencies.
+	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
+	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Add to Cart Labels.
+	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Call for Price.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Custom Price Labels.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Free Price Labels.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Listings.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Stock.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Cart Customization.
-	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Call for Price.
-	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Admin Tools.
-	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Add to Cart Labels.
-	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Address Formats.
+	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - More Button Labels.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Images.
-	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Custom CSS.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Listings.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Tabs.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Visibility by User Role.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - Stock.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
+	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Cart Customization.
+	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Empty Cart Button.
+	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
+	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Address Formats.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Order Custom Statuses.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Orders.
+	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Admin Tools.
+	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Custom CSS.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Emails.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Empty Cart Button.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
-	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - More Button Labels.
-	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
 ~	* Dev - Code refactoring - Settings from file.
 
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
