@@ -106,9 +106,11 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	 */
 	function get_cat_by_section( $section ) {
 		foreach ( $this->cats as $id => $label_info ) {
-			if ( ! empty( $label_info['all_cat_ids'] ) )
-				if ( in_array( $section, $label_info['all_cat_ids'] ) )
+			if ( ! empty( $label_info['all_cat_ids'] ) ) {
+				if ( in_array( $section, $label_info['all_cat_ids'] ) ) {
 						return $id;
+				}
+			}
 		}
 		return '';
 	}
@@ -119,17 +121,16 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	 * @return array
 	 */
 	function get_sections() {
-		return apply_filters( 'wcj_settings_sections', array(
-			'' => __( 'Dashboard', 'woocommerce-jetpack' ),
-		) );
+		return apply_filters( 'wcj_settings_sections', array( '' => __( 'Dashboard', 'woocommerce-jetpack' ) ) );
 	}
 
 	/**
 	 * active.
+	 *
+	 * @version 2.8.0
 	 */
 	function active( $active ) {
-		if ( 'yes' === $active ) return 'active';
-		else return 'inactive';
+		return ( 'yes' === $active ) ? 'active' : 'inactive';
 	}
 
 	/**
