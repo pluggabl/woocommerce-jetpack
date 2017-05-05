@@ -114,7 +114,7 @@ $settings = array_merge( $settings, array(
 	),
 ) );
 if ( ! empty( get_option( 'wcj_price_by_user_role_categories', '' ) ) ) {
-	$categories         = get_option( 'wcj_price_by_user_role_categories', '' );
+	$categories = get_option( 'wcj_price_by_user_role_categories', '' );
 	foreach ( $categories as $category ) {
 		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 			$settings = array_merge( $settings, array(
@@ -122,14 +122,14 @@ if ( ! empty( get_option( 'wcj_price_by_user_role_categories', '' ) ) ) {
 					'title'    => $product_cats_options[ $category ] . ': ' . $role_data['name'],
 					'id'       => 'wcj_price_by_user_role_cat_' . $category . '_' . $role_key,
 					'default'  => 1,
-					'type'     => 'number',
+					'type'     => 'wcj_number_plus_checkbox_start',
 					'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
 				),
 				array(
 					'desc'     => __( 'Make Empty Price', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $role_key,
 					'default'  => 'no',
-					'type'     => 'checkbox',
+					'type'     => 'wcj_number_plus_checkbox_end',
 				),
 			) );
 		}
