@@ -181,7 +181,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - More Button Labels.
 	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
-~!	* Dev - Code refactoring - Settings from file.
+~	* Dev - Code refactoring - Settings from file.
 
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
 	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
@@ -211,8 +211,8 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~	* Fix - PRODUCTS - Product Addons - Variable product with equal variation prices ajax issue fixed.
 ~	* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
 ~!	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
+~!D$* Dev - PRODUCTS - Product Availability by Time - Initial module release.
 ~!D	* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
-~!D$* Dev - PRODUCTS - Product by Time - Initial module release.
 ~D	* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
 ~!D	* Dev - PRODUCTS - Product Tabs - "Link" option added.
 ~!	* Dev - PRODUCTS - Product Tabs - Code refactoring.
