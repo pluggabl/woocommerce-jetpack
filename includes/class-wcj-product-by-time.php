@@ -36,7 +36,7 @@ class WCJ_Product_By_Time extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === get_option( 'wcj_product_by_time_section_enabled', 'no' ) ) {
-				$this->day_of_week_now = intval( date( 'N', $this->time_now ) ) - 1;
+				$this->day_of_week_now = intval( date( 'w', $this->time_now ) );
 				$this->hours_now       = intval( date( 'H', $this->time_now ) );
 				$this->minutes_now     = intval( date( 'i', $this->time_now ) );
 				add_filter( 'woocommerce_is_purchasable',         array( $this, 'check_is_purchasable_by_time' ),          PHP_INT_MAX, 2 );
@@ -46,23 +46,50 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	}
 
 	/**
+	 * get_default_time.
+	 *
+	 * @version 2.8.0
+	 * @version 2.8.0
+	 */
+	function get_default_time( $i ) {
+		$time_defaults = array(
+			'-',
+			'8:00-19:59',
+			'8:00-19:59',
+			'8:00-19:59',
+			'8:00-19:59',
+			'8:00-9:59,12:00-17:59',
+			'-',
+		);
+		return $time_defaults[ $i ];
+	}
+
+	/**
 	 * maybe_add_unavailable_by_time_message.
 	 *
 	 * @version 2.8.0
 	 * @version 2.8.0
-	 * @todo    if ( '-' === %time_today% )
 	 */
 	function maybe_add_unavailable_by_time_message() {
 		if ( ! $this->check_is_purchasable_by_time( true, null ) ) {
-			$purchasable_by_time = explode( PHP_EOL, get_option( 'wcj_product_by_time', '' ) );
-			$_time = '';
-			if ( isset( $purchasable_by_time[ $this->day_of_week_now ] ) ) {
-				$_time = str_replace( array( "\n", "\r", ' ' ), array( '', '', '' ), $purchasable_by_time[ $this->day_of_week_now ] );
-			}
+			$_time = get_option( 'wcj_product_by_time_' . $this->day_of_week_now, $this->get_default_time( $this->day_of_week_now ) );
+			$_product = wc_get_product();
+			$replaceable_values = array(
+				'%time_today%'    => $_time,
+				'%product_title%' => $_product->get_title(),
+			);
+			$message = ( ( '-' === $_time ) ?
+				apply_filters( 'booster_get_option', __( '<p style="color:red;">%product_title% is not available today.</p>', 'woocommerce-jetpack' ),
+					get_option( 'wcj_product_by_time_unavailable_message_day_off',
+						__( '<p style="color:red;">%product_title% is not available today.</p>', 'woocommerce-jetpack' ) ) ) :
+				apply_filters( 'booster_get_option', __( '<p style="color:red;">%product_title% is available only at %time_today% today.</p>', 'woocommerce-jetpack' ),
+					get_option( 'wcj_product_by_time_unavailable_message',
+						__( '<p style="color:red;">%product_title% is available only at %time_today% today.</p>', 'woocommerce-jetpack' ) ) )
+			);
 			echo str_replace(
-				'%time_today%',
-				$_time,
-				do_shortcode( get_option( 'wcj_product_by_time_unavailable_message', __( '<p style="color:red;">Today the product is available only at %time_today%.</p>', 'woocommerce-jetpack' ) ) )
+				array_keys( $replaceable_values ),
+				array_values( $replaceable_values ),
+				do_shortcode( $message )
 			);
 		}
 	}
@@ -72,18 +99,15 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	 *
 	 * @version 2.8.0
 	 * @version 2.8.0
-	 * @todo    validate `wcj_product_by_time` option before checking (or even better when option is saved by admin)
+	 * @todo    validate `wcj_product_by_time_` option before checking (or even better earlier, when option is saved by admin)
 	 */
 	function check_is_purchasable_by_time( $purchasable, $_product ) {
 		if ( $purchasable ) {
-			$purchasable_by_time = explode( PHP_EOL, get_option( 'wcj_product_by_time', '' ) );
-			if ( isset( $purchasable_by_time[ $this->day_of_week_now ] ) ) {
-				$_time = str_replace( array( "\n", "\r", ' ' ), array( '', '', '' ), $purchasable_by_time[ $this->day_of_week_now ] );
-				if ( '-' === $_time ) {
-					return false;
-				}
-				return wcj_check_time( $_time, array( 'hours_now' => $this->hours_now, 'minutes_now' => $this->minutes_now ) );
+			$_time = get_option( 'wcj_product_by_time_' . $this->day_of_week_now, $this->get_default_time( $this->day_of_week_now ) );
+			if ( '-' === $_time ) {
+				return false;
 			}
+			return wcj_check_time( $_time, array( 'hours_now' => $this->hours_now, 'minutes_now' => $this->minutes_now ) );
 		}
 		return $purchasable;
 	}

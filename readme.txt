@@ -211,7 +211,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~	* Fix - PRODUCTS - Product Addons - Variable product with equal variation prices ajax issue fixed.
 ~	* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
 ~!	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
-~!D$* Dev - PRODUCTS - Product Availability by Time - Initial module release.
+~DE	* Dev - PRODUCTS - Product Availability by Time - Initial module release.
 ~!D	* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
 ~D	* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
 ~!D	* Dev - PRODUCTS - Product Tabs - "Link" option added.

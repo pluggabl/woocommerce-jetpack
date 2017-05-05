@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-return array(
+$settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
 		'desc'     => '<span id="local-time">' . sprintf( __( 'Local time is <code>%s</code>.', 'woocommerce-jetpack' ), date( 'l, H:i:s', $this->time_now ) ) . '</span>',
@@ -19,34 +19,53 @@ return array(
 	array(
 		'title'    => __( 'Product by Time', 'woocommerce-jetpack' ),
 		'desc'     => '<strong>' . __( 'Enable Section', 'woocommerce-jetpack' ) . '</strong>',
+		'desc_tip' => __( 'Time formats:', 'woocommerce-jetpack' ) . ' ' . '<code>HH:MM</code>' . ', ' . '<code>HH:MM,HH:MM</code>' . ', ' . '<code>-</code>' . '.',
 		'id'       => 'wcj_product_by_time_section_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
-	array(
-		'title'     => __( 'Time Table', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_by_time',
-		'default'  =>
-			'8:00-19:59'            . PHP_EOL .
-			'8:00-19:59'            . PHP_EOL .
-			'8:00-19:59'            . PHP_EOL .
-			'8:00-19:59'            . PHP_EOL .
-			'8:00-9:59,12:00-17:59' . PHP_EOL .
-			'-'                     . PHP_EOL .
-			'-'                     . PHP_EOL,
-		'type'     => 'textarea',
-		'css'      => 'min-width:300px;height:200px;',
-	),
+);
+$timestamp = strtotime( 'next Sunday' );
+for ( $i = 0; $i < 7; $i++ ) {
+	$settings = array_merge( $settings, array(
+		array(
+			'title'    => date_i18n( 'l', $timestamp ),
+			'id'       => 'wcj_product_by_time_' . $i,
+			'default'  => $this->get_default_time( $i ),
+			'type'     => 'text',
+			'css'      => 'width:300px;',
+		),
+	) );
+	$timestamp = strtotime( '+1 day', $timestamp );
+}
+$settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Message', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Message when product is not available by time.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Message when product is not available by time.', 'woocommerce-jetpack' ) .
+			' ' . __( 'Replaceable values:', 'woocommerce-jetpack' ) . ' ' . '<code>%product_title%</code>' . ', ' . '<code>%time_today%</code>' . '.' .
+			' ' . __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) .
+			' ' . apply_filters( 'booster_get_message', '', 'desc' ),
 		'id'       => 'wcj_product_by_time_unavailable_message',
-		'default'  => __( '<p style="color:red;">Today the product is available only at %time_today%.</p>', 'woocommerce-jetpack' ),
+		'default'  => __( '<p style="color:red;">%product_title% is available only at %time_today% today.</p>', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+	),
+	array(
+		'title'    => __( 'Message (Day Off)', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Message when product is not available by time (day off).', 'woocommerce-jetpack' ) .
+			' ' . __( 'Replaceable value:', 'woocommerce-jetpack' ) . ' ' . '<code>%product_title%</code>' . '.' .
+			' ' . __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) .
+			' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'id'       => 'wcj_product_by_time_unavailable_message_day_off',
+		'default'  => __( '<p style="color:red;">%product_title% is not available today.</p>', 'woocommerce-jetpack' ),
+		'type'     => 'custom_textarea',
+		'css'      => 'width:66%;min-width:300px;',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 	),
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_by_time_options',
 	),
-);
+) );
+return $settings;
