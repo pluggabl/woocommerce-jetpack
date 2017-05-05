@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - Price by User Role
+ * Booster for WooCommerce - Settings - Price by User Role
  *
  * @version 2.8.0
  * @since   2.8.0
@@ -35,7 +35,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Show Roles on per Product Settings', 'woocommerce-jetpack' ),
-		'desc'     => __( 'If per product settings is enabled, you can choose which roles to show on product\'s edit page. Leave blank to show all roles.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'If per product settings are enabled, you can choose which roles to show on product\'s edit page. Leave blank to show all roles.', 'woocommerce-jetpack' ),
 		'type'     => 'multiselect',
 		'id'       => 'wcj_price_by_user_role_per_product_show_roles',
 		'default'  => '',
@@ -95,8 +95,17 @@ if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ){
 }
 $settings = array_merge( $settings, array(
 	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_price_by_user_role_multipliers_options',
+	),
+	array(
 		'title'    => __( 'Categories', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Save module\'s settings after changing this option to see new fields.', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_price_by_user_role_categories_options',
+	),
+	array(
+		'title'    => __( 'Categories', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save module\'s settings after changing this option to see new settings fields.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_categories',
 		'default'  => '',
 		'type'     => 'multiselect',
@@ -129,7 +138,7 @@ if ( ! empty( get_option( 'wcj_price_by_user_role_categories', '' ) ) ) {
 $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_price_by_user_role_multipliers_options',
+		'id'       => 'wcj_price_by_user_role_categories_options',
 	),
 ) );
 return $settings;
