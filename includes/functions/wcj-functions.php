@@ -925,7 +925,8 @@ if ( ! function_exists( 'wcj_hex2rgb' ) ) {
 if ( ! function_exists( 'wcj_get_the_ip' ) ) {
 	/**
 	 * wcj_get_the_ip.
-	 * http://stackoverflow.com/questions/3003145/how-to-get-the-client-ip-address-in-php
+	 *
+	 * @see http://stackoverflow.com/questions/3003145/how-to-get-the-client-ip-address-in-php
 	 */
 	function wcj_get_the_ip( ) {
 		$ip = null;
