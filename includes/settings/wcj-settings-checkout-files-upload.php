@@ -9,24 +9,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$product_tags_options = array();
-$product_tags = get_terms( 'product_tag', 'orderby=name&hide_empty=0' );
-if ( ! empty( $product_tags ) && ! is_wp_error( $product_tags ) ){
-	foreach ( $product_tags as $product_tag ) {
-		$product_tags_options[ $product_tag->term_id ] = $product_tag->name;
-	}
-}
-
-$product_cats_options = array();
-$product_cats = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
-if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ){
-	foreach ( $product_cats as $product_cat ) {
-		$product_cats_options[ $product_cat->term_id ] = $product_cat->name;
-	}
-}
-
-$products_options = apply_filters( 'wcj_get_products_filter', array() );
-
+$product_tags_options = wcj_get_terms( 'product_tag' );
+$product_cats_options = wcj_get_terms( 'product_cat' );
+$products_options     = wcj_get_products();
 $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -40,8 +25,7 @@ $settings = array(
 		'type'     => 'custom_number',
 		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => array_merge(
-			is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
-				apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
+			is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 			array( 'step' => '1', 'min'  => '1', )
 		),
 	),

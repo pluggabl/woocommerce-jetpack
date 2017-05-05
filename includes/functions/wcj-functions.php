@@ -722,7 +722,7 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 	/**
 	 * wcj_get_products.
 	 *
-	 * @version 2.7.2
+	 * @version 2.8.0
 	 */
 	function wcj_get_products( $products = array(), $post_status = 'any', $block_size = 256, $add_variations = false ) {
 		$offset = 0;
@@ -754,6 +754,26 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 			$offset += $block_size;
 		}
 		return $products;
+	}
+}
+
+if ( ! function_exists( 'wcj_get_terms' ) ) {
+	/**
+	 * wcj_get_terms.
+	 *
+	 * @version 2.8.0
+	 * @version 2.8.0
+	 * @todo    get_terms( array|string $args = array(), array $deprecated = '' )
+	 */
+	function wcj_get_terms( $_taxonomy ) {
+		$products_terms_options = array();
+		$products_terms = get_terms( $_taxonomy, 'orderby=name&hide_empty=0' );
+		if ( ! empty( $products_terms ) && ! is_wp_error( $products_terms ) ){
+			foreach ( $products_terms as $product_term ) {
+				$products_terms_options[ $product_term->term_id ] = $product_term->name;
+			}
+		}
+		return $products_terms_options;
 	}
 }
 
