@@ -485,9 +485,6 @@ final class WC_Jetpack {
 		include_once( 'includes/widgets/class-wcj-widget-country-switcher.php' );
 		include_once( 'includes/widgets/class-wcj-widget-left-to-free-shipping.php' );
 
-		// Abstracts
-//		include_once( 'includes/abstracts/class-wcj-product-input-fields.php' );
-
 		// Modules and Submodules
 		$this->include_modules();
 	}
@@ -599,7 +596,6 @@ final class WC_Jetpack {
 			'includes/class-wcj-order-min-amount.php',
 			'includes/class-wcj-order-numbers.php',
 			'includes/class-wcj-order-custom-statuses.php',
-//			'includes/class-wcj-pdf-invoices.php',
 			'includes/class-wcj-pdf-invoicing.php',
 			'includes/class-wcj-emails.php',
 			'includes/class-wcj-currencies.php',
@@ -615,7 +611,6 @@ final class WC_Jetpack {
 			'includes/class-wcj-custom-js.php',
 			'includes/class-wcj-products-xml.php',
 			'includes/class-wcj-export-import.php',
-//			'includes/class-wcj-shortcodes-module.php',
 			'includes/class-wcj-eu-vat-number.php',
 			'includes/class-wcj-old-slugs.php',
 			'includes/class-wcj-reports.php',
@@ -628,16 +623,12 @@ final class WC_Jetpack {
 			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php',
 			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php',
 			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php',
-//			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-general.php',
 		);
-
 		$this->modules = array();
 		foreach ( $modules_files as $module_file ) {
 			$module = include_once( $module_file );
 			$this->modules[ $module->id ] = $module;
 		}
-
-//		do_action( 'woojetpack_modules', $settings );
 
 		// Add and Manage options
 		if ( is_admin() ) {

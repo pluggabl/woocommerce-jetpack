@@ -833,48 +833,30 @@ if ( ! function_exists( 'wcj_plugin_url' ) ) {
 	 */
 	function wcj_plugin_url() {
 		return untrailingslashit( plugin_dir_url( realpath( dirname( __FILE__ ) . '/..' ) ) );
-		//return untrailingslashit( realpath( dirname( __FILE__ ) . '/..' ) );
 	}
 }
 
-/**
- * Get the plugin path.
- *
- * @return string
- */
 if ( ! function_exists( 'wcj_plugin_path' ) ) {
+	/**
+	 * Get the plugin path.
+	 *
+	 * @return string
+	 */
 	function wcj_plugin_path() {
-		//return untrailingslashit( plugin_dir_path( __FILE__ ) );
 		return untrailingslashit( realpath( plugin_dir_path( __FILE__ ) . '/../..' ) );
 	}
 }
 
-/**
- * Convert the php date format string to a js date format.
- * https://gist.github.com/clubduece/4053820
- */
-/* if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
-	function wcj_date_format_php_to_js( $php_date_format ) {
-		$date_formats_php_to_js = array(
-			'F j, Y' => 'MM dd, yy',
-			'Y/m/d'  => 'yy/mm/dd',
-			'm/d/Y'  => 'mm/dd/yy',
-			'd/m/Y'  => 'dd/mm/yy',
-		);
-		return isset( $date_formats_php_to_js[ $php_date_format ] ) ? $date_formats_php_to_js[ $php_date_format ] : 'MM dd, yy';
-	}
-} */
-
-/*
- * Matches each symbol of PHP date format standard
- * with jQuery equivalent codeword
- * http://stackoverflow.com/questions/16702398/convert-a-php-date-format-to-a-jqueryui-datepicker-date-format
- *
- * @author  Tristan Jahier
- * @version 2.4.0
- * @since   2.4.0
- */
 if ( ! function_exists( 'wcj_date_format_php_to_js_v2' ) ) {
+	/*
+	 * Matches each symbol of PHP date format standard
+	 * with jQuery equivalent codeword
+	 * http://stackoverflow.com/questions/16702398/convert-a-php-date-format-to-a-jqueryui-datepicker-date-format
+	 *
+	 * @author  Tristan Jahier
+	 * @version 2.4.0
+	 * @since   2.4.0
+	 */
 	function wcj_date_format_php_to_js_v2( $php_format ) {
 		$SYMBOLS_MATCHING = array(
 			// Day
