@@ -111,6 +111,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
 * *Custom CSS* - Separate custom CSS for front and back end. Per product CSS.
 * *Custom JS* - Separate custom JS for front and back end.
+* *Email Verification* - Add WooCommerce email verification.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *Export* - WooCommerce export tools.
 * *General* - Custom roles tool. Shortcodes in WordPress text widgets.
@@ -243,6 +244,7 @@ $~!D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module r
 ~!D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
 $~!D* Dev - EMAILS & MISC. - Email Verification - Initial module release.
+	* Tweak - `WCJ_Module` - `extra_desc` and `link_slug` properties added.
 	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt and main plugin file.
 
 = 2.7.1 - 13/04/2017 =
