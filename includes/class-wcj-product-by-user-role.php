@@ -1,10 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack Product by User Role
+ * Booster for WooCommerce - Module - Product Visibility by User Role
  *
- * The WooCommerce Jetpack Product by User Role class.
- *
- * @version 2.7.0
+ * @version 2.8.0
  * @since   2.5.5
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +16,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.8.0
 	 * @since   2.5.5
 	 */
 	function __construct() {
@@ -27,6 +25,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 		$this->short_desc = __( 'Product Visibility by User Role', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Display WooCommerce products by customer\'s user role.', 'woocommerce-jetpack' );
 		$this->link       = 'http://booster.io/features/woocommerce-product-visibility-by-user-role/';
+		$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Visibility by User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' );
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -125,44 +124,6 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 		return $options;
 	}
 
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.6.0
-	 * @since   2.5.5
-	 */
-	function get_settings() {
-		$settings = array(
-			array(
-				'title'    => __( 'Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_product_by_user_role_options',
-			),
-			array(
-				'title'    => __( 'Visibility', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_role_visibility',
-				'default'  => 'yes',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'Purchasable', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_role_purchasable',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'Query', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_by_user_role_query',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_product_by_user_role_options',
-			),
-		);
-		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Product Visibility by User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
-	}
 }
 
 endif;
