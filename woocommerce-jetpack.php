@@ -78,20 +78,6 @@ final class WC_Jetpack {
 	}
 
 	/**
-	 * Cloning is forbidden.
-	 */
-	/* public function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'woocommerce' ), '3.9.1' );
-	} */
-
-	/**
-	 * Unserializing instances of this class is forbidden.
-	 */
-	/* public function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'woocommerce' ), '3.9.1' );
-	} */
-
-	/**
 	 * WC_Jetpack Constructor.
 	 *
 	 * @version 2.8.0
@@ -105,6 +91,7 @@ final class WC_Jetpack {
 		// Include required files
 		$this->includes();
 
+		// My Products endpoint
 		register_activation_hook(   __FILE__, array( $this, 'add_my_products_endpoint_flush_rewrite_rules' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'add_my_products_endpoint_flush_rewrite_rules' ) );
 		add_filter( 'query_vars',             array( $this, 'add_my_products_endpoint_query_var' ), 0 );
@@ -120,7 +107,7 @@ final class WC_Jetpack {
 			add_action( 'admin_notices',                                      array( $this, 'check_plus_version' ) );
 		}
 
-		// Scripts
+		// Scripts - Admin
 		if ( is_admin() ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_wcj_backend_scripts' ) );
 			if (
@@ -132,6 +119,7 @@ final class WC_Jetpack {
 			}
 		}
 
+		// Scripts - Frontend
 		if (
 			'yes' === get_option( 'wcj_product_input_fields_enabled' ) ||
 			'yes' === get_option( 'wcj_checkout_custom_fields_enabled' ) ||
@@ -140,10 +128,12 @@ final class WC_Jetpack {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ) );
 		}
 
+		// Recalculate cart totals
 		if ( wcj_is_module_enabled( 'general' ) && 'yes' === get_option( 'wcj_general_advanced_recalculate_cart_totals', 'no' ) ) {
 			add_action( 'wp_loaded', array( $this, 'fix_mini_cart' ), PHP_INT_MAX );
 		}
 
+		// Import / Export / Reset Booster's settings
 		add_action( 'wp_loaded', array( $this, 'manage_options' ), PHP_INT_MAX );
 
 		// Loaded action
