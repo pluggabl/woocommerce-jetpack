@@ -545,8 +545,11 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		if ( '' === $module_desc && isset( $this->extra_desc ) ) {
 			$module_desc = $this->extra_desc;
 		}
+		if ( ! isset( $this->link ) && isset( $this->link_slug ) && '' != $this->link_slug ) {
+			$this->link = 'https://booster.io/features/' . $this->link_slug . '/';
+		}
 		$the_link = '';
-		if ( isset( $this->link ) &&  '' != $this->link ) {
+		if ( isset( $this->link ) && '' != $this->link ) {
 			$the_link = '<p><a class="button-primary"' .
 				' style="background: green; border-color: green; box-shadow: 0 1px 0 green; text-shadow: 0 -1px 1px #0a0,1px 0 1px #0a0,0 1px 1px #0a0,-1px 0 1px #0a0;"' .
 				' href="' . $this->link . '?utm_source=module_documentation&utm_medium=module_button&utm_campaign=booster_documentation" target="_blank">' . __( 'Documentation', 'woocommerce-jetpack' ) . '</a></p>';
