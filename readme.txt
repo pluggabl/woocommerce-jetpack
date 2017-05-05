@@ -204,7 +204,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_description]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_product_sale_price]` - `multiply_by` attribute added.
 ~	* Dev - PRICES & CURRENCIES - Currency per Product - Additional check for if cart is set added to `get_cart_checkout_currency()`.
 ~!	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Currency Switcher Template" option added.
-~D$	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
+~$D	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
 	* Dev - PRICES & CURRENCIES - Price by User Role - Minor code refactoring.
 ~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Per Product Settings Type" option added.
 ~	* Fix - PRODUCTS - Product Addons - Checking for set `product_id` on ajax call.
@@ -216,12 +216,12 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~D	* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
 ~!D	* Dev - PRODUCTS - Product Tabs - "Link" option added.
 ~!	* Dev - PRODUCTS - Product Tabs - Code refactoring.
-~D	* Dev - PRODUCTS - Product User Products - "Product URL (for "External/Affiliate" product type only)" field added.
-~D$	* Dev - PRODUCTS - Product User Products - "Product Type" option added.
-~	* Dev - PRODUCTS - Product User Products - `WP_Query` optimized to return `ids` only.
 ~DE	* Dev - PRODUCTS - Stock - Initial module release.
+~D	* Dev - PRODUCTS - User Products - "Product URL (for "External/Affiliate" product type only)" field added.
+~$D	* Dev - PRODUCTS - User Products - "Product Type" option added.
+~	* Dev - PRODUCTS - User Products - `WP_Query` optimized to return `ids` only.
 ~D	* Dev - PRODUCTS - User Products - "Price Step" option added (`[wcj_product_add_new]`).
-~!D$* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
+~!$D* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
 ~!D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
@@ -229,16 +229,16 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
 ~D	* Dev - CART & CHECKOUT - Empty Cart Button - "Do not add" option added to "Button position on the Cart page".
 	* Dev - CART & CHECKOUT - Empty Cart Button - Code refactoring.
-~D$	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
+~$D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
 	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Value" admin settings field type changed to `custom_textarea`.
 ~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
 ~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
-~!D$* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
-~!D$* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
+~!$D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
+~!$D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
 ~!$D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
 ~!D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
-~!D$* Dev - EMAILS & MISC. - Emails - "Email Verification" section added.
+~!$D* Dev - EMAILS & MISC. - Emails - "Email Verification" section added.
 	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt and main plugin file.
 
 = 2.7.1 - 13/04/2017 =
