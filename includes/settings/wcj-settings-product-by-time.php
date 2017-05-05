@@ -18,7 +18,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Product by Time', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable Section', 'woocommerce-jetpack' ) . '</strong>',
 		'id'       => 'wcj_product_by_time_section_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
