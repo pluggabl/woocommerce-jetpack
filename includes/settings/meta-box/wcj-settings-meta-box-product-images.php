@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings Meta Box - Product Images
+ * Booster for WooCommerce - Settings Meta Box - Product Images
  *
  * @version 2.8.0
  * @since   2.8.0

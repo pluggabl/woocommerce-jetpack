@@ -158,6 +158,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 2.8.0 - 05/05/2017 =
 
+	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
 
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currencies.
