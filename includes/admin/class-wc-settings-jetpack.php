@@ -4,7 +4,7 @@
  *
  * The WooCommerce Jetpack Settings class.
  *
- * @version 2.7.0
+ * @version 2.8.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.8.0
 	 */
 	function __construct() {
 
@@ -34,11 +34,97 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		add_action( 'woocommerce_sections_' . $this->id,       array( $this, 'output_sections_submenu' ) );
 
 //		add_action( 'woocommerce_admin_field_save_button',     array( $this, 'output_save_settings_button' ) );
+		add_action( 'woocommerce_admin_field_wcj_number_plus_checkbox_start', array( $this, 'output_wcj_number_plus_checkbox_start' ) );
+		add_action( 'woocommerce_admin_field_wcj_number_plus_checkbox_end',   array( $this, 'output_wcj_number_plus_checkbox_end' ) );
+		add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'fix_wcj_number_plus_checkbox_end' ), PHP_INT_MAX, 3 );
 		add_action( 'woocommerce_admin_field_custom_number',   array( $this, 'output_custom_number' ) );
 		add_action( 'woocommerce_admin_field_custom_link',     array( $this, 'output_custom_link' ) );
 		add_action( 'woocommerce_admin_field_module_tools',    array( $this, 'output_module_tools' ) );
 		add_action( 'woocommerce_admin_field_custom_textarea', array( $this, 'output_custom_textarea' ) );
 		add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'unclean_custom_textarea' ), PHP_INT_MAX, 3 );
+	}
+
+	/**
+	 * fix_wcj_number_plus_checkbox_end.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 */
+	function fix_wcj_number_plus_checkbox_end( $value, $option, $raw_value ) {
+		return ( 'wcj_number_plus_checkbox_end' === $option['type'] ) ? ( '1' === $raw_value || 'yes' === $raw_value ? 'yes' : 'no' ) : $value;
+	}
+
+	/**
+	 * output_wcj_number_plus_checkbox_start.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 */
+	function output_wcj_number_plus_checkbox_start( $value ) {
+		// Custom attribute handling
+		$custom_attributes = array();
+		if ( ! empty( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) {
+			foreach ( $value['custom_attributes'] as $attribute => $attribute_value ) {
+				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+			}
+		}
+		// Description handling
+		$field_description = WC_Admin_Settings::get_field_description( $value );
+		extract( $field_description );
+		// Option value
+		$option_value = WC_Admin_Settings::get_option( $value['id'], $value['default'] );
+		// Output
+		?><tr valign="top">
+			<th scope="row" class="titledesc">
+				<label for="<?php echo esc_attr( $value['id'] ); ?>"><?php echo esc_html( $value['title'] ); ?></label>
+				<?php echo $tooltip_html; ?>
+			</th>
+			<td class="forminp forminp-number-checkbox">
+				<input
+					name="<?php echo esc_attr( $value['id'] ); ?>"
+					id="<?php echo esc_attr( $value['id'] ); ?>"
+					type="number"
+					style="<?php echo esc_attr( $value['css'] ); ?>"
+					value="<?php echo esc_attr( $option_value ); ?>"
+					class="<?php echo esc_attr( $value['class'] ); ?>"
+					placeholder="<?php echo esc_attr( $value['placeholder'] ); ?>"
+					<?php echo implode( ' ', $custom_attributes ); ?>
+					/> <?php echo $description . ' ';
+	}
+
+	/**
+	 * output_wcj_number_plus_checkbox_end.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 */
+	function output_wcj_number_plus_checkbox_end( $value ) {
+		// Custom attribute handling
+		$custom_attributes = array();
+		if ( ! empty( $value['custom_attributes'] ) && is_array( $value['custom_attributes'] ) ) {
+			foreach ( $value['custom_attributes'] as $attribute => $attribute_value ) {
+				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+			}
+		}
+		// Description handling
+		$field_description = WC_Admin_Settings::get_field_description( $value );
+		extract( $field_description );
+		// Option value
+		$option_value = WC_Admin_Settings::get_option( $value['id'], $value['default'] );
+		// Output
+				?><label for="<?php echo $value['id'] ?>">
+					<input
+						name="<?php echo esc_attr( $value['id'] ); ?>"
+						id="<?php echo esc_attr( $value['id'] ); ?>"
+						type="checkbox"
+						class="<?php echo esc_attr( isset( $value['class'] ) ? $value['class'] : '' ); ?>"
+						value="1"
+						<?php checked( $option_value, 'yes' ); ?>
+						<?php echo implode( ' ', $custom_attributes ); ?>
+					/> <?php echo $description ?>
+				</label> <?php echo $tooltip_html; ?>
+			</td>
+		</tr><?php
 	}
 
 	/**

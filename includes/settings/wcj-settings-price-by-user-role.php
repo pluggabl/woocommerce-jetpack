@@ -75,14 +75,14 @@ foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 			'title'    => $role_data['name'],
 			'id'       => 'wcj_price_by_user_role_' . $role_key,
 			'default'  => 1,
-			'type'     => 'number',
+			'type'     => 'wcj_number_plus_checkbox_start',
 			'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
 		),
 		array(
 			'desc'     => __( 'Make Empty Price', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_price_by_user_role_empty_price_' . $role_key,
 			'default'  => 'no',
-			'type'     => 'checkbox',
+			'type'     => 'wcj_number_plus_checkbox_end',
 		),
 	) );
 }
