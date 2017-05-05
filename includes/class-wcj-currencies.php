@@ -52,10 +52,7 @@ class WCJ_Currencies extends WCJ_Module {
 	 * @version 2.8.0
 	 */
 	function change_currency_symbol( $currency_symbol, $currency ) {
-		if ( 'yes' === get_option( 'wcj_currency_hide_symbol', 'no' ) ) {
-			return '';
-		}
-		return wcj_get_currency_symbol( $currency );
+		return ( 'yes' === get_option( 'wcj_currency_hide_symbol', 'no' ) ? '' : wcj_get_currency_symbol( $currency ) );
 	}
 
 	/**
