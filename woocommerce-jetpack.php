@@ -83,12 +83,10 @@ final class WC_Jetpack {
 	 * @version 2.6.0
 	 * @access  public
 	 */
-	public function __construct() {
+	function __construct() {
 
 		// Set up localisation
 		load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( __FILE__ ) ) . '/langs/' );
-
-//		require_once( WP_PLUGIN_DIR . '/woocommerce/woocommerce.php' );
 
 		// Include required files
 		$this->includes();
@@ -97,10 +95,6 @@ final class WC_Jetpack {
 		register_deactivation_hook( __FILE__, array( $this, 'add_my_products_endpoint_flush_rewrite_rules' ) );
 		add_filter( 'query_vars',             array( $this, 'add_my_products_endpoint_query_var' ), 0 );
 		add_action( 'init',                   array( $this, 'add_my_products_endpoint' ) );
-
-//		register_activation_hook( __FILE__, array( $this, 'install' ) );
-//		add_action( 'admin_init', array( $this, 'install' ) );
-		add_action( 'init', array( $this, 'init' ), 0 );
 
 		// Settings
 		if ( is_admin() ) {
@@ -250,7 +244,7 @@ final class WC_Jetpack {
 	 *
 	 * @version 2.4.0
 	 */
-	public function enqueue_backend_scripts() {
+	function enqueue_backend_scripts() {
 		$this->maybe_enqueue_datepicker_scripts();
 		$this->maybe_enqueue_datepicker_style();
 	}
@@ -386,7 +380,7 @@ final class WC_Jetpack {
 	 *
 	 * @version 2.5.0
 	 */
-	public function jetpack_menu() {
+	function jetpack_menu() {
 		add_submenu_page(
 			'woocommerce',
 			__( 'Booster for WooCommerce', 'woocommerce-jetpack' ),
@@ -403,7 +397,7 @@ final class WC_Jetpack {
 	 * @param   mixed $links
 	 * @return  array
 	 */
-	public function action_links( $links ) {
+	function action_links( $links ) {
 		$custom_links = array(
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
 			'<a href="' . esc_url( 'https://booster.io/' )                      . '">' . __( 'Docs', 'woocommerce' ) . '</a>',
@@ -419,7 +413,7 @@ final class WC_Jetpack {
 	 *
 	 * @version 2.3.8
 	 */
-	public function get_wcj_plus_message( $value, $message_type ) {
+	function get_wcj_plus_message( $value, $message_type ) {
 
 		switch ( $message_type ) {
 
@@ -790,7 +784,7 @@ final class WC_Jetpack {
 	/**
 	 * Add Jetpack settings tab to WooCommerce settings.
 	 */
-	public function add_wcj_settings_tab( $settings ) {
+	function add_wcj_settings_tab( $settings ) {
 		$the_settings = include( 'includes/admin/class-wc-settings-jetpack.php' );
 		$the_settings->add_module_statuses( $this->module_statuses );
 		$settings[] = $the_settings;
@@ -798,25 +792,11 @@ final class WC_Jetpack {
 	}
 
 	/**
-	 * Init WC_Jetpack when WordPress initialises.
-	 *
-	 * @version 2.5.7
-	 * @todo    remove this function
-	 */
-	public function init() {
-		// Before init action
-		do_action( 'before_wcj_init' );
-
-		// Init action
-		do_action( 'wcj_init' );
-	}
-
-	/**
 	 * Get the plugin url.
 	 *
 	 * @return string
 	 */
-	public function plugin_url() {
+	function plugin_url() {
 		return untrailingslashit( plugin_dir_url( __FILE__ ) );
 	}
 
@@ -825,7 +805,7 @@ final class WC_Jetpack {
 	 *
 	 * @return string
 	 */
-	public function plugin_path() {
+	function plugin_path() {
 		return untrailingslashit( plugin_dir_path( __FILE__ ) );
 	}
 }
