@@ -156,10 +156,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.0 - 04/05/2017 =
+= 2.8.0 - 05/05/2017 =
 
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
 
+	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currencies.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Custom Price Labels.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Free Price Labels.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Listings.
