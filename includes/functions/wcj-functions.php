@@ -763,24 +763,38 @@ if ( ! function_exists( 'wcj_get_terms' ) ) {
 	 *
 	 * @version 2.8.0
 	 * @version 2.8.0
-	 * @todo    get_terms( array|string $args = array(), array $deprecated = '' )
 	 */
-	function wcj_get_terms( $_taxonomy ) {
-		$products_terms_options = array();
-		$products_terms = get_terms( $_taxonomy, 'orderby=name&hide_empty=0' );
-		if ( ! empty( $products_terms ) && ! is_wp_error( $products_terms ) ){
-			foreach ( $products_terms as $product_term ) {
-				$products_terms_options[ $product_term->term_id ] = $product_term->name;
+	function wcj_get_terms( $args ) {
+		if ( ! is_array( $args ) ) {
+			$_taxonomy = $args;
+			$args = array(
+				'taxonomy'   => $_taxonomy,
+				'orderby'    => 'name',
+				'hide_empty' => false,
+			);
+		}
+		global $wp_version;
+		if ( version_compare( $wp_version, '4.5.0', '>=' ) ) {
+			$_terms = get_terms( $args );
+		} else {
+			$_taxonomy = $args['taxonomy'];
+			unset( $args['taxonomy'] );
+			$_terms = get_terms( $_taxonomy, $args );
+		}
+		$_terms_options = array();
+		if ( ! empty( $_terms ) && ! is_wp_error( $_terms ) ){
+			foreach ( $_terms as $_term ) {
+				$_terms_options[ $_term->term_id ] = $_term->name;
 			}
 		}
-		return $products_terms_options;
+		return $_terms_options;
 	}
 }
 
-/*
- * wcj_get_product.
- */
 if ( ! function_exists( 'wcj_get_product' ) ) {
+	/*
+	 * wcj_get_product.
+	 */
 	function wcj_get_product( $product_id = 0 ) {
 		if ( 0 == $product_id ) $product_id = get_the_ID();
 		$the_product = new WCJ_Product( $product_id );
@@ -788,14 +802,14 @@ if ( ! function_exists( 'wcj_get_product' ) ) {
 	}
 }
 
-/**
- * validate_vat_no_soap.
- *
- * @version 2.6.0
- * @since   2.5.7
- * @return  mixed: bool on successful checking (can be true or false), null otherwise
- */
 if ( ! function_exists( 'validate_vat_no_soap' ) ) {
+	/**
+	 * validate_vat_no_soap.
+	 *
+	 * @version 2.6.0
+	 * @since   2.5.7
+	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
+	 */
 	function validate_vat_no_soap( $country_code, $vat_number ) {
 		$country_code = strtoupper( $country_code );
 		$api_url = "http://ec.europa.eu/taxation_customs/vies/viesquer.do?ms=" . $country_code . "&vat=" . $vat_number;
@@ -816,13 +830,13 @@ if ( ! function_exists( 'validate_vat_no_soap' ) ) {
 	}
 }
 
-/**
- * validate_VAT.
- *
- * @version 2.5.7
- * @return  mixed: bool on successful checking (can be true or false), null otherwise
- */
 if ( ! function_exists( 'validate_VAT' ) ) {
+	/**
+	 * validate_VAT.
+	 *
+	 * @version 2.5.7
+	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
+	 */
 	function validate_VAT( $country_code, $vat_number ) {
 		try {
 			if ( class_exists( 'SoapClient' ) ) {
