@@ -242,7 +242,7 @@ $~!D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quan
 $~!D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
 ~!D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
-$~!D* Dev - EMAILS & MISC. - Emails - "Email Verification" section added.
+$~!D* Dev - EMAILS & MISC. - Email Verification - Initial module release.
 	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt and main plugin file.
 
 = 2.7.1 - 13/04/2017 =

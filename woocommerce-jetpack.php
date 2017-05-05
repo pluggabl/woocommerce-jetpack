@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.8.0-dev-201705052244';
+	public $version = '2.8.0-dev-201705052350';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -598,6 +598,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-order-custom-statuses.php',
 			'includes/class-wcj-pdf-invoicing.php',
 			'includes/class-wcj-emails.php',
+			'includes/class-wcj-emails-verification.php',
 			'includes/class-wcj-currencies.php',
 			'includes/class-wcj-multicurrency.php',
 			'includes/class-wcj-multicurrency-product-base-price.php',
