@@ -913,20 +913,20 @@ if ( ! function_exists( 'wcj_date_format_php_to_js_v2' ) ) {
 	}
 }
 
-/**
- * wcj_hex2rgb.
- */
 if ( ! function_exists( 'wcj_hex2rgb' ) ) {
+	/**
+	 * wcj_hex2rgb.
+	 */
 	function wcj_hex2rgb( $hex ) {
 		return sscanf( $hex, "#%2x%2x%2x" );
 	}
 }
 
-/**
- * wcj_get_the_ip.
- * http://stackoverflow.com/questions/3003145/how-to-get-the-client-ip-address-in-php
- */
 if ( ! function_exists( 'wcj_get_the_ip' ) ) {
+	/**
+	 * wcj_get_the_ip.
+	 * http://stackoverflow.com/questions/3003145/how-to-get-the-client-ip-address-in-php
+	 */
 	function wcj_get_the_ip( ) {
 		$ip = null;
 		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
@@ -940,33 +940,20 @@ if ( ! function_exists( 'wcj_get_the_ip' ) ) {
 	}
 }
 
-/**
- * wcj_get_shortcodes_atts_list.
- *
-if ( ! function_exists( 'wcj_get_shortcodes_atts_list' ) ) {
-	function wcj_get_shortcodes_atts_list() {
-		return apply_filters( 'wcj_shortcodes_atts', array(
-			'before'        => '',
-			'after'         => '',
-			'visibility'    => '',
-		) );
-	}
-}
-
-/**
- * wcj_get_shortcodes_list.
- */
 if ( ! function_exists( 'wcj_get_shortcodes_list' ) ) {
+	/**
+	 * wcj_get_shortcodes_list.
+	 */
 	function wcj_get_shortcodes_list() {
 		$the_array = apply_filters( 'wcj_shortcodes_list', array() );
 		return implode( ', ', $the_array )/*  . ' (' . count( $the_array ) . ')' */;
 	}
 }
 
-/**
- * wcj_get_order_statuses.
- */
 if ( ! function_exists( 'wcj_get_order_statuses' ) ) {
+	/**
+	 * wcj_get_order_statuses.
+	 */
 	function wcj_get_order_statuses( $cut_the_prefix ) {
 		$order_statuses = array(
 			'wc-pending'    => _x( 'Pending Payment', 'Order status', 'woocommerce' ),
