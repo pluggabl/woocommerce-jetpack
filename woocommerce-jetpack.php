@@ -15,12 +15,26 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+if ( ! function_exists( 'wcj_is_plugin_active' ) ) {
+	/**
+	 * wcj_is_plugin_active.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 * @return  bool
+	 */
+	function wcj_is_plugin_active( $plugin ) {
+		return (
+			in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) ||
+			( is_multisite() && array_key_exists( $plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
+		);
+	}
+}
+
 // Check if WooCommerce is active
-$plugin = 'woocommerce/woocommerce.php';
-if (
-	! in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) &&
-	! ( is_multisite() && array_key_exists( $plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
-) return;
+if ( ! wcj_is_plugin_active( 'woocommerce/woocommerce.php' ) ) {;
+	return;
+}
 
 // Constants
 require_once( 'includes/constants/wcj-constants.php' );
@@ -54,7 +68,7 @@ final class WC_Jetpack {
 	 * Ensures only one instance of WC_Jetpack is loaded or can be loaded.
 	 *
 	 * @static
-	 * @see WCJ()
+	 * @see    WCJ()
 	 * @return WC_Jetpack - Main instance
 	 */
 	public static function instance() {
@@ -80,7 +94,7 @@ final class WC_Jetpack {
 	/**
 	 * WC_Jetpack Constructor.
 	 *
-	 * @version 2.6.0
+	 * @version 2.8.0
 	 * @access  public
 	 */
 	function __construct() {
@@ -98,15 +112,7 @@ final class WC_Jetpack {
 
 		// Settings
 		if ( is_admin() ) {
-			$woocommerce_get_settings_pages_booster_priority = PHP_INT_MAX;
-			$plugin = 'more-woocommerce-options/morewoooptions.php';
-			if (
-				in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) ||
-				( is_multisite() && array_key_exists( $plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
-			) {
-				$woocommerce_get_settings_pages_booster_priority = 10;
-			}
-			add_filter( 'woocommerce_get_settings_pages',                     array( $this, 'add_wcj_settings_tab' ), $woocommerce_get_settings_pages_booster_priority );
+			add_filter( 'woocommerce_get_settings_pages',                     array( $this, 'add_wcj_settings_tab' ), $this->get_booster_tab_priority() );
 			add_filter( 'booster_get_message',                                array( $this, 'get_wcj_plus_message' ), 100, 2 );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			add_action( 'admin_menu',                                         array( $this, 'jetpack_menu' ), 100 );
@@ -142,6 +148,16 @@ final class WC_Jetpack {
 
 		// Loaded action
 		do_action( 'wcj_loaded' );
+	}
+
+	/**
+	 * get_booster_tab_priority.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 */
+	function get_booster_tab_priority() {
+		return wcj_is_plugin_active( 'more-woocommerce-options/morewoooptions.php' ) ? 10 : PHP_INT_MAX;
 	}
 
 	/**
