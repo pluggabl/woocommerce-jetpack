@@ -302,8 +302,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 							break;
 					}
 					$html .= '<tr>';
-					$maybe_tooltip = ( isset( $option['tooltip'] ) && '' != $option['tooltip'] ) ?
-						'<span class="woocommerce-help-tip" data-tip="' . $option['tooltip'] . '"></span>' : '';
+					$maybe_tooltip = ( isset( $option['tooltip'] ) && '' != $option['tooltip'] ) ? wc_help_tip( $option['tooltip'], true ) : '';
 					$html .= '<th style="text-align:left;width:25%;">' . $option['title'] . $maybe_tooltip . '</th>';
 					if ( isset( $option['desc'] ) && '' != $option['desc'] ) {
 						$html .= '<td style="font-style:italic;width:25%;">' . $option['desc'] . '</td>';
