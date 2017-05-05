@@ -219,7 +219,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~D	* Dev - PRODUCTS - Product User Products - "Product URL (for "External/Affiliate" product type only)" field added.
 ~D$	* Dev - PRODUCTS - Product User Products - "Product Type" option added.
 ~	* Dev - PRODUCTS - Product User Products - `WP_Query` optimized to return `ids` only.
-~D$	* Dev - PRODUCTS - Stock - Initial module release.
+~DE	* Dev - PRODUCTS - Stock - Initial module release.
 ~D	* Dev - PRODUCTS - User Products - "Price Step" option added (`[wcj_product_add_new]`).
 ~!D$* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
@@ -236,7 +236,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~!D$* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
 ~!D$* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
 ~!$D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
-~!DE* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
+~!D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
 ~!D$* Dev - EMAILS & MISC. - Emails - "Email Verification" section added.
 	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt and main plugin file.

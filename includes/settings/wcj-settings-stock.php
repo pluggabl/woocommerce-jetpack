@@ -14,9 +14,16 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 return array(
 	array(
-		'title'    => __( 'Options', 'woocommerce-jetpack' ),
+		'title'    => __( 'Custom Out of Stock Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'id'       => 'wcj_stock_options',
+		'id'       => 'wcj_stock_custom_out_of_stock_options',
+	),
+	array(
+		'title'    => __( 'Custom Out of Stock', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'       => 'wcj_stock_custom_out_of_stock_section_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Custom Out of Stock HTML', 'woocommerce-jetpack' ),
@@ -45,6 +52,6 @@ return array(
 	),
 	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_stock_options',
+		'id'       => 'wcj_stock_custom_out_of_stock_options',
 	),
 );
