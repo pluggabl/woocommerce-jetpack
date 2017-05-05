@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings
- *
- * The WooCommerce Jetpack Settings class.
+ * Booster for WooCommerce - Settings
  *
  * @version 2.8.0
  * @since   1.0.0
@@ -33,24 +31,24 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		add_action( 'woocommerce_sections_' . $this->id,       array( $this, 'output_cats_submenu' ) );
 		add_action( 'woocommerce_sections_' . $this->id,       array( $this, 'output_sections_submenu' ) );
 
-//		add_action( 'woocommerce_admin_field_save_button',     array( $this, 'output_save_settings_button' ) );
-		add_action( 'woocommerce_admin_field_wcj_number_plus_checkbox_start', array( $this, 'output_wcj_number_plus_checkbox_start' ) );
-		add_action( 'woocommerce_admin_field_wcj_number_plus_checkbox_end',   array( $this, 'output_wcj_number_plus_checkbox_end' ) );
-		add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'fix_wcj_number_plus_checkbox_end' ), PHP_INT_MAX, 3 );
-		add_action( 'woocommerce_admin_field_custom_number',   array( $this, 'output_custom_number' ) );
-		add_action( 'woocommerce_admin_field_custom_link',     array( $this, 'output_custom_link' ) );
-		add_action( 'woocommerce_admin_field_module_tools',    array( $this, 'output_module_tools' ) );
-		add_action( 'woocommerce_admin_field_custom_textarea', array( $this, 'output_custom_textarea' ) );
-		add_filter( 'woocommerce_admin_settings_sanitize_option', array( $this, 'unclean_custom_textarea' ), PHP_INT_MAX, 3 );
+//		add_action( 'woocommerce_admin_field_save_button',                      array( $this, 'output_save_settings_button' ) );
+		add_action( 'woocommerce_admin_field_wcj_number_plus_checkbox_start',   array( $this, 'output_wcj_number_plus_checkbox_start' ) );
+		add_action( 'woocommerce_admin_field_wcj_number_plus_checkbox_end',     array( $this, 'output_wcj_number_plus_checkbox_end' ) );
+		add_filter( 'woocommerce_admin_settings_sanitize_option',               array( $this, 'format_wcj_number_plus_checkbox_end' ), PHP_INT_MAX, 3 );
+		add_action( 'woocommerce_admin_field_custom_number',                    array( $this, 'output_custom_number' ) );
+		add_action( 'woocommerce_admin_field_custom_link',                      array( $this, 'output_custom_link' ) );
+		add_action( 'woocommerce_admin_field_module_tools',                     array( $this, 'output_module_tools' ) );
+		add_action( 'woocommerce_admin_field_custom_textarea',                  array( $this, 'output_custom_textarea' ) );
+		add_filter( 'woocommerce_admin_settings_sanitize_option',               array( $this, 'unclean_custom_textarea' ), PHP_INT_MAX, 3 );
 	}
 
 	/**
-	 * fix_wcj_number_plus_checkbox_end.
+	 * format_wcj_number_plus_checkbox_end.
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
 	 */
-	function fix_wcj_number_plus_checkbox_end( $value, $option, $raw_value ) {
+	function format_wcj_number_plus_checkbox_end( $value, $option, $raw_value ) {
 		return ( 'wcj_number_plus_checkbox_end' === $option['type'] ) ? ( '1' === $raw_value || 'yes' === $raw_value ? 'yes' : 'no' ) : $value;
 	}
 
