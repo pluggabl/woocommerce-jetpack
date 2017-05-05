@@ -103,27 +103,6 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 		return $visible;
 	}
 
-	/**
-	 * get_meta_box_options.
-	 *
-	 * @version 2.5.6
-	 * @since   2.5.5
-	 */
-	function get_meta_box_options() {
-		$options = array(
-			array(
-				'name'       => 'wcj_product_by_user_role_visible',
-				'default'    => '',
-				'type'       => 'select',
-				'options'    => wcj_get_user_roles_options(),
-				'multiple'   => true,
-				'title'      => __( 'Visible for User Roles', 'woocommerce-jetpack' ),
-				'tooltip'    => __( 'Hold Control (Ctrl) key to select multiple roles.', 'woocommerce-jetpack' ),
-			),
-		);
-		return $options;
-	}
-
 }
 
 endif;
