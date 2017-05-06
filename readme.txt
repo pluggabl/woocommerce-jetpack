@@ -177,6 +177,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Listings.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Tabs.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Visibility by User Role.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - Products per Page.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Stock.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Cart Customization.

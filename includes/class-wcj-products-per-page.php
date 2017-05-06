@@ -1,10 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack Products per Page
+ * Booster for WooCommerce - Module - Products per Page
  *
- * The WooCommerce Jetpack Products per Page class.
- *
- * @version 2.7.0
+ * @version 2.8.0
  * @since   2.6.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +16,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 * @since   2.6.0
 	 * @todo    position priority for every hook
 	 * @todo    post or get
@@ -28,10 +26,8 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 		$this->id         = 'products_per_page';
 		$this->short_desc = __( 'Products per Page', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add "products per page" selector to WooCommerce.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-products-per-page/';
+		$this->link_slug  = 'woocommerce-products-per-page';
 		parent::__construct();
-
-		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'loop_shop_per_page', array( $this, 'set_products_per_page_number' ), PHP_INT_MAX );
@@ -113,68 +109,6 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 			$the_number = get_option( 'wcj_products_per_page_default', 10 );
 		}
 		return $the_number;
-	}
-
-	/*
-	 * add_settings.
-	 *
-	 * @version 2.6.0
-	 * @since   2.6.0
-	 */
-	function add_settings() {
-		return array(
-			array(
-				'title'    => __( 'Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_products_per_page_options',
-			),
-			array(
-				'title'    => __( 'Select Options', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Name|Number; one per line; -1 for all products', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_products_per_page_select_options',
-				'default'  => '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1',
-				'type'     => 'textarea',
-				'css'      => 'height:200px;',
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
-			),
-			array(
-				'title'    => __( 'Default', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_products_per_page_default',
-				'default'  => 10,
-				'type'     => 'number',
-				'custom_attributes' => array( 'min' => -1 ),
-			),
-			array(
-				'title'    => __( 'Position', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_products_per_page_position',
-				'default'  => array( 'woocommerce_before_shop_loop' ),
-				'type'     => 'multiselect',
-				'class'    => 'chosen_select',
-				'options'  => array(
-					'woocommerce_before_shop_loop' => __( 'Before shop loop', 'woocommerce-jetpack' ),
-					'woocommerce_after_shop_loop'  => __( 'After shop loop', 'woocommerce-jetpack' ),
-				),
-			),
-			array(
-				'title'    => __( 'Position Priority', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_products_per_page_position_priority',
-				'default'  => 40,
-				'type'     => 'number',
-				'custom_attributes' => array( 'min' => 0 ),
-			),
-			array(
-				'title'    => __( 'Text', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_products_per_page_text',
-				'default'  => __( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ),
-				'type'     => 'textarea',
-				'css'      => 'width:66%;min-width:300px;',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_products_per_page_options',
-			),
-		);
 	}
 
 }
