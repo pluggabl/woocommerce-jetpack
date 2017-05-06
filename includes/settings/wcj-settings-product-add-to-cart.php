@@ -1,0 +1,216 @@
+<?php
+/**
+ * Booster for WooCommerce - Settings - Product Add To Cart
+ *
+ * @version 2.8.0
+ * @since   2.8.0
+ * @author  Algoritmika Ltd.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+return array(
+	array(
+		'title'    => __( 'Add to Cart Local Redirect Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'desc'     => __( 'This section lets you set any local URL to redirect to after successfully adding product to cart. Leave empty to redirect to checkout page (skipping the cart page).', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_redirect_options',
+	),
+	array(
+		'title'    => __( 'Local Redirect', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_redirect_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Local Redirect URL', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Performs a safe (local) redirect, using wp_redirect().', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Local redirect URL. Leave empty to redirect to checkout.', 'woocommerce-jetpack' ) .
+			' ' . sprintf(
+				__( 'For archives - "Enable AJAX add to cart buttons on archives" checkbox in <a href="%s">WooCommerce > Settings > Products > Display</a> must be disabled.', 'woocommerce-jetpack' ),
+				admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
+			),
+		'id'       => 'wcj_add_to_cart_redirect_url',
+		'default'  => '',
+		'type'     => 'text',
+		'css'      => 'width:50%;min-width:300px;',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_add_to_cart_redirect_options',
+	),
+	array(
+		'title'    => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'desc'     => __( 'This section lets you enable automatically adding product to cart on visiting the product page. Product is only added once, so if it is already in cart - duplicate product is not added. ', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_on_visit_options',
+	),
+	array(
+		'title'    => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If "Per Product" is selected - meta box will be added to each product\'s edit page.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_on_visit_enabled',
+		'default'  => 'no',
+		'type'     => 'select',
+		'options'  => array(
+			'no'          => __( 'Disabled', 'woocommerce-jetpack' ),
+			'yes'         => __( 'All products', 'woocommerce-jetpack' ),
+			'per_product' => __( 'Per product', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_add_to_cart_on_visit_options',
+	),
+	array(
+		'title'    => __( 'Add to Cart Variable Product', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_add_to_cart_variable_options',
+	),
+	array(
+		'title'    => __( 'Display Radio Buttons Instead of Drop Box', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_variable_as_radio_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_add_to_cart_variable_options',
+	),
+	array(
+		'title'    => __( 'Replace Add to Cart Button on Archives with Single', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_add_to_cart_replace_loop_w_single_options',
+	),
+	array(
+		'title'    => __( 'Replace Add to Cart Button on Archives with Button from Single Product Pages', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_replace_loop_w_single_enabled',
+		'default'  => 'no',
+		'type'     => 'select',
+		'options'  => array(
+			'no'            => __( 'Disable', 'woocommerce-jetpack' ),
+			'yes'           => __( 'Enable', 'woocommerce-jetpack' ),
+			'variable_only' => __( 'Variable products only', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_add_to_cart_replace_loop_w_single_options',
+	),
+	array(
+		'title'    => __( 'Add to Cart Quantity', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_add_to_cart_quantity_options',
+	),
+	array(
+		'title'    => __( 'Disable Quantity Field for All Products', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable on Single Product Page', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_quantity_disable',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'checkboxgroup' => 'start',
+	),
+	array(
+		'desc'     => __( 'Disable on Cart Page', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_quantity_disable_cart',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'checkboxgroup' => 'end',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_add_to_cart_quantity_options',
+	),
+	array(
+		'title'    => __( 'Add to Cart Button Disabling', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_add_to_cart_button_options',
+	),
+	array(
+		'title'    => __( 'Disable Add to Cart Buttons on per Product Basis', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_per_product_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Disable Add to Cart Buttons on All Category/Archives Pages', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable Buttons', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_disable_archives',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Disable Add to Cart Buttons on All Single Product Pages', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable Buttons', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_disable_single',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_add_to_cart_button_options',
+	),
+	array(
+		'title'    => __( 'Add to Cart Button Custom URL', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_add_to_cart_button_custom_url_options',
+	),
+	array(
+		'title'    => __( 'Custom Add to Cart Buttons URL on Archives on per Product Basis', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_add_to_cart_button_custom_url_options',
+	),
+	array(
+		'title'    => __( 'Add to Cart Button AJAX', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_add_to_cart_button_ajax_options',
+	),
+	array(
+		'title'    => __( 'Disable/Enable Add to Cart Button AJAX on per Product Basis', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_ajax_per_product_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_add_to_cart_button_ajax_options',
+	),
+	array(
+		'title'    => __( 'External Products', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_add_to_cart_button_external_product_options',
+	),
+	array(
+		'title'    => __( 'Open External Products on Add to Cart in New Window', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable on Single Product Pages', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_external_open_new_window_single',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'checkboxgroup' => 'start',
+	),
+	array(
+		'desc'     => __( 'Enable on Category/Archive Pages', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_external_open_new_window_loop',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'checkboxgroup' => 'end',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_add_to_cart_button_external_product_options',
+	),
+);
