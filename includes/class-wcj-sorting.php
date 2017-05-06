@@ -1,10 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack Sorting
+ * Booster for WooCommerce - Module - Sorting
  *
- * The WooCommerce Jetpack Sorting class.
- *
- * @version 2.7.0
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,14 +16,14 @@ class WCJ_Sorting extends WCJ_Module {
 	 * WCJ_Sorting Constructor.
 	 *
 	 * @access  public
-	 * @version 2.6.0
+	 * @version 2.8.0
 	 */
 	function __construct() {
 
 		$this->id         = 'sorting';
 		$this->short_desc = __( 'Sorting', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add more WooCommerce sorting options; rename or remove default sorting options; rearrange sorting options on frontend.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-more-sorting-options/';
+		$this->link_slug  = 'woocommerce-sorting';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -127,7 +125,8 @@ class WCJ_Sorting extends WCJ_Module {
 		foreach ( $default_sortings as $sorting_key => $sorting_desc ) {
 			$option_key = str_replace( '-', '_', $sorting_key );
 			if ( isset( $sortby[ $sorting_key ] ) ) {
-				$sortby[ $sorting_key ] = apply_filters( 'booster_get_option', $sorting_desc, get_option( 'wcj_sorting_default_sorting_' . $option_key, $sorting_desc ) );
+				$sortby[ $sorting_key ] = apply_filters( 'booster_get_option', $sorting_desc,
+					get_option( 'wcj_sorting_default_sorting_' . $option_key, $sorting_desc ) );
 			}
 		}
 		return $sortby;
@@ -222,8 +221,10 @@ class WCJ_Sorting extends WCJ_Module {
 
 		// Get ordering from query string
 		$orderby_value = ( WCJ_IS_WC_VERSION_BELOW_3 ?
-			( isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) ) ) :
-			( isset( $_GET['orderby'] ) ? wc_clean( $_GET['orderby'] )          : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) ) )
+			( isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby',
+				get_option( 'woocommerce_default_catalog_orderby' ) ) ) :
+			( isset( $_GET['orderby'] ) ? wc_clean( $_GET['orderby'] )          : apply_filters( 'woocommerce_default_catalog_orderby',
+				get_option( 'woocommerce_default_catalog_orderby' ) ) )
 		);
 		// Get orderby arg from string
 		$orderby_value = explode( '-', $orderby_value );
@@ -241,12 +242,14 @@ class WCJ_Sorting extends WCJ_Module {
 				$args['meta_key'] = '';
 			break;
 			case 'sku_asc':
-				$args['orderby']  = ( 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ? 'meta_value' : 'meta_value_num';
+				$args['orderby']  = ( 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
+					'meta_value' : 'meta_value_num';
 				$args['order']    = 'asc';
 				$args['meta_key'] = '_sku';
 			break;
 			case 'sku_desc':
-				$args['orderby']  = ( 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ? 'meta_value' : 'meta_value_num';
+				$args['orderby']  = ( 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
+					'meta_value' : 'meta_value_num';
 				$args['order']    = 'desc';
 				$args['meta_key'] = '_sku';
 			break;
@@ -263,177 +266,6 @@ class WCJ_Sorting extends WCJ_Module {
 		endswitch;
 
 		return $args;
-	}
-
-	/*
-	 * Add the settings.
-	 *
-	 * @version 2.6.0
-	 */
-	function get_settings() {
-		$settings = array(
-			array(
-				'title'     => __( 'Add Custom Sorting', 'woocommerce-jetpack' ),
-				'type'      => 'title',
-				'id'        => 'wcj_more_sorting_options',
-			),
-			array(
-				'title'     => __( 'Add More Sorting', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Enable Section', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_more_sorting_enabled',
-				'default'   => 'yes',
-				'type'      => 'checkbox',
-			),
-			array(
-				'title'     => __( 'Sort by Name', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by title: A to Z', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Text to show on frontend. Leave blank to disable.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_sorting_by_name_asc_text',
-				'default'   => __( 'Sort by title: A to Z', 'woocommerce-jetpack' ),
-				'type'      => 'text',
-				'css'       => 'min-width:300px;',
-			),
-			array(
-				'title'     => '',//__( 'Sort by Name - Desc', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by title: Z to A', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Text to show on frontend. Leave blank to disable.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_sorting_by_name_desc_text',
-				'default'   => __( 'Sort by title: Z to A', 'woocommerce-jetpack' ),
-				'type'      => 'text',
-				'css'       => 'min-width:300px;',
-			),
-			array(
-				'title'     => __( 'Sort by SKU', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by SKU: low to high', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Text to show on frontend. Leave blank to disable.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_sorting_by_sku_asc_text',
-				'default'   => __( 'Sort by SKU: low to high', 'woocommerce-jetpack' ),
-				'type'      => 'text',
-				'css'       => 'min-width:300px;',
-			),
-			array(
-				'title'     => '',//__( 'Sort by SKU - Desc', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by SKU: high to low', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Text to show on frontend. Leave blank to disable.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_sorting_by_sku_desc_text',
-				'default'   => __( 'Sort by SKU: high to low', 'woocommerce-jetpack' ),
-				'type'      => 'text',
-				'css'       => 'min-width:300px;',
-			),
-			array(
-				'title'     => '',
-				'desc'      => __( 'Sort SKUs as numbers instead of as texts', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_sorting_by_sku_num_enabled',
-				'default'   => 'no',
-				'type'      => 'checkbox',
-				'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-			),
-			array(
-				'title'     => __( 'Sort by stock quantity', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by stock quantity: low to high', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Text to show on frontend. Leave blank to disable.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_sorting_by_stock_quantity_asc_text',
-				'default'   => __( 'Sort by stock quantity: low to high', 'woocommerce-jetpack' ),
-				'type'      => 'text',
-				'css'       => 'min-width:300px;',
-			),
-			array(
-				'title'     => '',//__( 'Sort by stock quantity - Desc', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Default: ', 'woocommerce-jetpack' ) . __( 'Sort by stock quantity: high to low', 'woocommerce-jetpack' ),
-				'desc_tip'  => __( 'Text to show on frontend. Leave blank to disable.', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_sorting_by_stock_quantity_desc_text',
-				'default'   => __( 'Sort by stock quantity: high to low', 'woocommerce-jetpack' ),
-				'type'      => 'text',
-				'css'       => 'min-width:300px;',
-			),
-			array(
-				'type'      => 'sectionend',
-				'id'        => 'wcj_more_sorting_options',
-			),
-			array(
-				'title'     => __( 'Rearrange Sorting', 'woocommerce-jetpack' ),
-				'type'      => 'title',
-				'id'        => 'wcj_sorting_rearrange_options',
-			),
-			array(
-				'title'     => __( 'Rearrange Sorting', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Enable Section', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_sorting_rearrange_enabled',
-				'default'   => 'no',
-				'type'      => 'checkbox',
-			),
-			array(
-				'title'     => __( 'Rearrange Sorting', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_sorting_rearrange',
-				'desc_tip'  => __( 'Default:', 'woocommerce-jetpack' ) . '<br>' . implode( '<br>', $this->get_woocommerce_sortings_order() ),
-				'default'   => implode( PHP_EOL, $this->get_woocommerce_sortings_order() ),
-				'type'      => 'textarea',
-				'css'       => 'min-height:300px;',
-			),
-			array(
-				'type'      => 'sectionend',
-				'id'        => 'wcj_sorting_rearrange_options',
-			),
-			array(
-				'title'     => __( 'Default WooCommerce Sorting', 'woocommerce-jetpack' ),
-				'type'      => 'title',
-				'id'        => 'wcj_sorting_default_sorting_options',
-			),
-			array(
-				'title'     => __( 'Default Sorting Options', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Enable Section', 'woocommerce-jetpack' ),
-				'id'        => 'wcj_sorting_default_sorting_enabled',
-				'default'   => 'no',
-				'type'      => 'checkbox',
-				'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-			),
-		);
-		foreach ( $this->get_woocommerce_default_sortings() as $sorting_key => $sorting_desc ) {
-			$option_key = str_replace( '-', '_', $sorting_key );
-			$settings[] = array(
-				'title'     => $sorting_desc,
-				'id'        => 'wcj_sorting_default_sorting_' . $option_key,
-				'default'   => $sorting_desc,
-				'type'      => 'text',
-				'css'       => 'min-width:300px;',
-			);
-			if ( 'menu_order' === $sorting_key ) {
-				continue;
-			}
-			$settings[] = array(
-				'desc'      => __( 'Remove', 'woocommerce-jetpack' ) . ' "' . $sorting_desc . '"',
-				'id'        => 'wcj_sorting_default_sorting_' . $option_key . '_disable',
-				'default'   => 'no',
-				'type'      => 'checkbox',
-			);
-		}
-		$settings = array_merge( $settings, array(
-			array(
-				'type'      => 'sectionend',
-				'id'        => 'wcj_sorting_default_sorting_options',
-			),
-			array(
-				'title'     => __( 'Remove All Sorting', 'woocommerce-jetpack' ),
-				'type'      => 'title',
-				'id'        => 'wcj_sorting_remove_all_options',
-			),
-			array(
-				'title'     => __( 'Remove All Sorting', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Remove all sorting (including WooCommerce default) from shop\'s frontend', 'woocommerce-jetpack' ),
-				'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
-				'id'        => 'wcj_sorting_remove_all_enabled',
-				'default'   => 'no',
-				'type'      => 'checkbox',
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-			),
-			array(
-				'type'      => 'sectionend',
-				'id'        => 'wcj_sorting_remove_all_options',
-			),
-		) );
-		return $this->add_standard_settings( $settings );
 	}
 
 }
