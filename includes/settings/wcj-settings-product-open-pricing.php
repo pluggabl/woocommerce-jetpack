@@ -15,7 +15,7 @@ return array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'id'       => 'wcj_product_open_price_messages_options',
+		'id'       => 'wcj_product_open_price_options',
 	),
 	array(
 		'title'    => __( 'Frontend Label', 'woocommerce-jetpack' ),
@@ -105,6 +105,6 @@ return array(
 	),
 	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_product_open_price_messages_options',
+		'id'       => 'wcj_product_open_price_options',
 	),
 );
