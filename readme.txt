@@ -186,6 +186,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Custom Fields.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Files Upload.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Empty Cart Button.
+	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Mini Cart Custom Info.
 	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Address Formats.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Order Custom Statuses.
