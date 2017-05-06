@@ -25,12 +25,11 @@ return array(
 	),
 	array(
 		'title'    => __( 'Local Redirect URL', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Performs a safe (local) redirect, using wp_redirect().', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Local redirect URL. Leave empty to redirect to checkout.', 'woocommerce-jetpack' ) .
-			' ' . sprintf(
-				__( 'For archives - "Enable AJAX add to cart buttons on archives" checkbox in <a href="%s">WooCommerce > Settings > Products > Display</a> must be disabled.', 'woocommerce-jetpack' ),
-				admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
-			),
+		'desc_tip' => __( 'Local redirect URL. Leave empty to redirect to checkout.', 'woocommerce-jetpack' ),
+		'desc'     => sprintf(
+			__( 'For archives - "Enable AJAX add to cart buttons on archives" checkbox in <a href="%s">WooCommerce > Settings > Products > Display</a> must be disabled.', 'woocommerce-jetpack' ),
+			admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
+		),
 		'id'       => 'wcj_add_to_cart_redirect_url',
 		'default'  => '',
 		'type'     => 'text',
