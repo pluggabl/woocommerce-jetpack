@@ -108,5 +108,4 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 		) );
 	}
 }
-
 return $settings;

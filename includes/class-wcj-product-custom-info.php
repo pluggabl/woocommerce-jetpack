@@ -54,19 +54,19 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 			$default_hook = ( 'single' === $single_or_archive ) ? 'woocommerce_after_single_product_summary' : 'woocommerce_after_shop_loop_item_title';
 			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
 				if (
-					'' != get_option( 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i ) &&
-					$current_filter === get_option( 'wcj_product_custom_info_hook_' . $single_or_archive . '_' . $i, $default_hook ) &&
+					''                       != get_option( 'wcj_product_custom_info_content_'  . $single_or_archive . '_' . $i ) &&
+					$current_filter         === get_option( 'wcj_product_custom_info_hook_'     . $single_or_archive . '_' . $i, $default_hook ) &&
 					$current_filter_priority == get_option( 'wcj_product_custom_info_priority_' . $single_or_archive . '_' . $i, 10 )
 				) {
-						$products_to_exclude = get_option( 'wcj_product_custom_info_products_to_exclude_' . $single_or_archive . '_' . $i );
-						$products_to_include = get_option( 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i );
-						$product_id = get_the_ID();
-						if (
-							( empty( $products_to_exclude ) || ! in_array( $product_id, $products_to_exclude ) ) &&
-							( empty( $products_to_include ) || in_array( $product_id, $products_to_include ) )
-						) {
-							echo do_shortcode( get_option( 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i ) );
-						}
+					$products_to_exclude = get_option( 'wcj_product_custom_info_products_to_exclude_' . $single_or_archive . '_' . $i );
+					$products_to_include = get_option( 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i );
+					$product_id          = get_the_ID();
+					if (
+						( empty( $products_to_exclude ) || ! in_array( $product_id, $products_to_exclude ) ) &&
+						( empty( $products_to_include ) ||   in_array( $product_id, $products_to_include ) )
+					) {
+						echo do_shortcode( get_option( 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i ) );
+					}
 				}
 			}
 		}
