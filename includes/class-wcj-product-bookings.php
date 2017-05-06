@@ -1,10 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack Product Bookings
+ * Booster for WooCommerce - Module - Bookings
  *
- * The WooCommerce Jetpack Product Bookings class.
- *
- * @version 2.7.0
+ * @version 2.8.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +16,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -26,7 +24,8 @@ class WCJ_Product_Bookings extends WCJ_Module {
 		$this->id         = 'product_bookings';
 		$this->short_desc = __( 'Bookings', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add bookings products to WooCommerce.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-bookings/';
+		$this->link_slug  = 'woocommerce-bookings';
+		$this->extra_desc = __( 'When enabled, module will add new "Booster: Bookings" meta box to each product\'s edit page.', 'woocommerce-jetpack' );
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -420,91 +419,6 @@ class WCJ_Product_Bookings extends WCJ_Module {
 		return $options;
 	}
 
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.3
-	 * @since   2.5.0
-	 */
-	function get_settings() {
-		$settings = array(
-			array(
-				'title'    => __( 'Labels and Messages', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_product_bookings_labels_and_messages_options',
-			),
-			array(
-				'title'    => __( 'Frontend Label: "Date from"', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_bookings_label_date_from',
-				'default'  => __( 'Date from', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Frontend Label: "Date to"', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_bookings_label_date_to',
-				'default'  => __( 'Date to', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Frontend Label: Period', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_bookings_label_period',
-				'default'  => __( 'Period', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Frontend Label: Price per Day', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_bookings_label_per_day',
-				'default'  => __( '/ day', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Message: "Date from" is missing', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_bookings_message_no_date_from',
-				'default'  => __( '"Date from" must be set', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Message: "Date to" is missing', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_bookings_message_no_date_to',
-				'default'  => __( '"Date to" must be set', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Message: "Date to" is missing', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_bookings_message_date_to_before_date_from',
-				'default'  => __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_product_bookings_labels_and_messages_options',
-			),
-			array(
-				'title'    => __( 'Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_product_bookings_options',
-			),
-			array(
-				'title'    => __( 'Hide Quantity Selector for Booking Products', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_bookings_hide_quantity',
-				'default'  => 'yes',
-				'type'     => 'checkbox',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_product_bookings_options',
-			),
-		);
-		return $this->add_standard_settings( $settings, __( 'When enabled, module will add new "Booster: Bookings" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) );
-	}
 }
 
 endif;

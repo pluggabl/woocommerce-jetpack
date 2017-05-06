@@ -171,6 +171,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Custom Price Labels.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Free Price Labels.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - More Button Labels.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - Bookings.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Images.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Listings.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Tabs.
