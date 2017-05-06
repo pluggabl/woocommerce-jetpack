@@ -163,60 +163,6 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '</div>';
 		}
 
-		// Multicurrency message
-		/* $multicurrency_modules_enabled = 0;
-		$multicurrency_modules_titles = array();
-		$multicurrency_modules = array( 'price_by_country', 'multicurrency', 'payment_gateways_currency' );
-		foreach ( $multicurrency_modules as $multicurrency_module ) {
-			if ( wcj_is_module_enabled( $multicurrency_module ) ) {
-				$multicurrency_modules_enabled++;
-				$multicurrency_modules_titles[] = WCJ()->modules[ $multicurrency_module ]->short_desc;
-			}
-		}
-		if ( $multicurrency_modules_enabled > 1 ) {
-			echo '<div id="wcj_message" class="error">';
-			echo '<p>';
-			echo '<strong>';
-			echo sprintf( __( 'Please note that only single multicurrency module can be enabled simultaneously. You have <em>%s</em> modules enabled, please choose one of them.', 'woocommerce-jetpack' ), implode( ', ', $multicurrency_modules_titles ) );
-			echo '</strong>';
-			echo '</p>';
-			echo '</div>';
-		} */
-
-		// Caching message
-		/* $known_caching_plugins = array( 'w3-total-cache/w3-total-cache.php' );
-		$no_caching_modules = array();
-//		$no_caching_modules = array_merge( $no_caching_modules, $multicurrency_modules );
-		$caching_plugin_is_active = false;
-		foreach ( $known_caching_plugins as $caching_plugin ) {
-			// Check if caching_plugin is active
-			if (
-				in_array( $caching_plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) ||
-				( is_multisite() && array_key_exists( $caching_plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
-			) {
-				$caching_plugin_is_active = true;
-				break;
-			}
-		}
-		$no_caching_module_is_active = false;
-		$no_caching_modules_titles = array();
-		foreach ( $no_caching_modules as $no_caching_module ) {
-			if ( wcj_is_module_enabled( $no_caching_module ) ) {
-				$no_caching_module_is_active = true;
-				$no_caching_modules_titles[] = WCJ()->modules[ $no_caching_module ]->short_desc;
-				//break;
-			}
-		}
-		if ( $caching_plugin_is_active && $no_caching_module_is_active ) {
-			echo '<div id="wcj_message" class="error">';
-			echo '<p>';
-			echo '<strong>';
-			echo sprintf( __( 'Please note that <em>%s</em> modules require caching to be turned off.', 'woocommerce-jetpack' ), implode( ', ', $no_caching_modules_titles ) );
-			echo '</strong>';
-			echo '</p>';
-			echo '</div>';
-		} */
-
 		if ( 'yes' === get_option( 'wcj_admin_tools_enabled' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
 			// Breadcrumbs
 			$breadcrumbs_html = '';
@@ -237,7 +183,6 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			if ( $is_dashboard && isset( $_GET['wcj-cat'] ) && 'dashboard' != $_GET['wcj-cat'] ) {
 				$breadcrumbs_html .= $this->cats[ $_GET['wcj-cat'] ]['label'];
 			}
-			//$breadcrumbs_html .= $settings[0]['title'];
 			if ( ! $is_dashboard ) {
 				$breadcrumbs_html .= ' > ';
 				$sections = $this->get_sections();
@@ -252,8 +197,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 
 		if ( ! $is_dashboard ) {
 			WC_Admin_Settings::output_fields( $settings );
-		}
-		else {
+		} else {
 			$this->output_dashboard( $current_section );
 		}
 	}
@@ -265,7 +209,9 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	 */
 	function output_dashboard( $current_section ) {
 
-		if ( '' == $current_section ) $current_section = 'by_category';
+		if ( '' == $current_section ) {
+			$current_section = 'by_category';
+		}
 
 		$the_settings = $this->get_settings();
 
@@ -363,50 +309,39 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			</tfoot>
 			<tbody id="the-list"><?php
 				$html = '';
-
 				usort( $settings, array( $this, 'compare_for_usort' ) );
-
 				$total_modules = 0;
 				foreach ( $settings as $the_feature ) {
-
-					if ( 'checkbox' !== $the_feature['type'] ) continue;
-
+					if ( 'checkbox' !== $the_feature['type'] ) {
+						continue;
+					}
 					$section = $the_feature['id'];
 					$section = str_replace( 'wcj_', '', $section );
 					$section = str_replace( '_enabled', '', $section );
-
 					if ( '' != $cat_id ) {
 						if ( 'active_modules_only' === $cat_id ) {
 							if ( 'no' === get_option( $the_feature['id'] ) ) continue;
 						}
 						elseif ( $cat_id != $this->get_cat_by_section( $section ) ) continue;
 					}
-
 					$total_modules++;
-
 					$html .= '<tr id="' . $the_feature['id'] . '" ' . 'class="' . $this->active( get_option( $the_feature['id'] ) ) . '">';
-
 					$html .= '<th scope="row" class="check-column">';
 					$html .= '<label class="screen-reader-text" for="' . $the_feature['id'] . '">' . $the_feature['desc'] . '</label>';
 					$html .= '<input type="checkbox" name="' . $the_feature['id'] . '" value="1" id="' . $the_feature['id'] . '" ' . checked( get_option( $the_feature['id'] ), 'yes', false ) . '>';
 					$html .= '</th>';
-
 					$html .= '<td class="plugin-title">' . '<strong>' . $the_feature['title'] . '</strong>';
 					$html .= '<div class="row-actions visible">';
-
 					$html .= '<span class="0"><a href="' . admin_url() . 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $this->get_cat_by_section( $section ) . '&section=' . $section . '">' . __( 'Settings', 'woocommerce' ) . '</a></span>';
 					if ( isset( $the_feature['wcj_link'] ) && '' != $the_feature['wcj_link'] ) {
 						$html .= ' | <span class="0"><a href="' . $the_feature['wcj_link'] . '?utm_source=module_documentation&utm_medium=dashboard_link&utm_campaign=booster_documentation" target="_blank">' . __( 'Documentation', 'woocommerce' ) . '</a></span>';
 					}
 					$html .= '</div>';
 					$html .= '</td>';
-
 					$html .= '<td class="column-description desc">';
 					$html .= '<div class="plugin-description"><p>' . ( ( isset( $the_feature['wcj_desc'] ) ) ? $the_feature['wcj_desc'] : $the_feature['desc_tip'] ) . '</p></div>';
 					$html .= '</td>';
-
 					$html .= '</tr>';
-
 					$readme_html .= '* *' . $the_feature['title'] . '* - ' . ( ( isset( $the_feature['wcj_desc'] ) ) ? $the_feature['wcj_desc'] : $the_feature['desc_tip'] ) . PHP_EOL;
 				}
 				echo $html;
@@ -467,7 +402,6 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				'desc'  => $this->cats[ $cat_id ]['desc'],
 				'id'    => 'wcj_' . $cat_id . '_options',
 			);
-//			$settings = apply_filters( 'wcj_features_status', $settings );
 			if ( 'dashboard' === $cat_id ) {
 				$settings = array_merge( $settings, $this->module_statuses );
 			} else {
