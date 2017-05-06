@@ -32,7 +32,7 @@ if ( ! function_exists( 'wcj_is_plugin_active' ) ) {
 }
 
 // Check if WooCommerce is active
-if ( ! wcj_is_plugin_active( 'woocommerce/woocommerce.php' ) ) {;
+if ( ! wcj_is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 	return;
 }
 
