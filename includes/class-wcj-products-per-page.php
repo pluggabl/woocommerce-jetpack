@@ -69,10 +69,13 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 		$html .= '<div class="clearfix"></div>';
 		$html .= '<div>';
 		$html .= '<form action="' . remove_query_arg( 'paged' ) . '" method="POST">';
-		$the_text = get_option( 'wcj_products_per_page_text', __( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ) );
+		$the_text = get_option( 'wcj_products_per_page_text',
+			__( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ) );
 		$select_form = '<select name="wcj_products_per_page" id="wcj_products_per_page" class="sortby rounded_corners_class" onchange="this.form.submit()">';
 		$html .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $the_text );
-		$products_per_page_select_options = apply_filters( 'booster_get_option', '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1', get_option( 'wcj_products_per_page_select_options', '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1' ) );
+		$products_per_page_select_options = apply_filters( 'booster_get_option',
+			'10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1',
+			get_option( 'wcj_products_per_page_select_options', '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1' ) );
 		$products_per_page_select_options = explode( PHP_EOL, $products_per_page_select_options );
 		foreach ( $products_per_page_select_options as $products_per_page_select_option ) {
 			$the_option = explode( '|', $products_per_page_select_option );
