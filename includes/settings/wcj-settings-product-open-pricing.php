@@ -97,6 +97,13 @@ return array(
 		'css'      => 'min-width:300px;width:50%;',
 	),
 	array(
+		'title'    => __( 'Add "Open Pricing" Column to Admin Product List', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_open_price_enable_admin_product_list_column',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_open_price_messages_options',
 	),

@@ -50,6 +50,36 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				$this->loop_price_info_template = get_option( 'wcj_product_open_price_loop_price_info_template', '<span class="price">%default_price%</span>' );
 				add_action( 'woocommerce_after_shop_loop_item_title', array( $this, 'add_price_info_to_loop' ), 10 );
 			}
+			if ( is_admin() && 'yes' === get_option( 'wcj_product_open_price_enable_admin_product_list_column', 'no' ) ) {
+				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_column_open_pricing' ),    PHP_INT_MAX );
+				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column_open_pricing' ), PHP_INT_MAX );
+			}
+		}
+	}
+
+	/**
+	 * add_product_column_open_pricing.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 */
+	function add_product_column_open_pricing( $columns ) {
+		$columns['wcj_open_pricing'] = __( 'Open Pricing', 'woocommerce-jetpack' );
+		return $columns;
+	}
+
+	/**
+	 * render_product_column_open_pricing.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	*/
+	function render_product_column_open_pricing( $column ) {
+		if ( 'wcj_open_pricing' != $column ) {
+			return;
+		}
+		if ( 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_product_open_price_enabled', true ) ) {
+			echo '<span id="wcj_open_pricing_admin_column">&#10004;</span>';
 		}
 	}
 
