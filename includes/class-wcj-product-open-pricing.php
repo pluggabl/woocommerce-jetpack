@@ -1,10 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack Product Open Pricing
+ * Booster for WooCommerce - Module - Product Open Pricing
  *
- * The WooCommerce Jetpack Product Open Pricing class.
- *
- * @version 2.7.0
+ * @version 2.8.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +16,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -26,7 +24,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 		$this->id         = 'product_open_pricing';
 		$this->short_desc = __( 'Product Open Pricing (Name Your Price)', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Let your WooCommerce store customers enter price for the product manually.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-product-open-pricing-name-your-price/';
+		$this->link_slug  = 'woocommerce-product-open-pricing-name-your-price';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -159,49 +157,6 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			}
 		}
 		return $purchasable;
-	}
-
-	/**
-	 * get_meta_box_options.
-	 *
-	 * @version 2.6.0
-	 * @since   2.4.8
-	 */
-	function get_meta_box_options() {
-		$options = array(
-			array(
-				'name'       => 'wcj_product_open_price_enabled',
-				'default'    => 'no',
-				'type'       => 'select',
-				'options'    => array(
-					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
-					'no'  => __( 'No', 'woocommerce-jetpack' ),
-				),
-				'title'      => __( 'Enabled', 'woocommerce-jetpack' ),
-			),
-			array(
-				'name'       => 'wcj_product_open_price_default_price',
-				'default'    => '',
-				'type'       => 'price',
-				'title'      => __( 'Default Price', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
-				'custom_attributes' => 'min="0"',
-			),
-			array(
-				'name'       => 'wcj_product_open_price_min_price',
-				'default'    => 1,
-				'type'       => 'price',
-				'title'      => __( 'Min Price', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
-				'custom_attributes' => 'min="0"',
-			),
-			array(
-				'name'       => 'wcj_product_open_price_max_price',
-				'default'    => '',
-				'type'       => 'price',
-				'title'      => __( 'Max Price', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
-				'custom_attributes' => 'min="0"',
-			),
-		);
-		return $options;
 	}
 
 	/**
@@ -378,93 +333,6 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 		}
 	}
 
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.6.0
-	 * @since   2.4.8
-	 * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
-	 */
-	function get_settings() {
-		$default_price_step = 1 / pow( 10, absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) );
-		$settings = array(
-			array(
-				'title'    => __( 'Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_product_open_price_messages_options',
-			),
-			array(
-				'title'    => __( 'Frontend Label', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_open_price_label_frontend',
-				'default'  => __( 'Name Your Price', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Frontend Template', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Here you can use' ) . ': ' .
-					'%frontend_label%, %open_price_input%, %currency_symbol%, %min_price_simple%, %max_price_simple%, %default_price_simple%, %min_price%, %max_price%, %default_price%.',
-				'id'       => 'wcj_product_open_price_frontend_template',
-				'default'  => '<label for="wcj_open_price">%frontend_label%</label> %open_price_input% %currency_symbol%',
-				'type'     => 'textarea',
-				'css'      => 'min-width:300px;width:50%;',
-			),
-			array(
-				'title'    => __( 'Frontend Input Style', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_open_price_input_style',
-				'default'  => 'width:75px;text-align:center;',
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Frontend Input Placeholder', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_open_price_input_placeholder',
-				'default'  => '',
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Frontend Input Price Step', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_open_price_price_step',
-				'default'  => $default_price_step,
-				'type'     => 'number',
-				'custom_attributes' => array( 'step' => '0.0001', 'min' => '0.0001' ),
-			),
-			array(
-				'title'    => __( 'Message on Empty Price', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_open_price_messages_required',
-				'default'  => __( 'Price is required!', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Message on Price too Small', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_open_price_messages_to_small',
-				'default'  => __( 'Entered price is too small!', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Message on Price too Big', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_open_price_messages_to_big',
-				'default'  => __( 'Entered price is too big!', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'css'      => 'width:250px;',
-			),
-			array(
-				'title'    => __( 'Enable JS Min/Max Validation', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_open_price_enable_js_validation',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_product_open_price_messages_options',
-			),
-		);
-		return $this->add_standard_settings( $settings );
-	}
 }
 
 endif;
