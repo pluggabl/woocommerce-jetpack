@@ -83,6 +83,20 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'Display Product Price Info in Archives', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_open_price_enable_loop_price_info',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Product price info in archives template. Replaceable values: <code>%default_price%</code>, <code>%min_price%</code>, <code>%max_price%</code>.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_open_price_loop_price_info_template',
+		'default'  => '<span class="price">%default_price%</span>',
+		'type'     => 'custom_textarea',
+		'css'      => 'min-width:300px;width:50%;',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_open_price_messages_options',
 	),

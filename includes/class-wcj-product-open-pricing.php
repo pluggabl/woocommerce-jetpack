@@ -46,7 +46,27 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 			add_filter( 'woocommerce_get_cart_item_from_session', array( $this, 'get_cart_item_open_price_from_session' ), PHP_INT_MAX, 3 );
 			add_filter( 'wcj_save_meta_box_value',                array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 			add_action( 'admin_notices',                          array( $this, 'admin_notices' ) );
+			if ( 'yes' === get_option( 'wcj_product_open_price_enable_loop_price_info', 'no' ) ) {
+				$this->loop_price_info_template = get_option( 'wcj_product_open_price_loop_price_info_template', '<span class="price">%default_price%</span>' );
+				add_action( 'woocommerce_after_shop_loop_item_title', array( $this, 'add_price_info_to_loop' ), 10 );
+			}
 		}
+	}
+
+	/**
+	 * add_price_info_to_loop.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 */
+	function add_price_info_to_loop() {
+		$_product_id = get_the_ID();
+		$replaceable_values = array(
+			'%default_price%' => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_default_price', true ) ),
+			'%min_price%'     => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_min_price', true ) ),
+			'%max_price%'     => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_max_price', true ) ),
+		);
+		echo str_replace( array_keys( $replaceable_values ), array_values( $replaceable_values ), $this->loop_price_info_template );
 	}
 
 	/**
