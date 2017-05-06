@@ -397,28 +397,6 @@ class WCJ_Product_Bookings extends WCJ_Module {
 		return ( 'yes' === get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_' . 'wcj_product_bookings_enabled', true ) ) ? true : false;
 	}
 
-	/**
-	 * get_meta_box_options.
-	 *
-	 * @version 2.5.0
-	 * @since   2.5.0
-	 */
-	function get_meta_box_options() {
-		$options = array(
-			array(
-				'name'       => 'wcj_product_bookings_enabled',
-				'default'    => 'no',
-				'type'       => 'select',
-				'options'    => array(
-					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
-					'no'  => __( 'No', 'woocommerce-jetpack' ),
-				),
-				'title'      => __( 'Enabled', 'woocommerce-jetpack' ),
-			),
-		);
-		return $options;
-	}
-
 }
 
 endif;
