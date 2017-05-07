@@ -118,6 +118,10 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 				if ( 'default' != ( $class = get_option( 'wcj_checkout_fields_' . $field . '_' . 'class', 'default' ) ) ) {
 					$checkout_fields[ $section ][ $field ]['class'] = array( $class );
 				}
+				// priority
+				if ( 0 != ( $priority = get_option( 'wcj_checkout_fields_' . $field . '_' . 'priority', 0 ) ) ) {
+					$checkout_fields[ $section ][ $field ]['priority'] = $priority;
+				}
 			}
 		}
 		return $checkout_fields;

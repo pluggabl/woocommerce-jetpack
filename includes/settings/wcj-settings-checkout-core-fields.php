@@ -73,6 +73,14 @@ foreach ( $this->woocommerce_core_checkout_fields as $field ) {
 			),
 			'css'      => 'min-width:300px;width:50%;',
 		),
+		array(
+			'desc'     => __( 'priority (i.e. order)', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Leave zero for WooCommerce defaults.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_checkout_fields_' . $field . '_' . 'priority',
+			'default'  => 0,
+			'type'     => 'number',
+			'css'      => 'min-width:300px;width:50%;',
+		),
 	) );
 }
 $settings = array_merge( $settings, array(
