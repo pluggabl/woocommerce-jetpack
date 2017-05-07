@@ -479,7 +479,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 2.6.0
+	 * @version 2.8.0
+	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 	 */
 	function add_custom_checkout_fields( $fields ) {
 
@@ -527,6 +528,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					'custom_attributes' => $custom_attributes,
 					'clear'             => ( 'yes' === get_option( 'wcj_checkout_custom_field_clear_' . $i ) ) ? true : false,
 					'class'             => array( get_option( 'wcj_checkout_custom_field_class_' . $i ), ),
+					'priority'          => get_option( 'wcj_checkout_custom_field_priority_' . $i, '' ),
 				);
 
 				if ( 'select' === $the_type || 'radio' === $the_type ) {

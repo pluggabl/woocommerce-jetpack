@@ -116,6 +116,13 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_che
 				'css'      => 'min-width:300px;',
 			),
 			array(
+				'title'    => __( 'Priority (i.e. Order)', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_custom_field_priority_' . $i,
+				'default'  => '',
+				'type'     => 'text',
+				'css'      => 'min-width:300px;',
+			),
+			array(
 				'title'    => __( 'Section', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_checkout_custom_field_section_' . $i,
 				'default'  => 'billing',

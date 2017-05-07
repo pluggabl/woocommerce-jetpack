@@ -88,7 +88,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	 * custom_override_checkout_fields.
 	 *
 	 * @version 2.8.0
-	 * @todo    (maybe) fix - priority seems to not affect tab order
+	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Custom Fields module)
 	 * @todo    (maybe) enable if was not enabled by default, i.e. `! isset( $checkout_fields[ $section ][ $field ] )`
 	 */
 	function custom_override_checkout_fields( $checkout_fields ) {

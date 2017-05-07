@@ -246,6 +246,7 @@ $~D	* Dev - PRODUCTS - User Products - "Product Type" option added.
 $~!D* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
 $~D	* Dev - CART & CHECKOUT - Checkout Core Fields - "priority (i.e. order)" options added.
 ~	* Dev - CART & CHECKOUT - Checkout Core Fields - Minor code refactoring.
+$~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Priority (i.e. Order)" options added.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
 ~!D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
