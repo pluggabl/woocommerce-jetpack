@@ -188,6 +188,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Cart Custom Info.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Cart Customization.
+	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Core Fields.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Custom Fields.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Files Upload.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Empty Cart Button.
@@ -243,6 +244,7 @@ $~D	* Dev - PRODUCTS - User Products - "Product Type" option added.
 ~	* Dev - PRODUCTS - User Products - `WP_Query` optimized to return `ids` only.
 ~D	* Dev - PRODUCTS - User Products - "Price Step" option added (`[wcj_product_add_new]`).
 $~!D* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
+~	* Dev - CART & CHECKOUT - Checkout Core Fields - Minor code refactoring.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
 ~!D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
