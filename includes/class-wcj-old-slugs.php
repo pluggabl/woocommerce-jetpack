@@ -80,9 +80,12 @@ class WCJ_Old_Slugs extends WCJ_Module {
 				$delete_result        = $wpdb->get_results( "DELETE FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug' AND post_id IN ($post_ids_to_delete)" );
 				$recheck_result       = $wpdb->get_results( "SELECT * FROM $wp_postmeta_table WHERE meta_key = '_wp_old_slug'" );
 				$recheck_result_count = count( $recheck_result );
-				$remove_result_html   = '<div class="updated"><p><strong>' .
-					sprintf( __( 'Removing old slugs from database finished! %d old slug(s) deleted.', 'woocommerce-jetpack' ), ( $num_old_slugs - $recheck_result_count ) ) .
-					' ' . __( 'Please <a href="">refresh</a> the page.', 'woocommerce-jetpack' ) . '</strong></p></div>';
+				$remove_result_html   = '<div class="updated"><p>' .
+					sprintf(
+						__( 'Removing old slugs from database finished! <strong>%d</strong> old slug(s) deleted.', 'woocommerce-jetpack' ),
+						( $num_old_slugs - $recheck_result_count )
+					) . ' ' . __( 'Please <a href="">refresh</a> the page.', 'woocommerce-jetpack' ) .
+				'</p></div>';
 			}
 		}
 		$this->output_old_slugs_tool( $remove_result_html, $multi_table_data, $num_old_slugs, $posts_ids );
