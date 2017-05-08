@@ -9,6 +9,20 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+$orderby_options = array(
+	'rand'  => __( 'Random', 'woocommerce-jetpack' ),
+	'date'  => __( 'Date', 'woocommerce-jetpack' ),
+	'title' => __( 'Title', 'woocommerce-jetpack' ),
+);
+if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+	$orderby_options['meta_value']     = __( 'Meta Value', 'woocommerce-jetpack' );
+	$orderby_options['meta_value_num'] = __( 'Meta Value (Numeric)', 'woocommerce-jetpack' );
+} else {
+	$orderby_options['id']             = __( 'ID', 'woocommerce-jetpack' );
+	$orderby_options['modified']       = __( 'Modified', 'woocommerce-jetpack' );
+	$orderby_options['menu_order']     = __( 'Menu order', 'woocommerce-jetpack' );
+	$orderby_options['price']          = __( 'Price', 'woocommerce-jetpack' );
+}
 $settings = array(
 	array(
 		'title'    => __( 'General', 'woocommerce-jetpack' ),
@@ -41,21 +55,21 @@ $settings = array(
 		'id'       => 'wcj_product_info_related_products_orderby',
 		'default'  => 'rand',
 		'type'     => 'select',
-		'options'  => array(
-			'rand'           => __( 'Random', 'woocommerce-jetpack' ),
-			'date'           => __( 'Date', 'woocommerce-jetpack' ),
-			'title'          => __( 'Title', 'woocommerce-jetpack' ),
-			'meta_value'     => __( 'Meta Value', 'woocommerce-jetpack' ),
-			'meta_value_num' => __( 'Meta Value (Numeric)', 'woocommerce-jetpack' ),
+		'options'  => $orderby_options,
+	),
+);
+if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+	$settings = array_merge( $settings, array(
+		array(
+			'title'    => __( 'Meta Key', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Used only if order by "Meta Value" or "Meta Value (Numeric)" is selected in "Order by".', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_product_info_related_products_orderby_meta_value_meta_key',
+			'default'  => '',
+			'type'     => 'text',
 		),
-	),
-	array(
-		'title'    => __( 'Meta Key', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Used only if order by "Meta Value" or "Meta Value (Numeric)" is selected in "Order by".', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_info_related_products_orderby_meta_value_meta_key',
-		'default'  => '',
-		'type'     => 'text',
-	),
+	) );
+}
+$settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Order', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Ignored if order by "Random" is selected in "Order by".', 'woocommerce-jetpack' ),
@@ -151,5 +165,5 @@ $settings = array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_info_related_products_hide_options',
 	),
-);
+) );
 return $settings;

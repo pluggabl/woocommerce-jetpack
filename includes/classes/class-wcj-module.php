@@ -226,7 +226,6 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * create_meta_box.
 	 *
 	 * @version 2.8.0
-	 * @todo    finish `$css` for all other types (now implemented only for `textarea`)
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -286,19 +285,19 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					}
 					switch ( $option['type'] ) {
 						case 'price':
-							$field_html = '<input class="short wc_input_price" type="number" step="' . apply_filters( 'wcj_get_meta_box_options_type_price_step', '0.0001' ) . '"' . $input_ending;
+							$field_html = '<input style="' . $css . '" class="short wc_input_price" type="number" step="' . apply_filters( 'wcj_get_meta_box_options_type_price_step', '0.0001' ) . '"' . $input_ending;
 							break;
 						case 'date':
-							$field_html = '<input class="input-text" display="date" type="text"' . $input_ending;
+							$field_html = '<input style="' . $css . '" class="input-text" display="date" type="text"' . $input_ending;
 							break;
 						case 'textarea':
-							$field_html = '<textarea style="' . $css . '"' . ' id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
+							$field_html = '<textarea style="' . $css . '" id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
 							break;
 						case 'select':
-							$field_html = '<select' . $custom_attributes . ' id="' . $option['name'] . '" name="' . $option_name . '">' . $options . '</select>';
+							$field_html = '<select' . $custom_attributes . ' style="' . $css . '" id="' . $option['name'] . '" name="' . $option_name . '">' . $options . '</select>';
 							break;
 						default:
-							$field_html = '<input class="short" type="' . $option['type'] . '"' . $input_ending;
+							$field_html = '<input style="' . $css . '" class="short" type="' . $option['type'] . '"' . $input_ending;
 							break;
 					}
 					$html .= '<tr>';

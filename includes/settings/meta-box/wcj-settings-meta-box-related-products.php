@@ -32,6 +32,7 @@ $options = array(
 		'type'     => 'select',
 		'options'  => $products,
 		'multiple' => true,
+		'css'      => 'height:300px;',
 	),
 );
 return $options;
