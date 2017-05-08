@@ -55,7 +55,9 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 		if ( $currency_from != $currency_to ) {
 			$field_id = 'wcj_currency_exchange_rates_' . sanitize_title( $currency_from . $currency_to );
 			foreach ( $settings as $setting ) {
-				if ( $setting['id'] === $field_id ) return $settings;
+				if ( $setting['id'] === $field_id ) {
+					return $settings;
+				}
 			}
 			$custom_attributes = array(
 				'currency_from'        => $currency_from,
