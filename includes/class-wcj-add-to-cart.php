@@ -15,14 +15,14 @@ class WCJ_Add_To_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.6
+	 * @version 2.8.0
 	 */
 	function __construct() {
 
 		$this->id         = 'add_to_cart';
 		$this->short_desc = __( 'Add to Cart Labels', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Change text for Add to Cart button by WooCommerce product type, by product category or for individual products.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-add-to-cart-labels/';
+		$this->link_slug  = 'woocommerce-add-to-cart-labels';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
