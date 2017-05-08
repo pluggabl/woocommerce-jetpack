@@ -157,7 +157,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.0 - 08/05/2017 =
+= 2.8.0 - 09/05/2017 =
 
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Product Open Pricing (Name Your Price).
@@ -186,6 +186,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Tabs.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Visibility by User Role.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Products per Page.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - Related Products.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Stock.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Sorting.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
