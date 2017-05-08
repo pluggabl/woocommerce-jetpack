@@ -102,13 +102,19 @@ return array(
 		'css'     => 'width:300px;height:100px;',
 	),
 	array(
-		'title'   => __( 'Hide on Archives (Categories)', 'woocommerce-jetpack' ),
+		'title'   => __( 'Hide Everywhere', 'woocommerce-jetpack' ),
+		'id'      => 'wcj_product_images_sale_flash_hide_everywhere',
+		'default' => 'no',
+		'type'    => 'checkbox',
+	),
+	array(
+		'title'   => __( 'Hide on Archives (Categories) Only', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_product_images_sale_flash_hide_on_archives',
 		'default' => 'no',
 		'type'    => 'checkbox',
 	),
 	array(
-		'title'   => __( 'Hide on Single', 'woocommerce-jetpack' ),
+		'title'   => __( 'Hide on Single Page Only', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_product_images_sale_flash_hide_on_single',
 		'default' => 'no',
 		'type'    => 'checkbox',

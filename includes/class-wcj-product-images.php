@@ -37,8 +37,12 @@ class WCJ_Product_Images extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_product_images_and_thumbnails_hide_on_single', 'no' ) ) {
 					add_action( 'init', array( $this, 'product_images_and_thumbnails_hide_on_single' ), PHP_INT_MAX );
 				} else {
-					add_filter( 'woocommerce_single_product_image_html',           array( $this, 'customize_single_product_image_html' ), PHP_INT_MAX, 2 ); // filter doesn't exist in WC3
-					add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_thumbnail_html' ) );
+					if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+						add_filter( 'woocommerce_single_product_image_html',           array( $this, 'customize_single_product_image_html' ), PHP_INT_MAX, 2 ); // filter doesn't exist in WC3
+						add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_thumbnail_html' ) );
+					} else {
+						add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_or_thumbnail_html_wc3' ), PHP_INT_MAX, 2 );
+					}
 				}
 
 				// Archives
@@ -161,6 +165,20 @@ class WCJ_Product_Images extends WCJ_Module {
 	}
 
 	/**
+	 * customize_single_product_image_or_thumbnail_html_wc3.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 */
+	function customize_single_product_image_or_thumbnail_html_wc3( $html, $attachment_id ) {
+		$post_id = get_the_ID();
+		return ( get_post_thumbnail_id( $post_id ) === $attachment_id ?
+			$this->customize_single_product_image_html( $html, $post_id ) :
+			$this->customize_single_product_image_thumbnail_html( $html )
+		);
+	}
+
+	/**
 	 * change_product_thumbnails_columns.
 	 */
 	function change_product_thumbnails_columns_number( $columns_number ) {
@@ -170,10 +188,13 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * customize_sale_flash.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 */
 	function customize_sale_flash( $sale_flash_html, $post, $product ) {
 		// Hiding
+		if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_everywhere', 'no' ) ) {
+			return '';
+		}
 		if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_on_archives', 'no' ) && is_archive() ) {
 			return '';
 		}
