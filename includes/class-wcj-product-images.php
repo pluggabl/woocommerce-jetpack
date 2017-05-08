@@ -25,7 +25,7 @@ class WCJ_Product_Images extends WCJ_Module {
 		$this->id         = 'product_images';
 		$this->short_desc = __( 'Product Images', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Customize WooCommerce products images, thumbnails and sale flashes.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-product-images/';
+		$this->link_slug  = 'woocommerce-product-images';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -37,7 +37,7 @@ class WCJ_Product_Images extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_product_images_and_thumbnails_hide_on_single', 'no' ) ) {
 					add_action( 'init', array( $this, 'product_images_and_thumbnails_hide_on_single' ), PHP_INT_MAX );
 				} else {
-					add_filter( 'woocommerce_single_product_image_html',           array( $this, 'customize_single_product_image_html' ), PHP_INT_MAX, 2 );
+					add_filter( 'woocommerce_single_product_image_html',           array( $this, 'customize_single_product_image_html' ), PHP_INT_MAX, 2 ); // filter doesn't exist in WC3
 					add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_thumbnail_html' ) );
 				}
 
