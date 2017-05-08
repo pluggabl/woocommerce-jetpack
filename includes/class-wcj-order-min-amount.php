@@ -1,10 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack Order Minimum Amount
+ * Booster for WooCommerce - Module - Order Minimum Amount
  *
- * The WooCommerce Jetpack Order Minimum Amount class.
- *
- * @version 2.7.0
+ * @version 2.8.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +16,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.8.0
 	 * @since   2.5.7
 	 */
 	function __construct() {
@@ -26,10 +24,8 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		$this->id         = 'order_min_amount';
 		$this->short_desc = __( 'Order Minimum Amount', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Minimum WooCommerce order amount (optionally by user role).', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-order-minimum-amount/';
+		$this->link_slug  = 'woocommerce-order-minimum-amount';
 		parent::__construct();
-
-		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 			add_action( 'init', array( $this, 'add_order_minimum_amount_hooks' ) );
@@ -41,6 +37,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	 *
 	 * @version 2.6.0
 	 * @since   2.5.3
+	 * @todo    (maybe) `template_redirect` instead of `wp`
 	 */
 	function add_order_minimum_amount_hooks() {
 		$is_order_minimum_amount_enabled = false;
@@ -59,7 +56,6 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 			add_action( 'woocommerce_before_cart',      array( $this, 'order_minimum_amount' ) );
 			if ( 'yes' === get_option( 'wcj_order_minimum_amount_stop_from_seeing_checkout', 'no' ) ) {
 				add_action( 'wp',                array( $this, 'stop_from_seeing_checkout' ), 100 );
-//				add_action( 'template_redirect', array( $this, 'stop_from_seeing_checkout' ), 100 );
 			}
 		}
 	}
@@ -95,7 +91,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	 * @version 2.6.0
 	 * @since   2.5.5
 	 */
-	private function get_cart_total_for_minimal_order_amount() {
+	function get_cart_total_for_minimal_order_amount() {
 		WC()->cart->calculate_totals();
 		$cart_total = WC()->cart->total;
 		if ( 'yes' === get_option( 'wcj_order_minimum_amount_exclude_shipping', 'no' ) ) {
@@ -145,9 +141,9 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	 * stop_from_seeing_checkout.
 	 *
 	 * @version 2.7.0
+	 * @todo    (maybe) `if ( is_admin() ) return;`
 	 */
 	function stop_from_seeing_checkout( $wp ) {
-//		if ( is_admin() ) return;
 		global $woocommerce;
 		if ( ! isset( $woocommerce ) || ! is_object( $woocommerce ) ) {
 			return;
@@ -172,109 +168,6 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		}
 	}
 
-	/**
-	 * add_settings.
-	 *
-	 * @version 2.5.7
-	 * @since   2.5.7
-	 */
-	function add_settings() {
-		$settings = array(
-			array(
-				'title'    => __( 'Order Minimum Amount', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'desc'     => __( 'This section lets you set minimum order amount.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_order_minimum_amount_options',
-			),
-			array(
-				'title'    => __( 'Amount', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Minimum order amount. Set to 0 to disable.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_order_minimum_amount',
-				'default'  => 0,
-				'type'     => 'number',
-				'custom_attributes' => array(
-					'step' => '0.0001',
-					'min'  => '0',
-				),
-			),
-			array(
-				'title'    => __( 'Exclude Shipping from Cart Total', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Exclude', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_order_minimum_amount_exclude_shipping',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'Error message', 'woocommerce-jetpack' ),
-				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-				'desc_tip' => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %s to place your order, your current order total is %s.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_order_minimum_amount_error_message',
-				'default'  => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
-				'type'     => 'textarea',
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-				'css'      => 'width:50%;min-width:300px;',
-			),
-			array(
-				'title'    => __( 'Add notice to cart page also', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_order_minimum_amount_cart_notice_enabled',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'title'    => __( 'Message on cart page', 'woocommerce-jetpack' ),
-				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-				'desc_tip' => __( 'Message to customer if order is below minimum amount. Default: You must have an order with a minimum of %s to place your order, your current order total is %s.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_order_minimum_amount_cart_notice_message',
-				'default'  => 'You must have an order with a minimum of %s to place your order, your current order total is %s.',
-				'type'     => 'textarea',
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-				'css'      => 'width:50%;min-width:300px;',
-			),
-			array(
-				'title'    => __( 'Stop customer from seeing the Checkout page if minimum amount not reached.', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Redirect back to Cart page', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_order_minimum_amount_stop_from_seeing_checkout',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_order_minimum_amount_options',
-			),
-			array(
-				'title'    => __( 'Order Minimum Amount by User Role', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_order_minimum_amount_by_ser_role_options',
-				'desc'     => sprintf( __( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.', 'woocommerce-jetpack' ),
-					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ),
-			),
-		);
-		$c = array( 'guest', 'administrator', 'customer' );
-		$is_r = apply_filters( 'booster_get_message', '', 'readonly' );
-		if ( '' == $is_r ) {
-			$is_r = array();
-		}
-		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
-			$settings = array_merge( $settings, array(
-				array(
-					'title'    => $role_data['name'],
-					'id'       => 'wcj_order_minimum_amount_by_user_role_' . $role_key,
-					'default'  => 0,
-					'type'     => 'number',
-					'custom_attributes' => ( ! in_array( $role_key, $c ) ? array_merge( array( 'step' => '0.0001', 'min'  => '0', ), $is_r ) : array( 'step' => '0.0001', 'min'  => '0', ) ),
-					'desc_tip' => ( ! in_array( $role_key, $c ) ? apply_filters( 'booster_get_message', '', 'desc_no_link' ) : '' ),
-				),
-			) );
-		}
-		$settings = array_merge( $settings, array(
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_order_minimum_amount_by_ser_role_options',
-			),
-		) );
-		return $settings;
-	}
 }
 
 endif;
