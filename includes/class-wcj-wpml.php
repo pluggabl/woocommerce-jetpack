@@ -1,10 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack WPML
+ * Booster for WooCommerce - Module - WPML
  *
- * The WooCommerce Jetpack WPML class.
- *
- * @version 2.7.0
+ * @version 2.8.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -18,74 +16,21 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.8.0
 	 */
 	function __construct() {
 
 		$this->id         = 'wpml';
 		$this->short_desc = __( 'Booster WPML', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Booster for WooCommerce basic WPML support.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-booster-wpml/';
+		$this->link_slug  = 'woocommerce-booster-wpml';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
 			add_action( 'init', array( $this, 'create_wpml_xml_file_tool' ), PHP_INT_MAX );
-			/* if ( 'yes' === get_option( 'wcj_' . $this->id . '_auto_regenerate', 'no' ) ) {
-				add_action( 'woojetpack_after_settings_save', array( $this, 'create_wpml_xml_file' ) );
-			} */
 		}
 
 		$this->notice = '';
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.7.0
-	 */
-	function get_settings() {
-		$settings = array(
-			/* array(
-				'title'    => __( 'General Options', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_' . $this->id . '_general_options',
-			),
-			array(
-				'title'    => __( 'Automatically Regenerate wpml-config.xml File', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Automatically regenerate wpml-config.xml file when saving any module\'s settings.', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_' . $this->id . '_auto_regenerate',
-				'default'  => 'no',
-				'type'     => 'checkbox',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_' . $this->id . '_general_options',
-			), */
-			array(
-				'title'    => $this->short_desc . ' ' . __( 'Tools', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_' . $this->id . '_tools_options',
-			),
-			array(
-				'title'    => __( 'Module Tools', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'To use tools, module must be enabled.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_' . $this->id . '_module_tools',
-				'type'     => 'custom_link',
-				'link'     => ( $this->is_enabled() ) ?
-					'<code>' .
-					'<a href="' . add_query_arg( 'create_wpml_xml_file', '1' ) . '">' . __( 'Regenerate wpml-config.xml file', 'woocommerce-jetpack' ) . '</a>' .
-					'</code>' .
-					'<pre>' . $this->notice . '</pre>' :
-					'<code>' . __( 'Regenerate wpml-config.xml file', 'woocommerce-jetpack' ) . '</code>',
-			),
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_' . $this->id . '_tools_options',
-			),
-		);
-		$this->notice = '';
-		return $this->add_standard_settings( $settings );
 	}
 
 	/**
@@ -136,13 +81,14 @@ class WCJ_WPML extends WCJ_Module {
 	}
 
 	/**
-	 * is_wpml_value.
+	 * is_wpml_section.
 	 *
-	 * @version 2.4.8
+	 * @version 2.8.0
 	 * @since   2.4.4
 	 */
 	function is_wpml_section( $section ) {
 		$sections_to_skip = array(
+
 			'price_by_country',
 			'multicurrency',
 			'multicurrency_base_price',
@@ -183,22 +129,24 @@ class WCJ_WPML extends WCJ_Module {
 			'admin_tools',
 			'emails',
 			'wpml',
+
 		);
-		return ( ! in_array( $section, $sections_to_skip ) ) ? true : false;
+		return ( ! in_array( $section, $sections_to_skip ) );
 	}
 
 	/**
 	 * is_wpml_value.
 	 *
-	 * @version 2.4.4
+	 * @version 2.8.0
 	 */
 	function is_wpml_value( $value ) {
 
 		// Type
-		$is_type_ok = ( 'textarea' === $value['type'] || 'text' === $value['type'] ) ? true : false;
+		$is_type_ok = ( 'textarea' === $value['type'] || 'text' === $value['type'] );
 
 		// ID
 		$values_to_skip = array(
+
 			'wcj_product_info_products_to_exclude',
 
 			'wcj_custom_product_tabs_title_global_hide_in_product_ids_',
@@ -207,6 +155,7 @@ class WCJ_WPML extends WCJ_Module {
 			'wcj_custom_product_tabs_title_global_show_in_cats_ids_',
 
 			'wcj_empty_cart_div_style',
+
 		);
 		$is_id_ok = true;
 		foreach ( $values_to_skip as $value_to_skip ) {
