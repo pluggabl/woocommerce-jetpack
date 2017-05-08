@@ -1,10 +1,8 @@
 <?php
 /**
- * WooCommerce Jetpack Bulk Price Converter
+ * Booster for WooCommerce - Module - Bulk Price Converter
  *
- * The WooCommerce Jetpack Bulk Price Converter class.
- *
- * @version 2.5.0
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  * @todo    clear products transients after converting prices
  */
@@ -18,14 +16,14 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.8.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'bulk_price_converter';
 		$this->short_desc = __( 'Bulk Price Converter', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Multiply all WooCommerce products prices by set value.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-bulk-price-converter/';
+		$this->link_slug  = 'woocommerce-bulk-price-converter';
 		parent::__construct();
 
 		$this->add_tools( array(
@@ -41,7 +39,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	 *
 	 * @version 2.4.4
 	 */
-	public function change_price_by_type( $product_id, $multiply_price_by, $price_type, $is_preview, $parent_product_id, $min_price = 0, $max_price = 0 ) {
+	function change_price_by_type( $product_id, $multiply_price_by, $price_type, $is_preview, $parent_product_id, $min_price = 0, $max_price = 0 ) {
 		$the_price = get_post_meta( $product_id, '_' . $price_type, true );
 		$the_modified_price = $the_price;
 		if ( '' != $the_price && 0 != $the_price ) {
@@ -87,7 +85,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	 *
 	 * @version 2.4.4
 	 */
-	public function change_price_all_types( $product_id, $multiply_price_by, $is_preview, $parent_product_id ) {
+	function change_price_all_types( $product_id, $multiply_price_by, $is_preview, $parent_product_id ) {
 		$what_prices_to_modify = ( isset( $_POST['wcj_price_types'] ) ) ? $_POST['wcj_price_types'] : 'wcj_both';
 		if ( 'wcj_both' === $what_prices_to_modify ) {
 			$this->change_price_by_type( $product_id, $multiply_price_by, 'price',         $is_preview, $parent_product_id );
@@ -120,7 +118,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	 *
 	 * @version 2.4.0
 	 */
-	public function change_product_price( $product_id, $multiply_price_by, $is_preview ) {
+	function change_product_price( $product_id, $multiply_price_by, $is_preview ) {
 		$this->change_price_all_types( $product_id, $multiply_price_by, $is_preview, $product_id );
 		// Handling variable products
 		$product = wc_get_product( $product_id );
@@ -137,7 +135,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	 *
 	 * @version 2.4.4
 	 */
-	public function change_all_products_prices( $multiply_prices_by, $is_preview ) {
+	function change_all_products_prices( $multiply_prices_by, $is_preview ) {
 		$multiply_prices_by = floatval( $multiply_prices_by );
 		if ( $multiply_prices_by <= 0 ) {
 			return;
@@ -194,7 +192,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	 *
 	 * @version 2.4.4
 	 */
-	public function create_bulk_price_converter_tool() {
+	function create_bulk_price_converter_tool() {
 
 		$result_message = '';
 

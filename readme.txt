@@ -223,6 +223,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - Shortcodes - Products - `[wcj_product_stock_quantity]` - `count_variations` attribute added.
 D	* Dev - Shortcodes - Products - `[wcj_product_description]` shortcode added.
 D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_product_sale_price]` - `multiply_by` attribute added.
+	* Dev - PRICES & CURRENCIES - Bulk Price Converter - Minor code refactoring.
 ~	* Dev - PRICES & CURRENCIES - Currency per Product - Additional check for if cart is set added to `get_cart_checkout_currency()`.
 ~!	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Currency Switcher Template" option added.
 $~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
