@@ -128,13 +128,13 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * customize_single_product_image_html.
 	 *
-	 * @version 2.5.2
+	 * @version 2.8.0
 	 */
 	function customize_single_product_image_html( $image_link, $post_id ) {
-		if ( '' != get_post_meta( $post_id, '_' . 'wcj_product_images_meta_custom_on_single', true ) ) {
-			return get_post_meta( $post_id, '_' . 'wcj_product_images_meta_custom_on_single', true );
-		} elseif ( '' != get_option( 'wcj_product_images_custom_on_single', '' ) ) {
-			return get_option( 'wcj_product_images_custom_on_single' );
+		if ( '' != ( $html_single = get_post_meta( $post_id, '_' . 'wcj_product_images_meta_custom_on_single', true ) ) ) {
+			return $html_single;
+		} elseif ( '' != ( $html_global = get_option( 'wcj_product_images_custom_on_single', '' ) ) ) {
+			return $html_global;
 		} elseif ( 'yes' === get_option( 'wcj_product_images_hide_on_single', 'no' ) ) {
 			return '';
 		} elseif ( 'yes' === get_post_meta( $post_id, '_' . 'wcj_product_images_hide_image_on_single', true ) ) {
