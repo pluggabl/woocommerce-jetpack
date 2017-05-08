@@ -14,6 +14,8 @@ $products   = wcj_get_products( array(), 'publish' );
 unset( $products[ $product_id  ] );
 $options = array(
 	array(
+		'title'    => __( 'Enable', 'woocommerce-jetpack' ),
+		'tooltip'  => __( 'If enabled and no products selected - will hide related products section on frontend for current product.', 'woocommerce-jetpack' ),
 		'name'     => 'wcj_product_info_related_products_enabled',
 		'default'  => 'no',
 		'type'     => 'select',
@@ -21,17 +23,15 @@ $options = array(
 			'no'  => __( 'No', 'woocommerce-jetpack' ),
 			'yes' => __( 'Yes', 'woocommerce-jetpack' ),
 		),
-		'title'    => __( 'Enable', 'woocommerce-jetpack' ),
-		'tooltip'  => __( 'If enabled and no products selected - will hide related products section on frontend for current product.', 'woocommerce-jetpack' ),
 	),
 	array(
+		'title'    => __( 'Related Products', 'woocommerce-jetpack' ),
+		'tooltip'  => __( 'Hold Control (Ctrl) key to select multiple products.', 'woocommerce-jetpack' ),
 		'name'     => 'wcj_product_info_related_products_ids',
 		'default'  => '',
 		'type'     => 'select',
 		'options'  => $products,
-		'title'    => __( 'Related Products', 'woocommerce-jetpack' ),
 		'multiple' => true,
-		'tooltip'  => __( 'Hold Control (Ctrl) key to select multiple products.', 'woocommerce-jetpack' ),
 	),
 );
 return $options;
