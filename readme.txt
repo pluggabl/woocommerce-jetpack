@@ -159,6 +159,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 2.8.0 - 09/05/2017 =
 
+	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Multicurrency Product Base Price.
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Product Open Pricing (Name Your Price).
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Bookings.
@@ -174,6 +175,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currency Exchange Rates.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currency for External Products.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currency per Product.
+	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Multicurrency Product Base Price.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Product Open Pricing (Name Your Price).
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Add to Cart Labels.
