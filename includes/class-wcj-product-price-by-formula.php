@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 2.7.0
+ * @version 2.8.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -208,65 +208,6 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	}
 
 	/**
-	 * get_meta_box_options.
-	 *
-	 * @version 2.6.0
-	 * @since   2.5.0
-	 */
-	function get_meta_box_options() {
-		$options = array(
-			array(
-				'name'       => 'wcj_product_price_by_formula_enabled',
-				'default'    => 'no',
-				'type'       => 'select',
-				'options'    => array(
-					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
-					'no'  => __( 'No', 'woocommerce-jetpack' ),
-				),
-				'title'      => __( 'Enabled', 'woocommerce-jetpack' ),
-				'tooltip'    => __( '\'Enabled\' option is ignored if \'Enable Price Calculation By Formula For All Products\' option is checked in module\'s settings.', 'woocommerce-jetpack' ),
-			),
-			array(
-				'name'       => 'wcj_product_price_by_formula_calculation',
-				'default'    => 'per_product',
-				'type'       => 'select',
-				'options'    => array(
-					'per_product' => __( 'Use values below', 'woocommerce-jetpack' ),
-					'global'      => __( 'Use default values', 'woocommerce-jetpack' ),
-				),
-				'title'      => __( 'Calculation', 'woocommerce-jetpack' ),
-			),
-			array(
-				'name'       => 'wcj_product_price_by_formula_eval',
-				'default'    => get_option( 'wcj_product_price_by_formula_eval', '' ),
-				'type'       => 'text',
-				'title'      => __( 'Formula', 'woocommerce-jetpack' ),
-			),
-			array(
-				'name'       => 'wcj_product_price_by_formula_total_params',
-				'default'    => get_option( 'wcj_product_price_by_formula_total_params', 1 ),
-				'type'       => 'number',
-				'title'      => __( 'Number of Parameters', 'woocommerce-jetpack' ),
-			),
-		);
-		$total_params = get_post_meta( get_the_ID(), '_' . 'wcj_product_price_by_formula_total_params', false );
-		if ( empty( $total_params ) ) {
-			$total_params = get_option( 'wcj_product_price_by_formula_total_params', 1 );
-		} else {
-			$total_params = $total_params[0];
-		}
-		for ( $i = 1; $i <= $total_params; $i++ ) {
-			$options[] = array(
-				'name'       => 'wcj_product_price_by_formula_param_' . $i,
-				'default'    => get_option( 'wcj_product_price_by_formula_param_' . $i, '' ),
-				'type'       => 'text',
-				'title'      => 'p' . $i,
-			);
-		}
-		return $options;
-	}
-
-	/**
 	 * create_meta_box.
 	 *
 	 * @version 2.7.0
@@ -285,60 +226,6 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 		}
 	}
 
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.6.0
-	 * @since   2.5.0
-	 */
-	function get_settings() {
-		$settings = array(
-			array(
-				'title'    => __( 'Default Settings', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'desc'     => __( 'You can set default settings here. All settings can later be changed in individual product\'s edit page.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_price_by_formula_options',
-			),
-			array(
-				'title'    => __( 'Formula', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Use "x" variable for product\'s base price. For example: x+p1*p2', 'woocommerce-jetpack' ),
-				'type'     => 'text',
-				'id'       => 'wcj_product_price_by_formula_eval',
-				'default'  => '',
-			),
-			array(
-				'title'    => __( 'Enable Price Calculation By Formula For All Products', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-				'type'     => 'checkbox',
-				'id'       => 'wcj_product_price_by_formula_enable_for_all_products',
-				'default'  => 'no',
-				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-			),
-			array(
-				'title'    => __( 'Total Params', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_price_by_formula_total_params',
-				'default'  => 1,
-				'type'     => 'custom_number',
-				/* 'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ), */
-			),
-		);
-		$total_number = get_option( 'wcj_product_price_by_formula_total_params', 1 );
-		for ( $i = 1; $i <= $total_number; $i++ ) {
-			$settings[] = array(
-				'title'    => 'p' . $i,
-				'id'       => 'wcj_product_price_by_formula_param_' . $i,
-				'default'  => '',
-				'type'     => 'text',
-			);
-		}
-		$settings[] = array(
-			'type'         => 'sectionend',
-			'id'           => 'wcj_product_price_by_formula_options',
-		);
-		return $this->add_standard_settings( $settings );
-	}
 }
 
 endif;
