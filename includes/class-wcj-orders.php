@@ -214,28 +214,6 @@ class WCJ_Orders extends WCJ_Module {
 	}
 
 	/**
-	 * get_meta_box_options.
-	 *
-	 * @version 2.7.0
-	 * @since   2.5.6
-	 */
-	function get_meta_box_options() {
-		$order_id = get_the_ID();
-		$_order = wc_get_order( $order_id );
-		$options = array(
-			array(
-				'name'       => ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ? 'wcj_order_currency' : 'order_currency' ),
-				'default'    => wcj_get_order_currency( $_order ),
-				'type'       => 'select',
-				'options'    => wcj_get_currencies_names_and_symbols( 'names' ),
-				'title'      => __( 'Order Currency', 'woocommerce-jetpack' ),
-				'tooltip'    => __( 'Save order after you change this field.', 'woocommerce-jetpack' ),
-			),
-		);
-		return $options;
-	}
-
-	/**
 	 * Filter the orders in admin based on options.
 	 *
 	 * @version 2.8.0

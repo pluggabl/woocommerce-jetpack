@@ -173,6 +173,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Visibility by Country.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Visibility by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Related Products.
+	* Dev - Code refactoring - Settings from file (meta box) - SHIPPING & ORDERS - Orders.
 	* Dev - Code refactoring - Settings from file (meta box) - EMAILS & MISC. - General.
 
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currencies.
@@ -224,7 +225,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Export.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - General.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - WPML.
-~	* Dev - Code refactoring - Settings from file.
+~	* Dev - Code refactoring - Settings from file. -> `add_settings_hook`
 
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `woocommerce_single_product_image_html` hook replaced.
