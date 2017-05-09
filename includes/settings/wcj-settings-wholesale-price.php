@@ -102,28 +102,30 @@ $settings = array(
 	),
 );
 for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
-	$settings[] = array(
-		'title'    => __( 'Min quantity', 'woocommerce-jetpack' ) . ' #' . $i,
-		'desc'     => __( 'Minimum quantity to apply discount', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_wholesale_price_level_min_qty_' . $i,
-		'default'  => 0,
-		'type'     => 'number',
-		'custom_attributes' => array('step' => '1', 'min' => '0', ),
-	);
-	$settings[] = array(
-		'title'    => __( 'Discount', 'woocommerce-jetpack' ) . ' #' . $i,
-		'desc'     => __( 'Discount', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_wholesale_price_level_discount_percent_' . $i, // mislabeled - should be 'wcj_wholesale_price_level_discount_'
-		'default'  => 0,
-		'type'     => 'number',
-		'custom_attributes' => array('step' => '0.0001', /* 'min' => '0', */ ),
-	);
+	$settings = array_merge( $settings, array(
+		array(
+			'title'    => __( 'Min quantity', 'woocommerce-jetpack' ) . ' #' . $i,
+			'desc'     => __( 'Minimum quantity to apply discount', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_wholesale_price_level_min_qty_' . $i,
+			'default'  => 0,
+			'type'     => 'number',
+			'custom_attributes' => array('step' => '1', 'min' => '0', ),
+		),
+		array(
+			'title'    => __( 'Discount', 'woocommerce-jetpack' ) . ' #' . $i,
+			'desc'     => __( 'Discount', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_wholesale_price_level_discount_percent_' . $i, // mislabeled - should be 'wcj_wholesale_price_level_discount_'
+			'default'  => 0,
+			'type'     => 'number',
+			'custom_attributes' => array('step' => '0.0001', /* 'min' => '0', */ ),
+		),
+	) );
 }
-$settings[] = array(
-	'type'         => 'sectionend',
-	'id'           => 'wcj_wholesale_price_level_options',
-);
 $settings = array_merge( $settings, array(
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_wholesale_price_level_options',
+	),
 	array(
 		'title'    => __( 'Additional User Roles Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
@@ -178,8 +180,10 @@ if ( ! empty( $user_roles ) ) {
 		}
 	}
 }
-$settings[] = array(
-	'type'         => 'sectionend',
-	'id'           => 'wcj_wholesale_price_by_user_role_options',
-);
+$settings = array_merge( $settings, array(
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_wholesale_price_by_user_role_options',
+	),
+) );
 return $settings;
