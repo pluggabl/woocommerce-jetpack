@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price Formats
  *
- * @version 2.7.0
+ * @version 2.8.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 2.8.0
 	 * @since   2.5.2
 	 */
 	function __construct() {
@@ -26,8 +26,6 @@ class WCJ_Price_Formats extends WCJ_Module {
 		$this->desc       = __( 'Set different WooCommerce price formats for different currencies.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-price-formats';
 		parent::__construct();
-
-		add_action( 'init', array( $this, 'add_settings_hook' ) );
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'wc_price_args', array( $this, 'price_format' ), PHP_INT_MAX );
@@ -86,99 +84,6 @@ class WCJ_Price_Formats extends WCJ_Module {
 		return apply_filters( 'woocommerce_price_format', $format, $currency_pos );
 	}
 
-	/**
-	 * add_settings.
-	 *
-	 * @version 2.5.8
-	 * @since   2.5.2
-	 */
-	function add_settings() {
-		$settings = array(
-			array(
-				'title'    => __( 'Formats', 'woocommerce-jetpack' ),
-				'type'     => 'title',
-				'id'       => 'wcj_price_formats_options',
-			),
-			array(
-				'title'    => __( 'Total Number', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_price_formats_total_number',
-				'default'  => 1,
-				'type'     => 'custom_number',
-				'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-				'custom_attributes' => array_merge(
-					is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
-					array( 'step' => '1', 'min'  => '0', )
-				),
-			),
-		);
-		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
-			$currency_symbol = wcj_get_currency_symbol( get_option( 'wcj_price_formats_currency_' . $i, get_woocommerce_currency() ) );
-			$settings = array_merge( $settings, array(
-				array(
-					'title'    => __( 'Format', 'woocommerce-jetpack' ) . ' #' . $i,
-					'desc'     => __( 'Currency', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_price_formats_currency_' . $i,
-					'default'  => get_woocommerce_currency(),
-					'type'     => 'select',
-					'options'  => wcj_get_currencies_names_and_symbols(),
-					'css'      => 'width:300px;',
-				),
-				array(
-					'desc'     => __( 'Currency Position', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_price_formats_currency_position_' . $i,
-					'default'  => get_option( 'woocommerce_currency_pos' ),
-					'type'     => 'select',
-					'options'  => array(
-						'left'        => __( 'Left', 'woocommerce' ) . ' (' . $currency_symbol . '99.99)',
-						'right'       => __( 'Right', 'woocommerce' ) . ' (99.99' . $currency_symbol . ')',
-						'left_space'  => __( 'Left with space', 'woocommerce' ) . ' (' . $currency_symbol . ' 99.99)',
-						'right_space' => __( 'Right with space', 'woocommerce' ) . ' (99.99 ' . $currency_symbol . ')'
-					),
-					'css'      => 'width:300px;',
-				),
-				array(
-					'desc'     => __( 'Thousand Separator', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_price_formats_thousand_separator_' . $i,
-					'default'  => wc_get_price_thousand_separator(),
-					'type'     => 'text',
-					'css'      => 'width:300px;',
-				),
-				array(
-					'desc'     => __( 'Decimal Separator', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_price_formats_decimal_separator_' . $i,
-					'default'  => wc_get_price_decimal_separator(),
-					'type'     => 'text',
-					'css'      => 'width:300px;',
-				),
-				array(
-					'desc'     => __( 'Number of Decimals', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_price_formats_number_of_decimals_' . $i,
-					'default'  => wc_get_price_decimals(),
-					'type'     => 'number',
-					'custom_attributes' => array(
-						'min'  => 0,
-						'step' => 1
-					),
-					'css'      => 'width:300px;',
-				),
-				array(
-					'desc'     => __( 'WPML Language Code', 'woocommerce-jetpack' ),
-					'desc_tip' => __( 'Option to set different price formats for different WPML languages. Can be comma separated list. Leave empty to disable.', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_price_formats_wpml_language_' . $i,
-					'default'  => '',
-					'type'     => 'text',
-					'css'      => 'width:300px;',
-				),
-			) );
-		}
-		$settings = array_merge( $settings, array(
-			array(
-				'type'     => 'sectionend',
-				'id'       => 'wcj_price_formats_options',
-			),
-		) );
-		return $settings;
-	}
 }
 
 endif;
