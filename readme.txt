@@ -194,6 +194,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Bookings.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Add to Cart.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Addons.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Cost Price.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Images.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Info.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Listings.
