@@ -163,6 +163,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Product Open Pricing (Name Your Price).
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Product Price by Formula.
+	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Wholesale Price.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Bookings.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Crowdfunding.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Add to Cart.
@@ -181,6 +182,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Product Open Pricing (Name Your Price).
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Product Price by Formula.
+	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Wholesale Price.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Add to Cart Labels.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Call for Price.
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Custom Price Labels.
