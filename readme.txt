@@ -164,6 +164,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Bookings.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Crowdfunding.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Add to Cart.
+	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Addons.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Visibility by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Related Products.
@@ -182,6 +183,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - More Button Labels.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Bookings.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Add to Cart.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Addons.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Images.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Info.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Listings.
