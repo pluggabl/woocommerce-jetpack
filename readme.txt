@@ -178,6 +178,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currency Exchange Rates.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currency for External Products.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currency per Product.
+	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Multicurrency (Currency Switcher).
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Multicurrency Product Base Price.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Product Open Pricing (Name Your Price).
