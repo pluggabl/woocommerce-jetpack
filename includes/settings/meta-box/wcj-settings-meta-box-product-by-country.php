@@ -17,5 +17,6 @@ return array(
 		'type'     => 'select',
 		'options'  => wcj_get_countries(),
 		'multiple' => true,
+		'css'      => 'height:300px;',
 	),
 );
