@@ -302,7 +302,7 @@ $~!D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module r
 $~!D* Dev - EMAILS & MISC. - Email Verification - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Output restyled.
 	* Tweak - `WCJ_Module` - `extra_desc` and `link_slug` properties added.
-	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt and main plugin file.
+	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt; main plugin file; module's documentation links.
 
 = 2.7.1 - 13/04/2017 =
 * Fix - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - "Variable products" visibility options fixed.
