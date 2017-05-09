@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Product Input Fields Global
- *
- * The WooCommerce Jetpack Product Input Fields Global class.
+ * Booster for WooCommerce - Product Input Fields - Global
  *
  * @version 2.5.0
  * @author  Algoritmika Ltd.

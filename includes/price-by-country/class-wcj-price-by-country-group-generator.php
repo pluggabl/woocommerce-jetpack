@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Price By Country Group Generator
- *
- * The WooCommerce Jetpack Price By Country Group Generator class.
+ * Booster for WooCommerce - Price By Country - Group Generator
  *
  * @version  2.5.0
  * @author   Algoritmika Ltd.

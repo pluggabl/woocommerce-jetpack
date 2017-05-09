@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Custom Shipping
- *
- * The WooCommerce Jetpack Custom Shipping class.
+ * Booster for WooCommerce - Shipping - Custom Shipping
  *
  * @version 2.8.0
  * @since   2.4.8

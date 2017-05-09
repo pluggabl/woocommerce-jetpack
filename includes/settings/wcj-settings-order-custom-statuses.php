@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - Order Custom Statuses
+ * Booster for WooCommerce Settings - Order Custom Statuses
  *
  * @version 2.8.0
  * @since   2.8.0

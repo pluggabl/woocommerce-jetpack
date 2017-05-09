@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Invoicing Functions
+ * Booster for WooCommerce - Functions - Invoicing
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

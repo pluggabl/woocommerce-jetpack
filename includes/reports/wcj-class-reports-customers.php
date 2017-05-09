@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Customers Reports
- *
- * The WooCommerce Jetpack Customers Reports class.
+ * Booster for WooCommerce - Reports - Customers
  *
  * @version 2.2.0
  * @author  Algoritmika Ltd.

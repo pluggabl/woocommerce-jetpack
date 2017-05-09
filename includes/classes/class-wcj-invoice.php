@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Invoice
+ * Booster for WooCommerce Invoice
  *
  * @version 2.5.9
  * @author  Algoritmika Ltd.

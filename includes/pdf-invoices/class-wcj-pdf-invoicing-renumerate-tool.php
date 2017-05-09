@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack PDF Invoices Renumerate Tool
- *
- * The WooCommerce Jetpack PDF Invoices Renumerate Tool class.
+ * Booster for WooCommerce - PDF Invoicing - Renumerate Tool
  *
  * @version 2.3.10
  * @author  Algoritmika Ltd.

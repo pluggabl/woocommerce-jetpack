@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Currencies Array
+ * Booster for WooCommerce Currencies Array
  *
  * @version 2.4.4
  * @author  Algoritmika Ltd.

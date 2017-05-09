@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack PDF Invoicing Header
- *
- * The WooCommerce Jetpack PDF Invoicing Header class.
+ * Booster for WooCommerce - PDF Invoicing - Header
  *
  * @version 2.4.7
  * @author  Algoritmika Ltd.

@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - More Button Labels
+ * Booster for WooCommerce Settings - More Button Labels
  *
  * @version 2.8.0
  * @since   2.8.0

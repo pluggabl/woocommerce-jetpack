@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - Orders
+ * Booster for WooCommerce Settings - Orders
  *
  * @version 2.8.0
  * @since   2.8.0

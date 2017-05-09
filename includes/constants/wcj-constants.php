@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Constants
+ * Booster for WooCommerce Constants
  *
  * @version 2.7.0
  * @since   2.7.0

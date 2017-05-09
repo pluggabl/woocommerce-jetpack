@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - Shipping by User Role
+ * Booster for WooCommerce Settings - Shipping by User Role
  *
  * @version 2.8.0
  * @since   2.8.0

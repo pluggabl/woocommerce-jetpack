@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Debug Functions
+ * Booster for WooCommerce - Functions - Debug
  *
  * @version     1.0.0
  * @author      Algoritmika Ltd.

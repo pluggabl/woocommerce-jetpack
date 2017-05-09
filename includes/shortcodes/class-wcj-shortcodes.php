@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Shortcodes
- *
- * The WooCommerce Jetpack Shortcodes class.
+ * Booster for WooCommerce - Shortcodes
  *
  * @version 2.8.0
  * @author  Algoritmika Ltd.

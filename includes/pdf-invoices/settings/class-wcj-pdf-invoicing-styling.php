@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack PDF Invoicing Styling
- *
- * The WooCommerce Jetpack PDF Invoicing Styling class.
+ * Booster for WooCommerce - PDF Invoicing - Styling
  *
  * @version 2.4.8
  * @author  Algoritmika Ltd.

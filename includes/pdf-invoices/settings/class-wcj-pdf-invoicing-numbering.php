@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack PDF Invoices Numbering
- *
- * The WooCommerce Jetpack PDF Invoices Numbering class.
+ * Booster for WooCommerce - PDF Invoicing - Numbering
  *
  * @version 2.5.2
  * @author  Algoritmika Ltd.

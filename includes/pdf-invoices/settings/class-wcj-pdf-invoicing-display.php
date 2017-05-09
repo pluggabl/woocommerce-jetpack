@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack PDF Invoicing Display
- *
- * The WooCommerce Jetpack PDF Invoicing Display class.
+ * Booster for WooCommerce - PDF Invoicing - Display
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

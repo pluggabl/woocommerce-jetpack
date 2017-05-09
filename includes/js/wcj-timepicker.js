@@ -1,5 +1,5 @@
 /**
- * WooCommerce Jetpack - Timepicker JS
+ * Booster for WooCommerce - Timepicker JS
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

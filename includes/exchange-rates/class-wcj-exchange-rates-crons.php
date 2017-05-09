@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Exchange Rates Crons
+ * Booster for WooCommerce Exchange Rates Crons
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Country Functions
+ * Booster for WooCommerce - Functions - Country
  *
  * @version  2.6.0
  * @author   Algoritmika Ltd.

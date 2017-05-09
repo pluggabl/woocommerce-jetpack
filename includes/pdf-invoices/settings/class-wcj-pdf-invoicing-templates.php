@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack PDF Invoices Templates
- *
- * The WooCommerce Jetpack PDF Invoices Templates class.
+ * Booster for WooCommerce - PDF Invoicing - Templates
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

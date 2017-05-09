@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Export Fields Helper
+ * Booster for WooCommerce Export Fields Helper
  *
  * @version 2.7.0
  * @since   2.5.9

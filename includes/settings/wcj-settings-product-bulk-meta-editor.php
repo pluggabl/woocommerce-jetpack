@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - Product Bulk Meta Editor
+ * Booster for WooCommerce Settings - Product Bulk Meta Editor
  *
  * @version 2.8.0
  * @since   2.8.0

@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - Empty Cart Button
+ * Booster for WooCommerce Settings - Empty Cart Button
  *
  * @version 2.8.0
  * @since   2.8.0

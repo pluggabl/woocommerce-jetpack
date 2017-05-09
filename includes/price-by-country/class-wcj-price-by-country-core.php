@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Price by Country Core
- *
- * The WooCommerce Jetpack Price by Country Core class.
+ * Booster for WooCommerce - Price by Country - Core
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Custom Shipping with Shipping Zones
- *
- * The WooCommerce Jetpack Custom Shipping with Shipping Zones class.
+ * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
  * @version 2.8.0
  * @since   2.5.6

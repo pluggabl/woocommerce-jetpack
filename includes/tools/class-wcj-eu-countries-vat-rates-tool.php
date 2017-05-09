@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack EU Countries VAT Rates Tool
- *
- * The WooCommerce Jetpack EU Countries VAT Rates Tool class.
+ * Booster for WooCommerce - Tool - EU Countries VAT Rates
  *
  * @version 2.5.0
  * @since   2.3.10

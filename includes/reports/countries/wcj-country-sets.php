@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Country Sets
+ * Booster for WooCommerce Country Sets
  *
  * @version 2.4.7
  * @author  Algoritmika Ltd.

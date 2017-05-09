@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack PDF Invoicing Emails
- *
- * The WooCommerce Jetpack PDF Invoicing Emails class.
+ * Booster for WooCommerce - PDF Invoicing - Emails
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Products Add Form Shortcodes
- *
- * The WooCommerce Jetpack Products Add Form Shortcodes class.
+ * Booster for WooCommerce - Shortcodes - Products Add Form
  *
  * @version 2.8.0
  * @since   2.5.0

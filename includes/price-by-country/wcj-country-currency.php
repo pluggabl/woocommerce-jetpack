@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Country Currency functions
+ * Booster for WooCommerce Country Currency functions
  *
  * @version 2.4.4
  * @author  Algoritmika Ltd.

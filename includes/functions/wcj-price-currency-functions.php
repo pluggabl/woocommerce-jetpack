@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Price and Currency Functions
- *
- * The WooCommerce Jetpack Price and Currency functions.
+ * Booster for WooCommerce - Functions - Price and Currency
  *
  * @version 2.7.0
  * @since   2.7.0

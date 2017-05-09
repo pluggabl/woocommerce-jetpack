@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack User Roles Functions
- *
- * The WooCommerce Jetpack User Roles functions.
+ * Booster for WooCommerce - Functions - User Roles
  *
  * @version 2.7.0
  * @since   2.7.0

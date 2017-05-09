@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack PDF Invoicing Footer
- *
- * The WooCommerce Jetpack PDF Invoicing Footer class.
+ * Booster for WooCommerce - PDF Invoicing - Footer
  *
  * @version 2.4.7
  * @author  Algoritmika Ltd.

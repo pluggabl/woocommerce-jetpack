@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Mothly Sales Reports
- *
- * The WooCommerce Jetpack Mothly Sales Reports class.
+ * Booster for WooCommerce - Reports - Mothly Sales
  *
  * @version 2.7.0
  * @since   2.4.7

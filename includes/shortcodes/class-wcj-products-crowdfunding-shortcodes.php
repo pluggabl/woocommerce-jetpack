@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Products Crowdfunding Shortcodes
- *
- * The WooCommerce Jetpack Products Crowdfunding Shortcodes class.
+ * Booster for WooCommerce - Shortcodes - Products Crowdfunding
  *
  * @version 2.7.0
  * @since   2.5.4

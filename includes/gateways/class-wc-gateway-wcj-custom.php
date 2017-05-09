@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Custom Payment Gateway
- *
- * The WooCommerce Jetpack Custom Payment Gateway class.
+ * Booster for WooCommerce - Custom Payment Gateway
  *
  * @version 2.5.7
  * @author  Algoritmika Ltd.

@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack TCPDF
+ * Booster for WooCommerce TCPDF
  *
  * @version 2.3.0
  * @author  Algoritmika Ltd.

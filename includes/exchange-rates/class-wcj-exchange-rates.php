@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Exchange Rates
+ * Booster for WooCommerce Exchange Rates
  *
  * @version  2.6.0
  * @author   Algoritmika Ltd.

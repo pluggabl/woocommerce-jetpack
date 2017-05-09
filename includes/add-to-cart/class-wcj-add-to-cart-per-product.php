@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Add to Cart per Product
+ * Booster for WooCommerce Add to Cart per Product
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

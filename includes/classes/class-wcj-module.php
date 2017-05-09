@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Module
+ * Booster for WooCommerce Module
  *
  * @version 2.8.0
  * @since   2.2.0

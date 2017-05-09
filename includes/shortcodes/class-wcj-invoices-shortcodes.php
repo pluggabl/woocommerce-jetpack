@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Invoices Shortcodes
- *
- * The WooCommerce Jetpack Invoices Shortcodes class.
+ * Booster for WooCommerce - Shortcodes - Invoices
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

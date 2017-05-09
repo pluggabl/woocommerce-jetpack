@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Stock Reports
- *
- * The WooCommerce Jetpack Stock Reports class.
+ * Booster for WooCommerce - Reports - Stock
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Order Items Shortcodes
- *
- * The WooCommerce Jetpack Order Items Shortcodes class.
+ * Booster for WooCommerce - Shortcodes - Order Items
  *
  * @version 2.8.0
  * @author  Algoritmika Ltd.

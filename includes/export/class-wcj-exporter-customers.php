@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Exporter Customers
+ * Booster for WooCommerce Exporter Customers
  *
  * @version 2.7.0
  * @since   2.5.9

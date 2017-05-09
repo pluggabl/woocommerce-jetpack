@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - Product by User
+ * Booster for WooCommerce Settings - Product by User
  *
  * @version 2.8.0
  * @since   2.8.0

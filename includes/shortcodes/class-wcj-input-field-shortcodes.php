@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Input Field Shortcodes
- *
- * The WooCommerce Jetpack Input Field Shortcodes class.
+ * Booster for WooCommerce - Shortcodes - Input Field
  *
  * @version 2.5.2
  * @since   2.5.2

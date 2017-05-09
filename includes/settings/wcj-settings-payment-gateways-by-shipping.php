@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - Payment Gateways by Shipping
+ * Booster for WooCommerce Settings - Payment Gateways by Shipping
  *
  * @version 2.8.0
  * @since   2.8.0

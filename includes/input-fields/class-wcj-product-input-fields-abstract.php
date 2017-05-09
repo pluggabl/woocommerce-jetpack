@@ -1,8 +1,6 @@
 <?php
 /**
- * Abstract WooCommerce Jetpack Product Input Fields
- *
- * The WooCommerce Jetpack Product Input Fields abstract class.
+ * Booster for WooCommerce - Product Input Fields - Abstract
  *
  * @version 2.8.0
  * @author  Algoritmika Ltd.

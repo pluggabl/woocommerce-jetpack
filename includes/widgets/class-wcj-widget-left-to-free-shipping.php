@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Left to Free Shipping Widget
- *
- * The WooCommerce Jetpack Left to Free Shipping Widget class.
+ * Booster for WooCommerce - Widget - Left to Free Shipping
  *
  * @version 2.4.4
  * @since   2.4.4

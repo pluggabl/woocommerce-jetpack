@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Multicurrency Widget
- *
- * The WooCommerce Jetpack Multicurrency Widget class.
+ * Booster for WooCommerce - Widget - Multicurrency
  *
  * @version 2.5.0
  * @since   2.4.3

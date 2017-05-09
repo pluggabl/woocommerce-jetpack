@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Currency Reports
- *
- * The WooCommerce Jetpack Currency Reports class.
+ * Booster for WooCommerce - Reports - Currency
  *
  * @version  2.5.7
  * @author   Algoritmika Ltd.

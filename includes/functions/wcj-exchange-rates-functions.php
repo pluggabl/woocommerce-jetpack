@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Exchange Rates Functions
+ * Booster for WooCommerce - Functions - Exchange Rates
  *
  * @version 2.7.0
  * @since   2.7.0

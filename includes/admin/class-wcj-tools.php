@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Tools
+ * Booster for WooCommerce Tools
  *
  * @version 2.5.7
  * @author  Algoritmika Ltd.

@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Country Switcher Widget
- *
- * The WooCommerce Jetpack Country Switcher Widget class.
+ * Booster for WooCommerce - Widget - Country Switcher
  *
  * @version 2.5.5
  * @since   2.4.8

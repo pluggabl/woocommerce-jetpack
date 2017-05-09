@@ -50,7 +50,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
 final class WC_Jetpack {
 
 	/**
-	 * WooCommerce Jetpack version.
+	 * Booster for WooCommerce version.
 	 *
 	 * @var   string
 	 * @since 2.4.7

@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Settings - Custom CSS
+ * Booster for WooCommerce Settings - Custom CSS
  *
  * @version 2.8.0
  * @since   2.8.0

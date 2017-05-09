@@ -1,6 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Functions
+ * Booster for WooCommerce - Functions - Numbers to Words
  *
  * @version 2.5.0
  * @author  Algoritmika Ltd.

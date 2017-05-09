@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack PDF Invoices Report Tool
- *
- * The WooCommerce Jetpack PDF Invoices Report Tool class.
+ * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
  * @version 2.7.0
  * @since   2.2.1
