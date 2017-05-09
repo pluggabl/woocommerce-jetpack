@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Custom JS
- *
- * The WooCommerce Jetpack Custom JS class.
+ * Booster for WooCommerce - Module - Custom JS
  *
  * @version 2.8.0
  * @since   2.8.0

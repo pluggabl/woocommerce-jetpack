@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Shipping Calculator
- *
- * The WooCommerce Jetpack Shipping Calculator class.
+ * Booster for WooCommerce - Module - Shipping Calculator
  *
  * @version 2.5.7
  * @author  Algoritmika Ltd.

@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Product Bulk Meta Editor
- *
- * The WooCommerce Jetpack Product Bulk Meta Editor class.
+ * Booster for WooCommerce - Module - Product Bulk Meta Editor
  *
  * @version 2.8.0
  * @version 2.8.0

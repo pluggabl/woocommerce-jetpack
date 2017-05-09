@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Product Price by Formula
- *
- * The WooCommerce Jetpack Product Price by Formula class.
+ * Booster for WooCommerce - Module - Product Price by Formula
  *
  * @version 2.7.0
  * @since   2.5.0

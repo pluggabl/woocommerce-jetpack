@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Exporter Products
  *
- * The WooCommerce Jetpack Exporter Products class.
- *
  * @version 2.7.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.

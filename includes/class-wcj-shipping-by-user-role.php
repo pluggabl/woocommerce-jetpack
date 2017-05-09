@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Shipping by User Role
- *
- * The WooCommerce Jetpack Shipping by User Role class.
+ * Booster for WooCommerce - Module - Shipping by User Role
  *
  * @version 2.8.0
  * @since   2.8.0

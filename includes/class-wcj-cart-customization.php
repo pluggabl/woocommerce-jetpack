@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Cart Customization
- *
- * The WooCommerce Jetpack Cart Customization class.
+ * Booster for WooCommerce - Module - Cart Customization
  *
  * @version 2.8.0
  * @since   2.7.0

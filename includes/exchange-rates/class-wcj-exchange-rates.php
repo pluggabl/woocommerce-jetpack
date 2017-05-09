@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Exchange Rates
  *
- * The WooCommerce Jetpack Exchange Rates class.
- *
  * @version  2.6.0
  * @author   Algoritmika Ltd.
  */

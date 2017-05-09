@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Add to Cart per Category
  *
- * The WooCommerce Jetpack Add to Cart Label per Category class.
- *
  * @version 2.2.6
  * @author  Algoritmika Ltd.
  */

@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Currencies Array
  *
- * The WooCommerce Jetpack Currencies Array.
- *
  * @version 2.4.4
  * @author  Algoritmika Ltd.
  */

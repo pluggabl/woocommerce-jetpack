@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Order Custom Statuses
- *
- * The WooCommerce Jetpack Order Custom Statuses class.
+ * Booster for WooCommerce - Module - Order Custom Statuses
  *
  * @version 2.8.0
  * @since   2.2.0

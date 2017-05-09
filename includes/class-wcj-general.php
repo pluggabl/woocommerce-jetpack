@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack General
- *
- * The WooCommerce Jetpack General class.
+ * Booster for WooCommerce - Module - General
  *
  * @version 2.7.1
  * @author  Algoritmika Ltd.

@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Left to Free Shipping
- *
- * The WooCommerce Jetpack Left to Free Shipping class.
+ * Booster for WooCommerce - Module - Left to Free Shipping
  *
  * @version 2.7.0
  * @since   2.5.8

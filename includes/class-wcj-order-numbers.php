@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Order Numbers
- *
- * The WooCommerce Jetpack Order Numbers class.
+ * Booster for WooCommerce - Module - Order Numbers
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Functions
  *
- * The WooCommerce Jetpack Functions.
- *
  * @version 2.8.0
  * @author  Algoritmika Ltd.
  */

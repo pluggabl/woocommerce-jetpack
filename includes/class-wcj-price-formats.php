@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Price Formats
- *
- * The WooCommerce Jetpack Price Formats class.
+ * Booster for WooCommerce - Module - Price Formats
  *
  * @version 2.7.0
  * @since   2.5.2

@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack More Button Labels
- *
- * The WooCommerce Jetpack More Button Labels class.
+ * Booster for WooCommerce - Module - More Button Labels
  *
  * @version 2.8.0
  * @since   2.2.0

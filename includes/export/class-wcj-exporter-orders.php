@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Exporter Orders
  *
- * The WooCommerce Jetpack Exporter Orders class.
- *
  * @version 2.7.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.

@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Payment Gateways Currency
- *
- * The WooCommerce Jetpack Payment Gateways Currency class.
+ * Booster for WooCommerce - Module - Payment Gateways Currency
  *
  * @version 2.7.0
  * @since   2.3.0

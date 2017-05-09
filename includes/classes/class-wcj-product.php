@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Product
  *
- * The WooCommerce Jetpack Product class.
- *
  * @version 2.4.8
  * @since   2.2.0
  * @author  Algoritmika Ltd.

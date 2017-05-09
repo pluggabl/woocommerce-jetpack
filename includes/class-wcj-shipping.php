@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Shipping
- *
- * The WooCommerce Jetpack Shipping class.
+ * Booster for WooCommerce - Module - Shipping
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

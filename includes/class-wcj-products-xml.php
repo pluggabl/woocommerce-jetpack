@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Products XML
- *
- * The WooCommerce Jetpack Products XML class.
+ * Booster for WooCommerce - Module - Products XML
  *
  * @version 2.6.0
  * @since   2.5.7

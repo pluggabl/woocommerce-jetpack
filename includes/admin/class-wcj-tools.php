@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Tools
  *
- * The WooCommerce Jetpack Tools class.
- *
  * @version 2.5.7
  * @author  Algoritmika Ltd.
  */

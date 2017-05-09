@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Product by Country
- *
- * The WooCommerce Jetpack Product by Country class.
+ * Booster for WooCommerce - Module - Product by Country
  *
  * @version 2.5.6
  * @since   2.5.0

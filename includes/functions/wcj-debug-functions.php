@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Debug Functions
  *
- * The WooCommerce Jetpack Debug functions.
- *
  * @version     1.0.0
  * @author      Algoritmika Ltd.
  */

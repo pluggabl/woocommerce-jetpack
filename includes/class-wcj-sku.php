@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack SKU
- *
- * The WooCommerce Jetpack SKU class.
+ * Booster for WooCommerce - Module - SKU
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

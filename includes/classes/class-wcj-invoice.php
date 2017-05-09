@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Invoice
  *
- * The WooCommerce Jetpack Invoice class.
- *
  * @version 2.5.9
  * @author  Algoritmika Ltd.
  */

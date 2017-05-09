@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Global Discount
- *
- * The WooCommerce Jetpack Global Discount class.
+ * Booster for WooCommerce - Module - Global Discount
  *
  * @version 2.7.0
  * @since   2.5.7

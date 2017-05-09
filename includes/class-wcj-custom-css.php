@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Custom CSS
- *
- * The WooCommerce Jetpack Custom CSS class.
+ * Booster for WooCommerce - Module - Custom CSS
  *
  * @version 2.8.0
  * @since   2.7.0

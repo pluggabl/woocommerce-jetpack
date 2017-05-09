@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Price by Country
- *
- * The WooCommerce Jetpack Price by Country class.
+ * Booster for WooCommerce - Module - Price by Country
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

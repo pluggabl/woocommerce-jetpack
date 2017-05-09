@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Payment Gateways by Country
- *
- * The WooCommerce Jetpack Payment Gateways by Country class.
+ * Booster for WooCommerce - Module - Payment Gateways by Country
  *
  * @version 2.7.0
  * @since   2.4.1

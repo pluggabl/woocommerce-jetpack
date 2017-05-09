@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Orders
- *
- * The WooCommerce Jetpack Orders class.
+ * Booster for WooCommerce - Module - Orders
  *
  * @version 2.8.0
  * @author  Algoritmika Ltd.

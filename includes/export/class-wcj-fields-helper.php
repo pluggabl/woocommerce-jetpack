@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Export Fields Helper
  *
- * The WooCommerce Jetpack Export Fields Helper class.
- *
  * @version 2.7.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.

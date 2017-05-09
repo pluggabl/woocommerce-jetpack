@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Multicurrency Product Base Price
- *
- * The WooCommerce Jetpack Multicurrency Product Base Price class.
+ * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
  * @version 2.7.0
  * @since   2.4.8

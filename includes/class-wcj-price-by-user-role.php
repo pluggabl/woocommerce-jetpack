@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Price by User Role
- *
- * The WooCommerce Jetpack Price by User Role class.
+ * Booster for WooCommerce - Module - Price by User Role
  *
  * @version 2.8.0
  * @since   2.5.0

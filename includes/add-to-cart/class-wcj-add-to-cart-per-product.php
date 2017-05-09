@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Add to Cart per Product
  *
- * The WooCommerce Jetpack Add to Cart per Product class.
- *
  * @version 2.7.0
  * @author  Algoritmika Ltd.
  */

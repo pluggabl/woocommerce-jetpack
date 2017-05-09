@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Payment Gateways per Category
- *
- * The WooCommerce Jetpack Payment Gateways per Category class.
+ * Booster for WooCommerce - Module - Payment Gateways per Category
  *
  * @version 2.7.0
  * @since   2.2.0

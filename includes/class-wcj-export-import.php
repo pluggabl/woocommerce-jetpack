@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Export Import
- *
- * The WooCommerce Jetpack Export Import class.
+ * Booster for WooCommerce - Module - Export Import
  *
  * @version 2.6.0
  * @since   2.5.4

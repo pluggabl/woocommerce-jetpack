@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Payment Gateways by User Role
- *
- * The WooCommerce Jetpack Payment Gateways by User Role class.
+ * Booster for WooCommerce - Module - Payment Gateways by User Role
  *
  * @version 2.8.0
  * @since   2.5.3

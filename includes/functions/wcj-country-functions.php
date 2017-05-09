@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Country Functions
  *
- * The WooCommerce Country Jetpack Functions.
- *
  * @version  2.6.0
  * @author   Algoritmika Ltd.
  */

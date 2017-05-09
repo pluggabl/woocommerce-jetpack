@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Reports
- *
- * The WooCommerce Jetpack Reports class.
+ * Booster for WooCommerce - Module - Reports
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

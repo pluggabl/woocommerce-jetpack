@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Payment Gateways Min Max
- *
- * The WooCommerce Jetpack Payment Gateways Min Max class.
+ * Booster for WooCommerce - Module - Payment Gateways Min Max
  *
  * @version 2.7.0
  * @since   2.4.1

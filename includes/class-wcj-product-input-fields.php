@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Product Input Fields
- *
- * The WooCommerce Jetpack Product Input Fields class.
+ * Booster for WooCommerce - Module - Product Input Fields
  *
  * @version 2.7.0
  * @author  Algoritmika Ltd.

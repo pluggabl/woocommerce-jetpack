@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Payment Gateways by Shipping
- *
- * The WooCommerce Jetpack Payment Gateways by Shipping class.
+ * Booster for WooCommerce - Module - Payment Gateways by Shipping
  *
  * @version 2.8.0
  * @since   2.7.0

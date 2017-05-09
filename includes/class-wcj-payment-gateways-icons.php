@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Payment Gateways Icons
- *
- * The WooCommerce Jetpack Payment Gateways Icons class.
+ * Booster for WooCommerce - Module - Payment Gateways Icons
  *
  * @version 2.5.0
  * @since   2.2.2

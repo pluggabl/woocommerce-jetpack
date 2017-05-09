@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Product by User
- *
- * The WooCommerce Jetpack Product by User class.
+ * Booster for WooCommerce - Module - Product by User
  *
  * @version 2.8.0
  * @since   2.5.2

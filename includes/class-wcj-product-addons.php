@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Product Addons
- *
- * The WooCommerce Jetpack Product Addons class.
+ * Booster for WooCommerce - Module - Product Addons
  *
  * @version 2.8.0
  * @since   2.5.3

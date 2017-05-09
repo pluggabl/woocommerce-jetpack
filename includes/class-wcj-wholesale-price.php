@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Wholesale Price
- *
- * The WooCommerce Jetpack Wholesale Price class.
+ * Booster for WooCommerce - Module - Wholesale Price
  *
  * @version 2.7.0
  * @since   2.2.0

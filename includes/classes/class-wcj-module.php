@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Module
  *
- * The WooCommerce Jetpack Module class.
- *
  * @version 2.8.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.

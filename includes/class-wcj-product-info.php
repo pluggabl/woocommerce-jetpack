@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Product Info
- *
- * The WooCommerce Jetpack Product Info class.
+ * Booster for WooCommerce - Module - Product Info
  *
  * @version 2.5.3
  * @author  Algoritmika Ltd.

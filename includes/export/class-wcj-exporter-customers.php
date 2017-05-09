@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Exporter Customers
  *
- * The WooCommerce Jetpack Exporter Customers class.
- *
  * @version 2.7.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.

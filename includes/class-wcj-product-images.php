@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Product Images
- *
- * The WooCommerce Jetpack Product Images class.
+ * Booster for WooCommerce - Module - Product Images
  *
  * @version 2.8.0
  * @since   2.2.0

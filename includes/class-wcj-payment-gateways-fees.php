@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Payment Gateways Fees
- *
- * The WooCommerce Jetpack Payment Gateways Fees class.
+ * Booster for WooCommerce - Module - Payment Gateways Fees
  *
  * @version 2.7.0
  * @since   2.2.2

@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Purchase Data
- *
- * The WooCommerce Jetpack Purchase Data class.
+ * Booster for WooCommerce - Module - Purchase Data
  *
  * @version 2.7.0
  * @since   2.2.0

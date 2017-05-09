@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Product Tabs
- *
- * The WooCommerce Jetpack Product Tabs class.
+ * Booster for WooCommerce - Module - Product Tabs
  *
  * @version 2.8.0
  * @author  Algoritmika Ltd.

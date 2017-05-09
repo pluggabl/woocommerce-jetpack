@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack Exchange Rates Crons
  *
- * The WooCommerce Jetpack Exchange Rates Crons class.
- *
  * @version 2.7.0
  * @author  Algoritmika Ltd.
  */

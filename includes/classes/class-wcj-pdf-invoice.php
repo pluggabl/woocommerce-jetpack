@@ -2,8 +2,6 @@
 /**
  * WooCommerce Jetpack PDF Invoice
  *
- * The WooCommerce Jetpack PDF Invoice class.
- *
  * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
