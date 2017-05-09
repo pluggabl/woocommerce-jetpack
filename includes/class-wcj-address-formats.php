@@ -1,8 +1,6 @@
 <?php
 /**
- * WooCommerce Jetpack Address Formats
- *
- * The WooCommerce Jetpack Address Formats class.
+ * Booster for WooCommerce - Module - Address Formats
  *
  * @version 2.8.0
  * @since   2.2.0
@@ -18,14 +16,14 @@ class WCJ_Address_Formats extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.8.0
 	 */
 	function __construct() {
 
 		$this->id         = 'address_formats';
 		$this->short_desc = __( 'Address Formats', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set address format in WooCommerce orders on per country basis. Force base country display.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-address-formats/';
+		$this->link_slug  = 'woocommerce-address-formats';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
