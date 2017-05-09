@@ -209,6 +209,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Admin Tools.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Custom CSS.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Emails.
+	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Export.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - WPML.
 ~	* Dev - Code refactoring - Settings from file.
 
