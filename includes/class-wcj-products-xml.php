@@ -25,7 +25,7 @@ class WCJ_Products_XML extends WCJ_Module {
 		$this->id         = 'products_xml';
 		$this->short_desc = __( 'Products XML', 'woocommerce-jetpack' );
 		$this->desc       = __( 'WooCommerce products XML feed.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-products-xml-feed/';
+		$this->link_slug  = 'woocommerce-products-xml-feed';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

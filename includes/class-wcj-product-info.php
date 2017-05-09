@@ -100,7 +100,7 @@ class WCJ_Product_Info extends WCJ_Module {
 		$this->id         = 'product_info';
 		$this->short_desc = __( 'Product Info V1', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add additional info to WooCommerce category and single product pages.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-product-info/';
+		$this->link_slug  = 'woocommerce-product-info';
 		parent::__construct();
 
 		$this->product_info_on_archive_filters_array = $this->get_product_info_on_archive_filters_array();

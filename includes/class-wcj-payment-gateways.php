@@ -22,7 +22,7 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 		$this->id         = 'payment_gateways';
 		$this->short_desc = __( 'Custom Gateways', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add multiple custom payment gateways to WooCommerce.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-custom-payment-gateways/';
+		$this->link_slug  = 'woocommerce-custom-payment-gateways';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

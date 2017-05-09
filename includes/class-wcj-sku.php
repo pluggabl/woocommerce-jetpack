@@ -23,7 +23,7 @@ class WCJ_SKU extends WCJ_Module {
 		$this->id         = 'sku';
 		$this->short_desc = __( 'SKU', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Generate WooCommerce SKUs automatically.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-sku/';
+		$this->link_slug  = 'woocommerce-sku';
 		parent::__construct();
 
 		$this->add_tools( array(

@@ -22,7 +22,7 @@ class WCJ_Emails extends WCJ_Module {
 		$this->id         = 'emails';
 		$this->short_desc = __( 'Emails', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add custom emails. Add another email recipient(s) to all WooCommerce emails.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-emails/';
+		$this->link_slug  = 'woocommerce-emails';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

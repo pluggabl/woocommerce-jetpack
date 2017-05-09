@@ -24,7 +24,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 		$this->id         = 'multicurrency_base_price';
 		$this->short_desc = __( 'Multicurrency Product Base Price', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Enter prices for WooCommerce products in different currencies.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-multicurrency-product-base-price/';
+		$this->link_slug  = 'woocommerce-multicurrency-product-base-price';
 		parent::__construct();
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );

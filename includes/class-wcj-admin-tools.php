@@ -22,7 +22,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 		$this->id         = 'admin_tools';
 		$this->short_desc = __( 'Admin Tools', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Booster for WooCommerce debug and log tools.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-booster-admin-tools/';
+		$this->link_slug  = 'woocommerce-booster-admin-tools';
 		parent::__construct();
 
 		$this->add_tools( array(

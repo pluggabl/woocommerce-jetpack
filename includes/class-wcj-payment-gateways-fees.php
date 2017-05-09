@@ -23,7 +23,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 		$this->id         = 'payment_gateways_fees';
 		$this->short_desc = __( 'Gateways Fees and Discounts', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Enable extra fees or discounts for WooCommerce payment gateways.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-fees-and-discounts/';
+		$this->link_slug  = 'woocommerce-payment-gateways-fees-and-discounts';
 		parent::__construct();
 
 		add_filter( 'init',  array( $this, 'add_settings_hook' ) );

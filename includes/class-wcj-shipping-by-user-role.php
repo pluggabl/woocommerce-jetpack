@@ -24,7 +24,7 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module {
 		$this->id         = 'shipping_by_user_role';
 		$this->short_desc = __( 'Shipping Methods by User Role', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set user roles to include/exclude for WooCommerce shipping methods to show up.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-shipping-methods-by-user-role/';
+		$this->link_slug  = 'woocommerce-shipping-methods-by-user-role';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

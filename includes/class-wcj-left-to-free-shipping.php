@@ -24,7 +24,7 @@ class WCJ_Left_To_Free_Shipping extends WCJ_Module {
 		$this->id         = 'left_to_free_shipping';
 		$this->short_desc = __( 'Left to Free Shipping', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Display "left to free shipping" info in WooCommerce.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-left-to-free-shipping/';
+		$this->link_slug  = 'woocommerce-left-to-free-shipping';
 		parent::__construct();
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );

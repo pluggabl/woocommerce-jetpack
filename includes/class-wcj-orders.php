@@ -22,7 +22,7 @@ class WCJ_Orders extends WCJ_Module {
 		$this->id         = 'orders';
 		$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-orders/';
+		$this->link_slug  = 'woocommerce-orders';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

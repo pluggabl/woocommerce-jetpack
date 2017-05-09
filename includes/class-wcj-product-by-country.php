@@ -24,7 +24,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 		$this->id         = 'product_by_country';
 		$this->short_desc = __( 'Product Visibility by Country', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Display WooCommerce products by customer\'s country.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-product-visibility-by-country/';
+		$this->link_slug  = 'woocommerce-product-visibility-by-country';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

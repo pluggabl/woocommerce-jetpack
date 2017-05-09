@@ -24,7 +24,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 		$this->id         = 'price_formats';
 		$this->short_desc = __( 'Price Formats', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set different WooCommerce price formats for different currencies.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-price-formats/';
+		$this->link_slug  = 'woocommerce-price-formats';
 		parent::__construct();
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );

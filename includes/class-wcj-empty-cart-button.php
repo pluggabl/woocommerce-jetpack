@@ -23,7 +23,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 		$this->id         = 'empty_cart';
 		$this->short_desc = __( 'Empty Cart Button', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add (and customize) "Empty Cart" button to WooCommerce cart and checkout pages.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-empty-cart-button/';
+		$this->link_slug  = 'woocommerce-empty-cart-button';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

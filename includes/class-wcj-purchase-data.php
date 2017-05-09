@@ -23,7 +23,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 		$this->id         = 'purchase_data';
 		$this->short_desc = __( 'Product Cost Price', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Save WooCommerce product purchase costs data for admin reports.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-product-cost-price/';
+		$this->link_slug  = 'woocommerce-product-cost-price';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

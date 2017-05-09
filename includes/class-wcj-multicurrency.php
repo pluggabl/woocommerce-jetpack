@@ -23,7 +23,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 		$this->id         = 'multicurrency';
 		$this->short_desc = __( 'Multicurrency (Currency Switcher)', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add multiple currencies (currency switcher) to WooCommerce.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-multicurrency-currency-switcher/';
+		$this->link_slug  = 'woocommerce-multicurrency-currency-switcher';
 		parent::__construct();
 
 		add_filter( 'init', array( $this, 'add_settings_hook' ) );

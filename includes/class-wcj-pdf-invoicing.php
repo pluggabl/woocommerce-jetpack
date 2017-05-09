@@ -23,7 +23,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		$this->short_desc    = __( 'PDF Invoicing', 'woocommerce-jetpack' );
 		$this->section_title = __( 'General', 'woocommerce-jetpack' );
 		$this->desc          = __( 'WooCommerce Invoices, Proforma Invoices, Credit Notes and Packing Slips.', 'woocommerce-jetpack' );
-		$this->link          = 'http://booster.io/features/woocommerce-pdf-invoicing-and-packing-slips/';
+		$this->link_slug     = 'woocommerce-pdf-invoicing-and-packing-slips';
 		parent::__construct();
 
 		$this->add_tools( array(

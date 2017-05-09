@@ -23,7 +23,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		$this->id         = 'payment_gateways_currency';
 		$this->short_desc = __( 'Gateways Currency', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Currency per WooCommerce payment gateway.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-currency/';
+		$this->link_slug  = 'woocommerce-payment-gateways-currency';
 		parent::__construct();
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );

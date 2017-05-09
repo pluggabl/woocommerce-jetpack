@@ -27,7 +27,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$this->id         = 'product_addons';
 		$this->short_desc = __( 'Product Addons', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add (paid/free/discount) addons to WooCommerce products.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-product-addons/';
+		$this->link_slug  = 'woocommerce-product-addons';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

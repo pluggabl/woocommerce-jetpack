@@ -22,7 +22,7 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 		$this->id         = 'shipping_calculator';
 		$this->short_desc = __( 'Shipping Calculator', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Customize WooCommerce shipping calculator on cart page.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-shipping-calculator-customizer/';
+		$this->link_slug  = 'woocommerce-shipping-calculator-customizer';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

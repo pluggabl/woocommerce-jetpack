@@ -25,7 +25,7 @@ class WCJ_Shipping extends WCJ_Module {
 			__( 'Add multiple custom shipping methods to WooCommerce.', 'woocommerce-jetpack' ) . ' ' .
 			__( 'Add descriptions and icons to shipping methods on frontend.', 'woocommerce-jetpack') . ' ' .
 			__( 'Hide WooCommerce shipping when free is available.', 'woocommerce-jetpack');
-		$this->link       = 'http://booster.io/features/woocommerce-shipping/';
+		$this->link_slug  = 'woocommerce-shipping';
 		parent::__construct();
 
 		add_action( 'init', array( $this, 'add_settings_hook' ) );

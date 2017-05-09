@@ -25,7 +25,7 @@ class WCJ_Stock extends WCJ_Module {
 		$this->id         = 'stock';
 		$this->short_desc = __( 'Stock', 'woocommerce-jetpack' );
 		$this->desc       = __( 'WooCommerce products stock management.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-stock/';
+		$this->link_slug  = 'woocommerce-stock';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

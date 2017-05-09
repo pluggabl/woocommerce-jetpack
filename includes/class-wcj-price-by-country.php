@@ -22,7 +22,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 		$this->id         = 'price_by_country';
 		$this->short_desc = __( 'Prices and Currencies by Country', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Change WooCommerce product price and currency automatically by customer\'s country.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-prices-and-currencies-by-country/';
+		$this->link_slug  = 'woocommerce-prices-and-currencies-by-country';
 		parent::__construct();
 
 		global $wcj_notice;

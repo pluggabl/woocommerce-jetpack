@@ -23,7 +23,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 		$this->id         = 'payment_gateways_by_country';
 		$this->short_desc = __( 'Gateways by Country or State', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set countries or states to include/exclude for WooCommerce payment gateways to show up.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-payment-gateways-by-country-or-state/';
+		$this->link_slug  = 'woocommerce-payment-gateways-by-country-or-state';
 		parent::__construct();
 
 		add_filter( 'init', array( $this, 'add_settings_hook' ) );

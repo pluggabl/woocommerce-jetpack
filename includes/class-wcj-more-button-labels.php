@@ -23,7 +23,7 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 		$this->id         = 'more_button_labels';
 		$this->short_desc = __( 'More Button Labels', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set WooCommerce "Place order" button label.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-more-button-labels/';
+		$this->link_slug  = 'woocommerce-more-button-labels';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

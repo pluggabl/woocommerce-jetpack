@@ -21,7 +21,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 		$this->id         = 'product_input_fields';
 		$this->short_desc = __( 'Product Input Fields', 'woocommerce-jetpack' );
 		$this->desc       = __( 'WooCommerce product input fields.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-product-input-fields/';
+		$this->link_slug  = 'woocommerce-product-input-fields';
 		parent::__construct();
 
 		include_once( 'input-fields/class-wcj-product-input-fields-abstract.php' );

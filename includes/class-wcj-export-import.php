@@ -25,7 +25,7 @@ class WCJ_Export_Import extends WCJ_Module {
 		$this->id         = 'export';
 		$this->short_desc = __( 'Export', 'woocommerce-jetpack' );
 		$this->desc       = __( 'WooCommerce export tools.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-export-tools/';
+		$this->link_slug  = 'woocommerce-export-tools';
 		parent::__construct();
 
 		$this->add_tools( array(

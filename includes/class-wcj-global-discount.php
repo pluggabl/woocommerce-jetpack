@@ -25,7 +25,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 		$this->id         = 'global_discount';
 		$this->short_desc = __( 'Global Discount', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add global discount to all WooCommerce products.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-shop-global-discount/';
+		$this->link_slug  = 'woocommerce-shop-global-discount';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

@@ -22,7 +22,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 		$this->id         = 'price_labels';
 		$this->short_desc = __( 'Custom Price Labels', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Create any custom price label for any WooCommerce product.', 'woocommerce-jetpack' );
-		$this->link       = 'http://booster.io/features/woocommerce-custom-price-labels/';
+		$this->link_slug  = 'woocommerce-custom-price-labels';
 		parent::__construct();
 
 		// Custom Price Labels - fields array
