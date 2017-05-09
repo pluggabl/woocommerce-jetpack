@@ -159,6 +159,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 2.8.0 - 09/05/2017 =
 
+	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Multicurrency (Currency Switcher).
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Multicurrency Product Base Price.
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Price by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Product Open Pricing (Name Your Price).
