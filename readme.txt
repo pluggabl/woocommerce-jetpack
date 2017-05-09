@@ -167,6 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Visibility by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Related Products.
+	* Dev - Code refactoring - Settings from file (meta box) - EMAILS & MISC. - General.
 
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currencies.
 	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currency Exchange Rates.
@@ -210,6 +211,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Custom CSS.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Emails.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Export.
+	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - General.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - WPML.
 ~	* Dev - Code refactoring - Settings from file.
 
