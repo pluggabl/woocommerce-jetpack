@@ -167,6 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Add to Cart.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Addons.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
+	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Visibility by Country.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Visibility by User Role.
 	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Related Products.
 	* Dev - Code refactoring - Settings from file (meta box) - EMAILS & MISC. - General.
