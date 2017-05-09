@@ -16,12 +16,12 @@ if ( ! $_order ) {
 }
 $options = array(
 	array(
-		'name'       => ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ? 'wcj_order_currency' : 'order_currency' ),
-		'default'    => wcj_get_order_currency( $_order ),
-		'type'       => 'select',
-		'options'    => wcj_get_currencies_names_and_symbols( 'names' ),
-		'title'      => __( 'Order Currency', 'woocommerce-jetpack' ),
-		'tooltip'    => __( 'Save order after you change this field.', 'woocommerce-jetpack' ),
+		'title'    => __( 'Order Currency', 'woocommerce-jetpack' ),
+		'tooltip'  => __( 'Save order after you change this field.', 'woocommerce-jetpack' ),
+		'name'     => ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ? 'wcj_order_currency' : 'order_currency' ),
+		'default'  => wcj_get_order_currency( $_order ),
+		'type'     => 'select',
+		'options'  => wcj_get_currencies_names_and_symbols( 'names' ),
 	),
 );
 return $options;
