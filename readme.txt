@@ -219,6 +219,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Empty Cart Button.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - EU VAT Number.
 	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Mini Cart Custom Info.
+	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Custom Gateways.
 	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Address Formats.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Left to Free Shipping.
