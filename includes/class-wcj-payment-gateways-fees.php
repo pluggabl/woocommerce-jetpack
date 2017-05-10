@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Module - Payment Gateways Fees
+ * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
  * @version 2.8.0
  * @since   2.2.2
