@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.8.0-dev-201705101923';
+	public $version = '2.8.0-dev-201705101937';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -616,14 +616,14 @@ final class WC_Jetpack {
 			'includes/class-wcj-old-slugs.php',
 			'includes/class-wcj-reports.php',
 			'includes/class-wcj-wpml.php',
-			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-numbering.php',
-			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-templates.php',
-			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-styling.php',
-			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-header.php',
-			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-footer.php',
-			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-page.php',
-			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-emails.php',
-			'includes/pdf-invoices/settings/class-wcj-pdf-invoicing-display.php',
+			'includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-numbering.php',
+			'includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-templates.php',
+			'includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-styling.php',
+			'includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-header.php',
+			'includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-footer.php',
+			'includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-page.php',
+			'includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-emails.php',
+			'includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php',
 		);
 		$this->modules = array();
 		foreach ( $modules_files as $module_file ) {

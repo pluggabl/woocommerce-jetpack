@@ -315,6 +315,7 @@ $~!D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shi
 $~!D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
 	* Dev - SHIPPING & ORDERS - Shipping Calculator - Minor code refactoring.
 $~!D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
+~	* Dev - PDF INVOICING & PACKING SLIPS - Directory changed from `settings` to `submodules`.
 ~!D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
 $~!D* Dev - EMAILS & MISC. - Email Verification - Initial module release.
