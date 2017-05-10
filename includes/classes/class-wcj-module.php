@@ -68,16 +68,6 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		add_filter( 'wcj_' . $this->id . '_settings', array( $this, 'add_settings_from_file' ) );
 	}
 
-	/*
-	 * add_settings_hook.
-	 *
-	 * @version 2.7.0
-	 * @since   2.7.0
-	 */
-	function add_settings_hook() {
-		add_filter( 'wcj_' . $this->id . '_settings', array( $this, 'add_settings' ) );
-	}
-
 	/**
 	 * save_meta_box_value.
 	 *

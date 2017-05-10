@@ -256,7 +256,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Product Info V1.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Reports.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - WPML.
-~	* Dev - Code refactoring - Settings from file. -> `add_settings_hook`
+~	* Dev - Code refactoring - Settings from file. `add_settings_hook()` function removed from `WCJ_Module` class.
 
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `woocommerce_single_product_image_html` hook replaced.
