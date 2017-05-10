@@ -246,6 +246,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Footer.
 ~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Header.
 ~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Page Settings.
+~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Styling.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Admin Tools.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Custom CSS.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Emails.
@@ -320,6 +321,7 @@ $~!D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shi
 $~!D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
 	* Dev - SHIPPING & ORDERS - Shipping Calculator - Minor code refactoring.
 $~!D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
+~	* Fix - PDF INVOICING & PACKING SLIPS - Styling - Default values for additional custom documents fixed.
 ~	* Dev - PDF INVOICING & PACKING SLIPS - Directory changed from `settings` to `submodules`.
 ~!D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
