@@ -244,6 +244,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Emails.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Export.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - General.
+	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Product Info V1.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Reports.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - WPML.
 ~	* Dev - Code refactoring - Settings from file. -> `add_settings_hook`
