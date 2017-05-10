@@ -159,104 +159,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 2.8.0 - 10/05/2017 =
 
-	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Multicurrency (Currency Switcher).
-	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Multicurrency Product Base Price.
-	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Price by User Role.
-	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Product Open Pricing (Name Your Price).
-	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Product Price by Formula.
-	* Dev - Code refactoring - Settings from file (meta box) - PRICES & CURRENCIES - Wholesale Price.
-	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Bookings.
-	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Crowdfunding.
-	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Add to Cart.
-	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Addons.
-	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Cost Price.
-	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Images.
-	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Visibility by Country.
-	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Product Visibility by User Role.
-	* Dev - Code refactoring - Settings from file (meta box) - PRODUCTS - Related Products.
-	* Dev - Code refactoring - Settings from file (meta box) - SHIPPING & ORDERS - Orders.
-	* Dev - Code refactoring - Settings from file (meta box) - EMAILS & MISC. - General.
-
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currencies.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currency Exchange Rates.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currency for External Products.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Currency per Product.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Global Discount.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Multicurrency (Currency Switcher).
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Multicurrency Product Base Price.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price by User Role.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Price Formats.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Prices and Currencies by Country.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Product Open Pricing (Name Your Price).
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Product Price by Formula.
-	* Dev - Code refactoring - Settings from file - PRICES & CURRENCIES - Wholesale Price.
-	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Add to Cart Labels.
-	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Call for Price.
-	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Custom Price Labels.
-	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - Free Price Labels.
-	* Dev - Code refactoring - Settings from file - BUTTON & PRICE LABELS - More Button Labels.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Bookings.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Add to Cart.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Addons.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Cost Price.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Images.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Info.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Input Fields.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Listings.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Tabs.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Visibility by User Role.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Products per Page.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Products XML.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Related Products.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - SKU.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Stock.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - Sorting.
-	* Dev - Code refactoring - Settings from file - PRODUCTS - User Products.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Cart Custom Info.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Cart Customization.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Core Fields.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Custom Fields.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Custom Info.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Customization.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Checkout Files Upload.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Empty Cart Button.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - EU VAT Number.
-	* Dev - Code refactoring - Settings from file - CART & CHECKOUT - Mini Cart Custom Info.
-	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Custom Gateways.
-	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Country or State.
-	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
-	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by User Role.
-	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways Currency.
-	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways Fees and Discounts.
-	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways Icons.
-	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways Min/Max Amounts.
-	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways per Product or Category.
-	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Address Formats.
-	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Left to Free Shipping.
-	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Order Custom Statuses.
-	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Order Minimum Amount.
-	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Order Numbers.
-	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Orders.
-	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Shipping.
-	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Shipping Calculator.
-	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - General.
-~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Numbering.
-~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Display & Misc.
-~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Email Options.
-~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Footer.
-~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Header.
-~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Page Settings.
-~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Styling.
-~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Templates.
-	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Admin Tools.
-	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Custom CSS.
-	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Emails.
-	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Export.
-	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - General.
-	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Product Info V1.
-	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Reports.
-	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - WPML.
-~	* Dev - Code refactoring - Settings from file. `add_settings_hook()` function removed from `WCJ_Module` class.
+~	* Dev - Major code refactoring - Settings (general and meta box) from file. `add_settings_hook()` function removed from `WCJ_Module` class.
 
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `woocommerce_single_product_image_html` hook replaced.
@@ -448,25 +351,7 @@ $~!D* Dev - EMAILS & MISC. - Email Verification - Initial module release.
 * Dev - EMAILS & MISC. - General - "URL Coupons" options added.
 * Fix - EMAILS & MISC. - Reports - Orders - Product Sales - "year not set" notice fixed.
 * Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Same Days Last Year" option added.
-* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added.
-* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Currency per Product.
-* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Multicurrency Product Base Price.
-* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Price by User Role.
-* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Price Formats.
-* Dev - Code refactoring - `add_settings_hook()` - PRICES & CURRENCIES - Wholesale Price.
-* Dev - Code refactoring - `add_settings_hook()` - BUTTON & PRICE LABELS - Free Price Labels.
-* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Product Info.
-* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Product Listings.
-* Dev - Code refactoring - `add_settings_hook()` - PRODUCTS - Products per Page.
-* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways Currency.
-* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways by User Role.
-* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways by Country or State.
-* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways Min/Max Amounts.
-* Dev - Code refactoring - `add_settings_hook()` - PAYMENT GATEWAYS - Gateways per Product or Category.
-* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Left to Free Shipping.
-* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Order Minimum Amount.
-* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Orders.
-* Dev - Code refactoring - `add_settings_hook()` - SHIPPING & ORDERS - Shipping.
+* Dev - `WCJ_Module` class code refactoring - `add_settings_hook()` function added (18 modules).
 * Dev - Code refactoring - `wcj_add_change_price_hooks()` function added.
 * Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Multicurrency (Currency Switcher).
 * Dev - Code refactoring - `wcj_add_change_price_hooks()` - PRICES & CURRENCIES - Multicurrency Product Base Price.
