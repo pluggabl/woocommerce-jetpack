@@ -13,15 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $settings = array();
 $invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
 foreach ( $invoice_types as $invoice_type ) {
-
-	$settings[] = array(
-		'title'        => strtoupper( $invoice_type['desc'] ),
-		'type'         => 'title',
-		'id'           => 'wcj_invoicing_' . $invoice_type['id'] . '_display_options',
-	);
-
 	$settings = array_merge( $settings, array(
-
+		array(
+			'title'    => strtoupper( $invoice_type['desc'] ),
+			'type'     => 'title',
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_display_options',
+		),
 		array(
 			'title'    => __( 'Admin\'s "Orders" Page', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Add Column', 'woocommerce-jetpack' ),
@@ -29,7 +26,6 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => 'yes',
 			'type'     => 'checkbox',
 		),
-
 		array(
 			'title'    => '',
 			'desc'     => __( 'Column Title', 'woocommerce-jetpack' ),
@@ -37,7 +33,6 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => $invoice_type['title'],
 			'type'     => 'text',
 		),
-
 		/* array(
 			'title'    => '',
 			'desc'     => __( 'Create Button', 'woocommerce-jetpack' ),
@@ -46,7 +41,6 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => __( 'Create', 'woocommerce-jetpack' ),
 			'type'     => 'text',
 		),
-
 		array(
 			'title'    => '',
 			'desc'     => __( 'Delete Button', 'woocommerce-jetpack' ),
@@ -55,42 +49,36 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => __( 'Delete', 'woocommerce-jetpack' ),
 			'type'     => 'text',
 		), */
-
 		array(
 			'desc'     => __( 'Add View Button', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_view_btn',
 			'default'  => 'no',
 			'type'     => 'checkbox',
 		),
-
 		array(
 			'desc'     => __( 'Add Create Button', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn',
 			'default'  => 'yes',
 			'type'     => 'checkbox',
 		),
-
 		array(
 			'desc'     => __( 'Add Delete Button', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn',
 			'default'  => 'yes',
 			'type'     => 'checkbox',
 		),
-
 		array(
 			'desc'     => __( 'Create Button Requires Confirmation', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn_confirm',
 			'default'  => 'yes',
 			'type'     => 'checkbox',
 		),
-
 		array(
 			'desc'     => __( 'Delete Button Requires Confirmation', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn_confirm',
 			'default'  => 'yes',
 			'type'     => 'checkbox',
 		),
-
 		array(
 			'title'    => __( 'Customer\'s "My Account" Page', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Add link', 'woocommerce-jetpack' ),
@@ -98,7 +86,6 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => 'no',
 			'type'     => 'checkbox',
 		),
-
 		array(
 			'title'    => '',
 			'desc'     => __( 'Link Text', 'woocommerce-jetpack' ),
@@ -106,7 +93,6 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => $invoice_type['title'],
 			'type'     => 'text',
 		),
-
 		array(
 			'title'    => __( 'Enable "Save as"', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
@@ -115,7 +101,6 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => 'no',
 			'type'     => 'checkbox',
 		),
-
 		array(
 			'title'    => __( 'PDF File Name', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enter file name for PDF documents. You can use shortcodes here, e.g. [wcj_' . $invoice_type['id'] . '_number]', 'woocommerce-jetpack' ),
@@ -123,12 +108,11 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => '[wcj_' . $invoice_type['id'] . '_number]',
 			'type'     => 'text',
 		),
+		array(
+			'type'     => 'sectionend',
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_display_options',
+		),
 	) );
-
-	$settings[] = array(
-		'type'         => 'sectionend',
-		'id'           => 'wcj_invoicing_' . $invoice_type['id'] . '_display_options',
-	);
 }
 
 return $settings;
