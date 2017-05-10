@@ -1,8 +1,8 @@
 <?php
 /**
- * Booster for WooCommerce - PDF Invoicing - Emails
+ * Booster for WooCommerce - PDF Invoicing - Email Options
  *
- * @version 2.7.0
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.4.8
+	 * @version 2.8.0
 	 */
 	function __construct() {
 
@@ -25,8 +25,6 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 		$this->desc       = '';
 		parent::__construct( 'submodule' );
 
-		add_filter( 'init',  array( $this, 'add_hooks' ) );
-
 		if ( $this->is_enabled() ) {
 			if ( ! wcj_is_module_enabled( 'general' ) || 'no' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 				add_filter( 'woocommerce_email_attachments', array( $this, 'add_pdf_invoice_email_attachment' ), PHP_INT_MAX, 3 );
@@ -35,19 +33,16 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 	}
 
 	/**
-	 * add_hooks.
-	 */
-	function add_hooks() {
-		add_filter( 'wcj_pdf_invoicing_emails_settings', array( $this, 'add_payment_gateways_pdf_invoicing_emails_settings' ), PHP_INT_MAX, 2 );
-	}
-
-	/**
 	 * do_attach_for_payment_method.
+	 *
+	 * @version 2.8.0
 	 */
 	function do_attach_for_payment_method( $invoice_type_id, $payment_method ) {
 		$included_gateways = get_option( 'wcj_invoicing_' . $invoice_type_id . '_payment_gateways', array() );
-		if ( empty ( $included_gateways ) ) return true; // include all
-		return ( in_array( $payment_method, $included_gateways ) ) ? true : false;
+		if ( empty ( $included_gateways ) ) {
+			return true; // include all
+		}
+		return ( in_array( $payment_method, $included_gateways ) );
 	}
 
 	/**
@@ -62,10 +57,12 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 				continue;
 			}
 			$send_on_statuses = get_option( 'wcj_invoicing_' . $invoice_type_id . '_attach_to_emails', array() );
-			if ( '' == $send_on_statuses ) $send_on_statuses = array();
+			if ( '' == $send_on_statuses ) {
+				$send_on_statuses = array();
+			}
 			if ( in_array( $status, $send_on_statuses ) ) {
 				$the_invoice = wcj_get_pdf_invoice( wcj_get_order_id( $order ), $invoice_type_id );
-				$file_name = $the_invoice->get_pdf( 'F' );
+				$file_name   = $the_invoice->get_pdf( 'F' );
 				if ( '' != $file_name ) {
 					$attachments[] = $file_name;
 				}
@@ -74,86 +71,6 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 		return $attachments;
 	}
 
-	/**
-	 * add_payment_gateways_pdf_invoicing_emails_settings.
-	 */
-	function add_payment_gateways_pdf_invoicing_emails_settings( $settings, $invoice_type_id ) {
-		global $woocommerce;
-		$available_gateways = $woocommerce->payment_gateways->payment_gateways();
-		foreach ( $available_gateways as $key => $gateway ) {
-			$available_gateways_options_array[ $key ] = $gateway->title;
-		}
-		$settings[] = array(
-			'title'             => __( 'Payment gateways to include', 'woocommerce' ),
-			'id'                => 'wcj_invoicing_' . $invoice_type_id . '_payment_gateways',
-			'type'              => 'multiselect',
-			'class'             => 'chosen_select',
-			'css'               => 'width: 450px;',
-			'default'           => '',
-			'options'           => $available_gateways_options_array,
-			'custom_attributes' => array( 'data-placeholder' => __( 'Select some gateways. Leave blank to include all.', 'woocommerce-jetpack' ) ),
-		);
-		return $settings;
-	}
-
-	/**
-	 * get_settings.
-	 *
-	 * @version 2.5.8
-	 * @todo    add emails from Booster's "Emails" module.
-	 */
-	function get_settings() {
-
-		$settings = array();
-		$invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
-		foreach ( $invoice_types as $invoice_type ) {
-
-			$settings[] = array(
-				'title' => strtoupper( $invoice_type['desc'] ),
-				'type'  => 'title',
-				'desc'  => '',
-				'id'    => 'wcj_invoicing_' . $invoice_type['id'] . '_emails_options',
-			);
-
-			$available_emails = array(
-				'new_order'                 => __( 'Admin - New Order', 'woocommerce-jetpack' ),
-				'cancelled_order'           => __( 'Admin - Cancelled Order', 'woocommerce-jetpack' ),
-				'failed_order'              => __( 'Admin - Failed Order', 'woocommerce-jetpack' ),
-				'customer_processing_order' => __( 'Customer - Processing Order', 'woocommerce-jetpack' ),
-				'customer_on_hold_order'    => __( 'Customer - On-Hold Order', 'woocommerce-jetpack' ),
-				'customer_completed_order'  => __( 'Customer - Completed Order', 'woocommerce-jetpack' ),
-				'customer_invoice'          => __( 'Customer - Invoice', 'woocommerce-jetpack' ),
-				'customer_refunded_order'   => __( 'Customer - Refunded Order', 'woocommerce-jetpack' ),
-				'customer_note'             => __( 'Customer - Note', 'woocommerce-jetpack' ),
-				'customer_new_account'      => __( 'Customer - New Account', 'woocommerce-jetpack' ),
-				'customer_reset_password'   => __( 'Customer - Reset Password', 'woocommerce-jetpack' ),
-			);
-			if ( 'yes' === get_option( 'wcj_emails_enabled', 'no' ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
-					$available_emails[ 'wcj_custom' . '_' . $i ] = __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i;
-				}
-			}
-			$settings[] = array(
-				'title'         => __( 'Attach PDF to emails', 'woocommerce' ),
-				'id'            => 'wcj_invoicing_' . $invoice_type['id'] . '_attach_to_emails',
-				'type'          => 'multiselect',
-				'class'         => 'chosen_select',
-				'css'           => 'width: 450px;',
-				'default'       => '',
-				'options'       => $available_emails,
-				'custom_attributes' => array( 'data-placeholder' => __( 'Select some emails', 'woocommerce' ) ),
-			);
-
-			$settings = apply_filters( 'wcj_pdf_invoicing_emails_settings', $settings, $invoice_type['id'] );
-
-			$settings[] = array(
-				'type' => 'sectionend',
-				'id'   => 'wcj_invoicing_' . $invoice_type['id'] . '_emails_options',
-			);
-		}
-
-		return $this->add_standard_settings( $settings );
-	}
 }
 
 endif;
