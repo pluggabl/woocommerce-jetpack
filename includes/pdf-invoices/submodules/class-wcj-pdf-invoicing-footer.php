@@ -15,7 +15,7 @@ class WCJ_PDF_Invoicing_Footer extends WCJ_Module {
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	function __construct() {
 		$this->id         = 'pdf_invoicing_footer';
 		$this->parent_id  = 'pdf_invoicing';
 		$this->short_desc = __( 'Footer', 'woocommerce-jetpack' );

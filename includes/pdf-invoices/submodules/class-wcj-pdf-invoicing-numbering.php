@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing_Numbering extends WCJ_Module {
 	 *
 	 * @version 2.5.2
 	 */
-	public function __construct() {
+	function __construct() {
 		$this->id         = 'pdf_invoicing_numbering';
 		$this->parent_id  = 'pdf_invoicing';
 		$this->short_desc = __( 'Numbering', 'woocommerce-jetpack' );
