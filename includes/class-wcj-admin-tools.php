@@ -129,27 +129,29 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * create_admin_tools_tool.
 	 *
-	 * @version 2.5.7
+	 * @version 2.8.0
 	 */
 	function create_admin_tools_tool() {
-
+		// Notice
 		$the_notice = '';
 		if ( isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) ) {
 			update_option( 'wcj_log', '' );
 			$the_notice .= __( 'Log deleted successfully.', 'woocommerce-jetpack' );
 		}
-
+		// Header
 		$the_tools = '';
 		$the_tools .= $this->get_tool_header_html( 'admin_tools' );
 		$the_tools .= '<p><a href="' . add_query_arg( 'wcj_delete_log', '1' ) . '">' . __( 'Delete Log', 'woocommerce-jetpack' ) . '</a></p>';
-
+		// Log
 		$the_log = '';
 		$the_log .= '<pre>' . get_option( 'wcj_log', '' ) . '</pre>';
-
+		// Final output
 		$html = '';
+		$html .= '<div class="wrap">';
 		$html .= '<p>' . $the_tools  . '</p>';
 		$html .= '<p>' . $the_notice . '</p>';
 		$html .= '<p>' . $the_log    . '</p>';
+		$html .= '</div>';
 		echo $html;
 	}
 
