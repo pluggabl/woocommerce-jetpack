@@ -222,6 +222,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Custom Gateways.
 	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Country or State.
 	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by Shipping.
+	* Dev - Code refactoring - Settings from file - PAYMENT GATEWAYS - Gateways by User Role.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Address Formats.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Left to Free Shipping.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Order Custom Statuses.
