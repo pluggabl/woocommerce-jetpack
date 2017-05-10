@@ -227,6 +227,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Order Minimum Amount.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Order Numbers.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Orders.
+	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Shipping.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Shipping Calculator.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Admin Tools.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Custom CSS.
