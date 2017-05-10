@@ -20,7 +20,7 @@ foreach ( $invoice_types as $invoice_type ) {
 		),
 		array(
 			'title'    => __( 'Sequential', 'woocommerce-jetpack' ),
-			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_sequential_enabled',
 			'default'  => 'no',
 			'type'     => 'checkbox',
