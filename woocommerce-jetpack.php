@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.8.0-dev-201705102323';
+	public $version = '2.8.0-dev-201705110253';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -145,9 +145,13 @@ final class WC_Jetpack {
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
+	 * @todo    (maybe) just always return 10?
 	 */
 	function get_booster_tab_priority() {
-		return wcj_is_plugin_active( 'more-woocommerce-options/morewoooptions.php' ) ? 10 : PHP_INT_MAX;
+		return (
+			wcj_is_plugin_active( 'more-woocommerce-options/morewoooptions.php' ) ||
+			wcj_is_plugin_active( 'wc-pont/pont.php' )
+		) ? 10 : PHP_INT_MAX;
 	}
 
 	/**
