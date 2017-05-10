@@ -226,6 +226,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Order Minimum Amount.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Order Numbers.
 	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Orders.
+	* Dev - Code refactoring - Settings from file - SHIPPING & ORDERS - Shipping Calculator.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Admin Tools.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Custom CSS.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Emails.
@@ -296,6 +297,7 @@ $~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" an
 ~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
 $~!D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
 $~!D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
+	* Dev - SHIPPING & ORDERS - Shipping Calculator - Minor code refactoring.
 $~!D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
 ~!D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
