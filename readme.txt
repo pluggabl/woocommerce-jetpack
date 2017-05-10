@@ -245,6 +245,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Email Options.
 ~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Footer.
 ~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Header.
+~	* Dev - Code refactoring - Settings from file - PDF INVOICING & PACKING SLIPS - Page Settings.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Admin Tools.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Custom CSS.
 	* Dev - Code refactoring - Settings from file - EMAILS & MISC. - Emails.
