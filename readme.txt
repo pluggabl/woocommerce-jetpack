@@ -200,6 +200,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Cost Price.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Images.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Info.
+	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Input Fields.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Listings.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Tabs.
 	* Dev - Code refactoring - Settings from file - PRODUCTS - Product Visibility by User Role.
