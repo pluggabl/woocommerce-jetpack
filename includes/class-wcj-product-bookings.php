@@ -116,8 +116,9 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 * @since   2.5.0
+	 * @todo    add "calculating price" progress message
 	 */
 	function enqueue_scripts() {
 		if ( is_product() ) {
@@ -128,7 +129,6 @@ class WCJ_Product_Bookings extends WCJ_Module {
 					'ajax_url'            => admin_url( 'admin-ajax.php' ),
 					'product_id'          => get_the_ID(),
 					'wrong_dates_message' => get_option( 'wcj_product_bookings_message_date_to_before_date_from', __( '"Date to" must be after "Date from"', 'woocommerce-jetpack' ) ),
-					'original_price_html' => $the_product->get_price_html(),
 				) );
 			}
 		}

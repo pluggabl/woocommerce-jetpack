@@ -189,6 +189,7 @@ $~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options adde
 ~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Per Product Settings Type" option added.
 ~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Display Product Price Info in Archives" options added.
 ~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Add "Open Pricing" Column to Admin Product List" option added.
+	* Fix - PRODUCTS - Bookings - "Product on sale" JS bug fixed.
 ~	* Fix - PRODUCTS - Product Addons - Checking for set `product_id` on ajax call.
 ~	* Fix - PRODUCTS - Product Addons - Variable product with equal variation prices ajax issue fixed.
 ~	* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
