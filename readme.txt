@@ -169,7 +169,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!	* Dev - `wcj_number_plus_checkbox` admin settings field type added (and `WC_Settings_Jetpack` code refactoring).
 ~!	* Dev - `wcj_get_products()` - Code refactoring and `add_variations` param added.
 ~!	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
-~!	* Fix - `wcj-datepicker.js` - Check for empty values added (e.g. `mindate=0` was not working properly in e.g. Checkout Custom Fields).
+-!	* Fix - `wcj-datepicker.js` - Check for empty values added (e.g. `mindate=0` was not working properly in e.g. Checkout Custom Fields).
 ~	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
 ~!D	* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
 ~!D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
