@@ -434,28 +434,50 @@ if ( ! function_exists( 'wcj_current_filter_priority' ) ) {
 	}
 }
 
-/*
- * wcj_get_product_input_fields.
- *
- * @version 2.5.6
- * @since   2.4.4
- * @return  string
- */
-if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
-	function wcj_get_product_input_fields( $item ) {
-		$product_input_fields = array();
-		foreach ( $item as $key => $value ) {
-			if ( false !== strpos( $key, 'wcj_product_input_fields_' ) ) {
-				if ( is_serialized( $value ) ) {
-					$value = unserialize( $value );
-					if ( is_array( $value ) ) {
-						$value = implode( ' ', $value );
-					}
-				}
-				$product_input_fields[] = /* $key . ': ' . */ $value;
+if ( ! function_exists( 'wcj_maybe_unserialize_and_implode' ) ) {
+	/*
+	 * wcj_maybe_unserialize_and_implode.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 * @return  string
+	 * @todo    `if ( ! is_array() )`
+	 */
+	function wcj_maybe_unserialize_and_implode( $value, $glue = ' ' ) {
+		if ( is_serialized( $value ) ) {
+			$value = unserialize( $value );
+			if ( is_array( $value ) ) {
+				$value = implode( $glue, $value );
 			}
 		}
-		return ( ! empty( $product_input_fields ) ) ? /* ' (' . */ implode( ', ', $product_input_fields ) /* . ')' */ : '';
+		return $value;
+	}
+}
+
+if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
+	/*
+	 * wcj_get_product_input_fields.
+	 *
+	 * @version 2.8.0
+	 * @since   2.4.4
+	 * @return  string
+	 */
+	function wcj_get_product_input_fields( $item ) {
+		$product_input_fields = array();
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+			foreach ( $item as $key => $value ) {
+				if ( false !== strpos( $key, 'wcj_product_input_fields_' ) ) {
+					$product_input_fields[] = wcj_maybe_unserialize_and_implode( $value );
+				}
+			}
+		} else {
+			foreach ( $item->get_meta_data() as $value ) {
+				if ( isset( $value->key ) && isset( $value->value ) && false !== strpos( $value->key, 'wcj_product_input_fields_' ) ) {
+					$product_input_fields[] = wcj_maybe_unserialize_and_implode( $value->value );
+				}
+			}
+		}
+		return ( ! empty( $product_input_fields ) ) ? implode( ', ', $product_input_fields ) : '';
 	}
 }
 
