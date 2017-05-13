@@ -414,13 +414,13 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 	}
 }
 
-/*
- * wcj_current_filter_priority.
- *
- * @version 2.5.8
- * @since   2.4.6
- */
 if ( ! function_exists( 'wcj_current_filter_priority' ) ) {
+	/*
+	 * wcj_current_filter_priority.
+	 *
+	 * @version 2.5.8
+	 * @since   2.4.6
+	 */
 	function wcj_current_filter_priority() {
 		global $wp_filter;
 		$current_filter_data = $wp_filter[ current_filter() ];
@@ -481,14 +481,14 @@ if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
 	}
 }
 
-/*
- * wcj_get_left_to_free_shipping.
- *
- * @version 2.5.8
- * @since   2.4.4
- * @return  string
- */
 if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
+	/*
+	 * wcj_get_left_to_free_shipping.
+	 *
+	 * @version 2.5.8
+	 * @since   2.4.4
+	 * @return  string
+	 */
 	function wcj_get_left_to_free_shipping( $content, $multiply_by = 1 ) {
 		if ( '' == $content ) {
 			$content = __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' );
