@@ -246,6 +246,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	 * get_pdf.
 	 *
 	 * @version 2.8.0
+	 * @todo    pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 	 */
 	function get_pdf( $dest ) {
 
@@ -257,6 +258,10 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		}
 		if ( ! isset( $_GET['payment_method'] ) ) {
 			$_GET['payment_method']  = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->payment_method  : $the_order->get_payment_method() );
+		}
+		global $wcj_pdf_invoice_data;
+		if ( ! isset( $wcj_pdf_invoice_data['user_id'] ) ) {
+			$wcj_pdf_invoice_data['user_id'] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->customer_user : $the_order->get_customer_id() );
 		}
 		$html = do_shortcode( get_option( 'wcj_invoicing_' . $this->invoice_type . '_template' ) );
 		$html = force_balance_tags( $html );

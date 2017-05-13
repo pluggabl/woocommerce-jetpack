@@ -76,6 +76,7 @@ class WCJ_Shortcodes {
 			'before'              => '',
 			'after'               => '',
 			'visibility'          => '', // user_visibility
+			'wrong_user_text'     => '<p>' . __( 'Wrong user role!', 'woocommerce-jetpack' ) . '</p>',
 //			'login_text'          => __( 'Login', 'woocommerce-jetpack' ),
 			'site_visibility'     => '',
 			'location'            => '', // user_location
@@ -113,6 +114,7 @@ class WCJ_Shortcodes {
 
 		// Check if privileges are ok
 		if ( '' != $atts['visibility'] ) {
+			global $wcj_pdf_invoice_data;
 			$visibilities = str_replace( ' ', '', $atts['visibility'] );
 			$visibilities = explode( ',', $visibilities );
 			$is_iser_visibility_ok = false;
@@ -120,9 +122,17 @@ class WCJ_Shortcodes {
 				if ( 'admin' === $visibility ) {
 					$visibility = 'administrator';
 				}
-				if ( wcj_is_user_role( $visibility ) ) {
-					$is_iser_visibility_ok = true;
-					break;
+				if ( isset( $wcj_pdf_invoice_data['user_id'] ) && 0 == $wcj_pdf_invoice_data['user_id'] ) {
+					if ( 'guest' === $visibility ) {
+						$is_iser_visibility_ok = true;
+						break;
+					}
+				} else {
+					$user_id = ( isset( $wcj_pdf_invoice_data['user_id'] ) ? $wcj_pdf_invoice_data['user_id'] : 0 );
+					if ( wcj_is_user_role( $visibility, $user_id ) ) {
+						$is_iser_visibility_ok = true;
+						break;
+					}
 				}
 			}
 			if ( ! $is_iser_visibility_ok ) {
@@ -132,7 +142,7 @@ class WCJ_Shortcodes {
 					woocommerce_login_form();
 					return ob_get_clean();
 				} else {
-					return '<p>' . __( 'Wrong user role!', 'woocommerce-jetpack' ) . '</p>';
+					return $atts['wrong_user_text'];
 				}
 			}
 		}

@@ -157,7 +157,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.0 - 11/05/2017 =
+= 2.8.0 - 13/05/2017 =
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `woocommerce_single_product_image_html` hook replaced.
 	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
@@ -173,6 +173,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
 ~!D	* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
 ~!D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
+~D	* Dev - Shortcodes - `visibility` (i.e. user role) attribute can now be used in invoice shortcodes; `wrong_user_text` attribute added.
 ~D	* Dev - Shortcodes - `payment_method` and `not_payment_method` attributes added to all shortcodes when used in invoice.
 	* Dev - Shortcodes - General - `[wcj_cart_total]` shortcode added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items]` - `field` attribute's `_qty_x_name` special value added (and `debug` renamed to `_debug`).
