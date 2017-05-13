@@ -324,13 +324,17 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			$item['is_custom'] = ( isset( $item['is_custom'] ) ) ? true : false; // $item['is_custom'] may be defined only if WCJ_IS_WC_VERSION_BELOW_3
 			$the_product = ( true === $item['is_custom'] ) ? null : $the_order->get_product_from_item( $item );
 			// Check if it's not excluded by product attribute
-			if ( '' != $atts['exclude_by_attribute__name'] /* && '' != $atts['exclude_by_attribute__value'] */ ) {
+			if ( $the_product && '' != $atts['exclude_by_attribute__name'] /* && '' != $atts['exclude_by_attribute__value'] */ ) {
 				$product_attributes = $the_product->get_attributes();
-				if (
-					isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) &&
-					$atts['exclude_by_attribute__value'] === $product_attributes[ $atts['exclude_by_attribute__name'] ]
-				) {
-					continue;
+				if ( isset( $product_attributes[ $atts['exclude_by_attribute__name'] ] ) ) {
+					$product_attribute = $product_attributes[ $atts['exclude_by_attribute__name'] ];
+					if ( is_object( $product_attribute ) ) {
+						if ( 'WC_Product_Attribute' === get_class( $product_attribute ) && in_array( $atts['exclude_by_attribute__value'], $product_attribute->get_options() ) ) {
+							continue;
+						}
+					} elseif ( $atts['exclude_by_attribute__value'] === $product_attribute ) {
+						continue;
+					}
 				}
 			}
 			$item_counter++;
