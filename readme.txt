@@ -157,7 +157,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.0 - 13/05/2017 =
+= 2.8.0 - 15/05/2017 =
 ~	* Dev - WooCommerce v3.x.x compatibility - `wcj_get_product_input_fields()` fixed (used in "Export" module and in `[wcj_order_items_table]` shortcode's `item_product_input_fields` column).
 ~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
@@ -208,6 +208,7 @@ $~D	* Dev - PRODUCTS - User Products - "Product Type" option added.
 ~	* Dev - PRODUCTS - User Products - `WP_Query` optimized to return `ids` only.
 ~D	* Dev - PRODUCTS - User Products - "Price Step" option added (`[wcj_product_add_new]`).
 $~!D* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
+$~D	* Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart "Return to shop" Button Text" options added.
 $~D	* Dev - CART & CHECKOUT - Checkout Core Fields - "priority (i.e. order)" options added.
 ~	* Dev - CART & CHECKOUT - Checkout Core Fields - Minor code refactoring.
 $~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Priority (i.e. Order)" options added.

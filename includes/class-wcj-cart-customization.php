@@ -36,7 +36,24 @@ class WCJ_Cart_Customization extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_cart_hide_item_remove_link', 'no' ) ) {
 				add_filter( 'woocommerce_cart_item_remove_link', '__return_empty_string', PHP_INT_MAX );
 			}
+			// Customize "Return to shop" button
+			if ( 'yes' === get_option( 'wcj_cart_customization_return_to_shop_button_enabled', 'no' ) ) {
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			}
 		}
+	}
+
+	/**
+	 * enqueue_scripts.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 */
+	function enqueue_scripts() {
+		wp_enqueue_script(  'wcj-cart-customization', wcj_plugin_url() . '/includes/js/wcj-cart-customization.js', array( 'jquery' ), WCJ()->version, false );
+		wp_localize_script( 'wcj-cart-customization', 'wcj_cart_customization', array(
+			'return_to_shop_button_text' => get_option( 'wcj_cart_customization_return_to_shop_button_text', __( 'Return to shop', 'woocommerce' ) ),
+		) );
 	}
 
 	/**

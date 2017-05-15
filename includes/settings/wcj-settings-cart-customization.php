@@ -30,6 +30,18 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'Change Empty Cart "Return to shop" Button Text', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_cart_customization_return_to_shop_button_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'id'       => 'wcj_cart_customization_return_to_shop_button_text',
+		'default'  => __( 'Return to shop', 'woocommerce' ),
+		'type'     => 'text',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_cart_customization_options',
 	),
