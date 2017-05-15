@@ -40,6 +40,39 @@ return array(
 		'id'       => 'wcj_add_to_cart_redirect_options',
 	),
 	array(
+		'title'    => __( 'Add to Cart Message Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_add_to_cart_message_options',
+	),
+	array(
+		'title'    => __( 'Change "Continue shopping" Text', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_add_to_cart_message_continue_shopping_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'id'       => 'wcj_product_add_to_cart_message_continue_shopping_text',
+		'default'  => __( 'Continue shopping', 'woocommerce' ),
+		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Change "View cart" Text', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_add_to_cart_message_view_cart_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'id'       => 'wcj_product_add_to_cart_message_view_cart_text',
+		'default'  => __( 'View cart', 'woocommerce' ),
+		'type'     => 'text',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_add_to_cart_message_options',
+	),
+	array(
 		'title'    => __( 'Add to Cart on Visit', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'desc'     => __( 'This section lets you enable automatically adding product to cart on visiting the product page. Product is only added once, so if it is already in cart - duplicate product is not added. ', 'woocommerce-jetpack' ),

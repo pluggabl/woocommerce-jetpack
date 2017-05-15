@@ -28,7 +28,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			. ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Disable add to cart button on per product basis.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Open external products on add to cart in new window.', 'woocommerce-jetpack' )
-			. ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' );
+			. ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' )
+			. ' ' . __( 'Customize Add to Cart messages.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-add-to-cart';
 		parent::__construct();
 
@@ -43,6 +44,14 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
+
+			// Customize "Continue shopping" or "View cart" messages
+			if (
+				'yes' === get_option( 'wcj_product_add_to_cart_message_continue_shopping_enabled', 'no' ) ||
+				'yes' === get_option( 'wcj_product_add_to_cart_message_view_cart_enabled', 'no' )
+			) {
+				add_filter( 'wc_add_to_cart_message_html', array( $this, 'change_add_to_cart_message_html' ), PHP_INT_MAX, 2 );
 			}
 
 			// Local Redirect
@@ -105,6 +114,45 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'replace_external_with_custom_add_to_cart_in_loop' ), PHP_INT_MAX );
 			}
 		}
+	}
+
+	/**
+	 * change_add_to_cart_message_html.
+	 *
+	 * @version 2.8.0
+	 * @since   2.8.0
+	 * @see     `wc_add_to_cart_message()` in `wc-cart-functions.php`
+	 * @todo    (maybe) product specific messages: foreach ( $products as $product_id => $qty ) ...
+	 * @todo    (maybe) if ( IS_WCJ_VERSION_BELOW_3 ) apply_filters( 'wc_add_to_cart_message' ) with 2 params: $message, $product_id
+	 */
+	function change_add_to_cart_message_html( $message, $products ) {
+
+		if ( 'yes' === get_option( 'woocommerce_cart_redirect_after_add' ) && 'no' === get_option( 'wcj_product_add_to_cart_message_continue_shopping_enabled', 'no' ) ) {
+			return $message;
+		}
+		if ( 'yes' !== get_option( 'woocommerce_cart_redirect_after_add' ) && 'no' === get_option( 'wcj_product_add_to_cart_message_view_cart_enabled', 'no' ) ) {
+			return $message;
+		}
+
+		$titles = array();
+		$count  = 0;
+
+		foreach ( $products as $product_id => $qty ) {
+			$titles[] = ( $qty > 1 ? absint( $qty ) . ' &times; ' : '' ) . sprintf( _x( '&ldquo;%s&rdquo;', 'Item name in quotes', 'woocommerce' ), strip_tags( get_the_title( $product_id ) ) );
+			$count += $qty;
+		}
+
+		$titles     = array_filter( $titles );
+		$added_text = sprintf( _n( '%s has been added to your cart.', '%s have been added to your cart.', $count, 'woocommerce' ), wc_format_list_of_items( $titles ) );
+
+		if ( 'yes' === get_option( 'woocommerce_cart_redirect_after_add' ) ) {
+			$return_to = apply_filters( 'woocommerce_continue_shopping_redirect', wc_get_raw_referer() ? wp_validate_redirect( wc_get_raw_referer(), false ) : wc_get_page_permalink( 'shop' ) );
+			$message   = sprintf( '<a href="%s" class="button wc-forward">%s</a> %s', esc_url( $return_to ), esc_html( get_option( 'wcj_product_add_to_cart_message_continue_shopping_text', __( 'Continue shopping', 'woocommerce' ) ) ), esc_html( $added_text ) );
+		} else {
+			$message   = sprintf( '<a href="%s" class="button wc-forward">%s</a> %s', esc_url( wc_get_page_permalink( 'cart' ) ), esc_html( get_option( 'wcj_product_add_to_cart_message_view_cart_text', __( 'View cart', 'woocommerce' ) ) ), esc_html( $added_text ) );
+		}
+
+		return $message;
 	}
 
 	/**
