@@ -9,12 +9,10 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$currency_from = get_woocommerce_currency();
+$currency_from  = get_woocommerce_currency();
 $all_currencies = wcj_get_currencies_names_and_symbols();
-foreach ( $all_currencies as $currency_key => $currency_name ) {
-	if ( $currency_from == $currency_key ) {
-		unset( $all_currencies[ $currency_key ] );
-	}
+if ( isset( $all_currencies[ $currency_from ] ) ) {
+	unset( $all_currencies[ $currency_from ] );
 }
 $settings = array(
 	array(
