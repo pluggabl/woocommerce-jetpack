@@ -44,7 +44,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Bookings* - Add bookings products to WooCommerce.
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
-* *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Disable add to cart button on per product basis. Open external products on add to cart in new window. Replace Add to Cart button on archives with button from single product pages.
+* *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Disable add to cart button on per product basis. Open external products on add to cart in new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages.
 * *Product Addons* - Add (paid/free/discount) addons to WooCommerce products.
 * *Product Availability by Time* - WooCommerce product availability by time.
 * *Product Bulk Meta Editor* - Set WooCommerce products meta with bulk editor.
@@ -67,7 +67,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Cart & Checkout**
 
 * *Cart Custom Info* - Add custom info to WooCommerce cart page.
-* *Cart Customization* - Customize WooCommerce cart - hide coupon field; item remove link.
+* *Cart Customization* - Customize WooCommerce cart - hide coupon field; item remove link; change empty cart "Return to shop" button text.
 * *Checkout Core Fields* - Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders.
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
