@@ -76,7 +76,14 @@ class WCJ_Add_To_Cart_Per_Product {
 	 * @version 2.4.8
 	 */
 	public function add_custom_add_to_cart_meta_box() {
-		add_meta_box( 'wc-jetpack-custom-add-to-cart', __( 'Booster: Custom Add to Cart', 'woocommerce-jetpack' ), array( $this, 'create_custom_add_to_cart_meta_box' ), 'product', 'normal', 'high' );
+		add_meta_box(
+			'wc-jetpack-custom-add-to-cart',
+			__( 'Booster: Custom Add to Cart', 'woocommerce-jetpack' ),
+			array( $this, 'create_custom_add_to_cart_meta_box' ),
+			'product',
+			'normal',
+			'high'
+		);
 	}
 
 	/**
