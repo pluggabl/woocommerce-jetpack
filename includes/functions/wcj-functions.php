@@ -8,6 +8,18 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_customer_get_country' ) ) {
+	/**
+	 * wcj_customer_get_country.
+	 *
+	 * @version 2.8.0
+	 * @version 2.8.0
+	 */
+	function wcj_customer_get_country() {
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_country() : WC()->customer->get_billing_country() );
+	}
+}
+
 if ( ! function_exists( 'wcj_check_time_from' ) ) {
 	/**
 	 * wcj_check_time_from.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 2.7.0
+ * @version 2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -208,7 +208,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 * @todo    (maybe) add `cart_and_checkout` override option
 	 */
 	function get_customer_country_group_id() {
@@ -233,9 +233,9 @@ class WCJ_Price_by_Country_Core {
 				( 'checkout'          === get_option( 'wcj_price_by_country_override_scope', 'all' ) && is_checkout() )
 			)
 			&& isset( WC()->customer )
-			&& ( ( 'yes' === $override_option && '' != WC()->customer->get_country() ) || ( 'shipping_country' === $override_option && '' != WC()->customer->get_shipping_country() ) )
+			&& ( ( 'yes' === $override_option && '' != wcj_customer_get_country() ) || ( 'shipping_country' === $override_option && '' != WC()->customer->get_shipping_country() ) )
 		) {
-			$country = ( 'yes' === $override_option ) ? WC()->customer->get_country() : WC()->customer->get_shipping_country();
+			$country = ( 'yes' === $override_option ) ? wcj_customer_get_country() : WC()->customer->get_shipping_country();
 		} else {
 			if ( 'by_ip' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
 				$country = $this->get_customer_country_by_ip();

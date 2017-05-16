@@ -34,11 +34,11 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 */
 	function available_payment_gateways( $_available_gateways ) {
 		if ( isset( WC()->customer ) ) {
-			$customer_country = ( WCJ_IS_WC_VERSION_BELOW_3 ) ? WC()->customer->get_country() : WC()->customer->get_billing_country();
+			$customer_country = wcj_customer_get_country();
 			foreach ( $_available_gateways as $key => $gateway ) {
 				$include_countries = get_option( 'wcj_gateways_countries_include_' . $key, '' );
 				if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries ) ) {
