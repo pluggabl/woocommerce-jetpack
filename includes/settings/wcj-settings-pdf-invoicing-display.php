@@ -5,7 +5,6 @@
  * @version 2.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    "edit order" metabox
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -114,5 +113,22 @@ foreach ( $invoice_types as $invoice_type ) {
 		),
 	) );
 }
-
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'General Display Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_invoicing_general_display_options',
+	),
+	array(
+		'title'    => __( 'Add PDF Invoices Meta Box to Admin Edit Order Page', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_invoicing_add_order_meta_box',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_invoicing_general_display_options',
+	),
+) );
 return $settings;

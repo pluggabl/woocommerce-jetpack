@@ -157,7 +157,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.0 - 15/05/2017 =
+= 2.8.0 - 16/05/2017 =
 ~	* Dev - WooCommerce v3.x.x compatibility - `wcj_get_product_input_fields()` fixed (used in "Export" module and in `[wcj_order_items_table]` shortcode's `item_product_input_fields` column).
 ~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
@@ -230,6 +230,7 @@ $~!D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quan
 $~!D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
 ~	* Fix - PDF INVOICING & PACKING SLIPS - Styling - Default values for additional custom documents fixed.
 ~	* Dev - PDF INVOICING & PACKING SLIPS - Directory changed from `settings` to `submodules`.
+~D	* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Add PDF Invoices Meta Box to Admin Edit Order Page" option added.
 ~!D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
 $~!D* Dev - EMAILS & MISC. - Email Verification - Initial module release.
