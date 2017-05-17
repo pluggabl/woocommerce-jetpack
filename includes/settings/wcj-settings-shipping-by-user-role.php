@@ -23,7 +23,7 @@ $settings = array(
 );
 $user_roles = wcj_get_user_roles_options();
 foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
-	if ( ! in_array( $method->id, array( 'flat_rate', 'free_shipping', 'local_pickup' ) ) ) {
+	if ( ! in_array( $method->id, array( 'flat_rate', 'local_pickup' ) ) ) {
 		$custom_attributes = apply_filters( 'booster_get_message', '', 'disabled' );
 		if ( '' == $custom_attributes ) {
 			$custom_attributes = array();

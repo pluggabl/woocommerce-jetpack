@@ -230,7 +230,7 @@ $~D	* Dev - CART & CHECKOUT - Checkout Core Fields - "priority (i.e. order)" opt
 $~!D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
 $~!D* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
 	* Dev - SHIPPING & ORDERS - Shipping Calculator - Minor code refactoring.
-$~!D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
+~!D	* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
 ~	* Fix - PDF INVOICING & PACKING SLIPS - Styling - Default values for additional custom documents fixed.
 ~	* Dev - PDF INVOICING & PACKING SLIPS - Directory changed from `settings` to `submodules`.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Add PDF Invoices Meta Box to Admin Edit Order Page" option added.
