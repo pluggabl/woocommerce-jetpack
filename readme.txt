@@ -223,7 +223,7 @@ $~D	* Dev - CART & CHECKOUT - Checkout Core Fields - "priority (i.e. order)" opt
 ~D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
 ~D	* Dev - CART & CHECKOUT - Empty Cart Button - "Do not add" option added to "Button position on the Cart page".
 	* Dev - CART & CHECKOUT - Empty Cart Button - Code refactoring.
-$~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
+~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
 	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Value" admin settings field type changed to `custom_textarea`.
 ~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
 ~!D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.

@@ -40,8 +40,9 @@ return array(
 	),
 	array(
 		'title'    => __( 'Default "Processing" and "Complete" Action Buttons', 'woocommerce-jetpack' ),
+		'desc_tip' => __( '"Processing" and "Complete" action buttons by default are hidden on custom status. You can enable it here. Possible values are: Show both; Show "Processing" only; Show "Complete" only; Hide (default).', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_orders_custom_statuses_processing_and_completed_actions',
-		'default'  => 'show_both',
+		'default'  => 'hide',
 		'type'     => 'select',
 		'options'  => array(
 			'show_both'       => __( 'Show both', 'woocommerce-jetpack' ),
@@ -49,6 +50,8 @@ return array(
 			'show_complete'   => __( 'Show "Complete" only', 'woocommerce-jetpack' ),
 			'hide'            => __( 'Hide', 'woocommerce-jetpack' ),
 		),
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Add Custom Statuses to Admin Order List Action Buttons', 'woocommerce-jetpack' ),

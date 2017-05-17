@@ -56,7 +56,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				add_action( 'admin_head',                      array( $this, 'add_custom_status_actions_buttons_css' ) );
 			}
 
-			if ( 'hide' != get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'show_both' ) ) {
+			if ( 'hide' != apply_filters( 'booster_get_option', 'hide', get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) ) ) {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_to_processing_and_completed_actions' ), PHP_INT_MAX, 2 );
 			}
 
@@ -78,7 +78,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			}
 			global $post;
 			$default_actions = array();
-			$show = get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'show_both' );
+			$show = apply_filters( 'booster_get_option', 'hide', get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) );
 			if ( ( 'show_both' === $show || 'show_processing' === $show ) && $_order->has_status( array_merge( array( 'pending', 'on-hold' ), $custom_order_statuses_without_wc_prefix ) ) ) {
 				$default_actions['processing'] = array(
 					'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=processing&order_id=' . $post->ID ), 'woocommerce-mark-order-status' ),
