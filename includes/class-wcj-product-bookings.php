@@ -288,7 +288,6 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	 *
 	 * @version 2.5.2
 	 * @since   2.5.0
-	 * @todo    `maxdate="3650"` - temporary solution - must fix `wcj-datepicker.js` - check for empty values.
 	 */
 	function add_input_fields_to_frontend() {
 		if ( $this->is_bookings_product( wc_get_product() ) ) {
@@ -296,12 +295,12 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			$date_from_value = ( isset( $_POST['wcj_product_bookings_date_from'] ) ) ? $_POST['wcj_product_bookings_date_from'] : '';
 			$date_to_value   = ( isset( $_POST['wcj_product_bookings_date_to'] ) )   ? $_POST['wcj_product_bookings_date_to']   : '';
 			$data_table[] = array(
-				'<label for="wcj_product_bookings_date_to">' . get_option( 'wcj_product_bookings_label_date_from', __( 'Date from' ) ) . '</label>',
-				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" maxdate="3650" type="datepicker" display="date" id="wcj_product_bookings_date_from" name="wcj_product_bookings_date_from" placeholder="" value="' . $date_from_value . '">',
+				'<label for="wcj_product_bookings_date_from">' . get_option( 'wcj_product_bookings_label_date_from', __( 'Date from' ) ) . '</label>',
+				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_from" name="wcj_product_bookings_date_from" placeholder="" value="' . $date_from_value . '">',
 			);
 			$data_table[] = array(
 				'<label for="wcj_product_bookings_date_to">' . get_option( 'wcj_product_bookings_label_date_to', __( 'Date to' ) ) . '</label>',
-				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" maxdate="3650" type="datepicker" display="date" id="wcj_product_bookings_date_to" name="wcj_product_bookings_date_to" placeholder="" value="' . $date_to_value . '">',
+				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_to" name="wcj_product_bookings_date_to" placeholder="" value="' . $date_to_value . '">',
 			);
 			echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none', ) );
 			echo '<div style="display:none !important;" name="wcj_bookings_message"><p style="color:red;"></p></div>';
