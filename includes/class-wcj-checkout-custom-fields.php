@@ -501,7 +501,13 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						$datepicker_format = wcj_date_format_php_to_js_v2( $datepicker_format );
 						$custom_attributes['dateformat'] = $datepicker_format;
 						$custom_attributes['mindate']    = get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
+						if ( 0 == $custom_attributes['mindate'] ) {
+							$custom_attributes['mindate'] = 'zero';
+						}
 						$custom_attributes['maxdate']    = get_option( 'wcj_checkout_custom_field_datepicker_maxdate_' . $i,  365 );
+						if ( 0 == $custom_attributes['maxdate'] ) {
+							$custom_attributes['maxdate'] = 'zero';
+						}
 						$custom_attributes['firstday']   = get_option( 'wcj_checkout_custom_field_datepicker_firstday_' . $i, 0 );
 						if ( 'yes' === get_option( 'wcj_checkout_custom_field_datepicker_changeyear_' . $i, 'yes' ) ) {
 							$custom_attributes['changeyear'] = 1;
