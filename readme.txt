@@ -195,7 +195,7 @@ $~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options adde
 ~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Display Product Price Info in Archives" options added.
 ~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Add "Open Pricing" Column to Admin Product List" option added.
 	* Fix - PRODUCTS - Bookings - "Product on sale" JS bug fixed.
-$~D	* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Message Options" section added.
+~D	* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Message Options" section added.
 ~	* Fix - PRODUCTS - Product Addons - Checking for set `product_id` on ajax call.
 ~	* Fix - PRODUCTS - Product Addons - Variable product with equal variation prices ajax issue fixed.
 ~	* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
@@ -212,7 +212,7 @@ $~D	* Dev - PRODUCTS - User Products - "Product Type" option added.
 ~	* Dev - PRODUCTS - User Products - `WP_Query` optimized to return `ids` only.
 ~D	* Dev - PRODUCTS - User Products - "Price Step" option added (`[wcj_product_add_new]`).
 $~!D* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
-$~D	* Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart "Return to shop" Button Text" options added.
+~D	* Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart "Return to shop" Button Text" options added.
 $~D	* Dev - CART & CHECKOUT - Checkout Core Fields - "priority (i.e. order)" options added.
 ~	* Dev - CART & CHECKOUT - Checkout Core Fields - Minor code refactoring.
 ~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Priority (i.e. Order)" options added.
