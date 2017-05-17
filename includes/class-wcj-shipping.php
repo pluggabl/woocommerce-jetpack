@@ -16,6 +16,7 @@ class WCJ_Shipping extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.0
+	 * @todo    "custom shipping" to new module
 	 */
 	function __construct() {
 

@@ -48,15 +48,14 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'title'    => __( 'Custom Shipping Methods Number', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save module\'s settings after changing this option to see new settings fields.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_shipping_custom_shipping_total_number',
 		'default'  => 1,
 		'type'     => 'custom_number',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
-			apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min' => '0' ),
+		'custom_attributes' => array( 'step' => '1', 'min' => '0' ),
 	),
 ) );
-for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_shipping_custom_shipping_total_number', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= get_option( 'wcj_shipping_custom_shipping_total_number', 1 ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => __( 'Admin Title Custom Shipping', 'woocommerce-jetpack' ) . ' #' . $i,
