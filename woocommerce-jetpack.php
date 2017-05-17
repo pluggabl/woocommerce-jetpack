@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.8.0-dev-201705172104';
+	public $version = '2.8.0-dev-201705172132';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -100,7 +100,7 @@ final class WC_Jetpack {
 		// Settings
 		if ( is_admin() ) {
 			add_filter( 'woocommerce_get_settings_pages',                     array( $this, 'add_wcj_settings_tab' ), $this->get_booster_tab_priority() );
-			add_filter( 'booster_get_message',                                array( $this, 'get_wcj_plus_message' ), 100, 2 );
+			add_filter( 'booster_get_message',                                array( $this, 'get_wcj_plus_message' ), 100, 3 );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			add_action( 'admin_menu',                                         array( $this, 'jetpack_menu' ), 100 );
 			add_filter( 'admin_footer_text',                                  array( $this, 'admin_footer_text' ), 2 );
@@ -421,9 +421,10 @@ final class WC_Jetpack {
 	/**
 	 * get_wcj_plus_message.
 	 *
-	 * @version 2.3.8
+	 * @version 2.8.0
+	 * @todo    sprintf
 	 */
-	function get_wcj_plus_message( $value, $message_type ) {
+	function get_wcj_plus_message( $value, $message_type, $args = array() ) {
 
 		switch ( $message_type ) {
 
@@ -436,6 +437,12 @@ final class WC_Jetpack {
 
 			case 'desc':
 				return __( 'Get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to change value.', 'woocommerce-jetpack' );
+
+			case 'desc_advanced':
+				return sprintf( __( 'Get <a href="%s" target="_blank">Booster Plus</a> to enable "%s" option.', 'woocommerce-jetpack' ), 'https://booster.io/plus/', $args['option'] );
+
+			case 'desc_advanced_no_link':
+				return sprintf( __( 'Get Booster Plus to enable "%s" option.', 'woocommerce-jetpack' ), $args['option'] );
 
 			case 'desc_below':
 				return __( 'Get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to change values below.', 'woocommerce-jetpack' );

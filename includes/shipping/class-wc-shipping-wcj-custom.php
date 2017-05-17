@@ -96,6 +96,15 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 				 * @version 2.8.0
 				 */
 				function init_form_fields() {
+					$type_options = array(
+						'flat_rate'                    => __( 'Flat Rate', 'woocommerce-jetpack' ),
+						'by_total_cart_weight'         => __( 'By Total Cart Weight', 'woocommerce-jetpack' ),
+						'by_total_cart_weight_table'   => __( 'By Total Cart Weight Table', 'woocommerce-jetpack' ),
+						'by_total_cart_quantity'       => __( 'By Total Cart Quantity', 'woocommerce-jetpack' ),
+					);
+					$type_options = apply_filters( 'booster_get_option', $type_options, array_merge( $type_options, array(
+						'by_total_cart_quantity_table' => __( 'By Total Cart Quantity Table', 'woocommerce-jetpack' ),
+					) ) );
 					$this->form_fields = array(
 						'enabled' => array(
 							'title'       => __( 'Enable/Disable', 'woocommerce' ),
@@ -113,16 +122,10 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_class' ) ) {
 						'type' => array(
 							'title'       => __( 'Type', 'woocommerce' ),
 							'type'        => 'select',
-							'description' => __( 'Cost calculation type.', 'woocommerce-jetpack' ),
+							'description' => __( 'Cost calculation type.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc_advanced_no_link', array( 'option' => __( 'By Total Cart Quantity Table', 'woocommerce-jetpack' ) ) ),
 							'default'     => 'flat_rate',
 							'desc_tip'    => true,
-							'options'     => array(
-								'flat_rate'                    => __( 'Flat Rate', 'woocommerce-jetpack' ),
-								'by_total_cart_weight'         => __( 'By Total Cart Weight', 'woocommerce-jetpack' ),
-								'by_total_cart_weight_table'   => __( 'By Total Cart Weight Table', 'woocommerce-jetpack' ),
-								'by_total_cart_quantity'       => __( 'By Total Cart Quantity', 'woocommerce-jetpack' ),
-								'by_total_cart_quantity_table' => __( 'By Total Cart Quantity Table', 'woocommerce-jetpack' ),
-							),
+							'options'     => $type_options,
 						),
 						'cost' => array(
 							'title'       => __( 'Cost', 'woocommerce' ),

@@ -93,6 +93,7 @@ $settings = array_merge(
 				'simple'   => __( 'Simple product', 'woocommerce-jetpack' ),
 				'external' => __( 'External/Affiliate product', 'woocommerce-jetpack' ),
 			),
+//			'desc'     =>  apply_filters( 'booster_get_message', '', 'desc_advanced', array( 'option' => __( 'Variable product', 'woocommerce-jetpack' ) ) ),
 		),
 		array(
 			'title'    => __( 'Product Status', 'woocommerce-jetpack' ),
