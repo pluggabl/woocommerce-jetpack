@@ -48,12 +48,12 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 	/**
 	 * add_pdf_invoice_email_attachment.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 */
 	function add_pdf_invoice_email_attachment( $attachments, $status, $order ) {
 		$invoice_types_ids = wcj_get_enabled_invoice_types_ids();
 		foreach ( $invoice_types_ids as $invoice_type_id ) {
-			if ( false === $this->do_attach_for_payment_method( $invoice_type_id, $order->payment_method ) ) {
+			if ( false === $this->do_attach_for_payment_method( $invoice_type_id, ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->payment_method : $order->get_payment_method() ) ) ) {
 				continue;
 			}
 			$send_on_statuses = get_option( 'wcj_invoicing_' . $invoice_type_id . '_attach_to_emails', array() );
