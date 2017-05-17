@@ -120,7 +120,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 					$checkout_fields[ $section ][ $field ]['class'] = array( $class );
 				}
 				// priority
-				if ( 0 != ( $priority = get_option( 'wcj_checkout_fields_' . $field . '_' . 'priority', 0 ) ) ) {
+				if ( 0 != ( $priority = apply_filters( 'booster_get_option', 0, get_option( 'wcj_checkout_fields_' . $field . '_' . 'priority', 0 ) ) ) ) {
 					$checkout_fields[ $section ][ $field ]['priority'] = $priority;
 				}
 			}

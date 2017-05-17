@@ -75,11 +75,12 @@ foreach ( $this->woocommerce_core_checkout_fields as $field ) {
 		),
 		array(
 			'desc'     => __( 'priority (i.e. order)', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'Leave zero for WooCommerce defaults.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Leave zero for WooCommerce defaults.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc_no_link' ),
 			'id'       => 'wcj_checkout_fields_' . $field . '_' . 'priority',
 			'default'  => 0,
 			'type'     => 'number',
 			'css'      => 'min-width:300px;width:50%;',
+			'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 		),
 	) );
 }
