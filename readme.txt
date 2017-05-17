@@ -167,7 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Related Products - `woocommerce_related_products_args` hook replaced with `woocommerce_product_related_posts_query`. Ordering by meta values removed. Ordering by ID, price etc. added.
 ~	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `get_country()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - Email Options - `get_payment_method()`.
-~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `get_payment_method()`.
+~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `get_payment_method()`; `get_status()`.
 ~	* Dev - Major code refactoring - Settings (general and meta box) from file. `add_settings_hook()` function removed from `WCJ_Module` class.
 ~	* Dev - `get_booster_tab_priority()` - one more plugin added.
 ~!	* Dev - `wcj_number_plus_checkbox` admin settings field type added (and `WC_Settings_Jetpack` code refactoring).
