@@ -299,7 +299,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 * @param   bool $plain_text
 				 */
 				public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
-					if ( $this->instructions_in_email && ! $sent_to_admin && $this->id === ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->payment_method : $order->get_payment_method() ) && $this->default_order_status === ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->status : $order->get_status() ) ) {
+					if ( $this->instructions_in_email && ! $sent_to_admin && $this->id === wcj_order_get_payment_method( $order ) && $this->default_order_status === ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->status : $order->get_status() ) ) {
 						echo do_shortcode( wpautop( wptexturize( $this->instructions_in_email ) ) . PHP_EOL );
 					}
 				}

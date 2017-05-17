@@ -20,6 +20,18 @@ if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_order_get_payment_method' ) ) {
+	/**
+	 * wcj_order_get_payment_method.
+	 *
+	 * @version 2.8.0
+	 * @version 2.8.0
+	 */
+	function wcj_order_get_payment_method( $_order ) {
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->payment_method : $_order->get_payment_method() );
+	}
+}
+
 if ( ! function_exists( 'wcj_check_time_from' ) ) {
 	/**
 	 * wcj_check_time_from.

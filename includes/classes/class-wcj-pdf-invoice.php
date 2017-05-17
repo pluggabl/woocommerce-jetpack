@@ -257,7 +257,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 			$_GET['billing_country'] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->billing_country : $the_order->get_billing_country() );
 		}
 		if ( ! isset( $_GET['payment_method'] ) ) {
-			$_GET['payment_method']  = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->payment_method  : $the_order->get_payment_method() );
+			$_GET['payment_method']  = wcj_order_get_payment_method( $the_order );
 		}
 		global $wcj_pdf_invoice_data;
 		if ( ! isset( $wcj_pdf_invoice_data['user_id'] ) ) {
