@@ -215,7 +215,7 @@ $~!D* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_
 $~D	* Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart "Return to shop" Button Text" options added.
 $~D	* Dev - CART & CHECKOUT - Checkout Core Fields - "priority (i.e. order)" options added.
 ~	* Dev - CART & CHECKOUT - Checkout Core Fields - Minor code refactoring.
-$~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Priority (i.e. Order)" options added.
+~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Priority (i.e. Order)" options added.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
 ~!D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
@@ -236,7 +236,7 @@ $~!D* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module r
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Add PDF Invoices Meta Box to Admin Edit Order Page" option added.
 ~!D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
-$~!D* Dev - EMAILS & MISC. - Email Verification - Initial module release.
+~!D	* Dev - EMAILS & MISC. - Email Verification - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Output restyled.
 	* Tweak - `WCJ_Module` - `extra_desc` and `link_slug` properties added.
 	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt; main plugin file; module's documentation links.

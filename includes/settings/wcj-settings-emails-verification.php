@@ -28,6 +28,8 @@ return array(
 		'id'       => 'wcj_emails_verification_email_subject',
 		'default'  => __( 'Please activate your account', 'woocommerce-jetpack' ),
 		'css'      => 'width:66%;min-width:300px;',
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 	),
 	array(
 		'title'    => __( 'Verification Email Content', 'woocommerce-jetpack' ),
@@ -35,6 +37,8 @@ return array(
 		'id'       => 'wcj_emails_verification_email_content',
 		'default'  => __( 'Please click the following link to verify your email:<br><br><a href="%verification_url%">%verification_url%</a>', 'woocommerce-jetpack' ),
 		'css'      => 'width:66%;min-width:300px;height:150px;',
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 	),
 	array(
 		'title'    => __( 'Verification Message - Success', 'woocommerce-jetpack' ),

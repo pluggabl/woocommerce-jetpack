@@ -75,11 +75,15 @@ class WCJ_Email_Verification extends WCJ_Module {
 		$user_info     = get_userdata( $user_id );
 		$code          = md5( time() );
 		$url           = add_query_arg( 'wcj_verify_email', base64_encode( serialize( array( 'id' => $user_id, 'code' => $code ) ) ), wc_get_page_permalink( 'myaccount' ) );
-		$email_content = do_shortcode( get_option( 'wcj_emails_verification_email_content',
-			__( 'Please click the following link to verify your email:<br><br><a href="%verification_url%">%verification_url%</a>', 'woocommerce-jetpack' ) ) );
+		$email_content = do_shortcode( apply_filters( 'booster_get_option',
+			__( 'Please click the following link to verify your email:<br><br><a href="%verification_url%">%verification_url%</a>', 'woocommerce-jetpack' ),
+			get_option( 'wcj_emails_verification_email_content',
+				__( 'Please click the following link to verify your email:<br><br><a href="%verification_url%">%verification_url%</a>', 'woocommerce-jetpack' ) ) ) );
 		$email_content = str_replace( '%verification_url%', $url, $email_content );
-		$email_subject = do_shortcode( get_option( 'wcj_emails_verification_email_subject',
-			__( 'Please activate your account', 'woocommerce-jetpack' ) ) );
+		$email_subject = do_shortcode( apply_filters( 'booster_get_option',
+			__( 'Please activate your account', 'woocommerce-jetpack' ),
+			get_option( 'wcj_emails_verification_email_subject',
+				__( 'Please activate your account', 'woocommerce-jetpack' ) ) ) );
 		update_user_meta( $user_id, 'wcj_is_activated', 0 );
 		update_user_meta( $user_id, 'wcj_activation_code', $code );
 		wc_mail( $user_info->user_email, $email_subject, $email_content );
