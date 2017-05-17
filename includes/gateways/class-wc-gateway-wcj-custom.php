@@ -293,13 +293,12 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 * Add content to the WC emails.
 				 *
 				 * @version 2.8.0
-				 * @access public
-				 * @param WC_Order $order
-				 * @param bool $sent_to_admin
-				 * @param bool $plain_text
+				 * @access  public
+				 * @param   WC_Order $order
+				 * @param   bool $sent_to_admin
+				 * @param   bool $plain_text
 				 */
 				public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
-					//if ( $this->instructions_in_email && ! $sent_to_admin && $this->id === $order->payment_method && 'on-hold' === $order->status ) {
 					if ( $this->instructions_in_email && ! $sent_to_admin && $this->id === ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->payment_method : $order->get_payment_method() ) && $this->default_order_status === $order->status ) {
 						echo do_shortcode( wpautop( wptexturize( $this->instructions_in_email ) ) . PHP_EOL );
 					}
