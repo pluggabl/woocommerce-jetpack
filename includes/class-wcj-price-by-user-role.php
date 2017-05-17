@@ -209,7 +209,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		}
 
 		// By category
-		$categories = get_option( 'wcj_price_by_user_role_categories', '' );
+		$categories = apply_filters( 'booster_get_option', '', get_option( 'wcj_price_by_user_role_categories', '' ) );
 		if ( ! empty( $categories ) ) {
 			$product_categories = get_the_terms( wcj_get_product_id_or_variation_parent_id( $_product ), 'product_cat' );
 			if ( ! empty( $product_categories ) ) {
@@ -247,7 +247,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$user_role = wcj_get_current_user_first_role();
-		$categories = get_option( 'wcj_price_by_user_role_categories', '' );
+		$categories = apply_filters( 'booster_get_option', '', get_option( 'wcj_price_by_user_role_categories', '' ) );
 		$price_hash['wcj_user_role'] = array(
 			$user_role,
 			get_option( 'wcj_price_by_user_role_' . $user_role, 1 ),

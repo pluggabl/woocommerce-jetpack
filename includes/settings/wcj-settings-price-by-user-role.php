@@ -99,7 +99,7 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_price_by_user_role_multipliers_options',
 	),
 	array(
-		'title'    => __( 'Categories', 'woocommerce-jetpack' ),
+		'title'    => __( 'Price by User Role by Products Categories', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_price_by_user_role_categories_options',
 	),
@@ -111,10 +111,12 @@ $settings = array_merge( $settings, array(
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
 		'options'  => $product_cats_options,
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 ) );
-if ( ! empty( get_option( 'wcj_price_by_user_role_categories', '' ) ) ) {
-	$categories = get_option( 'wcj_price_by_user_role_categories', '' );
+$categories = apply_filters( 'booster_get_option', '', get_option( 'wcj_price_by_user_role_categories', '' ) );
+if ( ! empty( $categories ) ) {
 	foreach ( $categories as $category ) {
 		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 			$settings = array_merge( $settings, array(

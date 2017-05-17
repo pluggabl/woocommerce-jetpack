@@ -189,7 +189,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 	* Dev - PRICES & CURRENCIES - Bulk Price Converter - Minor code refactoring.
 ~	* Dev - PRICES & CURRENCIES - Currency per Product - Additional check for if cart is set added to `get_cart_checkout_currency()`.
 ~!	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Currency Switcher Template" option added.
-$~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
+~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
 	* Dev - PRICES & CURRENCIES - Price by User Role - Minor code refactoring.
 ~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Per Product Settings Type" option added.
 ~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Display Product Price Info in Archives" options added.
