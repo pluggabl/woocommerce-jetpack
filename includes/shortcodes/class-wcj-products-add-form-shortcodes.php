@@ -216,10 +216,13 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function maybe_add_taxonomy_field( $atts, $args, $option_id, $taxonomy_id, $title, $input_style, $required_mark_html_template, $table_data ) {
 		if ( 'yes' === $atts[ $option_id . '_enabled' ] ) {
-			$required_html      = ( 'yes' === $atts[ $option_id . '_required' ] ) ? ' required' : '';
-			$required_mark_html = ( 'yes' === $atts[ $option_id . '_required' ] ) ? $required_mark_html_template : '';
-			$current_product_taxonomies = ( 0 != $atts['product_id'] ) ? get_the_terms( $atts['product_id'], $taxonomy_id ) : $args[ $option_id ];
 			$product_taxonomies = get_terms( $taxonomy_id, 'orderby=name&hide_empty=0' );
+			if ( is_wp_error( $product_taxonomies ) ) {
+				return $table_data;
+			}
+			$required_html                        = ( 'yes' === $atts[ $option_id . '_required' ] ) ? ' required' : '';
+			$required_mark_html                   = ( 'yes' === $atts[ $option_id . '_required' ] ) ? $required_mark_html_template : '';
+			$current_product_taxonomies           = ( 0 != $atts['product_id'] ) ? get_the_terms( $atts['product_id'], $taxonomy_id ) : $args[ $option_id ];
 			$product_taxonomies_as_select_options = '';
 			foreach ( $product_taxonomies as $product_taxonomy ) {
 				$selected = '';

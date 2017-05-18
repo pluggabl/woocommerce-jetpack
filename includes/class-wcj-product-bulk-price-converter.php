@@ -219,7 +219,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		$select_options_html = '';
 		$selected_option = ( isset( $_POST['wcj_product_cat'] ) ) ? $_POST['wcj_product_cat'] : '';
 		$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
-		if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ){
+		if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ) {
 			foreach ( $product_categories as $product_category ) {
 				$select_options_html .= '<option value="' . $product_category->slug . '"' . selected( $product_category->slug, $selected_option, false ) . '>' .
 					$product_category->name .
