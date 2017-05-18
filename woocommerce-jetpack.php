@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.8.0-dev-201705181356';
+	public $version = '2.8.0-dev-201705181358';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -99,7 +99,7 @@ final class WC_Jetpack {
 
 		// Settings
 		if ( is_admin() ) {
-			add_filter( 'woocommerce_get_settings_pages',                     array( $this, 'add_wcj_settings_tab' ), 10 );
+			add_filter( 'woocommerce_get_settings_pages',                     array( $this, 'add_wcj_settings_tab' ), 1 );
 			add_filter( 'booster_get_message',                                array( $this, 'get_wcj_plus_message' ), 100, 3 );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			add_action( 'admin_menu',                                         array( $this, 'jetpack_menu' ), 100 );
