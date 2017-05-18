@@ -218,7 +218,7 @@ DE	* Dev - PRODUCTS - Stock - Initial module release.
 ~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Priority (i.e. Order)" options added.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
-~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
+D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Minor code refactoring.
 D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
 D	* Dev - CART & CHECKOUT - Empty Cart Button - "Do not add" option added to "Button position on the Cart page".
@@ -228,8 +228,8 @@ D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and 
 D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
 D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
 D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - "Custom Shipping Methods Number" option moved to free version.
-~D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
-~D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
+D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
+D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
 	* Dev - SHIPPING & ORDERS - Shipping Calculator - Minor code refactoring.
 D	* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
 	* Fix - PDF INVOICING & PACKING SLIPS - Styling - Default values for additional custom documents fixed.
