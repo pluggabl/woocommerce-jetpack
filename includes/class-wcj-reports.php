@@ -101,7 +101,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * add_custom_order_reports_ranges_to_admin_bar.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 */
 	function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
 		$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
@@ -147,6 +147,11 @@ class WCJ_Reports extends WCJ_Module {
 				'last_24_months' => array(
 					'title'      => __( 'Last 24 Months', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-d', strtotime( '-24 months' ) ),
+					'end_date'   => date( 'Y-m-d' ),
+				),
+				'last_36_months' => array(
+					'title'      => __( 'Last 36 Months', 'woocommerce-jetpack' ),
+					'start_date' => date( 'Y-m-d', strtotime( '-36 months' ) ),
 					'end_date'   => date( 'Y-m-d' ),
 				),
 				'same_days_last_month' => array(

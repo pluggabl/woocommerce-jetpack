@@ -239,6 +239,7 @@ D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" option
 D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
 D	* Dev - EMAILS & MISC. - Email Verification - Initial module release.
 D	* Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Output restyled.
+D	* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Last 36 Months" option added.
 	* Tweak - Plugin update admin notices added.
 	* Tweak - `WCJ_Module` - `extra_desc` and `link_slug` properties added.
 	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt; main plugin file; module's documentation links.
