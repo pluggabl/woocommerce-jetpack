@@ -639,6 +639,7 @@ final class WC_Jetpack {
 	 *
 	 * @version 2.8.0
 	 * @since   2.5.2
+	 * @todo    this only loads Enable, Tools and Reset settings for each module
 	 */
 	function add_options() {
 		// Modules statuses
