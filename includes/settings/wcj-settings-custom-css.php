@@ -32,7 +32,8 @@ return array(
 	array(
 		'title'    => __( 'Custom CSS on per Product Basis', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set product specific CSS to be loaded only on specific product\'s single page.', 'woocommerce-jetpack' ) .
+			' ' . __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_custom_css_per_product',
 		'default'  => 'no',
 		'type'     => 'checkbox',
