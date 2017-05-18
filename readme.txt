@@ -173,14 +173,14 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - `wcj_number_plus_checkbox` admin settings field type added (and `WC_Settings_Jetpack` code refactoring).
 	* Dev - `wcj_get_products()` - Code refactoring and `add_variations` param added.
 ~	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
-~	* Fix - `wcj-datepicker.js` - 'zero' special value added for `mindate` and `maxdate` (fixes the issue with `mindate=0` and `maxdate=0` in Checkout Custom Fields).
+	* Fix - `wcj-datepicker.js` - 'zero' special value added for `mindate` and `maxdate` (fixes the issue with `mindate=0` and `maxdate=0` in Checkout Custom Fields).
 	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
 ~D	* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
 ~D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
 ~D	* Dev - Shortcodes - `visibility` (i.e. user role) attribute can now be used in invoice shortcodes; `wrong_user_text` attribute added.
 ~D	* Dev - Shortcodes - `payment_method` and `not_payment_method` attributes added to all shortcodes when used in invoice.
 	* Dev - Shortcodes - General - `[wcj_cart_total]` shortcode added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_items]` - `field` attribute's `_qty_x_name` special value added (and `debug` renamed to `_debug`).
+D	* Dev - Shortcodes - Orders - `[wcj_order_items]` - `field` attribute's `_qty_x_name` special value added (and `debug` renamed to `_debug`).
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_attribute__name` and `exclude_by_attribute__value` attributes added.
 ~	* Fix - Shortcodes - Products - `[wcj_product_stock_quantity]` - Return empty string instead of `false` on `null`.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_stock_quantity]` - `count_variations` attribute added.
@@ -220,8 +220,8 @@ DE	* Dev - PRODUCTS - Stock - Initial module release.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
 ~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Minor code refactoring.
-~D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
-~D	* Dev - CART & CHECKOUT - Empty Cart Button - "Do not add" option added to "Button position on the Cart page".
+D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
+D	* Dev - CART & CHECKOUT - Empty Cart Button - "Do not add" option added to "Button position on the Cart page".
 	* Dev - CART & CHECKOUT - Empty Cart Button - Code refactoring.
 D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
 	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Value" admin settings field type changed to `custom_textarea`.
