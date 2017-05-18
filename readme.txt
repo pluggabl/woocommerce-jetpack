@@ -163,9 +163,9 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
 ~	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `get_country()`.
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
-~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `woocommerce_single_product_image_html` hook replaced.
+~	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `woocommerce_single_product_image_html` hook replaced.
 	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
-~!	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Related Products - `woocommerce_related_products_args` hook replaced with `woocommerce_product_related_posts_query`. Ordering by meta values removed. Ordering by ID, price etc. added.
+~	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Related Products - `woocommerce_related_products_args` hook replaced with `woocommerce_product_related_posts_query`. Ordering by meta values removed. Ordering by ID, price etc. added.
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `get_payment_method()`; `get_status()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - Email Options - `get_payment_method()`.
 ~	* Dev - Major code refactoring - Settings (general and meta box) from file. `add_settings_hook()` function removed from `WCJ_Module` class.
@@ -181,7 +181,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - Shortcodes - `payment_method` and `not_payment_method` attributes added to all shortcodes when used in invoice.
 	* Dev - Shortcodes - General - `[wcj_cart_total]` shortcode added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_items]` - `field` attribute's `_qty_x_name` special value added (and `debug` renamed to `_debug`).
-~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_attribute__name` and `exclude_by_attribute__value` attributes added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_attribute__name` and `exclude_by_attribute__value` attributes added.
 ~	* Fix - Shortcodes - Products - `[wcj_product_stock_quantity]` - Return empty string instead of `false` on `null`.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_stock_quantity]` - `count_variations` attribute added.
 D	* Dev - Shortcodes - Products - `[wcj_product_description]` shortcode added.
@@ -199,7 +199,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~	* Fix - PRODUCTS - Product Addons - Checking for set `product_id` on ajax call.
 ~	* Fix - PRODUCTS - Product Addons - Variable product with equal variation prices ajax issue fixed.
 ~	* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
-~!	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
+~	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
 ~DE	* Dev - PRODUCTS - Product Availability by Time - Initial module release.
 ~!D	* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
 ~D	* Dev - PRODUCTS - Product Images - Product Images Sale Flash - "Hide Everywhere" option added.
