@@ -20,7 +20,7 @@ return array(
 		'desc_tip' => __( 'When enabled - meta can be changed only if it already existed for product. If you want to be able to create new meta for products, disable this option.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_bulk_meta_editor_check_if_exists',
-		'default'  => 'yes',
+		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(

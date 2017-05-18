@@ -339,7 +339,7 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 			if ( ! in_array( $product_id, $selected_products ) ) {
 				continue;
 			}
-			if ( ! metadata_exists( 'post', $product_id, $meta_name ) && 'yes' === get_option( 'wcj_product_bulk_meta_editor_check_if_exists', 'yes' ) ) {
+			if ( ! metadata_exists( 'post', $product_id, $meta_name ) && 'yes' === get_option( 'wcj_product_bulk_meta_editor_check_if_exists', 'no' ) ) {
 				$_post_meta = '<em>' . 'N/A' . '</em>';
 				$save_button = '';
 				$delete_button = '';

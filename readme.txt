@@ -159,7 +159,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 2.8.0 - 18/05/2017 =
 ~	* Dev - WooCommerce v3.x.x compatibility - `wcj_get_product_input_fields()` fixed (used in "Export" module and in `[wcj_order_items_table]` shortcode's `item_product_input_fields` column).
-~!	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
+~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
 ~	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `get_country()`.
 ~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
@@ -201,7 +201,7 @@ D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_produc
 ~	* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
 ~	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
 ~DE	* Dev - PRODUCTS - Product Availability by Time - Initial module release.
-~!D	* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
+~D	* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
 ~D	* Dev - PRODUCTS - Product Images - Product Images Sale Flash - "Hide Everywhere" option added.
 ~D	* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
 ~D	* Dev - PRODUCTS - Product Tabs - "Link" option added.
@@ -218,7 +218,7 @@ DE	* Dev - PRODUCTS - Stock - Initial module release.
 ~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Priority (i.e. Order)" options added.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
-~!D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
+~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
 	* Dev - CART & CHECKOUT - Checkout Custom Fields - Minor code refactoring.
 ~D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
 ~D	* Dev - CART & CHECKOUT - Empty Cart Button - "Do not add" option added to "Button position on the Cart page".
@@ -228,8 +228,8 @@ DE	* Dev - PRODUCTS - Stock - Initial module release.
 ~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
 ~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - "Custom Shipping Methods Number" option moved to free version.
-~!D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
-~!D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
+~D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
+~D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
 	* Dev - SHIPPING & ORDERS - Shipping Calculator - Minor code refactoring.
 ~D	* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
 ~	* Fix - PDF INVOICING & PACKING SLIPS - Styling - Default values for additional custom documents fixed.
@@ -237,7 +237,7 @@ DE	* Dev - PRODUCTS - Stock - Initial module release.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Add PDF Invoices Meta Box to Admin Edit Order Page" option added.
 ~D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
-~!D	* Dev - EMAILS & MISC. - Email Verification - Initial module release.
+~D	* Dev - EMAILS & MISC. - Email Verification - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Output restyled.
 	* Tweak - `WCJ_Module` - `extra_desc` and `link_slug` properties added.
 	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt; main plugin file; module's documentation links.
