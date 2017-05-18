@@ -48,14 +48,12 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'css'       => 'width:30%;min-width:300px;',
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'Priority (i.e. Order)', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_priority_global_' . $i,
 				'default'   => (40 + $i - 1),
 				'type'      => 'number',
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'Content', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'You can use shortcodes here...', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_content_global_' . $i,
@@ -78,7 +76,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'type'      => 'checkbox',
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'PRODUCTS to HIDE this tab', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'To hide this tab from some products, enter products here.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_global_hide_in_products_' . $i,
@@ -88,7 +85,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'options'   => $products_options,
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'PRODUCTS to SHOW this tab', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'To show this tab only for some products, enter products here.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_global_show_in_products_' . $i,
@@ -98,7 +94,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'options'   => $products_options,
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'CATEGORIES to HIDE this tab', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'To hide this tab from some categories, enter categories here.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_global_hide_in_cats_' . $i,
@@ -108,7 +103,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'options'   => $product_cats_options,
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'CATEGORIES to SHOW this tab', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'To show this tab only for some categories, enter categories here.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_global_show_in_cats_' . $i,
@@ -118,7 +112,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'options'   => $product_cats_options,
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'TAGS to HIDE this tab', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'To hide this tab from some tags, enter tags here.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_global_hide_in_tags_' . $i,
@@ -128,7 +121,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'options'   => $product_tags_options,
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'TAGS to SHOW this tab', 'woocommerce-jetpack' ),
 				'desc_tip'  => __( 'To show this tab only for some tags, enter tags here.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_global_show_in_tags_' . $i,
@@ -138,7 +130,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'options'   => $product_tags_options,
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'Comma separated PRODUCT IDs to HIDE this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 				'desc_tip'  => __( 'To hide this tab from some products, enter product IDs here.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_title_global_hide_in_product_ids_' . $i,
@@ -147,7 +138,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'css'       => 'width:30%;min-width:300px;',
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'Comma separated PRODUCT IDs to SHOW this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 				'desc_tip'  => __( 'To show this tab only for some products, enter product IDs here.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_title_global_show_in_product_ids_' . $i,
@@ -156,7 +146,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'css'       => 'width:30%;min-width:300px;',
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'Comma separated CATEGORY IDs to HIDE this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 				'desc_tip'  => __( 'To hide this tab from some categories, enter category IDs here.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_title_global_hide_in_cats_ids_' . $i,
@@ -165,7 +154,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'css'       => 'width:30%;min-width:300px;',
 			),
 			array(
-				'title'     => '',
 				'desc'      => __( 'Comma separated CATEGORY IDs to SHOW this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 				'desc_tip'  => __( 'To show this tab only for some categories, enter category IDs here.', 'woocommerce-jetpack' ),
 				'id'        => 'wcj_custom_product_tabs_title_global_show_in_cats_ids_' . $i,
@@ -229,14 +217,12 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 			'css'       => 'width:30%;min-width:300px;',
 		),
 		array(
-			'title'     => '',
 			'desc'      => __( 'Default Priority (i.e. Order)', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_custom_product_tabs_priority_local_default_' . $i,
 			'default'   => (50 + $i - 1),
 			'type'      => 'number',
 		),
 		array(
-			'title'     => '',
 			'desc'      => __( 'Default Content', 'woocommerce-jetpack' ),
 			'desc_tip'  => __( 'You can use shortcodes here...', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_custom_product_tabs_content_local_default_' . $i,
@@ -259,7 +245,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 			'type'      => 'checkbox',
 		),
 		array(
-			'title'     => '',
 			'desc'      => __( 'PRODUCTS to HIDE this tab', 'woocommerce-jetpack' ),
 			'desc_tip'  => __( 'To hide this tab from some products, enter products here.', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_custom_product_tabs_local_hide_in_products_' . $i,
@@ -269,7 +254,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 			'options'   => $products_options,
 		),
 		array(
-			'title'     => '',
 			'desc'      => __( 'PRODUCTS to SHOW this tab', 'woocommerce-jetpack' ),
 			'desc_tip'  => __( 'To show this tab only for some products, enter products here.', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_custom_product_tabs_local_show_in_products_' . $i,
@@ -279,7 +263,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 			'options'   => $products_options,
 		),
 		array(
-			'title'     => '',
 			'desc'      => __( 'CATEGORIES to HIDE this tab', 'woocommerce-jetpack' ),
 			'desc_tip'  => __( 'To hide this tab from some categories, enter categories here.', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_custom_product_tabs_local_hide_in_cats_' . $i,
@@ -289,7 +272,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 			'options'   => $product_cats_options,
 		),
 		array(
-			'title'     => '',
 			'desc'      => __( 'CATEGORIES to SHOW this tab', 'woocommerce-jetpack' ),
 			'desc_tip'  => __( 'To show this tab only for some categories, enter categories here.', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_custom_product_tabs_local_show_in_cats_' . $i,
@@ -299,7 +281,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 			'options'   => $product_cats_options,
 		),
 		array(
-			'title'     => '',
 			'desc'      => __( 'TAGS to HIDE this tab', 'woocommerce-jetpack' ),
 			'desc_tip'  => __( 'To hide this tab from some tags, enter tags here.', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_custom_product_tabs_local_hide_in_tags_' . $i,
@@ -309,7 +290,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 			'options'   => $product_tags_options,
 		),
 		array(
-			'title'     => '',
 			'desc'      => __( 'TAGS to SHOW this tab', 'woocommerce-jetpack' ),
 			'desc_tip'  => __( 'To show this tab only for some tags, enter tags here.', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_custom_product_tabs_local_show_in_tags_' . $i,
@@ -340,7 +320,6 @@ $settings = array_merge( $settings, array(
 		'type'      => 'checkbox',
 	),
 	array(
-		'title'     => '',
 		'desc'      => __( 'Title.', 'woocommerce-jetpack' ),
 		'desc_tip'  => __( 'Leave blank for WooCommerce defaults', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_product_info_product_tabs_description_title',
@@ -348,7 +327,6 @@ $settings = array_merge( $settings, array(
 		'type'      => 'text',
 	),
 	array(
-		'title'     => '',
 		'id'        => 'wcj_product_info_product_tabs_description_priority',
 		'default'   => 10,
 		'type'      => 'number',
@@ -363,7 +341,6 @@ $settings = array_merge( $settings, array(
 		'type'      => 'checkbox',
 	),
 	array(
-		'title'     => '',
 		'desc'      => __( 'Title.', 'woocommerce-jetpack' ),
 		'desc_tip'  => __( 'Leave blank for WooCommerce defaults', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_product_info_product_tabs_additional_information_title',
@@ -371,7 +348,6 @@ $settings = array_merge( $settings, array(
 		'type'      => 'text',
 	),
 	array(
-		'title'     => '',
 		'id'        => 'wcj_product_info_product_tabs_additional_information_priority',
 		'default'   => 20,
 		'type'      => 'number',
@@ -386,7 +362,6 @@ $settings = array_merge( $settings, array(
 		'type'      => 'checkbox',
 	),
 	array(
-		'title'     => '',
 		'desc'      => __( 'Title.', 'woocommerce-jetpack' ),
 		'desc_tip'  => __( 'Leave blank for WooCommerce defaults', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_product_info_product_tabs_reviews_title',
@@ -394,7 +369,6 @@ $settings = array_merge( $settings, array(
 		'type'      => 'text',
 	),
 	array(
-		'title'     => '',
 		'id'        => 'wcj_product_info_product_tabs_reviews_priority',
 		'default'   => 30,
 		'type'      => 'number',
