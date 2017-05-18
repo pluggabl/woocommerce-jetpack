@@ -171,7 +171,7 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - Major code refactoring - Settings (general and meta box) from file. `add_settings_hook()` function removed from `WCJ_Module` class.
 	* Dev - "Booster" tab priority in WooCommerce settings changed to 1.
 	* Dev - `wcj_number_plus_checkbox` admin settings field type added (and `WC_Settings_Jetpack` code refactoring).
-~	* Dev - `wcj_get_products()` - Code refactoring and `add_variations` param added.
+	* Dev - `wcj_get_products()` - Code refactoring and `add_variations` param added.
 ~	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
 ~	* Fix - `wcj-datepicker.js` - 'zero' special value added for `mindate` and `maxdate` (fixes the issue with `mindate=0` and `maxdate=0` in Checkout Custom Fields).
 	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
