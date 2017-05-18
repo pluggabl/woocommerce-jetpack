@@ -170,11 +170,11 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - Email Options - `get_payment_method()`.
 ~	* Dev - Major code refactoring - Settings (general and meta box) from file. `add_settings_hook()` function removed from `WCJ_Module` class.
 ~	* Dev - `get_booster_tab_priority()` - one more plugin added.
-~	* Dev - `wcj_number_plus_checkbox` admin settings field type added (and `WC_Settings_Jetpack` code refactoring).
+	* Dev - `wcj_number_plus_checkbox` admin settings field type added (and `WC_Settings_Jetpack` code refactoring).
 ~	* Dev - `wcj_get_products()` - Code refactoring and `add_variations` param added.
 ~	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
 ~	* Fix - `wcj-datepicker.js` - 'zero' special value added for `mindate` and `maxdate` (fixes the issue with `mindate=0` and `maxdate=0` in Checkout Custom Fields).
-~	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
+	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
 ~D	* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
 ~D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
 ~D	* Dev - Shortcodes - `visibility` (i.e. user role) attribute can now be used in invoice shortcodes; `wrong_user_text` attribute added.
@@ -223,22 +223,22 @@ DE	* Dev - PRODUCTS - Stock - Initial module release.
 ~D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
 ~D	* Dev - CART & CHECKOUT - Empty Cart Button - "Do not add" option added to "Button position on the Cart page".
 	* Dev - CART & CHECKOUT - Empty Cart Button - Code refactoring.
-~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
+D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
 	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Value" admin settings field type changed to `custom_textarea`.
-~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
-~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
-~D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - "Custom Shipping Methods Number" option moved to free version.
+D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
+D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
+D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - "Custom Shipping Methods Number" option moved to free version.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
 ~D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
 	* Dev - SHIPPING & ORDERS - Shipping Calculator - Minor code refactoring.
-~D	* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
-~	* Fix - PDF INVOICING & PACKING SLIPS - Styling - Default values for additional custom documents fixed.
-~	* Dev - PDF INVOICING & PACKING SLIPS - Directory changed from `settings` to `submodules`.
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Add PDF Invoices Meta Box to Admin Edit Order Page" option added.
-~D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
-~D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
-~D	* Dev - EMAILS & MISC. - Email Verification - Initial module release.
-~D	* Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Output restyled.
+D	* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
+	* Fix - PDF INVOICING & PACKING SLIPS - Styling - Default values for additional custom documents fixed.
+	* Dev - PDF INVOICING & PACKING SLIPS - Directory changed from `settings` to `submodules`.
+D	* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Add PDF Invoices Meta Box to Admin Edit Order Page" option added.
+D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
+D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
+D	* Dev - EMAILS & MISC. - Email Verification - Initial module release.
+D	* Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Output restyled.
 	* Tweak - `WCJ_Module` - `extra_desc` and `link_slug` properties added.
 	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt; main plugin file; module's documentation links.
 

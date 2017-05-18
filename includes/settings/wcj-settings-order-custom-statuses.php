@@ -39,8 +39,8 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Default "Processing" and "Complete" Action Buttons', 'woocommerce-jetpack' ),
-		'desc_tip' => __( '"Processing" and "Complete" action buttons by default are hidden on custom status. You can enable it here. Possible values are: Show both; Show "Processing" only; Show "Complete" only; Hide (default).', 'woocommerce-jetpack' ),
+		'title'    => __( '"Processing" and "Complete" Action Buttons', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'By default, when order has custom status, "Processing" and "Complete" action buttons are hidden. You can enable it here. Possible values are: Show both; Show "Processing" only; Show "Complete" only; Hide (default).', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_orders_custom_statuses_processing_and_completed_actions',
 		'default'  => 'hide',
 		'type'     => 'select',
