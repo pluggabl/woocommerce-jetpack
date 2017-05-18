@@ -545,7 +545,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 					if ( ! ( $option_value = get_post_meta( $current_post_id, '_' . $option_id, true ) ) ) {
 						$option_value = get_option( $option['id'] . 'default_' . $i, '' );
 						if ( '' === $option_value && 'wcj_custom_product_tabs_priority_local_' === $option['id'] ) {
-							$option_value = 50;
+							$option_value = (50 + $i - 1);
 						}
 					}
 					switch ( $option['type'] ) {

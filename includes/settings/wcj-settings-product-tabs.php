@@ -232,7 +232,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 			'title'     => '',
 			'desc'      => __( 'Default Priority (i.e. Order)', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_custom_product_tabs_priority_local_default_' . $i,
-			'default'   => 50,
+			'default'   => (50 + $i - 1),
 			'type'      => 'number',
 		),
 		array(
