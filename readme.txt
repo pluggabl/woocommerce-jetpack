@@ -162,7 +162,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
 ~	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `get_country()`.
-~!	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
+~	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
 ~	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `woocommerce_single_product_image_html` hook replaced.
 	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Related Products - `woocommerce_related_products_args` hook replaced with `woocommerce_product_related_posts_query`. Ordering by meta values removed. Ordering by ID, price etc. added.
