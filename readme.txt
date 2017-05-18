@@ -168,12 +168,12 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Related Products - `woocommerce_related_products_args` hook replaced with `woocommerce_product_related_posts_query`. Ordering by meta values removed. Ordering by ID, price etc. added.
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `get_payment_method()`; `get_status()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - Email Options - `get_payment_method()`.
+	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
+	* Fix - `wcj-datepicker.js` - 'zero' special value added for `mindate` and `maxdate` (fixes the issue with `mindate=0` and `maxdate=0` in Checkout Custom Fields).
 	* Dev - Major code refactoring - Settings (general and meta box) from file. `add_settings_hook()` function removed from `WCJ_Module` class.
 	* Dev - "Booster" tab priority in WooCommerce settings changed to 1.
 	* Dev - `wcj_number_plus_checkbox` admin settings field type added (and `WC_Settings_Jetpack` code refactoring).
 	* Dev - `wcj_get_products()` - Code refactoring and `add_variations` param added.
-~	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
-	* Fix - `wcj-datepicker.js` - 'zero' special value added for `mindate` and `maxdate` (fixes the issue with `mindate=0` and `maxdate=0` in Checkout Custom Fields).
 	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
 ~D	* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
 ~D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
