@@ -32,7 +32,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		if ( 'module' === $this->type ) {
 			$this->parent_id = '';
 		}
-		add_action( 'init', array( $this, 'add_settings_from_file_hook' ) );
+		add_action( 'init', array( $this, 'add_settings' ) );
 		add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
 	}
 
@@ -59,12 +59,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	}
 
 	/*
-	 * add_settings_from_file_hook.
+	 * add_settings.
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
 	 */
-	function add_settings_from_file_hook() {
+	function add_settings() {
 		add_filter( 'wcj_' . $this->id . '_settings', array( $this, 'add_settings_from_file' ) );
 	}
 
