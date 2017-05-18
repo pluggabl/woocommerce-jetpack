@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.8.0-dev-201705181515';
+	public $version = '2.8.0-dev-201705181520';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -689,12 +689,12 @@ final class WC_Jetpack {
 	function admin_notices_version_updated() {
 		if ( get_option( 'booster_for_woocommerce_version' ) === $this->version ) {
 			$class   = 'notice notice-success is-dismissible';
-			$message = sprintf( __( '<strong>Booster for WooCommerce</strong> plugin was successfully updated to version %s.', 'woocommerce-jetpack' ), $this->version );
-		} else {
+			$message = sprintf( __( '<strong>Booster for WooCommerce</strong> plugin was successfully updated to version <strong>%s</strong>.', 'woocommerce-jetpack' ), $this->version );
+			echo sprintf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message );
+		} /* else {
 			$class   = 'notice notice-error';
 			$message = __( 'Something went wrong when updating <strong>Booster for WooCommerce</strong> plugin.', 'woocommerce-jetpack' );
-		}
-		echo sprintf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message );
+		} */
 	}
 
 	/**
