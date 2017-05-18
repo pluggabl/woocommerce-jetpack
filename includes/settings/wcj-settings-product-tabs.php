@@ -33,21 +33,9 @@ $settings = array(
 		),
 	),
 );
-$product_tags_options = array();
-$product_tags = get_terms( 'product_tag', 'orderby=name&hide_empty=0' );
-if ( ! empty( $product_tags ) && ! is_wp_error( $product_tags ) ){
-	foreach ( $product_tags as $product_tag ) {
-		$product_tags_options[ $product_tag->term_id ] = $product_tag->name;
-	}
-}
-$product_cats_options = array();
-$product_cats = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
-if ( ! empty( $product_cats ) && ! is_wp_error( $product_cats ) ){
-	foreach ( $product_cats as $product_cat ) {
-		$product_cats_options[ $product_cat->term_id ] = $product_cat->name;
-	}
-}
-$products_options = apply_filters( 'wcj_get_products_filter', array() );
+$product_tags_options = wcj_get_terms( 'product_tag' );
+$product_cats_options = wcj_get_terms( 'product_cat' );
+$products_options     = wcj_get_products();
 for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings,
 		array(
