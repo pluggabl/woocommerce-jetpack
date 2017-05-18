@@ -158,91 +158,91 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.0 - 18/05/2017 =
-~	* Dev - WooCommerce v3.x.x compatibility - `wcj_get_product_input_fields()` fixed (used in "Export" module and in `[wcj_order_items_table]` shortcode's `item_product_input_fields` column).
-~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
-~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
-~	* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `get_country()`.
-~	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
-~	* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `woocommerce_single_product_image_html` hook replaced.
-	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
-~	* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Related Products - `woocommerce_related_products_args` hook replaced with `woocommerce_product_related_posts_query`. Ordering by meta values removed. Ordering by ID, price etc. added.
-~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `get_payment_method()`; `get_status()`.
-~	* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - Email Options - `get_payment_method()`.
-	* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
-	* Fix - `wcj-datepicker.js` - 'zero' special value added for `mindate` and `maxdate` (fixes the issue with `mindate=0` and `maxdate=0` in Checkout Custom Fields).
-	* Dev - Major code refactoring - Settings (general and meta box) from file. `add_settings_hook()` function removed from `WCJ_Module` class.
-	* Dev - "Booster" tab priority in WooCommerce settings changed to 1.
-	* Dev - `wcj_number_plus_checkbox` admin settings field type added (and `WC_Settings_Jetpack` code refactoring).
-	* Dev - `wcj_get_products()` - Code refactoring and `add_variations` param added.
-	* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
-~D	* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
-~D	* Dev - Shortcodes - `time` attribute added to all shortcodes.
-~D	* Dev - Shortcodes - `visibility` (i.e. user role) attribute can now be used in invoice shortcodes; `wrong_user_text` attribute added.
-~D	* Dev - Shortcodes - `payment_method` and `not_payment_method` attributes added to all shortcodes when used in invoice.
-	* Dev - Shortcodes - General - `[wcj_cart_total]` shortcode added.
-D	* Dev - Shortcodes - Orders - `[wcj_order_items]` - `field` attribute's `_qty_x_name` special value added (and `debug` renamed to `_debug`).
-~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_attribute__name` and `exclude_by_attribute__value` attributes added.
-~	* Fix - Shortcodes - Products - `[wcj_product_stock_quantity]` - Return empty string instead of `false` on `null`.
-~D	* Dev - Shortcodes - Products - `[wcj_product_stock_quantity]` - `count_variations` attribute added.
-D	* Dev - Shortcodes - Products - `[wcj_product_description]` shortcode added.
-D	* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_product_sale_price]` - `multiply_by` attribute added.
-	* Dev - PRICES & CURRENCIES - Bulk Price Converter - Minor code refactoring.
-~	* Dev - PRICES & CURRENCIES - Currency per Product - Additional check for if cart is set added to `get_cart_checkout_currency()`.
-~	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Currency Switcher Template" option added.
-~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
-	* Dev - PRICES & CURRENCIES - Price by User Role - Minor code refactoring.
-~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Per Product Settings Type" option added.
-~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Display Product Price Info in Archives" options added.
-~D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Add "Open Pricing" Column to Admin Product List" option added.
-	* Fix - PRODUCTS - Bookings - "Product on sale" JS bug fixed.
-~D	* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Message Options" section added.
-~	* Fix - PRODUCTS - Product Addons - Checking for set `product_id` on ajax call.
-~	* Fix - PRODUCTS - Product Addons - Variable product with equal variation prices ajax issue fixed.
-~	* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
-~	* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
-~DE	* Dev - PRODUCTS - Product Availability by Time - Initial module release.
-D	* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
-~D	* Dev - PRODUCTS - Product Images - Product Images Sale Flash - "Hide Everywhere" option added.
-~D	* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
-D	* Dev - PRODUCTS - Product Tabs - "Link" option added.
-~	* Dev - PRODUCTS - Product Tabs - Code refactoring.
-DE	* Dev - PRODUCTS - Stock - Initial module release.
-~D	* Dev - PRODUCTS - User Products - "Product URL (for "External/Affiliate" product type only)" field added.
-~D	* Dev - PRODUCTS - User Products - "Product Type" option added.
-~	* Dev - PRODUCTS - User Products - `WP_Query` optimized to return `ids` only.
-~D	* Dev - PRODUCTS - User Products - "Price Step" option added (`[wcj_product_add_new]`).
-~D	* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
-~D	* Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart "Return to shop" Button Text" options added.
-~D	* Dev - CART & CHECKOUT - Checkout Core Fields - "priority (i.e. order)" options added.
-~	* Dev - CART & CHECKOUT - Checkout Core Fields - Minor code refactoring.
-~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Priority (i.e. Order)" options added.
-	* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
-	* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
-D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
-	* Dev - CART & CHECKOUT - Checkout Custom Fields - Minor code refactoring.
-D	* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
-D	* Dev - CART & CHECKOUT - Empty Cart Button - "Do not add" option added to "Button position on the Cart page".
-	* Dev - CART & CHECKOUT - Empty Cart Button - Code refactoring.
-D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
-	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Value" admin settings field type changed to `custom_textarea`.
-D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
-D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
-D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - "Custom Shipping Methods Number" option moved to free version.
-D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
-D	* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
-	* Dev - SHIPPING & ORDERS - Shipping Calculator - Minor code refactoring.
-D	* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
-	* Fix - PDF INVOICING & PACKING SLIPS - Styling - Default values for additional custom documents fixed.
-	* Dev - PDF INVOICING & PACKING SLIPS - Directory changed from `settings` to `submodules`.
-D	* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Add PDF Invoices Meta Box to Admin Edit Order Page" option added.
-D	* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
-D	* Dev - EMAILS & MISC. - Custom JS - Initial module release.
-D	* Dev - EMAILS & MISC. - Email Verification - Initial module release.
-D	* Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Output restyled.
-D	* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Last 36 Months" option added.
-	* Tweak - Plugin update admin notices added.
-	* Tweak - `WCJ_Module` - `extra_desc` and `link_slug` properties added.
-	* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt; main plugin file; module's documentation links.
+* Dev - WooCommerce v3.x.x compatibility - `wcj_get_product_input_fields()` fixed (used in "Export" module and in `[wcj_order_items_table]` shortcode's `item_product_input_fields` column).
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.
+* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `shipping_as_item` and `discount_as_item` fixed (in `add_item()`).
+* Dev - WooCommerce v3.x.x compatibility - PRICES & CURRENCIES - Prices and Currencies by Country - `get_country()`.
+* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Addons - `wcj_get_product_id_or_variation_parent_id()` instead of `get_id()`.
+* Fix - WooCommerce v3.x.x compatibility - PRODUCTS - Product Images - `woocommerce_single_product_image_html` hook replaced.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Product Input Fields - Order item meta (`$item->meta_exists()` and `$item->get_meta()`) in `add_product_input_fields_to_order_item_name()` and `add_files_to_email_attachments()`.
+* Dev - WooCommerce v3.x.x compatibility - PRODUCTS - Related Products - `woocommerce_related_products_args` hook replaced with `woocommerce_product_related_posts_query`. Ordering by meta values removed. Ordering by ID, price etc. added.
+* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `get_payment_method()`; `get_status()`.
+* Dev - WooCommerce v3.x.x compatibility - PDF INVOICING & PACKING SLIPS - Email Options - `get_payment_method()`.
+* Fix - `wcj_get_order_item_meta_info()` - `is_custom` meta key excluded from results.
+* Fix - `wcj-datepicker.js` - 'zero' special value added for `mindate` and `maxdate` (fixes the issue with `mindate=0` and `maxdate=0` in Checkout Custom Fields).
+* Dev - Major code refactoring - Settings (general and meta box) from file. `add_settings_hook()` function removed from `WCJ_Module` class.
+* Dev - "Booster" tab priority in WooCommerce settings changed to 1.
+* Dev - `wcj_number_plus_checkbox` admin settings field type added (and `WC_Settings_Jetpack` code refactoring).
+* Dev - `wcj_get_products()` - Code refactoring and `add_variations` param added.
+* Dev - `WCJ_Module` - `create_meta_box()` - `css` option added.
+* Dev - Shortcodes - `on_zero` attribute added to all shortcodes.
+* Dev - Shortcodes - `time` attribute added to all shortcodes.
+* Dev - Shortcodes - `visibility` (i.e. user role) attribute can now be used in invoice shortcodes; `wrong_user_text` attribute added.
+* Dev - Shortcodes - `payment_method` and `not_payment_method` attributes added to all shortcodes when used in invoice.
+* Dev - Shortcodes - General - `[wcj_cart_total]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_items]` - `field` attribute's `_qty_x_name` special value added (and `debug` renamed to `_debug`).
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_attribute__name` and `exclude_by_attribute__value` attributes added.
+* Fix - Shortcodes - Products - `[wcj_product_stock_quantity]` - Return empty string instead of `false` on `null`.
+* Dev - Shortcodes - Products - `[wcj_product_stock_quantity]` - `count_variations` attribute added.
+* Dev - Shortcodes - Products - `[wcj_product_description]` shortcode added.
+* Dev - Shortcodes - Products - `[wcj_product_regular_price]` and `[wcj_product_sale_price]` - `multiply_by` attribute added.
+* Dev - PRICES & CURRENCIES - Bulk Price Converter - Minor code refactoring.
+* Dev - PRICES & CURRENCIES - Currency per Product - Additional check for if cart is set added to `get_cart_checkout_currency()`.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Currency Switcher Template" option added.
+* Dev - PRICES & CURRENCIES - Price by User Role - "Categories" options added.
+* Dev - PRICES & CURRENCIES - Price by User Role - Minor code refactoring.
+* Dev - PRICES & CURRENCIES - Price by User Role - "Per Product Settings Type" option added.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Display Product Price Info in Archives" options added.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Add "Open Pricing" Column to Admin Product List" option added.
+* Fix - PRODUCTS - Bookings - "Product on sale" JS bug fixed.
+* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Message Options" section added.
+* Fix - PRODUCTS - Product Addons - Checking for set `product_id` on ajax call.
+* Fix - PRODUCTS - Product Addons - Variable product with equal variation prices ajax issue fixed.
+* Fix - PRODUCTS - Product Addons - Negative number addon frontend issue fixed.
+* Dev - PRODUCTS - Product Addons - Conversion by "Multicurrency (Currency Switcher)" added.
+* Dev - PRODUCTS - Product Availability by Time - Initial module release.
+* Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
+* Dev - PRODUCTS - Product Images - Product Images Sale Flash - "Hide Everywhere" option added.
+* Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
+* Dev - PRODUCTS - Product Tabs - "Link" option added.
+* Dev - PRODUCTS - Product Tabs - Code refactoring.
+* Dev - PRODUCTS - Stock - Initial module release.
+* Dev - PRODUCTS - User Products - "Product URL (for "External/Affiliate" product type only)" field added.
+* Dev - PRODUCTS - User Products - "Product Type" option added.
+* Dev - PRODUCTS - User Products - `WP_Query` optimized to return `ids` only.
+* Dev - PRODUCTS - User Products - "Price Step" option added (`[wcj_product_add_new]`).
+* Dev - PRODUCTS - User Products - "Custom Taxonomies" options added (`[wcj_product_add_new]`).
+* Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart "Return to shop" Button Text" options added.
+* Dev - CART & CHECKOUT - Checkout Core Fields - "priority (i.e. order)" options added.
+* Dev - CART & CHECKOUT - Checkout Core Fields - Minor code refactoring.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - "Priority (i.e. Order)" options added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Code refactoring - `add_settings_hook()` instead of `get_settings()`.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Admin settings restyled.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - "exclude categories" and "exclude products" options added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Minor code refactoring.
+* Dev - CART & CHECKOUT - Empty Cart Button - `[wcj_empty_cart_button]` shortcode added.
+* Dev - CART & CHECKOUT - Empty Cart Button - "Do not add" option added to "Button position on the Cart page".
+* Dev - CART & CHECKOUT - Empty Cart Button - Code refactoring.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Default "Processing" and "Complete" Action Buttons" option added.
+* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Value" admin settings field type changed to `custom_textarea`.
+* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Country" column renamed to "Billing Country" and code refactoring.
+* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Currency Code" column and filtering added.
+* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - "Custom Shipping Methods Number" option moved to free version.
+* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping (Legacy - without Shipping Zones) - All options copied from "Custom Shipping" with zones.
+* Dev - SHIPPING & ORDERS - Shipping - Custom Shipping - "By Total Cart Quantity Table" option added to "Type".
+* Dev - SHIPPING & ORDERS - Shipping Calculator - Minor code refactoring.
+* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Initial module release.
+* Fix - PDF INVOICING & PACKING SLIPS - Styling - Default values for additional custom documents fixed.
+* Dev - PDF INVOICING & PACKING SLIPS - Directory changed from `settings` to `submodules`.
+* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Add PDF Invoices Meta Box to Admin Edit Order Page" option added.
+* Dev - EMAILS & MISC. - Custom CSS - "Custom CSS on per Product Basis" options added.
+* Dev - EMAILS & MISC. - Custom JS - Initial module release.
+* Dev - EMAILS & MISC. - Email Verification - Initial module release.
+* Dev - EMAILS & MISC. - Old Slugs - Code refactoring. Output restyled.
+* Dev - EMAILS & MISC. - Reports - Booster: More Ranges - "Last 36 Months" option added.
+* Tweak - Plugin update admin notices added.
+* Tweak - `WCJ_Module` - `extra_desc` and `link_slug` properties added.
+* Tweak - Link changed from `http://booster.io` to `https://booster.io` in readme.txt; main plugin file; module's documentation links.
 
 = 2.7.1 - 13/04/2017 =
 * Fix - WooCommerce v3.x.x compatibility - BUTTON & PRICE LABELS - Custom Price Labels - Per Product - "Variable products" visibility options fixed.
