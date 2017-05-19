@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Booster for WooCommerce 2.8.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-"
 "jetpack\n"
-"POT-Creation-Date: 2017-05-18 19:47+0300\n"
+"POT-Creation-Date: 2017-05-19 11:30+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -287,7 +287,7 @@ msgid "Let customers upload files on (or after) WooCommerce checkout."
 msgstr ""
 
 #: includes/class-wcj-checkout-files-upload.php:86
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:50
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:52
 #: includes/settings/wcj-settings-checkout-files-upload.php:37
 msgid "File"
 msgstr ""
@@ -1547,7 +1547,7 @@ msgstr ""
 #: includes/settings/wcj-settings-product-info.php:68
 #: includes/settings/wcj-settings-product-input-fields.php:22
 #: includes/settings/wcj-settings-product-input-fields.php:52
-#: includes/settings/wcj-settings-product-input-fields.php:151
+#: includes/settings/wcj-settings-product-input-fields.php:172
 #: includes/settings/wcj-settings-product-open-pricing.php:80
 #: includes/settings/wcj-settings-product-open-pricing.php:87
 #: includes/settings/wcj-settings-product-open-pricing.php:101
@@ -2041,7 +2041,7 @@ msgstr ""
 #: includes/class-wcj-product-by-user.php:155
 #: includes/class-wcj-product-tabs.php:505
 #: includes/gateways/class-wc-gateway-wcj-custom.php:66
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:228
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:68
 #: includes/settings/wcj-settings-export.php:75
 #: includes/settings/wcj-settings-export.php:143
 #: includes/settings/wcj-settings-export.php:224
@@ -2300,7 +2300,7 @@ msgid "Link - Open in New Window"
 msgstr ""
 
 #: includes/class-wcj-product-tabs.php:529
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:88
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:118
 #: includes/settings/wcj-settings-checkout-custom-fields.php:172
 #: includes/settings/meta-box/wcj-settings-meta-box-custom-css.php:20
 #: includes/settings/meta-box/wcj-settings-meta-box-price-by-user-role.php:35
@@ -2324,7 +2324,7 @@ msgid "No"
 msgstr ""
 
 #: includes/class-wcj-product-tabs.php:530
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:80
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:110
 #: includes/settings/wcj-settings-checkout-custom-fields.php:166
 #: includes/settings/wcj-settings-eu-vat-number.php:50
 #: includes/settings/wcj-settings-eu-vat-number.php:57
@@ -3924,7 +3924,7 @@ msgid "Customer ID"
 msgstr ""
 
 #: includes/export/class-wcj-fields-helper.php:75
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:59
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:61
 #: includes/reports/wcj-class-reports-customers.php:90
 #: includes/settings/wcj-settings-checkout-custom-fields.php:94
 msgid "Email"
@@ -4171,7 +4171,7 @@ msgid "Price"
 msgstr ""
 
 #: includes/export/class-wcj-fields-helper.php:289
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:42
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:44
 #: includes/settings/wcj-settings-checkout-custom-fields.php:77
 #: includes/settings/wcj-settings-export.php:81
 #: includes/settings/wcj-settings-export.php:149
@@ -5574,7 +5574,7 @@ msgstr ""
 msgid "Booster for WooCommerce: Custom Payment Gateway"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:35
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:37
 #: includes/settings/wcj-settings-checkout-core-fields.php:29
 #: includes/settings/wcj-settings-checkout-files-upload.php:39
 #: includes/settings/wcj-settings-export.php:70
@@ -5592,283 +5592,79 @@ msgstr ""
 msgid "Enabled"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:46
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:48
 #: includes/settings/wcj-settings-checkout-custom-fields.php:82
 #: includes/settings/wcj-settings-more-button-labels.php:19
 #: includes/settings/wcj-settings-products-per-page.php:54
 msgid "Text"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:47
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:49
 #: includes/settings/wcj-settings-checkout-custom-fields.php:83
 msgid "Textarea"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:48
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:50
 #: includes/settings/wcj-settings-checkout-custom-fields.php:84
 msgid "Number"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:49
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:51
 #: includes/settings/wcj-settings-checkout-custom-fields.php:85
 #: includes/settings/wcj-settings-product-addons.php:76
 #: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:50
 msgid "Checkbox"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:51
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:53
 #: includes/settings/wcj-settings-checkout-custom-fields.php:86
 msgid "Datepicker"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:52
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:54
 #: includes/settings/wcj-settings-checkout-custom-fields.php:87
 msgid "Weekpicker"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:53
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:55
 #: includes/settings/wcj-settings-checkout-custom-fields.php:88
 msgid "Timepicker"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:54
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:56
 #: includes/settings/wcj-settings-checkout-custom-fields.php:89
 msgid "Select"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:55
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:57
 #: includes/settings/wcj-settings-checkout-custom-fields.php:90
 msgid "Radio"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:56
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:58
 #: includes/settings/wcj-settings-checkout-custom-fields.php:91
 msgid "Password"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:57
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:59
 #: includes/settings/wcj-settings-checkout-custom-fields.php:92
 #: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:88
 #: includes/tools/class-wcj-eu-countries-vat-rates-tool.php:102
 msgid "Country"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:60
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:62
 #: includes/settings/wcj-settings-checkout-custom-fields.php:95
 msgid "Phone"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:77
-msgid "If checkbox is selected, set value for ON here"
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:75
+#: includes/settings/wcj-settings-checkout-custom-fields.php:112
+#: includes/settings/wcj-settings-eu-vat-number.php:27
+msgid "Placeholder"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:78
-msgid "Checkbox: ON"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:85
-msgid "If checkbox is selected, set value for OFF here"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:86
-msgid "Checkbox: OFF"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:93
-msgid "If checkbox is selected, set default value here"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:94
-msgid "Checkbox: Default"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:98
-#: includes/settings/wcj-settings-checkout-custom-fields.php:180
-msgid "Not Checked"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:99
-#: includes/settings/wcj-settings-checkout-custom-fields.php:181
-#: includes/settings/wcj-settings-checkout-customization.php:26
-msgid "Checked"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:105
-msgid ""
-"If file is selected, set accepted file types here. E.g.: \".jpg,.jpeg,.png"
-"\". Leave blank to accept all files"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:106
-msgid ""
-"Visit <a href=\"https://www.w3schools.com/tags/att_input_accept.asp\" target="
-"\"_blank\">documentation on input accept attribute</a> for valid option "
-"formats"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:107
-msgid "File: Accepted types"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:109
-msgid ".jpg,.jpeg,.png"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:114
-msgid ""
-"If file is selected, set max file size here. Set to zero to accept all files"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:115
-msgid "File: Max size"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:122
-msgid ""
-"If datepicker/weekpicker is selected, set date format here. Visit <a href="
-"\"https://codex.wordpress.org/Formatting_Date_and_Time\" target=\"_blank"
-"\">documentation on date and time formatting</a> for valid date formats"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:123
-#: includes/settings/wcj-settings-checkout-custom-fields.php:187
-msgid "Leave blank to use your current WordPress format"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:124
-msgid "Datepicker/Weekpicker: Date format"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:131
-msgid "If datepicker/weekpicker is selected, set min date (in days) here"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:132
-msgid "Datepicker/Weekpicker: Min date"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:139
-msgid "If datepicker/weekpicker is selected, set max date (in days) here"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:140
-msgid "Datepicker/Weekpicker: Max date"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:147
-msgid ""
-"If datepicker/weekpicker is selected, set if you want to add year selector"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:148
-msgid "Datepicker/Weekpicker: Change year"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:155
-msgid ""
-"If datepicker/weekpicker is selected, and year selector is enabled, set year "
-"range here"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:156
-msgid "Datepicker/Weekpicker: Year range"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:164
-msgid "If datepicker/weekpicker is selected, set first week day here"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:165
-msgid "Datepicker/Weekpicker: First week day"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:169
-#: includes/settings/wcj-settings-checkout-custom-fields.php:225
-msgid "Sunday"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:170
-#: includes/settings/wcj-settings-checkout-custom-fields.php:226
-msgid "Monday"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:171
-#: includes/settings/wcj-settings-checkout-custom-fields.php:227
-msgid "Tuesday"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:172
-#: includes/settings/wcj-settings-checkout-custom-fields.php:228
-msgid "Wednesday"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:173
-#: includes/settings/wcj-settings-checkout-custom-fields.php:229
-msgid "Thursday"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:174
-#: includes/settings/wcj-settings-checkout-custom-fields.php:230
-msgid "Friday"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:175
-#: includes/settings/wcj-settings-checkout-custom-fields.php:231
-msgid "Saturday"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:181
-msgid ""
-"If timepicker is selected, set time format here. Visit <a href=\"http://"
-"timepicker.co/options/\" target=\"_blank\">timepicker options page</a> for "
-"valid time formats"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:182
-msgid "Timepicker: Time format"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:189
-msgid ""
-"If timepicker is selected, set min time here. Visit <a href=\"http://"
-"timepicker.co/options/\" target=\"_blank\">timepicker options page</a> for "
-"valid option formats"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:190
-msgid "Timepicker: Min Time"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:197
-msgid ""
-"If timepicker is selected, set max time here. Visit <a href=\"http://"
-"timepicker.co/options/\" target=\"_blank\">timepicker options page</a> for "
-"valid option formats"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:198
-msgid "Timepicker: Max Time"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:205
-msgid "If timepicker is selected, set interval (in minutes) here"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:206
-#: includes/settings/wcj-settings-checkout-custom-fields.php:242
-msgid "Timepicker: Interval"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:213
-msgid "If select/radio is selected, set options here. One option per line"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:214
-#: includes/settings/wcj-settings-checkout-custom-fields.php:155
-msgid "Select/Radio: Options"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:221
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:82
 #: includes/settings/wcj-settings-checkout-core-fields.php:41
 #: includes/settings/wcj-settings-checkout-custom-fields.php:99
 #: includes/settings/wcj-settings-checkout-files-upload.php:45
@@ -5877,31 +5673,235 @@ msgstr ""
 msgid "Required"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:235
-#: includes/settings/wcj-settings-checkout-custom-fields.php:112
-#: includes/settings/wcj-settings-eu-vat-number.php:27
-msgid "Placeholder"
-msgstr ""
-
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:242
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:89
 msgid "Message on required"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:321
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:107
+msgid "If checkbox is selected, set value for ON here"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:108
+msgid "Checkbox: ON"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:115
+msgid "If checkbox is selected, set value for OFF here"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:116
+msgid "Checkbox: OFF"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:123
+msgid "If checkbox is selected, set default value here"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:124
+msgid "Checkbox: Default"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:128
+#: includes/settings/wcj-settings-checkout-custom-fields.php:180
+msgid "Not Checked"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:129
+#: includes/settings/wcj-settings-checkout-custom-fields.php:181
+#: includes/settings/wcj-settings-checkout-customization.php:26
+msgid "Checked"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:135
+msgid ""
+"If file is selected, set accepted file types here. E.g.: \".jpg,.jpeg,.png"
+"\". Leave blank to accept all files"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:136
+msgid ""
+"Visit <a href=\"https://www.w3schools.com/tags/att_input_accept.asp\" target="
+"\"_blank\">documentation on input accept attribute</a> for valid option "
+"formats"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:137
+msgid "File: Accepted types"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:139
+msgid ".jpg,.jpeg,.png"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:144
+msgid ""
+"If file is selected, set max file size here. Set to zero to accept all files"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:145
+msgid "File: Max size"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:152
+msgid ""
+"If datepicker/weekpicker is selected, set date format here. Visit <a href="
+"\"https://codex.wordpress.org/Formatting_Date_and_Time\" target=\"_blank"
+"\">documentation on date and time formatting</a> for valid date formats"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:153
+#: includes/settings/wcj-settings-checkout-custom-fields.php:187
+msgid "Leave blank to use your current WordPress format"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:154
+msgid "Datepicker/Weekpicker: Date format"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:161
+msgid "If datepicker/weekpicker is selected, set min date (in days) here"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:162
+msgid "Datepicker/Weekpicker: Min date"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:169
+msgid "If datepicker/weekpicker is selected, set max date (in days) here"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:170
+msgid "Datepicker/Weekpicker: Max date"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:177
+msgid ""
+"If datepicker/weekpicker is selected, set if you want to add year selector"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:178
+msgid "Datepicker/Weekpicker: Change year"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:185
+msgid ""
+"If datepicker/weekpicker is selected, and year selector is enabled, set year "
+"range here"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:186
+msgid "Datepicker/Weekpicker: Year range"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:194
+msgid "If datepicker/weekpicker is selected, set first week day here"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:195
+msgid "Datepicker/Weekpicker: First week day"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:199
+#: includes/settings/wcj-settings-checkout-custom-fields.php:225
+msgid "Sunday"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:200
+#: includes/settings/wcj-settings-checkout-custom-fields.php:226
+msgid "Monday"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:201
+#: includes/settings/wcj-settings-checkout-custom-fields.php:227
+msgid "Tuesday"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:202
+#: includes/settings/wcj-settings-checkout-custom-fields.php:228
+msgid "Wednesday"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:203
+#: includes/settings/wcj-settings-checkout-custom-fields.php:229
+msgid "Thursday"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:204
+#: includes/settings/wcj-settings-checkout-custom-fields.php:230
+msgid "Friday"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:205
+#: includes/settings/wcj-settings-checkout-custom-fields.php:231
+msgid "Saturday"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:211
+msgid ""
+"If timepicker is selected, set time format here. Visit <a href=\"http://"
+"timepicker.co/options/\" target=\"_blank\">timepicker options page</a> for "
+"valid time formats"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:212
+msgid "Timepicker: Time format"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:219
+msgid ""
+"If timepicker is selected, set min time here. Visit <a href=\"http://"
+"timepicker.co/options/\" target=\"_blank\">timepicker options page</a> for "
+"valid option formats"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:220
+msgid "Timepicker: Min Time"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:227
+msgid ""
+"If timepicker is selected, set max time here. Visit <a href=\"http://"
+"timepicker.co/options/\" target=\"_blank\">timepicker options page</a> for "
+"valid option formats"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:228
+msgid "Timepicker: Max Time"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:235
+msgid "If timepicker is selected, set interval (in minutes) here"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:236
+#: includes/settings/wcj-settings-checkout-custom-fields.php:242
+msgid "Timepicker: Interval"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:243
+msgid "If select/radio is selected, set options here. One option per line"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:244
+#: includes/settings/wcj-settings-checkout-custom-fields.php:155
+msgid "Select/Radio: Options"
+msgstr ""
+
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:323
 #: includes/input-fields/class-wcj-product-input-fields-per-product.php:162
 #: includes/settings/wcj-settings-product-input-fields.php:76
 msgid "Product Input Field"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:402
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:404
 msgid "Wrong file type!"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:411
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:413
 msgid "File is too big!"
 msgstr ""
 
-#: includes/input-fields/class-wcj-product-input-fields-abstract.php:563
+#: includes/input-fields/class-wcj-product-input-fields-abstract.php:567
 msgid "Select a country&hellip;"
 msgstr ""
 
@@ -7213,24 +7213,24 @@ msgid ""
 msgstr ""
 
 #: includes/settings/wcj-settings-checkout-files-upload.php:219
-#: includes/settings/wcj-settings-product-input-fields.php:120
+#: includes/settings/wcj-settings-product-input-fields.php:141
 msgid "Emails Options"
 msgstr ""
 
 #: includes/settings/wcj-settings-checkout-files-upload.php:224
-#: includes/settings/wcj-settings-product-input-fields.php:125
+#: includes/settings/wcj-settings-product-input-fields.php:146
 msgid "Attach Files to Admin's New Order Emails"
 msgstr ""
 
 #: includes/settings/wcj-settings-checkout-files-upload.php:225
 #: includes/settings/wcj-settings-checkout-files-upload.php:232
-#: includes/settings/wcj-settings-product-input-fields.php:126
-#: includes/settings/wcj-settings-product-input-fields.php:133
+#: includes/settings/wcj-settings-product-input-fields.php:147
+#: includes/settings/wcj-settings-product-input-fields.php:154
 msgid "Attach"
 msgstr ""
 
 #: includes/settings/wcj-settings-checkout-files-upload.php:231
-#: includes/settings/wcj-settings-product-input-fields.php:132
+#: includes/settings/wcj-settings-product-input-fields.php:153
 msgid "Attach Files to Customer's Processing Order Emails"
 msgstr ""
 
@@ -10298,22 +10298,34 @@ msgid "Frontend View Options"
 msgstr ""
 
 #: includes/settings/wcj-settings-product-input-fields.php:99
-msgid "HTML to add after required field title"
+msgid "HTML Template - Start"
 msgstr ""
 
 #: includes/settings/wcj-settings-product-input-fields.php:106
+msgid "HTML Template - Each Field"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-input-fields.php:113
+msgid "HTML Template - End"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-input-fields.php:120
+msgid "HTML to add after required field title"
+msgstr ""
+
+#: includes/settings/wcj-settings-product-input-fields.php:127
 msgid "Item Name Order Table Format"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-input-fields.php:107
+#: includes/settings/wcj-settings-product-input-fields.php:128
 msgid "Affects Checkout, Emails and Admin Orders View"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-input-fields.php:145
+#: includes/settings/wcj-settings-product-input-fields.php:166
 msgid "Admin Order View Options"
 msgstr ""
 
-#: includes/settings/wcj-settings-product-input-fields.php:150
+#: includes/settings/wcj-settings-product-input-fields.php:171
 msgid "Replace Field ID with Field Label"
 msgstr ""
 
