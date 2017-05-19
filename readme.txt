@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 2.8.0
+Stable tag: 2.8.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -158,8 +158,8 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.1 - 19/05/2017 =
-~	* Fix - Shortcodes - Orders - `[wcj_order_checkout_field]` - Fixed custom checkout fields value not returning properly.
-~D	* Dev - Shortcodes - Products - `[wcj_product_id]` shortcode added.
+* Fix - Shortcodes - Orders - `[wcj_order_checkout_field]` - Fixed custom checkout fields value not returning properly.
+* Dev - Shortcodes - Products - `[wcj_product_id]` shortcode added.
 
 = 2.8.0 - 19/05/2017 =
 * Dev - WooCommerce v3.x.x compatibility - `wcj_get_product_input_fields()` fixed (used in "Export" module and in `[wcj_order_items_table]` shortcode's `item_product_input_fields` column).
