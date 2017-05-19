@@ -204,7 +204,8 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - PRODUCTS - Product Bulk Meta Editor - Initial module release.
 * Dev - PRODUCTS - Product Images - Product Images Sale Flash - "Hide Everywhere" option added.
 * Dev - PRODUCTS - Product Input Fields - Settings restyled.
-* Dev - PRODUCTS - Product Input Fields - "HTML Template" options added.
+* Dev - PRODUCTS - Product Input Fields - Frontend CSS `id` and `class` added.
+* Dev - PRODUCTS - Product Input Fields - Frontend "HTML Template" options added.
 * Dev - PRODUCTS - Product Input Fields - `wcj_product_input_field_frontend_html` filter added.
 * Dev - PRODUCTS - Product Tabs - "Link" option added.
 * Dev - PRODUCTS - Product Tabs - Code refactoring.
