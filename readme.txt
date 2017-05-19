@@ -157,6 +157,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 2.8.1 - 19/05/2017 =
+~D	* Dev - Shortcodes - Products - `[wcj_product_id]` shortcode added.
+
 = 2.8.0 - 19/05/2017 =
 * Dev - WooCommerce v3.x.x compatibility - `wcj_get_product_input_fields()` fixed (used in "Export" module and in `[wcj_order_items_table]` shortcode's `item_product_input_fields` column).
 * Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_checkout_field]` - `$order->get_data()`.

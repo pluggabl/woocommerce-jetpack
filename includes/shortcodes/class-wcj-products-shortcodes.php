@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 2.8.0
+ * @version 2.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,11 +15,12 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.1
 	 */
 	public function __construct() {
 
 		$this->the_shortcodes = array(
+			'wcj_product_id',
 			'wcj_product_author_avatar',
 			'wcj_product_author',
 			'wcj_product_author_link',
@@ -133,6 +134,16 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		if ( ! $this->the_product ) return false;
 
 		return $atts;
+	}
+
+	/**
+	 * wcj_product_id.
+	 *
+	 * @version 2.8.1
+	 * @since   2.8.1
+	 */
+	function wcj_product_id( $atts ) {
+		return $this->the_product->get_id();
 	}
 
 	/**
