@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 2.8.0
+ * @version 2.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -554,7 +554,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_checkout_field.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.1
 	 */
 	function wcj_order_checkout_field( $atts ) {
 		$field_id = ( string ) $atts['field_id'];
@@ -579,6 +579,9 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 				if ( isset( $order_data['shipping'][ $shipping_field_id ] ) ) {
 					return $order_data['shipping'][ $shipping_field_id ];
 				}
+			}
+			if ( $this->the_order->get_meta( '_' . $field_id ) ) {
+				return $this->the_order->get_meta( '_' . $field_id );
 			}
 			if ( isset( $order_data[ $field_id ] ) ) {
 				return ( is_array( $order_data[ $field_id ] ) && isset( $order_data[ $field_id ]['value'] ) ) ? $order_data[ $field_id ]['value'] : $order_data[ $field_id ];

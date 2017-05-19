@@ -158,6 +158,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.1 - 19/05/2017 =
+~	* Fix - Shortcodes - Orders - `[wcj_order_checkout_field]` - Fixed custom checkout fields value not returning properly.
 ~D	* Dev - Shortcodes - Products - `[wcj_product_id]` shortcode added.
 
 = 2.8.0 - 19/05/2017 =
