@@ -27,7 +27,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * get_options.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.0
 	 */
 	function get_options() {
 		$options = array(
@@ -61,6 +61,34 @@ class WCJ_Product_Input_Fields_Abstract {
 					'email'      => __( 'Email', 'woocommerce-jetpack' ),
 					'tel'        => __( 'Phone', 'woocommerce-jetpack' ),
 				),
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_title_' . $this->scope . '_',
+				'title'             => __( 'Title', 'woocommerce-jetpack' ),
+				'type'              => 'textarea',
+				'default'           => '',
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_placeholder_' . $this->scope . '_',
+				'title'             => __( 'Placeholder', 'woocommerce-jetpack' ),
+				'type'              => 'textarea',
+				'default'           => '',
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_required_' . $this->scope . '_',
+				'title'             => __( 'Required', 'woocommerce-jetpack' ),
+				'type'              => 'checkbox',
+				'default'           => 'no',
+			),
+
+			array(
+				'id'                => 'wcj_product_input_fields_required_message_' . $this->scope . '_',
+				'title'             => __( 'Message on required', 'woocommerce-jetpack' ),
+				'type'              => 'textarea',
+				'default'           => '',
 			),
 
 			/* array(
@@ -214,34 +242,6 @@ class WCJ_Product_Input_Fields_Abstract {
 				'id'                => 'wcj_product_input_fields_type_select_options_' . $this->scope . '_',
 				'title'             => __( 'If select/radio is selected, set options here. One option per line', 'woocommerce-jetpack' ),
 				'short_title'       => __( 'Select/Radio: Options', 'woocommerce-jetpack' ),
-				'type'              => 'textarea',
-				'default'           => '',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_required_' . $this->scope . '_',
-				'title'             => __( 'Required', 'woocommerce-jetpack' ),
-				'type'              => 'checkbox',
-				'default'           => 'no',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_title_' . $this->scope . '_',
-				'title'             => __( 'Title', 'woocommerce-jetpack' ),
-				'type'              => 'textarea',
-				'default'           => '',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_placeholder_' . $this->scope . '_',
-				'title'             => __( 'Placeholder', 'woocommerce-jetpack' ),
-				'type'              => 'textarea',
-				'default'           => '',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_required_message_' . $this->scope . '_',
-				'title'             => __( 'Message on required', 'woocommerce-jetpack' ),
 				'type'              => 'textarea',
 				'default'           => '',
 			),
