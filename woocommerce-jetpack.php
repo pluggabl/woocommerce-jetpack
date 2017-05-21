@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: https://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 2.8.1
+Version: 2.8.2-dev
 Author: Algoritmika Ltd
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
@@ -45,7 +45,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.8.0
+ * @version 2.8.2
  */
 final class WC_Jetpack {
 
@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.8.1';
+	public $version = '2.8.2-dev-201705212102';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -316,7 +316,7 @@ final class WC_Jetpack {
 	/**
 	 * check_plus_version.
 	 *
-	 * @version 2.5.9
+	 * @version 2.8.2
 	 * @since   2.5.9
 	 */
 	function check_plus_version() {
@@ -331,7 +331,7 @@ final class WC_Jetpack {
 		}
 		foreach ( $active_plugins as $active_plugin ) {
 			$active_plugin = explode( '/', $active_plugin );
-			if ( isset( $active_plugin[1] ) && 'woocommerce-jetpack-plus.php' === $active_plugin[1] ) {
+			if ( isset( $active_plugin[1] ) && ( 'woocommerce-jetpack-plus.php' === $active_plugin[1] || 'woocommerce-booster-plus.php' === $active_plugin[1] ) ) {
 				$is_plus_active = true;
 				break;
 			}
@@ -340,7 +340,7 @@ final class WC_Jetpack {
 		if ( $is_plus_active ) {
 			$plus_version = get_option( 'booster_plus_version', false );
 			$required_plus_version = '1.1.0';
-			if ( 0 != version_compare( $plus_version, $required_plus_version ) ) {
+			if ( version_compare( $plus_version, $required_plus_version, '<' ) ) {
 				$class = 'notice notice-error';
 				$message = sprintf(
 					__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin to version %s. Please visit <a href="%s">your account</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
