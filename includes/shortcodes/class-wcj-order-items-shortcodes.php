@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 2.8.0
+ * @version 2.8.2
  * @author  Algoritmika Ltd.
  */
 
@@ -27,7 +27,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.2
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -52,6 +52,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'order_user_roles'                    => '',
 			'exclude_by_attribute__name'          => '',
 			'exclude_by_attribute__value'         => '',
+			'add_variation_info_to_item_name'     => 'no',
 		), $atts );
 		return $modified_atts;
 	}
@@ -266,7 +267,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.2
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -384,7 +385,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						} else {
 							$the_item_title = $item['name'];
 							// Variation (if needed)
-							if ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && ! in_array( 'item_variation', $columns ) ) {
+							if ( 'yes' === $atts['add_variation_info_to_item_name'] && isset( $item['variation_id'] ) && 0 != $item['variation_id'] && ! in_array( 'item_variation', $columns ) ) {
 								$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">';
 								if ( 'yes' === $atts['variation_as_metadata'] ) {
 									$the_item_title .= wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, true, $the_product );
