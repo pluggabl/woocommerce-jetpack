@@ -13,7 +13,7 @@ if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 	 * wcj_customer_get_country.
 	 *
 	 * @version 2.8.0
-	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function wcj_customer_get_country() {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_country() : WC()->customer->get_billing_country() );
@@ -25,7 +25,7 @@ if ( ! function_exists( 'wcj_order_get_payment_method' ) ) {
 	 * wcj_order_get_payment_method.
 	 *
 	 * @version 2.8.2
-	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function wcj_order_get_payment_method( $_order ) {
 		if ( ! $_order ) {
@@ -40,7 +40,7 @@ if ( ! function_exists( 'wcj_check_time_from' ) ) {
 	 * wcj_check_time_from.
 	 *
 	 * @version 2.8.0
-	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function wcj_check_time_from( $time_from, $args ) {
 		$time_from = explode( ':', $time_from );
@@ -59,7 +59,7 @@ if ( ! function_exists( 'wcj_check_time_to' ) ) {
 	 * wcj_check_time_to.
 	 *
 	 * @version 2.8.0
-	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function wcj_check_time_to( $time_to, $args ) {
 		$time_to = explode( ':', $time_to );
@@ -78,7 +78,7 @@ if ( ! function_exists( 'wcj_check_single_time' ) ) {
 	 * wcj_check_single_time.
 	 *
 	 * @version 2.8.0
-	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function wcj_check_single_time( $_time, $args ) {
 		$_time = explode( '-', $_time );
@@ -101,7 +101,7 @@ if ( ! function_exists( 'wcj_check_time' ) ) {
 	 * wcj_check_time.
 	 *
 	 * @version 2.8.0
-	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function wcj_check_time( $_time, $args = array() ) {
 		if ( empty( $args ) ) {
