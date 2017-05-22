@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 2.8.0
+ * @version 2.8.2
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -86,27 +86,30 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_price_info_to_loop.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.2
 	 * @since   2.8.0
 	 */
 	function add_price_info_to_loop() {
 		$_product_id = get_the_ID();
-		$replaceable_values = array(
-			'%default_price%' => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_default_price', true ) ),
-			'%min_price%'     => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_min_price', true ) ),
-			'%max_price%'     => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_max_price', true ) ),
-		);
-		echo str_replace( array_keys( $replaceable_values ), array_values( $replaceable_values ), $this->loop_price_info_template );
+		if ( $this->is_open_price_product( $_product_id ) ) {
+			$replaceable_values = array(
+				'%default_price%' => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_default_price', true ) ),
+				'%min_price%'     => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_min_price', true ) ),
+				'%max_price%'     => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_max_price', true ) ),
+			);
+			echo str_replace( array_keys( $replaceable_values ), array_values( $replaceable_values ), $this->loop_price_info_template );
+		}
 	}
 
 	/**
 	 * is_open_price_product.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.2
 	 * @since   2.4.8
 	 */
 	function is_open_price_product( $_product ) {
-		return ( 'yes' === get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_' . 'wcj_product_open_price_enabled', true ) ) ? true : false;
+		$_product_id = ( is_numeric( $_product ) ? $_product : wcj_get_product_id_or_variation_parent_id( $_product ) );
+		return ( 'yes' === get_post_meta( $_product_id, '_' . 'wcj_product_open_price_enabled', true ) );
 	}
 
 	/**

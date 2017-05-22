@@ -157,7 +157,8 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.2 - 21/05/2017 =
+= 2.8.2 - 22/05/2017 =
+~	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Display Product Price Info in Archives - Displaying info for not open pricing products fixed.
 ~!	* Dev - Checking for required Plus version message updated.
 
 = 2.8.1 - 19/05/2017 =
