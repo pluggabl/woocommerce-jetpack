@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price by User Role
  *
- * @version 2.8.0
+ * @version 2.8.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -241,7 +241,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.2
 	 * @since   2.5.0
 	 * @todo    only hash categories that is relevant to the product
 	 */
@@ -256,9 +256,11 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ),
 			$categories,
 		);
-		foreach ( $categories as $category ) {
-			$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $user_role, 'no' );
-			$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $user_role, 1 );
+		if ( ! empty( $categories ) ) {
+			foreach ( $categories as $category ) {
+				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $user_role, 'no' );
+				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $user_role, 1 );
+			}
 		}
 		return $price_hash;
 	}

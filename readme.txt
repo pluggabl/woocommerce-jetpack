@@ -158,6 +158,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.2 - 22/05/2017 =
+~	* Fix - PRICES & CURRENCIES - Price by User Role - `get_variation_prices_hash()` - Additional check for categories option not empty added.
 ~	* Dev - Functions - `wcj_order_get_payment_method()` - Additional check for order added.
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Display Product Price Info in Archives - Displaying info for not open pricing products fixed.
 ~!	* Dev - Checking for required Plus version message updated.
