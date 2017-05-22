@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 2.8.0
+ * @version 2.8.2
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -47,7 +47,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * gateways_fees.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.2
 	 */
 	function gateways_fees() {
 		global $woocommerce;
@@ -74,7 +74,10 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				$min_cart_amount = WCJ()->modules['multicurrency']->change_price( $min_cart_amount, null );
 				$max_cart_amount = WCJ()->modules['multicurrency']->change_price( $max_cart_amount, null );
 			}
-			$total_in_cart = $woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total;
+			$total_in_cart = ( 'no' === get_option( 'wcj_gateways_fees_exclude_shipping_' . $current_gateway, 'no' ) ?
+				$woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total :
+				$woocommerce->cart->cart_contents_total
+			);
 			if ( '' != $fee_text && $total_in_cart >= $min_cart_amount  && ( 0 == $max_cart_amount || $total_in_cart <= $max_cart_amount ) ) {
 				$fee_value = get_option( 'wcj_gateways_fees_value_' . $current_gateway );
 				$fee_type  = get_option( 'wcj_gateways_fees_type_'  . $current_gateway );
