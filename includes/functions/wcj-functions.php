@@ -28,7 +28,7 @@ if ( ! function_exists( 'wcj_order_get_payment_method' ) ) {
 	 * @since   2.8.0
 	 */
 	function wcj_order_get_payment_method( $_order ) {
-		if ( ! $_order ) {
+		if ( ! $_order || ! is_object( $_order ) ) {
 			return null;
 		}
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->payment_method : $_order->get_payment_method() );
