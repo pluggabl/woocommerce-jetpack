@@ -161,7 +161,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Exclude Shipping when Calculating Total Cart Amount" option added.
 ~D	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `add_variation_info_to_item_name` (defaults to `no`) attribute added - this fixes the issue with double variation info.
 ~	* Fix - PRICES & CURRENCIES - Price by User Role - `get_variation_prices_hash()` - Additional check for categories option not empty added.
-~	* Fix - Functions - `wcj_order_get_payment_method()` - Additional check for order (not null and object) added.
+~	* Fix - Functions - `wcj_order_get_payment_method()` - Additional check for order (not null, object and method/property exists) added.
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Display Product Price Info in Archives - Displaying info for not open pricing products fixed.
 ~!	* Dev - Checking for required Plus version message updated.
 

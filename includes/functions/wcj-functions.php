@@ -31,7 +31,11 @@ if ( ! function_exists( 'wcj_order_get_payment_method' ) ) {
 		if ( ! $_order || ! is_object( $_order ) ) {
 			return null;
 		}
-		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->payment_method : $_order->get_payment_method() );
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+			return ( isset( $_order->payment_method ) ? $_order->payment_method : null );
+		} else {
+			return ( method_exists( $_order, 'get_payment_method' ) ? $_order->get_payment_method() : null );
+		}
 	}
 }
 
