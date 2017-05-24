@@ -51,6 +51,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'wc_extra_product_options_show_price' => 'no',
 			'order_user_roles'                    => '',
 			'exclude_by_categories'               => '',
+			'exclude_by_tags'                     => '',
 			'exclude_by_attribute__name'          => '',
 			'exclude_by_attribute__value'         => '',
 			'add_variation_info_to_item_name'     => 'no',
@@ -328,6 +329,12 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			// Check if it's not excluded by category
 			if ( '' != $atts['exclude_by_categories'] && $the_product ) {
 				if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
+					continue;
+				}
+			}
+			// Check if it's not excluded by tag
+			if ( '' != $atts['exclude_by_tags'] && $the_product ) {
+				if ( wcj_product_has_terms( $the_product, $atts['exclude_by_tags'], 'product_tag' ) ) {
 					continue;
 				}
 			}

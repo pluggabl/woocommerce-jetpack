@@ -158,7 +158,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.2 - 24/05/2017 =
-~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_categories` attribute added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_categories` and `exclude_by_tags` attributes added.
 ~D	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Exclude Shipping when Calculating Total Cart Amount" option added.
 ~D	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `add_variation_info_to_item_name` (defaults to `no`) attribute added - this fixes the issue with double variation info.
 ~	* Fix - PRICES & CURRENCIES - Price by User Role - `get_variation_prices_hash()` - Additional check for categories option not empty added.
