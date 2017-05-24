@@ -31,10 +31,10 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => 'dejavusans',
 			'type'     => 'select',
 			'options'  => array(
-				'dejavusans'        => 'DejaVu Sans (Unicode)',
 				'courier'           => 'Courier',
 				'helvetica'         => 'Helvetica',
 				'times'             => 'Times',
+				'dejavusans'        => 'DejaVu Sans (Unicode)',
 				'droidsansfallback' => 'Droid Sans Fallback (Unicode)',
 				'angsanaupc'        => 'AngsanaUPC (Unicode)',
 				'cordiaupc'         => 'CordiaUPC (Unicode)',
