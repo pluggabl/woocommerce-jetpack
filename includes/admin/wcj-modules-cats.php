@@ -154,6 +154,7 @@ return array(
 		'desc'           => __( 'Emails, Reports, Export, Admin Tools, General Options and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'general',
+			'breadcrumbs',
 			'export',
 			'old_slugs',
 			'reports',
