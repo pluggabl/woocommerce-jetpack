@@ -50,6 +50,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'variation_as_metadata'               => 'yes',
 			'wc_extra_product_options_show_price' => 'no',
 			'order_user_roles'                    => '',
+			'exclude_by_categories'               => '',
 			'exclude_by_attribute__name'          => '',
 			'exclude_by_attribute__value'         => '',
 			'add_variation_info_to_item_name'     => 'no',
@@ -324,6 +325,12 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		foreach ( $the_items as $item_id => $item ) {
 			$item['is_custom'] = ( isset( $item['is_custom'] ) ) ? true : false; // $item['is_custom'] may be defined only if WCJ_IS_WC_VERSION_BELOW_3
 			$the_product = ( true === $item['is_custom'] ) ? null : $the_order->get_product_from_item( $item );
+			// Check if it's not excluded by category
+			if ( '' != $atts['exclude_by_categories'] && $the_product ) {
+				if ( wcj_product_has_terms( $the_product, $atts['exclude_by_categories'], 'product_cat' ) ) {
+					continue;
+				}
+			}
 			// Check if it's not excluded by product attribute
 			if ( $the_product && '' != $atts['exclude_by_attribute__name'] /* && '' != $atts['exclude_by_attribute__value'] */ ) {
 				$product_attributes = $the_product->get_attributes();

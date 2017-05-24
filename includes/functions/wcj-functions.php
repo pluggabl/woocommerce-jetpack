@@ -808,6 +808,35 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_product_has_terms' ) ) {
+	/**
+	 * wcj_product_has_terms.
+	 *
+	 * @version 2.8.2
+	 * @version 2.8.2
+	 */
+	function wcj_product_has_terms( $_product, $_values, $_term ) {
+		if ( is_string( $_values ) ) {
+			$_values = explode( ',', $_values );
+		}
+		if ( empty( $_values ) ) {
+			return false;
+		}
+		$product_categories = get_the_terms( wcj_get_product_id_or_variation_parent_id( $_product ), $_term );
+		if ( empty( $product_categories ) ) {
+			return false;
+		}
+		foreach ( $product_categories as $product_category ) {
+			foreach ( $_values as $_value ) {
+				if ( $product_category->slug === $_value ) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+}
+
 if ( ! function_exists( 'wcj_get_terms' ) ) {
 	/**
 	 * wcj_get_terms.
