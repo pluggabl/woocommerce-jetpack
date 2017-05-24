@@ -72,8 +72,9 @@ final class WC_Jetpack {
 	 * @return WC_Jetpack - Main instance
 	 */
 	public static function instance() {
-		if ( is_null( self::$_instance ) )
+		if ( is_null( self::$_instance ) ) {
 			self::$_instance = new self();
+		}
 		return self::$_instance;
 	}
 
