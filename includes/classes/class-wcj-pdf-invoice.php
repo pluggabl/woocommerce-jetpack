@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -20,113 +20,13 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	}
 
 	/**
-	 * check_tcpdf_fonts.
-	 *
-	 * @version 2.7.0
-	 * @since   2.7.0
-	 * @todo    use function - search for `check_tcpdf_fonts`
-	 * @todo    optional "do not download" (then default fonts directory with basic fonts)
-	 * @todo    check file size > 0 (not only if file exists in directory)
-	 * @todo    check if it works ok with https://booster.io
-	 * @todo    use `download_url()` instead of `file_get_contents()` or `curl` (in all Booster files)
-	 */
-	/* function check_tcpdf_fonts() {
-		$tcpdf_fonts_dir = wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/';
-		if ( ! file_exists( $tcpdf_fonts_dir ) ) {
-			mkdir( $tcpdf_fonts_dir );
-		}
-		$tcpdf_fonts_dir_files = scandir( $tcpdf_fonts_dir );
-		$tcpdf_fonts_files = array(
-			'angsanaupc.ctg.z',
-			'angsanaupc.php',
-			'angsanaupc.z',
-			'angsanaupcb.ctg.z',
-			'angsanaupcb.php',
-			'angsanaupcb.z',
-			'angsanaupcbi.ctg.z',
-			'angsanaupcbi.php',
-			'angsanaupcbi.z',
-			'angsanaupci.ctg.z',
-			'angsanaupci.php',
-			'angsanaupci.z',
-			'cordiaupc.ctg.z',
-			'cordiaupc.php',
-			'cordiaupc.z',
-			'cordiaupcb.ctg.z',
-			'cordiaupcb.php',
-			'cordiaupcb.z',
-			'cordiaupcbi.ctg.z',
-			'cordiaupcbi.php',
-			'cordiaupcbi.z',
-			'cordiaupci.ctg.z',
-			'cordiaupci.php',
-			'cordiaupci.z',
-			'courier.php',
-			'courierb.php',
-			'courierbi.php',
-			'courieri.php',
-			'dejavusans.ctg.z',
-			'dejavusans.php',
-			'dejavusans.z',
-			'dejavusansb.ctg.z',
-			'dejavusansb.php',
-			'dejavusansb.z',
-			'dejavusansbi.ctg.z',
-			'dejavusansbi.php',
-			'dejavusansbi.z',
-			'droidsansfallback.ctg.z',
-			'droidsansfallback.php',
-			'droidsansfallback.z',
-			'helvetica.php',
-			'helveticab.php',
-			'helveticabi.php',
-			'helveticai.php',
-			'symbol.php',
-			'thsarabun.ctg.z',
-			'thsarabun.php',
-			'thsarabun.z',
-			'thsarabunb.ctg.z',
-			'thsarabunb.php',
-			'thsarabunb.z',
-			'thsarabunbi.ctg.z',
-			'thsarabunbi.php',
-			'thsarabunbi.z',
-			'thsarabuni.ctg.z',
-			'thsarabuni.php',
-			'thsarabuni.z',
-			'times.php',
-			'timesb.php',
-			'timesbi.php',
-			'timesi.php',
-			'zapfdingbats.php',
-		);
-		require_once( ABSPATH . 'wp-admin/includes/file.php' );
-		foreach ( $tcpdf_fonts_files as $tcpdf_fonts_file ) {
-			if ( ! in_array( $tcpdf_fonts_file, $tcpdf_fonts_dir_files ) ) {
-				$url = 'http://booster.io/tcpdf_fonts/' . $tcpdf_fonts_file;
-				if ( '.php' === substr( $tcpdf_fonts_file, -4 ) ) {
-					$url .= '.data';
-				}
-				$response_file_name = download_url( $url );
-				if ( ! is_wp_error( $response_file_name ) ) {
-					$response = file_get_contents( $response_file_name );
-					if ( $response ) {
-						file_put_contents( $tcpdf_fonts_dir . $tcpdf_fonts_file, $response );
-					}
-					unlink( $response_file_name );
-				}
-			}
-		}
-	} */
-
-	/**
 	 * prepare_pdf.
 	 *
-	 * @version 2.5.2
+	 * @version 2.8.3
 	 */
 	function prepare_pdf() {
 
-//		$this->check_tcpdf_fonts();
+		wcj_check_and_maybe_download_tcpdf_fonts();
 
 		$invoice_type = $this->invoice_type;
 
@@ -189,8 +89,8 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		}
 
 		// Set Header and Footer fonts
-		$pdf->setHeaderFont( Array( /* PDF_FONT_NAME_MAIN */get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ), '', PDF_FONT_SIZE_MAIN ) );
-		$pdf->setFooterFont( Array( /* PDF_FONT_NAME_DATA */get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ), '', PDF_FONT_SIZE_DATA ) );
+		$pdf->setHeaderFont( Array( /* PDF_FONT_NAME_MAIN */ wcj_get_tcpdf_font( $invoice_type ), '', PDF_FONT_SIZE_MAIN ) );
+		$pdf->setFooterFont( Array( /* PDF_FONT_NAME_DATA */ wcj_get_tcpdf_font( $invoice_type ), '', PDF_FONT_SIZE_DATA ) );
 
 		// Set default monospaced font
 		$pdf->SetDefaultMonospacedFont( PDF_FONT_MONOSPACED );
@@ -220,12 +120,12 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$pdf->setFontSubsetting( true );
 
 		// Set font
-		/* if ( 'DroidSansFallback' === apply_filters( 'booster_get_option', 'dejavusans', get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ) ) ) {
+		/* if ( 'DroidSansFallback' === wcj_get_tcpdf_font( $invoice_type ) ) {
 			$pdf->addTTFfont( wcj_plugin_path() . '/includes/lib/tcpdf_min/fonts/' . 'DroidSansFallback.ttf' );
 		} */
 		// dejavusans is a UTF-8 Unicode font, if you only need to print standard ASCII chars, you can use core fonts like  helvetica or times to reduce file size.
 		$pdf->SetFont(
-			apply_filters( 'booster_get_option', 'dejavusans', get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ) ),
+			wcj_get_tcpdf_font( $invoice_type ),
 			'',
 			apply_filters( 'booster_get_option', 8, get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_size', 8 ) ),
 			'',

@@ -157,6 +157,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 2.8.3 - 24/05/2017
+~!D	* Dev - PDF INVOICING & PACKING SLIPS - Now extra fonts are downloaded to `woocommerce_uploads` folder.
+
 = 2.8.2 - 24/05/2017 =
 * Fix - Functions - `wcj_order_get_payment_method()` - Additional check for order (not null, object and method/property exists) added.
 * Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `add_variation_info_to_item_name` (defaults to `no`) attribute added - this fixes the issue with double variation info.

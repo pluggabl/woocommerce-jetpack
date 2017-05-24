@@ -2,9 +2,177 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 2.7.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
+
+if ( ! function_exists( 'wcj_get_fonts_list' ) ) {
+	/**
+	 * wcj_get_fonts_list.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function wcj_get_fonts_list() {
+		return array(
+			'angsanaupc.ctg.z',
+			'angsanaupc.php',
+			'angsanaupc.z',
+			'angsanaupcb.ctg.z',
+			'angsanaupcb.php',
+			'angsanaupcb.z',
+			'angsanaupcbi.ctg.z',
+			'angsanaupcbi.php',
+			'angsanaupcbi.z',
+			'angsanaupci.ctg.z',
+			'angsanaupci.php',
+			'angsanaupci.z',
+			'cordiaupc.ctg.z',
+			'cordiaupc.php',
+			'cordiaupc.z',
+			'cordiaupcb.ctg.z',
+			'cordiaupcb.php',
+			'cordiaupcb.z',
+			'cordiaupcbi.ctg.z',
+			'cordiaupcbi.php',
+			'cordiaupcbi.z',
+			'cordiaupci.ctg.z',
+			'cordiaupci.php',
+			'cordiaupci.z',
+			'courier.php',
+			'courierb.php',
+			'courierbi.php',
+			'courieri.php',
+			'dejavusans.ctg.z',
+			'dejavusans.php',
+			'dejavusans.z',
+			'dejavusansb.ctg.z',
+			'dejavusansb.php',
+			'dejavusansb.z',
+			'dejavusansbi.ctg.z',
+			'dejavusansbi.php',
+			'dejavusansbi.z',
+			'droidsansfallback.ctg.z',
+			'droidsansfallback.php',
+			'droidsansfallback.z',
+			'helvetica.php',
+			'helveticab.php',
+			'helveticabi.php',
+			'helveticai.php',
+			'symbol.php',
+			'thsarabun.ctg.z',
+			'thsarabun.php',
+			'thsarabun.z',
+			'thsarabunb.ctg.z',
+			'thsarabunb.php',
+			'thsarabunb.z',
+			'thsarabunbi.ctg.z',
+			'thsarabunbi.php',
+			'thsarabunbi.z',
+			'thsarabuni.ctg.z',
+			'thsarabuni.php',
+			'thsarabuni.z',
+			'times.php',
+			'timesb.php',
+			'timesbi.php',
+			'timesi.php',
+			'zapfdingbats.php',
+		);
+	}
+}
+
+if ( ! function_exists( 'wcj_get_tcpdf_font' ) ) {
+	/**
+	 * wcj_get_tcpdf_font.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function wcj_get_tcpdf_font( $invoice_type ) {
+		return (  wcj_check_tcpdf_fonts_version() ?
+			apply_filters( 'booster_get_option', 'dejavusans', get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ) ) :
+			apply_filters( 'booster_get_option', 'helvetica',  get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family_fallback', 'helvetica' ) )
+		);
+	}
+}
+
+if ( ! function_exists( 'wcj_get_tcpdf_fonts_version' ) ) {
+	/**
+	 * wcj_get_tcpdf_fonts_version.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function wcj_get_tcpdf_fonts_version() {
+		return '2.8.3';
+	}
+}
+
+if ( ! function_exists( 'wcj_check_tcpdf_fonts_version' ) ) {
+	/**
+	 * wcj_check_tcpdf_fonts_version.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function wcj_check_tcpdf_fonts_version() {
+		return ( version_compare( get_option( 'wcj_invoicing_fonts_version', null ), wcj_get_tcpdf_fonts_version(), '>=' ) );
+	}
+}
+
+if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
+	/**
+	 * wcj_check_and_maybe_download_tcpdf_fonts.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    (maybe) check file size > 0 or even for exact size (not only if file exists in directory)
+	 * @todo    (maybe) use `download_url()` instead of `file_get_contents()` or `curl` (in all Booster files)
+	 */
+	function wcj_check_and_maybe_download_tcpdf_fonts( $force_download = false ) {
+		if ( 'yes' === get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
+			return false;
+		}
+		if ( ! $force_download ) {
+			if ( wcj_check_tcpdf_fonts_version() ) {
+				return true;
+			}
+			if ( ( (int) current_time( 'timestamp' ) - get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) < 60 * 60 ) {
+				return false;
+			}
+		}
+		update_option( 'wcj_invoicing_fonts_version_timestamp', (int) current_time( 'timestamp' ) );
+		$tcpdf_fonts_dir = wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/';
+		if ( ! file_exists( $tcpdf_fonts_dir ) ) {
+			mkdir( $tcpdf_fonts_dir );
+		}
+		$tcpdf_fonts_dir_files = scandir( $tcpdf_fonts_dir );
+		$tcpdf_fonts_files     = wcj_get_fonts_list();
+		require_once( ABSPATH . 'wp-admin/includes/file.php' );
+		foreach ( $tcpdf_fonts_files as $tcpdf_fonts_file ) {
+			if ( ! in_array( $tcpdf_fonts_file, $tcpdf_fonts_dir_files ) ) {
+				$url = 'https://booster.io/tcpdf_fonts/' . $tcpdf_fonts_file;
+				if ( '.php' === substr( $tcpdf_fonts_file, -4 ) ) {
+					$url .= '.data';
+				}
+				$response_file_name = download_url( $url );
+				if ( ! is_wp_error( $response_file_name ) ) {
+					$response = file_get_contents( $response_file_name );
+					if ( $response ) {
+						file_put_contents( $tcpdf_fonts_dir . $tcpdf_fonts_file, $response );
+					}
+					unlink( $response_file_name );
+				}
+			}
+		}
+		if (
+			update_option( 'wcj_invoicing_fonts_version',           wcj_get_tcpdf_fonts_version() ) &&
+			update_option( 'wcj_invoicing_fonts_version_timestamp', (int) current_time( 'timestamp' ) )
+		) {
+			return true;
+		}
+	}
+}
 
 if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 	/*

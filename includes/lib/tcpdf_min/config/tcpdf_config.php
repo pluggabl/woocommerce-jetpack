@@ -59,13 +59,10 @@
  */
 //define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
 ////////////////////////////////////////////
-// Algoritmika - Booster version 2.7.0
-// TODO - search for `check_tcpdf_fonts`
-/*
-$tcpdf_fonts_dir = wp_upload_dir();
-$tcpdf_fonts_dir = $tcpdf_fonts_dir['basedir'] . '/woocommerce_uploads/wcj_uploads/tcpdf_fonts/';
-define ('K_PATH_FONTS', $tcpdf_fonts_dir );
-*/
+// Algoritmika - Booster - version 2.8.3 / since 2.8.3
+if ( wcj_check_tcpdf_fonts_version() ) {
+	define( 'K_PATH_FONTS', wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/' );
+}
 ////////////////////////////////////////////
 
 /**
