@@ -45,6 +45,7 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
+	 * @todo    (maybe) add more identifiers
 	 */
 	function hide_breadcrumbs_with_css() {
 		$identifiers = array(
