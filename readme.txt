@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.7
-Stable tag: 2.8.1
+Stable tag: 2.8.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -158,14 +158,14 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.2 - 24/05/2017 =
-~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_categories` and `exclude_by_tags` attributes added.
-~D	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Exclude Shipping when Calculating Total Cart Amount" option added.
-~D	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `add_variation_info_to_item_name` (defaults to `no`) attribute added - this fixes the issue with double variation info.
-~	* Fix - PRICES & CURRENCIES - Price by User Role - `get_variation_prices_hash()` - Additional check for categories option not empty added.
-~	* Fix - Functions - `wcj_order_get_payment_method()` - Additional check for order (not null, object and method/property exists) added.
-	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Display Product Price Info in Archives - Displaying info for not open pricing products fixed.
-~!	* Dev - Checking for required Plus version message updated.
-~D	* Tweak - PDF INVOICING & PACKING SLIPS - Styling - "Unicode" added to unicode fonts descriptions.
+* Fix - Functions - `wcj_order_get_payment_method()` - Additional check for order (not null, object and method/property exists) added.
+* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `add_variation_info_to_item_name` (defaults to `no`) attribute added - this fixes the issue with double variation info.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `exclude_by_categories` and `exclude_by_tags` attributes added.
+* Fix - PRICES & CURRENCIES - Price by User Role - `get_variation_prices_hash()` - Additional check for categories option not empty added.
+* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Display Product Price Info in Archives - Displaying info for not open pricing products fixed.
+* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Exclude Shipping when Calculating Total Cart Amount" option added.
+* Tweak - Checking for required Plus version message updated.
+* Tweak - PDF INVOICING & PACKING SLIPS - Styling - "Unicode" added to unicode fonts descriptions.
 
 = 2.8.1 - 19/05/2017 =
 * Fix - Shortcodes - Orders - `[wcj_order_checkout_field]` - Fixed custom checkout fields value not returning properly.
