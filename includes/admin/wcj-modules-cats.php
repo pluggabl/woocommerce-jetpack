@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -121,6 +121,7 @@ return array(
 		'desc'           => __( 'Order Custom Statuses, Order Minimum Amount, Order Numbers, Custom Shipping Methods and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'shipping',
+			'shipping_options',
 			'left_to_free_shipping',
 			'shipping_calculator',
 			'shipping_by_user_role',

@@ -92,14 +92,15 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Shipping & Orders**
 
 * *Address Formats* - Set address format in WooCommerce orders on per country basis. Force base country display.
+* *Custom Shipping* - Add multiple custom shipping methods to WooCommerce.
 * *Left to Free Shipping* - Display "left to free shipping" info in WooCommerce.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Minimum Amount* - Minimum WooCommerce order amount (optionally by user role).
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
 * *Orders* - Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.
-* *Shipping* - Add multiple custom shipping methods to WooCommerce. Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 * *Shipping Methods by User Role* - Set user roles to include/exclude for WooCommerce shipping methods to show up.
+* *Shipping Options* - Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available. Grant free shipping on per product basis.
 
 **PDF Invoicing & Packing Slips**
 
@@ -158,6 +159,8 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.3 - 24/05/2017
+~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
+~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Now extra fonts are downloaded to `woocommerce_uploads` folder.
 
 = 2.8.2 - 24/05/2017 =
