@@ -18,6 +18,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.7.0
+	 * @todo    add more (i.e. all) fields to "Disable Billing Email Fields on Checkout for Logged Users" (not only billing email)
 	 */
 	function __construct() {
 
@@ -58,7 +59,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 		if ( is_user_logged_in() ) {
 			if ( 'billing_email' == $key ) {
 				$desc = get_option( 'wcj_checkout_customization_disable_email_for_logged_message',
-					__( 'Email address can be changed on the "My Account" page', 'woocommerce-jetpack' ) );
+					'<em>' . __( 'Email address can be changed on the "My Account" page', 'woocommerce-jetpack' ) . '</em>' );
 				$field = str_replace( '__WCJ_TEMPORARY_VALUE_TO_REPLACE__', $desc, $field );
 			}
 		}

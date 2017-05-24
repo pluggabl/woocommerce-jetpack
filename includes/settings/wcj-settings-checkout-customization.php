@@ -45,7 +45,7 @@ return array(
 		'desc'     => __( 'Message for logged users', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'You can use HTML here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_checkout_customization_disable_email_for_logged_message',
-		'default'  => __( 'Email address can be changed on the "My Account" page', 'woocommerce-jetpack' ),
+		'default'  => '<em>' . __( 'Email address can be changed on the "My Account" page', 'woocommerce-jetpack' ) . '</em>',
 		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
 	),
