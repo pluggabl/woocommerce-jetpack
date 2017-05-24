@@ -159,6 +159,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.3 - 24/05/2017
+~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
 $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
 ~D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Billing Email Fields on Checkout for Logged Users" options added.

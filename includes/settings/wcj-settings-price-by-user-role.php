@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price by User Role
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -67,6 +67,13 @@ $settings = array(
 		'desc'     => sprintf( __( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module.', 'woocommerce-jetpack' ),
 			admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ),
 		'id'       => 'wcj_price_by_user_role_multipliers_options',
+	),
+	array(
+		'title'    => __( 'Disable Price by User Role for Products on Sale', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_disable_for_products_on_sale',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 );
 foreach ( wcj_get_user_roles() as $role_key => $role_data ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 2.7.0
+ * @version 2.8.3
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -38,6 +38,39 @@ if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 		// Grouped products
 		add_filter( 'woocommerce_get_price_including_tax',                 array( $module_object, 'change_price_grouped' ),      $priority, 3 );
 		add_filter( 'woocommerce_get_price_excluding_tax',                 array( $module_object, 'change_price_grouped' ),      $priority, 3 );
+	}
+}
+
+if ( ! function_exists( 'wcj_remove_change_price_hooks' ) ) {
+	/**
+	 * wcj_remove_change_price_hooks.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    make one function from this and `wcj_add_change_price_hooks()`
+	 */
+	function wcj_remove_change_price_hooks( $module_object, $priority, $include_shipping = true ) {
+		// Prices
+		remove_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                          array( $module_object, 'change_price' ),              $priority );
+		remove_filter( WCJ_PRODUCT_GET_SALE_PRICE_FILTER,                     array( $module_object, 'change_price' ),              $priority );
+		remove_filter( WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,                  array( $module_object, 'change_price' ),              $priority );
+		// Variations
+		remove_filter( 'woocommerce_variation_prices_price',                  array( $module_object, 'change_price' ),              $priority );
+		remove_filter( 'woocommerce_variation_prices_regular_price',          array( $module_object, 'change_price' ),              $priority );
+		remove_filter( 'woocommerce_variation_prices_sale_price',             array( $module_object, 'change_price' ),              $priority );
+		remove_filter( 'woocommerce_get_variation_prices_hash',               array( $module_object, 'get_variation_prices_hash' ), $priority );
+		if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
+			remove_filter( 'woocommerce_product_variation_get_price',         array( $module_object, 'change_price' ),              $priority );
+			remove_filter( 'woocommerce_product_variation_get_regular_price', array( $module_object, 'change_price' ),              $priority );
+			remove_filter( 'woocommerce_product_variation_get_sale_price',    array( $module_object, 'change_price' ),              $priority );
+		}
+		// Shipping
+		if ( $include_shipping ) {
+			remove_filter( 'woocommerce_package_rates',                       array( $module_object, 'change_price_shipping' ),     $priority );
+		}
+		// Grouped products
+		remove_filter( 'woocommerce_get_price_including_tax',                 array( $module_object, 'change_price_grouped' ),      $priority );
+		remove_filter( 'woocommerce_get_price_excluding_tax',                 array( $module_object, 'change_price_grouped' ),      $priority );
 	}
 }
 
