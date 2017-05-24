@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Styling
  *
- * @version 2.8.0
+ * @version 2.8.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -41,14 +41,14 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => 'dejavusans',
 			'type'     => 'select',
 			'options'  => array(
-				'dejavusans'        => 'DejaVu Sans',
+				'dejavusans'        => 'DejaVu Sans (Unicode)',
 				'courier'           => 'Courier',
 				'helvetica'         => 'Helvetica',
 				'times'             => 'Times',
-				'droidsansfallback' => 'Droid Sans Fallback',
-				'angsanaupc'        => 'AngsanaUPC',
-				'cordiaupc'         => 'CordiaUPC',
-				'thsarabun'         => 'THSarabunPSK',
+				'droidsansfallback' => 'Droid Sans Fallback (Unicode)',
+				'angsanaupc'        => 'AngsanaUPC (Unicode)',
+				'cordiaupc'         => 'CordiaUPC (Unicode)',
+				'thsarabun'         => 'THSarabunPSK (Unicode)',
 			),
 			'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 		),

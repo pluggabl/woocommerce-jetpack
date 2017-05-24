@@ -165,6 +165,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Fix - Functions - `wcj_order_get_payment_method()` - Additional check for order (not null, object and method/property exists) added.
 	* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Display Product Price Info in Archives - Displaying info for not open pricing products fixed.
 ~!	* Dev - Checking for required Plus version message updated.
+~D	* Tweak - PDF INVOICING & PACKING SLIPS - Styling - "Unicode" added to unicode fonts descriptions.
 
 = 2.8.1 - 19/05/2017 =
 * Fix - Shortcodes - Orders - `[wcj_order_checkout_field]` - Fixed custom checkout fields value not returning properly.
