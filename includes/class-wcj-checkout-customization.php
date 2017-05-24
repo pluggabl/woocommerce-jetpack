@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 * @since   2.7.0
 	 */
 	function __construct() {
@@ -40,7 +40,52 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_checkout_hide_order_again', 'no' ) ) {
 				add_action( 'init', array( $this, 'checkout_hide_order_again' ), PHP_INT_MAX );
 			}
+			// Disable Billing Email Fields on Checkout for Logged Users
+			if ( 'yes' === get_option( 'wcj_checkout_customization_disable_email_for_logged_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_checkout_fields' ,      array( $this, 'maybe_disable_email_field' ), PHP_INT_MAX );
+				add_filter( 'woocommerce_form_field_' . 'email', array( $this, 'maybe_add_description' ),     PHP_INT_MAX, 4 );
+			}
 		}
+	}
+
+	/**
+	 * maybe_add_description.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function maybe_add_description( $field, $key, $args, $value ) {
+		if ( is_user_logged_in() ) {
+			if ( 'billing_email' == $key ) {
+				$desc = get_option( 'wcj_checkout_customization_disable_email_for_logged_message',
+					__( 'Email address can be changed on the "My Account" page', 'woocommerce-jetpack' ) );
+				$field = str_replace( '__WCJ_TEMPORARY_VALUE_TO_REPLACE__', $desc, $field );
+			}
+		}
+		return $field;
+	}
+
+	/**
+	 * maybe_disable_email_field.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @see     woocommerce_form_field
+	 */
+	function maybe_disable_email_field( $checkout_fields ) {
+		if ( is_user_logged_in() ) {
+			if ( isset( $checkout_fields['billing']['billing_email'] ) ) {
+				if ( ! isset( $checkout_fields['billing']['billing_email']['custom_attributes'] ) ) {
+					$checkout_fields['billing']['billing_email']['custom_attributes'] = array();
+				}
+				$checkout_fields['billing']['billing_email']['custom_attributes'] = array_merge(
+					$checkout_fields['billing']['billing_email']['custom_attributes'],
+					array( 'readonly' => 'readonly' )
+				);
+				$checkout_fields['billing']['billing_email']['description'] = '__WCJ_TEMPORARY_VALUE_TO_REPLACE__';
+			}
+		}
+		return $checkout_fields;
 	}
 
 	/**
