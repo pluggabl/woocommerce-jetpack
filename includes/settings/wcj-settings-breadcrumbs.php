@@ -23,6 +23,20 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'Change Breadcrumbs Home URL', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_breadcrumbs_change_home_url_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Home URL', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_breadcrumbs_home_url',
+		'default'  => home_url(),
+		'type'     => 'text',
+		'css'      => 'width:66%;min-width:300px;',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_breadcrumbs_options',
 	),

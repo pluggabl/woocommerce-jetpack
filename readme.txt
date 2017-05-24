@@ -159,7 +159,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.3 - 24/05/2017
-~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
+$~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
 ~D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Billing Email Fields on Checkout for Logged Users" options added.
 ~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).

@@ -19,8 +19,8 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    recheck filter: `woocommerce_get_breadcrumb`
-	 * @todo    recheck action: `woocommerce_breadcrumb`; filter: `woocommerce_structured_data_breadcrumblist`
-	 * @todo    recheck filters: `woocommerce_breadcrumb_defaults`, `woocommerce_breadcrumb_home_url`; action: `woocommerce_breadcrumb`
+	 * @todo    recheck filter: `woocommerce_structured_data_breadcrumblist`; action: `woocommerce_breadcrumb`;
+	 * @todo    recheck filter: `woocommerce_breadcrumb_defaults`; action: `woocommerce_breadcrumb`
 	 */
 	function __construct() {
 
@@ -34,10 +34,24 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 			// Hide Breadcrumbs
 			if ( 'yes' === get_option( 'wcj_breadcrumbs_hide', 'no' ) ) {
 				add_filter( 'woocommerce_get_breadcrumb', '__return_false', PHP_INT_MAX );
-				add_action( 'wp_head',                    array( $this, 'hide_breadcrumbs_with_css' ) );
-				add_action( 'wp_loaded',                  array( $this, 'hide_breadcrumbs_by_removing_action' ) );
+				add_action( 'wp_head',   array( $this, 'hide_breadcrumbs_with_css' ) );
+				add_action( 'wp_loaded', array( $this, 'hide_breadcrumbs_by_removing_action' ), PHP_INT_MAX );
+			}
+			// Home URL
+			if ( 'yes' === get_option( 'wcj_breadcrumbs_change_home_url_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_breadcrumb_home_url', array( $this, 'change_home_url' ), PHP_INT_MAX );
 			}
 		}
+	}
+
+	/**
+	 * change_home_url.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function change_home_url( $_url ) {
+		return get_option( 'wcj_breadcrumbs_home_url', home_url() );
 	}
 
 	/**
