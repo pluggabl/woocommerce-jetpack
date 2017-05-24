@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 2.8.1
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -15,9 +15,9 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->the_shortcodes = array(
 			'wcj_order_status',
@@ -73,6 +73,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_coupons',
 			'wcj_order_customer_user',
 			'wcj_order_customer_user_roles',
+			'wcj_order_customer_meta',
 		);
 
 		parent::__construct();
@@ -159,6 +160,21 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
 		return ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) ? '' : wcj_price( $raw_price, wcj_get_order_currency( $this->the_order ), $atts['hide_currency'] );
+	}
+
+	/**
+	 * wcj_order_customer_meta.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function wcj_order_customer_meta( $atts ) {
+		if ( '' != $atts['key'] && ( $_customer_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() ) ) ) {
+			if ( '' != ( $meta = get_user_meta( $_customer_id, $atts['key'], true ) ) ) {
+				return $meta;
+			}
+		}
+		return '';
 	}
 
 	/**
