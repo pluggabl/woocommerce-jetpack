@@ -9,10 +9,10 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Booster for WooCommerce 2.8.0\n"
+"Project-Id-Version: Booster for WooCommerce 2.8.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/woocommerce-"
 "jetpack\n"
-"POT-Creation-Date: 2017-05-19 11:30+0300\n"
+"POT-Creation-Date: 2017-05-24 11:38+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: woocommerce-jetpack.php:346
+#: woocommerce-jetpack.php:347
 #, php-format
 msgid ""
 "Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin to "
@@ -30,110 +30,110 @@ msgid ""
 "download the latest Booster Plus version."
 msgstr ""
 
-#: woocommerce-jetpack.php:366
+#: woocommerce-jetpack.php:367
 #, php-format
 msgid ""
 "If you like <strong>Booster for WooCommerce</strong> please leave us a %s "
 "rating. Thank you, we couldn't have done it without you!"
 msgstr ""
 
-#: woocommerce-jetpack.php:382
+#: woocommerce-jetpack.php:383
 #: includes/admin/class-wc-settings-jetpack.php:400
 msgid "Booster for WooCommerce"
 msgstr ""
 
-#: woocommerce-jetpack.php:383
+#: woocommerce-jetpack.php:384
 msgid "Booster Settings"
 msgstr ""
 
-#: woocommerce-jetpack.php:398
+#: woocommerce-jetpack.php:399
 #: includes/admin/class-wc-settings-jetpack.php:173
 #: includes/admin/class-wc-settings-jetpack.php:335
 msgid "Settings"
 msgstr ""
 
-#: woocommerce-jetpack.php:399
+#: woocommerce-jetpack.php:400
 msgid "Docs"
 msgstr ""
 
-#: woocommerce-jetpack.php:402
+#: woocommerce-jetpack.php:403
 msgid "Unlock all"
 msgstr ""
 
-#: woocommerce-jetpack.php:419
+#: woocommerce-jetpack.php:420
 msgid "Install Booster Plus to unlock all features"
 msgstr ""
 
-#: woocommerce-jetpack.php:420
+#: woocommerce-jetpack.php:421
 #, php-format
 msgid ""
 "Some settings fields are locked and you will need %s to modify all locked "
 "fields."
 msgstr ""
 
-#: woocommerce-jetpack.php:421
+#: woocommerce-jetpack.php:422
 msgid "Buy now"
 msgstr ""
 
-#: woocommerce-jetpack.php:421
+#: woocommerce-jetpack.php:422
 msgid "Visit Booster Site"
 msgstr ""
 
-#: woocommerce-jetpack.php:425
+#: woocommerce-jetpack.php:426
 msgid ""
 "Get <a href=\"https://booster.io/plus/\" target=\"_blank\">Booster Plus</a> "
 "to change value."
 msgstr ""
 
-#: woocommerce-jetpack.php:428
+#: woocommerce-jetpack.php:429
 #, php-format
 msgid ""
 "Get <a href=\"%s\" target=\"_blank\">Booster Plus</a> to enable \"%s\" "
 "option."
 msgstr ""
 
-#: woocommerce-jetpack.php:431
+#: woocommerce-jetpack.php:432
 #, php-format
 msgid "Get Booster Plus to enable \"%s\" option."
 msgstr ""
 
-#: woocommerce-jetpack.php:434
+#: woocommerce-jetpack.php:435
 msgid ""
 "Get <a href=\"https://booster.io/plus/\" target=\"_blank\">Booster Plus</a> "
 "to change values below."
 msgstr ""
 
-#: woocommerce-jetpack.php:437
+#: woocommerce-jetpack.php:438
 msgid ""
 "Get <a href=\"https://booster.io/plus/\" target=\"_blank\">Booster Plus</a> "
 "to change values above."
 msgstr ""
 
-#: woocommerce-jetpack.php:440
+#: woocommerce-jetpack.php:441
 msgid "Get Booster Plus to change value."
 msgstr ""
 
-#: woocommerce-jetpack.php:692
+#: woocommerce-jetpack.php:693
 #, php-format
 msgid ""
 "<strong>Booster for WooCommerce</strong> plugin was successfully updated to "
 "version <strong>%s</strong>."
 msgstr ""
 
-#: woocommerce-jetpack.php:709
+#: woocommerce-jetpack.php:710
 msgid "Please upload a file to import!"
 msgstr ""
 
-#: woocommerce-jetpack.php:717 woocommerce-jetpack.php:722
+#: woocommerce-jetpack.php:718 woocommerce-jetpack.php:723
 msgid "Wrong file format!"
 msgstr ""
 
-#: woocommerce-jetpack.php:729
+#: woocommerce-jetpack.php:730
 #, php-format
 msgid "%d options successfully imported."
 msgstr ""
 
-#: woocommerce-jetpack.php:794
+#: woocommerce-jetpack.php:795
 #, php-format
 msgid "%d options successfully deleted."
 msgstr ""
@@ -874,7 +874,7 @@ msgstr ""
 #: includes/class-wcj-left-to-free-shipping.php:62
 #: includes/class-wcj-left-to-free-shipping.php:72
 #: includes/class-wcj-left-to-free-shipping.php:82
-#: includes/functions/wcj-functions.php:518
+#: includes/functions/wcj-functions.php:525
 #: includes/settings/wcj-settings-left-to-free-shipping.php:33
 #: includes/settings/wcj-settings-left-to-free-shipping.php:68
 #: includes/settings/wcj-settings-left-to-free-shipping.php:107
@@ -1022,7 +1022,7 @@ msgid "Pending payment"
 msgstr ""
 
 #: includes/class-wcj-order-custom-statuses.php:157
-#: includes/functions/wcj-functions.php:1039
+#: includes/functions/wcj-functions.php:1075
 msgctxt "Order status"
 msgid "Processing"
 msgstr ""
@@ -1033,25 +1033,25 @@ msgid "On hold"
 msgstr ""
 
 #: includes/class-wcj-order-custom-statuses.php:159
-#: includes/functions/wcj-functions.php:1041
+#: includes/functions/wcj-functions.php:1077
 msgctxt "Order status"
 msgid "Completed"
 msgstr ""
 
 #: includes/class-wcj-order-custom-statuses.php:160
-#: includes/functions/wcj-functions.php:1042
+#: includes/functions/wcj-functions.php:1078
 msgctxt "Order status"
 msgid "Cancelled"
 msgstr ""
 
 #: includes/class-wcj-order-custom-statuses.php:161
-#: includes/functions/wcj-functions.php:1043
+#: includes/functions/wcj-functions.php:1079
 msgctxt "Order status"
 msgid "Refunded"
 msgstr ""
 
 #: includes/class-wcj-order-custom-statuses.php:162
-#: includes/functions/wcj-functions.php:1044
+#: includes/functions/wcj-functions.php:1080
 msgctxt "Order status"
 msgid "Failed"
 msgstr ""
@@ -1719,7 +1719,7 @@ msgid "\"Date to\" must be after \"Date from\""
 msgstr ""
 
 #: includes/class-wcj-product-bookings.php:144
-#: includes/class-wcj-product-open-pricing.php:219
+#: includes/class-wcj-product-open-pricing.php:222
 msgid "Read more"
 msgstr ""
 
@@ -1938,7 +1938,7 @@ msgid "Products category"
 msgstr ""
 
 #: includes/class-wcj-product-bulk-price-converter.php:260
-#: includes/shortcodes/class-wcj-products-shortcodes.php:281
+#: includes/shortcodes/class-wcj-products-shortcodes.php:292
 msgid "Any"
 msgstr ""
 
@@ -2189,7 +2189,7 @@ msgstr ""
 msgid "Open Pricing"
 msgstr ""
 
-#: includes/class-wcj-product-open-pricing.php:180
+#: includes/class-wcj-product-open-pricing.php:183
 msgid ""
 "Booster: Free plugin's version is limited to only one open pricing product "
 "enabled at a time. You will need to get <a href=\"http://booster.io/plus/\" "
@@ -2197,22 +2197,22 @@ msgid ""
 "products."
 msgstr ""
 
-#: includes/class-wcj-product-open-pricing.php:275
+#: includes/class-wcj-product-open-pricing.php:278
 #: includes/settings/wcj-settings-product-open-pricing.php:60
 msgid "Price is required!"
 msgstr ""
 
-#: includes/class-wcj-product-open-pricing.php:279
+#: includes/class-wcj-product-open-pricing.php:282
 #: includes/settings/wcj-settings-product-open-pricing.php:67
 msgid "Entered price is too small!"
 msgstr ""
 
-#: includes/class-wcj-product-open-pricing.php:285
+#: includes/class-wcj-product-open-pricing.php:288
 #: includes/settings/wcj-settings-product-open-pricing.php:74
 msgid "Entered price is too big!"
 msgstr ""
 
-#: includes/class-wcj-product-open-pricing.php:342
+#: includes/class-wcj-product-open-pricing.php:345
 #: includes/settings/wcj-settings-product-open-pricing.php:23
 msgid "Name Your Price"
 msgstr ""
@@ -5299,97 +5299,97 @@ msgstr ""
 msgid "TCMB"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:558
+#: includes/functions/wcj-functions.php:565
 #: includes/settings/wcj-settings-left-to-free-shipping.php:143
 msgid "You have Free delivery"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:579
+#: includes/functions/wcj-functions.php:586
 msgid "Before cart"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:580
+#: includes/functions/wcj-functions.php:587
 msgid "Before cart table"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:581
+#: includes/functions/wcj-functions.php:588
 msgid "Before cart contents"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:582
+#: includes/functions/wcj-functions.php:589
 msgid "Cart contents"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:583
+#: includes/functions/wcj-functions.php:590
 msgid "Cart coupon"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:584
+#: includes/functions/wcj-functions.php:591
 msgid "Cart actions"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:585
+#: includes/functions/wcj-functions.php:592
 msgid "After cart contents"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:586
+#: includes/functions/wcj-functions.php:593
 msgid "After cart table"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:587
+#: includes/functions/wcj-functions.php:594
 msgid "Cart collaterals"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:588
+#: includes/functions/wcj-functions.php:595
 msgid "After cart"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:590
+#: includes/functions/wcj-functions.php:597
 msgid "Before cart totals"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:591
+#: includes/functions/wcj-functions.php:598
 msgid "Cart totals: Before shipping"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:592
+#: includes/functions/wcj-functions.php:599
 msgid "Cart totals: After shipping"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:593
+#: includes/functions/wcj-functions.php:600
 msgid "Cart totals: Before order total"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:594
+#: includes/functions/wcj-functions.php:601
 msgid "Cart totals: After order total"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:595
+#: includes/functions/wcj-functions.php:602
 msgid "Proceed to checkout"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:596
+#: includes/functions/wcj-functions.php:603
 msgid "After cart totals"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:598
+#: includes/functions/wcj-functions.php:605
 msgid "Before shipping calculator"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:599
+#: includes/functions/wcj-functions.php:606
 msgid "After shipping calculator"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:601
+#: includes/functions/wcj-functions.php:608
 msgid "If cart is empty"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:1038
+#: includes/functions/wcj-functions.php:1074
 msgctxt "Order status"
 msgid "Pending Payment"
 msgstr ""
 
-#: includes/functions/wcj-functions.php:1040
+#: includes/functions/wcj-functions.php:1076
 msgctxt "Order status"
 msgid "On Hold"
 msgstr ""
@@ -8330,6 +8330,7 @@ msgid "Exclude Shipping from Cart Total"
 msgstr ""
 
 #: includes/settings/wcj-settings-order-min-amount.php:29
+#: includes/settings/wcj-settings-payment-gateways-fees.php:99
 msgid "Exclude"
 msgstr ""
 
@@ -8720,6 +8721,16 @@ msgstr ""
 
 #: includes/settings/wcj-settings-payment-gateways-fees.php:95
 msgid "Standard Rate"
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-fees.php:98
+msgid "Exclude Shipping when Calculating Total Cart Amount"
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-fees.php:100
+msgid ""
+"This affects \"Percent\" type fees and \"Minimum/Maximum Cart Amount\" "
+"options."
 msgstr ""
 
 #: includes/settings/wcj-settings-payment-gateways-icons.php:35
@@ -11899,7 +11910,7 @@ msgstr ""
 msgid "Attribute \"name\" is required!"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-order-items-shortcodes.php:207
+#: includes/shortcodes/class-wcj-order-items-shortcodes.php:210
 msgid "Standard"
 msgstr ""
 
@@ -11949,12 +11960,12 @@ msgstr ""
 msgid "Edit Product"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-shortcodes.php:249
+#: includes/shortcodes/class-wcj-products-shortcodes.php:260
 #, php-format
 msgid "%s ago"
 msgstr ""
 
-#: includes/shortcodes/class-wcj-products-shortcodes.php:265
+#: includes/shortcodes/class-wcj-products-shortcodes.php:276
 msgid "No sales yet."
 msgstr ""
 
