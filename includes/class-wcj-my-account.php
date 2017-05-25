@@ -41,6 +41,7 @@ class WCJ_My_Account extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
+	 * @see     http://snippet.fm/snippets/add-order-complete-action-to-woocommerce-my-orders-customer-table/
 	 */
 	function add_my_account_order_actions( $actions, $order ) {
 		if ( 'completed' != $order->get_status() ) {
