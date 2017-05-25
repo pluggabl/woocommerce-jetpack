@@ -167,7 +167,7 @@ $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
 ~D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Billing Email Fields on Checkout for Logged Users" options added.
 ~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
-~!D	* Dev - PDF INVOICING & PACKING SLIPS - Now extra fonts are downloaded to `woocommerce_uploads` folder.
+-!D	* Dev - PDF INVOICING & PACKING SLIPS - Now extra fonts are downloaded to `woocommerce_uploads` folder.
 
 = 2.8.2 - 24/05/2017 =
 * Fix - Functions - `wcj_order_get_payment_method()` - Additional check for order (not null, object and method/property exists) added.
