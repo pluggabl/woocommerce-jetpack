@@ -156,6 +156,7 @@ return array(
 			'general',
 			'breadcrumbs',
 			'export',
+			'my_account',
 			'old_slugs',
 			'reports',
 			'admin_tools',
