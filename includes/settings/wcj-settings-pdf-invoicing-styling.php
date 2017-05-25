@@ -39,6 +39,7 @@ foreach ( $invoice_types as $invoice_type ) {
 				'angsanaupc'        => 'AngsanaUPC (Unicode)',
 				'cordiaupc'         => 'CordiaUPC (Unicode)',
 				'thsarabun'         => 'THSarabunPSK (Unicode)',
+				'stsongstdlight'    => 'STSong Light (Simp. Chinese)',
 			),
 			'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 		) :
@@ -52,6 +53,7 @@ foreach ( $invoice_types as $invoice_type ) {
 				'courier'           => 'Courier',
 				'helvetica'         => 'Helvetica',
 				'times'             => 'Times',
+				'stsongstdlight'    => 'STSong Light (Simp. Chinese)',
 			),
 			'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 		)

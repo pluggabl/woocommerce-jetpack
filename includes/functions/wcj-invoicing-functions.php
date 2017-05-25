@@ -59,6 +59,7 @@ if ( ! function_exists( 'wcj_get_fonts_list' ) ) {
 			'helveticab.php',
 			'helveticabi.php',
 			'helveticai.php',
+			'stsongstdlight.php',
 			'symbol.php',
 			'thsarabun.ctg.z',
 			'thsarabun.php',
