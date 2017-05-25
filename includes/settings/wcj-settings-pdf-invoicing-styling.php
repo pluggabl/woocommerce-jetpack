@@ -26,7 +26,6 @@ foreach ( $invoice_types as $invoice_type ) {
 	$font_family_option = ( $is_full_fonts ?
 		array(
 			'title'    => __( 'Font Family', 'woocommerce-jetpack' ),
-			'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_general_font_family',
 			'default'  => 'dejavusans',
 			'type'     => 'select',
@@ -41,11 +40,9 @@ foreach ( $invoice_types as $invoice_type ) {
 				'thsarabun'         => 'THSarabunPSK (Unicode)',
 				'stsongstdlight'    => 'STSong Light (Simp. Chinese)',
 			),
-			'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 		) :
 		array(
 			'title'    => __( 'Font Family', 'woocommerce-jetpack' ),
-			'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_general_font_family_fallback',
 			'default'  => 'helvetica',
 			'type'     => 'select',
@@ -55,7 +52,6 @@ foreach ( $invoice_types as $invoice_type ) {
 				'times'             => 'Times',
 				'stsongstdlight'    => 'STSong Light (Simp. Chinese)',
 			),
-			'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 		)
 	);
 	$settings = array_merge( $settings, array(

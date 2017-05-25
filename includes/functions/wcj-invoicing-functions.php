@@ -91,8 +91,8 @@ if ( ! function_exists( 'wcj_get_tcpdf_font' ) ) {
 	 */
 	function wcj_get_tcpdf_font( $invoice_type ) {
 		return (  wcj_check_tcpdf_fonts_version() ?
-			apply_filters( 'booster_get_option', 'dejavusans', get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ) ) :
-			apply_filters( 'booster_get_option', 'helvetica',  get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family_fallback', 'helvetica' ) )
+			get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ) :
+			get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family_fallback', 'helvetica' )
 		);
 	}
 }
