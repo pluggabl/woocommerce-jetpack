@@ -55,7 +55,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 			add_action( 'woocommerce_checkout_process', array( $this, 'order_minimum_amount' ) );
 			add_action( 'woocommerce_before_cart',      array( $this, 'order_minimum_amount' ) );
 			if ( 'yes' === get_option( 'wcj_order_minimum_amount_stop_from_seeing_checkout', 'no' ) ) {
-				add_action( 'wp',                array( $this, 'stop_from_seeing_checkout' ), 100 );
+				add_action( 'wp', array( $this, 'stop_from_seeing_checkout' ), 100 );
 			}
 		}
 	}
