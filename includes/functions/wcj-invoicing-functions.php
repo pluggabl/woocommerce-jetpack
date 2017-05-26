@@ -27,6 +27,7 @@ if ( ! function_exists( 'wcj_get_fonts_list' ) ) {
 			'angsanaupci.ctg.z',
 			'angsanaupci.php',
 			'angsanaupci.z',
+			'cid0ct.php',
 			'cordiaupc.ctg.z',
 			'cordiaupc.php',
 			'cordiaupc.z',
@@ -77,6 +78,7 @@ if ( ! function_exists( 'wcj_get_fonts_list' ) ) {
 			'timesb.php',
 			'timesbi.php',
 			'timesi.php',
+			'uni2cid_aj16.php',
 			'zapfdingbats.php',
 		);
 	}
@@ -105,7 +107,7 @@ if ( ! function_exists( 'wcj_get_tcpdf_fonts_version' ) ) {
 	 * @since   2.8.3
 	 */
 	function wcj_get_tcpdf_fonts_version() {
-		return '2.8.3';
+		return '2.8.3-dev-201705270128';
 	}
 }
 

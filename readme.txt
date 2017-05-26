@@ -165,6 +165,7 @@ $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
 ~!D	* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Font selection option updated.
+~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "cid0ct (Chinese Traditional)" font added (to extra fonts pack).
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "STSong Light (Simp. Chinese)" font added (to both minimal and extra fonts packs).
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.

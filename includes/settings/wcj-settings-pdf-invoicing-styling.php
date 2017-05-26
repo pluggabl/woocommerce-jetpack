@@ -39,6 +39,7 @@ foreach ( $invoice_types as $invoice_type ) {
 				'cordiaupc'         => 'CordiaUPC (Unicode)',
 				'thsarabun'         => 'THSarabunPSK (Unicode)',
 				'stsongstdlight'    => 'STSong Light (Simp. Chinese)',
+				'cid0ct'            => 'cid0ct (Chinese Traditional)',
 			),
 		) :
 		array(
