@@ -90,7 +90,7 @@ if ( ! function_exists( 'wcj_get_tcpdf_font' ) ) {
 	 * @since   2.8.3
 	 */
 	function wcj_get_tcpdf_font( $invoice_type ) {
-		return (  wcj_check_tcpdf_fonts_version() ?
+		return (  wcj_check_tcpdf_fonts_version( true ) ?
 			get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family', 'dejavusans' ) :
 			get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_family_fallback', 'helvetica' )
 		);
@@ -116,11 +116,22 @@ if ( ! function_exists( 'wcj_check_tcpdf_fonts_version' ) ) {
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 */
-	function wcj_check_tcpdf_fonts_version() {
+	function wcj_check_tcpdf_fonts_version( $force_file_check = false ) {
 		if ( 'yes' === get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
 			return false;
 		}
-		return ( version_compare( get_option( 'wcj_invoicing_fonts_version', null ), wcj_get_tcpdf_fonts_version(), '>=' ) );
+		$result = ( 0 == version_compare( get_option( 'wcj_invoicing_fonts_version', null ), wcj_get_tcpdf_fonts_version() ) );
+		if ( $result && $force_file_check ) {
+			$tcpdf_fonts_dir       = wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/';
+			$tcpdf_fonts_dir_files = scandir( $tcpdf_fonts_dir );
+			$tcpdf_fonts_files     = wcj_get_fonts_list();
+			foreach ( $tcpdf_fonts_files as $tcpdf_fonts_file ) {
+				if ( ! in_array( $tcpdf_fonts_file, $tcpdf_fonts_dir_files ) ) {
+					return false;
+				}
+			}
+		}
+		return $result;
 	}
 }
 
@@ -138,7 +149,7 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 			return false;
 		}
 		if ( ! $force_download ) {
-			if ( wcj_check_tcpdf_fonts_version() ) {
+			if ( wcj_check_tcpdf_fonts_version( true ) ) {
 				return true;
 			}
 			if ( ( (int) current_time( 'timestamp' ) - get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) < 60 * 60 ) {
@@ -161,11 +172,16 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 				}
 				$response_file_name = download_url( $url );
 				if ( ! is_wp_error( $response_file_name ) ) {
-					$response = file_get_contents( $response_file_name );
-					if ( $response ) {
-						file_put_contents( $tcpdf_fonts_dir . $tcpdf_fonts_file, $response );
+					if ( $response = file_get_contents( $response_file_name ) ) {
+						if ( ! file_put_contents( $tcpdf_fonts_dir . $tcpdf_fonts_file, $response ) ) {
+							return false;
+						}
+					} else {
+						return false;
 					}
 					unlink( $response_file_name );
+				} else {
+					return false;
 				}
 			}
 		}

@@ -93,7 +93,7 @@ if ( 'yes' === get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' )
 } else {
 	if ( $is_full_fonts ) {
 		$fonts_manager_desc = __( 'Fonts are up to date.', 'woocommerce-jetpack' ) . ' ' . sprintf(
-			__( 'Latest successful download was on %s.', 'woocommerce-jetpack' ),
+			__( 'Latest successful download or version check was on %s.', 'woocommerce-jetpack' ),
 			date( 'Y-m-d H:i:s', get_option( 'wcj_invoicing_fonts_version_timestamp', null ) )
 		);
 	} else {
