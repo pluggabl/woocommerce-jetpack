@@ -130,6 +130,7 @@ return array(
 			'order_min_amount',
 			'order_numbers',
 			'order_custom_statuses',
+			'order_quantities',
 		),
 	),
 
