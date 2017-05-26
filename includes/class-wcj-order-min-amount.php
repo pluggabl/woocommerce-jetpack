@@ -115,7 +115,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		}
 		$cart_total = $this->get_cart_total_for_minimal_order_amount();
 		if ( $cart_total < $minimum ) {
-			if( is_cart() ) {
+			if ( is_cart() ) {
 				if ( 'yes' === get_option( 'wcj_order_minimum_amount_cart_notice_enabled', 'no' ) ) {
 					wc_print_notice(
 						sprintf( apply_filters( 'booster_get_option', 'You must have an order with a minimum of %s to place your order, your current order total is %s.', get_option( 'wcj_order_minimum_amount_cart_notice_message' ) ),
