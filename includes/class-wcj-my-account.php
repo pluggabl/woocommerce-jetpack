@@ -18,7 +18,6 @@ class WCJ_My_Account extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    settings
 	 * @todo    more statuses (not only completed)
 	 */
 	function __construct() {
@@ -30,9 +29,11 @@ class WCJ_My_Account extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'add_my_account_order_actions' ), 10, 2 );
-			add_action( 'wp_footer',                                array( $this, 'add_js_conformation' ) );
-			add_action( 'init',                                     array( $this, 'woocommerce_mark_order_status' ) );
+			if ( 'yes' === get_option( 'wcj_my_account_add_order_complete_action', 'no' ) ) {
+				add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'add_my_account_order_actions' ), 10, 2 );
+				add_action( 'wp_footer',                                array( $this, 'add_js_conformation' ) );
+				add_action( 'init',                                     array( $this, 'woocommerce_mark_order_status' ) );
+			}
 		}
 	}
 

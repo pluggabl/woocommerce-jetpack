@@ -110,12 +110,14 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
+* *Breadcrumbs* - Customize WooCommerce breadcrumbs.
 * *Custom CSS* - Separate custom CSS for front and back end. Per product CSS.
 * *Custom JS* - Separate custom JS for front and back end.
 * *Email Verification* - Add WooCommerce email verification.
 * *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *Export* - WooCommerce export tools.
 * *General* - Custom roles tool. Shortcodes in WordPress text widgets.
+* *My Account* - WooCommerce "My Account" page customization.
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
 
@@ -160,7 +162,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 2.8.3 - 26/05/2017
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
--!D	* Dev - EMAILS & MISC. - My Account - Initial module release.
+~!D	* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Font selection option updated.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "STSong Light (Simp. Chinese)" font added (to both minimal and extra fonts packs).
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
