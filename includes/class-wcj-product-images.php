@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Images
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -93,15 +93,15 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * customize_archive_product_image_html.
 	 *
-	 * @version 2.5.2
+	 * @version 2.8.3
 	 * @since   2.2.6
 	 */
 	function customize_archive_product_image_html() {
 		$post_id = get_the_ID();
 		if ( $post_id > 0 && '' != get_post_meta( $post_id, '_' . 'wcj_product_images_meta_custom_on_archives', true ) ) {
-			echo get_post_meta( $post_id, '_' . 'wcj_product_images_meta_custom_on_archives', true );
+			echo do_shortcode( get_post_meta( $post_id, '_' . 'wcj_product_images_meta_custom_on_archives', true ) );
 		} elseif ( '' != get_option( 'wcj_product_images_custom_on_archives', '' ) ) {
-			echo get_option( 'wcj_product_images_custom_on_archives' );
+			echo do_shortcode( get_option( 'wcj_product_images_custom_on_archives' ) );
 		}
 	}
 
@@ -130,13 +130,13 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * customize_single_product_image_html.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 */
 	function customize_single_product_image_html( $image_link, $post_id ) {
 		if ( '' != ( $html_single = get_post_meta( $post_id, '_' . 'wcj_product_images_meta_custom_on_single', true ) ) ) {
-			return $html_single;
+			return do_shortcode( $html_single );
 		} elseif ( '' != ( $html_global = get_option( 'wcj_product_images_custom_on_single', '' ) ) ) {
-			return $html_global;
+			return do_shortcode( $html_global );
 		} elseif ( 'yes' === get_option( 'wcj_product_images_hide_on_single', 'no' ) ) {
 			return '';
 		} elseif ( 'yes' === get_post_meta( $post_id, '_' . 'wcj_product_images_hide_image_on_single', true ) ) {
@@ -148,12 +148,12 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * customize_single_product_image_thumbnail_html.
 	 *
-	 * @version 2.5.2
+	 * @version 2.8.3
 	 */
 	function customize_single_product_image_thumbnail_html( $image_link ) {
 		$post_id = get_the_ID();
 		if ( '' != get_option( 'wcj_product_images_thumbnails_custom_on_single', '' ) ) {
-			return get_option( 'wcj_product_images_thumbnails_custom_on_single' );
+			return do_shortcode( get_option( 'wcj_product_images_thumbnails_custom_on_single' ) );
 		} elseif ( 'yes' === get_option( 'wcj_product_images_thumbnails_hide_on_single', 'no' ) ) {
 			return '';
 		} elseif ( $post_id > 0 && 'yes' === get_post_meta( $post_id, '_' . 'wcj_product_images_hide_thumb_on_single', true ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - More Button Labels
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -52,6 +52,7 @@ return array(
 	array(
 		'title'   => __( 'Replace Image on Single', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Replace image on single product page with custom HTML. Leave blank to disable.', 'woocommerce-jetpack' ),
+		'desc_tip'=> __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_product_images_custom_on_single',
 		'default' => '',
 		'type'    => 'textarea',
@@ -60,6 +61,7 @@ return array(
 	array(
 		'title'   => __( 'Replace Thumbnails on Single', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Replace thumbnails on single product page with custom HTML. Leave blank to disable.', 'woocommerce-jetpack' ),
+		'desc_tip'=> __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_product_images_thumbnails_custom_on_single',
 		'default' => '',
 		'type'    => 'textarea',
@@ -68,6 +70,7 @@ return array(
 	array(
 		'title'   => __( 'Replace Image on Archive', 'woocommerce-jetpack' ),
 		'desc'    => __( 'Replace image on archive pages with custom HTML. Leave blank to disable.', 'woocommerce-jetpack' ),
+		'desc_tip'=> __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
 		'id'      => 'wcj_product_images_custom_on_archives',
 		'default' => '',
 		'type'    => 'textarea',

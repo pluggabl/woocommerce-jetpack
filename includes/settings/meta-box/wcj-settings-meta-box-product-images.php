@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Images
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -15,12 +15,14 @@ return array(
 		'default' => '',
 		'type'    => 'textarea',
 		'title'   => __( 'Replace image with custom HTML on single product page', 'woocommerce-jetpack' ),
+		'tooltip' => __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'name'    => 'wcj_product_images_meta_custom_on_archives',
 		'default' => '',
 		'type'    => 'textarea',
 		'title'   => __( 'Replace image with custom HTML on archives', 'woocommerce-jetpack' ),
+		'tooltip' => __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
 	),
 	array(
 		'name'    => 'wcj_product_images_hide_image_on_single',

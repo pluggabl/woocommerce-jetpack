@@ -159,6 +159,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.3 - 26/05/2017
+~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
 -!D	* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Font selection option updated.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "STSong Light (Simp. Chinese)" font added (to both minimal and extra fonts packs).
