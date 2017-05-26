@@ -117,6 +117,9 @@ if ( ! function_exists( 'wcj_check_tcpdf_fonts_version' ) ) {
 	 * @since   2.8.3
 	 */
 	function wcj_check_tcpdf_fonts_version() {
+		if ( 'yes' === get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
+			return false;
+		}
 		return ( version_compare( get_option( 'wcj_invoicing_fonts_version', null ), wcj_get_tcpdf_fonts_version(), '>=' ) );
 	}
 }
