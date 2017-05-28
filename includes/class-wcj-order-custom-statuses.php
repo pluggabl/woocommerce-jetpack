@@ -424,6 +424,8 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 
 	/**
 	 * get_order_statuses.
+	 *
+	 * @todo    use `wcj_get_order_statuses_v2`
 	 */
 	function get_order_statuses() {
 		$result = array();

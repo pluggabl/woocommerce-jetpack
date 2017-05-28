@@ -16,11 +16,12 @@ return array(
 		'id'       => 'wcj_my_account_options',
 	),
 	array(
-		'title'    => __( 'Add Order Complete Action', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_my_account_add_order_complete_action',
-		'default'  => 'no',
-		'type'     => 'checkbox',
+		'title'    => __( 'Add Order Status Actions', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_my_account_add_order_status_actions',
+		'default'  => '',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => wcj_get_order_statuses_v2(),
 	),
 	array(
 		'type'     => 'sectionend',

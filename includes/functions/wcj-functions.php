@@ -2,11 +2,29 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 2.8.2
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_order_statuses_v2' ) ) {
+	/**
+	 * wcj_get_order_statuses_v2.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    check `wcj_get_order_statuses`
+	 */
+	function wcj_get_order_statuses_v2() {
+		$result = array();
+		$statuses = function_exists( 'wc_get_order_statuses' ) ? wc_get_order_statuses() : array();
+		foreach( $statuses as $status => $status_name ) {
+			$result[ substr( $status, 3 ) ] = $statuses[ $status ];
+		}
+		return $result;
+	}
+}
 
 if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 	/**
