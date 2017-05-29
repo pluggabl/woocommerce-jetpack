@@ -181,13 +181,13 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_all_products_skus.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 */
 	function set_all_products_skus( $is_preview ) {
 		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$this->sequential_counter = apply_filters( 'booster_get_option', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
 		}
-		$limit = 256;
+		$limit = 512;
 		$offset = 0;
 		while ( TRUE ) {
 			$posts = new WP_Query( array(
@@ -207,7 +207,6 @@ class WCJ_SKU extends WCJ_Module {
 			}
 			$offset += $limit;
 		}
-		wp_reset_postdata();
 		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) && ! $is_preview ) {
 			update_option( 'wcj_sku_number_generation_sequential', $this->sequential_counter );
 		}
