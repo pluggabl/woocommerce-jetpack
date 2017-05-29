@@ -160,7 +160,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.3 - 28/05/2017
+= 2.8.3 - 29/05/2017
 $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
 $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.

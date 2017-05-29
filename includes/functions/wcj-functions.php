@@ -697,38 +697,53 @@ if ( ! function_exists( 'wcj_get_select_options' ) ) {
 	}
 }
 
-/*
- * is_frontend()
- *
- * @since  2.2.6
- * @return boolean
- */
 if ( ! function_exists( 'wcj_is_frontend' ) ) {
+	/*
+	 * is_frontend()
+	 *
+	 * @since  2.2.6
+	 * @return boolean
+	 */
 	function wcj_is_frontend() {
 		return ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) ? true : false;
 	}
 }
 
-/**
- * wcj_get_wcj_uploads_dir.
- */
 if ( ! function_exists( 'wcj_get_wcj_uploads_dir' ) ) {
+	/**
+	 * wcj_get_wcj_uploads_dir.
+	 *
+	 * @version 2.8.3
+	 * @todo    no need to `mkdir` after `wcj_get_wcj_uploads_dir`
+	 */
 	function wcj_get_wcj_uploads_dir( $subdir = '' ) {
 		$upload_dir = wp_upload_dir();
 		$upload_dir = $upload_dir['basedir'];
-		$upload_dir = $upload_dir . '/woocommerce_uploads/wcj_uploads';
-		if ( '' != $subdir ) $upload_dir = $upload_dir . '/' . $subdir;
+		$upload_dir = $upload_dir . '/woocommerce_uploads';
+		if ( ! file_exists( $upload_dir ) ) {
+			mkdir( $upload_dir, 0755, true );
+		}
+		$upload_dir = $upload_dir . '/wcj_uploads';
+		if ( ! file_exists( $upload_dir ) ) {
+			mkdir( $upload_dir, 0755, true );
+		}
+		if ( '' != $subdir ) {
+			$upload_dir = $upload_dir . '/' . $subdir;
+			if ( ! file_exists( $upload_dir ) ) {
+				mkdir( $upload_dir, 0755, true );
+			}
+		}
 		return $upload_dir;
 	}
 }
 
-/**
- * wcj_is_product_wholesale_enabled_per_product.
- *
- * @version 2.5.0
- * @since   2.5.0
- */
 if ( ! function_exists( 'wcj_is_product_wholesale_enabled_per_product' ) ) {
+	/**
+	 * wcj_is_product_wholesale_enabled_per_product.
+	 *
+	 * @version 2.5.0
+	 * @since   2.5.0
+	 */
 	function wcj_is_product_wholesale_enabled_per_product( $product_id ) {
 		return (
 			'yes' === get_option( 'wcj_wholesale_price_per_product_enable', 'yes' ) &&
@@ -737,12 +752,12 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled_per_product' ) ) {
 	}
 }
 
-/**
- * wcj_is_product_wholesale_enabled.
- *
- * @version 2.5.4
- */
 if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
+	/**
+	 * wcj_is_product_wholesale_enabled.
+	 *
+	 * @version 2.5.4
+	 */
 	function wcj_is_product_wholesale_enabled( $product_id ) {
 		if ( wcj_is_module_enabled( 'wholesale_price' ) ) {
 			if ( wcj_is_product_wholesale_enabled_per_product( $product_id ) ) {
