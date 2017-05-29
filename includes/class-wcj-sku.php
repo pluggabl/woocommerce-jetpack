@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -236,11 +236,11 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * create_sku_tool
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 */
 	function create_sku_tool() {
 		$result_message = '';
-		$is_preview = ( isset( $_POST['preview_sku'] ) ) ? true : false;
+		$is_preview = ( isset( $_POST['preview_sku'] ) );
 		if ( isset( $_POST['set_sku'] ) || isset( $_POST['preview_sku'] ) ) {
 			$this->product_counter = 1;
 			$preview_html = '<table class="widefat" style="width:50%; min-width: 300px; margin-top: 10px;">';
@@ -259,15 +259,22 @@ class WCJ_SKU extends WCJ_Module {
 			$preview_html .= '</table>';
 			$result_message = '<p><div class="updated"><p><strong>' . __( 'SKUs generated and set successfully!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 		}
-		?><div>
-			<?php echo $this->get_tool_header_html( 'sku' ); ?>
-			<?php if ( ! $is_preview ) echo $result_message; ?>
-			<form method="post" action="">
-				<input class="button-primary" type="submit" name="preview_sku" id="preview_sku" value="<?php _e( 'Preview SKUs', 'woocommerce-jetpack' ); ?>">
-				<input class="button-primary" type="submit" name="set_sku" value="<?php _e( 'Set SKUs', 'woocommerce-jetpack' ); ?>">
-			</form>
-			<?php if ( $is_preview ) echo $preview_html; ?>
-		</div><?php
+		$html = '';
+		$html .= '<div class="wrap">';
+		$html .= $this->get_tool_header_html( 'sku' );
+		if ( ! $is_preview ) {
+			$html .= $result_message;
+		}
+		$html .= '<form method="post" action="">';
+		$html .= '<input class="button-primary" type="submit" name="preview_sku" id="preview_sku" value="' . __( 'Preview SKUs', 'woocommerce-jetpack' ) . '">';
+		$html .= ' ';
+		$html .= '<input class="button-primary" type="submit" name="set_sku" id="set_sku" value="' . __( 'Set SKUs', 'woocommerce-jetpack' ) . '">';
+		$html .= '</form>';
+		if ( $is_preview ) {
+			$html .= $preview_html;
+		}
+		$html .= '</div>';
+		echo $html;
 	}
 
 }
