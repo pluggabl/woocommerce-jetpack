@@ -161,7 +161,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.3 - 30/05/2017
-~	* Dev - PRODUCTS - SKU - `create_sku_tool()` and `set_all_products_skus()` - Code refactoring.
+~	* Dev - PRODUCTS - SKU - Code refactoring.
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" added.
 $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
