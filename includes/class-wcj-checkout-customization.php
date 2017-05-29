@@ -19,6 +19,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 * @version 2.8.3
 	 * @since   2.7.0
 	 * @todo    "Disable Fields on Checkout for Logged Users" - billing and shipping country ('select' type)
+	 * @todo    "Disable Fields on Checkout for Logged Users" - other core fields (e.g. account fields)
 	 * @todo    "Disable Fields on Checkout for Logged Users" - custom fields
 	 * @todo    "Disable Fields on Checkout for Logged Users" - add single option (probably checkbox) to disable all fields
 	 */
