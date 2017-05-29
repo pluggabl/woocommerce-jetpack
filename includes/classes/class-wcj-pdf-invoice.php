@@ -128,7 +128,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$pdf->SetFont(
 			$tcpdf_font,
 			'',
-			apply_filters( 'booster_get_option', 8, get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_size', 8 ) ),
+			get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_size', 8 ),
 			'',
 			true );
 
