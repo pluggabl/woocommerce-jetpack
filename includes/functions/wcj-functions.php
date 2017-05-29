@@ -145,10 +145,13 @@ if ( ! function_exists( 'wcj_get_product_id' ) ) {
 	/**
 	 * wcj_get_product_id.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 * @since   2.7.0
 	 */
 	function wcj_get_product_id( $_product ) {
+		if ( ! $_product ) {
+			return 0;
+		}
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 			return ( isset( $_product->variation_id ) ) ? $_product->variation_id : $_product->id;
 		} else {
@@ -161,10 +164,13 @@ if ( ! function_exists( 'wcj_get_product_id_or_variation_parent_id' ) ) {
 	/**
 	 * wcj_get_product_id_or_variation_parent_id.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 * @since   2.7.0
 	 */
 	function wcj_get_product_id_or_variation_parent_id( $_product ) {
+		if ( ! $_product ) {
+			return 0;
+		}
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 			return $_product->id;
 		} else {
