@@ -170,7 +170,7 @@ $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
 $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
-~!D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Billing Email Fields on Checkout for Logged Users" options added.
+~!D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Fields on Checkout for Logged Users" options added.
 ~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
 -!D	* Dev - PDF INVOICING & PACKING SLIPS - Now extra fonts are downloaded to `woocommerce_uploads` folder.

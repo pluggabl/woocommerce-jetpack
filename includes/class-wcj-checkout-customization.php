@@ -18,7 +18,9 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.7.0
-	 * @todo    add more (i.e. all) fields to "Disable Billing Email Fields on Checkout for Logged Users" (not only billing email)
+	 * @todo    "Disable Fields on Checkout for Logged Users" - billing and shipping country ('select' type)
+	 * @todo    "Disable Fields on Checkout for Logged Users" - custom fields
+	 * @todo    "Disable Fields on Checkout for Logged Users" - add single option (probably checkbox) to disable all fields
 	 */
 	function __construct() {
 
@@ -41,10 +43,23 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_checkout_hide_order_again', 'no' ) ) {
 				add_action( 'init', array( $this, 'checkout_hide_order_again' ), PHP_INT_MAX );
 			}
-			// Disable Billing Email Fields on Checkout for Logged Users
-			if ( 'yes' === get_option( 'wcj_checkout_customization_disable_email_for_logged_enabled', 'no' ) ) {
-				add_filter( 'woocommerce_checkout_fields' ,      array( $this, 'maybe_disable_email_field' ), PHP_INT_MAX );
-				add_filter( 'woocommerce_form_field_' . 'email', array( $this, 'maybe_add_description' ),     PHP_INT_MAX, 4 );
+			// Disable Fields on Checkout for Logged Users
+			add_filter( 'woocommerce_checkout_fields' , array( $this, 'maybe_disable_fields' ), PHP_INT_MAX );
+			$checkout_fields_types = array(
+				'country',
+				'state',
+				'textarea',
+				'checkbox',
+				'password',
+				'text',
+				'email',
+				'tel',
+				'number',
+				'select',
+				'radio',
+			);
+			foreach ( $checkout_fields_types as $checkout_fields_type ) {
+				add_filter( 'woocommerce_form_field_' . $checkout_fields_type, array( $this, 'maybe_add_description' ), PHP_INT_MAX, 4 );
 			}
 		}
 	}
@@ -57,33 +72,43 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 */
 	function maybe_add_description( $field, $key, $args, $value ) {
 		if ( is_user_logged_in() ) {
-			if ( 'billing_email' == $key ) {
-				$desc = get_option( 'wcj_checkout_customization_disable_email_for_logged_message',
-					'<em>' . __( 'Email address can be changed on the "My Account" page', 'woocommerce-jetpack' ) . '</em>' );
-				$field = str_replace( '__WCJ_TEMPORARY_VALUE_TO_REPLACE__', $desc, $field );
+			$fields_to_disable = get_option( 'wcj_checkout_customization_disable_fields_for_logged', '' );
+			if ( ! empty( $fields_to_disable ) ) {
+				if ( in_array( $key, $fields_to_disable ) ) {
+					$desc = get_option( 'wcj_checkout_customization_disable_fields_for_logged_message',
+						'<em>' . __( 'This field can not be changed', 'woocommerce-jetpack' ) . '</em>' );
+					$field = str_replace( '__WCJ_TEMPORARY_VALUE_TO_REPLACE__', $desc, $field );
+				}
 			}
 		}
 		return $field;
 	}
 
 	/**
-	 * maybe_disable_email_field.
+	 * maybe_disable_fields.
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @see     woocommerce_form_field
 	 */
-	function maybe_disable_email_field( $checkout_fields ) {
+	function maybe_disable_fields( $checkout_fields ) {
 		if ( is_user_logged_in() ) {
-			if ( isset( $checkout_fields['billing']['billing_email'] ) ) {
-				if ( ! isset( $checkout_fields['billing']['billing_email']['custom_attributes'] ) ) {
-					$checkout_fields['billing']['billing_email']['custom_attributes'] = array();
+			$fields_to_disable = get_option( 'wcj_checkout_customization_disable_fields_for_logged', '' );
+			if ( ! empty( $fields_to_disable ) ) {
+				foreach ( $fields_to_disable as $field_to_disable ) {
+					$section = explode( '_', $field_to_disable );
+					$section = $section[0];
+					if ( isset( $checkout_fields[ $section ][ $field_to_disable ] ) ) {
+						if ( ! isset( $checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'] ) ) {
+							$checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'] = array();
+						}
+						$checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'] = array_merge(
+							$checkout_fields[ $section ][ $field_to_disable ]['custom_attributes'],
+							array( 'readonly' => 'readonly' )
+						);
+						$checkout_fields[ $section ][ $field_to_disable ]['description'] = '__WCJ_TEMPORARY_VALUE_TO_REPLACE__';
+					}
 				}
-				$checkout_fields['billing']['billing_email']['custom_attributes'] = array_merge(
-					$checkout_fields['billing']['billing_email']['custom_attributes'],
-					array( 'readonly' => 'readonly' )
-				);
-				$checkout_fields['billing']['billing_email']['description'] = '__WCJ_TEMPORARY_VALUE_TO_REPLACE__';
 			}
 		}
 		return $checkout_fields;
