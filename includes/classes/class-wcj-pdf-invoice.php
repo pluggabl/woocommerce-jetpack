@@ -88,9 +88,11 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 			$pdf->SetPrintFooter( false );
 		}
 
+		$tcpdf_font = wcj_get_tcpdf_font( $invoice_type );
+
 		// Set Header and Footer fonts
-		$pdf->setHeaderFont( Array( /* PDF_FONT_NAME_MAIN */ wcj_get_tcpdf_font( $invoice_type ), '', PDF_FONT_SIZE_MAIN ) );
-		$pdf->setFooterFont( Array( /* PDF_FONT_NAME_DATA */ wcj_get_tcpdf_font( $invoice_type ), '', PDF_FONT_SIZE_DATA ) );
+		$pdf->setHeaderFont( Array( /* PDF_FONT_NAME_MAIN */ $tcpdf_font, '', PDF_FONT_SIZE_MAIN ) );
+		$pdf->setFooterFont( Array( /* PDF_FONT_NAME_DATA */ $tcpdf_font, '', PDF_FONT_SIZE_DATA ) );
 
 		// Set default monospaced font
 		$pdf->SetDefaultMonospacedFont( PDF_FONT_MONOSPACED );
@@ -120,12 +122,11 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$pdf->setFontSubsetting( true );
 
 		// Set font
-		/* if ( 'DroidSansFallback' === wcj_get_tcpdf_font( $invoice_type ) ) {
+		/* if ( 'DroidSansFallback' === $tcpdf_font ) {
 			$pdf->addTTFfont( wcj_plugin_path() . '/includes/lib/tcpdf_min/fonts/' . 'DroidSansFallback.ttf' );
 		} */
-		// dejavusans is a UTF-8 Unicode font, if you only need to print standard ASCII chars, you can use core fonts like  helvetica or times to reduce file size.
 		$pdf->SetFont(
-			wcj_get_tcpdf_font( $invoice_type ),
+			$tcpdf_font,
 			'',
 			apply_filters( 'booster_get_option', 8, get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_size', 8 ) ),
 			'',
