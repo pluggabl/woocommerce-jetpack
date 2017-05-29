@@ -63,7 +63,7 @@ class WCJ_SKU extends WCJ_Module {
 	}
 
 	/**
-	 * get_available_variations.
+	 * get_all_variations.
 	 *
 	 * @version 2.7.0
 	 * @since   2.4.8
