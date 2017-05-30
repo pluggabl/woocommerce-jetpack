@@ -5,7 +5,6 @@
  * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    pseudo-random (check SKU plugin)
  * @todo    tags (check SKU plugin)
  * @todo    search by SKU (check SKU plugin)
  */
@@ -26,7 +25,7 @@ $settings = array(
 		'options'  => array(
 			'product_id' => __( 'From product ID', 'woocommerce-jetpack' ),
 			'sequential' => __( 'Sequential', 'woocommerce-jetpack' ),
-//			'random'     => __( 'Random (including variations)', 'woocommerce-jetpack' ),
+			'hash_crc32' => __( 'Pseudorandom - Hash (max 10 digits)', 'woocommerce-jetpack' ),
 		),
 		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),

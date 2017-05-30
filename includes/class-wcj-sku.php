@@ -113,6 +113,8 @@ class WCJ_SKU extends WCJ_Module {
 		} */
 		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$sku_number = $this->get_sequential_counter( $product_id );
+		} elseif ( 'hash_crc32' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+			$sku_number = sprintf( "%u", crc32( $product_id ) );
 		} else { // if 'product_id'
 			$sku_number = $product_id;
 		}
@@ -133,6 +135,8 @@ class WCJ_SKU extends WCJ_Module {
 				foreach ( $variations as $variation ) {
 					if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 						$sku_number = $this->get_sequential_counter( $product_id );
+					} elseif ( 'hash_crc32' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+						$sku_number = sprintf( "%u", crc32( $variation['variation_id'] ) );
 					} else { // if 'product_id'
 						$sku_number = $variation['variation_id'];
 					}
