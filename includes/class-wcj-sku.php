@@ -198,7 +198,7 @@ class WCJ_SKU extends WCJ_Module {
 		$the_sku = ( $do_generate_new_sku ) ? str_replace( array_keys( $replace_values ), array_values( $replace_values ), $format_template ) : $old_sku;
 
 		if ( $is_preview ) {
-			echo '<tr>' .
+			$this->preview_buffer .= '<tr>' .
 					'<td>' . $this->product_counter++ . '</td>' .
 					'<td>' . $product_id              . '</td>' .
 					'<td>' . $_product->get_title()   . '</td>' .
@@ -328,9 +328,9 @@ class WCJ_SKU extends WCJ_Module {
 					'<th>' . __( 'SKU', 'woocommerce-jetpack' )        . '</th>' .
 					'<th>' . __( 'Old SKU', 'woocommerce-jetpack' )    . '</th>' .
 				'</tr>';
-			ob_start();
+			$this->preview_buffer = '';
 			$this->set_all_products_skus( $is_preview );
-			$preview_html .= ob_get_clean();
+			$preview_html .= $this->preview_buffer;
 			$preview_html .= '</table>';
 			$result_message = '<p><div class="updated"><p><strong>' . __( 'SKUs generated and set successfully!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 		}
