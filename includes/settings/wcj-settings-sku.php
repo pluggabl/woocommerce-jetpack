@@ -27,6 +27,7 @@ $settings = array(
 			'sequential' => __( 'Sequential', 'woocommerce-jetpack' ),
 			'hash_crc32' => __( 'Pseudorandom - Hash (max 10 digits)', 'woocommerce-jetpack' ),
 		),
+		'desc_tip' => __( 'Possible values: from product ID, sequential or pseudorandom.', 'woocommerce-jetpack' ),
 		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
