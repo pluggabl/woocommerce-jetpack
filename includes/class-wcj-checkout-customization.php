@@ -27,7 +27,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 
 		$this->id         = 'checkout_customization';
 		$this->short_desc = __( 'Checkout Customization', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce checkout - hide "Order Again" button etc.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize WooCommerce checkout - hide "Order Again" button; disable selected fields on checkout for logged users and more.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-customization';
 		parent::__construct();
 

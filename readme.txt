@@ -59,7 +59,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Products XML* - WooCommerce products XML feed.
 * *Products per Page* - Add "products per page" selector to WooCommerce.
 * *Related Products* - Change displayed WooCommerce related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.
-* *SKU* - Generate WooCommerce SKUs automatically.
+* *SKU* - Generate WooCommerce SKUs automatically. Search by SKU on frontend.
 * *Sorting* - Add more WooCommerce sorting options; rename or remove default sorting options; rearrange sorting options on frontend.
 * *Stock* - WooCommerce products stock management.
 * *User Products* - Let users add new WooCommerce products from frontend.
@@ -71,7 +71,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Checkout Core Fields* - Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders.
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
-* *Checkout Customization* - Customize WooCommerce checkout - hide "Order Again" button etc.
+* *Checkout Customization* - Customize WooCommerce checkout - hide "Order Again" button; disable selected fields on checkout for logged users and more.
 * *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to WooCommerce cart and checkout pages.
@@ -97,6 +97,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Minimum Amount* - Minimum WooCommerce order amount (optionally by user role).
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
+* *Order Quantities* - Set min/max product quantities in WooCommerce order.
 * *Orders* - Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 * *Shipping Methods by User Role* - Set user roles to include/exclude for WooCommerce shipping methods to show up.
