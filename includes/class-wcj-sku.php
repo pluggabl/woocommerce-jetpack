@@ -35,20 +35,19 @@ class WCJ_SKU extends WCJ_Module {
 		) );
 
 		if ( $this->is_enabled() ) {
-
+			// New product
 			if ( 'yes' === get_option( 'wcj_sku_new_products_generate_enabled', 'yes' ) ) {
-				add_action( 'wp_insert_post', array( $this, 'set_sku_for_new_product' ), PHP_INT_MAX, 3 );
+				add_action( 'wp_insert_post',                array( $this, 'set_sku_for_new_product' ),          PHP_INT_MAX, 3 );
 				add_action( 'woocommerce_duplicate_product', array( $this, 'set_new_product_sku_on_duplicate' ), PHP_INT_MAX, 2 );
 			}
-
+			// Allow duplicates
 			if ( 'yes' === get_option( 'wcj_sku_allow_duplicates_enabled', 'no' ) ) {
 				add_filter( 'wc_product_has_unique_sku', '__return_false', PHP_INT_MAX );
 			}
-
+			// SKU in emails
 			if ( 'yes' === get_option( 'wcj_sku_add_to_customer_emails', 'no' ) ) {
 				add_filter( 'woocommerce_email_order_items_args', array( $this, 'add_sku_to_customer_emails' ), PHP_INT_MAX, 1 );
 			}
-
 			// Search by SKU
 			if ( 'yes' === get_option( 'wcj_sku_search_enabled', 'no' ) ) {
 				add_filter( 'pre_get_posts', array( $this, 'add_search_by_sku_to_frontend' ), PHP_INT_MAX );
