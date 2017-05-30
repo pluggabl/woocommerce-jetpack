@@ -8,7 +8,6 @@
  * @todo    pseudo-random (check SKU plugin)
  * @todo    tags (check SKU plugin)
  * @todo    search by SKU (check SKU plugin)
- * @todo    template (check SKU plugin)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -67,6 +66,17 @@ $settings = array(
 		'id'       => 'wcj_sku_suffix',
 		'default'  => '',
 		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Template', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Replaced values:', 'woocommerce-jetpack' ) .
+//			'{category_prefix}, {category_suffix}, {tag_prefix}, {tag_suffix}, {prefix}, {suffix}, {variation_suffix}, {sku_number}.',
+			'{category_prefix}, {category_suffix}, {prefix}, {suffix}, {variation_suffix}, {sku_number}.',
+		'id'       => 'wcj_sku_template',
+//		'default'  => '{category_prefix}{tag_prefix}{prefix}{sku_number}{suffix}{tag_suffix}{category_suffix}{variation_suffix}',
+		'default'  => '{category_prefix}{prefix}{sku_number}{suffix}{category_suffix}{variation_suffix}',
+		'type'     => 'text',
+		'css'      => 'width:99%;',
 	),
 	array(
 		'title'    => __( 'Variable Products Variations', 'woocommerce-jetpack' ),

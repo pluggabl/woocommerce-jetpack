@@ -155,7 +155,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 */
 	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview, $parent_product_id, $_product ) {
 
@@ -175,14 +175,19 @@ class WCJ_SKU extends WCJ_Module {
 			}
 		}
 
-		$the_sku = ( $do_generate_new_sku ) ? sprintf( '%s%s%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 'd%s%s%s',
-			apply_filters( 'booster_get_option', '', $category_prefix ),
-			get_option( 'wcj_sku_prefix', '' ),
-			$sku_number,
-			get_option( 'wcj_sku_suffix', '' ),
-			$variation_suffix,
-			$category_suffix
-		) : $old_sku;
+		$format_template = get_option( 'wcj_sku_template',
+			'{category_prefix}{prefix}{sku_number}{suffix}{category_suffix}{variation_suffix}' );
+		$replace_values = array(
+			'{category_prefix}'  => apply_filters( 'booster_get_option', '', $category_prefix ),
+//			'{tag_prefix}'       => $tag_prefix,
+			'{prefix}'           => get_option( 'wcj_sku_prefix', '' ),
+			'{sku_number}'       => sprintf( '%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 's', $sku_number ),
+			'{suffix}'           => get_option( 'wcj_sku_suffix', '' ),
+//			'{tag_suffix}'       => $tag_suffix,
+			'{category_suffix}'  => $category_suffix,
+			'{variation_suffix}' => $variation_suffix,
+		);
+		$the_sku = ( $do_generate_new_sku ) ? str_replace( array_keys( $replace_values ), array_values( $replace_values ), $format_template ) : $old_sku;
 
 		if ( $is_preview ) {
 			echo '<tr>' .
