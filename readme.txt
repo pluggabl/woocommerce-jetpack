@@ -161,27 +161,27 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.3 - 31/05/2017
+~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `insert_page_break` (defaults to `0`) attribute added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
+~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
+~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
 ~!D	* Dev - PRODUCTS - SKU - Adding SKU on product duplicate action added (`woocommerce_duplicate_product`).
 ~!D	* Dev - PRODUCTS - SKU - "Search by SKU" option added.
 $~!D* Dev - PRODUCTS - SKU - Number Generation - "Pseudorandom - Hash (max 10 digits)" option added.
 ~!D	* Dev - PRODUCTS - SKU - "Template" option added.
 $~!D* Dev - PRODUCTS - SKU - Sequential counter by categories added.
 ~	* Dev - PRODUCTS - SKU - Code refactoring.
-~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" added.
+~!D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Fields on Checkout for Logged Users" options added.
+~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
 $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
-~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
-$~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
+~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Font selection option updated.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "cid0ct (Chinese Traditional)" font added (to extra fonts pack).
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "STSong Light (Simp. Chinese)" font added (to both minimal and extra fonts packs).
-~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
+~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Now extra fonts are downloaded to `woocommerce_uploads` folder.
 $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
-~!D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Fields on Checkout for Logged Users" options added.
-~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
-~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
--!D	* Dev - PDF INVOICING & PACKING SLIPS - Now extra fonts are downloaded to `woocommerce_uploads` folder.
+$~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
 
 = 2.8.2 - 24/05/2017 =
 * Fix - Functions - `wcj_order_get_payment_method()` - Additional check for order (not null, object and method/property exists) added.
