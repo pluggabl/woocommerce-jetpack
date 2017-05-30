@@ -26,7 +26,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 
 		$this->id         = 'order_quantities';
 		$this->short_desc = __( 'Order Quantities', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set min/max WooCommerce order quantities.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set min/max product quantities in WooCommerce order.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-order-quantities';
 		parent::__construct();
 
