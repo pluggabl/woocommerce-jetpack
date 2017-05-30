@@ -33,7 +33,7 @@ $settings = array(
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
-		'title'    => __( 'Sequential Number Generation Counter', 'woocommerce-jetpack' ),
+		'title'    => __( 'Sequential Number Generation - Counter', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_sku_number_generation_sequential',
 		'default'  => 1,
 		'type'     => 'number',
