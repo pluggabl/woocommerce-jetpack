@@ -55,6 +55,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'exclude_by_attribute__name'          => '',
 			'exclude_by_attribute__value'         => '',
 			'add_variation_info_to_item_name'     => 'no',
+			'insert_page_break'                   => 0,
 		), $atts );
 		return $modified_atts;
 	}
@@ -316,12 +317,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			$the_items = $this->add_item( $the_items, array( 'name' => $name, 'qty' => 1, 'line_subtotal' => $total_discount_tax_excl, 'line_total' => $total_discount_tax_excl, 'line_tax' => $discount_tax, 'line_subtotal_tax' => $discount_tax, 'type' => 'discount' ) );
 		}
 
-		// Starting data[] by adding columns titles
-		$data = array();
-		foreach( $columns_titles as $column_title ) {
-			$data[0][] = $column_title;
-		}
 		// Items to data[]
+		$data = array();
 		$item_counter = 0;
 		foreach ( $the_items as $item_id => $item ) {
 			$item['is_custom'] = ( isset( $item['is_custom'] ) ) ? true : false; // $item['is_custom'] may be defined only if WCJ_IS_WC_VERSION_BELOW_3
@@ -592,12 +589,27 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			}
 		}
 
-		$html = wcj_get_table_html( $data, array(
+		$table_html_args = array(
 			'table_class'        => $atts['table_class'],
 			'table_heading_type' => 'horizontal',
 			'columns_classes'    => array(),
 			'columns_styles'     => $columns_styles,
-		) );
+		);
+		if ( 0 != $atts['insert_page_break'] ) {
+			$data_size = count( $data );
+			$slice_offset = 0;
+			$html = '';
+			while ( $slice_offset < $data_size ) {
+				if ( 0 != $slice_offset ) {
+					$html .= '<tcpdf method="AddPage" />';
+				}
+				$data_slice = array_slice( $data, $slice_offset, $atts['insert_page_break'] );
+				$html .= wcj_get_table_html( array_merge( array( $columns_titles ), $data_slice ), $table_html_args );
+				$slice_offset += $atts['insert_page_break'];
+			}
+		} else {
+			$html = wcj_get_table_html( array_merge( array( $columns_titles ), $data ), $table_html_args );
+		}
 
 		return $html;
 	}
