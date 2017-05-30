@@ -16,7 +16,6 @@ class WCJ_SKU extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.3
-	 * @todo    `woocommerce_duplicate_product` (check SKU plugin)
 	 */
 	function __construct() {
 
@@ -39,6 +38,7 @@ class WCJ_SKU extends WCJ_Module {
 
 			if ( 'yes' === get_option( 'wcj_sku_new_products_generate_enabled', 'yes' ) ) {
 				add_action( 'wp_insert_post', array( $this, 'set_sku_for_new_product' ), PHP_INT_MAX, 3 );
+				add_action( 'woocommerce_duplicate_product', array( $this, 'set_new_product_sku_on_duplicate' ), PHP_INT_MAX, 2 );
 			}
 
 			if ( 'yes' === get_option( 'wcj_sku_allow_duplicates_enabled', 'no' ) ) {
@@ -281,6 +281,18 @@ class WCJ_SKU extends WCJ_Module {
 			$offset += $limit;
 		}
 		$this->maybe_save_sequential_counters( $is_preview );
+	}
+
+	/**
+	 * set_new_product_sku_on_duplicate.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function set_new_product_sku_on_duplicate( $post_ID, $post ) {
+		$this->maybe_get_sequential_counters();
+		$this->set_sku_with_variable( $post_ID, false );
+		$this->maybe_save_sequential_counters();
 	}
 
 	/**
