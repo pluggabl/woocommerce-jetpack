@@ -5,7 +5,8 @@
  * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    tags (check SKU plugin)
+ * @todo    tags (check SKU plugin); template: '{category_prefix}{tag_prefix}{prefix}{sku_number}{suffix}{tag_suffix}{category_suffix}{variation_suffix}'
+ * @todo    add "Sequential Number Generation - By Category" to SKU plugin
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -68,11 +69,8 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Template', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Replaced values:', 'woocommerce-jetpack' ) .
-//			'{category_prefix}, {category_suffix}, {tag_prefix}, {tag_suffix}, {prefix}, {suffix}, {variation_suffix}, {sku_number}.',
-			'{category_prefix}, {category_suffix}, {prefix}, {suffix}, {variation_suffix}, {sku_number}.',
+		'desc'     => __( 'Replaced values:', 'woocommerce-jetpack' ) . '{category_prefix}, {category_suffix}, {prefix}, {suffix}, {variation_suffix}, {sku_number}.',
 		'id'       => 'wcj_sku_template',
-//		'default'  => '{category_prefix}{tag_prefix}{prefix}{sku_number}{suffix}{tag_suffix}{category_suffix}{variation_suffix}',
 		'default'  => '{category_prefix}{prefix}{sku_number}{suffix}{category_suffix}{variation_suffix}',
 		'type'     => 'text',
 		'css'      => 'width:99%;',
