@@ -15,7 +15,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 * @todo    `woocommerce_duplicate_product` (check SKU plugin)
 	 */
 	function __construct() {
@@ -47,6 +47,11 @@ class WCJ_SKU extends WCJ_Module {
 
 			if ( 'yes' === get_option( 'wcj_sku_add_to_customer_emails', 'no' ) ) {
 				add_filter( 'woocommerce_email_order_items_args', array( $this, 'add_sku_to_customer_emails' ), PHP_INT_MAX, 1 );
+			}
+
+			// Search by SKU
+			if ( 'yes' === get_option( 'wcj_sku_search_enabled', 'no' ) ) {
+				add_filter( 'pre_get_posts', array( $this, 'add_search_by_sku_to_frontend' ), PHP_INT_MAX );
 			}
 		}
 	}
@@ -336,6 +341,56 @@ class WCJ_SKU extends WCJ_Module {
 		}
 		$html .= '</div>';
 		echo $html;
+	}
+
+	/**
+	 * search_post_join.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function search_post_join( $join = '' ) {
+		global $wp_the_query;
+		if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) ) {
+			return $join;
+		}
+		$join .= "INNER JOIN wp_postmeta AS wcj_sku ON (wp_posts.ID = wcj_sku.post_id)";
+		return $join;
+	}
+
+	/**
+	 * search_post_where.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function search_post_where( $where = '' ) {
+		global $wp_the_query;
+		if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) ) {
+			return $where;
+		}
+		$where = preg_replace( "/post_title LIKE ('%[^%]+%')/", "post_title LIKE $1) OR (wcj_sku.meta_key = '_sku' AND CAST(wcj_sku.meta_value AS CHAR) LIKE $1 ", $where );
+		return $where;
+	}
+
+	/*
+	 * add_search_by_sku_to_frontend.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function add_search_by_sku_to_frontend( $query ) {
+		if (
+			isset( $query->query ) &&
+			! $query->is_admin &&
+			$query->is_search &&
+			! empty( $query->query_vars['wc_query'] ) &&
+			! empty( $query->query_vars['s'] ) &&
+			'product' === $query->query_vars['post_type']
+		) {
+			add_filter( 'posts_join',  array( $this, 'search_post_join' ) );
+			add_filter( 'posts_where', array( $this, 'search_post_where' ) );
+		}
 	}
 
 }

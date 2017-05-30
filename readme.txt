@@ -161,6 +161,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.8.3 - 30/05/2017
+~!D	* Dev - PRODUCTS - SKU - "Search by SKU" option added.
 $~!D* Dev - PRODUCTS - SKU - Number Generation - "Pseudorandom - Hash (max 10 digits)" option added.
 ~!D	* Dev - PRODUCTS - SKU - "Template" option added.
 $~!D* Dev - PRODUCTS - SKU - Sequential counter by categories added.

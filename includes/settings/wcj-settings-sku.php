@@ -6,7 +6,6 @@
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    tags (check SKU plugin)
- * @todo    search by SKU (check SKU plugin)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -158,6 +157,14 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Allow Duplicate SKUs', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_sku_allow_duplicates_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Search by SKU', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Add product searching by SKU on frontend.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_sku_search_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
