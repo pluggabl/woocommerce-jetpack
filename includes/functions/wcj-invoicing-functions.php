@@ -168,7 +168,7 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
 		foreach ( $tcpdf_fonts_files as $tcpdf_fonts_file ) {
 			if ( ! in_array( $tcpdf_fonts_file, $tcpdf_fonts_dir_files ) ) {
-				$url = 'https://booster.io/tcpdf_fonts/' . $tcpdf_fonts_file;
+				$url = 'http://storage.algoritmika.com/booster/tcpdf_fonts/' . $tcpdf_fonts_file;
 				if ( '.php' === substr( $tcpdf_fonts_file, -4 ) ) {
 					$url .= '.data';
 				}
