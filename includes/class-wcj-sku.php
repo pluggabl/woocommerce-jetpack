@@ -78,9 +78,32 @@ class WCJ_SKU extends WCJ_Module {
 	}
 
 	/**
+	 * get_sequential_counter.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function get_sequential_counter( $product_id ) {
+		if ( 'yes' === get_option( 'wcj_sku_number_generation_sequential_by_cat', 'no' ) ) {
+			$product_terms = get_the_terms( $product_id, 'product_cat' );
+			if ( is_array( $product_terms ) ) {
+				foreach ( $product_terms as $term ) {
+					$sku_number = $this->sequential_counter_cats[ $term->term_id ];
+					$this->sequential_counter_cats[ $term->term_id ]++;
+					return $sku_number;
+				}
+			}
+		}
+		// Cats disabled or no category found
+		$sku_number = $this->sequential_counter;
+		$this->sequential_counter++;
+		return $sku_number;
+	}
+
+	/**
 	 * set_sku_with_variable.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 * @todo    `as_variable_with_suffix` - handle cases with more than 26 variations
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
@@ -89,8 +112,7 @@ class WCJ_SKU extends WCJ_Module {
 			$sku_number = rand();
 		} */
 		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-			$sku_number = $this->sequential_counter;
-			$this->sequential_counter++;
+			$sku_number = $this->get_sequential_counter( $product_id );
 		} else { // if 'product_id'
 			$sku_number = $product_id;
 		}
@@ -105,25 +127,23 @@ class WCJ_SKU extends WCJ_Module {
 			$variations = $this->get_all_variations( $product );
 			if ( 'as_variable' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
-					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id, $product );
+					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id, wc_get_product( $variation['variation_id'] ) );
 				}
-			}
-			else if ( 'as_variation' === $variation_handling ) {
+			} elseif ( 'as_variation' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
 					if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-						$sku_number = $this->sequential_counter;
-						$this->sequential_counter++;
+						$sku_number = $this->get_sequential_counter( $product_id );
 					} else { // if 'product_id'
 						$sku_number = $variation['variation_id'];
 					}
-					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id, $product );
+					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id, wc_get_product( $variation['variation_id'] ) );
 				}
 			}
 			else if ( 'as_variable_with_suffix' === $variation_handling ) {
 				$variation_suffixes = 'abcdefghijklmnopqrstuvwxyz';
 				$abc = 0;
 				foreach ( $variations as $variation ) {
-					$this->set_sku( $variation['variation_id'], $sku_number, $variation_suffixes[ $abc++ ], $is_preview, $product_id, $product );
+					$this->set_sku( $variation['variation_id'], $sku_number, $variation_suffixes[ $abc++ ], $is_preview, $product_id, wc_get_product( $variation['variation_id'] ) );
 					if ( 26 == $abc ) {
 						$abc = 0;
 					}
@@ -187,6 +207,14 @@ class WCJ_SKU extends WCJ_Module {
 	function maybe_get_sequential_counters() {
 		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$this->sequential_counter = apply_filters( 'booster_get_option', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
+			if ( 'yes' === get_option( 'wcj_sku_number_generation_sequential_by_cat', 'no' ) ) {
+				$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+				if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ){
+					foreach ( $product_categories as $product_category ) {
+						$this->sequential_counter_cats[ $product_category->term_id ] = get_option( 'wcj_sku_counter_cat_' . $product_category->term_id, 1 );
+					}
+				}
+			}
 		}
 	}
 
@@ -195,10 +223,19 @@ class WCJ_SKU extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
+	 * @todo    get `$product_categories` from `maybe_get_sequential_counters`
 	 */
 	function maybe_save_sequential_counters( $is_preview = false ) {
 		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) && ! $is_preview ) {
 			update_option( 'wcj_sku_number_generation_sequential', $this->sequential_counter );
+			if ( 'yes' === get_option( 'wcj_sku_number_generation_sequential_by_cat', 'no' ) ) {
+				$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
+				if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ){
+					foreach ( $product_categories as $product_category ) {
+						update_option( 'wcj_sku_counter_cat_' . $product_category->term_id, $this->sequential_counter_cats[ $product_category->term_id ] );
+					}
+				}
+			}
 		}
 	}
 

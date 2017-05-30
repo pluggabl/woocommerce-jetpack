@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - SKU
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    pseudo-random (check SKU plugin)
@@ -42,6 +42,13 @@ $settings = array(
 			is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 			array( 'step' => '1', 'min'  => '0', )
 		),
+	),
+	array(
+		'title'    => __( 'Sequential Number Generation - By Category', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_sku_number_generation_sequential_by_cat',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Prefix', 'woocommerce-jetpack' ),
@@ -106,6 +113,13 @@ if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ){
 				'id'       => 'wcj_sku_suffix_cat_' . $product_category->term_id,
 				'default'  => '',
 				'type'     => 'text',
+			),
+			array(
+				'title'    => '',
+				'desc'     => __( 'Counter (Sequential)', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_sku_counter_cat_' . $product_category->term_id,
+				'default'  => 1,
+				'type'     => 'number',
 			),
 		) );
 	}
