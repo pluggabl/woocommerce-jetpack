@@ -69,14 +69,15 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_all_variations.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 * @since   2.4.8
 	 */
 	function get_all_variations( $_product ) {
 		$all_variations = array();
 		foreach ( $_product->get_children() as $child_id ) {
-			$variation = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_child( $child_id ) : wc_get_product( $child_id ) );
-			$all_variations[] = $_product->get_available_variation( $variation );
+			if ( $variation = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_product->get_child( $child_id ) : wc_get_product( $child_id ) ) ) {
+				$all_variations[] = $_product->get_available_variation( $variation );
+			}
 		}
 		return $all_variations;
 	}
