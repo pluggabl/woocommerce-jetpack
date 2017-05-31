@@ -56,6 +56,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'exclude_by_attribute__value'         => '',
 			'add_variation_info_to_item_name'     => 'no',
 			'insert_page_break'                   => 0,
+			'max_page_breaks'                     => 0,
 		), $atts );
 		return $modified_atts;
 	}
@@ -599,6 +600,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			$data_size = count( $data );
 			$slice_offset = 0;
 			$html = '';
+			$slices = 0;
 			while ( $slice_offset < $data_size ) {
 				if ( 0 != $slice_offset ) {
 					$html .= '<tcpdf method="AddPage" />';
@@ -606,6 +608,10 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 				$data_slice = array_slice( $data, $slice_offset, $atts['insert_page_break'] );
 				$html .= wcj_get_table_html( array_merge( array( $columns_titles ), $data_slice ), $table_html_args );
 				$slice_offset += $atts['insert_page_break'];
+				$slices++;
+				if ( 0 != $atts['max_page_breaks'] && $slices >= $atts['max_page_breaks'] ) {
+					$atts['insert_page_break'] = PHP_INT_MAX;
+				}
 			}
 		} else {
 			$html = wcj_get_table_html( array_merge( array( $columns_titles ), $data ), $table_html_args );
