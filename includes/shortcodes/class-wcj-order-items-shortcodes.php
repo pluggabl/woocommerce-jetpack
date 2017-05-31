@@ -55,8 +55,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'exclude_by_attribute__name'          => '',
 			'exclude_by_attribute__value'         => '',
 			'add_variation_info_to_item_name'     => 'no',
-			'insert_page_break'                   => 0,
-			'max_page_breaks'                     => 0,
+			'insert_page_break'                   => '',
 		), $atts );
 		return $modified_atts;
 	}
@@ -596,7 +595,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'columns_classes'    => array(),
 			'columns_styles'     => $columns_styles,
 		);
-		if ( 0 != $atts['insert_page_break'] ) {
+		if ( '' != $atts['insert_page_break'] ) {
+			$page_breaks = explode ( '|', $atts['insert_page_break'] );
 			$data_size = count( $data );
 			$slice_offset = 0;
 			$html = '';
@@ -605,13 +605,13 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 				if ( 0 != $slice_offset ) {
 					$html .= '<tcpdf method="AddPage" />';
 				}
-				$data_slice = array_slice( $data, $slice_offset, $atts['insert_page_break'] );
-				$html .= wcj_get_table_html( array_merge( array( $columns_titles ), $data_slice ), $table_html_args );
-				$slice_offset += $atts['insert_page_break'];
-				$slices++;
-				if ( 0 != $atts['max_page_breaks'] && $slices >= $atts['max_page_breaks'] ) {
-					$atts['insert_page_break'] = PHP_INT_MAX;
+				if ( isset( $page_breaks[ $slices ] ) ) {
+					$current_page_break = $page_breaks[ $slices ];
 				}
+				$data_slice = array_slice( $data, $slice_offset, $current_page_break );
+				$html .= wcj_get_table_html( array_merge( array( $columns_titles ), $data_slice ), $table_html_args );
+				$slice_offset += $current_page_break;
+				$slices++;
 			}
 		} else {
 			$html = wcj_get_table_html( array_merge( array( $columns_titles ), $data ), $table_html_args );
