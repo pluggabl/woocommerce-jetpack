@@ -54,7 +54,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'exclude_by_tags'                     => '',
 			'exclude_by_attribute__name'          => '',
 			'exclude_by_attribute__value'         => '',
-			'add_variation_info_to_item_name'     => 'no',
+			'add_variation_info_to_item_name'     => 'yes',
 			'insert_page_break'                   => '',
 		), $atts );
 		return $modified_atts;
