@@ -27,7 +27,7 @@ foreach ( $invoice_types as $invoice_type ) {
 		array(
 			'title'    => __( 'Font Family', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_general_font_family',
-			'default'  => 'dejavusans',
+			'default'  => 'helvetica',
 			'type'     => 'select',
 			'options'  => array(
 				'courier'           => 'Courier',

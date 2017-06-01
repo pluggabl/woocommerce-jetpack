@@ -179,6 +179,7 @@ $~!D* Dev - PRODUCTS - SKU - Sequential counter by categories added.
 ~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
 $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
+~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Default font set to "Helvetica".
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Font selection option updated.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "cid0ct (Chinese Traditional)" font added (to extra fonts pack).
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "STSong Light (Simp. Chinese)" font added (to both minimal and extra fonts packs).
