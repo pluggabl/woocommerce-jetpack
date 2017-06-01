@@ -52,6 +52,10 @@ class WCJ_SKU extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_sku_search_enabled', 'no' ) ) {
 				add_filter( 'pre_get_posts', array( $this, 'add_search_by_sku_to_frontend' ), PHP_INT_MAX );
 			}
+			// Disable SKU
+			if ( 'yes' === get_option( 'wcj_sku_disabled', 'no' ) ) {
+				add_filter( 'wc_product_sku_enabled', '__return_false', PHP_INT_MAX );
+			}
 		}
 	}
 

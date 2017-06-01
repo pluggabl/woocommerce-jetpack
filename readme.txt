@@ -161,12 +161,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.3 - 31/05/2017
+= 2.8.3 - 02/06/2017
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `insert_page_break` (defaults to empty string) attribute added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
+~D	* Dev - PRODUCTS - SKU - "Disable SKUs" option added.
 ~!D	* Dev - PRODUCTS - SKU - Adding SKU on product duplicate action added (`woocommerce_duplicate_product`).
 ~!D	* Dev - PRODUCTS - SKU - "Search by SKU" option added.
 $~!D* Dev - PRODUCTS - SKU - Number Generation - "Pseudorandom - Hash (max 10 digits)" option added.

@@ -181,6 +181,13 @@ $settings = array_merge( $settings, array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'Disable SKUs', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_sku_disabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_sku_more_options',
 	),
