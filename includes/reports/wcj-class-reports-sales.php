@@ -18,7 +18,7 @@ class WCJ_Reports_Sales {
 	 * @version 2.6.0
 	 * @since   2.3.0
 	 */
-	public function __construct( $args = null ) {
+	function __construct( $args = null ) {
 		return true;
 	}
 
@@ -28,7 +28,7 @@ class WCJ_Reports_Sales {
 	 * @version 2.3.9
 	 * @since   2.3.0
 	 */
-	public function get_report() {
+	function get_report() {
 
 		$html = '';
 
