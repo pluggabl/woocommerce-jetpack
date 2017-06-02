@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Orders
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -94,6 +94,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 		array(
 			'title'    => __( 'Custom Column', 'woocommerce-jetpack' ) . ' #' . $i,
 			'desc'     => __( 'Enabled', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Key:', 'woocommerce-jetpack' ) . ' <code>' . 'wcj_orders_custom_column_' . $i . '</code>',
 			'id'       => 'wcj_orders_list_custom_columns_enabled_' . $i,
 			'default'  => 'no',
 			'type'     => 'checkbox',
@@ -171,7 +172,7 @@ $settings = array_merge( $settings, array(
 		'desc_tip' => __( 'Default columns order', 'woocommerce-jetpack' ) . ':<br>' . str_replace( PHP_EOL, '<br>', $this->get_orders_default_columns_in_order() ),
 		'default'  => $this->get_orders_default_columns_in_order(),
 		'type'     => 'textarea',
-		'css'      => 'height:300px;',
+		'css'      => 'height:300px;min-width:300px;',
 	),
 	array(
 		'type'     => 'sectionend',
