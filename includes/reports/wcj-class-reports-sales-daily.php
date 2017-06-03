@@ -53,7 +53,6 @@ class WCJ_Reports_Product_Sales_Daily {
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    (maybe) currency conversion
-	 * @todo    option: selectable result columns (profit etc.)
 	 * @todo    recheck if `wc_get_product_purchase_price()` working correctly for variations
 	 */
 	function get_report_data() {
@@ -197,6 +196,7 @@ class WCJ_Reports_Product_Sales_Daily {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
+	 * @todo    option: selectable result columns (profit etc.) // `wcj_reports_products_sales_daily_display_profit`
 	 */
 	function output_report_results() {
 		$table_data = array();
