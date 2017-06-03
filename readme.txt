@@ -161,7 +161,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.3 - 02/06/2017
+= 2.8.3 - 03/06/2017
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" added.
 ~ED	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `add_variation_info_to_item_name` attribute defaults to `yes` now.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `insert_page_break` (defaults to empty string) attribute added.
@@ -186,6 +186,7 @@ $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Now extra fonts are downloaded to `woocommerce_uploads` folder.
 $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
 $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
+-!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
 ~!	* Tweak - SHIPPING & ORDERS - Orders - Settings updated (custom column key info added) and restyled (columns order textarea width changed).
 
 = 2.8.2 - 24/05/2017 =

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Reports
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -24,7 +24,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 */
 	function __construct() {
 
@@ -44,6 +44,7 @@ class WCJ_Reports extends WCJ_Module {
 
 				include_once( 'reports/wcj-class-reports-customers.php' );
 				include_once( 'reports/wcj-class-reports-stock.php' );
+				include_once( 'reports/wcj-class-reports-sales-daily.php' );
 				include_once( 'reports/wcj-class-reports-sales.php' );
 				include_once( 'reports/wcj-class-reports-monthly-sales.php' );
 
@@ -120,57 +121,57 @@ class WCJ_Reports extends WCJ_Module {
 
 			$custom_ranges = array(
 				'last_14_days' => array(
-					'title'      => __( 'Last 14 Days', 'woocommerce-jetpack' ),
+					'title'      => __( 'Last 14 days', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-d', strtotime( '-14 days' ) ),
 					'end_date'   => date( 'Y-m-d' ),
 				),
 				'last_30_days' => array(
-					'title'      => __( 'Last 30 Days', 'woocommerce-jetpack' ),
+					'title'      => __( 'Last 30 days', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-d', strtotime( '-30 days' ) ),
 					'end_date'   => date( 'Y-m-d' ),
 				),
 				'last_3_months' => array(
-					'title'      => __( 'Last 3 Months', 'woocommerce-jetpack' ),
+					'title'      => __( 'Last 3 months', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-d', strtotime( '-3 months' ) ),
 					'end_date'   => date( 'Y-m-d' ),
 				),
 				'last_6_months' => array(
-					'title'      => __( 'Last 6 Months', 'woocommerce-jetpack' ),
+					'title'      => __( 'Last 6 months', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-d', strtotime( '-6 months' ) ),
 					'end_date'   => date( 'Y-m-d' ),
 				),
 				'last_12_months' => array(
-					'title'      => __( 'Last 12 Months', 'woocommerce-jetpack' ),
+					'title'      => __( 'Last 12 months', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-d', strtotime( '-12 months' ) ),
 					'end_date'   => date( 'Y-m-d' ),
 				),
 				'last_24_months' => array(
-					'title'      => __( 'Last 24 Months', 'woocommerce-jetpack' ),
+					'title'      => __( 'Last 24 months', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-d', strtotime( '-24 months' ) ),
 					'end_date'   => date( 'Y-m-d' ),
 				),
 				'last_36_months' => array(
-					'title'      => __( 'Last 36 Months', 'woocommerce-jetpack' ),
+					'title'      => __( 'Last 36 months', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-d', strtotime( '-36 months' ) ),
 					'end_date'   => date( 'Y-m-d' ),
 				),
 				'same_days_last_month' => array(
-					'title'      => __( 'Same Days Last Month', 'woocommerce-jetpack' ),
+					'title'      => __( 'Same days last month', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-01', strtotime( '-1 month' ) ),
 					'end_date'   => date( 'Y-m-d', strtotime( '-1 month' ) ),
 				),
 				'same_days_last_year' => array(
-					'title'      => __( 'Same Days Last Year', 'woocommerce-jetpack' ),
+					'title'      => __( 'Same days last year', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-01', strtotime( '-1 year' ) ),
 					'end_date'   => date( 'Y-m-d', strtotime( '-1 year' ) ),
 				),
 				'last_year' => array(
-					'title'      => __( 'Last Year', 'woocommerce-jetpack' ),
+					'title'      => __( 'Last year', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-01-01', strtotime( '-1 year' ) ),
 					'end_date'   => date( 'Y-12-31', strtotime( '-1 year' ) ),
 				),
 				/* 'last_week' => array(
-					'title'      => __( 'Last Week', 'woocommerce-jetpack' ),
+					'title'      => __( 'Last week', 'woocommerce-jetpack' ),
 					'start_date' => date( 'Y-m-d', strtotime( 'last monday' ) ),
 					'end_date'   => date( 'Y-m-d', strtotime( 'last sunday' ) ),
 				), */
@@ -212,6 +213,17 @@ class WCJ_Reports extends WCJ_Module {
 	}
 
 	/**
+	 * get_report_products_sales_daily.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function get_report_products_sales_daily() {
+		$report = new WCJ_Reports_Product_Sales_Daily();
+		echo $report->get_report();
+	}
+
+	/**
 	 * get_report_monthly_sales.
 	 * @version 2.4.7
 	 * @since   2.4.7
@@ -243,13 +255,20 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Add reports to WooCommerce > Reports > Sales
 	 *
-	 * @version 2.5.3
+	 * @version 2.8.3
 	 * @since   2.3.0
 	 */
 	function add_sales_reports( $reports ) {
 
+		$reports['orders']['reports']['booster_products_sales_daily'] = array(
+			'title'       => __( 'Booster: Product Sales (Daily)', 'woocommerce-jetpack' ),
+			'description' => '',
+			'hide_title'  => false,
+			'callback'    => array( $this, 'get_report_products_sales_daily' ),
+		);
+
 		$reports['orders']['reports']['booster_products_sales'] = array(
-			'title'       => __( 'Booster: Product Sales', 'woocommerce-jetpack' ),
+			'title'       => __( 'Booster: Product Sales (Monthly)', 'woocommerce-jetpack' ),
 			'description' => '',
 			'hide_title'  => false,
 			'callback'    => array( $this, 'get_report_sales' ),

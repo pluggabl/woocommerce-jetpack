@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Reports
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -11,9 +11,44 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $reports_and_settings = array(
 	array(
-		'title'     => __( 'Product Sales', 'woocommerce-jetpack' ),
+		'title'     => __( 'Product Sales (Daily)', 'woocommerce-jetpack' ),
 		'tab'       => 'orders',
-		'tab_title' => 'Orders',
+		'tab_title' => __( 'Orders', 'woocommerce-jetpack' ),
+		'report'    => 'booster_products_sales_daily',
+	),
+	array(
+		'id'        => 'wcj_reports_products_sales_daily_order_statuses',
+		'desc'      => __( 'Order statuses', 'woocommerce-jetpack' ),
+		'type'      => 'multiselect',
+		'default'   => 'any',
+		'options'   => array_merge( array( 'any' => __( 'All statuses', 'woocommerce-jetpack' ) ), wc_get_order_statuses() ),
+		'class'     => 'chosen_select',
+	),
+	array(
+		'id'        => 'wcj_reports_products_sales_daily_display_profit',
+		'desc'      => __( 'Display profit', 'woocommerce-jetpack' ),
+		'type'      => 'checkbox',
+		'default'   => 'no',
+		'checkboxgroup' => 'start',
+	),
+	array(
+		'id'        => 'wcj_reports_products_sales_daily_include_taxes',
+		'desc'      => __( 'Include taxes', 'woocommerce-jetpack' ),
+		'type'      => 'checkbox',
+		'default'   => 'no',
+		'checkboxgroup' => '',
+	),
+	array(
+		'id'        => 'wcj_reports_products_sales_daily_count_variations',
+		'desc'      => __( 'Count variations for variable products', 'woocommerce-jetpack' ),
+		'type'      => 'checkbox',
+		'default'   => 'no',
+		'checkboxgroup' => 'end',
+	),
+	array(
+		'title'     => __( 'Product Sales (Monthly)', 'woocommerce-jetpack' ),
+		'tab'       => 'orders',
+		'tab_title' => __( 'Orders', 'woocommerce-jetpack' ),
 		'report'    => 'booster_products_sales',
 	),
 	array(
@@ -54,37 +89,37 @@ $reports_and_settings = array(
 	array(
 		'title'     => __( 'Monthly Sales (with currency conversions)', 'woocommerce-jetpack' ),
 		'tab'       => 'orders',
-		'tab_title' => 'Orders',
+		'tab_title' => __( 'Orders', 'woocommerce-jetpack' ),
 		'report'    => 'booster_monthly_sales',
 	),
 	array(
 		'title'     => __( 'Customers by Country', 'woocommerce-jetpack' ),
 		'tab'       => 'customers',
-		'tab_title' => 'Customers',
+		'tab_title' => __( 'Customers', 'woocommerce-jetpack' ),
 		'report'    => 'customers_by_country',
 	),
 	array(
 		'title'     => __( 'Customers by Country Sets', 'woocommerce-jetpack' ),
 		'tab'       => 'customers',
-		'tab_title' => 'Customers',
+		'tab_title' => __( 'Customers', 'woocommerce-jetpack' ),
 		'report'    => 'customers_by_country_sets',
 	),
 	array(
 		'title'     => __( 'All in Stock with sales data', 'woocommerce-jetpack' ),
 		'tab'       => 'stock',
-		'tab_title' => 'Stock',
+		'tab_title' => __( 'Stock', 'woocommerce-jetpack' ),
 		'report'    => 'on_stock',
 	),
 	array(
 		'title'     => __( 'Understocked products (calculated by sales data)', 'woocommerce-jetpack' ),
 		'tab'       => 'stock',
-		'tab_title' => 'Stock',
+		'tab_title' => __( 'Stock', 'woocommerce-jetpack' ),
 		'report'    => 'understocked',
 	),
 	array(
 		'title'     => __( 'Overstocked products (calculated by sales data)', 'woocommerce-jetpack' ),
 		'tab'       => 'stock',
-		'tab_title' => 'Stock',
+		'tab_title' => __( 'Stock', 'woocommerce-jetpack' ),
 		'report'    => 'overstocked',
 	),
 );
@@ -100,8 +135,8 @@ foreach ( $reports_and_settings as $report ) {
 	if ( isset( $report['report'] ) ) {
 		$settings = array_merge( $settings, array(
 			array(
-//				'title'    => 'WooCommerce > Reports > ' . $report['tab_title'] . ' > ' . $report['title'],
 				'title'    => '[' . $report['tab_title'] . '] ' . $report['title'],
+				'desc_tip' => 'WooCommerce > Reports > ' . $report['tab_title'] . ' > ' . $report['title'],
 				'id'       => 'wcj_' . $report['report'] . '_link',
 				'type'     => 'custom_link',
 				'link'     => '<a class="button-primary" '
