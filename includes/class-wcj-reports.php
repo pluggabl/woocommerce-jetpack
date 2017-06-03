@@ -102,7 +102,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * add_custom_order_reports_ranges_to_admin_bar.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 */
 	function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
 		$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
@@ -119,65 +119,8 @@ class WCJ_Reports extends WCJ_Module {
 			);
 			$wp_admin_bar->add_node( $args );
 
-			$custom_ranges = array(
-				'last_14_days' => array(
-					'title'      => __( 'Last 14 days', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-m-d', strtotime( '-14 days' ) ),
-					'end_date'   => date( 'Y-m-d' ),
-				),
-				'last_30_days' => array(
-					'title'      => __( 'Last 30 days', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-m-d', strtotime( '-30 days' ) ),
-					'end_date'   => date( 'Y-m-d' ),
-				),
-				'last_3_months' => array(
-					'title'      => __( 'Last 3 months', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-m-d', strtotime( '-3 months' ) ),
-					'end_date'   => date( 'Y-m-d' ),
-				),
-				'last_6_months' => array(
-					'title'      => __( 'Last 6 months', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-m-d', strtotime( '-6 months' ) ),
-					'end_date'   => date( 'Y-m-d' ),
-				),
-				'last_12_months' => array(
-					'title'      => __( 'Last 12 months', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-m-d', strtotime( '-12 months' ) ),
-					'end_date'   => date( 'Y-m-d' ),
-				),
-				'last_24_months' => array(
-					'title'      => __( 'Last 24 months', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-m-d', strtotime( '-24 months' ) ),
-					'end_date'   => date( 'Y-m-d' ),
-				),
-				'last_36_months' => array(
-					'title'      => __( 'Last 36 months', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-m-d', strtotime( '-36 months' ) ),
-					'end_date'   => date( 'Y-m-d' ),
-				),
-				'same_days_last_month' => array(
-					'title'      => __( 'Same days last month', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-m-01', strtotime( '-1 month' ) ),
-					'end_date'   => date( 'Y-m-d', strtotime( '-1 month' ) ),
-				),
-				'same_days_last_year' => array(
-					'title'      => __( 'Same days last year', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-m-01', strtotime( '-1 year' ) ),
-					'end_date'   => date( 'Y-m-d', strtotime( '-1 year' ) ),
-				),
-				'last_year' => array(
-					'title'      => __( 'Last year', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-01-01', strtotime( '-1 year' ) ),
-					'end_date'   => date( 'Y-12-31', strtotime( '-1 year' ) ),
-				),
-				/* 'last_week' => array(
-					'title'      => __( 'Last week', 'woocommerce-jetpack' ),
-					'start_date' => date( 'Y-m-d', strtotime( 'last monday' ) ),
-					'end_date'   => date( 'Y-m-d', strtotime( 'last sunday' ) ),
-				), */
-			);
 			$custom_range_nonce = wp_create_nonce( 'custom_range' );
-			foreach ( $custom_ranges as $custom_range_id => $custom_range ) {
+			foreach ( wcj_get_reports_custom_ranges() as $custom_range_id => $custom_range ) {
 				$node = array(
 					'parent' => $parent,
 					'id'     => $parent . '_' . $custom_range_id,

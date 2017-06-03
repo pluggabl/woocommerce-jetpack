@@ -187,6 +187,7 @@ $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
 $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
 $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
 -!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
+	* Dev - EMAILS & MISC. - Reports - Code refactoring - `wcj-reports-functions.php` added.
 ~!	* Tweak - SHIPPING & ORDERS - Orders - Settings updated (custom column key info added) and restyled (columns order textarea width changed).
 
 = 2.8.2 - 24/05/2017 =
