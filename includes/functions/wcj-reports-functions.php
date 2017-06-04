@@ -9,6 +9,26 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_product_sales_daily_report_columns' ) ) {
+	/*
+	 * wcj_get_product_sales_daily_report_columns.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function wcj_get_product_sales_daily_report_columns() {
+		return array(
+			'date'          => __( 'Date', 'woocommerce-jetpack' ),
+			'product_id'    => __( 'Product ID', 'woocommerce-jetpack' ),
+			'item_title'    => __( 'Item Title', 'woocommerce-jetpack' ),
+			'item_quantity' => __( 'Quantity', 'woocommerce-jetpack' ),
+			'sum'           => __( 'Sum', 'woocommerce-jetpack' ),
+			'profit'        => __( 'Profit', 'woocommerce-jetpack' ),
+			'last_sale'     => __( 'Last sale', 'woocommerce-jetpack' ),
+		);
+	}
+}
+
 if ( ! function_exists( 'wcj_get_reports_standard_ranges' ) ) {
 	/*
 	 * wcj_get_reports_standard_ranges.

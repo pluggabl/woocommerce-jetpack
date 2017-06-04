@@ -196,22 +196,19 @@ class WCJ_Reports_Product_Sales_Daily {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    option: selectable result columns (profit etc.) // `wcj_reports_products_sales_daily_display_profit`
+	 * @todo    totals (qty, sum, profit)
 	 */
 	function output_report_results() {
 		$table_data = array();
-		$table_header = array(
-			__( 'Date', 'woocommerce-jetpack' ),
-			__( 'Product ID', 'woocommerce-jetpack' ),
-			__( 'Title', 'woocommerce-jetpack' ),
-			__( 'Quantity', 'woocommerce-jetpack' ),
-			__( 'Sum', 'woocommerce-jetpack' ),
-		);
-		$display_profit = ( 'yes' === get_option( 'wcj_reports_products_sales_daily_display_profit', 'no' ) );
-		if ( $display_profit ) {
-			$table_header[] = __( 'Profit', 'woocommerce-jetpack' );
+		$table_header   = array();
+		$all_columns    = wcj_get_product_sales_daily_report_columns();
+		$report_columns = get_option( 'wcj_reports_products_sales_daily_columns', '' );
+		if ( empty( $report_columns ) ) {
+			$report_columns = array_keys( $all_columns );
 		}
-		$table_header[] = __( 'Last Sale', 'woocommerce-jetpack' );
+		foreach ( $report_columns as $report_column ) {
+			$table_header[] = $all_columns[ $report_column ];
+		}
 		$table_data[] = $table_header;
 		foreach ( $this->sales_by_day as $day_date => $day_sales ) {
 			foreach ( $day_sales as $product_id => $product_day_sales ) {
@@ -222,18 +219,33 @@ class WCJ_Reports_Product_Sales_Daily {
 						$this->total_sales_by_day[ $day_date ]['qty']
 					) . '</span></em>';
 				}
-				$row = array(
-					$day_date,
-					$product_id,
-					( is_array( $product_day_sales['name'] ) ? implode( ', ', array_unique( $product_day_sales['name'] ) ) : $product_day_sales['name'] ),
-					$product_day_sales['qty'],
-					wc_price( $product_day_sales['sum'] ),
-				);
-				$day_date = '';
-				if ( $display_profit ) {
-					$row[] = wc_price( $product_day_sales['sum'] - $this->purchase_data[ $product_id ] * $product_day_sales['qty'] );
+				$row = array();
+				foreach ( $report_columns as $report_column ) {
+					switch ( $report_column ) {
+						case 'date':
+							$row[] = $day_date;
+							$day_date = '';
+							break;
+						case 'product_id':
+							$row[] = $product_id;
+							break;
+						case 'item_title':
+							$row[] = ( is_array( $product_day_sales['name'] ) ? implode( ', ', array_unique( $product_day_sales['name'] ) ) : $product_day_sales['name'] );
+							break;
+						case 'item_quantity':
+							$row[] = $product_day_sales['qty'];
+							break;
+						case 'sum':
+							$row[] = wc_price( $product_day_sales['sum'] );
+							break;
+						case 'profit':
+							$row[] = wc_price( $product_day_sales['sum'] - $this->purchase_data[ $product_id ] * $product_day_sales['qty'] );
+							break;
+						case 'last_sale':
+							$row[] = $this->last_sale_data[ $product_id ];
+							break;
+					}
 				}
-				$row[] = $this->last_sale_data[ $product_id ];
 				$table_data[] = $row;
 			}
 		}

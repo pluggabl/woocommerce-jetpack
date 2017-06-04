@@ -17,6 +17,15 @@ $reports_and_settings = array(
 		'report'    => 'booster_products_sales_daily',
 	),
 	array(
+		'id'        => 'wcj_reports_products_sales_daily_columns',
+		'desc'      => __( 'Report columns', 'woocommerce-jetpack' ),
+		'desc_tip'  => __( 'Set empty to include all columns.', 'woocommerce-jetpack' ),
+		'type'      => 'multiselect',
+		'default'   => '',
+		'options'   => wcj_get_product_sales_daily_report_columns(),
+		'class'     => 'chosen_select',
+	),
+	array(
 		'id'        => 'wcj_reports_products_sales_daily_order_statuses',
 		'desc'      => __( 'Order statuses', 'woocommerce-jetpack' ),
 		'type'      => 'multiselect',
@@ -25,18 +34,11 @@ $reports_and_settings = array(
 		'class'     => 'chosen_select',
 	),
 	array(
-		'id'        => 'wcj_reports_products_sales_daily_display_profit',
-		'desc'      => __( 'Display profit', 'woocommerce-jetpack' ),
-		'type'      => 'checkbox',
-		'default'   => 'no',
-		'checkboxgroup' => 'start',
-	),
-	array(
 		'id'        => 'wcj_reports_products_sales_daily_include_taxes',
 		'desc'      => __( 'Include taxes', 'woocommerce-jetpack' ),
 		'type'      => 'checkbox',
 		'default'   => 'no',
-		'checkboxgroup' => '',
+		'checkboxgroup' => 'start',
 	),
 	array(
 		'id'        => 'wcj_reports_products_sales_daily_count_variations',
