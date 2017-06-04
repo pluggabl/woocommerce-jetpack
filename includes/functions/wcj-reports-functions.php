@@ -126,6 +126,16 @@ if ( ! function_exists( 'wcj_get_reports_custom_ranges' ) ) {
 				'start_date' => date( 'Y-01-01', strtotime( '-1 year' ) ),
 				'end_date'   => date( 'Y-12-31', strtotime( '-1 year' ) ),
 			),
+			'yesterday' => array(
+				'title'      => __( 'Yesterday', 'woocommerce-jetpack' ),
+				'start_date' => date( 'Y-m-d', strtotime( '-1 day' ) ),
+				'end_date'   => date( 'Y-m-d', strtotime( '-1 day' ) ),
+			),
+			'today' => array(
+				'title'      => __( 'Today', 'woocommerce-jetpack' ),
+				'start_date' => date( 'Y-m-d' ),
+				'end_date'   => date( 'Y-m-d' ),
+			),
 			/*
 			'last_week' => array(
 				'title'      => __( 'Last week', 'woocommerce-jetpack' ),
