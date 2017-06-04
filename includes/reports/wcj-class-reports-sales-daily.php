@@ -77,7 +77,7 @@ class WCJ_Reports_Product_Sales_Daily {
 				'post_status'    => $order_statuses,
 				'posts_per_page' => $block_size,
 				'orderby'        => 'date',
-				'order'          => 'ASC',
+				'order'          => 'DESC',
 				'offset'         => $offset,
 				'fields'         => 'ids',
 				'date_query'     => array(
