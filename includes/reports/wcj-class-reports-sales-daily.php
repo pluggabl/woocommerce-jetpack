@@ -210,6 +210,11 @@ class WCJ_Reports_Product_Sales_Daily {
 			$table_header[] = $all_columns[ $report_column ];
 		}
 		$table_data[] = $table_header;
+		$totals = array(
+			'qty'    => 0,
+			'sum'    => 0,
+			'profit' => 0,
+		);
 		foreach ( $this->sales_by_day as $day_date => $day_sales ) {
 			foreach ( $day_sales as $product_id => $product_day_sales ) {
 				if ( '' != $day_date ) {
@@ -234,12 +239,16 @@ class WCJ_Reports_Product_Sales_Daily {
 							break;
 						case 'item_quantity':
 							$row[] = $product_day_sales['qty'];
+							$totals['qty'] += $product_day_sales['qty'];
 							break;
 						case 'sum':
 							$row[] = wc_price( $product_day_sales['sum'] );
+							$totals['sum'] += $product_day_sales['sum'];
 							break;
 						case 'profit':
-							$row[] = wc_price( $product_day_sales['sum'] - $this->purchase_data[ $product_id ] * $product_day_sales['qty'] );
+							$profit = $product_day_sales['sum'] - $this->purchase_data[ $product_id ] * $product_day_sales['qty'];
+							$row[] = wc_price( $profit );
+							$totals['profit'] += $profit;
 							break;
 						case 'last_sale':
 							$row[] = $this->last_sale_data[ $product_id ];
@@ -248,6 +257,32 @@ class WCJ_Reports_Product_Sales_Daily {
 				}
 				$table_data[] = $row;
 			}
+		}
+		$display_totals = false;
+		$totals_row     = array();
+		foreach ( $report_columns as $report_column ) {
+			switch ( $report_column ) {
+				case 'date':
+					$totals_row[] = '<strong>' . __( 'Totals', 'woocommerce-jetpack' ) . '</strong>';
+					break;
+				case 'item_quantity':
+					$totals_row[] = '<strong>' . $totals['qty'] . '</strong>';
+					$display_totals = true;
+					break;
+				case 'sum':
+					$totals_row[] = '<strong>' . wc_price( $totals['sum'] ) . '</strong>';
+					$display_totals = true;
+					break;
+				case 'profit':
+					$totals_row[] = '<strong>' . wc_price( $totals['profit'] ) . '</strong>';
+					$display_totals = true;
+					break;
+				default:
+					$totals_row[] = '';
+			}
+		}
+		if ( $display_totals ) {
+			$table_data[] = $totals_row;
 		}
 		$result = ( ! empty( $this->sales_by_day ) ) ?
 			wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'none' ) ) .
