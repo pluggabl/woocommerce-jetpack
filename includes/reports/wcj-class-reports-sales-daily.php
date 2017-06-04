@@ -235,7 +235,7 @@ class WCJ_Reports_Product_Sales_Daily {
 							$day_date_info['daily_total_quantity'] = '';
 							break;
 						case 'product_id':
-							$row[] = $product_id;
+							$row[] = '<a target="_blank" href="' . get_permalink( $product_id ) . '">' . $product_id . '</a>';
 							break;
 						case 'item_title':
 							$row[] = ( is_array( $product_day_sales['name'] ) ? implode( ', ', array_unique( $product_day_sales['name'] ) ) : $product_day_sales['name'] );
