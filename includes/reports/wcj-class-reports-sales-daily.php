@@ -216,20 +216,18 @@ class WCJ_Reports_Product_Sales_Daily {
 			'profit' => 0,
 		);
 		foreach ( $this->sales_by_day as $day_date => $day_sales ) {
+			$day_date_info = $day_date . ' <em><span style="color:gray;">' . sprintf(
+				__( 'Total: %s (%d)', 'woocommerce-jetpack' ),
+				wc_price( $this->total_sales_by_day[ $day_date ]['sum'] ),
+				$this->total_sales_by_day[ $day_date ]['qty']
+			) . '</span></em>';
 			foreach ( $day_sales as $product_id => $product_day_sales ) {
-				if ( '' != $day_date ) {
-					$day_date .= ' <em><span style="color:gray;">' . sprintf(
-						__( 'Total: %s (%d)', 'woocommerce-jetpack' ),
-						wc_price( $this->total_sales_by_day[ $day_date ]['sum'] ),
-						$this->total_sales_by_day[ $day_date ]['qty']
-					) . '</span></em>';
-				}
 				$row = array();
 				foreach ( $report_columns as $report_column ) {
 					switch ( $report_column ) {
 						case 'date':
-							$row[] = $day_date;
-							$day_date = '';
+							$row[] = $day_date_info;
+							$day_date_info = '';
 							break;
 						case 'product_id':
 							$row[] = $product_id;
@@ -262,19 +260,16 @@ class WCJ_Reports_Product_Sales_Daily {
 		$totals_row     = array();
 		foreach ( $report_columns as $report_column ) {
 			switch ( $report_column ) {
-				case 'date':
-					$totals_row[] = '<strong>' . __( 'Totals', 'woocommerce-jetpack' ) . '</strong>';
-					break;
 				case 'item_quantity':
-					$totals_row[] = '<strong>' . $totals['qty'] . '</strong>';
+					$totals_row[] = '<strong>' . sprintf( __( 'Total: %d', 'woocommerce-jetpack' ), $totals['qty'] ) . '</strong>';
 					$display_totals = true;
 					break;
 				case 'sum':
-					$totals_row[] = '<strong>' . wc_price( $totals['sum'] ) . '</strong>';
+					$totals_row[] = '<strong>' . sprintf( __( 'Total: %s', 'woocommerce-jetpack' ), wc_price( $totals['sum'] ) ) . '</strong>';
 					$display_totals = true;
 					break;
 				case 'profit':
-					$totals_row[] = '<strong>' . wc_price( $totals['profit'] ) . '</strong>';
+					$totals_row[] = '<strong>' . sprintf( __( 'Total: %s', 'woocommerce-jetpack' ), wc_price( $totals['profit'] ) ) . '</strong>';
 					$display_totals = true;
 					break;
 				default:
