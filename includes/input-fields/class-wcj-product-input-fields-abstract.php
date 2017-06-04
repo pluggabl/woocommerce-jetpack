@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Abstract
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -669,7 +669,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Adds product input values to order details (and emails).
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 */
 	function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
@@ -677,7 +677,10 @@ class WCJ_Product_Input_Fields_Abstract {
 			return $name;
 		}
 		if ( $is_cart ) {
-			$name .= '<dl style="font-size:smaller;">';
+			$name .= get_option( 'wcj_product_input_fields_cart_start_template', '<dl style="font-size:smaller;">' );
+			$item_template = get_option( 'wcj_product_input_fields_cart_field_template', '<dt>%title%</dt><dd>%value%</dd>' );
+		} else {
+			$item_template = get_option( 'wcj_product_input_fields_frontend_view_order_table_format', '&nbsp;| %title% %value%' );
 		}
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $item['product_id'], 'no' );
@@ -708,20 +711,12 @@ class WCJ_Product_Input_Fields_Abstract {
 					$value = ( isset( $value['name'] ) ) ? $value['name'] : '';
 				}
 				if ( '' != $value ) {
-					if ( $is_cart ) {
-						$name .= '<dt>' . $title . '</dt>' . '<dd>' . $value . '</dd>';
-					} else {
-						$name .= str_replace(
-							array( '%title%', '%value%' ),
-							array( $title, $value ),
-							get_option( 'wcj_product_input_fields_frontend_view_order_table_format', '&nbsp;| %title% %value%' )
-						);
-					}
+					$name .= str_replace( array( '%title%', '%value%' ), array( $title, $value ), $item_template );
 				}
 			}
 		}
 		if ( $is_cart ) {
-			$name .= '</dl>';
+			$name .= get_option( 'wcj_product_input_fields_cart_end_template', '</dl>' );
 		}
 		return $name;
 	}

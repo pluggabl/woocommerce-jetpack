@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -124,8 +124,29 @@ $settings = array_merge( $settings, array(
 		'css'      => 'width:50%;min-width:300px;',
 	),
 	array(
-		'title'    => __( 'Item Name Order Table Format', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Affects Checkout, Emails and Admin Orders View', 'woocommerce-jetpack' ),
+		'title'    => __( 'Cart HTML Template - Start', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_input_fields_cart_start_template',
+		'default'  => '<dl style="font-size:smaller;">',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:50%;min-width:300px;',
+	),
+	array(
+		'title'    => __( 'Cart HTML Template - Each Field', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_input_fields_cart_field_template',
+		'default'  => '<dt>%title%</dt><dd>%value%</dd>',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:50%;min-width:300px;',
+	),
+	array(
+		'title'    => __( 'Cart HTML Template - End', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_input_fields_cart_end_template',
+		'default'  => '</dl>',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:50%;min-width:300px;',
+	),
+	array(
+		'title'    => __( 'Order Table Template - Each Field', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Affects Order received page, Emails and Admin Orders View', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_input_fields_frontend_view_order_table_format',
 		'default'  => '&nbsp;| %title% %value%',
 		'type'     => 'custom_textarea',
