@@ -168,6 +168,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!D	* Dev - PRODUCTS - Product Cost Price - "WooCommerce Cost of Goods" Data Import - Tool added.
+$~!D* Dev - PRODUCTS - Product Cost Price - "Admin Products List Custom Columns" - Section added.
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
 ~D	* Dev - PRODUCTS - SKU - "Disable SKUs" option added.
 ~!D	* Dev - PRODUCTS - SKU - Adding SKU on product duplicate action added (`woocommerce_duplicate_product`).

@@ -42,9 +42,22 @@ class WCJ_Purchase_Data extends WCJ_Module {
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
-			if ( 'yes' === get_option( 'wcj_purchase_data_custom_columns_profit', 'yes' ) || 'yes' === get_option( 'wcj_purchase_data_custom_columns_purchase_cost', 'no' ) ) {
+			// Orders columns
+			if (
+				'yes' === get_option( 'wcj_purchase_data_custom_columns_profit', 'yes' ) ||
+				'yes' === get_option( 'wcj_purchase_data_custom_columns_purchase_cost', 'no' )
+			) {
 				add_filter( 'manage_edit-shop_order_columns',        array( $this, 'add_order_columns' ),    PHP_INT_MAX - 2 );
 				add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
+			}
+
+			// Products columns
+			if (
+				'yes' === get_option( 'wcj_purchase_data_custom_products_columns_purchase_cost', 'yes' ) ||
+				'yes' === get_option( 'wcj_purchase_data_custom_products_columns_profit', 'no' )
+			) {
+				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),    PHP_INT_MAX );
+				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_columns' ), PHP_INT_MAX );
 			}
 		}
 	}
@@ -87,6 +100,43 @@ class WCJ_Purchase_Data extends WCJ_Module {
 		$html .= '<p>' . wcj_get_table_html( $table_data, array( 'table_heading_type' => 'horizontal', 'table_class' => 'widefat striped' ) ) . '</p>';
 		$html .= '</div>';
 		echo $html;
+	}
+
+	/**
+	 * add_product_columns.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    (maybe) output columns immediately after standard "Price"
+	 */
+	function add_product_columns( $columns ) {
+		if ( 'yes' === get_option( 'wcj_purchase_data_custom_products_columns_purchase_cost', 'yes' ) ) {
+			$columns['purchase_cost'] = __( 'Cost', 'woocommerce-jetpack' );
+		}
+		if ( 'yes' === get_option( 'wcj_purchase_data_custom_products_columns_profit', 'no' ) ) {
+			$columns['profit'] = __( 'Profit', 'woocommerce-jetpack' );
+		}
+		return $columns;
+	}
+
+	/**
+	 * render_product_columns.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    variable products when `if ( 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) )`
+	 */
+	function render_product_columns( $column ) {
+		if ( 'profit' === $column || 'purchase_cost' === $column ) {
+			$product_id = get_the_ID();
+			$purchase_cost = wc_get_product_purchase_price( $product_id );
+			if ( 'purchase_cost' === $column ) {
+				echo wc_price( $purchase_cost );
+			} elseif ( 'profit' === $column ) {
+				$_product = wc_get_product( $product_id );
+				echo wc_price( $_product->get_price() - $purchase_cost );
+			}
+		}
 	}
 
 	/**
