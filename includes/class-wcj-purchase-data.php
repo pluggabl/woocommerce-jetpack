@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Cost Price
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,11 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
+	 * @todo    (maybe) rename module to "Cost of Goods"
+	 * @todo    (maybe) pre-calculate profit for orders
+	 * @todo    (maybe) "Apply costs to orders that do not have costs set"
+	 * @todo    (maybe) "Apply costs to all orders, overriding previous costs"
 	 */
 	function __construct() {
 
@@ -25,6 +29,13 @@ class WCJ_Purchase_Data extends WCJ_Module {
 		$this->desc       = __( 'Save WooCommerce product purchase costs data for admin reports.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-cost-price';
 		parent::__construct();
+
+		$this->add_tools( array(
+			'import_from_wc_cog' => array(
+				'title'     => __( '"WooCommerce Cost of Goods" Data Import', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Import products costs from "WooCommerce Cost of Goods".', 'woocommerce-jetpack' ),
+			),
+		) );
 
 		if ( $this->is_enabled() ) {
 
@@ -36,6 +47,46 @@ class WCJ_Purchase_Data extends WCJ_Module {
 				add_action( 'manage_shop_order_posts_custom_column', array( $this, 'render_order_columns' ), PHP_INT_MAX );
 			}
 		}
+	}
+
+	/**
+	 * create_import_from_wc_cog_tool.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function create_import_from_wc_cog_tool() {
+		// Action and Products list
+		$perform_import = ( isset( $_POST['wcj_import_from_wc_cog'] ) );
+		$table_data = array();
+		$table_data[] = array(
+			__( 'Product ID', 'woocommerce-jetpack' ),
+			__( 'Product Title', 'woocommerce-jetpack' ),
+			__( 'WooCommerce Cost of Goods (source)', 'woocommerce-jetpack' ),
+			__( 'Booster: Product cost (destination)', 'woocommerce-jetpack' ),
+		);
+		foreach ( wcj_get_products( array(), 'any', 512, true  ) as $product_id => $product_title ) {
+			$wc_cog_cost = get_post_meta( $product_id, '_wc_cog_cost', true );
+			if ( $perform_import ) {
+				update_post_meta( $product_id, '_wcj_purchase_price', $wc_cog_cost );
+			}
+			$wcj_purchase_price = get_post_meta( $product_id, '_wcj_purchase_price', true );
+			$table_data[] = array( $product_id, $product_title, $wc_cog_cost, $wcj_purchase_price );
+		}
+		// Button form
+		$button_form = '';
+		$button_form .= '<form method="post" action="">';
+		$button_form .= '<input type="submit" name="wcj_import_from_wc_cog" class="button-primary" value="' . __( 'Import', 'woocommerce-jetpack' ) . '"' .
+			' onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">';
+		$button_form .= '</form>';
+		// Output
+		$html = '';
+		$html .= '<div class="wrap">';
+		$html .= '<p>' . $this->get_tool_header_html( 'import_from_wc_cog' ) . '</p>';
+		$html .= '<p>' . $button_form . '</p>';
+		$html .= '<p>' . wcj_get_table_html( $table_data, array( 'table_heading_type' => 'horizontal', 'table_class' => 'widefat striped' ) ) . '</p>';
+		$html .= '</div>';
+		echo $html;
 	}
 
 	/**
