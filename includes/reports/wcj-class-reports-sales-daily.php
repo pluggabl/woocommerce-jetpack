@@ -130,10 +130,9 @@ class WCJ_Reports_Product_Sales_Daily {
 					}
 					// Last Sale Time
 					if ( ! isset( $this->last_sale_data[ $product_id ] ) ) {
-						$this->last_sale_data[ $product_id ] = get_the_time( 'Y-m-d H:i:s', $order_id )
-							. ' '  . ' <em><span style="color:gray;">' . sprintf(
-								__( 'Order ID: %d (%s)', 'woocommerce-jetpack' ), $order_id, get_post_status( $order_id )
-							) . '</span></em>';
+						$this->last_sale_data[ $product_id ]['date']         = get_the_time( 'Y-m-d H:i:s', $order_id );
+						$this->last_sale_data[ $product_id ]['order_id']     = $order_id;
+						$this->last_sale_data[ $product_id ]['order_status'] = get_post_status( $order_id );
 					}
 				}
 				$this->total_orders++;
@@ -216,18 +215,24 @@ class WCJ_Reports_Product_Sales_Daily {
 			'profit' => 0,
 		);
 		foreach ( $this->sales_by_day as $day_date => $day_sales ) {
-			$day_date_info = $day_date . ' <em><span style="color:gray;">' . sprintf(
-				__( 'Total: %s (%d)', 'woocommerce-jetpack' ),
-				wc_price( $this->total_sales_by_day[ $day_date ]['sum'] ),
-				$this->total_sales_by_day[ $day_date ]['qty']
-			) . '</span></em>';
+			$day_date_info['date']                 = $day_date;
+			$day_date_info['daily_total_sum']      = wc_price( $this->total_sales_by_day[ $day_date ]['sum'] );
+			$day_date_info['daily_total_quantity'] = $this->total_sales_by_day[ $day_date ]['qty'];
 			foreach ( $day_sales as $product_id => $product_day_sales ) {
 				$row = array();
 				foreach ( $report_columns as $report_column ) {
 					switch ( $report_column ) {
 						case 'date':
-							$row[] = $day_date_info;
-							$day_date_info = '';
+							$row[] = $day_date_info['date'];
+							$day_date_info['date'] = '';
+							break;
+						case 'daily_total_sum':
+							$row[] = $day_date_info['daily_total_sum'];
+							$day_date_info['daily_total_sum'] = '';
+							break;
+						case 'daily_total_quantity':
+							$row[] = $day_date_info['daily_total_quantity'];
+							$day_date_info['daily_total_quantity'] = '';
 							break;
 						case 'product_id':
 							$row[] = $product_id;
@@ -249,7 +254,13 @@ class WCJ_Reports_Product_Sales_Daily {
 							$totals['profit'] += $profit;
 							break;
 						case 'last_sale':
-							$row[] = $this->last_sale_data[ $product_id ];
+							$row[] = $this->last_sale_data[ $product_id ]['date'];
+							break;
+						case 'last_sale_order_id':
+							$row[] = $this->last_sale_data[ $product_id ]['order_id'];
+							break;
+						case 'last_sale_order_status':
+							$row[] = $this->last_sale_data[ $product_id ]['order_status'];
 							break;
 					}
 				}

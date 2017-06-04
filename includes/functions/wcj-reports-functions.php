@@ -18,13 +18,18 @@ if ( ! function_exists( 'wcj_get_product_sales_daily_report_columns' ) ) {
 	 */
 	function wcj_get_product_sales_daily_report_columns() {
 		return array(
-			'date'          => __( 'Date', 'woocommerce-jetpack' ),
-			'product_id'    => __( 'Product ID', 'woocommerce-jetpack' ),
-			'item_title'    => __( 'Item Title', 'woocommerce-jetpack' ),
-			'item_quantity' => __( 'Quantity', 'woocommerce-jetpack' ),
-			'sum'           => __( 'Sum', 'woocommerce-jetpack' ),
-			'profit'        => __( 'Profit', 'woocommerce-jetpack' ),
-			'last_sale'     => __( 'Last sale', 'woocommerce-jetpack' ),
+			'date'                   => __( 'Date', 'woocommerce-jetpack' ),
+			'daily_total_sum'        => __( 'Daily Total Sum', 'woocommerce-jetpack' ),
+			'daily_total_quantity'   => __( 'Daily Total Quantity', 'woocommerce-jetpack' ),
+			'date'                   => __( 'Date', 'woocommerce-jetpack' ),
+			'product_id'             => __( 'Product ID', 'woocommerce-jetpack' ),
+			'item_title'             => __( 'Item Title', 'woocommerce-jetpack' ),
+			'item_quantity'          => __( 'Quantity', 'woocommerce-jetpack' ),
+			'sum'                    => __( 'Sum', 'woocommerce-jetpack' ),
+			'profit'                 => __( 'Profit', 'woocommerce-jetpack' ),
+			'last_sale'              => __( 'Last Sale Date', 'woocommerce-jetpack' ),
+			'last_sale_order_id'     => __( 'Last Sale Order ID', 'woocommerce-jetpack' ),
+			'last_sale_order_status' => __( 'Last Sale Order Status', 'woocommerce-jetpack' ),
 		);
 	}
 }
