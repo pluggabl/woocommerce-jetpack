@@ -28,9 +28,10 @@ $reports_and_settings = array(
 	array(
 		'id'        => 'wcj_reports_products_sales_daily_order_statuses',
 		'desc'      => __( 'Order statuses', 'woocommerce-jetpack' ),
+		'desc_tip'  => __( 'Set empty to include all statuses.', 'woocommerce-jetpack' ),
 		'type'      => 'multiselect',
-		'default'   => 'any',
-		'options'   => array_merge( array( 'any' => __( 'All statuses', 'woocommerce-jetpack' ) ), wc_get_order_statuses() ),
+		'default'   => '',
+		'options'   => wc_get_order_statuses(),
 		'class'     => 'chosen_select',
 	),
 	array(

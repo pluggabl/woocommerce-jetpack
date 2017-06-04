@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.8.3-dev-201706041244';
+	public $version = '2.8.3-dev-201706041259';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -81,7 +81,7 @@ final class WC_Jetpack {
 	/**
 	 * WC_Jetpack Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 * @access  public
 	 */
 	function __construct() {
@@ -114,7 +114,8 @@ final class WC_Jetpack {
 			if (
 				'yes' === get_option( 'wcj_purchase_data_enabled' ) ||
 				'yes' === get_option( 'wcj_pdf_invoicing_enabled' ) ||
-				'yes' === get_option( 'wcj_crowdfunding_enabled' )
+				'yes' === get_option( 'wcj_crowdfunding_enabled' ) ||
+				wcj_is_module_enabled( 'reports' )
 			) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_backend_scripts' ) );
 			}

@@ -58,8 +58,10 @@ class WCJ_Reports_Product_Sales_Daily {
 	function get_report_data() {
 		$include_taxes    = ( 'yes' === get_option( 'wcj_reports_products_sales_daily_include_taxes', 'no' ) );
 		$count_variations = ( 'yes' === get_option( 'wcj_reports_products_sales_daily_count_variations', 'no' ) );
-		$order_statuses   = get_option( 'wcj_reports_products_sales_daily_order_statuses', 'any' );
-		if ( 1 == count( $order_statuses ) ) {
+		$order_statuses   = get_option( 'wcj_reports_products_sales_daily_order_statuses', '' );
+		if ( empty( $order_statuses ) ) {
+			$order_statuses = 'any';
+		} elseif ( 1 == count( $order_statuses ) ) {
 			$order_statuses = $order_statuses[0];
 		}
 		$this->sales_by_day       = array();
@@ -155,7 +157,6 @@ class WCJ_Reports_Product_Sales_Daily {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    date range as datepicker
 	 */
 	function output_report_header() {
 		// Settings link and dates menu
@@ -178,10 +179,10 @@ class WCJ_Reports_Product_Sales_Daily {
 		$filter_form .= '<input type="hidden" name="tab" value="'        . $_GET['tab']      . '" />';
 		$filter_form .= '<input type="hidden" name="report" value="'     . $_GET['report']   . '" />';
 		$filter_form .= '<label style="font-style:italic;" for="start_date">' . __( 'From:', 'woocommerce-jetpack' ) . '</label>' . ' ' .
-			'<input type="text" name="start_date" title="" value="' . $this->start_date . '" />';
+			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js_v2( 'Y-m-d' ) . '" name="start_date" title="" value="' . $this->start_date . '" />';
 		$filter_form .= ' ';
 		$filter_form .= '<label style="font-style:italic;" for="end_date">' . __( 'To:', 'woocommerce-jetpack' ) . '</label>' . ' ' .
-			'<input type="text" name="end_date" title="" value="' . $this->end_date . '" />';
+			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js_v2( 'Y-m-d' ) . '" name="end_date" title="" value="' . $this->end_date . '" />';
 		$filter_form .= ' ';
 		$filter_form .= '<label style="font-style:italic;" for="product_title">' . __( 'Product:', 'woocommerce-jetpack' ) . '</label>' . ' ' .
 			'<input type="text" name="product_title" id="product_title" title="" value="' . $this->product_title . '" />';
@@ -196,7 +197,6 @@ class WCJ_Reports_Product_Sales_Daily {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    totals (qty, sum, profit)
 	 */
 	function output_report_results() {
 		$table_data = array();
