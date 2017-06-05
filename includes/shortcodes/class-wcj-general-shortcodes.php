@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 */
 	function __construct() {
 
@@ -64,6 +64,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'key'                   => '',
 			'full_country_name'     => 'yes',
 			'multiply_by'           => 1,
+			'default'               => '',
 		);
 
 		parent::__construct();
@@ -256,7 +257,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_currency_select_link_list.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 * @since   2.4.5
 	 */
 	function wcj_currency_select_link_list( $atts, $content ) {
@@ -275,6 +276,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 					$selected_currency = get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
 				}
 			}
+		}
+		if ( '' === $selected_currency && '' != $atts['default'] ) {
+			$selected_currency = $atts['default'];
 		}
 		$links = array();
 		$first_link = '';
@@ -325,7 +329,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_currency_selector.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 * @since   2.4.5
 	 */
 	private function get_currency_selector( $atts, $content, $type = 'select' ) {
@@ -352,6 +356,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 					$selected_currency = get_option( 'wcj_multicurrency_role_defaults_' . $current_user_role, '' );
 				}
 			}
+		}
+		if ( '' === $selected_currency && '' != $atts['default'] ) {
+			$selected_currency = $atts['default'];
 		}
 		$switcher_template = get_option( 'wcj_multicurrency_switcher_template', '%currency_name% (%currency_symbol%)' );
 		foreach ( $shortcode_currencies as $currency_code ) {
