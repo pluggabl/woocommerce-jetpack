@@ -453,6 +453,10 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					case 'product_attribute':
 						if ( isset( $column_param ) && '' != $column_param && is_object( $the_product ) ) {
 							$cell_data = $the_product->get_attribute( $column_param );
+							if ( '' === $cell_data && $the_product->is_type( 'variation' ) ) {
+								$parent_product = wc_get_product( $the_product->get_parent_id() );
+								$cell_data = $parent_product->get_attribute( $column_param );
+							}
 						} else {
 							$cell_data = '';
 						}
