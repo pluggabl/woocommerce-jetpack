@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -23,11 +23,7 @@ foreach ( $options as $option ) {
 }
 
 // Prepare categories
-$product_cats = array();
-$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
-foreach ( $product_categories as $product_category ) {
-	$product_cats[ $product_category->term_id ] = $product_category->name;
-}
+$product_cats = wcj_get_terms( 'product_cat' );
 
 // Prepare products
 $products = wcj_get_products();

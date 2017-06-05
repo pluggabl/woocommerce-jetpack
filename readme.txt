@@ -175,6 +175,7 @@ $~!D* Dev - PRODUCTS - Product Cost Price - "Admin Products List Custom Columns"
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
 $~!D* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart Display Options" option added.
 $~!D* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart HTML Template" options added.
+	* Dev - PRODUCTS - Product Listings - Settings - Code refactoring - `wcj_get_terms()`.
 ~D	* Dev - PRODUCTS - SKU - "Disable SKUs" option added.
 ~!D	* Dev - PRODUCTS - SKU - Adding SKU on product duplicate action added (`woocommerce_duplicate_product`).
 ~!D	* Dev - PRODUCTS - SKU - "Search by SKU" option added.
