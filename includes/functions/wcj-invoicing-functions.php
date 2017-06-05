@@ -313,11 +313,17 @@ if ( ! function_exists( 'wcj_get_invoice' ) ) {
 if ( ! function_exists( 'wcj_get_invoice_date' ) ) {
 	/*
 	 * wcj_get_invoice_date.
+	 *
+	 * @version 2.8.3
 	 */
 	function wcj_get_invoice_date( $order_id, $invoice_type_id, $extra_days, $date_format ) {
 		$the_invoice = wcj_get_invoice( $order_id, $invoice_type_id );
-		$extra_days_in_sec = $extra_days  * 24 * 60 * 60;
-		return date_i18n( $date_format, date( $the_invoice->get_invoice_date() ) + $extra_days_in_sec );
+		if ( $invoice_date_timestamp = $the_invoice->get_invoice_date() ) {
+			$extra_days_in_sec = $extra_days * 24 * 60 * 60;
+			return date_i18n( $date_format, $invoice_date_timestamp + $extra_days_in_sec );
+		} else {
+			return '';
+		}
 	}
 }
 
