@@ -124,6 +124,17 @@ $settings = array_merge( $settings, array(
 		'css'      => 'width:50%;min-width:300px;',
 	),
 	array(
+		'title'    => __( 'Cart Display Options', 'woocommerce-jetpack' ),
+		'desc'     => __( 'When "Add to cart item data" is selected, "Cart HTML Template" options below will be ignored.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_input_fields_display_options',
+		'default'  => 'name',
+		'type'     => 'select',
+		'options'  => array(
+			'name' => __( 'Add to cart item name', 'woocommerce-jetpack' ),
+			'data' => __( 'Add to cart item data', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
 		'title'    => __( 'Cart HTML Template - Start', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_input_fields_cart_start_template',
 		'default'  => '<dl style="font-size:smaller;">',

@@ -731,11 +731,58 @@ class WCJ_Product_Input_Fields_Abstract {
 	}
 
 	/**
+	 * add_product_input_fields_to_cart_item_display_data.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function add_product_input_fields_to_cart_item_display_data( $item_data, $item  ) {
+		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
+		if ( $total_number < 1 ) {
+			return $item_data;
+		}
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $item['product_id'], 'no' );
+			if ( ! ( 'on' === $is_enabled || 'yes' === $is_enabled ) ) {
+				continue;
+			}
+			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $item['product_id'], '' );
+			$meta_key = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
+			$meta_exists = array_key_exists( $meta_key, $item );
+			if ( $meta_exists ) {
+				$value = $item[ $meta_key ];
+			} elseif ( 'checkbox' === $type ) {
+				$value = 'off';
+				$meta_exists = true;
+			}
+			if ( $meta_exists ) {
+				$title = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $item['product_id'], '' );
+				$yes_value = $this->get_value( 'wcj_product_input_fields_type_checkbox_yes_' . $this->scope . '_' . $i, $item['product_id'], '' );
+				$no_value  = $this->get_value( 'wcj_product_input_fields_type_checkbox_no_'  . $this->scope . '_' . $i, $item['product_id'], '' );
+				if ( 'checkbox' === $type ) {
+					$value = ( 'on' === $value ) ? $yes_value : $no_value;
+				}
+				if ( 'file' === $type ) {
+					$value = maybe_unserialize( $value );
+					$value = ( isset( $value['name'] ) ) ? $value['name'] : '';
+				}
+				if ( '' != $value ) {
+					$item_data[] = array(
+						'key'     => $title,
+						'display' => $value,
+					);
+				}
+			}
+		}
+		return $item_data;
+	}
+
+	/**
 	 * add_product_input_fields_to_order_item_meta.
 	 *
 	 * @version 2.5.0
 	 */
-	function add_product_input_fields_to_order_item_meta(  $item_id, $values, $cart_item_key  ) {
+	function add_product_input_fields_to_order_item_meta( $item_id, $values, $cart_item_key  ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i , $values ) ) {

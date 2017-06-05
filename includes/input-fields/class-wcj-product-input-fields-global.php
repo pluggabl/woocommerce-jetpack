@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Global
  *
- * @version 2.5.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Product_Input_Fields_Global extends WCJ_Product_Input_Fields_Abstract 
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.0
+	 * @version 2.8.3
 	 */
 	function __construct() {
 
@@ -33,7 +33,11 @@ class WCJ_Product_Input_Fields_Global extends WCJ_Product_Input_Fields_Abstract 
 			add_filter( 'woocommerce_get_cart_item_from_session',   array( $this, 'get_cart_item_product_input_fields_from_session' ), 100, 3 );
 
 			// Show details at cart, order details, emails
-			add_filter( 'woocommerce_cart_item_name',               array( $this, 'add_product_input_fields_to_cart_item_name' ), 100, 3 );
+			if ( 'data' === get_option( 'wcj_product_input_fields_display_options', 'name' ) ) {
+				add_filter( 'woocommerce_get_item_data',            array( $this, 'add_product_input_fields_to_cart_item_display_data' ), PHP_INT_MAX, 2 );
+			} else {
+				add_filter( 'woocommerce_cart_item_name',           array( $this, 'add_product_input_fields_to_cart_item_name' ), 100, 3 );
+			}
 			add_filter( 'woocommerce_order_item_name',              array( $this, 'add_product_input_fields_to_order_item_name' ), 100, 2 );
 
 			// Add item meta from cart to order
