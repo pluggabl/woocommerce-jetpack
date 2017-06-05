@@ -108,7 +108,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 		),
 		array(
 			'desc'     => __( 'Value', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'You can use shortcodes and or HTML here.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'You can use shortcodes and/or HTML here.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_orders_list_custom_columns_value_' . $i,
 			'default'  => '',
 			'type'     => 'custom_textarea',

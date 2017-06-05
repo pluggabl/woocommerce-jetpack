@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
+	 * @todo    add "Admin list - Reorder columns" section
 	 */
 	function __construct() {
 		$this->id         = 'product_listings';
@@ -37,6 +38,45 @@ class WCJ_Product_Listings extends WCJ_Module {
 
 			// Tax Incl./Excl. by product/category
 			add_filter( 'option_woocommerce_tax_display_shop', array( $this, 'tax_display' ), PHP_INT_MAX );
+
+			// Admin list custom columns
+			if ( 'yes' === get_option( 'wcj_admin_products_list_custom_columns_section_enabled', 'no' ) ) {
+				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),   PHP_INT_MAX );
+				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column' ), PHP_INT_MAX );
+			}
+		}
+	}
+
+	/**
+	 * add_product_columns.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function add_product_columns( $columns ) {
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_admin_products_list_custom_columns_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( 'yes' === get_option( 'wcj_admin_products_list_custom_columns_enabled_' . $i, 'no' ) ) {
+				$columns[ 'wcj_products_custom_column_' . $i ] = get_option( 'wcj_admin_products_list_custom_columns_label_' . $i, '' );
+			}
+		}
+		return $columns;
+	}
+
+	/**
+	 * render_product_column.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function render_product_column( $column ) {
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_admin_products_list_custom_columns_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( 'yes' === get_option( 'wcj_admin_products_list_custom_columns_enabled_' . $i, 'no' ) ) {
+				if ( 'wcj_products_custom_column_' . $i === $column ) {
+					echo do_shortcode( get_option( 'wcj_admin_products_list_custom_columns_value_' . $i, '' ) );
+				}
+			}
 		}
 	}
 
