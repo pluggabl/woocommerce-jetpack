@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Module - Product Cost Price
+ * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
  * @version 2.8.3
  * @since   2.2.0
@@ -17,7 +17,6 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.3
-	 * @todo    (maybe) rename module to "Cost of Goods"
 	 * @todo    (maybe) pre-calculate profit for orders
 	 * @todo    (maybe) "Apply costs to orders that do not have costs set"
 	 * @todo    (maybe) "Apply costs to all orders, overriding previous costs"
@@ -25,9 +24,9 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'purchase_data';
-		$this->short_desc = __( 'Product Cost Price', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Cost of Goods', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Save WooCommerce product purchase costs data for admin reports.', 'woocommerce-jetpack' );
-		$this->link_slug  = 'woocommerce-product-cost-price';
+		$this->link_slug  = 'woocommerce-cost-of-goods';
 		parent::__construct();
 
 		$this->add_tools( array(
@@ -39,6 +38,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
+			// Products meta boxes
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 

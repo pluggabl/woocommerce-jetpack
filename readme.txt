@@ -170,8 +170,8 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_attribute` - Checking parent product's attribute for variation products.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
-~!D	* Dev - PRODUCTS - Product Cost Price - "WooCommerce Cost of Goods" Data Import - Tool added.
-$~!D* Dev - PRODUCTS - Product Cost Price - "Admin Products List Custom Columns" - Section added.
+~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.
+$~!D* Dev - PRODUCTS - Cost of Goods - "Admin Products List Custom Columns" - Section added.
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
 $~!D* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart Display Options" option added.
 $~!D* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart HTML Template" options added.
@@ -199,6 +199,7 @@ $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.
 ~!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
 	* Dev - EMAILS & MISC. - Reports - Code refactoring - `wcj-reports-functions.php` added.
+~!D	* Tweak - PRODUCTS - Product Cost Price - Renamed to "Cost of Goods".
 ~!	* Tweak - SHIPPING & ORDERS - Orders - Settings updated (custom column key info added) and restyled (columns order textarea width changed).
 ~!	* Tweak - Plus links updated.
 
