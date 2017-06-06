@@ -1,8 +1,8 @@
 <?php
 /**
- * Booster for WooCommerce - Settings - TODO
+ * Booster for WooCommerce - Settings - Order Minimum Amount
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -59,7 +59,28 @@ $settings = array(
 		'css'      => 'width:50%;min-width:300px;',
 	),
 	array(
-		'title'    => __( 'Stop customer from seeing the Checkout page if minimum amount not reached.', 'woocommerce-jetpack' ),
+		'title'    => __( 'Advanced', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Cart notice method', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_minimum_amount_cart_notice_function',
+		'default'  => 'wc_print_notice',
+		'type'     => 'select',
+		'options'  => array(
+			'wc_print_notice' => __( 'Print notice', 'woocommerce-jetpack' ),
+			'wc_add_notice'   => __( 'Add notice', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Cart notice type', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_minimum_amount_cart_notice_type',
+		'default'  => 'notice',
+		'type'     => 'select',
+		'options'  => array(
+			'notice' => __( 'Notice', 'woocommerce-jetpack' ),
+			'error'  => __( 'Error', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'title'    => __( 'Stop customer from seeing the Checkout page if minimum amount not reached', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Redirect back to Cart page', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_minimum_amount_stop_from_seeing_checkout',
 		'default'  => 'no',

@@ -189,6 +189,7 @@ $~!D* Dev - PRODUCTS - SKU - Sequential counter by categories added.
 ~	* Dev - PRODUCTS - SKU - Code refactoring.
 ~!D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Fields on Checkout for Logged Users" options added.
 ~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
+~!D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - Advanced - "Cart notice method" and "Cart notice type" options added.
 $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Templates - "Save all templates" buttons added.

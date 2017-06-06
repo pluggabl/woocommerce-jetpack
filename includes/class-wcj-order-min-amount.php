@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Minimum Amount
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -105,8 +105,8 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * order_minimum_amount.
 	 *
-	 * @version 2.7.0
-	 * @todo    wc_print_notice or wc_add_notice?
+	 * @version 2.8.3
+	 * @todo    `wcj_order_minimum_amount_checkout_notice_type`
 	 */
 	function order_minimum_amount() {
 		$minimum = $this->get_order_minimum_amount_with_user_roles();
@@ -117,12 +117,13 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		if ( $cart_total < $minimum ) {
 			if ( is_cart() ) {
 				if ( 'yes' === get_option( 'wcj_order_minimum_amount_cart_notice_enabled', 'no' ) ) {
-					wc_print_notice(
+					$notice_function = get_option( 'wcj_order_minimum_amount_cart_notice_function', 'wc_print_notice' );
+					$notice_function(
 						sprintf( apply_filters( 'booster_get_option', 'You must have an order with a minimum of %s to place your order, your current order total is %s.', get_option( 'wcj_order_minimum_amount_cart_notice_message' ) ),
 							wc_price( $minimum ),
 							wc_price( $cart_total )
 						),
-						'notice'
+						get_option( 'wcj_order_minimum_amount_cart_notice_type', 'notice' )
 					);
 				}
 			} else {
