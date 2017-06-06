@@ -39,13 +39,13 @@ class WCJ_Product_Listings extends WCJ_Module {
 			add_filter( 'option_woocommerce_tax_display_shop', array( $this, 'tax_display' ), PHP_INT_MAX );
 
 			// Admin list - custom columns
-			if ( 'yes' === get_option( 'wcj_products_admin_list_custom_columns_section_enabled', 'no' ) ) {
+			if ( 'yes' === get_option( 'wcj_products_admin_list_custom_columns_enabled', 'no' ) ) {
 				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),   PHP_INT_MAX );
 				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column' ), PHP_INT_MAX );
 			}
 
 			// Admin list - columns order
-			if ( 'yes' === get_option( 'wcj_products_admin_list_columns_order_section_enabled', 'no' ) ) {
+			if ( 'yes' === get_option( 'wcj_products_admin_list_columns_order_enabled', 'no' ) ) {
 				add_filter( 'manage_edit-product_columns', array( $this, 'rearange_product_columns' ), PHP_INT_MAX - 1 );
 			}
 		}

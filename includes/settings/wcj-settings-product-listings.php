@@ -178,7 +178,7 @@ $settings = array(
 	array(
 		'title'    => __( 'Enable/Disable', 'woocommerce-jetpack' ),
 		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
-		'id'       => 'wcj_products_admin_list_custom_columns_section_enabled',
+		'id'       => 'wcj_products_admin_list_custom_columns_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
@@ -236,7 +236,7 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Enable/Disable', 'woocommerce-jetpack' ),
 		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
-		'id'       => 'wcj_products_admin_list_columns_order_section_enabled',
+		'id'       => 'wcj_products_admin_list_columns_order_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
