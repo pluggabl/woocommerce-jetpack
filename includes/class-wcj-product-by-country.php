@@ -1,8 +1,8 @@
 <?php
 /**
- * Booster for WooCommerce - Module - Product by Country
+ * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -29,10 +29,44 @@ class WCJ_Product_By_Country extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			// Product meta box
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			// Core
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				add_filter( 'woocommerce_product_is_visible', array( $this, 'product_by_country' ), PHP_INT_MAX, 2 );
+			}
+			// Admin products list
+			if ( 'yes' === get_option( 'wcj_product_by_country_add_column_visible_countries', 'no' ) ) {
+				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),   PHP_INT_MAX );
+				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column' ), PHP_INT_MAX );
+			}
+		}
+	}
+
+	/**
+	 * add_product_columns.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function add_product_columns( $columns ) {
+		$columns[ 'wcj_product_by_country_visible_countries' ] = __( 'Countries', 'woocommerce-jetpack' );
+		return $columns;
+	}
+
+	/**
+	 * render_product_column.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function render_product_column( $column ) {
+		if ( 'wcj_product_by_country_visible_countries' === $column ) {
+			if ( $countries = get_post_meta( get_the_ID(), '_' . 'wcj_product_by_country_visible', true ) ) {
+				if ( is_array( $countries ) ) {
+					echo implode( ', ', $countries );
+				}
 			}
 		}
 	}
