@@ -46,7 +46,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 
 			// Admin list - columns order
 			if ( 'yes' === get_option( 'wcj_products_admin_list_columns_order_enabled', 'no' ) ) {
-				add_filter( 'manage_edit-product_columns', array( $this, 'rearange_product_columns' ), PHP_INT_MAX - 1 );
+				add_filter( 'manage_edit-product_columns', array( $this, 'rearange_product_columns' ), PHP_INT_MAX );
 			}
 		}
 	}
