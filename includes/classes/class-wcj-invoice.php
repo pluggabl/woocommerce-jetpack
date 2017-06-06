@@ -18,7 +18,7 @@ class WCJ_Invoice {
 	/**
 	 * Constructor.
 	 */
-	public function __construct( $order_id, $invoice_type ) {
+	function __construct( $order_id, $invoice_type ) {
 		$this->order_id     = $order_id;
 		$this->invoice_type = $invoice_type;
 	}
