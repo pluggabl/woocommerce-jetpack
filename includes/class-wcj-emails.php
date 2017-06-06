@@ -16,6 +16,7 @@ class WCJ_Emails extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.0
+	 * @todo    meta customizer - check "gravity-forms-emails-woocommerce" plugin
 	 */
 	function __construct() {
 
