@@ -15,7 +15,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * Constructor.
 	 */
-	public function __construct( $order_id, $invoice_type ) {
+	function __construct( $order_id, $invoice_type ) {
 		parent::__construct( $order_id, $invoice_type );
 	}
 
