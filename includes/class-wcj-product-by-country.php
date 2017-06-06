@@ -34,7 +34,16 @@ class WCJ_Product_By_Country extends WCJ_Module {
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			// Core
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-				add_filter( 'woocommerce_product_is_visible', array( $this, 'product_by_country' ), PHP_INT_MAX, 2 );
+				if ( 'yes' === get_option( 'wcj_product_by_country_visibility', 'yes' ) ) {
+					add_filter( 'woocommerce_product_is_visible', array( $this, 'product_by_country' ), PHP_INT_MAX, 2 );
+				}
+				if ( 'yes' === get_option( 'wcj_product_by_country_purchasable', 'no' ) ) {
+					add_filter( 'woocommerce_is_purchasable',     array( $this, 'product_by_country_purchasable' ), PHP_INT_MAX, 2 );
+				}
+				if ( 'yes' === get_option( 'wcj_product_by_country_query', 'no' ) ) {
+					add_action( 'pre_get_posts',                  array( $this, 'product_by_country_pre_get_posts' ) );
+				}
+
 			}
 			// Admin products list
 			if ( 'yes' === get_option( 'wcj_product_by_country_add_column_visible_countries', 'no' ) ) {
@@ -69,6 +78,49 @@ class WCJ_Product_By_Country extends WCJ_Module {
 				}
 			}
 		}
+	}
+
+	/**
+	 * product_by_country_pre_get_posts.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function product_by_country_pre_get_posts( $query ) {
+		if ( is_admin() ) {
+			return;
+		}
+		remove_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
+		// Get the country by IP
+		$location = WC_Geolocation::geolocate_ip();
+		if ( empty( $location['country'] ) ) {
+			// Base fallback
+			$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
+		}
+		$country = ( isset( $location['country'] ) ) ? $location['country'] : '';
+		// Calculate `post__not_in`
+		$post__not_in = array();
+		$args = $query->query;
+		$args['fields'] = 'ids';
+		$loop = new WP_Query( $args );
+		foreach ( $loop->posts as $product_id ) {
+			$visible_countries = get_post_meta( $product_id, '_' . 'wcj_product_by_country_visible', true );
+			if ( is_array( $visible_countries ) && ! in_array( $country, $visible_countries ) ) {
+				$post__not_in[] = $product_id;
+			}
+		}
+		$query->set( 'post__not_in', $post__not_in );
+		add_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
+	}
+
+	/**
+	 * product_by_country_purchasable.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function product_by_country_purchasable( $purchasable, $_product ) {
+		return $this->product_by_country( $purchasable, wcj_get_product_id_or_variation_parent_id( $_product ) );
 	}
 
 	/**
