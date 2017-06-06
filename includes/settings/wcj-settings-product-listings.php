@@ -228,5 +228,28 @@ $settings = array_merge( $settings, array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_admin_products_list_custom_columns_options',
 	),
+	array(
+		'title'    => __( 'Admin Products List - Columns Order', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_admin_products_list_columns_order_options',
+	),
+	array(
+		'title'    => __( 'Enable/Disable', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'       => 'wcj_admin_products_list_columns_order_section_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'id'       => 'wcj_admin_products_list_columns_order',
+		'desc_tip' => __( 'Default columns order', 'woocommerce-jetpack' ) . ':<br>' . str_replace( PHP_EOL, '<br>', $this->get_products_default_columns_in_order() ),
+		'default'  => $this->get_products_default_columns_in_order(),
+		'type'     => 'textarea',
+		'css'      => 'height:300px;min-width:300px;',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_admin_products_list_columns_order_options',
+	),
 ) );
 return $settings;

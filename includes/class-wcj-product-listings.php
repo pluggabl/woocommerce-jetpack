@@ -16,7 +16,6 @@ class WCJ_Product_Listings extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.3
-	 * @todo    add "Admin list - Reorder columns" section
 	 */
 	function __construct() {
 		$this->id         = 'product_listings';
@@ -39,12 +38,63 @@ class WCJ_Product_Listings extends WCJ_Module {
 			// Tax Incl./Excl. by product/category
 			add_filter( 'option_woocommerce_tax_display_shop', array( $this, 'tax_display' ), PHP_INT_MAX );
 
-			// Admin list custom columns
+			// Admin list - custom columns
 			if ( 'yes' === get_option( 'wcj_admin_products_list_custom_columns_section_enabled', 'no' ) ) {
 				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),   PHP_INT_MAX );
 				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column' ), PHP_INT_MAX );
 			}
+
+			// Admin list - columns order
+			if ( 'yes' === get_option( 'wcj_admin_products_list_columns_order_section_enabled', 'no' ) ) {
+				add_filter( 'manage_edit-product_columns', array( $this, 'rearange_product_columns' ), PHP_INT_MAX - 1 );
+			}
 		}
+	}
+
+	/**
+	 * rearange_product_columns.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function rearange_product_columns( $columns ) {
+		$reordered_columns = get_option( 'wcj_admin_products_list_columns_order', $this->get_products_default_columns_in_order() );
+		$reordered_columns = explode( PHP_EOL, $reordered_columns );
+		$reordered_columns_result = array();
+		if ( ! empty( $reordered_columns ) ) {
+			foreach ( $reordered_columns as $column_id ) {
+				$column_id = str_replace( "\n", '', $column_id );
+				$column_id = str_replace( "\r", '', $column_id );
+				if ( '' != $column_id && isset( $columns[ $column_id ] ) ) {
+					$reordered_columns_result[ $column_id ] = $columns[ $column_id ];
+					unset( $columns[ $column_id ] );
+				}
+			}
+		}
+		return array_merge( $reordered_columns_result, $columns );
+	}
+
+	/**
+	 * get_products_default_columns_in_order.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function get_products_default_columns_in_order() {
+		$columns = array(
+			'cb',
+			'thumb',
+			'name',
+			'sku',
+			'is_in_stock',
+			'price',
+			'product_cat',
+			'product_tag',
+			'featured',
+			'product_type',
+			'date',
+		);
+		return implode( PHP_EOL, $columns );
 	}
 
 	/**
