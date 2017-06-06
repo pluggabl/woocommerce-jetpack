@@ -203,6 +203,7 @@ $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
 	* Dev - EMAILS & MISC. - Reports - Code refactoring - `wcj-reports-functions.php` added.
 ~!D	* Tweak - PRODUCTS - Product Cost Price - Renamed to "Cost of Goods".
+~!D	* Tweak - PRODUCTS - Product Visibility by User Role - Settings descriptions added.
 ~!	* Tweak - SHIPPING & ORDERS - Orders - Settings updated (custom column key info added) and restyled (columns order textarea width changed).
 ~!	* Tweak - Plus links updated.
 

@@ -50,7 +50,8 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	 *
 	 * @version 2.7.0
 	 * @since   2.6.0
-	 * @todo    add same option to all "Product Visibility" modules (e.g. "Product Visibility by Country")
+	 * @todo    (maybe) add global function for this, as similar code is in "Product Visibility by Country" module
+	 * @todo    check if `purchasable` and `pre_get_posts` hooks should be added to other "Product Visibility" modules
 	 */
 	function product_by_user_role_pre_get_posts( $query ) {
 		if ( is_admin() ) {

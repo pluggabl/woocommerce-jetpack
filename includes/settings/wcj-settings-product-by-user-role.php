@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Visibility by User Role
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,19 +16,22 @@ return array(
 		'id'       => 'wcj_product_by_user_role_options',
 	),
 	array(
-		'title'    => __( 'Visibility', 'woocommerce-jetpack' ),
+		'title'    => __( 'Hide Visibility', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_by_user_role_visibility',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Purchasable', 'woocommerce-jetpack' ),
+		'title'    => __( 'Make Non-purchasable', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_by_user_role_purchasable',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Query', 'woocommerce-jetpack' ),
+		'title'    => __( 'Modify Query', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_by_user_role_query',
 		'default'  => 'no',
 		'type'     => 'checkbox',
