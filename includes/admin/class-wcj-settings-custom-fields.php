@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,10 +16,11 @@ class WCJ_Settings_Custom_Fields {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 * @since   2.8.0
 	 */
 	function __construct() {
+		add_action( 'woocommerce_admin_field_wcj_save_settings_button',         array( $this, 'output_wcj_save_settings_button' ) );
 		add_action( 'woocommerce_admin_field_wcj_number_plus_checkbox_start',   array( $this, 'output_wcj_number_plus_checkbox_start' ) );
 		add_action( 'woocommerce_admin_field_wcj_number_plus_checkbox_end',     array( $this, 'output_wcj_number_plus_checkbox_end' ) );
 		add_filter( 'woocommerce_admin_settings_sanitize_option',               array( $this, 'format_wcj_number_plus_checkbox_end' ), PHP_INT_MAX, 3 );
@@ -28,6 +29,22 @@ class WCJ_Settings_Custom_Fields {
 		add_action( 'woocommerce_admin_field_custom_number',                    array( $this, 'output_custom_number' ) );
 		add_action( 'woocommerce_admin_field_custom_link',                      array( $this, 'output_custom_link' ) );
 		add_action( 'woocommerce_admin_field_module_tools',                     array( $this, 'output_module_tools' ) );
+	}
+
+	/**
+	 * output_wcj_save_settings_button.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function output_wcj_save_settings_button( $value ) {
+		// Output
+		?><tr valign="top">
+			<th scope="row" class="titledesc"></th>
+			<td class="forminp forminp-<?php echo sanitize_title( $value['type'] ) ?>">
+				<input name="save" class="button-primary woocommerce-save-button" type="submit" value="<?php echo esc_html( $value['title'] ); ?>">
+			</td>
+		</tr><?php
 	}
 
 	/**

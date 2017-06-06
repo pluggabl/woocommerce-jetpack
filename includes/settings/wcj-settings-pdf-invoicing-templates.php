@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Templates
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -38,6 +38,11 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => $default_template,
 			'type'     => 'textarea',
 			'css'      => 'width:66%;min-width:300px;height:500px;',
+		),
+		array(
+			'title'    => __( 'Save all templates', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_invoicing_template_save_all',
+			'type'     => 'wcj_save_settings_button',
 		),
 		array(
 			'type'     => 'sectionend',
