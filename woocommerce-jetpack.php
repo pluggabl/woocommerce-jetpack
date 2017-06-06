@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.8.3-dev-201706061310';
+	public $version = '2.8.3-dev-201706061324';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -409,8 +409,7 @@ final class WC_Jetpack {
 	/**
 	 * get_wcj_plus_message.
 	 *
-	 * @version 2.8.0
-	 * @todo    sprintf
+	 * @version 2.8.3
 	 */
 	function get_wcj_plus_message( $value, $message_type, $args = array() ) {
 
@@ -419,12 +418,12 @@ final class WC_Jetpack {
 			case 'global':
 				return '<div class="updated">
 							<p class="main"><strong>' . __( 'Install Booster Plus to unlock all features', 'woocommerce-jetpack' ) . '</strong></p>
-							<span>' . sprintf( __('Some settings fields are locked and you will need %s to modify all locked fields.', 'woocommerce-jetpack'), '<a href="https://booster.io/plus/">Booster for WooCommerce Plus</a>' ) . '</span>
-							<p><a href="https://booster.io/plus/" target="_blank" class="button button-primary">' . __( 'Buy now', 'woocommerce-jetpack' ) . '</a> <a href="https://booster.io" target="_blank" class="button">'. sprintf( __( 'Visit Booster Site', 'woocommerce-jetpack' ), 'https://booster.io' ) . '</a></p>
+							<span>' . sprintf( __( 'Some settings fields are locked and you will need %s to modify all locked fields.', 'woocommerce-jetpack'), '<a href="https://booster.io/plus/" target="_blank">Booster for WooCommerce Plus</a>' ) . '</span>
+							<p><a href="https://booster.io/plus/" target="_blank" class="button button-primary">' . __( 'Buy now', 'woocommerce-jetpack' ) . '</a> <a href="https://booster.io" target="_blank" class="button">'. __( 'Visit Booster Site', 'woocommerce-jetpack' ) . '</a></p>
 						</div>';
 
 			case 'desc':
-				return __( 'Get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to change value.', 'woocommerce-jetpack' );
+				return sprintf( __( 'Get <a href="%s" target="_blank">Booster Plus</a> to change value.', 'woocommerce-jetpack' ), 'https://booster.io/plus/' );
 
 			case 'desc_advanced':
 				return sprintf( __( 'Get <a href="%s" target="_blank">Booster Plus</a> to enable "%s" option.', 'woocommerce-jetpack' ), 'https://booster.io/plus/', $args['option'] );
@@ -433,10 +432,10 @@ final class WC_Jetpack {
 				return sprintf( __( 'Get Booster Plus to enable "%s" option.', 'woocommerce-jetpack' ), $args['option'] );
 
 			case 'desc_below':
-				return __( 'Get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to change values below.', 'woocommerce-jetpack' );
+				return sprintf( __( 'Get <a href="%s" target="_blank">Booster Plus</a> to change values below.', 'woocommerce-jetpack' ), 'https://booster.io/plus/' );
 
 			case 'desc_above':
-				return __( 'Get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to change values above.', 'woocommerce-jetpack' );
+				return sprintf( __( 'Get <a href="%s" target="_blank">Booster Plus</a> to change values above.', 'woocommerce-jetpack' ), 'https://booster.io/plus/' );
 
 			case 'desc_no_link':
 				return __( 'Get Booster Plus to change value.', 'woocommerce-jetpack' );

@@ -200,6 +200,7 @@ $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
 	* Dev - EMAILS & MISC. - Reports - Code refactoring - `wcj-reports-functions.php` added.
 ~!	* Tweak - SHIPPING & ORDERS - Orders - Settings updated (custom column key info added) and restyled (columns order textarea width changed).
+~!	* Tweak - Plus links updated.
 
 = 2.8.2 - 24/05/2017 =
 * Fix - Functions - `wcj_order_get_payment_method()` - Additional check for order (not null, object and method/property exists) added.
