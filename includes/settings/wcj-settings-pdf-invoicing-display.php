@@ -2,9 +2,10 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Display
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    (maybe) add "Save all settings" buttons to each document type
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -106,6 +107,15 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_file_name',
 			'default'  => '[wcj_' . $invoice_type['id'] . '_number]',
 			'type'     => 'text',
+		),
+		array(
+			'title'    => __( 'Allowed User Roles', 'woocommerce-jetpack' ),
+			'desc'     => __( 'If set to empty - Administrator role will be used.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_roles',
+			'default'  => array( 'administrator', 'shop_manager' ),
+			'type'     => 'multiselect',
+			'class'    => 'chosen_select',
+			'options'  => wcj_get_user_roles_options(),
 		),
 		array(
 			'type'     => 'sectionend',

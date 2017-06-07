@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -308,19 +308,48 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	}
 
 	/**
+	 * check_user_roles.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    apply user role checking to other actions - create etc.
+	 * @todo    check if `current_user_can( 'administrator' )` is the same as checking role directly
+	 */
+	function check_user_roles() {
+		if ( get_current_user_id() == intval( get_post_meta( $this->order_id, '_customer_user', true ) ) ) {
+			return true;
+		}
+		$allowed_user_roles = get_option( 'wcj_invoicing_' . $this->invoice_type_id . '_roles', array( 'administrator', 'shop_manager' ) );
+		if ( empty( $allowed_user_roles ) ) {
+			$allowed_user_roles = array( 'administrator' );
+		}
+		if ( wcj_is_user_role( $allowed_user_roles ) ) {
+			return true;
+		} else {
+			add_action( 'admin_notices', array( $this, 'wrong_user_role_notice' ) );
+			return false;
+		}
+	}
+
+	/**
+	 * wrong_user_role_notice.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function wrong_user_role_notice() {
+		echo '<div class="notice notice-error is-dismissible"><p>' . __( 'You are not allowed to view the invoice.', 'woocommerce-jetpack' ) . '</p></div>';
+	}
+
+	/**
 	 * generate_pdf_on_init.
 	 *
-	 * @version 2.5.6
+	 * @version 2.8.3
 	 */
 	function generate_pdf_on_init() {
 
 		// Check if all is OK
-		if (
-			( true !== $this->get_invoice ) ||
-			( 0 == $this->order_id ) ||
-			( ! is_user_logged_in() ) ||
-			( ! current_user_can( 'administrator' ) && ! is_shop_manager() && get_current_user_id() != intval( get_post_meta( $this->order_id, '_customer_user', true ) ) )
-		) {
+		if ( true !== $this->get_invoice || 0 == $this->order_id || ! is_user_logged_in() || ! $this->check_user_roles() ) {
 			return;
 		}
 
