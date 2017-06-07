@@ -96,7 +96,7 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 	/**
 	 * wcj_is_user_role.
 	 *
-	 * @version 2.5.2
+	 * @version 2.8.3
 	 * @since   2.5.0
 	 * @return  bool
 	 */
@@ -105,6 +105,6 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 		if ( ! isset( $the_user->roles ) || empty( $the_user->roles ) ) {
 			$the_user->roles = array( 'guest' );
 		}
-		return ( isset( $the_user->roles ) && is_array( $the_user->roles ) && in_array( $user_role, $the_user->roles ) ) ? true : false;
+		return ( isset( $the_user->roles ) && is_array( $the_user->roles ) && in_array( $user_role, $the_user->roles ) );
 	}
 }
