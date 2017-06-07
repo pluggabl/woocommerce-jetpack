@@ -172,6 +172,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.
 $~!D* Dev - PRODUCTS - Cost of Goods - "Admin Products List Custom Columns" - Section added.
+~!	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Redirecting if "Add to Cart Local Redirect Options" is enabled.
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
 $~!D* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart Display Options" option added.
 $~!D* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart HTML Template" options added.

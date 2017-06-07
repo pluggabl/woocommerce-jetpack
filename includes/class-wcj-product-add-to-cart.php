@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -361,7 +361,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/*
 	 * Add item to cart on visit.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 */
 	function add_to_cart_on_visit() {
 		if ( ! is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && is_product() && ( $product_id = get_the_ID() ) ) {
@@ -382,10 +382,16 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 						}
 					}
 					// Product not found - add it
-					WC()->cart->add_to_cart( $product_id );
+					$was_added_to_cart = WC()->cart->add_to_cart( $product_id );
 				} else {
 					// No products in cart - add it
-					WC()->cart->add_to_cart( $product_id );
+					$was_added_to_cart = WC()->cart->add_to_cart( $product_id );
+				}
+				// Maybe perform add to cart redirect
+				if ( false !== $was_added_to_cart && 'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ) {
+					$redirect_url = $this->redirect_to_url( '' );
+					wp_safe_redirect( $redirect_url );
+					exit;
 				}
 			}
 		}
