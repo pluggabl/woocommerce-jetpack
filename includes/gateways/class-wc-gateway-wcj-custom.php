@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Custom Payment Gateway
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 			/**
 			 * WC_Gateway_WCJ_Custom_Template class.
 			 *
-			 * @version 2.8.0
+			 * @version 2.8.3
 			 */
 			class WC_Gateway_WCJ_Custom_Template extends WC_Payment_Gateway {
 
@@ -307,19 +307,18 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * Process the payment and return the result
 				 *
-				 * @version 2.4.0
+				 * @version 2.8.3
 				 * @param   int $order_id
 				 * @return  array
 				 */
-				public function process_payment( $order_id ) {
+				function process_payment( $order_id ) {
 
-					$order = new WC_Order( $order_id );
+					$order = wc_get_order( $order_id );
 
 					// Mark as on-hold (we're awaiting the payment)
-					//$order->update_status( 'on-hold', __( 'Awaiting payment', 'woocommerce' ) );
 					$statuses = $this->get_order_statuses();
 					$note = isset( $statuses[ $this->default_order_status ] ) ? $statuses[ $this->default_order_status ] : '';
-					$order->update_status( $this->default_order_status, $note );
+					$order->update_status( $this->default_order_status, $note ); // e.g. 'on-hold', __( 'Awaiting payment', 'woocommerce' )
 
 					if ( 'yes' === $this->send_email_to_admin || 'yes' === $this->send_email_to_customer ) {
 						$woocommerce_mailer = WC()->mailer();
@@ -328,7 +327,11 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					}
 
 					// Reduce stock levels
-					$order->reduce_order_stock();
+					if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+						$order->reduce_order_stock();
+					} else {
+						wc_reduce_stock_levels( $order_id );
+					}
 
 					// Remove cart
 					WC()->cart->empty_cart();
