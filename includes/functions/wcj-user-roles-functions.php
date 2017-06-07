@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - User Roles
  *
- * @version 2.7.0
+ * @version 2.8.3
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -13,12 +13,12 @@ if ( ! function_exists( 'is_shop_manager' ) ) {
 	/**
 	 * is_shop_manager.
 	 *
-	 * @return bool
+	 * @version 2.8.3
+	 * @return  bool
 	 */
 	function is_shop_manager( $user_id = 0 ) {
 		$the_user = ( 0 == $user_id ) ? wp_get_current_user() : get_user_by( 'id', $user_id );
-//		if ( isset( $the_user['roles'][0] ) && 'shop_manager' === $the_user['roles'][0] ) {
-		return ( isset( $the_user->roles[0] ) && 'shop_manager' === $the_user->roles[0] ) ? true : false;
+		return ( isset( $the_user->roles[0] ) && 'shop_manager' === $the_user->roles[0] );
 	}
 }
 
