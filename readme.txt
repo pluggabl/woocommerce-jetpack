@@ -169,6 +169,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~ED	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `add_variation_info_to_item_name` attribute defaults to `yes` now.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `insert_page_break` (defaults to empty string) attribute added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_attribute` - Checking parent product's attribute for variation products.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_shipping_address]` - `fallback_billing_address` attribute added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.

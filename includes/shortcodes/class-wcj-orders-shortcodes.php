@@ -82,7 +82,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -107,6 +107,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'order_user_roles'    => '',
 			'meta_key'            => '',
 			'tax_class'           => '',
+			'fallback_billing_address' => 'no',
 		), $atts );
 
 		return $modified_atts;
@@ -609,9 +610,18 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_shipping_address.
+	 *
+	 * @version 2.8.3
 	 */
 	function wcj_order_shipping_address( $atts ) {
-		return $this->the_order->get_formatted_shipping_address();
+		$shipping_address = $this->the_order->get_formatted_shipping_address();
+		if ( '' != $shipping_address ) {
+			return $shipping_address;
+		} elseif ( 'yes' === $atts['fallback_billing_address'] ) {
+			return $this->the_order->get_formatted_billing_address();
+		} else {
+			return '';
+		}
 	}
 
 	/**
