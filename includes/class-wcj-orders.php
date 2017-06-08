@@ -83,6 +83,8 @@ class WCJ_Orders extends WCJ_Module {
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    add sortable to "Billing Country" and "Currency Code"
+	 * @todo    add filtering to custom columns (as it's done for "Billing Country" and "Currency Code")
+	 * @todo    move custom columns section (probably with reordering and multiple status sections) to new module (e.g. (Admin) Order(s) List) - same with products custom columns
 	 */
 	function shop_order_pre_get_posts_order_by_column( $query ) {
 		if (
