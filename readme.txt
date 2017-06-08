@@ -196,6 +196,7 @@ $~!D* Dev - PRODUCTS - SKU - Sequential counter by categories added.
 $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
 $~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Sortable" options added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
+~	* Dev - PDF INVOICING & PACKING SLIPS - Display - Sortable Columns - Code refactoring.
 $~!D* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" options added.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Templates - "Save all templates" buttons added.
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Default font set to "Helvetica".

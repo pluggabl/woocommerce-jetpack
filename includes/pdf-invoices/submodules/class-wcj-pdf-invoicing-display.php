@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -46,14 +46,18 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * shop_order_pre_get_posts_order_by_column.
 	 *
-	 * @version 2.5.8
+	 * @version 2.8.3
 	 * @since   2.5.8
 	 */
 	function shop_order_pre_get_posts_order_by_column( $query ) {
-		if ( $query->is_main_query() && ( $orderby = $query->get( 'orderby' ) ) ) {
-			if ( 'wcj_' === substr( $orderby, 0, 4 ) ) {
-				$invoice_type = substr( $orderby, 4 );
-				$query->set( 'meta_key', '_wcj_invoicing_' . $invoice_type . '_number_id' );
+		if (
+			$query->is_main_query() &&
+			( $orderby = $query->get( 'orderby' ) ) &&
+			isset( $query->query['post_type'] ) && 'shop_order' === $query->query['post_type'] &&
+			isset( $query->is_admin ) && 1 == $query->is_admin
+		) {
+			if ( 'wcj_invoicing_' === substr( $orderby, 0, 14 ) ) {
+				$query->set( 'meta_key', '_' . $orderby );
 				$query->set( 'orderby', 'meta_value_num' );
 			}
 		}
@@ -62,7 +66,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Make columns sortable.
 	 *
-	 * @version 2.5.8
+	 * @version 2.8.3
 	 * @since   2.5.8
 	 * @param   array $columns
 	 * @return  array
@@ -70,7 +74,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	function shop_order_sortable_columns( $columns ) {
 		$custom = array();
 		foreach ( wcj_get_enabled_invoice_types_ids() as $invoice_type_id ) {
-			$custom[ $invoice_type_id ] = 'wcj_' . $invoice_type_id;
+			$custom[ $invoice_type_id ] = 'wcj_invoicing_' . $invoice_type_id . '_number_id';
 		}
 		return wp_parse_args( $custom, $columns );
 	}
