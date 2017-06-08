@@ -161,7 +161,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.3 - 07/06/2017
+= 2.8.3 - 08/06/2017
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `wc_reduce_stock_levels()`.
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" added.
 ~	* Fix - Functions - Invoicing - `wcj_get_invoice_date()` - Check for not empty invoice date added.
@@ -194,6 +194,7 @@ $~!D* Dev - PRODUCTS - SKU - Sequential counter by categories added.
 ~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
 ~!D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - Advanced - "Cart notice method" and "Cart notice type" options added.
 $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
+$~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Sortable" options added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
 $~!D* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" options added.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Templates - "Save all templates" buttons added.

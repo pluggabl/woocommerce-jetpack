@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 */
 	function __construct() {
 
@@ -70,7 +70,54 @@ class WCJ_Orders extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_order_admin_list_columns_order_enabled', 'no' ) ) {
 				add_filter( 'manage_edit-shop_order_columns', array( $this, 'rearange_order_columns' ), PHP_INT_MAX - 1 );
 			}
+
+			// Maybe make sortable custom columns
+			add_filter( 'manage_edit-shop_order_sortable_columns',  array( $this, 'shop_order_sortable_columns' ) );
+			add_action( 'pre_get_posts',                            array( $this, 'shop_order_pre_get_posts_order_by_column' ), 1 );
 		}
+	}
+
+	/**
+	 * shop_order_pre_get_posts_order_by_column.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    add sortable to "Billing Country" and "Currency Code"
+	 */
+	function shop_order_pre_get_posts_order_by_column( $query ) {
+		if (
+			$query->is_main_query() &&
+			( $orderby = $query->get( 'orderby' ) ) &&
+			isset( $query->query['post_type'] ) && 'shop_order' === $query->query['post_type'] &&
+			isset( $query->is_admin ) && 1 == $query->is_admin
+		) {
+			if ( 'wcj_orders_custom_column_' === substr( $orderby, 0, 25 ) ) {
+				$index = substr( $orderby, 25 );
+				$query->set( 'orderby',  get_option( 'wcj_orders_list_custom_columns_sortable_'     . $index, 'no' ) ); // 'meta_value' or 'meta_value_num'
+				$query->set( 'meta_key', get_option( 'wcj_orders_list_custom_columns_sortable_key_' . $index, '' ) );
+			}
+		}
+	}
+
+	/**
+	 * Make columns sortable.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @param   array $columns
+	 * @return  array
+	 */
+	function shop_order_sortable_columns( $columns ) {
+		$custom = array();
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
+				if ( 'no' != get_option( 'wcj_orders_list_custom_columns_sortable_' . $i, 'no' ) && '' != get_option( 'wcj_orders_list_custom_columns_sortable_key_' . $i, '' ) ) {
+					$custom[ 'wcj_orders_custom_column_' . $i ] = 'wcj_orders_custom_column_' . $i;
+				}
+			}
+		}
+		return ( ! empty( $custom ) ? wp_parse_args( $custom, $columns ) : $columns );
 	}
 
 	/**

@@ -114,6 +114,25 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'type'     => 'custom_textarea',
 			'css'      => 'width:300px;',
 		),
+		array(
+			'desc'     => __( 'Sortable', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_orders_list_custom_columns_sortable_' . $i,
+			'default'  => 'no',
+			'type'     => 'select',
+			'options'  => array(
+				'no'             => __( 'No', 'woocommerce-jetpack' ),
+				'meta_value'     => __( 'By meta (as text)', 'woocommerce-jetpack' ),
+				'meta_value_num' => __( 'By meta (as numbers)', 'woocommerce-jetpack' ),
+			),
+			'css'      => 'min-width:300px;',
+		),
+		array(
+			'desc'     => __( 'Key (if sortable)', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_orders_list_custom_columns_sortable_key_' . $i,
+			'default'  => '',
+			'type'     => 'text',
+			'css'      => 'width:300px;',
+		),
 	) );
 }
 $settings = array_merge( $settings, array(
