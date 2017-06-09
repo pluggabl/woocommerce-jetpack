@@ -167,7 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Fix - Functions - Invoicing - `wcj_get_invoice_date()` - Check for not empty invoice date added.
 ~!D	* Dev - Shortcodes - General - `[wcj_currency_select_link_list]`, `[wcj_currency_select_radio_list]`, `[wcj_currency_select_drop_down_list]` - `default` attribute added.
 ~ED	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `add_variation_info_to_item_name` attribute defaults to `yes` now.
-~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_meta` column added.
+~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_meta`, `product_cost`, `product_profit`, `line_cost`, `line_profit`, `product_id`, `item_product_id` columns added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `insert_page_break` (defaults to empty string) attribute added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_attribute` - Checking parent product's attribute for variation products.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_shipping_address]` - `fallback_billing_address` attribute added.

@@ -56,6 +56,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'exclude_by_attribute__value'         => '',
 			'add_variation_info_to_item_name'     => 'yes',
 			'insert_page_break'                   => '',
+			'multiply_cost'                       => 1,
+			'multiply_profit'                     => 1,
 		), $atts );
 		return $modified_atts;
 	}
@@ -578,6 +580,28 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					case 'item_length':
 					case 'product_length':
 						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_length();
+						break;
+					case 'product_cost':
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' :
+							wc_price( $atts['multiply_cost'] * wc_get_product_purchase_price( $the_product->get_id() ) );
+						break;
+					case 'product_profit':
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' :
+							wc_price( $atts['multiply_profit'] * ( $the_product->get_price() - wc_get_product_purchase_price( $the_product->get_id() ) ) );
+						break;
+					case 'line_cost':
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' :
+							wc_price( $atts['multiply_cost'] * $item['qty'] * wc_get_product_purchase_price( $the_product->get_id() ) );
+						break;
+					case 'line_profit':
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' :
+							wc_price( $atts['multiply_profit'] * $item['qty'] * ( $the_product->get_price() - wc_get_product_purchase_price( $the_product->get_id() ) ) );
+						break;
+					case 'product_id':
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ? '' : $the_product->get_id();
+						break;
+					case 'item_product_id':
+						$cell_data = ( true === $item['is_custom'] ) ? '' : $item['product_id'];
 						break;
 					case 'product_meta':
 						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) || ! isset( $column_param ) || '' == $column_param ) ?
