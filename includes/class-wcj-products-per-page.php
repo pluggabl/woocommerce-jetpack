@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products per Page
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.6.0
  * @author  Algoritmika Ltd.
  */
@@ -41,7 +41,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * add_products_per_page_form.
 	 *
-	 * @version 2.6.0
+	 * @version 2.8.3
 	 * @since   2.5.3
 	 */
 	function add_products_per_page_form() {
@@ -65,14 +65,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 		$products_to    = ( $paged - 1 ) * $products_per_page + $wp_query->post_count;
 		$products_total = $wp_query->found_posts;
 
-		$html = '';
-		$html .= '<div class="clearfix"></div>';
-		$html .= '<div>';
-		$html .= '<form action="' . remove_query_arg( 'paged' ) . '" method="POST">';
-		$the_text = get_option( 'wcj_products_per_page_text',
-			__( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ) );
 		$select_form = '<select name="wcj_products_per_page" id="wcj_products_per_page" class="sortby rounded_corners_class" onchange="this.form.submit()">';
-		$html .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $the_text );
 		$products_per_page_select_options = apply_filters( 'booster_get_option',
 			'10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1',
 			get_option( 'wcj_products_per_page_select_options', '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1' ) );
@@ -86,10 +79,18 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 				$sort_id   = str_replace( "\r", '', $sort_id );
 				$sort_name = str_replace( "\n", '', $sort_name );
 				$sort_name = str_replace( "\r", '', $sort_name );
-				$html .= '<option value="' . $sort_id . '" ' . selected( $products_per_page, $sort_id, false ) . ' >' . $sort_name . '</option>';
+				$select_form .= '<option value="' . $sort_id . '" ' . selected( $products_per_page, $sort_id, false ) . ' >' . $sort_name . '</option>';
 			}
 		}
-		$html .= '</select>';
+		$select_form .= '</select>';
+
+		$html = '';
+		$html .= '<div class="clearfix"></div>';
+		$html .= '<div>';
+		$html .= '<form action="' . remove_query_arg( 'paged' ) . '" method="POST">';
+		$the_text = get_option( 'wcj_products_per_page_text',
+			__( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ) );
+		$html .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $the_text );
 		$html .= '</form>';
 		$html .= '</div>';
 

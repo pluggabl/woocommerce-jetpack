@@ -161,7 +161,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.3 - 08/06/2017
+= 2.8.3 - 09/06/2017
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `wc_reduce_stock_levels()`.
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" added.
 ~	* Fix - Functions - Invoicing - `wcj_get_invoice_date()` - Check for not empty invoice date added.
@@ -183,6 +183,7 @@ $~D	* Dev - PRODUCTS - Product Listings - "Admin Products List - Columns Order" 
 	* Dev - PRODUCTS - Product Listings - Settings - Code refactoring - `wcj_get_terms()`.
 $~!D* Dev - PRODUCTS - Product Visibility by Country - Visibility, purchasable and query options added.
 $~!D* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Column" option added.
+~	* Fix - PRODUCTS - Products per Page - Template fixed.
 ~D	* Dev - PRODUCTS - SKU - "Disable SKUs" option added.
 ~!D	* Dev - PRODUCTS - SKU - Adding SKU on product duplicate action added (`woocommerce_duplicate_product`).
 ~!D	* Dev - PRODUCTS - SKU - "Search by SKU" option added.
