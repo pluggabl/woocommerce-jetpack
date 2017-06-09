@@ -85,14 +85,13 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 		$select_form .= '</select>';
 
 		$html = '';
-		$html .= '<div class="clearfix"></div>';
-		$html .= '<div>';
+		$html .= get_option( 'wcj_products_per_page_text_before', '<div class="clearfix"></div><div>' );
 		$html .= '<form action="' . remove_query_arg( 'paged' ) . '" method="POST">';
 		$the_text = get_option( 'wcj_products_per_page_text',
 			__( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ) );
 		$html .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $the_text );
 		$html .= '</form>';
-		$html .= '</div>';
+		$html .= get_option( 'wcj_products_per_page_text_after', '</div>' );
 
 		echo $html;
 	}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Products per Page
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -51,10 +51,24 @@ return array(
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'title'    => __( 'Text', 'woocommerce-jetpack' ),
+		'title'    => __( 'Template - Before Form', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_products_per_page_text_before',
+		'default'  => '<div class="clearfix"></div><div>',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:66%;min-width:300px;',
+	),
+	array(
+		'title'    => __( 'Template - Form', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_products_per_page_text',
 		'default'  => __( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ),
-		'type'     => 'textarea',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:66%;min-width:300px;',
+	),
+	array(
+		'title'    => __( 'Template - After Form', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_products_per_page_text_after',
+		'default'  => '</div>',
+		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
 	),
 	array(
