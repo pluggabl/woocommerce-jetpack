@@ -185,6 +185,7 @@ $~!D* Dev - PRODUCTS - Product Visibility by Country - Visibility, purchasable a
 $~!D* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Column" option added.
 ~	* Fix - PRODUCTS - Products per Page - Template fixed.
 ~D	* Dev - PRODUCTS - Products per Page - "Template - Before Form" and "Template - After Form" options added.
+	* Dev - PRODUCTS - Products per Page - Minor code refactoring.
 ~D	* Dev - PRODUCTS - SKU - "Disable SKUs" option added.
 ~!D	* Dev - PRODUCTS - SKU - Adding SKU on product duplicate action added (`woocommerce_duplicate_product`).
 ~!D	* Dev - PRODUCTS - SKU - "Search by SKU" option added.

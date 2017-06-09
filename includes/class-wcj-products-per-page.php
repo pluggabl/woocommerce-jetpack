@@ -20,6 +20,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	 * @since   2.6.0
 	 * @todo    position priority for every hook
 	 * @todo    post or get
+	 * @todo    cookie - optional (or at least add description in admin settings)
 	 */
 	function __construct() {
 
@@ -48,8 +49,8 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 
 		global $wp_query;
 
-		if ( isset( $_POST['wcj_products_per_page'] ) ) {
-			$products_per_page = $_POST['wcj_products_per_page'];
+		if ( isset( $_REQUEST['wcj_products_per_page'] ) ) {
+			$products_per_page = $_REQUEST['wcj_products_per_page'];
 		} elseif ( isset( $_COOKIE['wcj_products_per_page'] ) ) {
 			$products_per_page = $_COOKIE['wcj_products_per_page'];
 		} else {
@@ -99,19 +100,19 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * set_products_per_page_number.
 	 *
-	 * @version 2.6.0
+	 * @version 2.8.3
 	 * @since   2.5.3
 	 */
-	function set_products_per_page_number( $the_number ) {
-		if ( isset( $_POST['wcj_products_per_page'] ) ) {
-			$the_number = $_POST['wcj_products_per_page'];
-			setcookie( 'wcj_products_per_page', $the_number, ( time() + 1209600 ), '/', $_SERVER['SERVER_NAME'], false );
+	function set_products_per_page_number( $products_per_page ) {
+		if ( isset( $_REQUEST['wcj_products_per_page'] ) ) {
+			$products_per_page = $_REQUEST['wcj_products_per_page'];
+			setcookie( 'wcj_products_per_page', $products_per_page, ( time() + 1209600 ), '/', $_SERVER['SERVER_NAME'], false );
 		} elseif ( isset( $_COOKIE['wcj_products_per_page'] ) ) {
-			$the_number = $_COOKIE['wcj_products_per_page'];
+			$products_per_page = $_COOKIE['wcj_products_per_page'];
 		} else {
-			$the_number = get_option( 'wcj_products_per_page_default', 10 );
+			$products_per_page = get_option( 'wcj_products_per_page_default', 10 );
 		}
-		return $the_number;
+		return $products_per_page;
 	}
 
 }
