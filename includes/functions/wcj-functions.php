@@ -168,7 +168,7 @@ if ( ! function_exists( 'wcj_get_product_id_or_variation_parent_id' ) ) {
 	 * @since   2.7.0
 	 */
 	function wcj_get_product_id_or_variation_parent_id( $_product ) {
-		if ( ! $_product ) {
+		if ( ! $_product || ! is_object( $_product ) ) {
 			return 0;
 		}
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
