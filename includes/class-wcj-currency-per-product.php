@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -288,20 +288,29 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_current_product_id_and_currency.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 * @since   2.7.0
 	 */
 	function get_current_product_id_and_currency() {
-		$the_ID = get_the_ID();
-		if ( 0 == $the_ID && isset( $_REQUEST['product_id'] ) ) {
+		// Get ID
+		$the_ID = false;
+		global $product;
+		if ( $product ) {
+			$the_ID = wcj_get_product_id_or_variation_parent_id( $product );
+		}
+		if ( ! $the_ID && isset( $_REQUEST['product_id'] ) ) {
 			$the_ID = $_REQUEST['product_id'];
 		}
-		if ( 0 == $the_ID && isset( $_POST['form'] ) ) { // WooCommerce Bookings plugin
+		if ( ! $the_ID && isset( $_POST['form'] ) ) { // WooCommerce Bookings plugin
 			$posted = array();
 			parse_str( $_POST['form'], $posted );
 			$the_ID = isset( $posted['add-to-cart'] ) ? $posted['add-to-cart'] : 0;
 		}
-		if ( 0 != $the_ID && 'product' === get_post_type( $the_ID ) ) {
+		if ( ! $the_ID ) {
+			$the_ID = get_the_ID();
+		}
+		// Get currency
+		if ( $the_ID && 'product' === get_post_type( $the_ID ) ) {
 			$currency_per_product_currency = get_post_meta( $the_ID, '_' . 'wcj_currency_per_product_currency', true );
 			return ( '' != $currency_per_product_currency ) ? $currency_per_product_currency : false;
 		}
