@@ -17,6 +17,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.0
+	 * @todo    copy additional options form "Empty Cart Button" plugin
 	 */
 	function __construct() {
 
