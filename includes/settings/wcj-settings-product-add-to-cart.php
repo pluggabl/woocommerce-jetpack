@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Add To Cart
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -11,29 +11,37 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 return array(
 	array(
-		'title'    => __( 'Add to Cart Local Redirect Options', 'woocommerce-jetpack' ),
+		'title'    => __( 'Add to Cart Local Redirect', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'desc'     => __( 'This section lets you set any local URL to redirect to after successfully adding product to cart. Leave empty to redirect to checkout page (skipping the cart page).', 'woocommerce-jetpack' ),
+		'desc'     => __( 'This section lets you set any local URL to redirect to after successfully adding product to cart.', 'woocommerce-jetpack' ) . ' ' .
+			sprintf(
+				__( 'For archives - "Enable AJAX add to cart buttons on archives" checkbox in <a href="%s">WooCommerce > Settings > Products > Display</a> must be disabled.', 'woocommerce-jetpack' ),
+				admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
+			),
 		'id'       => 'wcj_add_to_cart_redirect_options',
 	),
 	array(
-		'title'    => __( 'Local Redirect', 'woocommerce-jetpack' ),
+		'title'    => __( 'All Products', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_add_to_cart_redirect_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Local Redirect URL', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Local redirect URL. Leave empty to redirect to checkout.', 'woocommerce-jetpack' ),
-		'desc'     => sprintf(
-			__( 'For archives - "Enable AJAX add to cart buttons on archives" checkbox in <a href="%s">WooCommerce > Settings > Products > Display</a> must be disabled.', 'woocommerce-jetpack' ),
-			admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
-		),
+		'desc'     => __( 'URL - All Products', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Redirect URL. Leave empty to redirect to checkout page (skipping the cart page).', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_add_to_cart_redirect_url',
 		'default'  => '',
 		'type'     => 'text',
 		'css'      => 'width:50%;min-width:300px;',
+	),
+	array(
+		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add meta boxes to each product\'s edit page.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_redirect_per_product_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',

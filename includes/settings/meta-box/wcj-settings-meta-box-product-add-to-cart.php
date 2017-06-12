@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Add To Cart
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -10,6 +10,28 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $options = array();
+if ( 'yes' === get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) {
+	$options = array_merge( $options, array(
+		array(
+			'name'       => 'wcj_add_to_cart_redirect_enabled',
+			'default'    => 'no',
+			'type'       => 'select',
+			'options'    => array(
+				'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+				'no'  => __( 'No', 'woocommerce-jetpack' ),
+			),
+			'title'      => __( 'Add to Cart Local Redirect', 'woocommerce-jetpack' ),
+		),
+		array(
+			'name'       => 'wcj_add_to_cart_redirect_url',
+			'tooltip'    => __( 'Redirect URL. Leave empty to redirect to checkout page (skipping the cart page).', 'woocommerce-jetpack' ),
+			'default'    => '',
+			'type'       => 'text',
+			'title'      => __( 'Add to Cart Local Redirect URL', 'woocommerce-jetpack' ),
+			'css'        => 'width:100%;',
+		),
+	) );
+}
 if ( 'per_product' === get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' ) ) {
 	$options = array_merge( $options, array(
 		array(

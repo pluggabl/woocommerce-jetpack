@@ -16,7 +16,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 */
 	function __construct() {
 
@@ -40,6 +40,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ||
 				'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' ) ||
 				'yes' === get_option( 'wcj_add_to_cart_button_ajax_per_product_enabled', 'no' ) ||
+				'yes' === get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ||
 				'per_product' === get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' )
 			) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
@@ -55,8 +56,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			}
 
 			// Local Redirect
-			if ( 'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ) {
-				add_filter( 'woocommerce_add_to_cart_redirect', array( $this, 'redirect_to_url' ), PHP_INT_MAX );
+			if ( 'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) || 'yes' === get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_add_to_cart_redirect', array( $this, 'maybe_redirect_to_url' ), PHP_INT_MAX );
 			}
 
 			// Add to Cart on Visit
@@ -347,21 +348,38 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	}
 
 	/*
-	 * redirect_to_url.
+	 * maybe_redirect_to_url.
+	 *
+	 * @version 2.8.3
 	 */
-	function redirect_to_url( $url ) {
-		global $woocommerce;
-		$checkout_url = get_option( 'wcj_add_to_cart_redirect_url' );
-		if ( '' === $checkout_url ) {
-			$checkout_url = $woocommerce->cart->get_checkout_url();
+	function maybe_redirect_to_url( $url, $product_id = false ) {
+		if ( 'yes' === get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) && ( $product_id || isset( $_REQUEST['add-to-cart'] ) ) ) {
+			if ( ! $product_id ) {
+				$product_id = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_REQUEST['add-to-cart'] ) );
+			}
+			if ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_add_to_cart_redirect_enabled', true ) ) {
+				$redirect_url = get_post_meta( $product_id,  '_' . 'wcj_add_to_cart_redirect_url', true );
+				if ( '' === $redirect_url ) {
+					$redirect_url = WC()->cart->get_checkout_url();
+				}
+				return $redirect_url;
+			}
 		}
-		return $checkout_url;
+		if ( 'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ) {
+			$redirect_url = get_option( 'wcj_add_to_cart_redirect_url', '' );
+			if ( '' === $redirect_url ) {
+				$redirect_url = WC()->cart->get_checkout_url();
+			}
+			return $redirect_url;
+		}
+		return $url;
 	}
 
 	/*
 	 * Add item to cart on visit.
 	 *
 	 * @version 2.8.3
+	 * @todo    (maybe) optionally add product every time page is visited (instead of only once)
 	 */
 	function add_to_cart_on_visit() {
 		if ( ! is_admin() && ! ( defined( 'DOING_AJAX' ) && DOING_AJAX ) && is_product() && ( $product_id = get_the_ID() ) ) {
@@ -388,10 +406,15 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 					$was_added_to_cart = WC()->cart->add_to_cart( $product_id );
 				}
 				// Maybe perform add to cart redirect
-				if ( false !== $was_added_to_cart && 'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ) {
-					$redirect_url = $this->redirect_to_url( '' );
-					wp_safe_redirect( $redirect_url );
-					exit;
+				if ( false !== $was_added_to_cart && (
+					'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ||
+					'yes' === get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' )
+				) ) {
+					if ( $redirect_url = $this->maybe_redirect_to_url( false, $product_id ) ) {
+						if ( wp_safe_redirect( $redirect_url ) ) {
+							exit;
+						}
+					}
 				}
 			}
 		}
