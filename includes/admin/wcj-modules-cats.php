@@ -156,6 +156,7 @@ return array(
 		'all_cat_ids'    => array(
 			'general',
 			'breadcrumbs',
+			'admin_bar',
 			'export',
 			'my_account',
 			'old_slugs',
