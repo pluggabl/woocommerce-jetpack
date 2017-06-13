@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -50,15 +50,15 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * check_if_user_email_is_verified.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 * @since   2.8.0
 	 */
 	function check_if_user_email_is_verified( $userdata ) {
-		$error_message = do_shortcode( get_option( 'wcj_emails_verification_error_message',
-			__( 'Your account has to be activated before you can login. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' )
-		) );
-		$error_message = str_replace( '%resend_verification_url%', add_query_arg( 'wcj_user_id', $userdata->ID, wc_get_page_permalink( 'myaccount' ) ), $error_message );
 		if ( ! get_user_meta( $userdata->ID, 'wcj_is_activated', true ) ) {
+			$error_message = do_shortcode( get_option( 'wcj_emails_verification_error_message',
+				__( 'Your account has to be activated before you can login. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' )
+			) );
+			$error_message = str_replace( '%resend_verification_url%', add_query_arg( 'wcj_user_id', $userdata->ID, wc_get_page_permalink( 'myaccount' ) ), $error_message );
 			$userdata = new WP_Error( 'booster_email_verified_error', $error_message );
 		}
 		return $userdata;
