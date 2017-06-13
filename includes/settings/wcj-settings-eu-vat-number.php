@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - EU VAT Number
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default value for "wcj_eu_vat_number_add_progress_text" to "yes"
@@ -84,6 +84,18 @@ $settings = array(
 		'default'  => __( '<strong>EU VAT Number</strong> is not valid.', 'woocommerce-jetpack' ),
 		'type'     => 'textarea',
 		'css'      => 'width:300px;',
+	),
+	array(
+		'title'    => __( 'First Validation Method', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Change this if you are having issues when validating VAT. This only selects first method to try - if not succeeded, remaining methods will be used for validation.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_eu_vat_number_first_method',
+		'default'  => 'soap',
+		'type'     => 'select',
+		'options'  => array(
+			'soap'              => __( 'SOAP', 'woocommerce-jetpack' ),
+			'curl'              => __( 'cURL', 'woocommerce-jetpack' ),
+			'file_get_contents' => __( 'Simple', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'title'    => __( 'Exempt VAT for Valid Numbers', 'woocommerce-jetpack' ),

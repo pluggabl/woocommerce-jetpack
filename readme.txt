@@ -198,6 +198,7 @@ $~!D* Dev - PRODUCTS - SKU - Number Generation - "Pseudorandom - Hash (max 10 di
 $~!D* Dev - PRODUCTS - SKU - Sequential counter by categories added.
 ~	* Dev - PRODUCTS - SKU - Code refactoring.
 ~!D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Fields on Checkout for Logged Users" options added.
+~D	* Dev - CART & CHECKOUT - EU VAT Number - "First Validation Method" option added.
 ~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
 ~!D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - Advanced - "Cart notice method" and "Cart notice type" options added.
 $~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.

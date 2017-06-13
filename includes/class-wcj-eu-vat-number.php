@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -305,7 +305,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * wcj_validate_eu_vat_number.
 	 *
-	 * @version 2.6.0
+	 * @version 2.8.3
 	 */
 	function wcj_validate_eu_vat_number( $param ) {
 //		if ( ! isset( $_GET['wcj_validate_eu_vat_number'] ) ) return;
@@ -318,10 +318,10 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
 				}
 				$is_valid = ( $location['country'] === $eu_vat_number_country_to_check ) ?
-					validate_VAT( $eu_vat_number_country_to_check, $eu_vat_number_to_check ) :
+					wcj_validate_vat( $eu_vat_number_country_to_check, $eu_vat_number_to_check ) :
 					false;
 			} else {
-				$is_valid = validate_VAT( $eu_vat_number_country_to_check, $eu_vat_number_to_check );
+				$is_valid = wcj_validate_vat( $eu_vat_number_country_to_check, $eu_vat_number_to_check );
 			}
 		} else {
 			$is_valid = null;

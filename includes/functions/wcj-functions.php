@@ -921,42 +921,51 @@ if ( ! function_exists( 'wcj_get_product' ) ) {
 	}
 }
 
-if ( ! function_exists( 'validate_vat_no_soap' ) ) {
+if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 	/**
-	 * validate_vat_no_soap.
+	 * wcj_validate_vat_no_soap.
 	 *
-	 * @version 2.6.0
+	 * @version 2.8.3
 	 * @since   2.5.7
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 */
-	function validate_vat_no_soap( $country_code, $vat_number ) {
+	function wcj_validate_vat_no_soap( $country_code, $vat_number, $method ) {
 		$country_code = strtoupper( $country_code );
 		$api_url = "http://ec.europa.eu/taxation_customs/vies/viesquer.do?ms=" . $country_code . "&vat=" . $vat_number;
-		if ( ini_get( 'allow_url_fopen' ) ) {
-			$response = file_get_contents( $api_url );
-		} elseif ( function_exists( 'curl_version' ) ) {
-			$curl = curl_init( $api_url );
-			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
-			$response = curl_exec( $curl );
-			curl_close( $curl );
-		} else {
-			return null;
+		switch ( $method ) {
+			case 'file_get_contents':
+				if ( ini_get( 'allow_url_fopen' ) ) {
+					$response = file_get_contents( $api_url );
+				} else {
+					return null;
+				}
+				break;
+			default: // 'curl'
+				if ( function_exists( 'curl_version' ) ) {
+					$curl = curl_init( $api_url );
+					curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+					$response = curl_exec( $curl );
+					curl_close( $curl );
+				} else {
+					return null;
+				}
+				break;
 		}
 		if ( false === $response ) {
 			return null;
 		}
-		return ( false !== strpos( $response, '="validStyle"' ) ) ? true : false;
+		return ( false !== strpos( $response, '="validStyle"' ) );
 	}
 }
 
-if ( ! function_exists( 'validate_VAT' ) ) {
+if ( ! function_exists( 'wcj_validate_vat_soap' ) ) {
 	/**
-	 * validate_VAT.
+	 * wcj_validate_vat_soap.
 	 *
-	 * @version 2.5.7
+	 * @version 2.8.3
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 */
-	function validate_VAT( $country_code, $vat_number ) {
+	function wcj_validate_vat_soap( $country_code, $vat_number ) {
 		try {
 			if ( class_exists( 'SoapClient' ) ) {
 				$client = new SoapClient(
@@ -969,11 +978,59 @@ if ( ! function_exists( 'validate_VAT' ) ) {
 				) );
 				return ( isset( $result->valid ) ) ? $result->valid : null;
 			} else {
-				return validate_vat_no_soap( $country_code, $vat_number );
+				return null;
 			}
 		} catch( Exception $exception ) {
 			return null;
 		}
+	}
+}
+
+if ( ! function_exists( 'wcj_validate_vat_with_method' ) ) {
+	/**
+	 * wcj_validate_vat_with_method.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
+	 */
+	function wcj_validate_vat_with_method( $country_code, $vat_number, $method ) {
+		switch ( $method ) {
+			case 'soap':
+				return wcj_validate_vat_soap( $country_code, $vat_number );
+			default: // 'curl', 'file_get_contents'
+				return wcj_validate_vat_no_soap( $country_code, $vat_number, $method );
+		}
+	}
+}
+
+if ( ! function_exists( 'wcj_validate_vat' ) ) {
+	/**
+	 * wcj_validate_vat.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
+	 */
+	function wcj_validate_vat( $country_code, $vat_number ) {
+		$methods = array();
+		switch ( get_option( 'wcj_eu_vat_number_first_method', 'soap' ) ) {
+			case 'curl':
+				$methods = array( 'curl', 'file_get_contents', 'soap' );
+				break;
+			case 'file_get_contents':
+				$methods = array( 'file_get_contents', 'curl', 'soap' );
+				break;
+			default: // 'soap'
+				$methods = array( 'soap', 'curl', 'file_get_contents' );
+				break;
+		}
+		foreach ( $methods as $method ) {
+			if ( null !== ( $result = wcj_validate_vat_with_method( $country_code, $vat_number, $method ) ) ) {
+				return $result;
+			}
+		}
+		return null;
 	}
 }
 
