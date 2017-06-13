@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -129,7 +129,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * create_admin_tools_tool.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 */
 	function create_admin_tools_tool() {
 		// Notice
@@ -144,6 +144,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 		$the_tools .= '<p><a href="' . add_query_arg( 'wcj_delete_log', '1' ) . '">' . __( 'Delete Log', 'woocommerce-jetpack' ) . '</a></p>';
 		// Log
 		$the_log = '';
+		$the_log .= '<p style="font-style:italic;color:gray;">' . sprintf( __( 'Now: %s', 'woocommerce-jetpack' ), date( 'Y-m-d H:i:s' ) ) . '</p>';
 		$the_log .= '<pre>' . get_option( 'wcj_log', '' ) . '</pre>';
 		// Final output
 		$html = '';
