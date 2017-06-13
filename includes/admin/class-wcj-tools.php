@@ -75,8 +75,7 @@ class WCJ_Tools {
 			echo '</tr>';
 			do_action( 'wcj_tools_' . 'dashboard' );
 			echo '</table>';
-		}
-		else {
+		} else {
 			do_action( 'wcj_tools_' . $active_tab );
 		}
 	}
