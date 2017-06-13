@@ -2,7 +2,7 @@
 Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
-Tested up to: 4.7
+Tested up to: 4.8
 Stable tag: 2.8.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -43,12 +43,12 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Products**
 
 * *Bookings* - Add bookings products to WooCommerce.
+* *Cost of Goods* - Save WooCommerce product purchase costs data for admin reports.
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
 * *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Disable add to cart button on per product basis. Open external products on add to cart in new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages.
 * *Product Addons* - Add (paid/free/discount) addons to WooCommerce products.
 * *Product Availability by Time* - WooCommerce product availability by time.
 * *Product Bulk Meta Editor* - Set WooCommerce products meta with bulk editor.
-* *Product Cost Price* - Save WooCommerce product purchase costs data for admin reports.
 * *Product Images* - Customize WooCommerce products images, thumbnails and sale flashes.
 * *Product Info* - Add additional info to WooCommerce category and single product pages.
 * *Product Input Fields* - WooCommerce product input fields.
@@ -109,6 +109,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 **Emails & Misc.**
 
+* *Admin Bar* - WooCommerce admin bar.
 * *Admin Tools* - Booster for WooCommerce debug and log tools.
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
 * *Breadcrumbs* - Customize WooCommerce breadcrumbs.
