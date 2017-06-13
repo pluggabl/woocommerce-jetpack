@@ -214,6 +214,7 @@ $~!D* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" optio
 $~!D* Dev - EMAILS & MISC. - Admin Bar - Initial module release.
 $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Skip Email Verification for User Roles" option added.
+~D	* Dev - EMAILS & MISC. - Email Verification - "Verification Message - Failed" - `%resend_verification_url%` replaceable value added.
 $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.
 ~!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".

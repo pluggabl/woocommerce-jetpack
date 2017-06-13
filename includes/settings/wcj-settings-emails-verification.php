@@ -67,7 +67,7 @@ return array(
 		'title'    => __( 'Verification Message - Failed', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'id'       => 'wcj_emails_verification_failed_message',
-		'default'  => __( '<strong>Error:</strong> Activation failed, please contact our administrator.', 'woocommerce-jetpack' ),
+		'default'  => __( '<strong>Error:</strong> Activation failed, please contact our administrator. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' ),
 		'css'      => 'width:66%;min-width:300px;',
 	),
 	array(

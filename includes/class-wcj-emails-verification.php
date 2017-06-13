@@ -101,7 +101,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * process_email_verification.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 * @since   2.8.0
 	 */
 	function process_email_verification(){
@@ -117,8 +117,13 @@ class WCJ_Email_Verification extends WCJ_Module {
 					header( wc_get_page_permalink( 'myaccount' ) );
 				}
 			} else {
-				wc_add_notice( do_shortcode( get_option( 'wcj_emails_verification_failed_message',
-					__( '<strong>Error:</strong> Activation failed, please contact our administrator.', 'woocommerce-jetpack' ), 'error' ) ) );
+				$_notice = do_shortcode(
+					get_option( 'wcj_emails_verification_failed_message',
+						__( '<strong>Error:</strong> Activation failed, please contact our administrator. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' )
+					)
+				);
+				$_notice = str_replace( '%resend_verification_url%', add_query_arg( 'wcj_user_id', $data['id'], wc_get_page_permalink( 'myaccount' ) ), $_notice );
+				wc_add_notice( $_notice, 'error' );
 			}
 		}
 		if ( isset( $_GET['wcj_activate_account_message'] ) ) {
