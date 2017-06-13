@@ -6,7 +6,7 @@
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) change "Currency per Users" option position
- * @todo    (maybe) add "Currency per User Roles" option (similar to "Currency per Users")
+ * @todo    (maybe) add "Currency per User Roles / Product Category / Tag" options (similar to "Currency per Users")
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
