@@ -82,6 +82,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	 * @version 2.8.3
 	 * @since   2.8.0
 	 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
+	 * @todo    ticket #5373 - unexpected issue with "Activation failed, please contact our administrator" message
 	 */
 	function reset_and_mail_activation_link( $user_id ) {
 		$user_info     = get_userdata( $user_id );
