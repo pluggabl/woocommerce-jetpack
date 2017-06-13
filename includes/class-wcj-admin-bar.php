@@ -92,8 +92,6 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    dashboard
-	 * @todo    (maybe) module->desc (as meta title)
-	 * @todo    add "Google Analytics" args to "Documentation"
 	 */
 	function get_nodes_booster_modules() {
 		$nodes = array();
@@ -102,6 +100,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 			$nodes[ $id ] = array(
 				'title'  => $label_info['label'],
 				'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id ),
+				'meta'   => array( 'title' => strip_tags( $label_info['desc'] ) ),
 			);
 			if ( 'dashboard' === $id ) {
 				continue;
@@ -110,6 +109,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 				$nodes[ $id ]['nodes'][] = array(
 					'title'  => WCJ()->modules[ $link_id ]->short_desc,
 					'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),
+					'meta'   => array( 'title' => WCJ()->modules[ $link_id ]->desc ),
 					'nodes'  => array(
 						'settings' => array(
 							'title'  => __( 'Settings', 'woocommerce-jetpack' ),
@@ -117,7 +117,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 						),
 						'docs' => array(
 							'title'  => __( 'Documentation', 'woocommerce-jetpack' ),
-							'href'   => WCJ()->modules[ $link_id ]->link,
+							'href'   => WCJ()->modules[ $link_id ]->link . '?utm_source=module_documentation&utm_medium=admin_bar_link&utm_campaign=booster_documentation',
 							'meta'   => array( 'target' => '_blank' ),
 						),
 					),
