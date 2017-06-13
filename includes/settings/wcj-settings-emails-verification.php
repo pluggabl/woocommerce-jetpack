@@ -16,13 +16,6 @@ return array(
 		'id'       => 'wcj_emails_verification_options',
 	),
 	array(
-		'title'    => __( 'Redirect to "My Account" Page After Successful Verification', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'type'     => 'checkbox',
-		'id'       => 'wcj_emails_verification_redirect_on_success',
-		'default'  => 'yes',
-	),
-	array(
 		'title'    => __( 'Skip Email Verification for User Roles', 'woocommerce-jetpack' ),
 		'type'     => 'multiselect',
 		'options'  => wcj_get_user_roles_options(),
@@ -37,6 +30,13 @@ return array(
 		'type'     => 'checkbox',
 		'id'       => 'wcj_emails_verification_already_registered_enabled',
 		'default'  => 'no',
+	),
+	array(
+		'title'    => __( 'Redirect to "My Account" Page After Successful Verification', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_emails_verification_redirect_on_success',
+		'default'  => 'yes',
 	),
 	array(
 		'title'    => __( 'Verification Email Subject', 'woocommerce-jetpack' ),
