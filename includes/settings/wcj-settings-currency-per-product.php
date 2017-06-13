@@ -2,9 +2,11 @@
 /**
  * Booster for WooCommerce - Settings - Currency per Product
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    (maybe) change "Currency per Users" option position
+ * @todo    (maybe) add "Currency per User Roles" option (similar to "Currency per Users")
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -96,7 +98,18 @@ $settings = array(
 			array( 'step' => '1', 'min'  => '1', )
 		),
 	),
+	array(
+		'title'    => __( 'Currency per Users', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save module\'s settings after changing this option to see new settings fields.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_per_product_by_user_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
 );
+if ( 'yes' === get_option( 'wcj_currency_per_product_by_user_enabled', 'no' ) ) {
+	$users_as_options = $this->get_users_as_options();
+}
 $total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$currency_to = get_option( 'wcj_currency_per_product_currency_' . $i, $currency_from );
@@ -128,6 +141,18 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'value'                    => $currency_from . '/' . $currency_to,
 		),
 	) );
+	if ( 'yes' === get_option( 'wcj_currency_per_product_by_user_enabled', 'no' ) ) {
+		$settings = array_merge( $settings, array(
+			array(
+				'desc'     => __( 'Users', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_currency_per_product_users_' . $i,
+				'default'  => '',
+				'type'     => 'multiselect',
+				'options'  =>  $users_as_options,
+				'class'    => 'chosen_select',
+			),
+		) );
+	}
 }
 $settings = array_merge( $settings, array(
 	array(

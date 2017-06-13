@@ -174,6 +174,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_shipping_address]` - `fallback_billing_address` attribute added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
+$~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Users" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.

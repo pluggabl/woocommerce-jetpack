@@ -107,12 +107,37 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	}
 
 	/**
+	 * get_users_as_options.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    (maybe) move to global functions
+	 */
+	function get_users_as_options() {
+		$users = array();
+		foreach ( get_users( 'orderby=display_name' ) as $user ) {
+			$users[ $user->ID ] = $user->display_name . ' ' . '[ID:' . $user->ID . ']';
+		}
+		return $users;
+	}
+
+	/**
 	 * get_product_currency.
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 */
 	function get_product_currency( $product_id ) {
+		if ( 'yes' === get_option( 'wcj_currency_per_product_by_user_enabled', 'no' ) ) {
+			$product_author_id = get_post_field( 'post_author', $product_id );
+			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
+			for ( $i = 1; $i <= $total_number; $i++ ) {
+				$users = get_option( 'wcj_currency_per_product_users_' . $i, '' );
+				if ( ! empty( $users ) && in_array( $product_author_id, $users ) ) {
+					return get_option( 'wcj_currency_per_product_currency_' . $i );
+				}
+			}
+		}
 		return get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true );
 	}
 
