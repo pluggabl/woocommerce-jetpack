@@ -54,7 +54,10 @@ class WCJ_Email_Verification extends WCJ_Module {
 	 * @since   2.8.0
 	 */
 	function check_if_user_email_is_verified( $userdata ) {
-		if ( ! get_user_meta( $userdata->ID, 'wcj_is_activated', true ) ) {
+		if (
+			( 'yes' === get_option( 'wcj_emails_verification_already_registered_enabled', 'no' ) &&       ! get_user_meta( $userdata->ID, 'wcj_is_activated', true ) ) ||
+			( 'no'  === get_option( 'wcj_emails_verification_already_registered_enabled', 'no' ) && '0' === get_user_meta( $userdata->ID, 'wcj_is_activated', true ) )
+		) {
 			if ( isset( $userdata->roles ) && ! empty( $userdata->roles ) ) {
 				if ( ! is_array( $userdata->roles ) ) {
 					$userdata->roles = array( $userdata->roles );

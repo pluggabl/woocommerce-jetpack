@@ -12,7 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 return array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Please note that after enabling the module, all your current users will have to verify their emails when logging to your site.', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_emails_verification_options',
 	),
@@ -30,6 +29,14 @@ return array(
 		'id'       => 'wcj_emails_verification_skip_user_roles',
 		'default'  => 'administrator',
 		'class'    => 'chosen_select',
+	),
+	array(
+		'title'    => __( 'Enable Email Verification for Already Registered Users', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If enabled, all your current users will have to verify their emails when logging to your site.', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_emails_verification_already_registered_enabled',
+		'default'  => 'no',
 	),
 	array(
 		'title'    => __( 'Verification Email Subject', 'woocommerce-jetpack' ),

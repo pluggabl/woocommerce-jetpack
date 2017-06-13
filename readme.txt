@@ -213,6 +213,7 @@ $~!D* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" optio
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Now extra fonts are downloaded to `woocommerce_uploads` folder.
 $~!D* Dev - EMAILS & MISC. - Admin Bar - Initial module release.
 $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
+~D	* Dev - EMAILS & MISC. - Email Verification - "Enable Email Verification for Already Registered Users" option added.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Skip Email Verification for User Roles" option added.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Verification Message - Failed" - `%resend_verification_url%` replaceable value added.
 $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
