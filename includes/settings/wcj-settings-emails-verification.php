@@ -42,6 +42,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Verification Email Content', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Replaced value: %s', 'woocommerce-jetpack' ), '%verification_url%' ),
 		'type'     => 'custom_textarea',
 		'id'       => 'wcj_emails_verification_email_content',
 		'default'  => __( 'Please click the following link to verify your email:<br><br><a href="%verification_url%">%verification_url%</a>', 'woocommerce-jetpack' ),
@@ -58,6 +59,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Verification Message - Error', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Replaced value: %s', 'woocommerce-jetpack' ), '%resend_verification_url%' ),
 		'type'     => 'custom_textarea',
 		'id'       => 'wcj_emails_verification_error_message',
 		'default'  => __( 'Your account has to be activated before you can login. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' ),
@@ -65,6 +67,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Verification Message - Failed', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Replaced value: %s', 'woocommerce-jetpack' ), '%resend_verification_url%' ),
 		'type'     => 'custom_textarea',
 		'id'       => 'wcj_emails_verification_failed_message',
 		'default'  => __( '<strong>Error:</strong> Activation failed, please contact our administrator. You can resend email with verification link by clicking <a href="%resend_verification_url%">here</a>.', 'woocommerce-jetpack' ),
