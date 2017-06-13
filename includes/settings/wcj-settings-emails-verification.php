@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Email Verification
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 return array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Please note that after enabling the module, all your current users will have to verify their emails when logging to your site.', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_emails_verification_options',
 	),
@@ -21,6 +22,14 @@ return array(
 		'type'     => 'checkbox',
 		'id'       => 'wcj_emails_verification_redirect_on_success',
 		'default'  => 'yes',
+	),
+	array(
+		'title'    => __( 'Skip Email Verification for User Roles', 'woocommerce-jetpack' ),
+		'type'     => 'multiselect',
+		'options'  => wcj_get_user_roles_options(),
+		'id'       => 'wcj_emails_verification_skip_user_roles',
+		'default'  => 'administrator',
+		'class'    => 'chosen_select',
 	),
 	array(
 		'title'    => __( 'Verification Email Subject', 'woocommerce-jetpack' ),
