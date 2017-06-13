@@ -229,11 +229,55 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	}
 
 	/**
+	 * get_nodes_orders_reports.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function get_nodes_orders_reports() {
+		$nodes = array();
+		$reports = array(
+			'sales_by_date'     => __( 'Sales by date', 'woocommerce-jetpack' ),
+			'sales_by_product'  => __( 'Sales by product', 'woocommerce-jetpack' ),
+			'sales_by_category' => __( 'Sales by category', 'woocommerce-jetpack' ),
+			'coupon_usage'      => __( 'Coupons by date', 'woocommerce-jetpack' ),
+		);
+		foreach ( $reports as $report_id => $report_title ) {
+			$nodes[ $report_id ] = array(
+				'title'  => $report_title,
+				'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id ),
+				'nodes'  => array(
+					'7day' => array(
+						'title'  => __( 'Last 7 days', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=7day' ),
+					),
+					'month' => array(
+						'title'  => __( 'Month', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=month' ),
+					),
+					'last_month' => array(
+						'title'  => __( 'Last month', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=last_month' ),
+					),
+					'year' => array(
+						'title'  => __( 'Year', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=year' ),
+					),
+				),
+			);
+		}
+		return $nodes;
+	}
+
+	/**
 	 * add_woocommerce_admin_bar.
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    finish standard WC nodes
+	 * @todo    reports > customers > customers > add dates
+	 * @todo    reports > taxes > taxes_by_code > add dates
+	 * @todo    reports > taxes > taxes_by_date > add dates
 	 * @todo    (maybe) custom user nodes
 	 * @todo    (maybe) optional selections
 	 */
@@ -267,10 +311,51 @@ class WCJ_Admin_Bar extends WCJ_Module {
 							'orders' => array(
 								'title'  => __( 'Orders', 'woocommerce-jetpack' ),
 								'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders' ),
+								'nodes'  => $this->get_nodes_orders_reports(),
+							),
+							'customers' => array(
+								'title'  => __( 'Customers', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'admin.php?page=wc-reports&tab=customers' ),
 								'nodes'  => array(
-									'7day' => array(
-										'title'  => __( 'Last 7 days', 'woocommerce-jetpack' ),
-										'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&range=7day' ),
+									'customers' => array(
+										'title'  => __( 'Customers vs. guests', 'woocommerce-jetpack' ),
+										'href'   => admin_url( 'admin.php?page=wc-reports&tab=customers&report=customers' ),
+									),
+									'customer_list' => array(
+										'title'  => __( 'Customer list', 'woocommerce-jetpack' ),
+										'href'   => admin_url( 'admin.php?page=wc-reports&tab=customers&report=customer_list' ),
+									),
+								),
+							),
+							'stock' => array(
+								'title'  => __( 'Stock', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock' ),
+								'nodes'  => array(
+									'low_in_stock' => array(
+										'title'  => __( 'Low in stock', 'woocommerce-jetpack' ),
+										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=low_in_stock' ),
+									),
+									'out_of_stock' => array(
+										'title'  => __( 'Out of stock', 'woocommerce-jetpack' ),
+										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=out_of_stock' ),
+									),
+									'most_stocked' => array(
+										'title'  => __( 'Most stocked', 'woocommerce-jetpack' ),
+										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=most_stocked' ),
+									),
+								),
+							),
+							'taxes' => array(
+								'title'  => __( 'Taxes', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'admin.php?page=wc-reports&tab=taxes' ),
+								'nodes'  => array(
+									'taxes_by_code' => array(
+										'title'  => __( 'Taxes by code', 'woocommerce-jetpack' ),
+										'href'   => admin_url( 'admin.php?page=wc-reports&tab=taxes&report=taxes_by_code' ),
+									),
+									'taxes_by_date' => array(
+										'title'  => __( 'Taxes by date', 'woocommerce-jetpack' ),
+										'href'   => admin_url( 'admin.php?page=wc-reports&tab=taxes&report=taxes_by_date' ),
 									),
 								),
 							),
