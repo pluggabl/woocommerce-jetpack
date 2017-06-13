@@ -5,12 +5,6 @@
  * @version 2.8.3
  * @since   2.8.3
  * @author  Algoritmika Ltd.
- * @todo    reload page after enabling the module
- * @todo    (maybe) custom user nodes
- * @todo    (maybe) optional nodes selection
- * @todo    (maybe) separate "Booster Active Modules" admin bar menu
- * @todo    (maybe) separate "Booster Modules" admin bar menu
- * @todo    (maybe) separate "Booster Tools" admin bar menu
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly

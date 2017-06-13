@@ -211,7 +211,7 @@ $~!D* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" optio
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "cid0ct (Chinese Traditional)" font added (to extra fonts pack).
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "STSong Light (Simp. Chinese)" font added (to both minimal and extra fonts packs).
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Now extra fonts are downloaded to `woocommerce_uploads` folder.
-$-!D* Dev - EMAILS & MISC. - Admin Bar - Initial module release.
+$~!D* Dev - EMAILS & MISC. - Admin Bar - Initial module release.
 $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
 $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.

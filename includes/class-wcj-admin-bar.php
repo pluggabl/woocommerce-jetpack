@@ -18,6 +18,11 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
+	 * @todo    (maybe) custom user nodes
+	 * @todo    (maybe) optional nodes selection
+	 * @todo    (maybe) separate "Booster Active Modules" admin bar menu
+	 * @todo    (maybe) separate "Booster Modules" admin bar menu
+	 * @todo    (maybe) separate "Booster Tools" admin bar menu
 	 */
 	function __construct() {
 
@@ -38,6 +43,22 @@ class WCJ_Admin_Bar extends WCJ_Module {
 				add_action( 'wp_head',        array( $this, 'add_booster_admin_bar_icon_style' ) );
 				add_action( 'admin_head',     array( $this, 'add_booster_admin_bar_icon_style' ) );
 			}
+			add_action( 'woojetpack_after_settings_save',  array( $this, 'reload_page_after_settings_save' ), PHP_INT_MAX, 2 );
+		}
+	}
+
+	/**
+	 * reload_page_after_settings_save.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    (maybe) somehow add "Your settings have been saved." admin notice
+	 */
+	function reload_page_after_settings_save( $sections, $current_section ) {
+		// This function is needed so admin bar menus would appear immediately after module settings are saved (i.e. without additional page refresh)
+		if ( $this->id === $current_section ) {
+			wp_safe_redirect( add_query_arg( '', '' ) );
+			exit;
 		}
 	}
 
