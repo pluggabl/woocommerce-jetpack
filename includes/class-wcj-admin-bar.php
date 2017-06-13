@@ -274,12 +274,15 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    finish standard WC nodes
-	 * @todo    reports > customers > customers > add dates
-	 * @todo    reports > taxes > taxes_by_code > add dates
-	 * @todo    reports > taxes > taxes_by_date > add dates
+	 * @todo    (maybe) reports > customers > customers > add dates
+	 * @todo    (maybe) reports > taxes > taxes_by_code > add dates
+	 * @todo    (maybe) reports > taxes > taxes_by_date > add dates
+	 * @todo    (maybe) settings > add sections
+	 * @todo    (maybe) system-status > add sections
+	 * @todo    (maybe) extensions > add sections
 	 * @todo    (maybe) custom user nodes
 	 * @todo    (maybe) optional selections
+	 * @todo    (maybe) dashes or underscores?
 	 */
 	function add_woocommerce_admin_bar( $wp_admin_bar ) {
 		$nodes = array(
@@ -294,6 +297,10 @@ class WCJ_Admin_Bar extends WCJ_Module {
 						'title'  => __( 'Orders', 'woocommerce-jetpack' ),
 						'href'   => admin_url( 'edit.php?post_type=shop_order' ),
 						'nodes'  => array(
+							'orders' => array(
+								'title'  => __( 'Orders', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'edit.php?post_type=shop_order' ),
+							),
 							'add-new-order' => array(
 								'title'  => __( 'Add new order', 'woocommerce-jetpack' ),
 								'href'   => admin_url( 'post-new.php?post_type=shop_order' ),
@@ -360,6 +367,58 @@ class WCJ_Admin_Bar extends WCJ_Module {
 								),
 							),
 						),
+					),
+					'products' => array(
+						'title'  => __( 'Products', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'edit.php?post_type=product' ),
+						'nodes'  => array(
+							'products' => array(
+								'title'  => __( 'Products', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'edit.php?post_type=product' ),
+							),
+							'add_new_product' => array(
+								'title'  => __( 'Add new product', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'post-new.php?post_type=product' ),
+							),
+							'categories' => array(
+								'title'  => __( 'Categories', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'edit-tags.php?taxonomy=product_cat&post_type=product' ),
+							),
+							'tags' => array(
+								'title'  => __( 'Tags', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'edit-tags.php?taxonomy=product_tag&post_type=product' ),
+							),
+							'attributes' => array(
+								'title'  => __( 'Attributes', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'edit.php?post_type=product&page=product_attributes' ),
+							),
+						),
+					),
+					'coupons' => array(
+						'title'  => __( 'Coupons', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'edit.php?post_type=shop_coupon' ),
+						'nodes'  => array(
+							'coupons' => array(
+								'title'  => __( 'Coupons', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'edit.php?post_type=shop_coupon' ),
+							),
+							'add_new_coupon' => array(
+								'title'  => __( 'Add new coupon', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'post-new.php?post_type=shop_coupon' ),
+							),
+						),
+					),
+					'settings' => array(
+						'title'  => __( 'Settings', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-settings' ),
+					),
+					'system-status' => array(
+						'title'  => __( 'System status', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-status' ),
+					),
+					'extensions' => array(
+						'title'  => __( 'Extensions', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-addons' ),
 					),
 				),
 			),
