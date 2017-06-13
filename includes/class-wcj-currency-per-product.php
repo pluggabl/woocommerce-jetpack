@@ -107,9 +107,19 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	}
 
 	/**
+	 * get_product_currency.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function get_product_currency( $product_id ) {
+		return get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true );
+	}
+
+	/**
 	 * validate_on_add_to_cart.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 * @since   2.7.0
 	 */
 	function validate_on_add_to_cart( $passed, $product_id ) {
@@ -124,7 +134,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			}
 		} elseif ( 'leave_same_currency' === $cart_checkout_behaviour ) {
 			$shop_currency = get_option( 'woocommerce_currency' );
-			$product_currency = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true );
+			$product_currency = $this->get_product_currency( $product_id );
 			if ( '' == $product_currency ) {
 				$product_currency = $shop_currency;
 			}
@@ -144,7 +154,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * grouped_price_html.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 * @since   2.5.2
 	 */
 	function grouped_price_html( $price_html, $_product ) {
@@ -166,8 +176,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			end( $child_prices );
 			$max_price = current( $child_prices );
 			$max_price_id = key( $child_prices );
-			$min_currency_per_product_currency = get_post_meta( $min_price_id, '_' . 'wcj_currency_per_product_currency', true );
-			$max_currency_per_product_currency = get_post_meta( $max_price_id, '_' . 'wcj_currency_per_product_currency', true );
+			$min_currency_per_product_currency = $this->get_product_currency( $min_price_id );
+			$max_currency_per_product_currency = $this->get_product_currency( $max_price_id );
 		} else {
 			$min_price = '';
 			$max_price = '';
@@ -261,11 +271,11 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * add_cart_item_data.
 	 *
-	 * @version 2.5.2
+	 * @version 2.8.3
 	 * @since   2.5.2
 	 */
 	function add_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
-		$currency_per_product_currency = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true );
+		$currency_per_product_currency = $this->get_product_currency( $product_id );
 		if ( '' != $currency_per_product_currency ) {
 			$cart_item_data['wcj_currency_per_product'] = $currency_per_product_currency;
 		}
@@ -311,7 +321,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 		}
 		// Get currency
 		if ( $the_ID && 'product' === get_post_type( $the_ID ) ) {
-			$currency_per_product_currency = get_post_meta( $the_ID, '_' . 'wcj_currency_per_product_currency', true );
+			$currency_per_product_currency = $this->get_product_currency( $the_ID );
 			return ( '' != $currency_per_product_currency ) ? $currency_per_product_currency : false;
 		}
 		return false;
