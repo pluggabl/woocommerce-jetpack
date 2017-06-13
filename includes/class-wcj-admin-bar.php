@@ -142,11 +142,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 						),
 					);
 					if ( WCJ()->modules[ $link_id ]->is_enabled() ) {
-						$active_modules[ $link_id ] = array(
-							'title'  => WCJ()->modules[ $link_id ]->short_desc,
-							'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),
-							'meta'   => array( 'title' => WCJ()->modules[ $link_id ]->desc ),
-						);
+						$active_modules[ $link_id ] = $nodes[ $id ]['nodes'][ $link_id ];
 					}
 				}
 			}
@@ -172,11 +168,40 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	}
 
 	/**
+	 * get_nodes_booster_tools.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function get_nodes_booster_tools() {
+		$nodes = array();
+		$tools = apply_filters( 'wcj_tools_tabs', array(
+			array(
+				'id'    => 'dashboard',
+				'title' => __( 'Dashboard', 'woocommerce-jetpack' ),
+				'desc'  => __( 'This dashboard lets you check statuses and short descriptions of all available Booster for WooCommerce tools. Tools can be enabled through WooCommerce > Settings > Booster.', 'woocommerce-jetpack' ),
+			),
+		) );
+		foreach ( $tools as $tool ) {
+			$nodes[ $tool['id'] ] = array(
+				'title'  => $tool['title'],
+				'href'   => admin_url( 'admin.php?page=wcj-tools&tab=' . $tool['id'] ),
+			);
+			if ( isset( $tool['desc'] ) ) {
+				$nodes[ $tool['id'] ]['meta']['title'] = $tool['desc'];
+			}
+		}
+		return $nodes;
+	}
+
+	/**
 	 * add_booster_admin_bar.
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    list all Booster tools
+	 * @todo    (maybe) separate "Booster Active Modules" admin bar menu
+	 * @todo    (maybe) separate "Booster Modules" admin bar menu
+	 * @todo    (maybe) separate "Booster Tools" admin bar menu
 	 */
 	function add_booster_admin_bar( $wp_admin_bar ) {
 		$nodes = array(
@@ -195,6 +220,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 					'tools' => array(
 						'title'  => __( 'Tools', 'woocommerce-jetpack' ),
 						'href'   => admin_url( 'admin.php?page=wcj-tools' ),
+						'nodes'  => $this->get_nodes_booster_tools(),
 					),
 				),
 			),
@@ -208,7 +234,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    finish standard WC nodes
-	 * @todo    custom user nodes
+	 * @todo    (maybe) custom user nodes
 	 * @todo    (maybe) optional selections
 	 */
 	function add_woocommerce_admin_bar( $wp_admin_bar ) {
