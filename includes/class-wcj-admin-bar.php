@@ -18,8 +18,6 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    reload page after enabling the module
-	 * @todo    enable/disable WC/Booster menus
 	 */
 	function __construct() {
 
@@ -30,12 +28,16 @@ class WCJ_Admin_Bar extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_action( 'admin_bar_menu', array( $this, 'add_woocommerce_admin_bar' ), PHP_INT_MAX );
-			add_action( 'wp_head',        array( $this, 'add_woocommerce_admin_bar_icon_style' ) );
-			add_action( 'admin_head',     array( $this, 'add_woocommerce_admin_bar_icon_style' ) );
-			add_action( 'admin_bar_menu', array( $this, 'add_booster_admin_bar' ), PHP_INT_MAX );
-			add_action( 'wp_head',        array( $this, 'add_booster_admin_bar_icon_style' ) );
-			add_action( 'admin_head',     array( $this, 'add_booster_admin_bar_icon_style' ) );
+			if ( 'yes' === get_option( 'wcj_admin_bar_wc_enabled', 'yes' ) ) {
+				add_action( 'admin_bar_menu', array( $this, 'add_woocommerce_admin_bar' ), PHP_INT_MAX );
+				add_action( 'wp_head',        array( $this, 'add_woocommerce_admin_bar_icon_style' ) );
+				add_action( 'admin_head',     array( $this, 'add_woocommerce_admin_bar_icon_style' ) );
+			}
+			if ( 'yes' === get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) ) {
+				add_action( 'admin_bar_menu', array( $this, 'add_booster_admin_bar' ), PHP_INT_MAX );
+				add_action( 'wp_head',        array( $this, 'add_booster_admin_bar_icon_style' ) );
+				add_action( 'admin_head',     array( $this, 'add_booster_admin_bar_icon_style' ) );
+			}
 		}
 	}
 
@@ -199,9 +201,6 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    (maybe) separate "Booster Active Modules" admin bar menu
-	 * @todo    (maybe) separate "Booster Modules" admin bar menu
-	 * @todo    (maybe) separate "Booster Tools" admin bar menu
 	 */
 	function add_booster_admin_bar( $wp_admin_bar ) {
 		$nodes = array(
@@ -280,8 +279,6 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 * @todo    (maybe) settings > add sections
 	 * @todo    (maybe) system-status > add sections
 	 * @todo    (maybe) extensions > add sections
-	 * @todo    (maybe) custom user nodes
-	 * @todo    (maybe) optional selections
 	 * @todo    (maybe) dashes or underscores?
 	 */
 	function add_woocommerce_admin_bar( $wp_admin_bar ) {
