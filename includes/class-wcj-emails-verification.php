@@ -79,7 +79,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * reset_and_mail_activation_link.
 	 *
-	 * @version 2.8.0
+	 * @version 2.8.3
 	 * @since   2.8.0
 	 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
 	 */
@@ -96,7 +96,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 			__( 'Please activate your account', 'woocommerce-jetpack' ),
 			get_option( 'wcj_emails_verification_email_subject',
 				__( 'Please activate your account', 'woocommerce-jetpack' ) ) ) );
-		update_user_meta( $user_id, 'wcj_is_activated', 0 );
+		update_user_meta( $user_id, 'wcj_is_activated', '0' );
 		update_user_meta( $user_id, 'wcj_activation_code', $code );
 		wc_mail( $user_info->user_email, $email_subject, $email_content );
 	}
@@ -111,7 +111,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 		if ( isset( $_GET['wcj_verify_email'] ) ) {
 			$data = unserialize( base64_decode( $_GET['wcj_verify_email'] ) );
 			if ( get_user_meta( $data['id'], 'wcj_activation_code', true ) == $data['code'] ) {
-				update_user_meta( $data['id'], 'wcj_is_activated', 1 );
+				update_user_meta( $data['id'], 'wcj_is_activated', '1' );
 				wc_add_notice( do_shortcode( get_option( 'wcj_emails_verification_success_message',
 					__( '<strong>Success:</strong> Your account has been activated!', 'woocommerce-jetpack' ) ) ) );
 				if ( 'yes' === get_option( 'wcj_emails_verification_redirect_on_success', 'yes' ) ) {
