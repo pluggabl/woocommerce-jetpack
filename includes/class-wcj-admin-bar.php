@@ -91,11 +91,13 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    dashboard
+	 * @todo    (maybe) dashboard > alphabetically - list all modules
+	 * @todo    (maybe) dashboard > by_category - list all modules
 	 */
 	function get_nodes_booster_modules() {
 		$nodes = array();
 		$cats  = include( wcj_plugin_path() . '/includes/admin/' . 'wcj-modules-cats.php' );
+		$active_modules = array();
 		foreach ( $cats as $id => $label_info ) {
 			$nodes[ $id ] = array(
 				'title'  => $label_info['label'],
@@ -103,28 +105,70 @@ class WCJ_Admin_Bar extends WCJ_Module {
 				'meta'   => array( 'title' => strip_tags( $label_info['desc'] ) ),
 			);
 			if ( 'dashboard' === $id ) {
-				continue;
-			}
-			foreach ( $label_info['all_cat_ids'] as $link_id ) {
-				$nodes[ $id ]['nodes'][] = array(
-					'title'  => WCJ()->modules[ $link_id ]->short_desc,
-					'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),
-					'meta'   => array( 'title' => WCJ()->modules[ $link_id ]->desc ),
-					'nodes'  => array(
-						'settings' => array(
-							'title'  => __( 'Settings', 'woocommerce-jetpack' ),
-							'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),
-						),
-						'docs' => array(
-							'title'  => __( 'Documentation', 'woocommerce-jetpack' ),
-							'href'   => WCJ()->modules[ $link_id ]->link . '?utm_source=module_documentation&utm_medium=admin_bar_link&utm_campaign=booster_documentation',
-							'meta'   => array( 'target' => '_blank' ),
-						),
+				$nodes[ $id ]['nodes'] = array(
+					'alphabetically' => array(
+						'title'  => __( 'Alphabetically', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=alphabetically' ),
+					),
+					'by_category' => array(
+						'title'  => __( 'By Category', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=by_category' ),
+					),
+					'active' => array(
+						'title'  => __( 'Active', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=active' ),
+					),
+					'manager' => array(
+						'title'  => __( 'Manage Settings', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=manager' ),
 					),
 				);
+			} else {
+				foreach ( $label_info['all_cat_ids'] as $link_id ) {
+					$nodes[ $id ]['nodes'][ $link_id ] = array(
+						'title'  => WCJ()->modules[ $link_id ]->short_desc,
+						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),
+						'meta'   => array( 'title' => WCJ()->modules[ $link_id ]->desc ),
+						'nodes'  => array(
+							'settings' => array(
+								'title'  => __( 'Settings', 'woocommerce-jetpack' ),
+								'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),
+							),
+							'docs' => array(
+								'title'  => __( 'Documentation', 'woocommerce-jetpack' ),
+								'href'   => WCJ()->modules[ $link_id ]->link . '?utm_source=module_documentation&utm_medium=admin_bar_link&utm_campaign=booster_documentation',
+								'meta'   => array( 'target' => '_blank' ),
+							),
+						),
+					);
+					if ( WCJ()->modules[ $link_id ]->is_enabled() ) {
+						$active_modules[ $link_id ] = array(
+							'title'  => WCJ()->modules[ $link_id ]->short_desc,
+							'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),
+							'meta'   => array( 'title' => WCJ()->modules[ $link_id ]->desc ),
+						);
+					}
+				}
 			}
 		}
+		if ( ! empty( $active_modules ) ) {
+			usort( $active_modules, array( $this, 'usort_compare_by_title' ) );
+			$nodes['dashboard']['nodes']['active']['nodes'] = $active_modules;
+		}
 		return $nodes;
+	}
+
+	/**
+	 * usort_compare_by_title.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function usort_compare_by_title( $a, $b ) {
+		if ( $a['title'] == $b['title'] ) {
+			return 0;
+		}
+		return ( $a['title'] < $b['title'] ) ? -1 : 1;
 	}
 
 	/**
