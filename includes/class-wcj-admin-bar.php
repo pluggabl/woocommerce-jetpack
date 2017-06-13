@@ -19,6 +19,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    reload page after enabling the module
+	 * @todo    enable/disable WC/Booster menus
 	 */
 	function __construct() {
 
@@ -30,8 +31,22 @@ class WCJ_Admin_Bar extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			add_action( 'admin_bar_menu', array( $this, 'add_woocommerce_admin_bar' ), PHP_INT_MAX );
+			add_action( 'wp_head',        array( $this, 'add_woocommerce_admin_bar_icon_style' ) );
 			add_action( 'admin_head',     array( $this, 'add_woocommerce_admin_bar_icon_style' ) );
+			add_action( 'admin_bar_menu', array( $this, 'add_booster_admin_bar' ), PHP_INT_MAX );
+			add_action( 'wp_head',        array( $this, 'add_booster_admin_bar_icon_style' ) );
+			add_action( 'admin_head',     array( $this, 'add_booster_admin_bar_icon_style' ) );
 		}
+	}
+
+	/**
+	 * add_booster_admin_bar_icon_style.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function add_booster_admin_bar_icon_style() {
+		echo '<style type="text/css"> #wpadminbar #wp-admin-bar-booster .ab-icon:before { content: "\f339"; top: 3px; } </style>';
 	}
 
 	/**
@@ -41,7 +56,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 * @since   2.8.3
 	 */
 	function add_woocommerce_admin_bar_icon_style() {
-		echo '<style type="text/css"> #wpadminbar #wp-admin-bar-wcj-wc .ab-icon:before { font-family: WooCommerce !important; content: \'\e03d\'; top: 1px; } </style>';
+		echo '<style type="text/css"> #wpadminbar #wp-admin-bar-wcj-wc .ab-icon:before { content: "\f174"; top: 3px; } </style>';
 	}
 
 	/**
@@ -113,13 +128,44 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	}
 
 	/**
+	 * add_booster_admin_bar.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    list all Booster tools
+	 */
+	function add_booster_admin_bar( $wp_admin_bar ) {
+		$nodes = array(
+			'booster' => array(
+				'title'  => '<span class="ab-icon"></span>' . __( 'Booster', 'woocommerce-jetpack' ),
+				'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack' ),
+				'meta'   => array(
+					'title'  => __( 'Booster - Settings', 'woocommerce-jetpack' ),
+				),
+				'nodes'  => array(
+					'settings' => array(
+						'title'  => __( 'Settings', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack' ),
+						'nodes'  => $this->get_nodes_booster_modules(),
+					),
+					'tools' => array(
+						'title'  => __( 'Tools', 'woocommerce-jetpack' ),
+						'href'   => admin_url( 'admin.php?page=wcj-tools' ),
+					),
+				),
+			),
+		);
+		$this->add_woocommerce_admin_bar_nodes( $wp_admin_bar, $nodes, false );
+	}
+
+	/**
 	 * add_woocommerce_admin_bar.
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    finish standard WC nodes
 	 * @todo    custom user nodes
-	 * @todo    list all Booster tools
+	 * @todo    (maybe) optional selections
 	 */
 	function add_woocommerce_admin_bar( $wp_admin_bar ) {
 		$nodes = array(
@@ -157,24 +203,6 @@ class WCJ_Admin_Bar extends WCJ_Module {
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&range=7day' ),
 									),
 								),
-							),
-						),
-					),
-					'booster' => array(
-						'title'  => __( 'Booster', 'woocommerce-jetpack' ),
-						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack' ),
-						'meta'   => array(
-							'title'  => __( 'Booster - Settings', 'woocommerce-jetpack' ),
-						),
-						'nodes'  => array(
-							'settings' => array(
-								'title'  => __( 'Settings', 'woocommerce-jetpack' ),
-								'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack' ),
-								'nodes'  => $this->get_nodes_booster_modules(),
-							),
-							'tools' => array(
-								'title'  => __( 'Tools', 'woocommerce-jetpack' ),
-								'href'   => admin_url( 'admin.php?page=wcj-tools' ),
 							),
 						),
 					),
