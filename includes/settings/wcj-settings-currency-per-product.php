@@ -62,14 +62,14 @@ $settings = array(
 		'id'       => 'wcj_currency_per_product_additional_options',
 	),
 	array(
-		'title'    => __( 'Currency per Users', 'woocommerce-jetpack' ),
+		'title'    => __( 'Currency per Product Authors', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_per_product_by_users_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Currency per User Roles', 'woocommerce-jetpack' ),
+		'title'    => __( 'Currency per Product Authors User Roles', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_per_product_by_user_roles_enabled',
 		'default'  => 'no',
@@ -181,7 +181,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 	if ( 'yes' === get_option( 'wcj_currency_per_product_by_users_enabled', 'no' ) ) {
 		$settings = array_merge( $settings, array(
 			array(
-				'desc'     => __( 'Users', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Product Authors', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_currency_per_product_users_' . $i,
 				'default'  => '',
 				'type'     => 'multiselect',
@@ -193,7 +193,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 	if ( 'yes' === get_option( 'wcj_currency_per_product_by_user_roles_enabled', 'no' ) ) {
 		$settings = array_merge( $settings, array(
 			array(
-				'desc'     => __( 'User Roles', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Product Authors User Roles', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_currency_per_product_user_roles_' . $i,
 				'default'  => '',
 				'type'     => 'multiselect',
