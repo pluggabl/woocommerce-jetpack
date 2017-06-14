@@ -606,6 +606,12 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					case 'product_meta':
 						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) || ! isset( $column_param ) || '' == $column_param ) ?
 							'' : $the_product->get_meta( $column_param );
+					case 'product_post_meta':
+						$cell_data = ( true === $item['is_custom'] || ! isset( $column_param ) || '' == $column_param ) ?
+							'' : get_post_meta( $item['product_id'], $column_param, true );
+					case 'product_purchase_note':
+						$cell_data = ( true === $item['is_custom'] || ! is_object( $the_product ) ) ?
+							'' : $the_product->get_purchase_note();
 						break;
 					default:
 						$cell_data = ''; // $column;
