@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $currency_from  = get_woocommerce_currency();
 $all_currencies = wcj_get_currencies_names_and_symbols();
-if ( isset( $all_currencies[ $currency_from ] ) ) {
+/* if ( isset( $all_currencies[ $currency_from ] ) ) {
 	unset( $all_currencies[ $currency_from ] );
-}
+} */
 $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),

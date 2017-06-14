@@ -179,6 +179,7 @@ $~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per User Role
 $~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.
 $~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
+~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.
 $~!D* Dev - PRODUCTS - Cost of Goods - "Admin Products List Custom Columns" - Section added.
