@@ -5,7 +5,6 @@
  * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    (maybe) change "Currency per Users" option position
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -57,6 +56,44 @@ $settings = array(
 		'id'       => 'wcj_currency_per_product_cart_options',
 	),
 	array(
+		'title'    => __( 'Additional Options', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Save module\'s settings after changing this options to see new settings fields.', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_currency_per_product_additional_options',
+	),
+	array(
+		'title'    => __( 'Currency per Users', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_per_product_by_users_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Currency per User Roles', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_per_product_by_user_roles_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Currency per Product Categories', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_per_product_by_product_cats_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Currency per Product Tags', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_per_product_by_product_tags_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_currency_per_product_additional_options',
+	),
+	array(
 		'title'    => __( 'Exchange Rates Updates Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_currency_per_product_exchange_rate_update_options',
@@ -96,38 +133,6 @@ $settings = array(
 			is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
 			array( 'step' => '1', 'min'  => '1', )
 		),
-	),
-	array(
-		'title'    => __( 'Currency per Users', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Save module\'s settings after changing this option to see new settings fields.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_currency_per_product_by_users_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Currency per User Roles', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Save module\'s settings after changing this option to see new settings fields.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_currency_per_product_by_user_roles_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Currency per Product Categories', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Save module\'s settings after changing this option to see new settings fields.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_currency_per_product_by_product_cats_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Currency per Product Tags', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Save module\'s settings after changing this option to see new settings fields.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_currency_per_product_by_product_tags_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
 	),
 );
 if ( 'yes' === get_option( 'wcj_currency_per_product_by_users_enabled', 'no' ) ) {
