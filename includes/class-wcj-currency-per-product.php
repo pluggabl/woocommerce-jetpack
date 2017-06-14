@@ -128,16 +128,56 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	 * @since   2.8.3
 	 */
 	function get_product_currency( $product_id ) {
-		if ( 'yes' === get_option( 'wcj_currency_per_product_by_user_enabled', 'no' ) ) {
-			$product_author_id = get_post_field( 'post_author', $product_id );
+		// By users or user roles
+		$do_check_by_users        = ( 'yes' === get_option( 'wcj_currency_per_product_by_users_enabled', 'no' ) );
+		$do_check_by_user_roles   = ( 'yes' === get_option( 'wcj_currency_per_product_by_user_roles_enabled', 'no' ) );
+		$do_check_by_product_cats = ( 'yes' === get_option( 'wcj_currency_per_product_by_product_cats_enabled', 'no' ) );
+		$do_check_by_product_tags = ( 'yes' === get_option( 'wcj_currency_per_product_by_product_tags_enabled', 'no' ) );
+		if ( $do_check_by_users || $do_check_by_user_roles || $do_check_by_product_cats || $do_check_by_product_tags ) {
+			if ( $do_check_by_users || $do_check_by_user_roles ) {
+				$product_author_id = get_post_field( 'post_author', $product_id );
+			}
+			if ( $do_check_by_product_cats ) {
+				$_product_cats = wcj_get_the_terms( $product_id, 'product_cat' );
+			}
+			if ( $do_check_by_product_tags ) {
+				$_product_tags = wcj_get_the_terms( $product_id, 'product_tag' );
+			}
 			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
-				$users = get_option( 'wcj_currency_per_product_users_' . $i, '' );
-				if ( ! empty( $users ) && in_array( $product_author_id, $users ) ) {
-					return get_option( 'wcj_currency_per_product_currency_' . $i );
+				if ( $do_check_by_users ) {
+					$users = get_option( 'wcj_currency_per_product_users_' . $i, '' );
+					if ( ! empty( $users ) && in_array( $product_author_id, $users ) ) {
+						return get_option( 'wcj_currency_per_product_currency_' . $i );
+					}
+				}
+				if ( $do_check_by_user_roles ) {
+					$user_roles = get_option( 'wcj_currency_per_product_user_roles_' . $i, '' );
+					if ( ! empty( $user_roles ) && wcj_is_user_role( $user_roles, $product_author_id ) ) {
+						return get_option( 'wcj_currency_per_product_currency_' . $i );
+					}
+				}
+				if ( $do_check_by_product_cats ) {
+					$product_cats = get_option( 'wcj_currency_per_product_product_cats_' . $i, '' );
+					if ( ! empty( $_product_cats ) && ! empty( $product_cats ) ) {
+						$_intersect = array_intersect( $_product_cats, $product_cats );
+						if ( ! empty( $_intersect ) ) {
+							return get_option( 'wcj_currency_per_product_currency_' . $i );
+						}
+					}
+				}
+				if ( $do_check_by_product_tags ) {
+					$product_tags = get_option( 'wcj_currency_per_product_product_tags_' . $i, '' );
+					if ( ! empty( $_product_tags ) && ! empty( $product_tags ) ) {
+						$_intersect = array_intersect( $_product_tags, $product_tags );
+						if ( ! empty( $_intersect ) ) {
+							return get_option( 'wcj_currency_per_product_currency_' . $i );
+						}
+					}
 				}
 			}
 		}
+		// By product meta
 		return get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true );
 	}
 

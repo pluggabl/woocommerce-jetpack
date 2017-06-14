@@ -876,6 +876,25 @@ if ( ! function_exists( 'wcj_product_has_terms' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_the_terms' ) ) {
+	/**
+	 * wcj_get_the_terms.
+	 *
+	 * @version 2.8.3
+	 * @version 2.8.3
+	 */
+	function wcj_get_the_terms( $product_id, $taxonomy ) {
+		$result = array();
+		$_terms = get_the_terms( $product_id, $taxonomy );
+		if ( ! empty( $_terms ) ) {
+			foreach( $_terms as $_term ) {
+				$result[] = $_term->term_id;
+			}
+		}
+		return $result;
+	}
+}
+
 if ( ! function_exists( 'wcj_get_terms' ) ) {
 	/**
 	 * wcj_get_terms.
