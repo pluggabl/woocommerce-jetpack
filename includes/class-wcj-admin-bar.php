@@ -69,7 +69,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 * @since   2.8.3
 	 */
 	function add_booster_admin_bar_icon_style() {
-		echo '<style type="text/css"> #wpadminbar #wp-admin-bar-booster .ab-icon:before { content: "\f339"; top: 3px; } </style>';
+		echo '<style type="text/css"> #wpadminbar #wp-admin-bar-booster .ab-icon:before { content: "\f185"; top: 3px; } </style>';
 	}
 
 	/**
