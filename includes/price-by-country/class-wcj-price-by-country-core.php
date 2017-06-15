@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -15,23 +15,25 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.7
+	 * @version 2.8.3
 	 */
 	function __construct() {
 		$this->customer_country_group_id = null;
 		if ( 'no' === get_option( 'wcj_price_by_country_for_bots_disabled', 'no' ) || ! wcj_is_bot() ) {
-			// `add_hooks()` moved to `init` hook, so in case we need to call `get_customer_country_by_ip()` `WC_Geolocation` class is ready
-			add_action( 'init', array( $this, 'add_hooks' ) );
+			$this->maybe_init();
+			$this->add_hooks();
+			// `maybe_init_customer_country_by_ip()` executed on `init` hook - in case we need to call `get_customer_country_by_ip()` `WC_Geolocation` class is ready
+			add_action( 'init', array( $this, 'maybe_init_customer_country_by_ip' ) );
 		}
 	}
 
 	/**
-	 * add_hooks.
+	 * maybe_init.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
+	 * @version 2.8.3
 	 */
-	function add_hooks() {
-
+	function maybe_init() {
 		if (
 			'by_user_selection'            === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ||
 			'by_ip_then_by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' )
@@ -42,12 +44,31 @@ class WCJ_Price_by_Country_Core {
 			if ( isset( $_REQUEST[ 'wcj-country' ] ) ) {
 				$_SESSION[ 'wcj-country' ] = $_REQUEST[ 'wcj-country' ];
 			}
-			if ( ! isset( $_SESSION[ 'wcj-country' ] ) && 'by_ip_then_by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
+		}
+	}
+
+	/**
+	 * maybe_init_customer_country_by_ip.
+	 *
+	 * @version 2.8.3
+	 * @version 2.8.3
+	 */
+	function maybe_init_customer_country_by_ip() {
+		if ( 'by_ip_then_by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
+			if ( ! isset( $_SESSION[ 'wcj-country' ] ) ) {
 				if ( null != ( $country = $this->get_customer_country_by_ip() ) ) {
 					$_SESSION[ 'wcj-country' ] = $country;
 				}
 			}
 		}
+	}
+
+	/**
+	 * add_hooks.
+	 *
+	 * @version 2.8.3
+	 */
+	function add_hooks() {
 
 		// Select with flags
 		if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {

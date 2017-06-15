@@ -181,6 +181,7 @@ $~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product T
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
 ~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
+~!	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Hooks are now added in constructor (instead of `init` hook) - this fixes the issue with wrong currency symbol in price filter widget.
 ~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.
 $~!D* Dev - PRODUCTS - Cost of Goods - "Admin Products List Custom Columns" - Section added.
 $~D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Local Redirect - "Per Product" option added.
