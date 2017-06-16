@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exchange Rates Crons
  *
- * @version 2.7.0
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -77,7 +77,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * On the scheduled action hook, run a function.
 	 *
-	 * @version 2.7.0
+	 * @version 2.8.3
 	 */
 	function update_the_exchange_rates( $interval ) {
 
@@ -137,6 +137,12 @@ class WCJ_Exchange_Rates_Crons {
 			}
 		}
 
+		// Additional currencies (via filter)
+		$additional_currencies = apply_filters( 'wcj_currency_exchange_rates_additional_currencies', array() );
+		foreach ( $additional_currencies as $additional_currency ) {
+			$currency_pairs = $this->get_currency_pair( $currency_pairs, $additional_currency, false );
+		}
+
 		// Currency Pairs - Final
 		$rate_offset_percent = get_option( 'wcj_currency_exchange_rates_offset_percent', 0 );
 		if ( 0 != $rate_offset_percent ) {
@@ -156,7 +162,9 @@ class WCJ_Exchange_Rates_Crons {
 				}
 				if ( $currency_from != $currency_to ) {
 					foreach ( $currency_pair['option_name'] as $option_name ) {
-						update_option( $option_name, $the_rate );
+						if ( false != $option_name ) {
+							update_option( $option_name, $the_rate );
+						}
 					}
 					$field_id = 'wcj_currency_exchange_rates_' . sanitize_title( $currency_from . $currency_to );
 					update_option( $field_id, $the_rate );

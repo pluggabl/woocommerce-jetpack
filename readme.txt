@@ -162,7 +162,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.3 - 15/06/2017
+= 2.8.3 - 16/06/2017
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `wc_reduce_stock_levels()`.
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" and `is_object` added.
 ~	* Fix - Functions - Invoicing - `wcj_get_invoice_date()` - Check for not empty invoice date added.
@@ -179,6 +179,7 @@ $~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product A
 $~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.
 $~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
+~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
 ~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Hooks are now added in constructor (instead of `init` hook) - this fixes the issue with wrong currency symbol in price filter widget.

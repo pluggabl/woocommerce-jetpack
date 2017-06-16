@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 2.8.0
+ * @version 2.8.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -82,6 +82,11 @@ $settings = array(
 	),
 );
 $currency_from = get_option( 'woocommerce_currency' );
+// Additional currencies (via filter)
+$additional_currencies = apply_filters( 'wcj_currency_exchange_rates_additional_currencies', array() );
+foreach ( $additional_currencies as $additional_currency ) {
+	$settings = $this->add_currency_pair_setting( $currency_from, $additional_currency, $settings );
+}
 if ( wcj_is_module_enabled( 'price_by_country' ) ) {
 	// Currency Pairs - Price by Country
 	if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_price_by_country_auto_exchange_rates', 'manual' ) ) ) {
