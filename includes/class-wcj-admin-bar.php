@@ -118,6 +118,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
+	 * @todo    (maybe) dashes instead of underscores
 	 * @todo    (maybe) dashboard > alphabetically - list all modules
 	 * @todo    (maybe) dashboard > by_category - list all modules
 	 */
@@ -302,7 +303,6 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 * @todo    (maybe) reports > taxes > taxes_by_code > add dates
 	 * @todo    (maybe) reports > taxes > taxes_by_date > add dates
 	 * @todo    (maybe) settings > add custom sections (i.e. Booster and other plugins)
-	 * @todo    (maybe) system-status > add sections
 	 * @todo    (maybe) extensions > add sections
 	 */
 	function add_woocommerce_admin_bar( $wp_admin_bar ) {
@@ -548,6 +548,20 @@ class WCJ_Admin_Bar extends WCJ_Module {
 					'system-status' => array(
 						'title'  => __( 'System status', 'woocommerce' ),
 						'href'   => admin_url( 'admin.php?page=wc-status' ),
+						'nodes'  => array(
+							'system-status' => array(
+								'title'  => __( 'System status', 'woocommerce' ),
+								'href'   => admin_url( 'admin.php?page=wc-status&tab=status' ),
+							),
+							'tools' => array(
+								'title'  => __( 'Tools', 'woocommerce' ),
+								'href'   => admin_url( 'admin.php?page=wc-status&tab=tools' ),
+							),
+							'logs' => array(
+								'title'  => __( 'Logs', 'woocommerce' ),
+								'href'   => admin_url( 'admin.php?page=wc-status&tab=logs' ),
+							),
+						),
 					),
 					'extensions' => array(
 						'title'  => __( 'Extensions', 'woocommerce' ),
