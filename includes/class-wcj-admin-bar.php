@@ -21,6 +21,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 * @todo    (maybe) custom user nodes
 	 * @todo    (maybe) optional nodes selection
 	 * @todo    (maybe) add WooCommerce versions (from / to) to nodes
+	 * @todo    (maybe) customizable icons
 	 * @todo    (maybe) separate "Booster Active Modules" admin bar menu
 	 * @todo    (maybe) separate "Booster Modules" admin bar menu
 	 * @todo    (maybe) separate "Booster Tools" admin bar menu
