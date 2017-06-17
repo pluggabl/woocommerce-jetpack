@@ -261,10 +261,10 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	function get_nodes_orders_reports() {
 		$nodes = array();
 		$reports = array(
-			'sales_by_date'     => __( 'Sales by date', 'woocommerce-jetpack' ),
-			'sales_by_product'  => __( 'Sales by product', 'woocommerce-jetpack' ),
-			'sales_by_category' => __( 'Sales by category', 'woocommerce-jetpack' ),
-			'coupon_usage'      => __( 'Coupons by date', 'woocommerce-jetpack' ),
+			'sales_by_date'     => __( 'Sales by date', 'woocommerce' ),
+			'sales_by_product'  => __( 'Sales by product', 'woocommerce' ),
+			'sales_by_category' => __( 'Sales by category', 'woocommerce' ),
+			'coupon_usage'      => __( 'Coupons by date', 'woocommerce' ),
 		);
 		foreach ( $reports as $report_id => $report_title ) {
 			$nodes[ $report_id ] = array(
@@ -272,19 +272,19 @@ class WCJ_Admin_Bar extends WCJ_Module {
 				'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id ),
 				'nodes'  => array(
 					'7day' => array(
-						'title'  => __( 'Last 7 days', 'woocommerce-jetpack' ),
+						'title'  => __( 'Last 7 days', 'woocommerce' ),
 						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=7day' ),
 					),
 					'month' => array(
-						'title'  => __( 'Month', 'woocommerce-jetpack' ),
+						'title'  => __( 'Month', 'woocommerce' ),
 						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=month' ),
 					),
 					'last-month' => array(
-						'title'  => __( 'Last month', 'woocommerce-jetpack' ),
+						'title'  => __( 'Last month', 'woocommerce' ),
 						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=last_month' ),
 					),
 					'year' => array(
-						'title'  => __( 'Year', 'woocommerce-jetpack' ),
+						'title'  => __( 'Year', 'woocommerce' ),
 						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=year' ),
 					),
 				),
@@ -298,7 +298,6 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    (maybe) use 'woocommerce' language domain (instead of 'woocommerce-jetpack')
 	 * @todo    (maybe) reports > customers > customers > add dates
 	 * @todo    (maybe) reports > taxes > taxes_by_code > add dates
 	 * @todo    (maybe) reports > taxes > taxes_by_date > add dates
@@ -309,81 +308,81 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	function add_woocommerce_admin_bar( $wp_admin_bar ) {
 		$nodes = array(
 			'wcj-wc' => array(
-				'title'  => '<span class="ab-icon"></span>' . __( 'WooCommerce', 'woocommerce-jetpack' ),
+				'title'  => '<span class="ab-icon"></span>' . __( 'WooCommerce', 'woocommerce' ),
 				'href'   => admin_url( 'admin.php?page=wc-settings' ),
 				'meta'   => array(
-					'title'  => __( 'WooCommerce - Settings', 'woocommerce-jetpack' ),
+					'title'  => __( 'WooCommerce settings', 'woocommerce' ),
 				),
 				'nodes'  => array(
 					'orders' => array(
-						'title'  => __( 'Orders', 'woocommerce-jetpack' ),
+						'title'  => __( 'Orders', 'woocommerce' ),
 						'href'   => admin_url( 'edit.php?post_type=shop_order' ),
 						'nodes'  => array(
 							'orders' => array(
-								'title'  => __( 'Orders', 'woocommerce-jetpack' ),
+								'title'  => __( 'Orders', 'woocommerce' ),
 								'href'   => admin_url( 'edit.php?post_type=shop_order' ),
 							),
 							'add-order' => array(
-								'title'  => __( 'Add order', 'woocommerce-jetpack' ),
+								'title'  => __( 'Add order', 'woocommerce' ),
 								'href'   => admin_url( 'post-new.php?post_type=shop_order' ),
 							),
 							'customers' => array(
-								'title'  => __( 'Customers', 'woocommerce-jetpack' ),
+								'title'  => __( 'Customers', 'woocommerce' ),
 								'href'   => admin_url( 'users.php?role=customer' ),
 							),
 						),
 					),
 					'reports' => array(
-						'title'  => __( 'Reports', 'woocommerce-jetpack' ),
+						'title'  => __( 'Reports', 'woocommerce' ),
 						'href'   => admin_url( 'admin.php?page=wc-reports' ),
 						'nodes'  => array(
 							'orders' => array(
-								'title'  => __( 'Orders', 'woocommerce-jetpack' ),
+								'title'  => __( 'Orders', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders' ),
 								'nodes'  => $this->get_nodes_orders_reports(),
 							),
 							'customers' => array(
-								'title'  => __( 'Customers', 'woocommerce-jetpack' ),
+								'title'  => __( 'Customers', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-reports&tab=customers' ),
 								'nodes'  => array(
 									'customers' => array(
-										'title'  => __( 'Customers vs. guests', 'woocommerce-jetpack' ),
+										'title'  => __( 'Customers vs. guests', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=customers&report=customers' ),
 									),
 									'customer-list' => array(
-										'title'  => __( 'Customer list', 'woocommerce-jetpack' ),
+										'title'  => __( 'Customer list', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=customers&report=customer_list' ),
 									),
 								),
 							),
 							'stock' => array(
-								'title'  => __( 'Stock', 'woocommerce-jetpack' ),
+								'title'  => __( 'Stock', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock' ),
 								'nodes'  => array(
 									'low-in-stock' => array(
-										'title'  => __( 'Low in stock', 'woocommerce-jetpack' ),
+										'title'  => __( 'Low in stock', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=low_in_stock' ),
 									),
 									'out-of-stock' => array(
-										'title'  => __( 'Out of stock', 'woocommerce-jetpack' ),
+										'title'  => __( 'Out of stock', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=out_of_stock' ),
 									),
 									'most-stocked' => array(
-										'title'  => __( 'Most stocked', 'woocommerce-jetpack' ),
+										'title'  => __( 'Most stocked', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=most_stocked' ),
 									),
 								),
 							),
 							'taxes' => array(
-								'title'  => __( 'Taxes', 'woocommerce-jetpack' ),
+								'title'  => __( 'Taxes', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-reports&tab=taxes' ),
 								'nodes'  => array(
 									'taxes-by-code' => array(
-										'title'  => __( 'Taxes by code', 'woocommerce-jetpack' ),
+										'title'  => __( 'Taxes by code', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=taxes&report=taxes_by_code' ),
 									),
 									'taxes-by-date' => array(
-										'title'  => __( 'Taxes by date', 'woocommerce-jetpack' ),
+										'title'  => __( 'Taxes by date', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=taxes&report=taxes_by_date' ),
 									),
 								),
@@ -391,155 +390,155 @@ class WCJ_Admin_Bar extends WCJ_Module {
 						),
 					),
 					'products' => array(
-						'title'  => __( 'Products', 'woocommerce-jetpack' ),
+						'title'  => __( 'Products', 'woocommerce' ),
 						'href'   => admin_url( 'edit.php?post_type=product' ),
 						'nodes'  => array(
 							'products' => array(
-								'title'  => __( 'Products', 'woocommerce-jetpack' ),
+								'title'  => __( 'Products', 'woocommerce' ),
 								'href'   => admin_url( 'edit.php?post_type=product' ),
 							),
 							'add-product' => array(
-								'title'  => __( 'Add product', 'woocommerce-jetpack' ),
+								'title'  => __( 'Add product', 'woocommerce' ),
 								'href'   => admin_url( 'post-new.php?post_type=product' ),
 							),
 							'categories' => array(
-								'title'  => __( 'Categories', 'woocommerce-jetpack' ),
+								'title'  => __( 'Categories', 'woocommerce' ),
 								'href'   => admin_url( 'edit-tags.php?taxonomy=product_cat&post_type=product' ),
 							),
 							'tags' => array(
-								'title'  => __( 'Tags', 'woocommerce-jetpack' ),
+								'title'  => __( 'Tags', 'woocommerce' ),
 								'href'   => admin_url( 'edit-tags.php?taxonomy=product_tag&post_type=product' ),
 							),
 							'attributes' => array(
-								'title'  => __( 'Attributes', 'woocommerce-jetpack' ),
+								'title'  => __( 'Attributes', 'woocommerce' ),
 								'href'   => admin_url( 'edit.php?post_type=product&page=product_attributes' ),
 							),
 						),
 					),
 					'coupons' => array(
-						'title'  => __( 'Coupons', 'woocommerce-jetpack' ),
+						'title'  => __( 'Coupons', 'woocommerce' ),
 						'href'   => admin_url( 'edit.php?post_type=shop_coupon' ),
 						'nodes'  => array(
 							'coupons' => array(
-								'title'  => __( 'Coupons', 'woocommerce-jetpack' ),
+								'title'  => __( 'Coupons', 'woocommerce' ),
 								'href'   => admin_url( 'edit.php?post_type=shop_coupon' ),
 							),
 							'add-coupon' => array(
-								'title'  => __( 'Add coupon', 'woocommerce-jetpack' ),
+								'title'  => __( 'Add coupon', 'woocommerce' ),
 								'href'   => admin_url( 'post-new.php?post_type=shop_coupon' ),
 							),
 						),
 					),
 					'settings' => array(
-						'title'  => __( 'Settings', 'woocommerce-jetpack' ),
+						'title'  => __( 'Settings', 'woocommerce' ),
 						'href'   => admin_url( 'admin.php?page=wc-settings' ),
 						'nodes'  => array(
 							'general' => array(
-								'title'  => __( 'General', 'woocommerce-jetpack' ),
+								'title'  => __( 'General', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-settings&tab=general' ),
 							),
 							'products' => array(
-								'title'  => __( 'Products', 'woocommerce-jetpack' ),
+								'title'  => __( 'Products', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-settings&tab=products' ),
 								'nodes'  => array(
 									'general' => array(
-										'title'  => __( 'General', 'woocommerce-jetpack' ),
+										'title'  => __( 'General', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=products&section' ),
 									),
 									'display' => array(
-										'title'  => __( 'Display', 'woocommerce-jetpack' ),
+										'title'  => __( 'Display', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=products&section=display' ),
 									),
 									'inventory' => array(
-										'title'  => __( 'Inventory', 'woocommerce-jetpack' ),
+										'title'  => __( 'Inventory', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=products&section=inventory' ),
 									),
 									'downloadable' => array(
-										'title'  => __( 'Downloadable products', 'woocommerce-jetpack' ),
+										'title'  => __( 'Downloadable products', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=products&section=downloadable' ),
 									),
 								),
 							),
 							'tax' => array(
-								'title'  => __( 'Tax', 'woocommerce-jetpack' ),
+								'title'  => __( 'Tax', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-settings&tab=tax' ),
 								'nodes'  => array(
 									'tax-options' => array(
-										'title'  => __( 'Tax options', 'woocommerce-jetpack' ),
+										'title'  => __( 'Tax options', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=tax&section' ),
 									),
 									'standard-rates' => array(
-										'title'  => __( 'Standard rates', 'woocommerce-jetpack' ),
+										'title'  => __( 'Standard rates', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=tax&section=standard' ),
 									),
 								),
 							),
 							'shipping' => array(
-								'title'  => __( 'Shipping', 'woocommerce-jetpack' ),
+								'title'  => __( 'Shipping', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-settings&tab=shipping' ),
 								'nodes'  => array(
 									'shipping-zones' => array(
-										'title'  => __( 'Shipping zones', 'woocommerce-jetpack' ),
+										'title'  => __( 'Shipping zones', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=shipping&section' ),
 									),
 									'shipping-options' => array(
-										'title'  => __( 'Shipping options', 'woocommerce-jetpack' ),
+										'title'  => __( 'Shipping options', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=shipping&section=options' ),
 									),
 									'shipping-classes' => array(
-										'title'  => __( 'Shipping classes', 'woocommerce-jetpack' ),
+										'title'  => __( 'Shipping classes', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=shipping&section=classes' ),
 									),
 								),
 							),
 							'checkout' => array(
-								'title'  => __( 'Checkout', 'woocommerce-jetpack' ),
+								'title'  => __( 'Checkout', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-settings&tab=checkout' ),
 								'nodes'  => array(
 									'checkout-options' => array(
-										'title'  => __( 'Checkout options', 'woocommerce-jetpack' ),
+										'title'  => __( 'Checkout options', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=checkout&section' ),
 									),
 									'bacs' => array(
-										'title'  => __( 'BACS', 'woocommerce-jetpack' ),
+										'title'  => __( 'BACS', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=checkout&section=bacs' ),
 									),
 									'cheque' => array(
-										'title'  => __( 'Check payments', 'woocommerce-jetpack' ),
+										'title'  => __( 'Check payments', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=checkout&section=cheque' ),
 									),
 									'cod' => array(
-										'title'  => __( 'Cash on delivery', 'woocommerce-jetpack' ),
+										'title'  => __( 'Cash on delivery', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=checkout&section=cod' ),
 									),
 									'paypal' => array(
-										'title'  => __( 'PayPal', 'woocommerce-jetpack' ),
+										'title'  => __( 'PayPal', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=checkout&section=paypal' ),
 									),
 								),
 							),
 							'account' => array(
-								'title'  => __( 'Account', 'woocommerce-jetpack' ),
+								'title'  => __( 'Account', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-settings&tab=account' ),
 							),
 							'email' => array(
-								'title'  => __( 'Emails', 'woocommerce-jetpack' ),
+								'title'  => __( 'Emails', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-settings&tab=email' ),
 							),
 							'api' => array(
-								'title'  => __( 'API', 'woocommerce-jetpack' ),
+								'title'  => __( 'API', 'woocommerce' ),
 								'href'   => admin_url( 'admin.php?page=wc-settings&tab=api' ),
 								'nodes'  => array(
 									'settings' => array(
-										'title'  => __( 'Settings', 'woocommerce-jetpack' ),
+										'title'  => __( 'Settings', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=api&section' ),
 									),
 									'keys' => array(
-										'title'  => __( 'Keys/Apps', 'woocommerce-jetpack' ),
+										'title'  => __( 'Keys/Apps', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=api&section=keys' ),
 									),
 									'webhooks' => array(
-										'title'  => __( 'Webhooks', 'woocommerce-jetpack' ),
+										'title'  => __( 'Webhooks', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-settings&tab=api&section=webhooks' ),
 									),
 								),
@@ -547,11 +546,11 @@ class WCJ_Admin_Bar extends WCJ_Module {
 						),
 					),
 					'system-status' => array(
-						'title'  => __( 'System status', 'woocommerce-jetpack' ),
+						'title'  => __( 'System status', 'woocommerce' ),
 						'href'   => admin_url( 'admin.php?page=wc-status' ),
 					),
 					'extensions' => array(
-						'title'  => __( 'Extensions', 'woocommerce-jetpack' ),
+						'title'  => __( 'Extensions', 'woocommerce' ),
 						'href'   => admin_url( 'admin.php?page=wc-addons' ),
 					),
 				),
