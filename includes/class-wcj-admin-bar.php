@@ -279,7 +279,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 						'title'  => __( 'Month', 'woocommerce-jetpack' ),
 						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=month' ),
 					),
-					'last_month' => array(
+					'last-month' => array(
 						'title'  => __( 'Last month', 'woocommerce-jetpack' ),
 						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=last_month' ),
 					),
@@ -305,7 +305,6 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 * @todo    (maybe) settings > add custom sections (i.e. Booster and other plugins)
 	 * @todo    (maybe) system-status > add sections
 	 * @todo    (maybe) extensions > add sections
-	 * @todo    (maybe) dashes or underscores?
 	 */
 	function add_woocommerce_admin_bar( $wp_admin_bar ) {
 		$nodes = array(
@@ -351,7 +350,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 										'title'  => __( 'Customers vs. guests', 'woocommerce-jetpack' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=customers&report=customers' ),
 									),
-									'customer_list' => array(
+									'customer-list' => array(
 										'title'  => __( 'Customer list', 'woocommerce-jetpack' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=customers&report=customer_list' ),
 									),
@@ -361,15 +360,15 @@ class WCJ_Admin_Bar extends WCJ_Module {
 								'title'  => __( 'Stock', 'woocommerce-jetpack' ),
 								'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock' ),
 								'nodes'  => array(
-									'low_in_stock' => array(
+									'low-in-stock' => array(
 										'title'  => __( 'Low in stock', 'woocommerce-jetpack' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=low_in_stock' ),
 									),
-									'out_of_stock' => array(
+									'out-of-stock' => array(
 										'title'  => __( 'Out of stock', 'woocommerce-jetpack' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=out_of_stock' ),
 									),
-									'most_stocked' => array(
+									'most-stocked' => array(
 										'title'  => __( 'Most stocked', 'woocommerce-jetpack' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=most_stocked' ),
 									),
@@ -379,11 +378,11 @@ class WCJ_Admin_Bar extends WCJ_Module {
 								'title'  => __( 'Taxes', 'woocommerce-jetpack' ),
 								'href'   => admin_url( 'admin.php?page=wc-reports&tab=taxes' ),
 								'nodes'  => array(
-									'taxes_by_code' => array(
+									'taxes-by-code' => array(
 										'title'  => __( 'Taxes by code', 'woocommerce-jetpack' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=taxes&report=taxes_by_code' ),
 									),
-									'taxes_by_date' => array(
+									'taxes-by-date' => array(
 										'title'  => __( 'Taxes by date', 'woocommerce-jetpack' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=taxes&report=taxes_by_date' ),
 									),
@@ -399,7 +398,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 								'title'  => __( 'Products', 'woocommerce-jetpack' ),
 								'href'   => admin_url( 'edit.php?post_type=product' ),
 							),
-							'add_product' => array(
+							'add-product' => array(
 								'title'  => __( 'Add product', 'woocommerce-jetpack' ),
 								'href'   => admin_url( 'post-new.php?post_type=product' ),
 							),
@@ -425,7 +424,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 								'title'  => __( 'Coupons', 'woocommerce-jetpack' ),
 								'href'   => admin_url( 'edit.php?post_type=shop_coupon' ),
 							),
-							'add_coupon' => array(
+							'add-coupon' => array(
 								'title'  => __( 'Add coupon', 'woocommerce-jetpack' ),
 								'href'   => admin_url( 'post-new.php?post_type=shop_coupon' ),
 							),
