@@ -25,6 +25,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Global Discount* - Add global discount to all WooCommerce products.
 * *Multicurrency (Currency Switcher)* - Add multiple currencies (currency switcher) to WooCommerce.
 * *Multicurrency Product Base Price* - Enter prices for WooCommerce products in different currencies.
+* *Offer Your Price* - Let your customers to suggest their price for products in WooCommerce.
 * *Price Formats* - Set different WooCommerce price formats for different currencies.
 * *Price by User Role* - Display WooCommerce products prices by user roles.
 * *Prices and Currencies by Country* - Change WooCommerce product price and currency automatically by customer's country.
@@ -162,7 +163,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.8.3 - 17/06/2017
+= 2.8.3 - 19/06/2017
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `wc_reduce_stock_levels()`.
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" and `is_object` added.
 ~	* Fix - Functions - Invoicing - `wcj_get_invoice_date()` - Check for not empty invoice date added.
@@ -181,6 +182,7 @@ $~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product T
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
 ~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
+$-!D* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Hooks are now added in constructor (instead of `init` hook) - this fixes the issue with wrong currency symbol in price filter widget.
 ~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.

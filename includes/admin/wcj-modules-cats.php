@@ -35,6 +35,7 @@ return array(
 			'bulk_price_converter',
 			'wholesale_price',
 			'product_open_pricing',
+			'offer_price',
 			'price_by_user_role',
 			'product_price_by_formula',
 			'global_discount',
