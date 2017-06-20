@@ -64,6 +64,7 @@ return array(
 		'type'     => 'custom_textarea',
 		'default'  => sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '%product_title%' ) . '<br>' . PHP_EOL .
 			sprintf( __( 'Offered price: %s', 'woocommerce-jetpack' ), '%offered_price%' ) . '<br>' . PHP_EOL .
+			sprintf( __( 'From: %s %s', 'woocommerce-jetpack' ),       '%customer_name%', '%customer_email%' ) . '<br>' . PHP_EOL .
 			sprintf( __( 'Message: %s', 'woocommerce-jetpack' ),       '%customer_message%' ),
 		'css'      => 'width:99%;height:200px;',
 	),

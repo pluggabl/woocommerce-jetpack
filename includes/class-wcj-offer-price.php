@@ -44,7 +44,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    (maybe) validate wcj meta box
+	 * @todo    validate wcj meta box
 	 * @todo    (maybe) add successful deletion notice
 	 */
 	function delete_offer_price_product_history( $post_id, $post ) {
@@ -76,7 +76,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    more info (e.g. average offer price)
+	 * @todo    (maybe) more info (e.g. average offer price)
 	 */
 	function create_offer_price_history_meta_box() {
 		if ( '' == ( $price_offers = get_post_meta( get_the_ID(), '_' . 'wcj_price_offers', true ) ) ) {
@@ -118,8 +118,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @see     https://www.w3schools.com/howto/howto_css_modals.asp
 	 */
 	function enqueue_scripts() {
-		wp_enqueue_style(   'wcj-offer-price',     wcj_plugin_url() . '/includes/css/wcj-offer-price.css', array(),           WCJ()->version );
-		wp_enqueue_script(  'wcj-offer-price-js',  wcj_plugin_url() . '/includes/js/wcj-offer-price.js',   array( 'jquery' ), WCJ()->version, true );
+		wp_enqueue_style(   'wcj-offer-price',    wcj_plugin_url() . '/includes/css/wcj-offer-price.css', array(),           WCJ()->version );
+		wp_enqueue_script(  'wcj-offer-price-js', wcj_plugin_url() . '/includes/js/wcj-offer-price.js',   array( 'jquery' ), WCJ()->version, true );
 	}
 
 	/**
@@ -162,7 +162,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 							'<input type="email" required id="wcj-offer-price-customer-email" name="wcj-offer-price-customer-email">' . '</p>' .
 						'<p>' . '<label for="wcj-offer-price-message">' . __( 'Your message', 'woocommerce-jetpack' ) . '</label>' . '<br>' .
 							'<textarea id="wcj-offer-price-message" name="wcj-offer-price-message"></textarea>' . '</p>' .
-						'<p>' . '<input type="submit" id="wcj-offer-price-submit" name="wcj-offer-price-submit">' . '</p>' .
+						'<p>' . '<input type="submit" id="wcj-offer-price-submit" name="wcj-offer-price-submit" value="' . __( 'Send', 'woocommerce-jetpack' ) . '">' . '</p>' .
 						'<input type="hidden" name="wcj-offer-price-product-id" value="' . get_the_ID() . '">' .
 					'</form>' .
 				'</div>' .
@@ -180,38 +180,15 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @since   2.8.3
 	 * @todo    check if mail has really been sent
 	 * @todo    "send a copy to me (i.e. customer)" checkbox
-	 * @todo    sanitize $_POST
-	 * @todo    multicurrency
+	 * @todo    (maybe) sanitize $_POST
+	 * @todo    (maybe) multicurrency
 	 * @todo    ! "From" header
-	 * @todo    email_template - customer name and email
 	 */
 	function offer_price() {
 		if ( isset( $_POST['wcj-offer-price-submit'] ) ) {
-			$_product = wc_get_product( $_POST['wcj-offer-price-product-id'] );
-			$email_template = get_option( 'wcj_offer_price_email_template',
-				sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '%product_title%' ) . '<br>' . PHP_EOL .
-				sprintf( __( 'Offered price: %s', 'woocommerce-jetpack' ), '%offered_price%' ) . '<br>' . PHP_EOL .
-				sprintf( __( 'Message: %s', 'woocommerce-jetpack' ),       '%customer_message%' )
-			);
-			$replaced_values = array(
-				'%product_title%'    => $_product->get_title(),
-				'%offered_price%'    => $_POST['wcj-offer-price-price'],
-				'%customer_message%' => $_POST['wcj-offer-price-message'],
-			);
-			$email_content = str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), $email_template );
-			if ( '' == ( $email_address = get_option( 'wcj_offer_price_email_address', '' ) ) ) {
-				$email_address = get_option( 'admin_email' );
-			}
-			$email_subject = get_option( 'wcj_offer_price_email_subject', __( 'Price Offer', 'woocommerce-jetpack' ) );
-			$email_headers = 'Content-Type: text/html' . "\r\n" .
-				'From: ' . $_POST['wcj-offer-price-customer-name'] . ' <' . $_POST['wcj-offer-price-customer-email'] . '>' . "\r\n" .
-				'Reply-To: ' . $_POST['wcj-offer-price-customer-email'] . "\r\n";
-			wc_mail( $email_address, $email_subject, $email_content, $email_headers );
-			wc_add_notice( get_option( 'wcj_offer_price_customer_notice', __( 'Your price offer has been sent.', 'woocommerce-jetpack' ) ), 'notice' );
-			if ( '' == ( $price_offers = get_post_meta( $_POST['wcj-offer-price-product-id'], '_' . 'wcj_price_offers', true ) ) ) {
-				$price_offers = array();
-			}
-			$price_offers[] = array(
+			$_product_id = $_POST['wcj-offer-price-product-id'];
+			$_product    = wc_get_product( $_product_id );
+			$price_offer =  array(
 				'offer_timestamp'  => current_time( 'timestamp' ),
 				'product_title'    => $_product->get_title(),
 				'offered_price'    => $_POST['wcj-offer-price-price'],
@@ -219,7 +196,37 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'customer_name'    => $_POST['wcj-offer-price-customer-name'],
 				'customer_email'   => $_POST['wcj-offer-price-customer-email'],
 			);
-			update_post_meta( $_POST['wcj-offer-price-product-id'], '_' . 'wcj_price_offers', $price_offers );
+			// Email
+			$email_template = get_option( 'wcj_offer_price_email_template',
+				sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '%product_title%' ) . '<br>' . PHP_EOL .
+				sprintf( __( 'Offered price: %s', 'woocommerce-jetpack' ), '%offered_price%' ) . '<br>' . PHP_EOL .
+				sprintf( __( 'From: %s %s', 'woocommerce-jetpack' ),       '%customer_name%', '%customer_email%' ) . '<br>' . PHP_EOL .
+				sprintf( __( 'Message: %s', 'woocommerce-jetpack' ),       '%customer_message%' )
+			);
+			$replaced_values = array(
+				'%product_title%'    => $price_offer['product_title'],
+				'%offered_price%'    => $price_offer['offered_price'],
+				'%customer_message%' => $price_offer['customer_message'],
+				'%customer_name%'    => $price_offer['customer_name'],
+				'%customer_email%'   => $price_offer['customer_email'],
+			);
+			$email_content = str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), $email_template );
+			if ( '' == ( $email_address = get_option( 'wcj_offer_price_email_address', '' ) ) ) {
+				$email_address = get_option( 'admin_email' );
+			}
+			$email_subject = get_option( 'wcj_offer_price_email_subject', __( 'Price Offer', 'woocommerce-jetpack' ) );
+			$email_headers = 'Content-Type: text/html' . "\r\n" .
+				'From: ' . $price_offer['customer_name'] . ' <' . $price_offer['customer_email'] . '>' . "\r\n" .
+				'Reply-To: ' . $price_offer['customer_email'] . "\r\n";
+			wc_mail( $email_address, $email_subject, $email_content, $email_headers );
+			// Notice
+			wc_add_notice( get_option( 'wcj_offer_price_customer_notice', __( 'Your price offer has been sent.', 'woocommerce-jetpack' ) ), 'notice' );
+			// Product meta (Offer Price History)
+			if ( '' == ( $price_offers = get_post_meta( $_product_id, '_' . 'wcj_price_offers', true ) ) ) {
+				$price_offers = array();
+			}
+			$price_offers[] = $price_offer;
+			update_post_meta( $_product_id, '_' . 'wcj_price_offers', $price_offers );
 		}
 	}
 
