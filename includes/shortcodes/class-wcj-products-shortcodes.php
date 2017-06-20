@@ -15,7 +15,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.1
+	 * @version 2.8.3
 	 */
 	public function __construct() {
 
@@ -102,6 +102,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'table_format'          => 'horizontal',
 			'avatar_size'           => 96,
 			'count_variations'      => 'no',
+			'variations'            => 'no',
 		);
 
 		parent::__construct();
@@ -910,12 +911,41 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * get_variations_table.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function get_variations_table( $param ) {
+		$return_html = '';
+		$return_html .= '<table>';
+		foreach ( $this->the_product->get_available_variations() as $variation ) {
+			$variation_product = wc_get_product( $variation['variation_id'] );
+			$value = '';
+			switch ( $param ) {
+				case 'weight':
+					$value = ( $variation_product->has_weight() ? $variation_product->get_weight() : '' );
+					break;
+			}
+			$return_html .= '<tr>';
+			$return_html .= '<td>' . get_the_title( $variation['variation_id'] ) . '</td>';
+			$return_html .= '<td>' . $value . '</td>';
+			$return_html .= '</tr>';
+		}
+		$return_html .= '</table>';
+		return $return_html;
+	}
+
+	/**
 	 * Get the product's weight.
 	 *
 	 * @return  string
-	 * @version 2.4.0
+	 * @version 2.8.3
 	 */
 	function wcj_product_weight( $atts ) {
+		if ( $this->the_product->is_type( 'variable' ) && 'yes' === $atts['variations'] ) {
+			return $this->get_variations_table( 'weight' );
+		}
 		return ( $this->the_product->has_weight() ) ? $this->the_product->get_weight() : '';
 	}
 
