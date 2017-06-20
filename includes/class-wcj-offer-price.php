@@ -147,23 +147,24 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    ~ price - currency
 	 * @todo    price - default, step, min and max (global and per product)
 	 * @todo    (maybe) optional, additional and custom form fields
 	 * @todo    archives
-	 * @todo    ~ fields labels
+	 * @todo    customizable fields labels
 	 * @todo    form template
 	 * @todo    ~ empty footer / header
 	 * @todo    wcj-close etc.
 	 * @todo    do_shortcode
-	 * @todo    more info if logged user
+	 * @todo    more info if logged user (e.g. user id)
 	 * @todo    logged user - check `nickname` and `billing_email`
-	 * @todo    required asterix
+	 * @todo    ~ required asterix
 	 */
 	function add_offer_price_button() {
+		// Check if enabled for current product
 		if ( ! $this->is_offer_price_enabled_for_current_product() ) {
 			return;
 		}
+		// Prepare logged user data
 		$customer_name  = '';
 		$customer_email = '';
 		if ( is_user_logged_in() ) {
@@ -175,48 +176,68 @@ class WCJ_Offer_Price extends WCJ_Module {
 				$customer_email = $meta;
 			}
 		}
-		echo '<p>' .
+		// Initial button
+		$make_offer_button = '<p>' .
 			'<button type="submit" name="wcj-offer-price-button" id="wcj-offer-price-button" value="' . get_the_ID() . '" class="button alt" style="">' .
 				get_option( 'wcj_offer_price_button_label', __( 'Make an offer', 'woocommerce-jetpack' ) ) .
 			'</button>' .
-		'</p>' .
-		'<div id="wcj-offer-price-modal" class="modal">' .
+		'</p>';
+		// Offer form - header
+		$offer_form_header = str_replace(
+			'%product_title%',
+			get_the_title(),
+			get_option( 'wcj_offer_price_form_header_template', '<h3>' . sprintf( __( 'Suggest your price for %s', 'woocommerce-jetpack' ), '%product_title%' ) . '</h3>' )
+		);
+		$offer_form_header = '<div class="modal-header">' .
+			'<span class="close">&times;</span>' .
+			$offer_form_header .
+		'</div>';
+		// Offer form - footer
+		$offer_form_footer = ( '' != ( $footer_template = get_option( 'wcj_offer_price_form_footer_template', '' ) ) ?
+			'<div class="modal-footer">' . do_shortcode( $footer_template ) . '</div>' : '' );
+		// Offer form - content - price
+		$offer_form_content_price = '<label for="wcj-offer-price-price">' .
+			str_replace(
+				'%currency_symbol%',
+				get_woocommerce_currency_symbol(),
+				sprintf( __( 'Your price (%s)', 'woocommerce-jetpack' ), '%currency_symbol%' )
+			) . ' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
+			'<input type="number" required id="wcj-offer-price-price" name="wcj-offer-price-price">';
+		// Offer form - content - email
+		$offer_form_content_email = '<label for="wcj-offer-price-customer-email">' . __( 'Your email', 'woocommerce-jetpack' ) .
+			' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
+			'<input type="email" required id="wcj-offer-price-customer-email" name="wcj-offer-price-customer-email" value="' . $customer_email . '">';
+		// Offer form - content - name
+		$offer_form_content_name = '<label for="wcj-offer-price-customer-name">' . __( 'Your name', 'woocommerce-jetpack' ) .
+			'</label>' . '<br>' .
+			'<input type="text" id="wcj-offer-price-customer-name" name="wcj-offer-price-customer-name" value="' . $customer_name . '">';
+		// Offer form - content - message
+		$offer_form_content_message = '<label for="wcj-offer-price-message">' . __( 'Your message', 'woocommerce-jetpack' ) . '</label>' . '<br>' .
+			'<textarea id="wcj-offer-price-message" name="wcj-offer-price-message"></textarea>';
+		// Offer form - content - button
+		$offer_form_content_button = '<input type="submit" id="wcj-offer-price-submit" name="wcj-offer-price-submit" value="' .
+			get_option( 'wcj_offer_price_form_button_label', __( 'Send', 'woocommerce-jetpack' ) ) . '">';
+		// Offer form - content
+		$offer_form_content = '<div class="modal-body">' .
+			'<form method="post">' .
+				'<p>' . $offer_form_content_price . '</p>' .
+				'<p>' . $offer_form_content_email . '</p>' .
+				'<p>' . $offer_form_content_name . '</p>' .
+				'<p>' . $offer_form_content_message . '</p>' .
+				'<p>' . $offer_form_content_button . '</p>' .
+				'<input type="hidden" name="wcj-offer-price-product-id" value="' . get_the_ID() . '">' .
+			'</form>' .
+		'</div>';
+		// Offer form
+		$offer_form = '<div id="wcj-offer-price-modal" class="modal">' .
 			'<div class="modal-content">' .
-				'<div class="modal-header">' .
-					'<span class="close">&times;</span>' .
-					str_replace(
-						'%product_title%',
-						get_the_title(),
-						get_option( 'wcj_offer_price_form_header_template',
-							'<h3>' . sprintf( __( 'Suggest your price for %s', 'woocommerce-jetpack' ), '%product_title%' ) . '</h3>' )
-					) .
-				'</div>' .
-				'<div class="modal-body">' .
-					'<form method="post">' .
-						'<p>' . '<label for="wcj-offer-price-price">' . str_replace(
-								'%currency_symbol%',
-								get_woocommerce_currency_symbol(),
-								sprintf( __( 'Your price (%s)', 'woocommerce-jetpack' ), '%currency_symbol%' )
-							) . ' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
-							'<input type="number" required id="wcj-offer-price-price" name="wcj-offer-price-price">' . '</p>' .
-						'<p>' . '<label for="wcj-offer-price-customer-name">' . __( 'Your name', 'woocommerce-jetpack' ) .
-							' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
-							'<input type="text" required id="wcj-offer-price-customer-name" name="wcj-offer-price-customer-name" value="' . $customer_name . '">' . '</p>' .
-						'<p>' . '<label for="wcj-offer-price-customer-email">' . __( 'Your email', 'woocommerce-jetpack' ) .
-							' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
-							'<input type="email" required id="wcj-offer-price-customer-email" name="wcj-offer-price-customer-email" value="' . $customer_email . '">' . '</p>' .
-						'<p>' . '<label for="wcj-offer-price-message">' . __( 'Your message', 'woocommerce-jetpack' ) . '</label>' . '<br>' .
-							'<textarea id="wcj-offer-price-message" name="wcj-offer-price-message"></textarea>' . '</p>' .
-						'<p>' . '<input type="submit" id="wcj-offer-price-submit" name="wcj-offer-price-submit" value="' .
-							get_option( 'wcj_offer_price_form_button_label', __( 'Send', 'woocommerce-jetpack' ) ) . '">' . '</p>' .
-						'<input type="hidden" name="wcj-offer-price-product-id" value="' . get_the_ID() . '">' .
-					'</form>' .
-				'</div>' . ( '' != ( $footer_template = get_option( 'wcj_offer_price_form_footer_template', '' ) ) ?
-				'<div class="modal-footer">' .
-					do_shortcode( $footer_template ) .
-				'</div>' : '' ) .
+				$offer_form_header .
+				$offer_form_content .
+				$offer_form_footer .
 			'</div>' .
 		'</div>';
+		// Final output
+		echo $make_offer_button . $offer_form;
 	}
 
 	/**
