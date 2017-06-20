@@ -16,6 +16,21 @@ return array(
 		'type'     => 'title',
 	),
 	array(
+		'title'    => __( 'Enable for All Products', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_enabled_for_all_products',
+		'type'     => 'checkbox',
+		'default'  => 'no',
+	),
+	array(
+		'title'    => __( 'Enable per Product', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_enabled_per_product',
+		'type'     => 'checkbox',
+		'default'  => 'no',
+	),
+	array(
 		'title'    => __( 'Button Label', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_button_label',
 		'type'     => 'text',

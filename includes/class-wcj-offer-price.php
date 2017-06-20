@@ -19,7 +19,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    more "Offer price" button position options
-	 * @todo    per product
+	 * @todo    ~ per product
 	 * @todo    for all products with empty price
 	 * @todo    (maybe) variations and grouped products
 	 */
@@ -32,11 +32,17 @@ class WCJ_Offer_Price extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_action( 'woocommerce_single_product_summary', array( $this, 'add_offer_price_button' ), 31 );
-			add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
-			add_action( 'init',                               array( $this, 'offer_price' ) );
-			add_action( 'add_meta_boxes',                     array( $this, 'add_offer_price_history_meta_box' ) );
-			add_action( 'save_post_product',                  array( $this, 'delete_offer_price_product_history' ), PHP_INT_MAX, 2 );
+			if ( 'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) || 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
+				add_action( 'woocommerce_single_product_summary', array( $this, 'add_offer_price_button' ), 31 );
+				add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
+				add_action( 'init',                               array( $this, 'offer_price' ) );
+				if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
+					add_action( 'add_meta_boxes',                 array( $this, 'add_meta_box' ) );
+					add_action( 'save_post_product',              array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+				}
+			}
+			add_action( 'add_meta_boxes',                         array( $this, 'add_offer_price_history_meta_box' ) );
+			add_action( 'save_post_product',                      array( $this, 'delete_offer_price_product_history' ), PHP_INT_MAX, 2 );
 		}
 	}
 
@@ -124,12 +130,25 @@ class WCJ_Offer_Price extends WCJ_Module {
 	}
 
 	/**
+	 * is_offer_price_enabled_for_current_product.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 */
+	function is_offer_price_enabled_for_current_product() {
+		if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
+			return ( 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_offer_price_enabled', true ) );
+		}
+		return ( 'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) );
+	}
+
+	/**
 	 * add_offer_price_button.
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    ~ price - currency
-	 * @todo    price - default, step, min and max
+	 * @todo    price - default, step, min and max (global and per product)
 	 * @todo    (maybe) optional, additional and custom form fields
 	 * @todo    archives
 	 * @todo    ~ fields labels
@@ -142,6 +161,9 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @todo    required asterix
 	 */
 	function add_offer_price_button() {
+		if ( ! $this->is_offer_price_enabled_for_current_product() ) {
+			return;
+		}
 		$customer_name  = '';
 		$customer_email = '';
 		if ( is_user_logged_in() ) {
