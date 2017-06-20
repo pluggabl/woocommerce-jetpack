@@ -127,13 +127,16 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    "Submit" button label
+	 * @todo    price - currency
 	 * @todo    price - default, step, min and max
-	 * @todo    optional, additional and custom form fields
+	 * @todo    (maybe) optional, additional and custom form fields
 	 * @todo    archives
 	 * @todo    ~ fields labels
 	 * @todo    form template
-	 * @todo    empty footer / header
+	 * @todo    ~ empty footer / header
+	 * @todo    wcj-close etc.
+	 * @todo    do_shortcode
+	 * @todo    logged users auto-fill (name and email)
 	 */
 	function add_offer_price_button() {
 		echo '<p>' .
@@ -144,7 +147,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 		'<div id="wcj-offer-price-modal" class="modal">' .
 			'<div class="modal-content">' .
 				'<div class="modal-header">' .
-					'<span class="close">&times;</span>' . // todo - wcj-close
+					'<span class="close">&times;</span>' . //
 					str_replace(
 						'%product_title%',
 						get_the_title(),
@@ -162,13 +165,14 @@ class WCJ_Offer_Price extends WCJ_Module {
 							'<input type="email" required id="wcj-offer-price-customer-email" name="wcj-offer-price-customer-email">' . '</p>' .
 						'<p>' . '<label for="wcj-offer-price-message">' . __( 'Your message', 'woocommerce-jetpack' ) . '</label>' . '<br>' .
 							'<textarea id="wcj-offer-price-message" name="wcj-offer-price-message"></textarea>' . '</p>' .
-						'<p>' . '<input type="submit" id="wcj-offer-price-submit" name="wcj-offer-price-submit" value="' . __( 'Send', 'woocommerce-jetpack' ) . '">' . '</p>' .
+						'<p>' . '<input type="submit" id="wcj-offer-price-submit" name="wcj-offer-price-submit" value="' .
+							get_option( 'wcj_offer_price_form_button_label', __( 'Send', 'woocommerce-jetpack' ) ) . '">' . '</p>' .
 						'<input type="hidden" name="wcj-offer-price-product-id" value="' . get_the_ID() . '">' .
 					'</form>' .
-				'</div>' .
+				'</div>' . ( '' != ( $footer_template = get_option( 'wcj_offer_price_form_footer_template', '' ) ) ?
 				'<div class="modal-footer">' .
-					get_option( 'wcj_offer_price_form_footer_template', '' ) .
-				'</div>' .
+					do_shortcode( $footer_template ) .
+				'</div>' : '' ) .
 			'</div>' .
 		'</div>';
 	}

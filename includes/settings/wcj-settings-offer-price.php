@@ -30,6 +30,13 @@ return array(
 		'css'      => 'width:99%;',
 	),
 	array(
+		'title'    => __( 'Form Button Label', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_form_button_label',
+		'type'     => 'text',
+		'default'  => __( 'Send', 'woocommerce-jetpack' ),
+		'css'      => 'width:99%;',
+	),
+	array(
 		'title'    => __( 'Form Footer', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_form_footer_template',
 		'type'     => 'custom_textarea',
