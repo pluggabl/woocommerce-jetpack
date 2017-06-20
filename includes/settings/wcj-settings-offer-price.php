@@ -31,6 +31,26 @@ return array(
 		'default'  => 'no',
 	),
 	array(
+		'title'    => __( 'Price Step', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Number of decimals', 'woocommerce' ),
+		'id'       => 'wcj_offer_price_price_step',
+		'type'     => 'number',
+		'default'  => get_option( 'woocommerce_price_num_decimals' ),
+	),
+	array(
+		'title'    => __( 'Minimal Price', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_min_price',
+		'type'     => 'number',
+		'default'  => 0,
+	),
+	array(
+		'title'    => __( 'Maximal Price', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set zero to disable.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_max_price',
+		'type'     => 'number',
+		'default'  => 0,
+	),
+	array(
 		'title'    => __( 'Button Label', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_button_label',
 		'type'     => 'text',

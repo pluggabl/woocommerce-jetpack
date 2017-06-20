@@ -175,7 +175,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_attribute` - Checking parent product's attribute for variation products.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_shipping_address]` - `fallback_billing_address` attribute added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
-~D	* Dev - Shortcodes - Products - `[wcj_product_weight]` - `variations` attribute added.
+-D	* Dev - Shortcodes - Products - `[wcj_product_weight]` - `variations` attribute added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
 $~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors" option added.
 $~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors User Roles" option added.
