@@ -19,6 +19,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    more "Offer price" button position options
+	 * @todo    per product
+	 * @todo    (maybe) variations and grouped products
 	 */
 	function __construct() {
 
@@ -33,6 +35,21 @@ class WCJ_Offer_Price extends WCJ_Module {
 			add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
 			add_action( 'init',                               array( $this, 'offer_price' ) );
 			add_action( 'add_meta_boxes',                     array( $this, 'add_offer_price_history_meta_box' ) );
+			add_action( 'save_post_product',                  array( $this, 'delete_offer_price_product_history' ), PHP_INT_MAX, 2 );
+		}
+	}
+
+	/**
+	 * delete_offer_price_product_history.
+	 *
+	 * @version 2.8.3
+	 * @since   2.8.3
+	 * @todo    (maybe) add successful deletion notice
+	 */
+	function delete_offer_price_product_history( $post_id, $post ) {
+		if ( isset( $_POST['wcj_offer_price_delete_history'] ) ) {
+			delete_post_meta( $post_id, '_' . 'wcj_price_offers' );
+			add_action( 'admin_notices', array( $this, 'notice_delete_offer_price_product_history' ) );
 		}
 	}
 
@@ -58,7 +75,9 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    add "delete all price offers" button (with confirmation)
+	 * @todo    add "delete all price offers" checkbox - add desc_tip
+	 * @todo    wp_nonce
+	 * @todo    more info (e.g. average offer price)
 	 */
 	function create_offer_price_history_meta_box() {
 		if ( '' == ( $price_offers = get_post_meta( get_the_ID(), '_' . 'wcj_price_offers', true ) ) ) {
@@ -84,6 +103,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 				);
 			}
 			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
+			echo '<p>' . '<input type="checkbox" id="wcj_offer_price_delete_history" name="wcj_offer_price_delete_history">' .
+				'<label for="wcj_offer_price_delete_history">' . __( 'Delete history', 'woocommerce-jetpack' ) . '</label>' . '</p>';
 		}
 	}
 
@@ -105,12 +126,12 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @version 2.8.3
 	 * @since   2.8.3
 	 * @todo    "Submit" button label
-	 * @todo    variations and grouped products
 	 * @todo    price - default, step, min and max
 	 * @todo    optional, additional and custom form fields
 	 * @todo    archives
 	 * @todo    ~ fields labels
 	 * @todo    form template
+	 * @todo    empty footer / header
 	 */
 	function add_offer_price_button() {
 		echo '<p>' .
