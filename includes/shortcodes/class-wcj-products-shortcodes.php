@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 2.8.1
+ * @version 2.8.3
  * @author  Algoritmika Ltd.
  */
 
@@ -502,11 +502,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_dimensions.
 	 *
-	 * @version 2.4.0
+	 * @version 2.8.3
 	 * @since   2.4.0
 	 */
 	function wcj_product_dimensions( $atts ) {
-		return ( $this->the_product->has_dimensions() ) ? $this->the_product->get_dimensions() : '';
+		return ( $this->the_product->has_dimensions() ) ?
+			( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_product->get_dimensions() : wc_format_dimensions( $this->the_product->get_dimensions( false ) ) )
+			: '';
 	}
 
 	/**
