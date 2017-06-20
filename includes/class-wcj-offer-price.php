@@ -95,7 +95,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 			foreach ( $price_offers as $price_offer ) {
 				$table_data[] = array(
 					date_i18n( $date_ant_time_format, $price_offer['offer_timestamp'] ),
-					wc_price( $price_offer['offered_price'] ),
+					wc_price( $price_offer['offered_price'], array( 'currency' => $price_offer['currency_code'] ) ),
 					$price_offer['customer_message'],
 					$price_offer['customer_name'],
 					$price_offer['customer_email'],
@@ -127,7 +127,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    price - currency
+	 * @todo    ~ price - currency
 	 * @todo    price - default, step, min and max
 	 * @todo    (maybe) optional, additional and custom form fields
 	 * @todo    archives
@@ -136,9 +136,22 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @todo    ~ empty footer / header
 	 * @todo    wcj-close etc.
 	 * @todo    do_shortcode
-	 * @todo    logged users auto-fill (name and email)
+	 * @todo    more info if logged user
+	 * @todo    logged user - check `nickname` and `billing_email`
+	 * @todo    required asterix
 	 */
 	function add_offer_price_button() {
+		$customer_name  = '';
+		$customer_email = '';
+		if ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			if ( '' != ( $meta = get_user_meta( $current_user->ID, 'nickname', true ) ) ) {
+				$customer_name = $meta;
+			}
+			if ( '' != ( $meta = get_user_meta( $current_user->ID, 'billing_email', true ) ) ) {
+				$customer_email = $meta;
+			}
+		}
 		echo '<p>' .
 			'<button type="submit" name="wcj-offer-price-button" id="wcj-offer-price-button" value="' . get_the_ID() . '" class="button alt" style="">' .
 				get_option( 'wcj_offer_price_button_label', __( 'Make an offer', 'woocommerce-jetpack' ) ) .
@@ -147,7 +160,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 		'<div id="wcj-offer-price-modal" class="modal">' .
 			'<div class="modal-content">' .
 				'<div class="modal-header">' .
-					'<span class="close">&times;</span>' . //
+					'<span class="close">&times;</span>' .
 					str_replace(
 						'%product_title%',
 						get_the_title(),
@@ -157,12 +170,18 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'</div>' .
 				'<div class="modal-body">' .
 					'<form method="post">' .
-						'<p>' . '<label for="wcj-offer-price-price">' . __( 'Your price', 'woocommerce-jetpack' ) . '</label>' . '<br>' .
+						'<p>' . '<label for="wcj-offer-price-price">' . str_replace(
+								'%currency_symbol%',
+								get_woocommerce_currency_symbol(),
+								sprintf( __( 'Your price (%s)', 'woocommerce-jetpack' ), '%currency_symbol%' )
+							) . ' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
 							'<input type="number" required id="wcj-offer-price-price" name="wcj-offer-price-price">' . '</p>' .
-						'<p>' . '<label for="wcj-offer-price-customer-name">' . __( 'Your name', 'woocommerce-jetpack' ) . '</label>' . '<br>' .
-							'<input type="text" required id="wcj-offer-price-customer-name" name="wcj-offer-price-customer-name">' . '</p>' .
-						'<p>' . '<label for="wcj-offer-price-customer-email">' . __( 'Your email', 'woocommerce-jetpack' ) . '</label>' . '<br>' .
-							'<input type="email" required id="wcj-offer-price-customer-email" name="wcj-offer-price-customer-email">' . '</p>' .
+						'<p>' . '<label for="wcj-offer-price-customer-name">' . __( 'Your name', 'woocommerce-jetpack' ) .
+							' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
+							'<input type="text" required id="wcj-offer-price-customer-name" name="wcj-offer-price-customer-name" value="' . $customer_name . '">' . '</p>' .
+						'<p>' . '<label for="wcj-offer-price-customer-email">' . __( 'Your email', 'woocommerce-jetpack' ) .
+							' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
+							'<input type="email" required id="wcj-offer-price-customer-email" name="wcj-offer-price-customer-email" value="' . $customer_email . '">' . '</p>' .
 						'<p>' . '<label for="wcj-offer-price-message">' . __( 'Your message', 'woocommerce-jetpack' ) . '</label>' . '<br>' .
 							'<textarea id="wcj-offer-price-message" name="wcj-offer-price-message"></textarea>' . '</p>' .
 						'<p>' . '<input type="submit" id="wcj-offer-price-submit" name="wcj-offer-price-submit" value="' .
@@ -185,7 +204,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @todo    check if mail has really been sent
 	 * @todo    "send a copy to me (i.e. customer)" checkbox
 	 * @todo    (maybe) sanitize $_POST
-	 * @todo    (maybe) multicurrency
+	 * @todo    check multicurrency
 	 * @todo    ! "From" header
 	 */
 	function offer_price() {
@@ -196,6 +215,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'offer_timestamp'  => current_time( 'timestamp' ),
 				'product_title'    => $_product->get_title(),
 				'offered_price'    => $_POST['wcj-offer-price-price'],
+				'currency_code'    => get_woocommerce_currency(),
 				'customer_message' => $_POST['wcj-offer-price-message'],
 				'customer_name'    => $_POST['wcj-offer-price-customer-name'],
 				'customer_email'   => $_POST['wcj-offer-price-customer-email'],
@@ -209,7 +229,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 			);
 			$replaced_values = array(
 				'%product_title%'    => $price_offer['product_title'],
-				'%offered_price%'    => $price_offer['offered_price'],
+				'%offered_price%'    => wc_price( $price_offer['offered_price'] ),
 				'%customer_message%' => $price_offer['customer_message'],
 				'%customer_name%'    => $price_offer['customer_name'],
 				'%customer_email%'   => $price_offer['customer_email'],
