@@ -44,6 +44,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
+	 * @todo    (maybe) validate wcj meta box
 	 * @todo    (maybe) add successful deletion notice
 	 */
 	function delete_offer_price_product_history( $post_id, $post ) {
@@ -75,8 +76,6 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.8.3
 	 * @since   2.8.3
-	 * @todo    add "delete all price offers" checkbox - add desc_tip
-	 * @todo    wp_nonce
 	 * @todo    more info (e.g. average offer price)
 	 */
 	function create_offer_price_history_meta_box() {
@@ -103,8 +102,11 @@ class WCJ_Offer_Price extends WCJ_Module {
 				);
 			}
 			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
-			echo '<p>' . '<input type="checkbox" id="wcj_offer_price_delete_history" name="wcj_offer_price_delete_history">' .
-				'<label for="wcj_offer_price_delete_history">' . __( 'Delete history', 'woocommerce-jetpack' ) . '</label>' . '</p>';
+			echo '<p>' .
+				'<input type="checkbox" id="wcj_offer_price_delete_history" name="wcj_offer_price_delete_history">' .
+				'<label for="wcj_offer_price_delete_history">' . __( 'Delete history', 'woocommerce-jetpack' ) . '</label>' .
+				wc_help_tip( __( 'Update product after checking the box.', 'woocommerce-jetpack' ) ) .
+			'</p>';
 		}
 	}
 
