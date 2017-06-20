@@ -20,6 +20,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @since   2.8.3
 	 * @todo    more "Offer price" button position options
 	 * @todo    per product
+	 * @todo    for all products with empty price
 	 * @todo    (maybe) variations and grouped products
 	 */
 	function __construct() {
