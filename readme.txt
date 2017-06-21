@@ -228,7 +228,7 @@ $~!D* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" optio
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "STSong Light (Simp. Chinese)" font added (to both minimal and extra fonts packs).
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Now extra fonts are downloaded to `woocommerce_uploads` folder.
 $~!D* Dev - EMAILS & MISC. - Admin Bar - Initial module release.
-	* Dev - EMAILS & MISC. - Admin Tools - Log - "Now time" added.
+	* Dev - EMAILS & MISC. - Admin Tools - Log - "Now time" added. `wp_safe_redirect()` added to "Delete log" action.
 $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Enable Email Verification for Already Registered Users" option added.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Skip Email Verification for User Roles" option added.
