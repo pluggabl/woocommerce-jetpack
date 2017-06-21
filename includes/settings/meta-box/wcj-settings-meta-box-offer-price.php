@@ -20,4 +20,12 @@ return array(
 			'no'  => __( 'No', 'woocommerce-jetpack' ),
 		),
 	),
+	array(
+		'title'    => __( 'Price Step', 'woocommerce-jetpack' ),
+		'tooltip'  => __( 'Leave blank to use global value.', 'woocommerce-jetpack' ),
+		'name'     => 'wcj_offer_price_price_step',
+		'default'  => '',
+		'type'     => 'number',
+		'placeholder' => get_option( 'wcj_offer_price_price_step', get_option( 'woocommerce_price_num_decimals' ) ),
+	),
 );

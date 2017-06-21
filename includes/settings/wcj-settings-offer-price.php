@@ -36,12 +36,14 @@ return array(
 		'id'       => 'wcj_offer_price_price_step',
 		'type'     => 'number',
 		'default'  => get_option( 'woocommerce_price_num_decimals' ),
+		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
 		'title'    => __( 'Minimal Price', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_min_price',
 		'type'     => 'number',
 		'default'  => 0,
+		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
 		'title'    => __( 'Maximal Price', 'woocommerce-jetpack' ),
@@ -49,6 +51,7 @@ return array(
 		'id'       => 'wcj_offer_price_max_price',
 		'type'     => 'number',
 		'default'  => 0,
+		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
 		'title'    => __( 'Button Label', 'woocommerce-jetpack' ),

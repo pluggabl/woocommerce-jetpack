@@ -130,14 +130,14 @@ class WCJ_Offer_Price extends WCJ_Module {
 	}
 
 	/**
-	 * is_offer_price_enabled_for_current_product.
+	 * is_offer_price_enabled_for_product.
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
 	 */
-	function is_offer_price_enabled_for_current_product() {
+	function is_offer_price_enabled_for_product( $product_id ) {
 		if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
-			return ( 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_offer_price_enabled', true ) );
+			return ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_offer_price_enabled', true ) );
 		}
 		return ( 'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) );
 	}
@@ -160,8 +160,9 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @todo    ~ required asterix
 	 */
 	function add_offer_price_button() {
+		$product_id = get_the_ID();
 		// Check if enabled for current product
-		if ( ! $this->is_offer_price_enabled_for_current_product() ) {
+		if ( ! $this->is_offer_price_enabled_for_product( $product_id ) ) {
 			return;
 		}
 		// Prepare logged user data
@@ -178,7 +179,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 		}
 		// Initial button
 		$make_offer_button = '<p>' .
-			'<button type="submit" name="wcj-offer-price-button" id="wcj-offer-price-button" value="' . get_the_ID() . '" class="button alt" style="">' .
+			'<button type="submit" name="wcj-offer-price-button" id="wcj-offer-price-button" value="' . $product_id . '" class="button alt" style="">' .
 				get_option( 'wcj_offer_price_button_label', __( 'Make an offer', 'woocommerce-jetpack' ) ) .
 			'</button>' .
 		'</p>';
@@ -196,7 +197,11 @@ class WCJ_Offer_Price extends WCJ_Module {
 		$offer_form_footer = ( '' != ( $footer_template = get_option( 'wcj_offer_price_form_footer_template', '' ) ) ?
 			'<div class="modal-footer">' . do_shortcode( $footer_template ) . '</div>' : '' );
 		// Offer form - content - price
-		$price_step = sprintf( "%f", ( 1 / pow( 10, absint( get_option( 'wcj_offer_price_price_step', get_option( 'woocommerce_price_num_decimals' ) ) ) ) ) );
+		$price_step = ( '' === ( $price_step_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_price_step', true ) ) ?
+			get_option( 'wcj_offer_price_price_step', get_option( 'woocommerce_price_num_decimals' ) ) :
+			$price_step_per_product
+		);
+		$price_step = sprintf( "%f", ( 1 / pow( 10, absint( $price_step ) ) ) );
 		$max_price_html = ( 0 != ( $max_price = get_option( 'wcj_offer_price_max_price', 0 ) ) ? ' max="' . $max_price . '"' : '' );
 		$offer_form_content_price = '<label for="wcj-offer-price-price">' .
 			str_replace(
@@ -228,7 +233,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'<p>' . $offer_form_content_name . '</p>' .
 				'<p>' . $offer_form_content_message . '</p>' .
 				'<p>' . $offer_form_content_button . '</p>' .
-				'<input type="hidden" name="wcj-offer-price-product-id" value="' . get_the_ID() . '">' .
+				'<input type="hidden" name="wcj-offer-price-product-id" value="' . $product_id . '">' .
 			'</form>' .
 		'</div>';
 		// Offer form
