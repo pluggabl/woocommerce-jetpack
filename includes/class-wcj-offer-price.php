@@ -33,6 +33,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 		$this->link_slug  = 'woocommerce-offer-your-product-price';
 		parent::__construct();
 
+		$this->dev        = true;
+
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) || 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
 				add_action(

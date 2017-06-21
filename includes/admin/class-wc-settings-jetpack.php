@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 2.8.0
+ * @version 2.9.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -136,7 +136,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output the settings.
 	 *
-	 * @version 2.7.0
+	 * @version 2.9.0
 	 */
 	function output() {
 
@@ -158,6 +158,17 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '<p>';
 			echo '<strong>';
 			echo sprintf( __( 'Please note that current <em>%s</em> module is deprecated and will be removed in future updates. Please use <em>%s</em> module instead.', 'woocommerce-jetpack' ), WCJ()->modules[ $current_section ]->short_desc, $deprecated_modules_and_links[ $current_section ] );
+			echo '</strong>';
+			echo '</p>';
+			echo '</div>';
+		}
+
+		// "Under development" message
+		if ( isset( WCJ()->modules[ $current_section ]->dev ) && true === WCJ()->modules[ $current_section ]->dev ) {
+			echo '<div id="wcj_message" class="error">';
+			echo '<p>';
+			echo '<strong>';
+			echo sprintf( __( 'Please note that <em>%s</em> module is currently under development. Until stable module version is released, options can be changed or some options can be moved to paid plugin version.', 'woocommerce-jetpack' ), WCJ()->modules[ $current_section ]->short_desc );
 			echo '</strong>';
 			echo '</p>';
 			echo '</div>';
