@@ -35,7 +35,11 @@ class WCJ_Offer_Price extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) || 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
-				add_action( 'woocommerce_single_product_summary', array( $this, 'add_offer_price_button' ), 31 );
+				add_action(
+					get_option( 'wcj_offer_price_button_position', 'woocommerce_single_product_summary' ),
+					array( $this, 'add_offer_price_button' ),
+					get_option( 'wcj_offer_price_button_position_priority', 31 )
+				);
 				add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
 				add_action( 'init',                               array( $this, 'offer_price' ) );
 				if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {

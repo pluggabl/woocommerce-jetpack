@@ -5,6 +5,8 @@
  * @version 2.9.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
+ * @todo    recheck if all button positions working properly
+ * @todo    more info about position priority
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -67,6 +69,23 @@ return array(
 		'type'     => 'text',
 		'default'  => __( 'Make an offer', 'woocommerce-jetpack' ),
 		'css'      => 'width:99%;',
+	),
+	array(
+		'title'    => __( 'Button Position On Single Product Page', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_button_position',
+		'type'     => 'select',
+		'default'  => 'woocommerce_single_product_summary',
+		'options'  => array(
+			'woocommerce_single_product_summary'        => __( 'Inside single product summary', 'woocommerce-jetpack' ),
+			'woocommerce_before_single_product_summary' => __( 'Before single product summary', 'woocommerce-jetpack' ),
+			'woocommerce_after_single_product_summary'  => __( 'After single product summary', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Position Priority (i.e. Order)', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_button_position_priority',
+		'type'     => 'number',
+		'default'  => 31,
 	),
 	array(
 		'title'    => __( 'Form Header', 'woocommerce-jetpack' ),
