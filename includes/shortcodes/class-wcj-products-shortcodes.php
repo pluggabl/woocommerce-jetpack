@@ -192,10 +192,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_length.
 	 *
-	 * @version 2.5.5
+	 * @version 2.9.0
 	 * @since   2.5.5
 	 */
 	function wcj_product_length( $atts ) {
+		if ( $this->the_product->is_type( 'variable' ) && 'yes' === $atts['variations'] ) {
+			return $this->get_variations_table( 'length', $atts );
+		}
 		$return = ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_length(), $atts['to_unit'] ) : $this->the_product->get_length();
 		return ( 'yes' === $atts['round'] ) ? round( $return, $atts['precision'] ) : $return;
 	}
@@ -203,10 +206,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_width.
 	 *
-	 * @version 2.5.5
+	 * @version 2.9.0
 	 * @since   2.5.5
 	 */
 	function wcj_product_width( $atts ) {
+		if ( $this->the_product->is_type( 'variable' ) && 'yes' === $atts['variations'] ) {
+			return $this->get_variations_table( 'width', $atts );
+		}
 		$return = ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_width(), $atts['to_unit'] ) : $this->the_product->get_width();
 		return ( 'yes' === $atts['round'] ) ? round( $return, $atts['precision'] ) : $return;
 	}
@@ -214,10 +220,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_height.
 	 *
-	 * @version 2.5.5
+	 * @version 2.9.0
 	 * @since   2.5.5
 	 */
 	function wcj_product_height( $atts ) {
+		if ( $this->the_product->is_type( 'variable' ) && 'yes' === $atts['variations'] ) {
+			return $this->get_variations_table( 'height', $atts );
+		}
 		$return = ( '' != $atts['to_unit'] ) ? wc_get_dimension( $this->the_product->get_height(), $atts['to_unit'] ) : $this->the_product->get_height();
 		return ( 'yes' === $atts['round'] ) ? round( $return, $atts['precision'] ) : $return;
 	}
@@ -507,6 +516,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   2.4.0
 	 */
 	function wcj_product_dimensions( $atts ) {
+		if ( $this->the_product->is_type( 'variable' ) && 'yes' === $atts['variations'] ) {
+			return $this->get_variations_table( 'dimensions', $atts );
+		}
 		return ( $this->the_product->has_dimensions() ) ?
 			( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_product->get_dimensions() : wc_format_dimensions( $this->the_product->get_dimensions( false ) ) )
 			: '';
@@ -915,8 +927,11 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    (maybe) code refactoring
+	 * @todo    (maybe) weight, length, width, height units
+	 * @todo    (maybe) check has_length, has_width, has_height
 	 */
-	function get_variations_table( $param ) {
+	function get_variations_table( $param, $atts ) {
 		$return_html = '';
 		$return_html .= '<table>';
 		foreach ( $this->the_product->get_available_variations() as $variation ) {
@@ -925,6 +940,23 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			switch ( $param ) {
 				case 'weight':
 					$value = ( $variation_product->has_weight() ? $variation_product->get_weight() : '' );
+					break;
+				case 'length':
+					$value = ( '' != $atts['to_unit'] ) ? wc_get_dimension( $variation_product->get_length(), $atts['to_unit'] ) : $variation_product->get_length();
+					$value = ( 'yes' === $atts['round'] ) ? round( $value, $atts['precision'] ) : $value;
+					break;
+				case 'width':
+					$value = ( '' != $atts['to_unit'] ) ? wc_get_dimension( $variation_product->get_width(), $atts['to_unit'] ) : $variation_product->get_width();
+					$value = ( 'yes' === $atts['round'] ) ? round( $value, $atts['precision'] ) : $value;
+					break;
+				case 'height':
+					$value = ( '' != $atts['to_unit'] ) ? wc_get_dimension( $variation_product->get_height(), $atts['to_unit'] ) : $variation_product->get_height();
+					$value = ( 'yes' === $atts['round'] ) ? round( $value, $atts['precision'] ) : $value;
+					break;
+				case 'dimensions':
+					$value = ( $variation_product->has_dimensions() ) ?
+						( WCJ_IS_WC_VERSION_BELOW_3 ? $variation_product->get_dimensions() : wc_format_dimensions( $variation_product->get_dimensions( false ) ) )
+						: '';
 					break;
 			}
 			$return_html .= '<tr>';
@@ -944,7 +976,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_product_weight( $atts ) {
 		if ( $this->the_product->is_type( 'variable' ) && 'yes' === $atts['variations'] ) {
-			return $this->get_variations_table( 'weight' );
+			return $this->get_variations_table( 'weight', $atts );
 		}
 		return ( $this->the_product->has_weight() ) ? $this->the_product->get_weight() : '';
 	}
