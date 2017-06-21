@@ -18,7 +18,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    more "Offer price" button position options
+	 * @todo    more "Offer price" button position options (on both single and archives)
 	 * @todo    ~ per product
 	 * @todo    for all products with empty price
 	 * @todo    (maybe) variations and grouped products
@@ -34,6 +34,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) || 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
 				add_action( 'woocommerce_single_product_summary', array( $this, 'add_offer_price_button' ), 31 );
+//				add_action( 'woocommerce_after_shop_loop_item',   array( $this, 'add_offer_price_button' ) );
 				add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
 				add_action( 'init',                               array( $this, 'offer_price' ) );
 				if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
@@ -123,6 +124,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @version 2.9.0
 	 * @since   2.9.0
 	 * @see     https://www.w3schools.com/howto/howto_css_modals.asp
+	 * @todo    (maybe) enqueue only if really needed
 	 */
 	function enqueue_scripts() {
 		wp_enqueue_style(   'wcj-offer-price',    wcj_plugin_url() . '/includes/css/wcj-offer-price.css', array(),           WCJ()->version );
@@ -147,12 +149,13 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    rethink 'Enable for All Products' and 'Enable per Product' compatibility
 	 * @todo    (maybe) optional, additional and custom form fields
 	 * @todo    archives
 	 * @todo    customizable fields labels
 	 * @todo    form template
 	 * @todo    ~ empty footer / header
-	 * @todo    wcj-close etc.
+	 * @todo    ~ wcj-close etc.
 	 * @todo    do_shortcode
 	 * @todo    more info if logged user (e.g. user id)
 	 * @todo    logged user - check `nickname` and `billing_email`
@@ -190,7 +193,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 			get_option( 'wcj_offer_price_form_header_template', '<h3>' . sprintf( __( 'Suggest your price for %s', 'woocommerce-jetpack' ), '%product_title%' ) . '</h3>' )
 		);
 		$offer_form_header = '<div class="modal-header">' .
-			'<span class="close">&times;</span>' .
+			'<span class="wcj-offer-price-form-close">&times;</span>' .
 			$offer_form_header .
 		'</div>';
 		// Offer form - footer
