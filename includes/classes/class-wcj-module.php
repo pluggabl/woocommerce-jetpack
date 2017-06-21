@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 2.8.0
+ * @version 2.9.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -213,7 +213,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.8.0
+	 * @version 2.9.0
+	 * @todo    placeholder for textarea
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -269,6 +270,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						$input_ending = ' id="' . $option['name'] . '" name="' . $option['name'] . '" value="' . $option_value . '">';
 						if ( isset( $option['custom_attributes'] ) ) {
 							$input_ending = ' ' . $option['custom_attributes'] . $input_ending;
+						}
+						if ( isset( $option['placeholder'] ) ) {
+							$input_ending = ' placeholder="' . $option['placeholder'] . '"' . $input_ending;
 						}
 					}
 					switch ( $option['type'] ) {
