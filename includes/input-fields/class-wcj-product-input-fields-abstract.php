@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Abstract
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -669,7 +669,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Adds product input values to order details (and emails).
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
@@ -733,8 +733,8 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_cart_item_display_data.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function add_product_input_fields_to_cart_item_display_data( $item_data, $item  ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	public function __construct() {
 
@@ -503,7 +503,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_dimensions.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.4.0
 	 */
 	function wcj_product_dimensions( $atts ) {
@@ -913,8 +913,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_variations_table.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function get_variations_table( $param ) {
 		$return_html = '';
@@ -940,7 +940,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * Get the product's weight.
 	 *
 	 * @return  string
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function wcj_product_weight( $atts ) {
 		if ( $this->the_product->is_type( 'variable' ) && 'yes' === $atts['variations'] ) {

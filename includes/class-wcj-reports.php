@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Reports
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -24,7 +24,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function __construct() {
 
@@ -102,7 +102,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * add_custom_order_reports_ranges_to_admin_bar.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function add_custom_order_reports_ranges_to_admin_bar( $wp_admin_bar ) {
 		$is_reports        = ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] );
@@ -158,8 +158,8 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * get_report_products_sales_daily.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function get_report_products_sales_daily() {
 		$report = new WCJ_Reports_Product_Sales_Daily();
@@ -198,7 +198,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Add reports to WooCommerce > Reports > Sales
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.3.0
 	 */
 	function add_sales_reports( $reports ) {

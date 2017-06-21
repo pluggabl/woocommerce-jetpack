@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Breadcrumbs
  *
- * @version 2.8.3
- * @since   2.8.3
+ * @version 2.9.0
+ * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 

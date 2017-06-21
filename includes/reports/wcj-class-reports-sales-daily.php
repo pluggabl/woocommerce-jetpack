@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales (Daily)
  *
- * @version 2.8.3
- * @since   2.8.3
+ * @version 2.9.0
+ * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Reports_Product_Sales_Daily {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function __construct( $args = null ) {
 		return true;
@@ -26,8 +26,8 @@ class WCJ_Reports_Product_Sales_Daily {
 	/**
 	 * get_report.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function get_report() {
 		$this->get_report_args();
@@ -38,8 +38,8 @@ class WCJ_Reports_Product_Sales_Daily {
 	/*
 	 * get_report_args.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function get_report_args() {
 		$this->start_date    = isset( $_GET['start_date'] )    ? $_GET['start_date']    : date( 'Y-m-d', strtotime( '-7 days' ) );
@@ -50,8 +50,8 @@ class WCJ_Reports_Product_Sales_Daily {
 	/*
 	 * get_report_data.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    (maybe) currency conversion
 	 * @todo    recheck if `wc_get_product_purchase_price()` working correctly for variations
 	 */
@@ -144,8 +144,8 @@ class WCJ_Reports_Product_Sales_Daily {
 	/*
 	 * output_report_data.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function output_report_data() {
 		return $this->output_report_header() . $this->output_report_results();
@@ -154,8 +154,8 @@ class WCJ_Reports_Product_Sales_Daily {
 	/*
 	 * output_report_header.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function output_report_header() {
 		// Settings link and dates menu
@@ -194,8 +194,8 @@ class WCJ_Reports_Product_Sales_Daily {
 	/*
 	 * output_report_results.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function output_report_results() {
 		$table_data = array();

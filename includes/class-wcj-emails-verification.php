@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -50,7 +50,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * check_if_user_email_is_verified.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.8.0
 	 */
 	function check_if_user_email_is_verified( $userdata ) {
@@ -79,7 +79,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * reset_and_mail_activation_link.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.8.0
 	 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
 	 * @todo    ticket #5373 - unexpected issue with "Activation failed, please contact our administrator" message
@@ -105,7 +105,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * process_email_verification.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.8.0
 	 */
 	function process_email_verification(){

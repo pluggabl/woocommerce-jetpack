@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - EU VAT Number
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default value for "wcj_eu_vat_number_add_progress_text" to "yes"

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function __construct() {
 		$this->id         = 'product_listings';
@@ -54,8 +54,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * rearange_product_columns.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function rearange_product_columns( $columns ) {
 		$reordered_columns = get_option( 'wcj_products_admin_list_columns_order', $this->get_products_default_columns_in_order() );
@@ -77,8 +77,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * get_products_default_columns_in_order.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function get_products_default_columns_in_order() {
 		$columns = array(
@@ -100,8 +100,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * add_product_columns.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function add_product_columns( $columns ) {
 		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_admin_list_custom_columns_total_number', 1 ) );
@@ -116,8 +116,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * render_product_column.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function render_product_column( $column ) {
 		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_admin_list_custom_columns_total_number', 1 ) );

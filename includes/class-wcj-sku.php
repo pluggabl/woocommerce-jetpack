@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function __construct() {
 
@@ -73,7 +73,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_all_variations.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.4.8
 	 */
 	function get_all_variations( $_product ) {
@@ -89,8 +89,8 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_sequential_counter.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function get_sequential_counter( $product_id ) {
 		if ( 'yes' === get_option( 'wcj_sku_number_generation_sequential_by_cat', 'no' ) ) {
@@ -112,7 +112,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku_with_variable.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @todo    `as_variable_with_suffix` - handle cases with more than 26 variations
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
@@ -168,7 +168,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview, $parent_product_id, $_product ) {
 
@@ -219,8 +219,8 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * maybe_get_sequential_counters.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function maybe_get_sequential_counters() {
 		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
@@ -239,8 +239,8 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * maybe_save_sequential_counters.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function maybe_save_sequential_counters( $is_preview = false ) {
 		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) && ! $is_preview ) {
@@ -258,7 +258,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_all_products_skus.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function set_all_products_skus( $is_preview ) {
 		$this->maybe_get_sequential_counters();
@@ -288,8 +288,8 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_new_product_sku_on_duplicate.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function set_new_product_sku_on_duplicate( $post_ID, $post ) {
 		$this->maybe_get_sequential_counters();
@@ -300,7 +300,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku_for_new_product.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function set_sku_for_new_product( $post_ID, $post, $update ) {
 		if ( 'product' != $post->post_type ) {
@@ -316,7 +316,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * create_sku_tool
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function create_sku_tool() {
 		$result_message = '';
@@ -360,8 +360,8 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * search_post_join.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function search_post_join( $join = '' ) {
 		global $wp_the_query;
@@ -375,8 +375,8 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * search_post_where.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function search_post_where( $where = '' ) {
 		global $wp_the_query;
@@ -390,8 +390,8 @@ class WCJ_SKU extends WCJ_Module {
 	/*
 	 * add_search_by_sku_to_frontend.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function add_search_by_sku_to_frontend( $query ) {
 		if (

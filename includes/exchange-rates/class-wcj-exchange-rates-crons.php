@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exchange Rates Crons
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -77,7 +77,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * On the scheduled action hook, run a function.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function update_the_exchange_rates( $interval ) {
 

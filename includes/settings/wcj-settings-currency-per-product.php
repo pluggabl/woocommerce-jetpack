@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency per Product
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

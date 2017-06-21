@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Images
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -93,7 +93,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * customize_archive_product_image_html.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.2.6
 	 */
 	function customize_archive_product_image_html() {
@@ -130,7 +130,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * customize_single_product_image_html.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function customize_single_product_image_html( $image_link, $post_id ) {
 		if ( '' != ( $html_single = get_post_meta( $post_id, '_' . 'wcj_product_images_meta_custom_on_single', true ) ) ) {
@@ -148,7 +148,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * customize_single_product_image_thumbnail_html.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function customize_single_product_image_thumbnail_html( $image_link ) {
 		$post_id = get_the_ID();

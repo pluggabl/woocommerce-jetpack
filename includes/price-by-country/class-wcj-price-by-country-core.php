@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function __construct() {
 		$this->customer_country_group_id = null;
@@ -30,8 +30,8 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * maybe_init.
 	 *
-	 * @version 2.8.3
-	 * @version 2.8.3
+	 * @version 2.9.0
+	 * @version 2.9.0
 	 */
 	function maybe_init() {
 		if (
@@ -50,8 +50,8 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * maybe_init_customer_country_by_ip.
 	 *
-	 * @version 2.8.3
-	 * @version 2.8.3
+	 * @version 2.9.0
+	 * @version 2.9.0
 	 */
 	function maybe_init_customer_country_by_ip() {
 		if ( 'by_ip_then_by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ) {
@@ -66,7 +66,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function add_hooks() {
 

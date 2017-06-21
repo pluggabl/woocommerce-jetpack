@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 2.8.3
- * @since   2.8.3
+ * @version 2.9.0
+ * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    (maybe) custom user nodes
 	 * @todo    (maybe) optional nodes selection
 	 * @todo    (maybe) add WooCommerce versions (from / to) to nodes
@@ -55,8 +55,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * reload_page_after_settings_save.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    (maybe) somehow add "Your settings have been saved." admin notice
 	 */
 	function reload_page_after_settings_save( $sections, $current_section ) {
@@ -70,8 +70,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_admin_bar_icon_style.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function add_booster_admin_bar_icon_style() {
 		echo '<style type="text/css"> #wpadminbar #wp-admin-bar-booster .ab-icon:before { content: "\f185"; top: 3px; } </style>';
@@ -80,8 +80,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_bar_icon_style.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function add_woocommerce_admin_bar_icon_style() {
 		echo '<style type="text/css"> #wpadminbar #wp-admin-bar-wcj-wc .ab-icon:before { content: "\f174"; top: 3px; } </style>';
@@ -90,8 +90,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_bar_nodes.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function add_woocommerce_admin_bar_nodes( $wp_admin_bar, $nodes, $parent_id ) {
 		foreach ( $nodes as $node_id => $node ) {
@@ -117,8 +117,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * get_nodes_booster_modules.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    (maybe) dashes instead of underscores
 	 * @todo    (maybe) dashboard > alphabetically - list all modules
 	 * @todo    (maybe) dashboard > by_category - list all modules
@@ -186,8 +186,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * usort_compare_by_title.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function usort_compare_by_title( $a, $b ) {
 		if ( $a['title'] == $b['title'] ) {
@@ -199,8 +199,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * get_nodes_booster_tools.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function get_nodes_booster_tools() {
 		$nodes = array();
@@ -226,8 +226,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_admin_bar.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function add_booster_admin_bar( $wp_admin_bar ) {
 		$nodes = array(
@@ -257,8 +257,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * get_nodes_orders_reports.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function get_nodes_orders_reports() {
 		$nodes = array();
@@ -298,8 +298,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_bar.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    (maybe) reports > customers > customers > add dates
 	 * @todo    (maybe) reports > taxes > taxes_by_code > add dates
 	 * @todo    (maybe) reports > taxes > taxes_by_date > add dates

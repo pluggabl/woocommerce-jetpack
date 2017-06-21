@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -109,8 +109,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_users_as_options.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    (maybe) move to global functions
 	 */
 	function get_users_as_options() {
@@ -124,8 +124,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_product_currency.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function get_product_currency( $product_id ) {
 		// By users or user roles
@@ -184,7 +184,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * validate_on_add_to_cart.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.7.0
 	 */
 	function validate_on_add_to_cart( $passed, $product_id ) {
@@ -219,7 +219,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * grouped_price_html.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.5.2
 	 */
 	function grouped_price_html( $price_html, $_product ) {
@@ -336,7 +336,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * add_cart_item_data.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.5.2
 	 */
 	function add_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
@@ -363,7 +363,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_current_product_id_and_currency.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.7.0
 	 */
 	function get_current_product_id_and_currency() {

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Breadcrumbs
  *
- * @version 2.8.3
- * @since   2.8.3
+ * @version 2.9.0
+ * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    recheck filter: `woocommerce_get_breadcrumb`
 	 * @todo    recheck filter: `woocommerce_structured_data_breadcrumblist`; action: `woocommerce_breadcrumb`;
 	 * @todo    recheck filter: `woocommerce_breadcrumb_defaults`; action: `woocommerce_breadcrumb`
@@ -47,8 +47,8 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 	/**
 	 * change_home_url.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function change_home_url( $_url ) {
 		return get_option( 'wcj_breadcrumbs_home_url', home_url() );
@@ -57,8 +57,8 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 	/**
 	 * hide_breadcrumbs_with_css.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    (maybe) add more identifiers
 	 */
 	function hide_breadcrumbs_with_css() {
@@ -75,8 +75,8 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 	/**
 	 * hide_breadcrumbs_by_removing_action.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @see     `add_action( 'woocommerce_before_main_content', 'woocommerce_breadcrumb', 20, 0 );`
 	 */
 	function hide_breadcrumbs_by_removing_action() {

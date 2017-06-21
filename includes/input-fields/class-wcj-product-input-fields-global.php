@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Global
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Product_Input_Fields_Global extends WCJ_Product_Input_Fields_Abstract 
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function __construct() {
 

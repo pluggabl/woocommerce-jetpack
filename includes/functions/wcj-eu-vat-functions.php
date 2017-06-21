@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Functions - EU VAT
  *
- * @version 2.8.3
- * @version 2.8.3
+ * @version 2.9.0
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -13,7 +13,7 @@ if ( ! function_exists( 'wcj_validate_vat_no_soap' ) ) {
 	/**
 	 * wcj_validate_vat_no_soap.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.5.7
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 */
@@ -50,7 +50,7 @@ if ( ! function_exists( 'wcj_validate_vat_soap' ) ) {
 	/**
 	 * wcj_validate_vat_soap.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 */
 	function wcj_validate_vat_soap( $country_code, $vat_number ) {
@@ -78,8 +78,8 @@ if ( ! function_exists( 'wcj_validate_vat_with_method' ) ) {
 	/**
 	 * wcj_validate_vat_with_method.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 */
 	function wcj_validate_vat_with_method( $country_code, $vat_number, $method ) {
@@ -96,8 +96,8 @@ if ( ! function_exists( 'wcj_validate_vat' ) ) {
 	/**
 	 * wcj_validate_vat.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 */
 	function wcj_validate_vat( $country_code, $vat_number ) {

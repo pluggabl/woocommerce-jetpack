@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 2.8.3
- * @since   2.8.3
+ * @version 2.9.0
+ * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    more "Offer price" button position options
 	 * @todo    ~ per product
 	 * @todo    for all products with empty price
@@ -49,8 +49,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * delete_offer_price_product_history.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    validate wcj meta box
 	 * @todo    (maybe) add successful deletion notice
 	 */
@@ -64,8 +64,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * add_offer_price_history_meta_box.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function add_offer_price_history_meta_box() {
 		add_meta_box(
@@ -81,8 +81,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * create_offer_price_history_meta_box.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    (maybe) more info (e.g. average offer price)
 	 */
 	function create_offer_price_history_meta_box() {
@@ -120,8 +120,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @see     https://www.w3schools.com/howto/howto_css_modals.asp
 	 */
 	function enqueue_scripts() {
@@ -132,8 +132,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * is_offer_price_enabled_for_current_product.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function is_offer_price_enabled_for_current_product() {
 		if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
@@ -145,8 +145,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * add_offer_price_button.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    price - default, ~step, ~min and ~max (global and per product)
 	 * @todo    (maybe) optional, additional and custom form fields
 	 * @todo    archives
@@ -246,8 +246,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * offer_price.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    check if mail has really been sent
 	 * @todo    "send a copy to me (i.e. customer)" checkbox
 	 * @todo    (maybe) sanitize $_POST

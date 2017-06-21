@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -45,8 +45,8 @@ if ( ! function_exists( 'wcj_remove_change_price_hooks' ) ) {
 	/**
 	 * wcj_remove_change_price_hooks.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    make one function from this and `wcj_add_change_price_hooks()`
 	 */
 	function wcj_remove_change_price_hooks( $module_object, $priority, $include_shipping = true ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @todo    (maybe) pre-calculate profit for orders
 	 * @todo    (maybe) "Apply costs to orders that do not have costs set"
 	 * @todo    (maybe) "Apply costs to all orders, overriding previous costs"
@@ -65,8 +65,8 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * create_import_from_wc_cog_tool.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function create_import_from_wc_cog_tool() {
 		// Action and Products list
@@ -105,8 +105,8 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * add_product_columns.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    (maybe) output columns immediately after standard "Price"
 	 */
 	function add_product_columns( $columns ) {
@@ -122,8 +122,8 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * render_product_columns.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    variable products when `if ( 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) )`
 	 */
 	function render_product_columns( $column ) {

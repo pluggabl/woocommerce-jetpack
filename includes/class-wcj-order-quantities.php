@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Order Quantities
  *
- * @version 2.8.3
- * @since   2.8.3
+ * @version 2.9.0
+ * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    quantities per item - per product
 	 * @todo    (maybe) do not allow to add/remove items (instead of just printing messages)
 	 * @todo    (maybe) order quantities by user roles
@@ -44,8 +44,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * stop_from_seeing_checkout.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function stop_from_seeing_checkout() {
 		if ( ! isset( WC()->cart ) ) {
@@ -76,8 +76,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * print_message.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function print_message( $message_type, $_is_cart, $required_quantity, $total_quantity, $_product_id = 0 ) {
 		if ( $_is_cart ) {
@@ -134,8 +134,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * check_quantities.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function check_quantities( $min_or_max, $cart_item_quantities, $cart_total_quantity, $_is_cart, $_return ) {
 		if ( 0 != ( $min_or_max_cart_total_quantity = get_option( 'wcj_order_quantities_' . $min_or_max . '_cart_total_quantity', 0 ) ) ) {
@@ -172,8 +172,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * check_order_quantities.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function check_order_quantities() {
 		if ( ! isset( WC()->cart ) ) {

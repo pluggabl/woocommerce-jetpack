@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -12,8 +12,8 @@ if ( ! function_exists( 'wcj_get_order_statuses_v2' ) ) {
 	/**
 	 * wcj_get_order_statuses_v2.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    check `wcj_get_order_statuses`
 	 */
 	function wcj_get_order_statuses_v2() {
@@ -145,7 +145,7 @@ if ( ! function_exists( 'wcj_get_product_id' ) ) {
 	/**
 	 * wcj_get_product_id.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.7.0
 	 */
 	function wcj_get_product_id( $_product ) {
@@ -164,7 +164,7 @@ if ( ! function_exists( 'wcj_get_product_id_or_variation_parent_id' ) ) {
 	/**
 	 * wcj_get_product_id_or_variation_parent_id.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.7.0
 	 */
 	function wcj_get_product_id_or_variation_parent_id( $_product ) {
@@ -719,7 +719,7 @@ if ( ! function_exists( 'wcj_get_wcj_uploads_dir' ) ) {
 	/**
 	 * wcj_get_wcj_uploads_dir.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @todo    no need to `mkdir` after `wcj_get_wcj_uploads_dir`
 	 */
 	function wcj_get_wcj_uploads_dir( $subdir = '' ) {
@@ -880,8 +880,8 @@ if ( ! function_exists( 'wcj_get_the_terms' ) ) {
 	/**
 	 * wcj_get_the_terms.
 	 *
-	 * @version 2.8.3
-	 * @version 2.8.3
+	 * @version 2.9.0
+	 * @version 2.9.0
 	 */
 	function wcj_get_the_terms( $product_id, $taxonomy ) {
 		$result = array();

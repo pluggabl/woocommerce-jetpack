@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -10,8 +10,8 @@ if ( ! function_exists( 'wcj_get_fonts_list' ) ) {
 	/**
 	 * wcj_get_fonts_list.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function wcj_get_fonts_list() {
 		return array(
@@ -88,8 +88,8 @@ if ( ! function_exists( 'wcj_get_tcpdf_font' ) ) {
 	/**
 	 * wcj_get_tcpdf_font.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function wcj_get_tcpdf_font( $invoice_type ) {
 		return (  wcj_check_tcpdf_fonts_version( true ) ?
@@ -103,11 +103,11 @@ if ( ! function_exists( 'wcj_get_tcpdf_fonts_version' ) ) {
 	/**
 	 * wcj_get_tcpdf_fonts_version.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function wcj_get_tcpdf_fonts_version() {
-		return '2.8.3-dev-201705270128';
+		return '2.9.0';
 	}
 }
 
@@ -115,8 +115,8 @@ if ( ! function_exists( 'wcj_check_tcpdf_fonts_version' ) ) {
 	/**
 	 * wcj_check_tcpdf_fonts_version.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function wcj_check_tcpdf_fonts_version( $force_file_check = false ) {
 		if ( 'yes' === get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
@@ -141,8 +141,8 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 	/**
 	 * wcj_check_and_maybe_download_tcpdf_fonts.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    (maybe) check file size > 0 or even for exact size (not only if file exists in directory)
 	 * @todo    (maybe) use `download_url()` instead of `file_get_contents()` or `curl` (in all Booster files)
 	 */
@@ -314,7 +314,7 @@ if ( ! function_exists( 'wcj_get_invoice_date' ) ) {
 	/*
 	 * wcj_get_invoice_date.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function wcj_get_invoice_date( $order_id, $invoice_type_id, $extra_days, $date_format ) {
 		$the_invoice = wcj_get_invoice( $order_id, $invoice_type_id );

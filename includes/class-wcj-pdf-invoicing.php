@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -310,8 +310,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * check_user_roles.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @todo    apply user role checking to other actions - create etc.
 	 * @todo    check if `current_user_can( 'administrator' )` is the same as checking role directly
 	 */
@@ -334,8 +334,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * wrong_user_role_notice.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function wrong_user_role_notice() {
 		echo '<div class="notice notice-error is-dismissible"><p>' . __( 'You are not allowed to view the invoice.', 'woocommerce-jetpack' ) . '</p></div>';
@@ -344,7 +344,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * generate_pdf_on_init.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function generate_pdf_on_init() {
 

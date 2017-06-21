@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 2.8.3
- * @since   2.8.3
+ * @version 2.9.0
+ * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function __construct() {
 
@@ -37,8 +37,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/*
 	 * maybe_add_my_account_order_actions.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 * @see     http://snippet.fm/snippets/add-order-complete-action-to-woocommerce-my-orders-customer-table/
 	 */
 	function maybe_add_my_account_order_actions( $actions, $order ) {
@@ -63,8 +63,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/*
 	 * maybe_add_js_conformation.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function maybe_add_js_conformation() {
 		$statuses_to_add = get_option( 'wcj_my_account_add_order_status_actions', '' );
@@ -81,8 +81,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/*
 	 * process_woocommerce_mark_order_status.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function process_woocommerce_mark_order_status() {
 		if (

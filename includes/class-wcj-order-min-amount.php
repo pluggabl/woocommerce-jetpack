@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Minimum Amount
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -105,7 +105,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * order_minimum_amount.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @todo    `wcj_order_minimum_amount_checkout_notice_type`
 	 */
 	function order_minimum_amount() {

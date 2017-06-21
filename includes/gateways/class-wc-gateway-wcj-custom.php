@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Custom Payment Gateway
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 			/**
 			 * WC_Gateway_WCJ_Custom_Template class.
 			 *
-			 * @version 2.8.3
+			 * @version 2.9.0
 			 */
 			class WC_Gateway_WCJ_Custom_Template extends WC_Payment_Gateway {
 
@@ -307,7 +307,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * Process the payment and return the result
 				 *
-				 * @version 2.8.3
+				 * @version 2.9.0
 				 * @param   int $order_id
 				 * @return  array
 				 */

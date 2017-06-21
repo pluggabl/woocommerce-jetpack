@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Settings_Custom_Fields {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.8.0
 	 */
 	function __construct() {
@@ -34,8 +34,8 @@ class WCJ_Settings_Custom_Fields {
 	/**
 	 * output_wcj_save_settings_button.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function output_wcj_save_settings_button( $value ) {
 		// Output

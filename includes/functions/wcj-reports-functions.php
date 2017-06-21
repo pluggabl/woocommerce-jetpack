@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Functions - Reports
  *
- * @version 2.8.3
- * @version 2.8.3
+ * @version 2.9.0
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_get_product_sales_daily_report_columns' ) ) {
 	/*
 	 * wcj_get_product_sales_daily_report_columns.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function wcj_get_product_sales_daily_report_columns() {
 		return array(
@@ -38,8 +38,8 @@ if ( ! function_exists( 'wcj_get_reports_standard_ranges' ) ) {
 	/*
 	 * wcj_get_reports_standard_ranges.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function wcj_get_reports_standard_ranges() {
 		return array(
@@ -71,8 +71,8 @@ if ( ! function_exists( 'wcj_get_reports_custom_ranges' ) ) {
 	/*
 	 * wcj_get_reports_custom_ranges.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function wcj_get_reports_custom_ranges() {
 		return array(

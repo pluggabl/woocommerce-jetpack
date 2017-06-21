@@ -59,7 +59,7 @@
  */
 //define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
 ////////////////////////////////////////////
-// Algoritmika - Booster - version 2.8.3 / since 2.8.3
+// Algoritmika - Booster - version 2.9.0 / since 2.9.0
 if ( wcj_check_tcpdf_fonts_version( true ) ) {
 	define( 'K_PATH_FONTS', wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/' );
 }

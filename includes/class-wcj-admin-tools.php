@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -129,7 +129,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * create_admin_tools_tool.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 */
 	function create_admin_tools_tool() {
 		// Notice

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products per Page
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.6.0
  * @author  Algoritmika Ltd.
  */
@@ -42,7 +42,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * add_products_per_page_form.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.5.3
 	 */
 	function add_products_per_page_form() {
@@ -100,7 +100,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * set_products_per_page_number.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.5.3
 	 */
 	function set_products_per_page_number( $products_per_page ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - User Roles
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -13,7 +13,7 @@ if ( ! function_exists( 'is_shop_manager' ) ) {
 	/**
 	 * is_shop_manager.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @return  bool
 	 */
 	function is_shop_manager( $user_id = 0 ) {
@@ -96,7 +96,7 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 	/**
 	 * wcj_is_user_role.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.5.0
 	 * @return  bool
 	 */

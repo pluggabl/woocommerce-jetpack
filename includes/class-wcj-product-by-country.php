@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -56,8 +56,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * add_product_columns.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function add_product_columns( $columns ) {
 		$columns[ 'wcj_product_by_country_visible_countries' ] = __( 'Countries', 'woocommerce-jetpack' );
@@ -67,8 +67,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * render_product_column.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function render_product_column( $column ) {
 		if ( 'wcj_product_by_country_visible_countries' === $column ) {
@@ -83,8 +83,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * product_by_country_pre_get_posts.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function product_by_country_pre_get_posts( $query ) {
 		if ( is_admin() ) {
@@ -116,8 +116,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * product_by_country_purchasable.
 	 *
-	 * @version 2.8.3
-	 * @since   2.8.3
+	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function product_by_country_purchasable( $purchasable, $_product ) {
 		return $this->product_by_country( $purchasable, wcj_get_product_id_or_variation_parent_id( $_product ) );

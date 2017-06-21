@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 2.8.3
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -46,7 +46,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * shop_order_pre_get_posts_order_by_column.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.5.8
 	 */
 	function shop_order_pre_get_posts_order_by_column( $query ) {
@@ -66,7 +66,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Make columns sortable.
 	 *
-	 * @version 2.8.3
+	 * @version 2.9.0
 	 * @since   2.5.8
 	 * @param   array $columns
 	 * @return  array
