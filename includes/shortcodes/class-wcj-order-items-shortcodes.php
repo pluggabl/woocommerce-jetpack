@@ -409,11 +409,14 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 							}
 							// "WooCommerce TM Extra Product Options" plugin options
 							// todo - this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency).
-							if ( isset( $item['tmcartepo_data'] ) ) {
-								$options = unserialize( $item['tmcartepo_data'] );
+							$tmcartepo_data = ( WCJ_IS_WC_VERSION_BELOW_3 ?
+								( isset( $item['tmcartepo_data'] ) ? unserialize( $item['tmcartepo_data'] ) : '' ) :
+								$item->get_meta( '_tmcartepo_data' )
+							);
+							if ( ! empty( $tmcartepo_data ) ) {
 								$options_prices = array();
 //								$order_currency = wcj_get_order_currency( $the_order );
-								foreach ( $options as $option ) {
+								foreach ( $tmcartepo_data as $option ) {
 									/* if ( isset( $option['price_per_currency'][ $order_currency ] ) ) {
 										$options_prices[] = $this->wcj_price_shortcode( $option['price_per_currency'][ $order_currency ], $atts );
 									} */
