@@ -6,7 +6,7 @@
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  * @todo    recheck if all button positions working properly
- * @todo    more info about position priority
+ * @todo    ! more info about position priority
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -83,6 +83,7 @@ return array(
 	),
 	array(
 		'desc'     => __( 'Position Priority (i.e. Order)', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Standard priorities for "Inside single product summary": title - 5, rating - 10, price - 10, excerpt - 20, add to cart - 30, meta - 40, sharing - 50', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_button_position_priority',
 		'type'     => 'number',
 		'default'  => 31,
