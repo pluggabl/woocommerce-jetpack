@@ -147,7 +147,6 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    price - default (global and per product)
 	 * @todo    (maybe) optional, additional and custom form fields
 	 * @todo    archives
 	 * @todo    customizable fields labels
@@ -158,6 +157,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @todo    more info if logged user (e.g. user id)
 	 * @todo    logged user - check `nickname` and `billing_email`
 	 * @todo    ~ required asterix
+	 * @todo    style options for input fields
 	 */
 	function add_offer_price_button() {
 		$product_id = get_the_ID();
@@ -211,13 +211,18 @@ class WCJ_Offer_Price extends WCJ_Module {
 			get_option( 'wcj_offer_price_min_price', 0 ) :
 			$min_price_per_product
 		);
+		$default_price = ( '' === ( $default_price_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_default_price', true ) ) ?
+			get_option( 'wcj_offer_price_default_price', 0 ) :
+			$default_price_per_product
+		);
+		$default_price_html = ( 0 != $default_price ? ' value="' . $default_price . '"' : '' );
 		$offer_form_content_price = '<label for="wcj-offer-price-price">' .
 			str_replace(
 				'%currency_symbol%',
 				get_woocommerce_currency_symbol(),
 				sprintf( __( 'Your price (%s)', 'woocommerce-jetpack' ), '%currency_symbol%' )
 			) . ' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
-			'<input type="number" required id="wcj-offer-price-price" name="wcj-offer-price-price" step="' . $price_step . '"' .
+			'<input type="number" required id="wcj-offer-price-price" name="wcj-offer-price-price" ' . $default_price_html . 'step="' . $price_step . '"' .
 				' min="' . $min_price . '"' . $max_price_html . '>';
 		// Offer form - content - email
 		$offer_form_content_email = '<label for="wcj-offer-price-customer-email">' . __( 'Your email', 'woocommerce-jetpack' ) .

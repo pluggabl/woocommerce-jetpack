@@ -54,6 +54,14 @@ return array(
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
+		'title'    => __( 'Default Price', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set zero to disable.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_default_price',
+		'type'     => 'number',
+		'default'  => 0,
+		'custom_attributes' => array( 'min' => 0 ),
+	),
+	array(
 		'title'    => __( 'Button Label', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_button_label',
 		'type'     => 'text',

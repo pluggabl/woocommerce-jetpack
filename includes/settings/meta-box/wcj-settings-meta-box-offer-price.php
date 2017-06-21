@@ -48,4 +48,13 @@ return array(
 		'placeholder' => get_option( 'wcj_offer_price_max_price', 0 ),
 		'custom_attributes' => 'min="0"',
 	),
+	array(
+		'title'    => __( 'Default Price', 'woocommerce-jetpack' ),
+		'tooltip'  => __( 'Set zero to disable.', 'woocommerce-jetpack' ) . ' ' . __( 'Leave blank to use global value.', 'woocommerce-jetpack' ),
+		'name'     => 'wcj_offer_price_default_price',
+		'default'  => '',
+		'type'     => 'number',
+		'placeholder' => get_option( 'wcj_offer_price_default_price', 0 ),
+		'custom_attributes' => 'min="0"',
+	),
 );
