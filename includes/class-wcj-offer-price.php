@@ -18,9 +18,11 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    archives (e.g. `woocommerce_after_shop_loop_item`)
 	 * @todo    more "Offer price" button position options (on both single and archives)
 	 * @todo    per product (rethink 'Enable for All Products' and 'Enable per Product' compatibility)
-	 * @todo    for all products with empty price
+	 * @todo    add 'enable for all products with empty price' option
+	 * @todo    recheck multicurrency
 	 * @todo    (maybe) variations and grouped products
 	 */
 	function __construct() {
@@ -34,7 +36,6 @@ class WCJ_Offer_Price extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) || 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
 				add_action( 'woocommerce_single_product_summary', array( $this, 'add_offer_price_button' ), 31 );
-//				add_action( 'woocommerce_after_shop_loop_item',   array( $this, 'add_offer_price_button' ) );
 				add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
 				add_action( 'init',                               array( $this, 'offer_price' ) );
 				if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
@@ -160,8 +161,6 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    (maybe) optional, additional and custom form fields
-	 * @todo    archives
 	 * @todo    customizable fields labels
 	 * @todo    form template
 	 * @todo    ~ empty footer / header
@@ -171,6 +170,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @todo    logged user - check `nickname` and `billing_email`
 	 * @todo    ~ required asterix
 	 * @todo    style options for input fields
+	 * @todo    (maybe) optional, additional and custom form fields
+	 * @todo    (maybe) "send a copy to me (i.e. customer)" checkbox
 	 */
 	function add_offer_price_button() {
 		$product_id = get_the_ID();
@@ -279,11 +280,9 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    check if mail has really been sent
-	 * @todo    "send a copy to me (i.e. customer)" checkbox
+	 * @todo    (maybe) fix "From" header
+	 * @todo    (maybe) check if mail has really been sent
 	 * @todo    (maybe) sanitize $_POST
-	 * @todo    check multicurrency
-	 * @todo    ! "From" header
 	 */
 	function offer_price() {
 		if ( isset( $_POST['wcj-offer-price-submit'] ) ) {
