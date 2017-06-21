@@ -19,7 +19,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @version 2.9.0
 	 * @since   2.9.0
 	 * @todo    more "Offer price" button position options (on both single and archives)
-	 * @todo    ~ per product
+	 * @todo    per product (rethink 'Enable for All Products' and 'Enable per Product' compatibility)
 	 * @todo    for all products with empty price
 	 * @todo    (maybe) variations and grouped products
 	 */
@@ -84,12 +84,12 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    (maybe) more info (e.g. average offer price)
 	 */
 	function create_offer_price_history_meta_box() {
 		if ( '' == ( $price_offers = get_post_meta( get_the_ID(), '_' . 'wcj_price_offers', true ) ) ) {
 			echo '<em>' . __( 'No price offers yet.', 'woocommerce-jetpack' ) . '</em>';
 		} else {
+			$average_offers = array();
 			$table_data = array();
 			$table_data[] = array(
 				__( 'Date', 'woocommerce-jetpack' ),
@@ -108,8 +108,19 @@ class WCJ_Offer_Price extends WCJ_Module {
 					$price_offer['customer_name'],
 					$price_offer['customer_email'],
 				);
+				if ( ! isset( $average_offers[ $price_offer['currency_code'] ] ) ) {
+					$average_offers[ $price_offer['currency_code'] ] = array( 'total_offers' => 0, 'offers_sum' => 0 );
+				}
+				$average_offers[ $price_offer['currency_code'] ]['total_offers']++;
+				$average_offers[ $price_offer['currency_code'] ]['offers_sum'] += $price_offer['offered_price'];
 			}
 			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
+			foreach ( $average_offers as $average_offer_currency_code => $average_offer_data ) {
+				echo '<p>' . sprintf( __( 'Average offer: %s (from %s offer(s))', 'woocommerce-jetpack' ),
+					wc_price( ( $average_offer_data['offers_sum'] / $average_offer_data['total_offers'] ), array( 'currency' => $average_offer_currency_code ) ),
+					$average_offer_data['total_offers']
+				) . '</p>';
+			}
 			echo '<p>' .
 				'<input type="checkbox" id="wcj_offer_price_delete_history" name="wcj_offer_price_delete_history">' .
 				'<label for="wcj_offer_price_delete_history">' . __( 'Delete history', 'woocommerce-jetpack' ) . '</label>' .
@@ -149,7 +160,6 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    rethink 'Enable for All Products' and 'Enable per Product' compatibility
 	 * @todo    (maybe) optional, additional and custom form fields
 	 * @todo    archives
 	 * @todo    customizable fields labels
