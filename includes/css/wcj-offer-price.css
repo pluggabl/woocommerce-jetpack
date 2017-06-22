@@ -35,6 +35,11 @@
 	animation-duration: 0.4s
 }
 
+/* Form */
+#wcj-offer-price-form {
+	padding-top: 20px;
+}
+
 /* Add Animation */
 @-webkit-keyframes animatetop {
 	from {top:-300px; opacity:0}

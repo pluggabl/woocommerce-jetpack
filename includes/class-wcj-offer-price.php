@@ -19,7 +19,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @version 2.9.0
 	 * @since   2.9.0
 	 * @todo    recheck `wp_footer` (didn't work with PHP_INT_MAX)? maybe `wp_head`?
-	 * @todo    css - different default colors
+	 * @todo    css - better default colors
 	 * @todo    settings - more info about position priorities, e.g.: __( 'Standard priorities for "Inside single product summary": title - 5, rating - 10, price - 10, excerpt - 20, add to cart - 30, meta - 40, sharing - 50', 'woocommerce-jetpack' )
 	 * @todo    (maybe) css - customizable colors, fonts etc.
 	 * @todo    (maybe) per product settings - add "use global values/use values below" for price step etc. (instead of placeholders etc.)
@@ -295,7 +295,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 			'<input type="checkbox" id="wcj-offer-price-customer-copy" name="wcj-offer-price-customer-copy" value="yes">';
 		// Content
 		$offer_form_content = '<div class="wcj-offer-price-modal-body">' .
-			'<form method="post">' .
+			'<form method="post" id="wcj-offer-price-form">' .
 				'<p>' . $offer_form_content_price   . '</p>' .
 				'<p>' . $offer_form_content_email   . '</p>' .
 				'<p>' . $offer_form_content_name    . '</p>' .
