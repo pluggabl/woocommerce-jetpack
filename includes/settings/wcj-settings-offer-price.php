@@ -71,6 +71,20 @@ return array(
 		'css'      => 'width:99%;',
 	),
 	array(
+		'title'    => __( 'Button CSS Class', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_button_class',
+		'type'     => 'text',
+		'default'  => 'button',
+		'css'      => 'width:99%;',
+	),
+	array(
+		'title'    => __( 'Button CSS Style', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_button_style',
+		'type'     => 'text',
+		'default'  => '',
+		'css'      => 'width:99%;',
+	),
+	array(
 		'title'    => __( 'Button Position On Single Product Page', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_button_position',
 		'type'     => 'select',

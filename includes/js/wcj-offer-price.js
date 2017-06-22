@@ -3,13 +3,32 @@
  *
  * @version 2.9.0
  * @since   2.9.0
+ * @todo    close on escape
  */
 
 // Get the modal
 var modal = jQuery('#wcj-offer-price-modal');
 
-// When the user clicks on the button, open the modal
-jQuery('#wcj-offer-price-button').click(function(){
+// When the user clicks on the button, fill in values and open the modal
+jQuery('.wcj-offer-price-button').click(function(){
+	// Get data
+	var wcj_data = jQuery.parseJSON(jQuery(this).attr('wcj_data'));
+	// Fill in price input
+	var price_input = jQuery('#wcj-offer-price-price');
+	price_input.attr('step',wcj_data['price_step']);
+	price_input.attr('min',wcj_data['min_price']);
+	if (0!=wcj_data['max_price']){
+		price_input.attr('max',wcj_data['max_price']);
+	}
+	if (0!=wcj_data['default_price']){
+		price_input.val(wcj_data['default_price']);
+	}
+	jQuery('#wcj-offer-price-price-label').html(wcj_data['price_label']);
+	// Fill in form header
+	jQuery('#wcj-offer-form-header').html(wcj_data['form_header']);
+	// Product ID (hidden input)
+	jQuery('#wcj-offer-price-product-id').val(wcj_data['product_id']);
+	// Show the form
 	modal.css('display','block');
 });
 
