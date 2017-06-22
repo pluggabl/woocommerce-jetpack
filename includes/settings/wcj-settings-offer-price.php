@@ -26,6 +26,13 @@ return array(
 		'default'  => 'no',
 	),
 	array(
+		'title'    => __( 'Enable for All Products with Empty Price', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_enabled_for_empty_prices',
+		'type'     => 'checkbox',
+		'default'  => 'no',
+	),
+	array(
 		'title'    => __( 'Enable per Product', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),

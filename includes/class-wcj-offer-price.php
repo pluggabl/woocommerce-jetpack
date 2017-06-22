@@ -19,9 +19,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @version 2.9.0
 	 * @since   2.9.0
 	 * @todo    !!! dev
-	 * @todo    ! per product (rethink 'Enable for All Products' and 'Enable per Product' compatibility)
-	 * @todo    ! are you sure about wp_footer (didn't work with PHP_INT_MAX)? maybe wp_head???
-	 * @todo    (maybe) add 'enable for all products with empty price' option
+	 * @todo    ! per product (rethink 'Enable for All Products' and 'Enable per Product' and 'Enable for All Products with Empty Price' compatibility)
+	 * @todo    ! recheck `wp_footer` (didn't work with PHP_INT_MAX)? maybe `wp_head`?
 	 * @todo    (maybe) recheck multicurrency
 	 * @todo    (maybe) more "Offer price" button position options (on both single and archives)
 	 * @todo    (maybe) variations and grouped products
@@ -40,7 +39,11 @@ class WCJ_Offer_Price extends WCJ_Module {
 		$this->dev = true;
 
 		if ( $this->is_enabled() ) {
-			if ( 'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) || 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
+			if (
+				'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) ||
+				'yes' === get_option( 'wcj_offer_price_enabled_for_empty_prices', 'no' ) ||
+				'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' )
+			) {
 				if ( 'disable' != ( $_hook = get_option( 'wcj_offer_price_button_position', 'woocommerce_single_product_summary' ) ) ) {
 					add_action(
 						$_hook,
@@ -174,6 +177,10 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @since   2.9.0
 	 */
 	function is_offer_price_enabled_for_product( $product_id ) {
+		if ( 'yes' === get_option( 'wcj_offer_price_enabled_for_empty_prices', 'no' ) ) {
+			$_product = wc_get_product( $product_id );
+			return ( '' === $_product->get_price() );
+		}
 		if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
 			return ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_offer_price_enabled', true ) );
 		}
