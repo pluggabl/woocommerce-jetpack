@@ -221,7 +221,8 @@ return array(
 	),
 	array(
 		'title'    => __( 'Email Recipient', 'woocommerce-jetpack' ),
-		'desc'     => sprintf( __( 'Leave blank to send to administrator email: %s', 'woocommerce-jetpack' ), '<code>' . get_option( 'admin_email' ) . '</code>' ),
+		'desc'     => sprintf( __( 'Leave blank to send to administrator email: %s.', 'woocommerce-jetpack' ), '<code>' . get_option( 'admin_email' ) . '</code>' ) .
+			' ' . sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%product_author_email%' . '</code>' ),
 		'id'       => 'wcj_offer_price_email_address',
 		'type'     => 'text',
 		'default'  => '',
