@@ -49,7 +49,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 					array( $this, 'add_offer_price_button' ),
 					get_option( 'wcj_offer_price_button_position_priority_archives', 10 )
 				);
-				add_action( 'wp_footer',                          array( $this, 'add_offer_price_form' ) );
+				add_action( 'wp_footer',                          array( $this, 'add_offer_price_form' ) ); // todo: are you sure about wp_footer, maybe wp_head???
 				add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
 				add_action( 'init',                               array( $this, 'offer_price' ) );
 				if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
