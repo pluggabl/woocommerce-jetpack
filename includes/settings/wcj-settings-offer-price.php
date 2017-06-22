@@ -111,7 +111,16 @@ return array(
 		'type'     => 'title',
 	),
 	array(
-		'title'    => __( 'Price Input - Price Step', 'woocommerce-jetpack' ),
+		'title'    => __( 'Price Input', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Label', 'woocommerce-jetpack' ) .
+			'. ' . sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%currency_symbol%' . '</code>' ),
+		'id'       => 'wcj_offer_price_price_label',
+		'type'     => 'custom_textarea',
+		'default'  => sprintf( __( 'Your price (%s)', 'woocommerce-jetpack' ), '%currency_symbol%' ),
+		'css'      => 'width:99%;',
+	),
+	array(
+		'desc'     => __( 'Price Step', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Number of decimals', 'woocommerce' ),
 		'id'       => 'wcj_offer_price_price_step',
 		'type'     => 'number',
@@ -119,14 +128,14 @@ return array(
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'title'    => __( 'Price Input - Minimal Price', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Minimal Price', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_min_price',
 		'type'     => 'number',
 		'default'  => 0,
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'title'    => __( 'Price Input - Maximal Price', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Maximal Price', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Set zero to disable.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_max_price',
 		'type'     => 'number',
@@ -134,7 +143,7 @@ return array(
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'title'    => __( 'Price Input - Default Price', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Default Price', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Set zero to disable.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_default_price',
 		'type'     => 'number',
@@ -142,7 +151,32 @@ return array(
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
+		'title'    => __( 'Customer Email', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Label', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_customer_email',
+		'type'     => 'custom_textarea',
+		'default'  => __( 'Your email', 'woocommerce-jetpack' ),
+		'css'      => 'width:99%;',
+	),
+	array(
+		'title'    => __( 'Customer Name', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Label', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_customer_name',
+		'type'     => 'custom_textarea',
+		'default'  => __( 'Your name', 'woocommerce-jetpack' ),
+		'css'      => 'width:99%;',
+	),
+	array(
+		'title'    => __( 'Customer Message', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Label', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_customer_message',
+		'type'     => 'custom_textarea',
+		'default'  => __( 'Your message', 'woocommerce-jetpack' ),
+		'css'      => 'width:99%;',
+	),
+	array(
 		'title'    => __( 'Form Header', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%product_title%' . '</code>' ),
 		'id'       => 'wcj_offer_price_form_header_template',
 		'type'     => 'custom_textarea',
 		'default'  => '<h3>' . sprintf( __( 'Suggest your price for %s', 'woocommerce-jetpack' ), '%product_title%' ) . '</h3>',
@@ -202,6 +236,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Email Template', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%product_title%, %offered_price%, %customer_name%, %customer_email%, %customer_message%' . '</code>' ),
 		'id'       => 'wcj_offer_price_email_template',
 		'type'     => 'custom_textarea',
 		'default'  => sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '%product_title%' ) . '<br>' . PHP_EOL .
