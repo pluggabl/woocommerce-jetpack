@@ -345,6 +345,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    product author email
 	 * @todo    (maybe) redirect (no notice though)
 	 * @todo    (maybe) `%product_title%` etc. in notice
 	 * @todo    (maybe) fix "From" header
