@@ -18,11 +18,12 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    ~archives (e.g. `woocommerce_after_shop_loop_item`)
-	 * @todo    more "Offer price" button position options (on both single and archives)
-	 * @todo    per product (rethink 'Enable for All Products' and 'Enable per Product' compatibility)
-	 * @todo    add 'enable for all products with empty price' option
-	 * @todo    recheck multicurrency
+	 * @todo    !!! dev
+	 * @todo    ! per product (rethink 'Enable for All Products' and 'Enable per Product' compatibility)
+	 * @todo    ! are you sure about wp_footer, maybe wp_head???
+	 * @todo    (maybe) add 'enable for all products with empty price' option
+	 * @todo    (maybe) recheck multicurrency
+	 * @todo    (maybe) more "Offer price" button position options (on both single and archives)
 	 * @todo    (maybe) variations and grouped products
 	 * @todo    (maybe) add shortcode
 	 * @todo    (maybe) option for disabling offers history
@@ -35,21 +36,25 @@ class WCJ_Offer_Price extends WCJ_Module {
 		$this->link_slug  = 'woocommerce-offer-your-product-price';
 		parent::__construct();
 
-		$this->dev = true; // todo
+		$this->dev = true;
 
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) || 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
-				add_action(
-					get_option( 'wcj_offer_price_button_position', 'woocommerce_single_product_summary' ), // todo - do not add
-					array( $this, 'add_offer_price_button' ),
-					get_option( 'wcj_offer_price_button_position_priority', 31 )
-				);
-				add_action(
-					get_option( 'wcj_offer_price_button_position_archives', 'woocommerce_after_shop_loop_item' ), // todo - option // todo - do not add
-					array( $this, 'add_offer_price_button' ),
-					get_option( 'wcj_offer_price_button_position_priority_archives', 10 )
-				);
-				add_action( 'wp_footer',                          array( $this, 'add_offer_price_form' ) ); // todo: are you sure about wp_footer, maybe wp_head???
+				if ( 'disable' != ( $_hook = get_option( 'wcj_offer_price_button_position', 'woocommerce_single_product_summary' ) ) ) {
+					add_action(
+						$_hook,
+						array( $this, 'add_offer_price_button' ),
+						get_option( 'wcj_offer_price_button_position_priority', 31 )
+					);
+				}
+				if ( 'disable' != ( $_hook = get_option( 'wcj_offer_price_button_position_archives', 'woocommerce_after_shop_loop_item' ) ) ) {
+					add_action(
+						$_hook,
+						array( $this, 'add_offer_price_button' ),
+						get_option( 'wcj_offer_price_button_position_priority_archives', 10 )
+					);
+				}
+				add_action( 'wp_footer',                          array( $this, 'add_offer_price_form' ) );
 				add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
 				add_action( 'init',                               array( $this, 'offer_price' ) );
 				if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
@@ -175,6 +180,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    ! check if per product is enabled
+	 * @todo    (maybe) recheck `str_replace( '\'', '"', ... )`
 	 */
 	function get_wcj_data_array( $product_id ) {
 		// Price input - price step
@@ -194,7 +201,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 			$max_price_per_product
 		);
 		// Price input - default price
-		$default_price = ( '' === ( $default_price_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_default_price', true ) ) ? // todo check if per product is enabled
+		$default_price = ( '' === ( $default_price_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_default_price', true ) ) ?
 			get_option( 'wcj_offer_price_default_price', 0 ) :
 			$default_price_per_product
 		);
@@ -215,8 +222,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 			'min_price'     => $min_price,
 			'max_price'     => $max_price,
 			'default_price' => $default_price,
-			'price_label'   => str_replace( '\'', '"', $price_label ), // +todo: single quotes
-			'form_header'   => str_replace( '\'', '"', $form_header ), // +todo: single quotes
+			'price_label'   => str_replace( '\'', '"', $price_label ),
+			'form_header'   => str_replace( '\'', '"', $form_header ),
 			'product_id'    => $product_id,
 		);
 	}
@@ -226,7 +233,17 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    ~output only once
+	 * @todo    customizable fields labels
+	 * @todo    form template
+	 * @todo    ~ empty footer / header
+	 * @todo    ~ wcj-close etc.
+	 * @todo    do_shortcode
+	 * @todo    more info if logged user (e.g. user id)
+	 * @todo    logged user - check `nickname` and `billing_email`
+	 * @todo    + required asterix
+	 * @todo    style options for input fields
+	 * @todo    (maybe) optional, additional and custom form fields
+	 * @todo    (maybe) "send a copy to me (i.e. customer)" checkbox
 	 */
 	function add_offer_price_form() {
 		// Prepare logged user data
@@ -248,13 +265,15 @@ class WCJ_Offer_Price extends WCJ_Module {
 		// Footer
 		$offer_form_footer = ( '' != ( $footer_template = get_option( 'wcj_offer_price_form_footer_template', '' ) ) ?
 			'<div class="modal-footer">' . /* do_shortcode */( $footer_template ) . '</div>' : '' );
+		// Required HTML
+		$required_html = get_option( 'wcj_offer_price_form_required_html', ' <abbr class="required" title="required">*</abbr>' );
 		// Content - price
 		$offer_form_content_price = '<label for="wcj-offer-price-price">' .
-			'<span id="wcj-offer-price-price-label"></span>' . ' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
+			'<span id="wcj-offer-price-price-label"></span>' . $required_html . '</label>' . '<br>' .
 			'<input type="number" required id="wcj-offer-price-price" name="wcj-offer-price-price">';
 		// Content - email
 		$offer_form_content_email = '<label for="wcj-offer-price-customer-email">' . __( 'Your email', 'woocommerce-jetpack' ) .
-			' ' . '<abbr class="required" title="required">*</abbr>' . '</label>' . '<br>' .
+			$required_html . '</label>' . '<br>' .
 			'<input type="email" required id="wcj-offer-price-customer-email" name="wcj-offer-price-customer-email" value="' . $customer_email . '">';
 		// Content - name
 		$offer_form_content_name = '<label for="wcj-offer-price-customer-name">' . __( 'Your name', 'woocommerce-jetpack' ) .
@@ -292,17 +311,6 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    customizable fields labels
-	 * @todo    form template
-	 * @todo    ~ empty footer / header
-	 * @todo    ~ wcj-close etc.
-	 * @todo    do_shortcode
-	 * @todo    more info if logged user (e.g. user id)
-	 * @todo    logged user - check `nickname` and `billing_email`
-	 * @todo    ~ required asterix
-	 * @todo    style options for input fields
-	 * @todo    (maybe) optional, additional and custom form fields
-	 * @todo    (maybe) "send a copy to me (i.e. customer)" checkbox
 	 */
 	function add_offer_price_button() {
 		$product_id = get_the_ID();
@@ -330,6 +338,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    `%product_title%` in notice
 	 * @todo    (maybe) fix "From" header
 	 * @todo    (maybe) check if mail has really been sent
 	 * @todo    (maybe) sanitize $_POST
@@ -371,7 +380,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'Reply-To: ' . $price_offer['customer_email'] . "\r\n";
 			wc_mail( $email_address, $email_subject, $email_content, $email_headers );
 			// Notice
-			wc_add_notice( get_option( 'wcj_offer_price_customer_notice', __( 'Your price offer has been sent.', 'woocommerce-jetpack' ) ), 'notice' ); // todo: %product_title%
+			wc_add_notice( get_option( 'wcj_offer_price_customer_notice', __( 'Your price offer has been sent.', 'woocommerce-jetpack' ) ), 'notice' );
 			// Product meta (Offer Price History)
 			if ( '' == ( $price_offers = get_post_meta( $_product_id, '_' . 'wcj_price_offers', true ) ) ) {
 				$price_offers = array();
