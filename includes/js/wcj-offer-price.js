@@ -3,31 +3,24 @@
  *
  * @version 2.9.0
  * @since   2.9.0
- * @todo    jQuery
  */
 
 // Get the modal
-var modal = document.getElementById('wcj-offer-price-modal');
-
-// Get the button that opens the modal
-var btn = document.getElementById('wcj-offer-price-button');
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("wcj-offer-price-form-close")[0];
+var modal = jQuery('#wcj-offer-price-modal');
 
 // When the user clicks on the button, open the modal
-btn.onclick = function() {
-	modal.style.display = "block";
-}
+jQuery('#wcj-offer-price-button').click(function(){
+	modal.css('display','block');
+});
 
 // When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-	modal.style.display = "none";
-}
+jQuery('.wcj-offer-price-form-close').first().click(function(){
+	modal.css('display','none');
+});
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-	if (event.target == modal) {
-		modal.style.display = "none";
+jQuery(window).click(function(e){
+	if (modal.is(e.target)){
+		modal.css('display','none');
 	}
-}
+});
