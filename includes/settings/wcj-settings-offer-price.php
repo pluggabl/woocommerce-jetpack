@@ -5,9 +5,6 @@
  * @version 2.9.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
- * @todo    recheck if all button positions working properly
- * @todo    ! more info about position priority
- * @todo    + multiple email recipients (comma separated)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -30,7 +27,6 @@ return array(
 			'empty_prices' => __( 'Enable for all products with empty price', 'woocommerce-jetpack' ),
 			'per_product'  => __( 'Enable per product', 'woocommerce-jetpack' ),
 		),
-
 		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
@@ -85,9 +81,10 @@ return array(
 	),
 	array(
 		'title'    => __( 'Position On Archive Pages', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Possible values: Do not add; Before product; Before product title; After product; After product title.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_button_position_archives',
 		'type'     => 'select',
-		'default'  => 'woocommerce_after_shop_loop_item',
+		'default'  => 'disable',
 		'options'  => array(
 			'disable'                                 => __( 'Do not add', 'woocommerce-jetpack' ),
 			'woocommerce_before_shop_loop_item'       => __( 'Before product', 'woocommerce-jetpack' ),
@@ -95,6 +92,8 @@ return array(
 			'woocommerce_after_shop_loop_item'        => __( 'After product', 'woocommerce-jetpack' ),
 			'woocommerce_after_shop_loop_item_title'  => __( 'After product title', 'woocommerce-jetpack' ),
 		),
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'desc'     => __( 'Position Priority (i.e. Order)', 'woocommerce-jetpack' ),

@@ -18,9 +18,14 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    !!! dev
-	 * @todo    ! per product (rethink 'Enable for All Products' and 'Enable per Product' and 'Enable for All Products with Empty Price' compatibility)
+	 * @todo    css - different default colors
+	 * @todo    recheck if all button positions working properly
+	 * @todo    ! settings - more info about position priority
+	 * @todo    + multiple email recipients (comma separated)
+	 * @todo    + per product (rethink 'Enable for All Products' and 'Enable per Product' and 'Enable for All Products with Empty Price' compatibility)
 	 * @todo    ! recheck `wp_footer` (didn't work with PHP_INT_MAX)? maybe `wp_head`?
+	 * @todo    (maybe) css - customizable colors, fonts etc.
+	 * @todo    (maybe) per product settings - add "use global values/use values below" for price step etc. (instead of placeholders etc.)
 	 * @todo    (maybe) recheck multicurrency
 	 * @todo    (maybe) more "Offer price" button position options (on both single and archives)
 	 * @todo    (maybe) variations and grouped products
@@ -36,8 +41,6 @@ class WCJ_Offer_Price extends WCJ_Module {
 		$this->link_slug  = 'woocommerce-offer-your-product-price';
 		parent::__construct();
 
-		$this->dev = true;
-
 		if ( $this->is_enabled() ) {
 			if ( 'disable' != ( $_hook = get_option( 'wcj_offer_price_button_position', 'woocommerce_single_product_summary' ) ) ) {
 				add_action(
@@ -46,7 +49,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 					get_option( 'wcj_offer_price_button_position_priority', 31 )
 				);
 			}
-			if ( 'disable' != ( $_hook = get_option( 'wcj_offer_price_button_position_archives', 'woocommerce_after_shop_loop_item' ) ) ) {
+			if ( 'disable' != ( $_hook = apply_filters( 'booster_get_option', 'disable', get_option( 'wcj_offer_price_button_position_archives', 'disable' ) ) ) ) {
 				add_action(
 					$_hook,
 					array( $this, 'add_offer_price_button' ),

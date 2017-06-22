@@ -5,7 +5,6 @@
  * @version 2.9.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
- * @todo    (maybe) add "use global values/use values below" for price step etc. (instead of placeholders etc.)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
