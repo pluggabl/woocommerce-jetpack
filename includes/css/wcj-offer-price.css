@@ -7,7 +7,7 @@
  */
 
 /* The Modal (background) */
-.modal {
+.wcj-offer-price-modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
 	z-index: 999999; /* Sit on top */
@@ -22,7 +22,7 @@
 }
 
 /* Modal Content */
-.modal-content {
+.wcj-offer-price-modal-content {
 	position: relative;
 	background-color: #fefefe;
 	margin: auto;
@@ -62,15 +62,15 @@
 	cursor: pointer;
 }
 
-.modal-header {
+.wcj-offer-modal-header {
 	padding: 2px 16px;
 	background-color: #5cb85c;
 	color: white;
 }
 
-.modal-body {padding: 2px 16px;}
+.wcj-offer-price-modal-body {padding: 2px 16px;}
 
-.modal-footer {
+.wcj-offer-price-modal-footer {
 	padding: 2px 16px;
 	background-color: #5cb85c;
 	color: white;

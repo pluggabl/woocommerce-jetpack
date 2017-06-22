@@ -20,13 +20,14 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @since   2.9.0
 	 * @todo    !!! dev
 	 * @todo    ! per product (rethink 'Enable for All Products' and 'Enable per Product' compatibility)
-	 * @todo    ! are you sure about wp_footer, maybe wp_head???
+	 * @todo    ! are you sure about wp_footer (didn't work with PHP_INT_MAX)? maybe wp_head???
 	 * @todo    (maybe) add 'enable for all products with empty price' option
 	 * @todo    (maybe) recheck multicurrency
 	 * @todo    (maybe) more "Offer price" button position options (on both single and archives)
 	 * @todo    (maybe) variations and grouped products
 	 * @todo    (maybe) add shortcode
 	 * @todo    (maybe) option for disabling offers history
+	 * @todo    (maybe) global (i.e. for all products) offers history
 	 */
 	function __construct() {
 
@@ -117,6 +118,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 				__( 'Message', 'woocommerce-jetpack' ),
 				__( 'Name', 'woocommerce-jetpack' ),
 				__( 'Email', 'woocommerce-jetpack' ),
+				__( 'Customer ID', 'woocommerce-jetpack' ),
 			);
 			$date_ant_time_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
 			$price_offers = array_reverse( $price_offers );
@@ -127,6 +129,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 					$price_offer['customer_message'],
 					$price_offer['customer_name'],
 					$price_offer['customer_email'],
+					$price_offer['customer_id'],
 				);
 				if ( ! isset( $average_offers[ $price_offer['currency_code'] ] ) ) {
 					$average_offers[ $price_offer['currency_code'] ] = array( 'total_offers' => 0, 'offers_sum' => 0 );
@@ -180,28 +183,29 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    ! check if per product is enabled
+	 * @todo    + check if per product is enabled
 	 * @todo    (maybe) recheck `str_replace( '\'', '"', ... )`
 	 */
 	function get_wcj_data_array( $product_id ) {
+		$is_per_product_enabled = ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) );
 		// Price input - price step
-		$price_step = ( '' === ( $price_step_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_price_step', true ) ) ?
+		$price_step = ( ! $is_per_product_enabled || '' === ( $price_step_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_price_step', true ) ) ?
 			get_option( 'wcj_offer_price_price_step', get_option( 'woocommerce_price_num_decimals' ) ) :
 			$price_step_per_product
 		);
 		$price_step = sprintf( "%f", ( 1 / pow( 10, absint( $price_step ) ) ) );
 		// Price input - min price
-		$min_price = ( '' === ( $min_price_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_min_price', true ) ) ?
+		$min_price = ( ! $is_per_product_enabled || '' === ( $min_price_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_min_price', true ) ) ?
 			get_option( 'wcj_offer_price_min_price', 0 ) :
 			$min_price_per_product
 		);
 		// Price input - max price
-		$max_price = ( '' === ( $max_price_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_max_price', true ) ) ?
+		$max_price = ( ! $is_per_product_enabled || '' === ( $max_price_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_max_price', true ) ) ?
 			get_option( 'wcj_offer_price_max_price', 0 ) :
 			$max_price_per_product
 		);
 		// Price input - default price
-		$default_price = ( '' === ( $default_price_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_default_price', true ) ) ?
+		$default_price = ( ! $is_per_product_enabled || '' === ( $default_price_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_default_price', true ) ) ?
 			get_option( 'wcj_offer_price_default_price', 0 ) :
 			$default_price_per_product
 		);
@@ -237,10 +241,10 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @todo    form template
 	 * @todo    ~ empty footer / header
 	 * @todo    ~ wcj-close etc.
-	 * @todo    do_shortcode
-	 * @todo    more info if logged user (e.g. user id)
-	 * @todo    logged user - check `nickname` and `billing_email`
-	 * @todo    + required asterix
+	 * @todo    (maybe) do_shortcode
+	 * @todo    + more info if logged user (e.g. user id)
+	 * @todo    (maybe) logged user - check `nickname` and `billing_email`
+	 * @todo    (maybe) better required asterix default
 	 * @todo    style options for input fields
 	 * @todo    (maybe) optional, additional and custom form fields
 	 * @todo    (maybe) "send a copy to me (i.e. customer)" checkbox
@@ -249,8 +253,10 @@ class WCJ_Offer_Price extends WCJ_Module {
 		// Prepare logged user data
 		$customer_name  = '';
 		$customer_email = '';
+		$customer_id    = 0;
 		if ( is_user_logged_in() ) {
 			$current_user = wp_get_current_user();
+			$customer_id  = $current_user->ID;
 			if ( '' != ( $meta = get_user_meta( $current_user->ID, 'nickname', true ) ) ) {
 				$customer_name = $meta;
 			}
@@ -259,12 +265,12 @@ class WCJ_Offer_Price extends WCJ_Module {
 			}
 		}
 		// Header
-		$offer_form_header = '<div class="modal-header">' .
+		$offer_form_header = '<div class="wcj-offer-modal-header">' .
 			'<span class="wcj-offer-price-form-close">&times;</span>' . '<div id="wcj-offer-form-header"></div>' .
 		'</div>';
 		// Footer
 		$offer_form_footer = ( '' != ( $footer_template = get_option( 'wcj_offer_price_form_footer_template', '' ) ) ?
-			'<div class="modal-footer">' . /* do_shortcode */( $footer_template ) . '</div>' : '' );
+			'<div class="wcj-offer-price-modal-footer">' . /* do_shortcode */( $footer_template ) . '</div>' : '' );
 		// Required HTML
 		$required_html = get_option( 'wcj_offer_price_form_required_html', ' <abbr class="required" title="required">*</abbr>' );
 		// Content - price
@@ -286,7 +292,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 		$offer_form_content_button = '<input type="submit" id="wcj-offer-price-submit" name="wcj-offer-price-submit" value="' .
 			get_option( 'wcj_offer_price_form_button_label', __( 'Send', 'woocommerce-jetpack' ) ) . '">';
 		// Content
-		$offer_form_content = '<div class="modal-body">' .
+		$offer_form_content = '<div class="wcj-offer-price-modal-body">' .
 			'<form method="post">' .
 				'<p>' . $offer_form_content_price . '</p>' .
 				'<p>' . $offer_form_content_email . '</p>' .
@@ -294,11 +300,12 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'<p>' . $offer_form_content_message . '</p>' .
 				'<p>' . $offer_form_content_button . '</p>' .
 				'<input type="hidden" id="wcj-offer-price-product-id" name="wcj-offer-price-product-id">' .
+				'<input type="hidden" name="wcj-offer-price-customer-id" value="' . $customer_id . '">' .
 			'</form>' .
 		'</div>';
 		// Final form
-		echo '<div id="wcj-offer-price-modal" class="modal">' .
-			'<div class="modal-content">' .
+		echo '<div id="wcj-offer-price-modal" class="wcj-offer-price-modal">' .
+			'<div class="wcj-offer-price-modal-content">' .
 				$offer_form_header .
 				$offer_form_content .
 				$offer_form_footer .
@@ -338,7 +345,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    `%product_title%` in notice
+	 * @todo    (maybe) redirect (no notice though)
+	 * @todo    (maybe) `%product_title%` etc. in notice
 	 * @todo    (maybe) fix "From" header
 	 * @todo    (maybe) check if mail has really been sent
 	 * @todo    (maybe) sanitize $_POST
@@ -355,6 +363,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'customer_message' => $_POST['wcj-offer-price-message'],
 				'customer_name'    => $_POST['wcj-offer-price-customer-name'],
 				'customer_email'   => $_POST['wcj-offer-price-customer-email'],
+				'customer_id'      => $_POST['wcj-offer-price-customer-id'],
 			);
 			// Email
 			$email_template = get_option( 'wcj_offer_price_email_template',

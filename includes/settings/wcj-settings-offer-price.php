@@ -7,6 +7,7 @@
  * @author  Algoritmika Ltd.
  * @todo    recheck if all button positions working properly
  * @todo    ! more info about position priority
+ * @todo    multiple email recipients (comma separated)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
