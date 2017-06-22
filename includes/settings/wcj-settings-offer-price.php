@@ -237,7 +237,7 @@ return array(
 			) . ' ' .
 			sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%admin_email%, %product_author_email%' . '</code>' ),
 		'id'       => 'wcj_offer_price_email_address',
-		'type'     => 'text',
+		'type'     => 'custom_textarea',
 		'default'  => '%admin_email%',
 		'css'      => 'width:99%;',
 	),

@@ -18,20 +18,19 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    css - different default colors
-	 * @todo    recheck if all button positions working properly
-	 * @todo    ! settings - more info about position priority
-	 * @todo    + multiple email recipients (comma separated)
-	 * @todo    + per product (rethink 'Enable for All Products' and 'Enable per Product' and 'Enable for All Products with Empty Price' compatibility)
+	 * @todo    (test) per product (rethink 'Enable for All Products' and 'Enable per Product' and 'Enable for All Products with Empty Price' compatibility)
+	 * @todo    (test) recheck if all button positions working properly
 	 * @todo    ! recheck `wp_footer` (didn't work with PHP_INT_MAX)? maybe `wp_head`?
+	 * @todo    ! settings - more info about position priorities
+	 * @todo    ! css - different default colors
 	 * @todo    (maybe) css - customizable colors, fonts etc.
 	 * @todo    (maybe) per product settings - add "use global values/use values below" for price step etc. (instead of placeholders etc.)
 	 * @todo    (maybe) recheck multicurrency
-	 * @todo    (maybe) more "Offer price" button position options (on both single and archives)
+	 * @todo    (maybe) more "Make an offer" button position options (on both single and archives)
 	 * @todo    (maybe) variations and grouped products
 	 * @todo    (maybe) add shortcode
-	 * @todo    (maybe) option for disabling offers history
-	 * @todo    (maybe) global (i.e. for all products) offers history
+	 * @todo    (maybe) offers history - option for disabling
+	 * @todo    (maybe) offers history - global (i.e. for all products)
 	 */
 	function __construct() {
 
@@ -73,7 +72,6 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    (maybe) validate wcj meta box
 	 * @todo    (maybe) add successful deletion notice
 	 */
 	function delete_offer_price_product_history( $post_id, $post ) {
@@ -190,8 +188,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    + check if per product is enabled
-	 * @todo    (maybe) recheck `str_replace( '\'', '"', ... )`
+	 * @todo    (maybe) rethink `str_replace( '\'', '"', ... )`
 	 */
 	function get_wcj_data_array( $product_id ) {
 		$is_per_product_enabled = ( 'per_product' === apply_filters( 'booster_get_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) );
@@ -244,17 +241,13 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    + wcj-close etc.
-	 * @todo    + more info if logged user (e.g. user id)
-	 * @todo    + customizable fields labels
-	 * @todo    ~ empty header
-	 * @todo    (maybe) style options for input fields
+	 * @todo    (maybe) fix when empty header
+	 * @todo    (maybe) style options for input fields (class, style)
 	 * @todo    (maybe) form template
-	 * @todo    (maybe) do_shortcode
+	 * @todo    (maybe) do_shortcode in form header and footer
 	 * @todo    (maybe) logged user - check `nickname` and `billing_email`
 	 * @todo    (maybe) better required asterix default
 	 * @todo    (maybe) optional, additional and custom form fields
-	 * @todo    + "send a copy to me (i.e. customer)" checkbox
 	 */
 	function add_offer_price_form() {
 		// Prepare logged user data
@@ -358,7 +351,6 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @version 2.9.0
 	 * @since   2.9.0
 	 * @todo    (maybe) separate customer copy email template and subject
-	 * @todo    + product author email
 	 * @todo    (maybe) redirect (no notice though)
 	 * @todo    (maybe) `%product_title%` etc. in notice
 	 * @todo    (maybe) fix "From" header
@@ -374,10 +366,16 @@ class WCJ_Offer_Price extends WCJ_Module {
 			if ( '' == $email_address ) {
 				$email_address = get_option( 'admin_email' );
 			} else {
-				$admin_email          = get_option( 'admin_email' );
-				$product_author_id    = get_post_field( 'post_author', $product_id );
-				$product_user_info    = get_userdata( $product_author_id );
-				$product_author_email = $product_user_info->user_email;
+				$admin_email = get_option( 'admin_email' );
+				if (
+					( $product_author_id = get_post_field( 'post_author', $product_id ) ) &&
+					( $product_user_info = get_userdata( $product_author_id ) ) &&
+					isset( $product_user_info->user_email )
+				) {
+					$product_author_email = $product_user_info->user_email;
+				} else {
+					$product_author_email = $admin_email;
+				}
 				$email_address = str_replace( array( '%admin_email%', '%product_author_email%' ), array( $admin_email, $product_author_email ), $email_address );
 			}
 			// Price offer array
