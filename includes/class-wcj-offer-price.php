@@ -134,7 +134,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 					$price_offer['customer_name'],
 					$price_offer['customer_email'],
 					$price_offer['customer_id'],
-					$price_offer['sent_to'],
+					$price_offer['sent_to'] . ( 'yes' === $price_offer['copy_to_customer'] ? '<br>' . $price_offer['customer_email'] : '' ),
 				);
 				if ( ! isset( $average_offers[ $price_offer['currency_code'] ] ) ) {
 					$average_offers[ $price_offer['currency_code'] ] = array( 'total_offers' => 0, 'offers_sum' => 0 );
@@ -256,7 +256,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @todo    (maybe) logged user - check `nickname` and `billing_email`
 	 * @todo    (maybe) better required asterix default
 	 * @todo    (maybe) optional, additional and custom form fields
-	 * @todo    (maybe) "send a copy to me (i.e. customer)" checkbox
+	 * @todo    + "send a copy to me (i.e. customer)" checkbox
 	 */
 	function add_offer_price_form() {
 		// Prepare logged user data
@@ -300,14 +300,19 @@ class WCJ_Offer_Price extends WCJ_Module {
 		// Content - button
 		$offer_form_content_button = '<input type="submit" id="wcj-offer-price-submit" name="wcj-offer-price-submit" value="' .
 			get_option( 'wcj_offer_price_form_button_label', __( 'Send', 'woocommerce-jetpack' ) ) . '">';
+		// Content - copy
+		$offer_form_content_copy = '<label for="wcj-offer-price-customer-copy">' . get_option( 'wcj_offer_price_customer_copy', __( 'Send a copy to your email', 'woocommerce-jetpack' ) ) .
+			'</label>' . ' ' .
+			'<input type="checkbox" id="wcj-offer-price-customer-copy" name="wcj-offer-price-customer-copy" value="yes">';
 		// Content
 		$offer_form_content = '<div class="wcj-offer-price-modal-body">' .
 			'<form method="post">' .
-				'<p>' . $offer_form_content_price . '</p>' .
-				'<p>' . $offer_form_content_email . '</p>' .
-				'<p>' . $offer_form_content_name . '</p>' .
+				'<p>' . $offer_form_content_price   . '</p>' .
+				'<p>' . $offer_form_content_email   . '</p>' .
+				'<p>' . $offer_form_content_name    . '</p>' .
 				'<p>' . $offer_form_content_message . '</p>' .
-				'<p>' . $offer_form_content_button . '</p>' .
+				'<p>' . $offer_form_content_button  . '</p>' .
+				'<p>' . $offer_form_content_copy    . '</p>' .
 				'<input type="hidden" id="wcj-offer-price-product-id" name="wcj-offer-price-product-id">' .
 				'<input type="hidden" name="wcj-offer-price-customer-id" value="' . $customer_id . '">' .
 			'</form>' .
@@ -354,6 +359,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    customer copy email subject
 	 * @todo    + product author email
 	 * @todo    (maybe) redirect (no notice though)
 	 * @todo    (maybe) `%product_title%` etc. in notice
@@ -386,6 +392,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'customer_name'    => $_POST['wcj-offer-price-customer-name'],
 				'customer_email'   => $_POST['wcj-offer-price-customer-email'],
 				'customer_id'      => $_POST['wcj-offer-price-customer-id'],
+				'copy_to_customer' => ( isset( $_POST['wcj-offer-price-customer-copy'] ) ? $_POST['wcj-offer-price-customer-copy'] : 'no' ),
 				'sent_to'          => $email_address,
 			);
 			// Email content
@@ -410,6 +417,9 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'Reply-To: ' . $price_offer['customer_email'] . "\r\n";
 			// Send email
 			wc_mail( $email_address, $email_subject, $email_content, $email_headers );
+			if ( 'yes' === $price_offer['copy_to_customer'] ) {
+				wc_mail( $price_offer['customer_email'], '[' . __( 'Copy', 'woocommerce-jetpack' ) . '] ' . $email_subject, $email_content, $email_headers );
+			}
 			// Notice
 			wc_add_notice( get_option( 'wcj_offer_price_customer_notice', __( 'Your price offer has been sent.', 'woocommerce-jetpack' ) ), 'notice' );
 			// Product meta (Offer Price History)

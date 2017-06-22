@@ -182,6 +182,14 @@ return array(
 		'css'      => 'width:99%;',
 	),
 	array(
+		'title'    => __( 'Send a Copy to Customer Checkbox', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Label', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_customer_copy',
+		'type'     => 'custom_textarea',
+		'default'  => __( 'Send a copy to your email', 'woocommerce-jetpack' ),
+		'css'      => 'width:99%;',
+	),
+	array(
 		'title'    => __( 'Form Header', 'woocommerce-jetpack' ),
 		'desc'     => sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%product_title%' . '</code>' ),
 		'id'       => 'wcj_offer_price_form_header_template',
