@@ -365,13 +365,18 @@ class WCJ_Offer_Price extends WCJ_Module {
 		if ( isset( $_POST['wcj-offer-price-submit'] ) ) {
 			$product_id  = $_POST['wcj-offer-price-product-id'];
 			$_product    = wc_get_product( $product_id );
-			if ( '' == ( $email_address = get_option( 'wcj_offer_price_email_address', '' ) ) ) {
+			// Email address
+			$email_address = get_option( 'wcj_offer_price_email_address', '%admin_email%' );
+			if ( '' == $email_address ) {
 				$email_address = get_option( 'admin_email' );
-			} elseif ( '%product_author_email%' === $email_address ) {
-				$product_author_id = get_post_field( 'post_author', $product_id );
-				$user_info         = get_userdata( $product_author_id );
-				$email_address     = $user_info->user_email;
+			} else {
+				$admin_email          = get_option( 'admin_email' );
+				$product_author_id    = get_post_field( 'post_author', $product_id );
+				$product_user_info    = get_userdata( $product_author_id );
+				$product_author_email = $product_user_info->user_email;
+				$email_address = str_replace( array( '%admin_email%', '%product_author_email%' ), array( $admin_email, $product_author_email ), $email_address );
 			}
+			// Price offer array
 			$price_offer = array(
 				'offer_timestamp'  => current_time( 'timestamp' ),
 				'product_title'    => $_product->get_title(),
@@ -383,7 +388,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'customer_id'      => $_POST['wcj-offer-price-customer-id'],
 				'sent_to'          => $email_address,
 			);
-			// Email
+			// Email content
 			$email_template = get_option( 'wcj_offer_price_email_template',
 				sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '%product_title%' ) . '<br>' . PHP_EOL .
 				sprintf( __( 'Offered price: %s', 'woocommerce-jetpack' ), '%offered_price%' ) . '<br>' . PHP_EOL .
@@ -398,10 +403,12 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'%customer_email%'   => $price_offer['customer_email'],
 			);
 			$email_content = str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), $email_template );
+			// Email subject and headers
 			$email_subject = get_option( 'wcj_offer_price_email_subject', __( 'Price Offer', 'woocommerce-jetpack' ) );
 			$email_headers = 'Content-Type: text/html' . "\r\n" .
 				'From: ' . $price_offer['customer_name'] . ' <' . $price_offer['customer_email'] . '>' . "\r\n" .
 				'Reply-To: ' . $price_offer['customer_email'] . "\r\n";
+			// Send email
 			wc_mail( $email_address, $email_subject, $email_content, $email_headers );
 			// Notice
 			wc_add_notice( get_option( 'wcj_offer_price_customer_notice', __( 'Your price offer has been sent.', 'woocommerce-jetpack' ) ), 'notice' );

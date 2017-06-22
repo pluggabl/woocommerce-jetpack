@@ -7,7 +7,7 @@
  * @author  Algoritmika Ltd.
  * @todo    recheck if all button positions working properly
  * @todo    ! more info about position priority
- * @todo    multiple email recipients (comma separated)
+ * @todo    + multiple email recipients (comma separated)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -228,11 +228,16 @@ return array(
 	),
 	array(
 		'title'    => __( 'Email Recipient', 'woocommerce-jetpack' ),
-		'desc'     => sprintf( __( 'Leave blank to send to administrator email: %s.', 'woocommerce-jetpack' ), '<code>' . get_option( 'admin_email' ) . '</code>' ) .
-			' ' . sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%product_author_email%' . '</code>' ),
+		'desc'     => __( 'Can be comma separated list.', 'woocommerce-jetpack' ) . ' ' .
+			sprintf(
+				__( 'Use %s to send to administrator email: %s.',
+				'woocommerce-jetpack' ), '<code>' . '%admin_email%' . '</code>',
+				'<code>' . get_option( 'admin_email' ) . '</code>'
+			) . ' ' .
+			sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%admin_email%, %product_author_email%' . '</code>' ),
 		'id'       => 'wcj_offer_price_email_address',
 		'type'     => 'text',
-		'default'  => '',
+		'default'  => '%admin_email%',
 		'css'      => 'width:99%;',
 	),
 	array(
