@@ -237,15 +237,15 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    + wcj-close etc.
+	 * @todo    + more info if logged user (e.g. user id)
+	 * @todo    ~ empty footer / header
 	 * @todo    customizable fields labels
 	 * @todo    form template
-	 * @todo    ~ empty footer / header
-	 * @todo    ~ wcj-close etc.
+	 * @todo    style options for input fields
 	 * @todo    (maybe) do_shortcode
-	 * @todo    + more info if logged user (e.g. user id)
 	 * @todo    (maybe) logged user - check `nickname` and `billing_email`
 	 * @todo    (maybe) better required asterix default
-	 * @todo    style options for input fields
 	 * @todo    (maybe) optional, additional and custom form fields
 	 * @todo    (maybe) "send a copy to me (i.e. customer)" checkbox
 	 */
