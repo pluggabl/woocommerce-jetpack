@@ -3,7 +3,6 @@
  *
  * @version 2.9.0
  * @since   2.9.0
- * @todo    close on escape
  */
 
 // Get the modal
@@ -17,10 +16,10 @@ jQuery('.wcj-offer-price-button').click(function(){
 	var price_input = jQuery('#wcj-offer-price-price');
 	price_input.attr('step',wcj_data['price_step']);
 	price_input.attr('min',wcj_data['min_price']);
-	if (0!=wcj_data['max_price']){
+	if (0 != wcj_data['max_price']){
 		price_input.attr('max',wcj_data['max_price']);
 	}
-	if (0!=wcj_data['default_price']){
+	if (0 != wcj_data['default_price']){
 		price_input.val(wcj_data['default_price']);
 	}
 	jQuery('#wcj-offer-price-price-label').html(wcj_data['price_label']);
@@ -40,6 +39,13 @@ jQuery('.wcj-offer-price-form-close').first().click(function(){
 // When the user clicks anywhere outside of the modal, close it
 jQuery(window).click(function(e){
 	if (modal.is(e.target)){
+		modal.css('display','none');
+	}
+});
+
+// When the user presses ESC, close modal
+jQuery(document).keyup(function(e){
+	if (27 === e.keyCode){ // esc
 		modal.css('display','none');
 	}
 });
