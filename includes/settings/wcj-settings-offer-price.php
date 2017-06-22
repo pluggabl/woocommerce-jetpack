@@ -19,26 +19,20 @@ return array(
 		'type'     => 'title',
 	),
 	array(
-		'title'    => __( 'Enable for All Products', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_offer_price_enabled_for_all_products',
-		'type'     => 'checkbox',
-		'default'  => 'no',
-	),
-	array(
-		'title'    => __( 'Enable for All Products with Empty Price', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_offer_price_enabled_for_empty_prices',
-		'type'     => 'checkbox',
-		'default'  => 'no',
-	),
-	array(
-		'title'    => __( 'Enable per Product', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_offer_price_enabled_per_product',
-		'type'     => 'checkbox',
-		'default'  => 'no',
+		'title'    => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Possible values: Enable for all products; Enable for all products with empty price; Enable per product.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'If Enable per product is selected, this will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_enabled_type',
+		'type'     => 'select',
+		'default'  => 'all_products',
+		'options'  => array(
+			'all_products' => __( 'Enable for all products', 'woocommerce-jetpack' ),
+			'empty_prices' => __( 'Enable for all products with empty price', 'woocommerce-jetpack' ),
+			'per_product'  => __( 'Enable per product', 'woocommerce-jetpack' ),
+		),
+
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'id'       => 'wcj_offer_price_general_options',

@@ -39,36 +39,30 @@ class WCJ_Offer_Price extends WCJ_Module {
 		$this->dev = true;
 
 		if ( $this->is_enabled() ) {
-			if (
-				'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) ||
-				'yes' === get_option( 'wcj_offer_price_enabled_for_empty_prices', 'no' ) ||
-				'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' )
-			) {
-				if ( 'disable' != ( $_hook = get_option( 'wcj_offer_price_button_position', 'woocommerce_single_product_summary' ) ) ) {
-					add_action(
-						$_hook,
-						array( $this, 'add_offer_price_button' ),
-						get_option( 'wcj_offer_price_button_position_priority', 31 )
-					);
-				}
-				if ( 'disable' != ( $_hook = get_option( 'wcj_offer_price_button_position_archives', 'woocommerce_after_shop_loop_item' ) ) ) {
-					add_action(
-						$_hook,
-						array( $this, 'add_offer_price_button' ),
-						get_option( 'wcj_offer_price_button_position_priority_archives', 10 )
-					);
-				}
-				add_action( 'wp_footer',                          array( $this, 'add_offer_price_form' ) );
-				add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
-				add_action( 'init',                               array( $this, 'offer_price' ) );
-				if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
-					add_action( 'add_meta_boxes',                 array( $this, 'add_meta_box' ) );
-					add_action( 'save_post_product',              array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
-				}
+			if ( 'disable' != ( $_hook = get_option( 'wcj_offer_price_button_position', 'woocommerce_single_product_summary' ) ) ) {
+				add_action(
+					$_hook,
+					array( $this, 'add_offer_price_button' ),
+					get_option( 'wcj_offer_price_button_position_priority', 31 )
+				);
 			}
-			add_action( 'add_meta_boxes',                         array( $this, 'add_offer_price_history_meta_box' ) );
-			add_action( 'save_post_product',                      array( $this, 'delete_offer_price_product_history' ), PHP_INT_MAX, 2 );
+			if ( 'disable' != ( $_hook = get_option( 'wcj_offer_price_button_position_archives', 'woocommerce_after_shop_loop_item' ) ) ) {
+				add_action(
+					$_hook,
+					array( $this, 'add_offer_price_button' ),
+					get_option( 'wcj_offer_price_button_position_priority_archives', 10 )
+				);
+			}
+			add_action( 'wp_footer',                          array( $this, 'add_offer_price_form' ) );
+			add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
+			add_action( 'init',                               array( $this, 'offer_price' ) );
+			if ( 'per_product' === apply_filters( 'booster_get_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) ) {
+				add_action( 'add_meta_boxes',                 array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product',              array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
 		}
+		add_action( 'add_meta_boxes',                         array( $this, 'add_offer_price_history_meta_box' ) );
+		add_action( 'save_post_product',                      array( $this, 'delete_offer_price_product_history' ), PHP_INT_MAX, 2 );
 	}
 
 	/**
@@ -177,14 +171,15 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @since   2.9.0
 	 */
 	function is_offer_price_enabled_for_product( $product_id ) {
-		if ( 'yes' === get_option( 'wcj_offer_price_enabled_for_empty_prices', 'no' ) ) {
-			$_product = wc_get_product( $product_id );
-			return ( '' === $_product->get_price() );
+		switch ( apply_filters( 'booster_get_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) ) {
+			case 'all_products':
+				return true;
+			case 'empty_prices':
+				$_product = wc_get_product( $product_id );
+				return ( '' === $_product->get_price() );
+			case 'per_product':
+				return ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_offer_price_enabled', true ) );
 		}
-		if ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) ) {
-			return ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_offer_price_enabled', true ) );
-		}
-		return ( 'yes' === get_option( 'wcj_offer_price_enabled_for_all_products', 'no' ) );
 	}
 
 	/**
@@ -196,7 +191,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @todo    (maybe) recheck `str_replace( '\'', '"', ... )`
 	 */
 	function get_wcj_data_array( $product_id ) {
-		$is_per_product_enabled = ( 'yes' === get_option( 'wcj_offer_price_enabled_per_product', 'no' ) );
+		$is_per_product_enabled = ( 'per_product' === apply_filters( 'booster_get_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) );
 		// Price input - price step
 		$price_step = ( ! $is_per_product_enabled || '' === ( $price_step_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_price_step', true ) ) ?
 			get_option( 'wcj_offer_price_price_step', get_option( 'woocommerce_price_num_decimals' ) ) :
@@ -359,7 +354,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    customer copy email subject
+	 * @todo    (maybe) separate customer copy email template and subject
 	 * @todo    + product author email
 	 * @todo    (maybe) redirect (no notice though)
 	 * @todo    (maybe) `%product_title%` etc. in notice
@@ -418,7 +413,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 			// Send email
 			wc_mail( $email_address, $email_subject, $email_content, $email_headers );
 			if ( 'yes' === $price_offer['copy_to_customer'] ) {
-				wc_mail( $price_offer['customer_email'], '[' . __( 'Copy', 'woocommerce-jetpack' ) . '] ' . $email_subject, $email_content, $email_headers );
+				wc_mail( $price_offer['customer_email'], $email_subject, $email_content, $email_headers );
 			}
 			// Notice
 			wc_add_notice( get_option( 'wcj_offer_price_customer_notice', __( 'Your price offer has been sent.', 'woocommerce-jetpack' ) ), 'notice' );
