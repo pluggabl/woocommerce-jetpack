@@ -48,6 +48,8 @@ $settings = array(
 		'id'       => 'wcj_sku_number_generation_sequential_by_cat',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Prefix', 'woocommerce-jetpack' ),
