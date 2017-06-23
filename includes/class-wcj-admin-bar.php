@@ -154,6 +154,9 @@ class WCJ_Admin_Bar extends WCJ_Module {
 				);
 			} else {
 				foreach ( $label_info['all_cat_ids'] as $link_id ) {
+					if ( wcj_is_module_deprecated( $link_id, false, true ) ) {
+						continue;
+					}
 					$nodes[ $id ]['nodes'][ $link_id ] = array(
 						'title'  => WCJ()->modules[ $link_id ]->short_desc,
 						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),

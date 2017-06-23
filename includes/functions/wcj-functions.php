@@ -8,6 +8,39 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_is_module_deprecated' ) ) {
+	/**
+	 * wcj_is_module_deprecated.
+	 *
+	 * @version 2.9.0
+	 * @since   2.9.0
+	 * @return  array|false
+	 */
+	function wcj_is_module_deprecated( $module_id, $by_module_option = false, $check_for_disabled = false ) {
+		if ( $check_for_disabled ) {
+			$module_option = ( $by_module_option ? $module_id : 'wcj_' . $module_id . '_enabled' );
+			if ( 'yes' === get_option( $module_option, 'no' ) ) {
+				return false;
+			}
+		}
+		if ( $by_module_option ) {
+			$module_id = str_replace( array( 'wcj_', '_enabled' ), '', $module_id );
+		}
+		$deprecated_and_replacement_modules = array(
+			'product_info' => array(
+				'cat'    => 'products',
+				'module' => 'product_custom_info',
+				'title'  => __( 'Product Info', 'woocommerce-jetpack' ),
+			),
+		);
+		if ( ! array_key_exists( $module_id, $deprecated_and_replacement_modules ) ) {
+			return false;
+		} else {
+			return ( isset( $deprecated_and_replacement_modules[ $module_id ] ) ? $deprecated_and_replacement_modules[ $module_id ] : array() );
+		}
+	}
+}
+
 if ( ! function_exists( 'wcj_get_order_statuses_v2' ) ) {
 	/**
 	 * wcj_get_order_statuses_v2.

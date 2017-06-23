@@ -55,7 +55,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output sections (modules) sub menu
 	 *
-	 * @version 2.7.0
+	 * @version 2.9.0
 	 */
 	function output_sections_submenu() {
 		global $current_section;
@@ -70,6 +70,8 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				if ( isset( $module_status['id'] ) && isset( $module_status['default'] ) ) {
 					if ( 'yes' === get_option( $module_status['id'], $module_status['default'] ) ) {
 						$active++;
+					} elseif ( wcj_is_module_deprecated( $module_status['id'], true ) ) {
+						continue;
 					}
 					$all++;
 				}
@@ -92,6 +94,11 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		}
 		if ( empty( $sections ) || 1 === count( $sections ) ) {
 			return;
+		}
+		foreach ( $this->cats[ $current_cat ]['all_cat_ids'] as $key => $id ) {
+			if ( wcj_is_module_deprecated( $id, false, true ) ) {
+				unset( $this->cats[ $current_cat ]['all_cat_ids'][ $key ] );
+			}
 		}
 		echo '<ul class="subsubsub">';
 		foreach ( $this->cats[ $current_cat ]['all_cat_ids'] as $id ) {
@@ -137,6 +144,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	 * Output the settings.
 	 *
 	 * @version 2.9.0
+	 * @todo    (maybe) admin_notices
 	 */
 	function output() {
 
@@ -150,14 +158,17 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			? false : true;
 
 		// Deprecated message
-		$deprecated_modules_and_links = array(
-			'product_info' => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=products&section=product_custom_info' ) . '">' . __( 'Product Info', 'woocommerce-jetpack' ) . '</a>',
-		);
-		if ( array_key_exists( $current_section, $deprecated_modules_and_links ) ) {
+		if ( $replacement_module = wcj_is_module_deprecated( $current_section ) ) {
 			echo '<div id="wcj_message" class="error">';
 			echo '<p>';
 			echo '<strong>';
-			echo sprintf( __( 'Please note that current <em>%s</em> module is deprecated and will be removed in future updates. Please use <em>%s</em> module instead.', 'woocommerce-jetpack' ), WCJ()->modules[ $current_section ]->short_desc, $deprecated_modules_and_links[ $current_section ] );
+			echo sprintf(
+				__( 'Please note that current <em>%s</em> module is deprecated and will be removed in future updates. Please use <em>%s</em> module instead.', 'woocommerce-jetpack' ),
+				WCJ()->modules[ $current_section ]->short_desc,
+				'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $replacement_module['cat'] . '&section=' . $replacement_module['module'] ) . '">' .
+					$replacement_module['title'] . '</a>'
+			);
+			echo ' <span style="color:red;">' . __( 'Module will be removed from the module\'s list as soon as you disable it.', 'woocommerce-jetpack' ) . '</span>';
 			echo '</strong>';
 			echo '</p>';
 			echo '</div>';
@@ -298,7 +309,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard_modules.
 	 *
-	 * @version 2.5.2
+	 * @version 2.9.0
 	 */
 	function output_dashboard_modules( $settings, $cat_id = '' ) {
 		$readme_html = '';
@@ -329,6 +340,9 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 					$section = $the_feature['id'];
 					$section = str_replace( 'wcj_', '', $section );
 					$section = str_replace( '_enabled', '', $section );
+					if ( wcj_is_module_deprecated( $section, false, true ) ) {
+						continue;
+					}
 					if ( '' != $cat_id ) {
 						if ( 'active_modules_only' === $cat_id ) {
 							if ( 'no' === get_option( $the_feature['id'] ) ) continue;
