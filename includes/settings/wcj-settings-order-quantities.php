@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Settings - Order Quantities
+ * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
  * @version 2.9.0
  * @since   2.9.0

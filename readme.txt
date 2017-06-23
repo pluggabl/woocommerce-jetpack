@@ -98,7 +98,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Minimum Amount* - Minimum WooCommerce order amount (optionally by user role).
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
-* *Order Quantities* - Set min/max product quantities in WooCommerce order.
+* *Order Min/Max Quantities* - Set min/max product quantities in WooCommerce order.
 * *Orders* - Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 * *Shipping Methods by User Role* - Set user roles to include/exclude for WooCommerce shipping methods to show up.
@@ -163,7 +163,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.9.0 - 23/06/2017
+= 2.9.0 - 24/06/2017
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `wc_reduce_stock_levels()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_dimensions]` - `wc_format_dimensions()`.
@@ -218,7 +218,7 @@ $~!D* Dev - PRODUCTS - SKU - Sequential counter by categories added.
 ~D	* Dev - CART & CHECKOUT - EU VAT Number - "First Validation Method" option added.
 ~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
 ~!D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - Advanced - "Cart notice method" and "Cart notice type" options added.
-$~!D* Dev - SHIPPING & ORDERS - Order Quantities - Initial module release.
+$~!D* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Initial module release.
 $~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Sortable" options added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
 ~	* Dev - PDF INVOICING & PACKING SLIPS - Display - Sortable Columns - Code refactoring.
@@ -229,7 +229,7 @@ $~!D* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" optio
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "cid0ct (Chinese Traditional)" font added (to extra fonts pack).
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "STSong Light (Simp. Chinese)" font added (to both minimal and extra fonts packs).
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Now extra fonts are downloaded to `woocommerce_uploads` folder.
-$~!D* Dev - EMAILS & MISC. - Admin Bar - Initial module release.
+~D	* Dev - EMAILS & MISC. - Admin Bar - Initial module release.
 	* Dev - EMAILS & MISC. - Admin Tools - Log - "Now time" added. `wp_safe_redirect()` added to "Delete log" action.
 $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Enable Email Verification for Already Registered Users" option added.

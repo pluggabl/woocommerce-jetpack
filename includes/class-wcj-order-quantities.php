@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Module - Order Quantities
+ * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
  * @version 2.9.0
  * @since   2.9.0
@@ -25,9 +25,9 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'order_quantities';
-		$this->short_desc = __( 'Order Quantities', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Order Min/Max Quantities', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set min/max product quantities in WooCommerce order.', 'woocommerce-jetpack' );
-		$this->link_slug  = 'woocommerce-order-quantities';
+		$this->link_slug  = 'woocommerce-order-min-max-quantities';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
