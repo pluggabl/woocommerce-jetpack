@@ -99,6 +99,7 @@ return array(
 		'id'       => 'wcj_offer_price_button_position_priority_archives',
 		'type'     => 'number',
 		'default'  => 10,
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'id'       => 'wcj_offer_price_button_options',

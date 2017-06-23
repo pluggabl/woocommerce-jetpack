@@ -181,14 +181,14 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
 ~!D	* Dev - Shortcodes - Products - `[wcj_product_weight]`, `[wcj_product_length]`, `[wcj_product_width]`, `[wcj_product_height]`, `[wcj_product_dimensions]` - `variations` attribute added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
-$~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors" option added.
-$~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors User Roles" option added.
-$~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.
-$~!D* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
+~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors" option added.
+~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors User Roles" option added.
+~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.
+~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
 ~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
-$~!D* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
+~!D	* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Hooks are now added in constructor (instead of `init` hook) - this fixes the issue with wrong currency symbol in price filter widget.
 ~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.
