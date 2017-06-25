@@ -170,6 +170,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - `WCJ_Module` - `create_meta_box()` - `placeholder` option added.
 ~!	* Dev - Settings - Module "Under development" message added.
 ~!	* Dev - Settings - Now deprecated modules are removed if disabled.
+-!	* Dev - Functions - `wcj_get_currencies_array()` function file moved to functions folder.
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" and `is_object` added.
 ~	* Fix - Functions - Invoicing - `wcj_get_invoice_date()` - Check for not empty invoice date added.
 ~!D	* Dev - Shortcodes - General - `[wcj_currency_select_link_list]`, `[wcj_currency_select_radio_list]`, `[wcj_currency_select_drop_down_list]` - `default` attribute added.
@@ -181,12 +182,14 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
 ~!D	* Dev - Shortcodes - Products - `[wcj_product_weight]`, `[wcj_product_length]`, `[wcj_product_width]`, `[wcj_product_height]`, `[wcj_product_dimensions]` - `variations` attribute added.
 ~!D	* Dev - PRICES & CURRENCIES - Currencies - Virtual currencies (myCred, Bitcoin, Ethereum) added.
+-!D	* Dev - PRICES & CURRENCIES - Currencies - Flags added to settings.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors" option added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors User Roles" option added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
+-!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added. `[wcj_exchange_rate]` and `[wcj_exchange_rates_table]` shortcodes added. `wcj_get_exchange_rate()` and `wcj_get_exchange_rates_table()` functions added.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
 ~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
 ~!D	* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
