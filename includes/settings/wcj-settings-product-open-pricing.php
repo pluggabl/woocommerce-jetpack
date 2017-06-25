@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Open Pricing
  *
- * @version 2.8.0
+ * @version 2.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
@@ -74,6 +74,13 @@ return array(
 		'default'  => __( 'Entered price is too big!', 'woocommerce-jetpack' ),
 		'type'     => 'text',
 		'css'      => 'width:250px;',
+	),
+	array(
+		'title'    => __( 'Disable Quantity Input', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_open_price_disable_quantity',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Enable JS Min/Max Validation', 'woocommerce-jetpack' ),

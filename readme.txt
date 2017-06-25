@@ -195,6 +195,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!D	* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
 ~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Hooks are now added in constructor (instead of `init` hook) - this fixes the issue with wrong currency symbol in price filter widget.
+~!D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Disable Quantity Input" option added (defaults to `yes`).
 ~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.
 $~!D* Dev - PRODUCTS - Cost of Goods - "Admin Products List Custom Columns" - Section added.
 $~D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Local Redirect - "Per Product" option added.
