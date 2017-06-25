@@ -42,6 +42,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_customer_shipping_country',
 			'wcj_customer_meta',
 			'wcj_empty_cart_button',
+			'wcj_currency_exchange_rate',
+			'wcj_currency_exchange_rates_table',
 		);
 
 		$this->the_atts = array(
@@ -65,10 +67,32 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'full_country_name'     => 'yes',
 			'multiply_by'           => 1,
 			'default'               => '',
+			'from'                  => '',
+			'to'                    => '',
 		);
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_currency_exchange_rate.
+	 *
+	 * @version 2.9.0
+	 * @since   2.9.0
+	 */
+	function wcj_currency_exchange_rate( $atts ) {
+		return ( '' != $atts['from'] && '' != $atts['to'] ) ? get_option( 'wcj_currency_exchange_rates_' . sanitize_title( $atts['from'] . $atts['to'] ) ) : '';
+	}
+
+	/**
+	 * wcj_currency_exchange_rates_table.
+	 *
+	 * @version 2.9.0
+	 * @since   2.9.0
+	 */
+	function wcj_currency_exchange_rates_table( $atts ) {
+		return '<pre>' . print_r( WCJ()->modules['currency_exchange_rates']->get_settings(), true ) . '</pre>';
 	}
 
 	/**
