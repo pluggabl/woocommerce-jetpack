@@ -1,9 +1,10 @@
 <?php
 /**
- * Booster for WooCommerce Currencies Array
+ * Booster for WooCommerce - Currencies Array
  *
- * @version 2.4.4
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
+ * @todo    move this to functions folder
  */
 
 if ( ! function_exists( 'wcj_get_currencies_array' ) ) {
@@ -172,6 +173,9 @@ if ( ! function_exists( 'wcj_get_currencies_array' ) ) {
 			array( 'code' => 'ZAR', 'symbol' => '&#82;', 'name' => __( 'South African rand', 'woocommerce' ) ),
 			array( 'code' => 'ZMK', 'symbol' => 'ZMK', 'name' => __( 'Zambian kwacha', 'woocommerce-jetpack' ) ),
 			array( 'code' => 'ZWD', 'symbol' => 'ZWD', 'name' => __( 'Zimbabwean dollar', 'woocommerce-jetpack' ) ),
+			array( 'code' => 'BTC', 'symbol' => 'BTC', 'name' => __( 'Bitcoin', 'woocommerce-jetpack' ) ),
+			array( 'code' => 'ETH', 'symbol' => 'ETH', 'name' => __( 'Ethereum', 'woocommerce-jetpack' ) ),
+			array( 'code' => 'MYC', 'symbol' => 'MYC', 'name' => __( 'myCred', 'woocommerce-jetpack' ) ),
 		);
 	}
 }

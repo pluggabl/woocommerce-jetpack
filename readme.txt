@@ -163,7 +163,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.9.0 - 24/06/2017
+= 2.9.0 - 25/06/2017
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `wc_reduce_stock_levels()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_dimensions]` - `wc_format_dimensions()`.
@@ -180,6 +180,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_shipping_address]` - `fallback_billing_address` attribute added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
 ~!D	* Dev - Shortcodes - Products - `[wcj_product_weight]`, `[wcj_product_length]`, `[wcj_product_width]`, `[wcj_product_height]`, `[wcj_product_dimensions]` - `variations` attribute added.
+~!D	* Dev - PRICES & CURRENCIES - Currencies - Virtual currencies (myCred, Bitcoin, Ethereum) added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors" option added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors User Roles" option added.
