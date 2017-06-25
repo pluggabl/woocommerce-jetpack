@@ -5,6 +5,7 @@
  * @version 2.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    add virtual currencies to "All Currencies for WC" plugin
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
