@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currencies
  *
- * @version 2.8.0
+ * @version 2.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -26,10 +26,16 @@ $settings = array(
 );
 $currency_names   = wcj_get_currencies_names_and_symbols( 'names',   'no_custom' );
 $currency_symbols = wcj_get_currencies_names_and_symbols( 'symbols', 'no_custom' );
+$countries        = wcj_get_currency_countries();
 foreach ( $currency_names as $currency_code => $currency_name ) {
+	$country_flag = ( 'EUR' === $currency_code ?
+		wcj_get_country_flag_by_code( 'EU' ) :
+		( isset( $countries[ $currency_code ] ) ? wcj_get_country_flag_by_code( $countries[ $currency_code ][0] ) : '' )
+	);
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => $currency_name,
+			'desc'     => $country_flag,
 			'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
 			'id'       => 'wcj_currency_' . $currency_code,
 			'default'  => $currency_symbols[ $currency_code ],
