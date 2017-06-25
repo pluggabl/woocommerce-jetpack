@@ -34,7 +34,7 @@ foreach ( $currency_names as $currency_code => $currency_name ) {
 	);
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => $currency_name,
+			'title'    => $currency_name . ' [' . $currency_code . ']',
 			'desc'     => $country_flag,
 			'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
 			'id'       => 'wcj_currency_' . $currency_code,
