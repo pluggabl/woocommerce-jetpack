@@ -94,7 +94,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @todo    (maybe) add similar function
 	 */
 	function wcj_currency_exchange_rates_table( $atts ) {
-		$all_currencies = WCJ()->modules['currency_exchange_rates']->get_all_currencies( array() );
+		$all_currencies = WCJ()->modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
 		$table_data = array();
 		foreach ( $all_currencies as $currency ) {
 			$table_data[] = array( $currency['title'], get_option( $currency['id'] ) );

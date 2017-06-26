@@ -79,23 +79,23 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	}
 
 	/**
-	 * get_all_currencies.
+	 * get_all_currencies_exchange_rates_currencies.
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
 	 */
-	function get_all_currencies( $settings ) {
-		$currency_from = get_option( 'woocommerce_currency' );
+	function get_all_currencies_exchange_rates_currencies() {
+		$currencies = array();
 		// Additional currencies (via filter)
 		$additional_currencies = apply_filters( 'wcj_currency_exchange_rates_additional_currencies', array() );
 		foreach ( $additional_currencies as $additional_currency ) {
-			$settings = $this->add_currency_pair_setting( $currency_from, $additional_currency, $settings );
+			$currencies[] = $additional_currency;
 		}
 		// Additional currencies (via custom currencies section)
 		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_exchange_custom_currencies_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'disabled' != ( $additional_currency = get_option( 'wcj_currency_exchange_custom_currencies_' . $i, 'disabled' ) ) ) {
-				$settings = $this->add_currency_pair_setting( $currency_from, $additional_currency, $settings );
+				$currencies[] = $additional_currency;
 			}
 		}
 		if ( wcj_is_module_enabled( 'price_by_country' ) ) {
@@ -103,7 +103,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_price_by_country_auto_exchange_rates', 'manual' ) ) ) {
 				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 					$currency_to = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
-					$settings = $this->add_currency_pair_setting( $currency_from, $currency_to, $settings );
+					$currencies[] = $currency_to;
 				}
 			}
 		}
@@ -112,7 +112,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_multicurrency_exchange_rate_update_auto', 'manual' ) ) ) {
 				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
 					$currency_to = get_option( 'wcj_multicurrency_currency_' . $i );
-					$settings = $this->add_currency_pair_setting( $currency_from, $currency_to, $settings );
+					$currencies[] = $currency_to;
 				}
 			}
 		}
@@ -121,7 +121,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_multicurrency_base_price_exchange_rate_update', 'manual' ) ) ) {
 				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
 					$currency_to = get_option( 'wcj_multicurrency_base_price_currency_' . $i );
-					$settings = $this->add_currency_pair_setting( $currency_from, $currency_to, $settings );
+					$currencies[] = $currency_to;
 				}
 			}
 		}
@@ -130,7 +130,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_currency_per_product_exchange_rate_update', 'manual' ) ) ) {
 				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) ); $i++ ) {
 					$currency_to = get_option( 'wcj_currency_per_product_currency_' . $i );
-					$settings = $this->add_currency_pair_setting( $currency_from, $currency_to, $settings );
+					$currencies[] = $currency_to;
 				}
 			}
 		}
@@ -142,10 +142,26 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				foreach ( $available_gateways as $key => $gateway ) {
 					$currency_to = get_option( 'wcj_gateways_currency_' . $key );
 					if ( 'no_changes' != $currency_to ) {
-						$settings = $this->add_currency_pair_setting( $currency_from, $currency_to, $settings );
+						$currencies[] = $currency_to;
 					}
 				}
 			}
+		}
+		return $currencies;
+	}
+
+	/**
+	 * get_all_currencies_exchange_rates_settings.
+	 *
+	 * @version 2.9.0
+	 * @since   2.9.0
+	 */
+	function get_all_currencies_exchange_rates_settings() {
+		$settings = array();
+		$currency_from = get_option( 'woocommerce_currency' );
+		$currencies = $this->get_all_currencies_exchange_rates_currencies();
+		foreach ( $currencies as $currency ) {
+			$settings = $this->add_currency_pair_setting( $currency_from, $currency, $settings );
 		}
 		return $settings;
 	}

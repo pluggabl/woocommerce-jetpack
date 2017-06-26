@@ -134,18 +134,21 @@ $settings = array_merge( $settings, array(
 	),
 ) );
 // Exchange rates
-$settings = array_merge( $settings, array(
-	array(
-		'title'    => __( 'Exchange Rates', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_currency_exchange_rates_rates',
-	),
-) );
-$settings = $this->get_all_currencies( $settings );
-$settings = array_merge( $settings, array(
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_currency_exchange_rates_rates',
-	),
-) );
+$exchange_rate_settings = $this->get_all_currencies_exchange_rates_settings();
+if ( ! empty( $exchange_rate_settings ) ) {
+	$settings = array_merge( $settings, array(
+		array(
+			'title'    => __( 'Exchange Rates', 'woocommerce-jetpack' ),
+			'type'     => 'title',
+			'id'       => 'wcj_currency_exchange_rates_rates',
+		),
+	) );
+	$settings = array_merge( $settings, $exchange_rate_settings );
+	$settings = array_merge( $settings, array(
+		array(
+			'type'     => 'sectionend',
+			'id'       => 'wcj_currency_exchange_rates_rates',
+		),
+	) );
+}
 return $settings;
