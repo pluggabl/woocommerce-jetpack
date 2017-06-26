@@ -60,9 +60,10 @@ class WCJ_Offer_Price extends WCJ_Module {
 				add_action( 'add_meta_boxes',                 array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product',              array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
+			// Offer history
+			add_action( 'add_meta_boxes',                     array( $this, 'add_offer_price_history_meta_box' ) );
+			add_action( 'save_post_product',                  array( $this, 'delete_offer_price_product_history' ), PHP_INT_MAX, 2 );
 		}
-		add_action( 'add_meta_boxes',                         array( $this, 'add_offer_price_history_meta_box' ) );
-		add_action( 'save_post_product',                      array( $this, 'delete_offer_price_product_history' ), PHP_INT_MAX, 2 );
 	}
 
 	/**
