@@ -22,7 +22,7 @@ if ( $this->is_enabled() ) {
 }
 $settings = array(
 	array(
-		'title'    => __( 'Exchange Rates', 'woocommerce-jetpack' ),
+		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'desc'     => __( 'All currencies from all <strong>enabled</strong> modules (with "Exchange Rates Updates" set to "Automatically via Currency Exchange Rates module") will be automatically added to the list.', 'woocommerce-jetpack' ) . $desc,
 		'id'       => 'wcj_currency_exchange_rates_options',
@@ -80,8 +80,29 @@ $settings = array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
+	/*
+	array(
+		'title'    => __( 'Logging', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_exchange_logging_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	*/
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_currency_exchange_rates_options',
+	),
+	array(
+		'title'    => __( 'Custom Currencies Options', 'woocommerce-jetpack' ),
+		'desc'     => sprintf(
+			__( 'You can add more currencies in this section. To get exchange rates you can use %s shortcodes.', 'woocommerce-jetpack' ),
+			'<code>[wcj_currency_exchange_rate]</code>, <code>[wcj_currency_exchange_rates_table]</code>'
+		),
+		'type'     => 'title',
+		'id'       => 'wcj_currency_exchange_custom_currencies_options',
+	),
 );
-$settings = $this->get_all_currencies( $settings );
 // Additional (custom) currencies
 $all_currencies = wcj_get_currencies_names_and_symbols();
 $settings = array_merge( $settings, array(
@@ -107,18 +128,24 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 	) );
 }
 $settings = array_merge( $settings, array(
-	/*
-	array(
-		'title'    => __( 'Logging', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_currency_exchange_logging_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	*/
 	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_currency_exchange_rates_options',
+		'id'       => 'wcj_currency_exchange_custom_currencies_options',
+	),
+) );
+// Exchange rates
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Exchange Rates', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_currency_exchange_rates_rates',
+	),
+) );
+$settings = $this->get_all_currencies( $settings );
+$settings = array_merge( $settings, array(
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_currency_exchange_rates_rates',
 	),
 ) );
 return $settings;

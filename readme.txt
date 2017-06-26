@@ -190,7 +190,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
-~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added.
+~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added. Settings restyled.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
 ~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
 ~!D	* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
@@ -212,7 +212,7 @@ $~!D* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Colu
 ~	* Fix - PRODUCTS - Products per Page - Template fixed.
 ~D	* Dev - PRODUCTS - Products per Page - "Template - Before Form" and "Template - After Form" options added.
 	* Dev - PRODUCTS - Products per Page - Minor code refactoring.
-$-!D* Dev - PRODUCTS - SKU - Category prefix options moved to free version.
+-$!D* Dev - PRODUCTS - SKU - Category prefix options moved to free version.
 ~D	* Dev - PRODUCTS - SKU - "Disable SKUs" option added.
 ~!D	* Dev - PRODUCTS - SKU - Adding SKU on product duplicate action added (`woocommerce_duplicate_product`).
 ~!D	* Dev - PRODUCTS - SKU - "Search by SKU" option added.
