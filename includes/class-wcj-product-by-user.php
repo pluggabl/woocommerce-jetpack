@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by User
  *
- * @version 2.8.0
+ * @version 2.9.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -16,8 +16,9 @@ class WCJ_Product_By_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.9.0
 	 * @since   2.5.2
+	 * @todo    run `add_my_products_endpoint` only if module is enabled
 	 */
 	function __construct() {
 
@@ -28,6 +29,12 @@ class WCJ_Product_By_User extends WCJ_Module {
 		$this->extra_desc = __( 'Use <strong>[wcj_product_add_new]</strong> shortcode to add product upload form to frontend.', 'woocommerce-jetpack' );
 		parent::__construct();
 
+		// My Products endpoint
+		register_activation_hook(   __FILE__, array( $this, 'add_my_products_endpoint_flush_rewrite_rules' ) );
+		register_deactivation_hook( __FILE__, array( $this, 'add_my_products_endpoint_flush_rewrite_rules' ) );
+		add_filter( 'query_vars',             array( $this, 'add_my_products_endpoint_query_var' ), 0 );
+		add_action( 'init',                   array( $this, 'add_my_products_endpoint' ) );
+
 		if ( $this->is_enabled() ) {
 			if ( 'yes' === get_option( 'wcj_product_by_user_add_to_my_account', 'yes' ) ) {
 				add_filter( 'woocommerce_account_menu_items',               array( $this, 'add_my_products_tab_my_account_page' ) );
@@ -35,6 +42,41 @@ class WCJ_Product_By_User extends WCJ_Module {
 				add_filter( 'the_title',                                    array( $this, 'change_my_products_endpoint_title' ) );
 			}
 		}
+	}
+
+	/**
+	 * Flush rewrite rules on plugin activation.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 */
+	function add_my_products_endpoint_flush_rewrite_rules() {
+		add_rewrite_endpoint( 'wcj-my-products', EP_ROOT | EP_PAGES );
+		flush_rewrite_rules();
+	}
+
+	/**
+	 * Add new query var.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 * @param   array $vars
+	 * @return  array
+	 */
+	function add_my_products_endpoint_query_var( $vars ) {
+		$vars[] = 'wcj-my-products';
+		return $vars;
+	}
+
+	/**
+	 * Register new endpoint to use inside My Account page.
+	 *
+	 * @version 2.5.7
+	 * @since   2.5.7
+	 * @see     https://developer.wordpress.org/reference/functions/add_rewrite_endpoint/
+	 */
+	function add_my_products_endpoint() {
+		add_rewrite_endpoint( 'wcj-my-products', EP_ROOT | EP_PAGES );
 	}
 
 	/*

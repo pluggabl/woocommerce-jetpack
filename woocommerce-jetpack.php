@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.9.0-dev-201706261746';
+	public $version = '2.9.0-dev-201706261750';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -91,12 +91,6 @@ final class WC_Jetpack {
 
 		// Include required files
 		$this->includes();
-
-		// My Products endpoint
-		register_activation_hook(   __FILE__, array( $this, 'add_my_products_endpoint_flush_rewrite_rules' ) );
-		register_deactivation_hook( __FILE__, array( $this, 'add_my_products_endpoint_flush_rewrite_rules' ) );
-		add_filter( 'query_vars',             array( $this, 'add_my_products_endpoint_query_var' ), 0 );
-		add_action( 'init',                   array( $this, 'add_my_products_endpoint' ) );
 
 		// Settings
 		if ( is_admin() ) {
@@ -135,41 +129,6 @@ final class WC_Jetpack {
 
 		// Loaded action
 		do_action( 'wcj_loaded' );
-	}
-
-	/**
-	 * Flush rewrite rules on plugin activation.
-	 *
-	 * @version 2.5.7
-	 * @since   2.5.7
-	 */
-	function add_my_products_endpoint_flush_rewrite_rules() {
-		add_rewrite_endpoint( 'wcj-my-products', EP_ROOT | EP_PAGES );
-		flush_rewrite_rules();
-	}
-
-	/**
-	 * Add new query var.
-	 *
-	 * @version 2.5.7
-	 * @since   2.5.7
-	 * @param   array $vars
-	 * @return  array
-	 */
-	function add_my_products_endpoint_query_var( $vars ) {
-		$vars[] = 'wcj-my-products';
-		return $vars;
-	}
-
-	/**
-	 * Register new endpoint to use inside My Account page.
-	 *
-	 * @version 2.5.7
-	 * @since   2.5.7
-	 * @see     https://developer.wordpress.org/reference/functions/add_rewrite_endpoint/
-	 */
-	function add_my_products_endpoint() {
-		add_rewrite_endpoint( 'wcj-my-products', EP_ROOT | EP_PAGES );
 	}
 
 	/**
