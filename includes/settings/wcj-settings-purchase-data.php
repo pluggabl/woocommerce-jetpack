@@ -135,13 +135,17 @@ $settings = array_merge( $settings, array(
 		'id'        => 'wcj_purchase_data_custom_products_columns_profit',
 		'default'   => 'no',
 		'type'      => 'checkbox',
+		'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'title'     => __( 'Purchase Cost', 'woocommerce-jetpack' ),
 		'desc'      => __( 'Add', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_purchase_data_custom_products_columns_purchase_cost',
-		'default'   => 'yes',
+		'default'   => 'no',
 		'type'      => 'checkbox',
+		'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'type'      => 'sectionend',
