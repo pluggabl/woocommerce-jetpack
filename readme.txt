@@ -215,9 +215,9 @@ $~!D* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Colu
 ~D	* Dev - PRODUCTS - SKU - "Disable SKUs" option added.
 ~!D	* Dev - PRODUCTS - SKU - Adding SKU on product duplicate action added (`woocommerce_duplicate_product`).
 ~!D	* Dev - PRODUCTS - SKU - "Search by SKU" option added.
-$~!D* Dev - PRODUCTS - SKU - Number Generation - "Pseudorandom - Hash (max 10 digits)" option added.
+~!D	* Dev - PRODUCTS - SKU - Number Generation - "Pseudorandom - Hash (max 10 digits)" option added.
 ~!D	* Dev - PRODUCTS - SKU - "Template" option added.
-$~!D* Dev - PRODUCTS - SKU - Sequential counter by categories added.
+~!D	* Dev - PRODUCTS - SKU - Sequential counter by categories added.
 ~	* Dev - PRODUCTS - SKU - Code refactoring.
 ~!D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Fields on Checkout for Logged Users" options added.
 	* Dev - CART & CHECKOUT - EU VAT Number - Code refactoring - Separate file for EU VAT functions added.
