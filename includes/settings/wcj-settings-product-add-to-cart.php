@@ -37,11 +37,12 @@ return array(
 	),
 	array(
 		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This will add meta boxes to each product\'s edit page.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add meta boxes to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_add_to_cart_redirect_per_product_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',
