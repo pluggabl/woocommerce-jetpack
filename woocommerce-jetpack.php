@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.9.0-dev-201706261822';
+	public $version = '2.9.0-dev-201706261828';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -114,7 +114,7 @@ final class WC_Jetpack {
 	function init_settings() {
 		if ( is_admin() ) {
 			add_filter( 'woocommerce_get_settings_pages',                     array( $this, 'add_wcj_settings_tab' ), 1 );
-			add_filter( 'booster_get_message',                                array( $this, 'get_wcj_plus_message' ), 100, 3 );
+			add_filter( 'booster_get_message',                                'wcj_get_plus_message', 100, 3 );
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			add_action( 'admin_menu',                                         array( $this, 'booster_menu' ), 100 );
 			add_filter( 'admin_footer_text',                                  array( $this, 'admin_footer_text' ), 2 );
@@ -214,56 +214,6 @@ final class WC_Jetpack {
 	}
 
 	/**
-	 * get_wcj_plus_message.
-	 *
-	 * @version 2.9.0
-	 */
-	function get_wcj_plus_message( $value, $message_type, $args = array() ) {
-
-		switch ( $message_type ) {
-
-			case 'global':
-				return '<div class="updated">
-							<p class="main"><strong>' . __( 'Install Booster Plus to unlock all features', 'woocommerce-jetpack' ) . '</strong></p>
-							<span>' . sprintf( __( 'Some settings fields are locked and you will need %s to modify all locked fields.', 'woocommerce-jetpack'), '<a href="https://booster.io/plus/" target="_blank">Booster for WooCommerce Plus</a>' ) . '</span>
-							<p><a href="https://booster.io/plus/" target="_blank" class="button button-primary">' . __( 'Buy now', 'woocommerce-jetpack' ) . '</a> <a href="https://booster.io" target="_blank" class="button">'. __( 'Visit Booster Site', 'woocommerce-jetpack' ) . '</a></p>
-						</div>';
-
-			case 'desc':
-				return sprintf( __( 'Get <a href="%s" target="_blank">Booster Plus</a> to change value.', 'woocommerce-jetpack' ), 'https://booster.io/plus/' );
-
-			case 'desc_advanced':
-				return sprintf( __( 'Get <a href="%s" target="_blank">Booster Plus</a> to enable "%s" option.', 'woocommerce-jetpack' ), 'https://booster.io/plus/', $args['option'] );
-
-			case 'desc_advanced_no_link':
-				return sprintf( __( 'Get Booster Plus to enable "%s" option.', 'woocommerce-jetpack' ), $args['option'] );
-
-			case 'desc_below':
-				return sprintf( __( 'Get <a href="%s" target="_blank">Booster Plus</a> to change values below.', 'woocommerce-jetpack' ), 'https://booster.io/plus/' );
-
-			case 'desc_above':
-				return sprintf( __( 'Get <a href="%s" target="_blank">Booster Plus</a> to change values above.', 'woocommerce-jetpack' ), 'https://booster.io/plus/' );
-
-			case 'desc_no_link':
-				return __( 'Get Booster Plus to change value.', 'woocommerce-jetpack' );
-
-			case 'readonly':
-				return array( 'readonly' => 'readonly' );
-
-			case 'disabled':
-				return array( 'disabled' => 'disabled' );
-
-			case 'readonly_string':
-				return 'readonly';
-
-			case 'disabled_string':
-				return 'disabled';
-		}
-
-		return $value;
-	}
-
-	/**
 	 * Include required core files used in admin and on the frontend.
 	 *
 	 * @version 2.4.8
@@ -301,6 +251,7 @@ final class WC_Jetpack {
 	 */
 	function include_functions() {
 		include_once( 'includes/functions/wcj-debug-functions.php' );
+		include_once( 'includes/functions/wcj-admin-functions.php' );
 		include_once( 'includes/functions/wcj-functions.php' );
 		include_once( 'includes/functions/wcj-eu-vat-functions.php' );
 		include_once( 'includes/functions/wcj-price-currency-functions.php' );
