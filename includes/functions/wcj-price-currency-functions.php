@@ -401,8 +401,6 @@ if ( ! function_exists( 'wcj_get_currencies_names_and_symbols' ) ) {
 			return $currency_names_and_symbols;
 		} */
 		if ( 'all' === $scope || 'no_custom' === $scope ) {
-//			$currencies = include( wcj_plugin_path() . '/includes/currencies/wcj-currencies.php' );
-//			include( wcj_plugin_path() . '/includes/currencies/wcj-currencies.php' );
 			$currencies = wcj_get_currencies_array();
 			foreach( $currencies as $data ) {
 				switch ( $result ) {

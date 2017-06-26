@@ -170,7 +170,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - `WCJ_Module` - `create_meta_box()` - `placeholder` option added.
 ~!	* Dev - Settings - Module "Under development" message added.
 ~!	* Dev - Settings - Now deprecated modules are removed if disabled.
--!	* Dev - Functions - `wcj_get_currencies_array()` function file moved to functions folder.
+~!	* Dev - Functions - `wcj-currencies.php` file (`wcj_get_currencies_array()` function) moved to functions folder.
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" and `is_object` added.
 ~	* Fix - Functions - Invoicing - `wcj_get_invoice_date()` - Check for not empty invoice date added.
 ~!D	* Dev - Shortcodes - General - `[wcj_currency_select_link_list]`, `[wcj_currency_select_radio_list]`, `[wcj_currency_select_drop_down_list]` - `default` attribute added.
