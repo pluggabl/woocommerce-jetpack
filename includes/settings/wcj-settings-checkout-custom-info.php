@@ -29,7 +29,7 @@ $settings = array(
 	),
 );
 $total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_info_total_number', 1 ) );
-for ( $i = 1; $i <= $total_number; $i++) {
+for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => __( 'Info Block', 'woocommerce-jetpack' ) . ' #' . $i,
