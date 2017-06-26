@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 2.8.0
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 2.9.0
 	 */
 	function __construct() {
 
@@ -39,22 +39,29 @@ class WCJ_General extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
+			// Recalculate cart totals
+			if ( 'yes' === get_option( 'wcj_general_advanced_recalculate_cart_totals', 'no' ) ) {
+				add_action( 'wp_loaded', array( $this, 'fix_mini_cart' ), PHP_INT_MAX );
+			}
+
+			// Product revisions
 			if ( 'yes' === get_option( 'wcj_product_revisions_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_register_post_type_product', array( $this, 'enable_product_revisions' ) );
 			}
 
+			// Shortcodes in text widgets
 			if ( 'yes' === get_option( 'wcj_general_shortcodes_in_text_widgets_enabled' ) ) {
 				add_filter( 'widget_text', 'do_shortcode' );
 			}
 
+			// PayPal email per product
 			if ( 'yes' === get_option( 'wcj_paypal_email_per_product_enabled', 'no' ) ) {
-
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
-
 				add_filter( 'woocommerce_payment_gateways', array( $this, 'maybe_change_paypal_email' ) );
 			}
 
+			// Session expiration
 			if ( 'yes' === get_option( 'wcj_session_expiration_section_enabled', 'no' ) ) {
 				add_filter( 'wc_session_expiring',   array( $this, 'change_session_expiring' ),   PHP_INT_MAX );
 				add_filter( 'wc_session_expiration', array( $this, 'change_session_expiration' ), PHP_INT_MAX );
@@ -65,6 +72,23 @@ class WCJ_General extends WCJ_Module {
 				add_action( 'wp_loaded', array( $this, 'maybe_apply_url_coupon' ), PHP_INT_MAX );
 			}
 
+		}
+	}
+
+	/**
+	 * fix_mini_cart.
+	 *
+	 * @version 2.5.2
+	 * @since   2.5.2
+	 * @todo    this is only temporary solution!
+	 */
+	function fix_mini_cart() {
+		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( null !== ( $wc = WC() ) ) {
+				if ( isset( $wc->cart ) ) {
+					$wc->cart->calculate_totals();
+				}
+			}
 		}
 	}
 

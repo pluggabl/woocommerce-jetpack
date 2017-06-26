@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.9.0-dev-201706261639';
+	public $version = '2.9.0-dev-201706261746';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -130,11 +130,6 @@ final class WC_Jetpack {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_frontend_scripts' ) );
 		}
 
-		// Recalculate cart totals
-		if ( wcj_is_module_enabled( 'general' ) && 'yes' === get_option( 'wcj_general_advanced_recalculate_cart_totals', 'no' ) ) {
-			add_action( 'wp_loaded', array( $this, 'fix_mini_cart' ), PHP_INT_MAX );
-		}
-
 		// Import / Export / Reset Booster's settings
 		add_action( 'wp_loaded', array( $this, 'manage_options' ), PHP_INT_MAX );
 
@@ -203,23 +198,6 @@ final class WC_Jetpack {
 			}
 			if ( isset( $_POST['booster_reset_settings'] ) ) {
 				$this->manage_options_reset();
-			}
-		}
-	}
-
-	/**
-	 * fix_mini_cart.
-	 *
-	 * @version 2.5.2
-	 * @since   2.5.2
-	 * @todo    this is only temporary solution!
-	 */
-	function fix_mini_cart() {
-		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
-			if ( null !== ( $wc = WC() ) ) {
-				if ( isset( $wc->cart ) ) {
-					$wc->cart->calculate_totals();
-				}
 			}
 		}
 	}
