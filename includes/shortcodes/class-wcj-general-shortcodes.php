@@ -80,6 +80,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    (maybe) add similar function
 	 */
 	function wcj_currency_exchange_rate( $atts ) {
 		return ( '' != $atts['from'] && '' != $atts['to'] ) ? get_option( 'wcj_currency_exchange_rates_' . sanitize_title( $atts['from'] . $atts['to'] ) ) : '';
@@ -90,9 +91,19 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    (maybe) add similar function
 	 */
 	function wcj_currency_exchange_rates_table( $atts ) {
-		return '<pre>' . print_r( WCJ()->modules['currency_exchange_rates']->get_settings(), true ) . '</pre>';
+		$all_currencies = WCJ()->modules['currency_exchange_rates']->get_all_currencies( array() );
+		$table_data = array();
+		foreach ( $all_currencies as $currency ) {
+			$table_data[] = array( $currency['title'], get_option( $currency['id'] ) );
+		}
+		if ( ! empty( $table_data ) ) {
+			return wcj_get_table_html( $table_data, array( 'table_class' => 'wcj_currency_exchange_rates_table', 'table_heading_type' => 'vertical' ) );
+		} else {
+			return '';
+		}
 	}
 
 	/**

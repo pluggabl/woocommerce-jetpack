@@ -174,6 +174,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" and `is_object` added.
 ~	* Fix - Functions - Invoicing - `wcj_get_invoice_date()` - Check for not empty invoice date added.
 ~!D	* Dev - Shortcodes - General - `[wcj_currency_select_link_list]`, `[wcj_currency_select_radio_list]`, `[wcj_currency_select_drop_down_list]` - `default` attribute added.
+~!D	* Dev - Shortcodes - General - `[wcj_currency_exchange_rate]` and `[wcj_currency_exchange_rates_table]` shortcodes added.
 ~ED	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `add_variation_info_to_item_name` attribute defaults to `yes` now.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_meta`, `product_cost`, `product_profit`, `line_cost`, `line_profit`, `product_id`, `item_product_id`, `product_post_meta`, `product_purchase_note` columns added.
 ~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `insert_page_break` (defaults to empty string) attribute added.
@@ -190,7 +191,6 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added.
--!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `[wcj_exchange_rate]` and `[wcj_exchange_rates_table]` shortcodes added. `wcj_get_exchange_rate()` and `wcj_get_exchange_rates_table()` functions added.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
 ~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
 ~!D	* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
