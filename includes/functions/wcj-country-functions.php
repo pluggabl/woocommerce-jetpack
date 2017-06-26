@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Country
  *
- * @version  2.6.0
+ * @version  2.9.0
  * @author   Algoritmika Ltd.
  */
 
@@ -18,32 +18,28 @@ if ( ! function_exists( 'wcj_get_country_flag_by_code' ) ) {
 	}
 }
 
-/**
- * wcj_get_customer_country.
- *
- * @return string
- */
 if ( ! function_exists( 'wcj_get_customer_country' ) ) {
+	/**
+	 * wcj_get_customer_country.
+	 *
+	 * @version 2.9.0
+	 * @return  string
+	 */
 	function wcj_get_customer_country( $user_id ) {
-
 		$user_meta = get_user_meta( $user_id );
-
 		$billing_country  = isset( $user_meta['billing_country'][0] )  ? $user_meta['billing_country'][0]  : '';
 		$shipping_country = isset( $user_meta['shipping_country'][0] ) ? $user_meta['shipping_country'][0] : '';
-
-		$customer_country = ( '' == $billing_country ) ? $shipping_country : $billing_country;
-
-		return $customer_country;
+		return ( '' == $billing_country ) ? $shipping_country : $billing_country;
 	}
 }
 
-/**
- * wcj_get_european_union_countries_with_vat.
- *
- * @version 2.4.0
- * @return array
- */
 if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
+	/**
+	 * wcj_get_european_union_countries_with_vat.
+	 *
+	 * @version 2.4.0
+	 * @return array
+	 */
 	function wcj_get_european_union_countries_with_vat() {
 		return array(
 			'AT' => 20,
@@ -81,30 +77,27 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 	}
 }
 
-/**
- * Get country name by country code.
- *
- * @return string on success, boolean false otherwise
- */
 if ( ! function_exists( 'wcj_get_country_name_by_code' ) ) {
+	/**
+	 * Get country name by country code.
+	 *
+	 * @version 2.9.0
+	 * @return  string on success, boolean false otherwise
+	 */
 	function wcj_get_country_name_by_code( $country_code ) {
-
 		$countries = wcj_get_countries();
-
-		if ( isset( $countries[ $country_code ] ) ) return $countries[ $country_code ];
-
-		return false;
+		return ( isset( $countries[ $country_code ] ) ) ? $countries[ $country_code ] : false;
 	}
 }
 
-/**
- * Get all states array.
- *
- * @version 2.4.4
- * @since   2.4.4
- * @return array
- */
 if ( ! function_exists( 'wcj_get_states' ) ) {
+	/**
+	 * Get all states array.
+	 *
+	 * @version 2.4.4
+	 * @since   2.4.4
+	 * @return  array
+	 */
 	function wcj_get_states() {
 		$base_country = WC()->countries->get_base_country();
 		$states = WC()->countries->get_states( $base_country );
@@ -112,12 +105,13 @@ if ( ! function_exists( 'wcj_get_states' ) ) {
 	}
 }
 
-/**
- * Get all countries array.
- *
- * @return array
- */
 if ( ! function_exists( 'wcj_get_countries' ) ) {
+	/**
+	 * Get all countries array.
+	 *
+	 * @version 2.9.0
+	 * @return  array
+	 */
 	function wcj_get_countries() {
 		return array(
 			'AF' => __( 'Afghanistan', 'woocommerce' ),
@@ -363,7 +357,8 @@ if ( ! function_exists( 'wcj_get_countries' ) ) {
 			'WS' => __( 'Western Samoa', 'woocommerce' ),
 			'YE' => __( 'Yemen', 'woocommerce' ),
 			'ZM' => __( 'Zambia', 'woocommerce' ),
-			'ZW' => __( 'Zimbabwe', 'woocommerce' )
+			'ZW' => __( 'Zimbabwe', 'woocommerce' ),
+			'EU' => __( 'European Union', 'woocommerce' ),
 		);
 	}
 }
