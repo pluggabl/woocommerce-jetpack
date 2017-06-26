@@ -143,6 +143,14 @@ class WCJ_Exchange_Rates_Crons {
 			$currency_pairs = $this->get_currency_pair( $currency_pairs, $additional_currency, false );
 		}
 
+		// Additional currencies (via custom currencies section)
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_exchange_custom_currencies_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( 'disabled' != ( $additional_currency = get_option( 'wcj_currency_exchange_custom_currencies_' . $i, 'disabled' ) ) ) {
+				$currency_pairs = $this->get_currency_pair( $currency_pairs, $additional_currency, false );
+			}
+		}
+
 		// Currency Pairs - Final
 		$rate_offset_percent = get_option( 'wcj_currency_exchange_rates_offset_percent', 0 );
 		if ( 0 != $rate_offset_percent ) {

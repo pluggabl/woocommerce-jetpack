@@ -163,7 +163,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.9.0 - 25/06/2017
+= 2.9.0 - 26/06/2017
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `wc_reduce_stock_levels()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_dimensions]` - `wc_format_dimensions()`.
@@ -189,7 +189,8 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
--!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added. `[wcj_exchange_rate]` and `[wcj_exchange_rates_table]` shortcodes added. `wcj_get_exchange_rate()` and `wcj_get_exchange_rates_table()` functions added.
+~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added.
+-!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `[wcj_exchange_rate]` and `[wcj_exchange_rates_table]` shortcodes added. `wcj_get_exchange_rate()` and `wcj_get_exchange_rates_table()` functions added.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
 ~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
 ~!D	* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.

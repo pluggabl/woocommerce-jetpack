@@ -87,6 +87,13 @@ $additional_currencies = apply_filters( 'wcj_currency_exchange_rates_additional_
 foreach ( $additional_currencies as $additional_currency ) {
 	$settings = $this->add_currency_pair_setting( $currency_from, $additional_currency, $settings );
 }
+// Additional currencies (via custom currencies section)
+$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_exchange_custom_currencies_total_number', 1 ) );
+for ( $i = 1; $i <= $total_number; $i++ ) {
+	if ( 'disabled' != ( $additional_currency = get_option( 'wcj_currency_exchange_custom_currencies_' . $i, 'disabled' ) ) ) {
+		$settings = $this->add_currency_pair_setting( $currency_from, $additional_currency, $settings );
+	}
+}
 if ( wcj_is_module_enabled( 'price_by_country' ) ) {
 	// Currency Pairs - Price by Country
 	if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_price_by_country_auto_exchange_rates', 'manual' ) ) ) {
@@ -135,6 +142,30 @@ if ( wcj_is_module_enabled( 'payment_gateways_currency' ) ) {
 			}
 		}
 	}
+}
+// Additional (custom) currencies
+$all_currencies = wcj_get_currencies_names_and_symbols();
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Total Custom Currencies', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_exchange_custom_currencies_total_number',
+		'default'  => 1,
+		'type'     => 'custom_number',
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+	),
+) );
+$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_exchange_custom_currencies_total_number', 1 ) );
+for ( $i = 1; $i <= $total_number; $i++ ) {
+	$settings = array_merge( $settings, array(
+		array(
+			'title'    => __( 'Custom Currency', 'woocommerce-jetpack' ) . ' #' . $i,
+			'id'       => 'wcj_currency_exchange_custom_currencies_' . $i,
+			'default'  => 'disabled',
+			'type'     => 'select',
+			'options'  => array_merge( array( 'disabled' => __( 'Disabled', 'woocommerce-jetpack' ) ), $all_currencies ),
+		),
+	) );
 }
 $settings = array_merge( $settings, array(
 	/*
