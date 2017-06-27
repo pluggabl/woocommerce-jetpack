@@ -72,6 +72,56 @@ class WCJ_General extends WCJ_Module {
 				add_action( 'wp_loaded', array( $this, 'maybe_apply_url_coupon' ), PHP_INT_MAX );
 			}
 
+			// Booster role user changer
+			if ( wcj_is_booster_role_changer_enabled() ) {
+				add_action( 'admin_bar_menu', array( $this, 'add_user_role_changer' ), PHP_INT_MAX );
+				add_action( 'init',           array( $this, 'change_user_role_meta' ) );
+			}
+		}
+	}
+
+	/**
+	 * change_user_role_meta.
+	 *
+	 * @version 2.9.0
+	 * @since   2.9.0
+	 * @todo    (maybe) optionally via cookies
+	 */
+	function change_user_role_meta() {
+		if ( isset( $_GET['wcj_booster_user_role'] ) ) {
+			$current_user_id = get_current_user_id();
+			update_user_meta( $current_user_id, '_' . 'wcj_booster_user_role', $_GET['wcj_booster_user_role'] );
+		}
+	}
+
+	/**
+	 * add_user_role_changer.
+	 *
+	 * @version 2.9.0
+	 * @since   2.9.0
+	 */
+	function add_user_role_changer( $wp_admin_bar ) {
+		$current_user_id  = get_current_user_id();
+		$user_roles       = wcj_get_user_roles_options();
+		if ( '' != ( $current_booster_user_role = get_user_meta( $current_user_id, '_' . 'wcj_booster_user_role', true ) ) ) {
+			$current_booster_user_role = ( isset( $user_roles[ $current_booster_user_role ] ) ) ? $user_roles[ $current_booster_user_role ] : $current_booster_user_role;
+			$current_booster_user_role = ' [' . $current_booster_user_role . ']';
+		}
+		$args = array(
+			'parent' => false,
+			'id'     => 'booster-user-role-changer',
+			'title'  => __( 'Booster User Role', 'woocommerce-jetpack' ) . $current_booster_user_role,
+			'href'   => false,
+		);
+		$wp_admin_bar->add_node( $args );
+		foreach ( $user_roles as $user_role_key => $user_role_name ) {
+			$args = array(
+				'parent' => 'booster-user-role-changer',
+				'id'     => 'booster-user-role-changer-role-' . $user_role_key,
+				'title'  => $user_role_name,
+				'href'   => add_query_arg( 'wcj_booster_user_role', $user_role_key ),
+			);
+			$wp_admin_bar->add_node( $args );
 		}
 	}
 

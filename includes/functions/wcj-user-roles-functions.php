@@ -35,14 +35,51 @@ if ( ! function_exists( 'wcj_get_current_user_all_roles' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_is_user_logged_in' ) ) {
+	/**
+	 * wcj_is_user_logged_in.
+	 *
+	 * @version 2.9.0
+	 * @since   2.9.0
+	 */
+	function wcj_is_user_logged_in() {
+		if ( ! function_exists( 'is_user_logged_in' ) ) {
+			require_once( ABSPATH . 'wp-includes/pluggable.php' );
+		}
+		return is_user_logged_in();
+	}
+}
+
+if ( ! function_exists( 'wcj_is_booster_role_changer_enabled' ) ) {
+	/**
+	 * wcj_is_booster_role_changer_enabled.
+	 *
+	 * @version 2.9.0
+	 * @since   2.9.0
+	 */
+	function wcj_is_booster_role_changer_enabled() {
+		return (
+			'yes' === get_option( 'wcj_general_user_role_changer_enabled', 'no' ) &&
+			wcj_is_user_logged_in() &&
+			wcj_is_user_role( get_option( 'wcj_general_user_role_changer_enabled_for', array( 'administrator', 'shop_manager' ) ) )
+		);
+	}
+}
+
 if ( ! function_exists( 'wcj_get_current_user_first_role' ) ) {
 	/**
 	 * wcj_get_current_user_first_role.
 	 *
-	 * @version 2.5.3
+	 * @version 2.9.0
 	 * @since   2.5.3
 	 */
 	function wcj_get_current_user_first_role() {
+		if ( wcj_is_module_enabled( 'general' ) && wcj_is_booster_role_changer_enabled() ) {
+			$current_user_id = get_current_user_id();
+			if ( '' != ( $role_by_meta = get_user_meta( $current_user_id, '_' . 'wcj_booster_user_role', true ) ) ) {
+				return $role_by_meta;
+			}
+		}
 		$current_user = wp_get_current_user();
 		return ( isset( $current_user->roles[0] ) && '' != $current_user->roles[0] ) ? $current_user->roles[0] : 'guest';
 	}

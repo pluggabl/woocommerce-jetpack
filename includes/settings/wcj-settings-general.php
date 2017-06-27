@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 2.8.0
+ * @version 2.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add link to Booster's shortcodes list
@@ -203,6 +203,30 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_url_coupons_options',
+	),
+	array(
+		'title'    => __( 'Booster User Roles Changer Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_general_user_role_changer_options',
+	),
+	array(
+		'title'    => __( 'Booster User Roles Changer', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_general_user_role_changer_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Enabled for', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_general_user_role_changer_enabled_for',
+		'default'  => array( 'administrator', 'shop_manager' ),
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => wcj_get_user_roles_options(),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_general_user_role_changer_options',
 	),
 	/*
 	array(
