@@ -43,7 +43,7 @@ jQuery(window).click(function(e){
 	}
 });
 
-// When the user presses ESC, close modal
+// When the user presses ESC, close the modal
 jQuery(document).keyup(function(e){
 	if (27 === e.keyCode){ // esc
 		modal.css('display','none');
