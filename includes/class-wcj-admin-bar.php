@@ -281,7 +281,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=7day' ),
 					),
 					'month' => array(
-						'title'  => __( 'Month', 'woocommerce' ),
+						'title'  => __( 'This month', 'woocommerce' ),
 						'href'   => admin_url( 'admin.php?page=wc-reports&tab=orders&report=' . $report_id . '&range=month' ),
 					),
 					'last-month' => array(
@@ -372,7 +372,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=out_of_stock' ),
 									),
 									'most-stocked' => array(
-										'title'  => __( 'Most stocked', 'woocommerce' ),
+										'title'  => __( 'Most Stocked', 'woocommerce' ),
 										'href'   => admin_url( 'admin.php?page=wc-reports&tab=stock&report=most_stocked' ),
 									),
 								),
