@@ -18,9 +18,9 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    recheck `wp_footer` (didn't work with PHP_INT_MAX)? maybe `wp_head`?
 	 * @todo    css - better default colors
 	 * @todo    settings - more info about position priorities, e.g.: __( 'Standard priorities for "Inside single product summary": title - 5, rating - 10, price - 10, excerpt - 20, add to cart - 30, meta - 40, sharing - 50', 'woocommerce-jetpack' )
+	 * @todo    (maybe) better solution for the form hook (instead of `woocommerce_before_main_content`)
 	 * @todo    (maybe) css - customizable colors, fonts etc.
 	 * @todo    (maybe) per product settings - add "use global values/use values below" for price step etc. (instead of placeholders etc.)
 	 * @todo    (maybe) recheck multicurrency
@@ -53,7 +53,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 					get_option( 'wcj_offer_price_button_position_priority_archives', 10 )
 				);
 			}
-			add_action( 'wp_footer',                          array( $this, 'add_offer_price_form' ) );
+			add_action( 'woocommerce_before_main_content',    array( $this, 'add_offer_price_form' ) );
 			add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
 			add_action( 'init',                               array( $this, 'offer_price' ) );
 			if ( 'per_product' === apply_filters( 'booster_get_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) ) {
