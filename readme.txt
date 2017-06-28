@@ -186,6 +186,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!D	* Dev - PRICES & CURRENCIES - Currencies - Virtual currencies (myCred, Bitcoin, Ethereum) added.
 ~!D	* Dev - PRICES & CURRENCIES - Currencies - Country flags and currency codes added to the settings.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
+~!D	* Dev - PRICES & CURRENCIES - Currency per Product - EventON plugin support added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors" option added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors User Roles" option added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.

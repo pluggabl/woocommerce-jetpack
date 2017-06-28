@@ -381,6 +381,9 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			parse_str( $_POST['form'], $posted );
 			$the_ID = isset( $posted['add-to-cart'] ) ? $posted['add-to-cart'] : 0;
 		}
+		if ( ! $the_ID && '' != ( $eventon_wc_product_id = get_post_meta( get_the_ID(), 'tx_woocommerce_product_id', true ) ) ) { // EventON plugin
+			$the_ID = $eventon_wc_product_id;
+		}
 		if ( ! $the_ID ) {
 			$the_ID = get_the_ID();
 		}
