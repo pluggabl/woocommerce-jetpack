@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exchange Rates
  *
- * @version  2.6.0
+ * @version  2.9.0
  * @author   Algoritmika Ltd.
  */
 
@@ -26,7 +26,7 @@ class WCJ_Exchange_Rates {
 	/**
 	 * register_script.
 	 *
-	 * @version 2.6.0
+	 * @version 2.9.0
 	 */
 	public function register_script() {
 		if (
@@ -40,7 +40,7 @@ class WCJ_Exchange_Rates {
 				'currency_exchange_rates',
 			) )
 		) {
-			wp_register_script( 'wcj-exchange-rates-ajax',  trailingslashit( WCJ()->plugin_url() ) . 'includes/js/ajax_exchange_rates.js', array( 'jquery' ), WCJ()->version, true );
+			wp_register_script( 'wcj-exchange-rates-ajax',  trailingslashit( WCJ()->plugin_url() ) . 'includes/js/wcj-ajax-exchange-rates.js', array( 'jquery' ), WCJ()->version, true );
 			wp_localize_script( 'wcj-exchange-rates-ajax', 'ajax_object', array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 			) );

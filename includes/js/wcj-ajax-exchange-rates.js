@@ -1,5 +1,5 @@
 /**
- * ajax_exchange_rates.js
+ * wcj-ajax-exchange-rates.js
  *
  * @version 2.6.0
  */
