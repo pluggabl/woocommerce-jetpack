@@ -2,15 +2,17 @@
 /**
  * Booster for WooCommerce - Settings - Product Info
  *
- * @version 2.8.0
+ * @version 2.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$products = wcj_get_products();
-$settings = array();
+$products     = wcj_get_products();
+$product_cats = wcj_get_terms( 'product_cat' );
+$product_tags = wcj_get_terms( 'product_tag' );
+$settings     = array();
 $single_or_archive_array = array( 'single', 'archive' );
 foreach ( $single_or_archive_array as $single_or_archive ) {
 	$single_or_archive_desc = ( 'single' === $single_or_archive ) ? __( 'Single', 'woocommerce-jetpack' ) : __( 'Archive', 'woocommerce-jetpack' );
@@ -80,6 +82,46 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'default'  => 10,
 				'type'     => 'number',
 				'css'      => 'width:250px;',
+			),
+			array(
+				'title'    => __( 'Product Categories to Include', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_custom_info_product_cats_to_include_' . $single_or_archive . '_' . $i,
+				'default'  => '',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'css'      => 'width: 450px;',
+				'options'  => $product_cats,
+			),
+			array(
+				'title'    => __( 'Product Categories to Exclude', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_custom_info_product_cats_to_exclude_' . $single_or_archive . '_' . $i,
+				'default'  => '',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'css'      => 'width: 450px;',
+				'options'  => $product_cats,
+			),
+			array(
+				'title'    => __( 'Product Tags to Include', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_custom_info_product_tags_to_include_' . $single_or_archive . '_' . $i,
+				'default'  => '',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'css'      => 'width: 450px;',
+				'options'  => $product_tags,
+			),
+			array(
+				'title'    => __( 'Product Tags to Exclude', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_custom_info_product_tags_to_exclude_' . $single_or_archive . '_' . $i,
+				'default'  => '',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'css'      => 'width: 450px;',
+				'options'  => $product_tags,
 			),
 			array(
 				'title'    => __( 'Products to Include', 'woocommerce-jetpack' ),

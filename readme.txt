@@ -205,6 +205,7 @@ $~!D* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Roun
 ~D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Local Redirect - "Per Product" option added.
 ~!	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Redirecting if "Add to Cart Local Redirect Options" is enabled.
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
+$~!D* Dev - PRODUCTS - Product Info - "Product Categories/Tags to Include/Exclude" options added.
 $~!D* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart Display Options" option added.
 $~!D* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart HTML Template" options added.
 ~D	* Dev - PRODUCTS - Product Listings - "Admin Products List - Custom Columns" section added.
