@@ -286,11 +286,11 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.6.0
+	 * @version 2.9.0
 	 */
 	function enqueue_scripts() {
 		if ( 'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) ) {
-			wp_enqueue_script( 'wcj-eu-vat-number', wcj_plugin_url() . '/includes/js/eu-vat-number.js', array(), WCJ()->version, true );
+			wp_enqueue_script( 'wcj-eu-vat-number', wcj_plugin_url() . '/includes/js/wcj-eu-vat-number.js', array(), WCJ()->version, true );
 			wp_localize_script( 'wcj-eu-vat-number', 'ajax_object', array(
 				'ajax_url'                        => admin_url( 'admin-ajax.php' ),
 				'add_progress_text'               => get_option( 'wcj_eu_vat_number_add_progress_text', 'no' ),
