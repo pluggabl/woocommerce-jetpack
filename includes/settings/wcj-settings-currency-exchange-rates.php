@@ -5,6 +5,7 @@
  * @version 2.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    add "rounding" and "offset" options for each pair separately
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -47,6 +48,20 @@ $settings = array(
 		'default'  => 'yahoo',
 		'type'     => 'select',
 		'options'  => wcj_get_currency_exchange_rate_servers(),
+	),
+	array(
+		'title'    => __( 'Exchange Rates Rounding', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_exchange_rates_rounding_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Rounding Precision', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_exchange_rates_rounding_precision',
+		'default'  => 0,
+		'type'     => 'number',
+		'custom_attributes' => array( 'min' => '0' ),
 	),
 	array(
 		'title'    => __( 'Exchange Rates Offset - Percent', 'woocommerce-jetpack' ),

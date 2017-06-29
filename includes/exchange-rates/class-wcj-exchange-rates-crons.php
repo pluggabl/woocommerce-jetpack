@@ -158,6 +158,9 @@ class WCJ_Exchange_Rates_Crons {
 			$rate_offset_percent = 1 + ( $rate_offset_percent / 100 );
 		}
 		$rate_offset_fixed = get_option( 'wcj_currency_exchange_rates_offset_fixed', 0 );
+		if ( $rate_rounding_enabled = ( 'yes' === get_option( 'wcj_currency_exchange_rates_rounding_enabled', 'no' ) ) ) {
+			$rate_rounding_precision = get_option( 'wcj_currency_exchange_rates_rounding_precision', 0 );
+		}
 		foreach ( $currency_pairs as $currency_pair ) {
 			$currency_from = $currency_pair['currency_from'];
 			$currency_to   = $currency_pair['currency_to'];
@@ -168,6 +171,9 @@ class WCJ_Exchange_Rates_Crons {
 				}
 				if ( 0 != $rate_offset_fixed ) {
 					$the_rate = $the_rate + $rate_offset_fixed;
+				}
+				if ( $rate_rounding_enabled ) {
+					$the_rate = round( $the_rate, $rate_rounding_precision );
 				}
 				if ( $currency_from != $currency_to ) {
 					foreach ( $currency_pair['option_name'] as $option_name ) {
