@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 2.8.2
+ * @version 2.9.0
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -35,13 +35,13 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * enqueue_checkout_script.
 	 *
-	 * @version 2.7.0
+	 * @version 2.9.0
 	 */
 	function enqueue_checkout_script() {
 		if( ! is_checkout() ) {
 			return;
 		}
-		wp_enqueue_script( 'wcj-payment-gateways-checkout', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/checkout.js', array( 'jquery' ), WCJ()->version, true );
+		wp_enqueue_script( 'wcj-payment-gateways-checkout', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/wcj-checkout.js', array( 'jquery' ), WCJ()->version, true );
 	}
 
 	/**

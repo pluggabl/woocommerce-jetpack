@@ -251,7 +251,7 @@ $~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.
 ~!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
 	* Dev - EMAILS & MISC. - Reports - Code refactoring - `wcj-reports-functions.php` added.
-	* Tweak - JS files naming fixed (`wcj-ajax-exchange-rates.js`, `wcj-product-input-fields.js`).
+	* Tweak - JS files naming fixed (`wcj-ajax-exchange-rates.js`, `wcj-product-input-fields.js`, `wcj-checkout.js`).
 	* Tweak - Timepicker files moved to `lib` directory.
 ~!D	* Tweak - PRODUCTS - Product Cost Price - Renamed to "Cost of Goods".
 ~!D	* Tweak - PRODUCTS - Product Visibility by User Role - Settings descriptions added.

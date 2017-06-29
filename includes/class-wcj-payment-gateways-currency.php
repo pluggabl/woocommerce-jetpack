@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency
  *
- * @version 2.8.0
+ * @version 2.9.0
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -185,9 +185,11 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 
 	/**
 	 * register_script.
+	 *
+	 * @version 2.9.0
 	 */
 	function register_script() {
-		wp_register_script( 'wcj-payment-gateways-checkout', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/checkout.js', array( 'jquery' ), false, true );
+		wp_register_script( 'wcj-payment-gateways-checkout', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/wcj-checkout.js', array( 'jquery' ), WCJ()->version, true );
 	}
 
 	/**
