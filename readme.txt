@@ -163,7 +163,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.9.0 - 29/06/2017
+= 2.9.0 - 30/06/2017
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_dimensions]` - `wc_format_dimensions()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `wc_reduce_stock_levels()`.
@@ -202,6 +202,7 @@ $~!D* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Roun
 ~!D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Disable Quantity Input" option added (defaults to `yes`).
 ~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.
 ~!D	* Dev - PRODUCTS - Cost of Goods - "Admin Products List Custom Columns" - Section added.
+~!D	* Fix - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - Display Radio Buttons Instead of Drop Box - Fixed.
 ~D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Local Redirect - "Per Product" option added.
 ~!	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Redirecting if "Add to Cart Local Redirect Options" is enabled.
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.

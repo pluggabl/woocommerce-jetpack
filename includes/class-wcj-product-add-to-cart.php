@@ -68,7 +68,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			// Variable Add to Cart Template
 			if ( 'yes' === apply_filters( 'booster_get_option', 'wcj', get_option( 'wcj_add_to_cart_variable_as_radio_enabled', 'no' ) ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_variable_add_to_cart_scripts' ) );
-				add_filter( 'wc_get_template', array( $this, 'change_variable_add_to_cart_template' ), PHP_INT_MAX, 5 );
+				add_filter( 'wc_get_template',    array( $this, 'change_variable_add_to_cart_template' ), PHP_INT_MAX, 5 );
 			}
 
 			// Replace Add to Cart Loop with Single
@@ -326,11 +326,11 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * enqueue_variable_add_to_cart_scripts.
 	 *
-	 * @version 2.4.8
+	 * @version 2.9.0
 	 * @since   2.4.8
 	 */
 	function enqueue_variable_add_to_cart_scripts() {
-		wp_enqueue_script( 'wcj-variations', wcj_plugin_url() . '/includes/js/wcj-variations-frontend.js', array( 'jquery' ) );
+		wp_enqueue_script( 'wcj-variations', wcj_plugin_url() . '/includes/js/wcj-variations-frontend.js', array( 'jquery' ), WCJ()->version, true );
 	}
 
 	/**
@@ -338,7 +338,6 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	 *
 	 * @version 2.4.8
 	 * @since   2.4.8
-	 * @todo    fix - variations images to changing (maybe check Crowdfunding plugin)
 	 */
 	function change_variable_add_to_cart_template( $located, $template_name, $args, $template_path, $default_path ) {
 		if ( 'single-product/add-to-cart/variable.php' == $template_name ) {
