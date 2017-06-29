@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 2.8.0
+ * @version 2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -88,16 +88,20 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 
 	/**
 	 * register_script.
+	 *
+	 * @version 2.9.0
 	 */
 	function register_scripts() {
-		wp_register_script( 'wcj-product-input-fields', WCJ()->plugin_url() . '/includes/js/product-input-fields.js', array( 'jquery' ), false, true );
+		wp_register_script( 'wcj-product-input-fields', WCJ()->plugin_url() . '/includes/js/wcj-product-input-fields.js', array( 'jquery' ), WCJ()->version, true );
 	}
 
 	/**
 	 * enqueue_checkout_script.
 	 */
 	function enqueue_scripts() {
-		if( ! is_product() ) return;
+		if( ! is_product() ) {
+			return;
+		}
 		wp_enqueue_script( 'wcj-product-input-fields' );
 	}
 
