@@ -232,8 +232,9 @@ $~!D* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Colu
 $~!D* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Initial module release.
 ~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Sortable" options added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
-~	* Dev - PDF INVOICING & PACKING SLIPS - Display - Sortable Columns - Code refactoring.
-$~!D* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" options added.
+~	* Dev - PDF INVOICING & PACKING SLIPS - Display - Code refactoring.
+~!D	* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" options added.
+~	* Dev - PDF INVOICING & PACKING SLIPS - Footer - "Footer Text" option updated.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Templates - "Save all templates" buttons added.
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Default font set to "Helvetica".
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Font selection option updated.
@@ -247,7 +248,7 @@ $~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Skip Email Verification for User Roles" option added.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Verification Message - Failed" - `%resend_verification_url%` replaceable value added.
 $~!D* Dev - EMAILS & MISC. - General - "Booster User Roles Changer" options added.
-$~!D* Dev - EMAILS & MISC. - My Account - Initial module release.
+~!D	* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.
 ~!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
 	* Dev - EMAILS & MISC. - Reports - Code refactoring - `wcj-reports-functions.php` added.
