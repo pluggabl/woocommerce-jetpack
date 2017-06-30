@@ -91,16 +91,22 @@ class WCJ_Order_Quantities extends WCJ_Module {
 					'%max_cart_total_quantity%' => $required_quantity,
 					'%cart_total_quantity%'     => $total_quantity,
 				);
-				$message_template = get_option( 'wcj_order_quantities_max_cart_total_message',
-					__( 'Maximum allowed order quantity is %max_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ) );
+				$message_template = apply_filters( 'booster_get_option',
+					__( 'Maximum allowed order quantity is %max_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ),
+					get_option( 'wcj_order_quantities_max_cart_total_message',
+						__( 'Maximum allowed order quantity is %max_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ) )
+				);
 				break;
 			case 'min_cart_total_quantity':
 				$replaced_values = array(
 					'%min_cart_total_quantity%' => $required_quantity,
 					'%cart_total_quantity%'     => $total_quantity,
 				);
-				$message_template = get_option( 'wcj_order_quantities_min_cart_total_message',
-					__( 'Minimum allowed order quantity is %min_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ) );
+				$message_template = apply_filters( 'booster_get_option',
+					__( 'Minimum allowed order quantity is %min_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ),
+					get_option( 'wcj_order_quantities_min_cart_total_message',
+						__( 'Minimum allowed order quantity is %min_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ) )
+				);
 				break;
 			case 'max_per_item_quantity':
 				$_product = wc_get_product( $_product_id );
@@ -109,8 +115,11 @@ class WCJ_Order_Quantities extends WCJ_Module {
 					'%item_quantity%'         => $total_quantity,
 					'%product_title%'         => $_product->get_title(),
 				);
-				$message_template = get_option( 'wcj_order_quantities_max_per_item_message',
-					__( 'Maximum allowed quantity for %product_title% is %max_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ) );
+				$message_template = apply_filters( 'booster_get_option',
+					__( 'Maximum allowed quantity for %product_title% is %max_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
+					get_option( 'wcj_order_quantities_max_per_item_message',
+						__( 'Maximum allowed quantity for %product_title% is %max_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ) )
+				);
 				break;
 			case 'min_per_item_quantity':
 				$_product = wc_get_product( $_product_id );
@@ -119,8 +128,11 @@ class WCJ_Order_Quantities extends WCJ_Module {
 					'%item_quantity%'         => $total_quantity,
 					'%product_title%'         => $_product->get_title(),
 				);
-				$message_template = get_option( 'wcj_order_quantities_min_per_item_message',
-					__( 'Minimum allowed quantity for %product_title% is %min_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ) );
+				$message_template = apply_filters( 'booster_get_option',
+					__( 'Minimum allowed quantity for %product_title% is %min_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
+					get_option( 'wcj_order_quantities_min_per_item_message',
+						__( 'Minimum allowed quantity for %product_title% is %min_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ) )
+				);
 				break;
 		}
 		$_notice = str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), $message_template );
