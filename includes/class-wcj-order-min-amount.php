@@ -5,6 +5,7 @@
  * @version 2.9.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
+ * @todo    order max amount
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
