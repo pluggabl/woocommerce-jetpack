@@ -192,7 +192,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
-$~!D* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Rounding" options added.
+~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Rounding" options added.
 ~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added. Settings restyled. Code refactoring.
 ~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
 ~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
@@ -207,10 +207,10 @@ $~!D* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Roun
 ~!	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Redirecting if "Add to Cart Local Redirect Options" is enabled.
 ~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
 ~!D	* Dev - PRODUCTS - Product Info - "Product Categories/Tags to Include/Exclude" options added.
-$~!D* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart Display Options" option added.
-$~!D* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart HTML Template" options added.
+~!D	* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart Display Options" option added.
+~!D	* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart HTML Template" options added.
 ~D	* Dev - PRODUCTS - Product Listings - "Admin Products List - Custom Columns" section added.
-$~D	* Dev - PRODUCTS - Product Listings - "Admin Products List - Columns Order" section added.
+~D	* Dev - PRODUCTS - Product Listings - "Admin Products List - Columns Order" section added.
 	* Dev - PRODUCTS - Product Listings - Settings - Code refactoring - `wcj_get_terms()`.
 $~!D* Dev - PRODUCTS - Product Visibility by Country - Visibility, purchasable and query options added.
 $~!D* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Column" option added.
@@ -230,7 +230,7 @@ $~!D* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Colu
 ~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
 ~!D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - Advanced - "Cart notice method" and "Cart notice type" options added.
 $~!D* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Initial module release.
-$~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Sortable" options added.
+~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Sortable" options added.
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
 ~	* Dev - PDF INVOICING & PACKING SLIPS - Display - Sortable Columns - Code refactoring.
 $~!D* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" options added.
