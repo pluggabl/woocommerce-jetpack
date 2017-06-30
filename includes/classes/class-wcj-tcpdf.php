@@ -27,7 +27,6 @@ class WCJ_TCPDF extends TCPDF {
 	 * Page footer.
 	 *
 	 * @version 2.9.0
-	 * @todo    (maybe) e.g. "Position at 15 mm from bottom" - `$this->SetY( -15 );`
 	 * @todo    (maybe) e.g. "Set font" - `$this->SetFont( 'helvetica', 'I', 8 );`
 	 */
 	function Footer() {

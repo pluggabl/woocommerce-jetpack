@@ -234,7 +234,7 @@ $~!D* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Initial module releas
 ~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
 ~	* Dev - PDF INVOICING & PACKING SLIPS - Display - Code refactoring.
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" options added.
-~	* Dev - PDF INVOICING & PACKING SLIPS - Footer - "Footer Text" option updated.
+~D	* Dev - PDF INVOICING & PACKING SLIPS - Footer - "Footer Text" option updated.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Templates - "Save all templates" buttons added.
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Default font set to "Helvetica".
 ~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Font selection option updated.
