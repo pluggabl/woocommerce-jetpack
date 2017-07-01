@@ -212,8 +212,8 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - PRODUCTS - Product Listings - "Admin Products List - Custom Columns" section added.
 ~D	* Dev - PRODUCTS - Product Listings - "Admin Products List - Columns Order" section added.
 	* Dev - PRODUCTS - Product Listings - Settings - Code refactoring - `wcj_get_terms()`.
-$~!D* Dev - PRODUCTS - Product Visibility by Country - Visibility, purchasable and query options added.
-$~!D* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Column" option added.
+~!D	* Dev - PRODUCTS - Product Visibility by Country - Visibility, purchasable and query options added.
+~!D	* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Column" option added.
 ~	* Fix - PRODUCTS - Products per Page - Template fixed.
 ~D	* Dev - PRODUCTS - Products per Page - "Template - Before Form" and "Template - After Form" options added.
 	* Dev - PRODUCTS - Products per Page - Minor code refactoring.
