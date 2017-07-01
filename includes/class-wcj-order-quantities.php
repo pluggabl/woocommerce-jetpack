@@ -162,7 +162,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				}
 			}
 		}
-		if ( 0 != ( $max_or_max_per_item_quantity = get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity', 0 ) ) ) {
+		if ( 0 != ( $max_or_max_per_item_quantity = apply_filters( 'booster_get_option', 0, get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity', 0 ) ) ) ) {
 			foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
 				if (
 					( 'max' === $min_or_max && $cart_item_quantity > $max_or_max_per_item_quantity ) ||

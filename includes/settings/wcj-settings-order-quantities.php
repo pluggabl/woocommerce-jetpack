@@ -46,7 +46,8 @@ return array(
 		'id'       => 'wcj_order_quantities_min_per_item_quantity',
 		'default'  => 0,
 		'type'     => 'number',
-		'custom_attributes' => array( 'min' => 0 ),
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => ( '' === apply_filters( 'booster_get_message', '', 'readonly' ) ? array( 'min' => 0 ) : apply_filters( 'booster_get_message', '', 'readonly' ) ),
 	),
 	array(
 		'title'    => __( 'Message - Per Item Quantity', 'woocommerce-jetpack' ),
@@ -96,7 +97,8 @@ return array(
 		'id'       => 'wcj_order_quantities_max_per_item_quantity',
 		'default'  => 0,
 		'type'     => 'number',
-		'custom_attributes' => array( 'min' => 0 ),
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => ( '' === apply_filters( 'booster_get_message', '', 'readonly' ) ? array( 'min' => 0 ) : apply_filters( 'booster_get_message', '', 'readonly' ) ),
 	),
 	array(
 		'title'    => __( 'Message - Per Item Quantity', 'woocommerce-jetpack' ),
