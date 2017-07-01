@@ -33,6 +33,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Message - Cart Total Quantity', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%min_cart_total_quantity%', '%cart_total_quantity%' ) ),
 		'id'       => 'wcj_order_quantities_min_cart_total_message',
 		'default'  => __( 'Minimum allowed order quantity is %min_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
@@ -49,6 +50,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Message - Per Item Quantity', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%min_per_item_quantity%', '%item_quantity%' ) ),
 		'id'       => 'wcj_order_quantities_min_per_item_message',
 		'default'  => __( 'Minimum allowed quantity for %product_title% is %min_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
@@ -80,6 +82,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Message - Cart Total Quantity', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%max_cart_total_quantity%', '%cart_total_quantity%' ) ),
 		'id'       => 'wcj_order_quantities_max_cart_total_message',
 		'default'  => __( 'Maximum allowed order quantity is %max_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
@@ -96,6 +99,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Message - Per Item Quantity', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%max_per_item_quantity%', '%item_quantity%' ) ),
 		'id'       => 'wcj_order_quantities_max_per_item_message',
 		'default'  => __( 'Maximum allowed quantity for %product_title% is %max_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
