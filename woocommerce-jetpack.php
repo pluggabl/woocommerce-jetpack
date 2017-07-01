@@ -55,7 +55,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '2.9.0-dev-201707012017';
+	public $version = '2.9.0-dev-201707012041';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -251,6 +251,7 @@ final class WC_Jetpack {
 	 */
 	function include_functions() {
 		include_once( 'includes/functions/wcj-debug-functions.php' );
+		include_once( 'includes/functions/wcj-core-functions.php' );
 		include_once( 'includes/functions/wcj-admin-functions.php' );
 		include_once( 'includes/functions/wcj-functions.php' );
 		include_once( 'includes/functions/wcj-eu-vat-functions.php' );
@@ -470,25 +471,6 @@ final class WC_Jetpack {
 		return $settings;
 	}
 
-	/**
-	 * Get the plugin url.
-	 *
-	 * @return string
-	 * @todo   delete this function
-	 */
-	function plugin_url() {
-		return untrailingslashit( plugin_dir_url( __FILE__ ) );
-	}
-
-	/**
-	 * Get the plugin path.
-	 *
-	 * @return string
-	 * @todo   delete this function
-	 */
-	function plugin_path() {
-		return untrailingslashit( plugin_dir_path( __FILE__ ) );
-	}
 }
 
 endif;
@@ -502,30 +484,6 @@ if ( ! function_exists( 'WCJ' ) ) {
 	 */
 	function WCJ() {
 		return WC_Jetpack::instance();
-	}
-}
-
-if ( ! function_exists( 'wcj_plugin_file' ) ) {
-	/**
-	 * Get the plugin file.
-	 *
-	 * @version 2.5.7
-	 * @since   2.5.7
-	 */
-	function wcj_plugin_file() {
-		return __FILE__;
-	}
-}
-
-if ( ! function_exists( 'wcj_plugin_url' ) ) {
-	/**
-	 * Get the plugin url.
-	 *
-	 * @version 2.6.0
-	 * @since   2.6.0
-	 */
-	function wcj_plugin_url() {
-		return untrailingslashit( plugin_dir_url( __FILE__ ) );
 	}
 }
 

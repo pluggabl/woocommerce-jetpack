@@ -14,7 +14,7 @@ $settings      = array();
 $invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
 foreach ( $invoice_types as $invoice_type ) {
 	$default_template_filename = ( false === strpos( $invoice_type['id'], 'custom_doc_' ) ? $invoice_type['id'] : 'custom_doc' );
-	$default_template_filename = WCJ()->plugin_path() . '/includes/settings/pdf-invoicing/wcj-' . $default_template_filename . '.css';
+	$default_template_filename = wcj_plugin_path() . '/includes/settings/pdf-invoicing/wcj-' . $default_template_filename . '.css';
 	if ( file_exists( $default_template_filename ) ) {
 		ob_start();
 		include( $default_template_filename );

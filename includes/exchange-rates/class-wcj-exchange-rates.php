@@ -28,7 +28,7 @@ class WCJ_Exchange_Rates {
 	 *
 	 * @version 2.9.0
 	 */
-	public function register_script() {
+	function register_script() {
 		if (
 			isset( $_GET['section'] ) &&
 			in_array( $_GET['section'], array(
@@ -40,7 +40,7 @@ class WCJ_Exchange_Rates {
 				'currency_exchange_rates',
 			) )
 		) {
-			wp_register_script( 'wcj-exchange-rates-ajax',  trailingslashit( WCJ()->plugin_url() ) . 'includes/js/wcj-ajax-exchange-rates.js', array( 'jquery' ), WCJ()->version, true );
+			wp_register_script( 'wcj-exchange-rates-ajax',  trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-ajax-exchange-rates.js', array( 'jquery' ), WCJ()->version, true );
 			wp_localize_script( 'wcj-exchange-rates-ajax', 'ajax_object', array(
 				'ajax_url' => admin_url( 'admin-ajax.php' ),
 			) );

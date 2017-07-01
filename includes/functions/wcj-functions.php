@@ -831,16 +831,6 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	}
  }
 
-/**
- * add_wcj_get_products_filter.
- */
-add_action( 'init', 'add_wcj_get_products_filter' );
-if ( ! function_exists( 'add_wcj_get_products_filter' ) ) {
-	function add_wcj_get_products_filter() {
-		add_filter( 'wcj_get_products_filter', 'wcj_get_products' );
-	}
-}
-
 if ( ! function_exists( 'wcj_get_products' ) ) {
 	/**
 	 * wcj_get_products.
@@ -992,29 +982,6 @@ if ( ! function_exists( 'wcj_get_product' ) ) {
 		if ( 0 == $product_id ) $product_id = get_the_ID();
 		$the_product = new WCJ_Product( $product_id );
 		return $the_product;
-	}
-}
-
-if ( ! function_exists( 'wcj_plugin_url' ) ) {
-	/**
-	 * wcj_plugin_url.
-	 *
-	 * @version 2.3.0
-	 * @todo    remove this function
-	 */
-	function wcj_plugin_url() {
-		return untrailingslashit( plugin_dir_url( realpath( dirname( __FILE__ ) . '/..' ) ) );
-	}
-}
-
-if ( ! function_exists( 'wcj_plugin_path' ) ) {
-	/**
-	 * Get the plugin path.
-	 *
-	 * @return string
-	 */
-	function wcj_plugin_path() {
-		return untrailingslashit( realpath( plugin_dir_path( __FILE__ ) . '/../..' ) );
 	}
 }
 
