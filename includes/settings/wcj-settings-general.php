@@ -215,6 +215,8 @@ $settings = array(
 		'id'       => 'wcj_general_user_role_changer_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Enabled for', 'woocommerce-jetpack' ),

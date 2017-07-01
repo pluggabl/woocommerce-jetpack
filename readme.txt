@@ -247,7 +247,7 @@ $~!D* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Colu
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Enable Email Verification for Already Registered Users" option added.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Skip Email Verification for User Roles" option added.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Verification Message - Failed" - `%resend_verification_url%` replaceable value added.
-$~!D* Dev - EMAILS & MISC. - General - "Booster User Roles Changer" options added.
+~!D	* Dev - EMAILS & MISC. - General - "Booster User Roles Changer" options added.
 ~!D	* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.
 ~!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
