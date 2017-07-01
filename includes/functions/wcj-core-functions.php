@@ -30,3 +30,16 @@ if ( ! function_exists( 'wcj_plugin_path' ) ) {
 		return untrailingslashit( realpath( plugin_dir_path( __FILE__ ) . '/../..' ) ); // return untrailingslashit( realpath( plugin_dir_path( __FILE__ ) ) );
 	}
 }
+
+if ( ! function_exists( 'wcj_is_module_enabled' ) ) {
+	/*
+	 * wcj_is_module_enabled.
+	 *
+	 * @version 2.9.0
+	 * @since   2.4.0
+	 * @return  boolean
+	 */
+	function wcj_is_module_enabled( $module_id ) {
+		return ( 'yes' === get_option( 'wcj_' . $module_id . '_enabled', 'no' ) );
+	}
+}
