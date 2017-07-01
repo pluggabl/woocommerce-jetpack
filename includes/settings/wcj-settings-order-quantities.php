@@ -37,8 +37,6 @@ return array(
 		'default'  => __( 'Minimum allowed order quantity is %min_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 	),
 	array(
 		'title'    => __( 'Per Item Quantity', 'woocommerce-jetpack' ),
@@ -55,8 +53,6 @@ return array(
 		'default'  => __( 'Minimum allowed quantity for %product_title% is %min_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 	),
 	array(
 		'type'     => 'sectionend',
@@ -88,8 +84,6 @@ return array(
 		'default'  => __( 'Maximum allowed order quantity is %max_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 	),
 	array(
 		'title'    => __( 'Per Item Quantity', 'woocommerce-jetpack' ),
@@ -106,8 +100,6 @@ return array(
 		'default'  => __( 'Maximum allowed quantity for %product_title% is %max_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
 	),
 	array(
 		'type'     => 'sectionend',
