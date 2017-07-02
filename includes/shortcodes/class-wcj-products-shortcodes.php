@@ -17,7 +17,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.9.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->the_shortcodes = array(
 			'wcj_product_id',

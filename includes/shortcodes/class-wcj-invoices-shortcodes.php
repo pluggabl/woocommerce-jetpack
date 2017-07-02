@@ -17,7 +17,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.7.0
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->the_shortcodes = array(
 

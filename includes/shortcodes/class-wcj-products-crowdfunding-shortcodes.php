@@ -19,7 +19,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	 * @version 2.5.4
 	 * @since   2.5.4
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->the_shortcodes = array(
 			'wcj_product_total_orders',

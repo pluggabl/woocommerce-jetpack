@@ -65,7 +65,7 @@ class WCJ_Product_Input_Fields_Per_Product extends WCJ_Product_Input_Fields_Abst
 	/**
 	 * get_value.
 	 */
-	public function get_value( $option_name, $product_id, $default ) {
+	function get_value( $option_name, $product_id, $default ) {
 		return get_post_meta( $product_id, '_' . $option_name, true );
 	}
 
@@ -74,7 +74,7 @@ class WCJ_Product_Input_Fields_Per_Product extends WCJ_Product_Input_Fields_Abst
 	 *
 	 * @version 2.2.9
 	 */
-	public function save_local_product_input_fields_on_product_edit( $post_id, $post ) {
+	function save_local_product_input_fields_on_product_edit( $post_id, $post ) {
 
 		// Check that we are saving with input fields displayed.
 		if ( ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) )
@@ -106,7 +106,7 @@ class WCJ_Product_Input_Fields_Per_Product extends WCJ_Product_Input_Fields_Abst
 	 *
 	 * @version 2.4.8
 	 */
-	public function add_local_product_input_fields_meta_box_to_product_edit() {
+	function add_local_product_input_fields_meta_box_to_product_edit() {
 		add_meta_box(
 			'wc-jetpack-product-input-fields',
 			__( 'Booster: Product Input Fields', 'woocommerce-jetpack' ),
@@ -122,7 +122,7 @@ class WCJ_Product_Input_Fields_Per_Product extends WCJ_Product_Input_Fields_Abst
 	 *
 	 * @version 2.2.9
 	 */
-	public function create_local_product_input_fields_meta_box() {
+	function create_local_product_input_fields_meta_box() {
 
 		$meta_box_id   = 'product_input_fields';
 		$meta_box_desc =  __( 'Product Input Fields', 'woocommerce-jetpack' );

@@ -18,7 +18,7 @@ class WCJ_Reports_Stock {
 	/**
 	 * Constructor.
 	 */
-	public function __construct( $args = null ) {
+	function __construct( $args = null ) {
 		$this->ranges_in_days = array( 7, 14, 30, 60, 90, 180, 360, );
 		$this->report_id  = isset( $args['report_id'] )  ? $args['report_id']  : 'on_stock';
 		$this->range_days = isset( $args['range_days'] ) ? $args['range_days'] : 30;
@@ -72,7 +72,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * get_submenu_html.
 	 */
-	public function get_submenu_html() {
+	function get_submenu_html() {
 		$html = '';
 		//$html = '<strong>' . __( 'Sales data range:', 'woocommerce-jetpack' ) . '</strong>';
 		$html .= '<ul class="subsubsub">';
@@ -95,7 +95,7 @@ class WCJ_Reports_Stock {
 	 * @version 2.7.0
 	 * @todo    variable products?
 	 */
-	public function gather_products_data( &$products_info ) {
+	function gather_products_data( &$products_info ) {
 
 		$offset = 0;
 		$block_size = 96;
@@ -244,7 +244,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * get_stock_summary.
 	 */
-	public function get_stock_summary( $products_info ) {
+	function get_stock_summary( $products_info ) {
 
 		$info = array();
 
@@ -283,7 +283,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * sort_products_info.
 	 */
-	public function sort_products_info( &$products_info, $field_name, $second_field_name = '', $order_of_sorting = SORT_DESC ) {
+	function sort_products_info( &$products_info, $field_name, $second_field_name = '', $order_of_sorting = SORT_DESC ) {
 		$field_name_array = array();
 		foreach ( $products_info as $key => $row ) {
 			if ( '' == $second_field_name ) $field_name_array[ $key ] = $row[ $field_name ];
@@ -297,7 +297,7 @@ class WCJ_Reports_Stock {
 	 *
 	 * @version 2.3.0
 	 */
-	public function get_report_html() {
+	function get_report_html() {
 
 		$products_info = $this->data_products;
 		$info = $this->data_summary;

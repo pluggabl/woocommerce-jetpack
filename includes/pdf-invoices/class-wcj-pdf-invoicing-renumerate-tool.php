@@ -17,7 +17,7 @@ class WCJ_PDF_Invoicing_Renumerate_Tool {
 	 *
 	 * @version 2.3.10
 	 */
-	public function __construct() {
+	function __construct() {
 	}
 
 	/**

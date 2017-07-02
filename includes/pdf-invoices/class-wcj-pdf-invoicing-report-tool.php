@@ -18,7 +18,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 *
 	 * @version 2.5.7
 	 */
-	public function __construct() {
+	function __construct() {
 		$this->notice = '';
 		add_action( 'init', array( $this, 'generate_report_zip' ) );
 		add_action( 'init', array( $this, 'export_csv' ) );

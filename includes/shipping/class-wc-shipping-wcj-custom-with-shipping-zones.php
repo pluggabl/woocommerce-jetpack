@@ -123,7 +123,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				 * @param   array $package
 				 * @return  bool
 				 */
-				public function is_available( $package ) {
+				function is_available( $package ) {
 					$available = parent::is_available( $package );
 					if ( $available ) {
 						$total_weight = WC()->cart->get_cart_contents_weight();

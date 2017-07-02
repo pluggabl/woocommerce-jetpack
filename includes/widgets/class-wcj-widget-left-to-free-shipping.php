@@ -16,7 +16,7 @@ class WCJ_Widget_Left_to_Free_Shipping extends WP_Widget {
 	/**
 	 * Sets up the widgets name etc
 	 */
-	public function __construct() {
+	function __construct() {
 		$widget_ops = array(
 			'classname'   => 'wcj_widget_left_to_free_shipping',
 			'description' => __( 'Booster: Left to Free Shipping Widget', 'woocommerce-jetpack' ),
@@ -30,7 +30,7 @@ class WCJ_Widget_Left_to_Free_Shipping extends WP_Widget {
 	 * @param array $args
 	 * @param array $instance
 	 */
-	public function widget( $args, $instance ) {
+	function widget( $args, $instance ) {
 		// outputs the content of the widget
 		echo $args['before_widget'];
 		if ( ! empty( $instance['title'] ) ) {
@@ -45,7 +45,7 @@ class WCJ_Widget_Left_to_Free_Shipping extends WP_Widget {
 	 *
 	 * @param array $instance The widget options
 	 */
-	public function form( $instance ) {
+	function form( $instance ) {
 		// outputs the options form on admin
 		$title   = ! empty( $instance['title'] )   ? $instance['title']   : __( 'Left to Free Shipping', 'woocommerce-jetpack' );
 		$content = ! empty( $instance['content'] ) ? $instance['content'] : __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' );
@@ -65,7 +65,7 @@ class WCJ_Widget_Left_to_Free_Shipping extends WP_Widget {
 	 * @param array $new_instance The new options
 	 * @param array $old_instance The previous options
 	 */
-	public function update( $new_instance, $old_instance ) {
+	function update( $new_instance, $old_instance ) {
 		// processes widget options to be saved
 		$instance = array();
 		$instance['title'] =   ( ! empty( $new_instance['title'] ) )   ? strip_tags( $new_instance['title'] )   : '';

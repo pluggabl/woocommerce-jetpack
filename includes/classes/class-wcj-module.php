@@ -311,7 +311,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * is_enabled.
 	 */
-	public function is_enabled() {
+	function is_enabled() {
 		$the_id = ( 'module' === $this->type ) ? $this->id : $this->parent_id;
 		return ( 'yes' === get_option( 'wcj_' . $the_id . '_enabled' ) ) ? true : false;
 	}
@@ -320,7 +320,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * add_enabled_option.
 	 * only for `module`
 	 *
-	public function add_enabled_option( $settings ) {
+	function add_enabled_option( $settings ) {
 		$all_settings = $this->get_settings();
 		$settings[] = $all_settings[1];
 		return $settings;
@@ -453,7 +453,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * @version 2.3.10
 	 * @since   2.3.10
 	 */
-	public function add_module_tools_info_to_tools_dashboard() {
+	function add_module_tools_info_to_tools_dashboard() {
 		$is_enabled_html = ( $this->is_enabled() ) ?
 			'<span style="color:green;font-style:italic;">' . __( 'enabled', 'woocommerce-jetpack' )  . '</span>' :
 			'<span style="color:gray;font-style:italic;">'  . __( 'disabled', 'woocommerce-jetpack' ) . '</span>';

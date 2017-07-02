@@ -15,7 +15,7 @@ class WCJ_Add_To_Cart_Per_Category {
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	function __construct() {
 		if ( 'yes' === get_option( 'wcj_add_to_cart_per_category_enabled' ) ) {
 			add_filter( 'woocommerce_product_single_add_to_cart_text', array( $this, 'change_add_to_cart_button_text_single' ),  PHP_INT_MAX );
 			add_filter( 'woocommerce_product_add_to_cart_text',        array( $this, 'change_add_to_cart_button_text_archive' ), PHP_INT_MAX );
@@ -25,14 +25,14 @@ class WCJ_Add_To_Cart_Per_Category {
 	/**
 	 * change_add_to_cart_button_text_single.
 	 */
-	public function change_add_to_cart_button_text_single( $add_to_cart_text ) {
+	function change_add_to_cart_button_text_single( $add_to_cart_text ) {
 		return $this->change_add_to_cart_button_text( $add_to_cart_text, 'single' );
 	}
 
 	/**
 	 * change_add_to_cart_button_text_archive.
 	 */
-	public function change_add_to_cart_button_text_archive( $add_to_cart_text ) {
+	function change_add_to_cart_button_text_archive( $add_to_cart_text ) {
 		return $this->change_add_to_cart_button_text( $add_to_cart_text, 'archive' );
 	}
 
@@ -41,7 +41,7 @@ class WCJ_Add_To_Cart_Per_Category {
 	 *
 	 * @version 2.2.6
 	 */
-	public function change_add_to_cart_button_text( $add_to_cart_text, $single_or_archive ) {
+	function change_add_to_cart_button_text( $add_to_cart_text, $single_or_archive ) {
 		$product_categories = get_the_terms( get_the_ID(), 'product_cat' );
 		if ( empty( $product_categories ) ) return $add_to_cart_text;
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_add_to_cart_per_category_total_groups_number', 1 ) ); $i++ ) {

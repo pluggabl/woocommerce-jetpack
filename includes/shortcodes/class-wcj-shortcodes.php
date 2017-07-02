@@ -15,7 +15,7 @@ class WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	function __construct() {
 
 		foreach( $this->the_shortcodes as $the_shortcode ) {
 			add_shortcode( $the_shortcode, array( $this, 'wcj_shortcode' ) );

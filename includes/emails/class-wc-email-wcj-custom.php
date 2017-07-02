@@ -71,7 +71,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	 * @since   2.5.6
 	 * @return  string
 	 */
-	public function validate_custom_textarea_field( $key, $value ) {
+	function validate_custom_textarea_field( $key, $value ) {
 		$value = is_null( $value ) ? '' : $value;
 		/* return wp_kses( trim( stripslashes( $value ) ),
 			array_merge(
@@ -93,7 +93,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	 * @since   2.5.6
 	 * @return  string
 	 */
-	public function generate_custom_textarea_html( $key, $data ) {
+	function generate_custom_textarea_html( $key, $data ) {
 		return $this->generate_textarea_html( $key, $data );
 	}
 
@@ -106,7 +106,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	 * @param   mixed  $empty_value
 	 * @return  mixed
 	 */
-	public function get_option( $key, $empty_value = null ) {
+	function get_option( $key, $empty_value = null ) {
 		$grandparent = get_parent_class( 'WC_Email' );
 		$value = $grandparent::get_option( $key, $empty_value );
 		return ( is_array( $value ) ) ? $value : apply_filters( 'woocommerce_email_get_option', __( $value ), $this, $value, $key, $empty_value );

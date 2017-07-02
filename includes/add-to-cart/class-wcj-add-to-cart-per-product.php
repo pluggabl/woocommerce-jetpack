@@ -15,7 +15,7 @@ class WCJ_Add_To_Cart_Per_Product {
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	function __construct() {
 		if ( 'yes' === get_option( 'wcj_add_to_cart_per_product_enabled' ) ) {
 			add_filter( 'woocommerce_product_single_add_to_cart_text', array( $this, 'change_add_to_cart_button_text_single' ),  PHP_INT_MAX );
 			add_filter( 'woocommerce_product_add_to_cart_text',        array( $this, 'change_add_to_cart_button_text_archive' ), PHP_INT_MAX );
@@ -27,14 +27,14 @@ class WCJ_Add_To_Cart_Per_Product {
 	/**
 	 * change_add_to_cart_button_text_single.
 	 */
-	public function change_add_to_cart_button_text_single( $add_to_cart_text ) {
+	function change_add_to_cart_button_text_single( $add_to_cart_text ) {
 		return $this->change_add_to_cart_button_text( $add_to_cart_text, 'single' );
 	}
 
 	/**
 	 * change_add_to_cart_button_text_archive.
 	 */
-	public function change_add_to_cart_button_text_archive( $add_to_cart_text ) {
+	function change_add_to_cart_button_text_archive( $add_to_cart_text ) {
 		return $this->change_add_to_cart_button_text( $add_to_cart_text, 'archive' );
 	}
 
@@ -43,7 +43,7 @@ class WCJ_Add_To_Cart_Per_Product {
 	 *
 	 * @version 2.7.0
 	 */
-	public function change_add_to_cart_button_text( $add_to_cart_text, $single_or_archive ) {
+	function change_add_to_cart_button_text( $add_to_cart_text, $single_or_archive ) {
 		global $product;
 		if ( ! $product ) {
 			return $add_to_cart_text;
@@ -59,7 +59,7 @@ class WCJ_Add_To_Cart_Per_Product {
 	/**
 	 * save_custom_add_to_cart_meta_box.
 	 */
-	public function save_custom_add_to_cart_meta_box( $post_id, $post ) {
+	function save_custom_add_to_cart_meta_box( $post_id, $post ) {
 		// Check that we are saving with custom add to cart metabox displayed.
 		if ( ! isset( $_POST['woojetpack_custom_add_to_cart_save_post'] ) ) {
 			return;
@@ -75,7 +75,7 @@ class WCJ_Add_To_Cart_Per_Product {
 	 *
 	 * @version 2.4.8
 	 */
-	public function add_custom_add_to_cart_meta_box() {
+	function add_custom_add_to_cart_meta_box() {
 		add_meta_box(
 			'wc-jetpack-custom-add-to-cart',
 			__( 'Booster: Custom Add to Cart', 'woocommerce-jetpack' ),
@@ -89,7 +89,7 @@ class WCJ_Add_To_Cart_Per_Product {
 	/**
 	 * create_custom_add_to_cart_meta_box.
 	 */
-	public function create_custom_add_to_cart_meta_box() {
+	function create_custom_add_to_cart_meta_box() {
 
 		$current_post_id = get_the_ID();
 

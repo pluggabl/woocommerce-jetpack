@@ -18,7 +18,7 @@ class WCJ_Reports_Customers {
 	/**
 	 * Constructor.
 	 */
-	public function __construct( $args = null ) {
+	function __construct( $args = null ) {
 		$this->country_sets = ( isset( $args['group_countries'] ) && 'yes' === $args['group_countries'] ) ?
 			include( 'countries/wcj-country-sets.php' ) : array();
 	}
@@ -26,7 +26,7 @@ class WCJ_Reports_Customers {
 	/**
 	 * get_report function.
 	 */
-	public function get_report() {
+	function get_report() {
 
 		$report_type = isset( $_GET['country'] ) ? $_GET['country'] : 'all_countries';
 
@@ -58,7 +58,7 @@ class WCJ_Reports_Customers {
 	/**
 	 * get_data function.
 	 */
-	public function get_data( $customers, $report_type = 'all_countries' ) {
+	function get_data( $customers, $report_type = 'all_countries' ) {
 
 		foreach ( $customers as $customer ) {
 
@@ -123,7 +123,7 @@ class WCJ_Reports_Customers {
 	/**
 	 * get_data function.
 	 */
-	public function get_html( $data, $total_customers, $report_type = 'all_countries' ) {
+	function get_html( $data, $total_customers, $report_type = 'all_countries' ) {
 
 		$html = '';
 

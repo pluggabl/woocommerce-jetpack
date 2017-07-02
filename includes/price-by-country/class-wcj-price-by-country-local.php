@@ -31,7 +31,7 @@ class WCJ_Price_by_Country_Local {
 	/**
 	 * add_custom_meta_box_to_product_edit.
 	 *
-	public function add_custom_meta_box_to_product_edit() {
+	function add_custom_meta_box_to_product_edit() {
 		add_meta_box(
 			'wc-jetpack-' . 'price-by-country',
 			__( 'Price and Currency by Country', 'woocommerce-jetpack' ),
@@ -114,7 +114,7 @@ class WCJ_Price_by_Country_Local {
 	/**
 	 * get_prices_options.
 	 */
-	public function get_prices_options() {
+	function get_prices_options() {
 
 		$meta_box_id = 'price_by_country';
 		$this->scope = 'local';

@@ -16,7 +16,7 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 	/**
 	 * Sets up the widgets name etc
 	 */
-	public function __construct() {
+	function __construct() {
 		$widget_ops = array(
 			'classname'   => 'wcj_widget_country_switcher',
 			'description' => __( 'Booster: Country Switcher Widget', 'woocommerce-jetpack' ),
@@ -31,7 +31,7 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 	 * @param array $args
 	 * @param array $instance
 	 */
-	public function widget( $args, $instance ) {
+	function widget( $args, $instance ) {
 		// outputs the content of the widget
 		echo $args['before_widget'];
 		if ( ! empty( $instance['title'] ) ) {
@@ -67,7 +67,7 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 	 * @version 2.5.5
 	 * @param array $instance The widget options
 	 */
-	public function form( $instance ) {
+	function form( $instance ) {
 		// outputs the options form on admin
 		$title                 = ! empty( $instance['title'] )                 ? $instance['title']                 : '';
 		$countries             = ! empty( $instance['countries'] )             ? $instance['countries']             : '';
@@ -107,7 +107,7 @@ class WCJ_Widget_Country_Switcher extends WP_Widget {
 	 * @param array $new_instance The new options
 	 * @param array $old_instance The previous options
 	 */
-	public function update( $new_instance, $old_instance ) {
+	function update( $new_instance, $old_instance ) {
 		// processes widget options to be saved
 		$instance = array();
 		$instance['title']                 = ( ! empty( $new_instance['title'] ) )                 ? strip_tags( $new_instance['title'] )         : '';

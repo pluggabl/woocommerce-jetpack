@@ -17,7 +17,7 @@ class WCJ_Exchange_Rates_Crons {
 	 *
 	 * @version 2.7.0
 	 */
-	public function __construct() {
+	function __construct() {
 		$this->update_intervals  = array(
 			'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
 			'hourly'     => __( 'Update Hourly', 'woocommerce-jetpack' ),

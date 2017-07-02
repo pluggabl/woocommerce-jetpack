@@ -24,7 +24,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * set_icon
 				 */
-				/* public function set_icon() {
+				/* function set_icon() {
 					$icon_url = get_option( 'wcj_payment_gateways_icons_woocommerce_wcj_custom_icon', '' );
 					if ( $icon_url === '' )
 						return $this->get_option( 'icon', '' );
@@ -36,7 +36,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 *
 				 * @version 2.5.7
 				 */
-				public function init_form_fields() {
+				function init_form_fields() {
 					global $woocommerce;
 
 					$shipping_methods = array();
@@ -190,7 +190,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 * @version 2.5.6
 				 * @return  bool
 				 */
-				public function is_available() {
+				function is_available() {
 
 					// Check min amount
 					$min_amount = apply_filters( 'booster_get_option', 0, $this->min_amount );
@@ -284,7 +284,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * Output for the order received page.
 				 */
-				public function thankyou_page() {
+				function thankyou_page() {
 					if ( $this->instructions )
 						echo do_shortcode( wpautop( wptexturize( $this->instructions ) ) );
 				}
@@ -298,7 +298,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 * @param   bool $sent_to_admin
 				 * @param   bool $plain_text
 				 */
-				public function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
+				function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
 					if ( $this->instructions_in_email && ! $sent_to_admin && $this->id === wcj_order_get_payment_method( $order ) && $this->default_order_status === ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->status : $order->get_status() ) ) {
 						echo do_shortcode( wpautop( wptexturize( $this->instructions_in_email ) ) . PHP_EOL );
 					}
@@ -348,7 +348,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 *
 				 * @version 2.5.2
 				 */
-				public function init( $id_count ) {
+				function init( $id_count ) {
 					$this->id                       = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
 					$this->has_fields               = false;
 					$this->method_title             = get_option( 'wcj_custom_payment_gateways_admin_title_' . $id_count, __( 'Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count );
@@ -379,7 +379,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * Constructor.
 				 */
-				public function __construct() {
+				function __construct() {
 				}
 			}
 

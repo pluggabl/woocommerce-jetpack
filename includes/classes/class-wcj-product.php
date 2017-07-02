@@ -19,7 +19,7 @@ class WCJ_Product {
 	/**
 	 * Constructor.
 	 */
-	public function __construct( $product_id ) {
+	function __construct( $product_id ) {
 		$this->id      = $product_id;
 //		$this->product = wc_get_product( $this->id );
 	}
@@ -29,7 +29,7 @@ class WCJ_Product {
 	 *
 	 * @version 2.4.8
 	 */
-	public function get_purchase_price() {
+	function get_purchase_price() {
 		$purchase_price = 0;
 		if ( 'yes' === get_option( 'wcj_purchase_price_enabled', 'yes' ) ) {
 			$purchase_price += get_post_meta( $this->id, '_' . 'wcj_purchase_price' , true );

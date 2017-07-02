@@ -15,7 +15,7 @@ class WCJ_Add_To_Cart_Per_Product_Type {
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	function __construct() {
 		if ( 'yes' === get_option( 'wcj_add_to_cart_enabled' ) ) {
 			if ( get_option( 'wcj_add_to_cart_text_enabled' ) == 'yes' ) {
 				add_filter( 'woocommerce_product_single_add_to_cart_text', array( $this, 'custom_add_to_cart_button_text' ), 100 );
@@ -29,7 +29,7 @@ class WCJ_Add_To_Cart_Per_Product_Type {
 	 *
 	 * @version 2.7.0
 	 */
-	public function custom_add_to_cart_button_text( $add_to_cart_text ) {
+	function custom_add_to_cart_button_text( $add_to_cart_text ) {
 
 		global $woocommerce, $product;
 

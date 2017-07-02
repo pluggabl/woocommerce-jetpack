@@ -15,7 +15,7 @@ class WCJ_Exchange_Rates {
 	/**
 	 * Constructor.
 	 */
-	public function __construct() {
+	function __construct() {
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_exchange_rates_script' ) );
 		add_action( 'admin_init',            array( $this, 'register_script' ) );
@@ -52,7 +52,7 @@ class WCJ_Exchange_Rates {
 	 *
 	 * @version 2.6.0
 	 */
-	public function enqueue_exchange_rates_script() {
+	function enqueue_exchange_rates_script() {
 	    if (
 			isset( $_GET['section'] ) &&
 			in_array( $_GET['section'], array(
