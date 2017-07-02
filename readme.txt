@@ -163,7 +163,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.9.0 - 01/07/2017
+= 2.9.0 - 02/07/2017
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_dimensions]` - `wc_format_dimensions()`.
 ~	* Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `wc_reduce_stock_levels()`.
@@ -252,7 +252,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.
 ~!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
 	* Dev - EMAILS & MISC. - Reports - Code refactoring - `wcj-reports-functions.php` added.
-	* Tweak - Code redirecting - `wcj-core-functions.php` file added.
+	* Tweak - Code redirecting - `wcj-core-functions.php`, `wcj-order-functions.php` files added.
 	* Tweak - JS files naming fixed (`wcj-ajax-exchange-rates.js`, `wcj-product-input-fields.js`, `wcj-checkout.js`, `wcj-eu-vat-number.js`).
 	* Tweak - Timepicker files moved to `lib` directory.
 ~!D	* Tweak - PRODUCTS - Product Cost Price - Renamed to "Cost of Goods".
