@@ -23,6 +23,18 @@ if ( ! function_exists( 'wcj_message_replaced_values' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_5_rocket_image' ) ) {
+	/**
+	 * wcj_get_5_rocket_image.
+	 *
+	 * @version 2.5.5
+	 * @since   2.5.3
+	 */
+	function wcj_get_5_rocket_image() {
+		return '<img class="wcj-rocket-icon" src="' . wcj_plugin_url() . '/assets/images/5-rockets.png' . '" title="">';
+	}
+}
+
 if ( ! function_exists( 'wcj_get_plus_message' ) ) {
 	/**
 	 * wcj_get_plus_message.

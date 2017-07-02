@@ -146,3 +146,23 @@ if ( ! function_exists( 'wcj_get_order_statuses_v2' ) ) {
 		return $result;
 	}
 }
+
+if ( ! function_exists( 'wcj_order_get_payment_method' ) ) {
+	/**
+	 * wcj_order_get_payment_method.
+	 *
+	 * @version 2.8.2
+	 * @since   2.8.0
+	 */
+	function wcj_order_get_payment_method( $_order ) {
+		if ( ! $_order || ! is_object( $_order ) ) {
+			return null;
+		}
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+			return ( isset( $_order->payment_method ) ? $_order->payment_method : null );
+		} else {
+			return ( method_exists( $_order, 'get_payment_method' ) ? $_order->get_payment_method() : null );
+		}
+	}
+}
+

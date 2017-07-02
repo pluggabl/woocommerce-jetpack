@@ -53,25 +53,6 @@ if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wcj_order_get_payment_method' ) ) {
-	/**
-	 * wcj_order_get_payment_method.
-	 *
-	 * @version 2.8.2
-	 * @since   2.8.0
-	 */
-	function wcj_order_get_payment_method( $_order ) {
-		if ( ! $_order || ! is_object( $_order ) ) {
-			return null;
-		}
-		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
-			return ( isset( $_order->payment_method ) ? $_order->payment_method : null );
-		} else {
-			return ( method_exists( $_order, 'get_payment_method' ) ? $_order->get_payment_method() : null );
-		}
-	}
-}
-
 if ( ! function_exists( 'wcj_check_time_from' ) ) {
 	/**
 	 * wcj_check_time_from.
@@ -309,18 +290,6 @@ if ( ! function_exists( 'wcj_get_rocket_icon' ) ) {
 	 */
 	function wcj_get_rocket_icon() {
 		return '<img class="wcj-rocket-icon" src="' . wcj_plugin_url() . '/assets/images/rocket-icon.png' . '" title="">';
-	}
-}
-
-if ( ! function_exists( 'wcj_get_5_rocket_image' ) ) {
-	/**
-	 * wcj_get_5_rocket_image.
-	 *
-	 * @version 2.5.5
-	 * @since   2.5.3
-	 */
-	function wcj_get_5_rocket_image() {
-		return '<img class="wcj-rocket-icon" src="' . wcj_plugin_url() . '/assets/images/5-rockets.png' . '" title="">';
 	}
 }
 
