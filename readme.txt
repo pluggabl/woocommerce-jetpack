@@ -252,7 +252,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.
 ~!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
 	* Dev - EMAILS & MISC. - Reports - Code refactoring - `wcj-reports-functions.php` added.
-	* Tweak - Code redirecting - `wcj-core-functions.php`, `wcj-order-functions.php`, `wcj-product-functions.php` files added.
+	* Tweak - Code refactoring - `wcj-core-functions.php`, `wcj-order-functions.php`, `wcj-product-functions.php` files added.
 	* Tweak - JS files naming fixed (`wcj-ajax-exchange-rates.js`, `wcj-product-input-fields.js`, `wcj-checkout.js`, `wcj-eu-vat-number.js`).
 	* Tweak - Timepicker files moved to `lib` directory.
 ~!D	* Tweak - PRODUCTS - Product Cost Price - Renamed to "Cost of Goods".
