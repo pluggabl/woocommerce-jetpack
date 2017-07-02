@@ -171,7 +171,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_shipping_fields_to_formatted_address.
 	 */
-	/* public function add_custom_shipping_fields_to_formatted_address( $fields, $order ) {
+	/* function add_custom_shipping_fields_to_formatted_address( $fields, $order ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			//if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );

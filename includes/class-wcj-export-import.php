@@ -20,7 +20,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	 * @version 2.8.0
 	 * @since   2.5.4
 	 */
-	public function __construct() {
+	function __construct() {
 
 		$this->id         = 'export';
 		$this->short_desc = __( 'Export', 'woocommerce-jetpack' );
