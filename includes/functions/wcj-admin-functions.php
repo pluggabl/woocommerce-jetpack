@@ -18,7 +18,7 @@ if ( ! function_exists( 'wcj_message_replaced_values' ) ) {
 	 * @todo    use this function in all applicable settings descriptions
 	 */
 	function wcj_message_replaced_values( $values ) {
-		$message_template = ( 1 == count( $values ) ? __( 'Replaced value: %s.', 'woocommerce-jetpack' ) : __( 'Replaced values: %s.', 'woocommerce-jetpack' ) );
+		$message_template = ( 1 == count( $values ) ? __( 'Replaced value: %s', 'woocommerce-jetpack' ) : __( 'Replaced values: %s', 'woocommerce-jetpack' ) );
 		return sprintf( $message_template, '<code>' . implode( '</code>, <code>', $values ) . '</code>' );
 	}
 }

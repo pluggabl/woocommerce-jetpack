@@ -111,7 +111,7 @@ $settings = array(
 	array(
 		'title'    => __( 'Custom Currencies Options', 'woocommerce-jetpack' ),
 		'desc'     => sprintf(
-			__( 'You can add more currencies in this section. To get exchange rates you can use %s shortcodes.', 'woocommerce-jetpack' ),
+			__( 'You can add more currencies in this section. E.g. this can be used to display exchange rates with %s shortcodes.', 'woocommerce-jetpack' ),
 			'<code>[wcj_currency_exchange_rate]</code>, <code>[wcj_currency_exchange_rates_table]</code>'
 		),
 		'type'     => 'title',

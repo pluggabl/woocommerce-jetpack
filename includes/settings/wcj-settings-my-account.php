@@ -17,6 +17,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Add Order Status Actions', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Let your customers change order status manually.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_my_account_add_order_status_actions',
 		'default'  => '',
 		'type'     => 'multiselect',

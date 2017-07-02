@@ -113,7 +113,7 @@ return array(
 	array(
 		'title'    => __( 'Price Input', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Label', 'woocommerce-jetpack' ) .
-			'. ' . sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%currency_symbol%' . '</code>' ),
+			'. ' . wcj_message_replaced_values( array( '%currency_symbol%' ) ),
 		'id'       => 'wcj_offer_price_price_label',
 		'type'     => 'custom_textarea',
 		'default'  => sprintf( __( 'Your price (%s)', 'woocommerce-jetpack' ), '%currency_symbol%' ),
@@ -184,7 +184,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Form Header', 'woocommerce-jetpack' ),
-		'desc'     => sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%product_title%' . '</code>' ),
+		'desc'     => wcj_message_replaced_values( array( '%product_title%' ) ),
 		'id'       => 'wcj_offer_price_form_header_template',
 		'type'     => 'custom_textarea',
 		'default'  => '<h3>' . sprintf( __( 'Suggest your price for %s', 'woocommerce-jetpack' ), '%product_title%' ) . '</h3>',
@@ -235,7 +235,7 @@ return array(
 				'woocommerce-jetpack' ), '<code>' . '%admin_email%' . '</code>',
 				'<code>' . get_option( 'admin_email' ) . '</code>'
 			) . ' ' .
-			sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%admin_email%, %product_author_email%' . '</code>' ),
+			wcj_message_replaced_values( array( '%admin_email%', '%product_author_email%' ) ),
 		'id'       => 'wcj_offer_price_email_address',
 		'type'     => 'custom_textarea',
 		'default'  => '%admin_email%',
@@ -250,7 +250,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Email Template', 'woocommerce-jetpack' ),
-		'desc'     => sprintf( __( 'Replaceable value(s): %s', 'woocommerce-jetpack' ), '<code>' . '%product_title%, %offered_price%, %customer_name%, %customer_email%, %customer_message%' . '</code>' ),
+		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%offered_price%', '%customer_name%', '%customer_email%', '%customer_message%' ) ),
 		'id'       => 'wcj_offer_price_email_template',
 		'type'     => 'custom_textarea',
 		'default'  => sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '%product_title%' ) . '<br>' . PHP_EOL .

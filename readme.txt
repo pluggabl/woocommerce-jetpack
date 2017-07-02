@@ -193,10 +193,10 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
 ~!	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Rounding" options added.
-~!	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added. Settings restyled. Code refactoring.
+~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added. Settings restyled. Code refactoring.
 ~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
 ~!	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
-~!	* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
+~	* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
 ~!	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Hooks are now added in constructor (instead of `init` hook) - this fixes the issue with wrong currency symbol in price filter widget.
 ~!	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Disable Quantity Input" option added (defaults to `yes`).
@@ -247,8 +247,8 @@ You can see the differences between versions in this [table](https://booster.io/
 ~	* Dev - EMAILS & MISC. - Email Verification - "Enable Email Verification for Already Registered Users" option added.
 ~	* Dev - EMAILS & MISC. - Email Verification - "Skip Email Verification for User Roles" option added.
 ~	* Dev - EMAILS & MISC. - Email Verification - "Verification Message - Failed" - `%resend_verification_url%` replaceable value added.
-~!	* Dev - EMAILS & MISC. - General - "Booster User Roles Changer" options added.
-~!	* Dev - EMAILS & MISC. - My Account - Initial module release.
+~	* Dev - EMAILS & MISC. - General - "Booster User Roles Changer" options added.
+~	* Dev - EMAILS & MISC. - My Account - Initial module release.
 ~	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.
 ~!	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
 	* Dev - EMAILS & MISC. - Reports - Code refactoring - `wcj-reports-functions.php` added.
