@@ -174,89 +174,89 @@ You can see the differences between versions in this [table](https://booster.io/
 ~!	* Dev - Functions - `wcj-currencies.php` file (`wcj_get_currencies_array()` function) moved to functions folder.
 ~	* Dev - Functions - `wcj_get_product_id()` and `wcj_get_product_id_or_variation_parent_id()` - Check for "product not null" and `is_object` added.
 ~	* Fix - Functions - Invoicing - `wcj_get_invoice_date()` - Check for not empty invoice date added.
-~!D	* Dev - Shortcodes - General - `[wcj_currency_select_link_list]`, `[wcj_currency_select_radio_list]`, `[wcj_currency_select_drop_down_list]` - `default` attribute added.
-~!D	* Dev - Shortcodes - General - `[wcj_currency_exchange_rate]` and `[wcj_currency_exchange_rates_table]` shortcodes added.
+~!	* Dev - Shortcodes - General - `[wcj_currency_select_link_list]`, `[wcj_currency_select_radio_list]`, `[wcj_currency_select_drop_down_list]` - `default` attribute added.
+~!	* Dev - Shortcodes - General - `[wcj_currency_exchange_rate]` and `[wcj_currency_exchange_rates_table]` shortcodes added.
 ~ED	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `add_variation_info_to_item_name` attribute defaults to `yes` now.
-~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_meta`, `product_cost`, `product_profit`, `line_cost`, `line_profit`, `product_id`, `item_product_id`, `product_post_meta`, `product_purchase_note` columns added.
-~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `insert_page_break` (defaults to empty string) attribute added.
-~!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_attribute` - Checking parent product's attribute for variation products.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_shipping_address]` - `fallback_billing_address` attribute added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
-~!D	* Dev - Shortcodes - Products - `[wcj_product_weight]`, `[wcj_product_length]`, `[wcj_product_width]`, `[wcj_product_height]`, `[wcj_product_dimensions]` - `variations` attribute added.
-~!D	* Dev - PRICES & CURRENCIES - Currencies - Virtual currencies (myCred, Bitcoin, Ethereum) added.
-~!D	* Dev - PRICES & CURRENCIES - Currencies - Country flags and currency codes added to the settings.
+~!	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_meta`, `product_cost`, `product_profit`, `line_cost`, `line_profit`, `product_id`, `item_product_id`, `product_post_meta`, `product_purchase_note` columns added.
+~!	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `insert_page_break` (defaults to empty string) attribute added.
+~!	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_attribute` - Checking parent product's attribute for variation products.
+~	* Dev - Shortcodes - Orders - `[wcj_order_shipping_address]` - `fallback_billing_address` attribute added.
+~	* Dev - Shortcodes - Orders - `[wcj_order_customer_meta]` shortcode added.
+~!	* Dev - Shortcodes - Products - `[wcj_product_weight]`, `[wcj_product_length]`, `[wcj_product_width]`, `[wcj_product_height]`, `[wcj_product_dimensions]` - `variations` attribute added.
+~!	* Dev - PRICES & CURRENCIES - Currencies - Virtual currencies (myCred, Bitcoin, Ethereum) added.
+~!	* Dev - PRICES & CURRENCIES - Currencies - Country flags and currency codes added to the settings.
 	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
-~!D	* Dev - PRICES & CURRENCIES - Currency per Product - EventON plugin support added.
-~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors" option added.
-~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors User Roles" option added.
-~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.
-~!D	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
+~!	* Dev - PRICES & CURRENCIES - Currency per Product - EventON plugin support added.
+~!	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors" option added.
+~!	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Authors User Roles" option added.
+~!	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Categories" option added.
+~!	* Dev - PRICES & CURRENCIES - Currency per Product - "Currency per Product Tags" option added.
 	* Dev - PRICES & CURRENCIES - Currency per Product - `get_current_product_id_and_currency()` - Getting ID from `global $product` added.
-~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Rounding" options added.
-~!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added. Settings restyled. Code refactoring.
-~D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
-~!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
-~!D	* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
-~!D	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
+~!	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Rounding" options added.
+~!	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Custom currency options added. Settings restyled. Code refactoring.
+~	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_additional_currencies` filter added.
+~!	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Base shop currency added to the list.
+~!	* Dev - PRICES & CURRENCIES - Offer Your Price - Initial module release.
+~!	* Dev - PRICES & CURRENCIES - Price by User Role - "Disable Price by User Role for Products on Sale" option added.
 ~!	* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Hooks are now added in constructor (instead of `init` hook) - this fixes the issue with wrong currency symbol in price filter widget.
-~!D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Disable Quantity Input" option added (defaults to `yes`).
-~!D	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.
-~!D	* Dev - PRODUCTS - Cost of Goods - "Admin Products List Custom Columns" - Section added.
-~!D	* Fix - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - Display Radio Buttons Instead of Drop Box - Fixed.
-~D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Local Redirect - "Per Product" option added.
+~!	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Disable Quantity Input" option added (defaults to `yes`).
+~!	* Dev - PRODUCTS - Cost of Goods - "WooCommerce Cost of Goods" Data Import - Tool added.
+~!	* Dev - PRODUCTS - Cost of Goods - "Admin Products List Custom Columns" - Section added.
+~!	* Fix - PRODUCTS - Product Add to Cart - Add to Cart Variable Product - Display Radio Buttons Instead of Drop Box - Fixed.
+~	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Local Redirect - "Per Product" option added.
 ~!	* Dev - PRODUCTS - Product Add to Cart - Add to Cart on Visit - Redirecting if "Add to Cart Local Redirect Options" is enabled.
-~D	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
-~!D	* Dev - PRODUCTS - Product Info - "Product Categories/Tags to Include/Exclude" options added.
-~!D	* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart Display Options" option added.
-~!D	* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart HTML Template" options added.
-~D	* Dev - PRODUCTS - Product Listings - "Admin Products List - Custom Columns" section added.
-~D	* Dev - PRODUCTS - Product Listings - "Admin Products List - Columns Order" section added.
+~	* Dev - PRODUCTS - Product Images - Shortcodes can now be used in all "Replace" fields.
+~!	* Dev - PRODUCTS - Product Info - "Product Categories/Tags to Include/Exclude" options added.
+~!	* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart Display Options" option added.
+~!	* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Cart HTML Template" options added.
+~	* Dev - PRODUCTS - Product Listings - "Admin Products List - Custom Columns" section added.
+~	* Dev - PRODUCTS - Product Listings - "Admin Products List - Columns Order" section added.
 	* Dev - PRODUCTS - Product Listings - Settings - Code refactoring - `wcj_get_terms()`.
-~!D	* Dev - PRODUCTS - Product Visibility by Country - Visibility, purchasable and query options added.
-~!D	* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Column" option added.
+~!	* Dev - PRODUCTS - Product Visibility by Country - Visibility, purchasable and query options added.
+~!	* Dev - PRODUCTS - Product Visibility by Country - "Admin Products List Column" option added.
 ~	* Fix - PRODUCTS - Products per Page - Template fixed.
-~D	* Dev - PRODUCTS - Products per Page - "Template - Before Form" and "Template - After Form" options added.
+~	* Dev - PRODUCTS - Products per Page - "Template - Before Form" and "Template - After Form" options added.
 	* Dev - PRODUCTS - Products per Page - Minor code refactoring.
-~D	* Dev - PRODUCTS - SKU - "Disable SKUs" option added.
-~!D	* Dev - PRODUCTS - SKU - Adding SKU on product duplicate action added (`woocommerce_duplicate_product`).
-~!D	* Dev - PRODUCTS - SKU - "Search by SKU" option added.
-~!D	* Dev - PRODUCTS - SKU - Number Generation - "Pseudorandom - Hash (max 10 digits)" option added.
-~!D	* Dev - PRODUCTS - SKU - "Template" option added.
-~!D	* Dev - PRODUCTS - SKU - Sequential counter by categories added.
+~	* Dev - PRODUCTS - SKU - "Disable SKUs" option added.
+~!	* Dev - PRODUCTS - SKU - Adding SKU on product duplicate action added (`woocommerce_duplicate_product`).
+~!	* Dev - PRODUCTS - SKU - "Search by SKU" option added.
+~!	* Dev - PRODUCTS - SKU - Number Generation - "Pseudorandom - Hash (max 10 digits)" option added.
+~!	* Dev - PRODUCTS - SKU - "Template" option added.
+~!	* Dev - PRODUCTS - SKU - Sequential counter by categories added.
 ~	* Dev - PRODUCTS - SKU - Code refactoring.
-~!D	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Fields on Checkout for Logged Users" options added.
+~!	* Dev - CART & CHECKOUT - Checkout Customization - "Disable Fields on Checkout for Logged Users" options added.
 	* Dev - CART & CHECKOUT - EU VAT Number - Code refactoring - Separate file for EU VAT functions added.
-~D	* Dev - CART & CHECKOUT - EU VAT Number - "First Validation Method" option added.
-~D	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
-~!D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - Advanced - "Cart notice method" and "Cart notice type" options added.
-~!D	* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Initial module release.
-~D	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Sortable" options added.
-~D	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
+~	* Dev - CART & CHECKOUT - EU VAT Number - "First Validation Method" option added.
+~	* Dev - SHIPPING & ORDERS - Custom Shipping - Renamed from "Shipping".
+~!	* Dev - SHIPPING & ORDERS - Order Minimum Amount - Advanced - "Cart notice method" and "Cart notice type" options added.
+~!	* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Initial module release.
+~	* Dev - SHIPPING & ORDERS - Orders - Admin Orders List Custom Columns - "Sortable" options added.
+~	* Dev - SHIPPING & ORDERS - Shipping Options - Initial module release (copied from "Shipping" module).
 ~	* Dev - PDF INVOICING & PACKING SLIPS - Display - Code refactoring.
-~!D	* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" options added.
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Footer - "Footer Text" option updated.
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Templates - "Save all templates" buttons added.
-~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Default font set to "Helvetica".
-~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Font selection option updated.
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "cid0ct (Chinese Traditional)" font added (to extra fonts pack).
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "STSong Light (Simp. Chinese)" font added (to both minimal and extra fonts packs).
-~!D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Now extra fonts are downloaded to `woocommerce_uploads` folder.
-~D	* Dev - EMAILS & MISC. - Admin Bar - Initial module release.
+~!	* Dev - PDF INVOICING & PACKING SLIPS - Display - "Allowed User Roles" options added.
+~	* Dev - PDF INVOICING & PACKING SLIPS - Footer - "Footer Text" option updated.
+~	* Dev - PDF INVOICING & PACKING SLIPS - Templates - "Save all templates" buttons added.
+~!	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Default font set to "Helvetica".
+~!	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Font selection option updated.
+~	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "cid0ct (Chinese Traditional)" font added (to extra fonts pack).
+~	* Dev - PDF INVOICING & PACKING SLIPS - Styling - "STSong Light (Simp. Chinese)" font added (to both minimal and extra fonts packs).
+~!	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Now extra fonts are downloaded to `woocommerce_uploads` folder.
+~	* Dev - EMAILS & MISC. - Admin Bar - Initial module release.
 	* Dev - EMAILS & MISC. - Admin Tools - Log - "Now time" added. `wp_safe_redirect()` added to "Delete log" action.
-~D	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
-~D	* Dev - EMAILS & MISC. - Email Verification - "Enable Email Verification for Already Registered Users" option added.
-~D	* Dev - EMAILS & MISC. - Email Verification - "Skip Email Verification for User Roles" option added.
-~D	* Dev - EMAILS & MISC. - Email Verification - "Verification Message - Failed" - `%resend_verification_url%` replaceable value added.
-~!D	* Dev - EMAILS & MISC. - General - "Booster User Roles Changer" options added.
-~!D	* Dev - EMAILS & MISC. - My Account - Initial module release.
-~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.
-~!D	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
+~	* Dev - EMAILS & MISC. - Breadcrumbs - Initial module release.
+~	* Dev - EMAILS & MISC. - Email Verification - "Enable Email Verification for Already Registered Users" option added.
+~	* Dev - EMAILS & MISC. - Email Verification - "Skip Email Verification for User Roles" option added.
+~	* Dev - EMAILS & MISC. - Email Verification - "Verification Message - Failed" - `%resend_verification_url%` replaceable value added.
+~!	* Dev - EMAILS & MISC. - General - "Booster User Roles Changer" options added.
+~!	* Dev - EMAILS & MISC. - My Account - Initial module release.
+~	* Dev - EMAILS & MISC. - Reports - Custom Ranges - "Today" and "Yesterday" custom ranges added.
+~!	* Dev - EMAILS & MISC. - Reports - Orders - "Product Sales (Daily)" new report added. "Product Sales" renamed to "Product Sales (Monthly)".
 	* Dev - EMAILS & MISC. - Reports - Code refactoring - `wcj-reports-functions.php` added.
 	* Tweak - Code refactoring - `wcj-core-functions.php`, `wcj-order-functions.php`, `wcj-product-functions.php`, `wcj-date-time-functions.php` files added.
 	* Tweak - JS files naming fixed (`wcj-ajax-exchange-rates.js`, `wcj-product-input-fields.js`, `wcj-checkout.js`, `wcj-eu-vat-number.js`).
 	* Tweak - Timepicker files moved to `lib` directory.
-~!D	* Tweak - PRODUCTS - Product Cost Price - Renamed to "Cost of Goods".
-~!D	* Tweak - PRODUCTS - Product Visibility by User Role - Settings descriptions added.
+~!	* Tweak - PRODUCTS - Product Cost Price - Renamed to "Cost of Goods".
+~!	* Tweak - PRODUCTS - Product Visibility by User Role - Settings descriptions added.
 ~!	* Tweak - SHIPPING & ORDERS - Orders - Settings updated (custom column key info added) and restyled (columns order textarea width changed).
 ~!	* Tweak - Plus links updated.
 
