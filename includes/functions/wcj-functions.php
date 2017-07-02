@@ -316,14 +316,14 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	}
 }
 
-/*
- * wcj_get_cart_filters()
- *
- * @version 2.4.4
- * @since   2.4.4
- * @return  array
- */
 if ( ! function_exists( 'wcj_get_cart_filters' ) ) {
+	/*
+	 * wcj_get_cart_filters()
+	 *
+	 * @version 2.4.4
+	 * @since   2.4.4
+	 * @return  array
+	 */
 	function wcj_get_cart_filters() {
 		return array(
 			'woocommerce_before_cart'                    => __( 'Before cart', 'woocommerce-jetpack' ),
@@ -390,14 +390,14 @@ if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 	}
 }
 
-/*
- * wcj_get_select_options()
- *
- * @version  2.5.5
- * @since    2.3.0
- * @return   array
- */
 if ( ! function_exists( 'wcj_get_select_options' ) ) {
+	/*
+	 * wcj_get_select_options()
+	 *
+	 * @version  2.5.5
+	 * @since    2.3.0
+	 * @return   array
+	 */
 	function wcj_get_select_options( $select_options_raw, $do_sanitize = true ) {
 		$select_options_raw = explode( PHP_EOL, $select_options_raw );
 		$select_options = array();
