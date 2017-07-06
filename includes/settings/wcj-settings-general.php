@@ -207,12 +207,12 @@ $settings = array(
 		'id'       => 'wcj_general_user_role_changer_options',
 	),
 	array(
-		'title'    => __( 'Track Users Options', 'woocommerce-jetpack' ),
+		'title'    => __( 'Track Users by Country Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_track_users_options',
 	),
 	array(
-		'title'    => __( 'Track Users', 'woocommerce-jetpack' ),
+		'title'    => __( 'Track Users by Country', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_track_users_enabled',
 		'default'  => 'no',
