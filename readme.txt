@@ -168,7 +168,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - EMAILS & MISC. - Admin Tools - "WooCommerce Log" option added.
 ~D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
-~!D	* Dev - EMAILS & MISC. - General - "Track Users by Country" option added.
+-!D	* Dev - EMAILS & MISC. - General - "Track Users by Country" option added.
 ~D	* Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
 
 = 2.9.0 - 02/07/2017
