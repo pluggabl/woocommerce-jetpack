@@ -72,6 +72,67 @@ class WCJ_General extends WCJ_Module {
 				add_action( 'admin_bar_menu', array( $this, 'add_user_role_changer' ), PHP_INT_MAX );
 				add_action( 'init',           array( $this, 'change_user_role_meta' ) );
 			}
+
+			// Track users
+			if ( 'yes' === get_option( 'wcj_track_users_enabled', 'no' ) ) {
+				add_action( 'init', array( $this, 'track_users' ) );
+			}
+		}
+	}
+
+	/**
+	 * track_users.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 * @todo    "delete stats" option
+	 * @todo    display data (with flags) - maybe on WP dashboard?
+	 * @todo    (maybe) stats - total
+	 * @todo    (maybe) stats - by month
+	 * @todo    (maybe) make new function for geolocation
+	 */
+	function track_users() {
+		// Country by IP
+		if ( class_exists( 'WC_Geolocation' ) ) {
+			$location = WC_Geolocation::geolocate_ip();
+		} else {
+			$location = array( 'country' => '', 'state' => '' );
+		}
+		// Saving stats by date
+		$date = date( 'Y-m-d', current_time( 'timestamp' ) );
+		$stats_by_date = get_option( 'wcj_track_users_stats_by_date', array() );
+		if ( ! isset( $stats_by_date[ $date ][ $location['country'] ][ $location['state'] ] ) ) {
+			$stats_by_date[ $date ][ $location['country'] ][ $location['state'] ] = 0;
+		}
+		$stats_by_date[ $date ][ $location['country'] ][ $location['state'] ]++;
+		update_option( 'wcj_track_users_stats_by_date', $stats_by_date );
+		// TODO: Display data
+		if ( isset( $_GET['wcj_track_users_stats_by_date__display'] ) && is_super_admin() ) {
+			$stats = get_option( 'wcj_track_users_stats_by_date', array() );
+			echo '<pre>';
+			print_r( $stats );
+			$totals = array();
+			foreach ( $stats as $day => $country ) {
+				foreach ( $country as $country_code => $stats_by_state ) {
+					if ( ! isset( $totals[ $country_code ] ) ) {
+						$totals[ $country_code ] = 0;
+					}
+					$totals[ $country_code ] += array_sum( $stats_by_state );
+				}
+			}
+			print_r( $totals );
+			$table_data = array();
+			foreach ( $totals as $country_code => $visits ) {
+				$country_info = ( '' != $country_code ? wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code ) : 'N/A' );
+				$table_data[] = array( $country_info, $visits );
+			}
+			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'none' ) );
+			echo '</pre>';
+			die();
+		}
+		// TODO: Delete data
+		if ( isset( $_GET['wcj_track_users_stats_by_date__delete'] ) && is_super_admin() ) {
+			delete_option( 'wcj_track_users_stats_by_date' );
 		}
 	}
 
