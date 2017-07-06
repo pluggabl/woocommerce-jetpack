@@ -164,6 +164,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.9.1 - 06/07/2017
+	* Fix - Emails & Misc. - Admin Bar - Booster - Dashboard - Active - Submodules excluded from the list.
 ~D	* Dev - EMAILS & MISC. - Admin Tools - "WooCommerce Log" option added.
 ~D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).

@@ -170,6 +170,7 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
+	 * @todo    optionally do not track selected user roles (e.g. admin)
 	 * @todo    (maybe) stats - by day
 	 * @todo    (maybe) stats - by month
 	 * @todo    (maybe) make new function for geolocation

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -117,7 +117,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * get_nodes_booster_modules.
 	 *
-	 * @version 2.9.0
+	 * @version 2.9.1
 	 * @since   2.9.0
 	 * @todo    (maybe) dashes instead of underscores
 	 * @todo    (maybe) dashboard > alphabetically - list all modules
@@ -173,7 +173,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 							),
 						),
 					);
-					if ( WCJ()->modules[ $link_id ]->is_enabled() ) {
+					if ( WCJ()->modules[ $link_id ]->is_enabled() && 'module' === WCJ()->modules[ $link_id ]->type ) {
 						$active_modules[ $link_id ] = $nodes[ $id ]['nodes'][ $link_id ];
 					}
 				}
