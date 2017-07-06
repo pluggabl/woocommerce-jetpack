@@ -163,6 +163,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 2.9.1 - 06/07/2017
+* Dev -
+
 = 2.9.0 - 02/07/2017
 * Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
 * Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_dimensions]` - `wc_format_dimensions()`.

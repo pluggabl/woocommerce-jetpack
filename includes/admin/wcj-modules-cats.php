@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -164,6 +164,7 @@ return array(
 			'reports',
 			'admin_tools',
 			'emails',
+			'email_options',
 			'emails_verification',
 			'wpml',
 			'custom_css',
