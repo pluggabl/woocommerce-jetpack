@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add link to Booster's shortcodes list
@@ -188,7 +188,8 @@ $settings = array(
 	array(
 		'title'    => __( 'URL Coupons', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'When enabled, your users can apply shop\'s standard coupons, by visiting URL. E.g.: http://yoursite.com/?wcj_apply_coupon=couponcode.', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'When enabled, your users can apply shop\'s standard coupons, by visiting URL. E.g.: %s.', 'woocommerce-jetpack' ),
+			'<code>' . site_url() . '/?' . get_option( 'wcj_url_coupons_key', 'wcj_apply_coupon' ) . '=couponcode' . '</code>' ),
 		'id'       => 'wcj_url_coupons_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -208,7 +209,6 @@ $settings = array(
 		'title'    => __( 'Booster User Roles Changer Options', 'woocommerce-jetpack' ),
 		'desc'     => __( 'This will add user roles changer tool to admin bar.', 'woocommerce-jetpack' )/*  . ' ' .
 		__( 'You will be able to change user roles for Booster modules (e.g. when creating orders manually by admin for "Price by User Role" module).', 'woocommerce-jetpack' ) */,
-
 		'type'     => 'title',
 		'id'       => 'wcj_general_user_role_changer_options',
 	),
