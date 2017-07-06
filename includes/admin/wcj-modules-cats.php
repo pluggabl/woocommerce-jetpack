@@ -157,6 +157,7 @@ return array(
 		'all_cat_ids'    => array(
 			'general',
 			'breadcrumbs',
+			'url_coupons',
 			'admin_bar',
 			'export',
 			'my_account',

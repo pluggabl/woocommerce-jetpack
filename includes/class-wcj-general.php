@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 2.9.1
 	 */
 	function __construct() {
 
@@ -65,11 +65,6 @@ class WCJ_General extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_session_expiration_section_enabled', 'no' ) ) {
 				add_filter( 'wc_session_expiring',   array( $this, 'change_session_expiring' ),   PHP_INT_MAX );
 				add_filter( 'wc_session_expiration', array( $this, 'change_session_expiration' ), PHP_INT_MAX );
-			}
-
-			// URL Coupons
-			if ( 'yes' === get_option( 'wcj_url_coupons_enabled', 'no' ) ) {
-				add_action( 'wp_loaded', array( $this, 'maybe_apply_url_coupon' ), PHP_INT_MAX );
 			}
 
 			// Booster role user changer
@@ -139,25 +134,6 @@ class WCJ_General extends WCJ_Module {
 					$wc->cart->calculate_totals();
 				}
 			}
-		}
-	}
-
-	/**
-	 * maybe_apply_url_coupon.
-	 *
-	 * @version 2.7.0
-	 * @since   2.7.0
-	 * @todo    (maybe) predefined $arg_key
-	 * @todo    (maybe) additional $_GET['coupon_code']
-	 * @todo    (maybe) if ( ! WC()->cart->has_discount( $coupon_code ) ) {}
-	 */
-	function maybe_apply_url_coupon() {
-		$arg_key = get_option( 'wcj_url_coupons_key', 'wcj_apply_coupon' );
-		if ( isset( $_GET[ $arg_key ] ) && '' != $_GET[ $arg_key ] ) {
-			$coupon_code = sanitize_text_field( $_GET[ $arg_key ] );
-			WC()->cart->add_discount( $coupon_code );
-			wp_safe_redirect( remove_query_arg( $arg_key ) );
-			exit;
 		}
 	}
 
