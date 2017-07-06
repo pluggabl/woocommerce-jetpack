@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 2.8.0
+ * @version 2.9.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,9 +16,16 @@ return array(
 		'id'       => 'wcj_admin_tools_module_options',
 	),
 	array(
-		'title'    => __( 'Logging', 'woocommerce-jetpack' ),
+		'title'    => __( 'Log', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_logging_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'WooCommerce Log', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_wc_logging_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
