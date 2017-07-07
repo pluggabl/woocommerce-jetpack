@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Availability by Time
  *
- * @version 2.8.0
+ * @version 2.9.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -19,7 +19,7 @@ $settings = array(
 	array(
 		'title'    => __( 'Product by Time', 'woocommerce-jetpack' ),
 		'desc'     => '<strong>' . __( 'Enable Section', 'woocommerce-jetpack' ) . '</strong>',
-		'desc_tip' => __( 'Time formats:', 'woocommerce-jetpack' ) . ' ' . '<code>HH:MM</code>' . ', ' . '<code>HH:MM,HH:MM</code>' . ', ' . '<code>-</code>' . '.',
+		'desc_tip' => __( 'Time formats:', 'woocommerce-jetpack' ) . ' ' . '<code>HH:MM-HH:MM</code>' . ', ' . '<code>HH:MM-HH:MM,HH:MM-HH:MM</code>' . ', ' . '<code>-</code>' . '.',
 		'id'       => 'wcj_product_by_time_section_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
