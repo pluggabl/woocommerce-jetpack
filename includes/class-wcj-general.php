@@ -75,7 +75,7 @@ class WCJ_General extends WCJ_Module {
 
 			// Track users
 			if ( 'yes' === get_option( 'wcj_track_users_enabled', 'no' ) ) {
-				add_action( 'init',               array( $this, 'track_users' ) );
+				add_action( 'wp_head',            array( $this, 'track_users' ) );
 				add_action( 'wp_dashboard_setup', array( $this, 'add_track_users_dashboard_widget' ) );
 				add_action( 'admin_init',         array( $this, 'maybe_delete_track_users_stats' ) );
 			}
