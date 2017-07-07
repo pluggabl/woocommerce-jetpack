@@ -78,6 +78,7 @@ return array(
 			'product_by_country',
 			'product_by_user_role',
 			'product_by_time',
+			'product_by_date',
 			'product_by_user',
 			'products_xml',
 			'product_bulk_meta_editor',

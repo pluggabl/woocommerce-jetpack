@@ -48,6 +48,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
 * *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Disable add to cart button on per product basis. Open external products on add to cart in new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages.
 * *Product Addons* - Add (paid/free/discount) addons to WooCommerce products.
+* *Product Availability by Date* - WooCommerce product availability by date.
 * *Product Availability by Time* - WooCommerce product availability by time.
 * *Product Bulk Meta Editor* - Set WooCommerce products meta with bulk editor.
 * *Product Images* - Customize WooCommerce products images, thumbnails and sale flashes.
@@ -163,8 +164,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.9.1 - 06/07/2017
-	* Fix - Emails & Misc. - Admin Bar - Booster - Dashboard - Active - Submodules excluded from the list.
+= 2.9.1 - 08/07/2017
+	* Dev - PRODUCTS - Product Availability by Date - Initial module release.
+	* Fix - EMAILS & MISC. - Admin Bar - Booster - Dashboard - Active - Submodules excluded from the list.
 ~D	* Dev - EMAILS & MISC. - Admin Tools - "WooCommerce Log" option added.
 ~D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).

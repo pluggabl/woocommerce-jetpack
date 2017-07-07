@@ -2,12 +2,57 @@
 /**
  * Booster for WooCommerce - Functions - Date and Time
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_check_single_date' ) ) {
+	/**
+	 * wcj_check_single_date.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function wcj_check_single_date( $_date, $args ) {
+		$_date = explode( '-', $_date );
+		if ( isset( $_date[0] ) ) {
+			if ( $args['day_now'] < $_date[0] ) {
+				return false;
+			}
+		}
+		if ( isset( $_date[1] ) ) {
+			if ( $args['day_now'] > $_date[1] ) {
+				return false;
+			}
+		}
+		return true;
+	}
+}
+
+if ( ! function_exists( 'wcj_check_date' ) ) {
+	/**
+	 * wcj_check_date.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function wcj_check_date( $_date, $args = array() ) {
+		if ( empty( $args ) ) {
+			$time_now        = current_time( 'timestamp' );
+			$args['day_now'] = intval( date( 'j', $time_now ) );
+		}
+		$_date = explode( ',', $_date );
+		foreach ( $_date as $_single_date ) {
+			if ( wcj_check_single_date( $_single_date, $args ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
 
 if ( ! function_exists( 'wcj_check_time_from' ) ) {
 	/**
