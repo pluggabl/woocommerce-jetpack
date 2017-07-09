@@ -167,6 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 = 2.9.1 - 09/07/2017
 $~!D* Dev - PRODUCTS - Product Availability by Date - Initial module release.
 	* Fix - PRODUCTS - Product Availability by Time - Settings - Description fixed.
+$~!D* Dev - PRODUCTS - Product Availability by Time - "Per Product" options added.
 	* Fix - EMAILS & MISC. - Admin Bar - Booster - Dashboard - Active - Submodules excluded from the list.
 ~D	* Dev - EMAILS & MISC. - Admin Tools - "WooCommerce Log" option added.
 ~D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
