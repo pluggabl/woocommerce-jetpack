@@ -18,7 +18,6 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
-	 * @todo    per product
 	 * @todo    per category
 	 * @todo    per tag
 	 * @todo    redirect to custom URL when product is not available
@@ -34,9 +33,16 @@ class WCJ_Product_By_Date extends WCJ_Module {
 		$this->time_now = current_time( 'timestamp' );
 
 		if ( $this->is_enabled() ) {
-			if ( 'yes' === get_option( 'wcj_product_by_date_section_enabled', 'no' ) ) {
+			// Per product meta box
+			if ( 'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) ) {
+				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
+			if ( 'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) || 'yes' === get_option( 'wcj_product_by_date_section_enabled', 'no' ) ) {
+				// Time now
 				$this->day_now   = intval( date( 'j', $this->time_now ) ); // Day of the month without leading zeros: 1 to 31
 				$this->month_now = intval( date( 'n', $this->time_now ) ); // Numeric representation of a month, without leading zeros: 1 through 12
+				// Filters
 				add_filter( 'woocommerce_is_purchasable',         array( $this, 'check_is_purchasable_by_date' ),          PHP_INT_MAX, 2 );
 				add_action( 'woocommerce_single_product_summary', array( $this, 'maybe_add_unavailable_by_date_message' ), 30 );
 			}
@@ -74,9 +80,9 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	 * @version 2.9.1
 	 */
 	function maybe_add_unavailable_by_date_message() {
-		if ( ! $this->check_is_purchasable_by_date( true, null ) ) {
-			$_date = get_option( 'wcj_product_by_date_' . $this->month_now, $this->get_default_date( $this->month_now ) );
-			$_product = wc_get_product();
+		$_product = wc_get_product();
+		if ( ! $this->check_is_purchasable_by_date( true, $_product ) ) {
+			$_date = $this->get_product_availability_this_month( $_product );
 			$replaceable_values = array(
 				'%date_this_month%' => $_date,
 				'%product_title%'   => $_product->get_title(),
@@ -98,6 +104,23 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	}
 
 	/**
+	 * get_product_availability_this_month.
+	 *
+	 * @version 2.9.1
+	 * @version 2.9.1
+	 */
+	function get_product_availability_this_month( $_product ) {
+		$product_id = wcj_get_product_id_or_variation_parent_id( $_product );
+		if ( 'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) && 'yes' === get_post_meta( $product_id, '_' . 'wcj_product_by_date_enabled', true ) ) {
+			return get_post_meta( $product_id, '_' . 'wcj_product_by_date_' . $this->month_now, true );
+		} elseif ( 'yes' === get_option( 'wcj_product_by_date_section_enabled', 'no' ) ) {
+			return get_option( 'wcj_product_by_date_' . $this->month_now, $this->get_default_date( $this->month_now ) );
+		} else {
+			return '';
+		}
+	}
+
+	/**
 	 * check_is_purchasable_by_date.
 	 *
 	 * @version 2.9.1
@@ -106,11 +129,14 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	 */
 	function check_is_purchasable_by_date( $purchasable, $_product ) {
 		if ( $purchasable ) {
-			$_date = get_option( 'wcj_product_by_date_' . $this->month_now, $this->get_default_date( $this->month_now ) );
+			$_date = $this->get_product_availability_this_month( $_product );
 			if ( '-' === $_date ) {
 				return false;
+			} elseif ( '' == $_date ) {
+				return true;
+			} else {
+				return wcj_check_date( $_date, array( 'day_now' => $this->day_now ) );
 			}
-			return wcj_check_date( $_date, array( 'day_now' => $this->day_now ) );
 		}
 		return $purchasable;
 	}

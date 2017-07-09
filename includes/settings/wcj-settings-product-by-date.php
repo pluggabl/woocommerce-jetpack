@@ -11,14 +11,31 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $settings = array(
 	array(
-		'title'    => __( 'Options', 'woocommerce-jetpack' ),
-		'desc'     => '<span id="local-date">' . sprintf( __( 'Today is <code>%s</code>.', 'woocommerce-jetpack' ), date( 'F j', $this->time_now ) ) . '</span>',
+		'title'    => __( 'Per Product Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'id'       => 'wcj_product_by_date_options',
+		'id'       => 'wcj_product_by_date_per_product_options',
 	),
 	array(
-		'title'    => __( 'Product by Date', 'woocommerce-jetpack' ),
-		'desc'     => '<strong>' . __( 'Enable Section', 'woocommerce-jetpack' ) . '</strong>',
+		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
+		'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_by_date_per_product_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_by_date_per_product_options',
+	),
+	array(
+		'title'    => __( 'All Products Options', 'woocommerce-jetpack' ),
+		'desc'     => '<span id="local-date">' . sprintf( __( 'Today is <code>%s</code>.', 'woocommerce-jetpack' ), date( 'F j', $this->time_now ) ) . '</span>',
+		'type'     => 'title',
+		'id'       => 'wcj_product_by_date_all_products_options',
+	),
+	array(
+		'title'    => __( 'All Products', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
 		'desc_tip' => __( 'Date formats:', 'woocommerce-jetpack' ) . ' ' . '<code>DD-DD</code>' . ', ' . '<code>DD-DD,DD-DD</code>' . ', ' . '<code>-</code>' . '.',
 		'id'       => 'wcj_product_by_date_section_enabled',
 		'default'  => 'no',
@@ -39,6 +56,15 @@ for ( $i = 1; $i <= 12; $i++ ) {
 	$_timestamp = strtotime( '+1 month', $_timestamp );
 }
 $settings = array_merge( $settings, array(
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_by_date_all_products_options',
+	),
+	array(
+		'title'    => __( 'Frontend Messages Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_by_date_messages_options',
+	),
 	array(
 		'title'    => __( 'Message', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Message when product is not available by date.', 'woocommerce-jetpack' ) .
@@ -65,7 +91,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_product_by_date_options',
+		'id'       => 'wcj_product_by_date_messages_options',
 	),
 ) );
 return $settings;
