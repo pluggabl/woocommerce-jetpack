@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $settings = array(
 	array(
-		'title'    => __( 'Enable/Disable', 'woocommerce-jetpack' ),
+		'title'    => __( 'Enable/Disable per Product Settings', 'woocommerce-jetpack' ),
 		'name'     => 'wcj_product_by_date_enabled',
 		'default'  => 'no',
 		'type'     => 'select',
