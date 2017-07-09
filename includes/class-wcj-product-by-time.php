@@ -20,6 +20,7 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	 * @since   2.8.0
 	 * @todo    per category
 	 * @todo    per tag
+	 * @todo    (maybe) per products sets
 	 * @todo    redirect to custom URL when product is not available
 	 */
 	function __construct() {
