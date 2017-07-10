@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,11 +15,12 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 2.9.1
 	 */
 	function __construct() {
 
 		$this->the_shortcodes = array(
+			'wcj_site_url',
 			'wcj_current_date',
 			'wcj_current_time',
 			'wcj_current_datetime',
@@ -73,6 +74,16 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_site_url.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function wcj_site_url( $atts ) {
+		return site_url();
 	}
 
 	/**
