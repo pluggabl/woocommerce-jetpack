@@ -25,6 +25,7 @@ $settings = array(
 			'no'                  => __( 'Disabled', 'woocommerce-jetpack' ),
 			'yes'                 => __( 'Hide all', 'woocommerce-jetpack' ),
 			'except_local_pickup' => __( 'Hide all except "Local Pickup"', 'woocommerce-jetpack' ),
+			'flat_rate_only'      => __( 'Hide "Flat Rate" only', 'woocommerce-jetpack' ),
 		),
 	),
 	array(

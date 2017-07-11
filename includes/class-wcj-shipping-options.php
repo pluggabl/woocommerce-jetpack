@@ -138,9 +138,12 @@ class WCJ_Shipping_Options extends WCJ_Module {
 			if ( false !== strpos( $rate_key, 'free_shipping' ) ) {
 				$is_free_shipping_available = true;
 				$free_shipping_rates[ $rate_key ] = $rate;
-			}
-			if ( 'except_local_pickup' === get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) && false !== strpos( $rate_key, 'local_pickup' ) ) {
-				$free_shipping_rates[ $rate_key ] = $rate;
+			} else {
+				if ( 'except_local_pickup' === get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) && false !== strpos( $rate_key, 'local_pickup' ) ) {
+					$free_shipping_rates[ $rate_key ] = $rate;
+				} elseif ( 'flat_rate_only' === get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) && false === strpos( $rate_key, 'flat_rate' ) ) {
+					$free_shipping_rates[ $rate_key ] = $rate;
+				}
 			}
 		}
 		return ( $is_free_shipping_available ) ? $free_shipping_rates : $rates;
@@ -150,6 +153,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	 * add_hide_shipping_if_free_available_fields.
 	 *
 	 * @version 2.9.1
+	 * @todo    (maybe) delete this
 	 */
 	function add_hide_shipping_if_free_available_fields( $settings ) {
 		$updated_settings = array();
@@ -165,6 +169,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 						'no'                  => __( 'Disabled', 'woocommerce-jetpack' ),
 						'yes'                 => __( 'Hide all', 'woocommerce-jetpack' ),
 						'except_local_pickup' => __( 'Hide all except "Local Pickup"', 'woocommerce-jetpack' ),
+						'flat_rate_only'      => __( 'Hide "Flat Rate" only', 'woocommerce-jetpack' ),
 					),
 				);
 			}
