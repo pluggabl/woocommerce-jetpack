@@ -164,7 +164,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.9.1 - 10/07/2017
+= 2.9.1 - 11/07/2017
 D	* Dev - Shortcodes - General - `[wcj_site_url]` shortcode added.
 $~!D* Dev - PRODUCTS - Product Availability by Date - Initial module release.
 	* Fix - PRODUCTS - Product Availability by Time - Settings - Description fixed.
@@ -174,6 +174,8 @@ $~!D* Dev - PRODUCTS - Product Availability by Time - "Per Product" options adde
 ~D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
 -!D	* Dev - EMAILS & MISC. - General - "Track Users by Country" option added.
+~D	* Dev - EMAILS & MISC. - Reports - Stock - "Total current stock purchase price" added.
+-	* Dev - EMAILS & MISC. - Reports - Stock - Code cleanup.
 ~D	* Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
 
 = 2.9.0 - 02/07/2017

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Stock
  *
- * @version 2.7.0
+ * @version 2.9.1
  * @author  Algoritmika Ltd.
  */
 
@@ -23,24 +23,21 @@ class WCJ_Reports_Stock {
 		$this->report_id  = isset( $args['report_id'] )  ? $args['report_id']  : 'on_stock';
 		$this->range_days = isset( $args['range_days'] ) ? $args['range_days'] : 30;
 		$this->reports_info = array(
-			'on_stock'	=> array(
-				'id'		=> 'on_stock',
-				'title'		=> __( 'All Products on Stock', 'woocommerce-jetpack' ),
-				'desc'		=> __( 'Report shows all products that are on stock and some sales info.', 'woocommerce-jetpack' ),
+			'on_stock' => array(
+				'id'        => 'on_stock',
+				'title'     => __( 'All Products on Stock', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Report shows all products that are on stock and some sales info.', 'woocommerce-jetpack' ),
 			),
-			'understocked'	=> array(
-				'id'		=> 'understocked',
-				'title'		=> __( 'Understocked', 'woocommerce-jetpack' ),
-				'desc'		=> __( 'Report shows all products that are low in stock calculated on product\'s sales data.', 'woocommerce-jetpack' )
-							   . ' '
-							   . __( 'Threshold for minimum stock is equal to half of the sales in selected days range.', 'woocommerce-jetpack' ),
+			'understocked' => array(
+				'id'        => 'understocked',
+				'title'     => __( 'Understocked', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Report shows all products that are low in stock calculated on product\'s sales data.', 'woocommerce-jetpack' ) . ' ' .
+					__( 'Threshold for minimum stock is equal to half of the sales in selected days range.', 'woocommerce-jetpack' ),
 			),
-			'overstocked'	=> array(
-				'id'		=> 'overstocked',
-				'title'		=> __( 'Overstocked', 'woocommerce-jetpack' ),
-				'desc'		=> __( 'Report shows all products that are on stock, but have no sales in selected period. Only products added before the start date of selected period are accounted.', 'woocommerce-jetpack' )
-							   . ' '
-							   . __( '', 'woocommerce-jetpack' ),
+			'overstocked' => array(
+				'id'        => 'overstocked',
+				'title'     => __( 'Overstocked', 'woocommerce-jetpack' ),
+				'desc'      => __( 'Report shows all products that are on stock, but have no sales in selected period. Only products added before the start date of selected period are accounted.', 'woocommerce-jetpack' ),
 			),
 		);
 		$this->start_time = microtime( true );
@@ -295,7 +292,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * get_report_html.
 	 *
-	 * @version 2.3.0
+	 * @version 2.9.1
 	 */
 	function get_report_html() {
 
@@ -334,6 +331,7 @@ class WCJ_Reports_Stock {
 		// Products table - info loop
 		$total_current_stock_price = 0;
 		$product_counter = 0;
+		$total_current_stock_purchase_price = 0;
 		foreach ( $products_info as $product_info ) {
 
 			if (
@@ -367,6 +365,7 @@ class WCJ_Reports_Stock {
 				$purchase_stock_price_html = ( $product_info['purchase_price'] > 0 ) ?
 					'<br><em>' . __( 'stock purchase price:', 'woocommerce-jetpack' ) . '</em>' . ' ' . wc_price( $product_info['purchase_price'] * $product_info['stock'] ) :
 					'';
+				$total_current_stock_purchase_price += ( $product_info['purchase_price'] > 0 ? $product_info['purchase_price'] * $product_info['stock'] : 0 );
 				$html .= '<td>' . wc_price( $product_info['stock_price'] ) . $purchase_stock_price_html . '</td>';
 				$html .= '<td>' . wc_price( $total_current_stock_price ) . '</td>';
 
@@ -404,6 +403,9 @@ class WCJ_Reports_Stock {
 		$html_header .= '<tr>' . '<th>' . __( 'Total stock value', 'woocommerce-jetpack' ) . '</th>' . '<td>' . wc_price( $info['total_stock_price'] ) . '</td>' . '</tr>';
 		$html_header .= '<tr>' . '<th>' . __( 'Product stock value average', 'woocommerce-jetpack' ) . '</th>' . '<td>' . wc_price( $info['stock_price_average'] ) . '</td>' . '</tr>';
 		$html_header .= '<tr>' . '<th>' . __( 'Product stock average', 'woocommerce-jetpack' ) . '</th>' . '<td>' . number_format( $info['stock_average'], 2, '.', '' ) . '</td>' . '</tr>';
+		if ( 0 != $total_current_stock_purchase_price ) {
+			$html_header .= '<tr>' . '<th>' . __( 'Total current stock purchase price', 'woocommerce-jetpack' ) . '</th>' . '<td>' . wc_price( $total_current_stock_purchase_price ) . '</td>' . '</tr>';
+		}
 		$html_header .= '</tbody></table>';
 		$html_header .= '<br class="clear">';
 
