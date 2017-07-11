@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Options
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 2.9.1
 	 * @since   2.9.0
 	 */
 	function __construct() {
@@ -32,7 +32,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			// Hide if free is available
-			if ( 'yes' === get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) ) {
+			if ( 'no' != get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) ) {
 				add_filter( 'woocommerce_package_rates', array( $this, 'hide_shipping_when_free_is_available' ), 10, 2 );
 			}
 			add_filter( 'woocommerce_shipping_settings', array( $this, 'add_hide_shipping_if_free_available_fields' ), 100 );
@@ -129,7 +129,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	/**
 	 * hide_shipping_when_free_is_available.
 	 *
-	 * @version 2.5.3
+	 * @version 2.9.1
 	 * @todo    if ( 'yes' === get_option( 'wcj_shipping_hide_if_free_available_local_delivery' ) ) { unset( $rates['local_delivery'] ); }
 	 */
 	function hide_shipping_when_free_is_available( $rates, $package ) {
@@ -140,6 +140,9 @@ class WCJ_Shipping_Options extends WCJ_Module {
 				$is_free_shipping_available = true;
 				$free_shipping_rates[ $rate_key ] = $rate;
 			}
+			if ( 'except_local_pickup' === get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) && false !== strpos( $rate_key, 'local_pickup' ) ) {
+				$free_shipping_rates[ $rate_key ] = $rate;
+			}
 		}
 		return ( $is_free_shipping_available ) ? $free_shipping_rates : $rates;
 	}
@@ -147,7 +150,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	/**
 	 * add_hide_shipping_if_free_available_fields.
 	 *
-	 * @version 2.5.3
+	 * @version 2.9.1
 	 */
 	function add_hide_shipping_if_free_available_fields( $settings ) {
 		$updated_settings = array();
@@ -164,12 +167,15 @@ class WCJ_Shipping_Options extends WCJ_Module {
 					'checkboxgroup' => 'start',
 				); */
 				$updated_settings[] = array(
-					'title'    => __( 'Booster: Hide shipping', 'woocommerce-jetpack' ),
-					'desc'     => __( 'Hide all when free is available', 'woocommerce-jetpack' ),
+					'title'    => __( 'Booster: Hide when free is available', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_shipping_hide_if_free_available_all',
 					'default'  => 'no',
-					'type'     => 'checkbox',
-					/* 'checkboxgroup' => 'end', */
+					'type'     => 'select',
+					'options'  => array(
+						'no'                  => __( 'Disabled', 'woocommerce-jetpack' ),
+						'yes'                 => __( 'Hide all', 'woocommerce-jetpack' ),
+						'except_local_pickup' => __( 'Hide all except "Local Pickup"', 'woocommerce-jetpack' ),
+					),
 				);
 			}
 		}
