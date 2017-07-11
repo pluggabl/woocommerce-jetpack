@@ -130,7 +130,6 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	 * hide_shipping_when_free_is_available.
 	 *
 	 * @version 2.9.1
-	 * @todo    if ( 'yes' === get_option( 'wcj_shipping_hide_if_free_available_local_delivery' ) ) { unset( $rates['local_delivery'] ); }
 	 */
 	function hide_shipping_when_free_is_available( $rates, $package ) {
 		$free_shipping_rates = array();
@@ -157,15 +156,6 @@ class WCJ_Shipping_Options extends WCJ_Module {
 		foreach ( $settings as $section ) {
 			$updated_settings[] = $section;
 			if ( isset( $section['id'] ) && 'woocommerce_ship_to_destination' === $section['id'] ) {
-				/* $updated_settings[] = array(
-					'title'    => __( 'Booster: Hide shipping', 'woocommerce-jetpack' ),
-					'desc'     => __( 'Hide local delivery when free is available', 'woocommerce-jetpack' ),
-					'desc_tip' => __( '', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_shipping_hide_if_free_available_local_delivery',
-					'default'  => 'no',
-					'type'     => 'checkbox',
-					'checkboxgroup' => 'start',
-				); */
 				$updated_settings[] = array(
 					'title'    => __( 'Booster: Hide when free is available', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_shipping_hide_if_free_available_all',

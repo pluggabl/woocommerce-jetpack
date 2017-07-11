@@ -16,16 +16,6 @@ $settings = array(
 		'desc'     => __( 'This section lets you hide other shipping options when free shipping is available on shop frontend.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_shipping_hide_if_free_available_options',
 	),
-	/*
-	array(
-		'title'    => __( 'Hide shipping', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Hide local delivery when free is available', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_shipping_hide_if_free_available_local_delivery',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-		'checkboxgroup' => 'start',
-	),
-	*/
 	array(
 		'title'    => __( 'Hide when free is available', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_shipping_hide_if_free_available_all',
@@ -36,7 +26,6 @@ $settings = array(
 			'yes'                 => __( 'Hide all', 'woocommerce-jetpack' ),
 			'except_local_pickup' => __( 'Hide all except "Local Pickup"', 'woocommerce-jetpack' ),
 		),
-//		'checkboxgroup' => 'end',
 	),
 	array(
 		'type'     => 'sectionend',
