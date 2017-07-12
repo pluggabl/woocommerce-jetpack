@@ -171,7 +171,7 @@ $~!D* Dev - PRODUCTS - Product Availability by Date - Initial module release.
 $~!D* Dev - PRODUCTS - Product Availability by Time - "Per Product" options added.
 $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Available - `Hide all except "Local Pickup"` and `Hide "Flat Rate" only` options added.
 	* Fix - EMAILS & MISC. - Admin Bar - Booster - Dashboard - Active - Submodules excluded from the list.
-~	* Dev - EMAILS & MISC. - Admin Bar - Booster - Modules - Sorted by title.
+~D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Modules - Sorted by title.
 ~D	* Dev - EMAILS & MISC. - Admin Tools - "WooCommerce Log" option added.
 ~D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
