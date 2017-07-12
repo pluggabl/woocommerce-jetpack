@@ -153,11 +153,12 @@ class WCJ_Admin_Bar extends WCJ_Module {
 					),
 				);
 			} else {
+				$cat_nodes = array();
 				foreach ( $label_info['all_cat_ids'] as $link_id ) {
 					if ( wcj_is_module_deprecated( $link_id, false, true ) ) {
 						continue;
 					}
-					$nodes[ $id ]['nodes'][ $link_id ] = array(
+					$cat_nodes[ $link_id ] = array(
 						'title'  => WCJ()->modules[ $link_id ]->short_desc,
 						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . $id . '&section=' . $link_id ),
 						'meta'   => array( 'title' => WCJ()->modules[ $link_id ]->desc ),
@@ -174,9 +175,11 @@ class WCJ_Admin_Bar extends WCJ_Module {
 						),
 					);
 					if ( WCJ()->modules[ $link_id ]->is_enabled() && 'module' === WCJ()->modules[ $link_id ]->type ) {
-						$active_modules[ $link_id ] = $nodes[ $id ]['nodes'][ $link_id ];
+						$active_modules[ $link_id ] = $cat_nodes[ $link_id ];
 					}
 				}
+				usort( $cat_nodes, array( $this, 'usort_compare_by_title' ) );
+				$nodes[ $id ]['nodes'] = $cat_nodes;
 			}
 		}
 		if ( ! empty( $active_modules ) ) {
@@ -189,14 +192,11 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * usort_compare_by_title.
 	 *
-	 * @version 2.9.0
+	 * @version 2.9.1
 	 * @since   2.9.0
 	 */
 	function usort_compare_by_title( $a, $b ) {
-		if ( $a['title'] == $b['title'] ) {
-			return 0;
-		}
-		return ( $a['title'] < $b['title'] ) ? -1 : 1;
+		return strcasecmp( $a['title'], $b['title'] );
 	}
 
 	/**
@@ -229,7 +229,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_admin_bar.
 	 *
-	 * @version 2.9.0
+	 * @version 2.9.1
 	 * @since   2.9.0
 	 */
 	function add_booster_admin_bar( $wp_admin_bar ) {
@@ -241,8 +241,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 					'title'  => __( 'Booster - Settings', 'woocommerce-jetpack' ),
 				),
 				'nodes'  => array(
-					'settings' => array(
-						'title'  => __( 'Settings', 'woocommerce-jetpack' ),
+					'modules' => array(
+						'title'  => __( 'Modules', 'woocommerce-jetpack' ),
 						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack' ),
 						'nodes'  => $this->get_nodes_booster_modules(),
 					),
