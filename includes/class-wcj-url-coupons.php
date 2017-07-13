@@ -62,6 +62,9 @@ class WCJ_URL_Coupons extends WCJ_Module {
 	 * @todo    (maybe) check if coupon is valid
 	 */
 	function maybe_add_products_to_cart( $coupon_code ) {
+		if ( 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_url_coupons_fixed_product_discount_add_products', 'no' ) ) ) {
+			return false;
+		}
 		// Coupons are globally disabled.
 		if ( ! wc_coupons_enabled() ) {
 			return false;

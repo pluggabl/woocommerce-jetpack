@@ -13,7 +13,7 @@ $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
 		'desc'     => sprintf( __( 'Additionally you can hide standard coupon field on cart page in Booster\'s <a href="%s">Cart Customization</a> module.', 'woocommerce-jetpack' ),
-				admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=cart_and_checkout&section=cart_customization' ) ),
+			admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=cart_and_checkout&section=cart_customization' ) ),
 		'type'     => 'title',
 		'id'       => 'wcj_url_coupons_options',
 	),
@@ -25,6 +25,15 @@ $settings = array(
 		'id'       => 'wcj_url_coupons_key',
 		'default'  => 'wcj_apply_coupon',
 		'type'     => 'text',
+	),
+	array(
+		'title'    => __( '"Fixed product discount" Coupons', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Automatically add coupon\'s products to the cart', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_url_coupons_fixed_product_discount_add_products',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',
