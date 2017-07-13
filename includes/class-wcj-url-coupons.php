@@ -33,11 +33,61 @@ class WCJ_URL_Coupons extends WCJ_Module {
 	}
 
 	/**
+	 * is_product_in_cart.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function is_product_in_cart( $product_id ) {
+		if ( 0 != $product_id ) {
+			if ( isset( WC()->cart->cart_contents ) && is_array( WC()->cart->cart_contents ) ) {
+				foreach ( WC()->cart->cart_contents as $cart_item_key => $cart_item_data ) {
+					if (
+						( isset( $cart_item_data['product_id'] )   && $product_id == $cart_item_data['product_id'] ) ||
+						( isset( $cart_item_data['variation_id'] ) && $product_id == $cart_item_data['variation_id'] )
+					) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * maybe_add_products_to_cart.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function maybe_add_products_to_cart( $coupon_code ) {
+		// Coupons are globally disabled.
+		if ( ! wc_coupons_enabled() ) {
+			return false;
+		}
+		// Sanitize coupon code.
+		$coupon_code = wc_format_coupon_code( $coupon_code );
+		// Get the coupon.
+		$the_coupon = new WC_Coupon( $coupon_code );
+		if ( 'fixed_product' === $the_coupon->get_discount_type() ) {
+			$product_ids = $the_coupon->get_product_ids();
+			if ( ! empty( $product_ids ) ) {
+				foreach ( $product_ids as $product_id ) {
+					if ( ! $this->is_product_in_cart( $product_id ) ) {
+						WC()->cart->add_to_cart( $product_id );
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * maybe_apply_url_coupon.
 	 *
-	 * @version 2.7.0
+	 * @version 2.9.1
 	 * @since   2.7.0
-	 * @todo    (maybe) add product to cart, if it's a product discount coupon
+	 * @todo    add product to cart with query arg?
+	 * @todo    redirect to cart or checkout after applying coupon
 	 * @todo    (maybe) predefined $arg_key
 	 * @todo    (maybe) additional $_GET['coupon_code']
 	 * @todo    (maybe) if ( ! WC()->cart->has_discount( $coupon_code ) ) {}
@@ -46,6 +96,7 @@ class WCJ_URL_Coupons extends WCJ_Module {
 		$arg_key = get_option( 'wcj_url_coupons_key', 'wcj_apply_coupon' );
 		if ( isset( $_GET[ $arg_key ] ) && '' != $_GET[ $arg_key ] ) {
 			$coupon_code = sanitize_text_field( $_GET[ $arg_key ] );
+			$this->maybe_add_products_to_cart( $coupon_code );
 			WC()->cart->add_discount( $coupon_code );
 			wp_safe_redirect( remove_query_arg( $arg_key ) );
 			exit;
