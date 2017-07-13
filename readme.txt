@@ -181,7 +181,7 @@ $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Avai
 ~	* Dev - EMAILS & MISC. - Reports - Stock - Code cleanup.
 $!D	* Dev - EMAILS & MISC. - URL Coupons - "Redirect URL" options added.
 $~D	* Dev - EMAILS & MISC. - URL Coupons - "Automatically add coupon's products to the cart" option added.
-~D	* Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
+D	* Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
 
 = 2.9.0 - 02/07/2017
 * Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
