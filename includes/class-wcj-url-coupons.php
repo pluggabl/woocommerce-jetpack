@@ -59,6 +59,7 @@ class WCJ_URL_Coupons extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
+	 * @todo    (maybe) check if coupon is valid
 	 */
 	function maybe_add_products_to_cart( $coupon_code ) {
 		// Coupons are globally disabled.
