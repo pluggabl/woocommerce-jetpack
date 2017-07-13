@@ -178,7 +178,8 @@ $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Avai
 -!D	* Dev - EMAILS & MISC. - General - "Track Users by Country" option added.
 ~D	* Dev - EMAILS & MISC. - Reports - Stock - "Total current stock purchase price" added.
 -	* Dev - EMAILS & MISC. - Reports - Stock - Code cleanup.
-$~!D* Dev - EMAILS & MISC. - URL Coupons - Automatically add products to cart if it's a "Fixed product discount" coupon.
+$~TD* Dev - EMAILS & MISC. - URL Coupons - "Redirect URL" options added.
+$~TD* Dev - EMAILS & MISC. - URL Coupons - "Automatically add coupon's products to the cart" option added.
 ~D	* Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
 
 = 2.9.0 - 02/07/2017

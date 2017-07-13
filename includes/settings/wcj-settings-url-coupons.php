@@ -27,6 +27,28 @@ $settings = array(
 		'type'     => 'text',
 	),
 	array(
+		'title'    => __( 'Redirect URL', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Possible values: No redirect; redirect to cart; redirect to checkout; redirect to custom local URL.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_url_coupons_redirect',
+		'default'  => 'no',
+		'type'     => 'select',
+		'options'  => array(
+			'no'       => __( 'No redirect', 'woocommerce-jetpack' ),
+			'cart'     => __( 'Redirect to cart', 'woocommerce-jetpack' ),
+			'checkout' => __( 'Redirect to checkout', 'woocommerce-jetpack' ),
+			'custom'   => __( 'Redirect to custom local URL', 'woocommerce-jetpack' ),
+		),
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+	),
+	array(
+		'desc'     => __( 'Custom Local URL', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_url_coupons_redirect_custom_url',
+		'default'  => '',
+		'type'     => 'text',
+		'css'      => 'min-width:300px;',
+	),
+	array(
 		'title'    => __( '"Fixed product discount" Coupons', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Automatically add coupon\'s products to the cart', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_url_coupons_fixed_product_discount_add_products',

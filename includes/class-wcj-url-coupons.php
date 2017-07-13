@@ -55,6 +55,25 @@ class WCJ_URL_Coupons extends WCJ_Module {
 	}
 
 	/**
+	 * get_redirect_url.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function get_redirect_url( $arg_key ) {
+		switch ( apply_filters( 'booster_get_option', 'no', get_option( 'wcj_url_coupons_redirect', 'no' ) ) ) {
+			case 'cart':
+				return wc_get_cart_url();
+			case 'checkout':
+				return wc_get_checkout_url();
+			case 'custom':
+				return get_option( 'wcj_url_coupons_redirect_custom_url', '' );
+			default: // 'no'
+				return remove_query_arg( $arg_key );
+		}
+	}
+
+	/**
 	 * maybe_add_products_to_cart.
 	 *
 	 * @version 2.9.1
@@ -90,10 +109,7 @@ class WCJ_URL_Coupons extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.7.0
-	 * @todo    add product to cart with query arg?
-	 * @todo    redirect to cart or checkout after applying coupon
-	 * @todo    (maybe) predefined $arg_key
-	 * @todo    (maybe) additional $_GET['coupon_code']
+	 * @todo    (maybe) options to add products to cart with query arg
 	 * @todo    (maybe) if ( ! WC()->cart->has_discount( $coupon_code ) ) {}
 	 */
 	function maybe_apply_url_coupon() {
@@ -102,7 +118,7 @@ class WCJ_URL_Coupons extends WCJ_Module {
 			$coupon_code = sanitize_text_field( $_GET[ $arg_key ] );
 			$this->maybe_add_products_to_cart( $coupon_code );
 			WC()->cart->add_discount( $coupon_code );
-			wp_safe_redirect( remove_query_arg( $arg_key ) );
+			wp_safe_redirect( $this->get_redirect_url( $arg_key ) );
 			exit;
 		}
 	}
