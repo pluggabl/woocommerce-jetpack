@@ -177,7 +177,7 @@ $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Avai
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
 -!D	* Dev - EMAILS & MISC. - General - "Track Users by Country" option added.
 ~D	* Dev - EMAILS & MISC. - Reports - Stock - "Total current stock purchase price" added.
--	* Dev - EMAILS & MISC. - Reports - Stock - Code cleanup.
+~	* Dev - EMAILS & MISC. - Reports - Stock - Code cleanup.
 $~TD* Dev - EMAILS & MISC. - URL Coupons - "Redirect URL" options added.
 $~TD* Dev - EMAILS & MISC. - URL Coupons - "Automatically add coupon's products to the cart" option added.
 ~D	* Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
