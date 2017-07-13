@@ -82,38 +82,40 @@ class WCJ_Reports_Stock {
 	/*
 	 * gather_products_data.
 	 *
-	 * @version 2.7.0
-	 * @todo    variable products?
+	 * @version 2.9.1
+	 * @todo    variations
 	 */
 	function gather_products_data( &$products_info ) {
 		$offset     = 0;
-		$block_size = 96;
+		$block_size = 256;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'product',
 				'posts_per_page' => $block_size,
 				'offset'         => $offset,
+				'fields'         => 'ids',
 			);
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$the_ID             = get_the_ID();
-				$the_product        = wc_get_product( $the_ID );
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $product_id ) {
+				$the_product        = wc_get_product( $product_id );
 				$the_price          = $the_product->get_price();
 				$the_stock          = wcj_get_product_total_stock( $the_product );
-				$the_title          = get_the_title();
-				$the_categories     = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $the_ID ) );
-				$the_date           = get_the_date();
-				$the_permalink      = get_the_permalink();
-				$post_custom        = get_post_custom( $the_ID );
+				$the_title          = get_the_title( $product_id );
+				$the_categories     = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $product_id ) );
+				$the_date           = get_the_date( get_option( 'date_format' ), $product_id );
+				$the_permalink      = get_the_permalink( $product_id );
+				$post_custom        = get_post_custom( $product_id );
 				$total_sales        = isset( $post_custom['total_sales'][0] ) ? $post_custom['total_sales'][0] : 0;
-				$purchase_price     = wc_get_product_purchase_price( $the_ID );
+				$purchase_price     = wc_get_product_purchase_price( $product_id );
 				$sales_in_day_range = array();
 				foreach( $this->ranges_in_days as $the_range ) {
 					$sales_in_day_range[ $the_range ] = 0;
 				}
-				$products_info[$the_ID] = array(
-					'ID'              => $the_ID,
+				$products_info[ $product_id ] = array(
+					'ID'              => $product_id,
 					'title'           => $the_title,
 					'category'        => $the_categories,
 					'permalink'       => $the_permalink,
@@ -126,7 +128,7 @@ class WCJ_Reports_Stock {
 					'last_sale'       => 0,
 					'sales_in_period' => $sales_in_day_range,
 				);
-			endwhile;
+			}
 			$offset += $block_size;
 		}
 	}
@@ -134,11 +136,11 @@ class WCJ_Reports_Stock {
 	/*
 	 * gather_orders_data.
 	 *
-	 * @version 2.5.0
+	 * @version 2.9.1
 	 */
 	function gather_orders_data( &$products_info ) {
 		$offset     = 0;
-		$block_size = 96;
+		$block_size = 256;
 		while( true ) {
 			$args_orders = array(
 				'post_type'      => 'shop_order',
@@ -153,16 +155,16 @@ class WCJ_Reports_Stock {
 						'after'  => $this->range_days . ' days ago',
 					),
 				),
+				'fields'         => 'ids',
 			);
 			$the_period  = $this->range_days;
 			$loop_orders = new WP_Query( $args_orders );
 			if ( ! $loop_orders->have_posts() ) {
 				break;
 			}
-			while ( $loop_orders->have_posts() ) : $loop_orders->the_post();
-				$order_id = $loop_orders->post->ID;
-				$order    = new WC_Order( $order_id );
-				$items    = $order->get_items();
+			foreach ( $loop_orders->posts as $order_id ) {
+				$order = wc_get_order( $order_id );
+				$items = $order->get_items();
 				foreach ( $items as $item ) {
 					if ( ! isset( $products_info[ $item['product_id'] ] ) ) {
 						// Deleted product
@@ -186,7 +188,7 @@ class WCJ_Reports_Stock {
 						$products_info[ $item['product_id'] ]['last_sale'] = get_the_time( 'U' );
 					}
 				}
-			endwhile;
+			}
 			$offset += $block_size;
 		}
 	}
