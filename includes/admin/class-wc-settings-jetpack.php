@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -227,7 +227,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard.
 	 *
-	 * @version 2.7.0
+	 * @version 2.9.1
 	 */
 	function output_dashboard( $current_section ) {
 
@@ -267,7 +267,6 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		} elseif ( 'active' === $current_section ) {
 			$this->output_dashboard_modules( $the_settings, 'active_modules_only' );
 		} elseif ( 'manager' === $current_section ) {
-			$autoload_settings = $this->get_autoload_settings();
 			$table_data = array(
 				array(
 					'<button style="width:100px;" class="button-primary" type="submit" name="booster_export_settings">' . __( 'Export', 'woocommerce-jetpack' ) . '</button>',
@@ -282,14 +281,17 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 					'<button style="width:100px;" class="button-primary" type="submit" name="booster_reset_settings" onclick="return confirm(\'' . __( 'This will reset settings to defaults for all Booster modules. Are you sure?', 'woocommerce-jetpack' ) . '\')">'  . __( 'Reset', 'woocommerce-jetpack' )  . '</button>',
 					'<em>' . __( 'Reset all Booster\'s options.', 'woocommerce-jetpack' ) . '</em>',
 				),
-				array(
-					'<label for="' . $autoload_settings['id'] . '">' .
-						'<input name="' . $autoload_settings['id'] . '" id="' . $autoload_settings['id'] . '" type="' . $autoload_settings['type'] . '" class="" value="1" ' . checked( get_option( $autoload_settings['id'], $autoload_settings['default'] ), 'yes', false ) . '>' .
-						' ' . '<strong>' . $autoload_settings['title'] . '</strong>' .
-					'</label>',
-					'<em>' . $autoload_settings['desc'] . '</em>',
-				),
 			);
+			$manager_settings = $this->get_manager_settings();
+			foreach ( $manager_settings as $manager_settings_field ) {
+				$table_data[] = array(
+					'<label for="' . $manager_settings_field['id'] . '">' .
+						'<input name="' . $manager_settings_field['id'] . '" id="' . $manager_settings_field['id'] . '" type="' . $manager_settings_field['type'] . '" class="" value="1" ' . checked( get_option( $manager_settings_field['id'], $manager_settings_field['default'] ), 'yes', false ) . '>' .
+						' ' . '<strong>' . $manager_settings_field['title'] . '</strong>' .
+					'</label>',
+					'<em>' . $manager_settings_field['desc'] . '</em>',
+				);
+			}
 			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'none' ) );
 		}
 
@@ -392,33 +394,44 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	}
 
 	/**
-	 * get_autoload_settings.
+	 * get_manager_settings.
 	 *
-	 * @version 2.6.0
+	 * @version 2.9.1
 	 * @since   2.6.0
 	 * @return  array
 	 */
-	function get_autoload_settings() {
+	function get_manager_settings() {
 		return array(
-			'title'   => __( 'Autoload Booster\'s Options', 'woocommerce-jetpack' ),
-			'type'    => 'checkbox',
-			'desc'    => __( 'Choose if you want Booster\'s options to be autoloaded when calling add_option. After saving this option, you need to Reset all Booster\'s settings. Leave default value (i.e. Enabled) if not sure.', 'woocommerce-jetpack' ),
-			'id'      => 'wcj_autoload_options',
-			'default' => 'yes',
+			array(
+				'title'   => __( 'Autoload Booster\'s Options', 'woocommerce-jetpack' ),
+				'type'    => 'checkbox',
+				'desc'    => __( 'Choose if you want Booster\'s options to be autoloaded when calling add_option. After saving this option, you need to Reset all Booster\'s settings. Leave default value (i.e. Enabled) if not sure.', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_autoload_options',
+				'default' => 'yes',
+			),
+			array(
+				'title'   => __( 'Use List Instead of Comma Separated Text for Products in Settings', 'woocommerce-jetpack' ),
+				'type'    => 'checkbox',
+				'desc'    => sprintf( __( 'Supported modules: %s.', 'woocommerce-jetpack' ), implode( ', ', array(
+					__( 'Product Info', 'woocommerce-jetpack' ),
+				) ) ),
+				'id'      => 'wcj_list_for_products',
+				'default' => 'yes',
+			),
 		);
 	}
 
 	/**
 	 * Get settings array
 	 *
-	 * @version 2.7.0
+	 * @version 2.9.1
 	 * @return  array
 	 */
 	function get_settings( $current_section = '' ) {
 		if ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section && 'manager' != $current_section ) {
 			return apply_filters( 'wcj_settings_' . $current_section, array() );
 		} elseif ( 'manager' === $current_section ) {
-			return array( $this->get_autoload_settings() );
+			return $this->get_manager_settings();
 		} else {
 			$cat_id = ( isset( $_GET['wcj-cat'] ) && '' != $_GET['wcj-cat'] ) ? $_GET['wcj-cat'] : 'dashboard';
 			$settings[] = array(

@@ -2,18 +2,20 @@
 /**
  * Booster for WooCommerce - Settings - Product Info
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$products     = wcj_get_products();
-$product_cats = wcj_get_terms( 'product_cat' );
-$product_tags = wcj_get_terms( 'product_tag' );
-$settings     = array();
-$single_or_archive_array = array( 'single', 'archive' );
+$is_multiselect_products     = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
+$products                    = ( $is_multiselect_products ? wcj_get_products() : false );
+$product_cats                = wcj_get_terms( 'product_cat' );
+$product_tags                = wcj_get_terms( 'product_tag' );
+$settings                    = array();
+$single_or_archive_array     = array( 'single', 'archive' );
+
 foreach ( $single_or_archive_array as $single_or_archive ) {
 	$single_or_archive_desc = ( 'single' === $single_or_archive ) ? __( 'Single', 'woocommerce-jetpack' ) : __( 'Archive', 'woocommerce-jetpack' );
 	$settings = array_merge( $settings, array(
@@ -36,6 +38,12 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 		),
 	) );
 	for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
+
+		wcj_maybe_convert_and_update_option_value( array(
+			array( 'id' => 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i, 'default' => '' ),
+			array( 'id' => 'wcj_product_custom_info_products_to_exclude_' . $single_or_archive . '_' . $i, 'default' => '' ),
+		), $is_multiselect_products );
+
 		$settings = array_merge( $settings, array(
 			array(
 				'title'    => __( 'Info Block', 'woocommerce-jetpack' ) . ' #' . $i . ' - ' . $single_or_archive_desc,
@@ -123,25 +131,27 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'css'      => 'width: 450px;',
 				'options'  => $product_tags,
 			),
-			array(
-				'title'    => __( 'Products to Include', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i,
-				'default'  => '',
-				'type'     => 'multiselect',
-				'class'    => 'chosen_select',
-				'css'      => 'width: 450px;',
-				'options'  => $products,
+			wcj_get_settings_as_multiselect_or_text(
+				array(
+					'title'    => __( 'Products to Include', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i,
+					'default'  => '',
+					'css'      => 'width: 450px;',
+				),
+				$products,
+				$is_multiselect_products
 			),
-			array(
-				'title'    => __( 'Products to Exclude', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_product_custom_info_products_to_exclude_' . $single_or_archive . '_' . $i,
-				'default'  => '',
-				'type'     => 'multiselect',
-				'class'    => 'chosen_select',
-				'css'      => 'width: 450px;',
-				'options'  => $products,
+			wcj_get_settings_as_multiselect_or_text(
+				array(
+					'title'    => __( 'Products to Exclude', 'woocommerce-jetpack' ),
+					'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
+					'id'       => 'wcj_product_custom_info_products_to_exclude_' . $single_or_archive . '_' . $i,
+					'default'  => '',
+					'css'      => 'width: 450px;',
+				),
+				$products,
+				$is_multiselect_products
 			),
 			array(
 				'type'     => 'sectionend',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Info
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   2.4.0
  * @author  Algoritmika Ltd.
  */
@@ -71,7 +71,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 	/**
 	 * check_included_and_excluded.
 	 *
-	 * @version 2.9.0
+	 * @version 2.9.1
 	 * @since   2.9.0
 	 */
 	function check_included_and_excluded( $product_id, $single_or_archive, $i ) {
@@ -79,8 +79,8 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 		$product_cats_to_exclude = get_option( 'wcj_product_custom_info_product_cats_to_exclude_' . $single_or_archive . '_' . $i );
 		$product_tags_to_include = get_option( 'wcj_product_custom_info_product_tags_to_include_' . $single_or_archive . '_' . $i );
 		$product_tags_to_exclude = get_option( 'wcj_product_custom_info_product_tags_to_exclude_' . $single_or_archive . '_' . $i );
-		$products_to_exclude     = get_option( 'wcj_product_custom_info_products_to_exclude_'     . $single_or_archive . '_' . $i );
-		$products_to_include     = get_option( 'wcj_product_custom_info_products_to_include_'     . $single_or_archive . '_' . $i );
+		$products_to_exclude     = wcj_maybe_convert_string_to_array( get_option( 'wcj_product_custom_info_products_to_exclude_' . $single_or_archive . '_' . $i ) );
+		$products_to_include     = wcj_maybe_convert_string_to_array( get_option( 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i ) );
 		return (
 			( empty( $product_cats_to_exclude ) || ! wcj_is_product_term( $product_id, $product_cats_to_exclude, 'product_cat' ) ) &&
 			( empty( $product_cats_to_include ) ||   wcj_is_product_term( $product_id, $product_cats_to_include, 'product_cat' ) ) &&

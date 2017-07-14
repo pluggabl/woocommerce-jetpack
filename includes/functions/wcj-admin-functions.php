@@ -2,12 +2,93 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_settings_as_multiselect_or_text' ) ) {
+	/**
+	 * wcj_get_settings_as_multiselect_or_text.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function wcj_get_settings_as_multiselect_or_text( $values, $multiselect_options, $is_multiselect ) {
+		return ( $is_multiselect ?
+			array_merge( $values, array(
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'options'  => $multiselect_options,
+			) ) :
+			array_merge( $values, array(
+				'type'     => 'text',
+				'desc'     => __( 'Enter comma separated list of IDs.', 'woocommerce-jetpack' ),
+			) )
+		);
+	}
+}
+
+if ( ! function_exists( 'wcj_convert_string_to_array' ) ) {
+	/**
+	 * wcj_convert_string_to_array.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 * @todo    check `cutom_explode` function
+	 */
+	function wcj_convert_string_to_array( $value ) {
+		if ( '' === $value ) {
+			$value = array();
+		} else {
+			$value = str_replace( ' ', '', $value );
+			$value = explode( ',', $value );
+		}
+		return $value;
+	}
+}
+
+if ( ! function_exists( 'wcj_maybe_convert_and_update_option_value' ) ) {
+	/**
+	 * wcj_maybe_convert_and_update_option_value.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function wcj_maybe_convert_and_update_option_value( $options, $is_multiselect ) {
+		foreach ( $options as $option ) {
+			$value = get_option( $option['id'], $option['default'] );
+			if ( ! $is_multiselect ) {
+				if ( is_array( $value ) ) {
+					$value = implode( ',', $value );
+					update_option( $option['id'], $value );
+				}
+			} else {
+				if ( is_string( $value ) ) {
+					$value = wcj_convert_string_to_array( $value );
+					update_option( $option['id'], $value );
+				}
+			}
+		}
+	}
+}
+
+if ( ! function_exists( 'wcj_maybe_convert_string_to_array' ) ) {
+	/**
+	 * wcj_maybe_convert_string_to_array.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function wcj_maybe_convert_string_to_array( $value ) {
+		if ( is_string( $value ) ) {
+			$value = wcj_convert_string_to_array( $value );
+		}
+		return $value;
+	}
+}
 
 if ( ! function_exists( 'wcj_message_replaced_values' ) ) {
 	/**
