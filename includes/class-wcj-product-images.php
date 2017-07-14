@@ -17,6 +17,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.0
+	 * @todo    Add watermarks to images (http://php.net/manual/en/image.examples-watermark.php); Filter: `wp_get_attachment_image_src`.
 	 */
 	function __construct() {
 

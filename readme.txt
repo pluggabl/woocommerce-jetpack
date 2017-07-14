@@ -178,6 +178,7 @@ $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Avai
 ~D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
 -D	* Dev - EMAILS & MISC. - General - "Track Users by Country" option added.
+-D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with currency conversions) - Option to enter monthly rates manually added.
 ~D	* Dev - EMAILS & MISC. - Reports - Stock - "Total current stock purchase price" added.
 ~	* Dev - EMAILS & MISC. - Reports - Stock - `WP_Query` optimized to return `ids` only.
 ~	* Dev - EMAILS & MISC. - Reports - Stock - Code cleanup.
