@@ -161,6 +161,7 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
+	 * @todo    track via script (ajax)
 	 * @todo    customizable `$time_expired`
 	 * @todo    maybe use something else instead of `wp_head` hook
 	 * @todo    add http referer to `woocommerce_new_order` hook
