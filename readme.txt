@@ -169,6 +169,7 @@ D	* Dev - Shortcodes - General - `[wcj_site_url]` shortcode added.
 $!D	* Dev - PRODUCTS - Product Availability by Date - Initial module release.
 	* Fix - PRODUCTS - Product Availability by Time - Settings - Description fixed.
 $!D	* Dev - PRODUCTS - Product Availability by Time - "Per Product" options added.
+-D	* Dev - SHIPPING & ORDERS - Orders - "Save customer source (i.e. HTTP referer)" option added.
 $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Available - `Hide all except "Local Pickup"` and `Hide "Flat Rate" only` options added.
 	* Fix - EMAILS & MISC. - Admin Bar - Booster - Dashboard - Active - Submodules excluded from the list.
 ~D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Modules - Sorted by title.
