@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom JS
  *
- * @version 2.8.0
+ * @version 2.9.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -43,21 +43,21 @@ class WCJ_Custom_JS extends WCJ_Module {
 	/**
 	 * custom_frontend_js.
 	 *
-	 * @version 2.8.0
+	 * @version 2.9.1
 	 * @since   2.8.0
 	 */
 	function custom_frontend_js() {
-		echo '<script>' . get_option( 'wcj_custom_js_frontend', '' ) . '</script>';
+		echo '<script>' . do_shortcode( get_option( 'wcj_custom_js_frontend', '' ) ) . '</script>';
 	}
 
 	/**
 	 * custom_backend_js.
 	 *
-	 * @version 2.8.0
+	 * @version 2.9.1
 	 * @since   2.8.0
 	 */
 	function custom_backend_js() {
-		echo '<script>' . get_option( 'wcj_custom_js_backend', '' ) . '</script>';
+		echo '<script>' . do_shortcode( get_option( 'wcj_custom_js_backend', '' ) ) . '</script>';
 	}
 
 }

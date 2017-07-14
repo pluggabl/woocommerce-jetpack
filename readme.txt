@@ -176,6 +176,7 @@ $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Avai
 ~D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Modules - Sorted by title.
 ~D	* Dev - EMAILS & MISC. - Admin Tools - "WooCommerce Log" option added.
 ~D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
+~D	* Dev - EMAILS & MISC. - Custom JS - Shortcodes can now be used in custom JS.
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
 !!D	* Dev - EMAILS & MISC. - General - "Track Users by Country" option added.
 -D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with currency conversions) - Option to enter monthly rates manually added.
