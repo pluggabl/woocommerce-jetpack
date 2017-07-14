@@ -206,14 +206,14 @@ $settings = array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_general_user_role_changer_options',
 	),
-	/* array(
+	array(
 		'title'    => __( 'Track Users Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_track_users_options',
 	),
 	array(
 		'title'    => __( 'Track Users', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ) . ' <span style="color:red;font-weight:bold;">[' . __( 'Experimental', 'woocommerce-jetpack' ) . ']</span>',
 		'id'       => 'wcj_track_users_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -221,7 +221,7 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_track_users_options',
-	), */
+	),
 	/*
 	array(
 		'title'    => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),

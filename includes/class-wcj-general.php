@@ -91,11 +91,12 @@ class WCJ_General extends WCJ_Module {
 	 */
 	function maybe_delete_track_users_stats() {
 		if ( isset( $_GET['wcj_delete_track_users_stats'] ) /* && is_super_admin() */ ) {
-			delete_option( 'wcj_track_users_stats_by_country' );
-//			delete_option( 'wcj_track_users_stats_by_country_by_day' );
-			if ( wp_safe_redirect( remove_query_arg( 'wcj_delete_track_users_stats' ) ) ) {
-				exit;
-			}
+			global $wpdb;
+			$table_name = $wpdb->prefix . 'wcj_track_users';
+			$sql = "DROP TABLE IF EXISTS $table_name";
+			$wpdb->query( $sql );
+			wp_safe_redirect( remove_query_arg( 'wcj_delete_track_users_stats' ) );
+			exit;
 		}
 	}
 
@@ -118,32 +119,24 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
+	 * @todo    fix flags (for missing country codes)
+	 * @todo    stats must be pre-calculated in cron
+	 * @todo    display stats by day
+	 * @todo    display stats by month
 	 * @todo    display stats by state
 	 */
 	function track_users_dashboard_widget_function() {
-		// By day
-		/* $stats = get_option( 'wcj_track_users_stats_by_country_by_day', array() );
-		$totals = array();
-		foreach ( $stats as $day => $country ) {
-			foreach ( $country as $country_code => $stats_by_state ) {
-				if ( ! isset( $totals[ $country_code ] ) ) {
-					$totals[ $country_code ] = 0;
-				}
-				$totals[ $country_code ] += array_sum( $stats_by_state );
-			}
-		}
-		$table_data = array();
-		foreach ( $totals as $country_code => $visits ) {
-			$country_info = ( '' != $country_code ? wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code ) : 'N/A' );
-			$table_data[] = array( $country_info, $visits );
-		}
-		echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'none' ) ); */
-		// Total
-		$stats = get_option( 'wcj_track_users_stats_by_country', array() );
-		if ( ! empty( $stats ) ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'wcj_track_users';
+		// Total by Country
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name && ( $results = $wpdb->get_results( "SELECT * FROM $table_name" ) ) ) {
 			$totals = array();
-			foreach ( $stats as $country_code => $stats_by_state ) {
-				$totals[ $country_code ] = array_sum( $stats_by_state );
+			foreach ( $results as $result ) {
+				if ( ! isset( $totals[ $result->country ] ) ) {
+					$totals[ $result->country ] = 1;
+				} else {
+					$totals[ $result->country ]++;
+				}
 			}
 			arsort( $totals );
 			$table_data = array();
@@ -159,9 +152,7 @@ class WCJ_General extends WCJ_Module {
 				'>' . __( 'Delete stats', 'woocommerce-jetpack' ) . '</a>' .
 			'</p>';
 		} else {
-			echo '<p>' .
-				'<em>' . __( 'No stats yet.', 'woocommerce-jetpack' ) . '</em>' .
-			'</p>';
+			echo '<p>' . '<em>' . __( 'No stats yet.', 'woocommerce-jetpack' ) . '</em>' . '</p>';
 		}
 	}
 
@@ -170,33 +161,52 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
+	 * @todo    customizable `$time_expired`
+	 * @todo    maybe use something else instead of `wp_head` hook
+	 * @todo    add http referer to `woocommerce_new_order` hook
 	 * @todo    optionally do not track selected user roles (e.g. admin)
-	 * @todo    (maybe) stats - by day
-	 * @todo    (maybe) stats - by month
-	 * @todo    (maybe) make new function for geolocation
 	 */
 	function track_users() {
-		// Country by IP
-		if ( class_exists( 'WC_Geolocation' ) ) {
-			$location = WC_Geolocation::geolocate_ip();
+		$user_ip = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::get_ip_address() : wcj_get_the_ip() );
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'wcj_track_users';
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) != $table_name ) {
+			// Create DB table
+			$charset_collate = $wpdb->get_charset_collate();
+			$sql = "CREATE TABLE $table_name (
+				id int NOT NULL AUTO_INCREMENT,
+				time datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+				country tinytext NOT NULL,
+				state tinytext NOT NULL,
+				ip text NOT NULL,
+				referer text NOT NULL,
+				PRIMARY KEY (id)
+			) $charset_collate;";
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $sql );
 		} else {
-			$location = array( 'country' => '', 'state' => '' );
+			// Check if already tracked recently
+			$time_expired = date( 'Y-m-d H:i:s', strtotime( '-1 day', current_time( 'timestamp' ) ) );
+			$result = $wpdb->get_row( "SELECT * FROM $table_name WHERE ip = '$user_ip' AND time > '$time_expired'" );
+			if ( $result ) {
+				return;
+			}
 		}
-		// Saving stats by country - by day
-		/* $date = date( 'Y-m-d', current_time( 'timestamp' ) );
-		$stats_by_day = get_option( 'wcj_track_users_stats_by_country_by_day', array() );
-		if ( ! isset( $stats_by_day[ $date ][ $location['country'] ][ $location['state'] ] ) ) {
-			$stats_by_day[ $date ][ $location['country'] ][ $location['state'] ] = 0;
-		}
-		$stats_by_day[ $date ][ $location['country'] ][ $location['state'] ]++;
-		update_option( 'wcj_track_users_stats_by_country_by_day', $stats_by_day ); */
-		// Saving stats by country - total
-		$stats = get_option( 'wcj_track_users_stats_by_country', array() );
-		if ( ! isset( $stats[ $location['country'] ][ $location['state'] ] ) ) {
-			$stats[ $location['country'] ][ $location['state'] ] = 0;
-		}
-		$stats[ $location['country'] ][ $location['state'] ]++;
-		update_option( 'wcj_track_users_stats_by_country', $stats );
+		// Country by IP
+		$location = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::geolocate_ip( $user_ip ) : array( 'country' => '', 'state' => '' ) );
+		// HTTP referrer
+		$http_referer = ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : 'N/A' );
+		// Add row to DB table
+		$wpdb->insert(
+			$table_name,
+			array(
+				'time'    => current_time( 'mysql' ),
+				'country' => $location['country'],
+				'state'   => $location['state'],
+				'ip'      => $user_ip,
+				'referer' => $http_referer,
+			)
+		);
 	}
 
 	/**
