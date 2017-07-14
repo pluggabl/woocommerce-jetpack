@@ -206,13 +206,13 @@ $settings = array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_general_user_role_changer_options',
 	),
-	array(
-		'title'    => __( 'Track Users by Country Options', 'woocommerce-jetpack' ),
+	/* array(
+		'title'    => __( 'Track Users Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_track_users_options',
 	),
 	array(
-		'title'    => __( 'Track Users by Country', 'woocommerce-jetpack' ),
+		'title'    => __( 'Track Users', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_track_users_enabled',
 		'default'  => 'no',
@@ -221,7 +221,7 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_track_users_options',
-	),
+	), */
 	/*
 	array(
 		'title'    => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),
