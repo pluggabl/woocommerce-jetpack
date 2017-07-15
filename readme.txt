@@ -164,7 +164,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.9.1 - 15/07/2017
+= 2.9.1 - 16/07/2017
 !!D	* Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products in Settings" option added (Supported modules: Product Info).
 D	* Dev - Shortcodes - General - `[wcj_site_url]` shortcode added.
 $!D	* Dev - PRODUCTS - Product Availability by Date - Initial module release.
@@ -178,7 +178,9 @@ $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Avai
 ~D	* Dev - EMAILS & MISC. - Custom JS - Shortcodes can now be used in custom JS.
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
 $!!D* Dev - EMAILS & MISC. - General - "Track Users" section added. "Track Orders" (i.e. "Save customer's acquisition source (i.e. HTTP referer) for orders") option added.
--D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with currency conversions) - Option to enter monthly rates manually added.
+!!D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Monthly rates are set manually now.
+~D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Orders by Currency" row added.
+~	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Code refactoring.
 ~D	* Dev - EMAILS & MISC. - Reports - Stock - "Total current stock purchase price" added.
 ~	* Dev - EMAILS & MISC. - Reports - Stock - `WP_Query` optimized to return `ids` only.
 ~	* Dev - EMAILS & MISC. - Reports - Stock - Code cleanup.

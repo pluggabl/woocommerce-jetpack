@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Reports
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -90,7 +90,7 @@ $reports_and_settings = array(
 		'checkboxgroup' => 'end',
 	),
 	array(
-		'title'     => __( 'Monthly Sales (with currency conversions)', 'woocommerce-jetpack' ),
+		'title'     => __( 'Monthly Sales (with Currency Conversion)', 'woocommerce-jetpack' ),
 		'tab'       => 'orders',
 		'tab_title' => __( 'Orders', 'woocommerce-jetpack' ),
 		'report'    => 'booster_monthly_sales',

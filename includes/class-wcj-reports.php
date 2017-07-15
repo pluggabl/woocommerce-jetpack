@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Reports
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @author  Algoritmika Ltd.
  */
 
@@ -198,7 +198,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Add reports to WooCommerce > Reports > Sales
 	 *
-	 * @version 2.9.0
+	 * @version 2.9.1
 	 * @since   2.3.0
 	 */
 	function add_sales_reports( $reports ) {
@@ -218,7 +218,7 @@ class WCJ_Reports extends WCJ_Module {
 		);
 
 		$reports['orders']['reports']['booster_monthly_sales'] = array(
-			'title'       => __( 'Booster: Monthly Sales', 'woocommerce-jetpack' ),
+			'title'       => __( 'Booster: Monthly Sales (with Currency Conversion)', 'woocommerce-jetpack' ),
 			'description' => '',
 			'hide_title'  => false,
 			'callback'    => array( $this, 'get_report_monthly_sales' ),
