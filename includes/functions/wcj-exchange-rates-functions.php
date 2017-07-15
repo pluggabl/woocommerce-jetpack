@@ -169,6 +169,7 @@ if ( ! function_exists( 'alg_yahoo_get_exchange_rate' ) ) {
 	 *
 	 * @version 2.7.0
 	 * @return  float rate on success, else 0
+	 * @todo    `alg_` to `wcj_`
 	 */
 	function alg_yahoo_get_exchange_rate( $currency_from, $currency_to ) {
 

@@ -73,7 +73,7 @@ class WCJ_Reports_Monthly_Sales {
 	 *
 	 * @version 2.9.1
 	 * @since   2.4.7
-	 * @todo    option to grab average monthly exchange rates from yahoo
+	 * @todo    (maybe) option to grab average monthly exchange rates from some data server (unfortunately discontinued by the Yahoo)
 	 * @todo    (maybe) current month - include today
 	 * @todo    (maybe) take not monthly average, but "Close" of closest day
 	 * @todo    (maybe) forecast for current month
