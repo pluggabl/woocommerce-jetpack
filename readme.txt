@@ -170,7 +170,6 @@ D	* Dev - Shortcodes - General - `[wcj_site_url]` shortcode added.
 $!D	* Dev - PRODUCTS - Product Availability by Date - Initial module release.
 	* Fix - PRODUCTS - Product Availability by Time - Settings - Description fixed.
 $!D	* Dev - PRODUCTS - Product Availability by Time - "Per Product" options added.
--D	* Dev - SHIPPING & ORDERS - Orders - "Save customer source (i.e. HTTP referer)" option added.
 $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Available - `Hide all except "Local Pickup"` and `Hide "Flat Rate" only` options added.
 	* Fix - EMAILS & MISC. - Admin Bar - Booster - Dashboard - Active - Submodules excluded from the list.
 ~D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Modules - Sorted by title.
@@ -178,7 +177,7 @@ $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Avai
 ~D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
 ~D	* Dev - EMAILS & MISC. - Custom JS - Shortcodes can now be used in custom JS.
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
-!!D	* Dev - EMAILS & MISC. - General - "Track Users by Country" option added.
+$!!D* Dev - EMAILS & MISC. - General - "Track Users by Country" option added. "Track Orders" (i.e. "Save customer's acquisition source (i.e. HTTP referer) for orders") option added.
 -D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with currency conversions) - Option to enter monthly rates manually added.
 ~D	* Dev - EMAILS & MISC. - Reports - Stock - "Total current stock purchase price" added.
 ~	* Dev - EMAILS & MISC. - Reports - Stock - `WP_Query` optimized to return `ids` only.

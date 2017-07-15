@@ -208,13 +208,23 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Track Users Options', 'woocommerce-jetpack' ),
+		'desc'     => '<span style="color:red;font-style:italic;">' .
+			sprintf( __( '"%s" section is in development (i.e. experimental).', 'woocommerce-jetpack' ), __( 'Track Users', 'woocommerce-jetpack' ) ) . '</span>',
 		'type'     => 'title',
 		'id'       => 'wcj_track_users_options',
 	),
 	array(
 		'title'    => __( 'Track Users', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ) . ' <span style="color:red;font-weight:bold;">[' . __( 'Experimental', 'woocommerce-jetpack' ) . ']</span>',
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
 		'id'       => 'wcj_track_users_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Track Orders', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save customer\'s acquisition source (i.e. HTTP referer) for orders.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_track_users_save_order_http_referer_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

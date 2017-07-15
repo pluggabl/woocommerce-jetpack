@@ -78,8 +78,32 @@ class WCJ_General extends WCJ_Module {
 				add_action( 'wp_head',            array( $this, 'track_users' ) );
 				add_action( 'wp_dashboard_setup', array( $this, 'add_track_users_dashboard_widget' ) );
 				add_action( 'admin_init',         array( $this, 'maybe_delete_track_users_stats' ) );
+				if ( 'yes' === get_option( 'wcj_track_users_save_order_http_referer_enabled', 'no' ) ) {
+					add_action( 'woocommerce_new_order', array( $this, 'add_http_referer_to_order' ) );
+				}
 			}
 		}
+	}
+
+	/**
+	 * add_http_referer_to_order.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 * @todo    add order meta box for displaying the referer
+	 */
+	function add_http_referer_to_order( $order_id ) {
+		global $wpdb;
+		$table_name = $wpdb->prefix . 'wcj_track_users';
+		$http_referer = 'N/A';
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name ) {
+			$user_ip = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::get_ip_address() : wcj_get_the_ip() );
+			$result = $wpdb->get_row( "SELECT * FROM $table_name WHERE ip = '$user_ip' ORDER BY time DESC" );
+			if ( $result ) {
+				$http_referer = $result->referer;
+			}
+		}
+		update_post_meta( $order_id, '_wcj_track_users_http_referer', $http_referer );
 	}
 
 	/**
@@ -108,9 +132,9 @@ class WCJ_General extends WCJ_Module {
 	 */
 	function add_track_users_dashboard_widget() {
 		wp_add_dashboard_widget(
-			'wcj_track_users_dashboard_widget',                     // Widget slug.
-			__( 'Users by Country', 'woocommerce-jetpack' ),        // Title.
-			array( $this, 'track_users_dashboard_widget_function' ) // Display function.
+			'wcj_track_users_dashboard_widget',                     // widget slug
+			__( 'Users by Country', 'woocommerce-jetpack' ),        // title
+			array( $this, 'track_users_dashboard_widget_function' ) // display function
 		);
 	}
 
@@ -124,6 +148,7 @@ class WCJ_General extends WCJ_Module {
 	 * @todo    display stats by day
 	 * @todo    display stats by month
 	 * @todo    display stats by state
+	 * @todo    (maybe) display only top 10
 	 */
 	function track_users_dashboard_widget_function() {
 		global $wpdb;
@@ -164,7 +189,6 @@ class WCJ_General extends WCJ_Module {
 	 * @todo    track via script (ajax)
 	 * @todo    customizable `$time_expired`
 	 * @todo    maybe use something else instead of `wp_head` hook
-	 * @todo    add http referer to `woocommerce_new_order` hook
 	 * @todo    optionally do not track selected user roles (e.g. admin)
 	 */
 	function track_users() {
