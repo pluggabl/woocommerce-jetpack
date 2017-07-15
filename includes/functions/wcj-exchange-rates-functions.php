@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 2.7.0
+ * @version 2.9.1
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -195,5 +195,74 @@ if ( ! function_exists( 'alg_yahoo_get_exchange_rate' ) ) {
 
 		return ( isset( $exchange_rate->query->results->row->rate ) ) ? floatval( $exchange_rate->query->results->row->rate ) : 0;
 //		return ( isset( $exchange_rate->rate ) ) ? $exchange_rate->rate : 0;
+	}
+}
+
+if ( ! function_exists( 'wcj_yahoo_get_exchange_rate_average_USD' ) ) {
+	/*
+	 * wcj_yahoo_get_exchange_rate_average_USD.
+	 *
+	 * @version 2.9.1
+	 * @since   2.5.3
+	 * @return  false or rate
+	 * @see     https://stackoverflow.com/questions/44075788/yahoo-yql-yahoo-finance-historicaldata-returning-empty-results
+	 * @see     https://forums.yahoo.net/t5/Yahoo-Finance-help/Is-Yahoo-Finance-API-broken/td-p/250503/page/3
+	 * @deprecated This feature was discontinued by the Yahoo Finance team and they will not be reintroducing that functionality.
+	 */
+	function wcj_yahoo_get_exchange_rate_average_USD( $currency, $start_date, $end_date ) {
+		$url = 'https://query.yahooapis.com/v1/public/yql?q=select%20Close%20from%20yahoo.finance.historicaldata%20where%20symbol%20%3D%20%22'
+			. $currency . '%3DX%22%20and%20startDate%20%3D%20%22'
+			. $start_date . '%22%20and%20endDate%20%3D%20%22'
+			. $end_date. '%22&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=';
+		ob_start();
+		$max_execution_time = ini_get( 'max_execution_time' );
+		set_time_limit( 15 );
+		$exchange_rate = json_decode( file_get_contents( $url ) );
+		set_time_limit( $max_execution_time );
+		ob_end_clean();
+		if ( ! isset( $exchange_rate->query->results->quote ) || count( $exchange_rate->query->results->quote ) < 1 ) {
+			return false;
+		}
+		$average_currency = 0;
+		foreach ( $exchange_rate->query->results->quote as $quote ) {
+			$average_currency += $quote->Close;
+		}
+		$average_currency = $average_currency / count( $exchange_rate->query->results->quote );
+		if ( 0 == $average_currency ) {
+			return false;
+		}
+		return $average_currency;
+	}
+}
+
+if ( ! function_exists( 'wcj_yahoo_get_exchange_rate_average' ) ) {
+	/*
+	 * wcj_yahoo_get_exchange_rate_average.
+	 *
+	 * @version 2.9.1
+	 * @since   2.4.7
+	 * @return  false or rate
+	 */
+	function wcj_yahoo_get_exchange_rate_average( $currency_from, $currency_to, $start_date, $end_date ) {
+		// USD / $currency_from
+		if ( 'USD' != $currency_from ) {
+			$average_currency_from = wcj_yahoo_get_exchange_rate_average_USD( $currency_from, $start_date, $end_date );
+			if ( 0 == $average_currency_from ) {
+				return false;
+			}
+		} else {
+			$average_currency_from = 1.0;
+		}
+		// USD / $currency_to
+		if ( 'USD' != $currency_to ) {
+			$average_currency_to = wcj_yahoo_get_exchange_rate_average_USD( $currency_to, $start_date, $end_date );
+			if ( 0 == $average_currency_to ) {
+				return false;
+			}
+		} else {
+			$average_currency_to = 1.0;
+		}
+		// Final rate
+		return $average_currency_to / $average_currency_from;
 	}
 }
