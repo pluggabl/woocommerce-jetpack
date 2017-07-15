@@ -80,9 +80,41 @@ class WCJ_General extends WCJ_Module {
 				add_action( 'admin_init',         array( $this, 'maybe_delete_track_users_stats' ) );
 				if ( 'yes' === get_option( 'wcj_track_users_save_order_http_referer_enabled', 'no' ) ) {
 					add_action( 'woocommerce_new_order', array( $this, 'add_http_referer_to_order' ) );
+					add_action( 'add_meta_boxes',        array( $this, 'add_http_referer_order_meta_box' ) );
 				}
 			}
 		}
+	}
+
+	/**
+	 * add_http_referer_order_meta_box.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function add_http_referer_order_meta_box() {
+		add_meta_box(
+			'wc-jetpack-' . $this->id,
+			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Acquisition Source', 'woocommerce-jetpack' ),
+			array( $this, 'create_http_referer_order_meta_box' ),
+			'shop_order',
+			'side',
+			'low'
+		);
+	}
+
+	/**
+	 * create_http_referer_order_meta_box.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 * @todo    identify referer by type (google, direct, wordpress.org, other etc.)
+	 */
+	function create_http_referer_order_meta_box() {
+		if ( '' == ( $http_referer = get_post_meta( get_the_ID(), '_wcj_track_users_http_referer', true ) ) ) {
+			$http_referer = 'N/A';
+		}
+		echo $http_referer;
 	}
 
 	/**

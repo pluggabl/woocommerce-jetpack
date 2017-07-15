@@ -222,7 +222,8 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Track Orders', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Save customer\'s acquisition source (i.e. HTTP referer) for orders.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save customer\'s acquisition source (i.e. HTTP referer) for orders.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'This will add "Booster: Acquisition Source" meta box to each order\'s edit page.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_track_users_save_order_http_referer_enabled',
 		'default'  => 'no',
