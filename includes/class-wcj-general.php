@@ -75,9 +75,13 @@ class WCJ_General extends WCJ_Module {
 
 			// Track users
 			if ( 'yes' === get_option( 'wcj_track_users_enabled', 'no' ) ) {
-				add_action( 'wp_head',            array( $this, 'track_users' ) );
+				add_action( 'wp_enqueue_scripts',                  array( $this, 'enqueue_track_users_script' ) );
+				add_action( 'wp_ajax_'        . 'wcj_track_users', array( $this, 'track_users' ) );
+				add_action( 'wp_ajax_nopriv_' . 'wcj_track_users', array( $this, 'track_users' ) );
+				// Stats in dashboard widget
 				add_action( 'wp_dashboard_setup', array( $this, 'add_track_users_dashboard_widget' ) );
 				add_action( 'admin_init',         array( $this, 'maybe_delete_track_users_stats' ) );
+				// Order tracking
 				if ( 'yes' === get_option( 'wcj_track_users_save_order_http_referer_enabled', 'no' ) ) {
 					add_action( 'woocommerce_new_order', array( $this, 'add_http_referer_to_order' ) );
 					add_action( 'add_meta_boxes',        array( $this, 'add_http_referer_order_meta_box' ) );
@@ -213,17 +217,33 @@ class WCJ_General extends WCJ_Module {
 	}
 
 	/**
+	 * enqueue_track_users_script.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function enqueue_track_users_script() {
+		wp_enqueue_script(  'wcj-track-users',  trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-track-users.js', array( 'jquery' ), WCJ()->version, true );
+		wp_localize_script( 'wcj-track-users', 'track_users_ajax_object', array(
+			'ajax_url'     => admin_url( 'admin-ajax.php' ),
+			'http_referer' => ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : 'N/A' ),
+			'user_ip'      => ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::get_ip_address() : wcj_get_the_ip() ),
+		) );
+	}
+
+	/**
 	 * track_users.
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
-	 * @todo    track via script (ajax)
 	 * @todo    (maybe) customizable `$time_expired`
-	 * @todo    maybe use something else instead of `wp_head` hook
 	 * @todo    (maybe) optionally do not track selected user roles (e.g. admin)
 	 */
 	function track_users() {
-		$user_ip = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::get_ip_address() : wcj_get_the_ip() );
+		if ( ! isset( $_POST['wcj_user_ip'] ) ) {
+			die();
+		}
+		$user_ip = $_POST['wcj_user_ip'];
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'wcj_track_users';
 		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) != $table_name ) {
@@ -251,7 +271,7 @@ class WCJ_General extends WCJ_Module {
 		// Country by IP
 		$location = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::geolocate_ip( $user_ip ) : array( 'country' => '', 'state' => '' ) );
 		// HTTP referrer
-		$http_referer = ( isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : 'N/A' );
+		$http_referer = ( isset( $_POST['wcj_http_referer'] ) ? $_POST['wcj_http_referer'] : 'N/A' );
 		// Add row to DB table
 		$wpdb->insert(
 			$table_name,
@@ -263,6 +283,7 @@ class WCJ_General extends WCJ_Module {
 				'referer' => $http_referer,
 			)
 		);
+		die();
 	}
 
 	/**
