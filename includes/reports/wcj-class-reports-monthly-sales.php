@@ -73,10 +73,11 @@ class WCJ_Reports_Monthly_Sales {
 	 *
 	 * @version 2.9.1
 	 * @since   2.4.7
+	 * @todo    (maybe) visible rows selection by admin (as option)
+	 * @todo    (maybe) current month - include today (as option)
+	 * @todo    (maybe) forecast for current month (as option)
+	 * @todo    (maybe) take not monthly average, but "Close" of closest day (probably create new "Daily Sales (with Currency Conversion)" report)
 	 * @todo    (maybe) option to grab average monthly exchange rates from some data server (unfortunately discontinued by the Yahoo)
-	 * @todo    (maybe) current month - include today
-	 * @todo    (maybe) take not monthly average, but "Close" of closest day
-	 * @todo    (maybe) forecast for current month
 	 */
 	function get_monthly_sales_report() {
 
