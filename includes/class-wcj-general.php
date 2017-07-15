@@ -122,7 +122,6 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
-	 * @todo    add order meta box for displaying the referer
 	 */
 	function add_http_referer_to_order( $order_id ) {
 		global $wpdb;
@@ -177,9 +176,9 @@ class WCJ_General extends WCJ_Module {
 	 * @since   2.9.1
 	 * @todo    fix flags (for missing country codes)
 	 * @todo    stats must be pre-calculated in cron
-	 * @todo    display stats by day
-	 * @todo    display stats by month
-	 * @todo    display stats by state
+	 * @todo    (maybe) display stats by day
+	 * @todo    (maybe) display stats by month
+	 * @todo    (maybe) display stats by state
 	 * @todo    (maybe) display only top 10
 	 */
 	function track_users_dashboard_widget_function() {
@@ -219,9 +218,9 @@ class WCJ_General extends WCJ_Module {
 	 * @version 2.9.1
 	 * @since   2.9.1
 	 * @todo    track via script (ajax)
-	 * @todo    customizable `$time_expired`
+	 * @todo    (maybe) customizable `$time_expired`
 	 * @todo    maybe use something else instead of `wp_head` hook
-	 * @todo    optionally do not track selected user roles (e.g. admin)
+	 * @todo    (maybe) optionally do not track selected user roles (e.g. admin)
 	 */
 	function track_users() {
 		$user_ip = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::get_ip_address() : wcj_get_the_ip() );
