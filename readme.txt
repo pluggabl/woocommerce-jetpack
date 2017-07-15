@@ -185,6 +185,7 @@ $!!D* Dev - EMAILS & MISC. - General - "Track Users" section added. "Track Order
 $!D	* Dev - EMAILS & MISC. - URL Coupons - "Redirect URL" options added.
 $~D	* Dev - EMAILS & MISC. - URL Coupons - "Automatically add coupon's products to the cart" option added.
 D	* Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
+	* Dev - Flags images updated.
 
 = 2.9.0 - 02/07/2017
 * Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
