@@ -11,23 +11,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $settings = array(
 	array(
-		'title'    => __( 'Per Product Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_product_by_date_per_product_options',
-	),
-	array(
-		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
-		'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
-		'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_by_date_per_product_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_product_by_date_per_product_options',
-	),
-	array(
 		'title'    => __( 'All Products Options', 'woocommerce-jetpack' ),
 		'desc'     => '<span id="local-date">' . sprintf( __( 'Today is <code>%s</code>.', 'woocommerce-jetpack' ), date( 'F j', $this->time_now ) ) . '</span>',
 		'type'     => 'title',
@@ -59,6 +42,24 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_by_date_all_products_options',
+	),
+	array(
+		'title'    => __( 'Per Product Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_by_date_per_product_options',
+	),
+	array(
+		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
+		'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'id'       => 'wcj_product_by_date_per_product_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_by_date_per_product_options',
 	),
 	array(
 		'title'    => __( 'Frontend Messages Options', 'woocommerce-jetpack' ),

@@ -35,11 +35,11 @@ class WCJ_Product_By_Date extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Per product meta box
-			if ( 'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) ) ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
-			if ( 'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) || 'yes' === get_option( 'wcj_product_by_date_section_enabled', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) ) || 'yes' === get_option( 'wcj_product_by_date_section_enabled', 'no' ) ) {
 				// Time now
 				$this->day_now   = intval( date( 'j', $this->time_now ) ); // Day of the month without leading zeros: 1 to 31
 				$this->month_now = intval( date( 'n', $this->time_now ) ); // Numeric representation of a month, without leading zeros: 1 through 12
@@ -112,7 +112,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	 */
 	function get_product_availability_this_month( $_product ) {
 		$product_id = wcj_get_product_id_or_variation_parent_id( $_product );
-		if ( 'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) && 'yes' === get_post_meta( $product_id, '_' . 'wcj_product_by_date_enabled', true ) ) {
+		if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) ) && 'yes' === get_post_meta( $product_id, '_' . 'wcj_product_by_date_enabled', true ) ) {
 			return get_post_meta( $product_id, '_' . 'wcj_product_by_date_' . $this->month_now, true );
 		} elseif ( 'yes' === get_option( 'wcj_product_by_date_section_enabled', 'no' ) ) {
 			return get_option( 'wcj_product_by_date_' . $this->month_now, $this->get_default_date( $this->month_now ) );
