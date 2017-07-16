@@ -74,8 +74,6 @@ class WCJ_Reports_Monthly_Sales {
 	 * @version 2.9.1
 	 * @since   2.4.7
 	 * @todo    (maybe) visible rows selection by admin (as option)
-	 * @todo    (maybe) current month - include today (as option)
-	 * @todo    (maybe) forecast for current month (as option)
 	 * @todo    (maybe) take not monthly average, but "Close" of closest day (probably create new "Daily Sales (with Currency Conversion)" report)
 	 * @todo    (maybe) option to grab average monthly exchange rates from some data server (unfortunately discontinued by the Yahoo)
 	 */
@@ -104,15 +102,19 @@ class WCJ_Reports_Monthly_Sales {
 		$report_currency                 = ( isset( $_GET['currency'] ) && 'merge' != $_GET['currency'] ) ? $_GET['currency'] : get_woocommerce_currency();
 		$block_size                      = 256;
 		$table_data                      = array();
+		$do_forecast                     = ( 'yes' === get_option( 'wcj_reports_orders_monthly_sales_forecast', 'no' ) );
+		$do_include_today                = ( 'yes' === get_option( 'wcj_reports_orders_monthly_sales_include_today', 'no' ) );
 		for ( $i = 1; $i <= 12; $i++ ) {
 			$current_months_averages = array();
 			$total_orders              = 0;
 			$total_orders_sum          = 0;
 			$total_orders_sum_excl_tax = 0;
 			$offset                    = 0;
-			$day_for_average           = ( $i == date( 'm' ) && $this->year == date( 'Y' ) ) ?
-				date( 'd' ) - 1 : // yesterday
-				date( 't', strtotime( $this->year . '-' . sprintf( '%02d', $i ) . '-' . '01' ) ); // last day of the month
+			$is_current_month          = ( $i == date( 'm' ) && $this->year == date( 'Y' ) );
+			$day_for_average           = ( $is_current_month ?
+				( $do_include_today ? date( 'd' ) : ( date( 'd' ) - 1 ) ) :                      // today or yesterday
+				date( 't', strtotime( $this->year . '-' . sprintf( '%02d', $i ) . '-' . '01' ) ) // last day of the month
+			);
 			if ( 0 == $day_for_average ) {
 				$months_array[]                          = date_i18n( 'F', mktime( 0, 0, 0, $i, 1, $this->year ) );
 				$months_days_array[]                     = '-';
@@ -191,10 +193,16 @@ class WCJ_Reports_Monthly_Sales {
 			$total_months_days  += ( date( 'm' ) >= $i || $this->year != date( 'Y' ) ? $day_for_average : 0 );
 
 			// Sales
-			$total_orders_array[] = ( $total_orders > 0 ? $total_orders : '-' );
+			$average_sales_result = $total_orders / $day_for_average;
+			if ( $is_current_month && $do_forecast ) {
+				$forecast_total_orders = ( $average_sales_result ) * ( date( 't', strtotime( $this->year . '-' . sprintf( '%02d', $i ) . '-' . '01' ) ) );
+			}
+			$total_orders_array[] = ( $total_orders > 0 ? $total_orders . ( $is_current_month && $do_forecast ?
+				' <span style="font-size:smaller;">(' . round( $forecast_total_orders ) . ')</span>' : ''
+				) : '-'
+			);
 			$total_orders_total  += $total_orders;
 			// Sales Average
-			$average_sales_result         = $total_orders / $day_for_average;
 			$total_orders_average_array[] = ( $average_sales_result > 0 ? number_format( $average_sales_result, 2, '.', ',' ) : '-' );
 
 			// Sum
@@ -202,7 +210,11 @@ class WCJ_Reports_Monthly_Sales {
 			$total_orders_sum_total  += $total_orders_sum;
 			// Sum excl. Tax
 			$total_orders_sum_excl_tax_array[] = ( $total_orders_sum_excl_tax > 0 ?
-				$report_currency . ' ' . number_format( $total_orders_sum_excl_tax, 2, '.', ',' ) : '-' );
+				$report_currency . ' ' . number_format( $total_orders_sum_excl_tax, 2, '.', ',' ) . ( $is_current_month && $do_forecast ?
+					' <span style="font-size:smaller;">(' . $report_currency . ' ' .
+						number_format( $forecast_total_orders * $total_orders_sum_excl_tax / $total_orders, 2 ) . ')</span>' : ''
+				) : '-'
+			);
 			$total_orders_sum_excl_tax_total  += $total_orders_sum_excl_tax;
 
 			// Order Average
@@ -291,6 +303,8 @@ class WCJ_Reports_Monthly_Sales {
 			( ( $this->year == date( 'Y' ) ) ? 'current' : '' ) . '">' . date( 'Y' ) . '</a> | </li>';
 		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 1 ) ) . '" class="' .
 			( ( $this->year == ( date( 'Y' ) - 1 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 1 ) . '</a> | </li>';
+		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 2 ) ) . '" class="' .
+			( ( $this->year == ( date( 'Y' ) - 2 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 2 ) . '</a> | </li>';
 		$menu .= '</ul>';
 		$menu .= '</p>';
 		$menu .= '<br class="clear">';

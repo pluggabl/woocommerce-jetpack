@@ -179,8 +179,10 @@ $~D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Avai
 ~D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
 $!!D* Dev - EMAILS & MISC. - General - "Track Users" section added. "Track Orders" (i.e. "Save customer's acquisition source (i.e. HTTP referer) for orders") option added.
 !D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Monthly rates are set manually now.
+~D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Forecast total orders and sum (excl. TAX) for current month" option added.
+~D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Include current day for current month" option added.
 ~D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Orders by Currency" row added.
-~	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Code refactoring.
+~	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Code refactoring, cleanup etc.
 ~D	* Dev - EMAILS & MISC. - Reports - Stock - "Total current stock purchase price" added.
 ~	* Dev - EMAILS & MISC. - Reports - Stock - `WP_Query` optimized to return `ids` only.
 ~	* Dev - EMAILS & MISC. - Reports - Stock - Code cleanup.

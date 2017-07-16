@@ -96,6 +96,20 @@ $reports_and_settings = array(
 		'report'    => 'booster_monthly_sales',
 	),
 	array(
+		'id'        => 'wcj_reports_orders_monthly_sales_include_today',
+		'desc'      => __( 'Include current day for current month', 'woocommerce-jetpack' ),
+		'type'      => 'checkbox',
+		'default'   => 'no',
+		'checkboxgroup' => 'start',
+	),
+	array(
+		'id'        => 'wcj_reports_orders_monthly_sales_forecast',
+		'desc'      => __( 'Forecast total orders and sum (excl. TAX) for current month', 'woocommerce-jetpack' ),
+		'type'      => 'checkbox',
+		'default'   => 'no',
+		'checkboxgroup' => 'end',
+	),
+	array(
 		'title'     => __( 'Customers by Country', 'woocommerce-jetpack' ),
 		'tab'       => 'customers',
 		'tab_title' => __( 'Customers', 'woocommerce-jetpack' ),
