@@ -75,6 +75,13 @@ class WCJ_General extends WCJ_Module {
 
 			// Track users
 			if ( 'yes' === get_option( 'wcj_track_users_enabled', 'no' ) ) {
+				// By country scope
+				$this->track_users_scopes = array(
+					'1'        => __( 'Last 24 hours', 'woocommerce-jetpack' ),
+					'7'        => __( 'Last 7 days', 'woocommerce-jetpack' ),
+					'28'       => __( 'Last 28 days', 'woocommerce-jetpack' ),
+					'all_time' => __( 'All time', 'woocommerce-jetpack' ),
+				);
 				add_action( 'wp_enqueue_scripts',                  array( $this, 'enqueue_track_users_script' ) );
 				add_action( 'wp_ajax_'        . 'wcj_track_users', array( $this, 'track_users' ) );
 				add_action( 'wp_ajax_nopriv_' . 'wcj_track_users', array( $this, 'track_users' ) );
@@ -134,8 +141,7 @@ class WCJ_General extends WCJ_Module {
 	function track_users_generate_stats_cron( $interval ) {
 		update_option( 'wcj_track_users_cron_time_last_run', time() );
 		$stats = get_option( 'wcj_track_users_stats_by_country', array() );
-		$scopes = array( 'all_time', '28', '7', '1' );
-		foreach ( $scopes as $scope ) {
+		foreach ( $this->track_users_scopes as $scope => $scope_title ) {
 			$stats[ $scope ] = $this->generate_track_users_stats_by_country( $scope );
 		}
 		update_option( 'wcj_track_users_stats_by_country', $stats );
@@ -231,6 +237,7 @@ class WCJ_General extends WCJ_Module {
 			$sql = "DROP TABLE IF EXISTS $table_name";
 			$wpdb->query( $sql );
 			delete_option( 'wcj_track_users_stats_by_country' );
+			delete_option( 'wcj_track_users_cron_time_last_run' );
 			wp_safe_redirect( remove_query_arg( 'wcj_delete_track_users_stats' ) );
 			exit;
 		}
@@ -305,13 +312,7 @@ class WCJ_General extends WCJ_Module {
 	 * @todo    (maybe) customizable number of results (now "top 10" only)
 	 */
 	function track_users_by_country_dashboard_widget( $post, $args ) {
-		$scopes = array(
-			'all_time' => __( 'All time', 'woocommerce-jetpack' ),
-			'28'       => __( 'Last 28 days', 'woocommerce-jetpack' ),
-			'7'        => __( 'Last 7 days', 'woocommerce-jetpack' ),
-			'1'        => __( 'Last 24 hours', 'woocommerce-jetpack' ),
-		);
-		foreach ( $scopes as $scope => $scope_title ) {
+		foreach ( $this->track_users_scopes as $scope => $scope_title ) {
 			$totals = $this->get_saved_track_users_stats_by_country( $scope );
 			if ( ! empty( $totals ) ) {
 				$totals = array_slice( $totals, 0, 10 );
@@ -334,10 +335,10 @@ class WCJ_General extends WCJ_Module {
 				'onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')"' .
 			'>' . __( 'Delete all tracking data', 'woocommerce-jetpack' ) . '</a>' .
 		'</p>';
+		$cron_last_run      = ( '' != ( $_time = get_option( 'wcj_track_users_cron_time_last_run', '' ) ) ? date( 'Y-m-d H:i:s', $_time ) : '-' );
+		$cron_next_schedule = ( '' != ( $_time = get_option( 'wcj_track_users_cron_time_schedule', '' ) ) ? date( 'Y-m-d H:i:s', $_time ) : '-' );
 		echo '<p>' .
-			sprintf( __( 'Stats generated at %s. Next update is scheduled at %s.', 'woocommerce-jetpack' ),
-				date( 'Y-m-d H:i:s', get_option( 'wcj_track_users_cron_time_last_run', '' ) ),
-				date( 'Y-m-d H:i:s', get_option( 'wcj_track_users_cron_time_schedule', '' ) ) ) . ' ' .
+			sprintf( __( 'Stats generated at %s. Next update is scheduled at %s.', 'woocommerce-jetpack' ), $cron_last_run, $cron_next_schedule ) . ' ' .
 			'<a href="' . add_query_arg( 'wcj_track_users_update_county_stats', '1' ) . '">' . __( 'Update now', 'woocommerce-jetpack' ) . '</a>.' .
 		'</p>';
 	}
