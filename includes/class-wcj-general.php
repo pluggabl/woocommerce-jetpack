@@ -78,8 +78,8 @@ class WCJ_General extends WCJ_Module {
 				add_action( 'wp_enqueue_scripts',                  array( $this, 'enqueue_track_users_script' ) );
 				add_action( 'wp_ajax_'        . 'wcj_track_users', array( $this, 'track_users' ) );
 				add_action( 'wp_ajax_nopriv_' . 'wcj_track_users', array( $this, 'track_users' ) );
-				// Stats in dashboard widget
-				add_action( 'wp_dashboard_setup', array( $this, 'add_track_users_dashboard_widget' ) );
+				// Stats in dashboard widgets
+				add_action( 'wp_dashboard_setup', array( $this, 'add_track_users_dashboard_widgets' ) );
 				add_action( 'admin_init',         array( $this, 'maybe_delete_track_users_stats' ) );
 				// Order tracking
 				if ( 'yes' === get_option( 'wcj_track_users_save_order_http_referer_enabled', 'no' ) ) {
@@ -108,17 +108,41 @@ class WCJ_General extends WCJ_Module {
 	}
 
 	/**
+	 * get_referer_type.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 * @todo    this is not finished!
+	 */
+	function get_referer_type( $http_referer ) {
+		if ( '' != $http_referer && 'N/A' != $http_referer ) {
+			if ( ( $http_referer_info = parse_url( $http_referer ) ) && isset( $http_referer_info['host'] ) ) {
+				if ( false !== stripos( $http_referer_info['host'], 'google.' ) ) {
+					return 'Google';
+				} elseif ( false !== stripos( $http_referer_info['host'], 'wordpress.' ) ) {
+					return 'WordPress';
+				} elseif ( false !== stripos( $http_referer_info['host'], 'facebook.' ) ) {
+					return 'Facebook';
+				} else {
+					return 'Other';
+				}
+			}
+		}
+		return 'N/A';
+	}
+
+	/**
 	 * create_http_referer_order_meta_box.
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
-	 * @todo    identify referer by type (google, direct, wordpress.org, other etc.)
 	 */
 	function create_http_referer_order_meta_box() {
 		if ( '' == ( $http_referer = get_post_meta( get_the_ID(), '_wcj_track_users_http_referer', true ) ) ) {
 			$http_referer = 'N/A';
 		}
-		echo $http_referer;
+		echo '<p>' . __( 'URL:', 'woocommerce-jetpack' )  . ' ' . $http_referer . '</p>';
+		echo '<p>' . __( 'Type:', 'woocommerce-jetpack' ) . ' ' . $this->get_referer_type( $http_referer ) . '</p>';
 	}
 
 	/**
@@ -126,6 +150,7 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
+	 * @todo    add orders stats by referer type
 	 */
 	function add_http_referer_to_order( $order_id ) {
 		global $wpdb;
@@ -160,16 +185,44 @@ class WCJ_General extends WCJ_Module {
 	}
 
 	/**
-	 * Add a widget to the dashboard.
+	 * Add a widgets to the dashboard.
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
+	 * @todo    option to select visible widgets
 	 */
-	function add_track_users_dashboard_widget() {
+	function add_track_users_dashboard_widgets() {
 		wp_add_dashboard_widget(
-			'wcj_track_users_dashboard_widget',                     // widget slug
-			__( 'Users by Country', 'woocommerce-jetpack' ),        // title
-			array( $this, 'track_users_dashboard_widget_function' ) // display function
+			'wcj_track_users_dashboard_widget_all_time',
+			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Top 10 countries by visits', 'woocommerce-jetpack' ) . ' - ' .
+				__( 'all time', 'woocommerce-jetpack' ),
+			array( $this, 'track_users_dashboard_widget_function' ),
+			'',
+			array( 'scope' => 'all_time' )
+		);
+		wp_add_dashboard_widget(
+			'wcj_track_users_dashboard_widget_past_month',
+			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Top 10 countries by visits', 'woocommerce-jetpack' ) . ' - ' .
+				__( 'last 28 days', 'woocommerce-jetpack' ),
+			array( $this, 'track_users_dashboard_widget_function' ),
+			'',
+			array( 'scope' => '28' )
+		);
+		wp_add_dashboard_widget(
+			'wcj_track_users_dashboard_widget_past_week',
+			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Top 10 countries by visits', 'woocommerce-jetpack' ) . ' - ' .
+				__( 'last 7 days', 'woocommerce-jetpack' ),
+			array( $this, 'track_users_dashboard_widget_function' ),
+			'',
+			array( 'scope' => '7' )
+		);
+		wp_add_dashboard_widget(
+			'wcj_track_users_dashboard_widget_past_day',
+			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Top 10 countries by visits', 'woocommerce-jetpack' ) . ' - ' .
+				__( 'last 24 hours', 'woocommerce-jetpack' ),
+			array( $this, 'track_users_dashboard_widget_function' ),
+			'',
+			array( 'scope' => '1' )
 		);
 	}
 
@@ -180,16 +233,25 @@ class WCJ_General extends WCJ_Module {
 	 * @since   2.9.1
 	 * @todo    fix flags (for missing country codes)
 	 * @todo    stats must be pre-calculated in cron
-	 * @todo    (maybe) display stats by day
-	 * @todo    (maybe) display stats by month
+	 * @todo    (maybe) display all info (IP, referer etc.) on country click
+	 * @todo    (maybe) display stats by day and/or month
 	 * @todo    (maybe) display stats by state
-	 * @todo    (maybe) display only top 10
+	 * @todo    (maybe) customizable number of results (now "top 10" only)
 	 */
-	function track_users_dashboard_widget_function() {
+	function track_users_dashboard_widget_function( $post, $args ) {
 		global $wpdb;
 		$table_name = $wpdb->prefix . 'wcj_track_users';
 		// Total by Country
-		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name && ( $results = $wpdb->get_results( "SELECT * FROM $table_name" ) ) ) {
+		switch ( $args['args']['scope'] ) {
+			case 'all_time':
+				$select_query = "SELECT * FROM $table_name";
+				break;
+			default: // 'month', 'week', 'day'
+				$time_expired = date( 'Y-m-d H:i:s', ( current_time( 'timestamp' ) - $args['args']['scope'] * 24 * 60 * 60 ) );
+				$select_query = "SELECT * FROM $table_name WHERE time > '" . $time_expired . "'";
+				break;
+		}
+		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) === $table_name && ( $results = $wpdb->get_results( $select_query ) ) ) {
 			$totals = array();
 			foreach ( $results as $result ) {
 				if ( ! isset( $totals[ $result->country ] ) ) {
@@ -199,17 +261,20 @@ class WCJ_General extends WCJ_Module {
 				}
 			}
 			arsort( $totals );
+			$totals = array_slice( $totals, 0, 10 );
 			$table_data = array();
-			$table_data[] = array( __( 'Country', 'woocommerce-jetpack' ), __( 'Visits', 'woocommerce-jetpack' ) );
+			$table_data[] = array( '', __( 'Country', 'woocommerce-jetpack' ), __( 'Visits', 'woocommerce-jetpack' ) );
+			$i = 0;
 			foreach ( $totals as $country_code => $visits ) {
+				$i++;
 				$country_info = ( '' != $country_code ? wcj_get_country_flag_by_code( $country_code ) . ' ' . wcj_get_country_name_by_code( $country_code ) : 'N/A' );
-				$table_data[] = array( $country_info, $visits );
+				$table_data[] = array( $i, $country_info, $visits );
 			}
 			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'horizontal' ) );
 			echo '<p>' .
 				'<a href="' . add_query_arg( 'wcj_delete_track_users_stats', '1' ) . '" ' .
 					'onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')"' .
-				'>' . __( 'Delete stats', 'woocommerce-jetpack' ) . '</a>' .
+				'>' . __( 'Delete all stats', 'woocommerce-jetpack' ) . '</a>' .
 			'</p>';
 		} else {
 			echo '<p>' . '<em>' . __( 'No stats yet.', 'woocommerce-jetpack' ) . '</em>' . '</p>';
