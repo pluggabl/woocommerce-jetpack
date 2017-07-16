@@ -166,6 +166,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 2.9.1 - 16/07/2017
 !D	* Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products in Settings" option added (Supported modules: Product Info).
+	* Dev - Functions - Country - `wcj_get_country_flag_by_code()` - "No flag" added.
 D	* Dev - Shortcodes - General - `[wcj_site_url]` shortcode added.
 $D	* Dev - PRODUCTS - Product Availability by Date - Initial module release.
 	* Fix - PRODUCTS - Product Availability by Time - Settings - Description fixed.

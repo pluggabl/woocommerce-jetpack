@@ -299,7 +299,6 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
-	 * @todo    fix flags (for missing country codes)
 	 * @todo    (maybe) display all info (IP, referer etc.) on country click
 	 * @todo    (maybe) display stats by day and/or month
 	 * @todo    (maybe) display stats by state
@@ -333,13 +332,13 @@ class WCJ_General extends WCJ_Module {
 		echo '<p>' .
 			'<a class="button-primary" href="' . add_query_arg( 'wcj_delete_track_users_stats', '1' ) . '" ' .
 				'onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')"' .
-			'>' . __( 'Delete all stats', 'woocommerce-jetpack' ) . '</a>' .
+			'>' . __( 'Delete all tracking data', 'woocommerce-jetpack' ) . '</a>' .
 		'</p>';
 		echo '<p>' .
 			sprintf( __( 'Stats generated at %s. Next update is scheduled at %s.', 'woocommerce-jetpack' ),
 				date( 'Y-m-d H:i:s', get_option( 'wcj_track_users_cron_time_last_run', '' ) ),
 				date( 'Y-m-d H:i:s', get_option( 'wcj_track_users_cron_time_schedule', '' ) ) ) . ' ' .
-			'<a href="' . add_query_arg( 'wcj_track_users_update_county_stats', '1' ) . '">' . __( 'Update stats now', 'woocommerce-jetpack' ) . '</a>.' .
+			'<a href="' . add_query_arg( 'wcj_track_users_update_county_stats', '1' ) . '">' . __( 'Update now', 'woocommerce-jetpack' ) . '</a>.' .
 		'</p>';
 	}
 
