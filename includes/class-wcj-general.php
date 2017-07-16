@@ -37,6 +37,14 @@ class WCJ_General extends WCJ_Module {
 			),
 		) );
 
+		// By country scopes
+		$this->track_users_scopes = array(
+			'1'        => __( 'Last 24 hours', 'woocommerce-jetpack' ),
+			'7'        => __( 'Last 7 days', 'woocommerce-jetpack' ),
+			'28'       => __( 'Last 28 days', 'woocommerce-jetpack' ),
+			'all_time' => __( 'All time', 'woocommerce-jetpack' ),
+		);
+
 		if ( $this->is_enabled() ) {
 
 			// Recalculate cart totals
@@ -75,21 +83,18 @@ class WCJ_General extends WCJ_Module {
 
 			// Track users
 			if ( 'yes' === get_option( 'wcj_track_users_enabled', 'no' ) ) {
-				// By country scope
-				$this->track_users_scopes = array(
-					'1'        => __( 'Last 24 hours', 'woocommerce-jetpack' ),
-					'7'        => __( 'Last 7 days', 'woocommerce-jetpack' ),
-					'28'       => __( 'Last 28 days', 'woocommerce-jetpack' ),
-					'all_time' => __( 'All time', 'woocommerce-jetpack' ),
-				);
+				// User tracking
 				add_action( 'wp_enqueue_scripts',                  array( $this, 'enqueue_track_users_script' ) );
 				add_action( 'wp_ajax_'        . 'wcj_track_users', array( $this, 'track_users' ) );
 				add_action( 'wp_ajax_nopriv_' . 'wcj_track_users', array( $this, 'track_users' ) );
 				// Stats in dashboard widgets
-				add_action( 'wp_dashboard_setup', array( $this, 'add_track_users_dashboard_widgets' ) );
-				add_action( 'admin_init',         array( $this, 'maybe_delete_track_users_stats' ) );
+				if ( 'yes' === get_option( 'wcj_track_users_by_country_widget_enabled', 'yes' ) ) {
+					add_action( 'wp_dashboard_setup', array( $this, 'add_track_users_dashboard_widgets' ) );
+					add_action( 'admin_init',         array( $this, 'maybe_delete_track_users_stats' ) );
+					add_action( 'admin_init',         array( $this, 'track_users_update_county_stats' ) );
+				}
 				// Order tracking
-				if ( 'yes' === get_option( 'wcj_track_users_save_order_http_referer_enabled', 'no' ) ) {
+				if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_track_users_save_order_http_referer_enabled', 'no' ) ) ) {
 					add_action( 'woocommerce_new_order', array( $this, 'add_http_referer_to_order' ) );
 					add_action( 'add_meta_boxes',        array( $this, 'add_http_referer_order_meta_box' ) );
 				}
@@ -97,7 +102,6 @@ class WCJ_General extends WCJ_Module {
 				add_action( 'init',                           array( $this, 'track_users_schedule_the_event' ) );
 				add_action( 'admin_init',                     array( $this, 'track_users_schedule_the_event' ) );
 				add_action( 'wcj_track_users_generate_stats', array( $this, 'track_users_generate_stats_cron' ) );
-				add_action( 'admin_init',                     array( $this, 'track_users_update_county_stats' ) );
 			}
 		}
 	}
@@ -122,6 +126,7 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
+	 * @todo    (maybe) customizable interval
 	 * @todo    (maybe) separate events for all time, last 28 days, last 7 days, last 24 hours
 	 */
 	function track_users_schedule_the_event() {
@@ -207,7 +212,7 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
-	 * @todo    add "all orders stats by referer type"
+	 * @todo    add "all orders by referer type" stats
 	 */
 	function add_http_referer_to_order( $order_id ) {
 		global $wpdb;
@@ -248,12 +253,12 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
-	 * @todo    option to select visible widgets
 	 */
 	function add_track_users_dashboard_widgets() {
 		wp_add_dashboard_widget(
 			'wcj_track_users_dashboard_widget',
-			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Top 10 countries by visits', 'woocommerce-jetpack' ),
+			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . sprintf( __( 'Top %d countries by visits', 'woocommerce-jetpack' ),
+				get_option( 'wcj_track_users_by_country_widget_top_count', 10 ) ),
 			array( $this, 'track_users_by_country_dashboard_widget' )
 		);
 	}
@@ -309,13 +314,16 @@ class WCJ_General extends WCJ_Module {
 	 * @todo    (maybe) display all info (IP, referer etc.) on country click
 	 * @todo    (maybe) display stats by day and/or month
 	 * @todo    (maybe) display stats by state
-	 * @todo    (maybe) customizable number of results (now "top 10" only)
 	 */
 	function track_users_by_country_dashboard_widget( $post, $args ) {
+		$top_count = get_option( 'wcj_track_users_by_country_widget_top_count', 10 );
 		foreach ( $this->track_users_scopes as $scope => $scope_title ) {
+			if ( ! in_array( $scope, get_option( 'wcj_track_users_by_country_widget_scopes', array( '1', '28' ) ) ) ) {
+				continue;
+			}
 			$totals = $this->get_saved_track_users_stats_by_country( $scope );
 			if ( ! empty( $totals ) ) {
-				$totals = array_slice( $totals, 0, 10 );
+				$totals = array_slice( $totals, 0, $top_count );
 				$table_data = array();
 				$table_data[] = array( '', __( 'Country', 'woocommerce-jetpack' ), __( 'Visits', 'woocommerce-jetpack' ) );
 				$i = 0;

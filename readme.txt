@@ -164,7 +164,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.9.1 - 16/07/2017
+= 2.9.1 - 17/07/2017
 !D	* Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products in Settings" option added (Supported modules: Product Info).
 	* Dev - Functions - Country - `wcj_get_country_flag_by_code()` - "No flag" added.
 D	* Dev - Shortcodes - General - `[wcj_site_url]` shortcode added.
@@ -178,7 +178,7 @@ D	* Dev - EMAILS & MISC. - Admin Tools - "WooCommerce Log" option added.
 D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
 D	* Dev - EMAILS & MISC. - Custom JS - Shortcodes can now be used in custom JS.
 D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
-$!D	* Dev - EMAILS & MISC. - General - "Track Users" (experimental) section added. "Track Orders" (i.e. "Save customer's acquisition source (i.e. HTTP referer) for orders") option added.
+D	* Dev - EMAILS & MISC. - General - "Track Users" section added. "Top countries by visits" admin dashboard widget added.  "Track Orders" (i.e. "Save customer's acquisition source (i.e. HTTP referer) for orders") option added.
 D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Monthly rates are set manually now.
 D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Forecast total orders and sum (excl. TAX) for current month" option added.
 D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Include current day for current month" option added.

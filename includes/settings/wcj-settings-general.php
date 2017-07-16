@@ -208,8 +208,6 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Track Users Options', 'woocommerce-jetpack' ),
-		'desc'     => '<span style="color:red;font-style:italic;">' .
-			sprintf( __( '"%s" section is in development (i.e. experimental).', 'woocommerce-jetpack' ), __( 'Track Users', 'woocommerce-jetpack' ) ) . '</span>',
 		'type'     => 'title',
 		'id'       => 'wcj_track_users_options',
 	),
@@ -221,13 +219,37 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'Countries by Visits', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable admin dashboard widget', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_track_users_by_country_widget_enabled',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc_tip' => __( 'Select which info show in admin dashboard widget.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_track_users_by_country_widget_scopes',
+		'default'  => array( '1', '28' ),
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => $this->track_users_scopes,
+	),
+	array(
+		'desc_tip' => __( 'Select which how many top countries to show.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_track_users_by_country_widget_top_count',
+		'default'  => 10,
+		'type'     => 'number',
+		'custom_attributes' => ( array( 'min' => 0 ) ),
+	),
+	array(
 		'title'    => __( 'Track Orders', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Save customer\'s acquisition source (i.e. HTTP referer) for orders.', 'woocommerce-jetpack' ) . ' ' .
-			__( 'This will add "Booster: Acquisition Source" meta box to each order\'s edit page.', 'woocommerce-jetpack' ),
+			__( 'This will add "Booster: Acquisition Source" meta box to each order\'s edit page.', 'woocommerce-jetpack' ) . ' ' .
+			apply_filters( 'booster_get_message', '', 'desc' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_track_users_save_order_http_referer_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',
