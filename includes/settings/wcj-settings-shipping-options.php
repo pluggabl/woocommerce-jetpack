@@ -18,15 +18,23 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Hide when free is available', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable section', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_shipping_hide_if_free_available_all',
 		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'id'       => 'wcj_shipping_hide_if_free_available_type',
+		'desc_tip' => sprintf( __( 'Available options: hide all; hide all except "Local Pickup"; hide "Flat Rate" only.', 'woocommerce-jetpack' ) ),
+		'default'  => 'hide_all',
 		'type'     => 'select',
 		'options'  => array(
-			'no'                  => __( 'Disabled', 'woocommerce-jetpack' ),
-			'yes'                 => __( 'Hide all', 'woocommerce-jetpack' ),
+			'hide_all'            => __( 'Hide all', 'woocommerce-jetpack' ),
 			'except_local_pickup' => __( 'Hide all except "Local Pickup"', 'woocommerce-jetpack' ),
 			'flat_rate_only'      => __( 'Hide "Flat Rate" only', 'woocommerce-jetpack' ),
 		),
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',
