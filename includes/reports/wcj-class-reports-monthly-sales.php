@@ -33,7 +33,7 @@ class WCJ_Reports_Monthly_Sales {
 		$html = '';
 		if ( isset( $_POST['wcj_save_currency_rates'] ) && isset( $_POST['wcj_save_currency_rates_array'] ) && is_array( $_POST['wcj_save_currency_rates_array'] ) ) {
 			// Save rates
-			update_option( 'wcj_reports_currency_rates', array_merge( get_option( 'wcj_reports_currency_rates', array() ), $_POST['wcj_save_currency_rates_array'] ) );
+			update_option( 'wcj_reports_currency_rates', array_replace_recursive( get_option( 'wcj_reports_currency_rates', array() ), $_POST['wcj_save_currency_rates_array'] ) );
 			$html .= '<div class="notice notice-success is-dismissible"><p><strong>' . __( 'Currency rates saved.', 'woocommerce-jetpack' ) . '</strong></p></div>';
 		} elseif ( isset( $_POST['wcj_reset_currency_rates'] ) ) {
 			// Delete rates
