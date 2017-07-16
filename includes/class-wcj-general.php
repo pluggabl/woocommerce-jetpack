@@ -247,7 +247,7 @@ class WCJ_General extends WCJ_Module {
 		wp_add_dashboard_widget(
 			'wcj_track_users_dashboard_widget',
 			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Top 10 countries by visits', 'woocommerce-jetpack' ),
-			array( $this, 'track_users_by_country_dashboard_widget_function' )
+			array( $this, 'track_users_by_country_dashboard_widget' )
 		);
 	}
 
@@ -295,7 +295,7 @@ class WCJ_General extends WCJ_Module {
 	}
 
 	/**
-	 * track_users_by_country_dashboard_widget_function.
+	 * track_users_by_country_dashboard_widget.
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
@@ -304,7 +304,7 @@ class WCJ_General extends WCJ_Module {
 	 * @todo    (maybe) display stats by state
 	 * @todo    (maybe) customizable number of results (now "top 10" only)
 	 */
-	function track_users_by_country_dashboard_widget_function( $post, $args ) {
+	function track_users_by_country_dashboard_widget( $post, $args ) {
 		$scopes = array(
 			'all_time' => __( 'All time', 'woocommerce-jetpack' ),
 			'28'       => __( 'Last 28 days', 'woocommerce-jetpack' ),
