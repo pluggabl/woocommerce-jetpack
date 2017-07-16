@@ -139,9 +139,15 @@ class WCJ_Shipping_Options extends WCJ_Module {
 				$is_free_shipping_available = true;
 				$free_shipping_rates[ $rate_key ] = $rate;
 			} else {
-				if ( 'except_local_pickup' === apply_filters( 'booster_get_option', 'hide_all', get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) && false !== strpos( $rate_key, 'local_pickup' ) ) {
+				if (
+					'except_local_pickup' === apply_filters( 'booster_get_option', 'hide_all', get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
+					false !== strpos( $rate_key, 'local_pickup' )
+				) {
 					$free_shipping_rates[ $rate_key ] = $rate;
-				} elseif ( 'flat_rate_only' === apply_filters( 'booster_get_option', 'hide_all', get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) && false === strpos( $rate_key, 'flat_rate' ) ) {
+				} elseif (
+					'flat_rate_only' === apply_filters( 'booster_get_option', 'hide_all', get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
+					false === strpos( $rate_key, 'flat_rate' )
+				) {
 					$free_shipping_rates[ $rate_key ] = $rate;
 				}
 			}
@@ -160,26 +166,28 @@ class WCJ_Shipping_Options extends WCJ_Module {
 		foreach ( $settings as $section ) {
 			$updated_settings[] = $section;
 			if ( isset( $section['id'] ) && 'woocommerce_ship_to_destination' === $section['id'] ) {
-				$updated_settings[] = array(
-					'title'    => __( 'Booster: Hide when free is available', 'woocommerce-jetpack' ),
-					'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-					'id'       => 'wcj_shipping_hide_if_free_available_all',
-					'default'  => 'no',
-					'type'     => 'checkbox',
-				);
-				$updated_settings[] = array(
-					'id'       => 'wcj_shipping_hide_if_free_available_type',
-					'desc_tip' => sprintf( __( 'Available options: hide all; hide all except "Local Pickup"; hide "Flat Rate" only.', 'woocommerce-jetpack' ) ),
-					'default'  => 'hide_all',
-					'type'     => 'select',
-					'options'  => array(
-						'hide_all'            => __( 'Hide all', 'woocommerce-jetpack' ),
-						'except_local_pickup' => __( 'Hide all except "Local Pickup"', 'woocommerce-jetpack' ),
-						'flat_rate_only'      => __( 'Hide "Flat Rate" only', 'woocommerce-jetpack' ),
+				$updated_settings = array_merge( $updated_settings, array(
+					array(
+						'title'    => __( 'Booster: Hide when free is available', 'woocommerce-jetpack' ),
+						'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+						'id'       => 'wcj_shipping_hide_if_free_available_all',
+						'default'  => 'no',
+						'type'     => 'checkbox',
 					),
-					'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-					'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-				);
+					array(
+						'id'       => 'wcj_shipping_hide_if_free_available_type',
+						'desc_tip' => sprintf( __( 'Available options: hide all; hide all except "Local Pickup"; hide "Flat Rate" only.', 'woocommerce-jetpack' ) ),
+						'default'  => 'hide_all',
+						'type'     => 'select',
+						'options'  => array(
+							'hide_all'            => __( 'Hide all', 'woocommerce-jetpack' ),
+							'except_local_pickup' => __( 'Hide all except "Local Pickup"', 'woocommerce-jetpack' ),
+							'flat_rate_only'      => __( 'Hide "Flat Rate" only', 'woocommerce-jetpack' ),
+						),
+						'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+						'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+					),
+				) );
 			}
 		}
 		return $updated_settings;
