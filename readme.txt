@@ -165,7 +165,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.9.1 - 16/07/2017
-!!D	* Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products in Settings" option added (Supported modules: Product Info).
+!D	* Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products in Settings" option added (Supported modules: Product Info).
 D	* Dev - Shortcodes - General - `[wcj_site_url]` shortcode added.
 $!D	* Dev - PRODUCTS - Product Availability by Date - Initial module release.
 	* Fix - PRODUCTS - Product Availability by Time - Settings - Description fixed.
@@ -189,7 +189,7 @@ D	* Dev - EMAILS & MISC. - Reports - Stock - "Total current stock purchase price
 D	* Dev - EMAILS & MISC. - URL Coupons - "Redirect URL" options added.
 D	* Dev - EMAILS & MISC. - URL Coupons - "Automatically add coupon's products to the cart" option added.
 D	* Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
-	* Dev - Flags images updated.
+	* Tweak - Flags images updated.
 
 = 2.9.0 - 02/07/2017
 * Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
