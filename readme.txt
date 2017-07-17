@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 2.9.0
+Stable tag: 2.9.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -116,14 +116,16 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
 * *Breadcrumbs* - Customize WooCommerce breadcrumbs.
 * *Custom CSS* - Separate custom CSS for front and back end. Per product CSS.
+* *Custom Emails* - Add custom emails to WooCommerce.
 * *Custom JS* - Separate custom JS for front and back end.
+* *Email Options* - WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.
 * *Email Verification* - Add WooCommerce email verification.
-* *Emails* - Add custom emails. Add another email recipient(s) to all WooCommerce emails.
 * *Export* - WooCommerce export tools.
 * *General* - Custom roles tool. Shortcodes in WordPress text widgets.
 * *My Account* - WooCommerce "My Account" page customization.
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
+* *URL Coupons* - WooCommerce URL coupons.
 
 = Feedback =
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!
@@ -165,33 +167,33 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.9.1 - 17/07/2017
-	* Dev - `WCJ_Module` - `save_meta_box_validate_value()` added.
-!D	* Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products in Settings" option added (Supported modules: Product Info).
-	* Dev - Functions - Country - `wcj_get_country_flag_by_code()` - "No flag" added.
-D	* Dev - Shortcodes - General - `[wcj_site_url]` shortcode added.
-D	* Dev - PRODUCTS - Product Availability by Date - Initial module release.
-	* Fix - PRODUCTS - Product Availability by Time - Settings - Description fixed.
-D	* Dev - PRODUCTS - Product Availability by Time - "Per Product" options added.
-D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Available - `Hide all except "Local Pickup"` and `Hide "Flat Rate" only` options added.
-	* Fix - EMAILS & MISC. - Admin Bar - Booster - Dashboard - Active - Submodules excluded from the list.
-D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Modules - Sorted by title.
-D	* Dev - EMAILS & MISC. - Admin Tools - "WooCommerce Log" option added.
-D	* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
-D	* Dev - EMAILS & MISC. - Custom JS - Shortcodes can now be used in custom JS.
-D	* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
-D	* Dev - EMAILS & MISC. - General - "Track Users" section added. "Top countries by visits" admin dashboard widget added.  "Track Orders" (i.e. "Save customer's acquisition source (i.e. HTTP referer) for orders") option added.
-D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Monthly rates are set manually now.
-D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Forecast total orders and sum (excl. TAX) for current month" option added.
-D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Include current day for current month" option added.
-D	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Orders by Currency" row added.
-	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Code refactoring, cleanup etc.
-D	* Dev - EMAILS & MISC. - Reports - Stock - "Total current stock purchase price" added.
-	* Dev - EMAILS & MISC. - Reports - Stock - `WP_Query` optimized to return `ids` only.
-	* Dev - EMAILS & MISC. - Reports - Stock - Code cleanup.
-D	* Dev - EMAILS & MISC. - URL Coupons - "Redirect URL" options added.
-D	* Dev - EMAILS & MISC. - URL Coupons - "Automatically add coupon's products to the cart" option added.
-D	* Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
-	* Tweak - Flags images updated.
+* Dev - `WCJ_Module` - `save_meta_box_validate_value()` added.
+* Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products in Settings" option added (Supported modules: Product Info).
+* Dev - Functions - Country - `wcj_get_country_flag_by_code()` - "No flag" added.
+* Dev - Shortcodes - General - `[wcj_site_url]` shortcode added.
+* Dev - PRODUCTS - Product Availability by Date - Initial module release.
+* Fix - PRODUCTS - Product Availability by Time - Settings - Description fixed.
+* Dev - PRODUCTS - Product Availability by Time - "Per Product" options added.
+* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Available - `Hide all except "Local Pickup"` and `Hide "Flat Rate" only` options added.
+* Fix - EMAILS & MISC. - Admin Bar - Booster - Dashboard - Active - Submodules excluded from the list.
+* Dev - EMAILS & MISC. - Admin Bar - Booster - Modules - Sorted by title.
+* Dev - EMAILS & MISC. - Admin Tools - "WooCommerce Log" option added.
+* Dev - EMAILS & MISC. - Custom Emails - Renamed from "Emails" module.
+* Dev - EMAILS & MISC. - Custom JS - Shortcodes can now be used in custom JS.
+* Dev - EMAILS & MISC. - Email Options - Initial module release (separated from "Emails" module).
+* Dev - EMAILS & MISC. - General - "Track Users" section added. "Top countries by visits" admin dashboard widget added.  "Track Orders" (i.e. "Save customer's acquisition source (i.e. HTTP referer) for orders") option added.
+* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Monthly rates are set manually now.
+* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Forecast total orders and sum (excl. TAX) for current month" option added.
+* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Include current day for current month" option added.
+* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - "Orders by Currency" row added.
+* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Code refactoring, cleanup etc.
+* Dev - EMAILS & MISC. - Reports - Stock - "Total current stock purchase price" added.
+* Dev - EMAILS & MISC. - Reports - Stock - `WP_Query` optimized to return `ids` only.
+* Dev - EMAILS & MISC. - Reports - Stock - Code cleanup.
+* Dev - EMAILS & MISC. - URL Coupons - "Redirect URL" options added.
+* Dev - EMAILS & MISC. - URL Coupons - "Automatically add coupon's products to the cart" option added.
+* Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
+* Tweak - Flags images updated.
 
 = 2.9.0 - 02/07/2017
 * Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
