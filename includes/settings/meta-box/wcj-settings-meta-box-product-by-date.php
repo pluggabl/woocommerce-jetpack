@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Availability by Date
  *
- * @version 2.9.1
+ * @version 2.9.2
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -22,7 +22,7 @@ $settings = array(
 //		'tooltip'  => __( 'Date formats:', 'woocommerce-jetpack' ) . ' ' . '<code>DD-DD</code>' . ', ' . '<code>DD-DD,DD-DD</code>' . ', ' . '<code>-</code>' . '.',
 	),
 );
-$_timestamp = strtotime( '2017-01' );
+$_timestamp = 1; //  January 1 1970
 for ( $i = 1; $i <= 12; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
