@@ -9,15 +9,19 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$days_array = array(
-	'S' => __( 'Sunday', 'woocommerce-jetpack' ),
-	'1' => __( 'Monday', 'woocommerce-jetpack' ),
-	'2' => __( 'Tuesday', 'woocommerce-jetpack' ),
-	'3' => __( 'Wednesday', 'woocommerce-jetpack' ),
-	'4' => __( 'Thursday', 'woocommerce-jetpack' ),
-	'5' => __( 'Friday', 'woocommerce-jetpack' ),
-	'6' => __( 'Saturday', 'woocommerce-jetpack' ),
-);
+$days_array = array();
+$_timestamp = strtotime( 'next Sunday' );
+for ( $i = 0; $i < 7; $i++ ) {
+	$index = ( 0 == $i ? 'S' : $i );
+	$days_array[ $index ] = date_i18n( 'l', $_timestamp );
+	$_timestamp = strtotime( '+1 day', $_timestamp );
+}
+$months_array = array();
+$_timestamp = 1; //  January 1 1970
+for ( $i = 1; $i <= 12; $i++ ) {
+	$months_array[ $i ] = date_i18n( 'F', $_timestamp );
+	$_timestamp = strtotime( '+1 month', $_timestamp );
+}
 
 return array(
 	array(
@@ -96,11 +100,13 @@ return array(
 	),
 	array(
 		'title'    => __( 'Datepicker Options', 'woocommerce-jetpack' ),
+		'desc'     => __( 'This settings will be applied to all your bookings products.', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_product_bookings_datepicker_options',
 	),
 	array(
 		'title'    => __( 'Date from: Exclude Days', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Leave blank to include all days.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_bookings_datepicker_date_from_exclude_days',
 		'default'  => '',
 		'type'     => 'multiselect',
@@ -109,11 +115,30 @@ return array(
 	),
 	array(
 		'title'    => __( 'Date to: Exclude Days', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Leave blank to include all days.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_bookings_datepicker_date_to_exclude_days',
 		'default'  => '',
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
 		'options'  => $days_array,
+	),
+	array(
+		'title'    => __( 'Date from: Exclude Months', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Leave blank to include all months.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_bookings_datepicker_date_from_exclude_months',
+		'default'  => '',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => $months_array,
+	),
+	array(
+		'title'    => __( 'Date to: Exclude Months', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Leave blank to include all months.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_bookings_datepicker_date_to_exclude_months',
+		'default'  => '',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => $months_array,
 	),
 	array(
 		'type'     => 'sectionend',

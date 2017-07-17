@@ -167,6 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.9.2 - 17/07/2017
+$~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Months" options added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Days" options added.
 
 = 2.9.1 - 17/07/2017
