@@ -37,7 +37,7 @@ if ( ! function_exists( 'wcj_convert_string_to_array' ) ) {
 	 *
 	 * @version 2.9.1
 	 * @since   2.9.1
-	 * @todo    check `cutom_explode` function
+	 * @todo    check `custom_explode` function
 	 */
 	function wcj_convert_string_to_array( $value ) {
 		if ( '' === $value ) {
