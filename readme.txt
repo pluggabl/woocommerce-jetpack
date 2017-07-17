@@ -165,12 +165,13 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 2.9.1 - 17/07/2017
+	* Dev - `WCJ_Module` - `save_meta_box_validate_value()` added.
 !D	* Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products in Settings" option added (Supported modules: Product Info).
 	* Dev - Functions - Country - `wcj_get_country_flag_by_code()` - "No flag" added.
 D	* Dev - Shortcodes - General - `[wcj_site_url]` shortcode added.
-$D	* Dev - PRODUCTS - Product Availability by Date - Initial module release.
+D	* Dev - PRODUCTS - Product Availability by Date - Initial module release.
 	* Fix - PRODUCTS - Product Availability by Time - Settings - Description fixed.
-$D	* Dev - PRODUCTS - Product Availability by Time - "Per Product" options added.
+D	* Dev - PRODUCTS - Product Availability by Time - "Per Product" options added.
 D	* Dev - SHIPPING & ORDERS - Shipping Options - Hide if Free Shipping is Available - `Hide all except "Local Pickup"` and `Hide "Flat Rate" only` options added.
 	* Fix - EMAILS & MISC. - Admin Bar - Booster - Dashboard - Active - Submodules excluded from the list.
 D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Modules - Sorted by title.

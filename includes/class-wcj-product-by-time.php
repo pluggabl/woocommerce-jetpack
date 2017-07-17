@@ -35,11 +35,14 @@ class WCJ_Product_By_Time extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			// Per product meta box
-			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_time_per_product_enabled', 'no' ) ) ) {
-				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			if ( 'yes' === get_option( 'wcj_product_by_time_per_product_enabled', 'no' ) ) {
+				add_action( 'add_meta_boxes',          array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product',       array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+				add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_validate_value' ), PHP_INT_MAX, 3 );
+				add_action( 'admin_notices',           array( $this, 'validate_value_admin_notices' ) );
+				$this->meta_box_validate_value = 'wcj_product_by_time_enabled';
 			}
-			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_time_per_product_enabled', 'no' ) ) || 'yes' === get_option( 'wcj_product_by_time_section_enabled', 'no' ) ) {
+			if ( 'yes' === get_option( 'wcj_product_by_time_per_product_enabled', 'no' ) || 'yes' === get_option( 'wcj_product_by_time_section_enabled', 'no' ) ) {
 				// Time now
 				$this->day_of_week_now = intval( date( 'w', $this->time_now ) );
 				$this->hours_now       = intval( date( 'H', $this->time_now ) );
@@ -108,7 +111,7 @@ class WCJ_Product_By_Time extends WCJ_Module {
 	 */
 	function get_product_availability_this_day( $_product ) {
 		$product_id = wcj_get_product_id_or_variation_parent_id( $_product );
-		if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_time_per_product_enabled', 'no' ) ) && 'yes' === get_post_meta( $product_id, '_' . 'wcj_product_by_time_enabled', true ) ) {
+		if ( 'yes' === get_option( 'wcj_product_by_time_per_product_enabled', 'no' ) && 'yes' === get_post_meta( $product_id, '_' . 'wcj_product_by_time_enabled', true ) ) {
 			return get_post_meta( $product_id, '_' . 'wcj_product_by_time_' . $this->day_of_week_now, true );
 		} elseif ( 'yes' === get_option( 'wcj_product_by_time_section_enabled', 'no' ) ) {
 			return get_option( 'wcj_product_by_time_' . $this->day_of_week_now, $this->get_default_time( $this->day_of_week_now ) );

@@ -51,11 +51,10 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
 		'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
-		'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_by_time_per_product_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',

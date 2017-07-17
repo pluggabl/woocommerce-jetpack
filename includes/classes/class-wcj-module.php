@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 2.9.0
+ * @version 2.9.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -34,6 +34,67 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		}
 		add_action( 'init', array( $this, 'add_settings' ) );
 		add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
+	}
+
+	/**
+	 * save_meta_box_validate_value.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function save_meta_box_validate_value( $option_value, $option_name, $module_id ) {
+		if ( true === apply_filters( 'booster_get_option', false, true ) ) {
+			return $option_value;
+		}
+		if ( 'no' === $option_value ) {
+			return $option_value;
+		}
+		if ( $this->id === $module_id && $this->meta_box_validate_value === $option_name ) {
+			$args = array(
+				'post_type'      => 'product',
+				'post_status'    => 'any',
+				'posts_per_page' => 1,
+				'meta_key'       => '_' . $this->meta_box_validate_value,
+				'meta_value'     => 'yes',
+				'post__not_in'   => array( get_the_ID() ),
+			);
+			$loop = new WP_Query( $args );
+			$c = $loop->found_posts + 1;
+			if ( $c >= 2 ) {
+				add_filter( 'redirect_post_location', array( $this, 'validate_value_add_notice_query_var' ), 99 );
+				return 'no';
+			}
+		}
+		return $option_value;
+	}
+
+	/**
+	 * validate_value_add_notice_query_var.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function validate_value_add_notice_query_var( $location ) {
+		remove_filter( 'redirect_post_location', array( $this, 'validate_value_add_notice_query_var' ), 99 );
+		return add_query_arg( array( 'wcj_' . $this->id . '_meta_box_admin_notice' => true ), $location );
+	}
+
+	/**
+	 * validate_value_admin_notices.
+	 *
+	 * @version 2.9.1
+	 * @since   2.9.1
+	 */
+	function validate_value_admin_notices() {
+		if ( ! isset( $_GET[ 'wcj_' . $this->id . '_meta_box_admin_notice' ] ) ) {
+			return;
+		}
+		echo '<div class="error">' . '<p>' . '<div class="message">' .
+			sprintf(
+				__( 'Booster: Free plugin\'s version is limited to only one "%1$s" product with settings on per product basis enabled at a time. You will need to get <a href="%2$s" target="_blank">Booster Plus</a> to add unlimited number of "%1$s" products.', 'woocommerce-jetpack' ),
+				$this->short_desc, 'https://booster.io/plus/'
+			) .
+		'</div>' . '</p>' . '</div>';
 	}
 
 	/**
