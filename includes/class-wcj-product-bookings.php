@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 2.8.0
+ * @version 2.9.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -286,21 +286,26 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * add_input_fields_to_frontend.
 	 *
-	 * @version 2.5.2
+	 * @version 2.9.2
 	 * @since   2.5.0
+	 * @todo    more options: exclude (or include only) dates, firstday, dateformat, mindate, maxdate etc.
 	 */
 	function add_input_fields_to_frontend() {
 		if ( $this->is_bookings_product( wc_get_product() ) ) {
 			$data_table = array();
 			$date_from_value = ( isset( $_POST['wcj_product_bookings_date_from'] ) ) ? $_POST['wcj_product_bookings_date_from'] : '';
 			$date_to_value   = ( isset( $_POST['wcj_product_bookings_date_to'] ) )   ? $_POST['wcj_product_bookings_date_to']   : '';
+			$date_from_exclude_days = ( '' != ( $exclude_days = get_option( 'wcj_product_bookings_datepicker_date_from_exclude_days', '' ) ) ?
+				' excludedays="[' . str_replace( 'S', '0', implode( ',', $exclude_days ) ) . ']"' : '' );
+			$date_to_exclude_days   = ( '' != ( $exclude_days = get_option( 'wcj_product_bookings_datepicker_date_to_exclude_days', '' ) ) ?
+				' excludedays="[' . str_replace( 'S', '0', implode( ',', $exclude_days ) ) . ']"' : '' );
 			$data_table[] = array(
 				'<label for="wcj_product_bookings_date_from">' . get_option( 'wcj_product_bookings_label_date_from', __( 'Date from' ) ) . '</label>',
-				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_from" name="wcj_product_bookings_date_from" placeholder="" value="' . $date_from_value . '">',
+				'<input firstday="0"' . $date_from_exclude_days . ' dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_from" name="wcj_product_bookings_date_from" placeholder="" value="' . $date_from_value . '">',
 			);
 			$data_table[] = array(
 				'<label for="wcj_product_bookings_date_to">' . get_option( 'wcj_product_bookings_label_date_to', __( 'Date to' ) ) . '</label>',
-				'<input firstday="0" dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_to" name="wcj_product_bookings_date_to" placeholder="" value="' . $date_to_value . '">',
+				'<input firstday="0"' . $date_to_exclude_days   . ' dateformat="mm/dd/yy" mindate="0" type="datepicker" display="date" id="wcj_product_bookings_date_to" name="wcj_product_bookings_date_to" placeholder="" value="' . $date_to_value . '">',
 			);
 			echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none', ) );
 			echo '<div style="display:none !important;" name="wcj_bookings_message"><p style="color:red;"></p></div>';

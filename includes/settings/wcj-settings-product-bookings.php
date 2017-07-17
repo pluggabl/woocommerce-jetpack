@@ -2,12 +2,22 @@
 /**
  * Booster for WooCommerce - Settings - Bookings
  *
- * @version 2.8.0
+ * @version 2.9.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+$days_array = array(
+	'S' => __( 'Sunday', 'woocommerce-jetpack' ),
+	'1' => __( 'Monday', 'woocommerce-jetpack' ),
+	'2' => __( 'Tuesday', 'woocommerce-jetpack' ),
+	'3' => __( 'Wednesday', 'woocommerce-jetpack' ),
+	'4' => __( 'Thursday', 'woocommerce-jetpack' ),
+	'5' => __( 'Friday', 'woocommerce-jetpack' ),
+	'6' => __( 'Saturday', 'woocommerce-jetpack' ),
+);
 
 return array(
 	array(
@@ -83,5 +93,30 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_bookings_options',
+	),
+	array(
+		'title'    => __( 'Datepicker Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_bookings_datepicker_options',
+	),
+	array(
+		'title'    => __( 'Date from: Exclude Days', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_bookings_datepicker_date_from_exclude_days',
+		'default'  => '',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => $days_array,
+	),
+	array(
+		'title'    => __( 'Date to: Exclude Days', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_bookings_datepicker_date_to_exclude_days',
+		'default'  => '',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => $days_array,
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_bookings_datepicker_options',
 	),
 );
