@@ -2,9 +2,11 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 2.8.0
+ * @version 2.9.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    add "frontend template" options
+ * @todo    add "global label" option for "Select Box" type
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -75,11 +77,12 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'options'  => array(
 				'checkbox' => __( 'Checkbox', 'woocommerce-jetpack' ),
 				'radio'    => __( 'Radio Buttons', 'woocommerce-jetpack' ),
+				'select'   => __( 'Select Box', 'woocommerce-jetpack' ),
 			),
 		),
 		array(
 			'desc'     => __( 'Label(s)', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'For radio enter one value per line.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'For radio and select enter one value per line.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_product_addons_all_products_label_' . $i,
 			'default'  => '',
 			'type'     => 'textarea',
@@ -87,7 +90,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 		),
 		array(
 			'desc'     => __( 'Price(s)', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'For radio enter one value per line.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'For radio and select enter one value per line.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_product_addons_all_products_price_' . $i,
 			'default'  => 0,
 			'type'     => 'textarea',
@@ -104,7 +107,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 		),
 		array(
 			'desc'     => __( 'Default Value', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'For checkbox use \'checked\'; for radio enter default label. Leave blank for no default value.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'For checkbox use \'checked\'; for radio and select enter default label. Leave blank for no default value.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_product_addons_all_products_default_' . $i,
 			'default'  => '',
 			'type'     => 'text',
@@ -112,6 +115,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 		),
 		array(
 			'desc'     => __( 'Is Required', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Ignored for "Select Box" type', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_product_addons_all_products_required_' . $i,
 			'default'  => 'no',
 			'type'     => 'checkbox',

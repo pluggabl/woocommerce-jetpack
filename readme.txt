@@ -166,9 +166,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 2.9.2 - 17/07/2017
+= 2.9.2 - 18/07/2017
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Months" options added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Days" options added.
+$~D	* Dev - PRODUCTS - Product Addons - "Select Box" type added.
 
 = 2.9.1 - 17/07/2017
 * Dev - `WCJ_Module` - `save_meta_box_validate_value()` added.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Addons
  *
- * @version 2.8.0
+ * @version 2.9.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -49,18 +49,19 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'options'  => array(
 				'checkbox' => __( 'Checkbox', 'woocommerce-jetpack' ),
 				'radio'    => __( 'Radio Buttons', 'woocommerce-jetpack' ),
+				'select'   => __( 'Select Box', 'woocommerce-jetpack' ),
 			),
 		),
 		array(
 			'title'    => __( 'Label(s)', 'woocommerce-jetpack' ),
-			'tooltip'  => __( 'For radio enter one value per line.', 'woocommerce-jetpack' ),
+			'tooltip'  => __( 'For radio and select enter one value per line.', 'woocommerce-jetpack' ),
 			'name'     => 'wcj_product_addons_per_product_label_' . $i,
 			'default'  => '',
 			'type'     => 'textarea',
 		),
 		array(
 			'title'    => __( 'Price(s)', 'woocommerce-jetpack' ),
-			'tooltip'  => __( 'For radio enter one value per line.', 'woocommerce-jetpack' ),
+			'tooltip'  => __( 'For radio and select enter one value per line.', 'woocommerce-jetpack' ),
 			'name'     => 'wcj_product_addons_per_product_price_' . $i,
 			'default'  => 0,
 			'type'     => 'textarea',
@@ -74,13 +75,14 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 		),
 		array(
 			'title'    => __( 'Default Value', 'woocommerce-jetpack' ),
-			'tooltip'  => __( 'For checkbox use \'checked\'; for radio enter default label. Leave blank for no default value.', 'woocommerce-jetpack' ),
+			'tooltip'  => __( 'For checkbox use \'checked\'; for radio and select enter default label. Leave blank for no default value.', 'woocommerce-jetpack' ),
 			'name'     => 'wcj_product_addons_per_product_default_' . $i,
 			'default'  => '',
 			'type'     => 'text',
 		),
 		array(
 			'title'    => __( 'Is required', 'woocommerce-jetpack' ),
+			'tooltip'  => __( 'Ignored for "Select Box" type', 'woocommerce-jetpack' ),
 			'name'     => 'wcj_product_addons_per_product_required_' . $i,
 			'default'  => 'no',
 			'type'     => 'select',

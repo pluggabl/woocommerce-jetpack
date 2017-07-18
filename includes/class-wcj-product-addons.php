@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 2.8.0
+ * @version 2.9.2
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -133,7 +133,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 2.8.0
+	 * @version 2.9.2
 	 * @since   2.5.3
 	 */
 	function price_change_ajax( $param ) {
@@ -148,7 +148,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 			if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
 				if ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) {
 					$the_addons_price += $addon['price_value'];
-				} elseif ( 'radio' === $addon['type'] ) {
+				} elseif ( 'radio' === $addon['type'] || 'select' === $addon['type'] ) {
 					$labels = explode( PHP_EOL, $addon['label_value'] );
 					$prices = explode( PHP_EOL, $addon['price_value'] );
 					if ( count( $labels ) === count( $prices ) ) {
@@ -359,7 +359,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item_data.
 	 *
-	 * @version 2.5.5
+	 * @version 2.9.2
 	 * @since   2.5.3
 	 */
 	function add_addons_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
@@ -369,7 +369,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 				if ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) {
 					$cart_item_data[ $addon['price_key'] ] = $addon['price_value'];
 					$cart_item_data[ $addon['label_key'] ] = $addon['label_value'];
-				} elseif ( 'radio' === $addon['type'] ) {
+				} elseif ( 'radio' === $addon['type'] || 'select' === $addon['type'] ) {
 					$prices = explode( PHP_EOL, $addon['price_value'] );
 					$labels = explode( PHP_EOL, $addon['label_value'] );
 					if ( count( $labels ) === count( $prices ) ) {
@@ -390,7 +390,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 2.8.0
+	 * @version 2.9.2
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {
@@ -414,25 +414,44 @@ class WCJ_Product_Addons extends WCJ_Module {
 						'<label for="' . $addon['checkbox_key'] . '">' . $addon['label_value'] . ' ('. wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $addon['price_value'] ) ) ) . ')' . '</label>' .
 						$maybe_tooltip .
 					'</p>';
-			} elseif ( 'radio' === $addon['type'] ) {
+			} elseif ( 'radio' === $addon['type'] || 'select' === $addon['type'] ) {
 				$prices   = explode( PHP_EOL, $addon['price_value'] );
 				$labels   = explode( PHP_EOL, $addon['label_value'] );
-				$tooltips = explode( PHP_EOL, $addon['tooltip'] );
+				if ( 'radio' === $addon['type'] ) {
+					$tooltips = explode( PHP_EOL, $addon['tooltip'] );
+				}
 				if ( count( $labels ) === count( $prices ) ) {
+					if ( 'select' === $addon['type'] ) {
+						$select_options = '';
+					}
 					foreach ( $labels as $i => $label ) {
 						$label = sanitize_title( $label );
 						$is_checked = '';
+						$checked_or_selected = ( 'radio' === $addon['type'] ? ' checked' : ' selected' );
 						if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
-							$is_checked = ( $label === $_POST[ $addon['checkbox_key'] ] ) ? ' checked' : '';
+							$is_checked = ( $label === $_POST[ $addon['checkbox_key'] ] ) ? $checked_or_selected : '';
 						} elseif ( '' != $addon['default'] ) {
-							$is_checked = ( $label === sanitize_title( $addon['default'] ) ) ? ' checked' : '';
+							$is_checked = ( $label === sanitize_title( $addon['default'] ) ) ? $checked_or_selected : '';
 						}
-						$maybe_tooltip = ( isset( $tooltips[ $i ] ) && '' != $tooltips[ $i ] ) ?
-							' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $tooltips[ $i ] . '">' :
+						if ( 'radio' === $addon['type'] ) {
+							$maybe_tooltip = ( isset( $tooltips[ $i ] ) && '' != $tooltips[ $i ] ) ?
+								' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $tooltips[ $i ] . '">' :
+								'';
+							$html .= '<p>' .
+								'<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>' . ' ' .
+								'<label for="' . $addon['checkbox_key'] . '-' . $label . '">' . $labels[ $i ] . ' ('. wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ] ) ) ) . ')' . '</label>' .
+								$maybe_tooltip .
+							'</p>';
+						} else {
+							$select_options .= '<option value="' . $label . '"' . $is_checked . '>' . $labels[ $i ] . ' ('. wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ] ) ) ) . ')' . '</option>';
+						}
+					}
+					if ( 'select' === $addon['type'] ) {
+						$maybe_tooltip = ( '' != $addon['tooltip'] ) ?
+							' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $addon['tooltip'] . '">' :
 							'';
 						$html .= '<p>' .
-							'<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>' . ' ' .
-							'<label for="' . $addon['checkbox_key'] . '-' . $label . '">' . $labels[ $i ] . ' ('. wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ] ) ) ) . ')' . '</label>' .
+							'<select id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '">' . $select_options . '</select>' .
 							$maybe_tooltip .
 						'</p>';
 					}

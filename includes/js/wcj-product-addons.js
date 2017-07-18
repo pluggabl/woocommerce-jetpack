@@ -1,7 +1,7 @@
 /**
  * wcj-product-addons.
  *
- * version 2.8.0
+ * version 2.9.2
  * since   2.5.3
  */
 
@@ -31,15 +31,13 @@ function change_price() {
 			'action': 'product_addons_price_change',
 			'product_id': product_id,
 		};
-		jQuery("input[name^='wcj_product_all_products_addons_']").each( function () {
+		jQuery("input[name^='wcj_product_all_products_addons_'], input[name^='wcj_product_per_product_addons_']").each( function () {
 			if (jQuery(this).is(':checked')) {
 				data[jQuery(this).attr('name')] = jQuery(this).val();
 			}
 		});
-		jQuery("input[name^='wcj_product_per_product_addons_']").each( function () {
-			if (jQuery(this).is(':checked')) {
-				data[jQuery(this).attr('name')] = jQuery(this).val();
-			}
+		jQuery("select[name^='wcj_product_all_products_addons_'], select[name^='wcj_product_per_product_addons_']").each( function () {
+			data[jQuery(this).attr('name')] = jQuery(this).find(':selected').val();
 		});
 		jQuery.post(_ajax_object.ajax_url, data, function(response) {
 			if ( '' != response ) {
@@ -55,10 +53,7 @@ function change_price() {
 
 jQuery(document).ready(function() {
 	change_price();
-	jQuery("input[name^='wcj_product_all_products_addons_']").each( function () {
-		jQuery(this).change( change_price );
-	});
-	jQuery("input[name^='wcj_product_per_product_addons_']").each( function () {
+	jQuery("[name^='wcj_product_all_products_addons_'], [name^='wcj_product_per_product_addons_']").each( function () {
 		jQuery(this).change( change_price );
 	});
 });
