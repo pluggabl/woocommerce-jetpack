@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Styling
  *
- * @version 2.9.0
+ * @version 2.9.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -29,7 +29,7 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_general_font_family',
 			'default'  => 'helvetica',
 			'type'     => 'select',
-			'options'  => array(
+			'options'  => apply_filters( 'wcj_pdf_invoicing_fonts', array(
 				'courier'           => 'Courier',
 				'helvetica'         => 'Helvetica',
 				'times'             => 'Times',
@@ -40,7 +40,7 @@ foreach ( $invoice_types as $invoice_type ) {
 				'thsarabun'         => 'THSarabunPSK (Unicode)',
 				'stsongstdlight'    => 'STSong Light (Simp. Chinese)',
 				'cid0ct'            => 'cid0ct (Chinese Traditional)',
-			),
+			) ),
 		) :
 		array(
 			'title'    => __( 'Font Family', 'woocommerce-jetpack' ),
