@@ -168,12 +168,12 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 3.0.0 - 20/07/2017
 ~D	* Dev - `wcj_modules` filter added.
-~D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Dashboard - `wcj_admin_bar_dashboard_nodes` filter added.
 ~D	* Dev - `WC_Settings_Jetpack` - `wcj_custom_dashboard_modules` filter added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Months" options added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Days" options added.
 $~D	* Dev - PRODUCTS - Product Addons - "Select Box" type added.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - `wcj_pdf_invoicing_fonts` filter added.
+~D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Dashboard - `wcj_admin_bar_dashboard_nodes` filter added.
 
 = 2.9.1 - 17/07/2017
 * Dev - `WCJ_Module` - `save_meta_box_validate_value()` added.
