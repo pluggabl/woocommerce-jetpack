@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 2.9.1
+ * @version 3.0.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.0.0
 	 */
 	function __construct() {
 
@@ -24,6 +24,8 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		$this->label = __( 'Booster', 'woocommerce-jetpack' );
 
 		$this->cats  = include( 'wcj-modules-cats.php' );
+
+		$this->custom_dashboard_modules = apply_filters( 'wcj_custom_dashboard_modules', array() );
 
 		add_filter( 'woocommerce_settings_tabs_array',         array( $this, 'add_settings_page' ), 20 );
 		add_action( 'woocommerce_settings_' . $this->id,       array( $this, 'output' ) );
@@ -55,7 +57,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output sections (modules) sub menu
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.0
 	 */
 	function output_sections_submenu() {
 		global $current_section;
@@ -81,6 +83,11 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			$sections['by_category']    = __( 'By Category', 'woocommerce-jetpack' )    . ' <span class="count">(' . $all . ')</span>';
 			$sections['active']         = __( 'Active', 'woocommerce-jetpack' )         . ' <span class="count">(' . $active . ')</span>';
 			$sections['manager']        = __( 'Manage Settings', 'woocommerce-jetpack' );
+			if ( ! empty( $this->custom_dashboard_modules ) ) {
+				foreach ( $this->custom_dashboard_modules as $custom_dashboard_module_id => $custom_dashboard_module_data ) {
+					$sections[ $custom_dashboard_module_id ] = $custom_dashboard_module_data['title'];
+				}
+			}
 			if ( '' == $current_section ) {
 				$current_section = 'by_category';
 			}
@@ -141,9 +148,19 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	}
 
 	/**
+	 * is_dashboard_section.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 */
+	function is_dashboard_section( $current_section ) {
+		return in_array( $current_section, array_merge( array( '', 'alphabetically', 'by_category', 'active', 'manager' ), array_keys( $this->custom_dashboard_modules ) ) );
+	}
+
+	/**
 	 * Output the settings.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.0
 	 * @todo    (maybe) admin_notices
 	 */
 	function output() {
@@ -154,8 +171,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '<div id="wcj_message" class="updated"><p><strong>' . $wcj_notice . '</strong></p></div>';
 		}
 
-		$is_dashboard = ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section && 'manager' != $current_section )
-			? false : true;
+		$is_dashboard = $this->is_dashboard_section( $current_section );
 
 		// Deprecated message
 		if ( $replacement_module = wcj_is_module_deprecated( $current_section ) ) {
@@ -227,7 +243,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard.
 	 *
-	 * @version 2.9.1
+	 * @version 3.0.0
 	 */
 	function output_dashboard( $current_section ) {
 
@@ -238,7 +254,9 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		$the_settings = $this->get_settings();
 
 		echo '<h3>' . $the_settings[0]['title'] . '</h3>';
-		if ( 'manager' != $current_section ) {
+		if ( isset( $this->custom_dashboard_modules[ $current_section ] ) ) {
+			echo '<p>' . $this->custom_dashboard_modules[ $current_section ]['desc'] . '</p>';
+		} elseif ( 'manager' != $current_section ) {
 			echo '<p>' . $the_settings[0]['desc'] . '</p>';
 		} else {
 			echo '<p>' . __( 'This section lets you export, import or reset all Booster\'s modules settings.', 'woocommerce-jetpack' ) . '</p>';
@@ -293,6 +311,24 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				);
 			}
 			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'none' ) );
+		}
+
+		if ( isset( $this->custom_dashboard_modules[ $current_section ] ) ) {
+			$table_data = array();
+			foreach ( $this->custom_dashboard_modules[ $current_section ]['settings'] as $_settings ) {
+				$table_data[] = array(
+					$_settings['title'],
+					'<label for="' . $_settings['id'] . '">' .
+						'<input name="' . $_settings['id'] .
+							'" id="'    . $_settings['id'] .
+							'" type="'  . $_settings['type'] .
+							'" class="' . $_settings['class'] .
+							'" value="' . get_option( $_settings['id'], $_settings['default'] )
+						. '">' . ' ' . '<em>' . $_settings['desc'] . '</em>' .
+					'</label>',
+				);
+			}
+			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
 		}
 
 		echo '<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . __( 'Version' ) . ': ' . get_option( 'booster_for_woocommerce_version', 'N/A' ) . '</p>';
@@ -424,14 +460,16 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Get settings array
 	 *
-	 * @version 2.9.1
+	 * @version 3.0.0
 	 * @return  array
 	 */
 	function get_settings( $current_section = '' ) {
-		if ( '' != $current_section && 'alphabetically' != $current_section && 'by_category' != $current_section && 'active' != $current_section && 'manager' != $current_section ) {
+		if ( ! $this->is_dashboard_section( $current_section ) ) {
 			return apply_filters( 'wcj_settings_' . $current_section, array() );
 		} elseif ( 'manager' === $current_section ) {
 			return $this->get_manager_settings();
+		} elseif ( isset( $this->custom_dashboard_modules[ $current_section ] ) ) {
+			return $this->custom_dashboard_modules[ $current_section ]['settings'];
 		} else {
 			$cat_id = ( isset( $_GET['wcj-cat'] ) && '' != $_GET['wcj-cat'] ) ? $_GET['wcj-cat'] : 'dashboard';
 			$settings[] = array(
