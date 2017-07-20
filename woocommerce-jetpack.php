@@ -50,7 +50,7 @@ require_once( 'includes/constants/wcj-constants.php' );
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 2.9.1
+ * @version 3.0.0
  */
 final class WC_Jetpack {
 
@@ -86,7 +86,7 @@ final class WC_Jetpack {
 	/**
 	 * WC_Jetpack Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.0
 	 * @access  public
 	 */
 	function __construct() {
@@ -96,6 +96,11 @@ final class WC_Jetpack {
 
 		// Include required files
 		$this->includes();
+
+		// Plus
+		if ( 'booster-plus-for-woocommerce.php' === basename( __FILE__ ) ) {
+			require_once( 'includes/plus/class-wcj-plus.php' );
+		}
 
 		// Settings
 		$this->init_settings();
