@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 2.9.1
+ * @version 3.0.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -117,7 +117,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * get_nodes_booster_modules.
 	 *
-	 * @version 2.9.1
+	 * @version 3.0.0
 	 * @since   2.9.0
 	 * @todo    (maybe) dashes instead of underscores
 	 * @todo    (maybe) dashboard > alphabetically - list all modules
@@ -134,7 +134,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 				'meta'   => array( 'title' => strip_tags( $label_info['desc'] ) ),
 			);
 			if ( 'dashboard' === $id ) {
-				$nodes[ $id ]['nodes'] = array(
+				$nodes[ $id ]['nodes'] = apply_filters( 'wcj_admin_bar_dashboard_nodes', array(
 					'alphabetically' => array(
 						'title'  => __( 'Alphabetically', 'woocommerce-jetpack' ),
 						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=alphabetically' ),
@@ -151,7 +151,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 						'title'  => __( 'Manage Settings', 'woocommerce-jetpack' ),
 						'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=manager' ),
 					),
-				);
+				) );
 			} else {
 				$cat_nodes = array();
 				foreach ( $label_info['all_cat_ids'] as $link_id ) {

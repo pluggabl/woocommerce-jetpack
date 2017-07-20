@@ -168,6 +168,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 3.0.0 - 20/07/2017
 ~D	* Dev - `wcj_modules` filter added.
+~D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Dashboard - `wcj_admin_bar_dashboard_nodes` filter added.
 ~D	* Dev - `WC_Settings_Jetpack` - `wcj_custom_dashboard_modules` filter added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Months" options added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Days" options added.
