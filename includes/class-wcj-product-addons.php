@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 2.9.2
+ * @version 3.0.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -133,7 +133,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 2.9.2
+	 * @version 3.0.0
 	 * @since   2.5.3
 	 */
 	function price_change_ajax( $param ) {
@@ -359,7 +359,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item_data.
 	 *
-	 * @version 2.9.2
+	 * @version 3.0.0
 	 * @since   2.5.3
 	 */
 	function add_addons_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
@@ -390,7 +390,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 2.9.2
+	 * @version 3.0.0
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 2.9.2
+ * @version 3.0.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -286,7 +286,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * add_input_fields_to_frontend.
 	 *
-	 * @version 2.9.2
+	 * @version 3.0.0
 	 * @since   2.5.0
 	 * @todo    more options: exclude days (1-31), exact availability dates, mindate, maxdate, firstday, dateformat etc.
 	 */

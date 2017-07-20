@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Styling
  *
- * @version 2.9.2
+ * @version 3.0.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 2.9.2
+ * @version 3.0.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add "frontend template" options

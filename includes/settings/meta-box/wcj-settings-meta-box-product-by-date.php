@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Availability by Date
  *
- * @version 2.9.2
+ * @version 3.0.0
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
