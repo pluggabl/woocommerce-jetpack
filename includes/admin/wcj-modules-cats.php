@@ -4,12 +4,12 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 2.9.1
+ * @version 3.0.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
 
-return array(
+return apply_filters( 'wcj_modules', array(
 
 	'dashboard' => array(
 		'label'          => __( 'Dashboard', 'woocommerce-jetpack' ),
@@ -175,4 +175,4 @@ return array(
 		),
 	),
 
-);
+) );

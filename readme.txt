@@ -167,6 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.0.0 - 20/07/2017
+~D	* Dev - `wcj_modules` filter added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Months" options added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Days" options added.
 $~D	* Dev - PRODUCTS - Product Addons - "Select Box" type added.
