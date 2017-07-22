@@ -2,11 +2,34 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 2.9.0
+ * @version 3.0.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
+	/**
+	 * wcj_maybe_add_date_query.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 */
+	function wcj_maybe_add_date_query( $args ) {
+		if ( ( isset( $_GET['start_date'] ) && '' != $_GET['start_date'] ) || ( isset( $_GET['end_date'] ) && '' != $_GET['end_date'] ) )  {
+			$date_query = array();
+			$date_query['inclusive'] = true;
+			if ( isset( $_GET['start_date'] ) && '' != $_GET['start_date'] ) {
+				$date_query['after'] = $_GET['start_date'];
+			}
+			if ( isset( $_GET['end_date'] ) && '' != $_GET['end_date'] ) {
+				$date_query['before'] = $_GET['end_date'];
+			}
+			$args['date_query'] = array( $date_query );
+		}
+		return $args;
+	}
+}
 
 if ( ! function_exists( 'wcj_is_module_deprecated' ) ) {
 	/**

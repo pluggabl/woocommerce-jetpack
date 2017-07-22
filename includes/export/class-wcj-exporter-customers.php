@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Customers
  *
- * @version 2.7.0
+ * @version 3.0.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -26,7 +26,7 @@ class WCJ_Exporter_Customers {
 	/**
 	 * export_customers.
 	 *
-	 * @version 2.5.9
+	 * @version 3.0.0
 	 * @since   2.4.8
 	 */
 	function export_customers( $fields_helper ) {
@@ -42,7 +42,9 @@ class WCJ_Exporter_Customers {
 		// Get the Data
 		$data = array();
 		$data[] = $titles;
-		$customers = get_users( 'role=customer' );
+		$args = array( 'role' => 'customer' );
+		$args = wcj_maybe_add_date_query( $args );
+		$customers = get_users( $args );
 		foreach ( $customers as $customer ) {
 			$row = array();
 			foreach( $fields_ids as $field_id ) {
@@ -87,7 +89,7 @@ class WCJ_Exporter_Customers {
 	/**
 	 * export_customers_from_orders.
 	 *
-	 * @version 2.7.0
+	 * @version 3.0.0
 	 * @since   2.4.8
 	 * @todo    (maybe) add more order fields (shipping)
 	 */
@@ -118,6 +120,7 @@ class WCJ_Exporter_Customers {
 				'offset'         => $offset,
 				'fields'         => 'ids',
 			);
+			$args_orders = wcj_maybe_add_date_query( $args_orders );
 			$loop_orders = new WP_Query( $args_orders );
 			if ( ! $loop_orders->have_posts() ) {
 				break;

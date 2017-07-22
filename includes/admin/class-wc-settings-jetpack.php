@@ -331,7 +331,10 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
 		}
 
-		echo '<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . __( 'Version' ) . ': ' . get_option( 'booster_for_woocommerce_version', 'N/A' ) . '</p>';
+		$plugin_data  = get_plugin_data( wcj_plugin_file() );
+		$plugin_title = ( isset( $plugin_data['Name'] ) ? '[' . $plugin_data['Name'] . '] ' : '' );
+		echo '<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . $plugin_title .
+			__( 'Version', 'woocommerce-jetpack' ) . ': ' . get_option( 'booster_for_woocommerce_version', 'N/A' ) . '</p>';
 
 		$readme_html .= '</pre>';
 		if ( isset( $_GET['woojetpack_readme'] ) ) echo $readme_html;

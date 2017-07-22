@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Products
  *
- * @version 2.7.0
+ * @version 3.0.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -57,7 +57,7 @@ class WCJ_Exporter_Products {
 	/**
 	 * export_products.
 	 *
-	 * @version 2.7.0
+	 * @version 3.0.0
 	 * @since   2.5.3
 	 * @todo    product attributes
 	 */
@@ -93,6 +93,7 @@ class WCJ_Exporter_Products {
 				'offset'         => $offset,
 				'fields'         => 'ids',
 			);
+			$args = wcj_maybe_add_date_query( $args );
 			$loop = new WP_Query( $args );
 			if ( ! $loop->have_posts() ) {
 				break;

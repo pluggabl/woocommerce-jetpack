@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 2.8.0
+ * @version 3.0.0
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  * @todo    import products, customers and (maybe) orders
@@ -65,6 +65,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	 * @version 2.5.9
 	 * @since   2.4.8
 	 * @todo    when filtering now using strpos, but other options would be stripos (case-insensitive) or strict equality
+	 * @todo    (maybe) do filtering directly in WP_Query
 	 */
 	function export( $tool_id ) {
 		$data = array();
@@ -218,14 +219,52 @@ class WCJ_Export_Import extends WCJ_Module {
 	}
 
 	/**
+	 * export_date_fields.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 * @todo    mark current (i.e. active) link (if exists)
+	 */
+	function export_date_fields( $tool_id ) {
+		$current_start_date = ( isset( $_GET['start_date'] ) ? $_GET['start_date'] : '' );
+		$current_end_date   = ( isset( $_GET['end_date'] )   ? $_GET['end_date']   : '' );
+		$predefined_ranges = array();
+		$predefined_ranges[] = '<a href="' . add_query_arg( 'range', 'all_time', remove_query_arg( array( 'start_date', 'end_date' ) ) ) . '">' .
+			__( 'All time', 'woocommerce-jetpack' ) . '</a>';
+		foreach ( array_merge( wcj_get_reports_standard_ranges(), wcj_get_reports_custom_ranges() ) as $range_id => $range_data ) {
+			$link = add_query_arg( array(
+				'start_date' => $range_data['start_date'],
+				'end_date'   => $range_data['end_date'],
+				'range'      => $range_id,
+			) );
+			$predefined_ranges[] = '<a href="' . $link . '">' . $range_data['title'] . '</a>';
+		}
+		$predefined_ranges = implode( ' | ', $predefined_ranges );
+		$date_input_fields = '<form method="get" action="">' .
+			'<input type="hidden" name="page" value="wcj-tools">' .
+			'<input type="hidden" name="tab" value="export_' . $tool_id . '">' .
+			'<strong>' . __( 'Custom:', 'woocommerce-jetpack' ) . '</strong>' . ' ' .
+			'<input name="start_date" id="start_date" type="text" display="date" value="' . $current_start_date . '">' .
+			'<strong>' . ' - ' . '</strong>' .
+			'<input name="end_date" id="end_date" type="text" display="date" value="' . $current_end_date . '">' .
+			' ' .
+			'<button class="button-primary" name="range" id="range" type="submit" value="custom">' . __( 'Go', 'woocommerce-jetpack' ) . '</button>' .
+		'</form>';
+		return $predefined_ranges . '<br>' . $date_input_fields;
+	}
+
+	/**
 	 * create_export_tool.
 	 *
-	 * @version 2.5.9
+	 * @version 3.0.0
 	 * @since   2.4.8
 	 */
 	function create_export_tool( $tool_id ) {
-		$data = $this->export( $tool_id );
 		echo $this->get_tool_header_html( 'export_' . $tool_id );
+		echo '<p>' . $this->export_date_fields( $tool_id ) . '</p>';
+		if ( ! isset( $_GET['range'] ) ) {
+			return;
+		}
 		echo '<form method="post" action="">';
 		echo '<p>' . $this->export_filter_fields( $tool_id ) . '</p>';
 		echo '<p>';
@@ -236,6 +275,7 @@ class WCJ_Export_Import extends WCJ_Module {
 		echo '<input style="float:right;margin-right:10px;" type="text" name="wcj_export_filter_all_columns" value="' . ( isset( $_POST['wcj_export_filter_all_columns'] ) ? $_POST['wcj_export_filter_all_columns'] : '' ) . '">';
 		echo '</p>';
 		echo '</form>';
+		$data = $this->export( $tool_id );
 		echo ( is_array( $data ) ) ? wcj_get_table_html( $data, array( 'table_class' => 'widefat striped' ) ) : $data;
 	}
 

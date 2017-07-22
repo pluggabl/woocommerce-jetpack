@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Scripts
  *
- * @version 2.9.0
+ * @version 3.0.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  * @todo    move this class to another directory
@@ -17,7 +17,7 @@ class WCJ_Scripts {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.0
 	 * @since   2.9.0
 	 */
 	function __construct() {
@@ -25,6 +25,7 @@ class WCJ_Scripts {
 		if ( is_admin() ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_wcj_backend_scripts' ) );
 			if (
+				wcj_is_module_enabled( 'export' ) ||
 				wcj_is_module_enabled( 'purchase_data' ) ||
 				wcj_is_module_enabled( 'pdf_invoicing' ) ||
 				wcj_is_module_enabled( 'crowdfunding' ) ||

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 2.7.0
+ * @version 3.0.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  * @todo    filter export by date
@@ -186,7 +186,7 @@ class WCJ_Exporter_Orders {
 	/**
 	 * export_orders.
 	 *
-	 * @version 2.6.0
+	 * @version 3.0.0
 	 * @since   2.4.8
 	 * @todo    (maybe) metainfo as separate column
 	 */
@@ -222,8 +222,11 @@ class WCJ_Exporter_Orders {
 				'offset'         => $offset,
 				'fields'         => 'ids',
 			);
+			$args_orders = wcj_maybe_add_date_query( $args_orders );
 			$loop_orders = new WP_Query( $args_orders );
-			if ( ! $loop_orders->have_posts() ) break;
+			if ( ! $loop_orders->have_posts() ) {
+				break;
+			}
 			foreach ( $loop_orders->posts as $order_id ) {
 				$order = wc_get_order( $order_id );
 
@@ -298,7 +301,7 @@ class WCJ_Exporter_Orders {
 	/**
 	 * export_orders_items.
 	 *
-	 * @version 2.6.0
+	 * @version 3.0.0
 	 * @since   2.5.9
 	 */
 	function export_orders_items( $fields_helper ) {
@@ -333,8 +336,11 @@ class WCJ_Exporter_Orders {
 				'offset'         => $offset,
 				'fields'         => 'ids',
 			);
+			$args_orders = wcj_maybe_add_date_query( $args_orders );
 			$loop_orders = new WP_Query( $args_orders );
-			if ( ! $loop_orders->have_posts() ) break;
+			if ( ! $loop_orders->have_posts() ) {
+				break;
+			}
 			foreach ( $loop_orders->posts as $order_id ) {
 				$order = wc_get_order( $order_id );
 
