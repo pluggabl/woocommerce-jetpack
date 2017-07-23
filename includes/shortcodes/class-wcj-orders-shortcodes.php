@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 2.9.0
+ * @version 3.0.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.0
 	 */
 	function __construct() {
 
@@ -28,6 +28,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_id',
 			'wcj_order_billing_address',
 			'wcj_order_billing_phone',
+			'wcj_order_billing_country_name',
+			'wcj_order_shipping_country_name',
 			'wcj_order_checkout_field',
 			'wcj_order_shipping_address',
 			'wcj_order_customer_note',
@@ -462,6 +464,36 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_order_customer_note( $atts ) {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_note : $this->the_order->get_customer_note() );
+	}
+
+	/**
+	 * wcj_order_billing_country_name.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 */
+	function wcj_order_billing_country_name( $atts ) {
+		$country_code = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->billing_country : $this->the_order->get_billing_country() );
+		if ( false !== ( $country_name = wcj_get_country_name_by_code( $country_code ) ) ) {
+			return $country_name;
+		} else {
+			return $country_code;
+		}
+	}
+
+	/**
+	 * wcj_order_shipping_country_name.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 */
+	function wcj_order_shipping_country_name( $atts ) {
+		$country_code = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->shipping_country : $this->the_order->get_shipping_country() );
+		if ( false !== ( $country_name = wcj_get_country_name_by_code( $country_code ) ) ) {
+			return $country_name;
+		} else {
+			return $country_code;
+		}
 	}
 
 	/**

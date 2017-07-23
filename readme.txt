@@ -170,6 +170,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~D	* Dev - Plugin update checker added.
 ~D	* Dev - `wcj_modules` filter added.
 ~D	* Dev - `WC_Settings_Jetpack` - `wcj_custom_dashboard_modules` filter added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_billing_country_name]` and `[wcj_order_shipping_country_name]` shortcodes added.
 ~	* Dev - PRICES & CURRENCIES - Product Price by Formula - Compatibility with "Products XML" module added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Months" options added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Days" options added.
