@@ -195,9 +195,25 @@ class WCJ_Product_Addons extends WCJ_Module {
 	}
 
 	/**
+	 * is_global_addon_visible.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 * @todo    add "include only products"
+	 * @todo    add "include/exclude categories/tags"
+	 */
+	function is_global_addon_visible( $i, $product_id ) {
+		$exclude_products = get_option( 'wcj_product_addons_all_products_exclude_products_' . $i, '' );
+		if ( ! empty( $exclude_products ) && in_array( $product_id, $exclude_products ) ) {
+			return false;
+		}
+		return true;
+	}
+
+	/**
 	 * get_product_addons.
 	 *
-	 * @version 2.5.5
+	 * @version 3.0.0
 	 * @since   2.5.3
 	 */
 	function get_product_addons( $product_id ) {
@@ -207,6 +223,9 @@ class WCJ_Product_Addons extends WCJ_Module {
 			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_addons_all_products_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( 'yes' === get_option( 'wcj_product_addons_all_products_enabled_' . $i, 'yes' ) ) {
+					if ( ! $this->is_global_addon_visible( $i, $product_id ) ) {
+						continue;
+					}
 					$addons[] = array(
 //						'scope'        => 'all_products',
 //						'index'        => $i,
@@ -215,6 +234,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 						'label_key'    => 'wcj_product_all_products_addons_label_' . $i,
 						'price_value'  => get_option( 'wcj_product_addons_all_products_price_' . $i ),
 						'label_value'  => get_option( 'wcj_product_addons_all_products_label_' . $i ),
+						'title'        => get_option( 'wcj_product_addons_all_products_title_' . $i, '' ),
 						'tooltip'      => get_option( 'wcj_product_addons_all_products_tooltip_' . $i, '' ),
 						'type'         => get_option( 'wcj_product_addons_all_products_type_' . $i, 'checkbox' ),
 						'default'      => get_option( 'wcj_product_addons_all_products_default_' . $i, '' ),
@@ -237,6 +257,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 							'label_key'    => 'wcj_product_per_product_addons_label_' . $i,
 							'price_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_price_' . $i, true ),
 							'label_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_label_' . $i, true ),
+							'title'        => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_title_' . $i, true ),
 							'tooltip'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_tooltip_' . $i, true ),
 							'type'         => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_type_' . $i, true ),
 							'default'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_default_' . $i, true ),
@@ -398,6 +419,9 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$addons = $this->get_product_addons( get_the_ID() );
 		$_product = wc_get_product( get_the_ID() );
 		foreach ( $addons as $addon ) {
+			if ( '' != $addon['title'] ) {
+				$html .= '<p>' .'<label for="' . $addon['checkbox_key'] . '">' . $addon['title'] . '</label>' . '</p>';
+			}
 			$is_required = ( 'yes' === $addon['is_required'] ) ? ' required' : '';
 			if ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) {
 				$is_checked = '';

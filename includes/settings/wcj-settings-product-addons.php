@@ -6,10 +6,11 @@
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add "frontend template" options
- * @todo    add "global label" option for "Select Box" type
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+$products = wcj_get_products();
 
 $settings = array();
 $settings = array_merge( $settings, array(
@@ -81,6 +82,13 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			),
 		),
 		array(
+			'desc'     => __( 'Title', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_product_addons_all_products_title_' . $i,
+			'default'  => '',
+			'type'     => 'textarea',
+			'css'      => 'width:300px;',
+		),
+		array(
 			'desc'     => __( 'Label(s)', 'woocommerce-jetpack' ),
 			'desc_tip' => __( 'For radio and select enter one value per line.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_product_addons_all_products_label_' . $i,
@@ -119,6 +127,14 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'id'       => 'wcj_product_addons_all_products_required_' . $i,
 			'default'  => 'no',
 			'type'     => 'checkbox',
+		),
+		array(
+			'desc'     => __( 'Exclude Products', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_product_addons_all_products_exclude_products_' . $i,
+			'default'  => '',
+			'type'     => 'multiselect',
+			'class'    => 'chosen_select',
+			'options'  => $products,
 		),
 	) );
 }

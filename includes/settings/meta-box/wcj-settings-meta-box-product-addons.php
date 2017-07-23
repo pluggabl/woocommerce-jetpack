@@ -53,6 +53,12 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			),
 		),
 		array(
+			'title'    => __( 'Title', 'woocommerce-jetpack' ),
+			'name'     => 'wcj_product_addons_per_product_title_' . $i,
+			'default'  => '',
+			'type'     => 'textarea',
+		),
+		array(
 			'title'    => __( 'Label(s)', 'woocommerce-jetpack' ),
 			'tooltip'  => __( 'For radio and select enter one value per line.', 'woocommerce-jetpack' ),
 			'name'     => 'wcj_product_addons_per_product_label_' . $i,
