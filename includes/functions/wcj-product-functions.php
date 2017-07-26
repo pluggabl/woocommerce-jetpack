@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Product
  *
- * @version 2.9.0
+ * @version 3.0.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -176,6 +176,71 @@ if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
 			}
 		}
 		return ( ! empty( $product_input_fields ) ) ? implode( ', ', $product_input_fields ) : '';
+	}
+}
+
+if ( ! function_exists( 'wcj_get_index_from_key' ) ) {
+	/*
+	 * wcj_get_index_from_key.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 * @return  string
+	 */
+	function wcj_get_index_from_key( $key ) {
+		$index = explode( '_', $key );
+		$index = array_reverse( $index );
+		return $index[0];
+	}
+}
+
+if ( ! function_exists( 'wcj_get_product_addons' ) ) {
+	/*
+	 * wcj_get_product_addons.
+	 *
+	 * @version 3.0.0
+	 * @since   3.0.0
+	 * @return  string
+	 */
+	function wcj_get_product_addons( $item, $order_currency ) {
+
+		// Prepare item values
+		$values = array();
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+			$values = $item;
+		} else {
+			foreach ( $item->get_meta_data() as $value ) {
+				if ( isset( $value->key ) && isset( $value->value ) ) {
+					$values[ $value->key ] = $value->value;
+				}
+			}
+		}
+
+		// Prepare addons (if any)
+		$addons = array();
+		foreach ( $values as $key => $value ) {
+			if ( false !== strpos( $key, 'wcj_product_all_products_addons_label_' ) ) {
+				$addons['all_products'][ wcj_get_index_from_key( $key ) ]['label'] = $value;
+			}
+			if ( false !== strpos( $key, 'wcj_product_per_product_addons_label_' ) ) {
+				$addons['per_product'][ wcj_get_index_from_key( $key ) ]['label'] = $value;
+			}
+			if ( false !== strpos( $key, 'wcj_product_all_products_addons_price_' ) ) {
+				$addons['all_products'][ wcj_get_index_from_key( $key ) ]['price'] = $value;
+			}
+			if ( false !== strpos( $key, 'wcj_product_per_product_addons_price_' ) ) {
+				$addons['per_product'][ wcj_get_index_from_key( $key ) ]['price'] = $value;
+			}
+		}
+
+		// Final result array
+		$return = array();
+		foreach ( $addons as $scope => $scope_addons ) {
+			foreach ( $scope_addons as $index => $addons_data ) {
+				$return[] = $addons_data['label'] . ': ' . wc_price( $addons_data['price'], array( 'currency' => $order_currency ) );
+			}
+		}
+		return ( ! empty( $return ) ) ? implode( ', ', $return ) : '';
 	}
 }
 

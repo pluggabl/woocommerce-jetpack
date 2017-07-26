@@ -166,16 +166,18 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.0.0 - 23/07/2017
+= 3.0.0 - 26/07/2017
 ~D	* Dev - Plugin update checker added.
 ~D	* Dev - `wcj_modules` filter added.
 ~D	* Dev - `WC_Settings_Jetpack` - `wcj_custom_dashboard_modules` filter added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_billing_country_name]` and `[wcj_order_shipping_country_name]` shortcodes added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_product_addons` column added.
 ~	* Dev - PRICES & CURRENCIES - Product Price by Formula - Compatibility with "Products XML" module added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Months" options added.
 $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Days" options added.
 ~D	* Dev - PRODUCTS - Product Addons - All Products Addons - "Exclude Products" option added.
 ~D	* Dev - PRODUCTS - Product Addons - "Title" option added.
+~D	* Dev - PRODUCTS - Product Addons - "Placeholder" option (for "Select Box" type only) added.
 ~D	* Dev - PRODUCTS - Product Addons - "Select Box" type added.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - `wcj_pdf_invoicing_fonts` filter added.
 ~D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Dashboard - `wcj_admin_bar_dashboard_nodes` filter added.

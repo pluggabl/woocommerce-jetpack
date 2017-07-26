@@ -87,8 +87,14 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'type'     => 'text',
 		),
 		array(
+			'title'    => __( 'Placeholder', 'woocommerce-jetpack' ),
+			'tooltip'  => __( 'For "Select Box" type only.', 'woocommerce-jetpack' ),
+			'name'     => 'wcj_product_addons_per_product_placeholder_' . $i,
+			'default'  => '',
+			'type'     => 'text',
+		),
+		array(
 			'title'    => __( 'Is required', 'woocommerce-jetpack' ),
-			'tooltip'  => __( 'Ignored for "Select Box" type', 'woocommerce-jetpack' ),
 			'name'     => 'wcj_product_addons_per_product_required_' . $i,
 			'default'  => 'no',
 			'type'     => 'select',

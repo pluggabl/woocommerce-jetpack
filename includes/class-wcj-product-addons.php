@@ -235,6 +235,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 						'price_value'  => get_option( 'wcj_product_addons_all_products_price_' . $i ),
 						'label_value'  => get_option( 'wcj_product_addons_all_products_label_' . $i ),
 						'title'        => get_option( 'wcj_product_addons_all_products_title_' . $i, '' ),
+						'placeholder'  => get_option( 'wcj_product_addons_all_products_placeholder_' . $i, '' ),
 						'tooltip'      => get_option( 'wcj_product_addons_all_products_tooltip_' . $i, '' ),
 						'type'         => get_option( 'wcj_product_addons_all_products_type_' . $i, 'checkbox' ),
 						'default'      => get_option( 'wcj_product_addons_all_products_default_' . $i, '' ),
@@ -258,6 +259,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 							'price_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_price_' . $i, true ),
 							'label_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_label_' . $i, true ),
 							'title'        => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_title_' . $i, true ),
+							'placeholder'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_placeholder_' . $i, true ),
 							'tooltip'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_tooltip_' . $i, true ),
 							'type'         => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_type_' . $i, true ),
 							'default'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_default_' . $i, true ),
@@ -474,8 +476,11 @@ class WCJ_Product_Addons extends WCJ_Module {
 						$maybe_tooltip = ( '' != $addon['tooltip'] ) ?
 							' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $addon['tooltip'] . '">' :
 							'';
+						if ( '' != $addon['placeholder'] ) {
+							$select_options = '<option value="">' . $addon['placeholder'] . '</option>' . $select_options;
+						}
 						$html .= '<p>' .
-							'<select id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '">' . $select_options . '</select>' .
+							'<select' . $is_required . ' id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '">' . $select_options . '</select>' .
 							$maybe_tooltip .
 						'</p>';
 					}

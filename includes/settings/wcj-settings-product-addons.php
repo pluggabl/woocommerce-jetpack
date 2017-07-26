@@ -122,8 +122,15 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'css'      => 'width:300px;',
 		),
 		array(
+			'desc'    => __( 'Placeholder', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'For "Select Box" type only.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_product_addons_all_products_placeholder_' . $i,
+			'default'  => '',
+			'type'     => 'text',
+			'css'      => 'width:300px;',
+		),
+		array(
 			'desc'     => __( 'Is Required', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'Ignored for "Select Box" type', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_product_addons_all_products_required_' . $i,
 			'default'  => 'no',
 			'type'     => 'checkbox',

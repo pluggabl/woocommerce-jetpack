@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 2.9.0
+ * @version 3.0.0
  * @author  Algoritmika Ltd.
  */
 
@@ -272,7 +272,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.0
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -441,6 +441,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						break;
 					case 'item_product_input_fields':
 						$cell_data = wcj_get_product_input_fields( $item );
+						break;
+					case 'item_product_addons':
+						$cell_data = wcj_get_product_addons( $item, wcj_get_order_currency( $this->the_order ) );
 						break;
 					case 'item_key':
 						if ( isset( $column_param ) && '' != $column_param && isset( $item[ $column_param ] ) ) {
