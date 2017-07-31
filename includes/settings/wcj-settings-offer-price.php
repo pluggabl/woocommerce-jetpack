@@ -253,7 +253,8 @@ return array(
 		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%offered_price%', '%customer_name%', '%customer_email%', '%customer_message%' ) ),
 		'id'       => 'wcj_offer_price_email_template',
 		'type'     => 'custom_textarea',
-		'default'  => sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '%product_title%' ) . '<br>' . PHP_EOL .
+		'default'  =>
+			sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '%product_title%' ) . '<br>' . PHP_EOL .
 			sprintf( __( 'Offered price: %s', 'woocommerce-jetpack' ), '%offered_price%' ) . '<br>' . PHP_EOL .
 			sprintf( __( 'From: %s %s', 'woocommerce-jetpack' ),       '%customer_name%', '%customer_email%' ) . '<br>' . PHP_EOL .
 			sprintf( __( 'Message: %s', 'woocommerce-jetpack' ),       '%customer_message%' ),

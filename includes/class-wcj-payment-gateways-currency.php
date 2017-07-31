@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency
  *
- * @version 2.9.0
+ * @version 3.0.0
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -16,14 +16,14 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.0.0
 	 */
 	function __construct() {
 
 		$this->id         = 'payment_gateways_currency';
-		$this->short_desc = __( 'Gateways Currency', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Currency per WooCommerce payment gateway.', 'woocommerce-jetpack' );
-		$this->link_slug  = 'woocommerce-payment-gateways-currency';
+		$this->short_desc = __( 'Gateways Currency Converter', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Currency converter for WooCommerce payment gateways.', 'woocommerce-jetpack' );
+		$this->link_slug  = 'woocommerce-payment-gateways-currency-converter';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

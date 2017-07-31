@@ -350,7 +350,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard_modules.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.0
 	 */
 	function output_dashboard_modules( $settings, $cat_id = '' ) {
 		$readme_html = '';
@@ -386,9 +386,12 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 					}
 					if ( '' != $cat_id ) {
 						if ( 'active_modules_only' === $cat_id ) {
-							if ( 'no' === get_option( $the_feature['id'] ) ) continue;
+							if ( 'no' === get_option( $the_feature['id'], 'no' ) ) {
+								continue;
+							}
+						} elseif ( $cat_id != $this->get_cat_by_section( $section ) ) {
+							continue;
 						}
-						elseif ( $cat_id != $this->get_cat_by_section( $section ) ) continue;
 					}
 					$total_modules++;
 					$html .= '<tr id="' . $the_feature['id'] . '" ' . 'class="' . $this->active( get_option( $the_feature['id'] ) ) . '">';

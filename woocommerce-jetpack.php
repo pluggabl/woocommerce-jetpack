@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: https://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 3.0.0-dev
+Version: 3.0.0
 Author: Algoritmika Ltd
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
@@ -74,7 +74,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.0.0-dev-201707261713';
+	public $version = '3.0.0';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -110,11 +110,6 @@ final class WC_Jetpack {
 
 		// Include required files
 		$this->includes();
-
-		// Plus
-		if ( 'booster-plus-for-woocommerce.php' === basename( __FILE__ ) ) {
-			require_once( 'includes/plus/class-wcj-plus.php' );
-		}
 
 		// Settings
 		$this->init_settings();
@@ -240,7 +235,7 @@ final class WC_Jetpack {
 	/**
 	 * Include required core files used in admin and on the frontend.
 	 *
-	 * @version 2.4.8
+	 * @version 3.0.0
 	 */
 	function includes() {
 
@@ -252,6 +247,11 @@ final class WC_Jetpack {
 		include_once( 'includes/classes/class-wcj-product.php' );
 		include_once( 'includes/classes/class-wcj-invoice.php' );
 		include_once( 'includes/classes/class-wcj-pdf-invoice.php' );
+
+		// Plus
+		if ( 'booster-plus-for-woocommerce.php' === basename( __FILE__ ) ) {
+			require_once( 'includes/plus/class-wcj-plus.php' );
+		}
 
 		// Tools
 		include_once( 'includes/admin/class-wcj-tools.php' );
@@ -317,7 +317,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 2.9.1
+	 * @version 3.0.0
 	 */
 	function include_modules() {
 		$modules_files = array(
@@ -370,6 +370,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-payment-gateways-fees.php',
 			'includes/class-wcj-payment-gateways-per-category.php',
 			'includes/class-wcj-payment-gateways-currency.php',
+			'includes/class-wcj-payment-gateways-by-currency.php',
 			'includes/class-wcj-payment-gateways-min-max.php',
 			'includes/class-wcj-payment-gateways-by-country.php',
 			'includes/class-wcj-payment-gateways-by-user-role.php',
@@ -436,7 +437,7 @@ final class WC_Jetpack {
 	 *
 	 * @version 2.8.0
 	 * @since   2.5.2
-	 * @todo    this only loads Enable, Tools and Reset settings for each module
+	 * @todo    (maybe) this only loads Enable, Tools and Reset settings for each module
 	 */
 	function add_options() {
 		// Modules statuses

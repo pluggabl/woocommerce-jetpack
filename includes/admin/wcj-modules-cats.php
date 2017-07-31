@@ -111,6 +111,7 @@ return apply_filters( 'wcj_modules', array(
 			'payment_gateways_fees',
 			'payment_gateways_per_category',
 			'payment_gateways_currency',
+			'payment_gateways_by_currency',
 			'payment_gateways_min_max',
 			'payment_gateways_by_country',
 			'payment_gateways_by_user_role',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 2.9.1
+ * @version 3.0.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -371,10 +371,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 
 	/**
 	 * is_enabled.
+	 *
+	 * @version 3.0.0
 	 */
 	function is_enabled() {
 		$the_id = ( 'module' === $this->type ) ? $this->id : $this->parent_id;
-		return ( 'yes' === get_option( 'wcj_' . $the_id . '_enabled' ) ) ? true : false;
+		return ( 'yes' === get_option( 'wcj_' . $the_id . '_enabled', 'no' ) );
 	}
 
 	/**

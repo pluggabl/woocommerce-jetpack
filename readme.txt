@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 2.9.1
+Stable tag: 3.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -82,11 +82,12 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Payment Gateways**
 
 * *Custom Gateways* - Add multiple custom payment gateways to WooCommerce.
-* *Gateways Currency* - Currency per WooCommerce payment gateway.
+* *Gateways Currency Converter* - Currency converter for WooCommerce payment gateways.
 * *Gateways Fees and Discounts* - Enable extra fees or discounts for WooCommerce payment gateways.
 * *Gateways Icons* - Change or completely remove icons (images) for any (default or custom) WooCommerce payment gateway.
 * *Gateways Min/Max Amounts* - Add min/max amounts for WooCommerce payment gateways to show up.
 * *Gateways by Country or State* - Set countries or states to include/exclude for WooCommerce payment gateways to show up.
+* *Gateways by Currency* - Set allowed currencies for WooCommerce payment gateways to show up.
 * *Gateways by Shipping* - Set "enable for shipping methods" for WooCommerce payment gateways.
 * *Gateways by User Role* - Set user roles to include/exclude for WooCommerce payment gateways to show up.
 * *Gateways per Product or Category* - Show WooCommerce gateway only if there is selected product or product category in cart.
@@ -166,24 +167,28 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.0.0 - 26/07/2017
-~D	* Dev - Plugin update checker added.
-~D	* Dev - `wcj_modules` filter added.
-~D	* Dev - `WC_Settings_Jetpack` - `wcj_custom_dashboard_modules` filter added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_billing_country_name]` and `[wcj_order_shipping_country_name]` shortcodes added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_product_addons` column added.
-~	* Dev - PRICES & CURRENCIES - Product Price by Formula - Compatibility with "Products XML" module added.
-$~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Months" options added.
-$~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Days" options added.
-~D	* Dev - PRODUCTS - Product Addons - All Products Addons - "Exclude Products" option added.
-~D	* Dev - PRODUCTS - Product Addons - "Title" option added.
-~D	* Dev - PRODUCTS - Product Addons - "Placeholder" option (for "Select Box" type only) added.
-~D	* Dev - PRODUCTS - Product Addons - "Select Box" type added.
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Styling - `wcj_pdf_invoicing_fonts` filter added.
-~D	* Dev - EMAILS & MISC. - Admin Bar - Booster - Dashboard - `wcj_admin_bar_dashboard_nodes` filter added.
-!D	* Dev - EMAILS & MISC. - Export - Date ranges added.
+= 3.0.0 - 31/07/2017 =
+* Dev - Plugin update checker added.
+* Dev - `wcj_modules` filter added.
+* Dev - `WC_Settings_Jetpack` - `wcj_custom_dashboard_modules` filter added.
+* Dev - Shortcodes - Orders - `[wcj_order_billing_country_name]` and `[wcj_order_shipping_country_name]` shortcodes added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_product_addons` column added.
+* Fix - PRICES & CURRENCIES - Offer Your Price - Button Options - CSS Class - Fixed (wasn't applied at all).
+* Dev - PRICES & CURRENCIES - Product Price by Formula - Compatibility with "Products XML" module added.
+* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Months" options added.
+* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Days" options added.
+* Dev - PRODUCTS - Product Addons - All Products Addons - "Exclude Products" option added.
+* Dev - PRODUCTS - Product Addons - "Title" option added.
+* Dev - PRODUCTS - Product Addons - "Placeholder" option (for "Select Box" type only) added.
+* Dev - PRODUCTS - Product Addons - "Select Box" type added.
+* Dev - PRODUCTS - Product Bulk Meta Editor - Restyling; minor fixes.
+* Dev - PAYMENT GATEWAYS - Gateways Currency Converter - Module renamed (was "Gateways Currency").
+* Dev - PAYMENT GATEWAYS - Gateways by Currency - Initial module release.
+* Dev - PDF INVOICING & PACKING SLIPS - Styling - `wcj_pdf_invoicing_fonts` filter added.
+* Dev - EMAILS & MISC. - Admin Bar - Booster - Dashboard - `wcj_admin_bar_dashboard_nodes` filter added.
+* Dev - EMAILS & MISC. - Export - Date ranges added.
 
-= 2.9.1 - 17/07/2017
+= 2.9.1 - 17/07/2017 =
 * Dev - `WCJ_Module` - `save_meta_box_validate_value()` added.
 * Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products in Settings" option added (Supported modules: Product Info).
 * Dev - Functions - Country - `wcj_get_country_flag_by_code()` - "No flag" added.
@@ -212,7 +217,7 @@ $~D	* Dev - PRODUCTS - Bookings - Datepicker Options - "Exclude Days" options ad
 * Dev - EMAILS & MISC. - URL Coupons - Initial module release (separated from "General" module).
 * Tweak - Flags images updated.
 
-= 2.9.0 - 02/07/2017
+= 2.9.0 - 02/07/2017 =
 * Dev - WooCommerce v3.x.x compatibility - Shortcodes - Orders - `[wcj_order_items_table]` - `product_name` column - "WooCommerce TM Extra Product Options" plugin compatibility - `get_meta()`.
 * Dev - WooCommerce v3.x.x compatibility - Shortcodes - Products - `[wcj_product_dimensions]` - `wc_format_dimensions()`.
 * Dev - WooCommerce v3.x.x compatibility - PAYMENT GATEWAYS - Custom Gateways - `wc_reduce_stock_levels()`.

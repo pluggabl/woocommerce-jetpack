@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways by User Role
  *
- * @version 2.8.0
+ * @version 3.0.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  */
@@ -35,12 +35,12 @@ class WCJ_Payment_Gateways_By_User_Role extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 2.5.3
+	 * @version 3.0.0
 	 * @since   2.5.3
 	 */
 	function available_payment_gateways( $_available_gateways ) {
+		$customer_role = wcj_get_current_user_first_role();
 		foreach ( $_available_gateways as $key => $gateway ) {
-			$customer_role = wcj_get_current_user_first_role();
 			$include_roles = get_option( 'wcj_gateways_user_roles_include_' . $key, '' );
 			if ( ! empty( $include_roles ) && ! in_array( $customer_role, $include_roles ) ) {
 				unset( $_available_gateways[ $key ] );

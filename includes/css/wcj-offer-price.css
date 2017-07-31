@@ -72,7 +72,9 @@
 	color: white;
 }
 
-.wcj-offer-price-modal-body {padding: 2px 16px;}
+.wcj-offer-price-modal-body {
+	padding: 2px 16px;
+}
 
 .wcj-offer-price-modal-footer {
 	padding: 2px 16px;

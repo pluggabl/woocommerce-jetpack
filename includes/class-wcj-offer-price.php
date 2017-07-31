@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 2.9.0
+ * @version 3.0.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -320,7 +320,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * add_offer_price_button.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.0
 	 * @since   2.9.0
 	 */
 	function add_offer_price_button() {
@@ -330,12 +330,14 @@ class WCJ_Offer_Price extends WCJ_Module {
 			return;
 		}
 		// The button
+		if ( '' != $additional_class = get_option( 'wcj_offer_price_button_class', 'button' ) ) {
+			$additional_class = ' ' . $additional_class;
+		}
 		echo '<p>' .
 			'<button type="submit"' .
 				' name="wcj-offer-price-button"' .
-				' class="wcj-offer-price-button"' .
+				' class="wcj-offer-price-button' . $additional_class . '"' .
 				' value="' . $product_id . '"' .
-				' class="' . get_option( 'wcj_offer_price_button_class', 'button' ) . '"' .
 				' style="' . get_option( 'wcj_offer_price_button_style', '' ) . '"' .
 				' wcj_data=\'' . json_encode( $this->get_wcj_data_array( $product_id ) ) . '\'' .
 			'>' .

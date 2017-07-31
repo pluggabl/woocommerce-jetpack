@@ -116,6 +116,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	 * Trigger.
 	 *
 	 * @version 2.5.6
+	 * @todo    WC3 compatibility
 	 */
 	function trigger( $order_id ) {
 

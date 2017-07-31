@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Product Bulk Meta Editor
  *
- * @version 2.8.0
- * @version 2.8.0
+ * @version 3.0.0
+ * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -175,16 +175,16 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 	/**
 	 * get_result_message.
 	 *
-	 * @version 2.8.0
+	 * @version 3.0.0
 	 * @since   2.8.0
 	 */
 	function get_result_message( $success, $fail ) {
 		$result_message = '';
 		if ( $success > 0 ) {
-			$result_message .= '<p><div class="updated"><p>' . sprintf( __( 'Meta for <strong>%d</strong> was product(s) updated.', 'woocommerce-jetpack' ), $success ) . '</p></div></p>';
+			$result_message .= '<p><div class="notice notice-success is-dismissible"><p>' . sprintf( __( 'Meta for <strong>%d</strong> product(s) was updated.', 'woocommerce-jetpack' ), $success ) . '</p></div></p>';
 		}
 		if ( $fail > 0 ) {
-			$result_message .= '<p><div class="error"><p>' . sprintf( __( 'Meta for <strong>%d</strong> product(s) was not updated.', 'woocommerce-jetpack' ), $fail ) . '</p></div></p>';
+			$result_message .= '<p><div class="notice notice-warning is-dismissible"><p>' . sprintf( __( 'Meta for <strong>%d</strong> product(s) was not updated.', 'woocommerce-jetpack' ), $fail ) . '</p></div></p>';
 		}
 		return $result_message;
 	}
@@ -214,18 +214,22 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 	/**
 	 * get_html_meta_key_input.
 	 *
-	 * @version 2.8.0
+	 * @version 3.0.0
 	 * @since   2.8.0
 	 */
 	function get_html_meta_key_input( $meta_name ) {
 		$meta_html = '';
 		$meta_html .= '<p>';
+		$meta_html .= '<label for="wcj_product_bulk_meta_editor_show_meta">';
 		$meta_html .= __( 'Meta key', 'woocommerce-jetpack' );
 		if ( '' == $meta_name ) {
 			$meta_html .= ', ' . sprintf( __( 'for example %s', 'woocommerce-jetpack' ), '<code>_sku</code>' );
 		}
-		$meta_html .= ' ' . '<input required type="text" name="wcj_product_bulk_meta_editor_show_meta" value="' . $meta_name . '">';
-		$meta_html .= ' ' . '<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_show" value="show">' . __( 'Show', 'woocommerce-jetpack' ) . '</button>';
+		$meta_html .= '</label>';
+		$meta_html .= '<input required class="widefat" type="text" id="wcj_product_bulk_meta_editor_show_meta" name="wcj_product_bulk_meta_editor_show_meta" value="' . $meta_name . '">';
+		$meta_html .= '</p>';
+		$meta_html .= '<p>';
+		$meta_html .= '<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_show" value="show">' . __( 'Show', 'woocommerce-jetpack' ) . '</button>';
 		$meta_html .= '</p>';
 		$table_data = array();
 		$table_data[] = array(
@@ -282,14 +286,18 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 	/**
 	 * get_html_meta_table_set_single_value.
 	 *
-	 * @version 2.8.0
+	 * @version 3.0.0
 	 * @since   2.8.0
 	 */
 	function get_html_meta_table_set_single_value( $set_meta, $js_confirmation ) {
-		$single_value_html = __( 'Value', 'woocommerce-jetpack' ) .
-			' ' . '<input type="text" name="wcj_product_bulk_meta_editor_set_meta" value="' . $set_meta . '">' .
-			' ' . '<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_set" value="set"' . $js_confirmation . '>' .
-				__( 'Set', 'woocommerce-jetpack' ) . '</button>';
+		$single_value_html = '<p>' .
+			'<label for="wcj_product_bulk_meta_editor_set_meta">' . __( 'Value', 'woocommerce-jetpack' ) . '</label>' .
+			'<input type="text" class="widefat" id="wcj_product_bulk_meta_editor_set_meta" name="wcj_product_bulk_meta_editor_set_meta" value="' . $set_meta . '">' .
+		'</p>' .
+		'<p>' .
+			'<button class="button-primary" type="submit" name="wcj_product_bulk_meta_editor_set" value="set"' . $js_confirmation . '>' .
+				__( 'Set', 'woocommerce-jetpack' ) . '</button>' .
+		'</p>';
 		$table_data = array();
 		$table_data[] = array(
 			__( 'Set Meta for All Products', 'woocommerce-jetpack' ),
