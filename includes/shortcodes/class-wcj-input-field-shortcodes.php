@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Input Field
  *
- * @version 2.5.2
+ * @version 3.0.1
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Input_Field_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.5.2
+	 * @version 3.0.1
 	 * @since   2.5.2
 	 */
 	function __construct() {
@@ -33,6 +33,7 @@ class WCJ_Input_Field_Shortcodes extends WCJ_Shortcodes {
 			'name'        => '',
 			'attach_to'   => '',
 			'label'       => '',
+			'required'    => 'no',
 		);
 
 		parent::__construct();
@@ -42,7 +43,7 @@ class WCJ_Input_Field_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_input_field.
 	 *
-	 * @version 2.5.2
+	 * @version 3.0.1
 	 * @since   2.5.2
 	 */
 	function wcj_input_field( $atts, $content ) {
@@ -62,6 +63,9 @@ class WCJ_Input_Field_Shortcodes extends WCJ_Shortcodes {
 		}
 		if ( '' != $atts['label'] ) {
 			$the_field .= '<input type="hidden" name="label_for_wcj_input_field_' . $atts['name'] . '" value="' . $atts['label'] . '">';
+		}
+		if ( 'yes' == $atts['required'] ) {
+			$the_field .= '<input type="hidden" name="wcj_input_field_' . $atts['name'] . '_required" value="yes">';
 		}
 		return $the_field;
 	}
