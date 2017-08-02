@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cart Customization
  *
- * @version 2.8.0
+ * @version 3.0.1
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Cart_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.0.1
 	 * @since   2.7.0
 	 */
 	function __construct() {
@@ -36,11 +36,26 @@ class WCJ_Cart_Customization extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_cart_hide_item_remove_link', 'no' ) ) {
 				add_filter( 'woocommerce_cart_item_remove_link', '__return_empty_string', PHP_INT_MAX );
 			}
-			// Customize "Return to shop" button
+			// Customize "Return to shop" button text
 			if ( 'yes' === get_option( 'wcj_cart_customization_return_to_shop_button_enabled', 'no' ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 			}
+			// Customize "Return to shop" button link
+			if ( 'yes' === get_option( 'wcj_cart_customization_return_to_shop_button_link_enabled', 'no' ) ) {
+				add_action( 'woocommerce_return_to_shop_redirect', array( $this, 'change_empty_cart_return_to_shop_link' ) );
+			}
 		}
+	}
+
+	/**
+	 * change_empty_cart_return_to_shop_link.
+	 *
+	 * @version 3.0.1
+	 * @since   3.0.1
+	 * @todo    (maybe) check if link is not empty
+	 */
+	function change_empty_cart_return_to_shop_link( $link ) {
+		return ( is_cart() ? get_option( 'wcj_cart_customization_return_to_shop_button_link', '' ) : $link );
 	}
 
 	/**

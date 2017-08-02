@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Cart Customization
  *
- * @version 2.8.0
+ * @version 3.0.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -40,6 +40,19 @@ return array(
 		'id'       => 'wcj_cart_customization_return_to_shop_button_text',
 		'default'  => __( 'Return to shop', 'woocommerce' ),
 		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Change Empty Cart "Return to shop" Button Link', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_cart_customization_return_to_shop_button_link_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'id'       => 'wcj_cart_customization_return_to_shop_button_link',
+		'default'  => '',
+		'type'     => 'text',
+		'css'      => 'width:300px;',
 	),
 	array(
 		'type'     => 'sectionend',
