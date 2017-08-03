@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 3.0.0
+Stable tag: 3.0.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -167,9 +167,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.0.1 - 02/08/2017 =
-	* Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart Return to shop Button Link" option added.
-!D	* Dev - PAYMENT GATEWAYS - Custom Gateways - `required` attribute added to `[wcj_input_field]` shortcode.
+= 3.0.1 - 03/08/2017 =
+* Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart Return to shop Button Link" option added.
+* Dev - PAYMENT GATEWAYS - Custom Gateways - `required` attribute added to `[wcj_input_field]` shortcode.
+* Fix - Plus message fixed.
 
 = 3.0.0 - 31/07/2017 =
 * Dev - Plugin update checker added.

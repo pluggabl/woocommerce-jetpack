@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: https://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 3.0.1-dev
+Version: 3.0.1
 Author: Algoritmika Ltd
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
@@ -74,7 +74,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.0.1-dev-201708022209';
+	public $version = '3.0.1';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -127,7 +127,7 @@ final class WC_Jetpack {
 	/**
 	 * init_settings.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.1
 	 * @since   2.9.0
 	 */
 	function init_settings() {
@@ -137,14 +137,16 @@ final class WC_Jetpack {
 			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'action_links' ) );
 			add_action( 'admin_menu',                                         array( $this, 'booster_menu' ), 100 );
 			add_filter( 'admin_footer_text',                                  array( $this, 'admin_footer_text' ), 2 );
-			add_action( 'admin_notices',                                      array( $this, 'check_plus_version' ) );
+			if ( 'woocommerce-jetpack.php' === basename( __FILE__ ) ) {
+				add_action( 'admin_notices',                                  array( $this, 'check_plus_version' ) );
+			}
 		}
 	}
 
 	/**
 	 * check_plus_version.
 	 *
-	 * @version 2.8.2
+	 * @version 3.0.1
 	 * @since   2.5.9
 	 */
 	function check_plus_version() {
@@ -152,27 +154,31 @@ final class WC_Jetpack {
 			return;
 		}
 		// Check if Plus is installed and activated
-		$is_plus_active = false;
+		$is_plus_active    = false;
+		$is_plus_v3_active = false;
 		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) );
 		if ( is_multisite() ) {
 			$active_plugins = array_merge( $active_plugins, array_keys( get_site_option( 'active_sitewide_plugins', array() ) ) );
 		}
 		foreach ( $active_plugins as $active_plugin ) {
 			$active_plugin = explode( '/', $active_plugin );
-			if ( isset( $active_plugin[1] ) && ( 'woocommerce-jetpack-plus.php' === $active_plugin[1] || 'woocommerce-booster-plus.php' === $active_plugin[1] ) ) {
-				$is_plus_active = true;
-				break;
+			if ( isset( $active_plugin[1] ) ) {
+				if ( 'booster-plus-for-woocommerce.php' === $active_plugin[1] ) {
+					$is_plus_v3_active = true;
+					break;
+				} elseif ( 'woocommerce-jetpack-plus.php' === $active_plugin[1] || 'woocommerce-booster-plus.php' === $active_plugin[1] ) {
+					$is_plus_active = true;
+				}
 			}
 		}
 		// Check Plus version
-		if ( $is_plus_active ) {
+		if ( ! $is_plus_v3_active && $is_plus_active ) {
 			$plus_version = get_option( 'booster_plus_version', false );
 			$required_plus_version = '1.1.0';
 			if ( version_compare( $plus_version, $required_plus_version, '<' ) ) {
 				$class = 'notice notice-error';
 				$message = sprintf(
-					__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin to version %s. Please visit <a href="%s">your account</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
-					$required_plus_version,
+					__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin. Please visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
 					'https://booster.io/my-account/?utm_source=plus_update'
 				);
 				echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
