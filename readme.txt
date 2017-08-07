@@ -167,6 +167,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.0.2 - 07/08/2017 =
+D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
+!	* Dev - PRODUCTS - Product Tabs - Code refactoring, cleanup and minor fixes.
+!D	* Dev - CART & CHECKOUT - Cart Customization - Change Empty Cart "Return to shop" Button Text - "Method" option added.
+
 = 3.0.1 - 03/08/2017 =
 * Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart Return to shop Button Link" option added.
 * Dev - PAYMENT GATEWAYS - Custom Gateways - `required` attribute added to `[wcj_input_field]` shortcode.

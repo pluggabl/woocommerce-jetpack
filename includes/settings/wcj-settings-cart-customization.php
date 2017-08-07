@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Cart Customization
  *
- * @version 3.0.1
+ * @version 3.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -37,6 +37,17 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc'     => __( 'Method', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_cart_customization_return_to_shop_button_text_method',
+		'default'  => 'js',
+		'type'     => 'select',
+		'options'  => array(
+			'js'       => __( 'Use JavaScript', 'woocommerce-jetpack' ),
+			'template' => __( 'Replace empty cart template', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Text', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_cart_customization_return_to_shop_button_text',
 		'default'  => __( 'Return to shop', 'woocommerce' ),
 		'type'     => 'text',
@@ -49,6 +60,7 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc'     => __( 'Link', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_cart_customization_return_to_shop_button_link',
 		'default'  => '',
 		'type'     => 'text',
