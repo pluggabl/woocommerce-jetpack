@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.0.0
+ * @version 3.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.0
+	 * @version 3.0.2
 	 */
 	function __construct() {
 
@@ -40,6 +40,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_items',
 			'wcj_order_subtotal',
 			'wcj_order_subtotal_plus_shipping',
+			'wcj_order_subtotal_to_display',
 			'wcj_order_total_discount',
 //			'wcj_order_cart_discount',
 			'wcj_order_shipping_tax',
@@ -84,7 +85,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.2
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -110,6 +111,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'meta_key'                    => '',
 			'tax_class'                   => '',
 			'fallback_billing_address'    => 'no',
+			'tax_display'                 => '',
 		), $atts );
 
 		return $modified_atts;
@@ -912,6 +914,16 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		return $this->wcj_price_shortcode( $the_subtotal, $atts );
+	}
+
+	/**
+	 * wcj_order_subtotal_to_display.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_order_subtotal_to_display( $atts ) {
+		return $this->the_order->get_subtotal_to_display( false, $atts['tax_display'] );
 	}
 
 	/**

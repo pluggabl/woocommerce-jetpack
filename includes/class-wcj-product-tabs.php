@@ -94,66 +94,52 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	}
 
 	/**
-	 * add_product_tabs_global.
+	 * add_custom_product_tabs.
 	 *
 	 * @version 3.0.2
 	 * @since   3.0.2
+	 * @todo    add visibility by user roles
 	 */
-	function add_product_tabs_global( $tabs, $current_post_id ) {
-		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
-			$key = 'global_' . $i;
-			if ( '' != get_option( 'wcj_custom_product_tabs_title_' . $key, '' ) &&
-				( '' != get_option( 'wcj_custom_product_tabs_content_' . $key, '' ) || '' != get_option( 'wcj_custom_product_tabs_link_' . $key, '' ) )
-			) {
-				if ( ! $this->is_global_tab_visible( $i, $current_post_id ) ) {
-					continue;
+	function add_custom_product_tabs( $scope, $tabs, $product_id ) {
+		switch ( $scope ) {
+			case 'global':
+				$total_custom_tabs = apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) );
+				break;
+			default: // 'local'
+				if ( ! ( $total_custom_tabs = get_post_meta( $product_id, '_' . 'wcj_custom_product_tabs_local_total_number', true ) ) ) {
+					$total_custom_tabs = apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
 				}
-				// Adding the tab
-				$tab_key = $this->get_tab_key( $key, 'global' );
-				$this->tab_option_keys['global'][ $tab_key ] = $key;
-				$tabs[ $tab_key ] = array(
-					'title'    => do_shortcode( get_option( 'wcj_custom_product_tabs_title_' . $key ) ),
-					'priority' => get_option( 'wcj_custom_product_tabs_priority_' . $key, 40 ),
-					'callback' => array( $this, 'create_new_custom_product_tab_global' ),
-				);
-			}
-		}
-		return $tabs;
-	}
-
-	/**
-	 * add_product_tabs_local.
-	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
-	 */
-	function add_product_tabs_local( $tabs, $current_post_id ) {
-		$option_name = 'wcj_custom_product_tabs_local_total_number';
-		if ( ! ( $total_custom_tabs = get_post_meta( $current_post_id, '_' . $option_name, true ) ) ) {
-			$total_custom_tabs = apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );
-		}
-		if ( 'yes' !== get_option( 'wcj_custom_product_tabs_local_enabled', 'yes' ) ) {
-			$total_custom_tabs = 0;
+				break;
 		}
 		for ( $i = 1; $i <= $total_custom_tabs; $i++ ) {
-			if ( $this->is_local_tab_visible( $i, $current_post_id ) ) {
-				$key = 'local_' . $i;
-				$tab_priority = get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_priority_' . $key, true );
-				if ( ! $tab_priority ) {
-					$tab_priority = ( 50 + $i - 1 );
+			$visibility_check_function = 'is_' . $scope . '_tab_visible';
+			if ( $this->$visibility_check_function( $i, $product_id ) ) {
+				$option_key = $scope . '_' . $i;
+				switch ( $scope ) {
+					case 'global':
+						$title    = get_option( 'wcj_custom_product_tabs_title_'    . $option_key, '' );
+						$content  = get_option( 'wcj_custom_product_tabs_content_'  . $option_key, '' );
+						$priority = get_option( 'wcj_custom_product_tabs_priority_' . $option_key, 40 );
+						$link     = get_option( 'wcj_custom_product_tabs_link_'     . $option_key, '' );
+						break;
+					default: // 'local'
+						$title    = get_post_meta( $product_id, '_' . 'wcj_custom_product_tabs_title_'    . $option_key, true );
+						$content  = get_post_meta( $product_id, '_' . 'wcj_custom_product_tabs_content_'  . $option_key, true );
+						$priority = get_post_meta( $product_id, '_' . 'wcj_custom_product_tabs_priority_' . $option_key, true );
+						$link     = get_post_meta( $product_id, '_' . 'wcj_custom_product_tabs_link_'     . $option_key, true );
+						if ( ! $priority ) {
+							$priority = ( 50 + $i - 1 );
+						}
+						break;
 				}
-				if ( '' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) &&
-					(
-						'' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_content_' . $key, true ) ||
-						'' != get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_link_' . $key, true )
-					)
-				) {
-					$tab_key = $this->get_tab_key( $key, 'local', $current_post_id );
-					$this->tab_option_keys['local'][ $tab_key ] = $key;
+				if ( '' != $title && ( '' != do_shortcode( $content ) || '' != $link ) ) {
+					// Adding the tab
+					$tab_key = $this->get_tab_key( $option_key, $scope, $product_id );
+					$this->tab_option_keys[ $scope ][ $tab_key ] = $option_key;
 					$tabs[ $tab_key ] = array(
-						'title'    => do_shortcode( get_post_meta( $current_post_id, '_' . 'wcj_custom_product_tabs_title_' . $key, true ) ),
-						'priority' => $tab_priority,
-						'callback' => array( $this, 'create_new_custom_product_tab_local' ),
+						'title'    => do_shortcode( $title ),
+						'priority' => $priority,
+						'callback' => array( $this, 'create_new_custom_product_tab_' . $scope ),
 					);
 				}
 			}
@@ -168,16 +154,20 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 */
 	function customize_product_tabs( $tabs ) {
 
-		$current_post_id = get_the_ID();
+		$product_id = get_the_ID();
 
 		// Default Tabs
 		$tabs = $this->customize_default_tabs( $tabs );
 
 		// Custom Tabs - Global
-		$tabs = $this->add_product_tabs_global( $tabs, $current_post_id );
+		if ( 'yes' === get_option( 'wcj_custom_product_tabs_global_enabled', 'yes' ) ) {
+			$tabs = $this->add_custom_product_tabs( 'global', $tabs, $product_id );
+		}
 
 		// Custom Tabs - Local
-		$tabs = $this->add_product_tabs_local( $tabs, $current_post_id );
+		if ( 'yes' === get_option( 'wcj_custom_product_tabs_local_enabled', 'yes' ) ) {
+			$tabs = $this->add_custom_product_tabs( 'local', $tabs, $product_id );
+		}
 
 		return $tabs;
 	}
@@ -457,6 +447,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 * create_new_custom_product_tab_local.
 	 *
 	 * @version 3.0.2
+	 * @todo    (maybe) replace `the_content` with `do_shortcode`
 	 */
 	function create_new_custom_product_tab_local( $key, $tab ) {
 		echo apply_filters( 'the_content', get_post_meta( get_the_ID(), '_' . 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) );
@@ -466,6 +457,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 * create_new_custom_product_tab_global.
 	 *
 	 * @version 3.0.2
+	 * @todo    (maybe) replace `the_content` with `do_shortcode`
 	 */
 	function create_new_custom_product_tab_global( $key, $tab ) {
 		echo apply_filters( 'the_content', get_option( 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['global'][ $key ] ) );

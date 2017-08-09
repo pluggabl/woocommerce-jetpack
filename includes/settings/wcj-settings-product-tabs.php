@@ -5,6 +5,7 @@
  * @version 3.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    clean up
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -12,10 +13,17 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $settings = array(
 	// Global Custom Tabs
 	array(
-		'title'     => __( 'Custom Product Tabs Options', 'woocommerce-jetpack' ),
+		'title'     => __( 'Custom Product Tabs - All Products', 'woocommerce-jetpack' ),
 		'type'      => 'title',
 		'desc'      => __( 'This section lets you add custom single product tabs.', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_custom_product_tabs_options',
+	),
+	array(
+		'title'     => __( 'Custom Product Tabs - All Products', 'woocommerce-jetpack' ),
+		'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+		'type'      => 'checkbox',
+		'id'        => 'wcj_custom_product_tabs_global_enabled',
+		'default'   => 'yes',
 	),
 	array(
 		'title'     => __( 'Custom Product Tabs Number', 'woocommerce-jetpack' ),
@@ -136,6 +144,10 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'type'      => 'multiselect',
 				'options'   => $product_tags_options,
 			),
+		)
+	);
+	if ( '' != get_option( 'wcj_custom_product_tabs_title_global_hide_in_product_ids_' . $i, '' ) ) {
+		$settings = array_merge( $settings, array(
 			array(
 				'desc'      => __( 'Comma separated PRODUCT IDs to HIDE this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 				'desc_tip'  => __( 'To hide this tab from some products, enter product IDs here.', 'woocommerce-jetpack' ),
@@ -144,6 +156,10 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'type'      => 'text',
 				'css'       => 'width:30%;min-width:300px;',
 			),
+		) );
+	}
+	if ( '' != get_option( 'wcj_custom_product_tabs_title_global_show_in_product_ids_' . $i, '' ) ) {
+		$settings = array_merge( $settings, array(
 			array(
 				'desc'      => __( 'Comma separated PRODUCT IDs to SHOW this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 				'desc_tip'  => __( 'To show this tab only for some products, enter product IDs here.', 'woocommerce-jetpack' ),
@@ -152,6 +168,10 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'type'      => 'text',
 				'css'       => 'width:30%;min-width:300px;',
 			),
+		) );
+	}
+	if ( '' != get_option( 'wcj_custom_product_tabs_title_global_hide_in_cats_ids_' . $i, '' ) ) {
+		$settings = array_merge( $settings, array(
 			array(
 				'desc'      => __( 'Comma separated CATEGORY IDs to HIDE this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 				'desc_tip'  => __( 'To hide this tab from some categories, enter category IDs here.', 'woocommerce-jetpack' ),
@@ -160,6 +180,10 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'type'      => 'text',
 				'css'       => 'width:30%;min-width:300px;',
 			),
+		) );
+	}
+	if ( '' != get_option( 'wcj_custom_product_tabs_title_global_show_in_cats_ids_' . $i, '' ) ) {
+		$settings = array_merge( $settings, array(
 			array(
 				'desc'      => __( 'Comma separated CATEGORY IDs to SHOW this tab', 'woocommerce-jetpack' ) . '. <strong><em>' . __( 'Deprecated', 'woocommerce-jetpack' ) . '!</em></strong>',
 				'desc_tip'  => __( 'To show this tab only for some categories, enter category IDs here.', 'woocommerce-jetpack' ),
@@ -168,8 +192,8 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_cus
 				'type'      => 'text',
 				'css'       => 'width:30%;min-width:300px;',
 			),
-		)
-	);
+		) );
+	}
 }
 $settings = array_merge( $settings, array(
 	array(

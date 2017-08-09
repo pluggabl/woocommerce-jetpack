@@ -167,10 +167,16 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.0.2 - 07/08/2017 =
+= 3.0.2 - 09/08/2017 =
+!D	* Dev - Shortcodes - Orders - `[wcj_order_subtotal_to_display]` shortcode added.
+!D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Added "WooCommerce Product Add-ons" plugin compatibility.
+!	* Dev - PRODUCTS - Product Input Fields - Values refilled after add to cart.
 D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
 !	* Dev - PRODUCTS - Product Tabs - Code refactoring, cleanup and minor fixes.
+!D	* Dev - PRODUCTS - Product Tabs - Deprecated options not displayed (if empty).
+!D	* Dev - PRODUCTS - Product Tabs - `do_shortcode` added when checking for empty content (before displaying the tab).
 !D	* Dev - CART & CHECKOUT - Cart Customization - Change Empty Cart "Return to shop" Button Text - "Method" option added.
+!D	* Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar added.
 
 = 3.0.1 - 03/08/2017 =
 * Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart Return to shop Button Link" option added.

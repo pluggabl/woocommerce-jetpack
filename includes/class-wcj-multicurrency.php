@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 2.8.0
+ * @version 3.0.2
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -45,7 +45,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.7.0
+	 * @version 3.0.2
 	 */
 	function add_hooks() {
 		// Session
@@ -69,7 +69,29 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 			// Add "Change Price" hooks
 			wcj_add_change_price_hooks( $this, PHP_INT_MAX - 1 );
+
+			// "WooCommerce Product Add-ons" plugin
+			add_filter( 'get_product_addons', array( $this, 'change_price_addons' ) );
 		}
+	}
+
+	/**
+	 * change_price_addons.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function change_price_addons( $addons ) {
+		foreach ( $addons as $addon_key => $addon ) {
+			if ( isset( $addon['options'] ) ) {
+				foreach ( $addon['options'] as $option_key => $option ) {
+					if ( isset( $option['price'] ) ) {
+						$addons[ $addon_key ]['options'][ $option_key ]['price'] = $this->change_price( $option['price'], null );
+					}
+				}
+			}
+		}
+		return $addons;
 	}
 
 	/**

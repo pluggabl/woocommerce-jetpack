@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 3.0.0
+ * @version 3.0.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,18 +16,13 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.2
 	 * @since   2.9.0
 	 * @todo    (maybe) custom user nodes
 	 * @todo    (maybe) optional nodes selection
 	 * @todo    (maybe) add WooCommerce versions (from / to) to nodes
 	 * @todo    (maybe) customizable icons
-	 * @todo    (maybe) separate "Booster Active Modules" admin bar menu
-	 * @todo    (maybe) separate "Booster Modules" admin bar menu
-	 * @todo    (maybe) separate "Booster Tools" admin bar menu
-	 * @todo    (maybe) separate "WooCommerce Reports" admin bar menu
-	 * @todo    (maybe) separate "WooCommerce Products" admin bar menu
-	 * @todo    (maybe) separate "WooCommerce Settings" admin bar menu
+	 * @todo    (maybe) separate admin bar menu: "Booster Modules", "Booster Tools", "WooCommerce Reports", "WooCommerce Products", "WooCommerce Settings"
 	 */
 	function __construct() {
 
@@ -45,6 +40,9 @@ class WCJ_Admin_Bar extends WCJ_Module {
 			}
 			if ( 'yes' === get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) ) {
 				add_action( 'admin_bar_menu', array( $this, 'add_booster_admin_bar' ), PHP_INT_MAX );
+				if ( 'yes' === get_option( 'wcj_admin_bar_booster_active_enabled', 'yes' ) ) {
+					add_action( 'admin_bar_menu', array( $this, 'add_booster_active_admin_bar' ), PHP_INT_MAX );
+				}
 				add_action( 'wp_head',        array( $this, 'add_booster_admin_bar_icon_style' ) );
 				add_action( 'admin_head',     array( $this, 'add_booster_admin_bar_icon_style' ) );
 			}
@@ -70,11 +68,12 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_admin_bar_icon_style.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.2
 	 * @since   2.9.0
 	 */
 	function add_booster_admin_bar_icon_style() {
 		echo '<style type="text/css"> #wpadminbar #wp-admin-bar-booster .ab-icon:before { content: "\f185"; top: 3px; } </style>';
+		echo '<style type="text/css"> #wpadminbar #wp-admin-bar-booster-active .ab-icon:before { content: "\f155"; top: 3px; } </style>';
 	}
 
 	/**
@@ -117,7 +116,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * get_nodes_booster_modules.
 	 *
-	 * @version 3.0.0
+	 * @version 3.0.2
 	 * @since   2.9.0
 	 * @todo    (maybe) dashes instead of underscores
 	 * @todo    (maybe) dashboard > alphabetically - list all modules
@@ -126,7 +125,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	function get_nodes_booster_modules() {
 		$nodes = array();
 		$cats  = include( wcj_plugin_path() . '/includes/admin/' . 'wcj-modules-cats.php' );
-		$active_modules = array();
+		$this->active_modules = array();
 		foreach ( $cats as $id => $label_info ) {
 			$nodes[ $id ] = array(
 				'title'  => $label_info['label'],
@@ -175,16 +174,16 @@ class WCJ_Admin_Bar extends WCJ_Module {
 						),
 					);
 					if ( WCJ()->modules[ $link_id ]->is_enabled() && 'module' === WCJ()->modules[ $link_id ]->type ) {
-						$active_modules[ $link_id ] = $cat_nodes[ $link_id ];
+						$this->active_modules[ $link_id ] = $cat_nodes[ $link_id ];
 					}
 				}
 				usort( $cat_nodes, array( $this, 'usort_compare_by_title' ) );
 				$nodes[ $id ]['nodes'] = $cat_nodes;
 			}
 		}
-		if ( ! empty( $active_modules ) ) {
-			usort( $active_modules, array( $this, 'usort_compare_by_title' ) );
-			$nodes['dashboard']['nodes']['active']['nodes'] = $active_modules;
+		if ( ! empty( $this->active_modules ) ) {
+			usort( $this->active_modules, array( $this, 'usort_compare_by_title' ) );
+			$nodes['dashboard']['nodes']['active']['nodes'] = $this->active_modules;
 		}
 		return $nodes;
 	}
@@ -224,6 +223,31 @@ class WCJ_Admin_Bar extends WCJ_Module {
 			}
 		}
 		return $nodes;
+	}
+
+	/**
+	 * add_booster_active_admin_bar.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function add_booster_active_admin_bar( $wp_admin_bar ) {
+		$tools = array(
+			'tools' => array(
+				'title'  => __( 'Tools', 'woocommerce-jetpack' ),
+				'href'   => admin_url( 'admin.php?page=wcj-tools' ),
+				'nodes'  => $this->get_nodes_booster_tools(),
+			),
+		);
+		unset( $tools['tools']['nodes']['dashboard'] );
+		$nodes = array(
+			'booster-active' => array(
+				'title'  => '<span class="ab-icon"></span>' . __( 'Booster: Active', 'woocommerce-jetpack' ),
+				'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=active' ),
+				'nodes'  => array_merge( $this->active_modules, $tools ),
+			),
+		);
+		$this->add_woocommerce_admin_bar_nodes( $wp_admin_bar, $nodes, false );
 	}
 
 	/**
