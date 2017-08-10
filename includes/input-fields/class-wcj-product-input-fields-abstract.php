@@ -682,7 +682,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Adds product input values to order details (and emails).
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.2
 	 */
 	function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
@@ -723,7 +723,7 @@ class WCJ_Product_Input_Fields_Abstract {
 					$value = maybe_unserialize( $value );
 					$value = ( isset( $value['name'] ) ) ? $value['name'] : '';
 				}
-				if ( '' != $value ) {
+				if ( '' != $value && is_string( $value ) ) {
 					$name .= str_replace( array( '%title%', '%value%' ), array( $title, $value ), $item_template );
 				}
 			}
