@@ -311,7 +311,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 //		if ( ! isset( $_GET['wcj_validate_eu_vat_number'] ) ) return;
 		if ( isset( $_POST['wcj_eu_vat_number_to_check'] ) && '' != $_POST['wcj_eu_vat_number_to_check'] ) {
 			$eu_vat_number_to_check = substr( $_POST['wcj_eu_vat_number_to_check'], 2 );
-			$eu_vat_number_country_to_check = substr( $_POST['wcj_eu_vat_number_to_check'], 0, 2 );
+			$eu_vat_number_country_to_check = strtoupper( substr( $_POST['wcj_eu_vat_number_to_check'], 0, 2 ) );
 			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_eu_vat_number_check_ip_location_country', 'no' ) ) ) {
 				$location = WC_Geolocation::geolocate_ip();
 				if ( empty( $location['country'] ) ) {
@@ -360,7 +360,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				if ( empty( $location['country'] ) ) {
 					$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
 				}
-				$selected_country = substr( $_SESSION['wcj_eu_vat_number_to_check'], 0, 2 );
+				$selected_country = strtoupper( substr( $_SESSION['wcj_eu_vat_number_to_check'], 0, 2 ) );
 				if ( 'EL' === $selected_country ) {
 					$selected_country = 'GR';
 				}
