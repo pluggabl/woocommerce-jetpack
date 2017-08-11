@@ -2,10 +2,11 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 2.8.0
+ * @version 3.0.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
+ * @todo    sort discounts table by quantity (asc) before using
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -167,7 +168,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * calculate_totals.
 	 *
-	 * @version 2.7.0
+	 * @version 3.0.2
 	 * @since   2.5.0
 	 */
 	function calculate_totals( $cart ) {
@@ -210,7 +211,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			$the_quantity = ( 'yes' === get_option( 'wcj_wholesale_price_use_total_cart_quantity', 'no' ) )
 				? $cart->cart_contents_count
 				: $item['quantity'];
-			if ( $the_quantity > 1 ) {
+			if ( $the_quantity > 0 ) {
 				$wholesale_price = $this->get_wholesale_price( $price, $the_quantity, wcj_get_product_id_or_variation_parent_id( $_product ) );
 				if ( $wholesale_price != $price ) {
 					// Setting wholesale price
@@ -231,7 +232,8 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	 * @version 2.7.0
 	 */
 	function wholesale_price( $price, $_product ) {
-		return ( wcj_is_product_wholesale_enabled( wcj_get_product_id_or_variation_parent_id( $_product ) ) && isset( $_product->wcj_wholesale_price ) ) ? $_product->wcj_wholesale_price : $price;
+		return ( wcj_is_product_wholesale_enabled( wcj_get_product_id_or_variation_parent_id( $_product ) ) && isset( $_product->wcj_wholesale_price ) ) ?
+			$_product->wcj_wholesale_price : $price;
 	}
 
 }

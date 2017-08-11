@@ -167,9 +167,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.0.2 - 10/08/2017 =
+= 3.0.2 - 11/08/2017 =
 !D	* Dev - Shortcodes - Orders - `[wcj_order_subtotal_to_display]` shortcode added.
 !D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Added "WooCommerce Product Add-ons" plugin compatibility.
+!D	* Dev - PRICES & CURRENCIES - Wholesale Price - Minimum quantity for applied discount changed from 1 to 0.
 !	* Dev - PRODUCTS - Product Input Fields - Additional check for `is_string( $value )` added.
 !	* Dev - PRODUCTS - Product Input Fields - Values refilled after add to cart.
 D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
