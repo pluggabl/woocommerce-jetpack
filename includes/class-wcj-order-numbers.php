@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 2.8.0
+ * @version 3.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.0.2
 	 */
 	function __construct() {
 
@@ -39,11 +39,22 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			add_filter( 'woocommerce_order_number', array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
 			if ( 'yes' === get_option( 'wcj_order_number_order_tracking_enabled', 'yes' ) ) {
 				add_filter( 'woocommerce_shortcode_order_tracking_order_id', array( $this, 'add_order_number_to_tracking' ), PHP_INT_MAX );
+				add_action( 'init',                                          array( $this, 'remove_order_tracking_sanitize_order_id_filter' ) );
 			}
 			if ( 'yes' === get_option( 'wcj_order_number_search_by_custom_number_enabled', 'yes' ) ) {
 				add_action( 'pre_get_posts', array( $this, 'search_by_custom_number' ) );
 			}
 		}
+	}
+
+	/**
+	 * remove_order_tracking_sanitize_order_id_filter.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function remove_order_tracking_sanitize_order_id_filter() {
+		remove_filter( 'woocommerce_shortcode_order_tracking_order_id', 'wc_sanitize_order_id' );
 	}
 
 	/**
@@ -76,32 +87,33 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * add_order_number_to_tracking.
 	 *
-	 * @version 2.5.2
+	 * @version 3.0.2
 	 * @since   2.5.2
-	 * @todo    optimize WP_Query to return only `ids` for `fields`
 	 */
 	function add_order_number_to_tracking( $order_number ) {
-		$offset = 0;
-		$block_size = 96;
+		$offset     = 0;
+		$block_size = 512;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'shop_order',
 				'post_status'    => 'any',
 				'posts_per_page' => $block_size,
-				'orderby'        => 'date',
+				'orderby'        => 'ID',
 				'order'          => 'DESC',
 				'offset'         => $offset,
+				'fields'         => 'ids',
 			);
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$_order_id = $loop->post->ID;
-				$_order = wc_get_order( $_order_id );
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $_order_id ) {
+				$_order        = wc_get_order( $_order_id );
 				$_order_number = $this->display_order_number( $_order_id, $_order );
 				if ( $_order_number === $order_number ) {
 					return $_order_id;
 				}
-			endwhile;
+			}
 			$offset += $block_size;
 		}
 		return $order_number;
@@ -202,13 +214,13 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Renumerate orders function.
 	 *
-	 * @version 2.5.0
+	 * @version 3.0.2
 	 * @todo    renumerate in date range only
-	 * @todo    optimize WP_Query to return only `ids` for `fields`
+	 * @todo    (maybe) `orderby` set to `ID`
 	 */
 	function renumerate_orders() {
-		$offset = 0;
-		$block_size = 96;
+		$offset     = 0;
+		$block_size = 512;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'shop_order',
@@ -217,13 +229,15 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'orderby'        => 'date',
 				'order'          => 'ASC',
 				'offset'         => $offset,
+				'fields'         => 'ids',
 			);
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$order_id = $loop->post->ID;
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $order_id ) {
 				$this->add_order_number_meta( $order_id, true );
-			endwhile;
+			}
 			$offset += $block_size;
 		}
 	}

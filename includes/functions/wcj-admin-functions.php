@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 2.9.1
+ * @version 3.0.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -13,10 +13,11 @@ if ( ! function_exists( 'wcj_get_settings_as_multiselect_or_text' ) ) {
 	/**
 	 * wcj_get_settings_as_multiselect_or_text.
 	 *
-	 * @version 2.9.1
+	 * @version 3.0.2
 	 * @since   2.9.1
 	 */
 	function wcj_get_settings_as_multiselect_or_text( $values, $multiselect_options, $is_multiselect ) {
+		$prev_desc = ( isset( $values['desc'] ) ? $values['desc'] . ' ' : '' );
 		return ( $is_multiselect ?
 			array_merge( $values, array(
 				'type'     => 'multiselect',
@@ -25,7 +26,7 @@ if ( ! function_exists( 'wcj_get_settings_as_multiselect_or_text' ) ) {
 			) ) :
 			array_merge( $values, array(
 				'type'     => 'text',
-				'desc'     => __( 'Enter comma separated list of IDs.', 'woocommerce-jetpack' ),
+				'desc'     => $prev_desc . __( 'Enter comma separated list of IDs.', 'woocommerce-jetpack' ),
 			) )
 		);
 	}

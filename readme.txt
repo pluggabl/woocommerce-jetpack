@@ -167,10 +167,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.0.2 - 11/08/2017 =
+= 3.0.2 - 17/08/2017 =
+!D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_subtotal_to_display]` shortcode added.
+!D	* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `columns_style` attribute added.
 !D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Added "WooCommerce Product Add-ons" plugin compatibility.
 !D	* Dev - PRICES & CURRENCIES - Wholesale Price - Minimum quantity for applied discount changed from 1 to 0.
+!D	* Dev - PRODUCTS - Product Info - Advanced - "Extra Filters" option added.
 !	* Dev - PRODUCTS - Product Input Fields - Additional check for `is_string( $value )` added.
 !	* Dev - PRODUCTS - Product Input Fields - Values refilled after add to cart.
 D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
@@ -178,6 +181,10 @@ D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
 !D	* Dev - PRODUCTS - Product Tabs - Deprecated options not displayed (if empty).
 !D	* Dev - PRODUCTS - Product Tabs - `do_shortcode` added when checking for empty content (before displaying the tab).
 !D	* Dev - CART & CHECKOUT - Cart Customization - Change Empty Cart "Return to shop" Button Text - "Method" option added.
+!D	* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - "Use List Instead of Comma Separated Text for Products in Settings" support added.
+!	* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - Removed sanitizing order id (was added in WC v3.1.0).
+!	* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - `WP_Query` optimized to return `ids` only.
+!	* Dev - SHIPPING & ORDERS - Order Numbers - Orders Renumerate - `WP_Query` optimized to return `ids` only.
 !D	* Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar added.
 ~	* Dev - EMAILS & MISC. - Email Verification - `serialize()` and `unserialize()` replaced with `json_encode()` and `json_decode()`.
 

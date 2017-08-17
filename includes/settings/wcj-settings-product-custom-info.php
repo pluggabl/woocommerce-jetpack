@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Info
  *
- * @version 2.9.1
+ * @version 3.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -17,6 +17,29 @@ $settings                    = array();
 $single_or_archive_array     = array( 'single', 'archive' );
 
 foreach ( $single_or_archive_array as $single_or_archive ) {
+
+	if ( '' == ( $extra_filters = get_option( 'wcj_product_custom_info_extra_filters_' . $single_or_archive, '' ) ) ) {
+		$extra_filters = array();
+	} else {
+		$extra_filters = explode( PHP_EOL, $extra_filters );
+		$extra_filters_result = array();
+		if ( ! empty( $extra_filters ) ) {
+			foreach ( $extra_filters as $extra_filter ) {
+				if ( '' != ( $extra_filter = trim( $extra_filter ) ) ) {
+					$extra_filter = explode( '|', $extra_filter, 2 );
+					if ( 2 == count( $extra_filter ) ) {
+						$extra_filter_id    = trim( $extra_filter[0] );
+						$extra_filter_title = trim( $extra_filter[1] );
+						if ( '' != $extra_filter_id && '' != $extra_filter_title ) {
+							$extra_filters_result[ $extra_filter_id ] = $extra_filter_title;
+						}
+					}
+				}
+			}
+		}
+		$extra_filters = $extra_filters_result;
+	}
+
 	$single_or_archive_desc = ( 'single' === $single_or_archive ) ? __( 'Single', 'woocommerce-jetpack' ) : __( 'Archive', 'woocommerce-jetpack' );
 	$settings = array_merge( $settings, array(
 		array(
@@ -63,7 +86,7 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'id'       => 'wcj_product_custom_info_hook_' . $single_or_archive . '_' . $i,
 				'default'  => ( 'single' === $single_or_archive ) ? 'woocommerce_after_single_product_summary' : 'woocommerce_after_shop_loop_item_title',
 				'type'     => 'select',
-				'options'  => ( 'single' === $single_or_archive ) ?
+				'options'  => array_merge( ( 'single' === $single_or_archive ?
 					array(
 						'woocommerce_before_single_product'         => __( 'Before single product', 'woocommerce-jetpack' ),
 						'woocommerce_before_single_product_summary' => __( 'Before single product summary', 'woocommerce-jetpack' ),
@@ -81,7 +104,8 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 						'woocommerce_shop_loop_item_title'        => __( 'Inside product title', 'woocommerce-jetpack' ),
 						'woocommerce_after_shop_loop_item_title'  => __( 'After product title', 'woocommerce-jetpack' ),
 						'woocommerce_after_shop_loop_item'        => __( 'After product', 'woocommerce-jetpack' ),
-					),
+					) ),
+					$extra_filters ),
 				'css'      => 'width:250px;',
 			),
 			array(
@@ -159,5 +183,25 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 			),
 		) );
 	}
+	$settings = array_merge( $settings, array(
+		array(
+			'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ) . ' - ' . $single_or_archive_desc,
+			'type'     => 'title',
+			'id'       => 'wcj_product_custom_info_advanced_options_' . $single_or_archive,
+		),
+		array(
+			'title'    => __( 'Extra Filters', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Leave blank to disable.', 'woocommerce-jetpack' ),
+			'desc'     => __( 'You can add custom filters here (one per line, in filter|title format). E.g.: <code>rehub_woo_after_compact_grid_title|Rehub: After title</code>.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_product_custom_info_extra_filters_' . $single_or_archive,
+			'default'  => '',
+			'type'     => 'custom_textarea',
+			'css'      => 'width:450px;height:100px',
+		),
+		array(
+			'type'     => 'sectionend',
+			'id'       => 'wcj_product_custom_info_advanced_options_' . $single_or_archive,
+		),
+	) );
 }
 return $settings;

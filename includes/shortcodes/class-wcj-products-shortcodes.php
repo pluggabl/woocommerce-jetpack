@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 2.9.0
+ * @version 3.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,56 +15,56 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.2
 	 */
 	function __construct() {
 
 		$this->the_shortcodes = array(
-			'wcj_product_id',
-			'wcj_product_author_avatar',
 			'wcj_product_author',
+			'wcj_product_author_avatar',
 			'wcj_product_author_link',
 			'wcj_product_author_link_all_posts',
-			'wcj_product_image',
-			'wcj_product_image_url',
-			'wcj_product_gallery_image_url',
-			'wcj_product_url',
-			'wcj_product_price',
-			'wcj_product_wholesale_price_table', // WooCommerce Wholesale Price
-			'wcj_product_sku',
-			'wcj_product_title',
-			'wcj_product_weight',
-			'wcj_product_excerpt',
-			'wcj_product_description',
-			'wcj_product_short_description',
-			'wcj_product_custom_field',
-			'wcj_product_meta',
-			'wcj_product_you_save',
-			'wcj_product_you_save_percent',
-			'wcj_product_tags',
-			'wcj_product_purchase_price', // WooCommerce Product Cost Price
-			'wcj_product_total_sales',
-			'wcj_product_shipping_class',
-			'wcj_product_dimensions',
-			'wcj_product_length',
-			'wcj_product_width',
-			'wcj_product_height',
-			'wcj_product_formatted_name',
-			'wcj_product_stock_availability',
-			'wcj_product_tax_class',
+			'wcj_product_available_variations',
 			'wcj_product_average_rating',
 			'wcj_product_categories',
 			'wcj_product_categories_names',
 			'wcj_product_categories_urls',
-			'wcj_product_list_attributes',
+			'wcj_product_custom_field',
+			'wcj_product_description',
+			'wcj_product_dimensions',
+			'wcj_product_excerpt',
+			'wcj_product_formatted_name',
+			'wcj_product_gallery_image_url',
+			'wcj_product_height',
+			'wcj_product_id',
+			'wcj_product_image',
+			'wcj_product_image_url',
+			'wcj_product_length',
 			'wcj_product_list_attribute',
-			'wcj_product_stock_quantity',
-			'wcj_product_sale_price',
-			'wcj_product_regular_price',
-			'wcj_product_time_since_last_sale',
-			'wcj_product_price_including_tax',
+			'wcj_product_list_attributes',
+			'wcj_product_meta',
+			'wcj_product_price',
 			'wcj_product_price_excluding_tax',
-			'wcj_product_available_variations',
+			'wcj_product_price_including_tax',
+			'wcj_product_purchase_price', // WooCommerce Product Cost Price
+			'wcj_product_regular_price',
+			'wcj_product_sale_price',
+			'wcj_product_shipping_class',
+			'wcj_product_short_description',
+			'wcj_product_sku',
+			'wcj_product_stock_availability',
+			'wcj_product_stock_quantity',
+			'wcj_product_tags',
+			'wcj_product_tax_class',
+			'wcj_product_time_since_last_sale',
+			'wcj_product_title',
+			'wcj_product_total_sales',
+			'wcj_product_url',
+			'wcj_product_weight',
+			'wcj_product_wholesale_price_table', // WooCommerce Wholesale Price
+			'wcj_product_width',
+			'wcj_product_you_save',
+			'wcj_product_you_save_percent',
 		);
 
 		$this->the_atts = array(
@@ -103,6 +103,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'avatar_size'           => 96,
 			'count_variations'      => 'no',
 			'variations'            => 'no',
+			'columns_style'         => 'text-align: center;',
 		);
 
 		parent::__construct();
@@ -691,7 +692,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 2.7.0
+	 * @version 3.0.2
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 
@@ -817,7 +818,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				}
 			}
 
-			$columns_styles[] = 'text-align: center;';
+			$columns_styles[] = $atts['columns_style'];
 		}
 
 		$table_rows = array( $data_qty, );

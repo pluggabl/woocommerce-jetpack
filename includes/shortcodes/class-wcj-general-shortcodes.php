@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 2.9.1
+ * @version 3.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,36 +15,36 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.1
+	 * @version 3.0.2
 	 */
 	function __construct() {
 
 		$this->the_shortcodes = array(
-			'wcj_site_url',
-			'wcj_current_date',
-			'wcj_current_time',
-			'wcj_current_datetime',
-			'wcj_current_timestamp',
-//			'wcj_image',
-			'wcj_cart_items_total_weight',
 			'wcj_cart_items_total_quantity',
+			'wcj_cart_items_total_weight',
 			'wcj_cart_total',
-			'wcj_wpml',
-			'wcj_wpml_translate',
 			'wcj_country_select_drop_down_list',
-			'wcj_currency_select_drop_down_list',
-			'wcj_currency_select_radio_list',
-			'wcj_currency_select_link_list',
-			'wcj_text',
-			'wcj_tcpdf_pagebreak',
-			'wcj_get_left_to_free_shipping',
-			'wcj_wholesale_price_table',
-			'wcj_customer_billing_country',
-			'wcj_customer_shipping_country',
-			'wcj_customer_meta',
-			'wcj_empty_cart_button',
 			'wcj_currency_exchange_rate',
 			'wcj_currency_exchange_rates_table',
+			'wcj_currency_select_drop_down_list',
+			'wcj_currency_select_link_list',
+			'wcj_currency_select_radio_list',
+			'wcj_current_date',
+			'wcj_current_datetime',
+			'wcj_current_time',
+			'wcj_current_timestamp',
+			'wcj_customer_billing_country',
+			'wcj_customer_meta',
+			'wcj_customer_shipping_country',
+			'wcj_empty_cart_button',
+			'wcj_get_left_to_free_shipping',
+			'wcj_site_url',
+			'wcj_tcpdf_pagebreak',
+			'wcj_text',
+			'wcj_wholesale_price_table',
+			'wcj_wpml',
+			'wcj_wpml_translate',
+//			'wcj_image',
 		);
 
 		$this->the_atts = array(
@@ -70,6 +70,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'default'               => '',
 			'from'                  => '',
 			'to'                    => '',
+			'columns_style'         => 'text-align: center;',
 		);
 
 		parent::__construct();
@@ -236,7 +237,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_wholesale_price_table (global only).
 	 *
-	 * @version 2.5.7
+	 * @version 3.0.2
 	 * @since   2.4.8
 	 */
 	function wcj_wholesale_price_table( $atts ) {
@@ -282,7 +283,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			);
 			$data_discount[]         = ( 'fixed' === get_option( 'wcj_wholesale_price_discount_type', 'percent' ) )
 				? '-' . wc_price( $wholesale_price_level['discount'] ) : '-' . $wholesale_price_level['discount'] . '%';
-			$columns_styles[]        = 'text-align: center;';
+			$columns_styles[]        = $atts['columns_style'];
 		}
 
 		$table_rows = array( $data_qty, $data_discount, );
