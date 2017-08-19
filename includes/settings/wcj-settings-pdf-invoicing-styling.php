@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Styling
  *
- * @version 3.0.0
+ * @version 3.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -13,15 +13,6 @@ $is_full_fonts = wcj_check_and_maybe_download_tcpdf_fonts();
 $settings      = array();
 $invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
 foreach ( $invoice_types as $invoice_type ) {
-	$default_template_filename = ( false === strpos( $invoice_type['id'], 'custom_doc_' ) ? $invoice_type['id'] : 'custom_doc' );
-	$default_template_filename = wcj_plugin_path() . '/includes/settings/pdf-invoicing/wcj-' . $default_template_filename . '.css';
-	if ( file_exists( $default_template_filename ) ) {
-		ob_start();
-		include( $default_template_filename );
-		$default_template = ob_get_clean();
-	} else {
-		$default_template = '';
-	}
 	// Font family
 	$font_family_option = ( $is_full_fonts ?
 		array(
@@ -64,7 +55,7 @@ foreach ( $invoice_types as $invoice_type ) {
 		array(
 			'title'    => __( 'CSS', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_css',
-			'default'  => $default_template,
+			'default'  => $this->get_default_css_template( $invoice_type['id'] ),
 			'type'     => 'textarea',
 			'css'      => 'width:66%;min-width:300px;height:200px;',
 		),

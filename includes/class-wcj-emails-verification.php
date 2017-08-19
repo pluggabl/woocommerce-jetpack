@@ -16,7 +16,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.0.2
 	 * @since   2.8.0
 	 * @see     idea from ticket #4752
 	 */
@@ -33,7 +33,38 @@ class WCJ_Email_Verification extends WCJ_Module {
 			add_filter( 'woocommerce_registration_redirect', array( $this, 'prevent_user_login_automatically_after_register' ), PHP_INT_MAX );
 			add_filter( 'wp_authenticate_user',              array( $this, 'check_if_user_email_is_verified' ),                 PHP_INT_MAX );
 			add_action( 'user_register',                     array( $this, 'reset_and_mail_activation_link' ),                  PHP_INT_MAX );
+			add_filter( 'manage_users_columns',              array( $this, 'add_verified_email_column' ) );
+			add_filter( 'manage_users_custom_column',        array( $this, 'render_verified_email_column' ), 10, 3 );
 		}
+	}
+
+	/**
+	 * add_verified_email_column.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 * @todo    (maybe) add option to enable/disable the column
+	 */
+	function add_verified_email_column( $columns ) {
+		$columns['wcj_is_verified_email'] = __( 'Verified', 'woocommerce-jetpack' );
+		return $columns;
+	}
+
+	/**
+	 * render_verified_email_column.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function render_verified_email_column( $output, $column_name, $user_id ) {
+		if ( 'wcj_is_verified_email' === $column_name ) {
+			$replaced_values = array(
+				'1' => '<span title="' . __( 'Email verified', 'woocommerce-jetpack' ) . '">&#9745;</span>',
+				'0' => '<span title="' . __( 'Email not verified', 'woocommerce-jetpack' ) . '">&#10006;</span>',
+			);
+			return str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), get_user_meta( $user_id, 'wcj_is_activated', true ) );
+		}
+		return $output;
 	}
 
 	/**
@@ -99,7 +130,32 @@ class WCJ_Email_Verification extends WCJ_Module {
 				__( 'Please activate your account', 'woocommerce-jetpack' ) ) ) );
 		update_user_meta( $user_id, 'wcj_is_activated', '0' );
 		update_user_meta( $user_id, 'wcj_activation_code', $code );
+		if ( 'wc' === apply_filters( 'booster_get_option', 'plain', get_option( 'wcj_emails_verification_email_template', 'plain' ) ) ) {
+			$email_content =
+				$this->get_wc_email_part( 'header', get_option( 'wcj_emails_verification_email_template_wc_heading', __( 'Activate your account', 'woocommerce-jetpack' ) ) ) .
+				$email_content .
+				$this->get_wc_email_part( 'footer' );
+		}
 		wc_mail( $user_info->user_email, $email_subject, $email_content );
+	}
+
+	/**
+	 * get_wc_email_part.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function get_wc_email_part( $part, $email_heading = '' ) {
+		ob_start();
+		switch ( $part ) {
+			case 'header':
+				wc_get_template( 'emails/email-header.php', array( 'email_heading' => $email_heading ) );
+				break;
+			case 'footer':
+				wc_get_template( 'emails/email-footer.php' );
+				break;
+		}
+		return ob_get_clean();
 	}
 
 	/**
@@ -108,7 +164,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	 * @version 3.0.2
 	 * @since   2.8.0
 	 */
-	function process_email_verification(){
+	function process_email_verification() {
 		if ( isset( $_GET['wcj_verify_email'] ) ) {
 			$data = json_decode( base64_decode( $_GET['wcj_verify_email'] ), true );
 			if ( get_user_meta( $data['id'], 'wcj_activation_code', true ) == $data['code'] ) {

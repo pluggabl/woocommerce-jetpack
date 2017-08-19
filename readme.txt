@@ -167,8 +167,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.0.2 - 17/08/2017 =
+= 3.0.2 - 19/08/2017 =
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
+!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_categories` column added.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_subtotal_to_display]` shortcode added.
 !D	* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `columns_style` attribute added.
 !D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Added "WooCommerce Product Add-ons" plugin compatibility.
@@ -185,7 +186,11 @@ D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
 !	* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - Removed sanitizing order id (was added in WC v3.1.0).
 !	* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - `WP_Query` optimized to return `ids` only.
 !	* Dev - SHIPPING & ORDERS - Order Numbers - Orders Renumerate - `WP_Query` optimized to return `ids` only.
+!	* Dev - PDF INVOICING & PACKING SLIPS - Default values added to `get_option()` calls.
 !D	* Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar added.
+D	* Dev - EMAILS & MISC. - Email Verification - Settings restyled.
+~D	* Dev - EMAILS & MISC. - Email Verification - "Verified" column added to admin users list.
+!D	* Dev - EMAILS & MISC. - Email Verification - "Verification Email Template" options added.
 ~	* Dev - EMAILS & MISC. - Email Verification - `serialize()` and `unserialize()` replaced with `json_encode()` and `json_decode()`.
 
 = 3.0.1 - 03/08/2017 =

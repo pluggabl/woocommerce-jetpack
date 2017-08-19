@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 2.9.0
+ * @version 3.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -22,7 +22,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * prepare_pdf.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.2
 	 */
 	function prepare_pdf() {
 
@@ -60,29 +60,29 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$pdf->SetKeywords( 'invoice, PDF' );
 
 		// Header - set default header data
-		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_header_enabled' ) ) {
+		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_header_enabled', 'yes' ) ) {
 			$the_logo = '';
 			$the_logo_width_mm = 0;
-			if ( '' != get_option( 'wcj_invoicing_' . $invoice_type . '_header_image' ) ) {
-				$the_logo = parse_url( get_option( 'wcj_invoicing_' . $invoice_type . '_header_image' ), PHP_URL_PATH );
-				$the_logo_width_mm = get_option( 'wcj_invoicing_' . $invoice_type . '_header_image_width_mm' );
+			if ( '' != get_option( 'wcj_invoicing_' . $invoice_type . '_header_image', '' ) ) {
+				$the_logo = parse_url( get_option( 'wcj_invoicing_' . $invoice_type . '_header_image', '' ), PHP_URL_PATH );
+				$the_logo_width_mm = get_option( 'wcj_invoicing_' . $invoice_type . '_header_image_width_mm', 50 );
 			}
 			$pdf->SetHeaderData(
 				$the_logo,
 				$the_logo_width_mm,
-				do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_header_title_text' ) ),
-				do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_header_text' ) ),
-				wcj_hex2rgb( get_option( 'wcj_invoicing_' . $invoice_type . '_header_text_color' ) ),
-				wcj_hex2rgb( get_option( 'wcj_invoicing_' . $invoice_type . '_header_line_color' ) ) );
+				do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_header_title_text', $invoice_title ) ),
+				do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_header_text', __( 'Company Name', 'woocommerce-jetpack' ) ) ),
+				wcj_hex2rgb( get_option( 'wcj_invoicing_' . $invoice_type . '_header_text_color', '#cccccc' ) ),
+				wcj_hex2rgb( get_option( 'wcj_invoicing_' . $invoice_type . '_header_line_color', '#cccccc' ) ) );
 		} else {
 			$pdf->SetPrintHeader( false );
 		}
 
 		// Footer
-		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_footer_enabled' ) ) {
+		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_footer_enabled', 'yes' ) ) {
 			$pdf->setFooterData(
-				wcj_hex2rgb( get_option( 'wcj_invoicing_' . $invoice_type . '_footer_text_color' ) ),
-				wcj_hex2rgb( get_option( 'wcj_invoicing_' . $invoice_type . '_footer_line_color' ) )
+				wcj_hex2rgb( get_option( 'wcj_invoicing_' . $invoice_type . '_footer_text_color', '#cccccc' ) ),
+				wcj_hex2rgb( get_option( 'wcj_invoicing_' . $invoice_type . '_footer_line_color', '#cccccc' ) )
 			);
 		} else {
 			$pdf->SetPrintFooter( false );
@@ -99,15 +99,15 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 
 		// Set margins
 		$pdf->SetMargins(
-			get_option( 'wcj_invoicing_' . $invoice_type . '_margin_left' ),
-			get_option( 'wcj_invoicing_' . $invoice_type . '_margin_top' ),
-			get_option( 'wcj_invoicing_' . $invoice_type . '_margin_right' )
+			get_option( 'wcj_invoicing_' . $invoice_type . '_margin_left',  15 ),
+			get_option( 'wcj_invoicing_' . $invoice_type . '_margin_top',   27 ),
+			get_option( 'wcj_invoicing_' . $invoice_type . '_margin_right', 15 )
 		);
-		$pdf->SetHeaderMargin( get_option( 'wcj_invoicing_' . $invoice_type . '_margin_header' ) );
-		$pdf->SetFooterMargin( get_option( 'wcj_invoicing_' . $invoice_type . '_margin_footer' ) );
+		$pdf->SetHeaderMargin( get_option( 'wcj_invoicing_' . $invoice_type . '_margin_header', 10 ) );
+		$pdf->SetFooterMargin( get_option( 'wcj_invoicing_' . $invoice_type . '_margin_footer', 10 ) );
 
 		// Set auto page breaks
-		$pdf->SetAutoPageBreak( TRUE, get_option( 'wcj_invoicing_' . $invoice_type . '_margin_bottom' ) );
+		$pdf->SetAutoPageBreak( TRUE, get_option( 'wcj_invoicing_' . $invoice_type . '_margin_bottom', 0 ) );
 
 		// Set image scale factor
 		$pdf->setImageScale( PDF_IMAGE_SCALE_RATIO );
@@ -131,7 +131,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$pdf->AddPage();
 
 		// Set text shadow effect
-		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_shadowed', 'yes' ) ) {
+		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_shadowed', 'no' ) ) {
 			$pdf->setTextShadow( array( 'enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array( 196, 196, 196 ), 'opacity' => 1, 'blend_mode' => 'Normal' ) );
 		}
 
@@ -141,7 +141,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 2.8.0
+	 * @version 3.0.2
 	 * @todo    pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 	 */
 	function get_pdf( $dest ) {
@@ -159,10 +159,11 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		if ( ! isset( $wcj_pdf_invoice_data['user_id'] ) ) {
 			$wcj_pdf_invoice_data['user_id'] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->customer_user : $the_order->get_customer_id() );
 		}
-		$html = do_shortcode( get_option( 'wcj_invoicing_' . $this->invoice_type . '_template' ) );
+		$html = do_shortcode( get_option( 'wcj_invoicing_' . $this->invoice_type . '_template',
+			WCJ()->modules['pdf_invoicing_templates']->get_default_template( $this->invoice_type ) ) );
 		$html = force_balance_tags( $html );
-		//$html = apply_filters( 'the_content', get_option( 'wcj_invoicing_' . $this->invoice_type . '_template' ) );
-		$styling = '<style>' . get_option( 'wcj_invoicing_' . $this->invoice_type . '_css' ) . '</style>';
+		$styling = '<style>' . get_option( 'wcj_invoicing_' . $this->invoice_type . '_css',
+			WCJ()->modules['pdf_invoicing_styling']->get_default_css_template( $this->invoice_type ) ) . '</style>';
 
 		$pdf = $this->prepare_pdf();
 		// Print text using writeHTMLCell()

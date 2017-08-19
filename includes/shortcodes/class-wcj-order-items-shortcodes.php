@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 3.0.0
+ * @version 3.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -272,7 +272,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 3.0.0
+	 * @version 3.0.2
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -380,6 +380,11 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					case 'item_sale_price_multiply_qty':
 					case 'product_sale_price_multiply_qty':
 						$cell_data = ( is_object( $the_product ) ) ? $this->wcj_price_shortcode( $the_product->get_sale_price() * $item['qty'], $atts ) : '';
+						break;
+					case 'product_categories':
+						$cell_data = ( is_object( $the_product ) ) ?
+							strip_tags( ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $item['product_id'] ) ) ) :
+							'';
 						break;
 					case 'item_tax_class':
 					case 'tax_class':
