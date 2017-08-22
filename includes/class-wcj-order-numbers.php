@@ -16,6 +16,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 3.0.2
+	 * @todo    (maybe) rename "Orders Renumerate" to "Renumerate orders"
+	 * @todo    (maybe) use `woocommerce_new_order` hook instead of `wp_insert_post`
 	 */
 	function __construct() {
 
@@ -29,12 +31,10 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			'renumerate_orders' => array(
 				'title'     => __( 'Orders Renumerate', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Tool renumerates all orders.', 'woocommerce-jetpack' ),
-//				'tab_title' => __( 'Renumerate orders', 'woocommerce-jetpack' ),
 			),
 		) );
 
 		if ( $this->is_enabled() ) {
-//			add_action( 'woocommerce_new_order',    array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 			add_action( 'wp_insert_post',           array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_order_number', array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
 			if ( 'yes' === get_option( 'wcj_order_number_order_tracking_enabled', 'yes' ) ) {
@@ -147,7 +147,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add Renumerate Orders tool to WooCommerce menu (the content).
 	 *
-	 * @version 2.4.4
+	 * @version 3.0.2
 	 */
 	function create_renumerate_orders_tool() {
 		$result_message = '';
@@ -155,14 +155,22 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			$this->renumerate_orders();
 			$result_message = '<p><div class="updated"><p><strong>' . __( 'Orders successfully renumerated!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
 		}
-		?><div>
-			<?php echo $this->get_tool_header_html( 'renumerate_orders' ); ?>
-			<p><?php echo __( 'Press the button below to renumerate all existing orders starting from order counter settings in WooCommerce > Settings > Booster > Order Numbers.', 'woocommerce-jetpack' ); ?></p>
-			<?php echo $result_message; ?>
-			<form method="post" action="">
-				<input class="button-primary" type="submit" name="renumerate_orders" value="<?php echo __( 'Renumerate orders', 'woocommerce-jetpack' ); ?>">
-			</form>
-		</div><?php
+		$html = '';
+		$html .= '<div class="wrap">';
+		$html .= $this->get_tool_header_html( 'renumerate_orders' );
+		$html .= '<p>';
+		$html .= sprintf(
+			__( 'Press the button below to renumerate all existing orders starting from order counter settings in <a href="%s">Order Numbers</a> module.',
+				'woocommerce-jetpack' ),
+			admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=shipping_and_orders&section=order_numbers' )
+		);
+		$html .= '</p>';
+		$html .= $result_message;
+		$html .= '<form method="post" action="">';
+		$html .= '<input class="button-primary" type="submit" name="renumerate_orders" value="' . __( 'Renumerate orders', 'woocommerce-jetpack' ) . '">';
+		$html .= '</form>';
+		$html .= '</div>';
+		echo $html;
 	}
 
 	/**
@@ -175,10 +183,10 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 2.7.0
+	 * @version 3.0.2
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {
-		if ( 'shop_order' !== get_post_type( $order_id ) ) {
+		if ( 'shop_order' !== get_post_type( $order_id ) || 'auto-draft' === get_post_status( $order_id ) ) {
 			return;
 		}
 		if ( true === $do_overwrite || 0 == get_post_meta( $order_id, '_wcj_order_number', true ) ) {
