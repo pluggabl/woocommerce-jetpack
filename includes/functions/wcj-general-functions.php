@@ -2,11 +2,44 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.0.0
+ * @version 3.0.2
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_wrap_in_wc_email_template' ) ) {
+	/**
+	 * wcj_wrap_in_wc_email_template.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_wrap_in_wc_email_template( $content, $email_heading = '' ) {
+		return wcj_get_wc_email_part( 'header', $email_heading ) . $content . wcj_get_wc_email_part( 'footer' );
+	}
+}
+
+if ( ! function_exists( 'wcj_get_wc_email_part' ) ) {
+	/**
+	 * wcj_get_wc_email_part.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_get_wc_email_part( $part, $email_heading = '' ) {
+		ob_start();
+		switch ( $part ) {
+			case 'header':
+				wc_get_template( 'emails/email-header.php', array( 'email_heading' => $email_heading ) );
+				break;
+			case 'footer':
+				wc_get_template( 'emails/email-footer.php' );
+				break;
+		}
+		return ob_get_clean();
+	}
+}
 
 if ( ! function_exists( 'wcj_maybe_add_date_query' ) ) {
 	/**

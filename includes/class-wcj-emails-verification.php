@@ -131,31 +131,10 @@ class WCJ_Email_Verification extends WCJ_Module {
 		update_user_meta( $user_id, 'wcj_is_activated', '0' );
 		update_user_meta( $user_id, 'wcj_activation_code', $code );
 		if ( 'wc' === apply_filters( 'booster_get_option', 'plain', get_option( 'wcj_emails_verification_email_template', 'plain' ) ) ) {
-			$email_content =
-				$this->get_wc_email_part( 'header', get_option( 'wcj_emails_verification_email_template_wc_heading', __( 'Activate your account', 'woocommerce-jetpack' ) ) ) .
-				$email_content .
-				$this->get_wc_email_part( 'footer' );
+			$email_content = wcj_wrap_in_wc_email_template( $email_content,
+				get_option( 'wcj_emails_verification_email_template_wc_heading', __( 'Activate your account', 'woocommerce-jetpack' ) ) );
 		}
 		wc_mail( $user_info->user_email, $email_subject, $email_content );
-	}
-
-	/**
-	 * get_wc_email_part.
-	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
-	 */
-	function get_wc_email_part( $part, $email_heading = '' ) {
-		ob_start();
-		switch ( $part ) {
-			case 'header':
-				wc_get_template( 'emails/email-header.php', array( 'email_heading' => $email_heading ) );
-				break;
-			case 'footer':
-				wc_get_template( 'emails/email-footer.php' );
-				break;
-		}
-		return ob_get_clean();
 	}
 
 	/**

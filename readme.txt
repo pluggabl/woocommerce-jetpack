@@ -190,6 +190,9 @@ D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
 !	* Dev - SHIPPING & ORDERS - Order Numbers - Orders Renumerate - `WP_Query` optimized to return `ids` only.
 !	* Dev - PDF INVOICING & PACKING SLIPS - Default values added to `get_option()` calls.
 !D	* Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar added.
+!D	* Dev - EMAILS & MISC. - Custom Emails - "Wrap in WC Email Template" option added.
+!D	* Dev - EMAILS & MISC. - Custom Emails - Code refactoring, clean up etc. Settings page restyled.
+!	* Dev - EMAILS & MISC. - Custom Emails - WooCommerce v3.x.x compatibility - `billing_email`, `order_date`, `post`.
 D	* Dev - EMAILS & MISC. - Email Verification - Settings restyled.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Verified" column added to admin users list.
 !D	* Dev - EMAILS & MISC. - Email Verification - "Verification Email Template" options added.

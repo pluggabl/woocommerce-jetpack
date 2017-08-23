@@ -2,12 +2,36 @@
 /**
  * Booster for WooCommerce - Functions - Order
  *
- * @version 2.9.0
+ * @version 3.0.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_order_billing_email' ) ) {
+	/**
+	 * wcj_get_order_billing_email.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_get_order_billing_email( $_order ) {
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->billing_email : $_order->get_billing_email() );
+	}
+}
+
+if ( ! function_exists( 'wcj_get_order_date' ) ) {
+	/**
+	 * wcj_get_order_date.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_get_order_date( $_order ) {
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->order_date : $_order->get_date_created() );
+	}
+}
 
 if ( ! function_exists( 'wcj_get_order_id' ) ) {
 	/**

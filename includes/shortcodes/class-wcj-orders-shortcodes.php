@@ -682,19 +682,19 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_date.
 	 *
-	 * @version 2.7.0
+	 * @version 3.0.2
 	 */
 	function wcj_order_date( $atts ) {
-		return date_i18n( $atts['date_format'], strtotime( ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->order_date : $this->the_order->get_date_created() ) ) );
+		return date_i18n( $atts['date_format'], strtotime( wcj_get_order_date( $this->the_order ) ) );
 	}
 
 	/**
 	 * wcj_order_time.
 	 *
-	 * @version 2.7.0
+	 * @version 3.0.2
 	 */
 	function wcj_order_time( $atts ) {
-		return date_i18n( $atts['time_format'], strtotime( ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->order_date : $this->the_order->get_date_created() ) ) );
+		return date_i18n( $atts['time_format'], strtotime( wcj_get_order_date( $this->the_order ) ) );
 	}
 
 	/**
