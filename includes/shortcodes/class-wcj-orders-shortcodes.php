@@ -46,6 +46,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_number',
 			'wcj_order_payment_method',
 			'wcj_order_payment_method_transaction_id',
+			'wcj_order_refunds_table',
 			'wcj_order_shipping_address',
 			'wcj_order_shipping_country_name',
 			'wcj_order_shipping_method',
@@ -71,9 +72,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_height',
 			'wcj_order_total_in_words',
 			'wcj_order_total_length',
+			'wcj_order_total_shipping_refunded',
 			'wcj_order_total_refunded',
 			'wcj_order_total_tax',
 			'wcj_order_total_tax_percent',
+			'wcj_order_total_tax_refunded',
 			'wcj_order_total_weight',
 			'wcj_order_total_width',
 //			'wcj_order_cart_discount',
@@ -112,6 +115,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'tax_class'                   => '',
 			'fallback_billing_address'    => 'no',
 			'tax_display'                 => '',
+			'table_class'                 => '',
+			'columns_styles'              => '',
+			'columns_titles'              => '',
+			'columns'                     => '',
+			'price_prefix'                => '',
 		), $atts );
 
 		return $modified_atts;
@@ -165,6 +173,95 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
 		return ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) ? '' : wcj_price( $raw_price, wcj_get_order_currency( $this->the_order ), $atts['hide_currency'] );
+	}
+
+	/**
+	 * wcj_order_refunds_table.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 * @todo    add `refund_items_or_reason_or_title` column
+	 * @todo    add `refund_items_quantities` column (`$_item->get_quantity()`)
+	 * @todo    check `$atts['columns']` etc. before starting
+	 * @todo    (maybe) move to new `class-wcj-orders-refunded-shortcodes.php` file
+	 */
+	function wcj_order_refunds_table( $atts ) {
+		$columns    = ( '' == $atts['columns'] ? array() : explode( '|', $atts['columns'] ) );
+		$table_data = array();
+		$i          = 1;
+		foreach ( $this->the_order->get_refunds() as $_refund ) {
+			$row = array();
+			foreach ( $columns as $column ) {
+				$cell = '';
+				switch ( $column ) {
+					case 'refund_number':
+						$cell = $i;
+						break;
+					case 'refund_title':
+						$cell = $_refund->get_post_title();
+						break;
+					case 'refund_reason':
+						$cell = $_refund->get_reason();
+						break;
+					case 'refund_reason_or_title':
+						$cell = ( ! empty( $_refund->get_reason() ) ? $_refund->get_reason() : $_refund->get_post_title() );
+						break;
+					case 'refund_amount':
+						$cell = $atts['price_prefix'] . $_refund->get_formatted_refund_amount();
+						break;
+					case 'refund_items':
+						$_items = array();
+						foreach ( $_refund->get_items() as $_item ) {
+							$_items[] = $_item->get_name();
+						}
+						$cell = ( ! empty( $_items ) ? implode( ', ', $_items ) : '' );
+						break;
+				}
+				$row[] = $cell;
+				$i++;
+			}
+			$table_data[] = $row;
+		}
+		return ( ! empty( $table_data ) ?
+			wcj_get_table_html(
+				array_merge( array( ( '' == $atts['columns_titles'] ? array() : explode( '|', $atts['columns_titles'] ) ) ), $table_data ),
+				array(
+					'table_class'    => $atts['table_class'],
+					'columns_styles' => ( '' == $atts['columns_styles'] ? array() : explode( '|', $atts['columns_styles'] ) ),
+				)
+			) :
+			''
+		);
+	}
+
+	/**
+	 * wcj_order_total_tax_refunded.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_order_total_tax_refunded( $atts ) {
+		return $this->wcj_price_shortcode( $this->the_order->get_total_tax_refunded(), $atts );
+	}
+
+	/**
+	 * wcj_order_total_shipping_refunded.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_order_total_shipping_refunded( $atts ) {
+		return $this->wcj_price_shortcode( $this->the_order->get_total_shipping_refunded(), $atts );
+	}
+
+	/**
+	 * wcj_order_total_refunded.
+	 *
+	 * @version 2.5.3
+	 * @since   2.5.3
+	 */
+	function wcj_order_total_refunded( $atts ) {
+		return $this->wcj_price_shortcode( $this->the_order->get_total_refunded(), $atts );
 	}
 
 	/**
@@ -798,16 +895,6 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$order_total_tax_percent = round( $order_total_tax_percent, $atts['precision'] );
 		apply_filters( 'wcj_order_total_tax_percent', $order_total_tax_percent, $this->the_order );
 		return number_format( $order_total_tax_percent, $atts['precision'] );
-	}
-
-	/**
-	 * wcj_order_total_refunded.
-	 *
-	 * @version 2.5.3
-	 * @since   2.5.3
-	 */
-	function wcj_order_total_refunded( $atts ) {
-		return $this->wcj_price_shortcode( $this->the_order->get_total_refunded(), $atts );
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Email Options
  *
- * @version 2.8.0
+ * @version 3.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -14,17 +14,18 @@ foreach ( $available_gateways as $key => $gateway ) {
 	$available_gateways_options_array[ $key ] = $gateway->title;
 }
 $available_emails = array(
-	'new_order'                 => __( 'Admin - New Order', 'woocommerce-jetpack' ),
-	'cancelled_order'           => __( 'Admin - Cancelled Order', 'woocommerce-jetpack' ),
-	'failed_order'              => __( 'Admin - Failed Order', 'woocommerce-jetpack' ),
-	'customer_processing_order' => __( 'Customer - Processing Order', 'woocommerce-jetpack' ),
-	'customer_on_hold_order'    => __( 'Customer - On-Hold Order', 'woocommerce-jetpack' ),
-	'customer_completed_order'  => __( 'Customer - Completed Order', 'woocommerce-jetpack' ),
-	'customer_invoice'          => __( 'Customer - Invoice', 'woocommerce-jetpack' ),
-	'customer_refunded_order'   => __( 'Customer - Refunded Order', 'woocommerce-jetpack' ),
-	'customer_note'             => __( 'Customer - Note', 'woocommerce-jetpack' ),
-	'customer_new_account'      => __( 'Customer - New Account', 'woocommerce-jetpack' ),
-	'customer_reset_password'   => __( 'Customer - Reset Password', 'woocommerce-jetpack' ),
+	'new_order'                         => __( 'Admin - New Order', 'woocommerce-jetpack' ),
+	'cancelled_order'                   => __( 'Admin - Cancelled Order', 'woocommerce-jetpack' ),
+	'failed_order'                      => __( 'Admin - Failed Order', 'woocommerce-jetpack' ),
+	'customer_processing_order'         => __( 'Customer - Processing Order', 'woocommerce-jetpack' ),
+	'customer_on_hold_order'            => __( 'Customer - On-Hold Order', 'woocommerce-jetpack' ),
+	'customer_completed_order'          => __( 'Customer - Completed Order', 'woocommerce-jetpack' ),
+	'customer_invoice'                  => __( 'Customer - Invoice', 'woocommerce-jetpack' ),
+	'customer_refunded_order'           => __( 'Customer - Refunded Order', 'woocommerce-jetpack' ),
+	'customer_partially_refunded_order' => __( 'Customer - Partially Refunded Order', 'woocommerce-jetpack' ),
+	'customer_note'                     => __( 'Customer - Note', 'woocommerce-jetpack' ),
+	'customer_new_account'              => __( 'Customer - New Account', 'woocommerce-jetpack' ),
+	'customer_reset_password'           => __( 'Customer - Reset Password', 'woocommerce-jetpack' ),
 );
 if ( wcj_is_module_enabled( 'emails' ) ) {
 	for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {

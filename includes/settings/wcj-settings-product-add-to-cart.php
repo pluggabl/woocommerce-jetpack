@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Add To Cart
  *
- * @version 2.9.0
+ * @version 3.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -83,6 +83,35 @@ return array(
 		'type'     => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+	),
+	array(
+		'title'    => __( 'Variation Label Template', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%variation_title%', '%variation_price%' ) ),
+		'id'       => 'wcj_add_to_cart_variable_as_radio_variation_label_template',
+		'default'  => '%variation_title% (%variation_price%)',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:99%;',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
+	),
+	array(
+		'title'    => __( 'Variation Description Template', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%variation_description%' ) ),
+		'id'       => 'wcj_add_to_cart_variable_as_radio_variation_desc_template',
+		'default'  => '<br><small>%variation_description%</small>',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:99%;',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
+	),
+	array(
+		'title'    => __( 'Variation Radio Input td Style', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_variable_as_radio_input_td_style',
+		'default'  => 'width:10%;',
+		'type'     => 'text',
+		'css'      => 'width:99%;',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
 	),
 	array(
 		'type'     => 'sectionend',

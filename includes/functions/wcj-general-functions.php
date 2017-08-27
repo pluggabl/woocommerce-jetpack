@@ -133,57 +133,79 @@ if ( ! function_exists( 'wcj_add_files_upload_form_to_checkout_frontend' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_replace_values_in_template' ) ) {
+	/**
+	 * wcj_replace_values_in_template.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_replace_values_in_template( $values_to_replace, $template ) {
+		return str_replace( array_keys( $values_to_replace ), array_values( $values_to_replace ), $template );
+	}
+}
+
 if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 	/**
 	 * wcj_variation_radio_button.
 	 *
-	 * @version 2.5.0
+	 * @version 3.0.2
 	 * @since   2.4.8
+	 * @todo    (maybe) check - maybe we can use `$variation['variation_description']` instead of `get_post_meta( $variation_id, '_variation_description', true )`
 	 */
 	function wcj_variation_radio_button( $_product, $variation ) {
-		$attributes_html = '';
+		$attributes_html                     = '';
 		$variation_attributes_display_values = array();
-		$is_checked = true;
+		$is_checked                          = true;
 		foreach ( $variation['attributes'] as $attribute_full_name => $attribute_value ) {
-
 			$attributes_html .= ' ' . $attribute_full_name . '="' . $attribute_value . '"';
-
+			// Attribute name
 			$attribute_name = $attribute_full_name;
-			$prefix = 'attribute_';
+			$prefix         = 'attribute_';
 			if ( substr( $attribute_full_name, 0, strlen( $prefix ) ) === $prefix ) {
 				$attribute_name = substr( $attribute_full_name, strlen( $prefix ) );
 			}
-
-			$checked = isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ? wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) : $_product->get_variation_default_attribute( $attribute_name );
-			if ( $checked != $attribute_value ) $is_checked = false;
-
+			// Checked
+			$checked = isset( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) ?
+				wc_clean( $_REQUEST[ 'attribute_' . sanitize_title( $attribute_name ) ] ) : $_product->get_variation_default_attribute( $attribute_name );
+			if ( $checked != $attribute_value ) {
+				$is_checked = false;
+			}
+			// Attribute value
 			$terms = get_terms( $attribute_name );
 			foreach ( $terms as $term ) {
 				if ( is_object( $term ) && isset( $term->slug ) && $term->slug === $attribute_value && isset( $term->name ) ) {
 					$attribute_value = $term->name;
 				}
 			}
-
+			// Display values
 			$variation_attributes_display_values[] = $attribute_value;
-
 		}
-		$variation_title = implode( ', ', $variation_attributes_display_values ) . ' (' . wc_price( $variation['display_price'] ) . ')';
+		// Variation label
+		$variation_label = wcj_replace_values_in_template( array(
+			'%variation_title%' => implode( ', ', $variation_attributes_display_values ),
+			'%variation_price%' => wc_price( $variation['display_price'] ),
+		), get_option( 'wcj_add_to_cart_variable_as_radio_variation_label_template', '%variation_title% (%variation_price%)' ) );
+		// Variation ID and "is checked"
 		$variation_id    = $variation['variation_id'];
-		$is_checked = checked( $is_checked, true, false );
-
-		echo '<td style="width:10%;">';
-		echo '<input id="wcj_variation_' . $variation_id . '" name="wcj_variations" type="radio"' . $attributes_html . ' variation_id="' . $variation_id . '"' . $is_checked . '>';
-		echo '</td>';
-		echo '<td>';
-		echo '<label for="wcj_variation_' . $variation_id . '">';
-		echo $variation_title;
+		$is_checked      = checked( $is_checked, true, false );
+		// Final HTML
+		$html = '';
+		$html .= '<td class="wcj_variable_as_radio_input_td" style="' . get_option( 'wcj_add_to_cart_variable_as_radio_input_td_style', 'width:10%;' ) . '">';
+		$html .= '<input id="wcj_variation_' . $variation_id . '" name="wcj_variations" type="radio"' . $attributes_html . ' variation_id="' .
+			$variation_id . '"' . $is_checked . '>';
+		$html .= '</td>';
+		$html .= '<td class="wcj_variable_as_radio_label_td">';
+		$html .= '<label for="wcj_variation_' . $variation_id . '">';
+		$html .= $variation_label;
 		if ( '' != ( $variation_description = get_post_meta( $variation_id, '_variation_description', true ) ) ) {
-			echo '<br>';
-//			echo '<small>' . $variation['variation_description'] . '</small>';
-			echo '<small>' . $variation_description . '</small>';
+			$html .= wcj_replace_values_in_template( array(
+				'%variation_description%' => $variation_description,
+			), get_option( 'wcj_add_to_cart_variable_as_radio_variation_desc_template', '<br><small>%variation_description%</small>' ) );
 		}
-		echo '</label>';
-		echo '</td>';
+		$html .= '</label>';
+		$html .= '</td>';
+		echo $html;
 	}
 }
 

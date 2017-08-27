@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - General
  *
- * @version 2.8.0
+ * @version 3.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -25,6 +25,7 @@ foreach ( $order_statuses as $status => $desc ) {
 	$create_on_array[ 'woocommerce_order_status_' . $status ] = __( 'Create on Order Status', 'woocommerce-jetpack' ) . ' ' . $desc;
 }
 $create_on_array['manual'] = __( 'Manual Only', 'woocommerce-jetpack' );
+$create_on_array['woocommerce_order_partially_refunded_notification'] = __( 'Create on Order Partially Refunded', 'woocommerce-jetpack' );
 // Settings
 $invoice_types = wcj_get_invoice_types();
 foreach ( $invoice_types as $k => $invoice_type ) {
