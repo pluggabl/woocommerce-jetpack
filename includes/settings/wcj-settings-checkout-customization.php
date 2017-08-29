@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Customization
  *
- * @version 2.9.0
+ * @version 3.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -71,7 +71,21 @@ return array(
 		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_message',
 		'default'  => '<em>' . __( 'This field can not be changed', 'woocommerce-jetpack' ) . '</em>',
 		'type'     => 'custom_textarea',
-		'css'      => 'width:66%;min-width:300px;',
+		'css'      => 'width:99%;',
+	),
+	array(
+		'title'    => __( 'Customize "order received" message', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_customization_order_received_message_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc_tip' => __( 'You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_customization_order_received_message',
+		'default'  => __( 'Thank you. Your order has been received.', 'woocommerce' ),
+		'type'     => 'custom_textarea',
+		'css'      => 'width:99%;',
 	),
 	array(
 		'type'     => 'sectionend',

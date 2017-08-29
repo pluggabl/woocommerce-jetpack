@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 2.9.0
+ * @version 3.0.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.2
 	 * @since   2.7.0
 	 * @todo    "Disable Fields on Checkout for Logged Users" - billing and shipping country ('select' type)
 	 * @todo    "Disable Fields on Checkout for Logged Users" - other core fields (e.g. account fields)
@@ -62,7 +62,30 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 			foreach ( $checkout_fields_types as $checkout_fields_type ) {
 				add_filter( 'woocommerce_form_field_' . $checkout_fields_type, array( $this, 'maybe_add_description' ), PHP_INT_MAX, 4 );
 			}
+			// Custom "order received" message text
+			if ( 'yes' === get_option( 'wcj_checkout_customization_order_received_message_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_thankyou_order_received_text', array( $this, 'customize_order_received_message' ), PHP_INT_MAX, 2 );
+			}
 		}
+	}
+
+	/**
+	 * customize_order_received_message.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function customize_order_received_message( $message, $_order ) {
+		if ( null != $_order ) {
+			global $post;
+			$post = get_post( wcj_get_order_id( $_order ) );
+			setup_postdata( $post );
+		}
+		$message = do_shortcode( get_option( 'wcj_checkout_customization_order_received_message', __( 'Thank you. Your order has been received.', 'woocommerce' ) ) );
+		if ( null != $_order ) {
+			wp_reset_postdata();
+		}
+		return $message;
 	}
 
 	/**

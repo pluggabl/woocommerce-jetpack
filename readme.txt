@@ -167,7 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.0.2 - 27/08/2017 =
+= 3.0.2 - 29/08/2017 =
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_categories` column added.
 -!D	* Dev - Shortcodes - Orders - `[wcj_order_refunds_table]` shortcode added.
@@ -186,6 +186,7 @@ D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
 !D	* Dev - PRODUCTS - Product Tabs - Deprecated options not displayed (if empty).
 !D	* Dev - PRODUCTS - Product Tabs - `do_shortcode` added when checking for empty content (before displaying the tab).
 !D	* Dev - CART & CHECKOUT - Cart Customization - Change Empty Cart "Return to shop" Button Text - "Method" option added.
+~D	* Dev - CART & CHECKOUT - Checkout Customization - "Customize order received message" options added.
 !D	* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - "Use List Instead of Comma Separated Text for Products in Settings" support added.
 	* Dev - SHIPPING & ORDERS - Order Numbers - Code refactoring and clean up.
 !D	* Dev - SHIPPING & ORDERS - Order Numbers - Skipping order number generation for `auto-draft` orders.
