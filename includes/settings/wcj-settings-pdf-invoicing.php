@@ -17,15 +17,23 @@ $settings = array(
 	),
 );
 // Hooks Array
-$create_on_array = array();
-$create_on_array['disabled'] = __( 'Disabled', 'woocommerce-jetpack' );
-$create_on_array['woocommerce_new_order'] = __( 'Create on New Order', 'woocommerce-jetpack' );
-$order_statuses = wcj_get_order_statuses( true );
+$status_change_hooks = array();
+$order_statuses      = wcj_get_order_statuses( true );
 foreach ( $order_statuses as $status => $desc ) {
-	$create_on_array[ 'woocommerce_order_status_' . $status ] = __( 'Create on Order Status', 'woocommerce-jetpack' ) . ' ' . $desc;
+	$status_change_hooks[ 'woocommerce_order_status_' . $status ] = sprintf( __( 'Create on Order Status %s', 'woocommerce-jetpack' ), $desc );
 }
-$create_on_array['manual'] = __( 'Manual Only', 'woocommerce-jetpack' );
-$create_on_array['woocommerce_order_partially_refunded_notification'] = __( 'Create on Order Partially Refunded', 'woocommerce-jetpack' );
+$create_on_array = array_merge(
+	array(
+		'disabled'                                          => __( 'Disabled', 'woocommerce-jetpack' ),
+		'woocommerce_new_order'                             => __( 'Create on New Order', 'woocommerce-jetpack' ),
+	),
+	$status_change_hooks,
+	array(
+		'wcj_pdf_invoicing_create_on_any_refund'            => __( 'Create on Order Status Refunded and/or Order Partially Refunded', 'woocommerce-jetpack' ),
+		'woocommerce_order_partially_refunded_notification' => __( 'Create on Order Partially Refunded', 'woocommerce-jetpack' ),
+		'manual'                                            => __( 'Manual Only', 'woocommerce-jetpack' ),
+	)
+);
 // Settings
 $invoice_types = wcj_get_invoice_types();
 foreach ( $invoice_types as $k => $invoice_type ) {

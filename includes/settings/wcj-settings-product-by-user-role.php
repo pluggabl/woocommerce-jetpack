@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Visibility by User Role
  *
- * @version 2.9.0
+ * @version 3.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -17,6 +17,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Hide Visibility', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will hide selected products in shop and search results. However product still will be accessible via direct link.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_by_user_role_visibility',
 		'default'  => 'yes',
@@ -24,6 +25,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Make Non-purchasable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will make selected products non-purchasable (i.e. product can\'t be added to the cart).', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_by_user_role_purchasable',
 		'default'  => 'no',
@@ -31,6 +33,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Modify Query', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will hide selected products completely (including direct link).', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_by_user_role_query',
 		'default'  => 'no',

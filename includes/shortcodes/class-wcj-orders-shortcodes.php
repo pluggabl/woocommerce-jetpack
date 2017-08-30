@@ -47,6 +47,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_payment_method',
 			'wcj_order_payment_method_transaction_id',
 			'wcj_order_refunds_table',
+			'wcj_order_remaining_refund_amount',
 			'wcj_order_shipping_address',
 			'wcj_order_shipping_country_name',
 			'wcj_order_shipping_method',
@@ -69,6 +70,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_fees',
 			'wcj_order_total_fees_incl_tax',
 			'wcj_order_total_fees_tax',
+			'wcj_order_total_formatted',
 			'wcj_order_total_height',
 			'wcj_order_total_in_words',
 			'wcj_order_total_length',
@@ -120,6 +122,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'columns_titles'              => '',
 			'columns'                     => '',
 			'price_prefix'                => '',
+			'display_refunded'            => 'yes',
 		), $atts );
 
 		return $modified_atts;
@@ -173,6 +176,26 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
 		return ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) ? '' : wcj_price( $raw_price, wcj_get_order_currency( $this->the_order ), $atts['hide_currency'] );
+	}
+
+	/**
+	 * wcj_order_total_formatted.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_order_total_formatted( $atts ) {
+		return $this->the_order->get_formatted_order_total( $atts['tax_display'], ( 'yes' === $atts['display_refunded'] ) );
+	}
+
+	/**
+	 * wcj_order_remaining_refund_amount.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_order_remaining_refund_amount( $atts ) {
+		return $this->wcj_price_shortcode( $this->the_order->get_remaining_refund_amount(), $atts );
 	}
 
 	/**
@@ -1048,6 +1071,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_total.
+	 *
+	 * @todo    (maybe) add attribute to deduct refunded (check `get_total_refunded()`, `get_total_tax_refunded()`, `get_total_shipping_refunded()`)
 	 */
 	function wcj_order_total( $atts ) {
 		$order_total = ( true === $atts['excl_tax'] ) ? $this->the_order->get_total() - $this->the_order->get_total_tax() : $this->the_order->get_total();

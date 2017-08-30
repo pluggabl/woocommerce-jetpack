@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 2.9.0
+ * @version 3.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.0.2
 	 */
 	function __construct() {
 
@@ -59,6 +59,10 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 						add_action( 'woocommerce_cli_create_order',         array( $this, 'create_document_hook' ) );
 						add_action( 'kco_before_confirm_order',             array( $this, 'create_document_hook' ) );
 						add_action( 'woocommerce_checkout_order_processed', array( $this, 'create_document_hook' ) );
+					}
+					if ( 'wcj_pdf_invoicing_create_on_any_refund' === $the_hook ) {
+						add_action( 'woocommerce_order_status_refunded',                 array( $this, 'create_document_hook' ) );
+						add_action( 'woocommerce_order_partially_refunded_notification', array( $this, 'create_document_hook' ) );
 					}
 				}
 			}

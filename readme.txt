@@ -167,13 +167,16 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.0.2 - 29/08/2017 =
+= 3.0.2 - 30/08/2017 =
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
+!	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_categories` column added.
 -!D	* Dev - Shortcodes - Orders - `[wcj_order_refunds_table]` shortcode added.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_total_shipping_refunded]` shortcode added.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_total_tax_refunded]` shortcode added.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_subtotal_to_display]` shortcode added.
+!D	* Dev - Shortcodes - Orders - `[wcj_order_total_formatted]` shortcode added.
+!D	* Dev - Shortcodes - Orders - `[wcj_order_remaining_refund_amount]` shortcode added.
 !D	* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `columns_style` attribute added.
 !D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Added "WooCommerce Product Add-ons" plugin compatibility.
 !D	* Dev - PRICES & CURRENCIES - Wholesale Price - Minimum quantity for applied discount changed from 1 to 0.
@@ -185,6 +188,8 @@ D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
 !	* Dev - PRODUCTS - Product Tabs - Code refactoring, cleanup and minor fixes.
 !D	* Dev - PRODUCTS - Product Tabs - Deprecated options not displayed (if empty).
 !D	* Dev - PRODUCTS - Product Tabs - `do_shortcode` added when checking for empty content (before displaying the tab).
+D	* Dev - PRODUCTS - Product Visibility by Country - Settings restyled and descriptions added.
+D	* Dev - PRODUCTS - Product Visibility by User Role - Descriptions added.
 !D	* Dev - CART & CHECKOUT - Cart Customization - Change Empty Cart "Return to shop" Button Text - "Method" option added.
 ~D	* Dev - CART & CHECKOUT - Checkout Customization - "Customize order received message" options added.
 !D	* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - "Use List Instead of Comma Separated Text for Products in Settings" support added.
@@ -194,7 +199,7 @@ D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
 !	* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - `WP_Query` optimized to return `ids` only.
 !	* Dev - SHIPPING & ORDERS - Order Numbers - Orders Renumerate - `WP_Query` optimized to return `ids` only.
 !	* Dev - PDF INVOICING & PACKING SLIPS - Default values added to `get_option()` calls.
--D	* Dev - PDF INVOICING & PACKING SLIPS - General - "Create on Order Partially Refunded" added.
+-D	* Dev - PDF INVOICING & PACKING SLIPS - General - "Create on Order Partially Refunded" and "Create on Order Status Refunded and/or Partially Refunded" added.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Email Options - "Customer - Partially Refunded Order" email added.
 !D	* Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar added.
 !D	* Dev - EMAILS & MISC. - Custom Emails - "Wrap in WC Email Template" option added.
