@@ -38,6 +38,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_customer_shipping_country',
 			'wcj_empty_cart_button',
 			'wcj_get_left_to_free_shipping',
+			'wcj_selector',
 			'wcj_site_url',
 			'wcj_tcpdf_pagebreak',
 			'wcj_text',
@@ -71,10 +72,38 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'from'                  => '',
 			'to'                    => '',
 			'columns_style'         => 'text-align: center;',
+			'selector_type'         => 'country',
 		);
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_selector.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function wcj_selector( $atts ) {
+		$html           = '';
+		$options        = '';
+		$selected_value = ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ?
+			$_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] :
+			WC()->session->get( 'wcj_selected_' . $atts['selector_type'] )
+		);
+		switch ( $atts['selector_type'] ) {
+			default: // 'country'
+				$options = wcj_get_countries();
+		}
+		foreach ( $options as $value => $title ) {
+			$html .= '<option value="' . $value . '" ' . selected( $selected_value, $value, false ) . '>' . $title . '</option>';
+		}
+		return '<form method="post" action="">' .
+			'<select name="wcj_' . $atts['selector_type'] . '_selector" class="wcj_' . $atts['selector_type'] . '_selector" onchange="this.form.submit()">' .
+				$html .
+			'</select>' .
+		'</form>';
 	}
 
 	/**

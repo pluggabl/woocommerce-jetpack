@@ -44,6 +44,25 @@ return array(
 		'id'       => 'wcj_product_by_country_options',
 	),
 	array(
+		'title'    => __( 'User Country Selection Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_by_country_selection_options',
+	),
+	array(
+		'title'    => __( 'User Country Selection Method', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_by_country_selection_method',
+		'default'  => 'by_ip',
+		'type'     => 'select',
+		'options'  => array(
+			'by_ip'  => __( 'Automatically by IP', 'woocommerce-jetpack' ),
+			'manual' => __( 'Manually', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_by_country_selection_options',
+	),
+	array(
 		'title'    => __( 'Admin Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_product_by_country_admin_options',

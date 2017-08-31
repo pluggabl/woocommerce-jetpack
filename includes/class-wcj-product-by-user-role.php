@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by User Role
  *
- * @version 2.8.0
+ * @version 3.0.2
  * @since   2.5.5
  * @author  Algoritmika Ltd.
  */
@@ -49,7 +49,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * product_by_user_role_pre_get_posts.
 	 *
-	 * @version 2.7.0
+	 * @version 3.0.2
 	 * @since   2.6.0
 	 * @todo    (maybe) add global function for this, as similar code is in "Product Visibility by Country" module
 	 * @todo    check if `purchasable` and `pre_get_posts` hooks should be added to other "Product Visibility" modules
@@ -60,7 +60,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 		}
 		remove_action( 'pre_get_posts', array( $this, 'product_by_user_role_pre_get_posts' ) );
 		$current_user_roles = wcj_get_current_user_all_roles();
-		$post__not_in = array();
+		$post__not_in = $query->get( 'post__not_in' );
 		$args = $query->query;
 		$args['fields'] = 'ids';
 		$loop = new WP_Query( $args );

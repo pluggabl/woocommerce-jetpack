@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 2.9.0
+ * @version 3.0.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.2
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -43,7 +43,9 @@ class WCJ_Product_By_Country extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_product_by_country_query', 'no' ) ) {
 					add_action( 'pre_get_posts',                  array( $this, 'product_by_country_pre_get_posts' ) );
 				}
-
+				if ( 'manual' === get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) {
+					add_action( 'init',                           array( $this, 'save_country_in_session' ), PHP_INT_MAX ) ;
+				}
 			}
 			// Admin products list
 			if ( 'yes' === get_option( 'wcj_product_by_country_add_column_visible_countries', 'no' ) ) {
@@ -83,7 +85,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * product_by_country_pre_get_posts.
 	 *
-	 * @version 2.9.0
+	 * @version 3.0.2
 	 * @since   2.9.0
 	 */
 	function product_by_country_pre_get_posts( $query ) {
@@ -91,15 +93,9 @@ class WCJ_Product_By_Country extends WCJ_Module {
 			return;
 		}
 		remove_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
-		// Get the country by IP
-		$location = WC_Geolocation::geolocate_ip();
-		if ( empty( $location['country'] ) ) {
-			// Base fallback
-			$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
-		}
-		$country = ( isset( $location['country'] ) ) ? $location['country'] : '';
+		$country = $this->get_country();
 		// Calculate `post__not_in`
-		$post__not_in = array();
+		$post__not_in = $query->get( 'post__not_in' );
 		$args = $query->query;
 		$args['fields'] = 'ids';
 		$loop = new WP_Query( $args );
@@ -126,22 +122,72 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * product_by_country.
 	 *
-	 * @version 2.5.0
+	 * @version 3.0.2
 	 * @since   2.5.0
 	 */
 	function product_by_country( $visible, $product_id ) {
-		// Get the country by IP
-		$location = WC_Geolocation::geolocate_ip();
-		// Base fallback
-		if ( empty( $location['country'] ) ) {
-			$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
-		}
-		$country = ( isset( $location['country'] ) ) ? $location['country'] : '';
+		$country = $this->get_country();
 		$visible_countries = get_post_meta( $product_id, '_' . 'wcj_product_by_country_visible', true );
 		if ( is_array( $visible_countries ) && ! in_array( $country, $visible_countries ) ) {
 			return false;
 		}
 		return $visible;
+	}
+
+	/**
+	 * save_country_in_session.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 * @todo    (maybe) option to use standard sessions instead of WC sessions
+	 */
+	function save_country_in_session() {
+		if ( isset( $_REQUEST['wcj_country_selector'] ) ) {
+			if ( ! WC()->session->has_session() ) {
+				WC()->session->set_customer_session_cookie( true );
+			}
+			WC()->session->set( 'wcj_selected_country', $_REQUEST['wcj_country_selector'] );
+		}
+	}
+
+	/**
+	 * get_country.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 */
+	function get_country() {
+		if ( 'manual' === get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) {
+			if ( '' == WC()->session->get( 'wcj_selected_country' ) ) {
+				if ( ! WC()->session->has_session() ) {
+					WC()->session->set_customer_session_cookie( true );
+				}
+				$country = $this->get_country_by_ip();
+				WC()->session->set( 'wcj_selected_country', $country );
+				return $country;
+			} else {
+				return WC()->session->get( 'wcj_selected_country' );
+			}
+		} else {
+			return $this->get_country_by_ip();
+		}
+	}
+
+	/**
+	 * get_country_by_ip.
+	 *
+	 * @version 3.0.2
+	 * @since   3.0.2
+	 * @todo    move to global functions
+	 */
+	function get_country_by_ip() {
+		// Get the country by IP
+		$location = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::geolocate_ip() : array( 'country' => '' ) );
+		// Base fallback
+		if ( empty( $location['country'] ) ) {
+			$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
+		}
+		return ( isset( $location['country'] ) ) ? $location['country'] : '';
 	}
 
 }
