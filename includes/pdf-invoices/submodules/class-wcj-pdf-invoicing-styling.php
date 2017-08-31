@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Styling
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -32,8 +32,8 @@ class WCJ_PDF_Invoicing_Styling extends WCJ_Module {
 	/**
 	 * get_default_css_template.
 	 *
-	 * @version 3.0.2
-	 * @version 3.0.2
+	 * @version 3.1.0
+	 * @version 3.1.0
 	 */
 	function get_default_css_template( $invoice_type_id ) {
 		if ( ! isset( $this->default_css_template[ $invoice_type_id ] ) ) {

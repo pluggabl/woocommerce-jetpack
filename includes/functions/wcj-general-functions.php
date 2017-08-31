@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -12,8 +12,8 @@ if ( ! function_exists( 'wcj_wrap_in_wc_email_template' ) ) {
 	/**
 	 * wcj_wrap_in_wc_email_template.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function wcj_wrap_in_wc_email_template( $content, $email_heading = '' ) {
 		return wcj_get_wc_email_part( 'header', $email_heading ) . $content . wcj_get_wc_email_part( 'footer' );
@@ -24,8 +24,8 @@ if ( ! function_exists( 'wcj_get_wc_email_part' ) ) {
 	/**
 	 * wcj_get_wc_email_part.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function wcj_get_wc_email_part( $part, $email_heading = '' ) {
 		ob_start();
@@ -137,8 +137,8 @@ if ( ! function_exists( 'wcj_replace_values_in_template' ) ) {
 	/**
 	 * wcj_replace_values_in_template.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function wcj_replace_values_in_template( $values_to_replace, $template ) {
 		return str_replace( array_keys( $values_to_replace ), array_values( $values_to_replace ), $template );
@@ -149,7 +149,7 @@ if ( ! function_exists( 'wcj_variation_radio_button' ) ) {
 	/**
 	 * wcj_variation_radio_button.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.4.8
 	 * @todo    (maybe) check - maybe we can use `$variation['variation_description']` instead of `get_post_meta( $variation_id, '_variation_description', true )`
 	 */

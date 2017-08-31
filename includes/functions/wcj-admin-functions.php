@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -13,7 +13,7 @@ if ( ! function_exists( 'wcj_get_settings_as_multiselect_or_text' ) ) {
 	/**
 	 * wcj_get_settings_as_multiselect_or_text.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.9.1
 	 */
 	function wcj_get_settings_as_multiselect_or_text( $values, $multiselect_options, $is_multiselect ) {

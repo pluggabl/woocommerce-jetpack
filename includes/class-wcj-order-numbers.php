@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @todo    (maybe) rename "Orders Renumerate" to "Renumerate orders"
 	 * @todo    (maybe) use `woocommerce_new_order` hook instead of `wp_insert_post`
 	 */
@@ -50,8 +50,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * remove_order_tracking_sanitize_order_id_filter.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function remove_order_tracking_sanitize_order_id_filter() {
 		remove_filter( 'woocommerce_shortcode_order_tracking_order_id', 'wc_sanitize_order_id' );
@@ -87,7 +87,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * add_order_number_to_tracking.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.5.2
 	 */
 	function add_order_number_to_tracking( $order_number ) {
@@ -147,7 +147,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add Renumerate Orders tool to WooCommerce menu (the content).
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function create_renumerate_orders_tool() {
 		$result_message = '';
@@ -183,7 +183,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {
 		if ( 'shop_order' !== get_post_type( $order_id ) || 'auto-draft' === get_post_status( $order_id ) ) {
@@ -222,7 +222,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Renumerate orders function.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @todo    renumerate in date range only
 	 * @todo    (maybe) `orderby` set to `ID`
 	 */

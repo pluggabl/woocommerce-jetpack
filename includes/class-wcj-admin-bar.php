@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.9.0
 	 * @todo    (maybe) custom user nodes
 	 * @todo    (maybe) optional nodes selection
@@ -68,7 +68,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_admin_bar_icon_style.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.9.0
 	 */
 	function add_booster_admin_bar_icon_style() {
@@ -116,7 +116,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * get_nodes_booster_modules.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.9.0
 	 * @todo    (maybe) dashes instead of underscores
 	 * @todo    (maybe) dashboard > alphabetically - list all modules
@@ -228,8 +228,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_active_admin_bar.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function add_booster_active_admin_bar( $wp_admin_bar ) {
 		$tools = array(

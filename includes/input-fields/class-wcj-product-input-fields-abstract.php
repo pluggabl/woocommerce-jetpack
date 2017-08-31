@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Abstract
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -424,7 +424,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @todo    `$set_value` - add "default" option for all other types except checkbox
 	 * @todo    `$set_value` - 'file' type
 	 */
@@ -682,7 +682,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Adds product input values to order details (and emails).
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );

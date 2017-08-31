@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -438,7 +438,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * get_manager_settings.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.6.0
 	 * @return  array
 	 */

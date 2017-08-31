@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Left to Free Shipping
  *
- * @version 2.8.0
+ * @version 3.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -13,9 +13,13 @@ return array(
 	array(
 		'title'    => __( 'Left to Free Shipping Info Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'desc'     => __( 'This section lets you enable info on cart, mini cart and checkout pages.', 'woocommerce-jetpack' )
-			. '<br>' . __( 'You can also use <em>Booster - Left to Free Shipping</em> widget, <em>[wcj_get_left_to_free_shipping content=""]</em> shortcode or <em>wcj_get_left_to_free_shipping( $content );</em> function.', 'woocommerce-jetpack' )
-			. '<br>' . __( 'In content you can use: <em>%left_to_free%</em> and <em>%free_shipping_min_amount%</em> shortcodes.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'This section lets you enable info on cart, mini cart and checkout pages.', 'woocommerce-jetpack' ) . '<br>' . '<br>' .
+			sprintf( __( 'You can also use <em>Booster - Left to Free Shipping</em> widget, %s shortcode or %s function.', 'woocommerce-jetpack' ),
+				'<code>[wcj_get_left_to_free_shipping content=""]</code>',
+				'<code>wcj_get_left_to_free_shipping( $content );</code>' ) . '<br>' . '<br>' .
+			sprintf( __( 'In content replaced values are: %s and %s.', 'woocommerce-jetpack' ),
+				'<code>%left_to_free%</code>',
+				'<code>%free_shipping_min_amount%</code>' ),
 		'id'       => 'wcj_shipping_left_to_free_info_options',
 	),
 	array(

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Widget
  *
- * @version 3.0.2
- * @since   3.0.2
+ * @version 3.1.0
+ * @since   3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Widget extends WP_Widget {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function __construct() {
 		$widget_options = array(
@@ -30,8 +30,8 @@ class WCJ_Widget extends WP_Widget {
 	/**
 	 * Outputs the content of the widget.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 * @param   array $args
 	 * @param   array $instance
 	 */
@@ -49,8 +49,8 @@ class WCJ_Widget extends WP_Widget {
 	/**
 	 * Outputs the options form on admin.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 * @param   array $instance The widget options
 	 * @todo    add more types (not only text etc. and select)
 	 */
@@ -87,8 +87,8 @@ class WCJ_Widget extends WP_Widget {
 	/**
 	 * Processing widget options on save.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 * @param   array $new_instance The new options
 	 * @param   array $old_instance The previous options
 	 */

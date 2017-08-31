@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.8.0
 	 * @see     idea from ticket #4752
 	 */
@@ -41,8 +41,8 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * add_verified_email_column.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 * @todo    (maybe) add option to enable/disable the column
 	 */
 	function add_verified_email_column( $columns ) {
@@ -53,8 +53,8 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * render_verified_email_column.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function render_verified_email_column( $output, $column_name, $user_id ) {
 		if ( 'wcj_is_verified_email' === $column_name ) {
@@ -110,7 +110,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * reset_and_mail_activation_link.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.8.0
 	 * @todo    %site_name% etc. in `wcj_emails_verification_email_subject`
 	 * @todo    ticket #5373 - unexpected issue with "Activation failed, please contact our administrator" message
@@ -140,7 +140,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * process_email_verification.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.8.0
 	 */
 	function process_email_verification() {

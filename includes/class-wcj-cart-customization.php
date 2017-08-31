@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cart Customization
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Cart_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.7.0
 	 */
 	function __construct() {
@@ -55,8 +55,8 @@ class WCJ_Cart_Customization extends WCJ_Module {
 	/**
 	 * change_empty_cart_button_text.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function change_empty_cart_button_text( $text ) {
 		return get_option( 'wcj_cart_customization_return_to_shop_button_text', __( 'Return to shop', 'woocommerce' ) );
@@ -65,8 +65,8 @@ class WCJ_Cart_Customization extends WCJ_Module {
 	/**
 	 * replace_empty_cart_template.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 * @todo    fix folder structure in /templates
 	 */
 	function replace_empty_cart_template( $located, $template_name, $args, $template_path, $default_path ) {

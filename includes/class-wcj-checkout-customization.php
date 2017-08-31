@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.7.0
 	 * @todo    "Disable Fields on Checkout for Logged Users" - billing and shipping country ('select' type)
 	 * @todo    "Disable Fields on Checkout for Logged Users" - other core fields (e.g. account fields)
@@ -72,8 +72,8 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * customize_order_received_message.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function customize_order_received_message( $message, $_order ) {
 		if ( null != $_order ) {

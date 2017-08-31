@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -104,7 +104,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * trigger.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function trigger( $order_id ) {
 
@@ -167,7 +167,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * get_content_html.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @access  public
 	 * @return  string
 	 * @todo    (maybe) use `wc_get_template` for custom templates (same for `get_content_plain()`)
@@ -194,7 +194,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Initialise settings form fields.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @todo    (maybe) `chosen_select` class in `trigger`
 	 */
 	function init_form_fields() {

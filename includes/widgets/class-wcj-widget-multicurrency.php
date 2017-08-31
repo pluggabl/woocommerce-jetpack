@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Multicurrency
  *
- * @version 2.5.0
+ * @version 3.1.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -11,96 +11,84 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WCJ_Widget_Multicurrency' ) ) :
 
-class WCJ_Widget_Multicurrency extends WP_Widget {
+class WCJ_Widget_Multicurrency extends WCJ_Widget {
 
 	/**
-	 * Sets up the widgets name etc
+	 * get_data.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
-	function __construct() {
-		$widget_ops = array(
-			'classname'   => 'wcj_widget_multicurrency',
-			'description' => __( 'Booster: Multicurrency Switcher Widget', 'woocommerce-jetpack' ),
-		);
-		parent::__construct( 'wcj_widget_multicurrency', __( 'Booster - Multicurrency Switcher', 'woocommerce-jetpack' ), $widget_ops );
+	function get_data( $id ) {
+		switch ( $id ) {
+			case 'id_base':
+				return 'wcj_widget_multicurrency';
+			case 'name':
+				return __( 'Booster - Multicurrency Switcher', 'woocommerce-jetpack' );
+			case 'description':
+				return __( 'Booster: Multicurrency Switcher Widget', 'woocommerce-jetpack' );
+		}
 	}
 
 	/**
-	 * Outputs the content of the widget
+	 * get_content.
 	 *
-	 * @version 2.5.0
-	 * @param array $args
-	 * @param array $instance
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
-	function widget( $args, $instance ) {
-		// outputs the content of the widget
-		echo $args['before_widget'];
-		if ( ! empty( $instance['title'] ) ) {
-			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
-		}
+	function get_content( $instance ) {
 		if ( ! wcj_is_module_enabled( 'multicurrency' ) ) {
-			echo __( 'Multicurrency module not enabled!', 'woocommerce-jetpack' );
+			return __( 'Multicurrency module not enabled!', 'woocommerce-jetpack' );
 		} else {
 			switch ( $instance['switcher_type'] ) {
 				case 'link_list':
-					echo do_shortcode( '[wcj_currency_select_link_list]' );
-					break;
+					return do_shortcode( '[wcj_currency_select_link_list]' );
 				case 'radio_list':
-					echo do_shortcode( '[wcj_currency_select_radio_list]' );
-					break;
-				default:
-					echo do_shortcode( '[wcj_currency_select_drop_down_list]' );
-					break;
+					return do_shortcode( '[wcj_currency_select_radio_list]' );
+				default: // 'drop_down'
+					return do_shortcode( '[wcj_currency_select_drop_down_list]' );
 			}
 		}
-		echo $args['after_widget'];
 	}
 
 	/**
-	 * Outputs the options form on admin
+	 * get_options.
 	 *
-	 * @version 2.4.5
-	 * @param array $instance The widget options
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
-	function form( $instance ) {
-		// outputs the options form on admin
-		$title         = ! empty( $instance['title'] )         ? $instance['title']         : '';
-		$switcher_type = ! empty( $instance['switcher_type'] ) ? $instance['switcher_type'] : 'drop_down';
-		?>
-		<p>
-		<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-		</p>
-		<p>
-		<label for="<?php echo $this->get_field_id( 'switcher_type' ); ?>"><?php _e( 'Type:' ); ?></label>
-		<select class="widefat" id="<?php echo $this->get_field_id( 'switcher_type' ); ?>" name="<?php echo $this->get_field_name( 'switcher_type' ); ?>">
-			<option value="drop_down" <?php  selected( $switcher_type, 'drop_down' ); ?>><?php  echo __( 'Drop down', 'woocommerce-jetpack' ); ?>
-			<option value="radio_list" <?php selected( $switcher_type, 'radio_list' ); ?>><?php echo __( 'Radio list', 'woocommerce-jetpack' ); ?>
-			<option value="link_list" <?php  selected( $switcher_type, 'link_list' ); ?>><?php  echo __( 'Link list', 'woocommerce-jetpack' ); ?>
-		</select>
-		</p>
-		<?php
+	function get_options() {
+		return array(
+			array(
+				'title'    => __( 'Title', 'woocommerce-jetpack' ),
+				'id'       => 'title',
+				'default'  => '',
+				'type'     => 'text',
+				'class'    => 'widefat',
+			),
+			array(
+				'title'    => __( 'Type', 'woocommerce-jetpack' ),
+				'id'       => 'switcher_type',
+				'default'  => 'drop_down',
+				'type'     => 'select',
+				'options'  => array(
+					'drop_down'  => __( 'Drop down', 'woocommerce-jetpack' ),
+					'radio_list' => __( 'Radio list', 'woocommerce-jetpack' ),
+					'link_list'  => __( 'Link list', 'woocommerce-jetpack' ),
+				),
+				'class'    => 'widefat',
+			),
+		);
 	}
 
-	/**
-	 * Processing widget options on save
-	 *
-	 * @version 2.4.5
-	 * @param array $new_instance The new options
-	 * @param array $old_instance The previous options
-	 */
-	function update( $new_instance, $old_instance ) {
-		// processes widget options to be saved
-		$instance = array();
-		$instance['title']         = ( ! empty( $new_instance['title'] ) )         ? strip_tags( $new_instance['title'] )         : '';
-		$instance['switcher_type'] = ( ! empty( $new_instance['switcher_type'] ) ) ? $new_instance['switcher_type']               : 'drop_down';
-		return $instance;
-	}
 }
 
 endif;
 
-// register WCJ_Widget_Multicurrency widget
 if ( ! function_exists( 'register_wcj_widget_multicurrency' ) ) {
+	/**
+	 * Register WCJ_Widget_Multicurrency widget.
+	 */
 	function register_wcj_widget_multicurrency() {
 		register_widget( 'WCJ_Widget_Multicurrency' );
 	}

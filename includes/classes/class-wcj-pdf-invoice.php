@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -22,7 +22,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * prepare_pdf.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function prepare_pdf() {
 
@@ -141,7 +141,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @todo    pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 	 */
 	function get_pdf( $dest ) {

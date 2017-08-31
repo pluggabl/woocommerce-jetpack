@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways per Product or Category
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -35,7 +35,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	/**
 	 * filter_available_payment_gateways_per_category.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function filter_available_payment_gateways_per_category( $available_gateways ) {
 

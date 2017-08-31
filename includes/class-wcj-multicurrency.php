@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -45,7 +45,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function add_hooks() {
 		// Session
@@ -78,8 +78,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_addons.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function change_price_addons( $addons ) {
 		foreach ( $addons as $addon_key => $addon ) {

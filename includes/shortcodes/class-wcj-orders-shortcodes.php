@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function __construct() {
 
@@ -90,7 +90,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -181,8 +181,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_total_formatted.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function wcj_order_total_formatted( $atts ) {
 		return $this->the_order->get_formatted_order_total( $atts['tax_display'], ( 'yes' === $atts['display_refunded'] ) );
@@ -191,8 +191,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_remaining_refund_amount.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function wcj_order_remaining_refund_amount( $atts ) {
 		return $this->wcj_price_shortcode( $this->the_order->get_remaining_refund_amount(), $atts );
@@ -201,8 +201,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_refunds_table.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 * @todo    add `refund_items_or_reason_or_title` column
 	 * @todo    add `refund_items_quantities` column (`$_item->get_quantity()`)
 	 * @todo    check `$atts['columns']` etc. before starting
@@ -260,8 +260,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_total_tax_refunded.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function wcj_order_total_tax_refunded( $atts ) {
 		return $this->wcj_price_shortcode( $this->the_order->get_total_tax_refunded(), $atts );
@@ -270,8 +270,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_total_shipping_refunded.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function wcj_order_total_shipping_refunded( $atts ) {
 		return $this->wcj_price_shortcode( $this->the_order->get_total_shipping_refunded(), $atts );
@@ -802,7 +802,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_date.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function wcj_order_date( $atts ) {
 		return date_i18n( $atts['date_format'], strtotime( wcj_get_order_date( $this->the_order ) ) );
@@ -811,7 +811,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_time.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function wcj_order_time( $atts ) {
 		return date_i18n( $atts['time_format'], strtotime( wcj_get_order_date( $this->the_order ) ) );
@@ -1029,8 +1029,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_subtotal_to_display.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function wcj_order_subtotal_to_display( $atts ) {
 		return $this->the_order->get_subtotal_to_display( false, $atts['tax_display'] );

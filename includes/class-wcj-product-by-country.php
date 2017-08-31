@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -85,7 +85,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * product_by_country_pre_get_posts.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.9.0
 	 */
 	function product_by_country_pre_get_posts( $query ) {
@@ -122,7 +122,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * product_by_country.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.5.0
 	 */
 	function product_by_country( $visible, $product_id ) {
@@ -137,8 +137,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * save_country_in_session.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 * @todo    (maybe) option to use standard sessions instead of WC sessions
 	 */
 	function save_country_in_session() {
@@ -153,8 +153,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * get_country.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function get_country() {
 		if ( 'manual' === get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) {
@@ -176,8 +176,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * get_country_by_ip.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 * @todo    move to global functions
 	 */
 	function get_country_by_ip() {

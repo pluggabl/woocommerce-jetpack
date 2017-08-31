@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Customers
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  */
@@ -89,7 +89,7 @@ class WCJ_Exporter_Customers {
 	/**
 	 * export_customers_from_orders.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.4.8
 	 * @todo    (maybe) add more order fields (shipping)
 	 */

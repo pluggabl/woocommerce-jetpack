@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -175,7 +175,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * add_order_column.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function add_order_column( $columns ) {
 		$invoice_types = wcj_get_enabled_invoice_types();

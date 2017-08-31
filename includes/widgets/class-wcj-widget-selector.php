@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Widget - Selector
  *
- * @version 3.0.2
- * @since   3.0.2
+ * @version 3.1.0
+ * @since   3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Widget_Selector extends WCJ_Widget {
 	/**
 	 * get_data.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function get_data( $id ) {
 		switch ( $id ) {
@@ -26,15 +26,25 @@ class WCJ_Widget_Selector extends WCJ_Widget {
 			case 'name':
 				return __( 'Booster - Selector', 'woocommerce-jetpack' );
 			case 'description':
-				return __( 'Selector Widget', 'woocommerce-jetpack' );
+				return __( 'Booster: Selector Widget', 'woocommerce-jetpack' );
 		}
+	}
+
+	/**
+	 * get_content.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function get_content( $instance ) {
+		return do_shortcode( '[wcj_selector selector_type="' . $instance['selector_type'] . '"]' );
 	}
 
 	/**
 	 * get_options.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function get_options() {
 		return array(
@@ -58,16 +68,6 @@ class WCJ_Widget_Selector extends WCJ_Widget {
 		);
 	}
 
-	/**
-	 * get_content.
-	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
-	 */
-	function get_content( $instance ) {
-		return do_shortcode( '[wcj_selector selector_type="' . $instance['selector_type'] . '"]' );
-	}
-
 }
 
 endif;
@@ -76,8 +76,8 @@ if ( ! function_exists( 'register_wcj_widget_selector' ) ) {
 	/**
 	 * Register WCJ_Widget_Selector widget.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function register_wcj_widget_selector() {
 		register_widget( 'WCJ_Widget_Selector' );

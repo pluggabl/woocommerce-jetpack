@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Bar
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */

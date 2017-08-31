@@ -167,7 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.0.2 - 31/08/2017 =
+= 3.1.0 - 31/08/2017 =
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
 -D	* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
 !	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.
@@ -179,6 +179,7 @@ You can see the differences between versions in this [table](https://booster.io/
 !D	* Dev - Shortcodes - Orders - `[wcj_order_total_formatted]` shortcode added.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_remaining_refund_amount]` shortcode added.
 !D	* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `columns_style` attribute added.
+!	* Dev - Widgets - Code refactoring (now as `WCJ_Widget` child classes).
 -D	* Dev - Widgets - "Booster - Selector" widget added.
 !D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Added "WooCommerce Product Add-ons" plugin compatibility.
 !D	* Dev - PRICES & CURRENCIES - Wholesale Price - Minimum quantity for applied discount changed from 1 to 0.
@@ -198,6 +199,7 @@ D	* Dev - PRODUCTS - Product Visibility by User Role - Descriptions added.
 !D	* Dev - CART & CHECKOUT - Cart Customization - Change Empty Cart "Return to shop" Button Text - "Method" option added.
 ~D	* Dev - CART & CHECKOUT - Checkout Customization - "Customize order received message" options added.
 !D	* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - "Use List Instead of Comma Separated Text for Products in Settings" support added.
+D	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Settings restyled.
 	* Dev - SHIPPING & ORDERS - Order Numbers - Code refactoring and clean up.
 !D	* Dev - SHIPPING & ORDERS - Order Numbers - Skipping order number generation for `auto-draft` orders.
 !	* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - Removed sanitizing order id (was added in WC v3.1.0).

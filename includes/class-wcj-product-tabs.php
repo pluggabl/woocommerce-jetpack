@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 3.0.2
+ * @version 3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -39,8 +39,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * get_tab_key.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function get_tab_key( $tab_option_key, $scope, $product_id  = 0 ) {
 		$tab_key = ( 'global' === $scope ?
@@ -53,8 +53,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * customize_default_tabs.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 */
 	function customize_default_tabs( $tabs ) {
 
@@ -96,8 +96,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * add_custom_product_tabs.
 	 *
-	 * @version 3.0.2
-	 * @since   3.0.2
+	 * @version 3.1.0
+	 * @since   3.1.0
 	 * @todo    add visibility by user roles
 	 */
 	function add_custom_product_tabs( $scope, $tabs, $product_id ) {
@@ -150,7 +150,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Customize the product tabs.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function customize_product_tabs( $tabs ) {
 
@@ -410,7 +410,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * maybe_add_js_links.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @since   2.8.0
 	 */
 	function maybe_add_js_links() {
@@ -446,7 +446,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_new_custom_product_tab_local.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @todo    (maybe) replace `the_content` with `do_shortcode`
 	 */
 	function create_new_custom_product_tab_local( $key, $tab ) {
@@ -456,7 +456,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_new_custom_product_tab_global.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @todo    (maybe) replace `the_content` with `do_shortcode`
 	 */
 	function create_new_custom_product_tab_global( $key, $tab ) {
@@ -466,7 +466,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * save_custom_tabs_meta_box.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 * @todo    rewrite as standard `WCJ_Module` function
 	 */
 	function save_custom_tabs_meta_box( $post_id, $post ) {
@@ -520,7 +520,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_custom_tabs_meta_box.
 	 *
-	 * @version 3.0.2
+	 * @version 3.1.0
 	 */
 	function create_custom_tabs_meta_box() {
 
