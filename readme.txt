@@ -167,7 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.0 - 31/08/2017 =
+= 3.1.0 - 01/09/2017 =
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
 -D	* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
 !	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.

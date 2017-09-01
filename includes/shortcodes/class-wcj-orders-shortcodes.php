@@ -227,7 +227,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 						$cell = $_refund->get_reason();
 						break;
 					case 'refund_reason_or_title':
-						$cell = ( ! empty( $_refund->get_reason() ) ? $_refund->get_reason() : $_refund->get_post_title() );
+						$reason = $_refund->get_reason();
+						$cell = ( '' != $reason ? $reason : $_refund->get_post_title() );
 						break;
 					case 'refund_amount':
 						$cell = $atts['price_prefix'] . $_refund->get_formatted_refund_amount();
