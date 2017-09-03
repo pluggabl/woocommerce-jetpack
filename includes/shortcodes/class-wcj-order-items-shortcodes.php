@@ -520,6 +520,15 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					case 'item_quantity':
 						$cell_data = $atts['quantity_prefix'] . $item['qty'];
 						break;
+					case 'item_quantity_refunded':
+						$cell_data = ( ! $item['is_custom'] && $item_id ? $this->the_order->get_qty_refunded_for_item( $item_id ) : '' );
+						break;
+					case 'item_quantity_excl_refunded':
+						$cell_data = ( ! $item['is_custom'] && $item_id ? ( $item['qty'] + $this->the_order->get_qty_refunded_for_item( $item_id ) ) : '' );
+						break;
+					case 'item_total_refunded':
+						$cell_data = ( ! $item['is_custom'] && $item_id ? $this->wcj_price_shortcode( $this->the_order->get_total_refunded_for_item( $item_id ), $atts ) : '' );
+						break;
 					case 'item_total_tax_excl':
 						$cell_data = $this->wcj_price_shortcode( $the_order->get_item_total( $item, false, true ), $atts );
 						break;

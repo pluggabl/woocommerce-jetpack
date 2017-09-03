@@ -167,11 +167,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.0 - 01/09/2017 =
+= 3.1.0 - 03/09/2017 =
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
 -D	* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
 !	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_categories` column added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_quantity_refunded` and `item_quantity_excl_refunded` columns added.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_total_refunded` column added.
 -!D	* Dev - Shortcodes - Orders - `[wcj_order_refunds_table]` shortcode added.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_total_shipping_refunded]` shortcode added.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_total_tax_refunded]` shortcode added.
