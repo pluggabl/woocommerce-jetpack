@@ -81,5 +81,42 @@ $settings = array_merge( $settings, array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_pdf_invoicing_options',
 	),
+	array(
+		'title'    => __( 'Report Tool Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_pdf_invoicing_report_tool_options',
+	),
+	array(
+		'title'    => __( 'Reports Filename', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%site%', '%invoice_type%', '%year%', '%month%' ) ),
+		'id'       => 'wcj_pdf_invoicing_report_tool_filename',
+		'default'  => '%site%-%invoice_type%-%year%_%month%',
+		'type'     => 'text',
+		'class'    => 'widefat',
+	),
+	array(
+		'title'    => __( 'CSV Separator', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_pdf_invoicing_report_tool_csv_separator',
+		'default'  => ';',
+		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'CSV UTF-8 BOM', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_pdf_invoicing_report_tool_csv_add_utf_8_bom',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Replace Periods with Commas in CSV Data', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Replace', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_pdf_invoicing_report_tool_csv_replace_periods_w_commas',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_pdf_invoicing_report_tool_options',
+	),
 ) );
 return $settings;

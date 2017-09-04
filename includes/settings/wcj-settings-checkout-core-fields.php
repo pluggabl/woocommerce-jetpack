@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Core Fields
  *
- * @version 2.8.0
+ * @version 3.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -11,7 +11,38 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $settings = array(
 	array(
-		'title'    => __( 'Checkout Core Fields Options', 'woocommerce-jetpack' ),
+		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_checkout_core_fields_general_options',
+	),
+	array(
+		'title'    => __( 'Override Default Address Fields', 'woocommerce-jetpack' ),
+		'type'     => 'select',
+		'id'       => 'wcj_checkout_core_fields_override_default_address_fields',
+		'default'  => 'billing',
+		'options'  => array(
+			'billing'  => __( 'Override with billing fields', 'woocommerce-jetpack' ),
+			'shipping' => __( 'Override with shipping fields', 'woocommerce-jetpack' ),
+			'disable'  => __( 'Do not override', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'title'    => __( 'Override Country Locale Fields', 'woocommerce-jetpack' ),
+		'type'     => 'select',
+		'id'       => 'wcj_checkout_core_fields_override_country_locale_fields',
+		'default'  => 'billing',
+		'options'  => array(
+			'billing'  => __( 'Override with billing fields', 'woocommerce-jetpack' ),
+			'shipping' => __( 'Override with shipping fields', 'woocommerce-jetpack' ),
+			'disable'  => __( 'Do not override', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_checkout_core_fields_general_options',
+	),
+	array(
+		'title'    => __( 'Fields Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_checkout_core_fields_options',
 	),

@@ -167,7 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.0 - 03/09/2017 =
+= 3.1.0 - 04/09/2017 =
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
 -D	* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
 !	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.
@@ -199,6 +199,8 @@ D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
 D	* Dev - PRODUCTS - Product Visibility by Country - Settings restyled and descriptions added.
 D	* Dev - PRODUCTS - Product Visibility by User Role - Descriptions added.
 !D	* Dev - CART & CHECKOUT - Cart Customization - Change Empty Cart "Return to shop" Button Text - "Method" option added.
+!D	* Dev - CART & CHECKOUT - Checkout Core Fields - "Override Default Address Fields" and "Override Country Locale Fields" options added.
+!D	* Dev - CART & CHECKOUT - Checkout Core Fields - "Account Username", "Account Password-2" fields added.
 ~D	* Dev - CART & CHECKOUT - Checkout Customization - "Customize order received message" options added.
 !D	* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - "Use List Instead of Comma Separated Text for Products in Settings" support added.
 D	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Settings restyled.
@@ -210,6 +212,8 @@ D	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Settings restyled.
 !	* Dev - PDF INVOICING & PACKING SLIPS - Default values added to `get_option()` calls.
 -D	* Dev - PDF INVOICING & PACKING SLIPS - General - "Create on Order Partially Refunded" and "Create on Order Status Refunded and/or Order Partially Refunded" added.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Email Options - "Customer - Partially Refunded Order" email added.
+~D	* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - Code refactoring, clean up, minor changes. Tool settings restyled.
+~D	* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - "Reports Filename", "CSV Separator", "CSV UTF-8 BOM", "Replace Periods with Commas in CSV Data" options added.
 !D	* Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar added.
 !D	* Dev - EMAILS & MISC. - Custom Emails - "Wrap in WC Email Template" option added.
 !D	* Dev - EMAILS & MISC. - Custom Emails - Code refactoring, clean up etc. Settings page restyled.

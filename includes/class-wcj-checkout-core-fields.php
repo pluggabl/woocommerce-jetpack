@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 2.8.0
+ * @version 3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,9 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.0
+	 * @see     https://docs.woocommerce.com/document/tutorial-customising-checkout-fields-using-actions-and-filters/
+	 * @todo    (maybe) default overrides should be `disable`
 	 */
 	function __construct() {
 
@@ -46,42 +48,67 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 			'shipping_city',
 			'shipping_state',
 			'shipping_postcode',
+			'account_username',
 			'account_password',
+			'account_password-2',
 			'order_comments',
 		);
 
 		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_checkout_fields' ,        array( $this, 'custom_override_checkout_fields' ) );
-			add_filter( 'woocommerce_default_address_fields' , array( $this, 'custom_override_default_address_fields' ) );
+			add_filter( 'woocommerce_checkout_fields' ,            array( $this, 'custom_override_checkout_fields' ),        PHP_INT_MAX );
+			if ( 'disable' != ( $this->country_locale_override = get_option( 'wcj_checkout_core_fields_override_country_locale_fields', 'billing' ) ) ) {
+				add_filter( 'woocommerce_get_country_locale',      array( $this, 'custom_override_country_locale_fields' ),  PHP_INT_MAX );
+			}
+			if ( 'disable' != ( $this->default_address_override = get_option( 'wcj_checkout_core_fields_override_default_address_fields', 'billing' ) ) ) {
+				add_filter( 'woocommerce_default_address_fields',  array( $this, 'custom_override_default_address_fields' ), PHP_INT_MAX );
+			}
 		}
+	}
+
+	/**
+	 * maybe_override_fields.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function maybe_override_fields( $fields, $override_with_section ) {
+		$options_to_override = array(
+			'label'       => '',
+			'placeholder' => '',
+			'priority'    => 0,
+		);
+		foreach ( $fields as $field_key => $field_values ) {
+			$field = $override_with_section . '_' . $field_key;
+			foreach ( $options_to_override as $option => $default_value ) {
+				if ( $default_value != ( $value = get_option( 'wcj_checkout_fields_' . $field . '_' . $option, $default_value ) ) ) {
+					$fields[ $field_key ][ $option ] = $value;
+				}
+			}
+		}
+		return $fields;
+	}
+
+	/**
+	 * custom_override_country_locale_fields.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function custom_override_country_locale_fields( $fields ) {
+		foreach ( $fields as $country => $country_fields ) {
+			$fields[ $country ] = $this->maybe_override_fields( $country_fields, $this->country_locale_override );
+		}
+		return $fields;
 	}
 
 	/**
 	 * custom_override_default_address_fields.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.0
 	 * @since   2.3.8
-	 * @todo    check if `$section` shouldn't be used
 	 */
 	function custom_override_default_address_fields( $fields ) {
-		foreach ( $fields as $field_key => $field_values ) {
-			foreach ( $this->woocommerce_core_checkout_fields as $field ) {
-				$field_parts = explode( '_', $field, 2 );
-				if ( is_array( $field_parts ) && 2 === count( $field_parts ) ) {
-					$section    = $field_parts[0]; // billing or shipping
-					$field_name = $field_parts[1];
-					if ( $field_key === $field_name ) {
-						if ( '' != ( $label = get_option( 'wcj_checkout_fields_' . $field . '_' . 'label', '' ) ) ) {
-							$fields[ $field_name ]['label'] = $label;
-						}
-						if ( '' != ( $placeholder = get_option( 'wcj_checkout_fields_' . $field . '_' . 'placeholder', '' ) ) ) {
-							$fields[ $field_name ]['placeholder'] = $placeholder;
-						}
-					}
-				}
-			}
-		}
-		return $fields;
+		return $this->maybe_override_fields( $fields, $this->default_address_override );
 	}
 
 	/**
