@@ -167,7 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.0 - 04/09/2017 =
+= 3.1.0 - 05/09/2017 =
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
 -D	* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
 !	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.
@@ -184,11 +184,16 @@ You can see the differences between versions in this [table](https://booster.io/
 !	* Dev - Widgets - Code refactoring (now as `WCJ_Widget` child classes).
 -D	* Dev - Widgets - "Booster - Selector" widget added.
 !D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Added "WooCommerce Product Add-ons" plugin compatibility.
+!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - "Advanced: Saved Calculated Products Prices" option added.
+!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - "Round Prices" options added.
 !D	* Dev - PRICES & CURRENCIES - Wholesale Price - Minimum quantity for applied discount changed from 1 to 0.
 !D	* Dev - PRODUCTS - Product Add to Cart - Variable Radio Buttons - Formatting options added.
 !D	* Dev - PRODUCTS - Product Info - Advanced - "Extra Filters" option added.
 !	* Dev - PRODUCTS - Product Input Fields - Additional check for `is_string( $value )` added.
 !	* Dev - PRODUCTS - Product Input Fields - Values refilled after add to cart.
+!D	* Dev - PRODUCTS - Product Input Fields - All Products - "Categories/Tags/Products to include/exclude" options added.
+D	* Dev - PRODUCTS - Product Input Fields - Settings restyled.
+!	* Dev - PRODUCTS - Product Input Fields - Code refactoring and cleanup.
 D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
 !	* Dev - PRODUCTS - Product Tabs - Code refactoring, cleanup and minor fixes.
 !D	* Dev - PRODUCTS - Product Tabs - Deprecated options not displayed (if empty).

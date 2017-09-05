@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Product Input Fields - Abstract
+ * Booster for WooCommerce - Product Input Fields - Core
  *
  * @version 3.1.0
  * @author  Algoritmika Ltd.
@@ -8,9 +8,9 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-if ( ! class_exists( 'WCJ_Product_Input_Fields_Abstract' ) ) :
+if ( ! class_exists( 'WCJ_Product_Input_Fields_Core' ) ) :
 
-class WCJ_Product_Input_Fields_Abstract {
+class WCJ_Product_Input_Fields_Core {
 
 	/** @var string scope. */
 	public $scope = '';
@@ -18,238 +18,230 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.0
+	 * @todo    save all info in product meta
 	 */
-	function __construct() {
-		return true;
+	function __construct( $scope ) {
+		$this->scope = $scope;
+		if ( 'yes' === get_option( 'wcj_product_input_fields_' . $this->scope . '_enabled', 'no' ) ) {
+
+			// Show fields at frontend
+			add_action( 'woocommerce_before_add_to_cart_button',    array( $this, 'add_product_input_fields_to_frontend' ), 100 );
+
+			// Process from $_POST to cart item data
+			add_filter( 'woocommerce_add_to_cart_validation',       array( $this, 'validate_product_input_fields_on_add_to_cart' ), 100, 2 );
+			add_filter( 'woocommerce_add_cart_item_data',           array( $this, 'add_product_input_fields_to_cart_item_data' ), 100, 3 );
+			// from session
+			add_filter( 'woocommerce_get_cart_item_from_session',   array( $this, 'get_cart_item_product_input_fields_from_session' ), 100, 3 );
+
+			// Show details at cart, order details, emails
+			if ( 'data' === get_option( 'wcj_product_input_fields_display_options', 'name' ) ) {
+				add_filter( 'woocommerce_get_item_data',            array( $this, 'add_product_input_fields_to_cart_item_display_data' ), PHP_INT_MAX, 2 );
+			} else {
+				add_filter( 'woocommerce_cart_item_name',           array( $this, 'add_product_input_fields_to_cart_item_name' ), 100, 3 );
+			}
+			add_filter( 'woocommerce_order_item_name',              array( $this, 'add_product_input_fields_to_order_item_name' ), 100, 2 );
+
+			// Add item meta from cart to order
+			add_action( 'woocommerce_add_order_item_meta',          array( $this, 'add_product_input_fields_to_order_item_meta' ), 100, 3 );
+
+			// Make nicer name for product input fields in order at backend (shop manager)
+			add_action( 'woocommerce_after_order_itemmeta',         array( $this, 'output_custom_input_fields_in_admin_order' ), 100, 3 );
+			if ( 'yes' === get_option( 'wcj_product_input_fields_make_nicer_name_enabled', 'yes' ) ) {
+				add_filter( 'woocommerce_hidden_order_itemmeta',    array( $this, 'hide_custom_input_fields_default_output_in_admin_order' ), 100 );
+			}
+
+			// Add to emails
+			add_filter( 'woocommerce_email_attachments',            array( $this, 'add_files_to_email_attachments' ), PHP_INT_MAX, 3 );
+
+			if ( 'local' === $this->scope ) {
+				// Product Edit
+				add_action( 'add_meta_boxes',                       array( $this, 'add_local_product_input_fields_meta_box_to_product_edit' ) );
+				add_action( 'save_post_product',                    array( $this, 'save_local_product_input_fields_on_product_edit' ), 999, 2 );
+			}
+		}
+	}
+
+	/**
+	 * Save product input fields on Product Edit.
+	 *
+	 * @version 2.2.9
+	 */
+	function save_local_product_input_fields_on_product_edit( $post_id, $post ) {
+
+		// Check that we are saving with input fields displayed.
+		if ( ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) )
+			return;
+
+		// Save enabled, required, title etc.
+		$default_total_input_fields = apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
+		$total_input_fields_before_saving = get_post_meta( $post_id, '_' . 'wcj_product_input_fields_local_total_number', true );
+		$total_input_fields_before_saving = ( '' != $total_input_fields_before_saving ) ? $total_input_fields_before_saving : $default_total_input_fields;
+		$options = $this->get_options();
+		for ( $i = 1; $i <= $total_input_fields_before_saving; $i++ ) {
+			foreach ( $options as $option ) {
+				if ( isset( $_POST[ $option['id'] . $i ] ) ) {
+					update_post_meta( $post_id, '_' . $option['id'] . $i, $_POST[ $option['id'] . $i ] );
+				} elseif ( 'checkbox' === $option['type'] ) {
+					update_post_meta( $post_id, '_' . $option['id'] . $i, 'off' );
+				}
+			}
+		}
+
+		// Save total product input fields number
+		$option_name = 'wcj_product_input_fields_local_total_number';
+		$total_input_fields = isset( $_POST[ $option_name ] ) ? $_POST[ $option_name ] : $default_total_input_fields;
+		update_post_meta( $post_id, '_' . $option_name, $_POST[ $option_name ] );
+	}
+
+	/**
+	 * add_local_product_input_fields_meta_box_to_product_edit.
+	 *
+	 * @version 2.4.8
+	 */
+	function add_local_product_input_fields_meta_box_to_product_edit() {
+		add_meta_box(
+			'wc-jetpack-product-input-fields',
+			__( 'Booster: Product Input Fields', 'woocommerce-jetpack' ),
+			array( $this, 'create_local_product_input_fields_meta_box' ),
+			'product',
+			'normal',
+			'high'
+		);
+	}
+
+	/**
+	 * create_local_product_input_fields_meta_box.
+	 *
+	 * @version 3.1.0
+	 * @todo    output options via standard "meta-box" mechanism
+	 */
+	function create_local_product_input_fields_meta_box() {
+
+		$meta_box_id   = 'product_input_fields';
+		$meta_box_desc =  __( 'Product Input Fields', 'woocommerce-jetpack' );
+
+		$options = $this->get_options();
+
+		// Get total number
+		$current_post_id = get_the_ID();
+		$option_name = 'wcj_' . $meta_box_id . '_local_total_number';
+		// If none total number set - check for the default
+		if ( ! ( $total_number = apply_filters( 'booster_get_option', 1, get_post_meta( $current_post_id, '_' . $option_name, true ) ) ) )
+			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_' . $meta_box_id . '_local_total_number_default', 1 ) );
+
+		// Start html
+		$html = '';
+
+		// Total number
+		$is_disabled = apply_filters( 'booster_get_message', '', 'readonly_string' );
+		$is_disabled_message = apply_filters( 'booster_get_message', '', 'desc' );
+		$html .= '<table>';
+		$html .= '<tr>';
+		$html .= '<th>';
+		$html .= __( 'Total number of ', 'woocommerce-jetpack' ) . $meta_box_desc;
+		$html .= '</th>';
+		$html .= '<td>';
+		$html .= '<input type="number" id="' . $option_name . '" name="' . $option_name . '" value="' . $total_number . '" ' . $is_disabled . '>';
+		$html .= '</td>';
+		$html .= '<td>';
+		$html .= __( 'Click "Update" product after you change this number.', 'woocommerce-jetpack' ) . '<br>' . $is_disabled_message;
+		$html .= '</td>';
+		$html .= '</td>';
+		$html .= '</tr>';
+		$html .= '</table>';
+
+		// The options
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			$data = array();
+			$html .= '<hr>';
+			$html .= '<h3>' . __( 'Product Input Field', 'woocommerce-jetpack' ) . ' #' . $i . '</h3>';
+			foreach ( $options as $option ) {
+				$option_id = $option['id'] . $i;
+				$option_value = get_post_meta( $current_post_id, '_' . $option_id, true );
+
+				if ( ! metadata_exists( 'post', $current_post_id, '_' . $option_id ) ) {
+					$option_value = $option['default'];
+				}
+
+				if ( 'checkbox' === $option['type'] )
+					$is_checked = checked( $option_value, 'on', false );
+
+				$select_options_html = '';
+				if ( 'select' === $option['type'] ) {
+					foreach( $option['options'] as $select_option_id => $select_option_label ) {
+						$select_options_html .= '<option value="' . $select_option_id . '"' . selected( $option_value, $select_option_id, false ) . '>' .
+							$select_option_label . '</option>';
+					}
+				}
+
+				switch ( $option['type'] ) {
+					case 'number':
+					case 'text':
+						$the_field = '<input class="widefat" type="' . $option['type'] . '" id="' . $option_id . '" name="' . $option_id . '" value="' . $option_value . '">';
+						break;
+					case 'textarea':
+						$the_field = '<textarea  style="' . ( isset( $option['css'] ) ? $option['css'] : '' ) .
+							'" class="widefat" style="" id="' . $option_id . '" name="' . $option_id . '">' . $option_value . '</textarea>';
+						break;
+					case 'checkbox':
+						$the_field = '<input class="checkbox" type="checkbox" name="' . $option_id . '" id="' . $option_id . '" ' . $is_checked . ' />' . ' ' . $option['title'];
+						break;
+					case 'select':
+						$the_field = '<select class="widefat" id="' . $option_id . '" name="' . $option_id . '">' . $select_options_html . '</select>';
+						break;
+				}
+
+				$maybe_tooltip = ( isset( $option['short_title'] ) && $option['short_title'] != $option['title'] ? wc_help_tip( $option['title'], true ) : '' );
+
+				$data[] = array(
+					( isset( $option['short_title'] ) ? $option['short_title'] : $option['title'] ) . $maybe_tooltip,
+					$the_field,
+				);
+			}
+			$html .= wcj_get_table_html( $data, array( 'table_heading_type' => 'vertical', 'table_class' => 'widefat striped', 'columns_styles' => array( 'width:33%;' ) ) );
+		}
+		$html .= '<input type="hidden" name="woojetpack_' . $meta_box_id . '_save_post" value="woojetpack_' . $meta_box_id . '_save_post">';
+
+		// Output
+		echo $html;
 	}
 
 	/**
 	 * get_options.
 	 *
-	 * @version 2.8.0
-	 * @todo    'css'
+	 * @version 3.1.0
 	 */
 	function get_options() {
-		$options = array(
+		return require( 'wcj-product-input-fields-options.php' );
+	}
 
-			array(
-				'id'                => 'wcj_product_input_fields_enabled_' . $this->scope . '_',
-				'title'             => __( 'Enabled', 'woocommerce-jetpack' ),
-				'type'              => 'checkbox',
-				'default'           => 'no',
-			),
+	/**
+	 * is_enabled_for_product_global.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function is_enabled_for_product_global( $field_nr, $product_id ) {
+		return wcj_is_enabled_for_product( $product_id, array(
+			'include_products'   => get_option( 'wcj_product_input_fields_in_products_' . 'global' . '_' . $field_nr, '' ),
+			'exclude_products'   => get_option( 'wcj_product_input_fields_ex_products_' . 'global' . '_' . $field_nr, '' ),
+			'include_categories' => get_option( 'wcj_product_input_fields_in_cats_'     . 'global' . '_' . $field_nr, '' ),
+			'exclude_categories' => get_option( 'wcj_product_input_fields_ex_cats_'     . 'global' . '_' . $field_nr, '' ),
+			'include_tags'       => get_option( 'wcj_product_input_fields_in_tags_'     . 'global' . '_' . $field_nr, '' ),
+			'exclude_tags'       => get_option( 'wcj_product_input_fields_ex_tags_'     . 'global' . '_' . $field_nr, '' ),
+		) );
+	}
 
-			array(
-				'id'                => 'wcj_product_input_fields_type_' . $this->scope . '_',
-				'title'             => __( 'Type', 'woocommerce-jetpack' ),
-				'type'              => 'select',
-				'default'           => 'text',
-				'options'           => array(
-					'text'       => __( 'Text', 'woocommerce-jetpack' ),
-					'textarea'   => __( 'Textarea', 'woocommerce-jetpack' ),
-					'number'     => __( 'Number', 'woocommerce-jetpack' ),
-					'checkbox'   => __( 'Checkbox', 'woocommerce-jetpack' ),
-					'file'       => __( 'File', 'woocommerce-jetpack' ),
-					'datepicker' => __( 'Datepicker', 'woocommerce-jetpack' ),
-					'weekpicker' => __( 'Weekpicker', 'woocommerce-jetpack' ),
-					'timepicker' => __( 'Timepicker', 'woocommerce-jetpack' ),
-					'select'     => __( 'Select', 'woocommerce-jetpack' ),
-					'radio'      => __( 'Radio', 'woocommerce-jetpack' ),
-					'password'   => __( 'Password', 'woocommerce-jetpack' ),
-					'country'    => __( 'Country', 'woocommerce-jetpack' ),
-//					'state'      => __( 'State', 'woocommerce-jetpack' ),
-					'email'      => __( 'Email', 'woocommerce-jetpack' ),
-					'tel'        => __( 'Phone', 'woocommerce-jetpack' ),
-				),
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_title_' . $this->scope . '_',
-				'title'             => __( 'Title', 'woocommerce-jetpack' ),
-				'type'              => 'textarea',
-				'default'           => '',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_placeholder_' . $this->scope . '_',
-				'title'             => __( 'Placeholder', 'woocommerce-jetpack' ),
-				'type'              => 'textarea',
-				'default'           => '',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_required_' . $this->scope . '_',
-				'title'             => __( 'Required', 'woocommerce-jetpack' ),
-				'type'              => 'checkbox',
-				'default'           => 'no',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_required_message_' . $this->scope . '_',
-				'title'             => __( 'Message on required', 'woocommerce-jetpack' ),
-				'type'              => 'textarea',
-				'default'           => '',
-			),
-
-			/* array(
-				'id'                => 'wcj_product_input_fields_type_checkbox_' . $this->scope . '_',
-				'title'             => __( 'If checkbox is selected, set possible pairs here.', 'woocommerce-jetpack' ),
-				'type'              => 'select',
-				'default'           => 'yes_no',
-				'options'           => array(
-					'yes_no' => __( 'Yes / No', 'woocommerce-jetpack' ),
-					'on_off' => __( 'On / Off', 'woocommerce-jetpack' ),
-				),
-			), */
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_checkbox_yes_' . $this->scope . '_',
-				'title'             => __( 'If checkbox is selected, set value for ON here', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Checkbox: ON', 'woocommerce-jetpack' ),
-				'type'              => 'text',
-				'default'           => __( 'Yes', 'woocommerce-jetpack' ),
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_checkbox_no_' . $this->scope . '_',
-				'title'             => __( 'If checkbox is selected, set value for OFF here', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Checkbox: OFF', 'woocommerce-jetpack' ),
-				'type'              => 'text',
-				'default'           => __( 'No', 'woocommerce-jetpack' ),
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_checkbox_default_' . $this->scope . '_',
-				'title'             => __( 'If checkbox is selected, set default value here', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Checkbox: Default', 'woocommerce-jetpack' ),
-				'type'              => 'select',
-				'default'           => 'no',
-				'options'           => array(
-					'no'  => __( 'Not Checked', 'woocommerce-jetpack' ),
-					'yes' => __( 'Checked', 'woocommerce-jetpack' ),
-				),
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_file_accept_' . $this->scope . '_',
-				'title'             => __( 'If file is selected, set accepted file types here. E.g.: ".jpg,.jpeg,.png". Leave blank to accept all files', 'woocommerce-jetpack' )
-					. '. ' . __( 'Visit <a href="https://www.w3schools.com/tags/att_input_accept.asp" target="_blank">documentation on input accept attribute</a> for valid option formats', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'File: Accepted types', 'woocommerce-jetpack' ),
-				'type'              => 'text',
-				'default'           => __( '.jpg,.jpeg,.png', 'woocommerce-jetpack' ),
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_file_max_size_' . $this->scope . '_',
-				'title'             => __( 'If file is selected, set max file size here. Set to zero to accept all files', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'File: Max size', 'woocommerce-jetpack' ),
-				'type'              => 'number',
-				'default'           => 0,
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_datepicker_format_' . $this->scope . '_',
-				'title'             => __( 'If datepicker/weekpicker is selected, set date format here. Visit <a href="https://codex.wordpress.org/Formatting_Date_and_Time" target="_blank">documentation on date and time formatting</a> for valid date formats', 'woocommerce-jetpack' ),
-				'desc_tip'          => __( 'Leave blank to use your current WordPress format', 'woocommerce-jetpack' ) . ': ' . get_option( 'date_format' ),
-				'short_title'       => __( 'Datepicker/Weekpicker: Date format', 'woocommerce-jetpack' ),
-				'type'              => 'text',
-				'default'           => '',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_',
-				'title'             => __( 'If datepicker/weekpicker is selected, set min date (in days) here', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Datepicker/Weekpicker: Min date', 'woocommerce-jetpack' ),
-				'type'              => 'number',
-				'default'           => -365,
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_',
-				'title'             => __( 'If datepicker/weekpicker is selected, set max date (in days) here', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Datepicker/Weekpicker: Max date', 'woocommerce-jetpack' ),
-				'type'              => 'number',
-				'default'           => 365,
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_datepicker_changeyear_' . $this->scope . '_',
-				'title'             => __( 'If datepicker/weekpicker is selected, set if you want to add year selector', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Datepicker/Weekpicker: Change year', 'woocommerce-jetpack' ),
-				'type'              => 'checkbox',
-				'default'           => 'no',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_datepicker_yearrange_' . $this->scope . '_',
-				'title'             => __( 'If datepicker/weekpicker is selected, and year selector is enabled, set year range here', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Datepicker/Weekpicker: Year range', 'woocommerce-jetpack' ),
-//				'desc_tip'          => __( 'The range of years displayed in the year drop-down: either relative to today\'s year ("-nn:+nn"), relative to the currently selected year ("c-nn:c+nn"), absolute ("nnnn:nnnn"), or combinations of these formats ("nnnn:-nn"). Note that this option only affects what appears in the drop-down, to restrict which dates may be selected use the minDate and/or maxDate options.', 'woocommerce-jetpack' ),
-				'type'              => 'text',
-				'default'           => 'c-10:c+10',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_datepicker_firstday_' . $this->scope . '_',
-				'title'             => __( 'If datepicker/weekpicker is selected, set first week day here', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Datepicker/Weekpicker: First week day', 'woocommerce-jetpack' ),
-				'type'              => 'select',
-				'default'           => 0,
-				'options'           => array(
-					__( 'Sunday', 'woocommerce-jetpack' ),
-					__( 'Monday', 'woocommerce-jetpack' ),
-					__( 'Tuesday', 'woocommerce-jetpack' ),
-					__( 'Wednesday', 'woocommerce-jetpack' ),
-					__( 'Thursday', 'woocommerce-jetpack' ),
-					__( 'Friday', 'woocommerce-jetpack' ),
-					__( 'Saturday', 'woocommerce-jetpack' ),
-				),
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_timepicker_format_' . $this->scope . '_',
-				'title'             => __( 'If timepicker is selected, set time format here. Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid time formats', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Timepicker: Time format', 'woocommerce-jetpack' ),
-				'type'              => 'text',
-				'default'           => 'hh:mm p',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_timepicker_mintime_' . $this->scope . '_',
-				'title'             => __( 'If timepicker is selected, set min time here. Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid option formats', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Timepicker: Min Time', 'woocommerce-jetpack' ),
-				'type'              => 'text',
-				'default'           => '',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_timepicker_maxtime_' . $this->scope . '_',
-				'title'             => __( 'If timepicker is selected, set max time here. Visit <a href="http://timepicker.co/options/" target="_blank">timepicker options page</a> for valid option formats', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Timepicker: Max Time', 'woocommerce-jetpack' ),
-				'type'              => 'text',
-				'default'           => '',
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_timepicker_interval_' . $this->scope . '_',
-				'title'             => __( 'If timepicker is selected, set interval (in minutes) here', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Timepicker: Interval', 'woocommerce-jetpack' ),
-				'type'              => 'number',
-				'default'           => 15,
-			),
-
-			array(
-				'id'                => 'wcj_product_input_fields_type_select_options_' . $this->scope . '_',
-				'title'             => __( 'If select/radio is selected, set options here. One option per line', 'woocommerce-jetpack' ),
-				'short_title'       => __( 'Select/Radio: Options', 'woocommerce-jetpack' ),
-				'type'              => 'textarea',
-				'default'           => '',
-//				'css'               => 'height:200px;',
-			),
-
-		);
-		return $options;
+	/**
+	 * is_enabled.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function is_enabled( $field_nr, $product_id ) {
+		$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $field_nr, $product_id, 'no' );
+		return ( ( 'on' === $is_enabled || 'yes' === $is_enabled ) && ( 'local' === $this->scope || $this->is_enabled_for_product_global( $field_nr, $product_id ) ) );
 	}
 
 	/**
@@ -309,7 +301,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * output_custom_input_fields_in_admin_order.
 	 *
-	 * @version 2.7.0
+	 * @version 3.1.0
 	 */
 	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
 		if ( null === $_product ) {
@@ -328,18 +320,12 @@ class WCJ_Product_Input_Fields_Abstract {
 
 			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $_product_id, '' );
 			if ( 'file' === $type ) {
-				/* $file_name = $the_value;
-				$upload_dir = wp_upload_dir();
-				$upload_url = $upload_dir['baseurl'];
-				$the_value = $upload_url . '/woocommerce_uploads/' . $file_name;
-				//$the_value = $upload_url . '/' . $the_value;
-				//$the_value = '<img style="width:50px;" src="' . $the_value . '">'; */
 				$the_value = maybe_unserialize( $the_value );
 				if ( isset( $the_value['name'] ) ) {
 					$the_value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '.' . pathinfo( $the_value['name'], PATHINFO_EXTENSION ) ) . '">' . $the_value['name'] . '</a>';
 				}
 			} else {
-				if ( 'no' === get_option( 'wcj_product_input_fields_make_nicer_name_enabled' ) ) {
+				if ( 'no' === get_option( 'wcj_product_input_fields_make_nicer_name_enabled', 'yes' ) ) {
 					continue;
 				}
 			}
@@ -353,22 +339,23 @@ class WCJ_Product_Input_Fields_Abstract {
 
 	/**
 	 * get_value.
+	 *
+	 * @version 3.1.0
 	 */
 	function get_value( $option_name, $product_id, $default ) {
-		return false;
+		return ( 'global' === $this->scope ? get_option( $option_name, $default ) : get_post_meta( $product_id, '_' . $option_name, true ) );
 	}
 
 	/**
 	 * validate_product_input_fields_on_add_to_cart.
 	 *
-	 * @version 2.7.0
+	 * @version 3.1.0
 	 */
 	function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
-			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $product_id, 'no' );
-			if ( ! ( 'on' === $is_enabled || 'yes' === $is_enabled ) ) {
+			if ( ! $this->is_enabled( $i, $product_id ) ) {
 				continue;
 			}
 
@@ -404,7 +391,6 @@ class WCJ_Product_Input_Fields_Abstract {
 						if ( ! in_array( $file_type, $file_accept ) ) {
 							$passed = false;
 							wc_add_notice( __( 'Wrong file type!', 'woocommerce-jetpack' ), 'error' );
-//							wc_add_notice( $this->get_value( 'wcj_product_input_fields_wrong_file_type_msg_' . $this->scope . '_' . $i, $product_id, '' ), 'error' );
 						}
 					}
 				}
@@ -439,7 +425,6 @@ class WCJ_Product_Input_Fields_Abstract {
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
 			$type        = $this->get_value( 'wcj_product_input_fields_type_' .        $this->scope . '_' . $i, $_product_id, 'text' );
-			$is_enabled  = $this->get_value( 'wcj_product_input_fields_enabled_' .     $this->scope . '_' . $i, $_product_id, 'no' );
 			$is_required = $this->get_value( 'wcj_product_input_fields_required_' .    $this->scope . '_' . $i, $_product_id, 'no' );
 			$title       = $this->get_value( 'wcj_product_input_fields_title_' .       $this->scope . '_' . $i, $_product_id, '' );
 			$placeholder = $this->get_value( 'wcj_product_input_fields_placeholder_' . $this->scope . '_' . $i, $_product_id, '' );
@@ -479,7 +464,7 @@ class WCJ_Product_Input_Fields_Abstract {
 				$title .= get_option( 'wcj_product_input_fields_frontend_view_required_html', '&nbsp;<abbr class="required" title="required">*</abbr>' );
 			}
 
-			if ( 'on' === $is_enabled || 'yes' === $is_enabled ) {
+			if ( $this->is_enabled( $i, $_product_id ) ) {
 
 				$set_value = ( isset( $_POST[ $field_name ] ) ?
 					$_POST[ $field_name ] :
@@ -498,42 +483,47 @@ class WCJ_Product_Input_Fields_Abstract {
 					case 'password':
 					case 'email':
 					case 'tel':
-
-						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '" type="' . $type . '" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
+						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '" type="' . $type . '" name="' .
+							$field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
 						break;
 
 					case 'checkbox':
-
 						$checked = checked(
 							$set_value,
 							'on',
 							false
 						);
-						$html = '<input class="wcj_product_input_fields" id="' . $field_name . '" type="' . $type . '" name="' . $field_name . '"' . $custom_attributes . $checked . '>';
+						$html = '<input class="wcj_product_input_fields" id="' . $field_name . '" type="' . $type . '" name="' . $field_name . '"' .
+							$custom_attributes . $checked . '>';
 						break;
 
 					case 'datepicker':
-
-						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '" ' . $datepicker_year . 'firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
+						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '" ' . $datepicker_year . 'firstday="' .
+							$datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' .
+							$datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' .
+							$type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
 						break;
 
 					case 'weekpicker':
-
-						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '" ' . $datepicker_year . 'firstday="' . $datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' . $datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' . $type . '" display="week" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
+						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '" ' . $datepicker_year . 'firstday="' .
+							$datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' .
+							$datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' .
+							$type . '" display="week" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
 						break;
 
 					case 'timepicker':
-
-						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '"' . $timepicker_mintime . $timepicker_maxtime . ' interval="' . $timepicker_interval . '" timeformat="' . $timepicker_format . '" type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
+						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '"' .
+							$timepicker_mintime . $timepicker_maxtime . ' interval="' . $timepicker_interval . '" timeformat="' .
+							$timepicker_format . '" type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' .
+							$placeholder . '"' . $custom_attributes . '>';
 						break;
 
 					case 'textarea':
-
-						$html = '<textarea class="wcj_product_input_fields" id="' . $field_name . '" name="' . $field_name . '" placeholder="' . $placeholder . '">' . $set_value . '</textarea>';
+						$html = '<textarea class="wcj_product_input_fields" id="' . $field_name . '" name="' . $field_name . '" placeholder="' . $placeholder . '">' .
+							$set_value . '</textarea>';
 						break;
 
 					case 'select':
-
 						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $_product_id, '' );
 						$select_options = wcj_get_select_options( $select_options_raw, false );
 						if ( '' != $placeholder ) {
@@ -553,11 +543,9 @@ class WCJ_Product_Input_Fields_Abstract {
 						break;
 
 					case 'radio':
-
 						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $_product_id, '' );
 						$select_options = wcj_get_select_options( $select_options_raw, false );
 						$select_options_html = '';
-						//$label_id = current( array_keys( $args['options'] ) );
 						if ( ! empty( $select_options ) ) {
 							reset( $select_options );
 							$value = ( '' != $set_value ? $set_value : key( $select_options ) );
@@ -572,7 +560,6 @@ class WCJ_Product_Input_Fields_Abstract {
 						break;
 
 					case 'country':
-
 						$countries = WC()->countries->get_allowed_countries();
 						if ( sizeof( $countries ) > 1 ) {
 							$value = ( '' != $set_value ? $set_value : key( $countries ) );
@@ -586,37 +573,6 @@ class WCJ_Product_Input_Fields_Abstract {
 						}
 						break;
 
-					/* case 'state' : // from woocommerce_form_field()
-
-						// Get Country
-						$country_key = $key == 'billing_state'? 'billing_country' : 'shipping_country';
-						$current_cc  = WC()->checkout->get_value( $country_key );
-						$states      = WC()->countries->get_states( $current_cc );
-
-						if ( is_array( $states ) && empty( $states ) ) {
-
-							$field_container = '<p class="form-row %1$s" id="%2$s" style="display: none">%3$s</p>';
-
-							$field .= '<input type="hidden" class="hidden" name="' . esc_attr( $key )  . '" id="' . esc_attr( $args['id'] ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '" />';
-
-						} elseif ( is_array( $states ) ) {
-
-							$field .= '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" class="state_select ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . esc_attr( $args['placeholder'] ) . '">
-								<option value="">'.__( 'Select a state&hellip;', 'woocommerce' ) .'</option>';
-
-							foreach ( $states as $ckey => $cvalue ) {
-								$field .= '<option value="' . esc_attr( $ckey ) . '" '.selected( $value, $ckey, false ) .'>'.__( $cvalue, 'woocommerce' ) .'</option>';
-							}
-
-							$field .= '</select>';
-
-						} else {
-
-							$field .= '<input type="text" class="input-text ' . esc_attr( implode( ' ', $args['input_class'] ) ) .'" value="' . esc_attr( $value ) . '"  placeholder="' . esc_attr( $args['placeholder'] ) . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $args['id'] ) . '" ' . implode( ' ', $custom_attributes ) . ' />';
-
-						}
-
-						break; */
 				}
 				$html = str_replace( array( '%field_title%', '%field_id%', '%field_html%' ), array( $title, $field_name, $html ),
 					get_option( 'wcj_product_input_fields_field_template', '<p><label for="%field_id%">%field_title%</label> %field_html%</p>' ) );
@@ -640,13 +596,12 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_cart_item_data - from $_POST to $cart_item_data
 	 *
-	 * @version 2.7.0
+	 * @version 3.1.0
 	 */
 	function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $product_id, 'no' );
-			if ( ! ( 'on' === $is_enabled || 'yes' === $is_enabled ) ) {
+			if ( ! $this->is_enabled( $i, $product_id ) ) {
 				continue;
 			}
 			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $product_id, '' );
@@ -696,8 +651,7 @@ class WCJ_Product_Input_Fields_Abstract {
 			$item_template = get_option( 'wcj_product_input_fields_frontend_view_order_table_format', '&nbsp;| %title% %value%' );
 		}
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $item['product_id'], 'no' );
-			if ( ! ( 'on' === $is_enabled || 'yes' === $is_enabled ) ) {
+			if ( ! $this->is_enabled( $i, $item['product_id'] ) ) {
 				continue;
 			}
 			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $item['product_id'], '' );
@@ -746,7 +700,7 @@ class WCJ_Product_Input_Fields_Abstract {
 	/**
 	 * add_product_input_fields_to_cart_item_display_data.
 	 *
-	 * @version 2.9.0
+	 * @version 3.1.0
 	 * @since   2.9.0
 	 */
 	function add_product_input_fields_to_cart_item_display_data( $item_data, $item  ) {
@@ -755,8 +709,7 @@ class WCJ_Product_Input_Fields_Abstract {
 			return $item_data;
 		}
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			$is_enabled = $this->get_value( 'wcj_product_input_fields_enabled_' . $this->scope . '_' . $i, $item['product_id'], 'no' );
-			if ( ! ( 'on' === $is_enabled || 'yes' === $is_enabled ) ) {
+			if ( ! $this->is_enabled( $i, $item['product_id'] ) ) {
 				continue;
 			}
 			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $item['product_id'], '' );
@@ -810,19 +763,12 @@ class WCJ_Product_Input_Fields_Abstract {
 					if ( ! file_exists( $upload_dir ) ) {
 						mkdir( $upload_dir, 0755, true );
 					}
-					//$upload_dir = ( wp_mkdir_p( $upload_dir['path'] ) ) ? $upload_dir['path'] : $upload_dir['basedir'];
 					$upload_dir_and_name = $upload_dir . '/' . $name;
-					//move_uploaded_file( $tmp_name, $upload_dir_and_name );
 					$file_data = file_get_contents( $tmp_name );
 					file_put_contents( $upload_dir_and_name, $file_data );
 					unlink( $tmp_name );
-					//unset( $input_field_value['tmp_name'] );
 					$input_field_value['tmp_name'] = addslashes( $upload_dir_and_name );
 					$input_field_value['wcj_type'] = 'file';
-					//$orig_file_name = $input_field_value['name'];
-					//wc_add_order_item_meta( $item_id, '_wcj_product_input_fields_' . $this->scope . '_' . $i . '_orig_file_name', $orig_file_name );
-					//$input_field_value = '<a href="' . add_query_arg( 'wcj_download_file', $name ) . '">' . $orig_file_name . '</a>';
-					//$input_field_value = $orig_file_name;
 				}
 
 				wc_add_order_item_meta( $item_id, '_wcj_product_input_fields_' . $this->scope . '_' . $i, $input_field_value );

@@ -457,6 +457,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				'desc'    => sprintf( __( 'Supported modules: %s.', 'woocommerce-jetpack' ), implode( ', ', array(
 					__( 'Product Info', 'woocommerce-jetpack' ),
 					__( 'Gateways per Product or Category', 'woocommerce-jetpack' ),
+					__( 'Product Input Fields', 'woocommerce-jetpack' ),
 				) ) ),
 				'id'      => 'wcj_list_for_products',
 				'default' => 'yes',

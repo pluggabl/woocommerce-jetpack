@@ -2,12 +2,60 @@
 /**
  * Booster for WooCommerce - Functions - Product
  *
- * @version 3.0.0
+ * @version 3.1.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_is_enabled_for_product' ) ) {
+	/*
+	 * wcj_is_enabled_for_product.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function wcj_is_enabled_for_product( $product_id, $args ) {
+		if ( isset( $args['include_products'] ) && ! empty( $args['include_products'] ) ) {
+			if ( ! is_array( $args['include_products'] ) ) {
+				$args['include_products'] = array_map( 'trim', explode( ',', $args['include_products'] ) );
+			}
+			if ( ! in_array( $product_id, $args['include_products'] ) ) {
+				return false;
+			}
+		}
+		if ( isset( $args['exclude_products'] ) && ! empty( $args['exclude_products'] ) ) {
+			if ( ! is_array( $args['exclude_products'] ) ) {
+				$args['exclude_products'] = array_map( 'trim', explode( ',', $args['exclude_products'] ) );
+			}
+			if ( in_array( $product_id, $args['exclude_products'] ) ) {
+				return false;
+			}
+		}
+		if ( isset( $args['include_categories'] ) && ! empty( $args['include_categories'] ) ) {
+			if ( ! wcj_is_product_term( $product_id, $args['include_categories'], 'product_cat' ) ) {
+				return false;
+			}
+		}
+		if ( isset( $args['exclude_categories'] ) && ! empty( $args['exclude_categories'] ) ) {
+			if ( wcj_is_product_term( $product_id, $args['exclude_categories'], 'product_cat' ) ) {
+				return false;
+			}
+		}
+		if ( isset( $args['include_tags'] ) && ! empty( $args['include_tags'] ) ) {
+			if ( ! wcj_is_product_term( $product_id, $args['include_tags'], 'product_tag' ) ) {
+				return false;
+			}
+		}
+		if ( isset( $args['exclude_tags'] ) && ! empty( $args['exclude_tags'] ) ) {
+			if ( wcj_is_product_term( $product_id, $args['exclude_tags'], 'product_tag' ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+}
 
 if ( ! function_exists( 'wcj_get_product' ) ) {
 	/*

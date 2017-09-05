@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
- * @version 2.9.0
+ * @version 3.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -34,6 +34,28 @@ $settings = array(
 			:
 			apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Round Prices', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_base_price_round_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'rounding precision', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_base_price_round_precision',
+		'default'  => get_option( 'woocommerce_price_num_decimals' ),
+		'type'     => 'number',
+		'custom_attributes' => array( 'min' => 0 ),
+	),
+	array(
+		'title'    => __( 'Advanced: Saved Calculated Products Prices', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_base_price_save_prices',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',
