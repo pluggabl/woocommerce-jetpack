@@ -167,7 +167,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.0 - 05/09/2017 =
+= 3.1.0 - 06/09/2017 =
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
 -D	* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
 !	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.
@@ -183,6 +183,8 @@ You can see the differences between versions in this [table](https://booster.io/
 !D	* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `columns_style` attribute added.
 !	* Dev - Widgets - Code refactoring (now as `WCJ_Widget` child classes).
 -D	* Dev - Widgets - "Booster - Selector" widget added.
+$!D	* Dev - PRICES & CURRENCIES - Global Discount - "Exclude Product Categories" and "Include/Exclude Product Tags/Products" options added.
+!D	* Dev - PRICES & CURRENCIES - Global Discount - Code refactoring, clean up and fixes.
 !D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Added "WooCommerce Product Add-ons" plugin compatibility.
 !D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - "Advanced: Saved Calculated Products Prices" option added.
 !D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - "Round Prices" options added.
