@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Header
  *
- * @version 2.8.0
+ * @version 3.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -14,12 +14,13 @@ $invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_setti
 foreach ( $invoice_types as $invoice_type ) {
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => strtoupper( $invoice_type['desc'] ),
+			'title'    => $invoice_type['title'],
 			'type'     => 'title',
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_header_options',
 		),
 		array(
 			'title'    => __( 'Enable Header', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_header_enabled',
 			'default'  => 'yes',
 			'type'     => 'checkbox',
@@ -29,9 +30,11 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_header_image',
 			'default'  => '',
 			'type'     => 'text',
-			'css'      => 'width:33%;min-width:300px;',
-			'desc'     => __( 'Enter a URL to an image you want to show in the invoice\'s header. Upload your image using the <a href="/wp-admin/media-new.php">media uploader</a>.', 'woocommerce-jetpack' ),
+			'desc'     => sprintf(
+				__( 'Enter a URL to an image you want to show in the invoice\'s header. Upload your image using the <a href="%s">media uploader</a>.', 'woocommerce-jetpack' ),
+				admin_url( 'media-new.php' ) ),
 			'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+			'class'    => 'widefat',
 		),
 		array(
 			'title'    => __( 'Header Image Width in mm', 'woocommerce-jetpack' ),
@@ -44,12 +47,14 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_header_title_text',
 			'default'  => $invoice_type['title'],
 			'type'     => 'text',
+			'class'    => 'widefat',
 		),
 		array(
 			'title'    => __( 'Header Text', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_header_text',
 			'default'  => __( 'Company Name', 'woocommerce-jetpack' ),
 			'type'     => 'text',
+			'class'    => 'widefat',
 		),
 		array(
 			'title'    => __( 'Header Text Color', 'woocommerce-jetpack' ),

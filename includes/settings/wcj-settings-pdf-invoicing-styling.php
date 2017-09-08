@@ -48,7 +48,7 @@ foreach ( $invoice_types as $invoice_type ) {
 	);
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => strtoupper( $invoice_type['desc'] ),
+			'title'    => $invoice_type['title'],
 			'type'     => 'title',
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_styling_options',
 		),

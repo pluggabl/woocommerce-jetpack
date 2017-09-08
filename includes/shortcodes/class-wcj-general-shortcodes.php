@@ -84,17 +84,20 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
+	 * @todo    (maybe) add more selector types (e.g.: currency)
+	 * @todo    (maybe) remove country switcher and currency switcher shortcodes and use this shortcode instead
 	 */
 	function wcj_selector( $atts ) {
 		$html           = '';
 		$options        = '';
 		$selected_value = ( isset( $_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] ) ?
 			$_REQUEST[ 'wcj_' . $atts['selector_type'] . '_selector' ] :
-			WC()->session->get( 'wcj_selected_' . $atts['selector_type'] )
+			wcj_session_get( 'wcj_selected_' . $atts['selector_type'] )
 		);
 		switch ( $atts['selector_type'] ) {
 			default: // 'country'
 				$options = wcj_get_countries();
+				asort( $options );
 		}
 		foreach ( $options as $value => $title ) {
 			$html .= '<option value="' . $value . '" ' . selected( $selected_value, $value, false ) . '>' . $title . '</option>';

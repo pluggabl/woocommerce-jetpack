@@ -93,15 +93,13 @@ class WCJ_Product_By_Country extends WCJ_Module {
 			return;
 		}
 		remove_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
-		$country = $this->get_country();
-		// Calculate `post__not_in`
-		$post__not_in = $query->get( 'post__not_in' );
-		$args = $query->query;
+		$country        = $this->get_country();
+		$post__not_in   = $query->get( 'post__not_in' );
+		$args           = $query->query;
 		$args['fields'] = 'ids';
-		$loop = new WP_Query( $args );
+		$loop           = new WP_Query( $args );
 		foreach ( $loop->posts as $product_id ) {
-			$visible_countries = get_post_meta( $product_id, '_' . 'wcj_product_by_country_visible', true );
-			if ( is_array( $visible_countries ) && ! in_array( $country, $visible_countries ) ) {
+			if ( ! $this->is_product_visible_in_country( $product_id, $country ) ) {
 				$post__not_in[] = $product_id;
 			}
 		}
@@ -112,11 +110,11 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * product_by_country_purchasable.
 	 *
-	 * @version 2.9.0
+	 * @version 3.1.0
 	 * @since   2.9.0
 	 */
 	function product_by_country_purchasable( $purchasable, $_product ) {
-		return $this->product_by_country( $purchasable, wcj_get_product_id_or_variation_parent_id( $_product ) );
+		return ( ! $this->is_product_visible_in_country( wcj_get_product_id_or_variation_parent_id( $_product ), $this->get_country() ) ? false : $purchasable );
 	}
 
 	/**
@@ -126,12 +124,21 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	 * @since   2.5.0
 	 */
 	function product_by_country( $visible, $product_id ) {
-		$country = $this->get_country();
-		$visible_countries = get_post_meta( $product_id, '_' . 'wcj_product_by_country_visible', true );
-		if ( is_array( $visible_countries ) && ! in_array( $country, $visible_countries ) ) {
-			return false;
+		return ( ! $this->is_product_visible_in_country( $product_id, $this->get_country() ) ? false : $visible );
+	}
+
+	/**
+	 * is_product_visible_in_country.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function is_product_visible_in_country( $product_id, $country ) {
+		$countries = get_post_meta( $product_id, '_' . 'wcj_product_by_country_visible', true );
+		if ( is_array( $countries ) && in_array( 'EU', $countries ) ) {
+			$countries = array_merge( $countries, wcj_get_european_union_countries() );
 		}
-		return $visible;
+		return ( is_array( $countries ) && ! in_array( $country, $countries ) ? false : true );
 	}
 
 	/**
@@ -139,14 +146,11 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
-	 * @todo    (maybe) option to use standard sessions instead of WC sessions
 	 */
 	function save_country_in_session() {
 		if ( isset( $_REQUEST['wcj_country_selector'] ) ) {
-			if ( ! WC()->session->has_session() ) {
-				WC()->session->set_customer_session_cookie( true );
-			}
-			WC()->session->set( 'wcj_selected_country', $_REQUEST['wcj_country_selector'] );
+			wcj_session_maybe_start();
+			wcj_session_set( 'wcj_selected_country', $_REQUEST['wcj_country_selector'] );
 		}
 	}
 
@@ -158,36 +162,17 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	 */
 	function get_country() {
 		if ( 'manual' === get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) {
-			if ( '' == WC()->session->get( 'wcj_selected_country' ) ) {
-				if ( ! WC()->session->has_session() ) {
-					WC()->session->set_customer_session_cookie( true );
-				}
-				$country = $this->get_country_by_ip();
-				WC()->session->set( 'wcj_selected_country', $country );
+			if ( '' == wcj_session_get( 'wcj_selected_country' ) ) {
+				$country = wcj_get_country_by_ip();
+				wcj_session_maybe_start();
+				wcj_session_set( 'wcj_selected_country', $country );
 				return $country;
 			} else {
-				return WC()->session->get( 'wcj_selected_country' );
+				return wcj_session_get( 'wcj_selected_country' );
 			}
 		} else {
-			return $this->get_country_by_ip();
+			return wcj_get_country_by_ip();
 		}
-	}
-
-	/**
-	 * get_country_by_ip.
-	 *
-	 * @version 3.1.0
-	 * @since   3.1.0
-	 * @todo    move to global functions
-	 */
-	function get_country_by_ip() {
-		// Get the country by IP
-		$location = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::geolocate_ip() : array( 'country' => '' ) );
-		// Base fallback
-		if ( empty( $location['country'] ) ) {
-			$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
-		}
-		return ( isset( $location['country'] ) ) ? $location['country'] : '';
 	}
 
 }

@@ -2,9 +2,27 @@
 /**
  * Booster for WooCommerce - Functions - Country
  *
- * @version  2.9.1
+ * @version  3.1.0
  * @author   Algoritmika Ltd.
  */
+
+if ( ! function_exists( 'wcj_get_country_by_ip' ) ) {
+	/**
+	 * wcj_get_country_by_ip.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function wcj_get_country_by_ip() {
+		// Get the country by IP
+		$location = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::geolocate_ip() : array( 'country' => '' ) );
+		// Base fallback
+		if ( empty( $location['country'] ) ) {
+			$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
+		}
+		return ( isset( $location['country'] ) ) ? $location['country'] : '';
+	}
+}
 
 if ( ! function_exists( 'wcj_get_country_flag_by_code' ) ) {
 	/**
@@ -40,7 +58,7 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 	 * wcj_get_european_union_countries_with_vat.
 	 *
 	 * @version 2.4.0
-	 * @return array
+	 * @return  array
 	 */
 	function wcj_get_european_union_countries_with_vat() {
 		return array(
@@ -76,6 +94,18 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 			//'MC' => ,
 			//'IM' => ,
 		);
+	}
+}
+
+if ( ! function_exists( 'wcj_get_european_union_countries' ) ) {
+	/**
+	 * wcj_get_european_union_countries.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function wcj_get_european_union_countries() {
+		return array_keys( wcj_get_european_union_countries_with_vat() );
 	}
 }
 

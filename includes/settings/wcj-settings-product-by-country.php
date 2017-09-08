@@ -50,6 +50,10 @@ return array(
 	),
 	array(
 		'title'    => __( 'User Country Selection Method', 'woocommerce-jetpack' ),
+		'desc'     => sprintf(
+			__( 'If "Manually" option is selected, you can add country selection drop box to frontend with "%s" widget or %s shortcode.', 'woocommerce-jetpack' ),
+			__( 'Booster - Selector', 'woocommerce-jetpack' ),
+			'<code>' . '[wcj_selector selector_type="country"]' . '</code>' ),
 		'id'       => 'wcj_product_by_country_selection_method',
 		'default'  => 'by_ip',
 		'type'     => 'select',

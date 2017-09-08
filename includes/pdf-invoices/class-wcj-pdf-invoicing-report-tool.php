@@ -153,6 +153,10 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 * @since   2.3.10
 	 */
 	function get_invoices_report_zip( $year, $month, $invoice_type_id ) {
+		if ( ! class_exists( 'ZipArchive' ) ) {
+			return sprintf( __( 'Booster: %s class is not accessible on your server. Please contact your hosting provider.', 'woocommerce-jetpack' ),
+				'<a target="_blank" href="http://php.net/manual/en/class.ziparchive.php">PHP ZipArchive</a>' );
+		}
 		$zip           = new ZipArchive();
 		$zip_file_name = $this->get_report_file_name( $year, $month, $invoice_type_id, 'zip' );
 		$zip_file_path = sys_get_temp_dir() . '/' . $zip_file_name;
@@ -221,6 +225,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 				flush(); // this is essential for large downloads
 			}
 			fclose( $fp );
+			exit();
 		} else {
 			die( __( 'Unexpected error', 'woocommerce-jetpack' ) );
 		}

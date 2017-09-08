@@ -8,6 +8,65 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
+	/**
+	 * wcj_session_maybe_start.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function wcj_session_maybe_start() {
+		switch ( WCJ_SESSION_TYPE ) {
+			case 'wc':
+				if ( ! WC()->session->has_session() ) {
+					WC()->session->set_customer_session_cookie( true );
+				}
+				break;
+			default: // 'standard'
+				if ( ! session_id() ) {
+					session_start();
+				}
+				break;
+		}
+	}
+}
+
+if ( ! function_exists( 'wcj_session_set' ) ) {
+	/**
+	 * wcj_session_set.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function wcj_session_set( $key, $value ) {
+		switch ( WCJ_SESSION_TYPE ) {
+			case 'wc':
+				WC()->session->set( $key, $value );
+				break;
+			default: // 'standard'
+				$_SESSION[ $key ] = $value;
+				break;
+		}
+	}
+}
+
+if ( ! function_exists( 'wcj_session_get' ) ) {
+	/**
+	 * wcj_session_get.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function wcj_session_get( $key, $default = null ) {
+		switch ( WCJ_SESSION_TYPE ) {
+			case 'wc':
+				return WC()->session->get( $key, $default );
+			default: // 'standard'
+				return ( isset( $_SESSION[ $key ] ) ? $_SESSION[ $key ] : $default );
+		}
+	}
+}
+
 if ( ! function_exists( 'wcj_wrap_in_wc_email_template' ) ) {
 	/**
 	 * wcj_wrap_in_wc_email_template.

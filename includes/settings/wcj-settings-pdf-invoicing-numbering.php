@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Numbering
  *
- * @version 2.8.0
+ * @version 3.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -14,7 +14,7 @@ $invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_setti
 foreach ( $invoice_types as $invoice_type ) {
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => strtoupper( $invoice_type['desc'] ),
+			'title'    => $invoice_type['title'],
 			'type'     => 'title',
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_options',
 		),

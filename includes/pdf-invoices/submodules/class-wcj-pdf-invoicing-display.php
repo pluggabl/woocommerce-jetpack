@@ -92,36 +92,19 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * add_pdf_invoices_admin_actions_buttons_css.
 	 *
-	 * @version 2.5.2
+	 * @version 3.1.0
 	 * @since   2.4.7
 	 */
 	function add_pdf_invoices_admin_actions_buttons_css() {
 		echo '<style>' . PHP_EOL;
 		$invoice_types = wcj_get_enabled_invoice_types();
 		foreach ( $invoice_types as $invoice_type ) {
-			switch ( $invoice_type['id'] ) {
-				case 'invoice':
-					$color = 'green';
-					break;
-				case 'proforma_invoice':
-					$color = 'orange';
-					break;
-				case 'packing_slip':
-					$color = 'blue';
-					break;
-				case 'credit_note':
-					$color = 'red';
-					break;
-				default: // 'custom_doc'
-					$color = 'gray';
-					break;
-			}
-			echo '.view.' . $invoice_type['id'] .                  '{ color: ' . $color . ' !important; }' . PHP_EOL;
-			echo '.view.' . $invoice_type['id'] . '_' . 'create' . '{ color: ' . $color . ' !important; }' . PHP_EOL;
-			echo '.view.' . $invoice_type['id'] . '_' . 'delete' . '{ color: ' . $color . ' !important; }' . PHP_EOL;
-			echo '.view.' . $invoice_type['id'] .                   '::after { content: "\f159" !important; }' . PHP_EOL;
-			echo '.view.' . $invoice_type['id'] .  '_' . 'create' . '::after { content: "\f132" !important; }' . PHP_EOL;
-			echo '.view.' . $invoice_type['id'] .  '_' . 'delete' . '::after { content: "\f460" !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] .                  '{ color: ' . $invoice_type['color'] . ' !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] . '_' . 'create' . '{ color: ' . $invoice_type['color'] . ' !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] . '_' . 'delete' . '{ color: ' . $invoice_type['color'] . ' !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] .                   '::after { content: "\f498" !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] .  '_' . 'create' . '::after { content: "\f119" !important; }' . PHP_EOL;
+			echo '.view.' . $invoice_type['id'] .  '_' . 'delete' . '::after { content: "\f153" !important; }' . PHP_EOL;
 		}
 		echo '</style>' . PHP_EOL;
 	}
@@ -274,14 +257,14 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * add_invoices_meta_box.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.0
 	 * @since   2.8.0
 	 */
 	function add_invoices_meta_box() {
 		if ( 'yes' === get_option( 'wcj_invoicing_add_order_meta_box', 'yes' ) ) {
 			add_meta_box(
 				'wc-booster-pdf-invoicing',
-				__( 'Booster: PDF Invoices', 'woocommerce-jetpack' ),
+				'<span class="dashicons dashicons-media-default" style="color:#23282d;"></span>' . ' ' . __( 'Booster: PDF Invoices', 'woocommerce-jetpack' ),
 				array( $this, 'create_invoices_meta_box' ),
 				'shop_order',
 				'side',
@@ -293,7 +276,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * create_invoices_meta_box.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.0
 	 * @since   2.8.0
 	 */
 	function create_invoices_meta_box() {
@@ -312,7 +295,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				$the_url       = add_query_arg( $query_args, remove_query_arg( array ( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) );
 				$the_name      = __( 'View', 'woocommerce-jetpack' );
 				$the_invoice   = wcj_get_invoice( $order_id, $invoice_type['id'] );
-				$the_number    = ' #' . $the_invoice->get_invoice_number();
+				$the_number    = ' [#' . $the_invoice->get_invoice_number() . ']';
 				$view_link     = '<a href="' .  $the_url . '">' . $the_name . '</a>';
 				// "Delete" link
 				$query_args    = array( 'delete_invoice_for_order_id' => $order_id, 'invoice_type_id' => $invoice_type['id'] );
@@ -326,7 +309,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				$the_name      = __( 'Create', 'woocommerce-jetpack' );
 				$actions       = array( '<a class="wcj_need_confirmation" href="' .  $the_url . '">' . $the_name . '</a>' );
 			}
-			$table_data[] = array( $invoice_type['title'] . $the_number );
+			$table_data[] = array( '<span class="dashicons dashicons-media-default" style="color:' . $invoice_type['color'] . ';"></span>' . ' ' . $invoice_type['title'] . $the_number );
 			$table_data[] = $actions;
 			echo '<p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) . '</p>';
 		}

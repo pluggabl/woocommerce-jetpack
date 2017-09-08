@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Footer
  *
- * @version 2.9.0
+ * @version 3.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -14,12 +14,13 @@ $invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_setti
 foreach ( $invoice_types as $invoice_type ) {
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => strtoupper( $invoice_type['desc'] ),
+			'title'    => $invoice_type['title'],
 			'type'     => 'title',
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_footer_options',
 		),
 		array(
 			'title'    => __( 'Enable Footer', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_footer_enabled',
 			'default'  => 'yes',
 			'type'     => 'checkbox',
@@ -30,10 +31,8 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => __( 'Page %page_number% / %total_pages%', 'woocommerce-jetpack' ),
 			'type'     => 'textarea',
 			'css'      => 'width:66%;min-width:300px;height:165px;',
-			'desc'     => sprintf(
-				__( 'You can use HTML here, as well as any WordPress shortcodes. There are two more predefined values you can use: %s.', 'woocommerce-jetpack' ),
-				'<code>%page_number%</code>, <code>%total_pages%</code>'
-			),
+			'desc'     => __( 'You can use HTML here, as well as any WordPress shortcodes.', 'woocommerce-jetpack' ) . ' ' .
+				wcj_message_replaced_values( array( '%page_number%', '%total_pages%' ) ),
 		),
 		array(
 			'title'    => __( 'Footer Text Color', 'woocommerce-jetpack' ),

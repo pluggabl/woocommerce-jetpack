@@ -167,9 +167,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.0 - 06/09/2017 =
+= 3.1.0 - 08/09/2017 =
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
--D	* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
+!D	* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
 !	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_categories` column added.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_quantity_refunded` and `item_quantity_excl_refunded` columns added.
@@ -201,7 +201,8 @@ D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
 !D	* Dev - PRODUCTS - Product Tabs - Deprecated options not displayed (if empty).
 !D	* Dev - PRODUCTS - Product Tabs - `do_shortcode` added when checking for empty content (before displaying the tab).
 	* Fix - PRODUCTS - Product Visibility by Country / by User Role - Getting `post__not_in` from query (instead of starting with empty array).
--D	* Dev - PRODUCTS - Product Visibility by Country - "User Country Selection Method" option added.
+~D	* Fix - PRODUCTS - Product Visibility by Country - "European Union" selection fixed.
+$!D	* Dev - PRODUCTS - Product Visibility by Country - "User Country Selection Method" option added.
 	* Dev - PRODUCTS - Product Visibility by Country - Code refactoring.
 D	* Dev - PRODUCTS - Product Visibility by Country - Settings restyled and descriptions added.
 D	* Dev - PRODUCTS - Product Visibility by User Role - Descriptions added.
@@ -216,11 +217,14 @@ D	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Settings restyled.
 !	* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - Removed sanitizing order id (was added in WC v3.1.0).
 !	* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - `WP_Query` optimized to return `ids` only.
 !	* Dev - SHIPPING & ORDERS - Order Numbers - Orders Renumerate - `WP_Query` optimized to return `ids` only.
+	* Dev - PDF INVOICING & PACKING SLIPS - Checking for `ZipArchive` to exist before generating ZIPs.
 !	* Dev - PDF INVOICING & PACKING SLIPS - Default values added to `get_option()` calls.
+!D	* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Admin Title" option added.
 -D	* Dev - PDF INVOICING & PACKING SLIPS - General - "Create on Order Partially Refunded" and "Create on Order Status Refunded and/or Order Partially Refunded" added.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Email Options - "Customer - Partially Refunded Order" email added.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - Code refactoring, clean up, minor changes. Tool settings restyled.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - "Reports Filename", "CSV Separator", "CSV UTF-8 BOM", "Replace Periods with Commas in CSV Data" options added.
+~D	* Dev - PDF INVOICING & PACKING SLIPS - Code factoring, clean up and minor fixes. Settings restyled.
 !D	* Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar added.
 !D	* Dev - EMAILS & MISC. - Custom Emails - "Wrap in WC Email Template" option added.
 !D	* Dev - EMAILS & MISC. - Custom Emails - Code refactoring, clean up etc. Settings page restyled.
@@ -229,6 +233,7 @@ D	* Dev - EMAILS & MISC. - Email Verification - Settings restyled.
 ~D	* Dev - EMAILS & MISC. - Email Verification - "Verified" column added to admin users list.
 !D	* Dev - EMAILS & MISC. - Email Verification - "Verification Email Template" options added.
 ~	* Dev - EMAILS & MISC. - Email Verification - `serialize()` and `unserialize()` replaced with `json_encode()` and `json_decode()`.
+!D	* Dev - EMAILS & MISC. - General - "Session Type in Booster" option added.
 
 = 3.0.1 - 03/08/2017 =
 * Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart Return to shop Button Link" option added.

@@ -107,31 +107,48 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * bulk_actions_pdfs_notices.
 	 *
-	 * @version 2.5.7
+	 * @version 3.1.0
 	 * @since   2.5.7
 	 */
 	function bulk_actions_pdfs_notices() {
 		global $post_type, $pagenow;
-		if ( $pagenow == 'edit.php' && 'shop_order' == $post_type && isset( $_REQUEST['generated'] ) && (int) $_REQUEST['generated'] ) {
-			$message = sprintf( _n( 'Document generated.', '%s documents generated.', $_REQUEST['generated'] ), number_format_i18n( $_REQUEST['generated'] ) );
-			echo "<div class='updated'><p>{$message}</p></div>";
+		if ( $pagenow == 'edit.php' && 'shop_order' == $post_type ) {
+			if ( isset( $_REQUEST['generated'] ) && (int) $_REQUEST['generated'] ) {
+				$message = sprintf( _n( 'Document generated.', '%s documents generated.', $_REQUEST['generated'] ), number_format_i18n( $_REQUEST['generated'] ) );
+				echo "<div class='updated'><p>{$message}</p></div>";
+			}
+			if ( isset( $_GET['wcj_notice'] ) ) {
+				switch ( $_GET['wcj_notice'] ) {
+					case 'ziparchive_class_missing':
+						echo '<div class="notice notice-error"><p><strong>' .
+							sprintf( __( 'Booster: %s class is not accessible on your server. Please contact your hosting provider.', 'woocommerce-jetpack' ),
+								'<a target="_blank" href="http://php.net/manual/en/class.ziparchive.php">PHP ZipArchive</a>' ) .
+						'</strong></p></div>';
+						break;
+					case 'ziparchive_error':
+						echo '<div class="notice notice-error"><p>' .
+							__( 'Booster: ZipArchive error.', 'woocommerce-jetpack' ) .
+						'</p></div>';
+						break;
+				}
+			}
 		}
 	}
 
 	/**
 	 * bulk_actions_pdfs.
 	 *
-	 * @version 2.5.7
+	 * @version 3.1.0
 	 * @since   2.5.7
 	 */
 	function bulk_actions_pdfs() {
 
 		// Get the action
 		$wp_list_table = _get_list_table( 'WP_Posts_List_Table' );
-		$action = $wp_list_table->current_action();
+		$action        = $wp_list_table->current_action();
 
 		// TODO: Security check
-//		check_admin_referer('bulk-posts');
+//		check_admin_referer( 'bulk-posts' );
 
 		// Validate the action
 		$action_exploded = explode( '_', $action, 2 );
@@ -168,8 +185,17 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				);
 				break;
 			case 'download':
-				$this->get_invoices_zip( $the_type, $post_ids );
-				exit();
+				if ( '' != ( $result = $this->get_invoices_zip( $the_type, $post_ids ) ) ) {
+					$sendback = add_query_arg(
+						array(
+							'post_type'          => 'shop_order',
+							'post_status'        => $_GET['post_status'],
+							'wcj_notice'         => $result,
+						),
+						$sendback
+					);
+				}
+				break;
 			default:
 				return;
 		}
@@ -182,29 +208,32 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * get_invoices_zip.
 	 *
-	 * @version 2.5.7
+	 * @version 3.1.0
 	 * @since   2.5.7
 	 */
 	function get_invoices_zip( $invoice_type_id, $post_ids ) {
-
-		$zip = new ZipArchive();
+		if ( ! class_exists( 'ZipArchive' ) ) {
+			return 'ziparchive_class_missing';
+		}
+		// Creating Zip
+		$zip           = new ZipArchive();
 		$zip_file_name = $invoice_type_id . '.zip';
 		$zip_file_path = sys_get_temp_dir() . '/' . $zip_file_name;
 		if ( file_exists( $zip_file_path ) ) {
 			unlink ( $zip_file_path );
 		}
 		if ( $zip->open( $zip_file_path, ZipArchive::CREATE ) !== TRUE ) {
-			return false;
+			return 'ziparchive_error';
 		}
 		foreach( $post_ids as $post_id ) {
 			if ( wcj_is_invoice_created( $post_id, $invoice_type_id ) ) {
 				$the_invoice = wcj_get_pdf_invoice( $post_id, $invoice_type_id );
-				$file_name = $the_invoice->get_pdf( 'F' );
+				$file_name   = $the_invoice->get_pdf( 'F' );
 				$zip->addFile( $file_name, $the_invoice->get_file_name() );
 			}
 		}
 		$zip->close();
-
+		// Sending Zip
 		header( "Content-Type: application/octet-stream" );
 		header( "Content-Disposition: attachment; filename=" . urlencode( $zip_file_name ) );
 		header( "Content-Type: application/octet-stream" );
@@ -218,10 +247,11 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				flush(); // this is essential for large downloads
 			}
 			fclose( $fp );
+			exit();
 		} else {
 			die( __( 'Unexpected error', 'woocommerce-jetpack' ) );
 		}
-		return true;
+		return '';
 	}
 
 	/**
@@ -253,7 +283,9 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	 */
 	function create_document_hook( $order_id ) {
 		$current_filter = current_filter();
-		if ( in_array( $current_filter, array( 'woocommerce_api_create_order', 'woocommerce_cli_create_order', 'kco_before_confirm_order', 'woocommerce_checkout_order_processed', ) ) ) {
+		if ( in_array( $current_filter,
+				array( 'woocommerce_api_create_order', 'woocommerce_cli_create_order', 'kco_before_confirm_order', 'woocommerce_checkout_order_processed' ) )
+		) {
 			$current_filter = 'woocommerce_new_order';
 		}
 		$invoice_types = wcj_get_enabled_invoice_types();

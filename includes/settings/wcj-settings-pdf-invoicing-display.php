@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Display
  *
- * @version 2.9.0
+ * @version 3.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add "Save all settings" buttons to each document type
@@ -13,11 +13,20 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $settings = array();
 $invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
 foreach ( $invoice_types as $invoice_type ) {
+	$document_number_shortode = ( isset( $invoice_type['is_custom_doc'] ) && true === $invoice_type['is_custom_doc'] ?
+		'[wcj_custom_doc_number doc_nr="' . $invoice_type['custom_doc_nr'] . '"]' : '[wcj_' . $invoice_type['id'] . '_number]' );
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => strtoupper( $invoice_type['desc'] ),
+			'title'    => $invoice_type['title'],
 			'type'     => 'title',
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_display_options',
+		),
+		array(
+			'title'    => __( 'Admin Title', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_title',
+			'default'  => $invoice_type['title'],
+			'type'     => 'text',
+			'class'    => 'widefat',
 		),
 		array(
 			'title'    => __( 'Admin\'s "Orders" Page', 'woocommerce-jetpack' ),
@@ -32,6 +41,7 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_page_column_text',
 			'default'  => $invoice_type['title'],
 			'type'     => 'text',
+			'class'    => 'widefat',
 		),
 		/* array(
 			'title'    => '',
@@ -50,34 +60,39 @@ foreach ( $invoice_types as $invoice_type ) {
 			'type'     => 'text',
 		), */
 		array(
-			'desc'     => __( 'Add View Button', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Add "View" button', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_view_btn',
 			'default'  => 'no',
 			'type'     => 'checkbox',
+			'checkboxgroup' => 'start',
 		),
 		array(
-			'desc'     => __( 'Add Create Button', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Add "Create" button', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn',
 			'default'  => 'yes',
 			'type'     => 'checkbox',
+			'checkboxgroup' => '',
 		),
 		array(
-			'desc'     => __( 'Add Delete Button', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Add "Delete" button', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn',
 			'default'  => 'yes',
 			'type'     => 'checkbox',
+			'checkboxgroup' => '',
 		),
 		array(
-			'desc'     => __( 'Create Button Requires Confirmation', 'woocommerce-jetpack' ),
+			'desc'     => __( '"Create" button requires confirmation', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_create_btn_confirm',
 			'default'  => 'yes',
 			'type'     => 'checkbox',
+			'checkboxgroup' => '',
 		),
 		array(
-			'desc'     => __( 'Delete Button Requires Confirmation', 'woocommerce-jetpack' ),
+			'desc'     => __( '"Delete" button requires confirmation', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_delete_btn_confirm',
 			'default'  => 'yes',
 			'type'     => 'checkbox',
+			'checkboxgroup' => 'end',
 		),
 		array(
 			'title'    => __( 'Customer\'s "My Account" Page', 'woocommerce-jetpack' ),
@@ -87,11 +102,11 @@ foreach ( $invoice_types as $invoice_type ) {
 			'type'     => 'checkbox',
 		),
 		array(
-			'title'    => '',
 			'desc'     => __( 'Link Text', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_link_text',
 			'default'  => $invoice_type['title'],
 			'type'     => 'text',
+			'class'    => 'widefat',
 		),
 		array(
 			'title'    => __( 'Enable "Save as"', 'woocommerce-jetpack' ),
@@ -103,10 +118,12 @@ foreach ( $invoice_types as $invoice_type ) {
 		),
 		array(
 			'title'    => __( 'PDF File Name', 'woocommerce-jetpack' ),
-			'desc'     => __( 'Enter file name for PDF documents. You can use shortcodes here, e.g. [wcj_' . $invoice_type['id'] . '_number]', 'woocommerce-jetpack' ),
+			'desc'     => sprintf( __( 'Enter file name for PDF documents. You can use shortcodes here, e.g. %s.', 'woocommerce-jetpack' ),
+				'<code>' . $document_number_shortode . '</code>' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_file_name',
-			'default'  => '[wcj_' . $invoice_type['id'] . '_number]',
+			'default'  => $document_number_shortode,
 			'type'     => 'text',
+			'class'    => 'widefat',
 		),
 		array(
 			'title'    => __( 'Allowed User Roles', 'woocommerce-jetpack' ),
