@@ -17,6 +17,13 @@ return array(
 		'default'           => 'no',
 	),
 	array(
+		'id'                => 'wcj_product_input_fields_order_' . $this->scope . '_',
+		'short_title'       => __( 'Order', 'woocommerce-jetpack' ),
+		'title'             => __( 'Set to zero for default order.', 'woocommerce-jetpack' ),
+		'type'              => 'number',
+		'default'           => 0,
+	),
+	array(
 		'id'                => 'wcj_product_input_fields_type_' . $this->scope . '_',
 		'title'             => __( 'Type', 'woocommerce-jetpack' ),
 		'type'              => 'select',

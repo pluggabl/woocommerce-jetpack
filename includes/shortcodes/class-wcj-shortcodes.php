@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 2.8.0
+ * @version 3.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -57,7 +57,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.0
 	 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 	 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 	 */
@@ -73,27 +73,27 @@ class WCJ_Shortcodes {
 
 		// Merge atts with global defaults
 		$global_defaults = array(
-			'before'              => '',
-			'after'               => '',
-			'visibility'          => '', // user_visibility
-			'wrong_user_text'     => '<p>' . __( 'Wrong user role!', 'woocommerce-jetpack' ) . '</p>',
-//			'login_text'          => __( 'Login', 'woocommerce-jetpack' ),
-			'site_visibility'     => '',
-			'location'            => '', // user_location
-			'not_location'        => '', // user_location
-			'wpml_language'       => '',
-			'wpml_not_language'   => '',
-			'billing_country'     => '',
-			'not_billing_country' => '',
-			'payment_method'      => '',
-			'not_payment_method'  => '',
-			'module'              => '',
-			'find'                => '',
-			'replace'             => '',
-			'strip_tags'          => 'no',
-			'on_empty'            => '',
-			'on_zero'             => 0,
-			'time'                => '',
+			'before'                           => '',
+			'after'                            => '',
+			'visibility'                       => '', // user_visibility
+			'wrong_user_text'                  => '', // '<p>' . __( 'Wrong user role!', 'woocommerce-jetpack' ) . '</p>',
+			'wrong_user_text_not_logged_in'    => '',
+			'site_visibility'                  => '',
+			'location'                         => '', // user_location
+			'not_location'                     => '', // user_location
+			'wpml_language'                    => '',
+			'wpml_not_language'                => '',
+			'billing_country'                  => '',
+			'not_billing_country'              => '',
+			'payment_method'                   => '',
+			'not_payment_method'               => '',
+			'module'                           => '',
+			'find'                             => '',
+			'replace'                          => '',
+			'strip_tags'                       => 'no',
+			'on_empty'                         => '',
+			'on_zero'                          => 0,
+			'time'                             => '',
 		);
 		$atts = array_merge( $global_defaults, $atts );
 
@@ -136,11 +136,18 @@ class WCJ_Shortcodes {
 				}
 			}
 			if ( ! $is_iser_visibility_ok ) {
-//				return '<p><a href="' . wp_login_url( get_permalink() ) . '" title="' . $atts['login_text'] . '">' . $atts['login_text'] . '</a></p>';
 				if ( ! is_user_logged_in() ) {
-					ob_start();
-					woocommerce_login_form();
-					return ob_get_clean();
+					$login_form = '';
+					$login_url  = '';
+					if ( false !== strpos( $atts['wrong_user_text_not_logged_in'], '%login_form%' ) ) {
+						ob_start();
+						woocommerce_login_form();
+						$login_form = ob_get_clean();
+					}
+					if ( false !== strpos( $atts['wrong_user_text_not_logged_in'], '%login_url%' ) ) {
+						$login_url  = wp_login_url( get_permalink() );
+					}
+					return str_replace( array( '%login_form%', '%login_url%' ), array( $login_form, $login_url ), $atts['wrong_user_text_not_logged_in'] );
 				} else {
 					return $atts['wrong_user_text'];
 				}
@@ -276,23 +283,13 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_get_user_location.
 	 *
-	 * @version 2.5.0
+	 * @version 3.1.0
+	 * @todo    (maybe) move this to global functions
 	 */
 	function wcj_get_user_location() {
-		$country = '';
-		if ( isset( $_GET['country'] ) && '' != $_GET['country'] && wcj_is_user_role( 'administrator' ) ) {
-			$country = $_GET['country'];
-		} else {
-			// Get the country by IP
-			$location = WC_Geolocation::geolocate_ip();
-			// Base fallback
-			if ( empty( $location['country'] ) ) {
-				$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
-			}
-			$country = ( isset( $location['country'] ) ) ? $location['country'] : '';
-		}
-		return $country;
+		return ( isset( $_GET['country'] ) && '' != $_GET['country'] && wcj_is_user_role( 'administrator' ) ? $_GET['country'] : wcj_get_country_by_ip() );
 	}
+
 }
 
 endif;

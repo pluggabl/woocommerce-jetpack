@@ -167,7 +167,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.0 - 08/09/2017 =
+= 3.1.0 - 09/09/2017 =
+!D	* Dev - Shortcodes - `visibility` attribute - `wrong_user_text` attribute set to empty string by default now; `wrong_user_text_not_logged_in` attribute added (defaults to empty string).
+~	* Dev - Shortcodes - `location` and `not_location` attributes - `wcj_get_user_location()` - Code refactoring.
 !D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
 !D	* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
 !	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.
@@ -191,6 +193,7 @@ $!D	* Dev - PRICES & CURRENCIES - Global Discount - "Exclude Product Categories"
 !D	* Dev - PRICES & CURRENCIES - Wholesale Price - Minimum quantity for applied discount changed from 1 to 0.
 !D	* Dev - PRODUCTS - Product Add to Cart - Variable Radio Buttons - Formatting options added.
 !D	* Dev - PRODUCTS - Product Info - Advanced - "Extra Filters" option added.
+!D	* Dev - PRODUCTS - Product Input Fields - "Order" option added.
 !	* Dev - PRODUCTS - Product Input Fields - Additional check for `is_string( $value )` added.
 !	* Dev - PRODUCTS - Product Input Fields - Values refilled after add to cart.
 !D	* Dev - PRODUCTS - Product Input Fields - All Products - "Categories/Tags/Products to include/exclude" options added.

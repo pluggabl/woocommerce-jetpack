@@ -420,7 +420,7 @@ class WCJ_Product_Input_Fields_Core {
 			return;
 		}
 		$_product_id = wcj_get_product_id_or_variation_parent_id( $product );
-		$final_html = '';
+		$fields = array();
 		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
@@ -576,7 +576,10 @@ class WCJ_Product_Input_Fields_Core {
 				}
 				$html = str_replace( array( '%field_title%', '%field_id%', '%field_html%' ), array( $title, $field_name, $html ),
 					get_option( 'wcj_product_input_fields_field_template', '<p><label for="%field_id%">%field_title%</label> %field_html%</p>' ) );
-				$final_html .= apply_filters( 'wcj_product_input_field_frontend_html', $html, array(
+				if ( 0 == ( $field_order = $this->get_value( 'wcj_product_input_fields_order_' . $this->scope . '_' . $i, $_product_id, 0 ) ) ) {
+					$field_order = $i;
+				}
+				$fields[ $field_order ] = apply_filters( 'wcj_product_input_field_frontend_html', $html, array(
 					'title'             => $title,
 					'type'              => $type,
 					'field_name'        => $field_name,
@@ -588,8 +591,9 @@ class WCJ_Product_Input_Fields_Core {
 				) );
 			}
 		}
-		if ( '' != $final_html ) {
-			echo get_option( 'wcj_product_input_fields_start_template', '' ) . $final_html . get_option( 'wcj_product_input_fields_end_template', '' );
+		ksort( $fields );
+		if ( ! empty ( $fields ) ) {
+			echo get_option( 'wcj_product_input_fields_start_template', '' ) . implode( $fields ) . get_option( 'wcj_product_input_fields_end_template', '' );
 		}
 	}
 

@@ -44,6 +44,19 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	}
 
 	/**
+	 * get_global_product_fields_options.
+	 *
+	 * @version 3.1.0
+	 * @since   3.1.0
+	 */
+	function get_global_product_fields_options() {
+		$this->scope = 'global';
+		$return = require( 'input-fields/wcj-product-input-fields-options.php' );
+		unset( $this->scope );
+		return $return;
+	}
+
+	/**
 	 * delete_file_uploads.
 	 *
 	 * @version 2.2.2

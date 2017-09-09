@@ -76,7 +76,7 @@ $is_multiselect_products     = ( 'yes' === get_option( 'wcj_list_for_products', 
 $products                    = ( $is_multiselect_products ? wcj_get_products() : false );
 $product_cats                = wcj_get_terms( 'product_cat' );
 $product_tags                = wcj_get_terms( 'product_tag' );
-$options                     = $this->global_product_fields->get_options();
+$options                     = $this->get_global_product_fields_options();
 for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_input_fields_global_total_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
