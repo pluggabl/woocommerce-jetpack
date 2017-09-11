@@ -309,7 +309,13 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				$the_name      = __( 'Create', 'woocommerce-jetpack' );
 				$actions       = array( '<a class="wcj_need_confirmation" href="' .  $the_url . '">' . $the_name . '</a>' );
 			}
-			$table_data[] = array( '<span class="dashicons dashicons-media-default" style="color:' . $invoice_type['color'] . ';"></span>' . ' ' . $invoice_type['title'] . $the_number );
+			$maybe_toolptip = '';
+			$_hook = get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_create_on', 'woocommerce_new_order' );
+			if ( in_array( $_hook, array( 'woocommerce_order_partially_refunded_notification', 'wcj_pdf_invoicing_create_on_any_refund' ) ) ) {
+				$maybe_toolptip = wc_help_tip( __( 'In case of partial refund, you need to reload the page to see created document in this meta box.', 'woocommerce-jetpack' ), true );
+			}
+			$table_data[] = array( '<span class="dashicons dashicons-media-default" style="color:' . $invoice_type['color'] . ';"></span>' . ' ' .
+				$invoice_type['title'] . $the_number . $maybe_toolptip );
 			$table_data[] = $actions;
 			echo '<p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) . '</p>';
 		}

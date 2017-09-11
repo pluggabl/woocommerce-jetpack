@@ -26,7 +26,7 @@ class WCJ_Widget_Selector extends WCJ_Widget {
 			case 'name':
 				return __( 'Booster - Selector', 'woocommerce-jetpack' );
 			case 'description':
-				return __( 'Booster: Selector Widget', 'woocommerce-jetpack' );
+				return __( 'Booster: Selector Widget', 'woocommerce-jetpack' ) . ' (' . __( 'currently for "Product Visibility by Country" module only', 'woocommerce-jetpack' ) . ')';
 		}
 	}
 

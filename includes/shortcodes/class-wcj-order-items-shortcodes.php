@@ -27,7 +27,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 2.9.0
+	 * @version 3.1.0
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -58,6 +58,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'insert_page_break'                   => '',
 			'multiply_cost'                       => 1,
 			'multiply_profit'                     => 1,
+			'refunded_items_table'                => 'no',
 		), $atts );
 		return $modified_atts;
 	}
@@ -291,7 +292,14 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		} */
 
 		// The Items
-		$the_items = $the_order->get_items();
+		$the_items = array();
+		if ( 'yes' === $atts['refunded_items_table'] ) {
+			foreach ( $this->the_order->get_refunds() as $_refund ) {
+				$the_items = array_merge( $the_items, $_refund->get_items() );
+			}
+		} else {
+			$the_items = $the_order->get_items();
+		}
 
 		// Shipping as item
 		if ( '' != $atts['shipping_as_item'] && $the_order->get_total_shipping() > 0 ) {
@@ -645,6 +653,10 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					'product'      => $the_product,
 				) );
 			}
+		}
+
+		if ( empty( $data ) ) {
+			return '';
 		}
 
 		$table_html_args = array(

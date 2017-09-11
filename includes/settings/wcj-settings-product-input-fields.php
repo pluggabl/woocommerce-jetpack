@@ -186,6 +186,22 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_product_input_fields_frontend_view_options',
 	),
 	array(
+		'title'    => __( 'Position on Single Product Page', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_input_fields_position',
+		'default'  => 'woocommerce_before_add_to_cart_button',
+		'type'     => 'select',
+		'options'  => array(
+			'woocommerce_before_add_to_cart_button'     => __( 'Before add to cart button', 'woocommerce-jetpack' ),
+			'woocommerce_after_add_to_cart_button'      => __( 'After add to cart button', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Position priority', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_input_fields_position_priority',
+		'default'  => 100,
+		'type'     => 'number',
+	),
+	array(
 		'title'    => __( 'HTML Template - Start', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_input_fields_start_template',
 		'default'  => '',

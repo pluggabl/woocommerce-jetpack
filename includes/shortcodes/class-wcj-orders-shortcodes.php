@@ -236,9 +236,9 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 					case 'refund_items':
 						$_items = array();
 						foreach ( $_refund->get_items() as $_item ) {
-							$_items[] = $_item->get_name();
+							$_items[] = $_item->get_name() . ' x ' . $_item->get_quantity() * -1;
 						}
-						$cell = ( ! empty( $_items ) ? implode( ', ', $_items ) : '' );
+						$cell = ( ! empty( $_items ) ? implode( '<br>', $_items ) : '' );
 						break;
 				}
 				$row[] = $cell;

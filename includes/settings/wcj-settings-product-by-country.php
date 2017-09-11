@@ -50,10 +50,11 @@ return array(
 	),
 	array(
 		'title'    => __( 'User Country Selection Method', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Possible values: "Automatically by IP" or "Manually".', 'woocommerce-jetpack' ),
 		'desc'     => sprintf(
 			__( 'If "Manually" option is selected, you can add country selection drop box to frontend with "%s" widget or %s shortcode.', 'woocommerce-jetpack' ),
 			__( 'Booster - Selector', 'woocommerce-jetpack' ),
-			'<code>' . '[wcj_selector selector_type="country"]' . '</code>' ),
+			'<code>' . '[wcj_selector selector_type="country"]' . '</code>' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
 		'id'       => 'wcj_product_by_country_selection_method',
 		'default'  => 'by_ip',
 		'type'     => 'select',
@@ -61,6 +62,7 @@ return array(
 			'by_ip'  => __( 'Automatically by IP', 'woocommerce-jetpack' ),
 			'manual' => __( 'Manually', 'woocommerce-jetpack' ),
 		),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',

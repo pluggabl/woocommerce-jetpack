@@ -26,7 +26,8 @@ class WCJ_Product_Input_Fields_Core {
 		if ( 'yes' === get_option( 'wcj_product_input_fields_' . $this->scope . '_enabled', 'no' ) ) {
 
 			// Show fields at frontend
-			add_action( 'woocommerce_before_add_to_cart_button',    array( $this, 'add_product_input_fields_to_frontend' ), 100 );
+			add_action( get_option( 'wcj_product_input_fields_position', 'woocommerce_before_add_to_cart_button' ),
+				array( $this, 'add_product_input_fields_to_frontend' ), get_option( 'wcj_product_input_fields_position_priority', 100 ) );
 
 			// Process from $_POST to cart item data
 			add_filter( 'woocommerce_add_to_cart_validation',       array( $this, 'validate_product_input_fields_on_add_to_cart' ), 100, 2 );
@@ -413,6 +414,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * @version 3.1.0
 	 * @todo    `$set_value` - add "default" option for all other types except checkbox
 	 * @todo    `$set_value` - 'file' type
+	 * @todo    add `required` attributes
 	 */
 	function add_product_input_fields_to_frontend() {
 		global $product;

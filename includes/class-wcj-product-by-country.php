@@ -43,7 +43,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_product_by_country_query', 'no' ) ) {
 					add_action( 'pre_get_posts',                  array( $this, 'product_by_country_pre_get_posts' ) );
 				}
-				if ( 'manual' === get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) {
+				if ( 'manual' === apply_filters( 'booster_get_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
 					add_action( 'init',                           array( $this, 'save_country_in_session' ), PHP_INT_MAX ) ;
 				}
 			}
@@ -161,7 +161,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	 * @since   3.1.0
 	 */
 	function get_country() {
-		if ( 'manual' === get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) {
+		if ( 'manual' === apply_filters( 'booster_get_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
 			if ( '' == wcj_session_get( 'wcj_selected_country' ) ) {
 				$country = wcj_get_country_by_ip();
 				wcj_session_maybe_start();

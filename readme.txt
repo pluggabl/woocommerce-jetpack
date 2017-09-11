@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 3.0.1
+Stable tag: 3.1.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -167,76 +167,79 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.0 - 09/09/2017 =
-!D	* Dev - Shortcodes - `visibility` attribute - `wrong_user_text` attribute set to empty string by default now; `wrong_user_text_not_logged_in` attribute added (defaults to empty string).
-~	* Dev - Shortcodes - `location` and `not_location` attributes - `wcj_get_user_location()` - Code refactoring.
-!D	* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
-!D	* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
-!	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.
-!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_categories` column added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_quantity_refunded` and `item_quantity_excl_refunded` columns added.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_total_refunded` column added.
--!D	* Dev - Shortcodes - Orders - `[wcj_order_refunds_table]` shortcode added.
-!D	* Dev - Shortcodes - Orders - `[wcj_order_total_shipping_refunded]` shortcode added.
-!D	* Dev - Shortcodes - Orders - `[wcj_order_total_tax_refunded]` shortcode added.
-!D	* Dev - Shortcodes - Orders - `[wcj_order_subtotal_to_display]` shortcode added.
-!D	* Dev - Shortcodes - Orders - `[wcj_order_total_formatted]` shortcode added.
-!D	* Dev - Shortcodes - Orders - `[wcj_order_remaining_refund_amount]` shortcode added.
-!D	* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `columns_style` attribute added.
-!	* Dev - Widgets - Code refactoring (now as `WCJ_Widget` child classes).
--D	* Dev - Widgets - "Booster - Selector" widget added.
-$!D	* Dev - PRICES & CURRENCIES - Global Discount - "Exclude Product Categories" and "Include/Exclude Product Tags/Products" options added.
-!D	* Dev - PRICES & CURRENCIES - Global Discount - Code refactoring, clean up and fixes.
-!D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Added "WooCommerce Product Add-ons" plugin compatibility.
-!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - "Advanced: Saved Calculated Products Prices" option added.
-!D	* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - "Round Prices" options added.
-!D	* Dev - PRICES & CURRENCIES - Wholesale Price - Minimum quantity for applied discount changed from 1 to 0.
-!D	* Dev - PRODUCTS - Product Add to Cart - Variable Radio Buttons - Formatting options added.
-!D	* Dev - PRODUCTS - Product Info - Advanced - "Extra Filters" option added.
-!D	* Dev - PRODUCTS - Product Input Fields - "Order" option added.
-!	* Dev - PRODUCTS - Product Input Fields - Additional check for `is_string( $value )` added.
-!	* Dev - PRODUCTS - Product Input Fields - Values refilled after add to cart.
-!D	* Dev - PRODUCTS - Product Input Fields - All Products - "Categories/Tags/Products to include/exclude" options added.
-D	* Dev - PRODUCTS - Product Input Fields - Settings restyled.
-!	* Dev - PRODUCTS - Product Input Fields - Code refactoring and cleanup.
-D	* Dev - PRODUCTS - Product Tabs - "Key" option added.
-!	* Dev - PRODUCTS - Product Tabs - Code refactoring, cleanup and minor fixes.
-!D	* Dev - PRODUCTS - Product Tabs - Deprecated options not displayed (if empty).
-!D	* Dev - PRODUCTS - Product Tabs - `do_shortcode` added when checking for empty content (before displaying the tab).
-	* Fix - PRODUCTS - Product Visibility by Country / by User Role - Getting `post__not_in` from query (instead of starting with empty array).
-~D	* Fix - PRODUCTS - Product Visibility by Country - "European Union" selection fixed.
-$!D	* Dev - PRODUCTS - Product Visibility by Country - "User Country Selection Method" option added.
-	* Dev - PRODUCTS - Product Visibility by Country - Code refactoring.
-D	* Dev - PRODUCTS - Product Visibility by Country - Settings restyled and descriptions added.
-D	* Dev - PRODUCTS - Product Visibility by User Role - Descriptions added.
-!D	* Dev - CART & CHECKOUT - Cart Customization - Change Empty Cart "Return to shop" Button Text - "Method" option added.
-!D	* Dev - CART & CHECKOUT - Checkout Core Fields - "Override Default Address Fields" and "Override Country Locale Fields" options added.
-!D	* Dev - CART & CHECKOUT - Checkout Core Fields - "Account Username", "Account Password-2" fields added.
-~D	* Dev - CART & CHECKOUT - Checkout Customization - "Customize order received message" options added.
-!D	* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - "Use List Instead of Comma Separated Text for Products in Settings" support added.
-D	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Settings restyled.
-	* Dev - SHIPPING & ORDERS - Order Numbers - Code refactoring and clean up.
-!D	* Dev - SHIPPING & ORDERS - Order Numbers - Skipping order number generation for `auto-draft` orders.
-!	* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - Removed sanitizing order id (was added in WC v3.1.0).
-!	* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - `WP_Query` optimized to return `ids` only.
-!	* Dev - SHIPPING & ORDERS - Order Numbers - Orders Renumerate - `WP_Query` optimized to return `ids` only.
-	* Dev - PDF INVOICING & PACKING SLIPS - Checking for `ZipArchive` to exist before generating ZIPs.
-!	* Dev - PDF INVOICING & PACKING SLIPS - Default values added to `get_option()` calls.
-!D	* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Admin Title" option added.
--D	* Dev - PDF INVOICING & PACKING SLIPS - General - "Create on Order Partially Refunded" and "Create on Order Status Refunded and/or Order Partially Refunded" added.
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Email Options - "Customer - Partially Refunded Order" email added.
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - Code refactoring, clean up, minor changes. Tool settings restyled.
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - "Reports Filename", "CSV Separator", "CSV UTF-8 BOM", "Replace Periods with Commas in CSV Data" options added.
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Code factoring, clean up and minor fixes. Settings restyled.
-!D	* Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar added.
-!D	* Dev - EMAILS & MISC. - Custom Emails - "Wrap in WC Email Template" option added.
-!D	* Dev - EMAILS & MISC. - Custom Emails - Code refactoring, clean up etc. Settings page restyled.
-!	* Dev - EMAILS & MISC. - Custom Emails - WooCommerce v3.x.x compatibility - `billing_email`, `order_date`, `post`.
-D	* Dev - EMAILS & MISC. - Email Verification - Settings restyled.
-~D	* Dev - EMAILS & MISC. - Email Verification - "Verified" column added to admin users list.
-!D	* Dev - EMAILS & MISC. - Email Verification - "Verification Email Template" options added.
-~	* Dev - EMAILS & MISC. - Email Verification - `serialize()` and `unserialize()` replaced with `json_encode()` and `json_decode()`.
-!D	* Dev - EMAILS & MISC. - General - "Session Type in Booster" option added.
+= 3.1.0 - 11/09/2017 =
+* Dev - Shortcodes - `visibility` attribute - `wrong_user_text` attribute set to empty string by default now; `wrong_user_text_not_logged_in` attribute added (defaults to empty string).
+* Dev - Shortcodes - `location` and `not_location` attributes - `wcj_get_user_location()` - Code refactoring.
+* Dev - Shortcodes - General - `[wcj_wholesale_price_table]` - `columns_style` attribute added.
+* Dev - Shortcodes - General - `[wcj_selector]` - shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - WooCommerce v3.x.x compatibility - `unserialize()` replaced with `maybe_unserialize()` for "WooCommerce TM Extra Product Options" plugin data.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `product_categories` column added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_quantity_refunded` and `item_quantity_excl_refunded` columns added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `columns` - `item_total_refunded` column added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `refunded_items_table` attribute added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Returning empty string if no items found.
+* Dev - Shortcodes - Orders - `[wcj_order_refunds_table]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_total_shipping_refunded]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_total_tax_refunded]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_subtotal_to_display]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_total_formatted]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_remaining_refund_amount]` shortcode added.
+* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `columns_style` attribute added.
+* Dev - Widgets - Code refactoring (now as `WCJ_Widget` child classes).
+* Dev - Widgets - "Booster - Selector" widget added.
+* Dev - PRICES & CURRENCIES - Global Discount - "Exclude Product Categories" and "Include/Exclude Product Tags/Products" options added.
+* Dev - PRICES & CURRENCIES - Global Discount - Code refactoring, clean up and fixes.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Added "WooCommerce Product Add-ons" plugin compatibility.
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - "Advanced: Saved Calculated Products Prices" option added.
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - "Round Prices" options added.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Minimum quantity for applied discount changed from 1 to 0.
+* Dev - PRODUCTS - Product Add to Cart - Variable Radio Buttons - Formatting options added.
+* Dev - PRODUCTS - Product Info - Advanced - "Extra Filters" option added.
+* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "Position on Single Product Page" options added.
+* Dev - PRODUCTS - Product Input Fields - Fields Options - "Order" option added.
+* Dev - PRODUCTS - Product Input Fields - Additional check for `is_string( $value )` added.
+* Dev - PRODUCTS - Product Input Fields - Values refilled after add to cart.
+* Dev - PRODUCTS - Product Input Fields - All Products - "Categories/Tags/Products to include/exclude" options added.
+* Dev - PRODUCTS - Product Input Fields - Settings restyled.
+* Dev - PRODUCTS - Product Input Fields - Code refactoring and cleanup.
+* Dev - PRODUCTS - Product Tabs - "Key" option added.
+* Dev - PRODUCTS - Product Tabs - Code refactoring, cleanup and minor fixes.
+* Dev - PRODUCTS - Product Tabs - Deprecated options not displayed (if empty).
+* Dev - PRODUCTS - Product Tabs - `do_shortcode` added when checking for empty content (before displaying the tab).
+* Fix - PRODUCTS - Product Visibility by Country / by User Role - Getting `post__not_in` from query (instead of starting with empty array).
+* Fix - PRODUCTS - Product Visibility by Country - "European Union" selection fixed.
+* Dev - PRODUCTS - Product Visibility by Country - "User Country Selection Method" option added.
+* Dev - PRODUCTS - Product Visibility by Country - Code refactoring.
+* Dev - PRODUCTS - Product Visibility by Country - Settings restyled and descriptions added.
+* Dev - PRODUCTS - Product Visibility by User Role - Descriptions added.
+* Dev - CART & CHECKOUT - Cart Customization - Change Empty Cart "Return to shop" Button Text - "Method" option added.
+* Dev - CART & CHECKOUT - Checkout Core Fields - "Override Default Address Fields" and "Override Country Locale Fields" options added.
+* Dev - CART & CHECKOUT - Checkout Core Fields - "Account Username", "Account Password-2" fields added.
+* Dev - CART & CHECKOUT - Checkout Customization - "Customize order received message" options added.
+* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - "Use List Instead of Comma Separated Text for Products in Settings" support added.
+* Dev - SHIPPING & ORDERS - Left to Free Shipping - Settings restyled.
+* Dev - SHIPPING & ORDERS - Order Numbers - Code refactoring and clean up.
+* Dev - SHIPPING & ORDERS - Order Numbers - Skipping order number generation for `auto-draft` orders.
+* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - Removed sanitizing order id (was added in WC v3.1.0).
+* Dev - SHIPPING & ORDERS - Order Numbers - Order Tracking - `WP_Query` optimized to return `ids` only.
+* Dev - SHIPPING & ORDERS - Order Numbers - Orders Renumerate - `WP_Query` optimized to return `ids` only.
+* Dev - PDF INVOICING & PACKING SLIPS - Checking for `ZipArchive` to exist before generating ZIPs.
+* Dev - PDF INVOICING & PACKING SLIPS - Default values added to `get_option()` calls.
+* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Admin Title" option added.
+* Dev - PDF INVOICING & PACKING SLIPS - General - "Create on Order Partially Refunded" and "Create on Order Status Refunded and/or Order Partially Refunded" added.
+* Dev - PDF INVOICING & PACKING SLIPS - Email Options - "Customer - Partially Refunded Order" email added.
+* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - Code refactoring, clean up, minor changes. Tool settings restyled.
+* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - "Reports Filename", "CSV Separator", "CSV UTF-8 BOM", "Replace Periods with Commas in CSV Data" options added.
+* Dev - PDF INVOICING & PACKING SLIPS - Code factoring, clean up and minor fixes. Settings restyled.
+* Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar added.
+* Dev - EMAILS & MISC. - Custom Emails - "Wrap in WC Email Template" option added.
+* Dev - EMAILS & MISC. - Custom Emails - Code refactoring, clean up etc. Settings page restyled.
+* Dev - EMAILS & MISC. - Custom Emails - WooCommerce v3.x.x compatibility - `billing_email`, `order_date`, `post`.
+* Dev - EMAILS & MISC. - Email Verification - Settings restyled.
+* Dev - EMAILS & MISC. - Email Verification - "Verified" column added to admin users list.
+* Dev - EMAILS & MISC. - Email Verification - "Verification Email Template" options added.
+* Dev - EMAILS & MISC. - Email Verification - `serialize()` and `unserialize()` replaced with `json_encode()` and `json_decode()`.
+* Dev - EMAILS & MISC. - General - "Session Type in Booster" option added.
 
 = 3.0.1 - 03/08/2017 =
 * Dev - CART & CHECKOUT - Cart Customization - "Change Empty Cart Return to shop Button Link" option added.

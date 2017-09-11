@@ -16,6 +16,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 3.1.0
+	 * @todo    (maybe) option to change local and global fields order (i.e. output local fields before the global)
 	 */
 	function __construct() {
 
