@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Invoice
  *
- * @version 2.5.9
+ * @version 3.1.1
  * @author  Algoritmika Ltd.
  */
 
@@ -50,13 +50,13 @@ class WCJ_Invoice {
 	/**
 	 * create.
 	 *
-	 * @version 2.5.9
+	 * @version 3.1.1
 	 * @todo    use mysql transaction enabled (as in "wcj_order_number_use_mysql_transaction_enabled")
 	 */
 	function create( $date = '' ) {
 		$order_id = $this->order_id;
 		$invoice_type = $this->invoice_type;
-		if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_invoicing_' . $invoice_type . '_skip_zero_total', 'no' ) ) ) {
+		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_skip_zero_total', 'no' ) ) {
 			$_order = wc_get_order( $order_id );
 			if ( 0 == $_order->get_total() ) {
 				return;

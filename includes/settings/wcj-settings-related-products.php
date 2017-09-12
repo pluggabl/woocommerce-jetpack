@@ -2,12 +2,21 @@
 /**
  * Booster for WooCommerce - Settings - Related Products
  *
- * @version 2.8.0
+ * @version 3.1.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+$is_multiselect_products     = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
+$products                    = ( $is_multiselect_products ? wcj_get_products() : false );
+$product_cats                = wcj_get_terms( 'product_cat' );
+$product_tags                = wcj_get_terms( 'product_tag' );
+wcj_maybe_convert_and_update_option_value( array(
+	array( 'id' => 'wcj_product_info_related_products_hide_products_incl', 'default' => '' ),
+	array( 'id' => 'wcj_product_info_related_products_hide_products_excl', 'default' => '' ),
+), $is_multiselect_products );
 
 $orderby_options = array(
 	'rand'  => __( 'Random', 'woocommerce-jetpack' ),
@@ -23,6 +32,7 @@ if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 	$orderby_options['menu_order']     = __( 'Menu order', 'woocommerce-jetpack' );
 	$orderby_options['price']          = __( 'Price', 'woocommerce-jetpack' );
 }
+
 $settings = array(
 	array(
 		'title'    => __( 'General', 'woocommerce-jetpack' ),
@@ -160,6 +170,64 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_product_info_related_products_hide',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Include Product Categories', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set this field to hide related products on selected product categories only. Leave blank to hide on all products.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_info_related_products_hide_cats_incl',
+		'default'  => '',
+		'class'    => 'chosen_select',
+		'type'     => 'multiselect',
+		'options'  => $product_cats,
+	),
+	array(
+		'title'    => __( 'Exclude Product Categories', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set this field to NOT hide related products on selected product categories. Leave blank to hide on all products.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_info_related_products_hide_cats_excl',
+		'default'  => '',
+		'class'    => 'chosen_select',
+		'type'     => 'multiselect',
+		'options'  => $product_cats,
+	),
+	array(
+		'title'    => __( 'Include Product Tags', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set this field to hide related products on selected product tags only. Leave blank to hide on all products.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_info_related_products_hide_tags_incl',
+		'default'  => '',
+		'class'    => 'chosen_select',
+		'type'     => 'multiselect',
+		'options'  => $product_tags,
+	),
+	array(
+		'title'    => __( 'Exclude Product Tags', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set this field to NOT hide related products on selected product tags. Leave blank to hide on all products.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_info_related_products_hide_tags_excl',
+		'default'  => '',
+		'class'    => 'chosen_select',
+		'type'     => 'multiselect',
+		'options'  => $product_tags,
+	),
+	wcj_get_settings_as_multiselect_or_text(
+		array(
+			'title'    => __( 'Include Products', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Set this field to hide related products on selected products only. Leave blank to hide on all products.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_product_info_related_products_hide_products_incl',
+			'default'  => '',
+			'class'    => 'widefat',
+		),
+		$products,
+		$is_multiselect_products
+	),
+	wcj_get_settings_as_multiselect_or_text(
+		array(
+			'title'    => __( 'Exclude Products', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Set this field to NOT hide related products on selected products. Leave blank to hide on all products.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_product_info_related_products_hide_products_excl',
+			'default'  => '',
+			'class'    => 'widefat',
+		),
+		$products,
+		$is_multiselect_products
 	),
 	array(
 		'type'     => 'sectionend',

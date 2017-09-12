@@ -167,6 +167,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.1.1 - 12/09/2017 =
+	* Fix - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option fixed (`disabled`).
+D	* Dev - PRICES & CURRENCIES - Product Price by Formula - Settings restyled.
+D	* Dev - PRODUCTS - Related Products - Hide - "Include/Exclude Categories/Tags/Products" options added.
+	* Fix - PRODUCTS - Related Products - "Clear all products transients" button - `post_status` error fixed.
+	* Fix - PDF INVOICING & PACKING SLIPS - General - "Do not create if order total equals zero" fixed (for "Invoice").
+
 = 3.1.0 - 11/09/2017 =
 * Dev - Shortcodes - `visibility` attribute - `wrong_user_text` attribute set to empty string by default now; `wrong_user_text_not_logged_in` attribute added (defaults to empty string).
 * Dev - Shortcodes - `location` and `not_location` attributes - `wcj_get_user_location()` - Code refactoring.

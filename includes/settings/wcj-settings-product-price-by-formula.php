@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
- * @version 2.8.0
+ * @version 3.1.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -18,10 +18,12 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Formula', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Use "x" variable for product\'s base price. For example: x+p1*p2', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'Use %s variable for product\'s base price. For example: %s.', 'woocommerce-jetpack' ),
+			'<code>' . 'x' . '</code>', '<code>' . 'x+p1*p2' . '</code>' ),
 		'type'     => 'text',
 		'id'       => 'wcj_product_price_by_formula_eval',
 		'default'  => '',
+		'class'    => 'widefat',
 	),
 	array(
 		'title'    => __( 'Enable Price Calculation By Formula For All Products', 'woocommerce-jetpack' ),
@@ -30,15 +32,13 @@ $settings = array(
 		'id'       => 'wcj_product_price_by_formula_enable_for_all_products',
 		'default'  => 'no',
 		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Total Params', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_price_by_formula_total_params',
 		'default'  => 1,
 		'type'     => 'custom_number',
-		/* 'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ), */
 	),
 );
 $total_number = get_option( 'wcj_product_price_by_formula_total_params', 1 );

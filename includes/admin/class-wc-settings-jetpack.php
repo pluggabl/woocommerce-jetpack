@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 3.1.0
+ * @version 3.1.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -438,7 +438,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * get_manager_settings.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.1
 	 * @since   2.6.0
 	 * @return  array
 	 */
@@ -459,6 +459,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 					__( 'Gateways per Product or Category', 'woocommerce-jetpack' ),
 					__( 'Product Input Fields', 'woocommerce-jetpack' ),
 					__( 'Global Discount', 'woocommerce-jetpack' ),
+					__( 'Related Products', 'woocommerce-jetpack' ),
 				) ) ),
 				'id'      => 'wcj_list_for_products',
 				'default' => 'yes',

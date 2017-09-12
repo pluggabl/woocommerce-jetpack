@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 2.8.0
+ * @version 3.1.1
  * @author  Algoritmika Ltd.
  */
 
@@ -30,7 +30,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.1
 	 */
 	function __construct() {
 
@@ -88,19 +88,56 @@ class WCJ_Related_Products extends WCJ_Module {
 
 			// Hide Related
 			if ( 'yes' === get_option( 'wcj_product_info_related_products_hide', 'no' ) ) {
-				add_action( 'init', array( $this, 'remove_output_related_products_action' ), PHP_INT_MAX );
+				add_action( ( $this->do_hide_for_all_products() ? 'init' : 'wp_head' ), array( $this, 'remove_output_related_products_action' ), PHP_INT_MAX );
 			}
 
 		}
 	}
 
 	/**
+	 * do_hide_for_all_products.
+	 *
+	 * @version 3.1.1
+	 * @since   3.1.1
+	 */
+	function do_hide_for_all_products() {
+		return (
+			'' == get_option( 'wcj_product_info_related_products_hide_products_incl', '' ) &&
+			'' == get_option( 'wcj_product_info_related_products_hide_products_excl', '' ) &&
+			'' == get_option( 'wcj_product_info_related_products_hide_cats_incl', '' ) &&
+			'' == get_option( 'wcj_product_info_related_products_hide_cats_excl', '' ) &&
+			'' == get_option( 'wcj_product_info_related_products_hide_tags_incl', '' ) &&
+			'' == get_option( 'wcj_product_info_related_products_hide_tags_excl', '' )
+		);
+	}
+
+	/**
+	 * do_hide_for_product.
+	 *
+	 * @version 3.1.1
+	 * @since   3.1.1
+	 */
+	function do_hide_for_product( $product_id ) {
+		return wcj_is_enabled_for_product( $product_id, array(
+			'include_products'   => get_option( 'wcj_product_info_related_products_hide_products_incl', '' ),
+			'exclude_products'   => get_option( 'wcj_product_info_related_products_hide_products_excl', '' ),
+			'include_categories' => get_option( 'wcj_product_info_related_products_hide_cats_incl', '' ),
+			'exclude_categories' => get_option( 'wcj_product_info_related_products_hide_cats_excl', '' ),
+			'include_tags'       => get_option( 'wcj_product_info_related_products_hide_tags_incl', '' ),
+			'exclude_tags'       => get_option( 'wcj_product_info_related_products_hide_tags_excl', '' ),
+		) );
+	}
+
+	/**
 	 * remove_output_related_products_action.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.1
 	 * @since   2.8.0
 	 */
 	function remove_output_related_products_action( $args ) {
+		if ( ! $this->do_hide_for_all_products() && ! $this->do_hide_for_product( get_the_ID() ) ) {
+			return;
+		}
 		remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
 	}
 
@@ -322,7 +359,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * maybe_delete_product_transients.
 	 *
-	 * @since   2.6.0
+	 * @since   3.1.1
 	 * @version 2.6.0
 	 */
 	function maybe_delete_product_transients() {
@@ -332,7 +369,7 @@ class WCJ_Related_Products extends WCJ_Module {
 			while( true ) {
 				$args = array(
 					'post_type'      => 'product',
-					'post_status'    => $post_status,
+					'post_status'    => 'any',
 					'posts_per_page' => $block_size,
 					'offset'         => $offset,
 					'orderby'        => 'title',
