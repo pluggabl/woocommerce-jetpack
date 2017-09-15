@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.1.0
+ * @version 3.1.1
  * @author  Algoritmika Ltd.
  */
 
@@ -594,7 +594,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * wcj_product_you_save.
 	 *
 	 * @return  string
-	 * @version 2.4.0
+	 * @version 3.1.1
 	 */
 	function wcj_product_you_save( $atts ) {
 		if ( $this->the_product->is_on_sale() ) {
@@ -602,6 +602,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$you_save = ( $this->the_product->get_variation_regular_price( 'max' ) - $this->the_product->get_variation_sale_price( 'max' ) );
 			} else {
 				$you_save = ( $this->the_product->get_regular_price() - $this->the_product->get_sale_price() );
+			}
+			if ( '' !== $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
+				$you_save *= $atts['multiply_by'];
 			}
 			return ( 'yes' === $atts['hide_currency'] ) ? $you_save : wc_price( $you_save );
 		} else {

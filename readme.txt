@@ -167,9 +167,15 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.1 - 12/09/2017 =
+= 3.1.1 - 15/09/2017 =
+	* Dev - `WCJ_Module` - `create_meta_box()` - `show_value` option added.
+	* Dev - `WCJ_Module` - `create_meta_box()` - `class` option added.
+D	* Dev - Shortcodes - General - `[wcj_current_currency_code]` and `[wcj_current_currency_symbol]` shortcodes added.
+D	* Dev - Shortcodes - Products - `[wcj_product_you_save]` - `multiply_by` attribute added.
 	* Fix - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option fixed (`disabled`).
 D	* Dev - PRICES & CURRENCIES - Product Price by Formula - Settings restyled.
+D	* Dev - PRODUCTS - Product Visibility by Country - Admin Options - "Visibility Method" option added.
+$D	* Dev - PRODUCTS - Product Visibility by Country - Admin Options - "Country List" option added.
 D	* Dev - PRODUCTS - Related Products - Hide - "Include/Exclude Categories/Tags/Products" options added.
 	* Fix - PRODUCTS - Related Products - "Clear all products transients" button - `post_status` error fixed.
 	* Fix - PDF INVOICING & PACKING SLIPS - General - "Do not create if order total equals zero" fixed (for "Invoice").

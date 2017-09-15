@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.0.0
+ * @version 3.1.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -274,8 +274,10 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.9.0
-	 * @todo    placeholder for textarea
+	 * @version 3.1.1
+	 * @todo    `placeholder` for textarea
+	 * @todo    `class` for all types (now only for select)
+	 * @todo    `show_value` for all types (now only for multiple select)
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -297,7 +299,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					} else {
 						$option_value = ( isset( $option['default'] ) ) ? $option['default'] : '';
 					}
-					$css = ( isset( $option['css'] ) ) ? $option['css']  : '';
+					$css          = ( isset( $option['css'] )   ? $option['css']   : '' );
+					$class        = ( isset( $option['class'] ) ? $option['class'] : '' );
+					$show_value   = ( isset( $option['show_value'] ) && $option['show_value'] );
 					$input_ending = '';
 					if ( 'select' === $option['type'] ) {
 						if ( isset( $option['multiple'] ) ) {
@@ -338,7 +342,8 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					}
 					switch ( $option['type'] ) {
 						case 'price':
-							$field_html = '<input style="' . $css . '" class="short wc_input_price" type="number" step="' . apply_filters( 'wcj_get_meta_box_options_type_price_step', '0.0001' ) . '"' . $input_ending;
+							$field_html = '<input style="' . $css . '" class="short wc_input_price" type="number" step="' .
+								apply_filters( 'wcj_get_meta_box_options_type_price_step', '0.0001' ) . '"' . $input_ending;
 							break;
 						case 'date':
 							$field_html = '<input style="' . $css . '" class="input-text" display="date" type="text"' . $input_ending;
@@ -347,7 +352,9 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 							$field_html = '<textarea style="' . $css . '" id="' . $option['name'] . '" name="' . $option['name'] . '">' . $option_value . '</textarea>';
 							break;
 						case 'select':
-							$field_html = '<select' . $custom_attributes . ' style="' . $css . '" id="' . $option['name'] . '" name="' . $option_name . '">' . $options . '</select>';
+							$field_html = '<select' . $custom_attributes . ' class="' . $class . '" style="' . $css . '" id="' . $option['name'] . '" name="' .
+								$option_name . '">' . $options . '</select>' .
+								( $show_value && ! empty( $option_value ) ? sprintf( '<em>' . __( 'Selected: %s.', 'woocommerce-jetpack' ), implode( ', ', $option_value ) ) . '</em>' : '' );
 							break;
 						default:
 							$field_html = '<input style="' . $css . '" class="short" type="' . $option['type'] . '"' . $input_ending;
@@ -355,7 +362,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					}
 					$html .= '<tr>';
 					$maybe_tooltip = ( isset( $option['tooltip'] ) && '' != $option['tooltip'] ) ? wc_help_tip( $option['tooltip'], true ) : '';
-					$html .= '<th style="text-align:left;width:25%;">' . $option['title'] . $maybe_tooltip . '</th>';
+					$html .= '<th style="text-align:left;width:25%;font-weight:bold;">' . $option['title'] . $maybe_tooltip . '</th>';
 					if ( isset( $option['desc'] ) && '' != $option['desc'] ) {
 						$html .= '<td style="font-style:italic;width:25%;">' . $option['desc'] . '</td>';
 					}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.1.0
+ * @version 3.1.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.1
 	 */
 	function __construct() {
 
@@ -29,6 +29,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_currency_select_drop_down_list',
 			'wcj_currency_select_link_list',
 			'wcj_currency_select_radio_list',
+			'wcj_current_currency_code',
+			'wcj_current_currency_symbol',
 			'wcj_current_date',
 			'wcj_current_datetime',
 			'wcj_current_time',
@@ -77,6 +79,26 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_current_currency_code.
+	 *
+	 * @version 3.1.1
+	 * @since   3.1.1
+	 */
+	function wcj_current_currency_code( $atts ) {
+		return get_woocommerce_currency();
+	}
+
+	/**
+	 * wcj_current_currency_symbol.
+	 *
+	 * @version 3.1.1
+	 * @since   3.1.1
+	 */
+	function wcj_current_currency_symbol( $atts ) {
+		return get_woocommerce_currency_symbol();
 	}
 
 	/**

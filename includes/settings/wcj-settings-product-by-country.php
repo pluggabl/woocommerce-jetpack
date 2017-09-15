@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Visibility by Country
  *
- * @version 3.1.0
+ * @version 3.1.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -72,6 +72,33 @@ return array(
 		'title'    => __( 'Admin Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_product_by_country_admin_options',
+	),
+	array(
+		'title'    => __( 'Country List', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This option sets which countries will be added to list in product\'s edit page.', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'If "WooCommerce selling locations" option is selected, country list will be set by <a href="%s">WooCommerce > Settings > General > Selling location(s)</a>.', 'woocommerce-jetpack' ),
+			admin_url( 'admin.php?page=wc-settings' ) ),
+		'id'       => 'wcj_product_by_country_country_list',
+		'default'  => 'all',
+		'type'     => 'select',
+		'options'  => array(
+			'all' => __( 'All countries', 'woocommerce-jetpack' ),
+			'wc'  => __( 'WooCommerce selling locations', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'title'    => __( 'Visibility Method', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This option sets how do you want to set product\'s visibility: by setting visible countries, setting invisible countries, or setting both.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_by_country_visibility_method',
+		'default'  => 'visible',
+		'type'     => 'select',
+		'options'  => array(
+			'visible'   => __( 'Set visible countries', 'woocommerce-jetpack' ),
+			'invisible' => __( 'Set invisible countries', 'woocommerce-jetpack' ),
+			'both'      => __( 'Set both', 'woocommerce-jetpack' ),
+		),
+		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Admin Products List Column', 'woocommerce-jetpack' ),
