@@ -176,12 +176,15 @@ final class WC_Jetpack {
 			$plus_version          = get_option( 'booster_plus_version', false );
 			$required_plus_version = '1.1.0';
 			$notice_type           = ( version_compare( $plus_version, $required_plus_version, '<' ) ? 'error' : 'warning' );
-			$class                 = 'notice notice-' . $notice_type;
-			$message               = sprintf(
-				__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin. Please visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
-				'https://booster.io/my-account/?utm_source=plus_update'
-			);
-			echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
+			global $pagenow;
+			if ( 'error' === $notice_type || 'plugins.php' === $pagenow ) {
+				$class   = 'notice notice-' . $notice_type;
+				$message = sprintf(
+					__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin. Please visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
+					'https://booster.io/my-account/?utm_source=plus_update'
+				);
+				echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
+			}
 		}
 	}
 
