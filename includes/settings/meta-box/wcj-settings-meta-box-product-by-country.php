@@ -9,7 +9,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$countries = ( 'wc' === get_option( 'wcj_product_by_country_country_list', 'all' ) ? WC()->countries->get_allowed_countries() : wcj_get_countries() );
+$countries = ( 'wc' === apply_filters( 'booster_get_option', 'all', get_option( 'wcj_product_by_country_country_list', 'all' ) ) ? WC()->countries->get_allowed_countries() : wcj_get_countries() );
 
 $options = array();
 if ( 'invisible' != apply_filters( 'booster_get_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {

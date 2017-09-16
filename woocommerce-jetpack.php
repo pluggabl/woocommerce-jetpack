@@ -64,7 +64,7 @@ require_once( 'includes/constants/wcj-constants.php' );
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 3.1.0
+ * @version 3.1.1
  */
 final class WC_Jetpack {
 
@@ -74,7 +74,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.1.1-dev-201709151448';
+	public $version = '3.1.1-dev-201709161843';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -146,7 +146,7 @@ final class WC_Jetpack {
 	/**
 	 * check_plus_version.
 	 *
-	 * @version 3.0.1
+	 * @version 3.1.1
 	 * @since   2.5.9
 	 */
 	function check_plus_version() {
@@ -173,16 +173,15 @@ final class WC_Jetpack {
 		}
 		// Check Plus version
 		if ( ! $is_plus_v3_active && $is_plus_active ) {
-			$plus_version = get_option( 'booster_plus_version', false );
+			$plus_version          = get_option( 'booster_plus_version', false );
 			$required_plus_version = '1.1.0';
-			if ( version_compare( $plus_version, $required_plus_version, '<' ) ) {
-				$class = 'notice notice-error';
-				$message = sprintf(
-					__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin. Please visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
-					'https://booster.io/my-account/?utm_source=plus_update'
-				);
-				echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
-			}
+			$notice_type           = ( version_compare( $plus_version, $required_plus_version, '<' ) ? 'error' : 'warning' );
+			$class                 = 'notice notice-' . $notice_type;
+			$message               = sprintf(
+				__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin. Please visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
+				'https://booster.io/my-account/?utm_source=plus_update'
+			);
+			echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
 		}
 	}
 

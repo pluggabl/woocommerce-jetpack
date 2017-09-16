@@ -54,7 +54,7 @@ return array(
 		'desc'     => sprintf(
 			__( 'If "Manually" option is selected, you can add country selection drop box to frontend with "%s" widget or %s shortcode.', 'woocommerce-jetpack' ),
 			__( 'Booster - Selector', 'woocommerce-jetpack' ),
-			'<code>' . '[wcj_selector selector_type="country"]' . '</code>' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+			'<code>' . '[wcj_selector selector_type="country"]' . '</code>' ) . '<br>' . apply_filters( 'booster_get_message', '', 'desc' ),
 		'id'       => 'wcj_product_by_country_selection_method',
 		'default'  => 'by_ip',
 		'type'     => 'select',
@@ -63,6 +63,7 @@ return array(
 			'manual' => __( 'Manually', 'woocommerce-jetpack' ),
 		),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'css'      => 'min-width:250px;',
 	),
 	array(
 		'type'     => 'sectionend',
@@ -75,9 +76,9 @@ return array(
 	),
 	array(
 		'title'    => __( 'Country List', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This option sets which countries will be added to list in product\'s edit page.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This option sets which countries will be added to list in product\'s edit page. Possible values: "All countries" or "WooCommerce selling locations".', 'woocommerce-jetpack' ),
 		'desc'     => sprintf( __( 'If "WooCommerce selling locations" option is selected, country list will be set by <a href="%s">WooCommerce > Settings > General > Selling location(s)</a>.', 'woocommerce-jetpack' ),
-			admin_url( 'admin.php?page=wc-settings' ) ),
+			admin_url( 'admin.php?page=wc-settings' ) ) . '<br>' . apply_filters( 'booster_get_message', '', 'desc' ),
 		'id'       => 'wcj_product_by_country_country_list',
 		'default'  => 'all',
 		'type'     => 'select',
@@ -85,10 +86,12 @@ return array(
 			'all' => __( 'All countries', 'woocommerce-jetpack' ),
 			'wc'  => __( 'WooCommerce selling locations', 'woocommerce-jetpack' ),
 		),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'css'      => 'min-width:250px;',
 	),
 	array(
 		'title'    => __( 'Visibility Method', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This option sets how do you want to set product\'s visibility: by setting visible countries, setting invisible countries, or setting both.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This option sets how do you want to set product\'s visibility. Possible values: "Set visible countries", "Set invisible countries" or "Set both".', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_by_country_visibility_method',
 		'default'  => 'visible',
 		'type'     => 'select',
@@ -97,8 +100,9 @@ return array(
 			'invisible' => __( 'Set invisible countries', 'woocommerce-jetpack' ),
 			'both'      => __( 'Set both', 'woocommerce-jetpack' ),
 		),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => '<br>' . apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'css'      => 'min-width:250px;',
 	),
 	array(
 		'title'    => __( 'Admin Products List Column', 'woocommerce-jetpack' ),
