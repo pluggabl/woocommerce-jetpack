@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: https://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 3.1.1-dev
+Version: 3.1.1
 Author: Algoritmika Ltd
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
@@ -74,7 +74,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.1.1-dev-201709161843';
+	public $version = '3.1.1';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -179,9 +179,15 @@ final class WC_Jetpack {
 			global $pagenow;
 			if ( 'error' === $notice_type || 'plugins.php' === $pagenow ) {
 				$class   = 'notice notice-' . $notice_type;
-				$message = sprintf(
-					__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin. Please visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
-					'https://booster.io/my-account/?utm_source=plus_update'
+				$message = ( 'error' === $notice_type ?
+					sprintf(
+						__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin. Visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
+						'https://booster.io/my-account/?utm_source=plus_update'
+					) :
+					sprintf(
+						__( 'There is new version of <strong>Booster Plus for WooCommerce</strong> plugin available. We recommend upgrading. Please visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
+						'https://booster.io/my-account/?utm_source=plus_update'
+					)
 				);
 				echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
 			}

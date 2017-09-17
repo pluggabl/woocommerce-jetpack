@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 3.1.0
+Stable tag: 3.1.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -167,19 +167,21 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.1 - 16/09/2017 =
-!	* Dev - Version message added.
-	* Dev - `WCJ_Module` - `create_meta_box()` - `show_value` option added.
-	* Dev - `WCJ_Module` - `create_meta_box()` - `class` option added.
-D	* Dev - Shortcodes - General - `[wcj_current_currency_code]` and `[wcj_current_currency_symbol]` shortcodes added.
-D	* Dev - Shortcodes - Products - `[wcj_product_you_save]` - `multiply_by` attribute added.
-	* Fix - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option fixed (`disabled`).
-D	* Dev - PRICES & CURRENCIES - Product Price by Formula - Settings restyled.
-D	* Dev - PRODUCTS - Product Visibility by Country - Admin Options - "Visibility Method" option added.
-D	* Dev - PRODUCTS - Product Visibility by Country - Admin Options - "Country List" option added.
-D	* Dev - PRODUCTS - Related Products - Hide - "Include/Exclude Categories/Tags/Products" options added.
-	* Fix - PRODUCTS - Related Products - "Clear all products transients" button - `post_status` error fixed.
-	* Fix - PDF INVOICING & PACKING SLIPS - General - "Do not create if order total equals zero" fixed (for "Invoice").
+= 3.1.1 - 17/09/2017 =
+* Dev - Version message added.
+* Dev - `WCJ_Module` - `create_meta_box()` - `show_value` option added.
+* Dev - `WCJ_Module` - `create_meta_box()` - `class` option added.
+* Dev - Functions - Order - `[wcj_get_order_id]` - Check added (`is_object( $_order )`).
+* Dev - Shortcodes - General - `[wcj_current_currency_code]` and `[wcj_current_currency_symbol]` shortcodes added.
+* Dev - Shortcodes - Products - `[wcj_product_you_save]` - `multiply_by` attribute added.
+* Fix - PRICES & CURRENCIES - Product Price by Formula - "Enable Price Calculation By Formula For All Products" option fixed (`disabled`).
+* Dev - PRICES & CURRENCIES - Product Price by Formula - Settings restyled.
+* Dev - PRODUCTS - Product Visibility by Country - Admin Options - "Visibility Method" option added.
+* Dev - PRODUCTS - Product Visibility by Country - Admin Options - "Country List" option added.
+* Dev - PRODUCTS - Related Products - Hide - "Include/Exclude Categories/Tags/Products" options added.
+* Fix - PRODUCTS - Related Products - "Clear all products transients" button - `post_status` error fixed.
+* Fix - PDF INVOICING & PACKING SLIPS - General - "Do not create if order total equals zero" fixed (for "Invoice").
+* Dev - PDF INVOICING & PACKING SLIPS - Emails - `add_pdf_invoice_email_attachment()` - Check added (`is_object( $order )`).
 
 = 3.1.0 - 11/09/2017 =
 * Dev - Shortcodes - `visibility` attribute - `wrong_user_text` attribute set to empty string by default now; `wrong_user_text_not_logged_in` attribute added (defaults to empty string).

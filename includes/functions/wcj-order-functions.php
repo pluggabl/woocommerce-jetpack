@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Order
  *
- * @version 3.1.0
+ * @version 3.1.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -37,10 +37,13 @@ if ( ! function_exists( 'wcj_get_order_id' ) ) {
 	/**
 	 * wcj_get_order_id.
 	 *
-	 * @version 2.7.0
+	 * @version 3.1.1
 	 * @since   2.7.0
 	 */
 	function wcj_get_order_id( $_order ) {
+		if ( ! $_order || ! is_object( $_order ) ) {
+			return 0;
+		}
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ) ? $_order->id : $_order->get_id();
 	}
 }
