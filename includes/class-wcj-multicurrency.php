@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.1.0
+ * @version 3.1.2
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -45,7 +45,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.2
 	 */
 	function add_hooks() {
 		// Session
@@ -72,6 +72,17 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 			// "WooCommerce Product Add-ons" plugin
 			add_filter( 'get_product_addons', array( $this, 'change_price_addons' ) );
+
+			// Additional Price Filters
+			$this->additional_price_filters = get_option( 'wcj_multicurrency_switcher_additional_price_filters', '' );
+			if ( ! empty( $this->additional_price_filters ) ) {
+				$this->additional_price_filters = array_map( 'trim', explode( PHP_EOL, $this->additional_price_filters ) );
+				foreach ( $this->additional_price_filters as $additional_price_filter ) {
+					add_filter( $additional_price_filter, array( $this, 'change_price' ), PHP_INT_MAX - 1, 2 );
+				}
+			} else {
+				$this->additional_price_filters = array();
+			}
 		}
 	}
 
@@ -184,7 +195,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.7.0
+	 * @version 3.1.2
 	 */
 	function change_price( $price, $_product ) {
 
@@ -204,7 +215,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 				if ( 'woocommerce_get_price_including_tax' == $_current_filter || 'woocommerce_get_price_excluding_tax' == $_current_filter ) {
 					return wcj_get_product_display_price( $_product );
 
-				} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER == $_current_filter || 'woocommerce_variation_prices_price' == $_current_filter || 'woocommerce_product_variation_get_price' == $_current_filter ) {
+				} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER == $_current_filter || 'woocommerce_variation_prices_price' == $_current_filter || 'woocommerce_product_variation_get_price' == $_current_filter || in_array( $_current_filter, $this->additional_price_filters ) ) {
 					$sale_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
 					return ( '' != $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
 

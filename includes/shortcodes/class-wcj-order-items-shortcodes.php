@@ -666,11 +666,11 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'columns_styles'     => $columns_styles,
 		);
 		if ( '' != $atts['insert_page_break'] ) {
-			$page_breaks = explode ( '|', $atts['insert_page_break'] );
-			$data_size = count( $data );
+			$page_breaks  = explode ( '|', $atts['insert_page_break'] );
+			$data_size    = count( $data );
 			$slice_offset = 0;
-			$html = '';
-			$slices = 0;
+			$html         = '';
+			$slices       = 0;
 			while ( $slice_offset < $data_size ) {
 				if ( 0 != $slice_offset ) {
 					$html .= '<tcpdf method="AddPage" />';

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.1.0
+ * @version 3.1.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.2
 	 */
 	function __construct() {
 
@@ -63,6 +63,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_taxes_html',
 			'wcj_order_time',
 			'wcj_order_total',
+			'wcj_order_total_after_refund',
 			'wcj_order_total_by_tax_class',
 			'wcj_order_total_discount',
 			'wcj_order_total_excl_shipping',
@@ -77,6 +78,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_shipping_refunded',
 			'wcj_order_total_refunded',
 			'wcj_order_total_tax',
+			'wcj_order_total_tax_after_refund',
 			'wcj_order_total_tax_percent',
 			'wcj_order_total_tax_refunded',
 			'wcj_order_total_weight',
@@ -90,7 +92,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.2
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -123,6 +125,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'columns'                     => '',
 			'price_prefix'                => '',
 			'display_refunded'            => 'yes',
+			'insert_page_break'           => '',
 		), $atts );
 
 		return $modified_atts;
@@ -201,7 +204,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_refunds_table.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.2
 	 * @since   3.1.0
 	 * @todo    add `refund_items_or_reason_or_title` column
 	 * @todo    add `refund_items_quantities` column (`$_item->get_quantity()`)
@@ -242,20 +245,41 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 						break;
 				}
 				$row[] = $cell;
-				$i++;
 			}
+			$i++;
 			$table_data[] = $row;
 		}
-		return ( ! empty( $table_data ) ?
-			wcj_get_table_html(
-				array_merge( array( ( '' == $atts['columns_titles'] ? array() : explode( '|', $atts['columns_titles'] ) ) ), $table_data ),
-				array(
-					'table_class'    => $atts['table_class'],
-					'columns_styles' => ( '' == $atts['columns_styles'] ? array() : explode( '|', $atts['columns_styles'] ) ),
-				)
-			) :
-			''
+		if ( empty( $table_data ) ) {
+			return '';
+		}
+		$table_html_args = array(
+			'table_class'        => $atts['table_class'],
+			'columns_classes'    => array(),
+			'columns_styles'     => ( '' == $atts['columns_styles'] ? array() : explode( '|', $atts['columns_styles'] ) ),
 		);
+		$columns_titles = array( ( '' == $atts['columns_titles'] ? array() : explode( '|', $atts['columns_titles'] ) ) );
+		if ( '' != $atts['insert_page_break'] ) {
+			$page_breaks  = explode ( '|', $atts['insert_page_break'] );
+			$data_size    = count( $table_data );
+			$slice_offset = 0;
+			$html         = '';
+			$slices       = 0;
+			while ( $slice_offset < $data_size ) {
+				if ( 0 != $slice_offset ) {
+					$html .= '<tcpdf method="AddPage" />';
+				}
+				if ( isset( $page_breaks[ $slices ] ) ) {
+					$current_page_break = $page_breaks[ $slices ];
+				}
+				$data_slice    = array_slice( $table_data, $slice_offset, $current_page_break );
+				$html         .= wcj_get_table_html( array_merge( $columns_titles, $data_slice ), $table_html_args );
+				$slice_offset += $current_page_break;
+				$slices++;
+			}
+		} else {
+			$html = wcj_get_table_html( array_merge( $columns_titles, $table_data ), $table_html_args );
+		}
+		return $html;
 	}
 
 	/**
@@ -994,11 +1018,21 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_total_tax.
+	 *
+	 * @version 3.1.2
 	 */
 	function wcj_order_total_tax( $atts ) {
-		$order_total_tax = $this->the_order->get_total_tax();
-		$order_total_tax = apply_filters( 'wcj_order_total_tax', $order_total_tax, $this->the_order );
-		return $this->wcj_price_shortcode( $order_total_tax, $atts );
+		return $this->wcj_price_shortcode( apply_filters( 'wcj_order_total_tax', $this->the_order->get_total_tax(), $this->the_order ), $atts );
+	}
+
+	/**
+	 * wcj_order_total_tax_after_refund.
+	 *
+	 * @version 3.1.2
+	 * @since   3.1.2
+	 */
+	function wcj_order_total_tax_after_refund( $atts ) {
+		return $this->wcj_price_shortcode( ( $this->the_order->get_total_tax() - $this->the_order->get_total_tax_refunded() ), $atts );
 	}
 
 	/**
@@ -1072,12 +1106,25 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_total.
-	 *
-	 * @todo    (maybe) add attribute to deduct refunded (check `get_total_refunded()`, `get_total_tax_refunded()`, `get_total_shipping_refunded()`)
 	 */
 	function wcj_order_total( $atts ) {
 		$order_total = ( true === $atts['excl_tax'] ) ? $this->the_order->get_total() - $this->the_order->get_total_tax() : $this->the_order->get_total();
 		return $this->wcj_price_shortcode( $order_total, $atts );
+	}
+
+	/**
+	 * wcj_order_total_after_refund.
+	 *
+	 * @version 3.1.2
+	 * @since   3.1.2
+	 * @todo    (maybe) `get_total_shipping_refunded()`
+	 */
+	function wcj_order_total_after_refund( $atts ) {
+		$order_total_after_refund = $this->the_order->get_total() - $this->the_order->get_total_refunded();
+		if ( true === $atts['excl_tax'] ) {
+			$order_total_after_refund -= ( $this->the_order->get_total_tax() - $this->the_order->get_total_tax_refunded() );
+		}
+		return $this->wcj_price_shortcode( $order_total_after_refund, $atts );
 	}
 
 	/**

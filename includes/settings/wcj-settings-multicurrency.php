@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 2.8.0
+ * @version 3.1.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    "pretty prices"
@@ -76,6 +76,15 @@ $settings = array(
 		'default'  => '%currency_name% (%currency_symbol%)',
 		'type'     => 'text',
 		'css'      => 'min-width:300px;width:66%;',
+	),
+	array(
+		'title'    => __( 'Advanced: Additional Price Filters', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Add additional price filters here. One per line. Leave blank if not sure.' ),
+		'desc'     => sprintf( __( 'E.g.: %s' ), '<code>' . 'woocommerce_subscriptions_product_price' . '</code>' . ', ' .'<code>' . 'woocommerce_get_price' . '</code>' . '.' ),
+		'id'       => 'wcj_multicurrency_switcher_additional_price_filters',
+		'default'  => '',
+		'type'     => 'textarea',
+		'css'      => 'min-width:300px;height:150px;',
 	),
 	array(
 		'type'     => 'sectionend',

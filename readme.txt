@@ -167,6 +167,14 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.1.2 - 19/09/2017 =
+D	* Fix - Shortcodes - Orders - `[wcj_order_refunds_table]` - `columns` - `refund_number` fixed.
+D	* Dev - Shortcodes - Orders - `[wcj_order_refunds_table]` - `insert_page_break` attribute added.
+D	* Dev - Shortcodes - Orders - `[wcj_order_total_after_refund]` shortcode added.
+D	* Dev - Shortcodes - Orders - `[wcj_order_total_tax_after_refund]` shortcode added.
+	* Dev - Shortcodes - Orders - `[wcj_order_total_tax]` - Code refactoring.
+D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Advanced: Additional Price Filters" option added.
+
 = 3.1.1 - 17/09/2017 =
 * Dev - Version message added.
 * Dev - `WCJ_Module` - `create_meta_box()` - `show_value` option added.
