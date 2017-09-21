@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 3.1.0
+ * @version 3.1.2
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -104,7 +104,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * trigger.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.2
 	 */
 	function trigger( $order_id ) {
 
@@ -114,17 +114,17 @@ class WC_Email_WCJ_Custom extends WC_Email {
 
 		if ( $order_id ) {
 
-			$order = wc_get_order( $order_id );
+			$this->object = wc_get_order( $order_id ); // must be `object` as it's named so in parent class (`WC_Email`). E.g. for attachments.
 
 			if ( $this->customer_email ) {
-				$this->recipient = wcj_get_order_billing_email( $order );
+				$this->recipient = wcj_get_order_billing_email( $this->object );
 			}
 
 			$this->find['order-date']      = '{order_date}';
 			$this->find['order-number']    = '{order_number}';
 
-			$this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( wcj_get_order_date( $order ) ) );
-			$this->replace['order-number'] = $order->get_order_number();
+			$this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( wcj_get_order_date( $this->object ) ) );
+			$this->replace['order-number'] = $this->object->get_order_number();
 
 			global $post;
 			if ( 'woocommerce_checkout_order_processed_notification' === current_filter() ) {
@@ -134,7 +134,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				foreach ( $trigger_hooks as $trigger_hook ) {
 					if ( false !== ( $pos = strpos( $trigger_hook, 'woocommerce_new_order_notification' ) ) ) {
 						$the_status = 'wc-' . substr( $trigger_hook, 35 );
-						if ( 'wc-wcj_any_status' === $the_status || $order->post_status === $the_status ) {
+						if ( 'wc-wcj_any_status' === $the_status || $this->object->post_status === $the_status ) {
 							$is_status_found = true;
 							break;
 						}
@@ -144,7 +144,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 					return;
 				}
 			}
-			$post = ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->post : get_post( $order_id ) );
+			$post = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->object->post : get_post( $order_id ) );
 			setup_postdata( $post );
 		}
 

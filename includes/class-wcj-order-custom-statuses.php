@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 2.8.0
+ * @version 3.1.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.2
 	 * @todo    copy all changes from Custom Order Status plugin
 	 * @todo    `wcj_orders_custom_statuses_processing_and_completed_actions` to Custom Order Status plugin
 	 */
@@ -60,7 +60,45 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_to_processing_and_completed_actions' ), PHP_INT_MAX, 2 );
 			}
 
+			// Is order editable
+			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_is_order_editable', 'no' ) ) {
+				add_filter( 'wc_order_is_editable', array( $this, 'add_custom_order_statuses_to_order_editable' ), PHP_INT_MAX, 2 );
+			}
+
 		}
+	}
+
+	/**
+	 * get_custom_order_statuses.
+	 *
+	 * @version 3.1.2
+	 * @since   3.1.2
+	 */
+	function get_custom_order_statuses( $cut_prefix = false ) {
+		$orders_custom_statuses = get_option( 'wcj_orders_custom_statuses_array', '' );
+		if ( empty( $orders_custom_statuses ) ) {
+			return array();
+		} else {
+			if ( $cut_prefix ) {
+				$orders_custom_statuses_no_prefix = array();
+				foreach( $orders_custom_statuses as $status => $status_name ) {
+					$orders_custom_statuses_no_prefix[ substr( $status, 3 ) ] = $status_name;
+				}
+				return $orders_custom_statuses_no_prefix;
+			} else {
+				return $orders_custom_statuses;
+			}
+		}
+	}
+
+	/**
+	 * add_custom_order_statuses_to_order_editable.
+	 *
+	 * @version 3.1.2
+	 * @since   3.1.2
+	 */
+	function add_custom_order_statuses_to_order_editable( $is_editable, $_order ) {
+		return ( in_array( $_order->get_status(), array_keys( $this->get_custom_order_statuses( true ) ) ) ? true : $is_editable );
 	}
 
 	/**

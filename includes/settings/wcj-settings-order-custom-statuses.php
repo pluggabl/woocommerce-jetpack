@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Order Custom Statuses
  *
- * @version 2.8.0
+ * @version 3.1.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -36,6 +36,13 @@ return array(
 		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_orders_custom_statuses_add_to_reports',
 		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Make Custom Status Orders Editable', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_orders_custom_statuses_is_order_editable',
+		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(

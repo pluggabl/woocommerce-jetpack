@@ -100,6 +100,7 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 	 *
 	 * @version 3.1.0
 	 * @since   2.5.6
+	 * @todo    in `$do_save` - save `current_filter`?
 	 */
 	function wcj_price_by_product_base_currency( $price, $product_id ) {
 		if ( '' == $price ) {

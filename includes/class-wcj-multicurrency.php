@@ -300,20 +300,29 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 2.7.0
+	 * @version 3.1.2
 	 */
 	function change_price_shipping( $package_rates, $package ) {
 		if ( $this->do_revert() ) {
 			return $package_rates;
 		}
-		$currency_exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
-		$modified_package_rates = array();
+		$currency_exchange_rate     = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
+		$modified_package_rates     = array();
+		$is_wc_version_at_least_3_2 = version_compare( WCJ_WC_VERSION, '3.2.0', '>=' );
 		foreach ( $package_rates as $id => $package_rate ) {
 			if ( 1 != $currency_exchange_rate && isset( $package_rate->cost ) ) {
 				$package_rate->cost = $package_rate->cost * $currency_exchange_rate;
 				if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
-					foreach ( $package_rate->taxes as $tax_id => $tax ) {
-						$package_rate->taxes[ $tax_id ] = $package_rate->taxes[ $tax_id ] * $currency_exchange_rate;
+					if ( $is_wc_version_at_least_3_2 ) {
+						$rate_taxes = $package_rate->taxes;
+						foreach ( $rate_taxes as &$tax ) {
+							$tax *= $currency_exchange_rate;
+						}
+						$package_rate->taxes = $rate_taxes;
+					} else {
+						foreach ( $package_rate->taxes as $tax_id => $tax ) {
+							$package_rate->taxes[ $tax_id ] = $package_rate->taxes[ $tax_id ] * $currency_exchange_rate;
+						}
 					}
 				}
 			}
