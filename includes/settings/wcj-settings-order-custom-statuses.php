@@ -44,6 +44,8 @@ return array(
 		'id'       => 'wcj_orders_custom_statuses_is_order_editable',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( '"Processing" and "Complete" Action Buttons', 'woocommerce-jetpack' ),

@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 3.1.1
+Stable tag: 3.1.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -167,16 +167,20 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.2 - 21/09/2017 =
--!	* Dev - WooCommerce v3.2 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `change_price_shipping()` - Taxes.
-D	* Fix - Shortcodes - Orders - `[wcj_order_refunds_table]` - `columns` - `refund_number` fixed.
-D	* Dev - Shortcodes - Orders - `[wcj_order_refunds_table]` - `insert_page_break` attribute added.
-D	* Dev - Shortcodes - Orders - `[wcj_order_total_after_refund]` shortcode added.
-D	* Dev - Shortcodes - Orders - `[wcj_order_total_tax_after_refund]` shortcode added.
-	* Dev - Shortcodes - Orders - `[wcj_order_total_tax]` - Code refactoring.
-D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Advanced: Additional Price Filters" option added.
-$D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Make Custom Status Orders Editable" option added.
-	* Fix - EMAILS & MISC. - Custom Emails - Email attachments fixed.
+= 3.1.2 - 22/09/2017 =
+* Dev - WooCommerce v3.2 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `change_price_shipping()` - Taxes.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter - `order` argument added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `hide_zero_prices` - attribute added.
+* Fix - Shortcodes - Orders - `[wcj_order_refunds_table]` - `columns` - `refund_number` fixed.
+* Dev - Shortcodes - Orders - `[wcj_order_refunds_table]` - `insert_page_break` attribute added.
+* Dev - Shortcodes - Orders - `[wcj_order_total_after_refund]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_total_tax_after_refund]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_total_tax]` - Code refactoring.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Admin settings restyled.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Advanced: Additional Price Filters" option added.
+* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Advanced: Saved Calculated Products Prices - Filter bug fixed.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Make Custom Status Orders Editable" option added.
+* Fix - EMAILS & MISC. - Custom Emails - Email attachments fixed.
 
 = 3.1.1 - 17/09/2017 =
 * Dev - Version message added.

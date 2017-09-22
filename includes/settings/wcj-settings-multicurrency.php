@@ -10,7 +10,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$currency_from = get_woocommerce_currency();
+$currency_from  = get_woocommerce_currency();
 $all_currencies = wcj_get_currencies_names_and_symbols();
 $settings = array(
 	array(
@@ -71,11 +71,11 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Currency Switcher Template', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Replaced values:', 'woocommerce-jetpack' ) . ' ' . '%currency_name%, %currency_symbol%, %currency_code%.',
+		'desc'     => wcj_message_replaced_values( array( '%currency_name%', '%currency_symbol%', '%currency_code%' ) ),
 		'id'       => 'wcj_multicurrency_switcher_template',
 		'default'  => '%currency_name% (%currency_symbol%)',
 		'type'     => 'text',
-		'css'      => 'min-width:300px;width:66%;',
+		'class'    => 'widefat',
 	),
 	array(
 		'title'    => __( 'Advanced: Additional Price Filters', 'woocommerce-jetpack' ),

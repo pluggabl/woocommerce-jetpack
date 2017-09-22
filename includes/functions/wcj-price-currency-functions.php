@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.1.0
+ * @version 3.1.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -98,17 +98,22 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 	/**
 	 * wcj_price_by_product_base_currency.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.2
 	 * @since   2.5.6
-	 * @todo    in `$do_save` - save `current_filter`?
 	 */
 	function wcj_price_by_product_base_currency( $price, $product_id ) {
 		if ( '' == $price ) {
 			return $price;
 		}
 		$do_save = ( 'yes' === get_option( 'wcj_multicurrency_base_price_save_prices', 'no' ) );
-		if ( $do_save && isset( WCJ()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ] ) ) {
-			return WCJ()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ];
+		if ( $do_save ) {
+			$_current_filter = current_filter();
+			if ( '' == $_current_filter ) {
+				$_current_filter = 'wcj_filter__none';
+			}
+		}
+		if ( $do_save && isset( WCJ()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] ) ) {
+			return WCJ()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ];
 		}
 		$multicurrency_base_price_currency = get_post_meta( $product_id, '_' . 'wcj_multicurrency_base_price_currency', true );
 		if ( '' != $multicurrency_base_price_currency ) {
@@ -118,7 +123,7 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 					$_price = round( $_price, get_option( 'wcj_multicurrency_base_price_round_precision', get_option( 'woocommerce_price_num_decimals' ) ) );
 				}
 				if ( $do_save ) {
-					WCJ()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ] = $_price;
+					WCJ()->modules['multicurrency_base_price']->calculated_products_prices[ $product_id ][ $_current_filter ] = $_price;
 				}
 				return $_price;
 			}

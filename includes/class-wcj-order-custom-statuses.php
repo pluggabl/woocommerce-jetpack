@@ -61,7 +61,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			}
 
 			// Is order editable
-			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_is_order_editable', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_orders_custom_statuses_is_order_editable', 'no' ) ) ) {
 				add_filter( 'wc_order_is_editable', array( $this, 'add_custom_order_statuses_to_order_editable' ), PHP_INT_MAX, 2 );
 			}
 

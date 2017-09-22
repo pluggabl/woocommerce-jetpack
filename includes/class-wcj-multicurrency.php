@@ -16,7 +16,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.2
 	 */
 	function __construct() {
 
@@ -24,7 +24,10 @@ class WCJ_Multicurrency extends WCJ_Module {
 		$this->short_desc = __( 'Multicurrency (Currency Switcher)', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add multiple currencies (currency switcher) to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-multicurrency-currency-switcher';
-		$this->extra_desc = __( 'After setting currencies in the Currencies Options below, use <em>Booster - Multicurrency Switcher</em> widget, or <em>[wcj_currency_select_drop_down_list]</em> shortcode. If you want to insert switcher in your PHP code, just use <em>echo do_shortcode( \'[wcj_currency_select_drop_down_list]\' );</em>', 'woocommerce-jetpack' );
+		$this->extra_desc = sprintf( __( 'After setting currencies in the Currencies Options section below, use %s <strong>widget</strong>, or %s <strong>shortcode</strong>. If you want to insert switcher in your <strong>PHP code</strong>, just use %s code.', 'woocommerce-jetpack' ),
+			'<em>' . __( 'Booster - Multicurrency Switcher', 'woocommerce-jetpack' ) . '</em>',
+			'<code>[wcj_currency_select_drop_down_list]</code>',
+			'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_currency_select_drop_down_list]\'&nbsp;);</code>' );
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

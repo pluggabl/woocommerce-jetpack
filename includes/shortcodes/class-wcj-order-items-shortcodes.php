@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 3.1.0
+ * @version 3.1.2
  * @author  Algoritmika Ltd.
  */
 
@@ -27,7 +27,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.2
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -59,6 +59,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'multiply_cost'                       => 1,
 			'multiply_profit'                     => 1,
 			'refunded_items_table'                => 'no',
+			'hide_zero_prices'                    => 'no',
 		), $atts );
 		return $modified_atts;
 	}
@@ -104,9 +105,12 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_price_shortcode.
 	 *
-	 * @version 2.7.0
+	 * @version 3.1.2
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
+		if ( 'yes' === $atts['hide_zero_prices'] && 0 == $raw_price ) {
+			return '';
+		}
 		return wcj_price( $atts['price_prefix'] . $raw_price, wcj_get_order_currency( $this->the_order ), $atts['hide_currency'] );
 	}
 
@@ -273,7 +277,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.2
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
 
@@ -651,6 +655,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					'item_id'      => $item_id,
 					'item_counter' => $item_counter,
 					'product'      => $the_product,
+					'order'        => $this->the_order,
 				) );
 			}
 		}
