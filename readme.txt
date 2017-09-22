@@ -26,7 +26,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Multicurrency (Currency Switcher)* - Add multiple currencies (currency switcher) to WooCommerce.
 * *Multicurrency Product Base Price* - Enter prices for WooCommerce products in different currencies.
 * *Offer Your Price* - Let your customers to suggest their price for products in WooCommerce.
-* *Price Formats* - Set different WooCommerce price formats for different currencies.
+* *Price Formats* - Set different WooCommerce price formats for different currencies. Set general price format options.
 * *Price by User Role* - Display WooCommerce products prices by user roles.
 * *Prices and Currencies by Country* - Change WooCommerce product price and currency automatically by customer's country.
 * *Product Open Pricing (Name Your Price)* - Let your WooCommerce store customers enter price for the product manually.
@@ -166,6 +166,11 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 3.1.3 - 22/09/2017 =
+D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Admin settings restyled.
+D	* Dev - PRICES & CURRENCIES - Price Formats - "Trim Zeros in Prices" option added.
+D	* Dev - PRICES & CURRENCIES - Price Formats - Price Formats by Currency (or WPML) - "Enable section" option added.
 
 = 3.1.2 - 22/09/2017 =
 * Dev - WooCommerce v3.2 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `change_price_shipping()` - Taxes.

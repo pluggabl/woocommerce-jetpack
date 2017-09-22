@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price Formats
  *
- * @version 2.8.0
+ * @version 3.1.3
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -16,19 +16,26 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.3
 	 * @since   2.5.2
 	 */
 	function __construct() {
 
 		$this->id         = 'price_formats';
 		$this->short_desc = __( 'Price Formats', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set different WooCommerce price formats for different currencies.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set different WooCommerce price formats for different currencies. Set general price format options.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-price-formats';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_filter( 'wc_price_args', array( $this, 'price_format' ), PHP_INT_MAX );
+			// Trim Zeros
+			if ( 'yes' === get_option( 'wcj_price_formats_general_trim_zeros', 'no' ) ) {
+				add_filter( 'woocommerce_price_trim_zeros', '__return_true', PHP_INT_MAX );
+			}
+			// Price Formats by Currency (or WPML)
+			if ( 'yes' === get_option( 'wcj_price_formats_by_currency_enabled', 'yes' ) ) {
+				add_filter( 'wc_price_args', array( $this, 'price_format' ), PHP_INT_MAX );
+			}
 		}
 	}
 

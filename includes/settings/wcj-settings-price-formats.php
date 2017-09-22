@@ -2,18 +2,42 @@
 /**
  * Booster for WooCommerce - Settings - Price Formats
  *
- * @version 2.8.0
+ * @version 3.1.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    (maybe) add `desc_tip` to `wcj_price_formats_general_trim_zeros`
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $settings = array(
 	array(
-		'title'    => __( 'Formats', 'woocommerce-jetpack' ),
+		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_price_formats_general_options',
+	),
+	array(
+		'title'    => __( 'Trim Zeros in Prices', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_price_formats_general_trim_zeros',
+		'default'  => 'no',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_price_formats_general_options',
+	),
+	array(
+		'title'    => __( 'Price Formats by Currency (or WPML)', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_price_formats_options',
+	),
+	array(
+		'title'    => __( 'Price Formats by Currency (or WPML)', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'type'     => 'checkbox',
+		'id'       => 'wcj_price_formats_by_currency_enabled',
+		'default'  => 'yes',
 	),
 	array(
 		'title'    => __( 'Total Number', 'woocommerce-jetpack' ),
