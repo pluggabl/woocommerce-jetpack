@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 3.0.0
+ * @version 3.1.3
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -172,6 +172,7 @@ return apply_filters( 'wcj_modules', array(
 			'wpml',
 			'custom_css',
 			'custom_js',
+			'track_users',
 			'product_info',
 		),
 	),

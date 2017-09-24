@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 2.9.0
+ * @version 3.1.3
  * @author  Algoritmika Ltd.
  */
 
@@ -300,13 +300,17 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku_for_new_product.
 	 *
-	 * @version 2.9.0
+	 * @version 3.1.3
 	 */
 	function set_sku_for_new_product( $post_ID, $post, $update ) {
 		if ( 'product' != $post->post_type ) {
 			return;
 		}
-		if ( false === $update ) {
+		$do_generate_only_on_first_publish = ( 'yes' === get_option( 'wcj_sku_new_products_generate_only_on_publish', 'no' ) );
+		if (
+			( false === $update && ! $do_generate_only_on_first_publish ) ||
+			( $do_generate_only_on_first_publish && 'publish' === $post->post_status && '' == get_post_meta( $post_ID, '_sku', true ) )
+		) {
 			$this->maybe_get_sequential_counters();
 			$this->set_sku_with_variable( $post_ID, false );
 			$this->maybe_save_sequential_counters();

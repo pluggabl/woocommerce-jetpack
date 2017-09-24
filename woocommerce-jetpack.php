@@ -64,7 +64,7 @@ require_once( 'includes/constants/wcj-constants.php' );
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 3.1.1
+ * @version 3.1.3
  */
 final class WC_Jetpack {
 
@@ -74,7 +74,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.1.3-dev-201709222041';
+	public $version = '3.1.3-dev-201709241626';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -333,7 +333,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 3.0.0
+	 * @version 3.1.3
 	 */
 	function include_modules() {
 		$modules_files = array(
@@ -415,6 +415,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-currency-exchange-rates.php',
 			'includes/class-wcj-price-formats.php',
 			'includes/class-wcj-general.php',
+			'includes/class-wcj-track-users.php',
 			'includes/class-wcj-breadcrumbs.php',
 			'includes/class-wcj-url-coupons.php',
 			'includes/class-wcj-admin-bar.php',

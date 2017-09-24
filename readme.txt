@@ -167,10 +167,12 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.3 - 22/09/2017 =
+= 3.1.3 - 24/09/2017 =
 D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Admin settings restyled.
 D	* Dev - PRICES & CURRENCIES - Price Formats - "Trim Zeros in Prices" option added.
 D	* Dev - PRICES & CURRENCIES - Price Formats - Price Formats by Currency (or WPML) - "Enable section" option added.
+~D	* Dev - PRODUCTS - SKU - More Options - "Generate SKU for New Products Only on First Publish" option added.
+!D	* Dev - EMAILS & MISC. - User Tracking - Initial module release (moved from "General" module).
 
 = 3.1.2 - 22/09/2017 =
 * Dev - WooCommerce v3.2 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `change_price_shipping()` - Taxes.

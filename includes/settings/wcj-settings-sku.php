@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - SKU
  *
- * @version 2.9.0
+ * @version 3.1.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    tags (check SKU plugin); template: '{category_prefix}{tag_prefix}{prefix}{sku_number}{suffix}{tag_suffix}{category_suffix}{variation_suffix}'
@@ -151,6 +151,13 @@ $settings = array_merge( $settings, array(
 		'desc_tip' => __( 'Alternatively you can use Autogenerate SKUs tool.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_sku_new_products_generate_enabled',
 		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Generate SKU for New Products Only on First Publish', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_sku_new_products_generate_only_on_publish',
+		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
