@@ -217,6 +217,23 @@ $settings = array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_general_user_role_changer_options',
 	),
+	array(
+		'title'    => __( 'Coupons Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_coupons_options',
+	),
+	array(
+		'title'    => __( 'Generate Coupon Code Automatically', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'When enabled, this will generate coupon code automatically when adding new coupon.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_coupons_code_generator_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_coupons_options',
+	),
 	/*
 	array(
 		'title'    => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),

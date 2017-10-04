@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Global Discount
  *
- * @version 3.1.0
+ * @version 3.1.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -48,6 +48,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_glo
 		),
 		array(
 			'title'    => __( 'Enabled', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Enabled/disables the discount group.', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_global_discount_sale_enabled_' . $i,
 			'default'  => 'yes',
@@ -55,6 +56,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_glo
 		),
 		array(
 			'title'    => __( 'Type', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Can be fixed or percent.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_global_discount_sale_coefficient_type_' . $i,
 			'default'  => 'percent',
 			'type'     => 'select',
@@ -73,6 +75,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_glo
 		),
 		array(
 			'title'    => __( 'Product Scope', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Possible values: all products, only products that are already on sale, only products that are not on sale.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_global_discount_sale_product_scope_' . $i,
 			'default'  => 'all',
 			'type'     => 'select',

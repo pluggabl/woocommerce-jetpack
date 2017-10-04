@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 2.9.0
+ * @version 3.1.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Settings_Custom_Fields {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.1.3
 	 * @since   2.8.0
 	 */
 	function __construct() {
@@ -29,6 +29,17 @@ class WCJ_Settings_Custom_Fields {
 		add_action( 'woocommerce_admin_field_custom_number',                    array( $this, 'output_custom_number' ) );
 		add_action( 'woocommerce_admin_field_custom_link',                      array( $this, 'output_custom_link' ) );
 		add_action( 'woocommerce_admin_field_module_tools',                     array( $this, 'output_module_tools' ) );
+		add_filter( 'woocommerce_admin_settings_sanitize_option',               array( $this, 'maybe_unclean_field' ), PHP_INT_MAX, 3 );
+	}
+
+	/**
+	 * maybe_unclean_field.
+	 *
+	 * @version 3.1.3
+	 * @since   3.1.3
+	 */
+	function maybe_unclean_field( $value, $option, $raw_value ) {
+		return ( isset( $option['wcj_raw'] ) && $option['wcj_raw'] ? $raw_value : $value );
 	}
 
 	/**

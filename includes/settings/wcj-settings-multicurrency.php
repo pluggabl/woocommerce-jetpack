@@ -20,6 +20,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Exchange Rates Updates', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Select how you want currency exchange rates to be updated. Possible options are: manually or automatically via Currency Exchange Rates module.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_exchange_rate_update_auto',
 		'default'  => 'manual',
 		'type'     => 'select',
@@ -36,13 +37,14 @@ $settings = array(
 	array(
 		'title'    => __( 'Multicurrency on per Product Basis', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This will add meta boxes in product edit.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If you enable this option, you will be able to enter prices for products in different currencies directly (i.e. without exchange rates). This will add meta boxes in product edit.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_per_product_enabled',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Revert Currency to Default on Checkout', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you want prices to revert back to your shop\'s default currency, when customer reaches the checkout page.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_revert',
 		'default'  => 'no',
@@ -50,7 +52,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Rounding', 'woocommerce-jetpack' ),
-		'desc'     => __( 'If using exchange rates, choose rounding here.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If using exchange rates, choose rounding here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_rounding',
 		'default'  => 'no_round',
 		'type'     => 'select',
@@ -63,7 +65,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Rounding Precision', 'woocommerce-jetpack' ),
-		'desc'     => __( 'If rounding enabled, set precision here.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If rounding is enabled, set rounding precision here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_rounding_precision',
 		'default'  => absint( get_option( 'woocommerce_price_num_decimals', 2 ) ),
 		'type'     => 'number',
@@ -71,6 +73,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Currency Switcher Template', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set how you want currency switcher to be displayed on frontend.', 'woocommerce-jetpack' ),
 		'desc'     => wcj_message_replaced_values( array( '%currency_name%', '%currency_symbol%', '%currency_code%' ) ),
 		'id'       => 'wcj_multicurrency_switcher_template',
 		'default'  => '%currency_name% (%currency_symbol%)',
@@ -98,6 +101,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Total Currencies', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Press Save changes after setting this option, so new settings fields will be added.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_total_number',
 		'default'  => 2,
 		'type'     => 'custom_number',
@@ -156,7 +160,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'title'    => __( 'Roles', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Save settings after you change this option. Leave blank to disable.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save settings after you change this option. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'type'     => 'multiselect',
 		'id'       => 'wcj_multicurrency_role_defaults_roles',
 		'default'  => '',

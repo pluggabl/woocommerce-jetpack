@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - URL Coupons
  *
- * @version 2.9.1
+ * @version 3.1.3
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -43,6 +43,7 @@ $settings = array(
 	),
 	array(
 		'desc'     => __( 'Custom Local URL', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If redirect to custom local URL is selected, set URL here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_url_coupons_redirect_custom_url',
 		'default'  => '',
 		'type'     => 'text',

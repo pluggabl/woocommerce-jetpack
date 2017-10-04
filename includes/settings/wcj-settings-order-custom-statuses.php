@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Order Custom Statuses
  *
- * @version 3.1.2
+ * @version 3.1.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -27,6 +27,7 @@ return array(
 	array(
 		'title'    => __( 'Add All Statuses to Admin Order Bulk Actions', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If you wish to add custom statuses to admin Orders page bulk actions, enable the checkbox here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_orders_custom_statuses_add_to_bulk_actions',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
@@ -34,6 +35,7 @@ return array(
 	array(
 		'title'    => __( 'Add Custom Statuses to Admin Reports', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If you wish to add custom statuses to admin reports, enable the checkbox here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_orders_custom_statuses_add_to_reports',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
@@ -41,10 +43,11 @@ return array(
 	array(
 		'title'    => __( 'Make Custom Status Orders Editable', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'By default orders with custom statuses are not editable (same like with standard WooCommerce Completed status). If you wish to make custom status orders editable, enable the checkbox here.', 'woocommerce-jetpack' ) . ' ' .
+			apply_filters( 'booster_get_message', '', 'desc' ),
 		'id'       => 'wcj_orders_custom_statuses_is_order_editable',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
@@ -65,18 +68,19 @@ return array(
 	array(
 		'title'    => __( 'Add Custom Statuses to Admin Order List Action Buttons', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If you wish to add custom statuses buttons to the admin Orders page action buttons (Actions column), enable the checkbox here.', 'woocommerce-jetpack' ) . ' ' .
+			apply_filters( 'booster_get_message', '', 'desc' ),
 		'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
 		'desc'     => __( 'Enable Colors', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Choose if you want the buttons to have colors.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
 		'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions_colored',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(

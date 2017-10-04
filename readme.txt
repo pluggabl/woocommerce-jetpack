@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 3.1.2
+Stable tag: 3.1.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -127,6 +127,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
 * *URL Coupons* - WooCommerce URL coupons.
+* *User Tracking* - Track your users in WooCommerce.
 
 = Feedback =
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!
@@ -167,12 +168,23 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.3 - 24/09/2017 =
-D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Admin settings restyled.
-D	* Dev - PRICES & CURRENCIES - Price Formats - "Trim Zeros in Prices" option added.
-D	* Dev - PRICES & CURRENCIES - Price Formats - Price Formats by Currency (or WPML) - "Enable section" option added.
-~D	* Dev - PRODUCTS - SKU - More Options - "Generate SKU for New Products Only on First Publish" option added.
-!D	* Dev - EMAILS & MISC. - User Tracking - Initial module release (moved from "General" module).
+= 3.1.3 - 04/10/2017 =
+* Dev - PRICES & CURRENCIES - Global Discount - Admin settings descriptions updated.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Admin settings restyled; descriptions updated.
+* Dev - PRICES & CURRENCIES - Price Formats - Space not saving in thousand and decimal separator admin settings fields fixed.
+* Dev - PRICES & CURRENCIES - Price Formats - "Trim Zeros in Prices" option added.
+* Dev - PRICES & CURRENCIES - Price Formats - Price Formats by Currency (or WPML) - "Enable section" option added.
+* Dev - PRODUCTS - SKU - More Options - "Generate SKU for New Products Only on First Publish" option added.
+* Dev - PRODUCTS - SKU - Admin settings restyled.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Admin settings descriptions updated.
+* Dev - EMAILS & MISC. - General - Coupons - "Generate Coupon Code Automatically" option added.
+* Dev - EMAILS & MISC. - URL Coupons - Admin settings descriptions updated.
+* Dev - EMAILS & MISC. - User Tracking - Initial module release (moved from "General" module).
+* Dev - Functions - User Roles - `wcj_is_user_role()` - `super_admin` added if checking for `administrator`.
+* Dev - Plugin update checker - "Check site key now" button added.
+* Dev - Plugin update checker - "Try again" links added.
+* Dev - Plugin update checker - Do not overwrite valid status with server error status.
+* Dev - `wcj_full_pack` filter added.
 
 = 3.1.2 - 22/09/2017 =
 * Dev - WooCommerce v3.2 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `change_price_shipping()` - Taxes.

@@ -82,6 +82,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_pri
 			'default'  => wc_get_price_thousand_separator(),
 			'type'     => 'text',
 			'css'      => 'width:300px;',
+			'wcj_raw'  => true,
 		),
 		array(
 			'desc'     => __( 'Decimal Separator', 'woocommerce-jetpack' ),
@@ -89,6 +90,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_pri
 			'default'  => wc_get_price_decimal_separator(),
 			'type'     => 'text',
 			'css'      => 'width:300px;',
+			'wcj_raw'  => true,
 		),
 		array(
 			'desc'     => __( 'Number of Decimals', 'woocommerce-jetpack' ),

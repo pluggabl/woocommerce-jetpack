@@ -23,7 +23,8 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'desc_tip' => __( 'Select which info show in admin dashboard widget.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Info', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Select which info to show in admin dashboard widget.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_track_users_by_country_widget_scopes',
 		'default'  => array( '1', '28' ),
 		'type'     => 'multiselect',
@@ -31,7 +32,8 @@ return array(
 		'options'  => $this->track_users_scopes,
 	),
 	array(
-		'desc_tip' => __( 'Select which how many top countries to show.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Top Countries', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Select how many top countries to show.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_track_users_by_country_widget_top_count',
 		'default'  => 10,
 		'type'     => 'number',

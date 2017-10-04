@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - User Roles
  *
- * @version 2.9.0
+ * @version 3.1.3
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -133,12 +133,12 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 	/**
 	 * wcj_is_user_role.
 	 *
-	 * @version 2.9.0
+	 * @version 3.1.3
 	 * @since   2.5.0
 	 * @return  bool
 	 */
 	function wcj_is_user_role( $user_role, $user_id = 0 ) {
-		$_user = ( 0 == $user_id ) ? wp_get_current_user() : get_user_by( 'id', $user_id );
+		$_user = ( 0 == $user_id ? wp_get_current_user() : get_user_by( 'id', $user_id ) );
 		if ( ! isset( $_user->roles ) || empty( $_user->roles ) ) {
 			$_user->roles = array( 'guest' );
 		}
@@ -146,10 +146,25 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 			return false;
 		}
 		if ( is_array( $user_role ) ) {
+			if ( in_array( 'administrator', $user_role ) ) {
+				$user_role[] = 'super_admin';
+			}
 			$_intersect = array_intersect( $user_role, $_user->roles );
 			return ( ! empty( $_intersect ) );
 		} else {
-			return ( in_array( $user_role, $_user->roles ) );
+			if ( 'administrator' == $user_role ) {
+				return ( in_array( 'administrator', $_user->roles ) || in_array( 'super_admin', $_user->roles ) );
+			} else {
+				return ( in_array( $user_role, $_user->roles ) );
+			}
 		}
+		/* if ( ! is_array( $user_role ) ) {
+			$user_role = array( $user_role );
+		}
+		if ( in_array( 'administrator', $user_role ) ) {
+			$user_role[] = 'super_admin';
+		}
+		$_intersect = array_intersect( $user_role, $_user->roles );
+		return ( ! empty( $_intersect ) ); */
 	}
 }
