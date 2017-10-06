@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by User Role
  *
- * @version 2.8.0
+ * @version 3.1.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -35,13 +35,13 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module {
 	/**
 	 * available_shipping_methods.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.4
 	 * @since   2.8.0
 	 * @todo    apply_filters( 'booster_get_option' )
 	 */
 	function available_shipping_methods( $rates, $package ) {
+		$customer_role = wcj_get_current_user_first_role();
 		foreach ( $rates as $rate_key => $rate ) {
-			$customer_role = wcj_get_current_user_first_role();
 			$include_roles = get_option( 'wcj_shipping_user_roles_include_' . $rate->method_id, '' );
 			if ( ! empty( $include_roles ) && ! in_array( $customer_role, $include_roles ) ) {
 				unset( $rates[ $rate_key ] );

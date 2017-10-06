@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 3.1.0
+ * @version 3.1.4
  * @author  Algoritmika Ltd.
  */
 
@@ -276,7 +276,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * create_invoices_meta_box.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.4
 	 * @since   2.8.0
 	 */
 	function create_invoices_meta_box() {
@@ -310,8 +310,8 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				$actions       = array( '<a class="wcj_need_confirmation" href="' .  $the_url . '">' . $the_name . '</a>' );
 			}
 			$maybe_toolptip = '';
-			$_hook = get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_create_on', 'woocommerce_new_order' );
-			if ( in_array( $_hook, array( 'woocommerce_order_partially_refunded_notification', 'wcj_pdf_invoicing_create_on_any_refund' ) ) ) {
+			$_hooks = wcj_get_invoice_create_on( $invoice_type['id'] );
+			if ( in_array( 'woocommerce_order_partially_refunded_notification', $_hooks ) ) {
 				$maybe_toolptip = wc_help_tip( __( 'In case of partial refund, you need to reload the page to see created document in this meta box.', 'woocommerce-jetpack' ), true );
 			}
 			$table_data[] = array( '<span class="dashicons dashicons-media-default" style="color:' . $invoice_type['color'] . ';"></span>' . ' ' .

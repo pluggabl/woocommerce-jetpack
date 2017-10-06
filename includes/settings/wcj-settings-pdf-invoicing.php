@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - General
  *
- * @version 3.1.0
+ * @version 3.1.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -24,14 +24,12 @@ foreach ( $order_statuses as $status => $desc ) {
 }
 $create_on_array = array_merge(
 	array(
-		'disabled'                                          => __( 'Disabled', 'woocommerce-jetpack' ),
 		'woocommerce_new_order'                             => __( 'Create on New Order', 'woocommerce-jetpack' ),
 	),
 	$status_change_hooks,
 	array(
-		'wcj_pdf_invoicing_create_on_any_refund'            => __( 'Create on Order Status Refunded and/or Order Partially Refunded', 'woocommerce-jetpack' ),
 		'woocommerce_order_partially_refunded_notification' => __( 'Create on Order Partially Refunded', 'woocommerce-jetpack' ),
-		'manual'                                            => __( 'Manual Only', 'woocommerce-jetpack' ),
+		'manual'                                            => __( 'Manually', 'woocommerce-jetpack' ),
 	)
 );
 // Settings
@@ -49,12 +47,13 @@ foreach ( $invoice_types as $k => $invoice_type ) {
 			),
 		) );
 	}
+	$create_on_value = wcj_get_invoice_create_on( $invoice_type['id'] ); // for conversion (i.e. backward compatibility with Booster version <= 3.1.3)
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => $invoice_type['title'],
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_create_on',
-			'default'  => 'disabled',
-			'type'     => 'select',
+			'default'  => '',
+			'type'     => 'multiselect',
 			'class'    => 'chosen_select',
 			'options'  => $create_on_array,
 			'desc'     => ( 0 === $k ) ? '' : apply_filters( 'booster_get_message', '', 'desc' ),

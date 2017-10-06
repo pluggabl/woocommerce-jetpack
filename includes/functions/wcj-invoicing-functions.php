@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 3.1.0
+ * @version 3.1.4
  * @author  Algoritmika Ltd.
  */
 
@@ -245,17 +245,51 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_invoice_create_on' ) ) {
+	/*
+	 * wcj_get_invoice_create_on.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 */
+	function wcj_get_invoice_create_on( $invoice_type ) {
+		$create_on = get_option( 'wcj_invoicing_' . $invoice_type . '_create_on', '' );
+		if ( empty( $create_on ) ) {
+			return array();
+		}
+		if ( ! is_array( $create_on ) ) {
+			// Backward compatibility with Booster version <= 3.1.3
+			if ( 'disabled' === $create_on ) {
+				update_option( 'wcj_invoicing_' . $invoice_type . '_create_on', '' );
+				return array();
+			} elseif ( 'wcj_pdf_invoicing_create_on_any_refund' === $create_on ) {
+				$create_on = array( 'woocommerce_order_status_refunded', 'woocommerce_order_partially_refunded_notification' );
+				update_option( 'wcj_invoicing_' . $invoice_type . '_create_on', $create_on );
+				return $create_on;
+			} else {
+				$create_on = array( $create_on );
+				update_option( 'wcj_invoicing_' . $invoice_type . '_create_on', $create_on );
+				return $create_on;
+			}
+		}
+		return $create_on;
+	}
+}
+
 if ( ! function_exists( 'wcj_get_enabled_invoice_types' ) ) {
 	/*
 	 * wcj_get_enabled_invoice_types.
+	 *
+	 * @version 3.1.4
 	 */
 	function wcj_get_enabled_invoice_types() {
 		$invoice_types = wcj_get_invoice_types();
 		$enabled_invoice_types = array();
 		foreach ( $invoice_types as $k => $invoice_type ) {
-			$z = ( 0 === $k ) ? get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_create_on' ) : apply_filters( 'booster_get_option', 'disabled', get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_create_on' ) );
-			if ( 'disabled' === $z )
+			$z = ( 0 === $k ) ? wcj_get_invoice_create_on( $invoice_type['id'] ) : apply_filters( 'booster_get_option', '', wcj_get_invoice_create_on( $invoice_type['id'] ) );
+			if ( empty( $z ) ) {
 				continue;
+			}
 			$enabled_invoice_types[] = $invoice_type;
 		}
 		return $enabled_invoice_types;

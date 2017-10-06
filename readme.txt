@@ -168,6 +168,14 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.1.4 - 06/10/2017 =
+!D	* Dev - SHIPPING & ORDERS - Orders - "Bulk Regenerate Download Permissions for Orders" section added.
+~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Orders Renumerate Tool Options" admin settings section added.
+!D	* Dev - SHIPPING & ORDERS - Shipping Methods by User Membership - Initial module release.
+	* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Minor code optimization.
+!D	* Dev - PDF INVOICING & PACKING SLIPS - General - Now invoices can be created on multiple statuses.
+	* Dev - `es_ES` translation files added.
+
 = 3.1.3 - 04/10/2017 =
 * Dev - PRICES & CURRENCIES - Global Discount - Admin settings descriptions updated.
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Admin settings restyled; descriptions updated.

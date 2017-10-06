@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 2.9.0
+ * @version 3.1.4
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.1.4
 	 */
 	function __construct() {
 
@@ -74,6 +74,119 @@ class WCJ_Orders extends WCJ_Module {
 			// Maybe make sortable custom columns
 			add_filter( 'manage_edit-shop_order_sortable_columns',  array( $this, 'shop_order_sortable_columns' ) );
 			add_action( 'pre_get_posts',                            array( $this, 'shop_order_pre_get_posts_order_by_column' ), 1 );
+
+			// Bulk Regenerate Download Permissions
+			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_order_bulk_regenerate_download_permissions_enabled', 'no' ) ) ) {
+				// Actions
+				if ( 'yes' === get_option( 'wcj_order_bulk_regenerate_download_permissions_actions', 'no' ) ) {
+					add_filter( 'bulk_actions-edit-shop_order',        array( $this, 'register_bulk_actions_regenerate_download_permissions' ), PHP_INT_MAX );
+					add_filter( 'handle_bulk_actions-edit-shop_order', array( $this, 'handle_bulk_actions_regenerate_download_permissions' ), 10, 3 );
+				}
+				// All orders
+				add_action( 'woojetpack_after_settings_save', array( $this, 'maybe_bulk_regenerate_download_permissions_all_orders' ) );
+				// Admin notices
+				add_filter( 'admin_notices', array( $this, 'admin_notice_regenerate_download_permissions' ) );
+			}
+
+		}
+	}
+
+	/**
+	 * handle_bulk_actions_regenerate_download_permissions.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 * @see     https://make.wordpress.org/core/2016/10/04/custom-bulk-actions/
+	 * @todo    (maybe) "bulk actions" for for WP < 4.7
+	 */
+	function handle_bulk_actions_regenerate_download_permissions( $redirect_to, $doaction, $post_ids ) {
+		if ( $doaction !== 'wcj_regenerate_download_permissions' ) {
+			return $redirect_to;
+		}
+		$data_store = WC_Data_Store::load( 'customer-download' );
+		foreach ( $post_ids as $post_id ) {
+			$data_store->delete_by_order_id( $post_id );
+			wc_downloadable_product_permissions( $post_id, true );
+		}
+		$redirect_to = add_query_arg( 'wcj_bulk_regenerated_download_permissions', count( $post_ids ), $redirect_to );
+		return $redirect_to;
+	}
+
+	/**
+	 * register_bulk_actions_regenerate_download_permissions.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 */
+	function register_bulk_actions_regenerate_download_permissions( $bulk_actions ) {
+		$bulk_actions['wcj_regenerate_download_permissions'] = __( 'Regenerate download permissions', 'woocommerce-jetpack' );
+		return $bulk_actions;
+	}
+
+	/**
+	 * admin_notice_regenerate_download_permissions.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 */
+	function admin_notice_regenerate_download_permissions() {
+		if ( ! empty( $_REQUEST['wcj_bulk_regenerated_download_permissions'] ) ) {
+			$orders_count = intval( $_REQUEST['wcj_bulk_regenerated_download_permissions'] );
+			$message = sprintf(
+				_n( 'Download permissions regenerated for %s order.', 'Download permissions regenerated for %s orders.', $orders_count, 'woocommerce-jetpack' ),
+				'<strong>' . $orders_count . '</strong>'
+			);
+			echo '<div class="notice notice-success is-dismissible"><p>' . $message . '</p></div>';
+		}
+	}
+
+	/**
+	 * bulk_regenerate_download_permissions_all_orders.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 */
+	function bulk_regenerate_download_permissions_all_orders() {
+		$data_store   = WC_Data_Store::load( 'customer-download' );
+		$block_size   = 512;
+		$offset       = 0;
+		$total_orders = 0;
+		while( true ) {
+			$args = array(
+				'post_type'      => 'shop_order',
+				'post_status'    => 'any',
+				'posts_per_page' => $block_size,
+				'offset'         => $offset,
+				'orderby'        => 'ID',
+				'order'          => 'DESC',
+				'fields'         => 'ids',
+			);
+			$loop = new WP_Query( $args );
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $post_id ) {
+				$data_store->delete_by_order_id( $post_id );
+				wc_downloadable_product_permissions( $post_id, true );
+				$total_orders++;
+			}
+			$offset += $block_size;
+		}
+		return $total_orders;
+	}
+
+	/**
+	 * maybe_bulk_regenerate_download_permissions_all_orders.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 */
+	function maybe_bulk_regenerate_download_permissions_all_orders() {
+		if ( 'yes' === get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders', 'no' ) ) {
+			update_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders', 'no' );
+			$total_orders = $this->bulk_regenerate_download_permissions_all_orders();
+			wp_safe_redirect( add_query_arg( 'wcj_bulk_regenerated_download_permissions', $total_orders ) );
+			exit;
 		}
 	}
 

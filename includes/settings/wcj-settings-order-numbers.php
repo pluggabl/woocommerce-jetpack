@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Numbers
  *
- * @version 2.8.0
+ * @version 3.1.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -108,5 +108,36 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_order_numbers_options',
+	),
+	array(
+		'title'    => __( 'Orders Renumerate Tool Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_order_numbers_renumerate_tool_options',
+	),
+	array(
+		'title'    => __( 'Sort by', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_numbers_renumerate_tool_orderby',
+		'default'  => 'date',
+		'type'     => 'select',
+		'options'  => array(
+			'ID'       => __( 'ID', 'woocommerce-jetpack' ),
+			'date'     => __( 'Date', 'woocommerce-jetpack' ),
+			'modified' => __( 'Last modified date', 'woocommerce-jetpack' ),
+			'rand'     => __( 'Random', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'title'    => __( 'Sort Ascending or Descending', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_numbers_renumerate_tool_order',
+		'default'  => 'ASC',
+		'type'     => 'select',
+		'options'  => array(
+			'ASC'  => __( 'Ascending', 'woocommerce-jetpack' ),
+			'DESC' => __( 'Descending', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_order_numbers_renumerate_tool_options',
 	),
 );

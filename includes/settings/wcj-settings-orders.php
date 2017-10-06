@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Orders
  *
- * @version 2.9.0
+ * @version 3.1.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -196,6 +196,42 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_order_admin_list_columns_order_options',
+	),
+	array(
+		'title'    => __( 'Bulk Regenerate Download Permissions for Orders', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_order_bulk_regenerate_download_permissions_options',
+	),
+	array(
+		'title'    => __( 'Bulk Regenerate Download Permissions', 'woocommerce-jetpack' ),
+		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'       => 'wcj_order_bulk_regenerate_download_permissions_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Add Regenerate Download Permissions to Bulk Actions', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'When enabled this will add "Regenerate download permissions" action to "Bulk Actions" select box on admin orders page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_bulk_regenerate_download_permissions_actions',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Regenerate Download Permissions for All Orders', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Check this box and press "Save changes" button to start regeneration.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => __( 'Regenerate', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_bulk_regenerate_download_permissions_all_orders',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_order_bulk_regenerate_download_permissions_options',
 	),
 ) );
 return $settings;

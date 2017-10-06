@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 3.1.0
+ * @version 3.1.4
  * @author  Algoritmika Ltd.
  */
 
@@ -222,9 +222,10 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Renumerate orders function.
 	 *
-	 * @version 3.1.0
+	 * @version 3.1.4
 	 * @todo    renumerate in date range only
-	 * @todo    (maybe) `orderby` set to `ID`
+	 * @todo    (maybe) selectable `post_status`
+	 * @todo    (maybe) set default value for `wcj_order_numbers_renumerate_tool_orderby` to `ID` (instead of `date`)
 	 */
 	function renumerate_orders() {
 		$offset     = 0;
@@ -234,8 +235,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				'post_type'      => 'shop_order',
 				'post_status'    => 'any',
 				'posts_per_page' => $block_size,
-				'orderby'        => 'date',
-				'order'          => 'ASC',
+				'orderby'        => get_option( 'wcj_order_numbers_renumerate_tool_orderby', 'date' ),
+				'order'          => get_option( 'wcj_order_numbers_renumerate_tool_order',   'ASC' ),
 				'offset'         => $offset,
 				'fields'         => 'ids',
 			);
