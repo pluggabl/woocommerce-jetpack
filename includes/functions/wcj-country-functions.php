@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Country
  *
- * @version  3.1.0
+ * @version  3.1.4
  * @author   Algoritmika Ltd.
  */
 
@@ -57,8 +57,9 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 	/**
 	 * wcj_get_european_union_countries_with_vat.
 	 *
-	 * @version 2.4.0
+	 * @version 3.1.4
 	 * @return  array
+	 * @todo    check `MC`, `IM`
 	 */
 	function wcj_get_european_union_countries_with_vat() {
 		return array(
@@ -74,7 +75,7 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 			'FI' => 24,
 			'FR' => 20,
 			'GB' => 20,
-			'GR' => 23,
+			'GR' => 24, // 23
 			'HU' => 27,
 			'HR' => 25,
 			'IE' => 23,
@@ -86,13 +87,10 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 			'NL' => 21,
 			'PL' => 23,
 			'PT' => 23,
-			'RO' => 20,//24,
+			'RO' => 19, // 20 // 24
 			'SE' => 25,
 			'SI' => 22,
 			'SK' => 20,
-
-			//'MC' => ,
-			//'IM' => ,
 		);
 	}
 }

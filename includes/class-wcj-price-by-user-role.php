@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price by User Role
  *
- * @version 2.9.0
+ * @version 3.1.4
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -17,7 +17,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.4
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -36,11 +36,24 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				if ( 'no' === get_option( 'wcj_price_by_user_role_for_bots_disabled', 'no' ) || ! wcj_is_bot() ) {
 					wcj_add_change_price_hooks( $this, PHP_INT_MAX - 200 );
+					if ( ( $this->disable_for_regular_price = ( 'yes' === get_option( 'wcj_price_by_user_role_disable_for_regular_price', 'no' ) ) ) ) {
+						add_filter( 'woocommerce_product_is_on_sale', array( $this, 'maybe_make_on_sale' ), PHP_INT_MAX, 2 );
+					}
 				}
 			}
 			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
 		}
+	}
+
+	/**
+	 * maybe_make_on_sale.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 */
+	function maybe_make_on_sale( $on_sale, $product ) {
+		return ( $product->get_price() < $product->get_regular_price() ? true : $on_sale );
 	}
 
 	/**
@@ -157,12 +170,13 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.9.0
+	 * @version 3.1.4
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product ) {
 
 		$current_user_role = wcj_get_current_user_first_role();
+		$_current_filter   = current_filter();
 
 		// Per product
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {
@@ -176,7 +190,6 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 						return ( '' === $price ) ? $price : $price * $multiplier_per_product;
 					}
 				} elseif ( '' != ( $regular_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_regular_price_' . $current_user_role, true ) ) ) {
-					$_current_filter = current_filter();
 					if ( in_array( $_current_filter, array(
 						'woocommerce_get_price_including_tax',
 						'woocommerce_get_price_excluding_tax'
@@ -208,7 +221,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			}
 		}
 
-		// Maybe disable for_products on sale
+		// Maybe disable for products on sale
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_disable_for_products_on_sale', 'no' ) ) {
 			wcj_remove_change_price_hooks( $this, PHP_INT_MAX - 200 );
 			if ( $_product && $_product->is_on_sale() ) {
@@ -217,6 +230,15 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			} else {
 				wcj_add_change_price_hooks( $this, PHP_INT_MAX - 200 );
 			}
+		}
+
+		// Maybe disable for regular price hooks
+		if ( $this->disable_for_regular_price && in_array( $_current_filter, array(
+			WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,
+			'woocommerce_variation_prices_regular_price',
+			'woocommerce_product_variation_get_regular_price'
+		) ) ) {
+			return $price;
 		}
 
 		// By category
@@ -230,7 +252,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 							if ( 'yes' === get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $current_user_role, 'no' ) ) {
 								return '';
 							}
-							return ( '' === $price ) ? $price : $price * get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $current_user_role, 1 );
+							$koef_category = get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $current_user_role, 1 );
+							return ( '' === $price ) ? $price : $price * $koef_category;
 						}
 					}
 				}
@@ -252,7 +275,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.8.2
+	 * @version 3.1.4
 	 * @since   2.5.0
 	 * @todo    only hash categories that is relevant to the product
 	 */
@@ -265,6 +288,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			get_option( 'wcj_price_by_user_role_empty_price_' . $user_role, 'no' ),
 			get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ),
 			get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ),
+			get_option( 'wcj_price_by_user_role_disable_for_products_on_sale', 'no' ),
+			$this->disable_for_regular_price,
 			$categories,
 		);
 		if ( ! empty( $categories ) ) {

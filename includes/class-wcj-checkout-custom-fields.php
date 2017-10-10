@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 2.8.0
+ * @version 3.1.4
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.4
 	 */
 	function __construct() {
 
@@ -56,6 +56,46 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					$the_name    = $the_section . '_' . $the_key;
 					add_filter( 'default_checkout_' . $the_name,        array( $this, 'add_default_checkout_custom_fields' ), PHP_INT_MAX, 2 );
 				}
+			}
+
+			// select2 script
+			add_action( 'wp_enqueue_scripts', array( $this, 'maybe_enqueue_scripts' ) );
+		}
+	}
+
+	/**
+	 * maybe_enqueue_scripts.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 */
+	function maybe_enqueue_scripts( $fields ) {
+		if ( is_checkout() ) {
+			$select2_fields = array();
+			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
+				if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i, 'no' ) ) {
+					if ( 'select' === get_option( 'wcj_checkout_custom_field_type_' . $i, 'text' ) ) {
+						if ( 'yes' === get_option( 'wcj_checkout_custom_field_select_select2_' . $i, 'no' ) ) {
+							$select2_fields[] = get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ) . '_' . 'wcj_checkout_field_' . $i;
+						}
+					}
+				}
+			}
+			if ( ! empty( $select2_fields ) ) {
+				wp_enqueue_script(
+					'wcj-checkout-custom-fields',
+					wcj_plugin_url() . '/includes/js/wcj-checkout-custom-fields.js',
+					array( 'jquery' ),
+					WCJ()->version,
+					true
+				);
+				wp_localize_script(
+					'wcj-checkout-custom-fields',
+					'wcj_checkout_custom_fields',
+					array(
+						'select2_fields' => $select2_fields,
+					)
+				);
 			}
 		}
 	}

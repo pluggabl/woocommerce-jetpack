@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price by User Role
  *
- * @version 2.9.0
+ * @version 3.1.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -72,6 +72,13 @@ $settings = array(
 		'title'    => __( 'Disable Price by User Role for Products on Sale', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_disable_for_products_on_sale',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Disable Price by User Role for Regular Price', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_disable_for_regular_price',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

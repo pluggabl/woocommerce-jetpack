@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Fields
  *
- * @version 2.8.0
+ * @version 3.1.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -158,6 +158,13 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_che
 				'default'  => '',
 				'type'     => 'textarea',
 				'css'      => 'min-width:300px;height:150px;',
+			),
+			array(
+				'title'    => __( 'Select: Use select2 Library', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_custom_field_select_select2_' . $i,
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'id'       => 'wcj_checkout_custom_field_checkbox_yes_' . $i,
