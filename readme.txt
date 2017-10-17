@@ -168,7 +168,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.4 - 10/10/2017 =
+= 3.1.4 - 17/10/2017 =
+~	* Dev - WooCommerce v3.2 compatibility - Admin settings - `select` type options fixed.
+	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `product_meta` and `product_post_meta` columns fixed.
+!	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Major code refactoring and cleanup.
+!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "Multicolumns" functionality added.
 !D	* Dev - PRICES & CURRENCIES - Price by User Role - Roles & Multipliers - "Disable Price by User Role for Regular Price" option added.
 ~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Select: Use select2 Library" options added.
 !D	* Dev - SHIPPING & ORDERS - Orders - "Bulk Regenerate Download Permissions for Orders" section added.
@@ -176,6 +180,7 @@ You can see the differences between versions in this [table](https://booster.io/
 !D	* Dev - SHIPPING & ORDERS - Shipping Methods by User Membership - Initial module release.
 	* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Minor code optimization.
 !D	* Dev - PDF INVOICING & PACKING SLIPS - General - Now invoices can be created on multiple statuses.
+!D	* Dev - PDF INVOICING & PACKING SLIPS - Email Options - Getting full emails list directly from WooCommerce (instead of using manually defined list).
 	* Dev - Functions - Country - `wcj_get_european_union_countries_with_vat()` - `GR` changed to `24`; `RO` changed to `19`.
 	* Dev - `es_ES` translation files added.
 

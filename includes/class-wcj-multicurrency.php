@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.1.2
+ * @version 3.1.4
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -303,7 +303,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 3.1.2
+	 * @version 3.1.4
 	 */
 	function change_price_shipping( $package_rates, $package ) {
 		if ( $this->do_revert() ) {
@@ -311,12 +311,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 		}
 		$currency_exchange_rate     = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
 		$modified_package_rates     = array();
-		$is_wc_version_at_least_3_2 = version_compare( WCJ_WC_VERSION, '3.2.0', '>=' );
 		foreach ( $package_rates as $id => $package_rate ) {
 			if ( 1 != $currency_exchange_rate && isset( $package_rate->cost ) ) {
 				$package_rate->cost = $package_rate->cost * $currency_exchange_rate;
 				if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
-					if ( $is_wc_version_at_least_3_2 ) {
+					if ( ! WCJ_IS_WC_VERSION_BELOW_3_2_0 ) {
 						$rate_taxes = $package_rate->taxes;
 						foreach ( $rate_taxes as &$tax ) {
 							$tax *= $currency_exchange_rate;

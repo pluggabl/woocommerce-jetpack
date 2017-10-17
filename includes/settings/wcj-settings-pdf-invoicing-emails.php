@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Email Options
  *
- * @version 3.1.0
+ * @version 3.1.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -13,7 +13,7 @@ $available_gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $available_gateways as $key => $gateway ) {
 	$available_gateways_options_array[ $key ] = $gateway->title;
 }
-$available_emails = array(
+/* $available_emails = array(
 	'new_order'                         => __( 'Admin - New Order', 'woocommerce-jetpack' ),
 	'cancelled_order'                   => __( 'Admin - Cancelled Order', 'woocommerce-jetpack' ),
 	'failed_order'                      => __( 'Admin - Failed Order', 'woocommerce-jetpack' ),
@@ -30,6 +30,13 @@ $available_emails = array(
 if ( wcj_is_module_enabled( 'emails' ) ) {
 	for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
 		$available_emails[ 'wcj_custom' . '_' . $i ] = __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i;
+	}
+} */
+$available_emails = array();
+$wc_emails = WC()->mailer()->get_emails();
+foreach ( $wc_emails as $wc_email ) {
+	if ( isset( $wc_email->id ) && isset( $wc_email->title ) ) {
+		$available_emails[ $wc_email->id ] = $wc_email->title;
 	}
 }
 $settings = array();

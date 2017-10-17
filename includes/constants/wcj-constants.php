@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Constants
  *
- * @version 3.1.0
+ * @version 3.1.4
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -29,6 +29,17 @@ if ( ! defined( 'WCJ_IS_WC_VERSION_BELOW_3' ) ) {
 	 * @author  Algoritmika Ltd.
 	 */
 	define( 'WCJ_IS_WC_VERSION_BELOW_3', version_compare( WCJ_WC_VERSION, '3.0.0', '<' ) );
+}
+
+if ( ! defined( 'WCJ_IS_WC_VERSION_BELOW_3_2_0' ) ) {
+	/**
+	 * WooCommerce version - is below version 3.2.0.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 * @author  Algoritmika Ltd.
+	 */
+	define( 'WCJ_IS_WC_VERSION_BELOW_3_2_0', version_compare( WCJ_WC_VERSION, '3.2.0', '<' ) );
 }
 
 if ( ! defined( 'WCJ_PRODUCT_GET_PRICE_FILTER' ) ) {
