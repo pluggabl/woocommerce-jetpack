@@ -310,27 +310,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 			return $package_rates;
 		}
 		$currency_exchange_rate     = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
-		$modified_package_rates     = array();
-		foreach ( $package_rates as $id => $package_rate ) {
-			if ( 1 != $currency_exchange_rate && isset( $package_rate->cost ) ) {
-				$package_rate->cost = $package_rate->cost * $currency_exchange_rate;
-				if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
-					if ( ! WCJ_IS_WC_VERSION_BELOW_3_2_0 ) {
-						$rate_taxes = $package_rate->taxes;
-						foreach ( $rate_taxes as &$tax ) {
-							$tax *= $currency_exchange_rate;
-						}
-						$package_rate->taxes = $rate_taxes;
-					} else {
-						foreach ( $package_rate->taxes as $tax_id => $tax ) {
-							$package_rate->taxes[ $tax_id ] = $package_rate->taxes[ $tax_id ] * $currency_exchange_rate;
-						}
-					}
-				}
-			}
-			$modified_package_rates[ $id ] = $package_rate;
-		}
-		return $modified_package_rates;
+		return wcj_change_price_shipping_package_rates( $package_rates, $currency_exchange_rate );
 	}
 
 }

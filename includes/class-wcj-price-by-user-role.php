@@ -119,26 +119,14 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 2.7.0
+	 * @version 3.1.4
 	 * @since   2.5.0
 	 */
 	function change_price_shipping( $package_rates, $package ) {
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_shipping_enabled', 'no' ) ) {
 			$current_user_role = wcj_get_current_user_first_role();
 			$koef = get_option( 'wcj_price_by_user_role_' . $current_user_role, 1 );
-			$modified_package_rates = array();
-			foreach ( $package_rates as $id => $package_rate ) {
-				if ( 1 != $koef && isset( $package_rate->cost ) ) {
-					$package_rate->cost = $package_rate->cost * $koef;
-					if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
-						foreach ( $package_rate->taxes as $tax_id => $tax ) {
-							$package_rate->taxes[ $tax_id ] = $package_rate->taxes[ $tax_id ] * $koef;
-						}
-					}
-				}
-				$modified_package_rates[ $id ] = $package_rate;
-			}
-			return $modified_package_rates;
+			return wcj_change_price_shipping_package_rates( $package_rates, $koef );
 		}
 		return $package_rates;
 	}

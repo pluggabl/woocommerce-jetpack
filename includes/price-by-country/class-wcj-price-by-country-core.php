@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 2.9.0
+ * @version 3.1.4
  * @author  Algoritmika Ltd.
  */
 
@@ -203,24 +203,12 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 2.7.0
+	 * @version 3.1.4
 	 */
 	function change_price_shipping( $package_rates, $package ) {
 		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
 			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
-			$modified_package_rates = array();
-			foreach ( $package_rates as $id => $package_rate ) {
-				if ( 1 != $country_exchange_rate && isset( $package_rate->cost ) ) {
-					$package_rate->cost = $package_rate->cost * $country_exchange_rate;
-					if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
-						foreach ( $package_rate->taxes as $tax_id => $tax ) {
-							$package_rate->taxes[ $tax_id ] = $package_rate->taxes[ $tax_id ] * $country_exchange_rate;
-						}
-					}
-				}
-				$modified_package_rates[ $id ] = $package_rate;
-			}
-			return $modified_package_rates;
+			return wcj_change_price_shipping_package_rates( $package_rates, $country_exchange_rate );
 		} else {
 			return $package_rates;
 		}

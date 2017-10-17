@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency per Product
  *
- * @version 2.9.0
+ * @version 3.1.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -119,7 +119,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Currencies Options', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Exchange rates for currencies won\'t be used if "Cart and Checkout Behaviour" is set to one of "Leave product currency ..." options.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Exchange rates for currencies won\'t be used for products if "Cart and Checkout Behaviour" is set to one of "Leave product currency ..." options. However it may be used for shipping price conversion.', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_currency_per_product_currencies_options',
 	),

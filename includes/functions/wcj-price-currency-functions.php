@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.1.2
+ * @version 3.1.4
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -71,6 +71,38 @@ if ( ! function_exists( 'wcj_remove_change_price_hooks' ) ) {
 		// Grouped products
 		remove_filter( 'woocommerce_get_price_including_tax',                 array( $module_object, 'change_price_grouped' ),      $priority );
 		remove_filter( 'woocommerce_get_price_excluding_tax',                 array( $module_object, 'change_price_grouped' ),      $priority );
+	}
+}
+
+if ( ! function_exists( 'wcj_change_price_shipping_package_rates' ) ) {
+	/**
+	 * wcj_change_price_shipping_package_rates.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 */
+	function wcj_change_price_shipping_package_rates( $package_rates, $multiplier ) {
+		$modified_package_rates = array();
+		foreach ( $package_rates as $id => $package_rate ) {
+			if ( 1 != $multiplier && isset( $package_rate->cost ) ) {
+				$package_rate->cost = $package_rate->cost * $multiplier;
+				if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
+					if ( ! WCJ_IS_WC_VERSION_BELOW_3_2_0 ) {
+						$rate_taxes = $package_rate->taxes;
+						foreach ( $rate_taxes as &$tax ) {
+							$tax *= $multiplier;
+						}
+						$package_rate->taxes = $rate_taxes;
+					} else {
+						foreach ( $package_rate->taxes as $tax_id => $tax ) {
+							$package_rate->taxes[ $tax_id ] = $package_rate->taxes[ $tax_id ] * $multiplier;
+						}
+					}
+				}
+			}
+			$modified_package_rates[ $id ] = $package_rate;
+		}
+		return $modified_package_rates;
 	}
 }
 

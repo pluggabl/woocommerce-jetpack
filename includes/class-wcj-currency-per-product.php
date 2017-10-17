@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 2.9.0
+ * @version 3.1.4
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -61,11 +61,11 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * change_shipping_price.
 	 *
-	 * @version 2.7.0
+	 * @version 3.1.4
 	 * @since   2.7.0
 	 */
 	function change_shipping_price( $package_rates, $package ) {
-		if ( $this->is_cart_or_checkout_or_ajax() ) {
+		if ( isset( WC()->cart ) ) {
 			if ( WC()->cart->is_empty() ) {
 				return $package_rates;
 			}
@@ -80,19 +80,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 						$currency_exchange_rate = $this->get_currency_exchange_rate( $_currency );
 						if ( 0 != $currency_exchange_rate && 1 != $currency_exchange_rate ) {
 							$currency_exchange_rate = 1 / $currency_exchange_rate;
-							$modified_package_rates = array();
-							foreach ( $package_rates as $id => $package_rate ) {
-								if ( isset( $package_rate->cost ) ) {
-									$package_rate->cost = $package_rate->cost * $currency_exchange_rate;
-									if ( isset( $package_rate->taxes ) && ! empty( $package_rate->taxes ) ) {
-										foreach ( $package_rate->taxes as $tax_id => $tax ) {
-											$package_rate->taxes[ $tax_id ] = $package_rate->taxes[ $tax_id ] * $currency_exchange_rate;
-										}
-									}
-								}
-								$modified_package_rates[ $id ] = $package_rate;
-							}
-							return $modified_package_rates;
+							return wcj_change_price_shipping_package_rates( $package_rates, $currency_exchange_rate );
 						} else {
 							return $package_rates;
 						}

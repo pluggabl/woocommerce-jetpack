@@ -168,11 +168,17 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.4 - 17/10/2017 =
+= 3.1.4 - 18/10/2017 =
+	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Currency per Product.
+	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Price by User Role.
+	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Prices and Currencies by Country.
+	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PAYMENT GATEWAYS - Gateways Currency Converter.
 ~	* Dev - WooCommerce v3.2 compatibility - Admin settings - `select` type options fixed.
 	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `product_meta` and `product_post_meta` columns fixed.
 !	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Major code refactoring and cleanup.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "Multicolumns" functionality added.
+!!!	* Fix - PRICES & CURRENCIES - Currency per Product - Shipping calculation fixed.
+	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring.
 !D	* Dev - PRICES & CURRENCIES - Price by User Role - Roles & Multipliers - "Disable Price by User Role for Regular Price" option added.
 ~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Select: Use select2 Library" options added.
 !D	* Dev - SHIPPING & ORDERS - Orders - "Bulk Regenerate Download Permissions for Orders" section added.
@@ -203,7 +209,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - `wcj_full_pack` filter added.
 
 = 3.1.2 - 22/09/2017 =
-* Dev - WooCommerce v3.2 compatibility - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - `change_price_shipping()` - Taxes.
+* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Multicurrency (Currency Switcher).
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_pdf_invoicing_cell_data` filter - `order` argument added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `hide_zero_prices` - attribute added.
 * Fix - Shortcodes - Orders - `[wcj_order_refunds_table]` - `columns` - `refund_number` fixed.
