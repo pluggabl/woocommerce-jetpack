@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 2.9.0
+ * @version 3.1.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -121,7 +121,7 @@ $settings = array(
 		'id'       => 'wcj_product_listings_archive_pages_options',
 	),
 	array(
-		'title'    => __( 'TAX Display Prices in the Shop', 'woocommerce-jetpack' ),
+		'title'    => __( 'TAX Display in the Shop - by Product', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'desc'     => __( 'If you want to display part of your products including TAX and another part excluding TAX, you can set it here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_listings_display_taxes_options',
@@ -171,6 +171,53 @@ $settings = array(
 		'id'       => 'wcj_product_listings_display_taxes_options',
 	),
 	array(
+		'title'    => __( 'TAX Display in the Shop - by User Role', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'desc'     => __( 'If you want to display prices including TAX or excluding TAX for different user roles, you can set it here.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_listings_display_taxes_by_user_role_options',
+	),
+	array(
+		'title'    => __( 'TAX Display by User Role', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable section', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_listings_display_taxes_by_user_role_enabled',
+		'type'     => 'checkbox',
+		'default'  => 'no',
+	),
+	array(
+		'title'    => __( 'User Roles', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save changes after you change this option and new settings fields will appear.', 'woocommerce-jetpack' ),
+		'desc'     => '<br>' . sprintf( __( 'Select user roles that you want to change tax display for. For all remaining (i.e. not selected) user roles - default TAX display (set in %s) will be applied.', 'woocommerce-jetpack' ),
+			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=tax' ) . '">' . __( 'WooCommerce > Settings > Tax', 'woocommerce-jetpack' ) . '</a>' ),
+		'id'       => 'wcj_product_listings_display_taxes_by_user_role_roles',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'default'  => '',
+		'options'  => wcj_get_user_roles_options(),
+	),
+);
+if ( '' != ( $display_taxes_by_user_role_roles = get_option( 'wcj_product_listings_display_taxes_by_user_role_roles', '' ) ) ) {
+	foreach ( $display_taxes_by_user_role_roles as $display_taxes_by_user_role_role ) {
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => sprintf( __( 'Role: %s', 'woocommerce-jetpack' ), $display_taxes_by_user_role_role ),
+				'id'       => 'wcj_product_listings_display_taxes_by_user_role_' . $display_taxes_by_user_role_role,
+				'default'  => 'no_changes',
+				'type'     => 'select',
+				'options'  => array(
+					'no_changes' => __( 'Default TAX display (no changes)', 'woocommerce-jetpack' ),
+					'incl'       => __( 'Including tax', 'woocommerce-jetpack' ),
+					'excl'       => __( 'Excluding tax', 'woocommerce-jetpack' ),
+				),
+			),
+		) );
+	}
+}
+$settings = array_merge( $settings, array(
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_listings_display_taxes_by_user_role_options',
+	),
+	array(
 		'title'    => __( 'Admin Products List - Custom Columns', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_products_admin_list_custom_columns_options',
@@ -194,7 +241,7 @@ $settings = array(
 			array( 'step' => '1', 'min'  => '0', )
 		),
 	),
-);
+) );
 $total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_admin_list_custom_columns_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(

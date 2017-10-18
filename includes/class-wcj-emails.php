@@ -1,8 +1,8 @@
 <?php
 /**
- * Booster for WooCommerce - Module - Emails
+ * Booster for WooCommerce - Module - Custom Emails
  *
- * @version 2.9.1
+ * @version 3.1.4
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.1
+	 * @version 3.1.4
 	 */
 	function __construct() {
 
@@ -26,11 +26,56 @@ class WCJ_Emails extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			// Custom Emails
 			add_filter( 'woocommerce_email_actions',                 array( $this, 'add_custom_woocommerce_email_actions' ) );
 			add_filter( 'woocommerce_email_classes',                 array( $this, 'add_custom_emails_to_wc' ) );
 			add_filter( 'woocommerce_resend_order_emails_available', array( $this, 'add_custom_emails_to_wc_resend_order_emails' ) );
+			if ( ! WCJ_IS_WC_VERSION_BELOW_3_2_0 ) {
+				add_filter( 'woocommerce_order_actions', array( $this, 'add_custom_emails_order_actions' ), PHP_INT_MAX, 1 );
+				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
+					add_action( 'woocommerce_order_action_' . 'wcj_send_email_custom' . '_' . $i,
+						array( $this, 'do_custom_emails_order_actions' ), PHP_INT_MAX, 1 );
+				}
+			}
 		}
+	}
+
+	/**
+	 * do_custom_emails_order_actions.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 */
+	function do_custom_emails_order_actions( $order ) {
+		$booster_action_prefix = 'woocommerce_order_action_' . 'wcj_send_email_custom' . '_';
+		$_current_filter       = current_filter();
+		if ( substr( $_current_filter, 0, strlen( $booster_action_prefix ) ) === $booster_action_prefix ) {
+			$email_nr = substr( $_current_filter, strlen( $booster_action_prefix ) );
+			WC()->payment_gateways();
+			WC()->shipping();
+			WC()->mailer()->emails[ 'WC_Email_WCJ_Custom_' . $email_nr ]->trigger( $order->get_id(), $order );
+			$order->add_order_note(
+				sprintf( __( 'Booster: Emails: %s manually sent.', 'woocommerce-jetpack' ),
+					get_option( 'wcj_emails_custom_emails_admin_title_' . $email_nr, __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $email_nr ) ),
+				false,
+				true
+			);
+		}
+	}
+
+	/**
+	 * add_custom_emails_order_actions.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 * @todo    (maybe) add "Add Custom Email(s) to Order Actions" option (in WC >= 3.2.0); same to `woocommerce_order_action_`
+	 */
+	function add_custom_emails_order_actions( $actions ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
+			$actions[ 'wcj_send_email_custom' . '_' . $i ] = sprintf( __( 'Booster: Send Email: %s', 'woocommerce-jetpack' ),
+				get_option( 'wcj_emails_custom_emails_admin_title_' . $i, __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i )
+			);
+		}
+		return $actions;
 	}
 
 	/**

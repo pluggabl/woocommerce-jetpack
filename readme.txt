@@ -103,6 +103,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
 * *Orders* - Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
+* *Shipping Methods by User Membership* - Set membership plans to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Methods by User Role* - Set user roles to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Options* - Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available. Grant free shipping on per product basis.
 
@@ -169,17 +170,17 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.1.4 - 18/10/2017 =
+~	* Dev - WooCommerce v3.2 compatibility - SHIPPING & ORDERS - Left to Free Shipping - "WC_Cart->taxes function is deprecated since version 3.2" notice fixed.
+~	* Dev - WooCommerce v3.2 compatibility - EMAILS & MISC. - Custom Emails - Custom emails added to order actions.
 	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Currency per Product.
 	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Price by User Role.
 	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Prices and Currencies by Country.
 	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PAYMENT GATEWAYS - Gateways Currency Converter.
 ~	* Dev - WooCommerce v3.2 compatibility - Admin settings - `select` type options fixed.
-	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `product_meta` and `product_post_meta` columns fixed.
-!	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Major code refactoring and cleanup.
-!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "Multicolumns" functionality added.
-!!!	* Fix - PRICES & CURRENCIES - Currency per Product - Shipping calculation fixed.
+!!	* Fix - PRICES & CURRENCIES - Currency per Product - Shipping calculation fixed.
 	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring.
 !D	* Dev - PRICES & CURRENCIES - Price by User Role - Roles & Multipliers - "Disable Price by User Role for Regular Price" option added.
+!$D	* Dev - PRODUCTS - Product Listings - "TAX Display in the Shop - by User Role" section added.
 ~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Select: Use select2 Library" options added.
 !D	* Dev - SHIPPING & ORDERS - Orders - "Bulk Regenerate Download Permissions for Orders" section added.
 ~D	* Dev - SHIPPING & ORDERS - Order Numbers - "Orders Renumerate Tool Options" admin settings section added.
@@ -187,7 +188,11 @@ You can see the differences between versions in this [table](https://booster.io/
 	* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Minor code optimization.
 !D	* Dev - PDF INVOICING & PACKING SLIPS - General - Now invoices can be created on multiple statuses.
 !D	* Dev - PDF INVOICING & PACKING SLIPS - Email Options - Getting full emails list directly from WooCommerce (instead of using manually defined list).
+	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `product_meta` and `product_post_meta` columns fixed.
+!	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Major code refactoring and cleanup.
+!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "Multicolumns" functionality added.
 	* Dev - Functions - Country - `wcj_get_european_union_countries_with_vat()` - `GR` changed to `24`; `RO` changed to `19`.
+	* Dev - Plugin update checker - "Check site key now" now saves the key before checking.
 	* Dev - `es_ES` translation files added.
 
 = 3.1.3 - 04/10/2017 =

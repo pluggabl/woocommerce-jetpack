@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.1.0
+ * @version 3.1.4
  * @author  Algoritmika Ltd.
  */
 
@@ -312,7 +312,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	/*
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 2.5.8
+	 * @version 3.1.4
 	 * @since   2.4.4
 	 * @return  string
 	 */
@@ -321,8 +321,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 			$content = __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' );
 		}
 		$min_free_shipping_amount = 0;
-		$current_wc_version = get_option( 'woocommerce_version', null );
-		if ( version_compare( $current_wc_version, '2.6.0', '<' ) ) {
+		if ( version_compare( WCJ_WC_VERSION, '2.6.0', '<' ) ) {
 			$free_shipping = new WC_Shipping_Free_Shipping();
 			if ( in_array( $free_shipping->requires, array( 'min_amount', 'either', 'both' ) ) ) {
 				$min_free_shipping_amount = $free_shipping->min_amount;
@@ -356,7 +355,8 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 		}
 		if ( 0 != $min_free_shipping_amount ) {
 			if ( isset( WC()->cart->cart_contents_total ) ) {
-				$total = ( WC()->cart->prices_include_tax ) ? WC()->cart->cart_contents_total + array_sum( WC()->cart->taxes ) : WC()->cart->cart_contents_total;
+				$cart_taxes = ( WCJ_IS_WC_VERSION_BELOW_3_2_0 ? WC()->cart->taxes : WC()->cart->get_cart_contents_taxes() );
+				$total = ( WC()->cart->prices_include_tax ) ? WC()->cart->cart_contents_total + array_sum( $cart_taxes ) : WC()->cart->cart_contents_total;
 				if ( $total >= $min_free_shipping_amount ) {
 					return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
 				} else {
