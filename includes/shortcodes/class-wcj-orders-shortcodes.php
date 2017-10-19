@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.1.2
+ * @version 3.1.4
  * @author  Algoritmika Ltd.
  */
 
@@ -92,7 +92,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.1.2
+	 * @version 3.1.4
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -126,6 +126,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'price_prefix'                => '',
 			'display_refunded'            => 'yes',
 			'insert_page_break'           => '',
+			'key'                         => null,
 		), $atts );
 
 		return $modified_atts;
@@ -377,13 +378,18 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Get order custom field.
 	 *
-	 * @version 2.4.8
+	 * @version 3.1.4
 	 * @since   2.4.8
 	 * @return  string
 	 */
 	function wcj_order_custom_field( $atts ) {
 		$order_custom_fields = get_post_custom( $atts['order_id'] );
-		return ( isset( $order_custom_fields[ $atts['name'] ][0] ) ) ? $order_custom_fields[ $atts['name'] ][0] : '';
+		$return = ( isset( $order_custom_fields[ $atts['name'] ][0] ) ) ? $order_custom_fields[ $atts['name'] ][0] : '';
+		if ( null !== $atts['key'] ) {
+			$return = maybe_unserialize( $return );
+			return ( isset( $return[ $atts['key'] ] ) ? $return[ $atts['key'] ] : '' );
+		}
+		return $return;
 	}
 
 	/**

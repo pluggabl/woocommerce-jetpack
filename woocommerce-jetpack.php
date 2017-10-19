@@ -74,7 +74,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.1.4-dev-201710182104';
+	public $version = '3.1.4-dev-201710191610';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -249,7 +249,7 @@ final class WC_Jetpack {
 	/**
 	 * Include required core files used in admin and on the frontend.
 	 *
-	 * @version 3.1.3
+	 * @version 3.1.4
 	 */
 	function includes() {
 
@@ -258,6 +258,7 @@ final class WC_Jetpack {
 
 		// Classes
 		include_once( 'includes/classes/class-wcj-module.php' );
+		include_once( 'includes/classes/class-wcj-module-shipping-by-condition.php' );
 		include_once( 'includes/classes/class-wcj-product.php' );
 		include_once( 'includes/classes/class-wcj-invoice.php' );
 		include_once( 'includes/classes/class-wcj-pdf-invoice.php' );
@@ -397,6 +398,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-shipping-calculator.php',
 			'includes/class-wcj-shipping-by-user-role.php',
 			'includes/class-wcj-shipping-by-user-membership.php',
+			'includes/class-wcj-shipping-by-products.php',
 			'includes/class-wcj-address-formats.php',
 			'includes/class-wcj-orders.php',
 			'includes/class-wcj-order-min-amount.php',

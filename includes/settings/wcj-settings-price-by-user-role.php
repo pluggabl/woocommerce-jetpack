@@ -51,6 +51,14 @@ $settings = array(
 		'default'  => 'no',
 	),
 	array(
+		'title'    => __( 'Disable Price by User Role for Regular Price', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Disable price by user role for regular price when using multipliers (global or per product).', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_disable_for_regular_price',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'title'    => __( 'Search Engine Bots', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable Price by User Role for Bots', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_for_bots_disabled',
@@ -72,13 +80,6 @@ $settings = array(
 		'title'    => __( 'Disable Price by User Role for Products on Sale', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_disable_for_products_on_sale',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Disable Price by User Role for Regular Price', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_price_by_user_role_disable_for_regular_price',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

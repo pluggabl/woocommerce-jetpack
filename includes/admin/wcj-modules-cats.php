@@ -129,6 +129,7 @@ return apply_filters( 'wcj_modules', array(
 			'shipping_calculator',
 			'shipping_by_user_role',
 			'shipping_by_user_membership',
+			'shipping_by_products',
 			'address_formats',
 			'orders',
 			'order_min_amount',

@@ -175,6 +175,14 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 				}
 				if ( 'multiplier' === get_option( 'wcj_price_by_user_role_per_product_type', 'fixed' ) ) {
 					if ( '' !== ( $multiplier_per_product = get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_multiplier_' . $current_user_role, true ) ) ) {
+						// Maybe disable for regular price hooks
+						if ( $this->disable_for_regular_price && in_array( $_current_filter, array(
+							WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER,
+							'woocommerce_variation_prices_regular_price',
+							'woocommerce_product_variation_get_regular_price'
+						) ) ) {
+							return $price;
+						}
 						return ( '' === $price ) ? $price : $price * $multiplier_per_product;
 					}
 				} elseif ( '' != ( $regular_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_price_by_user_role_regular_price_' . $current_user_role, true ) ) ) {

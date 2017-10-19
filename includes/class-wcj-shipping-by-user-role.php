@@ -11,12 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if ( ! class_exists( 'WCJ_Shipping_By_User_Role' ) ) :
 
-class WCJ_Shipping_By_User_Role extends WCJ_Module {
+class WCJ_Shipping_By_User_Role extends WCJ_Module_Shipping_By_Condition {
 
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.1.4
 	 * @since   2.8.0
 	 */
 	function __construct() {
@@ -25,35 +25,42 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module {
 		$this->short_desc = __( 'Shipping Methods by User Role', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set user roles to include/exclude for WooCommerce shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-user-role';
+
+		$this->condition_options = array(
+			'user_roles' => array(
+				'title' => __( 'User Roles', 'woocommerce-jetpack' ),
+				'desc'  => sprintf(
+					__( 'Custom roles can be added via "Add/Manage Custom Roles" tool in Booster\'s <a href="%s">General</a> module', 'woocommerce-jetpack' ),
+					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' )
+				),
+			),
+		);
+
 		parent::__construct();
 
-		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_package_rates', array( $this, 'available_shipping_methods' ), PHP_INT_MAX, 2 );
-		}
 	}
 
 	/**
-	 * available_shipping_methods.
+	 * check.
 	 *
 	 * @version 3.1.4
-	 * @since   2.8.0
-	 * @todo    apply_filters( 'booster_get_option' )
+	 * @since   3.1.4
 	 */
-	function available_shipping_methods( $rates, $package ) {
-		$customer_role = wcj_get_current_user_first_role();
-		foreach ( $rates as $rate_key => $rate ) {
-			$include_roles = get_option( 'wcj_shipping_user_roles_include_' . $rate->method_id, '' );
-			if ( ! empty( $include_roles ) && ! in_array( $customer_role, $include_roles ) ) {
-				unset( $rates[ $rate_key ] );
-				continue;
-			}
-			$exclude_roles = get_option( 'wcj_shipping_user_roles_exclude_' . $rate->method_id, '' );
-			if ( ! empty( $exclude_roles ) && in_array( $customer_role, $exclude_roles ) ) {
-				unset( $rates[ $rate_key ] );
-				continue;
-			}
+	function check( $options_id, $user_roles ) {
+		if ( ! isset( $this->customer_role ) ) {
+			$this->customer_role = wcj_get_current_user_first_role();
 		}
-		return $rates;
+		return in_array( $this->customer_role, $user_roles );
+	}
+
+	/**
+	 * get_condition_options.
+	 *
+	 * @version 3.1.4
+	 * @since   3.1.4
+	 */
+	function get_condition_options( $options_id ) {
+		return wcj_get_user_roles_options();
 	}
 
 }

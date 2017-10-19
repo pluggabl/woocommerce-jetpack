@@ -71,8 +71,9 @@ class WCJ_Emails extends WCJ_Module {
 	 */
 	function add_custom_emails_order_actions( $actions ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
-			$actions[ 'wcj_send_email_custom' . '_' . $i ] = sprintf( __( 'Booster: Send Email: %s', 'woocommerce-jetpack' ),
-				get_option( 'wcj_emails_custom_emails_admin_title_' . $i, __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i )
+			$actions[ 'wcj_send_email_custom' . '_' . $i ] = sprintf( apply_filters( 'wcj_emails_custom_emails_order_action_text',
+				__( 'Booster: Send Email: %s', 'woocommerce-jetpack' ), $i ),
+					get_option( 'wcj_emails_custom_emails_admin_title_' . $i, __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i )
 			);
 		}
 		return $actions;
