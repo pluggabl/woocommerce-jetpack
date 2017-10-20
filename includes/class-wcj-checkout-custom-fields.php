@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 */
 	function __construct() {
 
@@ -66,8 +66,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * maybe_enqueue_scripts.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function maybe_enqueue_scripts( $fields ) {
 		if ( is_checkout() ) {

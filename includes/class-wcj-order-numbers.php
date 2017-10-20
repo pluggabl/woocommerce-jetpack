@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -222,7 +222,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Renumerate orders function.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 * @todo    renumerate in date range only
 	 * @todo    (maybe) selectable `post_status`
 	 * @todo    (maybe) set default value for `wcj_order_numbers_renumerate_tool_orderby` to `ID` (instead of `date`)

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -61,7 +61,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * change_shipping_price.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 * @since   2.7.0
 	 */
 	function change_shipping_price( $package_rates, $package ) {

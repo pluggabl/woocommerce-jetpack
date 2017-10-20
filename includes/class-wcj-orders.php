@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 */
 	function __construct() {
 
@@ -94,8 +94,8 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * handle_bulk_actions_regenerate_download_permissions.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 * @see     https://make.wordpress.org/core/2016/10/04/custom-bulk-actions/
 	 * @todo    (maybe) "bulk actions" for for WP < 4.7
 	 */
@@ -115,8 +115,8 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * register_bulk_actions_regenerate_download_permissions.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function register_bulk_actions_regenerate_download_permissions( $bulk_actions ) {
 		$bulk_actions['wcj_regenerate_download_permissions'] = __( 'Regenerate download permissions', 'woocommerce-jetpack' );
@@ -126,8 +126,8 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * admin_notice_regenerate_download_permissions.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function admin_notice_regenerate_download_permissions() {
 		if ( ! empty( $_REQUEST['wcj_bulk_regenerated_download_permissions'] ) ) {
@@ -143,8 +143,8 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * bulk_regenerate_download_permissions_all_orders.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function bulk_regenerate_download_permissions_all_orders() {
 		$data_store   = WC_Data_Store::load( 'customer-download' );
@@ -178,8 +178,8 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * maybe_bulk_regenerate_download_permissions_all_orders.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function maybe_bulk_regenerate_download_permissions_all_orders() {
 		if ( 'yes' === get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders', 'no' ) ) {

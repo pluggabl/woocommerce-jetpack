@@ -4,7 +4,7 @@
  *
  * The WooCommerce Modules Array.
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -128,7 +128,6 @@ return apply_filters( 'wcj_modules', array(
 			'left_to_free_shipping',
 			'shipping_calculator',
 			'shipping_by_user_role',
-			'shipping_by_user_membership',
 			'shipping_by_products',
 			'address_formats',
 			'orders',

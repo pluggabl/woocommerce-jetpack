@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -78,8 +78,8 @@ if ( ! function_exists( 'wcj_change_price_shipping_package_rates' ) ) {
 	/**
 	 * wcj_change_price_shipping_package_rates.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function wcj_change_price_shipping_package_rates( $package_rates, $multiplier ) {
 		$modified_package_rates = array();

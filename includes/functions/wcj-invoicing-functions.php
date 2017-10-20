@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -249,8 +249,8 @@ if ( ! function_exists( 'wcj_get_invoice_create_on' ) ) {
 	/*
 	 * wcj_get_invoice_create_on.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function wcj_get_invoice_create_on( $invoice_type ) {
 		$create_on = get_option( 'wcj_invoicing_' . $invoice_type . '_create_on', '' );
@@ -280,7 +280,7 @@ if ( ! function_exists( 'wcj_get_enabled_invoice_types' ) ) {
 	/*
 	 * wcj_get_enabled_invoice_types.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 */
 	function wcj_get_enabled_invoice_types() {
 		$invoice_types = wcj_get_invoice_types();

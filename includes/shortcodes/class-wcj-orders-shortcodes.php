@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -92,7 +92,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -378,7 +378,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Get order custom field.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 * @since   2.4.8
 	 * @return  string
 	 */

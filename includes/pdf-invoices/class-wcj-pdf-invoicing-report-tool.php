@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 3.1.0
+ * @version 3.2.0
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -295,7 +295,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Invoices Report Data function.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.0
 	 * @since   2.5.7
 	 */
 	function get_invoices_report_data( $year, $month, $invoice_type_id ) {
@@ -310,6 +310,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			__( 'Order Taxes', 'woocommerce-jetpack' ),
 			__( 'Order Total', 'woocommerce-jetpack' ),
 			__( 'Order Currency', 'woocommerce-jetpack' ),
+			__( 'Payment Gateway', 'woocommerce-jetpack' ),
 			__( 'Refunds', 'woocommerce-jetpack' ),
 		);
 
@@ -382,6 +383,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 						$order_tax_html,
 						sprintf( '%.2f', $order_total ),
 						wcj_get_order_currency( $the_order ),
+						get_post_meta( $order_id, '_payment_method_title', true ),
 						$the_order->get_total_refunded(),
 					);
 				}

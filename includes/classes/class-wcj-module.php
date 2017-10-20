@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -111,7 +111,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * add_settings_from_file.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 * @since   2.8.0
 	 */
 	function add_settings_from_file( $settings ) {
@@ -124,6 +124,13 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 						$setting['class'] = 'wc-enhanced-select';
 					} else {
 						$setting['class'] .= ' ' . 'wc-enhanced-select';
+					}
+				}
+				if ( isset( $setting['type'] ) && 'text' === $setting['type'] && isset( $setting['class'] ) && 'widefat' === $setting['class'] ) {
+					if ( ! isset( $setting['css'] ) || '' === $setting['css'] ) {
+						$setting['css'] = 'width:100%;';
+					} else {
+						$setting['css'] .= ' ' . 'width:100%;';
 					}
 				}
 			}

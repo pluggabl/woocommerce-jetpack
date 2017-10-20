@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -59,7 +59,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * change_shipping_price_by_gateway.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 * @since   2.4.8
 	 */
 	function change_shipping_price_by_gateway( $package_rates, $package ) {

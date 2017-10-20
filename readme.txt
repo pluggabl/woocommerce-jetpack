@@ -3,7 +3,7 @@ Contributors: algoritmika,anbinder
 Tags: woocommerce,booster for woocommerce,woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 3.1.3
+Stable tag: 3.2.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -104,8 +104,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Orders* - Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 * *Shipping Methods by Products* - Set products, product categories or tags to include/exclude for WooCommerce shipping methods to show up.
-* *Shipping Methods by User Membership* - Set membership plans to include/exclude for WooCommerce shipping methods to show up.
-* *Shipping Methods by User Role* - Set user roles to include/exclude for WooCommerce shipping methods to show up.
+* *Shipping Methods by Users* - Set user roles or membership plans to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Options* - Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available. Grant free shipping on per product basis.
 
 **PDF Invoicing & Packing Slips**
@@ -170,33 +169,34 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.1.4 - 19/10/2017 =
-	* Dev - WooCommerce v3.2 compatibility - SHIPPING & ORDERS - Left to Free Shipping - "WC_Cart->taxes function is deprecated since version 3.2" notice fixed.
-	* Dev - WooCommerce v3.2 compatibility - EMAILS & MISC. - Custom Emails - Custom emails added to order actions.
-	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Currency per Product.
-	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Price by User Role.
-	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Prices and Currencies by Country.
-	* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PAYMENT GATEWAYS - Gateways Currency Converter.
-	* Dev - WooCommerce v3.2 compatibility - Admin settings - `select` type options fixed.
-!	* Fix - PRICES & CURRENCIES - Currency per Product - Shipping calculation fixed.
-	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring.
-D	* Dev - PRICES & CURRENCIES - Price by User Role - Roles & Multipliers - "Disable Price by User Role for Regular Price" option added.
-D	* Dev - PRODUCTS - Product Listings - "TAX Display in the Shop - by User Role" section added.
-D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Select: Use select2 Library" options added.
-!D	* Dev - SHIPPING & ORDERS - Orders - "Bulk Regenerate Download Permissions for Orders" section added.
-D	* Dev - SHIPPING & ORDERS - Order Numbers - "Orders Renumerate Tool Options" admin settings section added.
-!D	* Dev - SHIPPING & ORDERS - Shipping Methods by Products - Initial module release.
-!D	* Dev - SHIPPING & ORDERS - Shipping Methods by User Membership - Initial module release.
-!	* Dev - SHIPPING & ORDERS - Shipping Methods by User Role - Major code refactoring.
-D	* Dev - PDF INVOICING & PACKING SLIPS - General - Now invoices can be created on multiple statuses.
-D	* Dev - PDF INVOICING & PACKING SLIPS - Email Options - Getting full emails list directly from WooCommerce (instead of using manually defined list).
-D	* Dev - Shortcodes - Orders - `[wcj_order_custom_field]` - `key` attribute added.
-	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `product_meta` and `product_post_meta` columns fixed.
-	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Major code refactoring and cleanup.
-D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "Multicolumns" functionality added.
-	* Dev - Functions - Country - `wcj_get_european_union_countries_with_vat()` - `GR` changed to `24`; `RO` changed to `19`.
-	* Dev - Plugin update checker - "Check site key now" now saves the key before checking.
-	* Dev - `es_ES` translation files added.
+= 3.2.0 - 20/10/2017 =
+* Dev - WooCommerce v3.2 compatibility - SHIPPING & ORDERS - Left to Free Shipping - "WC_Cart->taxes function is deprecated since version 3.2" notice fixed.
+* Dev - WooCommerce v3.2 compatibility - EMAILS & MISC. - Custom Emails - Custom emails added to order actions.
+* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Currency per Product.
+* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Price by User Role.
+* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PRICES & CURRENCIES - Prices and Currencies by Country.
+* Dev - WooCommerce v3.2 compatibility - Shipping Taxes - PAYMENT GATEWAYS - Gateways Currency Converter.
+* Dev - WooCommerce v3.2 compatibility - Admin settings - `select` type options fixed; `text` with class `widefat` options fixed.
+* Fix - PRICES & CURRENCIES - Currency per Product - Shipping calculation fixed.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Code refactoring.
+* Dev - PRICES & CURRENCIES - Price by User Role - Roles & Multipliers - "Disable Price by User Role for Regular Price" option added.
+* Dev - PRODUCTS - Product Listings - "TAX Display in the Shop - by User Role" section added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - "Select: Use select2 Library" options added.
+* Dev - SHIPPING & ORDERS - Orders - "Bulk Regenerate Download Permissions for Orders" section added.
+* Dev - SHIPPING & ORDERS - Order Numbers - "Orders Renumerate Tool Options" admin settings section added.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Products - Initial module release.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Users - Module renamed from "Shipping Methods by User Role". Major code refactoring. "Shipping Methods by User Membership" section added.
+* Dev - PDF INVOICING & PACKING SLIPS - General - Now invoices can be created on multiple statuses.
+* Dev - PDF INVOICING & PACKING SLIPS - Header - Header Image - Shortcodes processing added.
+* Dev - PDF INVOICING & PACKING SLIPS - Email Options - Getting full emails list directly from WooCommerce (instead of using manually defined list).
+* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report - "Payment Gateway" column added.
+* Dev - Shortcodes - Orders - `[wcj_order_custom_field]` - `key` attribute added.
+* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `product_meta` and `product_post_meta` columns fixed.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Major code refactoring and cleanup.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - "Multicolumns" functionality added.
+* Dev - Functions - Country - `wcj_get_european_union_countries_with_vat()` - `GR` changed to `24`; `RO` changed to `19`.
+* Dev - Plugin update checker - "Check site key now" now saves the key before checking.
+* Dev - `es_ES` translation files added.
 
 = 3.1.3 - 04/10/2017 =
 * Dev - PRICES & CURRENCIES - Global Discount - Admin settings descriptions updated.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Country
  *
- * @version  3.1.4
+ * @version  3.2.0
  * @author   Algoritmika Ltd.
  */
 
@@ -57,7 +57,7 @@ if ( ! function_exists( 'wcj_get_european_union_countries_with_vat' ) ) {
 	/**
 	 * wcj_get_european_union_countries_with_vat.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 * @return  array
 	 * @todo    check `MC`, `IM`
 	 */

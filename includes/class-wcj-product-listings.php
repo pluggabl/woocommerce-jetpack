@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 */
 	function __construct() {
 		$this->id         = 'product_listings';
@@ -138,8 +138,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * tax_display_by_user_role.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function tax_display_by_user_role( $value ) {
 		if ( '' != ( $display_taxes_by_user_role_roles = get_option( 'wcj_product_listings_display_taxes_by_user_role_roles', '' ) ) ) {

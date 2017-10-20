@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -203,7 +203,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 */
 	function change_price_shipping( $package_rates, $package ) {
 		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {

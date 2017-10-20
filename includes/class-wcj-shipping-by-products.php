@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Products
  *
- * @version 3.1.4
- * @since   3.1.4
+ * @version 3.2.0
+ * @since   3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function __construct() {
 
@@ -47,8 +47,8 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * check.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function check( $options_id, $products_or_cats_or_tags ) {
 		if ( ! isset( WC()->cart ) || WC()->cart->is_empty() ) {
@@ -81,8 +81,8 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * get_condition_options.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function get_condition_options( $options_id ) {
 		switch( $options_id ) {

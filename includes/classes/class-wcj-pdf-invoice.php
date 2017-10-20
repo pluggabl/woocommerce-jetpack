@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.1.0
+ * @version 3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -22,7 +22,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * prepare_pdf.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.0
 	 */
 	function prepare_pdf() {
 
@@ -63,8 +63,8 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_header_enabled', 'yes' ) ) {
 			$the_logo = '';
 			$the_logo_width_mm = 0;
-			if ( '' != get_option( 'wcj_invoicing_' . $invoice_type . '_header_image', '' ) ) {
-				$the_logo = parse_url( get_option( 'wcj_invoicing_' . $invoice_type . '_header_image', '' ), PHP_URL_PATH );
+			if ( '' != ( $header_image = do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_header_image', '' ) ) ) ) {
+				$the_logo = parse_url( $header_image, PHP_URL_PATH );
 				$the_logo_width_mm = get_option( 'wcj_invoicing_' . $invoice_type . '_header_image_width_mm', 50 );
 			}
 			$pdf->SetHeaderData(

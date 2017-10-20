@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Emails
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 */
 	function __construct() {
 
@@ -42,8 +42,8 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * do_custom_emails_order_actions.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 */
 	function do_custom_emails_order_actions( $order ) {
 		$booster_action_prefix = 'woocommerce_order_action_' . 'wcj_send_email_custom' . '_';
@@ -65,8 +65,8 @@ class WCJ_Emails extends WCJ_Module {
 	/**
 	 * add_custom_emails_order_actions.
 	 *
-	 * @version 3.1.4
-	 * @since   3.1.4
+	 * @version 3.2.0
+	 * @since   3.2.0
 	 * @todo    (maybe) add "Add Custom Email(s) to Order Actions" option (in WC >= 3.2.0); same to `woocommerce_order_action_`
 	 */
 	function add_custom_emails_order_actions( $actions ) {

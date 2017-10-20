@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 */
 	function __construct() {
 
@@ -276,7 +276,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * create_document_hook.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 * @since   2.7.0
 	 */
 	function create_document_hook( $order_id ) {

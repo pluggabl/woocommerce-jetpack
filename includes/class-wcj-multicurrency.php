@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -303,7 +303,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 3.1.4
+	 * @version 3.2.0
 	 */
 	function change_price_shipping( $package_rates, $package ) {
 		if ( $this->do_revert() ) {

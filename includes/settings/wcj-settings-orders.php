@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Orders
  *
- * @version 3.1.4
+ * @version 3.2.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -222,7 +222,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'title'    => __( 'Regenerate Download Permissions for All Orders', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Check this box and press "Save changes" button to start regeneration.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc_tip' => __( 'Check this box and press "Save changes" button to start regeneration. Please note that both module and current section must be enabled.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
 		'desc'     => __( 'Regenerate', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_bulk_regenerate_download_permissions_all_orders',
 		'default'  => 'no',
