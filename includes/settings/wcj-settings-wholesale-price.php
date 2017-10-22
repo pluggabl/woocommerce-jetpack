@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 2.8.0
+ * @version 3.2.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -47,11 +47,11 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'If show discount info on cart page is enabled, set format here', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Replaced values: %old_price%, %price%, %discount_value%.', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%old_price%', '%price%', '%discount_value%' ) ),
 		'id'       => 'wcj_wholesale_price_show_info_on_cart_format',
 		'default'  => '<del>%old_price%</del> %price%<br>You save: <span style="color:red;">%discount_value%</span>',
 		'type'     => 'textarea',
-		'css'      => 'width: 450px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Discount Type', 'woocommerce-jetpack' ),

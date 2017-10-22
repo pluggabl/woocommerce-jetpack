@@ -1,13 +1,29 @@
 <?php
 /**
- * Booster for WooCommerce - Functions - User Roles
+ * Booster for WooCommerce - Functions - Users
  *
- * @version 3.1.3
+ * @version 3.2.1
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_users_as_options' ) ) {
+	/**
+	 * wcj_get_users_as_options.
+	 *
+	 * @version 3.2.1
+	 * @since   2.9.0
+	 */
+	function wcj_get_users_as_options() {
+		$users = array();
+		foreach ( get_users( 'orderby=display_name' ) as $user ) {
+			$users[ $user->ID ] = $user->display_name . ' ' . '[ID:' . $user->ID . ']';
+		}
+		return $users;
+	}
+}
 
 if ( ! function_exists( 'is_shop_manager' ) ) {
 	/**

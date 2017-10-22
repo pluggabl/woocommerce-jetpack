@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 3.0.0
+ * @version 3.2.1
  * @since   2.5.9
  * @author  Algoritmika Ltd.
  * @todo    filter export by date
@@ -301,7 +301,7 @@ class WCJ_Exporter_Orders {
 	/**
 	 * export_orders_items.
 	 *
-	 * @version 3.0.0
+	 * @version 3.2.1
 	 * @since   2.5.9
 	 */
 	function export_orders_items( $fields_helper ) {
@@ -359,24 +359,33 @@ class WCJ_Exporter_Orders {
 					for ( $i = 1; $i <= $total_number; $i++ ) {
 						if ( 'yes' === get_option( 'wcj_export_orders_items_fields_additional_enabled_' . $i, 'no' ) ) {
 							if ( '' != ( $additional_field_value = get_option( 'wcj_export_orders_items_fields_additional_value_' . $i, '' ) ) ) {
-								if ( 'meta' === get_option( 'wcj_export_orders_items_fields_additional_type_' . $i, 'meta' ) ) {
-									$row[] = $this->safely_get_post_meta( $order_id, $additional_field_value );
-								} elseif ( 'meta_product' === get_option( 'wcj_export_orders_items_fields_additional_type_' . $i, 'meta' ) ) {
-									$product_id = ( 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
-									$row[] = $this->safely_get_post_meta( $product_id, $additional_field_value );
-								} elseif ( 'shortcode' === get_option( 'wcj_export_orders_items_fields_additional_type_' . $i, 'meta' ) ) {
-									global $post;
-									$post = get_post( $order_id );
-									setup_postdata( $post );
-									$row[] = do_shortcode( $additional_field_value );
-									wp_reset_postdata();
-								} elseif ( 'shortcode_product' === get_option( 'wcj_export_orders_items_fields_additional_type_' . $i, 'meta' ) ) {
-									global $post;
-									$product_id = ( 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
-									$post = get_post( $product_id );
-									setup_postdata( $post );
-									$row[] = do_shortcode( $additional_field_value );
-									wp_reset_postdata();
+								$field_type = get_option( 'wcj_export_orders_items_fields_additional_type_' . $i, 'meta' );
+								switch ( $field_type ) {
+									case 'meta':
+										$row[] = $this->safely_get_post_meta( $order_id, $additional_field_value );
+										break;
+									case 'item_meta':
+										$row[] = wcj_maybe_implode( wc_get_order_item_meta( $item_id, $additional_field_value ) );
+										break;
+									case 'meta_product':
+										$product_id = ( 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
+										$row[] = $this->safely_get_post_meta( $product_id, $additional_field_value );
+										break;
+									case 'shortcode':
+										global $post;
+										$post = get_post( $order_id );
+										setup_postdata( $post );
+										$row[] = do_shortcode( $additional_field_value );
+										wp_reset_postdata();
+										break;
+									case 'shortcode_product':
+										global $post;
+										$product_id = ( 0 != $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'];
+										$post = get_post( $product_id );
+										setup_postdata( $post );
+										$row[] = do_shortcode( $additional_field_value );
+										wp_reset_postdata();
+										break;
 								}
 							} else {
 								$row[] = '';

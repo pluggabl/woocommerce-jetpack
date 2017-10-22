@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Condition
  *
- * @version 3.2.0
+ * @version 3.2.1
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `abstract class WCJ_Module_Shipping_By_Condition`
@@ -60,7 +60,7 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * generate_settings.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.1
 	 * @since   3.2.0
 	 */
 	function generate_settings() {
@@ -99,7 +99,7 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 					array(
 						'title'     => $method->get_method_title(),
 						'desc_tip'  => $desc_tip,
-						'desc'      => sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ),
+						'desc'      => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ),
 						'id'        => 'wcj_shipping_' . $options_id . '_include_' . $method->id,
 						'default'   => '',
 						'type'      => 'multiselect',
@@ -110,7 +110,7 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 					),
 					array(
 						'desc_tip'  => $desc_tip,
-						'desc'      => sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ),
+						'desc'      => '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ),
 						'id'        => 'wcj_shipping_' . $options_id . '_exclude_' . $method->id,
 						'default'   => '',
 						'type'      => 'multiselect',

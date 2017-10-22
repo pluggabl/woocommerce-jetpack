@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Footer
  *
- * @version 3.1.0
+ * @version 3.2.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -30,7 +30,7 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_footer_text',
 			'default'  => __( 'Page %page_number% / %total_pages%', 'woocommerce-jetpack' ),
 			'type'     => 'textarea',
-			'css'      => 'width:66%;min-width:300px;height:165px;',
+			'css'      => 'width:100%;height:165px;',
 			'desc'     => __( 'You can use HTML here, as well as any WordPress shortcodes.', 'woocommerce-jetpack' ) . ' ' .
 				wcj_message_replaced_values( array( '%page_number%', '%total_pages%' ) ),
 		),

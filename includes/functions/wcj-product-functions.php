@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Product
  *
- * @version 3.1.0
+ * @version 3.2.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -206,9 +206,10 @@ if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
 	/*
 	 * wcj_get_product_input_fields.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.1
 	 * @since   2.4.4
 	 * @return  string
+	 * @todo    (maybe) better handle "file" type
 	 */
 	function wcj_get_product_input_fields( $item ) {
 		$product_input_fields = array();
@@ -225,7 +226,7 @@ if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
 				}
 			}
 		}
-		return ( ! empty( $product_input_fields ) ) ? implode( ', ', $product_input_fields ) : '';
+		return ( ! empty( $product_input_fields ) ) ? implode( ', ', array_map( 'wcj_maybe_implode', $product_input_fields ) ) : '';
 	}
 }
 

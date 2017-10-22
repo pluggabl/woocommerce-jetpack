@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 3.2.0
+ * @version 3.2.1
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -92,21 +92,6 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			}
 		}
 		return $package_rates;
-	}
-
-	/**
-	 * get_users_as_options.
-	 *
-	 * @version 2.9.0
-	 * @since   2.9.0
-	 * @todo    (maybe) move to global functions
-	 */
-	function get_users_as_options() {
-		$users = array();
-		foreach ( get_users( 'orderby=display_name' ) as $user ) {
-			$users[ $user->ID ] = $user->display_name . ' ' . '[ID:' . $user->ID . ']';
-		}
-		return $users;
 	}
 
 	/**

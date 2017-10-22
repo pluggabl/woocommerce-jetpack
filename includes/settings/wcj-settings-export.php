@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Export
  *
- * @version 2.8.0
+ * @version 3.2.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add "Additional Export Fields" for "Customers from Orders" and (maybe) "Customers"
@@ -152,6 +152,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'default'  => 'meta',
 			'options'  => array(
 				'meta'              => __( 'Order Meta', 'woocommerce-jetpack' ),
+				'item_meta'         => __( 'Order Item Meta', 'woocommerce-jetpack' ),
 				'shortcode'         => __( 'Order Shortcode', 'woocommerce-jetpack' ),
 				'meta_product'      => __( 'Product Meta', 'woocommerce-jetpack' ),
 				'shortcode_product' => __( 'Product Shortcode', 'woocommerce-jetpack' ),

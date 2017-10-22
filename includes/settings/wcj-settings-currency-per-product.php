@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency per Product
  *
- * @version 3.2.0
+ * @version 3.2.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -136,7 +136,7 @@ $settings = array(
 	),
 );
 if ( 'yes' === get_option( 'wcj_currency_per_product_by_users_enabled', 'no' ) ) {
-	$users_as_options = $this->get_users_as_options();
+	$users_as_options = wcj_get_users_as_options();
 }
 if ( 'yes' === get_option( 'wcj_currency_per_product_by_user_roles_enabled', 'no' ) ) {
 	$user_roles_as_options = wcj_get_user_roles_options();

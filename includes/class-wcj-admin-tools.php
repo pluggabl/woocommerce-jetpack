@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 2.9.0
+ * @version 3.2.1
  * @author  Algoritmika Ltd.
  */
 
@@ -94,7 +94,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * create_meta_meta_box.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.1
 	 * @since   2.5.8
 	 */
 	function create_meta_meta_box( $post ) {
@@ -104,7 +104,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 		$meta = get_post_meta( $post_id );
 		$table_data = array();
 		foreach ( $meta as $meta_key => $meta_values ) {
-			$table_data[] = array( $meta_key, implode( ', ', $meta_values ) );
+			$table_data[] = array( $meta_key, esc_html( print_r( maybe_unserialize( $meta_values[0] ), true ) ) );
 		}
 		$html .= wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
 		// Items Meta (for orders only)
@@ -113,14 +113,17 @@ class WCJ_Admin_Tools extends WCJ_Module {
 			$table_data = array();
 			foreach ( $_order->get_items() as $item_key => $item ) {
 				foreach ( $item['item_meta'] as $item_meta_key => $item_meta_value ) {
-					if ( is_array( $item_meta_value ) ) {
-						$item_meta_value = implode( ', ', $item_meta_value );
-					}
-					$table_data[] = array( $item_key, $item_meta_key, $item_meta_value );
+					$table_data[] = array( $item_key, $item_meta_key, esc_html( print_r( maybe_unserialize( $item_meta_value ), true ) ) );
 				}
 			}
-			$html .= '<h3>' . __( 'Order Items Meta', 'woocommerce-jetpack' ) . '</h3>';
-			$html .= wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
+			if ( ! empty( $table_data ) ) {
+				$html .= '<h3>' . __( 'Order Items Meta', 'woocommerce-jetpack' ) . '</h3>';
+				$table_data = array_merge(
+					array( array( __( 'Item Key', 'woocommerce-jetpack' ), __( 'Item Meta Key', 'woocommerce-jetpack' ), __( 'Item Meta Value', 'woocommerce-jetpack' ) ) ),
+					$table_data
+				);
+				$html .= wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'horizontal' ) );
+			}
 		}
 		// Output
 		echo $html;

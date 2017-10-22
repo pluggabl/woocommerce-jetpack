@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.2.0
+ * @version 3.2.1
  * @author  Algoritmika Ltd.
  */
 
@@ -285,6 +285,22 @@ if ( ! function_exists( 'wcj_current_filter_priority' ) ) {
 			// before WordPress v4.7
 			return key( $current_filter_data );
 		}
+	}
+}
+
+if ( ! function_exists( 'wcj_maybe_implode' ) ) {
+	/*
+	 * wcj_maybe_implode.
+	 *
+	 * @version 3.2.1
+	 * @since   3.2.1
+	 * @return  string
+	 */
+	function wcj_maybe_implode( $value, $glue = ' ' ) {
+		if ( is_array( $value ) ) {
+			$value = implode( $glue, $value );
+		}
+		return $value;
 	}
 }
 

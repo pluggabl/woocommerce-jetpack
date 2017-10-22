@@ -169,6 +169,19 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.2.1 - 22/10/2017 =
+~	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
+!	* Dev - PRICES & CURRENCIES - Wholesale Price - Getting product directly from cart (instead of by ID) - this fixes the issue with "Product Addons" module compatibility.
+	* Dev - PRICES & CURRENCIES - Wholesale Price - Minor code refactoring and admin settings restyling.
+!D	* Dev - SHIPPING & ORDERS - Shipping Methods by Users - "... by Users" (`user_id`) section added.
+	* Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` (Shipping Methods by Products / Users) - Admin settings restyled.
+	* Dev - PDF INVOICING & PACKING SLIPS - Admin settings - Minor restyling.
+	* Fix - EMAILS & MISC. - Admin Tools - Show Order/Product Meta - Array type values display fixed.
+~D	* Dev - EMAILS & MISC. - Export - Orders Items - Additional Fields - "Order Item Meta" type added.
+~	* Dev - EMAILS & MISC. - Export - Orders Items - Additional Fields - Code refactoring.
+	* Dev - Functions - Products - `wcj_get_product_input_fields()` - Array type values display fixed.
+-	* Dev - Functions - Files renamed.
+
 = 3.2.0 - 20/10/2017 =
 * Dev - WooCommerce v3.2 compatibility - SHIPPING & ORDERS - Left to Free Shipping - "WC_Cart->taxes function is deprecated since version 3.2" notice fixed.
 * Dev - WooCommerce v3.2 compatibility - EMAILS & MISC. - Custom Emails - Custom emails added to order actions.

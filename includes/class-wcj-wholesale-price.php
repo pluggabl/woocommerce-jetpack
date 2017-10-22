@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 3.1.0
+ * @version 3.2.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -19,6 +19,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.0
+	 * @todo    (maybe) `woocommerce_get_variation_prices_hash`
 	 */
 	function __construct() {
 
@@ -51,7 +52,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * add_discount_info_to_cart_page.
 	 *
-	 * @version 2.5.7
+	 * @version 3.2.1
 	 */
 	function add_discount_info_to_cart_page( $price_html, $cart_item, $cart_item_key ) {
 
@@ -65,21 +66,25 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 					? get_post_meta( $cart_item['product_id'], '_' . 'wcj_wholesale_price_discount_type', true )
 					: get_option( 'wcj_wholesale_price_discount_type', 'percent' );
 				if ( 'price_directly' === $discount_type ) {
-					$_product = wc_get_product( $cart_item['product_id'] );
+					$_product = $cart_item['data'];
+					if ( isset( $_product->wcj_wholesale_price ) ) {
+						unset( $_product->wcj_wholesale_price );
+					}
 					$discount = wc_price( $_product->get_price() - $discount );
-				}
-				elseif ( 'fixed' === $discount_type ) {
+				} elseif ( 'fixed' === $discount_type ) {
 					$discount = wc_price( $discount );
 				} else {
 					$discount = $discount . '%';
 				}
 				$old_price_html = wc_price( $cart_item['wcj_wholesale_price_old'] );
 				$wholesale_price_html = get_option( 'wcj_wholesale_price_show_info_on_cart_format' );
-				$wholesale_price_html = str_replace(
-					array( '%old_price%',   '%price%',   '%discount_value%', '%discount_percent%' ), // '%discount_percent%' is deprecated
-					array( $old_price_html, $price_html, $discount,          $discount ),
-					$wholesale_price_html
+				$replaced_values = array(
+					'%old_price%'        => $old_price_html,
+					'%price%'            => $price_html,
+					'%discount_value%'   => $discount,
+					'%discount_percent%' => $discount, // deprecated (replaced with %discount_value%)
 				);
+				$wholesale_price_html = str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), $wholesale_price_html );
 				return $wholesale_price_html;
 			}
 		}
@@ -168,7 +173,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * calculate_totals.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.1
 	 * @since   2.5.0
 	 */
 	function calculate_totals( $cart ) {
@@ -185,20 +190,14 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				unset( WC()->cart->cart_contents[ $item_key ]['wcj_wholesale_price_old'] );
 			}
 
-			$_product = wc_get_product( $item['product_id'] );
+			$_product = $item['data'];
 			if ( ! wcj_is_product_wholesale_enabled( wcj_get_product_id_or_variation_parent_id( $_product ) ) ) {
 				continue;
 			}
 
 			// Prices
-			if ( 0 != ( $variation_id = WC()->cart->cart_contents[ $item_key ]['variation_id'] ) ) {
-				$variation = wc_get_product( $variation_id );
-				$price     = $variation->get_price();
-				$price_old = wcj_get_product_display_price( $variation ); // used for display only
-			} else {
-				$price     = $_product->get_price();
-				$price_old = wcj_get_product_display_price( $_product ); // used for display only
-			}
+			$price     = $_product->get_price();
+			$price_old = wcj_get_product_display_price( $_product ); // used for display only
 
 			// If other discount was applied in cart...
 			if ( 'yes' === get_option( 'wcj_wholesale_price_apply_only_if_no_other_discounts', 'no' ) ) {

@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: https://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 3.2.0
+Version: 3.2.1-dev
 Author: Algoritmika Ltd
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
@@ -64,7 +64,7 @@ require_once( 'includes/constants/wcj-constants.php' );
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 3.2.0
+ * @version 3.2.1
  */
 final class WC_Jetpack {
 
@@ -74,7 +74,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.2.0';
+	public $version = '3.2.1-dev-201710221938';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -288,7 +288,7 @@ final class WC_Jetpack {
 	/**
 	 * include_functions.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.1
 	 */
 	function include_functions() {
 		include_once( 'includes/functions/wcj-core-functions.php' );
@@ -300,7 +300,7 @@ final class WC_Jetpack {
 		include_once( 'includes/functions/wcj-order-functions.php' );
 		include_once( 'includes/functions/wcj-eu-vat-functions.php' );
 		include_once( 'includes/functions/wcj-price-currency-functions.php' );
-		include_once( 'includes/functions/wcj-user-roles-functions.php' );
+		include_once( 'includes/functions/wcj-functions-users.php' );
 		include_once( 'includes/functions/wcj-exchange-rates-functions.php' );
 		include_once( 'includes/functions/wcj-functions-number-to-words.php' );
 		include_once( 'includes/functions/wcj-functions-number-to-words-bg.php' );
