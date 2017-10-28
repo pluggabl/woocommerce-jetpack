@@ -103,8 +103,9 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
 * *Orders* - Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
+* *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for WooCommerce shipping methods to show up.
 * *Shipping Methods by Products* - Set products, product categories or tags to include/exclude for WooCommerce shipping methods to show up.
-* *Shipping Methods by Users* - Set user roles or membership plans to include/exclude for WooCommerce shipping methods to show up.
+* *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Options* - Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available. Grant free shipping on per product basis.
 
 **PDF Invoicing & Packing Slips**
@@ -169,18 +170,26 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.1 - 22/10/2017 =
-~	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
-!	* Dev - PRICES & CURRENCIES - Wholesale Price - Getting product directly from cart (instead of by ID) - this fixes the issue with "Product Addons" module compatibility.
+= 3.2.1 - 26/10/2017 =
+	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
+	* Dev - PRICES & CURRENCIES - Wholesale Price - Getting product directly from cart (instead of by ID) - this fixes the issue with "Product Addons" module compatibility.
 	* Dev - PRICES & CURRENCIES - Wholesale Price - Minor code refactoring and admin settings restyling.
-!D	* Dev - SHIPPING & ORDERS - Shipping Methods by Users - "... by Users" (`user_id`) section added.
+D	* Dev - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Amount - Initial module release.
+D	* Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Include" Options - "Validate all" option added.
+D	* Dev - SHIPPING & ORDERS - Shipping Methods by Users - "... by Users" (`user_id`) section added. Module (documentation) URL changed.
 	* Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` (Shipping Methods by Products / Users) - Admin settings restyled.
+	* Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` - Code refactoring.
 	* Dev - PDF INVOICING & PACKING SLIPS - Admin settings - Minor restyling.
 	* Fix - EMAILS & MISC. - Admin Tools - Show Order/Product Meta - Array type values display fixed.
-~D	* Dev - EMAILS & MISC. - Export - Orders Items - Additional Fields - "Order Item Meta" type added.
-~	* Dev - EMAILS & MISC. - Export - Orders Items - Additional Fields - Code refactoring.
+D	* Dev - EMAILS & MISC. - Export - Orders Items - Additional Fields - "Order Item Meta" type added.
+	* Dev - EMAILS & MISC. - Export - Orders Items - Additional Fields - Code refactoring.
+D	* Dev - Shortcodes - General - `[wcj_store_address]` shortcode added.
+D	* Dev - Shortcodes - General - `[wcj_wp_option]` shortcode added.
 	* Dev - Functions - Products - `wcj_get_product_input_fields()` - Array type values display fixed.
--	* Dev - Functions - Files renamed.
+	* Dev - Functions - Files renamed.
+	* Dev - Langs - `pt_BR`, `ro_RO`, `ja`, `is_IS`, `it_IT`, `sv_SE`, `az` translation files added.
+!	* Dev - Langs - "po" files removed.
+	* Dev - Classes - `WCJ_Module` - Minor code refactoring.
 
 = 3.2.0 - 20/10/2017 =
 * Dev - WooCommerce v3.2 compatibility - SHIPPING & ORDERS - Left to Free Shipping - "WC_Cart->taxes function is deprecated since version 3.2" notice fixed.

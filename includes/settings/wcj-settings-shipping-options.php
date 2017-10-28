@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Options
  *
- * @version 2.9.1
+ * @version 3.2.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -44,7 +44,10 @@ $settings = array(
 $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Free Shipping by Product', 'woocommerce-jetpack' ),
-		'desc'     => __( 'In this section you can select products which grant free shipping when added to cart.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'In this section you can select products which grant free shipping when added to cart.', 'woocommerce-jetpack' ) . '<br>' .
+			sprintf( __( 'Similar results can be achieved with %s module.', 'woocommerce-jetpack' ),
+				'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=shipping_and_orders&section=shipping_by_products' ) . '">' .
+					__( 'Shipping Methods by Products', 'woocommerce-jetpack' ) . '</a>' ),
 		'type'     => 'title',
 		'id'       => 'wcj_shipping_free_shipping_by_product_options',
 	),

@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Functions - Product
+ * Booster for WooCommerce - Functions - Products
  *
  * @version 3.2.1
  * @since   2.9.0

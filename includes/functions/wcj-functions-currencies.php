@@ -1,13 +1,15 @@
 <?php
 /**
- * Booster for WooCommerce - Currencies Array
+ * Booster for WooCommerce - Functions - Currencies
  *
  * @version 2.9.0
  * @author  Algoritmika Ltd.
- * @todo    move this to functions folder
  */
 
 if ( ! function_exists( 'wcj_get_currencies_array' ) ) {
+	/**
+	 * wcj_get_currencies_array.
+	 */
 	function wcj_get_currencies_array() {
 		return array(
 			array( 'code' => 'AED', 'symbol' => 'د.إ', 'name' => __( 'United Arab Emirates Dirham', 'woocommerce' ) ),

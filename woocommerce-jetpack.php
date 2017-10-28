@@ -74,7 +74,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.2.1-dev-201710221938';
+	public $version = '3.2.1-dev-201710262013';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -291,25 +291,25 @@ final class WC_Jetpack {
 	 * @version 3.2.1
 	 */
 	function include_functions() {
-		include_once( 'includes/functions/wcj-core-functions.php' );
-		include_once( 'includes/functions/wcj-debug-functions.php' );
-		include_once( 'includes/functions/wcj-admin-functions.php' );
-		include_once( 'includes/functions/wcj-general-functions.php' );
-		include_once( 'includes/functions/wcj-date-time-functions.php' );
-		include_once( 'includes/functions/wcj-product-functions.php' );
-		include_once( 'includes/functions/wcj-order-functions.php' );
-		include_once( 'includes/functions/wcj-eu-vat-functions.php' );
-		include_once( 'includes/functions/wcj-price-currency-functions.php' );
+		include_once( 'includes/functions/wcj-functions-core.php' );
+		include_once( 'includes/functions/wcj-functions-debug.php' );
+		include_once( 'includes/functions/wcj-functions-admin.php' );
+		include_once( 'includes/functions/wcj-functions-general.php' );
+		include_once( 'includes/functions/wcj-functions-date-time.php' );
+		include_once( 'includes/functions/wcj-functions-products.php' );
+		include_once( 'includes/functions/wcj-functions-orders.php' );
+		include_once( 'includes/functions/wcj-functions-eu-vat.php' );
+		include_once( 'includes/functions/wcj-functions-price-currency.php' );
 		include_once( 'includes/functions/wcj-functions-users.php' );
-		include_once( 'includes/functions/wcj-exchange-rates-functions.php' );
+		include_once( 'includes/functions/wcj-functions-exchange-rates.php' );
 		include_once( 'includes/functions/wcj-functions-number-to-words.php' );
 		include_once( 'includes/functions/wcj-functions-number-to-words-bg.php' );
 		include_once( 'includes/functions/wcj-functions-number-to-words-lt.php' );
-		include_once( 'includes/functions/wcj-html-functions.php' );
-		include_once( 'includes/functions/wcj-country-functions.php' );
-		include_once( 'includes/functions/wcj-invoicing-functions.php' );
-		include_once( 'includes/functions/wcj-reports-functions.php' );
-		include_once( 'includes/functions/wcj-currencies.php' );
+		include_once( 'includes/functions/wcj-functions-html.php' );
+		include_once( 'includes/functions/wcj-functions-country.php' );
+		include_once( 'includes/functions/wcj-functions-invoicing.php' );
+		include_once( 'includes/functions/wcj-functions-reports.php' );
+		include_once( 'includes/functions/wcj-functions-currencies.php' );
 	}
 
 	/**
@@ -334,7 +334,7 @@ final class WC_Jetpack {
 	/**
 	 * Include modules and submodules
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.1
 	 */
 	function include_modules() {
 		$modules_files = array(
@@ -398,6 +398,7 @@ final class WC_Jetpack {
 			'includes/class-wcj-shipping-calculator.php',
 			'includes/class-wcj-shipping-by-user-role.php',
 			'includes/class-wcj-shipping-by-products.php',
+			'includes/class-wcj-shipping-by-order-amount.php',
 			'includes/class-wcj-address-formats.php',
 			'includes/class-wcj-orders.php',
 			'includes/class-wcj-order-min-amount.php',

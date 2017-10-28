@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.2.0
+ * @version 3.2.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -109,14 +109,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	}
 
 	/**
-	 * add_settings_from_file.
+	 * maybe_fix_settings.
 	 *
-	 * @version 3.2.0
-	 * @since   2.8.0
+	 * @version 3.2.1
+	 * @since   3.2.1
 	 */
-	function add_settings_from_file( $settings ) {
-		$filename = wcj_plugin_path() . '/includes/settings/wcj-settings-' . str_replace( '_', '-', $this->id ) . '.php';
-		$settings = ( file_exists ( $filename ) ? require( $filename ) : $settings );
+	function maybe_fix_settings( $settings ) {
 		if ( ! WCJ_IS_WC_VERSION_BELOW_3_2_0 ) {
 			foreach ( $settings as &$setting ) {
 				if ( isset( $setting['type'] ) && 'select' === $setting['type'] ) {
@@ -136,6 +134,18 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			}
 		}
 		return $settings;
+	}
+
+	/**
+	 * add_settings_from_file.
+	 *
+	 * @version 3.2.1
+	 * @since   2.8.0
+	 */
+	function add_settings_from_file( $settings ) {
+		$filename = wcj_plugin_path() . '/includes/settings/wcj-settings-' . str_replace( '_', '-', $this->id ) . '.php';
+		$settings = ( file_exists ( $filename ) ? require( $filename ) : $settings );
+		return $this->maybe_fix_settings( $settings );
 	}
 
 	/*

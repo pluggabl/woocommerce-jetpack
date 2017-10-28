@@ -18,12 +18,11 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.1
 	 * @since   3.2.0
 	 */
 	function __construct( $type = 'module' ) {
 		parent::__construct( $type );
-		add_filter( 'wcj_' . $this->id . '_settings', array( $this, 'generate_settings' ) );
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_package_rates', array( $this, 'available_shipping_methods' ), PHP_INT_MAX, 2 );
 		}
@@ -32,7 +31,7 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * available_shipping_methods.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.1
 	 * @since   3.2.0
 	 * @todo    apply_filters( 'booster_get_option' )
 	 */
@@ -43,12 +42,12 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 					continue;
 				}
 				$include = get_option( 'wcj_shipping_' . $options_id . '_include_' . $rate->method_id, '' );
-				if ( ! empty( $include ) && ! $this->check( $options_id, $include ) ) {
+				if ( ! empty( $include ) && ! $this->check( $options_id, $include, 'include' ) ) {
 					unset( $rates[ $rate_key ] );
 					break;
 				}
 				$exclude = get_option( 'wcj_shipping_' . $options_id . '_exclude_' . $rate->method_id, '' );
-				if ( ! empty( $exclude ) && $this->check( $options_id, $exclude ) ) {
+				if ( ! empty( $exclude ) && $this->check( $options_id, $exclude , 'exclude' ) ) {
 					unset( $rates[ $rate_key ] );
 					break;
 				}
@@ -58,86 +57,22 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	}
 
 	/**
-	 * generate_settings.
+	 * add_settings_from_file.
 	 *
 	 * @version 3.2.1
-	 * @since   3.2.0
+	 * @since   3.2.1
 	 */
-	function generate_settings() {
-		$settings = array();
-		if ( ! function_exists( 'WC' ) ) {
-			return array();
-		}
-		foreach ( $this->condition_options as $options_id => $options_data ) {
-			$settings = array_merge( $settings, array(
-				array(
-					'title'   => sprintf( __( 'Shipping Methods by %s', 'woocommerce-jetpack' ), $options_data['title'] ),
-					'type'    => 'title',
-					'desc'    => __( 'Leave empty to disable.', 'woocommerce-jetpack' )  . ' ' . $options_data['desc'],
-					'id'      => 'wcj_shipping_by_' . $options_id . '_options',
-				),
-				array(
-					'title'   => sprintf( __( 'Shipping Methods by %s', 'woocommerce-jetpack' ), $options_data['title'] ),
-					'desc'    => __( 'Enable section', 'woocommerce-jetpack' ),
-					'id'      => 'wcj_shipping_by_' . $options_id . '_section_enabled',
-					'type'    => 'checkbox',
-					'default' => 'yes',
-				),
-			) );
-			foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
-				if ( ! in_array( $method->id, array( 'flat_rate', 'local_pickup' ) ) ) {
-					$custom_attributes = apply_filters( 'booster_get_message', '', 'disabled' );
-					if ( '' == $custom_attributes ) {
-						$custom_attributes = array();
-					}
-					$desc_tip = apply_filters( 'booster_get_message', '', 'desc_no_link' );
-				} else {
-					$custom_attributes = array();
-					$desc_tip = '';
-				}
-				$settings = array_merge( $settings, array(
-					array(
-						'title'     => $method->get_method_title(),
-						'desc_tip'  => $desc_tip,
-						'desc'      => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ),
-						'id'        => 'wcj_shipping_' . $options_id . '_include_' . $method->id,
-						'default'   => '',
-						'type'      => 'multiselect',
-						'class'     => 'chosen_select',
-						'css'       => 'width: 450px;',
-						'options'   => $this->get_condition_options( $options_id ),
-						'custom_attributes' => $custom_attributes,
-					),
-					array(
-						'desc_tip'  => $desc_tip,
-						'desc'      => '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ),
-						'id'        => 'wcj_shipping_' . $options_id . '_exclude_' . $method->id,
-						'default'   => '',
-						'type'      => 'multiselect',
-						'class'     => 'chosen_select',
-						'css'       => 'width: 450px;',
-						'options'   => $this->get_condition_options( $options_id ),
-						'custom_attributes' => $custom_attributes,
-					),
-				) );
-			}
-			$settings = array_merge( $settings, array(
-				array(
-					'type'  => 'sectionend',
-					'id'    => 'wcj_shipping_by_' . $options_id . '_options',
-				),
-			) );
-		}
-		return $settings;
+	function add_settings_from_file( $settings ) {
+		return $this->maybe_fix_settings( require( wcj_plugin_path() . '/includes/settings/wcj-settings-shipping-by-condition.php' ) );
 	}
 
 	/**
 	 * check.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.1
 	 * @since   3.2.0
 	 */
-	function check( $options_id, $args ) {
+	function check( $options_id, $args, $include_or_exclude ) {
 		return true;
 	}
 
@@ -148,6 +83,16 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	 * @since   3.2.0
 	 */
 	function get_condition_options( $options_id ) {
+		return array();
+	}
+
+	/**
+	 * get_additional_section_settings.
+	 *
+	 * @version 3.2.1
+	 * @since   3.2.1
+	 */
+	function get_additional_section_settings( $options_id ) {
 		return array();
 	}
 

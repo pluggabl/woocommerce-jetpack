@@ -1,10 +1,8 @@
 <?php
 /**
- * WooCommerce Modules Array
+ * Booster for WooCommerce - Modules Array
  *
- * The WooCommerce Modules Array.
- *
- * @version 3.2.0
+ * @version 3.2.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -129,6 +127,7 @@ return apply_filters( 'wcj_modules', array(
 			'shipping_calculator',
 			'shipping_by_user_role',
 			'shipping_by_products',
+			'shipping_by_order_amount',
 			'address_formats',
 			'orders',
 			'order_min_amount',

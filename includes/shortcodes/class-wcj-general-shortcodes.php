@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.1.1
+ * @version 3.2.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.1
+	 * @version 3.2.1
 	 */
 	function __construct() {
 
@@ -42,9 +42,11 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_get_left_to_free_shipping',
 			'wcj_selector',
 			'wcj_site_url',
+			'wcj_store_address',
 			'wcj_tcpdf_pagebreak',
 			'wcj_text',
 			'wcj_wholesale_price_table',
+			'wcj_wp_option',
 			'wcj_wpml',
 			'wcj_wpml_translate',
 //			'wcj_image',
@@ -75,10 +77,45 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'to'                    => '',
 			'columns_style'         => 'text-align: center;',
 			'selector_type'         => 'country',
+			'option'                => '',
+			'company'               => '',
 		);
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_store_address.
+	 *
+	 * @version 3.2.1
+	 * @since   3.2.1
+	 * @todo    `force_country_display` - make optional
+	 * @todo    `remove_filter` will remove all `__return_true` functions (even added elsewhere)
+	 */
+	function wcj_store_address( $atts ) {
+		add_filter( 'woocommerce_formatted_address_force_country_display', '__return_true' );
+		$return = WC()->countries->get_formatted_address( array(
+			'company'    => $atts['company'],
+			'address_1'  => WC()->countries->get_base_address(),
+			'address_2'  => WC()->countries->get_base_address_2(),
+			'city'       => WC()->countries->get_base_city(),
+			'state'      => WC()->countries->get_base_state(),
+			'postcode'   => WC()->countries->get_base_postcode(),
+			'country'    => WC()->countries->get_base_country(),
+		) );
+		remove_filter( 'woocommerce_formatted_address_force_country_display', '__return_true' );
+		return $return;
+	}
+
+	/**
+	 * wcj_wp_option.
+	 *
+	 * @version 3.2.1
+	 * @since   3.2.1
+	 */
+	function wcj_wp_option( $atts ) {
+		return ( '' != $atts['option'] ? get_option( $atts['option'], $atts['default'] ) : '' );
 	}
 
 	/**
