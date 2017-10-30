@@ -1,9 +1,9 @@
 === Booster for WooCommerce ===
-Contributors: algoritmika,anbinder
-Tags: woocommerce,booster for woocommerce,woocommerce jetpack
+Contributors: algoritmika, anbinder
+Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -170,26 +170,26 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.1 - 26/10/2017 =
-	* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
-	* Dev - PRICES & CURRENCIES - Wholesale Price - Getting product directly from cart (instead of by ID) - this fixes the issue with "Product Addons" module compatibility.
-	* Dev - PRICES & CURRENCIES - Wholesale Price - Minor code refactoring and admin settings restyling.
-D	* Dev - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Amount - Initial module release.
-D	* Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Include" Options - "Validate all" option added.
-D	* Dev - SHIPPING & ORDERS - Shipping Methods by Users - "... by Users" (`user_id`) section added. Module (documentation) URL changed.
-	* Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` (Shipping Methods by Products / Users) - Admin settings restyled.
-	* Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` - Code refactoring.
-	* Dev - PDF INVOICING & PACKING SLIPS - Admin settings - Minor restyling.
-	* Fix - EMAILS & MISC. - Admin Tools - Show Order/Product Meta - Array type values display fixed.
-D	* Dev - EMAILS & MISC. - Export - Orders Items - Additional Fields - "Order Item Meta" type added.
-	* Dev - EMAILS & MISC. - Export - Orders Items - Additional Fields - Code refactoring.
-D	* Dev - Shortcodes - General - `[wcj_store_address]` shortcode added.
-D	* Dev - Shortcodes - General - `[wcj_wp_option]` shortcode added.
-	* Dev - Functions - Products - `wcj_get_product_input_fields()` - Array type values display fixed.
-	* Dev - Functions - Files renamed.
-	* Dev - Langs - `pt_BR`, `ro_RO`, `ja`, `is_IS`, `it_IT`, `sv_SE`, `az` translation files added.
-!	* Dev - Langs - "po" files removed.
-	* Dev - Classes - `WCJ_Module` - Minor code refactoring.
+= 3.2.1 - 30/10/2017 =
+* Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Getting product directly from cart (instead of by ID) - this fixes the issue with "Product Addons" module compatibility.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Minor code refactoring and admin settings restyling.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Amount - Initial module release.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Include" Options - "Validate all" option added.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Users - "... by Users" (`user_id`) section added. Module (documentation) URL changed.
+* Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` (Shipping Methods by Products / Users) - Admin settings restyled.
+* Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` - Code refactoring.
+* Dev - PDF INVOICING & PACKING SLIPS - Admin settings - Minor restyling.
+* Fix - EMAILS & MISC. - Admin Tools - Show Order/Product Meta - Array type values display fixed.
+* Dev - EMAILS & MISC. - Export - Orders Items - Additional Fields - "Order Item Meta" type added.
+* Dev - EMAILS & MISC. - Export - Orders Items - Additional Fields - Code refactoring.
+* Dev - Shortcodes - General - `[wcj_store_address]` shortcode added.
+* Dev - Shortcodes - General - `[wcj_wp_option]` shortcode added.
+* Dev - Functions - Products - `wcj_get_product_input_fields()` - Array type values display fixed.
+* Dev - Functions - Files renamed.
+* Dev - Langs - `pt_BR`, `ro_RO`, `ja`, `is_IS`, `it_IT`, `sv_SE`, `az` translation files added.
+* Dev - Langs - "po" files removed.
+* Dev - Classes - `WCJ_Module` - Minor code refactoring.
 
 = 3.2.0 - 20/10/2017 =
 * Dev - WooCommerce v3.2 compatibility - SHIPPING & ORDERS - Left to Free Shipping - "WC_Cart->taxes function is deprecated since version 3.2" notice fixed.
