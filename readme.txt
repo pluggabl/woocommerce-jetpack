@@ -170,6 +170,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.2.2 - 30/10/2017 =
+!	* Dev - Functions - Users - `wcj_get_current_user_first_role()` - Code changed, so now user role is correctly identified regarding of array index.
+
 = 3.2.1 - 30/10/2017 =
 * Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
 * Dev - PRICES & CURRENCIES - Wholesale Price - Getting product directly from cart (instead of by ID) - this fixes the issue with "Product Addons" module compatibility.

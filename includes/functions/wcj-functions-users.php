@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 3.2.1
+ * @version 3.2.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -86,7 +86,7 @@ if ( ! function_exists( 'wcj_get_current_user_first_role' ) ) {
 	/**
 	 * wcj_get_current_user_first_role.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.2
 	 * @since   2.5.3
 	 */
 	function wcj_get_current_user_first_role() {
@@ -97,7 +97,8 @@ if ( ! function_exists( 'wcj_get_current_user_first_role' ) ) {
 			}
 		}
 		$current_user = wp_get_current_user();
-		return ( isset( $current_user->roles[0] ) && '' != $current_user->roles[0] ) ? $current_user->roles[0] : 'guest';
+		$first_role   = ( isset( $current_user->roles ) && is_array( $current_user->roles ) && ! empty( $current_user->roles ) ? reset( $current_user->roles ) : 'guest' );
+		return ( '' != $first_role ? $first_role : 'guest' );
 	}
 }
 
