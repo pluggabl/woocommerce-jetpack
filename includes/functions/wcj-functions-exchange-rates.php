@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 2.9.1
+ * @version 3.2.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -13,12 +13,12 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate_servers.
 	 *
-	 * @version 2.6.0
+	 * @version 3.2.2
 	 * @since   2.6.0
 	 */
 	function wcj_get_currency_exchange_rate_servers() {
 		return array(
-			'yahoo' => __( 'Yahoo', 'woocommerce-jetpack' ),
+			'yahoo' => __( 'European Central Bank (ECB) (Yahoo Service discontinued)', 'woocommerce-jetpack' ),
 			'ecb'   => __( 'European Central Bank (ECB)', 'woocommerce-jetpack' ),
 			'tcmb'  => __( 'TCMB', 'woocommerce-jetpack' ),
 		);
@@ -29,7 +29,7 @@ if ( ! function_exists( 'alg_get_exchange_rate' ) ) {
 	/*
 	 * alg_get_exchange_rate.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.2
 	 * @since   2.6.0
 	 */
 	function alg_get_exchange_rate( $currency_from, $currency_to ) {
@@ -43,11 +43,8 @@ if ( ! function_exists( 'alg_get_exchange_rate' ) ) {
 			case 'tcmb':
 				$return = alg_tcmb_get_exchange_rate( $currency_from, $currency_to );
 				break;
-			case 'ecb':
+			default: // 'yahoo' // 'ecb'
 				$return = alg_ecb_get_exchange_rate( $currency_from, $currency_to );
-				break;
-			default: // 'yahoo'
-				$return = alg_yahoo_get_exchange_rate( $currency_from, $currency_to );
 				break;
 		}
 		return ( 'yes' === $calculate_by_invert ) ? round( ( 1 / $return ), 6 ) : $return;
@@ -170,6 +167,8 @@ if ( ! function_exists( 'alg_yahoo_get_exchange_rate' ) ) {
 	 * @version 2.7.0
 	 * @return  float rate on success, else 0
 	 * @todo    `alg_` to `wcj_`
+	 * @todo    remove this as Yahoo service is discontinued
+	 * @deprecated This feature was discontinued by the Yahoo Finance team and they will not be reintroducing that functionality.
 	 */
 	function alg_yahoo_get_exchange_rate( $currency_from, $currency_to ) {
 

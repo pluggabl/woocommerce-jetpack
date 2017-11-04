@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Breadcrumbs
  *
- * @version 2.9.0
+ * @version 3.2.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -57,8 +57,9 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 	/**
 	 * hide_breadcrumbs_with_css.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.2
 	 * @since   2.9.0
+	 * @todo    (maybe) option to add custom identifiers
 	 * @todo    (maybe) add more identifiers
 	 */
 	function hide_breadcrumbs_with_css() {
@@ -68,6 +69,7 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 			'.breadcrumbs',
 			'.breadcrumb',
 			'#breadcrumbs',
+			'.breadcrumbs-wrapper',
 		);
 		echo '<style>' . implode( ', ', $identifiers ) . ' { display: none !important; }' . '</style>';
 	}

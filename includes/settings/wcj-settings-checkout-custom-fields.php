@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Fields
  *
- * @version 3.2.0
+ * @version 3.2.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -32,11 +32,49 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Add All Fields to "Order Received" Page', 'woocommerce-jetpack' ),
+		'title'    => __( 'Emails Fields Template', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Before the fields', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_custom_fields_emails_template_before',
+		'default'  => '',
+		'type'     => 'textarea',
+	),
+	array(
+		'desc'     => __( 'Each field', 'woocommerce-jetpack' ) . '. ' . wcj_message_replaced_values( array( '%label%', '%value%' ) ),
+		'id'       => 'wcj_checkout_custom_fields_emails_template_field',
+		'default'  => '<p><strong>%label%:</strong> %value%</p>',
+		'type'     => 'textarea',
+	),
+	array(
+		'desc'     => __( 'After the fields', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_custom_fields_emails_template_after',
+		'default'  => '',
+		'type'     => 'textarea',
+	),
+	array(
+		'title'    => __( 'Add All Fields to "Order Received" (i.e. "Thank You") and "View Order" Pages', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_checkout_custom_fields_add_to_order_received',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( '"Order Received" Fields Template', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Before the fields', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_custom_fields_order_received_template_before',
+		'default'  => '',
+		'type'     => 'textarea',
+	),
+	array(
+		'desc'     => __( 'Each field', 'woocommerce-jetpack' ) . '. ' . wcj_message_replaced_values( array( '%label%', '%value%' ) ),
+		'id'       => 'wcj_checkout_custom_fields_order_received_template_field',
+		'default'  => '<p><strong>%label%:</strong> %value%</p>',
+		'type'     => 'textarea',
+	),
+	array(
+		'desc'     => __( 'After the fields', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_custom_fields_order_received_template_after',
+		'default'  => '',
+		'type'     => 'textarea',
 	),
 	array(
 		'title'    => __( 'Custom Fields Number', 'woocommerce-jetpack' ),

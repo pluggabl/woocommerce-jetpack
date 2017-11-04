@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 3.2.0
+ * @version 3.2.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.2
 	 */
 	function __construct() {
 
@@ -34,7 +34,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 			add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $this, 'add_custom_order_and_account_fields_to_admin_order_display' ), PHP_INT_MAX );
 
 			if ( 'yes' === get_option( 'wcj_checkout_custom_fields_add_to_order_received', 'yes' ) ) {
-				add_action( 'woocommerce_order_details_after_order_table', array( $this, 'add_custom_fields_to_order_display' ), PHP_INT_MAX );
+				add_action( 'woocommerce_order_details_after_order_table', array( $this, 'add_custom_fields_to_view_order_and_thankyou_pages' ), PHP_INT_MAX );
 			}
 			add_action( 'woocommerce_email_after_order_table',          array( $this, 'add_custom_fields_to_emails' ), PHP_INT_MAX, 2 );
 
@@ -158,20 +158,6 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	}
 
 	/**
-	 * add_custom_fields_to_emails.
-	 *
-	 * @version 2.3.0
-	 */
-	function add_custom_fields_to_emails( $order, $sent_to_admin ) {
-		if (
-			(   $sent_to_admin && 'yes' === get_option( 'wcj_checkout_custom_fields_email_all_to_admin' ) ) ||
-			( ! $sent_to_admin && 'yes' === get_option( 'wcj_checkout_custom_fields_email_all_to_customer' ) )
-		) {
-			$this->add_custom_fields_to_order_display( $order );
-		}
-	}
-
-	/**
 	 * add_custom_fields_to_store_exporter_order.
 	 *
 	 * @version 2.3.0
@@ -262,25 +248,59 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	}
 
 	/**
+	 * add_custom_fields_to_emails.
+	 *
+	 * @version 3.2.2
+	 */
+	function add_custom_fields_to_emails( $order, $sent_to_admin ) {
+		if (
+			(   $sent_to_admin && 'yes' === get_option( 'wcj_checkout_custom_fields_email_all_to_admin' ) ) ||
+			( ! $sent_to_admin && 'yes' === get_option( 'wcj_checkout_custom_fields_email_all_to_customer' ) )
+		) {
+			$templates = array(
+				'before' => get_option( 'wcj_checkout_custom_fields_emails_template_before', '' ),
+				'field'  => get_option( 'wcj_checkout_custom_fields_emails_template_field', '<p><strong>%label%:</strong> %value%</p>' ),
+				'after'  => get_option( 'wcj_checkout_custom_fields_emails_template_after', '' ),
+			);
+			$this->add_custom_fields_to_order_display( $order, '', $templates );
+		}
+	}
+
+	/**
+	 * add_custom_fields_to_view_order_and_thankyou_pages.
+	 *
+	 * @version 3.2.2
+	 * @since   3.2.2
+	 */
+	function add_custom_fields_to_view_order_and_thankyou_pages( $order ) {
+		$templates = array(
+			'before' => get_option( 'wcj_checkout_custom_fields_order_received_template_before', '' ),
+			'field'  => get_option( 'wcj_checkout_custom_fields_order_received_template_field', '<p><strong>%label%:</strong> %value%</p>' ),
+			'after'  => get_option( 'wcj_checkout_custom_fields_order_received_template_after', '' ),
+		);
+		$this->add_custom_fields_to_order_display( $order, '', $templates );
+	}
+
+	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.2
 	 * @since   2.3.0
+	 * @todo    convert from before version 2.3.0
 	 */
-	function add_custom_fields_to_order_display( $order, $section = '', $add_styling = false ) {
-		$post_meta = get_post_meta( wcj_get_order_id( $order ) );
+	function add_custom_fields_to_order_display( $order, $section = '', $templates ) {
+		$post_meta    = get_post_meta( wcj_get_order_id( $order ) );
 		$final_output = '';
 		foreach( $post_meta as $key => $values ) {
-
 			if ( false !== strpos( $key, 'wcj_checkout_field_' ) && isset( $values[0] ) ) {
-
+				// Checking section (if set)
 				if ( '' != $section ) {
 					$the_section = strtok( $key, '_' );
 					if ( $section !== $the_section ) {
 						continue;
 					}
 				}
-
+				// Skipping unnecessary meta
 				if (
 					false !== strpos( $key, '_label_' ) ||
 					false !== strpos( $key, '_type_' ) ||
@@ -289,61 +309,46 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				) {
 					continue;
 				}
-
-				$output = '';
-
+				// Field label
+				$label = '';
 				$the_label_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_label_', $key );
 				if ( isset( $post_meta[ $the_label_key ][0] ) ) {
-					$output .= $post_meta[ $the_label_key ][0] . ': ';
+					$label = $post_meta[ $the_label_key ][0];
 				} elseif ( is_array( $values[0] ) && isset( $values[0]['label'] ) ) {
-					$output .= $values[0]['label'] . ': ';
-					// TODO: convert from before version 2.3.0
+					$label = $values[0]['label'];
 				}
-
-				if ( $add_styling && '' != $output ) {
-					$output = '<strong>' . $output . '</strong>';
-				}
-
-				$the_value = ( is_array( $values[0] ) && isset( $values[0]['value'] ) ) ? $values[0]['value'] : $values[0];
-
-				$the_type_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_type_', $key );
-				if ( isset( $post_meta[ $the_type_key ][0] ) && 'checkbox' === $post_meta[ $the_type_key ][0] ) {
-					$the_checkbox_value_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_checkbox_value_', $key );
-					$output .= ( isset( $post_meta[ $the_checkbox_value_key ][0] ) ) ? $post_meta[ $the_checkbox_value_key ][0] : $the_value;
-				} elseif ( isset( $post_meta[ $the_type_key ][0] ) && ( 'radio' === $post_meta[ $the_type_key ][0] || 'select' === $post_meta[ $the_type_key ][0] ) ) {
-					$the_select_values_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_select_options_', $key );
-					$the_select_values = ( isset( $post_meta[ $the_select_values_key ][0] ) ) ? $post_meta[ $the_select_values_key ][0] : '';
-					if ( ! empty( $the_select_values ) ) {
-						$the_select_values_prepared = wcj_get_select_options( $the_select_values );
-						$is_found = false;
-						foreach ( $the_select_values_prepared as $the_select_value_prepared_key => $the_select_value_prepared_value ) {
-							if ( $the_value === $the_select_value_prepared_key ) {
-								$output .= $the_select_value_prepared_value;
-								$is_found = true;
-								break;
-							}
-						}
-						if ( ! $is_found ) {
-							$output .= $the_value;
-						}
+				// Field value
+				$value    = '';
+				$_value   = ( is_array( $values[0] ) && isset( $values[0]['value'] ) ? $values[0]['value'] : $values[0] );
+				$type_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_type_', $key );
+				if ( isset( $post_meta[ $type_key ][0] ) && 'checkbox' === $post_meta[ $type_key ][0] ) {
+					$checkbox_value_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_checkbox_value_', $key );
+					$value              = ( isset( $post_meta[ $checkbox_value_key ][0] ) ? $post_meta[ $checkbox_value_key ][0] : $_value );
+				} elseif ( isset( $post_meta[ $type_key ][0] ) && ( 'radio' === $post_meta[ $type_key ][0] || 'select' === $post_meta[ $type_key ][0] ) ) {
+					$select_values_key = str_replace( 'wcj_checkout_field_', 'wcj_checkout_field_select_options_', $key );
+					$select_values     = ( isset( $post_meta[ $select_values_key ][0] ) ) ? $post_meta[ $select_values_key ][0] : '';
+					if ( ! empty( $select_values ) ) {
+						$select_values_prepared = wcj_get_select_options( $select_values );
+						$value = ( isset( $select_values_prepared[ $_value ] ) ? $select_values_prepared[ $_value ] : $_value );
 					} else {
-						$output .= $the_value;
+						$value = $_value;
 					}
 				} else {
-					$output .= $the_value;
+					$value = $_value;
 				}
-
-				if ( '' != $output ) {
-					$final_output .= $output . '<br>';
+				// Adding field to final output
+				if ( '' != $label || '' != $value ) {
+					$replaced_values = array(
+						'%label%' => $label,
+						'%value%' => $value,
+					);
+					$final_output .= str_replace( array_keys( $replaced_values ), $replaced_values, $templates['field'] );
 				}
 			}
 		}
+		// Outputting
 		if ( '' != $final_output ) {
-			if ( $add_styling ) {
-				echo '<div class="clear"></div><p>' . $final_output . '</p>';
-			} else {
-				echo $final_output;
-			}
+			echo $templates['before'] . $final_output . $templates['after'];
 		}
 	}
 
@@ -437,11 +442,16 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_order_and_account_fields_to_admin_order_display
 	 *
-	 * @version 2.5.0
+	 * @version 3.2.2
 	 */
 	function add_custom_order_and_account_fields_to_admin_order_display( $order ) {
-		$this->add_custom_fields_to_order_display( $order, 'order',   true );
-		$this->add_custom_fields_to_order_display( $order, 'account', true );
+		$templates = array(
+			'before' => '<div class="clear"></div><p>',
+			'field'  => '<strong>%label%: </strong>%value%<br>',
+			'after'  => '</p>',
+		);
+		$this->add_custom_fields_to_order_display( $order, 'order',   $templates );
+		$this->add_custom_fields_to_order_display( $order, 'account', $templates );
 		/*
 		$fields = $this->add_woocommerce_admin_fields( $fields, 'order' );
 		$fields = $this->add_woocommerce_admin_fields( $fields, 'account' );

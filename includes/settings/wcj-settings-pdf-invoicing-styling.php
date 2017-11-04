@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Styling
  *
- * @version 3.2.1
+ * @version 3.2.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -57,7 +57,7 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_css',
 			'default'  => $this->get_default_css_template( $invoice_type['id'] ),
 			'type'     => 'textarea',
-			'css'      => 'width:100%;height:200px;',
+			'css'      => 'width:100%;height:500px;',
 		),
 	),
 	array( $font_family_option ),

@@ -170,8 +170,14 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.2 - 30/10/2017 =
-!	* Dev - Functions - Users - `wcj_get_current_user_first_role()` - Code changed, so now user role is correctly identified regarding of array index.
+= 3.2.2 - 04/11/2017 =
+!	* Dev - CART & CHECKOUT - Checkout Custom Fields - Template options added. Now (by default) using styling in emails and order received page.
+	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Admin settings - Minor restyling.
+~	* Dev - EMAILS & MISC. - Breadcrumbs - `hide_breadcrumbs_with_css()` - Additional identifier added.
+!	* Dev - Functions - Exchange Rates - Exchange Rates Server - "Yahoo" replaced with "ECB" server.
+!	* Dev - Functions - Price and Currency - `wc_get_product_purchase_price()` - Converting post meta to `int` before adding (fixes PHP 7 notice).
+!	* Fix - Functions - Users - `wcj_get_current_user_first_role()` - Code changed, so now user role is always correctly identified (i.e. with any array index).
+!	* Dev - `WCJ_Product` - Class removed (`get_purchase_price()` function moved to `wc_get_product_purchase_price()`).
 
 = 3.2.1 - 30/10/2017 =
 * Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.

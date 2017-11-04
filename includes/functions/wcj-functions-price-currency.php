@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.2.0
+ * @version 3.2.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -431,10 +431,34 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate' ) ) {
 if ( ! function_exists( 'wc_get_product_purchase_price' ) ) {
 	/**
 	 * wc_get_product_purchase_price.
+	 *
+	 * @version 3.2.2
 	 */
 	function wc_get_product_purchase_price( $product_id = 0 ) {
-		$the_product = wcj_get_product( $product_id );
-		return $the_product->get_purchase_price();
+		if ( 0 == $product_id ) {
+			$product_id = get_the_ID();
+		}
+		$purchase_price = 0;
+		if ( 'yes' === get_option( 'wcj_purchase_price_enabled', 'yes' ) ) {
+			$purchase_price += (int) get_post_meta( $product_id, '_' . 'wcj_purchase_price' , true );
+		}
+		if ( 'yes' === get_option( 'wcj_purchase_price_extra_enabled', 'yes' ) ) {
+			$purchase_price += (int) get_post_meta( $product_id, '_' . 'wcj_purchase_price_extra', true );
+		}
+		if ( 'yes' === get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ) ) {
+			$purchase_price += (int) get_post_meta( $product_id, '_' . 'wcj_purchase_price_affiliate_commission', true );
+		}
+		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( '' == get_option( 'wcj_purchase_data_custom_price_field_name_' . $i, '' ) ) {
+				continue;
+			}
+			$meta_value = (int) get_post_meta( $product_id, '_' . 'wcj_purchase_price_custom_field_' . $i, true );
+			if ( 0 != $meta_value ) {
+				$purchase_price += ( 'fixed' === get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' ) ) ? $meta_value : $purchase_price * $meta_value / 100.0;
+			}
+		}
+		return apply_filters( 'wcj_get_product_purchase_price', $purchase_price, $product_id );
 	}
 }
 

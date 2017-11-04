@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.2.1
+ * @version 3.2.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -54,19 +54,6 @@ if ( ! function_exists( 'wcj_is_enabled_for_product' ) ) {
 			}
 		}
 		return true;
-	}
-}
-
-if ( ! function_exists( 'wcj_get_product' ) ) {
-	/*
-	 * wcj_get_product.
-	 */
-	function wcj_get_product( $product_id = 0 ) {
-		if ( 0 == $product_id ) {
-			$product_id = get_the_ID();
-		}
-		$the_product = new WCJ_Product( $product_id );
-		return $the_product;
 	}
 }
 
