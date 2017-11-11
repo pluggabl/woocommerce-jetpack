@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price by User Role
  *
- * @version 3.2.0
+ * @version 3.2.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -17,7 +17,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.2
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -29,13 +29,14 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'price_by_user_role' );
 			if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
 			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 				if ( 'no' === get_option( 'wcj_price_by_user_role_for_bots_disabled', 'no' ) || ! wcj_is_bot() ) {
-					wcj_add_change_price_hooks( $this, PHP_INT_MAX - 200 );
+					wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 					if ( ( $this->disable_for_regular_price = ( 'yes' === get_option( 'wcj_price_by_user_role_disable_for_regular_price', 'no' ) ) ) ) {
 						add_filter( 'woocommerce_product_is_on_sale', array( $this, 'maybe_make_on_sale' ), PHP_INT_MAX, 2 );
 					}
@@ -158,7 +159,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.2
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product ) {
@@ -219,12 +220,12 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 
 		// Maybe disable for products on sale
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_disable_for_products_on_sale', 'no' ) ) {
-			wcj_remove_change_price_hooks( $this, PHP_INT_MAX - 200 );
+			wcj_remove_change_price_hooks( $this, $this->price_hooks_priority );
 			if ( $_product && $_product->is_on_sale() ) {
-				wcj_add_change_price_hooks( $this, PHP_INT_MAX - 200 );
+				wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 				return $price;
 			} else {
-				wcj_add_change_price_hooks( $this, PHP_INT_MAX - 200 );
+				wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 			}
 		}
 

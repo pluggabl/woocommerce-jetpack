@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 3.1.3
+ * @version 3.2.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    "pretty prices"
@@ -88,6 +88,13 @@ $settings = array(
 		'default'  => '',
 		'type'     => 'textarea',
 		'css'      => 'min-width:300px;height:150px;',
+	),
+	array(
+		'title'    => __( 'Advanced: Price Filters Priority', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
+		'id'       => 'wcj_multicurrency_advanced_price_hooks_priority',
+		'default'  => 0,
+		'type'     => 'number',
 	),
 	array(
 		'type'     => 'sectionend',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 3.0.0
+ * @version 3.2.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add "frontend template" options
@@ -79,6 +79,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'checkbox' => __( 'Checkbox', 'woocommerce-jetpack' ),
 				'radio'    => __( 'Radio Buttons', 'woocommerce-jetpack' ),
 				'select'   => __( 'Select Box', 'woocommerce-jetpack' ),
+				'text'     => __( 'Text', 'woocommerce-jetpack' ),
 			),
 		),
 		array(

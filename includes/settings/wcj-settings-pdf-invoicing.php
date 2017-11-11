@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - General
  *
- * @version 3.2.0
+ * @version 3.2.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -18,7 +18,7 @@ $settings = array(
 );
 // Hooks Array
 $status_change_hooks = array();
-$order_statuses      = wcj_get_order_statuses( true );
+$order_statuses      = wcj_get_order_statuses();
 foreach ( $order_statuses as $status => $desc ) {
 	$status_change_hooks[ 'woocommerce_order_status_' . $status ] = sprintf( __( 'Create on Order Status %s', 'woocommerce-jetpack' ), $desc );
 }

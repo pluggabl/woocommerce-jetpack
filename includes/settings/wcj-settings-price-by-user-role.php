@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price by User Role
  *
- * @version 3.2.0
+ * @version 3.2.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -64,6 +64,13 @@ $settings = array(
 		'id'       => 'wcj_price_by_user_role_for_bots_disabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Advanced: Price Filters Priority', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
+		'id'       => 'wcj_price_by_user_role_advanced_price_hooks_priority',
+		'default'  => 0,
+		'type'     => 'number',
 	),
 	array(
 		'type'     => 'sectionend',

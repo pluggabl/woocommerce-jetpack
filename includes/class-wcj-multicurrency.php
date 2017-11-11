@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.2.0
+ * @version 3.2.2
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.2
+	 * @version 3.2.2
 	 */
 	function __construct() {
 
@@ -31,6 +31,9 @@ class WCJ_Multicurrency extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+
+			$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'multicurrency' );
+
 //			add_filter( 'init', array( $this, 'add_hooks' ) );
 			$this->add_hooks();
 
@@ -48,7 +51,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 3.1.2
+	 * @version 3.2.2
+	 * @todo    (maybe) replace all `PHP_INT_MAX - 1` with `$this->price_hooks_priority`
 	 */
 	function add_hooks() {
 		// Session
@@ -71,7 +75,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 			add_filter( 'woocommerce_currency',                       array( $this, 'change_currency_code' ),   PHP_INT_MAX - 1, 1 );
 
 			// Add "Change Price" hooks
-			wcj_add_change_price_hooks( $this, PHP_INT_MAX - 1 );
+			wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 
 			// "WooCommerce Product Add-ons" plugin
 			add_filter( 'get_product_addons', array( $this, 'change_price_addons' ) );
@@ -81,7 +85,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 			if ( ! empty( $this->additional_price_filters ) ) {
 				$this->additional_price_filters = array_map( 'trim', explode( PHP_EOL, $this->additional_price_filters ) );
 				foreach ( $this->additional_price_filters as $additional_price_filter ) {
-					add_filter( $additional_price_filter, array( $this, 'change_price' ), PHP_INT_MAX - 1, 2 );
+					add_filter( $additional_price_filter, array( $this, 'change_price' ), $this->price_hooks_priority, 2 );
 				}
 			} else {
 				$this->additional_price_filters = array();

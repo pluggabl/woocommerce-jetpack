@@ -87,7 +87,7 @@ class WCJ_Emails extends WCJ_Module {
 	 */
 	function add_custom_woocommerce_email_actions( $email_actions ) {
 		$email_actions[] = 'woocommerce_checkout_order_processed';
-		$order_statuses = wcj_get_order_statuses_v2();
+		$order_statuses = wcj_get_order_statuses();
 		foreach ( $order_statuses as $slug => $name ) {
 			$email_actions[] = 'woocommerce_order_status_' . $slug;
 			foreach ( $order_statuses as $slug2 => $name2 ) {

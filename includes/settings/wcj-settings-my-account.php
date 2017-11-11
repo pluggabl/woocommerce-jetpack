@@ -22,7 +22,7 @@ return array(
 		'default'  => '',
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
-		'options'  => wcj_get_order_statuses_v2(),
+		'options'  => wcj_get_order_statuses(),
 	),
 	array(
 		'type'     => 'sectionend',

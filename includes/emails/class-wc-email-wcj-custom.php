@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 3.1.2
+ * @version 3.2.2
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -104,7 +104,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * trigger.
 	 *
-	 * @version 3.1.2
+	 * @version 3.2.2
 	 */
 	function trigger( $order_id ) {
 
@@ -134,7 +134,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				foreach ( $trigger_hooks as $trigger_hook ) {
 					if ( false !== ( $pos = strpos( $trigger_hook, 'woocommerce_new_order_notification' ) ) ) {
 						$the_status = 'wc-' . substr( $trigger_hook, 35 );
-						if ( 'wc-wcj_any_status' === $the_status || $this->object->post_status === $the_status ) {
+						if ( 'wc-wcj_any_status' === $the_status || wcj_get_order_status( $this->object ) === $the_status ) {
 							$is_status_found = true;
 							break;
 						}
@@ -209,7 +209,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 		$status_change_triggers = array();
 		$new_order_triggers     = array();
 		$status_triggers        = array();
-		$order_statuses         = wcj_get_order_statuses_v2();
+		$order_statuses         = wcj_get_order_statuses();
 		foreach ( $order_statuses as $slug => $name ) {
 			$new_order_triggers[ 'woocommerce_new_order_notification_' . $slug ] = sprintf( __( 'New order (%s)', 'woocommerce-jetpack' ), $name );
 			$status_triggers[ 'woocommerce_order_status_' . $slug . '_notification' ] = sprintf( __( 'Order status updated to %s', 'woocommerce-jetpack' ), $name );

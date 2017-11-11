@@ -44,7 +44,7 @@ class WCJ_My_Account extends WCJ_Module {
 	function maybe_add_my_account_order_actions( $actions, $order ) {
 		$statuses_to_add = get_option( 'wcj_my_account_add_order_status_actions', '' );
 		if ( ! empty( $statuses_to_add ) ) {
-			$all_statuses = wcj_get_order_statuses_v2();
+			$all_statuses = wcj_get_order_statuses();
 			foreach ( $statuses_to_add as $status_to_add ) {
 				if ( $status_to_add != $order->get_status() ) {
 					$actions[ 'wcj_mark_' . $status_to_add . '_by_customer' ] = array(

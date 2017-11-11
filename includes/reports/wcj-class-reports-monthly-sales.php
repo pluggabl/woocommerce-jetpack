@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version 2.9.1
+ * @version 3.2.2
  * @since   2.4.7
  * @author  Algoritmika Ltd.
  */
@@ -71,11 +71,10 @@ class WCJ_Reports_Monthly_Sales {
 	/*
 	 * get_monthly_sales_report.
 	 *
-	 * @version 2.9.1
+	 * @version 3.2.2
 	 * @since   2.4.7
 	 * @todo    (maybe) visible rows selection by admin (as option)
 	 * @todo    (maybe) take not monthly average, but "Close" of closest day (probably create new "Daily Sales (with Currency Conversion)" report)
-	 * @todo    (maybe) option to grab average monthly exchange rates from some data server (unfortunately discontinued by the Yahoo)
 	 */
 	function get_monthly_sales_report() {
 
@@ -230,8 +229,16 @@ class WCJ_Reports_Monthly_Sales {
 			foreach ( $current_months_averages as $currency_from => $currencies_to ) {
 				foreach ( $currencies_to as $currency_to => $rate ) {
 					if ( $currency_from != $currency_to ) {
-						$currency_rates_html .= $currency_from . $currency_to . ' ' .
-							'<input style="width:50px;font-size:x-small;" type="number" ' .
+						$input_id = sanitize_title( $currency_from . '_' . $currency_to . '_' . $start_date . '_' . $end_date );
+						$currency_rates_html .= '<a class="wcj_grab_average_currency_exchange_rate" href="#" title="' . __( 'Grab average rate', 'woocommerce-jetpack' ) .
+							'" currency_from="' . $currency_from .
+							'" currency_to="' . $currency_to .
+							'" start_date="' . $start_date .
+							'" end_date="' . $end_date .
+							'" input_id="' . $input_id .
+						'">' . $currency_from . $currency_to .
+						'</a> ' .
+							'<input id="' . $input_id . '" style="width:50px;font-size:x-small;" type="number" ' .
 								'name="wcj_save_currency_rates_array[' . $currency_from . '][' . $currency_to . '][' . $start_date . '][' . $end_date . ']" ' .
 								'value="' . $rate . '" step="0.000001">' .
 							'<br>';

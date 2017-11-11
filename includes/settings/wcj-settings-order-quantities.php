@@ -2,10 +2,10 @@
 /**
  * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
- * @version 2.9.0
+ * @version 3.2.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
- * @todo    maybe generate settings in loop ( min / max )
+ * @todo    (maybe) generate settings in loop ( min / max )
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -18,7 +18,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Minimum Quantity', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
 		'id'       => 'wcj_order_quantities_min_section_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -37,7 +37,7 @@ return array(
 		'id'       => 'wcj_order_quantities_min_cart_total_message',
 		'default'  => __( 'Minimum allowed order quantity is %min_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
-		'css'      => 'width:66%;min-width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Per Item Quantity', 'woocommerce-jetpack' ),
@@ -49,12 +49,21 @@ return array(
 		'custom_attributes' => ( '' === apply_filters( 'booster_get_message', '', 'readonly' ) ? array( 'min' => 0 ) : apply_filters( 'booster_get_message', '', 'readonly' ) ),
 	),
 	array(
+		'title'    => __( 'Per Item Quantity on Per Product Basis', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'id'       => 'wcj_order_quantities_min_per_item_quantity_per_product',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+	),
+	array(
 		'title'    => __( 'Message - Per Item Quantity', 'woocommerce-jetpack' ),
 		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%min_per_item_quantity%', '%item_quantity%' ) ),
 		'id'       => 'wcj_order_quantities_min_per_item_message',
 		'default'  => __( 'Minimum allowed quantity for %product_title% is %min_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
-		'css'      => 'width:66%;min-width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'type'     => 'sectionend',
@@ -67,7 +76,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Maximum Quantity', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
 		'id'       => 'wcj_order_quantities_max_section_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -86,7 +95,7 @@ return array(
 		'id'       => 'wcj_order_quantities_max_cart_total_message',
 		'default'  => __( 'Maximum allowed order quantity is %max_cart_total_quantity%. Your current order quantity is %cart_total_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
-		'css'      => 'width:66%;min-width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Per Item Quantity', 'woocommerce-jetpack' ),
@@ -98,12 +107,21 @@ return array(
 		'custom_attributes' => ( '' === apply_filters( 'booster_get_message', '', 'readonly' ) ? array( 'min' => 0 ) : apply_filters( 'booster_get_message', '', 'readonly' ) ),
 	),
 	array(
+		'title'    => __( 'Per Item Quantity on Per Product Basis', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'id'       => 'wcj_order_quantities_max_per_item_quantity_per_product',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+	),
+	array(
 		'title'    => __( 'Message - Per Item Quantity', 'woocommerce-jetpack' ),
 		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%max_per_item_quantity%', '%item_quantity%' ) ),
 		'id'       => 'wcj_order_quantities_max_per_item_message',
 		'default'  => __( 'Maximum allowed quantity for %product_title% is %max_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
-		'css'      => 'width:66%;min-width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'type'     => 'sectionend',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - EU VAT Number
  *
- * @version 2.9.0
+ * @version 3.2.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default value for "wcj_eu_vat_number_add_progress_text" to "yes"
@@ -21,21 +21,21 @@ $settings = array(
 		'id'       => 'wcj_eu_vat_number_field_label',
 		'default'  => __( 'EU VAT Number', 'woocommerce-jetpack' ),
 		'type'     => 'text',
-		'css'      => 'width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Placeholder', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_field_placeholder',
 		'default'  => __( 'EU VAT Number', 'woocommerce-jetpack' ),
 		'type'     => 'text',
-		'css'      => 'width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Description', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_field_description',
 		'default'  => '',
 		'type'     => 'text',
-		'css'      => 'width:300px;',
+		'css'      => 'width:100%;',
 	),
 	/*
 	array(
@@ -78,12 +78,11 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => '',
 		'desc'     => __( 'Message on not valid', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_not_valid_message',
 		'default'  => __( '<strong>EU VAT Number</strong> is not valid.', 'woocommerce-jetpack' ),
 		'type'     => 'textarea',
-		'css'      => 'width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'First Validation Method', 'woocommerce-jetpack' ),
@@ -106,40 +105,41 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Preserve VAT in Base Country', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'This will validate the VAT, but won\'t exempt VAT for base country VAT numbers. Base (i.e. store) country is set in %s.', 'woocommerce-jetpack' ),
+			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=general' ) . '">' . __( 'WooCommerce > Settings > General', 'woocommerce-jetpack' ) . '</a>' ) . '<br>' .
+			apply_filters( 'booster_get_message', '', 'desc' ),
 		'desc'     => __( 'Yes', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_preserve_in_base_country',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	/*
 	array(
-		'title'    => '',
 		'desc'     => __( 'Message if customer is in base country and VAT is NOT exempted.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_preserve_in_base_country_message',
 		'default'  => __( 'EU VAT Number is valid, however VAT is not exempted.', 'woocommerce-jetpack' ),
 		'type'     => 'textarea',
-		'css'      => 'width:300px;',
+		'css'      => 'width:100%;',
 	),
 	*/
 	array(
 		'title'    => __( 'Check for IP Location Country', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will check if customer\'s country (located by customer\'s IP) matches the country in entered VAT number.', 'woocommerce-jetpack' ) . '<br>' .
+			apply_filters( 'booster_get_message', '', 'desc' ),
 		'desc'     => __( 'Yes', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_check_ip_location_country',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	/*
 	array(
-		'title'    => '',
 		'desc'     => __( 'Message if customer\'s check for IP location country has failed.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_check_ip_location_country_message',
 		'default'  => __( 'IP must be from same country as VAT ID.', 'woocommerce-jetpack' ),
 		'type'     => 'textarea',
-		'css'      => 'width:300px;',
+		'css'      => 'width:100%;',
 	),
 	*/
 	array(
@@ -164,21 +164,21 @@ $settings = array(
 		'id'       => 'wcj_eu_vat_number_progress_text_validating',
 		'default'  => __( 'Validating VAT. Please wait...', 'woocommerce-jetpack' ),
 		'type'     => 'text',
-		'css'      => 'width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Progress Message: Valid', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_progress_text_valid',
 		'default'  => __( 'VAT is valid.', 'woocommerce-jetpack' ),
 		'type'     => 'text',
-		'css'      => 'width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Progress Message: Not Valid', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_progress_text_not_valid',
 		'default'  => __( 'VAT is not valid.', 'woocommerce-jetpack' ),
 		'type'     => 'text',
-		'css'      => 'width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Progress Message: Validation Failed', 'woocommerce-jetpack' ),
@@ -186,10 +186,10 @@ $settings = array(
 		'id'       => 'wcj_eu_vat_number_progress_text_validation_failed',
 		'default'  => __( 'Validation failed. Please try again.', 'woocommerce-jetpack' ),
 		'type'     => 'text',
-		'css'      => 'width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
-		'title'    => __( 'Add EU VAT Number Summary Metabox to Order Edit Page', 'woocommerce-jetpack' ),
+		'title'    => __( 'Add EU VAT Number Summary Meta Box to Admin Order Edit Page', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_add_order_edit_metabox',
 		'default'  => 'no',
@@ -198,6 +198,23 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_eu_vat_number_options',
+	),
+	array(
+		'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_eu_vat_number_advanced_options',
+	),
+	array(
+		'title'    => __( 'Skip VAT Validation for Selected Countries', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'List all countries you want VAT validation to be skipped for (i.e. VAT always valid). Ignored if empty.', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'Enter country codes as comma separated list, e.g. %s.', 'woocommerce-jetpack' ), '<code>IT,NL</code>' ),
+		'id'       => 'wcj_eu_vat_number_advanced_skip_countries',
+		'default'  => '',
+		'type'     => 'text',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_eu_vat_number_advanced_options',
 	),
 );
 return $settings;

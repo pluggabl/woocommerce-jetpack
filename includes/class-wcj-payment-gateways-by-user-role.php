@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways by User Role
  *
- * @version 3.0.0
+ * @version 3.2.2
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Payment_Gateways_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.2
 	 * @since   2.5.3
 	 */
 	function __construct() {
@@ -28,7 +28,7 @@ class WCJ_Payment_Gateways_By_User_Role extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'available_payment_gateways' ), PHP_INT_MAX, 1 );
+			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'available_payment_gateways' ), PHP_INT_MAX - 100, 1 );
 		}
 	}
 

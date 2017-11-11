@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 2.9.0
+ * @version 3.2.2
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -215,7 +215,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * add_eu_vat_number_to_order_display.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.2
 	 * @since   2.4.7
 	 */
 	function add_eu_vat_number_to_order_display( $order ) {
@@ -225,7 +225,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		$the_eu_vat_number = get_post_meta( $order_id, $option_name, true );
 		if ( '' != $the_eu_vat_number ) {
 			$the_label = get_option( 'wcj_eu_vat_number_field_label', __( 'EU VAT Number', 'woocommerce-jetpack' ) );
-			$html .= $the_label . ': ' . $the_eu_vat_number . '<br>';
+			$html .= '<p>' . '<strong>' . $the_label . '</strong>: ' . $the_eu_vat_number . '</p>';
 		}
 		echo $html;
 	}

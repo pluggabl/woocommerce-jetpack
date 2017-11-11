@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exchange Rates
  *
- * @version  2.9.0
+ * @version  3.2.2
  * @author   Algoritmika Ltd.
  */
 
@@ -14,6 +14,8 @@ class WCJ_Exchange_Rates {
 
 	/**
 	 * Constructor.
+	 *
+	 * @version 3.2.2
 	 */
 	function __construct() {
 
@@ -21,6 +23,20 @@ class WCJ_Exchange_Rates {
 		add_action( 'admin_init',            array( $this, 'register_script' ) );
 
 		add_action( 'woocommerce_admin_field_exchange_rate', array( $this, 'output_settings_button' ) );
+
+		add_action( 'wp_ajax_'        . 'wcj_ajax_get_exchange_rates_average', array( $this, 'wcj_ajax_get_exchange_rates_average' ) );
+		add_action( 'wp_ajax_nopriv_' . 'wcj_ajax_get_exchange_rates_average', array( $this, 'wcj_ajax_get_exchange_rates_average' ) );
+	}
+
+	/**
+	 * wcj_ajax_get_exchange_rates_average.
+	 *
+	 * @version 3.2.2
+	 * @since   3.2.2
+	 */
+	function wcj_ajax_get_exchange_rates_average() {
+		echo wcj_fixer_io_get_exchange_rate_average( $_POST['wcj_currency_from'], $_POST['wcj_currency_to'], $_POST['wcj_start_date'], $_POST['wcj_end_date'] );
+		die();
 	}
 
 	/**
@@ -50,10 +66,10 @@ class WCJ_Exchange_Rates {
 	/**
 	 * enqueue_exchange_rates_script.
 	 *
-	 * @version 2.6.0
+	 * @version 3.2.2
 	 */
 	function enqueue_exchange_rates_script() {
-	    if (
+		if (
 			isset( $_GET['section'] ) &&
 			in_array( $_GET['section'], array(
 				'multicurrency',
@@ -65,6 +81,17 @@ class WCJ_Exchange_Rates {
 			) )
 		) {
 			wp_enqueue_script( 'wcj-exchange-rates-ajax' );
+		}
+		if (
+			isset( $_GET['report'] ) &&
+			in_array( $_GET['report'], array(
+				'booster_monthly_sales',
+			) )
+		) {
+			wp_enqueue_script(  'wcj-exchange-rates-ajax-average',  trailingslashit( wcj_plugin_url() ) . 'includes/js/wcj-ajax-exchange-rates-average.js', array( 'jquery' ), WCJ()->version, true );
+			wp_localize_script( 'wcj-exchange-rates-ajax-average', 'ajax_object', array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+			) );
 		}
 	}
 

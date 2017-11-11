@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Invoice
  *
- * @version 3.1.1
+ * @version 3.2.2
  * @author  Algoritmika Ltd.
  */
 
@@ -27,20 +27,18 @@ class WCJ_Invoice {
 	 * is_created.
 	 */
 	function is_created() {
-		return ( '' != get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_date', true ) ) ? true : false;
+		return ( '' != get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_date', true ) );
 	}
 
 	/**
 	 * delete.
 	 *
-	 * @version 2.3.0
+	 * @version 3.2.2
 	 */
 	function delete() {
 		update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', 0 );
-		//update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number', 0 );
 		update_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_date', '' );
-
-		if ( 'yes' === get_option( 'wcj_invoicing_' . $this->invoice_type . '_sequential_enabled' ) ) {
+		if ( 'yes' === get_option( 'wcj_invoicing_' . $this->invoice_type . '_sequential_enabled', 'no' ) ) {
 			$option_name = 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter';
 			$the_invoice_counter = get_option( $option_name, 1 );
 			update_option( $option_name, ( $the_invoice_counter - 1 ) );
@@ -50,7 +48,7 @@ class WCJ_Invoice {
 	/**
 	 * create.
 	 *
-	 * @version 3.1.1
+	 * @version 3.2.2
 	 * @todo    use mysql transaction enabled (as in "wcj_order_number_use_mysql_transaction_enabled")
 	 */
 	function create( $date = '' ) {
@@ -62,18 +60,15 @@ class WCJ_Invoice {
 				return;
 			}
 		}
-		//if ( '' == get_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number', true ) ) {
-			if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_sequential_enabled' ) ) {
-				$the_invoice_number = get_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', 1 );
-				update_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', ( $the_invoice_number + 1 ) );
-			} else {
-				$the_invoice_number = $order_id;
-			}
-			$the_date = ( '' == $date ) ? current_time( 'timestamp' ) : $date;
-			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number_id', $the_invoice_number );
-//			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number', $this->get_invoice_full_number( $the_invoice_number ) );
-			update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_date', $the_date );
-		//}
+		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_sequential_enabled', 'no' ) ) {
+			$the_invoice_number = get_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', 1 );
+			update_option( 'wcj_invoicing_' . $invoice_type . '_numbering_counter', ( $the_invoice_number + 1 ) );
+		} else {
+			$the_invoice_number = $order_id;
+		}
+		$the_date = ( '' == $date ) ? current_time( 'timestamp' ) : $date;
+		update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_number_id', $the_invoice_number );
+		update_post_meta( $order_id, '_wcj_invoicing_' . $invoice_type . '_date', $the_date );
 	}
 
 	/**
@@ -96,32 +91,23 @@ class WCJ_Invoice {
 
 	/**
 	 * get_invoice_number.
+	 *
+	 * @version 3.2.2
 	 */
 	function get_invoice_number() {
-		//$the_number = get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number', true );
-		$the_number_id = get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', true );
-		//$the_number = $this->get_invoice_full_number( $the_number_id );
-		$the_prefix = get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_prefix' );
-		$the_suffix = get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_suffix' );
-		$the_number = do_shortcode( sprintf( '%s%0' . get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter_width', 0 ). 'd%s',
-			$the_prefix,
-			$the_number_id,
-			$the_suffix ) );
-		return apply_filters( 'wcj_get_' . $this->invoice_type . '_number', $the_number, $this->order_id );
+		$replaced_values = array(
+			'%prefix%'  => get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_prefix', '' ),
+			'%counter%' => sprintf( '%0' . get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter_width', 0 ) . 'd',
+				get_post_meta( $this->order_id, '_wcj_invoicing_' . $this->invoice_type . '_number_id', true ) ),
+			'%suffix%'  => get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_suffix', '' ),
+		);
+		return apply_filters( 'wcj_get_' . $this->invoice_type . '_number',
+			do_shortcode( str_replace( array_keys( $replaced_values ), $replaced_values,
+				get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_template', '%prefix%%counter%%suffix%' ) ) ),
+			$this->order_id
+		);
 	}
 
-	/**
-	 * get_invoice_full_number.
-	 *
-	private function get_invoice_full_number( $the_number ) {
-		$the_prefix = get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_prefix' );
-		$the_suffix = get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_suffix' );
-		return do_shortcode( sprintf( '%s%0' . get_option( 'wcj_invoicing_' . $this->invoice_type . '_numbering_counter_width', 0 ). 'd%s',
-			$the_prefix,
-			$the_number,
-			$the_suffix ) );
-	}
-	/**/
 }
 
 endif;

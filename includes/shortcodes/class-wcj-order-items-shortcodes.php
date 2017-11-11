@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 3.2.0
+ * @version 3.2.2
  * @author  Algoritmika Ltd.
  */
 
@@ -25,7 +25,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.2
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -59,6 +59,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'refunded_items_table'                => 'no',
 			'hide_zero_prices'                    => 'no',
 			'multicolumns_glue'                   => '<br>',
+			'sort_by_column'                      => 0,
 		), $atts );
 		return $modified_atts;
 	}
@@ -245,7 +246,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_table.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.2
+	 * @todo    `sort_by_column` - fix `item_number`
 	 * @todo    (maybe) `if ( $columns_total_number !== count( $columns_titles ) || $columns_total_number !== count( $columns_styles ) ) { return __( 'Please recheck that there is the same number of columns in "columns", "columns_titles" and "columns_styles" attributes.', 'woocommerce-jetpack' ); }`
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
@@ -372,6 +374,16 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			return '';
 		}
 
+		// Sorting
+		if ( $atts['sort_by_column'] > 0 ) {
+			$this->sort_by_column = $atts['sort_by_column'];
+			usort( $data, array( $this, 'sort_data' ) );
+		}
+
+		// Final filter
+		$data = apply_filters( 'wcj_order_items_table_data', $data );
+
+		// Final HTML
 		$html = '';
 		$table_html_args = array(
 			'table_class'        => $atts['table_class'],
@@ -402,6 +414,25 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		return $html;
+	}
+
+	/**
+	 * sort_data.
+	 *
+	 * @version 3.2.2
+	 * @since   3.2.2
+	 * @todo    option to sort as numbers or as text
+	 * @todo    use id (e.g. `product_sku`) instead of number
+	 */
+	function sort_data( $a, $b ) {
+		$key = ( $this->sort_by_column - 1 );
+		if ( ! isset( $a[ $key ] ) || ! isset( $b[ $key ] ) ) {
+			return 0;
+		}
+		if ( $a[ $key ] == $b[ $key ] ) {
+			return 0;
+		}
+		return ( $a[ $key ] < $b[ $key ] ) ? -1 : 1;
 	}
 
 	/**

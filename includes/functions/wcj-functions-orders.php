@@ -2,12 +2,24 @@
 /**
  * Booster for WooCommerce - Functions - Orders
  *
- * @version 3.1.1
+ * @version 3.2.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_order_status' ) ) {
+	/**
+	 * wcj_get_order_status.
+	 *
+	 * @version 3.2.2
+	 * @since   3.2.2
+	 */
+	function wcj_get_order_status( $_order ) {
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->post_status : $_order->get_status() );
+	}
+}
 
 if ( ! function_exists( 'wcj_get_order_billing_email' ) ) {
 	/**
@@ -133,42 +145,18 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 if ( ! function_exists( 'wcj_get_order_statuses' ) ) {
 	/**
 	 * wcj_get_order_statuses.
-	 */
-	function wcj_get_order_statuses( $cut_the_prefix ) {
-		$order_statuses = array(
-			'wc-pending'    => _x( 'Pending Payment', 'Order status', 'woocommerce' ),
-			'wc-processing' => _x( 'Processing', 'Order status', 'woocommerce' ),
-			'wc-on-hold'    => _x( 'On Hold', 'Order status', 'woocommerce' ),
-			'wc-completed'  => _x( 'Completed', 'Order status', 'woocommerce' ),
-			'wc-cancelled'  => _x( 'Cancelled', 'Order status', 'woocommerce' ),
-			'wc-refunded'   => _x( 'Refunded', 'Order status', 'woocommerce' ),
-			'wc-failed'     => _x( 'Failed', 'Order status', 'woocommerce' ),
-		);
-		$order_statuses = apply_filters( 'wc_order_statuses', $order_statuses );
-		if ( $cut_the_prefix ) {
-			$order_statuses_no_prefix = array();
-			foreach ( $order_statuses as $status => $desc ) {
-				$order_statuses_no_prefix[ substr( $status, 3 ) ] = $desc;
-			}
-			return $order_statuses_no_prefix;
-		}
-		return $order_statuses;
-	}
-}
-
-if ( ! function_exists( 'wcj_get_order_statuses_v2' ) ) {
-	/**
-	 * wcj_get_order_statuses_v2.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.2
 	 * @since   2.9.0
-	 * @todo    check `wcj_get_order_statuses`
 	 */
-	function wcj_get_order_statuses_v2() {
-		$result = array();
+	function wcj_get_order_statuses( $cut_prefix = true ) {
 		$statuses = function_exists( 'wc_get_order_statuses' ) ? wc_get_order_statuses() : array();
+		if ( ! $cut_prefix ) {
+			return $statuses;
+		}
+		$result = array();
 		foreach( $statuses as $status => $status_name ) {
-			$result[ substr( $status, 3 ) ] = $statuses[ $status ];
+			$result[ substr( $status, 3 ) ] = $status_name;
 		}
 		return $result;
 	}

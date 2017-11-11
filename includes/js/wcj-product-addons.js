@@ -1,8 +1,9 @@
 /**
  * wcj-product-addons.
  *
- * version 3.0.0
+ * version 3.2.2
  * since   2.5.3
+ * todo    `text` type - update price not only on change, but on each pressed key
  */
 
 var _ajax_object = ajax_object;
@@ -33,6 +34,9 @@ function change_price() {
 		};
 		jQuery("input[name^='wcj_product_all_products_addons_'], input[name^='wcj_product_per_product_addons_']").each( function () {
 			if (jQuery(this).is(':checked')) {
+				data[jQuery(this).attr('name')] = jQuery(this).val();
+			}
+			if ('text'==jQuery(this).attr('type') && jQuery(this).val()!='') {
 				data[jQuery(this).attr('name')] = jQuery(this).val();
 			}
 		});

@@ -9,12 +9,30 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
+	/**
+	 * wcj_get_module_price_hooks_priority.
+	 *
+	 * @version 3.2.2
+	 * @since   3.2.2
+	 * @todo    add all corresponding modules
+	 */
+	function wcj_get_module_price_hooks_priority( $module_id ) {
+		$modules_priorities = array(
+			'multicurrency'          => PHP_INT_MAX - 1,
+			'price_by_user_role'     => PHP_INT_MAX - 200,
+		);
+		return ( 0 != ( $priority = get_option( 'wcj_' . $module_id . '_advanced_price_hooks_priority', 0 ) ) ? $priority : $modules_priorities[ $module_id ] );
+	}
+}
+
 if ( ! function_exists( 'wcj_add_change_price_hooks' ) ) {
 	/**
 	 * wcj_add_change_price_hooks.
 	 *
 	 * @version 2.7.0
 	 * @since   2.7.0
+	 * @todo    use `$module_object->price_hooks_priority` instead of passing `$priority` argument
 	 */
 	function wcj_add_change_price_hooks( $module_object, $priority, $include_shipping = true ) {
 		// Prices

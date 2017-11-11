@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Order Custom Statuses
  *
- * @version 3.1.3
+ * @version 3.2.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -20,9 +20,9 @@ return array(
 		'desc'     => __( 'Enable the module to add custom statuses to the list.', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'You can change the default order status here. However payment gateways can change this status immediately on order creation. E.g. BACS gateway will change status to On-hold.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_orders_custom_statuses_default_status',
-		'default'  => apply_filters( 'woocommerce_default_order_status', 'pending' ),
+		'default'  => 'wcj_no_changes',
 		'type'     => 'select',
-		'options'  => $this->get_order_statuses(),
+		'options'  => array_merge( array( 'wcj_no_changes' => __( 'No changes', 'woocommerce-jetpack' ) ), wcj_get_order_statuses() ),
 	),
 	array(
 		'title'    => __( 'Add All Statuses to Admin Order Bulk Actions', 'woocommerce-jetpack' ),

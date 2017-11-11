@@ -2,15 +2,15 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Numbering
  *
- * @version 3.1.0
+ * @version 3.2.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$settings = array();
-$invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
+$settings      = array();
+$invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types() );
 foreach ( $invoice_types as $invoice_type ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -42,14 +42,19 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_prefix',
 			'default'  => '',
 			'type'     => 'text',
-			'css'      => 'width:300px',
 		),
 		array(
 			'title'    => __( 'Suffix', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_suffix',
 			'default'  => '',
 			'type'     => 'text',
-			'css'      => 'width:300px',
+		),
+		array(
+			'title'    => __( 'Template', 'woocommerce-jetpack' ),
+			'desc'     => '<br>' . wcj_message_replaced_values( array( '%prefix%', '%counter%', '%suffix%' ) ),
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_numbering_template',
+			'default'  => '%prefix%%counter%%suffix%',
+			'type'     => 'text',
 		),
 		array(
 			'type'     => 'sectionend',
