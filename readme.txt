@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.8
-Stable tag: 3.2.1
+Stable tag: 3.2.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -170,38 +170,38 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.2 - 11/11/2017 =
-~D	* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Advanced: Price Filters Priority" option added.
-~D	* Dev - PRICES & CURRENCIES - Price by User Role - "Advanced: Price Filters Priority" option added.
-!D	* Dev - PRODUCTS - Product Addons - "Text" addon type added.
-!D	* Dev - CART & CHECKOUT - Checkout Custom Fields - Template options added. Now (by default) using styling in emails and order received page.
-~D	* Dev - CART & CHECKOUT - EU VAT Number - Advanced Options - "Skip VAT Validation for Selected Countries" option added.
-~	* Dev - CART & CHECKOUT - EU VAT Number - Display - After order table - Output restyled.
-~D	* Dev - CART & CHECKOUT - EU VAT Number - Admin settings descriptions and styling updated.
-~	* Dev - PAYMENT GATEWAYS - Gateways by User Role - Module's main hook priority lowered (so e.g. it's now run before the "Gateways Min/Max Amounts" module).
-~	* Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses Tool - Adding "Delete" and "Edit" buttons to Booster's custom statuses only.
-~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses Tool - "Delete All Custom Statuses" button added.
-~	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses Tool - Sanitizing slug when adding new custom status.
-~D	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Default Order Status - "No changes" option added.
-!	* Dev - SHIPPING & ORDERS - Order Custom Statuses - Major code refactoring and cleanup.
-!$D	* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Min and max quantities added to quantity input on single product page (if "Per Item Quantity" is enabled).
-~D	* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - "Per Item Quantity on Per Product Basis" added.
-!	* Dev - PDF INVOICING & PACKING SLIPS - Invoices Renumerate Tool - Code cleanup. Restyling.
-!	* Dev - PDF INVOICING & PACKING SLIPS - Numbering - "Template" option added.
-	* Dev - PDF INVOICING & PACKING SLIPS - Styling - Admin settings - Minor restyling.
-~	* Dev - EMAILS & MISC. - Breadcrumbs - `hide_breadcrumbs_with_css()` - Additional identifier added.
-!	* Dev - EMAILS & MISC. - Custom Emails - WooCommerce v3.x.x compatibility - `post_status`.
-~D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_order_items_table_data` filter added.
-!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `sort_by_column` attribute added.
-~	* Dev - Functions - Exchange Rates - Deprecated average exchange rates (Yahoo) calculation removed.
-~D	* Dev - Functions - Exchange Rates - Average exchange rates (Fixer.io) calculation added.
-~D	* Dev - Functions - Exchange Rates - Exchange Rates Server - "Fixer.io" server added.
-~	* Dev - Functions - Exchange Rates - Exchange Rates Server - "Yahoo" URL updated.
-!	* Dev - Functions - Orders - Cleanup (`wcj_get_order_statuses()`).
-~	* Dev - Functions - Price and Currency - `wc_get_product_purchase_price()` - Converting post meta to `int` before adding (fixes PHP 7 notice).
-~	* Fix - Functions - Users - `wcj_get_current_user_first_role()` - Code changed, so now user role is always correctly identified (i.e. with any array index).
-~	* Dev - `WCJ_Invoice` - Default values added to `get_option()` calls.
-~	* Dev - `WCJ_Product` - Class removed (`get_purchase_price()` function moved to `wc_get_product_purchase_price()`).
+= 3.2.2 - 12/11/2017 =
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Advanced: Price Filters Priority" option added.
+* Dev - PRICES & CURRENCIES - Price by User Role - "Advanced: Price Filters Priority" option added.
+* Dev - PRODUCTS - Product Addons - "Text" addon type added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Template options added. Now (by default) using styling in emails and order received page.
+* Dev - CART & CHECKOUT - EU VAT Number - Advanced Options - "Skip VAT Validation for Selected Countries" option added.
+* Dev - CART & CHECKOUT - EU VAT Number - Display - After order table - Output restyled.
+* Dev - CART & CHECKOUT - EU VAT Number - Admin settings descriptions and styling updated.
+* Dev - PAYMENT GATEWAYS - Gateways by User Role - Module's main hook priority lowered (so e.g. it's now run before the "Gateways Min/Max Amounts" module).
+* Fix - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses Tool - Adding "Delete" and "Edit" buttons to Booster's custom statuses only.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses Tool - "Delete All Custom Statuses" button added.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Custom Statuses Tool - Sanitizing slug when adding new custom status.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Default Order Status - "No changes" option added.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Major code refactoring and cleanup.
+* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Min and max quantities added to quantity input on single product page (if "Per Item Quantity" is enabled).
+* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - "Per Item Quantity on Per Product Basis" added.
+* Dev - PDF INVOICING & PACKING SLIPS - Invoices Renumerate Tool - Code cleanup. Restyling.
+* Dev - PDF INVOICING & PACKING SLIPS - Numbering - "Template" option added.
+* Dev - PDF INVOICING & PACKING SLIPS - Styling - Admin settings - Minor restyling.
+* Dev - EMAILS & MISC. - Breadcrumbs - `hide_breadcrumbs_with_css()` - Additional identifier added.
+* Dev - EMAILS & MISC. - Custom Emails - WooCommerce v3.x.x compatibility - `post_status`.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `wcj_order_items_table_data` filter added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `sort_by_column` attribute added.
+* Dev - Functions - Exchange Rates - Deprecated average exchange rates (Yahoo) calculation removed.
+* Dev - Functions - Exchange Rates - Average exchange rates (Fixer.io) calculation added.
+* Dev - Functions - Exchange Rates - Exchange Rates Server - "Fixer.io" server added.
+* Dev - Functions - Exchange Rates - Exchange Rates Server - "Yahoo" URL updated.
+* Dev - Functions - Orders - Cleanup (`wcj_get_order_statuses()`).
+* Dev - Functions - Price and Currency - `wc_get_product_purchase_price()` - Converting post meta to `int` before adding (fixes PHP 7 notice).
+* Fix - Functions - Users - `wcj_get_current_user_first_role()` - Code changed, so now user role is always correctly identified (i.e. with any array index).
+* Dev - `WCJ_Invoice` - Default values added to `get_option()` calls.
+* Dev - `WCJ_Product` - Class removed (`get_purchase_price()` function moved to `wc_get_product_purchase_price()`).
 
 = 3.2.1 - 30/10/2017 =
 * Dev - PRICES & CURRENCIES - Currency per Product - Minor code refactoring.
