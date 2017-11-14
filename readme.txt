@@ -170,6 +170,15 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.2.3 - 14/11/2017 =
+	* Fix - PRICES & CURRENCIES - Currency Exchange Rates - cURL option fixed for "Yahoo" and "Fixer.io" servers.
+!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Server - Default value set to "European Central Bank (ECB)".
+T	* Dev - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Checking for `WC()` function to exist before accessing to `WC()->cart`. Code refactoring.
+!D	* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - General Options - Variable Products - "Force on add to cart" option added.
+!D	* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - General Options - Variable Products - "Action on variation change" option added.
+!D	* Dev - PDF INVOICING & PACKING SLIPS - "Replace Admin Order Search with Invoice Search" option added.
+~	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Currency Rates - Input step decreased.
+
 = 3.2.2 - 12/11/2017 =
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Advanced: Price Filters Priority" option added.
 * Dev - PRICES & CURRENCIES - Price by User Role - "Advanced: Price Filters Priority" option added.

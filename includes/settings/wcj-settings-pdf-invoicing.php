@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - General
  *
- * @version 3.2.2
+ * @version 3.2.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -73,6 +73,13 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Hide Disabled Docs Settings', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_invoicing_hide_disabled_docs_settings',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Replace Admin Order Search with Invoice Search', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_invoicing_admin_search_by_invoice',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 2.9.0
+ * @version 3.2.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add "rounding" and "offset" options for each pair separately
@@ -45,7 +45,7 @@ $settings = array(
 	array(
 		'title'    => __( 'Exchange Rates Server', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_exchange_rates_server',
-		'default'  => 'yahoo',
+		'default'  => 'ecb',
 		'type'     => 'select',
 		'options'  => wcj_get_currency_exchange_rate_servers(),
 	),

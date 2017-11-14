@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Min/Max Amounts
  *
- * @version 2.8.0
+ * @version 3.2.2
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -34,18 +34,22 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 2.6.0
+	 * @version 3.2.2
 	 */
 	function available_payment_gateways( $_available_gateways ) {
+		if ( ! function_exists( 'WC' ) || ! isset( WC()->cart ) ) {
+			return $_available_gateways;
+		}
+		$total_in_cart = WC()->cart->cart_contents_total;
+		if ( 'no' === get_option( 'wcj_payment_gateways_min_max_exclude_shipping', 'no' ) ) {
+			$total_in_cart += WC()->cart->shipping_total;
+		}
 		$notices = array();
 		$notices_template_min = get_option( 'wcj_payment_gateways_min_max_notices_template_min', __( 'Minimum amount for %gateway_title% is %min_amount%', 'woocommerce-jetpack') );
 		$notices_template_max = get_option( 'wcj_payment_gateways_min_max_notices_template_max', __( 'Maximum amount for %gateway_title% is %max_amount%', 'woocommerce-jetpack') );
 		foreach ( $_available_gateways as $key => $gateway ) {
 			$min = get_option( 'wcj_payment_gateways_min_' . $key, 0 );
 			$max = get_option( 'wcj_payment_gateways_max_' . $key, 0 );
-			global $woocommerce;
-			$total_in_cart = ( 'no' === get_option( 'wcj_payment_gateways_min_max_exclude_shipping', 'no' ) ) ?
-				$woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total : $woocommerce->cart->cart_contents_total;
 			if ( $min != 0 && $total_in_cart < $min ) {
 				$notices[] = str_replace( array( '%gateway_title%', '%min_amount%' ), array( $gateway->title, wc_price( $min ) ), $notices_template_min );
 				unset( $_available_gateways[ $key ] );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exchange Rates
  *
- * @version  3.2.2
+ * @version  3.2.3
  * @author   Algoritmika Ltd.
  */
 
@@ -98,7 +98,7 @@ class WCJ_Exchange_Rates {
 	/**
 	 * output_settings_button.
 	 *
-	 * @version 2.6.0
+	 * @version 3.2.3
 	 * @todo    (maybe) wcj_currency_exchange_rates_precision
 	 */
 	function output_settings_button( $value ) {
@@ -125,7 +125,7 @@ class WCJ_Exchange_Rates {
 		$tip = '';
 		$description = '';
 		$exchange_rate_servers = wcj_get_currency_exchange_rate_servers();
-		$exchange_rate_server = $exchange_rate_servers[ get_option( 'wcj_currency_exchange_rates_server', 'yahoo' ) ];
+		$exchange_rate_server = $exchange_rate_servers[ get_option( 'wcj_currency_exchange_rates_server', 'ecb' ) ];
 		$value_title = sprintf( __( 'Grab %s rate from %s', 'woocommerce-jetpack' ), $value['value'], $exchange_rate_server );
 		?>
 		<tr valign="top">

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version 3.2.2
+ * @version 3.2.3
  * @since   2.4.7
  * @author  Algoritmika Ltd.
  */
@@ -71,7 +71,7 @@ class WCJ_Reports_Monthly_Sales {
 	/*
 	 * get_monthly_sales_report.
 	 *
-	 * @version 3.2.2
+	 * @version 3.2.3
 	 * @since   2.4.7
 	 * @todo    (maybe) visible rows selection by admin (as option)
 	 * @todo    (maybe) take not monthly average, but "Close" of closest day (probably create new "Daily Sales (with Currency Conversion)" report)
@@ -240,7 +240,7 @@ class WCJ_Reports_Monthly_Sales {
 						'</a> ' .
 							'<input id="' . $input_id . '" style="width:50px;font-size:x-small;" type="number" ' .
 								'name="wcj_save_currency_rates_array[' . $currency_from . '][' . $currency_to . '][' . $start_date . '][' . $end_date . ']" ' .
-								'value="' . $rate . '" step="0.000001">' .
+								'value="' . $rate . '" step="0.0000000001">' .
 							'<br>';
 					}
 				}

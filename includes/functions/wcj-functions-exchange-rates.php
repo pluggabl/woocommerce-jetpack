@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.2.2
+ * @version 3.2.3
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -30,7 +30,7 @@ if ( ! function_exists( 'alg_get_exchange_rate' ) ) {
 	/*
 	 * alg_get_exchange_rate.
 	 *
-	 * @version 3.2.2
+	 * @version 3.2.3
 	 * @since   2.6.0
 	 */
 	function alg_get_exchange_rate( $currency_from, $currency_to ) {
@@ -39,7 +39,7 @@ if ( ! function_exists( 'alg_get_exchange_rate' ) ) {
 			$currency_to   = $currency_from;
 			$currency_from = $_currency_to;
 		}
-		$exchange_rates_server = get_option( 'wcj_currency_exchange_rates_server', 'yahoo' );
+		$exchange_rates_server = get_option( 'wcj_currency_exchange_rates_server', 'ecb' );
 		switch ( $exchange_rates_server ) {
 			case 'tcmb':
 				$return = alg_tcmb_get_exchange_rate( $currency_from, $currency_to );
@@ -171,7 +171,7 @@ if ( ! function_exists( 'alg_yahoo_get_exchange_rate' ) ) {
 	/*
 	 * alg_yahoo_get_exchange_rate.
 	 *
-	 * @version 3.2.2
+	 * @version 3.2.3
 	 * @return  float rate on success, else 0
 	 * @todo    `alg_` to `wcj_`
 	 */
@@ -183,6 +183,7 @@ if ( ! function_exists( 'alg_yahoo_get_exchange_rate' ) ) {
 		} elseif ( function_exists( 'curl_version' ) ) {
 			$curl = curl_init( $url );
 			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+			curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
 			$response = curl_exec( $curl );
 			curl_close( $curl );
 		}
@@ -233,7 +234,7 @@ if ( ! function_exists( 'wcj_fixer_io_get_exchange_rate_by_date' ) ) {
 	/*
 	 * wcj_fixer_io_get_exchange_rate_by_date.
 	 *
-	 * @version 3.2.2
+	 * @version 3.2.3
 	 * @since   3.2.2
 	 * @return  false or rate
 	 */
@@ -245,6 +246,7 @@ if ( ! function_exists( 'wcj_fixer_io_get_exchange_rate_by_date' ) ) {
 		} elseif ( function_exists( 'curl_version' ) ) {
 			$curl = curl_init( $url );
 			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+			curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
 			$response = curl_exec( $curl );
 			curl_close( $curl );
 		}

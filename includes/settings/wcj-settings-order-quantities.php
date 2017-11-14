@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
- * @version 3.2.2
+ * @version 3.2.3
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) generate settings in loop ( min / max )
@@ -144,6 +144,25 @@ return array(
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Will be redirected to cart page', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_quantities_stop_from_seeing_checkout',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Variable Products', 'woocommerce-jetpack' ),
+		'desc'     => '<br>' . __( 'Action on variation change', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_variable_variation_change',
+		'default'  => 'do_nothing',
+		'type'     => 'select',
+		'options'  => array(
+			'do_nothing'   => __( 'Do nothing', 'woocommerce-jetpack' ),
+			'reset_to_min' => __( 'Reset to min quantity', 'woocommerce-jetpack' ),
+			'reset_to_max' => __( 'Reset to max quantity', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Force on add to cart', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Force quantity correction on add to cart button click', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_variable_force_on_add_to_cart',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
