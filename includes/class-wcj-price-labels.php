@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 2.8.0
+ * @version 3.2.3
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.3
 	 */
 	function __construct() {
 
@@ -91,6 +91,8 @@ class WCJ_Price_Labels extends WCJ_Module {
 				// WooCommerce Subscription
 				'woocommerce_subscriptions_product_price_string',
 				'woocommerce_variable_subscription_price_html',
+				// Entrada theme
+				'entrada_price',
 			);
 			foreach ( $this->prices_filters as $the_filter ) {
 				add_filter( $the_filter, array( $this, 'custom_price' ), 100, 2 );
@@ -226,7 +228,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 2.7.1
+	 * @version 3.2.3
 	 * @todo    rewrite this with less filters (e.g. `woocommerce_get_price_html` only) - at least for `! WCJ_IS_WC_VERSION_BELOW_3`
 	 */
 	function custom_price( $price, $product ) {
@@ -237,6 +239,8 @@ class WCJ_Price_Labels extends WCJ_Module {
 		$current_filter_name = current_filter();
 		if ( 'woocommerce_cart_item_price' === $current_filter_name ) {
 			$product = $product['data'];
+		} elseif ( 'entrada_price' === $current_filter_name ) {
+			$product = wc_get_product();
 		}
 		$_product_id   = wcj_get_product_id_or_variation_parent_id( $product );
 		$_product_type = ( WCJ_IS_WC_VERSION_BELOW_3 ? $product->product_type : $product->get_type() );

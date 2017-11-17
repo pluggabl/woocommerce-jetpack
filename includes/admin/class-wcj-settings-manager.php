@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings Manager
  *
- * @version 2.9.0
- * @version 2.9.0
+ * @version 3.2.3
+ * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -27,11 +27,14 @@ class WCJ_Settings_Manager {
 	/**
 	 * manage_options.
 	 *
-	 * @version 2.5.2
+	 * @version 3.2.3
 	 * @since   2.5.2
 	 */
 	function manage_options() {
 		if ( is_admin() ) {
+			if ( ! function_exists( 'current_user_can' ) || ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
 			if ( isset( $_POST['booster_import_settings'] ) ) {
 				$this->manage_options_import();
 			}

@@ -165,7 +165,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * stop_from_seeing_checkout.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.3
 	 * @since   2.9.0
 	 */
 	function stop_from_seeing_checkout() {
@@ -182,13 +182,13 @@ class WCJ_Order_Quantities extends WCJ_Module {
 		$cart_total_quantity = array_sum( $cart_item_quantities );
 		if ( 'yes' === get_option( 'wcj_order_quantities_max_section_enabled', 'no' ) ) {
 			if ( ! $this->check_quantities( 'max', $cart_item_quantities, $cart_total_quantity, false, true ) ) {
-				wp_safe_redirect( WC()->cart->get_cart_url() );
+				wp_safe_redirect( wc_get_cart_url() );
 				exit;
 			}
 		}
 		if ( 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
 			if ( ! $this->check_quantities( 'min', $cart_item_quantities, $cart_total_quantity, false, true ) ) {
-				wp_safe_redirect( WC()->cart->get_cart_url() );
+				wp_safe_redirect( wc_get_cart_url() );
 				exit;
 			}
 		}

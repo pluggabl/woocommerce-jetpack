@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.2.1
+ * @version 3.2.3
  * @author  Algoritmika Ltd.
  */
 
@@ -463,7 +463,7 @@ if ( ! function_exists( 'wcj_get_select_options' ) ) {
 	/*
 	 * wcj_get_select_options()
 	 *
-	 * @version  2.5.5
+	 * @version  3.2.3
 	 * @since    2.3.0
 	 * @return   array
 	 */
@@ -472,7 +472,7 @@ if ( ! function_exists( 'wcj_get_select_options' ) ) {
 		$select_options = array();
 		foreach ( $select_options_raw as $select_options_title ) {
 			$select_options_key = ( $do_sanitize ) ? sanitize_title( $select_options_title ) : $select_options_title;
-			$select_options[ $select_options_key ] = $select_options_title;
+			$select_options[ 'wcj-' . $select_options_key ] = $select_options_title;
 		}
 		return $select_options;
 	}

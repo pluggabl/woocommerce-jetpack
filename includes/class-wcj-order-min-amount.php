@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Minimum Amount
  *
- * @version 2.9.0
+ * @version 3.2.3
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    order max amount
@@ -142,7 +142,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * stop_from_seeing_checkout.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.3
 	 * @todo    (maybe) `if ( is_admin() ) return;`
 	 */
 	function stop_from_seeing_checkout( $wp ) {
@@ -165,7 +165,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 			return;
 		}
 		if ( $the_cart_total < $minimum ) {
-			wp_safe_redirect( $woocommerce->cart->get_cart_url() );
+			wp_safe_redirect( wc_get_cart_url() );
 			exit;
 		}
 	}
