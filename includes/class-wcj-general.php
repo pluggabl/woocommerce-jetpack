@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 3.1.3
+ * @version 3.2.3
  * @author  Algoritmika Ltd.
  */
 
@@ -15,11 +15,8 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.3
+	 * @version 3.2.3
 	 * @todo    expand `$this->desc`
-	 * @todo    Coupon code generator - move to new module
-	 * @todo    Coupon code generator - add option to generate code only on button (in meta box) pressed
-	 * @todo    Coupon code generator - `wp_ajax_nopriv_wcj_generate_coupon_code` ?
 	 */
 	function __construct() {
 
@@ -77,64 +74,6 @@ class WCJ_General extends WCJ_Module {
 				add_action( 'init',           array( $this, 'change_user_role_meta' ) );
 			}
 
-			// Coupon code generator
-			if ( 'yes' === get_option( 'wcj_coupons_code_generator_enabled', 'no' ) ) {
-				add_action( 'wp_ajax_wcj_generate_coupon_code', array( $this, 'ajax_generate_coupon_code' ) );
-				add_action( 'admin_enqueue_scripts',            array( $this, 'enqueue_generate_coupon_code_script' ) );
-			}
-
-		}
-	}
-
-	/**
-	 * enqueue_generate_coupon_code_script.
-	 *
-	 * @version 3.1.3
-	 * @since   3.1.3
-	 */
-	function enqueue_generate_coupon_code_script() {
-		global $pagenow;
-		if ( 'post-new.php' === $pagenow && isset( $_GET['post_type'] ) && 'shop_coupon' === $_GET['post_type'] ) {
-			wp_enqueue_script(  'wcj-coupons-code-generator', wcj_plugin_url() . '/includes/js/wcj-coupons-code-generator.js', array( 'jquery' ), WCJ()->version, true );
-			wp_localize_script( 'wcj-coupons-code-generator', 'ajax_object', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
-		}
-	}
-
-	/**
-	 * generate_coupon_code.
-	 *
-	 * @version 3.1.3
-	 * @since   3.1.3
-	 * @todo    more options: "algorithm", "fixed length", "uppercase/lowercase" etc.
-	 */
-	function generate_coupon_code( $str = '' ) {
-		if ( '' === $str ) {
-			$str = time();
-		}
-		return sprintf( '%08x', crc32( time() ) );
-	}
-
-	/**
-	 * ajax_generate_coupon_code.
-	 *
-	 * @version 3.1.3
-	 * @since   3.1.3
-	 * @todo    (maybe) optionally generate some description for coupon (e.g. "Automatically generated coupon [YYYY-MM-DD]")
-	 */
-	function ajax_generate_coupon_code() {
-		$attempts = 0;
-		while ( true ) {
-			$coupon_code = $this->generate_coupon_code();
-			$coupon      = new WC_Coupon( $coupon_code );
-			if ( ! $coupon->get_id() ) {
-				echo $coupon_code;
-				die();
-			}
-			$attempts++;
-			if ( $attempts > 100 ) { // shouldn't happen, but just in case...
-				echo '';
-				die();
-			}
 		}
 	}
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 3.2.1
+ * @version 3.2.3
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -85,12 +85,14 @@ return apply_filters( 'wcj_modules', array(
 
 	'cart_and_checkout' => array(
 		'label'          => __( 'Cart & Checkout', 'woocommerce-jetpack' ),
-		'desc'           => __( 'Cart and Checkout Customization, Empty Cart Button, Mini Cart and more.', 'woocommerce-jetpack' ),
+		'desc'           => __( 'Cart and Checkout Customization, Empty Cart Button, Mini Cart, Coupons and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'cart',
 			'cart_customization',
 			'empty_cart',
 			'mini_cart',
+			'url_coupons',
+			'coupon_code_generator',
 			'checkout_core_fields',
 			'checkout_custom_fields',
 			'checkout_files_upload',
@@ -159,7 +161,6 @@ return apply_filters( 'wcj_modules', array(
 		'all_cat_ids'    => array(
 			'general',
 			'breadcrumbs',
-			'url_coupons',
 			'admin_bar',
 			'export',
 			'my_account',

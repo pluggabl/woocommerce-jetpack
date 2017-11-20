@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 3.1.3
+ * @version 3.2.3
  * @author  Algoritmika Ltd.
  */
 
@@ -378,7 +378,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * search_post_where.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.3
 	 * @since   2.9.0
 	 */
 	function search_post_where( $where = '' ) {
@@ -386,7 +386,7 @@ class WCJ_SKU extends WCJ_Module {
 		if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) ) {
 			return $where;
 		}
-		$where = preg_replace( "/post_title LIKE ('%[^%]+%')/", "post_title LIKE $1) OR (wcj_sku.meta_key = '_sku' AND CAST(wcj_sku.meta_value AS CHAR) LIKE $1 ", $where );
+		$where = preg_replace( "/\(\s*wp_posts.post_title\s+LIKE\s*(\'[^\']+\')\s*\)/", "(wp_posts.post_title LIKE $1) OR (wcj_sku.meta_key = '_sku' AND CAST(wcj_sku.meta_value AS CHAR) LIKE $1)", $where );
 		return $where;
 	}
 

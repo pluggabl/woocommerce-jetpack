@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 3.1.3
+ * @version 3.2.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add link to Booster's shortcodes list
@@ -216,23 +216,6 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_general_user_role_changer_options',
-	),
-	array(
-		'title'    => __( 'Coupons Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_coupons_options',
-	),
-	array(
-		'title'    => __( 'Generate Coupon Code Automatically', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'When enabled, this will generate coupon code automatically when adding new coupon.', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_coupons_code_generator_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_coupons_options',
 	),
 	/*
 	array(

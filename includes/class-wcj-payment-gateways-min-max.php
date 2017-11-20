@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Min/Max Amounts
  *
- * @version 3.2.2
+ * @version 3.2.3
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -17,6 +17,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.0
+	 * @since   2.4.1
 	 */
 	function __construct() {
 
@@ -34,7 +35,9 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 3.2.2
+	 * @version 3.2.3
+	 * @since   2.4.1
+	 * @todo    (maybe) `wc_clear_notices()`
 	 */
 	function available_payment_gateways( $_available_gateways ) {
 		if ( ! function_exists( 'WC' ) || ! isset( WC()->cart ) ) {
@@ -62,7 +65,6 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 			}
 		}
 		if ( 'yes' === get_option( 'wcj_payment_gateways_min_max_notices_enable', 'yes' ) && ! empty( $notices ) ) {
-//			wc_clear_notices();
 			$notice_type = get_option( 'wcj_payment_gateways_min_max_notices_type', 'notice' );
 			foreach ( $notices as $notice ) {
 				if ( ! wc_has_notice( $notice, $notice_type ) ) {
