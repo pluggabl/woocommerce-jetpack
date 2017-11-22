@@ -56,8 +56,8 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 	 *
 	 * @version 3.2.3
 	 * @since   3.2.3
-	 * @todo    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-	 * @todo    $characters = '0123456789abcdefghijklmnopqrstuvwxyz'
+	 * @todo    (maybe) $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+	 * @todo    (maybe) $characters = '0123456789abcdefghijklmnopqrstuvwxyz'
 	 */
 	function random_string( $length = 32, $characters = 'abcdefghijklmnopqrstuvwxyz' ) {
 		$characters_length = strlen( $characters );
@@ -75,14 +75,19 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 	 * @since   3.1.3
 	 * @todo    (maybe) more algorithms
 	 */
-	function generate_coupon_code( $str = '' ) {
+	function generate_coupon_code( $str = '', $algorithm = '', $length = '' ) {
 		if ( '' === $str ) {
 			$str = time();
 		}
-		$algorithm = get_option( 'wcj_coupons_code_generator_algorithm', 'crc32' );
+		if ( '' === $algorithm ) {
+			$algorithm = get_option( 'wcj_coupons_code_generator_algorithm', 'crc32' );
+		}
 		switch ( $algorithm ) {
 			case 'random_letters':
 				$code = $this->random_string();
+				break;
+			case 'random_numbers':
+				$code = $this->random_string( 32, '0123456789' );
 				break;
 			case 'md5':
 				$code = md5( $str );
@@ -94,7 +99,9 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 				$code = sprintf( '%08x', crc32( $str ) );
 				break;
 		}
-		$length = get_option( 'wcj_coupons_code_generator_length', 0 );
+		if ( '' === $length ) {
+			$length = get_option( 'wcj_coupons_code_generator_length', 0 );
+		}
 		if ( $length > 0 && strlen( $code ) > $length ) {
 			$code = substr( $code, 0, $length );
 		}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.2.0
+ * @version 3.2.3
  * @author  Algoritmika Ltd.
  */
 
@@ -22,7 +22,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * prepare_pdf.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.3
 	 */
 	function prepare_pdf() {
 
@@ -133,6 +133,12 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		// Set text shadow effect
 		if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_shadowed', 'no' ) ) {
 			$pdf->setTextShadow( array( 'enabled' => true, 'depth_w' => 0.2, 'depth_h' => 0.2, 'color' => array( 196, 196, 196 ), 'opacity' => 1, 'blend_mode' => 'Normal' ) );
+		}
+
+		// Background image
+		if ( '' != ( $background_image = do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_background_image', '' ) ) ) ) {
+			$background_image = parse_url( $background_image, PHP_URL_PATH );
+			$pdf->Image( $background_image, 0, 0, $pdf->getPageWidth(), $pdf->getPageHeight() );
 		}
 
 		return $pdf;

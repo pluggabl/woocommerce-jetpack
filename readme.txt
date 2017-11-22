@@ -170,20 +170,23 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.3 - 20/11/2017 =
+= 3.2.3 - 22/11/2017 =
 	* Fix - PRICES & CURRENCIES - Currency Exchange Rates - cURL option fixed for "Yahoo" and "Fixer.io" servers.
 !D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Server - Default value set to "European Central Bank (ECB)".
 	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Entrada" theme filter added.
+~D	* Dev - PRODUCTS - Product Listings - "Product Shop Visibility by Price" section added.
 ~	* Fix - PRODUCTS - SKU - Search by SKU on frontend - Bug fixed.
-	* Dev - CART & CHECKOUT - Coupon Code Generator - Initial module release (moved from "General" module).
-$!	* Dev - CART & CHECKOUT - Coupon Code Generator - "Algorithm" and "Length" options added.
-	* Dev - CART & CHECKOUT - URL Coupons - Module moved from "EMAILS & MISC." section.
-T	* Dev - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Checking for `WC()` function to exist before accessing to `WC()->cart`. Code refactoring.
+D	* Dev - CART & CHECKOUT - Coupon Code Generator - Initial module release (moved from "General" module).
+$!D	* Dev - CART & CHECKOUT - Coupon Code Generator - "Algorithm" and "Length" options added.
+D	* Dev - CART & CHECKOUT - URL Coupons - Module moved from "EMAILS & MISC." section.
+T	* Fix - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Checking for `WC()` function to exist before accessing to `WC()->cart`. Code refactoring.
 !D	* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - General Options - Variable Products - "Force on add to cart" option added.
 !D	* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - General Options - Variable Products - "Action on variation change" option added.
 	* Fix - SHIPPING & ORDERS - Order Min/Max Quantities - `get_cart_url()` method replaced with `wc_get_cart_url()` function.
 T	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `get_cart_url()` method replaced with `wc_get_cart_url()` function.
 !D	* Dev - PDF INVOICING & PACKING SLIPS - "Replace Admin Order Search with Invoice Search" option added.
+D	* Dev - PDF INVOICING & PACKING SLIPS - "Default Images Directory" option moved from "Header" settings section to "General" section.
+!D	* Dev - PDF INVOICING & PACKING SLIPS - Page Settings - "Background Image" option added.
 ~	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Currency Rates - Input step decreased.
 !!!	* Fix - Functions - General - `wcj_get_select_options()` - Prefix (`wcj-`) is added to the keys (to prevent issues with numeric keys).
 !	* Fix - Settings Manager - `manage_options()` fixed.

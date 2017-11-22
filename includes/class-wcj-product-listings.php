@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 3.2.0
+ * @version 3.2.3
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.3
 	 */
 	function __construct() {
 		$this->id         = 'product_listings';
@@ -53,7 +53,33 @@ class WCJ_Product_Listings extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_products_admin_list_columns_order_enabled', 'no' ) ) {
 				add_filter( 'manage_edit-product_columns', array( $this, 'rearange_product_columns' ), PHP_INT_MAX );
 			}
+
+			// Product visibility by price
+			if ( 'yes' === get_option( 'wcj_product_listings_product_visibility_by_price_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_product_is_visible', array( $this, 'product_visibility_by_price' ), PHP_INT_MAX, 2 );
+			}
+
 		}
+	}
+
+	/**
+	 * product_visibility_by_price.
+	 *
+	 * @version 3.2.3
+	 * @since   3.2.3
+	 * @todo    grouped products
+	 */
+	function product_visibility_by_price( $visible, $product_id ) {
+		$product = wc_get_product( $product_id );
+		if ( $product->is_type( 'variable' ) ) {
+			$min_price = $product->get_variation_price( 'min' );
+			$max_price = $product->get_variation_price( 'max' );
+		} else {
+			$min_price = $max_price = $product->get_price();
+		}
+		$min_price_limit = get_option( 'wcj_product_listings_product_visibility_by_price_min', 0 );
+		$max_price_limit = get_option( 'wcj_product_listings_product_visibility_by_price_max', 0 );
+		return ( ( 0 != $min_price_limit && $min_price < $min_price_limit ) || ( 0 != $max_price_limit && $max_price > $max_price_limit ) ? false : $visible );
 	}
 
 	/**

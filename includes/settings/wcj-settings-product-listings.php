@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 3.2.0
+ * @version 3.2.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -121,6 +121,39 @@ $settings = array(
 		'id'       => 'wcj_product_listings_archive_pages_options',
 	),
 	array(
+		'title'    => __( 'Product Shop Visibility by Price', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'desc'     => __( 'Here you can set to hide products from shop and search results depending on product\'s price. Products will still be accessible via direct link.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_listings_product_visibility_by_price_options',
+	),
+	array(
+		'title'    => __( 'Product Shop Visibility by Price', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'       => 'wcj_product_listings_product_visibility_by_price_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Min Price', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Products with price below this value will be hidden. Ignored if set to zero.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_listings_product_visibility_by_price_min',
+		'default'  => 0,
+		'type'     => 'number',
+		'custom_attributes' => array( 'min' => 0, 'step' => wcj_get_wc_price_step() ),
+	),
+	array(
+		'title'    => __( 'Max Price', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Products with price above this value will be hidden. Ignored if set to zero.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_listings_product_visibility_by_price_max',
+		'default'  => 0,
+		'type'     => 'number',
+		'custom_attributes' => array( 'min' => 0, 'step' => wcj_get_wc_price_step() ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_listings_product_visibility_by_price_options',
+	),
+	array(
 		'title'    => __( 'TAX Display in the Shop - by Product', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'desc'     => __( 'If you want to display part of your products including TAX and another part excluding TAX, you can set it here.', 'woocommerce-jetpack' ),
@@ -178,7 +211,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'TAX Display by User Role', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable section', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
 		'id'       => 'wcj_product_listings_display_taxes_by_user_role_enabled',
 		'type'     => 'checkbox',
 		'default'  => 'no',

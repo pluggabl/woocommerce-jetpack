@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Page Settings
  *
- * @version 3.1.0
+ * @version 3.2.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -58,6 +58,16 @@ foreach ( $invoice_types as $invoice_type ) {
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_margin_bottom',
 			'default'  => 0, // PDF_MARGIN_BOTTOM,
 			'type'     => 'number',
+		),
+		array(
+			'title'    => __( 'Background Image', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_background_image',
+			'default'  => '',
+			'type'     => 'text',
+			'desc'     => sprintf( __( 'Enter a local URL to an image. Upload your image using the <a href="%s">media uploader</a>.', 'woocommerce-jetpack' ),
+				admin_url( 'media-new.php' ) ),
+			'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
+			'class'    => 'widefat',
 		),
 		array(
 			'type'     => 'sectionend',

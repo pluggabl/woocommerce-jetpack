@@ -2,12 +2,25 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.2.2
+ * @version 3.2.3
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_wc_price_step' ) ) {
+	/**
+	 * wcj_get_wc_price_step.
+	 *
+	 * @version 3.2.3
+	 * @since   3.2.3
+	 * @todo    use this where needed
+	 */
+	function wcj_get_wc_price_step() {
+		return ( 1 / pow( 10, absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) ) );
+	}
+}
 
 if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 	/**
