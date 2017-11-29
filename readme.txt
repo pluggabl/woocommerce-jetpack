@@ -75,9 +75,11 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
 * *Checkout Customization* - Customize WooCommerce checkout - hide "Order Again" button; disable selected fields on checkout for logged users and more.
 * *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
+* *Coupon Code Generator* - WooCommerce coupon code generator.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to WooCommerce cart and checkout pages.
 * *Mini Cart Custom Info* - Add custom info to WooCommerce mini cart widget.
+* *URL Coupons* - WooCommerce URL coupons.
 
 **Payment Gateways**
 
@@ -128,7 +130,6 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *My Account* - WooCommerce "My Account" page customization.
 * *Old Slugs* - Remove old WooCommerce products slugs.
 * *Reports* - WooCommerce stock, sales, customers etc. reports.
-* *URL Coupons* - WooCommerce URL coupons.
 * *User Tracking* - Track your users in WooCommerce.
 
 = Feedback =
@@ -170,7 +171,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.3 - 22/11/2017 =
+= 3.2.3 - 28/11/2017 =
 	* Fix - PRICES & CURRENCIES - Currency Exchange Rates - cURL option fixed for "Yahoo" and "Fixer.io" servers.
 !D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Server - Default value set to "European Central Bank (ECB)".
 	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - "Entrada" theme filter added.
@@ -179,15 +180,15 @@ You can see the differences between versions in this [table](https://booster.io/
 D	* Dev - CART & CHECKOUT - Coupon Code Generator - Initial module release (moved from "General" module).
 $!D	* Dev - CART & CHECKOUT - Coupon Code Generator - "Algorithm" and "Length" options added.
 D	* Dev - CART & CHECKOUT - URL Coupons - Module moved from "EMAILS & MISC." section.
-T	* Fix - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Checking for `WC()` function to exist before accessing to `WC()->cart`. Code refactoring.
+T	* Fix - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Checking for `WC()` function to exist before accessing to `WC()->cart`. Checking for `is_checkout()`. Code refactoring.
 !D	* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - General Options - Variable Products - "Force on add to cart" option added.
 !D	* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - General Options - Variable Products - "Action on variation change" option added.
 	* Fix - SHIPPING & ORDERS - Order Min/Max Quantities - `get_cart_url()` method replaced with `wc_get_cart_url()` function.
 T	* Fix - SHIPPING & ORDERS - Order Minimum Amount - `get_cart_url()` method replaced with `wc_get_cart_url()` function.
+!	* Dev - SHIPPING & ORDERS - Order Numbers - "WooCommerce Subscriptions" plugin compatibility added (sequential and random order numbers).
 !D	* Dev - PDF INVOICING & PACKING SLIPS - "Replace Admin Order Search with Invoice Search" option added.
 D	* Dev - PDF INVOICING & PACKING SLIPS - "Default Images Directory" option moved from "Header" settings section to "General" section.
 !D	* Dev - PDF INVOICING & PACKING SLIPS - Page Settings - "Background Image" option added.
-~	* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Currency Rates - Input step decreased.
 !!!	* Fix - Functions - General - `wcj_get_select_options()` - Prefix (`wcj-`) is added to the keys (to prevent issues with numeric keys).
 !	* Fix - Settings Manager - `manage_options()` fixed.
 

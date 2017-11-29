@@ -64,7 +64,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 				continue;
 			}
 		}
-		if ( 'yes' === get_option( 'wcj_payment_gateways_min_max_notices_enable', 'yes' ) && ! empty( $notices ) ) {
+		if ( function_exists( 'is_checkout' ) && is_checkout() && 'yes' === get_option( 'wcj_payment_gateways_min_max_notices_enable', 'yes' ) && ! empty( $notices ) ) {
 			$notice_type = get_option( 'wcj_payment_gateways_min_max_notices_type', 'notice' );
 			foreach ( $notices as $notice ) {
 				if ( ! wc_has_notice( $notice, $notice_type ) ) {

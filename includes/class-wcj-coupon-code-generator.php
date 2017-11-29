@@ -57,7 +57,6 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 	 * @version 3.2.3
 	 * @since   3.2.3
 	 * @todo    (maybe) $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-	 * @todo    (maybe) $characters = '0123456789abcdefghijklmnopqrstuvwxyz'
 	 */
 	function random_string( $length = 32, $characters = 'abcdefghijklmnopqrstuvwxyz' ) {
 		$characters_length = strlen( $characters );
@@ -83,8 +82,11 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 			$algorithm = get_option( 'wcj_coupons_code_generator_algorithm', 'crc32' );
 		}
 		switch ( $algorithm ) {
+			case 'random_letters_and_numbers':
+				$code = $this->random_string( 32, '0123456789abcdefghijklmnopqrstuvwxyz' );
+				break;
 			case 'random_letters':
-				$code = $this->random_string();
+				$code = $this->random_string( 32, 'abcdefghijklmnopqrstuvwxyz' );
 				break;
 			case 'random_numbers':
 				$code = $this->random_string( 32, '0123456789' );

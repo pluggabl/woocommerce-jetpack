@@ -31,11 +31,12 @@ return array(
 		'default'  => 'crc32',
 		'type'     => 'select',
 		'options'  => array(
-			'crc32'          => __( 'Hash', 'woocommerce-jetpack' ) . ': ' . 'crc32'    . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 8 )  . ')',
-			'md5'            => __( 'Hash', 'woocommerce-jetpack' ) . ': ' . 'md5'      . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 32 ) . ')',
-			'sha1'           => __( 'Hash', 'woocommerce-jetpack' ) . ': ' . 'sha1'     . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 40 ) . ')',
-			'random_letters' => __( 'Random letters', 'woocommerce-jetpack' )           . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 32 ) . ')',
-			'random_numbers' => __( 'Random numbers', 'woocommerce-jetpack' )           . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 32 ) . ')',
+			'crc32'                      => __( 'Hash', 'woocommerce-jetpack' ) . ': ' . 'crc32'      . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 8 )  . ')',
+			'md5'                        => __( 'Hash', 'woocommerce-jetpack' ) . ': ' . 'md5'        . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 32 ) . ')',
+			'sha1'                       => __( 'Hash', 'woocommerce-jetpack' ) . ': ' . 'sha1'       . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 40 ) . ')',
+			'random_letters_and_numbers' => __( 'Random letters and numbers', 'woocommerce-jetpack' ) . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 32 ) . ')',
+			'random_letters'             => __( 'Random letters', 'woocommerce-jetpack' )             . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 32 ) . ')',
+			'random_numbers'             => __( 'Random numbers', 'woocommerce-jetpack' )             . ' (' . sprintf( __( 'length %d', 'woocommerce-jetpack' ), 32 ) . ')',
 		),
 	),
 	array(

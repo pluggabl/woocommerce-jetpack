@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 3.2.0
+ * @version 3.2.3
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.3
 	 * @todo    (maybe) rename "Orders Renumerate" to "Renumerate orders"
 	 * @todo    (maybe) use `woocommerce_new_order` hook instead of `wp_insert_post`
 	 */
@@ -44,7 +44,27 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_order_number_search_by_custom_number_enabled', 'yes' ) ) {
 				add_action( 'pre_get_posts', array( $this, 'search_by_custom_number' ) );
 			}
+			// "WooCommerce Subscriptions" plugin
+			$woocommerce_subscriptions_types = array( 'subscription', 'renewal_order', 'resubscribe_order', 'copy_order' );
+			foreach ( $woocommerce_subscriptions_types as $woocommerce_subscriptions_type ) {
+				add_filter( 'wcs_' . $woocommerce_subscriptions_type . '_meta', array( $this, 'woocommerce_subscriptions_remove_meta_copy' ), PHP_INT_MAX, 3 );
+			}
 		}
+	}
+
+	/**
+	 * woocommerce_subscriptions_remove_meta_copy.
+	 *
+	 * @version 3.2.3
+	 * @since   3.2.3
+	 */
+	function woocommerce_subscriptions_remove_meta_copy( $meta, $to_order, $from_order ) {
+		foreach ( $meta as $meta_id => $meta_item ) {
+			if ( '_wcj_order_number' === $meta_item['meta_key'] ) {
+				unset( $meta[ $meta_id ] );
+			}
+		}
+		return $meta;
 	}
 
 	/**
