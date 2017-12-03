@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 2.8.0
+ * @version 3.2.3
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options;
@@ -92,7 +92,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * validate_on_checkout.
 	 *
-	 * @version 2.5.0
+	 * @version 3.2.3
 	 * @since   2.4.5
 	 */
 	function validate_on_checkout( $posted ) {
@@ -107,17 +107,24 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 					// Is required
 					wc_add_notice( get_option( 'wcj_checkout_files_upload_notice_required_' . $i, __( 'File is required!', 'woocommerce-jetpack' ) ), 'error' );
 				}
-				if ( '' != ( $file_accept = get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' ) ) && isset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] ) ) {
+				if ( ! isset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] ) ) {
+					continue;
+				}
+				$file_name = $_SESSION[ 'wcj_checkout_files_upload_' . $i ]['name'];
+				$file_type = '.' . pathinfo( $file_name, PATHINFO_EXTENSION );
+				if ( '' != ( $file_accept = get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' ) ) ) {
 					// Validate file type
 					$file_accept = explode( ',', $file_accept );
 					if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
-						$file_name = $_SESSION[ 'wcj_checkout_files_upload_' . $i ]['name'];
-						$file_type = '.' . pathinfo( $file_name, PATHINFO_EXTENSION );
 						if ( ! in_array( $file_type, $file_accept ) ) {
 							wc_add_notice( sprintf( get_option( 'wcj_checkout_files_upload_notice_wrong_file_type_' . $i,
 								__( 'Wrong file type: "%s"!', 'woocommerce-jetpack' ) ), $file_name ), 'error' );
 						}
 					}
+				}
+				if ( $this->is_extension_blocked( $file_type ) ) {
+					wc_add_notice( sprintf( get_option( 'wcj_checkout_files_upload_notice_wrong_file_type_' . $i,
+						__( 'Wrong file type: "%s"!', 'woocommerce-jetpack' ) ), $file_name ), 'error' );
 				}
 			}
 		}
@@ -173,9 +180,30 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	}
 
 	/**
+	 * is_extension_blocked.
+	 *
+	 * @version 3.2.3
+	 * @since   3.2.3
+	 */
+	function is_extension_blocked( $ext ) {
+		if ( 'no' === get_option( 'wcj_checkout_files_upload_block_files_enabled', 'yes' ) ) {
+			return false;
+		}
+		$ext = strtolower( $ext );
+		if ( strlen( $ext ) > 0 && '.' === $ext[0] ) {
+			$ext = substr( $ext, 1 );
+		}
+		$blocked_file_exts = get_option( 'wcj_checkout_files_upload_block_files_exts',
+			'bat|exe|cmd|sh|php|php0|php1|php2|php3|php4|php5|php6|php7|php8|php9|ph|ph0|ph1|ph2|ph3|ph4|ph5|ph6|ph7|ph8|ph9|pl|cgi|386|dll|com|torrent|js|app|jar|pif|vb|vbscript|wsf|asp|cer|csr|jsp|drv|sys|ade|adp|bas|chm|cpl|crt|csh|fxp|hlp|hta|inf|ins|isp|jse|htaccess|htpasswd|ksh|lnk|mdb|mde|mdt|mdw|msc|msi|msp|mst|ops|pcd|prg|reg|scr|sct|shb|shs|url|vbe|vbs|wsc|wsf|wsh|html|htm'
+		);
+		$blocked_file_exts = explode( '|', $blocked_file_exts );
+		return in_array( $ext, $blocked_file_exts );
+	}
+
+	/**
 	 * add_files_to_order.
 	 *
-	 * @version 2.4.5
+	 * @version 3.2.3
 	 * @since   2.4.5
 	 */
 	function add_files_to_order( $order_id, $posted ) {
@@ -192,7 +220,9 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				$file_path          = $upload_dir . '/' . $download_file_name;
 				$tmp_file_name      = $_SESSION[ 'wcj_checkout_files_upload_' . $i ]['tmp_name'];
 				$file_data          = file_get_contents( $tmp_file_name );
-				file_put_contents( $file_path, $file_data );
+				if ( ! $this->is_extension_blocked( $ext ) ) { // should already be validated earlier, but just in case...
+					file_put_contents( $file_path, $file_data );
+				}
 				unlink( $tmp_file_name );
 				unset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] );
 				update_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_' . $i, $download_file_name );
@@ -205,7 +235,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 2.5.0
+	 * @version 3.2.3
 	 * @since   2.4.5
 	 */
 	function process_checkout_files_upload() {
@@ -244,18 +274,23 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				if ( isset( $_FILES[ $file_name ] ) && '' != $_FILES[ $file_name ]['tmp_name'] ) {
 					// Validate
 					$is_valid = true;
-					if ( '' != ( $file_accept = get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' ) ) && isset( $_FILES[ $file_name ] ) ) {
+					$real_file_name = $_FILES[ $file_name ]['name'];
+					$file_type      = '.' . pathinfo( $real_file_name, PATHINFO_EXTENSION );
+					if ( '' != ( $file_accept = get_option( 'wcj_checkout_files_upload_file_accept_' . $i, '' ) ) ) {
 						// Validate file type
 						$file_accept = explode( ',', $file_accept );
 						if ( is_array( $file_accept ) && ! empty( $file_accept ) ) {
-							$real_file_name = $_FILES[ $file_name ]['name'];
-							$file_type      = '.' . pathinfo( $real_file_name, PATHINFO_EXTENSION );
 							if ( ! in_array( $file_type, $file_accept ) ) {
 								wc_add_notice( sprintf( get_option( 'wcj_checkout_files_upload_notice_wrong_file_type_' . $i,
 									__( 'Wrong file type: "%s"!', 'woocommerce-jetpack' ) ), $real_file_name ), 'error' );
 								$is_valid = false;
 							}
 						}
+					}
+					if ( $this->is_extension_blocked( $file_type ) ) {
+						wc_add_notice( sprintf( get_option( 'wcj_checkout_files_upload_notice_wrong_file_type_' . $i,
+							__( 'Wrong file type: "%s"!', 'woocommerce-jetpack' ) ), $real_file_name ), 'error' );
+						$is_valid = false;
 					}
 					if ( $is_valid ) {
 						// To session

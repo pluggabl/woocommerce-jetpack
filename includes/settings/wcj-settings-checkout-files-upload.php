@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Files Upload
  *
- * @version 2.8.0
+ * @version 3.2.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -278,6 +278,32 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_checkout_files_upload_form_template_options',
+	),
+) );
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_checkout_files_upload_advanced_options',
+	),
+	array(
+		'title'    => __( 'Block Potentially Harmful Files', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_files_upload_block_files_enabled',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Potentially Harmful File Extensions', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'List of file extensions separated by vertical bar %s.', 'woocommerce-jetpack' ), '<code>|</code>' ),
+		'id'       => 'wcj_checkout_files_upload_block_files_exts',
+		'default'  => 'bat|exe|cmd|sh|php|php0|php1|php2|php3|php4|php5|php6|php7|php8|php9|ph|ph0|ph1|ph2|ph3|ph4|ph5|ph6|ph7|ph8|ph9|pl|cgi|386|dll|com|torrent|js|app|jar|pif|vb|vbscript|wsf|asp|cer|csr|jsp|drv|sys|ade|adp|bas|chm|cpl|crt|csh|fxp|hlp|hta|inf|ins|isp|jse|htaccess|htpasswd|ksh|lnk|mdb|mde|mdt|mdw|msc|msi|msp|mst|ops|pcd|prg|reg|scr|sct|shb|shs|url|vbe|vbs|wsc|wsf|wsh|html|htm',
+		'type'     => 'text',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_checkout_files_upload_advanced_options',
 	),
 ) );
 return $settings;

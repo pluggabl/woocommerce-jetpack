@@ -1,9 +1,10 @@
 /**
  * wcj-product-addons.
  *
- * version 3.2.2
- * since   2.5.3
- * todo    `text` type - update price not only on change, but on each pressed key
+ * @version 3.2.2
+ * @since   2.5.3
+ * @todo    `text` type - update price not only on change, but on each pressed key
+ * @todo    fix the issue with custom price labels module
  */
 
 var _ajax_object = ajax_object;

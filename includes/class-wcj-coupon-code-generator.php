@@ -18,8 +18,9 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 	 *
 	 * @version 3.2.3
 	 * @since   3.2.3
-	 * @todo    Coupon code generator - add option to generate code only on button (in meta box) pressed
-	 * @todo    Coupon code generator - `wp_ajax_nopriv_wcj_generate_coupon_code` ?
+	 * @todo    user ID in coupon code
+	 * @todo    add option to generate code only on button (in meta box) pressed
+	 * @todo    `wp_ajax_nopriv_wcj_generate_coupon_code` ?
 	 */
 	function __construct() {
 
@@ -79,7 +80,7 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 			$str = time();
 		}
 		if ( '' === $algorithm ) {
-			$algorithm = get_option( 'wcj_coupons_code_generator_algorithm', 'crc32' );
+			$algorithm = apply_filters( 'booster_get_option', 'crc32', get_option( 'wcj_coupons_code_generator_algorithm', 'crc32' ) );
 		}
 		switch ( $algorithm ) {
 			case 'random_letters_and_numbers':
@@ -102,7 +103,7 @@ class WCJ_Coupon_Code_Generator extends WCJ_Module {
 				break;
 		}
 		if ( '' === $length ) {
-			$length = get_option( 'wcj_coupons_code_generator_length', 0 );
+			$length = apply_filters( 'booster_get_option', 0, get_option( 'wcj_coupons_code_generator_length', 0 ) );
 		}
 		if ( $length > 0 && strlen( $code ) > $length ) {
 			$code = substr( $code, 0, $length );
