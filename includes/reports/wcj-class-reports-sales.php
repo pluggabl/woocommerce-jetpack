@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Sales
  *
- * @version 2.7.0
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -69,7 +69,7 @@ class WCJ_Reports_Sales {
 	/*
 	 * get_products_sales.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.4
 	 * @since   2.3.0
 	 * @todo    (maybe) currency conversion
 	 * @todo    fix when variable and variations are all (wrongfully) counted in total sums
@@ -106,6 +106,9 @@ class WCJ_Reports_Sales {
 				$order = wc_get_order( $order_id );
 				$items = $order->get_items();
 				foreach ( $items as $item ) {
+					if ( ! apply_filters( 'wcj_reports_products_sales_check_product', true, $item['product_id'] ) ) {
+						continue;
+					}
 					$product_ids = array( $item['product_id'] );
 					if ( 0 != $item['variation_id'] && 'yes' === get_option( 'wcj_reports_products_sales_count_variations', 'no' ) ) {
 						$product_ids[] = $item['variation_id'];

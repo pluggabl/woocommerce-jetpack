@@ -171,6 +171,16 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.2.4 - 08/12/2017 =
+D	* Dev - PRODUCTS - Product Add to Cart - "Set All Products to Sold individually" option added.
+~D	* Dev - SHIPPING & ORDERS - Orders - Bulk Regenerate Download Permissions for Orders - All Orders - "Periodically" option added.
+~D	* Dev - EMAILS & MISC. - Custom Emails - `%customer%` can now be used in comma separated list for multiple recipients.
+~D	* Dev - EMAILS & MISC. - Reports - Orders - Product Sales (Monthly) - `wcj_reports_products_sales_check_product` filter added.
+	* Dev - Functions - "Crons" added.
+	* Dev - Functions - Debug - `wcj_log()` - `esc_url()` added.
+D	* Fix - Functions - Price and Currency - `wc_get_product_purchase_price()` - `int` replaced with `float` - this fixes the issue with purchase price calculating incorrectly (cutting decimal part).
+	* Dev - Settings Manager - Import - Checking for `wcj_` prefix, when importing plugin settings.
+
 = 3.2.3 - 03/12/2017 =
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - cURL option fixed for "Yahoo" and "Fixer.io" servers.
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Server - Default value set to "European Central Bank (ECB)".
@@ -191,7 +201,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - PDF INVOICING & PACKING SLIPS - "Default Images Directory" option moved from "Header" settings section to "General" section.
 * Dev - PDF INVOICING & PACKING SLIPS - Page Settings - "Background Image" option added.
 * Fix - Functions - General - `wcj_get_select_options()` - Prefix (`wcj-`) is added to the keys (to prevent issues with numeric keys).
-* Fix - Settings Manager - `manage_options()` fixed.
+* Fix - Settings Manager - `manage_options()` - Security issue fixed.
 
 = 3.2.2 - 12/11/2017 =
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Advanced: Price Filters Priority" option added.

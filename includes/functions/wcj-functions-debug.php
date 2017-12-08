@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Debug
  *
- * @version 2.9.1
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ if ( ! function_exists( 'wcj_log' ) ) {
 	/**
 	 * wcj_log.
 	 *
-	 * @version 2.9.1
+	 * @version 3.2.4
 	 */
 	function wcj_log( $message = '' ) {
 		if ( ! wcj_is_module_enabled( 'admin_tools' ) || ( 'no' === get_option( 'wcj_logging_enabled', 'no' ) && 'no' === get_option( 'wcj_wc_logging_enabled', 'no' ) ) ) {
@@ -30,7 +30,7 @@ if ( ! function_exists( 'wcj_log' ) ) {
 			$message = print_r( $message, true );
 		}
 		if ( 'yes' === get_option( 'wcj_logging_enabled', 'no' ) ) {
-			update_option( 'wcj_log', date( 'Y-m-d H:i:s' ) . ' ' . $_SERVER['REQUEST_URI'] . ' [' . $message . ']' . '<br>' . get_option( 'wcj_log', '' ) );
+			update_option( 'wcj_log', date( 'Y-m-d H:i:s' ) . ' ' . esc_url( $_SERVER['REQUEST_URI'] ) . ' [' . $message . ']' . '<br>' . get_option( 'wcj_log', '' ) );
 		}
 		// WC log
 		if ( 'yes' === get_option( 'wcj_wc_logging_enabled', 'no' ) && function_exists( 'wc_get_logger' ) ) {

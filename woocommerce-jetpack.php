@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: https://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features.
-Version: 3.2.3
+Version: 3.2.4-dev
 Author: Algoritmika Ltd
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
@@ -64,7 +64,7 @@ require_once( 'includes/constants/wcj-constants.php' );
  * Main WC_Jetpack Class
  *
  * @class   WC_Jetpack
- * @version 3.2.3
+ * @version 3.2.4
  */
 final class WC_Jetpack {
 
@@ -74,7 +74,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.2.3';
+	public $version = '3.2.4-dev-20171208-2255';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -287,7 +287,7 @@ final class WC_Jetpack {
 	/**
 	 * include_functions.
 	 *
-	 * @version 3.2.1
+	 * @version 3.2.4
 	 */
 	function include_functions() {
 		include_once( 'includes/functions/wcj-functions-core.php' );
@@ -295,6 +295,7 @@ final class WC_Jetpack {
 		include_once( 'includes/functions/wcj-functions-admin.php' );
 		include_once( 'includes/functions/wcj-functions-general.php' );
 		include_once( 'includes/functions/wcj-functions-date-time.php' );
+		include_once( 'includes/functions/wcj-functions-crons.php' );
 		include_once( 'includes/functions/wcj-functions-products.php' );
 		include_once( 'includes/functions/wcj-functions-orders.php' );
 		include_once( 'includes/functions/wcj-functions-eu-vat.php' );

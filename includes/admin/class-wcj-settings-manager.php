@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Manager
  *
- * @version 3.2.3
+ * @version 3.2.4
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -50,7 +50,7 @@ class WCJ_Settings_Manager {
 	/**
 	 * manage_options_import.
 	 *
-	 * @version 2.5.4
+	 * @version 3.2.4
 	 * @since   2.5.2
 	 */
 	function manage_options_import() {
@@ -73,8 +73,10 @@ class WCJ_Settings_Manager {
 				} else {
 					$import_settings = json_decode( $import_settings[1], true );
 					foreach ( $import_settings as $import_key => $import_setting ) {
-						update_option( $import_key, $import_setting );
-						$import_counter++;
+						if ( strlen( $import_key ) > 4 && 'wcj_' === substr( $import_key, 0, 4 ) ) {
+							update_option( $import_key, $import_setting );
+							$import_counter++;
+						}
 					}
 					$wcj_notice .= sprintf( __( '%d options successfully imported.', 'woocommerce-jetpack' ), $import_counter );
 				}

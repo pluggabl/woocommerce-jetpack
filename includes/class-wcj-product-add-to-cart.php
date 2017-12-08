@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 2.9.0
+ * @version 3.2.4
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.4
 	 */
 	function __construct() {
 
@@ -81,6 +81,10 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			// Quantity
 			if ( 'yes' === get_option( 'wcj_add_to_cart_quantity_disable', 'no' ) || 'yes' === get_option( 'wcj_add_to_cart_quantity_disable_cart', 'no' ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_disable_quantity_add_to_cart_script' ) );
+			}
+			// Quantity - Sold individually
+			if ( 'yes' === get_option( 'wcj_add_to_cart_quantity_sold_individually_all', 'no' ) ) {
+				add_filter( 'woocommerce_is_sold_individually', '__return_true', PHP_INT_MAX );
 			}
 
 			// Button - Disabling - Archives

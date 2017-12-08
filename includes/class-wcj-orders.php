@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 3.2.0
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,10 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.4
+	 * @todo    Bulk Regenerate Download Permissions - copy "cron" to plugin
+	 * @todo    Bulk Regenerate Download Permissions - maybe move "bulk actions" to free
+	 * @todo    Bulk Regenerate Download Permissions - maybe as new module
 	 */
 	function __construct() {
 
@@ -86,9 +89,29 @@ class WCJ_Orders extends WCJ_Module {
 				add_action( 'woojetpack_after_settings_save', array( $this, 'maybe_bulk_regenerate_download_permissions_all_orders' ) );
 				// Admin notices
 				add_filter( 'admin_notices', array( $this, 'admin_notice_regenerate_download_permissions' ) );
+				// All orders - Cron
+				if ( 'disabled' != apply_filters( 'booster_get_option', 'disabled', get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) ) ) {
+					add_action( 'init',       array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
+					add_action( 'admin_init', array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
+					add_filter( 'cron_schedules', 'wcj_crons_add_custom_intervals' );
+					add_action( 'wcj_bulk_regenerate_download_permissions_all_orders_cron', array( $this, 'bulk_regenerate_download_permissions_all_orders' ) );
+				}
 			}
 
 		}
+	}
+
+	/**
+	 * schedule_bulk_regenerate_download_permissions_all_orders_cron.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 */
+	function schedule_bulk_regenerate_download_permissions_all_orders_cron() {
+		wcj_crons_schedule_the_events(
+			'wcj_bulk_regenerate_download_permissions_all_orders_cron',
+			apply_filters( 'booster_get_option', 'disabled', get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) )
+		);
 	}
 
 	/**

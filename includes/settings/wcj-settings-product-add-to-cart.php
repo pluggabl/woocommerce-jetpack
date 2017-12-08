@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Add To Cart
  *
- * @version 3.1.0
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -156,6 +156,13 @@ return array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 		'checkboxgroup' => 'end',
+	),
+	array(
+		'title'    => __( 'Set All Products to "Sold individually"', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_quantity_sold_individually_all',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',

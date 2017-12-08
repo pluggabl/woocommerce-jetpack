@@ -4,6 +4,7 @@
  *
  * @version 3.2.3
  * @author  Algoritmika Ltd.
+ * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

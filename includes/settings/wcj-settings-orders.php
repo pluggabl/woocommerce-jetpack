@@ -2,12 +2,17 @@
 /**
  * Booster for WooCommerce Settings - Orders
  *
- * @version 3.2.0
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+$bulk_regenerate_download_permissions_all_orders_cron_desc = '';
+if ( $this->is_enabled() && 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_order_bulk_regenerate_download_permissions_enabled', 'no' ) ) ) {
+	$bulk_regenerate_download_permissions_all_orders_cron_desc = wcj_crons_get_next_event_time_message( 'wcj_bulk_regenerate_download_permissions_all_orders_cron_time' );
+}
 
 $settings = array(
 	array(
@@ -212,7 +217,7 @@ $settings = array_merge( $settings, array(
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
-		'title'    => __( 'Add Regenerate Download Permissions to Bulk Actions', 'woocommerce-jetpack' ),
+		'title'    => __( 'Bulk Actions', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'When enabled this will add "Regenerate download permissions" action to "Bulk Actions" select box on admin orders page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
 		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_bulk_regenerate_download_permissions_actions',
@@ -221,12 +226,22 @@ $settings = array_merge( $settings, array(
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(
-		'title'    => __( 'Regenerate Download Permissions for All Orders', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Check this box and press "Save changes" button to start regeneration. Please note that both module and current section must be enabled.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
-		'desc'     => __( 'Regenerate', 'woocommerce-jetpack' ),
+		'title'    => __( 'All Orders - Now', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Check this box and press "Save changes" button to start regeneration. Please note that both module and current section must be enabled before that.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => __( 'Regenerate now', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_bulk_regenerate_download_permissions_all_orders',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'All Orders - Periodically', 'woocommerce-jetpack' ),
+		'desc'     => $bulk_regenerate_download_permissions_all_orders_cron_desc . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'id'       => 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron',
+		'default'  => 'disabled',
+		'type'     => 'select',
+		'options'  => array_merge( array( 'disabled' => __( 'Disabled', 'woocommerce-jetpack' ) ),
+			wcj_crons_get_all_intervals( __( 'Regenerate', 'woocommerce-jetpack' ), array( 'minutely' ) ) ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 	),
 	array(

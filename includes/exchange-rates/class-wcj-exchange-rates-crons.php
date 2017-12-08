@@ -208,11 +208,11 @@ class WCJ_Exchange_Rates_Crons {
 	function cron_add_custom_intervals( $schedules ) {
 		$schedules['weekly'] = array(
 			'interval' => 604800,
-			'display' => __( 'Once Weekly', 'woocommerce-jetpack' )
+			'display'  => __( 'Once Weekly', 'woocommerce-jetpack' )
 		);
 		$schedules['minutely'] = array(
 			'interval' => 60,
-			'display' => __( 'Once a Minute', 'woocommerce-jetpack' )
+			'display'  => __( 'Once a Minute', 'woocommerce-jetpack' )
 		);
 		return $schedules;
 	}
