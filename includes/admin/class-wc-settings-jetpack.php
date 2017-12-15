@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 3.1.1
+ * @version 3.2.4
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -243,7 +243,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard.
 	 *
-	 * @version 3.0.0
+	 * @version 3.2.4
 	 */
 	function output_dashboard( $current_section ) {
 
@@ -331,7 +331,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
 		}
 
-		$plugin_data  = get_plugin_data( wcj_plugin_file() );
+		$plugin_data  = get_plugin_data( WCJ_PLUGIN_FILE );
 		$plugin_title = ( isset( $plugin_data['Name'] ) ? '[' . $plugin_data['Name'] . '] ' : '' );
 		echo '<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . $plugin_title .
 			__( 'Version', 'woocommerce-jetpack' ) . ': ' . get_option( 'booster_for_woocommerce_version', 'N/A' ) . '</p>';
@@ -438,7 +438,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * get_manager_settings.
 	 *
-	 * @version 3.1.1
+	 * @version 3.2.4
 	 * @since   2.6.0
 	 * @return  array
 	 */
@@ -455,10 +455,11 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				'title'   => __( 'Use List Instead of Comma Separated Text for Products in Settings', 'woocommerce-jetpack' ),
 				'type'    => 'checkbox',
 				'desc'    => sprintf( __( 'Supported modules: %s.', 'woocommerce-jetpack' ), implode( ', ', array(
-					__( 'Product Info', 'woocommerce-jetpack' ),
 					__( 'Gateways per Product or Category', 'woocommerce-jetpack' ),
-					__( 'Product Input Fields', 'woocommerce-jetpack' ),
 					__( 'Global Discount', 'woocommerce-jetpack' ),
+					__( 'Product Info', 'woocommerce-jetpack' ),
+					__( 'Product Input Fields', 'woocommerce-jetpack' ),
+					__( 'Products XML', 'woocommerce-jetpack' ),
 					__( 'Related Products', 'woocommerce-jetpack' ),
 				) ) ),
 				'id'      => 'wcj_list_for_products',

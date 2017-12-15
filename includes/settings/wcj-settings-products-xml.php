@@ -2,16 +2,17 @@
 /**
  * Booster for WooCommerce - Settings - Products XML
  *
- * @version 2.8.0
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$product_cats_options = wcj_get_terms( 'product_cat' );
-$product_tags_options = wcj_get_terms( 'product_tag' );
-$products_options     = wcj_get_products();
+$product_cats_options    = wcj_get_terms( 'product_cat' );
+$product_tags_options    = wcj_get_terms( 'product_tag' );
+$products_options        = wcj_get_products();
+$is_multiselect_products = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
 $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -42,6 +43,10 @@ $settings = array(
 	),
 );
 for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) ); $i++ ) {
+	wcj_maybe_convert_and_update_option_value( array(
+		array( 'id' => 'wcj_products_xml_products_incl_' . $i, 'default' => '' ),
+		array( 'id' => 'wcj_products_xml_products_excl_' . $i, 'default' => '' ),
+	), $is_multiselect_products );
 	$products_xml_cron_desc = '';
 	if ( $this->is_enabled() ) {
 		if ( '' != get_option( 'wcj_create_products_xml_cron_time_' . $i, '' ) ) {
@@ -134,23 +139,25 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_pro
 			'desc_tip' => __( 'Possible update periods are: every minute, hourly, twice daily, daily and weekly.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc_no_link' ),
 			'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
 		),
-		array(
-			'title'    => __( 'Products to Include', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'To include selected products only, enter products here. Leave blank to include all products.', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_products_xml_products_incl_' . $i,
-			'default'  => '',
-			'class'    => 'chosen_select',
-			'type'     => 'multiselect',
-			'options'  => $products_options,
+		wcj_get_settings_as_multiselect_or_text(
+			array(
+				'title'    => __( 'Products to Include', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'To include selected products only, enter products here. Leave blank to include all products.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_products_xml_products_incl_' . $i,
+				'default'  => '',
+			),
+			$products_options,
+			$is_multiselect_products
 		),
-		array(
-			'title'    => __( 'Products to Exclude', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'To exclude selected products, enter products here. Leave blank to include all products.', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_products_xml_products_excl_' . $i,
-			'default'  => '',
-			'class'    => 'chosen_select',
-			'type'     => 'multiselect',
-			'options'  => $products_options,
+		wcj_get_settings_as_multiselect_or_text(
+			array(
+				'title'    => __( 'Products to Exclude', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'To exclude selected products, enter products here. Leave blank to include all products.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_products_xml_products_excl_' . $i,
+				'default'  => '',
+			),
+			$products_options,
+			$is_multiselect_products
 		),
 		array(
 			'title'    => __( 'Categories to Include', 'woocommerce-jetpack' ),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 3.1.0
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.4
 	 * @todo    code refactoring and clean-up
 	 */
 	function __construct() {
@@ -32,7 +32,28 @@ class WCJ_Product_Tabs extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_custom_product_tabs_local_enabled', 'yes' ) ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_custom_tabs_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_custom_tabs_meta_box' ), 100, 2 );
+				if ( 'yes' === get_option( 'wcj_custom_product_tabs_yoast_seo_enabled', 'no' ) ) {
+					add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_scripts' ) );
+				}
 			}
+		}
+	}
+
+	/**
+	 * enqueue_admin_scripts.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 */
+	function enqueue_admin_scripts() {
+		if ( wcj_is_admin_product_edit_page() ) {
+			wp_enqueue_script(
+				'wcj-custom-tabs-yoast-seo',
+				wcj_plugin_url() . '/includes/js/wcj-custom-tabs-yoast-seo.js',
+				array( 'jquery', 'yoast-seo-admin-script' ),
+				WCJ()->version,
+				false
+			);
 		}
 	}
 

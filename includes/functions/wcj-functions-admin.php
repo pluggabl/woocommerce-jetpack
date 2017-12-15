@@ -2,12 +2,43 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 3.1.0
+ * @version 3.2.4
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_is_admin_product_edit_page' ) ) {
+	/**
+	 * wcj_is_admin_product_edit_page.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 * @todo    use where appropriate
+	 * @todo    (maybe) move to `wcj-functions-conditional.php`
+	 */
+	function wcj_is_admin_product_edit_page() {
+		global $pagenow;
+		return ( is_admin() && 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] && 'product' === get_post_type() );
+	}
+}
+
+if ( ! function_exists( 'wcj_admin_notices_version_updated' ) ) {
+	/**
+	 * wcj_admin_notices_version_updated.
+	 *
+	 * @version 3.2.4
+	 * @since   2.8.0
+	 */
+	function wcj_admin_notices_version_updated() {
+		if ( get_option( 'booster_for_woocommerce_version' ) === WCJ()->version ) {
+			$class   = 'notice notice-success is-dismissible';
+			$message = sprintf( __( '<strong>Booster for WooCommerce</strong> plugin was successfully updated to version <strong>%s</strong>.', 'woocommerce-jetpack' ), WCJ()->version );
+			echo sprintf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message );
+		}
+	}
+}
 
 if ( ! function_exists( 'wcj_get_settings_as_multiselect_or_text' ) ) {
 	/**

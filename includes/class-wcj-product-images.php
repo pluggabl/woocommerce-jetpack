@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Images
  *
- * @version 2.9.0
+ * @version 3.2.4
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,52 +16,44 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
-	 * @todo    Add watermarks to images (http://php.net/manual/en/image.examples-watermark.php); Filter: `wp_get_attachment_image_src`.
+	 * @version 3.2.4
+	 * @todo    add watermarks to images (http://php.net/manual/en/image.examples-watermark.php); Filter: `wp_get_attachment_image_src`.
 	 */
 	function __construct() {
 
 		$this->id         = 'product_images';
 		$this->short_desc = __( 'Product Images', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce products images, thumbnails and sale flashes.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize WooCommerce products images and thumbnails.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-images';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
 
-			// Product Image & Thumbnails
-			if ( 'yes' === get_option( 'wcj_product_images_and_thumbnails_enabled', 'no' ) ) {
-
-				// Single
-				if ( 'yes' === get_option( 'wcj_product_images_and_thumbnails_hide_on_single', 'no' ) ) {
-					add_action( 'init', array( $this, 'product_images_and_thumbnails_hide_on_single' ), PHP_INT_MAX );
+			// Single
+			if ( 'yes' === get_option( 'wcj_product_images_and_thumbnails_hide_on_single', 'no' ) ) {
+				add_action( 'init', array( $this, 'product_images_and_thumbnails_hide_on_single' ), PHP_INT_MAX );
+			} else {
+				if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+					add_filter( 'woocommerce_single_product_image_html',           array( $this, 'customize_single_product_image_html' ), PHP_INT_MAX, 2 ); // filter doesn't exist in WC3
+					add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_thumbnail_html' ) );
 				} else {
-					if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
-						add_filter( 'woocommerce_single_product_image_html',           array( $this, 'customize_single_product_image_html' ), PHP_INT_MAX, 2 ); // filter doesn't exist in WC3
-						add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_thumbnail_html' ) );
-					} else {
-						add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_or_thumbnail_html_wc3' ), PHP_INT_MAX, 2 );
-					}
+					add_filter( 'woocommerce_single_product_image_thumbnail_html', array( $this, 'customize_single_product_image_or_thumbnail_html_wc3' ), PHP_INT_MAX, 2 );
 				}
-
-				// Archives
-				add_action( 'woocommerce_before_shop_loop_item',       array( $this, 'product_images_hide_on_archive' ) );
-				add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'customize_archive_product_image_html' ), 10 );
-				add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'hide_per_product_image_on_archives_start' ), 1 );
-				add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'hide_per_product_image_on_archives_end' ), PHP_INT_MAX );
-
-				// Single Product Thumbnails Columns Number
-				add_filter( 'woocommerce_product_thumbnails_columns', array( $this, 'change_product_thumbnails_columns_number' ), PHP_INT_MAX );
-
-				// Per product options
-				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
 
-			// Sale flash
-			if ( 'yes' === get_option( 'wcj_product_images_sale_flash_enabled', 'no' ) ) {
-				add_filter( 'woocommerce_sale_flash', array( $this, 'customize_sale_flash' ), PHP_INT_MAX, 3 );
-			}
+			// Archives
+			add_action( 'woocommerce_before_shop_loop_item',       array( $this, 'product_images_hide_on_archive' ) );
+			add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'customize_archive_product_image_html' ), 10 );
+			add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'hide_per_product_image_on_archives_start' ), 1 );
+			add_action( 'woocommerce_before_shop_loop_item_title', array( $this, 'hide_per_product_image_on_archives_end' ), PHP_INT_MAX );
+
+			// Single Product Thumbnails Columns Number
+			add_filter( 'woocommerce_product_thumbnails_columns', array( $this, 'change_product_thumbnails_columns_number' ), PHP_INT_MAX );
+
+			// Per product options
+			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+
 		}
 	}
 
@@ -182,26 +174,6 @@ class WCJ_Product_Images extends WCJ_Module {
 	 */
 	function change_product_thumbnails_columns_number( $columns_number ) {
 		return get_option( 'wcj_product_images_thumbnails_columns', 3 );
-	}
-
-	/**
-	 * customize_sale_flash.
-	 *
-	 * @version 2.8.0
-	 */
-	function customize_sale_flash( $sale_flash_html, $post, $product ) {
-		// Hiding
-		if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_everywhere', 'no' ) ) {
-			return '';
-		}
-		if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_on_archives', 'no' ) && is_archive() ) {
-			return '';
-		}
-		if ( 'yes' === get_option( 'wcj_product_images_sale_flash_hide_on_single', 'no' )   && is_single() && get_the_ID() === wcj_get_product_id_or_variation_parent_id( $product ) ) {
-			return '';
-		}
-		// Content
-		return do_shortcode( get_option( 'wcj_product_images_sale_flash_html' , '<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>' ) );
 	}
 
 }

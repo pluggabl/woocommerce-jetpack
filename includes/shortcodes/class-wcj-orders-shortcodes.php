@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.2.0
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -92,7 +92,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.4
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -127,6 +127,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'display_refunded'            => 'yes',
 			'insert_page_break'           => '',
 			'key'                         => null,
+			'days'                        => 0,
 		), $atts );
 
 		return $modified_atts;
@@ -833,10 +834,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_date.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.4
+	 * @todo    (maybe) rename `days` to `extra_days`
 	 */
 	function wcj_order_date( $atts ) {
-		return date_i18n( $atts['date_format'], strtotime( wcj_get_order_date( $this->the_order ) ) );
+		return date_i18n( $atts['date_format'], strtotime( wcj_get_order_date( $this->the_order ) ) + $atts['days'] * 24 * 60 * 60 );
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 3.1.0
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -411,7 +411,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.4
 	 * @todo    `$set_value` - add "default" option for all other types except checkbox
 	 * @todo    `$set_value` - 'file' type
 	 * @todo    add `required` attributes
@@ -529,7 +529,7 @@ class WCJ_Product_Input_Fields_Core {
 						$select_options_raw = $this->get_value( 'wcj_product_input_fields_type_select_options_' . $this->scope . '_' . $i, $_product_id, '' );
 						$select_options = wcj_get_select_options( $select_options_raw, false );
 						if ( '' != $placeholder ) {
-							$select_options = array_merge( array( '' => $placeholder ), $select_options );
+							$select_options = array_replace( array( '' => $placeholder ), $select_options );
 						}
 						$select_options_html = '';
 						if ( ! empty( $select_options ) ) {
@@ -551,11 +551,16 @@ class WCJ_Product_Input_Fields_Core {
 						if ( ! empty( $select_options ) ) {
 							reset( $select_options );
 							$value = ( '' != $set_value ? $set_value : key( $select_options ) );
+							$template = get_option( 'wcj_product_input_fields_field_template_radio',
+								'%radio_field_html%<label for="%radio_field_id%" class="radio">%radio_field_title%</label><br>' );
 							foreach ( $select_options as $option_key => $option_text ) {
-								$select_options_html .= '<input type="radio" class="input-radio wcj_product_input_fields" value="' . esc_attr( $option_key ) .
-									'" name="' . $field_name . '" id="' . $field_name . '_' . esc_attr( $option_key ) . '"' . checked( $value, $option_key, false ) . ' />';
-								$select_options_html .= '<label for="' . $field_name . '_' . esc_attr( $option_key ) .
-									'" class="radio">' . $option_text . '</label><br>';
+								$replaced_values = array(
+									'%radio_field_html%'  => '<input type="radio" class="input-radio wcj_product_input_fields" value="' . esc_attr( $option_key ) .
+										'" name="' . $field_name . '" id="' . $field_name . '_' . esc_attr( $option_key ) . '"' . checked( $value, $option_key, false ) . ' />',
+									'%radio_field_id%'    => $field_name . '_' . esc_attr( $option_key ),
+									'%radio_field_title%' => $option_text,
+								);
+								$select_options_html .= str_replace( array_keys( $replaced_values ), $replaced_values, $template );
 							}
 							$html = $select_options_html;
 						}

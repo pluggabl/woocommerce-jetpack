@@ -1,8 +1,8 @@
 <?php
 /**
- * Booster for WooCommerce Settings - More Button Labels
+ * Booster for WooCommerce - Settings - Product Images
  *
- * @version 2.9.0
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -14,12 +14,6 @@ return array(
 		'title'    => __( 'Product Image and Thumbnails', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_product_images_and_thumbnails_options',
-	),
-	array(
-		'title'    => __( 'Enable Section', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_images_and_thumbnails_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Image and Thumbnails on Single', 'woocommerce-jetpack' ),
@@ -56,7 +50,7 @@ return array(
 		'id'       => 'wcj_product_images_custom_on_single',
 		'default'  => '',
 		'type'     => 'textarea',
-		'css'      => 'width:66%; min-width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Replace Thumbnails on Single', 'woocommerce-jetpack' ),
@@ -65,7 +59,7 @@ return array(
 		'id'       => 'wcj_product_images_thumbnails_custom_on_single',
 		'default'  => '',
 		'type'     => 'textarea',
-		'css'      => 'width:66%; min-width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Replace Image on Archive', 'woocommerce-jetpack' ),
@@ -74,7 +68,7 @@ return array(
 		'id'       => 'wcj_product_images_custom_on_archives',
 		'default'  => '',
 		'type'     => 'textarea',
-		'css'      => 'width:66%; min-width:300px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Single Product Thumbnails Columns', 'woocommerce-jetpack' ),
@@ -85,45 +79,5 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_images_and_thumbnails_options',
-	),
-	array(
-		'title'    => __( 'Product Images Sale Flash', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_product_images_sale_flash_options',
-	),
-	array(
-		'title'    => __( 'Enable Section', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_images_sale_flash_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'HTML', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_images_sale_flash_html',
-		'default'  => '<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>',
-		'type'     => 'textarea',
-		'css'      => 'width:300px;height:100px;',
-	),
-	array(
-		'title'    => __( 'Hide Everywhere', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_images_sale_flash_hide_everywhere',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Hide on Archives (Categories) Only', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_images_sale_flash_hide_on_archives',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Hide on Single Page Only', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_images_sale_flash_hide_on_single',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_product_images_sale_flash_options',
 	),
 );

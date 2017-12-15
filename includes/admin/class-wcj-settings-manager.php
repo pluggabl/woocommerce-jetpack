@@ -122,11 +122,13 @@ class WCJ_Settings_Manager {
 	/**
 	 * manage_options_reset.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.4
 	 * @since   2.5.2
+	 * @todo    clean up
 	 */
 	function manage_options_reset() {
 		global $wcj_notice;
+		/*
 		$delete_counter = 0;
 		foreach ( WCJ()->modules as $module ) {
 			$values = $module->get_settings();
@@ -144,6 +146,24 @@ class WCJ_Settings_Manager {
 		}
 		if ( $delete_counter > 0 ) {
 			$wcj_notice .= sprintf( __( '%d options successfully deleted.', 'woocommerce-jetpack' ), $delete_counter );
+		}
+		*/
+		global $wpdb;
+		$delete_counter_meta = 0;
+		$plugin_meta = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key LIKE '_wcj_%'" );
+		foreach( $plugin_meta as $meta ) {
+			delete_post_meta( $meta->post_id, $meta->meta_key );
+			$delete_counter_meta++;
+		}
+		$delete_counter_options = 0;
+		$plugin_options = $wpdb->get_results( "SELECT option_name FROM $wpdb->options WHERE option_name LIKE 'wcj_%'" );
+		foreach( $plugin_options as $option ) {
+			delete_option( $option->option_name );
+			delete_site_option( $option->option_name );
+			$delete_counter_options++;
+		}
+		if ( $delete_counter_meta > 0 || $delete_counter_options > 0) {
+			$wcj_notice .= sprintf( __( '%d options and %d meta successfully deleted.', 'woocommerce-jetpack' ), $delete_counter_options, $delete_counter_meta );
 		}
 	}
 

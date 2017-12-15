@@ -51,7 +51,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Availability by Date* - WooCommerce product availability by date.
 * *Product Availability by Time* - WooCommerce product availability by time.
 * *Product Bulk Meta Editor* - Set WooCommerce products meta with bulk editor.
-* *Product Images* - Customize WooCommerce products images, thumbnails and sale flashes.
+* *Product Images* - Customize WooCommerce products images and thumbnails.
 * *Product Info* - Add additional info to WooCommerce category and single product pages.
 * *Product Input Fields* - WooCommerce product input fields.
 * *Product Listings* - Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.
@@ -62,6 +62,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Products per Page* - Add "products per page" selector to WooCommerce.
 * *Related Products* - Change displayed WooCommerce related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.
 * *SKU* - Generate WooCommerce SKUs automatically. Search by SKU on frontend.
+* *Sale Flash* - Customize WooCommerce products sale flash.
 * *Sorting* - Add more WooCommerce sorting options; rename or remove default sorting options; rearrange sorting options on frontend.
 * *Stock* - WooCommerce products stock management.
 * *User Products* - Let users add new WooCommerce products from frontend.
@@ -171,15 +172,30 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.4 - 08/12/2017 =
+= 3.2.4 - 15/12/2017 =
+~D	* Dev - PRODUCTS - Products XML - "Products to Include/Exclude" options can now be set as comma separated text (optionally) (instead of list).
+	* Dev - PRODUCTS - Product Input Fields - `array_merge()` replaced with `array_replace()` for `wcj_get_select_options()` results (with placeholder).
+	* Dev - CART & CHECKOUT  Checkout Custom Fields - `array_merge()` replaced with `array_replace()` for `wcj_get_select_options()` results (with placeholder).
 D	* Dev - PRODUCTS - Product Add to Cart - "Set All Products to Sold individually" option added.
+~D	* Dev - PRODUCTS - Product Images - "Enable Section" option removed. Minor setting restyling.
+~D	* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "HTML Template - Radio Field" option added.
+~D	* Dev - PRODUCTS - (Product) Sale Flash - "Per Product", "Per Category", "Per Tag" options added.
+!D	* Dev - PRODUCTS - (Product) Sale Flash - Initial module release (copied from "Product Images" module).
+!D	* Dev - PRODUCTS - Product Tabs - "Add Per Product Tabs Content to Yoast SEO plugin analysis" option added.
 ~D	* Dev - SHIPPING & ORDERS - Orders - Bulk Regenerate Download Permissions for Orders - All Orders - "Periodically" option added.
 ~D	* Dev - EMAILS & MISC. - Custom Emails - `%customer%` can now be used in comma separated list for multiple recipients.
 ~D	* Dev - EMAILS & MISC. - Reports - Orders - Product Sales (Monthly) - `wcj_reports_products_sales_check_product` filter added.
+!D	* Dev - Shortcodes - Orders - `[wcj_order_date]` - `days` attribute added.
+	* Fix - Shortcodes - Products - `[wcj_product_purchase_price]` - Using `wcj_get_product_id()` instead of `wcj_get_product_id_or_variation_parent_id()`.
+D	* Dev - Shortcodes - Products - `[wcj_product_purchase_price]` - `hide_currency` attribute added.
 	* Dev - Functions - "Crons" added.
 	* Dev - Functions - Debug - `wcj_log()` - `esc_url()` added.
+~D	* Dev - Functions - General - `wcj_get_select_options()` - Prefix (`wcj-`) removed (was added in v3.2.3).
+!	* Dev - Functions - General - `wcj_get_select_options()` - `trim()` added.
 D	* Fix - Functions - Price and Currency - `wc_get_product_purchase_price()` - `int` replaced with `float` - this fixes the issue with purchase price calculating incorrectly (cutting decimal part).
 	* Dev - Settings Manager - Import - Checking for `wcj_` prefix, when importing plugin settings.
+	* Dev - Settings Manager - Reset - Now deletes all options (also includes meta).
+!	* Dev - Code refactoring. `core` directory added.
 
 = 3.2.3 - 03/12/2017 =
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - cURL option fixed for "Yahoo" and "Fixer.io" servers.

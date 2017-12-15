@@ -25,6 +25,7 @@ if ( ! function_exists( 'wcj_plugin_path' ) ) {
 	 * Get the plugin path.
 	 *
 	 * @return string
+	 * @todo   use `WCJ_PLUGIN_PATH` constant instead
 	 */
 	function wcj_plugin_path() {
 		return untrailingslashit( realpath( plugin_dir_path( __FILE__ ) . '/../..' ) );

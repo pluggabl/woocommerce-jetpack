@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 3.1.0
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -219,6 +219,13 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'HTML Template - End', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_input_fields_end_template',
 		'default'  => '',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:50%;min-width:300px;',
+	),
+	array(
+		'title'    => __( 'HTML Template - Radio Field', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_input_fields_field_template_radio',
+		'default'  => '%radio_field_html%<label for="%radio_field_id%" class="radio">%radio_field_title%</label><br>',
 		'type'     => 'custom_textarea',
 		'css'      => 'width:50%;min-width:300px;',
 	),

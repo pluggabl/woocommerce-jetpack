@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Product Tabs
  *
- * @version 3.1.0
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    clean up
@@ -220,6 +220,13 @@ $settings = array_merge( $settings, array(
 		'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_custom_product_tabs_local_wp_editor_enabled',
 		'default'   => 'yes',
+		'type'      => 'checkbox',
+	),
+	array(
+		'title'     => __( 'Add Per Product Tabs Content to "Yoast SEO" plugin analysis', 'woocommerce-jetpack' ),
+		'desc'      => __( 'Add', 'woocommerce-jetpack' ),
+		'id'        => 'wcj_custom_product_tabs_yoast_seo_enabled',
+		'default'   => 'no',
 		'type'      => 'checkbox',
 	),
 	array(

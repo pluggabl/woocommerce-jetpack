@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 3.2.3
+ * @version 3.2.4
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -73,6 +73,7 @@ return apply_filters( 'wcj_modules', array(
 			'crowdfunding',
 			'product_addons',
 			'product_images',
+			'sale_flash',
 			'product_by_country',
 			'product_by_user_role',
 			'product_by_time',

@@ -5,7 +5,6 @@
  * @version 3.0.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
- * @todo    move this class to another directory
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

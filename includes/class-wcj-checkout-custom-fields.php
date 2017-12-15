@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 3.2.2
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -529,7 +529,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.4
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 	 */
 	function add_custom_checkout_fields( $fields ) {
@@ -593,7 +593,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					if ( 'select' === $the_type ) {
 						$placeholder = get_option( 'wcj_checkout_custom_field_placeholder_' . $i );
 						if ( '' != $placeholder ) {
-							$select_options = array_merge( array( '' => $placeholder ), $select_options );
+							$select_options = array_replace( array( '' => $placeholder ), $select_options );
 						}
 					}
 					$the_field['options'] = $select_options;

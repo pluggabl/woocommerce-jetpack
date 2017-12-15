@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.1.1
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -561,13 +561,11 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_purchase_price.
 	 *
-	 * @version 2.7.0
-	 * @return  string
-	 * @todo    maybe just `wcj_get_product_id` instead of `wcj_get_product_id_or_variation_parent_id`
+	 * @version 3.2.4
 	 */
 	function wcj_product_purchase_price( $atts ) {
-		$purchase_price = wc_get_product_purchase_price( wcj_get_product_id_or_variation_parent_id( $this->the_product ) );
-		return wc_price( $purchase_price );
+		$purchase_price = wc_get_product_purchase_price( wcj_get_product_id( $this->the_product ) );
+		return ( 'yes' === $atts['hide_currency'] ? $purchase_price : wc_price( $purchase_price ) );
 	}
 
 	/**
