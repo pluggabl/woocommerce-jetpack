@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 3.2.2
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add "frontend template" options
@@ -217,6 +217,13 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_product_addons_hide_on_admin_order_page',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Position Priority on Frontend', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set to zero to use the default priority.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_position_priority',
+		'default'  => 0,
+		'type'     => 'number',
 	),
 	array(
 		'type'     => 'sectionend',

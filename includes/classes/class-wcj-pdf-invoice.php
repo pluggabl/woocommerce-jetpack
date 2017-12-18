@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.2.3
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -147,7 +147,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.4
 	 * @todo    pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 	 */
 	function get_pdf( $dest ) {
@@ -237,8 +237,13 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$result_pdf = $pdf->Output( '', 'S' );
 		$file_name = $this->get_file_name();
 
+		$tmp_dir = get_option( 'wcj_invoicing_general_tmp_dir', '' );
+		if ( '' === $tmp_dir ) {
+			$tmp_dir = sys_get_temp_dir();
+		}
+
 		if ( 'F' === $dest ) {
-			$file_path = sys_get_temp_dir() . '/' . $file_name;
+			$file_path = $tmp_dir . '/' . $file_name;
 			if ( ! file_put_contents( $file_path, $result_pdf ) ) {
 				return null;
 			}
@@ -261,7 +266,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 				echo $result_pdf;
 			} else {
 
-				$file_path = sys_get_temp_dir() . '/' . $file_name;
+				$file_path = $tmp_dir . '/' . $file_name;
 				if ( ! file_put_contents( $file_path, $result_pdf ) ) {
 					return null;
 				}

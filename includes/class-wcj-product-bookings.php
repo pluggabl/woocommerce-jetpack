@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 3.0.0
+ * @version 3.2.4
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -96,7 +96,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.4
 	 * @since   2.5.0
 	 */
 	function price_change_ajax( $param ) {
@@ -110,7 +110,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			$the_price     = $days_diff * $price_per_day;
 			echo wc_price( $the_price );
 		}
-		wp_die();
+		die();
 	}
 
 	/**

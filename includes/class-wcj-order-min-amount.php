@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Minimum Amount
  *
- * @version 3.2.3
+ * @version 3.2.4
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    order max amount
@@ -89,16 +89,22 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * get_cart_total_for_minimal_order_amount.
 	 *
-	 * @version 2.6.0
+	 * @version 3.2.4
 	 * @since   2.5.5
 	 */
 	function get_cart_total_for_minimal_order_amount() {
+		if ( ! isset( WC()->cart ) ) {
+			return 0;
+		}
 		WC()->cart->calculate_totals();
 		$cart_total = WC()->cart->total;
 		if ( 'yes' === get_option( 'wcj_order_minimum_amount_exclude_shipping', 'no' ) ) {
 			$shipping_total     = isset( WC()->cart->shipping_total )     ? WC()->cart->shipping_total     : 0;
 			$shipping_tax_total = isset( WC()->cart->shipping_tax_total ) ? WC()->cart->shipping_tax_total : 0;
 			$cart_total -= ( $shipping_total + $shipping_tax_total );
+		}
+		if ( 'yes' === get_option( 'wcj_order_minimum_amount_exclude_discounts', 'no' ) ) {
+			$cart_total += ( WC()->cart->get_cart_discount_total() + WC()->cart->get_cart_discount_tax_total() );
 		}
 		return $cart_total;
 	}

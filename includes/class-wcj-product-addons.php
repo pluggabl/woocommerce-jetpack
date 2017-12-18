@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 3.2.2
+ * @version 3.2.4
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -17,7 +17,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.4
 	 * @since   2.5.3
 	 * @todo    (maybe) add "in progress" ajax message
 	 * @todo    (maybe) for variable products - show addons only if variation is selected (e.g. move to addons from `woocommerce_before_add_to_cart_button` to variation description)
@@ -46,7 +46,8 @@ class WCJ_Product_Addons extends WCJ_Module {
 					add_action( 'wp_ajax_nopriv_product_addons_price_change', array( $this, 'price_change_ajax' ) );
 				}
 				// Single Page
-				add_action( 'woocommerce_before_add_to_cart_button',      array( $this, 'add_addons_to_frontend' ), PHP_INT_MAX );
+				add_action( 'woocommerce_before_add_to_cart_button',      array( $this, 'add_addons_to_frontend' ),
+					( 0 == ( $position_priority = get_option( 'wcj_product_addons_position_priority', 0 ) ) ? PHP_INT_MAX : $position_priority ) );
 				// Add to cart
 				add_filter( 'woocommerce_add_cart_item_data',             array( $this, 'add_addons_price_to_cart_item_data' ), PHP_INT_MAX, 3 );
 				add_filter( 'woocommerce_add_cart_item',                  array( $this, 'add_addons_price_to_cart_item' ), PHP_INT_MAX, 2 );
@@ -133,12 +134,12 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 3.2.2
+	 * @version 3.2.4
 	 * @since   2.5.3
 	 */
 	function price_change_ajax( $param ) {
 		if ( ! isset( $_POST['product_id'] ) || 0 == $_POST['product_id'] ) {
-			wp_die();
+			die();
 		}
 		$the_product = wc_get_product( $_POST['product_id'] );
 		$parent_product_id = ( $the_product->is_type( 'variation' ) ) ? wp_get_post_parent_id( $_POST['product_id'] ) : $_POST['product_id'];
@@ -169,7 +170,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 		} else {
 			echo $the_product->get_price_html();
 		}
-		wp_die();
+		die();
 	}
 
 	/**

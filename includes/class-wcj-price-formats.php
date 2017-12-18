@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price Formats
  *
- * @version 3.1.3
+ * @version 3.2.4
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -42,7 +42,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * price_format.
 	 *
-	 * @version 2.5.8
+	 * @version 3.2.4
 	 * @since   2.5.2
 	 */
 	function price_format( $args ) {
@@ -55,6 +55,8 @@ class WCJ_Price_Formats extends WCJ_Module {
 					}
 				}
 				$args['price_format']       = $this->get_woocommerce_price_format( get_option( 'wcj_price_formats_currency_position_' . $i ) );
+				$args['price_format']       = $this->get_woocommerce_price_format_currency_code(
+					get_option( 'wcj_price_formats_currency_code_position_' . $i, 'none' ), get_option( 'wcj_price_formats_currency_' . $i ), $args['price_format'] );
 				$args['decimal_separator']  = get_option( 'wcj_price_formats_decimal_separator_'  . $i );
 				$args['thousand_separator'] = get_option( 'wcj_price_formats_thousand_separator_' . $i );
 				$args['decimals']           = absint( get_option( 'wcj_price_formats_number_of_decimals_' . $i ) );
@@ -62,6 +64,27 @@ class WCJ_Price_Formats extends WCJ_Module {
 			}
 		}
 		return $args;
+	}
+
+	/**
+	 * get_woocommerce_price_format_currency_code.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 */
+	function get_woocommerce_price_format_currency_code( $currency_code_pos, $currency, $price_format ) {
+		switch ( $currency_code_pos ) {
+			case 'left' :
+				return $currency . $price_format;
+			case 'right' :
+				return $price_format . $currency;
+			case 'left_space' :
+				return $currency . '&nbsp;' . $price_format;
+			case 'right_space' :
+				return $price_format . '&nbsp;' . $currency;
+			default: // 'none'
+				return $price_format;
+		}
 	}
 
 	/**

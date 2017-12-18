@@ -7,6 +7,7 @@
  * @author  Algoritmika Ltd.
  * @todo    add link to Booster's shortcodes list
  * @todo    clean up
+ * @todo    (maybe) move `wcj_general_advanced_disable_save_sys_temp_dir` to "PDF Invoicing" module
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - General
  *
- * @version 3.2.3
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -96,6 +96,13 @@ $settings = array_merge( $settings, array(
 			'abspath'       => __( 'ABSPATH', 'woocommerce-jetpack' ),       // . ': ' . ABSPATH,
 			'document_root' => __( 'DOCUMENT_ROOT', 'woocommerce-jetpack' ), // . ': ' . $_SERVER['DOCUMENT_ROOT'],
 		),
+	),
+	array(
+		'title'    => __( 'Advanced', 'woocommerce-jetpack' ) . ': ' . __( 'Temp Directory', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Leave blank to use the default temp directory.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_invoicing_general_tmp_dir',
+		'default'  => '',
+		'type'     => 'text',
 	),
 	array(
 		'type'     => 'sectionend',

@@ -16,6 +16,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * Constructor.
 	 *
 	 * @version 3.1.0
+	 * @todo    (maybe) add `[wcj_product_stock_price]`
 	 */
 	function __construct() {
 
@@ -593,6 +594,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @return  string
 	 * @version 3.1.1
+	 * @todo    (maybe) add `[wcj_product_discount]` alias
 	 */
 	function wcj_product_you_save( $atts ) {
 		if ( $this->the_product->is_on_sale() ) {

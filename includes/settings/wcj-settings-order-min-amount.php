@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Minimum Amount
  *
- * @version 2.9.0
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -28,6 +28,13 @@ $settings = array(
 		'title'    => __( 'Exclude Shipping from Cart Total', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Exclude', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_minimum_amount_exclude_shipping',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Exclude Discounts from Cart Total', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Exclude', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_minimum_amount_exclude_discounts',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

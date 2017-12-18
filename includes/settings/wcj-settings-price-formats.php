@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price Formats
  *
- * @version 3.1.3
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `desc_tip` to `wcj_price_formats_general_trim_zeros`
@@ -75,6 +75,19 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_pri
 				'right_space' => __( 'Right with space', 'woocommerce' ) . ' (99.99 ' . $currency_symbol . ')'
 			),
 			'css'      => 'width:300px;',
+		),
+		array(
+			'desc'     => __( 'Additional Currency Code Position', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_price_formats_currency_code_position_' . $i,
+			'default'  => 'none',
+			'type'     => 'select',
+			'options'  => array(
+				'none'        => __( 'Do not add currency code', 'woocommerce-jetpack' ),
+				'left'        => __( 'Left', 'woocommerce' ),
+				'right'       => __( 'Right', 'woocommerce' ),
+				'left_space'  => __( 'Left with space', 'woocommerce' ),
+				'right_space' => __( 'Right with space', 'woocommerce' ),
+			),
 		),
 		array(
 			'desc'     => __( 'Thousand Separator', 'woocommerce-jetpack' ),

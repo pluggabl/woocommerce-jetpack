@@ -58,7 +58,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
 * *Product Visibility by Country* - Display WooCommerce products by customer's country.
 * *Product Visibility by User Role* - Display WooCommerce products by customer's user role.
-* *Products XML* - WooCommerce products XML feed.
+* *Products XML Feeds* - WooCommerce products XML feeds.
 * *Products per Page* - Add "products per page" selector to WooCommerce.
 * *Related Products* - Change displayed WooCommerce related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.
 * *SKU* - Generate WooCommerce SKUs automatically. Search by SKU on frontend.
@@ -172,7 +172,14 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.4 - 15/12/2017 =
+= 3.2.4 - 18/12/2017 =
+~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - "Exclude Discounts from Cart Total" option added.
+~D	* Dev - PDF INVOICING & PACKING SLIPS - General - "Advanced: Temp Directory" option added.
+-D	* Dev - PRODUCTS - Products XML - Renamed to "Products XML Feeds". Description and documentation URL updated.
+!D	* Dev - PRODUCTS - Product Addons - "Position Priority on Frontend" option added.
+!D	* Dev - PRICES & CURRENCIES - Price Formats - "Additional Currency Code Position" option added.
+	* Fix - PRODUCTS - Bookings - `wp_die()` replaced with `die()` in `price_change_ajax()`.
+	* Fix - PRODUCTS - Product Addons - `wp_die()` replaced with `die()` in `price_change_ajax()`.
 ~D	* Dev - PRODUCTS - Products XML - "Products to Include/Exclude" options can now be set as comma separated text (optionally) (instead of list).
 	* Dev - PRODUCTS - Product Input Fields - `array_merge()` replaced with `array_replace()` for `wcj_get_select_options()` results (with placeholder).
 	* Dev - CART & CHECKOUT  Checkout Custom Fields - `array_merge()` replaced with `array_replace()` for `wcj_get_select_options()` results (with placeholder).

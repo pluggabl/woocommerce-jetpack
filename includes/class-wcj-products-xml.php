@@ -17,15 +17,15 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.4
 	 * @since   2.5.7
 	 */
 	function __construct() {
 
 		$this->id         = 'products_xml';
-		$this->short_desc = __( 'Products XML', 'woocommerce-jetpack' );
-		$this->desc       = __( 'WooCommerce products XML feed.', 'woocommerce-jetpack' );
-		$this->link_slug  = 'woocommerce-products-xml-feed';
+		$this->short_desc = __( 'Products XML Feeds', 'woocommerce-jetpack' );
+		$this->desc       = __( 'WooCommerce products XML feeds.', 'woocommerce-jetpack' );
+		$this->link_slug  = 'woocommerce-products-xml-feeds';
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
