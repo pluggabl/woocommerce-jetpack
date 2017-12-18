@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales (Daily)
  *
- * @version 2.9.0
+ * @version 3.2.4
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -38,12 +38,13 @@ class WCJ_Reports_Product_Sales_Daily {
 	/*
 	 * get_report_args.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.4
 	 * @since   2.9.0
 	 */
 	function get_report_args() {
-		$this->start_date    = isset( $_GET['start_date'] )    ? $_GET['start_date']    : date( 'Y-m-d', strtotime( '-7 days' ) );
-		$this->end_date      = isset( $_GET['end_date'] )      ? $_GET['end_date']      : date( 'Y-m-d' );
+		$current_time = (int) current_time( 'timestamp' );
+		$this->start_date    = isset( $_GET['start_date'] )    ? $_GET['start_date']    : date( 'Y-m-d', strtotime( '-7 days', $current_time ) );
+		$this->end_date      = isset( $_GET['end_date'] )      ? $_GET['end_date']      : date( 'Y-m-d', $current_time );
 		$this->product_title = isset( $_GET['product_title'] ) ? $_GET['product_title'] : '';
 	}
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Reports
  *
- * @version 2.9.1
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -57,7 +57,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * add_custom_order_reports_ranges_by_month_to_admin_bar.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.4
 	 * @since   2.2.4
 	 */
 	function add_custom_order_reports_ranges_by_month_to_admin_bar( $wp_admin_bar ) {
@@ -76,12 +76,13 @@ class WCJ_Reports extends WCJ_Module {
 			$wp_admin_bar->add_node( $args );
 
 			$custom_range_nonce = wp_create_nonce( 'custom_range' );
+			$current_time = (int) current_time( 'timestamp' );
 			for ( $i = 1; $i <= 12; $i++ ) {
-				$month_start_date = date( 'Y-m-01' ) . "-$i months";
-				$month_num  = date( 'm',      strtotime( $month_start_date ) );
-				$month_name = date( 'Y F',    strtotime( $month_start_date ) );
-				$start_date = date( 'Y-m-01', strtotime( $month_start_date ) );
-				$end_date   = date( 'Y-m-t',  strtotime( $month_start_date ) );
+				$month_start_date = strtotime( date( 'Y-m-01', $current_time ) . " -$i months" );
+				$month_num  = date( 'm',      $month_start_date );
+				$month_name = date( 'Y F',    $month_start_date );
+				$start_date = date( 'Y-m-01', $month_start_date );
+				$end_date   = date( 'Y-m-t',  $month_start_date );
 				$node = array(
 					'parent' => $parent,
 					'id'     => $parent . '_' . $month_num,

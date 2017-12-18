@@ -173,6 +173,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.2.4 - 18/12/2017 =
+~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges / Product Sales (Daily) / Reports functions (also affects Export module) - `time()` replaced with `current_time()`.
 ~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - "Exclude Discounts from Cart Total" option added.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - General - "Advanced: Temp Directory" option added.
 -D	* Dev - PRODUCTS - Products XML - Renamed to "Products XML Feeds". Description and documentation URL updated.
