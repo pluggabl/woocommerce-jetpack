@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.2.3
+ * @version 3.2.4
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -13,16 +13,46 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate_servers.
 	 *
-	 * @version 3.2.2
+	 * @version 3.2.4
 	 * @since   2.6.0
 	 */
 	function wcj_get_currency_exchange_rate_servers() {
 		return array(
-			'yahoo' => __( 'Yahoo', 'woocommerce-jetpack' ),
-			'ecb'   => __( 'European Central Bank (ECB)', 'woocommerce-jetpack' ),
-			'tcmb'  => __( 'TCMB', 'woocommerce-jetpack' ),
-			'fixer' => __( 'Fixer.io', 'woocommerce-jetpack' ),
+			'yahoo'      => __( 'Yahoo', 'woocommerce-jetpack' ),
+			'ecb'        => __( 'European Central Bank (ECB)', 'woocommerce-jetpack' ),
+			'tcmb'       => __( 'TCMB', 'woocommerce-jetpack' ),
+			'fixer'      => __( 'Fixer.io', 'woocommerce-jetpack' ),
+			'coinbase'   => __( 'Coinbase', 'woocommerce-jetpack' ),
 		);
+	}
+}
+
+if ( ! function_exists( 'wcj_get_currency_exchange_rate_server' ) ) {
+	/*
+	 * wcj_get_currency_exchange_rate_server.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 */
+	function wcj_get_currency_exchange_rate_server( $currency_from, $currency_to ) {
+		if ( 'default_server' === ( $server = get_option( 'wcj_currency_exchange_rates_server_' . sanitize_title( $currency_from . $currency_to ), 'default_server' ) ) ) {
+			return get_option( 'wcj_currency_exchange_rates_server', 'ecb' );
+		}
+		return $server;
+	}
+}
+
+if ( ! function_exists( 'wcj_get_currency_exchange_rate_server_name' ) ) {
+	/*
+	 * wcj_get_currency_exchange_rate_server_name.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 */
+	function wcj_get_currency_exchange_rate_server_name( $currency_from, $currency_to ) {
+		$servers = wcj_get_currency_exchange_rate_servers();
+		$server  = wcj_get_currency_exchange_rate_server( $currency_from, $currency_to );
+		return ( isset( $servers[ $server ] ) ? $servers[ $server ] : $server );
 	}
 }
 
@@ -30,16 +60,16 @@ if ( ! function_exists( 'alg_get_exchange_rate' ) ) {
 	/*
 	 * alg_get_exchange_rate.
 	 *
-	 * @version 3.2.3
+	 * @version 3.2.4
 	 * @since   2.6.0
 	 */
 	function alg_get_exchange_rate( $currency_from, $currency_to ) {
+		$exchange_rates_server = wcj_get_currency_exchange_rate_server( $currency_from, $currency_to );
 		if ( 'yes' === ( $calculate_by_invert = get_option( 'wcj_currency_exchange_rates_calculate_by_invert', 'no' ) ) ) {
 			$_currency_to  = $currency_to;
 			$currency_to   = $currency_from;
 			$currency_from = $_currency_to;
 		}
-		$exchange_rates_server = get_option( 'wcj_currency_exchange_rates_server', 'ecb' );
 		switch ( $exchange_rates_server ) {
 			case 'tcmb':
 				$return = alg_tcmb_get_exchange_rate( $currency_from, $currency_to );
@@ -50,11 +80,38 @@ if ( ! function_exists( 'alg_get_exchange_rate' ) ) {
 			case 'fixer':
 				$return = alg_fixer_io_get_exchange_rate( $currency_from, $currency_to );
 				break;
+			case 'coinbase':
+				$return = alg_coinbase_get_exchange_rate( $currency_from, $currency_to );
+				break;
 			default: // 'yahoo'
 				$return = alg_yahoo_get_exchange_rate( $currency_from, $currency_to );
 				break;
 		}
 		return ( 'yes' === $calculate_by_invert ) ? round( ( 1 / $return ), 6 ) : $return;
+	}
+}
+
+if ( ! function_exists( 'alg_coinbase_get_exchange_rate' ) ) {
+	/*
+	 * alg_coinbase_get_exchange_rate.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 */
+	function alg_coinbase_get_exchange_rate( $currency_from, $currency_to ) {
+		$url = "https://api.coinbase.com/v2/exchange-rates?currency=$currency_from";
+		$response = '';
+		if ( 'no' === get_option( 'wcj_currency_exchange_rates_always_curl', 'no' ) && ini_get( 'allow_url_fopen' ) ) {
+			$response = file_get_contents( $url );
+		} elseif ( function_exists( 'curl_version' ) ) {
+			$curl = curl_init( $url );
+			curl_setopt( $curl, CURLOPT_RETURNTRANSFER, 1 );
+			curl_setopt( $curl, CURLOPT_SSL_VERIFYPEER, false );
+			$response = curl_exec( $curl );
+			curl_close( $curl );
+		}
+		$response = json_decode( $response );
+		return ( isset( $response->data->rates->{$currency_to} ) ? $response->data->rates->{$currency_to} : false );
 	}
 }
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 2.8.0
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -273,8 +273,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_pri
 			'id'       => 'wcj_price_by_country_exchange_rate_group_' . $i,
 			'default'  => 1,
 			'type'     => 'exchange_rate',
-			'css'      => 'width:100px;',
-			'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
 			'custom_attributes_button' => $custom_attributes,
 			'value'    => $currency_from . '/' . $currency_to,
 		),

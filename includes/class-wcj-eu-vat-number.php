@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 3.2.2
+ * @version 3.2.4
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -343,7 +343,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * maybe_exclude_vat.
 	 *
-	 * @version 2.5.7
+	 * @version 3.2.4
 	 */
 //	function maybe_exclude_vat( $matched_tax_rates, $args ) {
 	function maybe_exclude_vat() {
@@ -364,7 +364,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				if ( 'EL' === $selected_country ) {
 					$selected_country = 'GR';
 				}
-				$preserve_base_country_check_passed = ( $location['country'] !== $selected_country ) ? true : false;
+				$preserve_base_country_check_passed = ( strtoupper( $location['country'] ) !== strtoupper( $selected_country ) );
 			}
 			if ( $preserve_base_country_check_passed ) {
 				/* $modified_matched_tax_rates = array();

@@ -172,7 +172,16 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.4 - 18/12/2017 =
+= 3.2.4 - 21/12/2017 =
+~	* Dev - PRODUCTS - Product Add to Cart - External Products - Open External Products on Add to Cart in New Window - on Category/Archive Pages - Additional themes compatibility added.
+~D	* Dev - PRICES & CURRENCIES - Currencies - More cryptocurrencies added.
+~	* Fix - EMAILS & MISC. - Reports - Orders - Product Sales (Monthly) - WooCommerce v3.0.0 compatibility - "Product `parent` property accessed directly" issue fixed.
+~	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_meta` column - `is_custom` meta excluded.
+~	* Fix - CART & CHECKOUT - EU VAT Number - Preserve VAT in Base Country - Issue with lowercase country code n VAT ID fixed.
+~D	* Dev - Shortcodes - Products - `[wcj_product_category_count]` shortcode added.
+~D	* Dev - Admin Settings - Custom Fields - `exchange_rate` field updated (12 decimals in `step` and code refactoring).
+~D	* Dev - Functions - Exchange Rates - Exchange Rates Server - "Coinbase" server added.
+!D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Secondary "Exchange Rates Server" option added to each currency pair.
 ~D	* Dev - EMAILS & MISC. - Reports - Custom Ranges / Product Sales (Daily) / Reports functions (also affects Export module) - `time()` replaced with `current_time()`.
 ~D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - "Exclude Discounts from Cart Total" option added.
 ~D	* Dev - PDF INVOICING & PACKING SLIPS - General - "Advanced: Temp Directory" option added.

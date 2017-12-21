@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency Exchange Rates
  *
- * @version 2.9.0
+ * @version 3.2.4
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -50,7 +50,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	/**
 	 * add_currency_pair_setting.
 	 *
-	 * @version 2.6.0
+	 * @version 3.2.4
 	 */
 	function add_currency_pair_setting( $currency_from, $currency_to, $settings ) {
 		if ( $currency_from != $currency_to ) {
@@ -70,9 +70,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 				'id'                       => $field_id,
 				'default'                  => 0,
 				'type'                     => 'exchange_rate',
-				'custom_attributes'        => array( 'step' => '0.000001', 'min'  => '0', ),
 				'custom_attributes_button' => $custom_attributes,
-				'css'                      => 'width:100px;',
 				'value'                    => $currency_from . '/' . $currency_to,
 			);
 		}
@@ -152,17 +150,53 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	}
 
 	/**
+	 * add_currency_pair_server_setting.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 */
+	function add_currency_pair_server_setting( $currency_from, $currency_to, $default_server, $settings ) {
+		if ( $currency_from != $currency_to ) {
+			$field_id = 'wcj_currency_exchange_rates_server_' . sanitize_title( $currency_from . $currency_to );
+			foreach ( $settings as $setting ) {
+				if ( $setting['id'] === $field_id ) {
+					return $settings;
+				}
+			}
+			$settings[] = array(
+				'desc'     => __( 'Exchange Rates Server', 'woocommerce-jetpack' ),
+				'id'       => $field_id,
+				'default'  => 'default_server',
+				'type'     => 'select',
+				'options'  => array_merge(
+					array( 'default_server' => sprintf( __( 'Use default: %s', 'woocommerce-jetpack' ), $default_server ) ),
+					wcj_get_currency_exchange_rate_servers()
+				),
+			);
+		}
+		return $settings;
+	}
+
+	/**
 	 * get_all_currencies_exchange_rates_settings.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.4
 	 * @since   2.9.0
 	 */
-	function get_all_currencies_exchange_rates_settings() {
+	function get_all_currencies_exchange_rates_settings( $add_server = false ) {
+		if ( $add_server ) {
+			$exchange_rate_servers = wcj_get_currency_exchange_rate_servers();
+			$exchange_rate_server  = get_option( 'wcj_currency_exchange_rates_server', 'ecb' );
+			$default_server        = ( isset( $exchange_rate_servers[ $exchange_rate_server ] ) ? $exchange_rate_servers[ $exchange_rate_server ] : $exchange_rate_server );
+		}
 		$settings = array();
 		$currency_from = get_option( 'woocommerce_currency' );
 		$currencies = $this->get_all_currencies_exchange_rates_currencies();
 		foreach ( $currencies as $currency ) {
 			$settings = $this->add_currency_pair_setting( $currency_from, $currency, $settings );
+			if ( $add_server ) {
+				$settings = $this->add_currency_pair_server_setting( $currency_from, $currency, $default_server, $settings );
+			}
 		}
 		return $settings;
 	}

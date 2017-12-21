@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 3.2.2
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -438,7 +438,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_cell.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.4
 	 * @since   3.2.0
 	 */
 	function get_cell( $column, $column_param, $atts, $the_order, $columns, $item_counter, $item_id, $item, $the_product ) {
@@ -478,7 +478,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 				return $item_counter;
 
 			case 'item_meta':
-				return wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, false, $the_product );
+				return wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, false, $the_product, array( 'is_custom' ) );
 
 			case 'item_name':
 			case 'product_name': // "product_" because of possible variation

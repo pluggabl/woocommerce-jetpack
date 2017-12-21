@@ -237,13 +237,17 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * replace_external_with_custom_add_to_cart_in_loop.
 	 *
-	 * @version 2.5.3
+	 * @version 3.2.4
 	 * @since   2.5.3
 	 */
 	function replace_external_with_custom_add_to_cart_in_loop( $link_html ) {
 		global $product;
 		if ( $product->is_type( 'external' ) ) {
-			$link_html = str_replace( '<a rel=', '<a target="_blank" rel=', $link_html );
+			if ( false !== strpos( $link_html, '<a rel=' ) ) {
+				$link_html = str_replace( '<a rel=',  '<a target="_blank" rel=',  $link_html );
+			} else {
+				$link_html = str_replace( '<a href=', '<a target="_blank" href=', $link_html );
+			}
 		}
 		return $link_html;
 	}

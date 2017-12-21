@@ -15,7 +15,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.4
 	 * @todo    (maybe) add `[wcj_product_stock_price]`
 	 */
 	function __construct() {
@@ -30,6 +30,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_categories',
 			'wcj_product_categories_names',
 			'wcj_product_categories_urls',
+			'wcj_product_category_count',
 			'wcj_product_custom_field',
 			'wcj_product_description',
 			'wcj_product_dimensions',
@@ -105,6 +106,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'count_variations'      => 'no',
 			'variations'            => 'no',
 			'columns_style'         => 'text-align: center;',
+			'slug'                  => '',
 		);
 
 		parent::__construct();
@@ -137,6 +139,27 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		if ( ! $this->the_product ) return false;
 
 		return $atts;
+	}
+
+	/**
+	 * wcj_product_category_count.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 * @todo    option to use `name` or `term_id` instead of `slug`
+	 * @todo    `pad_counts`
+	 */
+	function wcj_product_category_count( $atts ) {
+		if ( ! isset( $atts['slug'] ) ) {
+			return '';
+		}
+		$product_categories = get_categories( array(
+			'hide_empty'   => 0,
+			'hierarchical' => 1,
+			'taxonomy'     => 'product_cat',
+			'slug'         => $atts['slug'],
+		) );
+		return ( isset( $product_categories[0]->count ) ? $product_categories[0]->count : '' );
 	}
 
 	/**

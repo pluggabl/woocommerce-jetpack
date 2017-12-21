@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 3.2.3
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add "rounding" and "offset" options for each pair separately
@@ -149,7 +149,7 @@ $settings = array_merge( $settings, array(
 	),
 ) );
 // Exchange rates
-$exchange_rate_settings = $this->get_all_currencies_exchange_rates_settings();
+$exchange_rate_settings = $this->get_all_currencies_exchange_rates_settings( true );
 if ( ! empty( $exchange_rate_settings ) ) {
 	$settings = array_merge( $settings, array(
 		array(

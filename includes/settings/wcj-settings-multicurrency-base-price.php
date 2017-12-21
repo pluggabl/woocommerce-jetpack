@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
- * @version 3.1.0
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -103,9 +103,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'id'                       => 'wcj_multicurrency_base_price_exchange_rate_' . $i,
 			'default'                  => 1,
 			'type'                     => 'exchange_rate',
-			'custom_attributes'        => array( 'step' => '0.000001', 'min'  => '0', ),
 			'custom_attributes_button' => $custom_attributes,
-			'css'                      => 'width:100px;',
 			'value'                    => $currency_from . '/' . $currency_to,
 		),
 	) );

@@ -41,22 +41,6 @@ class WCJ_Reports_Sales {
 	}
 
 	/*
-	 * sort_by_total_sales.
-	 *
-	 * @version    2.3.0
-	 * @since      2.3.0
-	 * @deprecated 2.5.8
-	 */
-	/*
-	function sort_by_total_sales( $a, $b ) {
-		if ( $a['sales'] == $b['sales'] ) {
-			return 0;
-		}
-		return ( $a['sales'] < $b['sales'] ) ? 1 : -1;
-	}
-	*/
-
-	/*
 	 * sort_by_title.
 	 *
 	 * @version 2.5.7
@@ -64,6 +48,20 @@ class WCJ_Reports_Sales {
 	 */
 	function sort_by_title( $a, $b ) {
 		return strcmp( strip_tags( $a['title'] ), strip_tags( $b['title'] ) );
+	}
+
+	/*
+	 * do_product_parent_exist.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 */
+	function do_product_parent_exist( $_product ) {
+		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+			return is_object( $_product->parent );
+		} else {
+			return ( 0 != ( $parent_id = $_product->get_parent_id() ) ? is_object( wc_get_product( $parent_id ) ) : false );
+		}
 	}
 
 	/*
@@ -120,7 +118,7 @@ class WCJ_Reports_Sales {
 							$_product = wc_get_product( $product_id );
 							if ( is_object( $_product ) ) {
 								$products_data[ $product_id ][ 'title' ] .= $_product->get_title(); // get_the_title( $product_id );
-								if ( 'WC_Product_Variation' === get_class( $_product ) && is_object( $_product->parent ) ) {
+								if ( 'WC_Product_Variation' === get_class( $_product ) && $this->do_product_parent_exist( $_product ) ) {
 									$products_data[ $product_id ][ 'title' ] .= '<br><em>' . wcj_get_product_formatted_variation( $_product, true ) . '</em>';
 								} elseif ( 'WC_Product_Variation' === get_class( $_product ) ) {
 //									$products_data[ $product_id ][ 'title' ] .= ' [PARENT PRODUCT DELETED]'; // todo

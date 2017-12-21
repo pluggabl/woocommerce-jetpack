@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Orders
  *
- * @version 3.2.2
+ * @version 3.2.4
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -78,10 +78,10 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	 *
 	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.4
 	 * @since   2.5.9
 	 */
-	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null ) {
+	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null, $exclude_meta = array() ) {
 		$meta_info = '';
 		$metadata = ( WCJ_IS_WC_VERSION_BELOW_3 ? $_order->has_meta( $item_id ) : $item->get_meta_data() );
 		if ( $metadata ) {
@@ -104,6 +104,10 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 					'method_id',
 					'cost'
 				) ) ) ) {
+					continue;
+				}
+
+				if ( ! empty( $exclude_meta ) && in_array( $_meta_key, $exclude_meta ) ) {
 					continue;
 				}
 
