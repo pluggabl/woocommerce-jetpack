@@ -172,7 +172,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.4 - 21/12/2017 =
+= 3.2.4 - 22/12/2017 =
+!D	* Dev - PRODUCTS - Product Custom Visibility - Initial module release.
+!	* Fix - PRODUCTS - Product Visibility by Country - Session bug fixed.
 ~	* Dev - PRODUCTS - Product Add to Cart - External Products - Open External Products on Add to Cart in New Window - on Category/Archive Pages - Additional themes compatibility added.
 ~D	* Dev - PRICES & CURRENCIES - Currencies - More cryptocurrencies added.
 ~	* Fix - EMAILS & MISC. - Reports - Orders - Product Sales (Monthly) - WooCommerce v3.0.0 compatibility - "Product `parent` property accessed directly" issue fixed.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.2.1
+ * @version 3.2.4
  * @author  Algoritmika Ltd.
  */
 
@@ -141,8 +141,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_selector.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.4
 	 * @since   3.1.0
+	 * @todo    add `default` attribute
 	 * @todo    (maybe) add more selector types (e.g.: currency)
 	 * @todo    (maybe) remove country switcher and currency switcher shortcodes and use this shortcode instead
 	 */
@@ -154,9 +155,13 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			wcj_session_get( 'wcj_selected_' . $atts['selector_type'] )
 		);
 		switch ( $atts['selector_type'] ) {
+			case 'product_custom_visibility':
+				$options = wcj_get_select_options( get_option( 'wcj_product_custom_visibility_options_list', '' ) );
+				break;
 			default: // 'country'
 				$options = wcj_get_countries();
 				asort( $options );
+				break;
 		}
 		foreach ( $options as $value => $title ) {
 			$html .= '<option value="' . $value . '" ' . selected( $selected_value, $value, false ) . '>' . $title . '</option>';

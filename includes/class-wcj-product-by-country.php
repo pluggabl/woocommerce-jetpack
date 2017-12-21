@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 3.1.1
+ * @version 3.2.4
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -176,12 +176,12 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * save_country_in_session.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.4
 	 * @since   3.1.0
 	 */
 	function save_country_in_session() {
+		wcj_session_maybe_start();
 		if ( isset( $_REQUEST['wcj_country_selector'] ) ) {
-			wcj_session_maybe_start();
 			wcj_session_set( 'wcj_selected_country', $_REQUEST['wcj_country_selector'] );
 		}
 	}
@@ -189,14 +189,13 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * get_country.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.4
 	 * @since   3.1.0
 	 */
 	function get_country() {
 		if ( 'manual' === apply_filters( 'booster_get_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
 			if ( '' == wcj_session_get( 'wcj_selected_country' ) ) {
 				$country = wcj_get_country_by_ip();
-				wcj_session_maybe_start();
 				wcj_session_set( 'wcj_selected_country', $country );
 				return $country;
 			} else {

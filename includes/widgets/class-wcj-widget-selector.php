@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Selector
  *
- * @version 3.1.0
+ * @version 3.2.4
  * @since   3.1.0
  * @author  Algoritmika Ltd.
  */
@@ -43,7 +43,7 @@ class WCJ_Widget_Selector extends WCJ_Widget {
 	/**
 	 * get_options.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.4
 	 * @since   3.1.0
 	 */
 	function get_options() {
@@ -61,7 +61,8 @@ class WCJ_Widget_Selector extends WCJ_Widget {
 				'default'  => 'country',
 				'type'     => 'select',
 				'options'  => array(
-					'country' => __( 'Countries', 'woocommerce-jetpack' ),
+					'country'                   => __( 'Countries', 'woocommerce-jetpack' ),
+					'product_custom_visibility' => __( 'Product custom visibility', 'woocommerce-jetpack' ),
 				),
 				'class'    => 'widefat',
 			),

@@ -40,6 +40,7 @@ $wcj_module_files = array(
 	'class-wcj-product-images.php',
 	'class-wcj-sale-flash.php',
 	'class-wcj-product-by-country.php',
+	'class-wcj-product-custom-visibility.php',
 	'class-wcj-product-by-time.php',
 	'class-wcj-product-by-date.php',
 	'class-wcj-product-by-user-role.php',

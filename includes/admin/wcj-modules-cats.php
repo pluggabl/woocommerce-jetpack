@@ -76,6 +76,7 @@ return apply_filters( 'wcj_modules', array(
 			'sale_flash',
 			'product_by_country',
 			'product_by_user_role',
+			'product_custom_visibility',
 			'product_by_time',
 			'product_by_date',
 			'product_by_user',
