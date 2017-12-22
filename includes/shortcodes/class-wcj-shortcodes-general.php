@@ -15,11 +15,12 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.1
+	 * @version 3.2.4
 	 */
 	function __construct() {
 
 		$this->the_shortcodes = array(
+			'wcj_button_toggle_tax_display',
 			'wcj_cart_items_total_quantity',
 			'wcj_cart_items_total_weight',
 			'wcj_cart_total',
@@ -79,10 +80,26 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'selector_type'         => 'country',
 			'option'                => '',
 			'company'               => '',
+			'label_incl'            => __( 'Tax toggle (incl.)', 'woocommerce-jetpack' ),
+			'label_excl'            => __( 'Tax toggle (excl.)', 'woocommerce-jetpack' ),
 		);
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_button_toggle_tax_display.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 * @todo    (maybe) `get` instead of `post`
+	 */
+	function wcj_button_toggle_tax_display( $atts ) {
+		$current_value = ( '' == ( $session_value = wcj_session_get( 'wcj_toggle_tax_display' ) ) ? get_option( 'woocommerce_tax_display_shop', 'excl' ) : $session_value );
+		$label         = $atts[ 'label_' . $current_value ];
+		return '<form method="post" action=""><input type="submit" name="wcj_button_toggle_tax_display"' .
+			' class="' . $atts['class'] . '" style="' . $atts['style'] . '" value="' . $label . '"></form>';
 	}
 
 	/**

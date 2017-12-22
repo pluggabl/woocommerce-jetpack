@@ -14,14 +14,14 @@ if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' 
 	include_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-shortcodes.php' );
 
 	$wcj_shortcodes_files = array(
-		'class-wcj-general-shortcodes.php',
-		'class-wcj-invoices-shortcodes.php',
-		'class-wcj-orders-shortcodes.php',
-		'class-wcj-order-items-shortcodes.php',
-		'class-wcj-products-shortcodes.php',
-		'class-wcj-products-crowdfunding-shortcodes.php',
-		'class-wcj-products-add-form-shortcodes.php',
-		'class-wcj-input-field-shortcodes.php',
+		'class-wcj-shortcodes-general.php',
+		'class-wcj-shortcodes-invoices.php',
+		'class-wcj-shortcodes-orders.php',
+		'class-wcj-shortcodes-order-items.php',
+		'class-wcj-shortcodes-products.php',
+		'class-wcj-shortcodes-products-crowdfunding.php',
+		'class-wcj-shortcodes-products-add-form.php',
+		'class-wcj-shortcodes-input-field.php',
 	);
 
 	$wcj_shortcodes_dir = WCJ_PLUGIN_PATH . '/includes/shortcodes/';

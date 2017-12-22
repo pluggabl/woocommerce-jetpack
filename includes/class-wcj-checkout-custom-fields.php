@@ -462,8 +462,9 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * is_visible.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.4
 	 * @since   2.6.0
+	 * @todo    add "user roles to include/exclude"
 	 */
 	function is_visible( $i ) {
 
@@ -520,6 +521,25 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				}
 			}
 			return false;
+		}
+
+		// Checking min/max cart amount
+		$cart_total = false;
+		if ( ( $min_cart_amount = get_option( 'wcj_checkout_custom_field_min_cart_amount_' . $i, 0 ) ) > 0 ) {
+			WC()->cart->calculate_totals();
+			$cart_total = WC()->cart->total;
+			if ( $cart_total < $min_cart_amount ) {
+				return false;
+			}
+		}
+		if ( ( $max_cart_amount = get_option( 'wcj_checkout_custom_field_max_cart_amount_' . $i, 0 ) ) > 0 ) {
+			if ( false === $cart_total ) {
+				WC()->cart->calculate_totals();
+				$cart_total = WC()->cart->total;
+			}
+			if ( $cart_total > $max_cart_amount ) {
+				return false;
+			}
 		}
 
 		// All passed

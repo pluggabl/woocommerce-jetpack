@@ -43,6 +43,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 **Products**
 
+* *Admin Products List* - Customize WooCommerce admin products list.
 * *Bookings* - Add bookings products to WooCommerce.
 * *Cost of Goods* - Save WooCommerce product purchase costs data for admin reports.
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
@@ -51,6 +52,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Availability by Date* - WooCommerce product availability by date.
 * *Product Availability by Time* - WooCommerce product availability by time.
 * *Product Bulk Meta Editor* - Set WooCommerce products meta with bulk editor.
+* *Product Custom Visibility* - Display WooCommerce products by custom param.
 * *Product Images* - Customize WooCommerce products images and thumbnails.
 * *Product Info* - Add additional info to WooCommerce category and single product pages.
 * *Product Input Fields* - WooCommerce product input fields.
@@ -65,6 +67,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Sale Flash* - Customize WooCommerce products sale flash.
 * *Sorting* - Add more WooCommerce sorting options; rename or remove default sorting options; rearrange sorting options on frontend.
 * *Stock* - WooCommerce products stock management.
+* *Tax Display* - Customize WooCommerce tax display.
 * *User Products* - Let users add new WooCommerce products from frontend.
 
 **Cart & Checkout**
@@ -98,13 +101,14 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Shipping & Orders**
 
 * *Address Formats* - Set address format in WooCommerce orders on per country basis. Force base country display.
+* *Admin Orders List* - Customize WooCommerce admin orders list: add custom columns; add multiple status filtering.
 * *Custom Shipping* - Add multiple custom shipping methods to WooCommerce.
 * *Left to Free Shipping* - Display "left to free shipping" info in WooCommerce.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Min/Max Quantities* - Set min/max product quantities in WooCommerce order.
 * *Order Minimum Amount* - Minimum WooCommerce order amount (optionally by user role).
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
-* *Orders* - Orders auto-complete. Custom admin order list columns. Admin order currency. Admin order list multiple status filtering.
+* *Orders* - WooCommerce orders auto-complete; admin order currency; bulk regenerate download permissions for orders.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 * *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for WooCommerce shipping methods to show up.
 * *Shipping Methods by Products* - Set products, product categories or tags to include/exclude for WooCommerce shipping methods to show up.
@@ -173,6 +177,13 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.2.4 - 22/12/2017 =
+~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Min Cart Amount" and "Max Cart Amount" options added.
+~D	* Dev - SHIPPING & ORDERS - Admin Orders List - Initial module release (moved from "Orders" module).
+!D	* Dev - PRODUCTS - Admin Products List - Initial module release (moved from "Product Listings" module).
+~	* Dev - Shortcodes files renamed.
+~	* Fix - PRODUCTS - Tax Display - by Product & by User Role - `wcj_is_frontend()` check added.
+!D	* Dev - PRODUCTS - Tax Display - "TAX Display - Toggle Button" section added.
+$!D	* Dev - PRODUCTS - Tax Display - Initial module release (moved from "Product Listings" module).
 !D	* Dev - PRODUCTS - Product Custom Visibility - Initial module release.
 !	* Fix - PRODUCTS - Product Visibility by Country - Session bug fixed.
 ~	* Dev - PRODUCTS - Product Add to Cart - External Products - Open External Products on Add to Cart in New Window - on Category/Archive Pages - Additional themes compatibility added.

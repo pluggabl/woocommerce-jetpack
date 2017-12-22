@@ -487,7 +487,7 @@ if ( ! function_exists( 'wcj_is_frontend' ) ) {
 	 * @return boolean
 	 */
 	function wcj_is_frontend() {
-		return ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) ? true : false;
+		return ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) );
 	}
 }
 
