@@ -22,7 +22,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * prepare_pdf.
 	 *
-	 * @version 3.2.3
+	 * @version 3.2.4
 	 */
 	function prepare_pdf() {
 
@@ -30,13 +30,20 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 
 		$invoice_type = $this->invoice_type;
 
+		$page_format = get_option( 'wcj_invoicing_' . $invoice_type . '_page_format', 'A4' );
+		if ( 'custom' === $page_format ) {
+			$page_format = array(
+				get_option( 'wcj_invoicing_' . $invoice_type . '_page_format_custom_width',  0 ),
+				get_option( 'wcj_invoicing_' . $invoice_type . '_page_format_custom_height', 0 )
+			);
+		}
+
 		// Create new PDF document
 		require_once( wcj_plugin_path() . '/includes/classes/class-wcj-tcpdf.php' );
 		$pdf = new WCJ_TCPDF(
 			get_option( 'wcj_invoicing_' . $invoice_type . '_page_orientation', 'P' ),
 			PDF_UNIT,
-			//PDF_PAGE_FORMAT,
-			get_option( 'wcj_invoicing_' . $invoice_type . '_page_format', 'A4' ),
+			$page_format,
 			true,
 			'UTF-8',
 			false

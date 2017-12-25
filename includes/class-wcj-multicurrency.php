@@ -52,7 +52,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 * add_hooks.
 	 *
 	 * @version 3.2.2
-	 * @todo    (maybe) replace all `PHP_INT_MAX - 1` with `$this->price_hooks_priority`
+	 * @todo    (maybe) replace all `PHP_INT_MAX - 1` with `$this->price_hooks_priority` (especially for `woocommerce_currency_symbol` and `woocommerce_currency`)
 	 */
 	function add_hooks() {
 		// Session

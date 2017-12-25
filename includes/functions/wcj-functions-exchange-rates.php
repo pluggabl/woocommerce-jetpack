@@ -9,6 +9,51 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_saved_exchange_rate' ) ) {
+	/**
+	 * wcj_get_saved_exchange_rate.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 * @todo    `if ( $from == $to ) return 1`
+	 */
+	function wcj_get_saved_exchange_rate( $from, $to ) {
+		// Preparing `active_currencies` array
+		if ( ! isset( WCJ()->modules['currency_exchange_rates']->active_currencies ) ) {
+			$active_currencies_settings = WCJ()->modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();
+			$active_currencies          = array();
+			foreach ( $active_currencies_settings as $currency ) {
+				$active_currencies[ str_replace( 'wcj_currency_exchange_rates_', '', $currency['id'] ) ] = get_option( $currency['id'] );
+			}
+			WCJ()->modules['currency_exchange_rates']->active_currencies = $active_currencies;
+		} else {
+			$active_currencies = WCJ()->modules['currency_exchange_rates']->active_currencies;
+		}
+		if ( empty( $active_currencies ) ) {
+			return 0;
+		}
+		// Getting exchange rate - simple method
+		$exchange_rate = ( isset( $active_currencies[ sanitize_title( $from . $to ) ] ) ? $active_currencies[ sanitize_title( $from . $to ) ] : 0 );
+		// Getting exchange rate - invert method
+		if ( 0 == $exchange_rate ) {
+			$exchange_rate = ( isset( $active_currencies[ sanitize_title( $to . $from ) ] ) ? $active_currencies[ sanitize_title( $to . $from ) ] : 0 );
+			if ( 0 != $exchange_rate ) {
+				$exchange_rate = 1 / $exchange_rate;
+			}
+		}
+		// Getting exchange rate - shop base
+		if ( 0 == $exchange_rate ) {
+			$shop_currency      = get_option( 'woocommerce_currency' );
+			$exchange_rate_from = ( isset( $active_currencies[ sanitize_title( $shop_currency . $from ) ] ) ? $active_currencies[ sanitize_title( $shop_currency . $from ) ] : 0 );
+			$exchange_rate_to   = ( isset( $active_currencies[ sanitize_title( $shop_currency . $to ) ] )   ? $active_currencies[ sanitize_title( $shop_currency . $to ) ]   : 0 );
+			if ( 0 != $exchange_rate_from ) {
+				$exchange_rate = $exchange_rate_to / $exchange_rate_from;
+			}
+		}
+		return $exchange_rate;
+	}
+}
+
 if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate_servers.

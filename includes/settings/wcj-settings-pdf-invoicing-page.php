@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Page Settings
  *
- * @version 3.2.3
+ * @version 3.2.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -31,9 +31,23 @@ foreach ( $invoice_types as $invoice_type ) {
 		array(
 			'title'    => __( 'Page Format', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_page_format',
-			'default'  => 'A4',
+			'default'  => 'A4', // PDF_PAGE_FORMAT
 			'type'     => 'select',
-			'options'  => $this->get_page_formats(),
+			'options'  => array_replace( array( 'custom' => __( 'Custom', 'woocommerce-jetpack' ) ), $this->get_page_formats() ),
+		),
+		array(
+			'desc'     => __( 'Custom: width (millimeters)', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_page_format_custom_width',
+			'default'  => '0',
+			'type'     => 'number',
+			'custom_attributes' => array( 'min' => 0 ),
+		),
+		array(
+			'desc'     => __( 'Custom: height (millimeters)', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_page_format_custom_height',
+			'default'  => '0',
+			'type'     => 'number',
+			'custom_attributes' => array( 'min' => 0 ),
 		),
 		array(
 			'title'    => __( 'Margin Left', 'woocommerce-jetpack' ),

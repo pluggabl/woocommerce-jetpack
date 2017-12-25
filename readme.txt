@@ -176,7 +176,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.4 - 22/12/2017 =
+= 3.2.4 - 25/12/2017 =
+~D	* Dev - PDF INVOICING & PACKING SLIPS - Page Settings - Page Format - "Custom" options added.
+!D	* Dev - Shortcodes - Products - `[wcj_product_price]` - `currency` attribute added.
+!	* Dev - Functions - Exchange Rates - `wcj_get_saved_exchange_rate()` function added.
+!	* Fix - PRICES & CURRENCIES - Currency per Product - `change_currency_symbol()` - Changing symbol for appropriate currency code only.
 ~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Min Cart Amount" and "Max Cart Amount" options added.
 ~D	* Dev - SHIPPING & ORDERS - Admin Orders List - Initial module release (moved from "Orders" module).
 !D	* Dev - PRODUCTS - Admin Products List - Initial module release (moved from "Product Listings" module).

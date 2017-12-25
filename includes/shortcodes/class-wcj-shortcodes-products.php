@@ -107,6 +107,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'variations'            => 'no',
 			'columns_style'         => 'text-align: center;',
 			'slug'                  => '',
+			'currency'              => '',
 		);
 
 		parent::__construct();
@@ -688,7 +689,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Returns product (modified) price.
 	 *
-	 * @version 2.4.8
+	 * @version 3.2.4
 	 * @todo    variable products: a) not range; and b) price by country.
 	 * @return  string The product (modified) price
 	 */
@@ -701,17 +702,34 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$min = $min * $atts['multiply_by'];
 				$max = $max * $atts['multiply_by'];
 			}
+			if (
+				'' != $atts['currency'] &&
+				( $base_product_currency = get_woocommerce_currency() ) != $atts['currency'] &&
+				0 != ( $exchange_rate = wcj_get_saved_exchange_rate( $base_product_currency, $atts['currency'] ) )
+			) {
+				$min = $min * $exchange_rate;
+				$max = $max * $exchange_rate;
+			}
 			if ( 'yes' !== $atts['hide_currency'] ) {
-				$min = wc_price( $min );
-				$max = wc_price( $max );
+				$min = wc_price( $min, array( 'currency' => $atts['currency'] ) );
+				$max = wc_price( $max, array( 'currency' => $atts['currency'] ) );
 			}
 			return ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
 		}
 		// Simple etc.
 		else {
 			$the_price = $this->the_product->get_price();
-			if ( '' !== $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) $the_price = $the_price * $atts['multiply_by'];
-			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price );
+			if ( '' !== $atts['multiply_by'] && is_numeric( $atts['multiply_by'] ) ) {
+				$the_price = $the_price * $atts['multiply_by'];
+			}
+			if (
+				'' != $atts['currency'] &&
+				( $base_product_currency = get_woocommerce_currency() ) != $atts['currency'] &&
+				0 != ( $exchange_rate = wcj_get_saved_exchange_rate( $base_product_currency, $atts['currency'] ) )
+			) {
+				$the_price = $the_price * $exchange_rate;
+			}
+			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price, array( 'currency' => $atts['currency'] ) );
 		}
 	}
 
