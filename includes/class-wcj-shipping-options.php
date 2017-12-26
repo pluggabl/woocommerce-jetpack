@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Options
  *
- * @version 2.9.1
+ * @version 3.2.4
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.1
+	 * @version 3.2.4
 	 * @since   2.9.0
 	 */
 	function __construct() {
@@ -33,7 +33,8 @@ class WCJ_Shipping_Options extends WCJ_Module {
 
 			// Hide if free is available
 			if ( 'yes' === get_option( 'wcj_shipping_hide_if_free_available_all', 'no' ) ) {
-				add_filter( 'woocommerce_package_rates', array( $this, 'hide_shipping_when_free_is_available' ), 10, 2 );
+				add_filter( 'woocommerce_package_rates', array( $this, 'hide_shipping_when_free_is_available' ),
+					wcj_get_woocommerce_package_rates_module_filter_priority( 'shipping_options_hide_free_shipping' ), 2 );
 			}
 			add_filter( 'woocommerce_shipping_settings', array( $this, 'add_hide_shipping_if_free_available_fields' ), PHP_INT_MAX );
 

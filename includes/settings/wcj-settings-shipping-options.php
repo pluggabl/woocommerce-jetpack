@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Options
  *
- * @version 3.2.1
+ * @version 3.2.4
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -35,6 +35,13 @@ $settings = array(
 		),
 		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Advanced: Filter Priority', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set to zero to use the default priority.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_shipping_options_hide_free_shipping_filter_priority',
+		'default'  => 0,
+		'type'     => 'number',
 	),
 	array(
 		'type'     => 'sectionend',

@@ -18,6 +18,7 @@ class WCJ_Sale_Flash extends WCJ_Module {
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
+	 * @todo    add predefined styles
 	 * @todo    (maybe) per product/category/tag: separate "loop" and "single" options
 	 * @todo    (maybe) related / homepage
 	 */

@@ -9,6 +9,27 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_woocommerce_package_rates_module_filter_priority' ) ) {
+	/**
+	 * wcj_get_woocommerce_package_rates_module_filter_priority.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 * @todo    add `shipping_by_order_amount` module
+	 */
+	function wcj_get_woocommerce_package_rates_module_filter_priority( $module_id ) {
+		$modules_priorities = array(
+			'shipping_options_hide_free_shipping'  => PHP_INT_MAX,
+			'shipping_by_products'                 => PHP_INT_MAX - 100,
+			'shipping_by_user_role'                => PHP_INT_MAX - 100,
+		);
+		return ( 0 != ( $priority = get_option( 'wcj_' . $module_id . '_filter_priority', 0 ) ) ?
+			$priority :
+			( isset( $modules_priorities[ $module_id ] ) ? $modules_priorities[ $module_id ] : PHP_INT_MAX )
+		);
+	}
+}
+
 if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 	/**
 	 * wcj_session_maybe_start.
