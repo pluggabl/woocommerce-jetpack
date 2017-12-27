@@ -163,6 +163,39 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	}
 }
 
+if ( ! function_exists( 'alg_coinmarketcap_get_exchange_rate_specific' ) ) {
+	/*
+	 * alg_coinmarketcap_get_exchange_rate_specific.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 * @see     https://coinmarketcap.com/api/
+	 * @todo    add more `$cryptocurrencies_ids`
+	 * @todo    (maybe) try reverse only if `! isset( $cryptocurrencies_ids[ $currency_from ] )`
+	 */
+	function alg_coinmarketcap_get_exchange_rate_specific( $currency_from, $currency_to, $try_reverse = true ) {
+		$return = false;
+		$cryptocurrencies_ids = array(
+			'BTC' => 'bitcoin',
+			'XRP' => 'ripple',
+		);
+		if ( isset( $cryptocurrencies_ids[ $currency_from ] ) ) {
+			$url = 'https://api.coinmarketcap.com/v1/ticker/' . $cryptocurrencies_ids[ $currency_from ] . '/?convert=' . $currency_to;
+			if ( false != ( $response = wcj_get_currency_exchange_rates_url_response( $url ) ) ) {
+				$att    = 'price_' . strtolower( $currency_to );
+				$return = ( isset( $response[0]->{$att} ) ? $response[0]->{$att} : false );
+			}
+		}
+		if ( false === $return && $try_reverse ) {
+			$return = alg_coinmarketcap_get_exchange_rate_specific( $currency_to, $currency_from, false );
+			if ( 0 != $return ) {
+				$return = round( ( 1 / $return ), 12 );
+			}
+		}
+		return $return;
+	}
+}
+
 if ( ! function_exists( 'alg_coinmarketcap_get_exchange_rate' ) ) {
 	/*
 	 * alg_coinmarketcap_get_exchange_rate.
@@ -171,18 +204,21 @@ if ( ! function_exists( 'alg_coinmarketcap_get_exchange_rate' ) ) {
 	 * @since   3.2.4
 	 * @see     https://coinmarketcap.com/api/
 	 * @todo    `WCJ()->modules['currency_exchange_rates']->coinmarketcap_response`
+	 * @todo    `alg_coinmarketcap_get_exchange_rate_specific()`
 	 * @todo    (maybe) `limit=0`
 	 */
 	function alg_coinmarketcap_get_exchange_rate( $currency_from, $currency_to, $try_reverse = true ) {
 		$return = false;
-		/* if ( ! isset( WCJ()->modules['currency_exchange_rates']->coinmarketcap_response ) ) {
+		/*
+		if ( ! isset( WCJ()->modules['currency_exchange_rates']->coinmarketcap_response ) ) {
 			$response = wcj_get_currency_exchange_rates_url_response( 'https://api.coinmarketcap.com/v1/ticker/?convert=' . $currency_to );
 			if ( false != $response ) {
 				WCJ()->modules['currency_exchange_rates']->coinmarketcap_response = $response;
 			}
 		} else {
 			$response = WCJ()->modules['currency_exchange_rates']->coinmarketcap_response;
-		} */
+		}
+		*/
 		if ( false != ( $response = wcj_get_currency_exchange_rates_url_response( 'https://api.coinmarketcap.com/v1/ticker/?convert=' . $currency_to ) ) && is_array( $response ) ) {
 			foreach ( $response as $pair ) {
 				if ( isset( $pair->symbol ) && $currency_from === $pair->symbol ) {

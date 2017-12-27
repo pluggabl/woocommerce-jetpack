@@ -244,6 +244,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	 * output_dashboard.
 	 *
 	 * @version 3.2.4
+	 * @todo    (maybe) remove `woojetpack_readme`
 	 */
 	function output_dashboard( $current_section ) {
 

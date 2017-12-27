@@ -182,64 +182,6 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		// Print text using writeHTMLCell()
 		$pdf->writeHTMLCell( 0, 0, '', '', $styling . $html, 0, 1, 0, true, '', true );
 
-		/*
-		// set style for barcode
-		$style = array(
-			'border' => true,
-			'vpadding' => 'auto',
-			'hpadding' => 'auto',
-			'fgcolor' => array(0,0,0),
-			'bgcolor' => false, //array(255,255,255)
-			'module_width' => 1, // width of a single module in points
-			'module_height' => 1 // height of a single module in points
-		);
-
-		// -------------------------------------------------------------------
-		// PDF417 (ISO/IEC 15438:2006)
-
-		/*
-
-		 The $type parameter can be simple 'PDF417' or 'PDF417' followed by a
-		 number of comma-separated options:
-
-		 'PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6'
-
-		 Possible options are:
-
-			 a  = aspect ratio (width/height);
-			 e  = error correction level (0-8);
-
-			 Macro Control Block options:
-
-			 t  = total number of macro segments;
-			 s  = macro segment index (0-99998);
-			 f  = file ID;
-			 o0 = File Name (text);
-			 o1 = Segment Count (numeric);
-			 o2 = Time Stamp (numeric);
-			 o3 = Sender (text);
-			 o4 = Addressee (text);
-			 o5 = File Size (numeric);
-			 o6 = Checksum (numeric).
-
-		 Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional.
-		 To use a comma character ',' on text options, replace it with the character 255: "\xff".
-
-		*//*
-
-		$pdf->write2DBarcode( 'www.woojetpack.com', 'PDF417', 0, 200, 0, 30, $style, 'T');
-		//$pdf->Text(80, 85, 'PDF417 (ISO/IEC 15438:2006)');
-
-		// -------------------------------------------------------------------
-		/**
-		require_once( wcj_plugin_path() .'/includes/lib/tcpdf_min/tcpdf_barcodes_2d.php');
-		$barcodeobj = new TCPDF2DBarcode('http://www.tcpdf.org', 'PDF417');
-		// output the barcode as PNG image
-		//$barcodeobj->getBarcodePNG(4, 4, array(0,0,0));
-		$html = $barcodeobj->getBarcodeHTML(4, 4, 'black');
-		//$pdf->writeHTMLCell( 0, 0, '', '', $html, 0, 1, 0, true, '', true );
-		/**/
-
 		// Close and output PDF document
 		$result_pdf = $pdf->Output( '', 'S' );
 		$file_name = $this->get_file_name();

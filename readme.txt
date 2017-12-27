@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.2.3
+Stable tag: 3.2.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -18,7 +18,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 **Prices & Currencies**
 
 * *Bulk Price Converter* - Multiply all WooCommerce products prices by set value.
-* *Currencies* - Add all world currencies to your WooCommerce store; change currency symbol.
+* *Currencies* - Add all world currencies and cryptocurrencies to your WooCommerce store; change currency symbol.
 * *Currency Exchange Rates* - Automatic currency exchange rates for WooCommerce.
 * *Currency for External Products* - Set different currency for external WooCommerce products.
 * *Currency per Product* - Display prices for WooCommerce products in different currencies.
@@ -176,64 +176,67 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.4 - 26/12/2017 =
-!D	* Dev - BUTTON & PRICE LABELS - Call for Price - Variable and grouped products support added.
-!D	* Dev - SHIPPING & ORDERS - Shipping Methods by Users / Shipping Methods by Products / Shipping Options (Hide if Free Shipping is Available) - "Filter Priority" options added.
-~D	* Dev - PDF INVOICING & PACKING SLIPS - Page Settings - Page Format - "Custom" options added.
-!D	* Dev - Shortcodes - Products - `[wcj_product_price]` - `currency` attribute added.
-!	* Dev - Functions - Exchange Rates - `wcj_get_saved_exchange_rate()` function added.
-!	* Fix - PRICES & CURRENCIES - Currency per Product - `change_currency_symbol()` - Changing symbol for appropriate currency code only.
-~D	* Dev - CART & CHECKOUT - Checkout Custom Fields - "Min Cart Amount" and "Max Cart Amount" options added.
-~D	* Dev - SHIPPING & ORDERS - Admin Orders List - Initial module release (moved from "Orders" module).
-!D	* Dev - PRODUCTS - Admin Products List - Initial module release (moved from "Product Listings" module).
-~	* Dev - Shortcodes files renamed.
-~	* Fix - PRODUCTS - Tax Display - by Product & by User Role - `wcj_is_frontend()` check added.
-!D	* Dev - PRODUCTS - Tax Display - "TAX Display - Toggle Button" section added.
-$!D	* Dev - PRODUCTS - Tax Display - Initial module release (moved from "Product Listings" module).
-!D	* Dev - PRODUCTS - Product Custom Visibility - Initial module release.
-!	* Fix - PRODUCTS - Product Visibility by Country - Session bug fixed.
-~	* Dev - PRODUCTS - Product Add to Cart - External Products - Open External Products on Add to Cart in New Window - on Category/Archive Pages - Additional themes compatibility added.
-~D	* Dev - PRICES & CURRENCIES - Currencies - More cryptocurrencies added.
-~	* Fix - EMAILS & MISC. - Reports - Orders - Product Sales (Monthly) - WooCommerce v3.0.0 compatibility - "Product `parent` property accessed directly" issue fixed.
-~	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_meta` column - `is_custom` meta excluded.
-~	* Fix - CART & CHECKOUT - EU VAT Number - Preserve VAT in Base Country - Issue with lowercase country code n VAT ID fixed.
-~D	* Dev - Shortcodes - Products - `[wcj_product_category_count]` shortcode added.
-~D	* Dev - Admin Settings - Custom Fields - `exchange_rate` field updated (12 decimals in `step` and code refactoring).
-D	* Dev - Functions - Exchange Rates - Code refactoring (`wcj_get_currency_exchange_rates_url_response()` function added).
-D	* Dev - Functions - Exchange Rates - Exchange Rates Server - "Coinbase" server added.
-D	* Dev - Functions - Exchange Rates - Exchange Rates Server - "CoinMarketCap" server added.
-D	* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Secondary "Exchange Rates Server" option added to each currency pair.
-D	* Dev - EMAILS & MISC. - Reports - Custom Ranges / Product Sales (Daily) / Reports functions (also affects Export module) - `time()` replaced with `current_time()`.
-D	* Dev - SHIPPING & ORDERS - Order Minimum Amount - "Exclude Discounts from Cart Total" option added.
-D	* Dev - PDF INVOICING & PACKING SLIPS - General - "Advanced: Temp Directory" option added.
-D	* Dev - PRODUCTS - Products XML - Renamed to "Products XML Feeds". Description and documentation URL updated.
-D	* Dev - PRODUCTS - Product Addons - "Position Priority on Frontend" option added.
-D	* Dev - PRICES & CURRENCIES - Price Formats - "Additional Currency Code Position" option added.
-	* Fix - PRODUCTS - Bookings - `wp_die()` replaced with `die()` in `price_change_ajax()`.
-	* Fix - PRODUCTS - Product Addons - `wp_die()` replaced with `die()` in `price_change_ajax()`.
-D	* Dev - PRODUCTS - Products XML - "Products to Include/Exclude" options can now be set as comma separated text (optionally) (instead of list).
-	* Dev - PRODUCTS - Product Input Fields - `array_merge()` replaced with `array_replace()` for `wcj_get_select_options()` results (with placeholder).
-	* Dev - CART & CHECKOUT  Checkout Custom Fields - `array_merge()` replaced with `array_replace()` for `wcj_get_select_options()` results (with placeholder).
-D	* Dev - PRODUCTS - Product Add to Cart - "Set All Products to Sold individually" option added.
-D	* Dev - PRODUCTS - Product Images - "Enable Section" option removed. Minor setting restyling.
-D	* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "HTML Template - Radio Field" option added.
-D	* Dev - PRODUCTS - Product Tabs - "Add Per Product Tabs Content to Yoast SEO plugin analysis" option added.
-D	* Dev - PRODUCTS - Sale Flash - "Per Product", "Per Category", "Per Tag" options added.
-D	* Dev - PRODUCTS - Sale Flash - Initial module release (copied from "Product Images" module).
-D	* Dev - SHIPPING & ORDERS - Orders - Bulk Regenerate Download Permissions for Orders - All Orders - "Periodically" option added.
-D	* Dev - EMAILS & MISC. - Custom Emails - `%customer%` can now be used in comma separated list for multiple recipients.
-D	* Dev - EMAILS & MISC. - Reports - Orders - Product Sales (Monthly) - `wcj_reports_products_sales_check_product` filter added.
-D	* Dev - Shortcodes - Orders - `[wcj_order_date]` - `days` attribute added.
-	* Fix - Shortcodes - Products - `[wcj_product_purchase_price]` - Using `wcj_get_product_id()` instead of `wcj_get_product_id_or_variation_parent_id()`.
-D	* Dev - Shortcodes - Products - `[wcj_product_purchase_price]` - `hide_currency` attribute added.
-	* Dev - Functions - "Crons" added.
-	* Dev - Functions - Debug - `wcj_log()` - `esc_url()` added.
-D	* Dev - Functions - General - `wcj_get_select_options()` - Prefix (`wcj-`) removed (was added in v3.2.3).
-	* Dev - Functions - General - `wcj_get_select_options()` - `trim()` added.
-D	* Fix - Functions - Price and Currency - `wc_get_product_purchase_price()` - `int` replaced with `float` - this fixes the issue with purchase price calculating incorrectly (cutting decimal part).
-	* Dev - Settings Manager - Import - Checking for `wcj_` prefix, when importing plugin settings.
-	* Dev - Settings Manager - Reset - Now deletes all options (also includes meta).
-	* Dev - Code refactoring. `core` directory added.
+= 3.2.4 - 27/12/2017 =
+* Dev - PRICES & CURRENCIES - Currencies - More cryptocurrencies added.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Secondary "Exchange Rates Server" option added to each currency pair.
+* Fix - PRICES & CURRENCIES - Currency per Product - `change_currency_symbol()` - Changing symbol for appropriate currency code only.
+* Dev - PRICES & CURRENCIES - Price Formats - "Additional Currency Code Position" option added.
+* Dev - BUTTON & PRICE LABELS - Call for Price - Variable and grouped products support added.
+* Dev - PRODUCTS - Admin Products List - Initial module release (moved from "Product Listings" module).
+* Fix - PRODUCTS - Bookings - `wp_die()` replaced with `die()` in `price_change_ajax()`.
+* Dev - PRODUCTS - Product Add to Cart - "Set All Products to Sold individually" option added.
+* Dev - PRODUCTS - Product Add to Cart - External Products - Open External Products on Add to Cart in New Window - on Category/Archive Pages - Additional themes compatibility added.
+* Fix - PRODUCTS - Product Addons - `wp_die()` replaced with `die()` in `price_change_ajax()`.
+* Dev - PRODUCTS - Product Addons - "Position Priority on Frontend" option added.
+* Dev - PRODUCTS - Product Custom Visibility - Initial module release.
+* Dev - PRODUCTS - Product Images - "Enable Section" option removed. Minor setting restyling.
+* Dev - PRODUCTS - Product Input Fields - `array_merge()` replaced with `array_replace()` for `wcj_get_select_options()` results (with placeholder).
+* Dev - PRODUCTS - Product Input Fields - Frontend View Options - "HTML Template - Radio Field" option added.
+* Dev - PRODUCTS - Product Tabs - "Add Per Product Tabs Content to Yoast SEO plugin analysis" option added.
+* Fix - PRODUCTS - Product Visibility by Country - Session bug fixed.
+* Dev - PRODUCTS - Products XML - "Products to Include/Exclude" options can now be set as comma separated text (optionally) (instead of list).
+* Dev - PRODUCTS - Products XML - Renamed to "Products XML Feeds". Description and documentation URL updated.
+* Dev - PRODUCTS - Sale Flash - "Per Product", "Per Category", "Per Tag" options added.
+* Dev - PRODUCTS - Sale Flash - Initial module release (copied from "Product Images" module).
+* Fix - PRODUCTS - Tax Display - by Product & by User Role - `wcj_is_frontend()` check added.
+* Dev - PRODUCTS - Tax Display - "TAX Display - Toggle Button" section added.
+* Dev - PRODUCTS - Tax Display - Initial module release (moved from "Product Listings" module).
+* Dev - CART & CHECKOUT - Checkout Custom Fields - "Customer Meta Fields" options added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - "Min Cart Amount" and "Max Cart Amount" options added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - `array_merge()` replaced with `array_replace()` for `wcj_get_select_options()` results (with placeholder).
+* Fix - CART & CHECKOUT - EU VAT Number - Preserve VAT in Base Country - Issue with lowercase country code n VAT ID fixed.
+* Dev - SHIPPING & ORDERS - Admin Orders List - Initial module release (moved from "Orders" module).
+* Dev - SHIPPING & ORDERS - Order Minimum Amount - "Exclude Discounts from Cart Total" option added.
+* Dev - SHIPPING & ORDERS - Orders - Bulk Regenerate Download Permissions for Orders - All Orders - "Periodically" option added.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Users / Shipping Methods by Products / Shipping Options (Hide if Free Shipping is Available) - "Filter Priority" options added.
+* Dev - PDF INVOICING & PACKING SLIPS - General - "Advanced: Temp Directory" option added.
+* Dev - PDF INVOICING & PACKING SLIPS - Page Settings - Page Format - "Custom" options added.
+* Dev - EMAILS & MISC. - Custom Emails - `%customer%` can now be used in comma separated list for multiple recipients.
+* Dev - EMAILS & MISC. - Reports - Custom Ranges / Product Sales (Daily) / Reports functions (also affects Export module) - `time()` replaced with `current_time()`.
+* Dev - EMAILS & MISC. - Reports - Orders - Product Sales (Monthly) - `wcj_reports_products_sales_check_product` filter added.
+* Fix - EMAILS & MISC. - Reports - Orders - Product Sales (Monthly) - WooCommerce v3.0.0 compatibility - "Product `parent` property accessed directly" issue fixed.
+* Dev - Shortcodes - General - `[wcj_barcode]` shortcode added.
+* Dev - Shortcodes - General - `[wcj_tcpdf_barcode]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_date]` - `days` attribute added.
+* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_meta` column - `is_custom` meta excluded.
+* Dev - Shortcodes - Products - `[wcj_product_category_count]` shortcode added.
+* Dev - Shortcodes - Products - `[wcj_product_price]` - `currency` attribute added.
+* Fix - Shortcodes - Products - `[wcj_product_purchase_price]` - Using `wcj_get_product_id()` instead of `wcj_get_product_id_or_variation_parent_id()`.
+* Dev - Shortcodes - Products - `[wcj_product_purchase_price]` - `hide_currency` attribute added.
+* Dev - Shortcodes files renamed.
+* Dev - Functions - "Crons" added.
+* Dev - Functions - Debug - `wcj_log()` - `esc_url()` added.
+* Dev - Functions - Exchange Rates - `wcj_get_saved_exchange_rate()` function added.
+* Dev - Functions - Exchange Rates - Code refactoring (`wcj_get_currency_exchange_rates_url_response()` function added).
+* Dev - Functions - Exchange Rates - Exchange Rates Server - "CoinMarketCap" server added.
+* Dev - Functions - Exchange Rates - Exchange Rates Server - "Coinbase" server added.
+* Dev - Functions - General - `wcj_get_select_options()` - Prefix (`wcj-`) removed (was added in v3.2.3).
+* Dev - Functions - General - `wcj_get_select_options()` - `trim()` added.
+* Fix - Functions - Price and Currency - `wc_get_product_purchase_price()` - `int` replaced with `float` - this fixes the issue with purchase price calculating incorrectly (cutting decimal part).
+* Dev - Settings Manager - Import - Checking for `wcj_` prefix, when importing plugin settings.
+* Dev - Settings Manager - Reset - Now deletes all options (also includes meta).
+* Dev - Admin Settings - Custom Fields - `exchange_rate` field updated (12 decimals in `step` and code refactoring).
+* Dev - Code refactoring. `core` directory added.
 
 = 3.2.3 - 03/12/2017 =
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - cURL option fixed for "Yahoo" and "Fixer.io" servers.

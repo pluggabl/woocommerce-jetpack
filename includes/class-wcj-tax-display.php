@@ -68,7 +68,7 @@ class WCJ_Tax_Display extends WCJ_Module {
 	 * @version 3.2.4
 	 * @since   3.2.4
 	 * @todo    widget
-	 * @todo    (maybe) floating button or at least give CSS instructions
+	 * @todo    (maybe) floating button or at least give CSS instructions ($)
 	 * @todo    (maybe) position near the price or at least give "Product Info" instructions
 	 */
 	function tax_display_toggle( $value ) {

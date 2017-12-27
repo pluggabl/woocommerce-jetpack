@@ -19,7 +19,7 @@ $settings = array(
 	array(
 		'title'    => __( 'TAX Display - Toggle Button', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'desc'     => sprintf( __( 'Shortcode: %s.', 'woocommerce-jetpack' ), '<code>[wcj_button_toggle_tax_display]</code>' ),
+		'desc'     => sprintf( __( 'Use %s shortcode to display the button on frontend.', 'woocommerce-jetpack' ), '<code>[wcj_button_toggle_tax_display]</code>' ),
 		'id'       => 'wcj_tax_display_toggle_options',
 	),
 	array(

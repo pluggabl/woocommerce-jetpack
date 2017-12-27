@@ -104,7 +104,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_che
 			),
 			array(
 				'title'    => __( 'Enable/Disable', 'woocommerce-jetpack' ),
-				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
 				'desc_tip' => __( 'Key', 'woocommerce-jetpack' ) . ': ' .
 					'<code>' . get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ) . '_' . 'wcj_checkout_field_' . $i . '</code>',
 				'id'       => 'wcj_checkout_custom_field_enabled_' . $i,
@@ -186,6 +186,13 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_che
 			array(
 				'title'    => __( 'Clear', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_checkout_custom_field_clear_' . $i,
+				'default'  => 'yes',
+				'type'     => 'checkbox',
+			),
+			array(
+				'title'    => __( 'Customer Meta Fields', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_custom_field_customer_meta_fields_' . $i,
 				'default'  => 'yes',
 				'type'     => 'checkbox',
 			),

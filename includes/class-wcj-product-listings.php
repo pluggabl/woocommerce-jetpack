@@ -46,9 +46,10 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * product_visibility_by_price.
 	 *
-	 * @version 3.2.3
+	 * @version 3.2.4
 	 * @since   3.2.3
 	 * @todo    grouped products
+	 * @todo    (maybe) as new "Product Visibility by Price" module
 	 */
 	function product_visibility_by_price( $visible, $product_id ) {
 		$product = wc_get_product( $product_id );
@@ -56,7 +57,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 			$min_price = $product->get_variation_price( 'min' );
 			$max_price = $product->get_variation_price( 'max' );
 		} else {
-			$min_price = $max_price = $product->get_price();
+			$min_price = $product->get_price();
+			$max_price = $product->get_price();
 		}
 		$min_price_limit = get_option( 'wcj_product_listings_product_visibility_by_price_min', 0 );
 		$max_price_limit = get_option( 'wcj_product_listings_product_visibility_by_price_max', 0 );

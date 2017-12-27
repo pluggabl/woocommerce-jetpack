@@ -20,6 +20,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	function __construct() {
 
 		$this->the_shortcodes = array(
+			'wcj_barcode',
+			'wcj_tcpdf_barcode',
 			'wcj_button_toggle_tax_display',
 			'wcj_cart_items_total_quantity',
 			'wcj_cart_items_total_weight',
@@ -41,6 +43,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_customer_shipping_country',
 			'wcj_empty_cart_button',
 			'wcj_get_left_to_free_shipping',
+			'wcj_product_category_count',
 			'wcj_selector',
 			'wcj_site_url',
 			'wcj_store_address',
@@ -82,10 +85,140 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'company'               => '',
 			'label_incl'            => __( 'Tax toggle (incl.)', 'woocommerce-jetpack' ),
 			'label_excl'            => __( 'Tax toggle (excl.)', 'woocommerce-jetpack' ),
+			'slug'                  => '',
+			'code'                  => '',
+			'type'                  => '',
+			'dimension'             => '2D',
+			'width'                 => 0,
+			'height'                => 0,
+			'color'                 => 'black',
 		);
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_tcpdf_barcode.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 * @todo    `color`
+	 * @todo    `align` (try 'T')
+	 */
+	function wcj_tcpdf_barcode( $atts ) {
+		if ( '' === $atts['code'] ) {
+			return '';
+		}
+		if ( '' === $atts['type'] ) {
+			$atts['type'] = ( '1D' === $atts['dimension'] ? 'C39' : 'PDF417' );
+		}
+		if ( 0 === $atts['width'] ) {
+			$atts['width']  = ( '1D' === $atts['dimension'] ? 80 : 80 );
+		}
+		if ( 0 === $atts['height'] ) {
+			$atts['height'] = ( '1D' === $atts['dimension'] ? 30 : 80 );
+		}
+		if ( '1D' === $atts['dimension'] ) {
+			$params = array(
+				$atts['code'],
+				$atts['type'],
+				'',  // x
+				'',  // y
+				$atts['width'],
+				$atts['height'],
+				0.4, // xres
+				array( // style
+					'position'      => 'S',
+					'border'        => true,
+					'padding'       => 4,
+					'fgcolor'       => array( 0, 0, 0 ),
+					'bgcolor'       => array( 255, 255, 255 ),
+					'text'          => false,
+				),
+				'N', // align
+			);
+		} else {
+			$params = array(
+				$atts['code'],
+				$atts['type'],
+				'',  // x
+				'',  // y
+				$atts['width'],
+				$atts['height'],
+				array( // style
+					'border'        => true,
+					'vpadding'      => 'auto',
+					'hpadding'      => 'auto',
+					'fgcolor'       => array( 0, 0, 0 ),
+					'bgcolor'       => array( 255, 255, 255 ),
+					'module_width'  => 1, // width of a single module in points
+					'module_height' => 1, // height of a single module in points
+				),
+				'N', // align
+				false, // distort
+			);
+		}
+		require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/include/tcpdf_static.php' );
+		$params = TCPDF_STATIC::serializeTCPDFtagParameters( $params );
+		$method = ( '1D' === $atts['dimension'] ? 'write1DBarcode' : 'write2DBarcode' );
+		return '<tcpdf method="' . $method . '" params="' . $params . '" />';
+	}
+
+	/**
+	 * wcj_barcode.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 * @todo    barcode in `[wcj_order_items_table]`
+	 * @todo    `code` from product data (SKU etc.), i.e. `[wcj_product_barcode]`
+	 * @todo    (maybe) "Barcodes" module
+	 * @todo    (maybe) `getBarcodePNG()`
+	 */
+	function wcj_barcode( $atts ) {
+		if ( '' === $atts['code'] ) {
+			return '';
+		}
+		if ( '' === $atts['type'] ) {
+			$atts['type'] = ( '1D' === $atts['dimension'] ? 'C39' : 'PDF417' );
+		}
+		if ( 0 === $atts['width'] ) {
+			$atts['width']  = ( '1D' === $atts['dimension'] ? 2  : 10 );
+		}
+		if ( 0 === $atts['height'] ) {
+			$atts['height'] = ( '1D' === $atts['dimension'] ? 30 : 10 );
+		}
+		if ( '1D' === $atts['dimension'] ) {
+			require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/tcpdf_barcodes_1d.php' );
+			$barcode = new TCPDFBarcode( $atts['code'], $atts['type'] );
+		} else {
+			require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/tcpdf_barcodes_2d.php' );
+			$barcode = new TCPDF2DBarcode( $atts['code'], $atts['type'] );
+		}
+		$barcode_array = $barcode->getBarcodeArray();
+		return ( ! empty( $barcode_array ) && is_array( $barcode_array ) ? $barcode->getBarcodeHTML( $atts['width'], $atts['height'], $atts['color'] ) : '' );
+	}
+
+	/**
+	 * wcj_product_category_count.
+	 *
+	 * @version 3.2.4
+	 * @since   3.2.4
+	 * @todo    option to use `name` or `term_id` instead of `slug`
+	 * @todo    `pad_counts`
+	 * @todo    add similar `[wcj_product_tag_count]` and `[wcj_product_taxonomy_count]`
+	 */
+	function wcj_product_category_count( $atts ) {
+		if ( ! isset( $atts['slug'] ) ) {
+			return '';
+		}
+		$product_categories = get_categories( array(
+			'hide_empty'   => 0,
+			'hierarchical' => 1,
+			'taxonomy'     => 'product_cat',
+			'slug'         => $atts['slug'],
+		) );
+		return ( isset( $product_categories[0]->count ) ? $product_categories[0]->count : '' );
 	}
 
 	/**

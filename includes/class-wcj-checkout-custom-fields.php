@@ -16,6 +16,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 3.2.2
+	 * @todo    (maybe) check if `'wcj_checkout_custom_field_customer_meta_fields_' . $i` option should affect `add_default_checkout_custom_fields`
 	 */
 	function __construct() {
 
@@ -103,12 +104,15 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_checkout_custom_fields_customer_meta_fields.
 	 *
-	 * @version 2.4.5
+	 * @version 3.2.4
 	 * @since   2.4.5
 	 */
 	function add_checkout_custom_fields_customer_meta_fields( $fields ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
+				if ( 'no' === get_option( 'wcj_checkout_custom_field_customer_meta_fields_' . $i, 'yes' ) ) {
+					continue;
+				}
 				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
 				$the_key     = 'wcj_checkout_field_' . $i;
 				$the_name    = $the_section . '_' . $the_key;
