@@ -2,12 +2,115 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
+	/**
+	 * wcj_tcpdf_barcode.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    `color`
+	 * @todo    `align` (try 'T')
+	 */
+	function wcj_tcpdf_barcode( $atts ) {
+		if ( '' === $atts['code'] ) {
+			return '';
+		}
+		if ( '' === $atts['type'] ) {
+			$atts['type'] = ( '1D' === $atts['dimension'] ? 'C39' : 'PDF417' );
+		}
+		if ( 0 === $atts['width'] ) {
+			$atts['width']  = ( '1D' === $atts['dimension'] ? 80 : 80 );
+		}
+		if ( 0 === $atts['height'] ) {
+			$atts['height'] = ( '1D' === $atts['dimension'] ? 30 : 80 );
+		}
+		if ( '1D' === $atts['dimension'] ) {
+			$params = array(
+				$atts['code'],
+				$atts['type'],
+				'',  // x
+				'',  // y
+				$atts['width'],
+				$atts['height'],
+				0.4, // xres
+				array( // style
+					'position'      => 'S',
+					'border'        => false,
+					'padding'       => 4,
+					'fgcolor'       => array( 0, 0, 0 ),
+					'bgcolor'       => array( 255, 255, 255 ),
+					'text'          => false,
+				),
+				'N', // align
+			);
+		} else {
+			$params = array(
+				$atts['code'],
+				$atts['type'],
+				'',  // x
+				'',  // y
+				$atts['width'],
+				$atts['height'],
+				array( // style
+					'border'        => false,
+					'vpadding'      => 'auto',
+					'hpadding'      => 'auto',
+					'fgcolor'       => array( 0, 0, 0 ),
+					'bgcolor'       => array( 255, 255, 255 ),
+					'module_width'  => 1, // width of a single module in points
+					'module_height' => 1, // height of a single module in points
+				),
+				'N', // align
+				false, // distort
+			);
+		}
+		require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/include/tcpdf_static.php' );
+		$params = TCPDF_STATIC::serializeTCPDFtagParameters( $params );
+		$method = ( '1D' === $atts['dimension'] ? 'write1DBarcode' : 'write2DBarcode' );
+		return '<tcpdf method="' . $method . '" params="' . $params . '" />';
+	}
+}
+
+if ( ! function_exists( 'wcj_barcode' ) ) {
+	/**
+	 * wcj_barcode.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    (maybe) "Barcodes" module
+	 * @todo    (maybe) `getBarcodePNG()`
+	 */
+	function wcj_barcode( $atts ) {
+		if ( '' === $atts['code'] ) {
+			return '';
+		}
+		if ( '' === $atts['type'] ) {
+			$atts['type'] = ( '1D' === $atts['dimension'] ? 'C39' : 'PDF417' );
+		}
+		if ( 0 === $atts['width'] ) {
+			$atts['width']  = ( '1D' === $atts['dimension'] ? 2  : 10 );
+		}
+		if ( 0 === $atts['height'] ) {
+			$atts['height'] = ( '1D' === $atts['dimension'] ? 30 : 10 );
+		}
+		if ( '1D' === $atts['dimension'] ) {
+			require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/tcpdf_barcodes_1d.php' );
+			$barcode = new TCPDFBarcode( $atts['code'], $atts['type'] );
+		} else {
+			require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/tcpdf_barcodes_2d.php' );
+			$barcode = new TCPDF2DBarcode( $atts['code'], $atts['type'] );
+		}
+		$barcode_array = $barcode->getBarcodeArray();
+		return ( ! empty( $barcode_array ) && is_array( $barcode_array ) ? $barcode->getBarcodeHTML( $atts['width'], $atts['height'], $atts['color'] ) : '' );
+	}
+}
 
 if ( ! function_exists( 'wcj_get_woocommerce_package_rates_module_filter_priority' ) ) {
 	/**

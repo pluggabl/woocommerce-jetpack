@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.2.2
+ * @version 3.2.5
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -354,14 +354,14 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled_per_product' ) ) {
 	/**
 	 * wcj_is_product_wholesale_enabled_per_product.
 	 *
-	 * @version 2.5.0
+	 * @version 3.2.5
 	 * @since   2.5.0
 	 */
 	function wcj_is_product_wholesale_enabled_per_product( $product_id ) {
 		return (
 			'yes' === get_option( 'wcj_wholesale_price_per_product_enable', 'yes' ) &&
 			'yes' === get_post_meta( $product_id, '_' . 'wcj_wholesale_price_per_product_enabled', true )
-		) ? true : false;
+		);
 	}
 }
 
@@ -369,7 +369,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	/**
 	 * wcj_is_product_wholesale_enabled.
 	 *
-	 * @version 2.5.4
+	 * @version 3.2.5
 	 */
 	function wcj_is_product_wholesale_enabled( $product_id ) {
 		if ( wcj_is_module_enabled( 'wholesale_price' ) ) {
@@ -378,25 +378,13 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 			} else {
 				$products_to_include_passed = false;
 				$products_to_include = get_option( 'wcj_wholesale_price_products_to_include', array() );
-				if ( empty ( $products_to_include ) ) {
+				if ( empty( $products_to_include ) || in_array( $product_id, $products_to_include ) ) {
 					$products_to_include_passed = true;
-				} else {
-					foreach ( $products_to_include as $id ) {
-						if ( $product_id == $id ) {
-							$products_to_include_passed = true;
-						}
-					}
 				}
 				$products_to_exclude_passed = false;
 				$products_to_exclude = get_option( 'wcj_wholesale_price_products_to_exclude', array() );
-				if ( empty ( $products_to_exclude ) ) {
+				if ( empty( $products_to_exclude ) || ! in_array( $product_id, $products_to_exclude ) ) {
 					$products_to_exclude_passed = true;
-				} else {
-					foreach ( $products_to_exclude as $id ) {
-						if ( $product_id == $id ) {
-							$products_to_exclude_passed = false;
-						}
-					}
 				}
 				return ( $products_to_include_passed && $products_to_exclude_passed );
 			}

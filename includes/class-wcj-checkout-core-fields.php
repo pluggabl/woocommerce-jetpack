@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 3.1.0
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -68,19 +68,39 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * maybe_override_fields.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.5
 	 * @since   3.1.0
+	 * @todo    (maybe) add option to choose `$options_to_override`
+	 * @todo    (maybe) add to `$options_to_override`: enabled; class;
 	 */
 	function maybe_override_fields( $fields, $override_with_section ) {
 		$options_to_override = array(
-			'label'       => '',
-			'placeholder' => '',
-			'priority'    => 0,
+			'label'       => array(
+				'default'   => '',
+			),
+			'placeholder' => array(
+				'default'   => '',
+			),
+			'priority'    => array(
+				'default'   => 0,
+			),
+			'required'    =>  array(
+				'default'   => 'default',
+				'option_id' => 'is_required',
+				'values'    => array(
+					'yes' => true,
+					'no'  => false,
+				),
+			),
 		);
 		foreach ( $fields as $field_key => $field_values ) {
 			$field = $override_with_section . '_' . $field_key;
-			foreach ( $options_to_override as $option => $default_value ) {
-				if ( $default_value != ( $value = get_option( 'wcj_checkout_fields_' . $field . '_' . $option, $default_value ) ) ) {
+			foreach ( $options_to_override as $option => $option_data ) {
+				$default_value = $option_data['default'];
+				$option_id     = ( isset( $option_data['option_id'] ) ? $option_data['option_id'] : $option );
+				$option_id     = 'wcj_checkout_fields_' . $field . '_' . $option_id;
+				if ( $default_value != ( $value = get_option( $option_id, $default_value ) ) ) {
+					$value = ( isset( $option_data['values'][ $value ] ) ? $option_data['values'][ $value ] : $value );
 					$fields[ $field_key ][ $option ] = $value;
 				}
 			}

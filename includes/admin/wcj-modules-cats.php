@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -180,7 +180,8 @@ return apply_filters( 'wcj_modules', array(
 			'custom_css',
 			'custom_js',
 			'track_users',
-			'product_info',
+			'modules_by_user_roles',
+			'product_info', // deprecated
 		),
 	),
 

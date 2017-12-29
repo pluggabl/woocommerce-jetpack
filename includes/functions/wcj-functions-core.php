@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Core
  *
- * @version 2.9.0
+ * @version 3.2.5
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -36,11 +36,31 @@ if ( ! function_exists( 'wcj_is_module_enabled' ) ) {
 	/*
 	 * wcj_is_module_enabled.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.5
 	 * @since   2.4.0
 	 * @return  boolean
 	 */
 	function wcj_is_module_enabled( $module_id ) {
+		if ( 'modules_by_user_roles' != $module_id && wcj_is_module_enabled( 'modules_by_user_roles' ) ) {
+			global $wcj_modules_by_user_roles_data;
+			if ( ! isset( $wcj_modules_by_user_roles_data ) ) {
+				if( ! function_exists( 'wp_get_current_user' ) ) {
+					require_once( ABSPATH . 'wp-includes/pluggable.php' );
+				}
+				$current_user = wp_get_current_user();
+				$wcj_modules_by_user_roles_data['role'] = ( isset( $current_user->roles ) && is_array( $current_user->roles ) && ! empty( $current_user->roles ) ?
+					reset( $current_user->roles ) : 'guest' );
+				$wcj_modules_by_user_roles_data['role'] = ( '' != $wcj_modules_by_user_roles_data['role'] ? $wcj_modules_by_user_roles_data['role'] : 'guest' );
+				$wcj_modules_by_user_roles_data['modules_incl'] = get_option( 'wcj_modules_by_user_roles_incl_' . $wcj_modules_by_user_roles_data['role'], '' );
+				$wcj_modules_by_user_roles_data['modules_excl'] = get_option( 'wcj_modules_by_user_roles_excl_' . $wcj_modules_by_user_roles_data['role'], '' );
+			}
+			if ( ! empty( $wcj_modules_by_user_roles_data['modules_incl'] ) && ! in_array( $module_id, $wcj_modules_by_user_roles_data['modules_incl'] ) ) {
+				return false;
+			}
+			if ( ! empty( $wcj_modules_by_user_roles_data['modules_excl'] ) &&   in_array( $module_id, $wcj_modules_by_user_roles_data['modules_excl'] ) ) {
+				return false;
+			}
+		}
 		return ( 'yes' === get_option( 'wcj_' . $module_id . '_enabled', 'no' ) );
 	}
 }

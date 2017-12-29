@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 3.2.5
 	 * @todo    (maybe) add `[wcj_product_stock_price]`
 	 */
 	function __construct() {
@@ -27,6 +27,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_author_link_all_posts',
 			'wcj_product_available_variations',
 			'wcj_product_average_rating',
+			'wcj_product_barcode',
 			'wcj_product_categories',
 			'wcj_product_categories_names',
 			'wcj_product_categories_urls',
@@ -106,6 +107,12 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'variations'            => 'no',
 			'columns_style'         => 'text-align: center;',
 			'currency'              => '',
+			'code'                  => '',
+			'type'                  => '',
+			'dimension'             => '2D',
+			'width'                 => 0,
+			'height'                => 0,
+			'color'                 => 'black',
 		);
 
 		parent::__construct();
@@ -128,16 +135,44 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			} else {
 				$atts['product_id'] = get_the_ID();
 			}
-			if ( 0 == $atts['product_id'] ) return false;
+			if ( 0 == $atts['product_id'] ) {
+				return false;
+			}
 		}
 		$the_post_type = get_post_type( $atts['product_id'] );
-		if ( 'product' !== $the_post_type && 'product_variation' !== $the_post_type ) return false;
+		if ( 'product' !== $the_post_type && 'product_variation' !== $the_post_type ) {
+			return false;
+		}
 
 		// Class properties
 		$this->the_product = wc_get_product( $atts['product_id'] );
-		if ( ! $this->the_product ) return false;
+		if ( ! $this->the_product ) {
+			return false;
+		}
 
 		return $atts;
+	}
+
+	/**
+	 * wcj_product_barcode.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    (maybe) more options for `code` (e.g. `id`)
+	 */
+	function wcj_product_barcode( $atts ) {
+		switch ( $atts['code'] ) {
+			case 'url':
+				$atts['code'] = $this->the_product->get_permalink();
+				break;
+			default: // 'sku'
+				$atts['code'] = $this->the_product->get_sku();
+				break;
+		}
+		if ( '' == $atts['code'] ) {
+			return '';
+		}
+		return wcj_barcode( $atts );
 	}
 
 	/**

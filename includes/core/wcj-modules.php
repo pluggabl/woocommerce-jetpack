@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -109,6 +109,7 @@ $wcj_module_files = array(
 	'class-wcj-old-slugs.php',
 	'class-wcj-reports.php',
 	'class-wcj-wpml.php',
+	'class-wcj-modules-by-user-roles.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-numbering.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-templates.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-styling.php',

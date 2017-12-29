@@ -176,6 +176,19 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.2.5 - 29/12/2017 =
+!D	* Dev - EMAILS & MISC. - Modules By User Roles - Initial module release.
+!	* Fix - PRICES & CURRENCIES - Wholesale Price - `wcj_is_product_wholesale_enabled()` - "Products to exclude" option fixed.
+!	* Fix - CART & CHECKOUT - Checkout Core Fields - Override Fields - `required` added to options.
+!	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_subtotal_tax_excl`, `item_subtotal_tax_incl`, `line_subtotal_tax_excl`, `line_subtotal_tax_incl` and `line_subtax` columns fixed for "custom" items (i.e. "shipping and discount as item") for WC from v3.0.0.
+!D	* Dev - PRODUCTS - Product Addons - "Quantity" options added.
+D	* Dev - PRODUCTS - Product Addons - Admin settings minor restyling.
+~D	* Dev - EMAILS & MISC. - Admin Tools - Log tool restyled.
+	* Dev - Shortcodes - General - `[wcj_tcpdf_barcode]` and `[wcj_barcode]` - Code refactoring (corresponding functions added to `wcj-functions-general.php`).
+!D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `product_barcode` column added.
+!D	* Dev - Shortcodes - Products - `[wcj_product_barcode]` shortcode added.
+~D	* Dev - Functions - General - `wcj_tcpdf_barcode()` - Border removed.
+
 = 3.2.4 - 27/12/2017 =
 * Dev - PRICES & CURRENCIES - Currencies - More cryptocurrencies added.
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Secondary "Exchange Rates Server" option added to each currency pair.

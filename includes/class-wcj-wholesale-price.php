@@ -175,6 +175,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	 *
 	 * @version 3.2.1
 	 * @since   2.5.0
+	 * @todo    `$price_old` must be price to display *in cart* (now it's *in shop*)
 	 */
 	function calculate_totals( $cart ) {
 

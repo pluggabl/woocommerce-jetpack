@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -17,7 +17,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 3.2.5
 	 * @since   2.5.3
 	 * @todo    (maybe) add "in progress" ajax message
 	 * @todo    (maybe) for variable products - show addons only if variation is selected (e.g. move to addons from `woocommerce_before_add_to_cart_button` to variation description)
@@ -64,6 +64,68 @@ class WCJ_Product_Addons extends WCJ_Module {
 			if ( is_admin() ) {
 				if ( 'yes' === get_option( 'wcj_product_addons_hide_on_admin_order_page', 'no' ) ) {
 					add_filter( 'woocommerce_hidden_order_itemmeta', array( $this, 'hide_addons_in_admin_order' ), PHP_INT_MAX );
+				}
+			}
+			// Addons quantity
+			$qty_triggers = get_option( 'wcj_product_addons_qty_decrease_triggers', '' );
+			if ( ! empty( $qty_triggers ) ) {
+				if ( in_array( 'woocommerce_new_order', $qty_triggers ) ) {
+					$qty_triggers = array_merge( $qty_triggers, array(
+						'woocommerce_api_create_order',
+						'woocommerce_cli_create_order',
+						'kco_before_confirm_order',
+						'woocommerce_checkout_order_processed',
+					) );
+				}
+				foreach ( $qty_triggers as $qty_trigger ) {
+					add_action( $qty_trigger, array( $this, 'maybe_reduce_addons_qty' ) );
+				}
+			}
+		}
+	}
+
+	/**
+	 * maybe_reduce_addons_qty.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    (maybe) $order->add_order_note
+	 */
+	function maybe_reduce_addons_qty( $order_id ) {
+		if ( $order = wc_get_order( $order_id ) ) {
+			if ( 'yes' !== get_post_meta( $order_id, '_' . 'wcj_product_addons_qty_reduced', true ) ) {
+				if ( sizeof( $order->get_items() ) > 0 ) {
+					foreach ( $order->get_items() as $item ) {
+						if ( $item->is_type( 'line_item' ) && ( $product = $item->get_product() ) ) {
+							$product_id              = wcj_get_product_id_or_variation_parent_id( $product );
+							$product_qty             = $item->get_quantity();
+							$global_addon_key        = '_wcj_product_all_products_addons_label_';
+							$global_addon_key_length = strlen( $global_addon_key );
+							$local_addon_key         = '_wcj_product_per_product_addons_label_';
+							$local_addon_key_length  = strlen( $local_addon_key );
+							foreach ( $item->get_meta_data() as $meta_data ) {
+								$meta = $meta_data->get_data();
+								if ( $global_addon_key === substr( $meta['key'], 0, $global_addon_key_length ) ) {
+									$i       = substr( $meta['key'], $global_addon_key_length );
+									$qty_key = 'wcj_product_addons_all_products_qty_' . $i;
+									$old_qty = get_option( $qty_key, '' );
+									if ( '' !== $old_qty ) {
+										$new_qty = $old_qty - $product_qty;
+										update_option( $qty_key, $new_qty );
+									}
+								} elseif ( $local_addon_key === substr( $meta['key'], 0, $local_addon_key_length ) ) {
+									$i       = substr( $meta['key'], $local_addon_key_length );
+									$qty_key = '_' . 'wcj_product_addons_per_product_qty_' . $i;
+									$old_qty = get_post_meta( $product_id, $qty_key, true );
+									if ( '' !== $old_qty ) {
+										$new_qty = $old_qty - $product_qty;
+										update_post_meta( $product_id, $qty_key, $new_qty );
+									}
+								}
+							}
+						}
+					}
+					update_post_meta( $order_id, '_' . 'wcj_product_addons_qty_reduced', 'yes' );
 				}
 			}
 		}
@@ -214,7 +276,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_product_addons.
 	 *
-	 * @version 3.0.0
+	 * @version 3.2.5
 	 * @since   2.5.3
 	 * @todo    (maybe) `checkbox_key` is mislabelled, should be `key` (or maybe `value_key`)
 	 */
@@ -226,6 +288,9 @@ class WCJ_Product_Addons extends WCJ_Module {
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( 'yes' === get_option( 'wcj_product_addons_all_products_enabled_' . $i, 'yes' ) ) {
 					if ( ! $this->is_global_addon_visible( $i, $product_id ) ) {
+						continue;
+					}
+					if ( '0' === ( $qty = get_option( 'wcj_product_addons_all_products_qty_' . $i, '' ) ) || $qty < 0 ) {
 						continue;
 					}
 					$addons[] = array(
@@ -242,6 +307,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 						'type'         => get_option( 'wcj_product_addons_all_products_type_' . $i, 'checkbox' ),
 						'default'      => get_option( 'wcj_product_addons_all_products_default_' . $i, '' ),
 						'is_required'  => get_option( 'wcj_product_addons_all_products_required_' . $i, 'no' ),
+						'qty'          => $qty,
 					);
 				}
 			}
@@ -252,6 +318,9 @@ class WCJ_Product_Addons extends WCJ_Module {
 				$total_number = get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_total_number', true );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					if ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_enabled_' . $i, true ) ) {
+						if ( '0' === ( $qty = get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_qty_' . $i, true ) ) || $qty < 0  ) {
+							continue;
+						}
 						$addons[] = array(
 //							'scope'        => 'per_product',
 //							'index'        => $i,
@@ -266,6 +335,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 							'type'         => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_type_' . $i, true ),
 							'default'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_default_' . $i, true ),
 							'is_required'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_required_' . $i, true ),
+							'qty'          => $qty,
 						);
 					}
 				}

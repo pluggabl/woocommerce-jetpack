@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Addons
  *
- * @version 3.2.2
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -103,6 +103,13 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'yes' => __( 'Yes', 'woocommerce-jetpack' ),
 				'no'  => __( 'No', 'woocommerce-jetpack' ),
 			),
+		),
+		array(
+			'title'    => __( 'Quantity', 'woocommerce-jetpack' ),
+			'tooltip'  => __( 'Leave empty to disable quantity calculation for the addon. When set to zero - addon will be disabled.', 'woocommerce-jetpack' ),
+			'name'     => 'wcj_product_addons_per_product_qty_' . $i,
+			'default'  => '',
+			'type'     => 'text',
 		),
 	) );
 }

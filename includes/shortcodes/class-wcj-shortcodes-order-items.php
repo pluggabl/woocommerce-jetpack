@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -312,7 +312,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		$data = array();
 		$item_counter = 0;
 		foreach ( $the_items as $item_id => $item ) {
-			$item['is_custom'] = ( isset( $item['is_custom'] ) ); // $item['is_custom'] may be defined only if WCJ_IS_WC_VERSION_BELOW_3
+			$item['is_custom'] = ( isset( $item['is_custom'] ) ); // todo: $item['is_custom'] may be defined only if WCJ_IS_WC_VERSION_BELOW_3
 			$the_product = ( true === $item['is_custom'] ) ? null : $the_order->get_product_from_item( $item );
 			// Check if it's not excluded by category
 			if ( '' != $atts['exclude_by_categories'] && $the_product ) {
@@ -438,7 +438,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_cell.
 	 *
-	 * @version 3.2.4
+	 * @version 3.2.5
 	 * @since   3.2.0
 	 */
 	function get_cell( $column, $column_param, $atts, $the_order, $columns, $item_counter, $item_id, $item, $the_product ) {
@@ -620,10 +620,18 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 				return $this->wcj_price_shortcode( $the_order->get_item_total( $item, true, true ), $atts );
 
 			case 'item_subtotal_tax_excl':
-				return $this->wcj_price_shortcode( $the_order->get_item_subtotal( $item, false, true ), $atts );
+				$return = ( is_callable( array( $item, 'get_subtotal' ) ) ? // could also use `is_object( $the_product )`
+					$the_order->get_item_subtotal( $item, false, true ) :
+					$the_order->get_item_total( $item, false, true )
+				);
+				return $this->wcj_price_shortcode( $return, $atts );
 
 			case 'item_subtotal_tax_incl':
-				return $this->wcj_price_shortcode( $the_order->get_item_subtotal( $item, true, true ), $atts );
+				$return = ( is_callable( array( $item, 'get_subtotal' ) ) ?
+					$the_order->get_item_subtotal( $item, true, true ) :
+					$the_order->get_item_total( $item, true, true )
+				);
+				return $this->wcj_price_shortcode( $return, $atts );
 
 			case 'item_tax':
 				return $this->wcj_price_shortcode( $the_order->get_item_tax( $item, true ), $atts );
@@ -637,10 +645,18 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 				return $this->wcj_price_shortcode( $the_order->get_line_total( $item, true, true ), $atts );
 
 			case 'line_subtotal_tax_excl':
-				return $this->wcj_price_shortcode( $the_order->get_line_subtotal( $item, false, true ), $atts );
+				$return = ( is_callable( array( $item, 'get_subtotal' ) ) ?
+					$the_order->get_line_subtotal( $item, false, true ) :
+					$the_order->get_line_total( $item, false, true )
+				);
+				return $this->wcj_price_shortcode( $return, $atts );
 
 			case 'line_subtotal_tax_incl':
-				return $this->wcj_price_shortcode( $the_order->get_line_subtotal( $item, true, true ), $atts );
+				$return = ( is_callable( array( $item, 'get_subtotal' ) ) ?
+					$the_order->get_line_subtotal( $item, true, true ) :
+					$the_order->get_line_total( $item, true, true )
+				);
+				return $this->wcj_price_shortcode( $return, $atts );
 
 			case 'line_tax':
 				$line_tax = $the_order->get_line_tax( $item );
@@ -648,7 +664,10 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 				return $this->wcj_price_shortcode( $line_tax, $atts );
 
 			case 'line_subtax':
-				$line_subtax = $the_order->get_line_subtotal( $item, true, false ) - $the_order->get_line_subtotal( $item, false, false );
+				$line_subtax = ( is_callable( array( $item, 'get_subtotal' ) ) ?
+					$the_order->get_line_subtotal( $item, true, false ) - $the_order->get_line_subtotal( $item, false, false ) :
+					$the_order->get_line_total( $item, true, false ) - $the_order->get_line_total( $item, false, false )
+				);
 				return $this->wcj_price_shortcode( $line_subtax, $atts );
 
 			case 'item_tax_percent':
@@ -704,6 +723,21 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 
 			case 'product_purchase_note':
 				return ( ! is_object( $the_product ) ) ? '' : $the_product->get_purchase_note();
+
+			case 'product_barcode':
+				if ( is_object( $the_product ) ) {
+					$atts = array(
+						'code'                  => ( isset( $column_param ) && 'url' == $column_param ? $the_product->get_permalink() : $the_product->get_sku() ),
+						'type'                  => 'PDF417',
+						'dimension'             => '2D',
+						'width'                 => 60,
+						'height'                => 60,
+						'color'                 => 'black',
+					);
+					return wcj_tcpdf_barcode( $atts );
+				} else {
+					return '';
+				}
 
 			default:
 				return '';
