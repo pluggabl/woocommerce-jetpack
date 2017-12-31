@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    create all files at once (manually and synchronize update)
@@ -17,7 +17,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 3.2.5
 	 * @since   2.5.7
 	 */
 	function __construct() {
@@ -32,6 +32,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			add_action( 'init',           array( $this, 'schedule_the_events' ) );
 			add_action( 'admin_init',     array( $this, 'schedule_the_events' ) );
 			add_action( 'admin_init',     array( $this, 'wcj_create_products_xml' ) );
+			add_action( 'admin_notices',  array( $this, 'admin_notices' ) );
 			add_filter( 'cron_schedules', array( $this, 'cron_add_custom_intervals' ) );
 			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
@@ -101,39 +102,39 @@ class WCJ_Products_XML extends WCJ_Module {
 	}
 
 	/**
-	 * admin_notice__success.
+	 * admin_notices.
 	 *
-	 * @version 2.5.7
+	 * @version 3.2.5
 	 * @since   2.5.7
 	 */
-	function admin_notice__success() {
-		echo '<div class="notice notice-success is-dismissible"><p>' . __( 'Products XML file created successfully.', 'woocommerce-jetpack' ) . '</p></div>';
-	}
-
-	/**
-	 * admin_notice__error.
-	 *
-	 * @version 2.5.7
-	 * @since   2.5.7
-	 */
-	function admin_notice__error() {
-		echo '<div class="notice notice-error"><p>' . __( 'An error has occurred while creating products XML file.', 'woocommerce-jetpack' ) . '</p></div>';
+	function admin_notices() {
+		if ( isset( $_GET['wcj_create_products_xml_result'] ) ) {
+			if ( 0 == $_GET['wcj_create_products_xml_result'] ) {
+				$class   = 'notice notice-error';
+				$message = __( 'An error has occurred while creating products XML file.', 'woocommerce-jetpack' );
+			} else {
+				$class   = 'notice notice-success is-dismissible';
+				$message = sprintf( __( 'Products XML file #%s created successfully.', 'woocommerce-jetpack' ), $_GET['wcj_create_products_xml_result'] );
+			}
+			echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
+		}
 	}
 
 	/**
 	 * wcj_create_products_xml.
 	 *
-	 * @version 2.6.0
+	 * @version 3.2.5
 	 * @since   2.5.7
 	 */
 	function wcj_create_products_xml() {
 		if ( isset( $_GET['wcj_create_products_xml'] ) ) {
 			$file_num = $_GET['wcj_create_products_xml'];
 			$result = $this->create_products_xml( $file_num );
-			add_action( 'admin_notices', array( $this, ( ( false !== $result ) ? 'admin_notice__success' : 'admin_notice__error' ) ) );
 			if ( false !== $result ) {
 				update_option( 'wcj_products_time_file_created_' . $file_num, current_time( 'timestamp' ) );
 			}
+			wp_safe_redirect( add_query_arg( 'wcj_create_products_xml_result', ( false === $result ? 0 : $file_num ), remove_query_arg( 'wcj_create_products_xml' ) ) );
+			exit;
 		}
 	}
 
@@ -156,6 +157,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	 *
 	 * @version 3.2.4
 	 * @since   2.5.7
+	 * @todo    check the `str_replace` and `html_entity_decode` part
 	 */
 	function create_products_xml( $file_num ) {
 		$xml_items = '';
@@ -253,7 +255,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			}
 			while ( $loop->have_posts() ) {
 				$loop->the_post();
-				$xml_items .= str_replace( '&', '&amp;', html_entity_decode( do_shortcode( $xml_item_template ) ) ); // todo
+				$xml_items .= str_replace( '&', '&amp;', html_entity_decode( do_shortcode( $xml_item_template ) ) );
 			}
 			$offset += $block_size;
 		}

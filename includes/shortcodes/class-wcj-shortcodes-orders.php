@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.2
+	 * @version 3.2.5
 	 */
 	function __construct() {
 
@@ -61,6 +61,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_subtotal_to_display',
 			'wcj_order_tax_by_class',
 			'wcj_order_taxes_html',
+			'wcj_order_tcpdf_barcode',
 			'wcj_order_time',
 			'wcj_order_total',
 			'wcj_order_total_after_refund',
@@ -92,7 +93,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.2.4
+	 * @version 3.2.5
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -128,6 +129,12 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'insert_page_break'           => '',
 			'key'                         => null,
 			'days'                        => 0,
+			'code'                        => '',
+			'type'                        => '',
+			'dimension'                   => '2D',
+			'width'                       => 0,
+			'height'                      => 0,
+			'color'                       => 'black',
 		), $atts );
 
 		return $modified_atts;
@@ -181,6 +188,18 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
 		return ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) ? '' : wcj_price( $raw_price, wcj_get_order_currency( $this->the_order ), $atts['hide_currency'] );
+	}
+
+	/**
+	 * wcj_order_tcpdf_barcode.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    add more options for `code` (e.g.: `id`, `tracking number/url` (e.g. UPS) etc.)
+	 */
+	function wcj_order_tcpdf_barcode( $atts ) {
+		$atts['code'] = $this->the_order->get_view_order_url();
+		return wcj_tcpdf_barcode( $atts );
 	}
 
 	/**

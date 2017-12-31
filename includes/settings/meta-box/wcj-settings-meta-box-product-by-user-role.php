@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Visibility by User Role
  *
- * @version 2.8.0
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -17,6 +17,7 @@ return array(
 		'options'    => wcj_get_user_roles_options(),
 		'multiple'   => true,
 		'title'      => __( 'Visible for User Roles', 'woocommerce-jetpack' ),
-		'tooltip'    => __( 'Hold Control (Ctrl) key to select multiple roles.', 'woocommerce-jetpack' ),
+		'class'      => 'chosen_select',
+		'css'        => 'width:100%;',
 	),
 );

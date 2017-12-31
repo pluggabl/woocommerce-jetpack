@@ -121,17 +121,18 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Inits shortcode atts and properties.
 	 *
-	 * @version 2.4.8
+	 * @version 3.2.5
 	 * @param   array $atts Shortcode atts.
 	 * @return  array The (modified) shortcode atts.
 	 */
 	function init_atts( $atts ) {
 
 		// Atts
+		$is_passed_product = false;
 		if ( 0 == $atts['product_id'] ) {
-			global $wcj_product_id_for_shortcode;
-			if ( 0 != $wcj_product_id_for_shortcode ) {
-				$atts['product_id'] = $wcj_product_id_for_shortcode;
+			if ( isset( $this->passed_product ) ) {
+				$atts['product_id'] = wcj_get_product_id( $this->passed_product );
+				$is_passed_product = true;
 			} else {
 				$atts['product_id'] = get_the_ID();
 			}
@@ -145,7 +146,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		// Class properties
-		$this->the_product = wc_get_product( $atts['product_id'] );
+		$this->the_product = ( $is_passed_product ? $this->passed_product : wc_get_product( $atts['product_id'] ) );
 		if ( ! $this->the_product ) {
 			return false;
 		}

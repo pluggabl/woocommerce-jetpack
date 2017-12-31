@@ -15,13 +15,12 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 3.2.5
 	 */
 	function __construct() {
 
 		$this->the_shortcodes = array(
 			'wcj_barcode',
-			'wcj_tcpdf_barcode',
 			'wcj_button_toggle_tax_display',
 			'wcj_cart_items_total_quantity',
 			'wcj_cart_items_total_weight',
@@ -47,7 +46,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_selector',
 			'wcj_site_url',
 			'wcj_store_address',
+			'wcj_tcpdf_barcode',
 			'wcj_tcpdf_pagebreak',
+			'wcj_tcpdf_rectangle',
 			'wcj_text',
 			'wcj_wholesale_price_table',
 			'wcj_wp_option',
@@ -92,6 +93,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'width'                 => 0,
 			'height'                => 0,
 			'color'                 => 'black',
+			'x'                     => 0,
+			'y'                     => 0,
 		);
 
 		parent::__construct();
@@ -99,11 +102,42 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * wcj_tcpdf_rectangle.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @see     https://tcpdf.org/examples/example_012/
+	 * @todo    not finished!
+	 * @todo    (maybe) move all `tcpdf` shortcodes to `class-wcj-shortcodes-tcpdf.php`
+	 * @todo    (maybe) create general `[wcj_tcpdf_method]` shortcode (not sure how to solve `$params` part though)
+	 */
+	function wcj_tcpdf_rectangle( $atts ) {
+
+		$style        = 'D';
+		$border_style = array( 'all' => array( 'width' => 1, 'cap' => 'round', 'join' => 'round', 'dash' => '2,10', 'color' => array( 255, 0, 0 ) ) );
+		$fill_color   = array();
+
+		$params = array(
+			$atts['x'],
+			$atts['y'],
+			$atts['width'],
+			$atts['height'],
+			$style,
+			$border_style,
+			$fill_color,
+		);
+
+		require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/include/tcpdf_static.php' );
+		$params = TCPDF_STATIC::serializeTCPDFtagParameters( $params );
+		$method = 'Rect';
+		return '<tcpdf method="' . $method . '" params="' . $params . '" />';
+	}
+
+	/**
 	 * wcj_tcpdf_barcode.
 	 *
 	 * @version 3.2.5
 	 * @since   3.2.4
-	 * @todo    order id, order url, order tracking number (e.g. UPS) as `code`
 	 */
 	function wcj_tcpdf_barcode( $atts ) {
 		return wcj_tcpdf_barcode( $atts );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Products XML
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -49,19 +49,15 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_pro
 	), $is_multiselect_products );
 	$products_xml_cron_desc = '';
 	if ( $this->is_enabled() ) {
-		if ( '' != get_option( 'wcj_create_products_xml_cron_time_' . $i, '' ) ) {
-			$scheduled_time_diff = get_option( 'wcj_create_products_xml_cron_time_' . $i, '' ) - time();
-			if ( $scheduled_time_diff > 0 ) {
-				$products_xml_cron_desc = '<em>' . sprintf( __( '%s seconds till next update.', 'woocommerce-jetpack' ), $scheduled_time_diff ) . '</em>';
-			}
-		}
-		$products_xml_cron_desc .= '<br><a href="' . add_query_arg( 'wcj_create_products_xml', $i ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>';
+		$products_xml_cron_desc = '<a class="button" title="' . __( 'If you\'ve made any changes in module\'s settings - don\'t forget to save changes before clicking this button.', 'woocommerce-jetpack' ) . '"' .
+			' href="' . add_query_arg( 'wcj_create_products_xml', $i, remove_query_arg( 'wcj_create_products_xml_result' ) ) . '">' . __( 'Create Now', 'woocommerce-jetpack' ) . '</a>' .
+		wcj_crons_get_next_event_time_message( 'wcj_create_products_xml_cron_time_' . $i );
 	}
 	$products_time_file_created_desc = '';
 	if ( '' != get_option( 'wcj_products_time_file_created_' . $i, '' ) ) {
 		$products_time_file_created_desc = sprintf(
 			__( 'Recent file was created on %s', 'woocommerce-jetpack' ),
-			date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), get_option( 'wcj_products_time_file_created_' . $i, '' ) )
+			'<code>' . date_i18n( get_option( 'date_format' ) . ' ' . get_option( 'time_format' ), get_option( 'wcj_products_time_file_created_' . $i, '' ) ) . '</code>'
 		);
 	}
 	$default_file_name = ( ( 1 == $i ) ? 'products.xml' : 'products_' . $i . '.xml' );
@@ -81,7 +77,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_pro
 		),
 		array(
 			'title'    => __( 'XML Header', 'woocommerce-jetpack' ),
-			'desc'     => __( 'You can use shortcodes here. For example [wcj_current_datetime].', 'woocommerce-jetpack' ),
+			'desc'     => sprintf( __( 'You can use shortcodes here. For example %s.', 'woocommerce-jetpack' ), '<code>[wcj_current_datetime]</code>' ),
 			'id'       => 'wcj_products_xml_header_' . $i,
 			'default'  => '<?xml version = "1.0" encoding = "utf-8" ?>' . PHP_EOL . '<root>' . PHP_EOL,
 			'type'     => 'custom_textarea',

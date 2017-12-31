@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 3.2.3
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -228,7 +228,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 3.2.3
+	 * @version 3.2.5
 	 * @todo    rewrite this with less filters (e.g. `woocommerce_get_price_html` only) - at least for `! WCJ_IS_WC_VERSION_BELOW_3`
 	 */
 	function custom_price( $price, $product ) {
@@ -399,13 +399,13 @@ class WCJ_Price_Labels extends WCJ_Module {
 			}
 		}
 
-		// For debug
-//		return do_shortcode( $price . $current_filter_name . ( WCJ_IS_WC_VERSION_BELOW_3 ? $product->product_type : $product->get_type() ) . $labels_array['variation_variable'] . $labels_array['variation_variation'] );
-
-		global $wcj_product_id_for_shortcode;
-		$wcj_product_id_for_shortcode = wcj_get_product_id( $product );
+		// Apply shortcodes
+		WCJ()->shortcodes['products']->passed_product = $product;
+		WCJ()->shortcodes['products_crowdfunding']->passed_product = $product;
 		$result = do_shortcode( $price );
-		$wcj_product_id_for_shortcode = 0;
+		unset( WCJ()->shortcodes['products']->passed_product );
+		unset( WCJ()->shortcodes['products_crowdfunding']->passed_product );
+
 		return $result;
 	}
 

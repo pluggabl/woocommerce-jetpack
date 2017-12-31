@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Crowdfunding
  *
- * @version 2.7.0
+ * @version 3.2.5
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  */
@@ -46,29 +46,37 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Inits shortcode atts and properties.
 	 *
-	 * @version 2.5.4
+	 * @version 3.2.5
 	 * @since   2.5.4
 	 * @param   array $atts Shortcode atts.
 	 * @return  array The (modified) shortcode atts.
+	 * @todo    (maybe) call this function from `WCJ_Products_Shortcodes` class (i.e. make `WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Products_Shortcodes`)
 	 */
 	function init_atts( $atts ) {
 
 		// Atts
+		$is_passed_product = false;
 		if ( 0 == $atts['product_id'] ) {
-			global $wcj_product_id_for_shortcode;
-			if ( 0 != $wcj_product_id_for_shortcode ) {
-				$atts['product_id'] = $wcj_product_id_for_shortcode;
+			if ( isset( $this->passed_product ) ) {
+				$atts['product_id'] = wcj_get_product_id( $this->passed_product );
+				$is_passed_product = true;
 			} else {
 				$atts['product_id'] = get_the_ID();
 			}
-			if ( 0 == $atts['product_id'] ) return false;
+			if ( 0 == $atts['product_id'] ) {
+				return false;
+			}
 		}
 		$the_post_type = get_post_type( $atts['product_id'] );
-		if ( 'product' !== $the_post_type && 'product_variation' !== $the_post_type ) return false;
+		if ( 'product' !== $the_post_type && 'product_variation' !== $the_post_type ) {
+			return false;
+		}
 
 		// Class properties
-		$this->the_product = wc_get_product( $atts['product_id'] );
-		if ( ! $this->the_product ) return false;
+		$this->the_product = ( $is_passed_product ? $this->passed_product : wc_get_product( $atts['product_id'] ) );
+		if ( ! $this->the_product ) {
+			return false;
+		}
 
 		return $atts;
 	}

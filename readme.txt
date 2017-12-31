@@ -176,7 +176,16 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.5 - 29/12/2017 =
+= 3.2.5 - 30/12/2017 =
+~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Passing product object to shortcodes (instead of product id).
+	* Dev - Code refactoring - Shortcodes objects saved in `WCJ()->shortcodes` array.
+D	* Dev - PRODUCTS - Product Visibility by User Role - Settings (meta box) restyled.
+D	* Dev - PRODUCTS - Products XML Feeds - Admin settings - Minor changes.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_tcpdf_barcode]` shortcode added.
+-D	* Dev - Shortcodes - General - `[wcj_tcpdf_rectangle]` shortcode added.
+-D	* Dev - Admin settings restyling (`css` changed to `width:100%`).
+!	* Fix - Functions - Price and Currency - `wcj_price_by_product_base_currency()` - Checking if currency exchange rate not equals zero (so no division by zero can happen).
+	* Dev - "WC tested up to" added to plugin's header.
 !D	* Dev - EMAILS & MISC. - Modules By User Roles - Initial module release.
 !	* Fix - PRICES & CURRENCIES - Wholesale Price - `wcj_is_product_wholesale_enabled()` - "Products to exclude" option fixed.
 !	* Fix - CART & CHECKOUT - Checkout Core Fields - Override Fields - `required` added to options.
