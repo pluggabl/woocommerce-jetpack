@@ -312,6 +312,8 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		$first_minute = mktime( 0, 0, 0, $month, 1, $year );
 		$last_minute  = mktime( 23, 59, 59, $month, date( 't', $first_minute ), $year );
 
+		$tax_percent_format = '%.' . get_option( 'wcj_pdf_invoicing_report_tool_tax_percent_precision', 0 ) . 'f %%';
+
 		$data       = array();
 		$offset     = 0;
 		$block_size = 512;
@@ -355,13 +357,21 @@ class WCJ_PDF_Invoicing_Report_Tool {
 					$order_tax                   = apply_filters( 'wcj_order_total_tax', $the_order->get_total_tax(), $the_order );
 					$order_total_exlc_tax        = $order_total - $order_tax;
 					$order_total_tax_not_rounded = $the_order->get_cart_tax() + $the_order->get_shipping_tax();
-					$order_tax_percent           = ( 0 == $order_total ) ? 0 : $order_total_tax_not_rounded / $order_total_exlc_tax;
+					$order_tax_percent           = ( 0 == $order_total_exlc_tax ? 0 : $order_total_tax_not_rounded / $order_total_exlc_tax );
 
 					$total_sum          += $order_total;
 					$total_sum_excl_tax += $order_total_exlc_tax;
 					$total_tax          += $order_tax;
 
-					$order_tax_html = sprintf( '%.2f', $order_tax );
+					$order_cart_tax                = $the_order->get_cart_tax();
+					$order_shipping_tax            = $the_order->get_shipping_tax();
+					$order_cart_total_excl_tax     = 0;
+					foreach ( $the_order->get_items() as $item ) {
+						$order_cart_total_excl_tax += $item->get_total();
+					}
+					$order_shipping_total_excl_tax = $the_order->get_shipping_total();
+					$order_cart_tax_percent        = ( 0 == $order_cart_total_excl_tax ? 0 : $order_cart_tax / $order_cart_total_excl_tax );
+					$order_shipping_tax_percent    = ( 0 == $order_shipping_total_excl_tax ? 0 : $order_shipping_tax / $order_shipping_total_excl_tax );
 
 					$row = array();
 					foreach ( $columns as $column ) {
@@ -382,13 +392,31 @@ class WCJ_PDF_Invoicing_Report_Tool {
 								$row[] = $customer_vat_id;
 								break;
 							case 'tax_percent':
-								$row[] = sprintf( '%.0f %%', $order_tax_percent * 100 );
+								$row[] = sprintf( $tax_percent_format, $order_tax_percent * 100 );
 								break;
 							case 'order_total_tax_excluding':
 								$row[] = sprintf( '%.2f', $order_total_exlc_tax );
 								break;
 							case 'order_taxes':
-								$row[] = $order_tax_html;
+								$row[] = sprintf( '%.2f', $order_tax );
+								break;
+							case 'order_cart_total_excl_tax':
+								$row[] = sprintf( '%.2f', $order_cart_total_excl_tax );
+								break;
+							case 'order_cart_tax':
+								$row[] = sprintf( '%.2f', $order_cart_tax );
+								break;
+							case 'order_cart_tax_percent':
+								$row[] = sprintf( $tax_percent_format, $order_cart_tax_percent * 100 );
+								break;
+							case 'order_shipping_total_excl_tax':
+								$row[] = sprintf( '%.2f', $order_shipping_total_excl_tax );
+								break;
+							case 'order_shipping_tax':
+								$row[] = sprintf( '%.2f', $order_shipping_tax );
+								break;
+							case 'order_shipping_tax_percent':
+								$row[] = sprintf( $tax_percent_format, $order_shipping_tax_percent * 100 );
 								break;
 							case 'order_total':
 								$row[] = sprintf( '%.2f', $order_total );

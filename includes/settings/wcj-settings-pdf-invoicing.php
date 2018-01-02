@@ -125,10 +125,17 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Report Columns', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Leave blank to show all columns.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_pdf_invoicing_report_tool_columns',
-		'default'  => '',
+		'default'  => $this->get_report_default_columns(),
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
 		'options'  => $this->get_report_columns(),
+	),
+	array(
+		'title'    => __( 'Tax Percent Precision', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_pdf_invoicing_report_tool_tax_percent_precision',
+		'default'  => 0,
+		'type'     => 'number',
+		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
 		'title'    => __( 'CSV Separator', 'woocommerce-jetpack' ),

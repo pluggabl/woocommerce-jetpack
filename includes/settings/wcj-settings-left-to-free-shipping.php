@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Left to Free Shipping
  *
- * @version 3.1.0
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -36,7 +36,7 @@ return array(
 		'id'       => 'wcj_shipping_left_to_free_info_content_cart',
 		'default'  => __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ),
 		'type'     => 'textarea',
-		'css'      => 'width:30%;min-width:300px;height:100px;',
+		'css'      => 'width:100%;height:100px;',
 	),
 	array(
 		'title'    => '',
@@ -45,7 +45,6 @@ return array(
 		'default'  => 'woocommerce_after_cart_totals',
 		'type'     => 'select',
 		'options'  => wcj_get_cart_filters(),
-		'css'      => 'width:250px;',
 	),
 	array(
 		'title'    => '',
@@ -53,7 +52,6 @@ return array(
 		'id'       => 'wcj_shipping_left_to_free_info_priority_cart',
 		'default'  => 10,
 		'type'     => 'number',
-		'css'      => 'width:250px;',
 	),
 	array(
 		'title'    => __( 'Info on Mini Cart', 'woocommerce-jetpack' ),
@@ -71,7 +69,7 @@ return array(
 		'id'       => 'wcj_shipping_left_to_free_info_content_mini_cart',
 		'default'  => __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ),
 		'type'     => 'textarea',
-		'css'      => 'width:30%;min-width:300px;height:100px;',
+		'css'      => 'width:100%;height:100px;',
 	),
 	array(
 		'title'    => '',
@@ -84,7 +82,6 @@ return array(
 			'woocommerce_widget_shopping_cart_before_buttons' => __( 'Before buttons', 'woocommerce-jetpack' ),
 			'woocommerce_after_mini_cart'                     => __( 'After mini cart', 'woocommerce-jetpack' ),
 		),
-		'css'      => 'width:250px;',
 	),
 	array(
 		'title'    => '',
@@ -92,7 +89,6 @@ return array(
 		'id'       => 'wcj_shipping_left_to_free_info_priority_mini_cart',
 		'default'  => 10,
 		'type'     => 'number',
-		'css'      => 'width:250px;',
 	),
 	array(
 		'title'    => __( 'Info on Checkout', 'woocommerce-jetpack' ),
@@ -110,7 +106,7 @@ return array(
 		'id'       => 'wcj_shipping_left_to_free_info_content_checkout',
 		'default'  => __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' ),
 		'type'     => 'textarea',
-		'css'      => 'width:30%;min-width:300px;height:100px;',
+		'css'      => 'width:100%;height:100px;',
 	),
 	array(
 		'title'    => '',
@@ -129,7 +125,6 @@ return array(
 			'woocommerce_checkout_after_order_review'       => __( 'After order review', 'woocommerce-jetpack' ),
 			'woocommerce_after_checkout_form'               => __( 'After checkout form', 'woocommerce-jetpack' ),
 		),
-		'css'      => 'width:250px;',
 	),
 	array(
 		'title'    => '',
@@ -137,7 +132,6 @@ return array(
 		'id'       => 'wcj_shipping_left_to_free_info_priority_checkout',
 		'default'  => 10,
 		'type'     => 'number',
-		'css'      => 'width:250px;',
 	),
 	array(
 		'title'    => __( 'Message on Free Shipping Reached', 'woocommerce-jetpack' ),
@@ -146,7 +140,7 @@ return array(
 		'id'       => 'wcj_shipping_left_to_free_info_content_reached',
 		'default'  => __( 'You have Free delivery', 'woocommerce-jetpack' ),
 		'type'     => 'textarea',
-		'css'      => 'width:30%;min-width:300px;height:100px;',
+		'css'      => 'width:100%;height:100px;',
 	),
 	array(
 		'type'     => 'sectionend',

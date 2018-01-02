@@ -453,11 +453,21 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	/*
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.5
 	 * @since   2.4.4
 	 * @return  string
 	 */
 	function wcj_get_left_to_free_shipping( $content, $multiply_by = 1 ) {
+		if ( function_exists( 'WC' ) && ( WC()->shipping ) && ( $packages = WC()->shipping->get_packages() ) ) {
+			foreach ( $packages as $i => $package ) {
+				$available_shipping_methods = $package['rates'];
+				foreach ( $available_shipping_methods as $available_shipping_method ) {
+					if ( 'free_shipping' === $available_shipping_method->get_method_id() ) {
+						return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
+					}
+				}
+			}
+		}
 		if ( '' == $content ) {
 			$content = __( '%left_to_free% left to free shipping', 'woocommerce-jetpack' );
 		}

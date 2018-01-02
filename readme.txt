@@ -177,6 +177,11 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.2.5 - 02/01/2018 =
+!D	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Outputting "You have Free delivery" if free shipping is available without order minimum amount (e.g. coupon).
+D	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Admin settings - Minor restyling.
+	* Fix - PAYMENT GATEWAYS - Gateways by Currency - Admin settings - `$paypal_allowed_currencies_and_names` type fixed (changed to array).
+~D	* Dev - PDF INVOICING & PACKING SLIPS - General - Report Tool Options - Report Columns - "Cart Total Excl. Tax", "Shipping Total Excl. Tax", "Cart Tax", "Shipping Tax", "Cart Tax %", "Shipping Tax %" columns added.
+~D	* Dev - PDF INVOICING & PACKING SLIPS - General - Report Tool Options - "Tax Percent Precision" option added.
 ~D	* Dev - Shortcodes - Orders - `currency` attribute added to all shortcodes which use `wcj_price_shortcode()` function.
 D	* Dev - SHIPPING & ORDERS - Admin Orders List - Admin settings - Minor restyling.
 	* Dev - Functions - Exchange Rates - `wcj_get_saved_exchange_rate()` - Returning `1` when `currency_from` equals `currency_to`.
