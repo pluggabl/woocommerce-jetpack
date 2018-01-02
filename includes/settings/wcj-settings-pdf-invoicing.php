@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - General
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -120,6 +120,15 @@ $settings = array_merge( $settings, array(
 		'default'  => '%site%-%invoice_type%-%year%_%month%',
 		'type'     => 'text',
 		'class'    => 'widefat',
+	),
+	array(
+		'title'    => __( 'Report Columns', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Leave blank to show all columns.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_pdf_invoicing_report_tool_columns',
+		'default'  => '',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => $this->get_report_columns(),
 	),
 	array(
 		'title'    => __( 'CSV Separator', 'woocommerce-jetpack' ),

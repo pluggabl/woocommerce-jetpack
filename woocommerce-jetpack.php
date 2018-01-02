@@ -8,7 +8,7 @@ Author: Algoritmika Ltd
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
 Domain Path: /langs
-Copyright: © 2017 Algoritmika Ltd.
+Copyright: © 2018 Algoritmika Ltd.
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 WC tested up to: 3.2
@@ -70,7 +70,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.2.5-dev-20171230-2250';
+	public $version = '3.2.5-dev-20180102-1613';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class

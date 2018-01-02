@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 3.2.0
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -65,6 +65,29 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				}
 			}
 		}
+	}
+
+	/**
+	 * get_report_columns
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 */
+	function get_report_columns() {
+		return array(
+			'document_number'           => __( 'Document Number', 'woocommerce-jetpack' ),
+			'document_date'             => __( 'Document Date', 'woocommerce-jetpack' ),
+			'order_id'                  => __( 'Order ID', 'woocommerce-jetpack' ),
+			'customer_country'          => __( 'Customer Country', 'woocommerce-jetpack' ),
+			'customer_vat_id'           => __( 'Customer VAT ID', 'woocommerce-jetpack' ),
+			'tax_percent'               => __( 'Tax %', 'woocommerce-jetpack' ),
+			'order_total_tax_excluding' => __( 'Order Total Tax Excluding', 'woocommerce-jetpack' ),
+			'order_taxes'               => __( 'Order Taxes', 'woocommerce-jetpack' ),
+			'order_total'               => __( 'Order Total', 'woocommerce-jetpack' ),
+			'order_currency'            => __( 'Order Currency', 'woocommerce-jetpack' ),
+			'payment_gateway'           => __( 'Payment Gateway', 'woocommerce-jetpack' ),
+			'refunds'                   => __( 'Refunds', 'woocommerce-jetpack' ),
+		);
 	}
 
 	/**

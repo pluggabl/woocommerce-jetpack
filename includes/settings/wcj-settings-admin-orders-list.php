@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Orders List
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -65,6 +65,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'id'       => 'wcj_orders_list_custom_columns_label_' . $i,
 			'default'  => '',
 			'type'     => 'text',
+			'css'      => 'width:100%;',
 		),
 		array(
 			'desc'     => __( 'Value', 'woocommerce-jetpack' ),
@@ -72,6 +73,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'id'       => 'wcj_orders_list_custom_columns_value_' . $i,
 			'default'  => '',
 			'type'     => 'custom_textarea',
+			'css'      => 'width:100%;',
 		),
 		array(
 			'desc'     => __( 'Sortable', 'woocommerce-jetpack' ),

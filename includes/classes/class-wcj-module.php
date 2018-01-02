@@ -111,12 +111,12 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * maybe_fix_settings.
 	 *
-	 * @version 3.2.5
+	 * @version 3.2.1
 	 * @since   3.2.1
 	 */
 	function maybe_fix_settings( $settings ) {
-		foreach ( $settings as &$setting ) {
-			if ( ! WCJ_IS_WC_VERSION_BELOW_3_2_0 ) {
+		if ( ! WCJ_IS_WC_VERSION_BELOW_3_2_0 ) {
+			foreach ( $settings as &$setting ) {
 				if ( isset( $setting['type'] ) && 'select' === $setting['type'] ) {
 					if ( ! isset( $setting['class'] ) || '' === $setting['class'] ) {
 						$setting['class'] = 'wc-enhanced-select';
@@ -132,12 +132,6 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					}
 				}
 			}
-			/* if ( isset( $setting['css'] ) ) {
-				$setting['css'] = str_replace( 'width:250px', 'width:100%', $setting['css'] );
-				$setting['css'] = str_replace( 'width:300px', 'width:100%', $setting['css'] );
-				$setting['css'] = str_replace( 'width:50%',   'width:100%', $setting['css'] );
-				$setting['css'] = str_replace( 'width:60%',   'width:100%', $setting['css'] );
-			} */
 		}
 		return $settings;
 	}

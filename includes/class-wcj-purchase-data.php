@@ -20,6 +20,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 * @todo    (maybe) pre-calculate profit for orders
 	 * @todo    (maybe) "Apply costs to orders that do not have costs set"
 	 * @todo    (maybe) "Apply costs to all orders, overriding previous costs"
+	 * @todo    (maybe) `calculate_all_products_profit()`
 	 */
 	function __construct() {
 
@@ -161,7 +162,8 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 * @param   string $column
 	 * @version 2.7.0
 	 * @since   2.2.4
-	 * @todo    forecasted profit
+	 * @todo    forecasted profit `$value = $line_total * $average_profit_margin`
+	 * @todo    (maybe) use `[wcj_order_profit]` and `[wcj_order_items_cost]`
 	 */
 	function render_order_columns( $column ) {
 		if ( 'profit' === $column || 'purchase_cost' === $column ) {
@@ -171,12 +173,10 @@ class WCJ_Purchase_Data extends WCJ_Module {
 				$is_forecasted = false;
 				foreach ( $the_order->get_items() as $item_id => $item ) {
 					$value = 0;
-					$product_id = ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) )
-						? $item['variation_id']
-						: $item['product_id'];
+					$product_id = ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' )
+						? $item['variation_id'] : $item['product_id'] );
 					if ( 0 != ( $purchase_price = wc_get_product_purchase_price( $product_id ) ) ) {
 						if ( 'profit' === $column ) {
-//							$line_total = ( 'yes' === get_option('woocommerce_prices_include_tax') ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
 							$_order_prices_include_tax = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->prices_include_tax : $the_order->get_prices_include_tax() );
 							$line_total = ( $_order_prices_include_tax ) ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'];
 							$value = $line_total - $purchase_price * $item['qty'];
@@ -184,16 +184,19 @@ class WCJ_Purchase_Data extends WCJ_Module {
 							$value = $purchase_price * $item['qty'];
 						}
 					} else {
-//						$value = ( $item['line_total'] + $item['line_tax'] ) * $average_profit_margin;
 						$is_forecasted = true;
 					}
 					$total += $value;
 				}
 			}
 			if ( 0 != $total ) {
-				if ( ! $is_forecasted ) echo '<span style="color:green;">';
+				if ( ! $is_forecasted ) {
+					echo '<span style="color:green;">';
+				}
 				echo wc_price( $total );
-				if ( ! $is_forecasted ) echo '</span>';
+				if ( ! $is_forecasted ) {
+					echo '</span>';
+				}
 			}
 		}
 	}
@@ -203,7 +206,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 *
 	 * @version 2.7.0
 	 * @since   2.4.5
-	 * @todo    min_profit
+	 * @todo    (maybe) min_profit
 	 */
 	function create_meta_box() {
 
@@ -234,11 +237,6 @@ class WCJ_Purchase_Data extends WCJ_Module {
 					$table_data[] = array( __( 'Buying', 'woocommerce-jetpack' ),  wc_price( $purchase_price ) );
 					$table_data[] = array( __( 'Profit', 'woocommerce-jetpack' ),  wc_price( $the_profit )
 						. sprintf( ' (%0.2f %%)', ( $the_profit / $purchase_price * 100 ) ) );
-//						. sprintf( ' (%0.2f %%)', ( $the_profit / $the_price * 100 ) ) );
-					/* $the_min_profit = $purchase_price * 0.25;
-					$the_min_price = $purchase_price * 1.25;
-					$html .= __( 'Min Profit', 'woocommerce-jetpack' );
-					$html .= wc_price( $the_min_profit ) . ' ' . __( 'at', 'woocommerce-jetpack' ) . ' ' . wc_price( $the_min_price ); */
 					$html = '';
 					$html .= '<h5>' . __( 'Report', 'woocommerce-jetpack' ) . $desc . '</h5>';
 					$html .= wcj_get_table_html( $table_data, array(
@@ -252,13 +250,6 @@ class WCJ_Purchase_Data extends WCJ_Module {
 			}
 		}
 	}
-
-	/**
-	 * calculate_all_products_profit.
-	 *
-	 * @todo
-	 */
-	/* function calculate_all_products_profit() { } */
 
 }
 

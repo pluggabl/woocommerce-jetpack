@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 3.2.0
+ * @version 3.2.5
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -295,24 +295,15 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Invoices Report Data function.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.5
 	 * @since   2.5.7
 	 */
 	function get_invoices_report_data( $year, $month, $invoice_type_id ) {
-		$headers = array(
-			__( 'Document Number', 'woocommerce-jetpack' ),
-			__( 'Document Date', 'woocommerce-jetpack' ),
-			__( 'Order ID', 'woocommerce-jetpack' ),
-			__( 'Customer Country', 'woocommerce-jetpack' ),
-			__( 'Customer VAT ID', 'woocommerce-jetpack' ),
-			__( 'Tax %', 'woocommerce-jetpack' ),
-			__( 'Order Total Tax Excluding', 'woocommerce-jetpack' ),
-			__( 'Order Taxes', 'woocommerce-jetpack' ),
-			__( 'Order Total', 'woocommerce-jetpack' ),
-			__( 'Order Currency', 'woocommerce-jetpack' ),
-			__( 'Payment Gateway', 'woocommerce-jetpack' ),
-			__( 'Refunds', 'woocommerce-jetpack' ),
-		);
+
+		$columns = get_option( 'wcj_pdf_invoicing_report_tool_columns', '' );
+		if ( empty( $columns ) ) {
+			$columns = array_keys( WCJ()->modules['pdf_invoicing']->get_report_columns() );
+		}
 
 		$total_sum          = 0;
 		$total_sum_excl_tax = 0;
@@ -372,27 +363,73 @@ class WCJ_PDF_Invoicing_Report_Tool {
 
 					$order_tax_html = sprintf( '%.2f', $order_tax );
 
-					$data[] = array(
-						wcj_get_invoice_number( $order_id, $invoice_type_id ),
-						wcj_get_invoice_date( $order_id, $invoice_type_id, 0, get_option( 'date_format' ) ),
-						$order_id,
-						$customer_country,
-						$customer_vat_id,
-						sprintf( '%.0f %%', $order_tax_percent * 100 ),
-						sprintf( '%.2f', $order_total_exlc_tax ),
-						$order_tax_html,
-						sprintf( '%.2f', $order_total ),
-						wcj_get_order_currency( $the_order ),
-						get_post_meta( $order_id, '_payment_method_title', true ),
-						$the_order->get_total_refunded(),
-					);
+					$row = array();
+					foreach ( $columns as $column ) {
+						switch ( $column ) {
+							case 'document_number':
+								$row[] = wcj_get_invoice_number( $order_id, $invoice_type_id );
+								break;
+							case 'document_date':
+								$row[] = wcj_get_invoice_date( $order_id, $invoice_type_id, 0, get_option( 'date_format' ) );
+								break;
+							case 'order_id':
+								$row[] = $order_id;
+								break;
+							case 'customer_country':
+								$row[] = $customer_country;
+								break;
+							case 'customer_vat_id':
+								$row[] = $customer_vat_id;
+								break;
+							case 'tax_percent':
+								$row[] = sprintf( '%.0f %%', $order_tax_percent * 100 );
+								break;
+							case 'order_total_tax_excluding':
+								$row[] = sprintf( '%.2f', $order_total_exlc_tax );
+								break;
+							case 'order_taxes':
+								$row[] = $order_tax_html;
+								break;
+							case 'order_total':
+								$row[] = sprintf( '%.2f', $order_total );
+								break;
+							case 'order_currency':
+								$row[] = wcj_get_order_currency( $the_order );
+								break;
+							case 'payment_gateway':
+								$row[] = get_post_meta( $order_id, '_payment_method_title', true );
+								break;
+							case 'refunds':
+								$row[] = $the_order->get_total_refunded();
+								break;
+						}
+					}
+					$data[] = $row;
 				}
 			}
 			$offset += $block_size;
 		}
 
+		$headers = $this->get_headers( $columns );
+
 		return ( ! empty( $data ) ? array_merge( array( $headers ), $data ) : array() );
 	}
+
+	/**
+	 * get_headers.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 */
+	function get_headers( $columns ) {
+		$headers = array();
+		$all_headers = WCJ()->modules['pdf_invoicing']->get_report_columns();
+		foreach ( $columns as $column ) {
+			$headers[] = $all_headers[ $column ];
+		}
+		return $headers;
+	}
+
 
 }
 

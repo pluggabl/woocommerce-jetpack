@@ -176,14 +176,19 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.5 - 30/12/2017 =
+= 3.2.5 - 02/01/2018 =
+~D	* Dev - Shortcodes - Orders - `currency` attribute added to all shortcodes which use `wcj_price_shortcode()` function.
+D	* Dev - SHIPPING & ORDERS - Admin Orders List - Admin settings - Minor restyling.
+	* Dev - Functions - Exchange Rates - `wcj_get_saved_exchange_rate()` - Returning `1` when `currency_from` equals `currency_to`.
+~D	* Dev - Shortcodes - Orders - `[wcj_order_profit]` and `[wcj_order_items_cost]` shortcodes added.
+D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Admin settings restyled.
+~D	* Dev - PDF INVOICING & PACKING SLIPS - General - Report Tool Options - "Report Columns" option added.
 ~D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Passing product object to shortcodes (instead of product id).
 	* Dev - Code refactoring - Shortcodes objects saved in `WCJ()->shortcodes` array.
 D	* Dev - PRODUCTS - Product Visibility by User Role - Settings (meta box) restyled.
 D	* Dev - PRODUCTS - Products XML Feeds - Admin settings - Minor changes.
 ~D	* Dev - Shortcodes - Orders - `[wcj_order_tcpdf_barcode]` shortcode added.
 -D	* Dev - Shortcodes - General - `[wcj_tcpdf_rectangle]` shortcode added.
--D	* Dev - Admin settings restyling (`css` changed to `width:100%`).
 !	* Fix - Functions - Price and Currency - `wcj_price_by_product_base_currency()` - Checking if currency exchange rate not equals zero (so no division by zero can happen).
 	* Dev - "WC tested up to" added to plugin's header.
 !D	* Dev - EMAILS & MISC. - Modules By User Roles - Initial module release.

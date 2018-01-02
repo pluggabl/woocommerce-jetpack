@@ -38,6 +38,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_function',
 			'wcj_order_id',
 			'wcj_order_items',
+			'wcj_order_items_cost',
 			'wcj_order_items_meta',
 			'wcj_order_items_total_number',
 			'wcj_order_items_total_quantity',
@@ -46,6 +47,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_number',
 			'wcj_order_payment_method',
 			'wcj_order_payment_method_transaction_id',
+			'wcj_order_profit',
 			'wcj_order_refunds_table',
 			'wcj_order_remaining_refund_amount',
 			'wcj_order_shipping_address',
@@ -135,6 +137,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'width'                       => 0,
 			'height'                      => 0,
 			'color'                       => 'black',
+			'currency'                    => '',
 		), $atts );
 
 		return $modified_atts;
@@ -184,10 +187,62 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_price_shortcode.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.5
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
-		return ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) ? '' : wcj_price( $raw_price, wcj_get_order_currency( $this->the_order ), $atts['hide_currency'] );
+		if ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) {
+			return '';
+		} else {
+			$order_currency = wcj_get_order_currency( $this->the_order );
+			if ( '' === $atts['currency'] ) {
+				return wcj_price( $raw_price, $order_currency, $atts['hide_currency'] );
+			} else {
+				$convert_to_currency = $atts['currency'];
+				if ( '%shop_currency%' === $convert_to_currency ) {
+					$convert_to_currency = get_option( 'woocommerce_currency' );
+				}
+				return wcj_price( $raw_price * wcj_get_saved_exchange_rate( $order_currency, $convert_to_currency ), $convert_to_currency, $atts['hide_currency'] );
+			}
+		}
+	}
+
+	/**
+	 * wcj_order_items_cost.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 */
+	function wcj_order_items_cost( $atts ) {
+		$atts['type'] = 'items_cost';
+		return $this->wcj_order_profit( $atts );
+	}
+
+	/**
+	 * wcj_order_profit.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 */
+	function wcj_order_profit( $atts ) {
+		$total = 0;
+		foreach ( $this->the_order->get_items() as $item_id => $item ) {
+			$product_id = ( ( isset( $item['variation_id'] ) && 0 != $item['variation_id'] && 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) )
+				? $item['variation_id'] : $item['product_id'] );
+			$value = 0;
+			if ( 0 != ( $purchase_price = wc_get_product_purchase_price( $product_id ) ) ) {
+				if ( 'profit' === $atts['type'] || '' === $atts['type'] ) {
+					// profit
+					$_order_prices_include_tax = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->prices_include_tax : $this->the_order->get_prices_include_tax() );
+					$line_total                = ( $_order_prices_include_tax ? ( $item['line_total'] + $item['line_tax'] ) : $item['line_total'] );
+					$value                     = $line_total - $purchase_price * $item['qty'];
+				} else {
+					// 'items_cost'
+					$value                     = $purchase_price * $item['qty'];
+				}
+			}
+			$total += $value;
+		}
+		return $this->wcj_price_shortcode( $total, $atts );
 	}
 
 	/**

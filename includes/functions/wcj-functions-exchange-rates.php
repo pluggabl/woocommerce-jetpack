@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -13,11 +13,14 @@ if ( ! function_exists( 'wcj_get_saved_exchange_rate' ) ) {
 	/**
 	 * wcj_get_saved_exchange_rate.
 	 *
-	 * @version 3.2.4
+	 * @version 3.2.5
 	 * @since   3.2.4
-	 * @todo    `if ( $from == $to ) return 1`
+	 * @todo    (maybe) need to check if `currency_exchange_rates` module `is_enabled()`
 	 */
 	function wcj_get_saved_exchange_rate( $from, $to ) {
+		if ( $from == $to ) {
+			return 1;
+		}
 		// Preparing `active_currencies` array
 		if ( ! isset( WCJ()->modules['currency_exchange_rates']->active_currencies ) ) {
 			$active_currencies_settings = WCJ()->modules['currency_exchange_rates']->get_all_currencies_exchange_rates_settings();

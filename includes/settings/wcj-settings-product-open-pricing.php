@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Open Pricing
  *
- * @version 2.9.0
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
@@ -22,7 +22,7 @@ return array(
 		'id'       => 'wcj_product_open_price_label_frontend',
 		'default'  => __( 'Name Your Price', 'woocommerce-jetpack' ),
 		'type'     => 'text',
-		'css'      => 'width:250px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Frontend Template', 'woocommerce-jetpack' ),
@@ -31,21 +31,21 @@ return array(
 		'id'       => 'wcj_product_open_price_frontend_template',
 		'default'  => '<label for="wcj_open_price">%frontend_label%</label> %open_price_input% %currency_symbol%',
 		'type'     => 'textarea',
-		'css'      => 'min-width:300px;width:50%;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Frontend Input Style', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_open_price_input_style',
 		'default'  => 'width:75px;text-align:center;',
 		'type'     => 'text',
-		'css'      => 'width:250px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Frontend Input Placeholder', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_open_price_input_placeholder',
 		'default'  => '',
 		'type'     => 'text',
-		'css'      => 'width:250px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Frontend Input Price Step', 'woocommerce-jetpack' ),
@@ -59,21 +59,21 @@ return array(
 		'id'       => 'wcj_product_open_price_messages_required',
 		'default'  => __( 'Price is required!', 'woocommerce-jetpack' ),
 		'type'     => 'text',
-		'css'      => 'width:250px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Message on Price too Small', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_open_price_messages_to_small',
 		'default'  => __( 'Entered price is too small!', 'woocommerce-jetpack' ),
 		'type'     => 'text',
-		'css'      => 'width:250px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Message on Price too Big', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_open_price_messages_to_big',
 		'default'  => __( 'Entered price is too big!', 'woocommerce-jetpack' ),
 		'type'     => 'text',
-		'css'      => 'width:250px;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Disable Quantity Input', 'woocommerce-jetpack' ),
@@ -101,11 +101,11 @@ return array(
 		'id'       => 'wcj_product_open_price_loop_price_info_template',
 		'default'  => '<span class="price">%default_price%</span>',
 		'type'     => 'custom_textarea',
-		'css'      => 'min-width:300px;width:50%;',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Add "Open Pricing" Column to Admin Product List', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_open_price_enable_admin_product_list_column',
 		'default'  => 'no',
 		'type'     => 'checkbox',
