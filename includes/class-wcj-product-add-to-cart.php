@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -281,12 +281,12 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * add_to_cart_button_loop_disable.
 	 *
-	 * @version 2.5.2
+	 * @version 3.2.5
 	 * @since   2.5.2
 	 */
 	function add_to_cart_button_loop_disable( $link, $_product ) {
 		if ( 0 != get_the_ID() && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_loop_disable', true ) ) {
-			return '';
+			return do_shortcode( get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_disable_content', true ) );
 		}
 		return $link;
 	}
@@ -294,12 +294,13 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * add_to_cart_button_disable_end.
 	 *
-	 * @version 2.5.2
+	 * @version 3.2.5
 	 * @since   2.5.2
 	 */
 	function add_to_cart_button_disable_end() {
 		if ( 0 != get_the_ID() && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_disable', true ) ) {
 			ob_end_clean();
+			echo do_shortcode( get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_loop_disable_content', true ) );
 		}
 	}
 

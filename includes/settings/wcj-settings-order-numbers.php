@@ -2,9 +2,10 @@
 /**
  * Booster for WooCommerce - Settings - Order Numbers
  *
- * @version 3.2.0
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    (maybe) add `wcj_order_number_counter_previous_order_date` as `hidden` field (for proper module reset)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -28,12 +29,25 @@ return array(
 		),
 	),
 	array(
-		'title'    => __( 'Next Order Number', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Next new order will be given this number.', 'woocommerce-jetpack' ) . ' ' . __( 'Use Renumerate Orders tool for existing orders.', 'woocommerce-jetpack' ),
+		'title'    => __( 'Sequential: Next Order Number', 'woocommerce-jetpack' ),
+		'desc'     => '<br>' . __( 'Next new order will be given this number.', 'woocommerce-jetpack' ) . ' ' . __( 'Use Renumerate Orders tool for existing orders.', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This will be ignored if sequential order numbering is disabled.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_number_counter',
 		'default'  => 1,
 		'type'     => 'number',
+	),
+	array(
+		'title'    => __( 'Sequential: Reset Counter', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will be ignored if sequential order numbering is disabled.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_number_counter_reset_enabled',
+		'default'  => 'no',
+		'type'     => 'select',
+		'options'  => array(
+			'no'      => __( 'Disabled', 'woocommerce-jetpack' ),
+			'daily'   => __( 'Daily', 'woocommerce-jetpack' ),
+			'monthly' => __( 'Monthly', 'woocommerce-jetpack' ),
+			'yearly'  => __( 'Yearly', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'title'    => __( 'Order Number Custom Prefix', 'woocommerce-jetpack' ),
@@ -41,7 +55,6 @@ return array(
 		'id'       => 'wcj_order_number_prefix',
 		'default'  => '',
 		'type'     => 'text',
-		'css'      => 'width:300px;',
 	),
 	array(
 		'title'    => __( 'Order Number Date Prefix', 'woocommerce-jetpack' ),
@@ -51,7 +64,6 @@ return array(
 		'default'  => '',
 		'type'     => 'text',
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-		'css'      => 'width:300px;',
 	),
 	array(
 		'title'    => __( 'Order Number Width', 'woocommerce-jetpack' ),
@@ -61,7 +73,6 @@ return array(
 		'default'  => 0,
 		'type'     => 'number',
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-		'css'      => 'width:300px;',
 	),
 	array(
 		'title'    => __( 'Order Number Custom Suffix', 'woocommerce-jetpack' ),
@@ -71,7 +82,6 @@ return array(
 		'default'  => '',
 		'type'     => 'text',
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-		'css'      => 'width:300px;',
 	),
 	array(
 		'title'    => __( 'Order Number Date Suffix', 'woocommerce-jetpack' ),
@@ -81,7 +91,6 @@ return array(
 		'default'  => '',
 		'type'     => 'text',
 		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-		'css'      => 'width:300px;',
 	),
 	array(
 		'title'    => __( 'Use MySQL Transaction', 'woocommerce-jetpack' ),

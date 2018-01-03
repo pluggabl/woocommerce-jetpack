@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Add To Cart
  *
- * @version 2.9.0
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -59,6 +59,15 @@ if ( 'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) 
 			'title'      => __( 'Disable Add to Cart Button (Single Product Page)', 'woocommerce-jetpack' ),
 		),
 		array(
+			'name'       => 'wcj_add_to_cart_button_disable_content',
+			'default'    => '',
+			'type'       => 'textarea',
+			'title'      => '',
+			'css'        => 'width:100%;',
+			'tooltip'    => __( 'Content to replace add to cart button on single product page.', 'woocommerce-jetpack' ) . ' ' .
+				__( 'You can use HTML and/or shortcode here.', 'woocommerce-jetpack' ),
+		),
+		array(
 			'name'       => 'wcj_add_to_cart_button_loop_disable',
 			'default'    => 'no',
 			'type'       => 'select',
@@ -67,6 +76,15 @@ if ( 'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) 
 				'no'  => __( 'No', 'woocommerce-jetpack' ),
 			),
 			'title'      => __( 'Disable Add to Cart Button (Category/Archives)', 'woocommerce-jetpack' ),
+		),
+		array(
+			'name'       => 'wcj_add_to_cart_button_loop_disable_content',
+			'default'    => '',
+			'type'       => 'textarea',
+			'title'      => '',
+			'css'        => 'width:100%;',
+			'tooltip'    => __( 'Content to replace add to cart button on category/archives.', 'woocommerce-jetpack' ) . ' ' .
+				__( 'You can use HTML and/or shortcode here.', 'woocommerce-jetpack' ),
 		),
 	) );
 }

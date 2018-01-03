@@ -303,7 +303,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 3.1.1
+	 * @version 3.2.5
 	 * @todo    `placeholder` for textarea
 	 * @todo    `class` for all types (now only for select)
 	 * @todo    `show_value` for all types (now only for multiple select)
@@ -390,7 +390,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 							break;
 					}
 					$html .= '<tr>';
-					$maybe_tooltip = ( isset( $option['tooltip'] ) && '' != $option['tooltip'] ) ? wc_help_tip( $option['tooltip'], true ) : '';
+					$maybe_tooltip = ( isset( $option['tooltip'] ) && '' != $option['tooltip'] ) ? '<span style="float:right;">' . wc_help_tip( $option['tooltip'], true ) . '</span>' : '';
 					$html .= '<th style="text-align:left;width:25%;font-weight:bold;">' . $option['title'] . $maybe_tooltip . '</th>';
 					if ( isset( $option['desc'] ) && '' != $option['desc'] ) {
 						$html .= '<td style="font-style:italic;width:25%;">' . $option['desc'] . '</td>';

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 3.2.3
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -16,6 +16,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 3.2.3
+	 * @todo    (maybe) add option (order meta box) to set number directly
 	 * @todo    (maybe) rename "Orders Renumerate" to "Renumerate orders"
 	 * @todo    (maybe) use `woocommerce_new_order` hook instead of `wp_insert_post`
 	 */
@@ -167,13 +168,20 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add Renumerate Orders tool to WooCommerce menu (the content).
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.5
+	 * @todo    restyle
+	 * @todo    add more result info (e.g. number of regenerated orders etc.)
 	 */
 	function create_renumerate_orders_tool() {
 		$result_message = '';
 		if ( isset( $_POST['renumerate_orders'] ) ) {
 			$this->renumerate_orders();
 			$result_message = '<p><div class="updated"><p><strong>' . __( 'Orders successfully renumerated!', 'woocommerce-jetpack' ) . '</strong></p></div></p>';
+		} else {
+			if ( 'yes' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
+				$result_message .= '<p>' . sprintf( __( 'Sequential number generation is enabled. Next order number will be %s.', 'woocommerce-jetpack' ),
+					'<code>' . get_option( 'wcj_order_number_counter', 1 ) . '</code>' ) . '</p>';
+			}
 		}
 		$html = '';
 		$html .= '<div class="wrap">';
@@ -201,9 +209,51 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	}
 
 	/**
+	 * maybe_reset_sequential_counter.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    use transactions on `wcj_order_number_use_mysql_transaction_enabled`
+	 */
+	function maybe_reset_sequential_counter( $current_order_number, $order_id ) {
+		if ( 'no' != ( $reset_period = get_option( 'wcj_order_number_counter_reset_enabled', 'no' ) ) ) {
+			$previous_order_date = get_option( 'wcj_order_number_counter_previous_order_date', 0 );
+			$current_order_date  = strtotime( wcj_get_order_date( wc_get_order( $order_id ) ) );
+			update_option( 'wcj_order_number_counter_previous_order_date', $current_order_date );
+			if ( 0 != $previous_order_date ) {
+				$do_reset = false;
+				switch ( $reset_period ) {
+					case 'daily':
+						$do_reset = (
+							date( 'Y', $current_order_date ) != date( 'Y', $previous_order_date ) ||
+							date( 'm', $current_order_date ) != date( 'm', $previous_order_date ) ||
+							date( 'd', $current_order_date ) != date( 'd', $previous_order_date )
+						);
+						break;
+					case 'monthly':
+						$do_reset = (
+							date( 'Y', $current_order_date ) != date( 'Y', $previous_order_date ) ||
+							date( 'm', $current_order_date ) != date( 'm', $previous_order_date )
+						);
+						break;
+					case 'yearly':
+						$do_reset = (
+							date( 'Y', $current_order_date ) != date( 'Y', $previous_order_date )
+						);
+						break;
+				}
+				if ( $do_reset ) {
+					return 1;
+				}
+			}
+		}
+		return $current_order_number;
+	}
+
+	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 3.1.0
+	 * @version 3.2.5
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {
 		if ( 'shop_order' !== get_post_type( $order_id ) || 'auto-draft' === get_post_status( $order_id ) ) {
@@ -216,7 +266,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				$wp_options_table = $wpdb->prefix . 'options';
 				$result_select = $wpdb->get_row( "SELECT * FROM $wp_options_table WHERE option_name = 'wcj_order_number_counter'" );
 				if ( NULL != $result_select ) {
-					$current_order_number = $result_select->option_value;
+					$current_order_number = $this->maybe_reset_sequential_counter( $result_select->option_value, $order_id );
 					$result_update = $wpdb->update( $wp_options_table, array( 'option_value' => ( $current_order_number + 1 ) ), array( 'option_name' => 'wcj_order_number_counter' ) );
 					if ( NULL != $result_update ) {
 						$wpdb->query( 'COMMIT' ); // all ok
@@ -230,9 +280,11 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			} else {
 				if ( 'hash_crc32' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
 					$current_order_number = sprintf( "%u", crc32( $order_id ) );
-				} else { // sequential
-					$current_order_number = get_option( 'wcj_order_number_counter', 1 );
+				} elseif ( 'yes' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) ) {
+					$current_order_number = $this->maybe_reset_sequential_counter( get_option( 'wcj_order_number_counter', 1 ), $order_id );
 					update_option( 'wcj_order_number_counter', ( $current_order_number + 1 ) );
+				} else { // 'no' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) // order ID
+					$current_order_number = '';
 				}
 				update_post_meta( $order_id, '_wcj_order_number', $current_order_number );
 			}
@@ -242,12 +294,15 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Renumerate orders function.
 	 *
-	 * @version 3.2.0
+	 * @version 3.2.5
 	 * @todo    renumerate in date range only
 	 * @todo    (maybe) selectable `post_status`
 	 * @todo    (maybe) set default value for `wcj_order_numbers_renumerate_tool_orderby` to `ID` (instead of `date`)
 	 */
 	function renumerate_orders() {
+		if ( 'yes' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) && 'no' != get_option( 'wcj_order_number_counter_reset_enabled', 'no' ) ) {
+			update_option( 'wcj_order_number_counter_previous_order_date', 0 );
+		}
 		$offset     = 0;
 		$block_size = 512;
 		while( true ) {

@@ -176,7 +176,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.5 - 02/01/2018 =
+= 3.2.5 - 04/01/2018 =
+~D	* Fix - SHIPPING & ORDERS - Order Numbers - Orders Renumerate Tool - More info added when sequential number generation is enabled.
+!D	* Fix - SHIPPING & ORDERS - Order Numbers - `add_order_number_meta()` - Bug fixed (when "Number Generation" is set to "Order ID").
+D	* Dev - SHIPPING & ORDERS - Order Numbers - Admin settings - Minor restyling.
+!D	* Dev - SHIPPING & ORDERS - Order Numbers - "Sequential: Reset Counter" option added.
+!	* Dev - `WCJ_Module` - `create_meta_box()` - Tooltip restyling.
+~D	* Dev - PRODUCTS - Product Add to Cart - Add to Cart Button Disabling - Per Product - "Content" options added.
 !D	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Outputting "You have Free delivery" if free shipping is available without order minimum amount (e.g. coupon).
 D	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Admin settings - Minor restyling.
 	* Fix - PAYMENT GATEWAYS - Gateways by Currency - Admin settings - `$paypal_allowed_currencies_and_names` type fixed (changed to array).
