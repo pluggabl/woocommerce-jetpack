@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 3.2.1
+ * @version 3.2.5
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -173,7 +173,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * calculate_totals.
 	 *
-	 * @version 3.2.1
+	 * @version 3.2.5
 	 * @since   2.5.0
 	 * @todo    `$price_old` must be price to display *in cart* (now it's *in shop*)
 	 */
@@ -213,12 +213,13 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				: $item['quantity'];
 			if ( $the_quantity > 0 ) {
 				$wholesale_price = $this->get_wholesale_price( $price, $the_quantity, wcj_get_product_id_or_variation_parent_id( $_product ) );
+				if ( 'yes' === get_option( 'wcj_wholesale_price_rounding_enabled', 'yes' ) ) {
+					$wholesale_price = round( $wholesale_price, get_option( 'woocommerce_price_num_decimals', 2 ) );
+				}
 				if ( $wholesale_price != $price ) {
 					// Setting wholesale price
-					$precision = get_option( 'woocommerce_price_num_decimals', 2 );
-					$wcj_wholesale_price = round( $wholesale_price, $precision );
-					WC()->cart->cart_contents[ $item_key ]['data']->wcj_wholesale_price = $wcj_wholesale_price;
-					WC()->cart->cart_contents[ $item_key ]['wcj_wholesale_price']       = $wcj_wholesale_price;
+					WC()->cart->cart_contents[ $item_key ]['data']->wcj_wholesale_price = $wholesale_price;
+					WC()->cart->cart_contents[ $item_key ]['wcj_wholesale_price']       = $wholesale_price;
 					WC()->cart->cart_contents[ $item_key ]['wcj_wholesale_price_old']   = $price_old;
 				}
 			}

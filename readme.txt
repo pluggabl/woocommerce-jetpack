@@ -177,6 +177,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.2.5 - 04/01/2018 =
+!D	* Dev - PRICES & CURRENCIES - Wholesale Price - "Round single product price" option added.
 ~D	* Fix - SHIPPING & ORDERS - Order Numbers - Orders Renumerate Tool - More info added when sequential number generation is enabled.
 !D	* Fix - SHIPPING & ORDERS - Order Numbers - `add_order_number_meta()` - Bug fixed (when "Number Generation" is set to "Order ID").
 D	* Dev - SHIPPING & ORDERS - Order Numbers - Admin settings - Minor restyling.

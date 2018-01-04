@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 3.2.1
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -36,6 +36,14 @@ $settings = array(
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_apply_only_if_no_other_discounts',
 		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Round single product price', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If enabled will round single product price with precision set in WooCommerce > Settings > General > Number of decimals.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_wholesale_price_rounding_enabled',
+		'default'  => 'yes',
 		'type'     => 'checkbox',
 	),
 	array(

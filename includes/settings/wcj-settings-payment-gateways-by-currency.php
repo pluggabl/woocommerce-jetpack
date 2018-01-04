@@ -24,7 +24,7 @@ $paypal_allowed_currencies_and_names = array();
 foreach ( $paypal_allowed_currencies as $paypal_allowed_currency ) {
 	$paypal_allowed_currencies_and_names[] = $currencies[ $paypal_allowed_currency ];
 }
-$paypal_tip = sprintf( __( 'PayPal allows only these currencies:<br>%s.', 'woocommerce-jetpack' ), implode( '<br>', $paypal_allowed_currencies_and_names ) );
+$paypal_tip = sprintf( __( 'PayPal allows only these currencies: %s.', 'woocommerce-jetpack' ), '<br>' . implode( '<br>', $paypal_allowed_currencies_and_names ) );
 foreach ( $gateways as $key => $gateway ) {
 	$default_gateways = array( 'bacs' );
 	if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
