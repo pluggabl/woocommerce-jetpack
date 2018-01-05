@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Orders
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -60,6 +60,23 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_order_auto_complete_options',
+	),
+	array(
+		'title'    => __( 'Country by IP', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_orders_country_by_ip_options',
+	),
+	array(
+		'title'    => __( 'Add Country by IP Meta Box', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'When enabled this will add "Booster: Country by IP" metabox to each order\'s edit page.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_orders_country_by_ip_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_orders_country_by_ip_options',
 	),
 	array(
 		'title'    => __( 'Bulk Regenerate Download Permissions for Orders', 'woocommerce-jetpack' ),

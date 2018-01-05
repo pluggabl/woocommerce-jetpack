@@ -176,7 +176,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.5 - 05/01/2018 =
+= 3.2.5 - 06/01/2018 =
+!D	* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button Position Options" section added.
+~D	* Dev - SHIPPING & ORDERS - Orders - "Country by IP" section added.
 ~D	* Dev - BUTTON & PRICE LABELS - More Button Labels - "Override Default Text" option added.
 ~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Per product settings restyled.
 ~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Groups - "Admin Title" option added.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 3.2.5
 	 * @todo    Bulk Regenerate Download Permissions - copy "cron" to plugin
 	 * @todo    Bulk Regenerate Download Permissions - maybe move "bulk actions" to free
 	 * @todo    Bulk Regenerate Download Permissions - maybe as new module
@@ -67,6 +67,51 @@ class WCJ_Orders extends WCJ_Module {
 				}
 			}
 
+			// Country by IP
+			if ( 'yes' === get_option( 'wcj_orders_country_by_ip_enabled', 'no' ) ) {
+				add_action( 'add_meta_boxes', array( $this, 'add_country_by_ip_meta_box' ) );
+			}
+
+		}
+	}
+
+	/**
+	 * add_country_by_ip_meta_box.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 */
+	function add_country_by_ip_meta_box() {
+		add_meta_box(
+			'wc-jetpack-' . $this->id . '-country-by-ip',
+			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Country by IP', 'woocommerce-jetpack' ),
+			array( $this, 'create_country_by_ip_meta_box' ),
+			'shop_order',
+			'side',
+			'low'
+		);
+	}
+
+	/**
+	 * create_country_by_ip_meta_box.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 */
+	function create_country_by_ip_meta_box() {
+		if (
+			class_exists( 'WC_Geolocation' ) &&
+			( $order = wc_get_order() ) &&
+			( $customer_ip = $order->get_customer_ip_address() ) &&
+			( $location = WC_Geolocation::geolocate_ip( $customer_ip ) ) &&
+			isset( $location['country'] ) && '' != $location['country']
+		) {
+			echo wcj_get_country_flag_by_code( $location['country'] ) . ' ' .
+				wcj_get_country_name_by_code( $location['country'] ) .
+				' (' . $location['country'] . ')' .
+				' [' . $customer_ip . ']';
+		} else {
+			echo '<em>' . __( 'No data.', 'woocommerce-jetpack' ) . '</em>';
 		}
 	}
 
@@ -187,6 +232,7 @@ class WCJ_Orders extends WCJ_Module {
 	 *
 	 * @version 2.7.0
 	 * @since   2.5.6
+	 * @todo    (maybe) move meta box to `side`
 	 */
 	function change_order_currency( $order_currency, $_order ) {
 		return ( '' != ( $wcj_order_currency = get_post_meta( wcj_get_order_id( $_order ), '_' . 'wcj_order_currency', true ) ) ) ? $wcj_order_currency : $order_currency;

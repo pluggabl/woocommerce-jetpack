@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Add To Cart
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -293,5 +293,38 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_add_to_cart_message_options',
+	),
+	array(
+		'title'    => __( 'Add to Cart Button Position Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_add_to_cart_button_position_options',
+	),
+	array(
+		'title'    => __( 'Reposition Button on Single Product Pages', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_add_to_cart_button_position_single_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Position (default 30)', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Position is set via priority. Here are the default WooCommerce priorities: %s', 'woocommerce-jetpack' ),
+			implode( ', ', array(
+				'5 - '  . __( 'Title', 'woocommerce-jetpack' ),
+				'10 - ' . __( 'Rating', 'woocommerce-jetpack' ),
+				'10 - ' . __( 'Price', 'woocommerce-jetpack' ),
+				'20 - ' . __( 'Excerpt', 'woocommerce-jetpack' ),
+				'40 - ' . __( 'Meta', 'woocommerce-jetpack' ),
+				'50 - ' . __( 'Sharing', 'woocommerce-jetpack' ),
+				'30 - ' . __( 'Add to Cart', 'woocommerce-jetpack' ),
+			)
+		) ),
+		'id'       => 'wcj_product_add_to_cart_button_position_single',
+		'default'  => 30,
+		'type'     => 'number',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_add_to_cart_button_position_options',
 	),
 );
