@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Country
  *
- * @version  3.2.0
+ * @version  3.2.5
  * @author   Algoritmika Ltd.
  */
 
@@ -400,7 +400,7 @@ if ( ! function_exists( 'wcj_get_currency_countries' ) ) {
 	 * 158 currencies.
 	 * Three-letter currency code (ISO 4217) => Two-letter countries codes (ISO 3166-1 alpha-2).
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.5
 	 * @since   2.9.0
 	 */
 	function wcj_get_currency_countries() {
@@ -421,7 +421,7 @@ if ( ! function_exists( 'wcj_get_currency_countries' ) ) {
 			'BHD' => array( 'BH' ),
 			'BDT' => array( 'BD' ),
 			'BBD' => array( 'BB' ),
-			'BYR' => array( 'BY' ),
+			'BYN' => array( 'BY' ),
 			'BZD' => array( 'BZ' ),
 			'XOF' => array( 'SN', 'BJ', 'BF', 'ML', 'NE', 'TG' ),
 			'BMD' => array( 'BM' ),

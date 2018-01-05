@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - More Button Labels
  *
- * @version 2.8.0
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -22,6 +22,14 @@ return array(
 		'id'       => 'wcj_checkout_place_order_button_text',
 		'default'  => '',
 		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Override Default Text', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if button text is not changing for some payment gateway (e.g. PayPal).', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_place_order_button_override',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',

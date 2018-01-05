@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - HTML Functions
  *
- * @version 2.8.0
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -23,7 +23,7 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 			'columns_classes'    => array(),
 			'columns_styles'     => array(),
 		);
-		//wp_parse_args( $args, $defaults );
+//		wp_parse_args( $args, $defaults );
 		$args = array_merge( $defaults, $args );
 		extract( $args );
 		$table_class = ( '' == $table_class ) ? '' : ' class="' . $table_class . '"';
@@ -54,6 +54,8 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 if ( ! function_exists( 'wcj_get_option_html' ) ) {
 	/**
 	 * wcj_get_option_html.
+	 *
+	 * @version 3.2.5
 	 */
 	function wcj_get_option_html( $option_type, $option_id, $option_value, $option_description, $option_class ) {
 
@@ -70,7 +72,7 @@ if ( ! function_exists( 'wcj_get_option_html' ) ) {
 				$html .= '<textarea class="' . $option_class . '" id="' . $option_id . '" name="' . $option_id . '">' . $option_value . '</textarea>';
 				break;
 			case 'checkbox':
-				$html .= '<input class="checkbox" type="checkbox" name="' . $option_id . '" id="' . $option_id . '" ' . $is_checked . ' />';
+				$html .= '<input class="checkbox" style="margin-right:5px !important;" type="checkbox" name="' . $option_id . '" id="' . $option_id . '" ' . $is_checked . ' />';
 				break;
 			case 'select':
 				$html .= '<select class="' . $option_class . '" id="' . $option_id . '" name="' . $option_id . '">' . $option_value . '</select>';

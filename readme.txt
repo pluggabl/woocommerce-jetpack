@@ -176,7 +176,12 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.5 - 04/01/2018 =
+= 3.2.5 - 05/01/2018 =
+~D	* Dev - BUTTON & PRICE LABELS - More Button Labels - "Override Default Text" option added.
+~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Per product settings restyled.
+~D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Groups - "Admin Title" option added.
+	* Fix - EMAILS & MISC. - Reports - Customers - Flag images fixed.
+!D	* Dev - Currencies - Belarusian ruble code updated (from `BYR` to `BYN`).
 !D	* Dev - PRICES & CURRENCIES - Wholesale Price - "Round single product price" option added.
 ~D	* Fix - SHIPPING & ORDERS - Order Numbers - Orders Renumerate Tool - More info added when sequential number generation is enabled.
 !D	* Fix - SHIPPING & ORDERS - Order Numbers - `add_order_number_meta()` - Bug fixed (when "Number Generation" is set to "Order ID").

@@ -2,13 +2,15 @@
 /**
  * Booster for WooCommerce - Functions - Currencies
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
 if ( ! function_exists( 'wcj_get_currencies_array' ) ) {
 	/**
 	 * wcj_get_currencies_array.
+	 *
+	 * @version 3.2.5
 	 */
 	function wcj_get_currencies_array() {
 		return array(
@@ -28,7 +30,7 @@ if ( ! function_exists( 'wcj_get_currencies_array' ) ) {
 			array( 'code' => 'BGN', 'symbol' => '&#1083;&#1074;.', 'name' => __( 'Bulgarian Lev', 'woocommerce' ) ),
 			array( 'code' => 'BHD', 'symbol' => 'BHD', 'name' => __( 'Bahraini dinar', 'woocommerce-jetpack' ) ),
 			array( 'code' => 'BIF', 'symbol' => 'BIF', 'name' => __( 'Burundi franc', 'woocommerce-jetpack' ) ),
-			array( 'code' => 'BYR', 'symbol' => 'BYR', 'name' => __( 'Belarusian ruble', 'woocommerce-jetpack' ) ),
+			array( 'code' => 'BYN', 'symbol' => 'BYN', 'name' => __( 'Belarusian ruble', 'woocommerce-jetpack' ) ),
 			array( 'code' => 'BND', 'symbol' => 'BND', 'name' => __( 'Brunei dollar', 'woocommerce-jetpack' ) ),
 			array( 'code' => 'BOB', 'symbol' => 'BOB', 'name' => __( 'Bolivian boliviano', 'woocommerce-jetpack' ) ),
 			array( 'code' => 'BRL', 'symbol' => '&#82;&#36;', 'name' => __( 'Brazilian Real', 'woocommerce' ) ),

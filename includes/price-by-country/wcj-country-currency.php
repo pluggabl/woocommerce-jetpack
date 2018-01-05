@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Country Currency functions
  *
- * @version 2.9.0
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -12,7 +12,7 @@ if ( ! function_exists( 'wcj_get_yahoo_exchange_rates_supported_currency' ) ) {
 	/**
 	 * wcj_get_yahoo_exchange_rates_supported_currency.
 	 *
-	 * @version 2.3.9
+	 * @version 3.2.5
 	 */
 	function wcj_get_yahoo_exchange_rates_supported_currency() {
 		return array(
@@ -26,7 +26,7 @@ if ( ! function_exists( 'wcj_get_yahoo_exchange_rates_supported_currency' ) ) {
 			'VEF' => true,
 			'GEL' => true,
 			'ISK' => true,
-			'BYR' => true,
+			'BYN' => true,
 			'THB' => true,
 			'MXV' => true,
 			'TND' => true,
@@ -234,7 +234,7 @@ if ( ! function_exists( 'wcj_get_country_currency' ) ) {
 	/**
 	 * wcj_get_country_currency.
 	 *
-	 * @version 2.4.4
+	 * @version 3.2.5
 	 */
 	function wcj_get_country_currency() {
 		return array(
@@ -268,7 +268,7 @@ if ( ! function_exists( 'wcj_get_country_currency' ) ) {
 			'BH' => 'BHD',
 			'BD' => 'BDT',
 			'BB' => 'BBD',
-			'BY' => 'BYR',
+			'BY' => 'BYN',
 			'BE' => 'EUR',
 			'BZ' => 'BZD',
 			'BJ' => 'XOF',
