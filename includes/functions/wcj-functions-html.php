@@ -97,7 +97,7 @@ if ( ! function_exists( 'wcj_empty_cart_button_html' ) ) {
 			' onclick="return confirm(\'' . get_option( 'wcj_empty_cart_confirmation_text', __( 'Are you sure?', 'woocommerce-jetpack' ) ) . '\')"' : '';
 		return '<div style="' . get_option( 'wcj_empty_cart_div_style', 'float: right;' ) . '">' .
 			'<form action="" method="post"><input type="submit" class="button" name="wcj_empty_cart" value="' .
-				apply_filters( 'booster_get_option', 'Empty Cart', get_option( 'wcj_empty_cart_text', 'Empty Cart' ) ) . '"' . $confirmation_html . '>' .
+				apply_filters( 'booster_option', 'Empty Cart', get_option( 'wcj_empty_cart_text', 'Empty Cart' ) ) . '"' . $confirmation_html . '>' .
 			'</form>' .
 		'</div>';
 	}

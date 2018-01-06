@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.5
 	 * @since   2.5.2
 	 * @todo    (maybe) add `$this->price_hooks_priority`
 	 */
@@ -29,6 +29,8 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+
+			$this->do_save_converted_prices = ( 'yes' === get_option( 'wcj_currency_per_product_save_prices', 'no' ) );
 
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
@@ -117,7 +119,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			if ( $do_check_by_product_tags ) {
 				$_product_tags = wcj_get_the_terms( $product_id, 'product_tag' );
 			}
-			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( $do_check_by_users ) {
 					$users = get_option( 'wcj_currency_per_product_users_' . $i, '' );
@@ -245,7 +247,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	 */
 	function get_currency_exchange_rate( $currency_code ) {
 		$currency_exchange_rate = 1;
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( $currency_code === get_option( 'wcj_currency_per_product_currency_' . $i ) ) {
 				$currency_exchange_rate = 1 / get_option( 'wcj_currency_per_product_exchange_rate_' . $i );
@@ -256,9 +258,40 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	}
 
 	/**
+	 * maybe_return_saved_converted_price.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    ! maybe I need to save `cart_item_id` and not `product_id`
+	 */
+	function maybe_return_saved_converted_price( $_product, $_currency ) {
+		if ( $this->do_save_converted_prices ) {
+			$product_id = wcj_get_product_id( $_product );
+			if ( isset( $this->saved_product_prices[ $product_id ][ $_product->wcj_currency_per_product ][ $_currency ] ) ) {
+				return $this->saved_product_prices[ $product_id ][ $_product->wcj_currency_per_product ][ $_currency ];
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * maybe_save_converted_price.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 */
+	function maybe_save_converted_price( $price, $_product, $_currency ) {
+		if ( $this->do_save_converted_prices ) {
+			$product_id = wcj_get_product_id( $_product );
+			$this->saved_product_prices[ $product_id ][ $_product->wcj_currency_per_product ][ $_currency ] = $price;
+		}
+		return $price;
+	}
+
+	/**
 	 * change_price.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.5
 	 * @since   2.5.2
 	 */
 	function change_price( $price, $_product ) {
@@ -270,25 +303,35 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 					return $price;
 				case 'convert_first_product':
 				case 'convert_last_product':
-					$shop_currency = get_option('woocommerce_currency');
+					$shop_currency = get_option( 'woocommerce_currency' );
 					if ( false != ( $_currency = $this->get_cart_checkout_currency() ) && $_currency != $shop_currency ) {
 						if ( $_product->wcj_currency_per_product === $_currency ) {
 							return $price;
 						} else {
+							if ( false !== ( $saved_price = $this->maybe_return_saved_converted_price( $_product, $_currency ) ) ) {
+								return $saved_price;
+							}
 							$exchange_rate_product       = $this->get_currency_exchange_rate( $_product->wcj_currency_per_product );
 							$exchange_rate_cart_checkout = $this->get_currency_exchange_rate( $_currency );
 							$exchange_rate               = $exchange_rate_product / $exchange_rate_cart_checkout;
-							return $price * $exchange_rate;
+							return $this->maybe_save_converted_price( $price * $exchange_rate, $_product, $_currency );
 						}
 					} elseif ( $_product->wcj_currency_per_product === $shop_currency ) {
 						return $price;
 					} else {
+						if ( false !== ( $saved_price = $this->maybe_return_saved_converted_price( $_product, $shop_currency ) ) ) {
+							return $saved_price;
+						}
 						$exchange_rate = $this->get_currency_exchange_rate( $_product->wcj_currency_per_product );
-						return $price * $exchange_rate;
+						return $this->maybe_save_converted_price( $price * $exchange_rate, $_product, $shop_currency );
 					}
 				default: // case 'convert_shop_default':
+					$shop_currency = get_option( 'woocommerce_currency' );
+					if ( false !== ( $saved_price = $this->maybe_return_saved_converted_price( $_product, $shop_currency ) ) ) {
+						return $saved_price;
+					}
 					$exchange_rate = $this->get_currency_exchange_rate( $_product->wcj_currency_per_product );
-					return $price * $exchange_rate;
+					return $this->maybe_save_converted_price( $price * $exchange_rate, $_product, $shop_currency );
 			}
 		}
 		return $price;

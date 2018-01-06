@@ -34,7 +34,7 @@ class WCJ_Products_XML extends WCJ_Module {
 			add_action( 'admin_init',     array( $this, 'wcj_create_products_xml' ) );
 			add_action( 'admin_notices',  array( $this, 'admin_notices' ) );
 			add_filter( 'cron_schedules', array( $this, 'cron_add_custom_intervals' ) );
-			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				add_action( 'wcj_create_products_xml_hook_' . $i, array( $this, 'create_products_xml_cron' ), PHP_INT_MAX, 2 );
 			}
@@ -55,11 +55,11 @@ class WCJ_Products_XML extends WCJ_Module {
 			'daily',
 			'weekly',
 		);
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$event_hook = 'wcj_create_products_xml_hook_' . $i;
 			if ( 'yes' === get_option( 'wcj_products_xml_enabled_' . $i, 'yes' ) ) {
-				$selected_interval = apply_filters( 'booster_get_option', 'weekly', get_option( 'wcj_create_products_xml_period_' . $i, 'weekly' ) );
+				$selected_interval = apply_filters( 'booster_option', 'weekly', get_option( 'wcj_create_products_xml_period_' . $i, 'weekly' ) );
 				foreach ( $update_intervals as $interval ) {
 					$event_timestamp = wp_next_scheduled( $event_hook, array( $interval, $i ) );
 					if ( $selected_interval === $interval ) {

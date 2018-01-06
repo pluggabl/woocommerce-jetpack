@@ -22,8 +22,8 @@ return array(
 		'default'  => '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1',
 		'type'     => 'textarea',
 		'css'      => 'height:200px;',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc_no_link' ),
 	),
 	array(
 		'title'    => __( 'Default', 'woocommerce-jetpack' ),

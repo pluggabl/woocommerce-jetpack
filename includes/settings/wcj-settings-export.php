@@ -53,15 +53,15 @@ $settings = array(
 		'id'       => 'wcj_export_orders_fields_additional_total_number',
 		'default'  => 1,
 		'type'     => 'custom_number',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => array_merge(
-			is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
-				apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
+			is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ?
+				apply_filters( 'booster_message', '', 'readonly' ) : array(),
 			array( 'step' => '1', 'min'  => '0', )
 		),
 	),
 );
-$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_export_orders_fields_additional_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -121,15 +121,15 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_export_orders_items_fields_additional_total_number',
 		'default'  => 1,
 		'type'     => 'custom_number',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => array_merge(
-			is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
-				apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
+			is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ?
+				apply_filters( 'booster_message', '', 'readonly' ) : array(),
 			array( 'step' => '1', 'min'  => '0', )
 		),
 	),
 ) );
-$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_export_orders_items_fields_additional_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -203,15 +203,15 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_export_products_fields_additional_total_number',
 		'default'  => 1,
 		'type'     => 'custom_number',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => array_merge(
-			is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
-				apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
+			is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ?
+				apply_filters( 'booster_message', '', 'readonly' ) : array(),
 			array( 'step' => '1', 'min'  => '0', )
 		),
 	),
 ) );
-$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_export_products_fields_additional_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(

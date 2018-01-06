@@ -25,12 +25,12 @@ return array(
 	),
 	array(
 		'title'    => __( 'Add Variations to Products List', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'When enabled - variations of variable products will be added to the list. If you want to edit only main product\'s meta, disable this option.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc_tip' => __( 'When enabled - variations of variable products will be added to the list. If you want to edit only main product\'s meta, disable this option.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_bulk_meta_editor_add_variations',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Additional Columns', 'woocommerce-jetpack' ),

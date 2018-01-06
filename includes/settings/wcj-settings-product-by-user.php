@@ -38,8 +38,8 @@ foreach ( $fields as $field_id => $field_desc ) {
 		'default'  => 'no',
 		'type'     => 'checkbox',
 		'checkboxgroup' => $checkboxgroup,
-		'custom_attributes' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_get_message', '', 'disabled' ) : '' ),
-		'desc_tip' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_get_message', '', 'desc' ) : '' ),
+		'custom_attributes' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_message', '', 'disabled' ) : '' ),
+		'desc_tip' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_message', '', 'desc' ) : '' ),
 	);
 	$fields_required_options[] = array(
 		'title'    => ( ( 1 === $i ) ? __( 'Is Required', 'woocommerce-jetpack' ) : '' ),
@@ -48,8 +48,8 @@ foreach ( $fields as $field_id => $field_desc ) {
 		'default'  => 'no',
 		'type'     => 'checkbox',
 		'checkboxgroup' => $checkboxgroup,
-		'custom_attributes' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_get_message', '', 'disabled' ) : '' ),
-		'desc_tip' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_get_message', '', 'desc' ) : '' ),
+		'custom_attributes' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_message', '', 'disabled' ) : '' ),
+		'desc_tip' => ( ( 'image' === $field_id ) ? apply_filters( 'booster_message', '', 'desc' ) : '' ),
 	);
 }
 
@@ -93,7 +93,7 @@ $settings = array_merge(
 				'simple'   => __( 'Simple product', 'woocommerce-jetpack' ),
 				'external' => __( 'External/Affiliate product', 'woocommerce-jetpack' ),
 			),
-//			'desc'     =>  apply_filters( 'booster_get_message', '', 'desc_advanced', array( 'option' => __( 'Variable product', 'woocommerce-jetpack' ) ) ),
+//			'desc'     =>  apply_filters( 'booster_message', '', 'desc_advanced', array( 'option' => __( 'Variable product', 'woocommerce-jetpack' ) ) ),
 		),
 		array(
 			'title'    => __( 'Product Status', 'woocommerce-jetpack' ),
@@ -136,13 +136,13 @@ $settings = array_merge(
 			'default'  => 1,
 			'type'     => 'custom_number',
 			'desc_tip' => __( 'Press Save changes after you change this number.', 'woocommerce-jetpack' ),
-			'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-			'custom_attributes' => is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
-				apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1' ),
+			'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+			'custom_attributes' => is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ?
+				apply_filters( 'booster_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1' ),
 		),
 	)
 );
-for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_by_user_custom_taxonomies_total', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product_by_user_custom_taxonomies_total', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 			array(
 				'title'    => __( 'Custom Taxonomy', 'woocommerce-jetpack' ) . ' #' . $i,

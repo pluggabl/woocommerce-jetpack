@@ -110,7 +110,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 			}
 
 			// Including by products
-			$products_in = wcj_maybe_convert_string_to_array( apply_filters( 'booster_get_option', array(), get_option( 'wcj_gateways_per_products_' . $gateway_id ) ) );
+			$products_in = wcj_maybe_convert_string_to_array( apply_filters( 'booster_option', array(), get_option( 'wcj_gateways_per_products_' . $gateway_id ) ) );
 			if ( ! empty( $products_in ) ) {
 				$do_skip = true;
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
@@ -130,7 +130,7 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 			}
 
 			// Excluding by products
-			$products_excl = wcj_maybe_convert_string_to_array( apply_filters( 'booster_get_option', array(), get_option( 'wcj_gateways_per_products_excl_' . $gateway_id ) ) );
+			$products_excl = wcj_maybe_convert_string_to_array( apply_filters( 'booster_option', array(), get_option( 'wcj_gateways_per_products_excl_' . $gateway_id ) ) );
 			if ( ! empty( $products_excl ) ) {
 				$do_skip = false;
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {

@@ -25,7 +25,7 @@ if ( $_product->is_type( 'variable' ) ) {
 	$products[ $main_product_id ] = '';
 }
 $currencies = array();
-$total_number = apply_filters( 'booster_get_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+$total_number = apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
 foreach ( $products as $product_id => $desc ) {
 	for ( $i = 1; $i <= $total_number; $i++ ) {
 		$currency_code = get_option( 'wcj_multicurrency_currency_' . $i );

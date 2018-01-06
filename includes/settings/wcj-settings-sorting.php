@@ -64,8 +64,8 @@ $settings = array(
 		'id'        => 'wcj_sorting_by_sku_num_enabled',
 		'default'   => 'no',
 		'type'      => 'checkbox',
-		'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc_tip'  => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'     => __( 'Sort by stock quantity', 'woocommerce-jetpack' ),
@@ -124,8 +124,8 @@ $settings = array(
 		'id'        => 'wcj_sorting_default_sorting_enabled',
 		'default'   => 'no',
 		'type'      => 'checkbox',
-		'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc_tip'  => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 );
 foreach ( $this->get_woocommerce_default_sortings() as $sorting_key => $sorting_desc ) {
@@ -160,11 +160,11 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'     => __( 'Remove All Sorting', 'woocommerce-jetpack' ),
 		'desc'      => __( 'Remove all sorting (including WooCommerce default) from shop\'s frontend', 'woocommerce-jetpack' ),
-		'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc_tip'  => apply_filters( 'booster_message', '', 'desc' ),
 		'id'        => 'wcj_sorting_remove_all_enabled',
 		'default'   => 'no',
 		'type'      => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'      => 'sectionend',

@@ -52,7 +52,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	function get_currency_exchange_rate( $currency_code ) {
 		/*
 		$currency_exchange_rate = 1;
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( $currency_code === get_option( 'wcj_multicurrency_base_price_currency_' . $i ) ) {
 				$currency_exchange_rate = get_option( 'wcj_multicurrency_base_price_exchange_rate_' . $i );

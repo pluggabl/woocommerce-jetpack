@@ -10,7 +10,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $options = array();
-if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) ) {
+if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) ) {
 	$options = array_merge( $options, array(
 		array(
 			'name'       => 'wcj_add_to_cart_redirect_enabled',

@@ -119,18 +119,18 @@ class WCJ_Email_Verification extends WCJ_Module {
 		$user_info     = get_userdata( $user_id );
 		$code          = md5( time() );
 		$url           = add_query_arg( 'wcj_verify_email', base64_encode( json_encode( array( 'id' => $user_id, 'code' => $code ) ) ), wc_get_page_permalink( 'myaccount' ) );
-		$email_content = do_shortcode( apply_filters( 'booster_get_option',
+		$email_content = do_shortcode( apply_filters( 'booster_option',
 			__( 'Please click the following link to verify your email:<br><br><a href="%verification_url%">%verification_url%</a>', 'woocommerce-jetpack' ),
 			get_option( 'wcj_emails_verification_email_content',
 				__( 'Please click the following link to verify your email:<br><br><a href="%verification_url%">%verification_url%</a>', 'woocommerce-jetpack' ) ) ) );
 		$email_content = str_replace( '%verification_url%', $url, $email_content );
-		$email_subject = do_shortcode( apply_filters( 'booster_get_option',
+		$email_subject = do_shortcode( apply_filters( 'booster_option',
 			__( 'Please activate your account', 'woocommerce-jetpack' ),
 			get_option( 'wcj_emails_verification_email_subject',
 				__( 'Please activate your account', 'woocommerce-jetpack' ) ) ) );
 		update_user_meta( $user_id, 'wcj_is_activated', '0' );
 		update_user_meta( $user_id, 'wcj_activation_code', $code );
-		if ( 'wc' === apply_filters( 'booster_get_option', 'plain', get_option( 'wcj_emails_verification_email_template', 'plain' ) ) ) {
+		if ( 'wc' === apply_filters( 'booster_option', 'plain', get_option( 'wcj_emails_verification_email_template', 'plain' ) ) ) {
 			$email_content = wcj_wrap_in_wc_email_template( $email_content,
 				get_option( 'wcj_emails_verification_email_template_wc_heading', __( 'Activate your account', 'woocommerce-jetpack' ) ) );
 		}

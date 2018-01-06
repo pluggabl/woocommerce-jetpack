@@ -31,7 +31,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			add_action( 'add_meta_boxes', array( $this, 'add_file_admin_order_meta_box' ) );
 			add_action( 'init', array( $this, 'process_checkout_files_upload' ) );
-			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( 'disable' != ( $the_hook = get_option( 'wcj_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' ) ) ) {
 					add_action( $the_hook, array( $this, 'add_files_upload_form_to_checkout_frontend' ), get_option( 'wcj_checkout_files_upload_hook_priority_' . $i, 10 ) );
@@ -96,7 +96,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	 * @since   2.4.5
 	 */
 	function validate_on_checkout( $posted ) {
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if (
 				'yes' === get_option( 'wcj_checkout_files_upload_enabled_' . $i, 'yes' ) &&
@@ -211,7 +211,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		if ( ! file_exists( $upload_dir ) ) {
 			mkdir( $upload_dir, 0755, true );
 		}
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( isset( $_SESSION[ 'wcj_checkout_files_upload_' . $i ] ) ) {
 				$file_name          = $_SESSION[ 'wcj_checkout_files_upload_' . $i ]['name'];
@@ -243,7 +243,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 			session_start();
 		}
 		// Remove file
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( isset( $_POST[ 'wcj_remove_checkout_file_' . $i ] ) ) {
 				if ( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ) {
@@ -556,7 +556,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	 */
 	function add_files_upload_form_to_thankyou_and_myaccount_page( $order_id ) {
 		$html = '';
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 		$current_filter = current_filter();
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_files_upload_enabled_' . $i, 'yes' ) && $this->is_visible( $i, $order_id ) ) {
@@ -590,7 +590,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	 */
 	function add_files_upload_form_to_checkout_frontend_all( $is_direct_call = false ) {
 		$html = '';
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 		if ( ! $is_direct_call ) {
 			$current_filter = current_filter();
 			$current_filter_priority = wcj_current_filter_priority();

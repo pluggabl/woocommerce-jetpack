@@ -99,8 +99,8 @@ return array(
 		'id'       => 'wcj_emails_verification_email_subject',
 		'default'  => __( 'Please activate your account', 'woocommerce-jetpack' ),
 		'css'      => 'width:66%;min-width:300px;',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'title'    => __( 'Email Content', 'woocommerce-jetpack' ),
@@ -109,8 +109,8 @@ return array(
 		'id'       => 'wcj_emails_verification_email_content',
 		'default'  => __( 'Please click the following link to verify your email:<br><br><a href="%verification_url%">%verification_url%</a>', 'woocommerce-jetpack' ),
 		'css'      => 'width:66%;min-width:300px;height:150px;',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'title'    => __( 'Email Template', 'woocommerce-jetpack' ),
@@ -122,8 +122,8 @@ return array(
 			'plain' => __( 'Plain', 'woocommerce-jetpack' ),
 			'wc'    => __( 'WooCommerce', 'woocommerce-jetpack' ),
 		),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'desc_tip' => __( 'If WooCommerce template is selected, set email heading here.', 'woocommerce-jetpack' ),
@@ -131,8 +131,8 @@ return array(
 		'type'     => 'custom_textarea',
 		'default'  => __( 'Activate your account', 'woocommerce-jetpack' ),
 		'css'      => 'width:66%;min-width:300px;',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'type'     => 'sectionend',

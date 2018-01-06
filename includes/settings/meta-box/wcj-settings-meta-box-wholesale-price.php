@@ -46,11 +46,11 @@ $options = array(
 		'default'  => 0,
 		'type'     => 'number',
 		'title'    => __( 'Number of levels', 'woocommerce-jetpack' ),
-		'tooltip'  => __( 'Save product after you change this number.', 'woocommerce-jetpack' ) . apply_filters( 'booster_get_option', ' ' . __( 'Free Booster\'s version is limited to one level maximum. Please visit http://booster.io to get full version.', 'woocommerce-jetpack' ), '' ),
-		'custom_attributes' => 'min="0" max="' . apply_filters( 'booster_get_option', 1, 1000 ) . '"',
+		'tooltip'  => __( 'Save product after you change this number.', 'woocommerce-jetpack' ) . apply_filters( 'booster_option', ' ' . __( 'Free Booster\'s version is limited to one level maximum. Please visit http://booster.io to get full version.', 'woocommerce-jetpack' ), '' ),
+		'custom_attributes' => 'min="0" max="' . apply_filters( 'booster_option', 1, 1000 ) . '"',
 	),
 );
-for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number', true ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number', true ) ); $i++ ) {
 	$options = array_merge( $options, array(
 		/*
 		array(
@@ -82,11 +82,11 @@ if ( ! empty( $user_roles ) ) {
 				'default' => 0,
 				'type'    => 'number',
 				'title'   => __( 'Number of levels', 'woocommerce-jetpack' ) . ' [' . $user_role_key . ']',
-				'tooltip' => __( 'Save product after you change this number.', 'woocommerce-jetpack' ) . apply_filters( 'booster_get_option', ' ' . __( 'Free Booster\'s version is limited to one level maximum. Please visit http://booster.io to get full version.', 'woocommerce-jetpack' ), '' ),
-				'custom_attributes' => 'min="0" max="' . apply_filters( 'booster_get_option', 1, 1000 ) . '"',
+				'tooltip' => __( 'Save product after you change this number.', 'woocommerce-jetpack' ) . apply_filters( 'booster_option', ' ' . __( 'Free Booster\'s version is limited to one level maximum. Please visit http://booster.io to get full version.', 'woocommerce-jetpack' ), '' ),
+				'custom_attributes' => 'min="0" max="' . apply_filters( 'booster_option', 1, 1000 ) . '"',
 			),
 		) );
-		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number_' . $user_role_key, true ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number_' . $user_role_key, true ) ); $i++ ) {
 			$options = array_merge( $options, array(
 				/*
 				array(

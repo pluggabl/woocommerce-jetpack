@@ -35,8 +35,8 @@ return array(
 		'id'       => 'wcj_breadcrumbs_hide',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',

@@ -427,7 +427,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			$shortcode_currencies = explode( ',', $shortcode_currencies );
 		}
 		if ( empty( $shortcode_currencies ) ) {
-			$total_number = apply_filters( 'booster_get_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+			$total_number = apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				$shortcode_currencies[] = get_option( 'wcj_multicurrency_currency_' . $i );
 			}
@@ -461,7 +461,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		$wholesale_price_levels = array();
-		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
 			$level_qty                = get_option( 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX );
 			$discount                 = get_option( 'wcj_wholesale_price_level_discount_percent' . $role_option_name_addon . '_' . $i, 0 );
 			$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => $discount, );

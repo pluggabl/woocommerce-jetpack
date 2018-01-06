@@ -59,7 +59,7 @@ foreach ( $products as $product_id => $desc ) {
 			'enabled'    => get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ),
 		),
 	);
-	$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+	$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
 	for ( $i = 1; $i <= $total_number; $i++ ) {
 		$the_title = get_option( 'wcj_purchase_data_custom_price_field_name_' . $i, '' );
 		if ( '' == $the_title ) {

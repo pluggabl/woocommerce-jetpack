@@ -75,7 +75,7 @@ class WCJ_Product_Input_Fields_Core {
 			return;
 
 		// Save enabled, required, title etc.
-		$default_total_input_fields = apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
+		$default_total_input_fields = apply_filters( 'booster_option', 1, get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
 		$total_input_fields_before_saving = get_post_meta( $post_id, '_' . 'wcj_product_input_fields_local_total_number', true );
 		$total_input_fields_before_saving = ( '' != $total_input_fields_before_saving ) ? $total_input_fields_before_saving : $default_total_input_fields;
 		$options = $this->get_options();
@@ -128,15 +128,15 @@ class WCJ_Product_Input_Fields_Core {
 		$current_post_id = get_the_ID();
 		$option_name = 'wcj_' . $meta_box_id . '_local_total_number';
 		// If none total number set - check for the default
-		if ( ! ( $total_number = apply_filters( 'booster_get_option', 1, get_post_meta( $current_post_id, '_' . $option_name, true ) ) ) )
-			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_' . $meta_box_id . '_local_total_number_default', 1 ) );
+		if ( ! ( $total_number = apply_filters( 'booster_option', 1, get_post_meta( $current_post_id, '_' . $option_name, true ) ) ) )
+			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_' . $meta_box_id . '_local_total_number_default', 1 ) );
 
 		// Start html
 		$html = '';
 
 		// Total number
-		$is_disabled = apply_filters( 'booster_get_message', '', 'readonly_string' );
-		$is_disabled_message = apply_filters( 'booster_get_message', '', 'desc' );
+		$is_disabled = apply_filters( 'booster_message', '', 'readonly_string' );
+		$is_disabled_message = apply_filters( 'booster_message', '', 'desc' );
 		$html .= '<table>';
 		$html .= '<tr>';
 		$html .= '<th>';
@@ -258,7 +258,7 @@ class WCJ_Product_Input_Fields_Core {
 		) {
 			foreach ( $order->get_items() as $item_key => $item ) {
 				$product_id = $item['product_id'];
-				$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
+				$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					$meta_key    = 'wcj_product_input_fields_' . $this->scope . '_' . $i;
 					if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
@@ -287,7 +287,7 @@ class WCJ_Product_Input_Fields_Core {
 	function hide_custom_input_fields_default_output_in_admin_order( $hidden_metas ) {
 		$total_number = 0;
 		if ( 'global' === $this->scope ) {
-			$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', 0, 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', 0, 1 ) );
 		} else {
 			$max_number_of_fields_for_local = 100;
 			$total_number = $max_number_of_fields_for_local;
@@ -311,7 +311,7 @@ class WCJ_Product_Input_Fields_Core {
 		}
 		echo '<table cellspacing="0" class="display_meta">';
 		$_product_id = wcj_get_product_id_or_variation_parent_id( $_product );
-		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product_id, 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
 			$the_nice_name = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $_product_id, '' );
@@ -353,7 +353,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * @version 3.1.0
 	 */
 	function validate_product_input_fields_on_add_to_cart( $passed, $product_id ) {
-		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
 			if ( ! $this->is_enabled( $i, $product_id ) ) {
@@ -423,7 +423,7 @@ class WCJ_Product_Input_Fields_Core {
 		}
 		$_product_id = wcj_get_product_id_or_variation_parent_id( $product );
 		$fields = array();
-		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product_id, 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 
 			$type        = $this->get_value( 'wcj_product_input_fields_type_' .        $this->scope . '_' . $i, $_product_id, 'text' );
@@ -610,7 +610,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * @version 3.1.0
 	 */
 	function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
-		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( ! $this->is_enabled( $i, $product_id ) ) {
 				continue;
@@ -637,7 +637,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * get_cart_item_product_input_fields_from_session.
 	 */
 	function get_cart_item_product_input_fields_from_session( $item, $values, $key ) {
-		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $values ) )
 				$item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] = $values[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ];
@@ -651,7 +651,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * @version 3.1.0
 	 */
 	function add_product_input_fields_to_order_item_name( $name, $item, $is_cart = false ) {
-		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
 		if ( $total_number < 1 ) {
 			return $name;
 		}
@@ -715,7 +715,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * @since   2.9.0
 	 */
 	function add_product_input_fields_to_cart_item_display_data( $item_data, $item  ) {
-		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
 		if ( $total_number < 1 ) {
 			return $item_data;
 		}
@@ -760,7 +760,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * @version 2.5.0
 	 */
 	function add_product_input_fields_to_order_item_meta( $item_id, $values, $cart_item_key  ) {
-		$total_number = apply_filters( 'booster_get_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i , $values ) ) {
 				$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $values['product_id'], '' );

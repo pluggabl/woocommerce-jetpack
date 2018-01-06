@@ -26,16 +26,16 @@ $settings = array(
 		'default'  => 1,
 		'type'     => 'custom_number',
 		'desc_tip' => __( 'Press Save changes after you change this number.', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
-			apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ?
+			apply_filters( 'booster_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
 	),
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_global_discount_options',
 	),
 );
-for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) ); $i++ ) {
 	wcj_maybe_convert_and_update_option_value( array(
 		array( 'id' => 'wcj_global_discount_sale_products_incl_' . $i, 'default' => '' ),
 		array( 'id' => 'wcj_global_discount_sale_products_excl_' . $i, 'default' => '' ),

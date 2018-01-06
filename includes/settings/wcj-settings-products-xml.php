@@ -25,9 +25,9 @@ $settings = array(
 		'default'  => 1,
 		'type'     => 'custom_number',
 		'desc_tip' => __( 'Press Save changes after you change this number.', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ?
-			apply_filters( 'booster_get_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ?
+			apply_filters( 'booster_message', '', 'readonly' ) : array( 'step' => '1', 'min'  => '1', ),
 	),
 	array(
 		'title'    => __( 'Advanced: Block Size', 'woocommerce-jetpack' ),
@@ -42,7 +42,7 @@ $settings = array(
 		'id'       => 'wcj_products_xml_options',
 	),
 );
-for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) ); $i++ ) {
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_products_xml_total_files', 1 ) ); $i++ ) {
 	wcj_maybe_convert_and_update_option_value( array(
 		array( 'id' => 'wcj_products_xml_products_incl_' . $i, 'default' => '' ),
 		array( 'id' => 'wcj_products_xml_products_excl_' . $i, 'default' => '' ),
@@ -132,8 +132,8 @@ for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_pro
 				'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
 				'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
 			),
-			'desc_tip' => __( 'Possible update periods are: every minute, hourly, twice daily, daily and weekly.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc_no_link' ),
-			'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+			'desc_tip' => __( 'Possible update periods are: every minute, hourly, twice daily, daily and weekly.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc_no_link' ),
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 		wcj_get_settings_as_multiselect_or_text(
 			array(

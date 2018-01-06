@@ -107,12 +107,12 @@ $settings = array(
 		'title'    => __( 'Preserve VAT in Base Country', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf( __( 'This will validate the VAT, but won\'t exempt VAT for base country VAT numbers. Base (i.e. store) country is set in %s.', 'woocommerce-jetpack' ),
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=general' ) . '">' . __( 'WooCommerce > Settings > General', 'woocommerce-jetpack' ) . '</a>' ) . '<br>' .
-			apply_filters( 'booster_get_message', '', 'desc' ),
+			apply_filters( 'booster_message', '', 'desc' ),
 		'desc'     => __( 'Yes', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_preserve_in_base_country',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	/*
 	array(
@@ -126,12 +126,12 @@ $settings = array(
 	array(
 		'title'    => __( 'Check for IP Location Country', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This will check if customer\'s country (located by customer\'s IP) matches the country in entered VAT number.', 'woocommerce-jetpack' ) . '<br>' .
-			apply_filters( 'booster_get_message', '', 'desc' ),
+			apply_filters( 'booster_message', '', 'desc' ),
 		'desc'     => __( 'Yes', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_check_ip_location_country',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	/*
 	array(

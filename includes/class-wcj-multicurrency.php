@@ -179,7 +179,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 */
 	function get_currency_exchange_rate( $currency_code ) {
 		$currency_exchange_rate = 1;
-		$total_number = apply_filters( 'booster_get_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+		$total_number = apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( $currency_code === get_option( 'wcj_multicurrency_currency_' . $i ) ) {
 				$currency_exchange_rate = get_option( 'wcj_multicurrency_exchange_rate_' . $i );

@@ -70,24 +70,24 @@ $settings = array_merge( $settings, array(
 		'desc'     => __( 'Message when product is not available by date.', 'woocommerce-jetpack' ) .
 			' ' . wcj_message_replaced_values( array( '%product_title%', '%date_this_month%' ) ) . '.' .
 			' ' . __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) .
-			' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+			' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_product_by_date_unavailable_message',
 		'default'  => __( '<p style="color:red;">%product_title% is available only on %date_this_month% this month.</p>', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'title'    => __( 'Message (Month Off)', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Message when product is not available by date (month off).', 'woocommerce-jetpack' ) .
 			' ' . wcj_message_replaced_values( array( '%product_title%' ) ) . '.' .
 			' ' . __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) .
-			' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+			' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_product_by_date_unavailable_message_month_off',
 		'default'  => __( '<p style="color:red;">%product_title% is not available this month.</p>', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'type'     => 'sectionend',

@@ -33,7 +33,7 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	 *
 	 * @version 3.2.1
 	 * @since   3.2.0
-	 * @todo    apply_filters( 'booster_get_option' )
+	 * @todo    apply_filters( 'booster_option' )
 	 */
 	function available_shipping_methods( $rates, $package ) {
 		foreach ( $rates as $rate_key => $rate ) {

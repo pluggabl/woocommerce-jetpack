@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -21,7 +21,7 @@ class WCJ_Admin {
 	 */
 	function __construct() {
 		if ( is_admin() ) {
-			add_filter( 'booster_get_message',                                      'wcj_get_plus_message', 100, 3 );
+			add_filter( 'booster_message',                                      'wcj_get_plus_message', 100, 3 );
 			add_filter( 'woocommerce_get_settings_pages',                            array( $this, 'add_wcj_settings_tab' ), 1 );
 			add_filter( 'plugin_action_links_' . plugin_basename( WCJ_PLUGIN_FILE ), array( $this, 'action_links' ) );
 			add_action( 'admin_menu',                                                array( $this, 'booster_menu' ), 100 );
@@ -35,16 +35,16 @@ class WCJ_Admin {
 	/**
 	 * check_plus_version.
 	 *
-	 * @version 3.1.1
+	 * @version 3.2.5
 	 * @since   2.5.9
+	 * @todo    expand "Please upgrade ..." message (i.e. "... you can downgrade to Booster v3.2.4 or earlier from ...")
 	 */
 	function check_plus_version() {
 		if ( ! is_admin() ) {
 			return;
 		}
 		// Check if Plus is installed and activated
-		$is_plus_active    = false;
-		$is_plus_v3_active = false;
+		$is_deprecated_plus_active = false;
 		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) );
 		if ( is_multisite() ) {
 			$active_plugins = array_merge( $active_plugins, array_keys( get_site_option( 'active_sitewide_plugins', array() ) ) );
@@ -53,33 +53,20 @@ class WCJ_Admin {
 			$active_plugin = explode( '/', $active_plugin );
 			if ( isset( $active_plugin[1] ) ) {
 				if ( 'booster-plus-for-woocommerce.php' === $active_plugin[1] ) {
-					$is_plus_v3_active = true;
-					break;
+					return;
 				} elseif ( 'woocommerce-jetpack-plus.php' === $active_plugin[1] || 'woocommerce-booster-plus.php' === $active_plugin[1] ) {
-					$is_plus_active = true;
+					$is_deprecated_plus_active = true;
 				}
 			}
 		}
 		// Check Plus version
-		if ( ! $is_plus_v3_active && $is_plus_active ) {
-			$plus_version          = get_option( 'booster_plus_version', false );
-			$required_plus_version = '1.1.0';
-			$notice_type           = ( version_compare( $plus_version, $required_plus_version, '<' ) ? 'error' : 'warning' );
-			global $pagenow;
-			if ( 'error' === $notice_type || 'plugins.php' === $pagenow ) {
-				$class   = 'notice notice-' . $notice_type;
-				$message = ( 'error' === $notice_type ?
-					sprintf(
-						__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin. Visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
-						'https://booster.io/my-account/?utm_source=plus_update'
-					) :
-					sprintf(
-						__( 'There is new version of <strong>Booster Plus for WooCommerce</strong> plugin available. We recommend upgrading. Please visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
-						'https://booster.io/my-account/?utm_source=plus_update'
-					)
-				);
-				echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
-			}
+		if ( $is_deprecated_plus_active ) {
+			$class   = 'notice notice-error';
+			$message = sprintf(
+				__( 'Please upgrade <strong>Booster Plus for WooCommerce</strong> plugin. Visit <a target="_blank" href="%s">your account page</a> on booster.io to download the latest Booster Plus version.', 'woocommerce-jetpack' ),
+				'https://booster.io/my-account/?utm_source=plus_update'
+			);
+			echo '<div class="' . $class . '"><p>' . $message . '</p></div>';
 		}
 	}
 
@@ -129,7 +116,7 @@ class WCJ_Admin {
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack' ) . '">' . __( 'Settings', 'woocommerce' ) . '</a>',
 			'<a href="' . esc_url( 'https://booster.io/' )                      . '">' . __( 'Docs', 'woocommerce-jetpack' ) . '</a>',
 		);
-		if ( 1 === apply_filters( 'booster_get_option', 1, '' ) ) {
+		if ( 1 === apply_filters( 'booster_option', 1, '' ) ) {
 			$custom_links[] = '<a href="' . esc_url( 'https://booster.io/plus/' ) . '">' . __( 'Unlock all', 'woocommerce-jetpack' ) . '</a>';
 		}
 		return array_merge( $custom_links, $links );

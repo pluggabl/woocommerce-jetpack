@@ -28,7 +28,7 @@ foreach ( $available_gateways as $key => $gateway ) {
 	'customer_reset_password'           => __( 'Customer - Reset Password', 'woocommerce-jetpack' ),
 );
 if ( wcj_is_module_enabled( 'emails' ) ) {
-	for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
+	for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_emails_custom_emails_total_number', 1 ) ); $i++ ) {
 		$available_emails[ 'wcj_custom' . '_' . $i ] = __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $i;
 	}
 } */

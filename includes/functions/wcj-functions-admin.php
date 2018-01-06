@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -28,11 +28,11 @@ if ( ! function_exists( 'wcj_admin_notices_version_updated' ) ) {
 	/**
 	 * wcj_admin_notices_version_updated.
 	 *
-	 * @version 3.2.4
+	 * @version 3.2.5
 	 * @since   2.8.0
 	 */
 	function wcj_admin_notices_version_updated() {
-		if ( get_option( 'booster_for_woocommerce_version' ) === WCJ()->version ) {
+		if ( get_option( WCJ_VERSION_OPTION ) === WCJ()->version ) {
 			$class   = 'notice notice-success is-dismissible';
 			$message = sprintf( __( '<strong>Booster for WooCommerce</strong> plugin was successfully updated to version <strong>%s</strong>.', 'woocommerce-jetpack' ), WCJ()->version );
 			echo sprintf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message );

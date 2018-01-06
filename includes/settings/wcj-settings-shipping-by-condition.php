@@ -31,11 +31,11 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 	$settings = array_merge( $settings, $this->get_additional_section_settings( $options_id ) );
 	foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
 		if ( ! in_array( $method->id, array( 'flat_rate', 'local_pickup' ) ) ) {
-			$custom_attributes = apply_filters( 'booster_get_message', '', 'disabled' );
+			$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
 			if ( '' == $custom_attributes ) {
 				$custom_attributes = array();
 			}
-			$desc_tip = apply_filters( 'booster_get_message', '', 'desc_no_link' );
+			$desc_tip = apply_filters( 'booster_message', '', 'desc_no_link' );
 		} else {
 			$custom_attributes = array();
 			$desc_tip = '';

@@ -152,7 +152,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			$order_number_meta = $order_id;
 		}
 		$order_timestamp = strtotime( ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->post->post_date : $order->get_date_created() ) );
-		$order_number = apply_filters( 'booster_get_option',
+		$order_number = apply_filters( 'booster_option',
 			sprintf( '%s%s', do_shortcode( get_option( 'wcj_order_number_prefix', '' ) ), $order_number_meta ),
 			sprintf( '%s%s%0' . get_option( 'wcj_order_number_min_width', 0 ) . 's%s%s',
 				do_shortcode( get_option( 'wcj_order_number_prefix', '' ) ),

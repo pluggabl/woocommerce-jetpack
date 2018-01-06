@@ -48,7 +48,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 				add_action( 'admin_init',         array( $this, 'track_users_update_county_stats' ) );
 			}
 			// Order tracking
-			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_track_users_save_order_http_referer_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_track_users_save_order_http_referer_enabled', 'no' ) ) ) {
 				add_action( 'woocommerce_new_order', array( $this, 'add_http_referer_to_order' ) );
 				add_action( 'add_meta_boxes',        array( $this, 'add_http_referer_order_meta_box' ) );
 			}

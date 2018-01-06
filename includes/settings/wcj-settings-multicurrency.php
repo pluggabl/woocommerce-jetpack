@@ -28,11 +28,11 @@ $settings = array(
 			'manual' => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
 			'auto'   => __( 'Automatically via Currency Exchange Rates module', 'woocommerce-jetpack' ),
 		),
-		'desc'     => ( '' == apply_filters( 'booster_get_message', '', 'desc' ) ) ?
+		'desc'     => ( '' == apply_filters( 'booster_message', '', 'desc' ) ) ?
 			__( 'Visit', 'woocommerce-jetpack' ) . ' <a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
 			:
-			apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+			apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Multicurrency on per Product Basis', 'woocommerce-jetpack' ),
@@ -112,14 +112,14 @@ $settings = array(
 		'id'       => 'wcj_multicurrency_total_number',
 		'default'  => 2,
 		'type'     => 'custom_number',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => array_merge(
-			is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
+			is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ? apply_filters( 'booster_message', '', 'readonly' ) : array(),
 			array( 'step' => '1', 'min'  => '2', )
 		),
 	),
 );
-$total_number = apply_filters( 'booster_get_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+$total_number = apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$currency_to = get_option( 'wcj_multicurrency_currency_' . $i, $currency_from );
 	$custom_attributes = array(

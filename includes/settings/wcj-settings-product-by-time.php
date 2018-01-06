@@ -70,24 +70,24 @@ $settings = array_merge( $settings, array(
 		'desc'     => __( 'Message when product is not available by time.', 'woocommerce-jetpack' ) .
 			' ' . __( 'Replaceable values:', 'woocommerce-jetpack' ) . ' ' . '<code>%product_title%</code>' . ', ' . '<code>%time_today%</code>' . '.' .
 			' ' . __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) .
-			' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+			' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_product_by_time_unavailable_message',
 		'default'  => __( '<p style="color:red;">%product_title% is available only at %time_today% today.</p>', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'title'    => __( 'Message (Day Off)', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Message when product is not available by time (day off).', 'woocommerce-jetpack' ) .
 			' ' . __( 'Replaceable value:', 'woocommerce-jetpack' ) . ' ' . '<code>%product_title%</code>' . '.' .
 			' ' . __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) .
-			' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+			' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_product_by_time_unavailable_message_day_off',
 		'default'  => __( '<p style="color:red;">%product_title% is not available today.</p>', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'css'      => 'width:66%;min-width:300px;',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'type'     => 'sectionend',

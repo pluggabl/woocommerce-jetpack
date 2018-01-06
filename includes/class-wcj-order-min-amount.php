@@ -126,7 +126,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_order_minimum_amount_cart_notice_enabled', 'no' ) ) {
 					$notice_function = get_option( 'wcj_order_minimum_amount_cart_notice_function', 'wc_print_notice' );
 					$notice_function(
-						sprintf( apply_filters( 'booster_get_option', 'You must have an order with a minimum of %s to place your order, your current order total is %s.', get_option( 'wcj_order_minimum_amount_cart_notice_message' ) ),
+						sprintf( apply_filters( 'booster_option', 'You must have an order with a minimum of %s to place your order, your current order total is %s.', get_option( 'wcj_order_minimum_amount_cart_notice_message' ) ),
 							wc_price( $minimum ),
 							wc_price( $cart_total )
 						),
@@ -135,7 +135,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 				}
 			} else {
 				wc_add_notice(
-					sprintf( apply_filters( 'booster_get_option', 'You must have an order with a minimum of %s to place your order, your current order total is %s.', get_option( 'wcj_order_minimum_amount_error_message' ) ),
+					sprintf( apply_filters( 'booster_option', 'You must have an order with a minimum of %s to place your order, your current order total is %s.', get_option( 'wcj_order_minimum_amount_error_message' ) ),
 						wc_price( $minimum ),
 						wc_price( $cart_total )
 					),

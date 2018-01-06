@@ -109,7 +109,7 @@ class WCJ_Price_by_Country_Local {
 	 * get_total_country_groups_number.
 	 */
 	function get_total_country_groups_number() {
-		return apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) );
+		return apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) );
 	}
 
 	/**

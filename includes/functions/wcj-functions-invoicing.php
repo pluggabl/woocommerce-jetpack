@@ -286,7 +286,7 @@ if ( ! function_exists( 'wcj_get_enabled_invoice_types' ) ) {
 		$invoice_types = wcj_get_invoice_types();
 		$enabled_invoice_types = array();
 		foreach ( $invoice_types as $k => $invoice_type ) {
-			$z = ( 0 === $k ) ? wcj_get_invoice_create_on( $invoice_type['id'] ) : apply_filters( 'booster_get_option', '', wcj_get_invoice_create_on( $invoice_type['id'] ) );
+			$z = ( 0 === $k ) ? wcj_get_invoice_create_on( $invoice_type['id'] ) : apply_filters( 'booster_option', '', wcj_get_invoice_create_on( $invoice_type['id'] ) );
 			if ( empty( $z ) ) {
 				continue;
 			}

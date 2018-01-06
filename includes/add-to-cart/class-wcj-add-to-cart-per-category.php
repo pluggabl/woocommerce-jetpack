@@ -44,7 +44,7 @@ class WCJ_Add_To_Cart_Per_Category {
 	function change_add_to_cart_button_text( $add_to_cart_text, $single_or_archive ) {
 		$product_categories = get_the_terms( get_the_ID(), 'product_cat' );
 		if ( empty( $product_categories ) ) return $add_to_cart_text;
-		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_add_to_cart_per_category_total_groups_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_add_to_cart_per_category_total_groups_number', 1 ) ); $i++ ) {
 			if ( 'yes' !== get_option( 'wcj_add_to_cart_per_category_enabled_group_' . $i ) ) continue;
 			$categories = get_option( 'wcj_add_to_cart_per_category_ids_group_' . $i );
 			if ( empty(  $categories ) ) continue;

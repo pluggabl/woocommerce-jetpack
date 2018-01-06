@@ -33,8 +33,8 @@ $settings = array(
 			'except_local_pickup' => __( 'Hide all except "Local Pickup"', 'woocommerce-jetpack' ),
 			'flat_rate_only'      => __( 'Hide "Flat Rate" only', 'woocommerce-jetpack' ),
 		),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Advanced: Filter Priority', 'woocommerce-jetpack' ),
@@ -83,8 +83,8 @@ $settings = array_merge( $settings, array(
 			'all'          => __( 'All products in cart must grant free shipping', 'woocommerce-jetpack' ),
 			'at_least_one' => __( 'At least one product in cart must grant free shipping', 'woocommerce-jetpack' ),
 		),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',
@@ -116,8 +116,8 @@ $settings = array_merge( $settings, array(
 			'checkout_only' => __( 'Only on checkout page', 'woocommerce-jetpack' ),
 		),
 		'desc_tip' => __( 'Possible values: on both cart and checkout pages; only on cart page; only on checkout page', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 ) );
 foreach ( WC()->shipping->get_shipping_methods() as $method ) {
@@ -172,8 +172,8 @@ $settings = array_merge( $settings, array(
 			'checkout_only' => __( 'Only on checkout page', 'woocommerce-jetpack' ),
 		),
 		'desc_tip' => __( 'Possible values: on both cart and checkout pages; only on cart page; only on checkout page', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Icon Style', 'woocommerce-jetpack' ),

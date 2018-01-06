@@ -30,7 +30,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 			$single_or_archive_array = array( 'single', 'archive' );
 			foreach ( $single_or_archive_array as $single_or_archive ) {
 				$default_hook = ( 'single' === $single_or_archive ) ? 'woocommerce_after_single_product_summary' : 'woocommerce_after_shop_loop_item_title';
-				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
 					add_action(
 						get_option( 'wcj_product_custom_info_hook_' . $single_or_archive . '_' . $i, $default_hook ),
 						array( $this, 'add_product_custom_info' ),
@@ -103,7 +103,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 		$single_or_archive_array = array( 'single', 'archive' );
 		foreach ( $single_or_archive_array as $single_or_archive ) {
 			$default_hook = ( 'single' === $single_or_archive ) ? 'woocommerce_after_single_product_summary' : 'woocommerce_after_shop_loop_item_title';
-			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
 				if ( $this->is_visible( $product_id, $current_filter, $current_filter_priority, $default_hook, $single_or_archive, $i ) ) {
 					echo do_shortcode( get_option( 'wcj_product_custom_info_content_' . $single_or_archive . '_' . $i ) );
 				}

@@ -53,11 +53,11 @@ $settings = array(
 		'id'        => 'wcj_purchase_data_custom_price_fields_total_number',
 		'default'   => 1,
 		'type'      => 'custom_number',
-		'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 );
-$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -135,8 +135,8 @@ $settings = array_merge( $settings, array(
 		'id'        => 'wcj_purchase_data_custom_products_columns_profit',
 		'default'   => 'no',
 		'type'      => 'checkbox',
-		'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc_tip'  => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'     => __( 'Purchase Cost', 'woocommerce-jetpack' ),
@@ -144,8 +144,8 @@ $settings = array_merge( $settings, array(
 		'id'        => 'wcj_purchase_data_custom_products_columns_purchase_cost',
 		'default'   => 'no',
 		'type'      => 'checkbox',
-		'desc_tip'  => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc_tip'  => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'      => 'sectionend',

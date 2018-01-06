@@ -158,7 +158,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 		if ( 'price' === $price_type && '' === $price ) {
 			return $price; // no changes
 		}
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( ! $this->check_if_applicable( $_product, $i ) ) {
 				continue; // no changes by current discount group
@@ -185,7 +185,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$wcj_global_discount_price_hash = array();
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_global_discount_groups_total_number', 1 ) );
 		$wcj_global_discount_price_hash['total_number'] = $total_number;
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			$wcj_global_discount_price_hash[ 'enabled_' . $i ]     = get_option( 'wcj_global_discount_sale_enabled_'          . $i, 'yes' );

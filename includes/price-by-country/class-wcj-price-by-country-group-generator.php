@@ -71,7 +71,7 @@ class WCJ_Price_By_Country_Group_Generator {
 		if ( isset( $_POST['save'] ) ) {
 			return;
 		}
-		if ( /* ! is_admin() || */ ! wcj_is_user_role( 'administrator' ) || 1 === apply_filters( 'booster_get_option', 1, '' ) ) {
+		if ( /* ! is_admin() || */ ! wcj_is_user_role( 'administrator' ) || 1 === apply_filters( 'booster_option', 1, '' ) ) {
 			$wcj_notice = __( 'Create All Country Groups Failed.', 'woocommerce-jetpack' );
 			return;
 		}

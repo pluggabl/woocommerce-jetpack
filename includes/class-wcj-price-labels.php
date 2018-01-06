@@ -162,7 +162,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 				$option_name = $this->custom_tab_group_name . $custom_tab_section . $custom_tab_section_variation;
 				if ( $custom_tab_section_variation == '_text' ) {
 					if ( $custom_tab_section != '_instead' ) {
-						$disabled_if_no_plus = apply_filters( 'booster_get_message', '', 'readonly_string' );
+						$disabled_if_no_plus = apply_filters( 'booster_message', '', 'readonly_string' );
 					} else {
 						$disabled_if_no_plus = '';
 					}
@@ -177,7 +177,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 						echo '<li><h5>Variable products</h5></li>';
 					}
 					if ( '_instead' != $custom_tab_section ) {
-						$disabled_if_no_plus = apply_filters( 'booster_get_message', '', 'disabled_string' );
+						$disabled_if_no_plus = apply_filters( 'booster_message', '', 'disabled_string' );
 					} else {
 						$disabled_if_no_plus = '';
 					}
@@ -192,7 +192,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 		echo '<tr>';
 		foreach ( $this->custom_tab_sections as $custom_tab_section ) {
 			if ( '_instead' != $custom_tab_section )
-				$disabled_if_no_plus = apply_filters( 'booster_get_message', '', 'desc_above' );
+				$disabled_if_no_plus = apply_filters( 'booster_message', '', 'desc_above' );
 			else
 				$disabled_if_no_plus = '';
 			echo '<td style="width:25%;">' . $disabled_if_no_plus . '</td>';
@@ -213,13 +213,13 @@ class WCJ_Price_Labels extends WCJ_Module {
 				$price = $custom_label;
 				break;
 			case '_before':
-				$price = apply_filters( 'booster_get_option', $price, $custom_label . $price );
+				$price = apply_filters( 'booster_option', $price, $custom_label . $price );
 				break;
 			case '_between':
-				$price = apply_filters( 'booster_get_option', $price, str_replace( '</del> <ins>', '</del>' . $custom_label . '<ins>', $price ) );
+				$price = apply_filters( 'booster_option', $price, str_replace( '</del> <ins>', '</del>' . $custom_label . '<ins>', $price ) );
 				break;
 			case '_after':
-				$price = apply_filters( 'booster_get_option', $price, $price . $custom_label );
+				$price = apply_filters( 'booster_option', $price, $price . $custom_label );
 				break;
 		}
 		return str_replace( 'From: ', '', $price );
@@ -319,7 +319,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 		}
 		if ( $do_apply_global ) {
 			// Global price labels - Add text before price
-			$text_to_add_before = apply_filters( 'booster_get_option', '', get_option( 'wcj_global_price_labels_add_before_text' ) );
+			$text_to_add_before = apply_filters( 'booster_option', '', get_option( 'wcj_global_price_labels_add_before_text' ) );
 			if ( '' != $text_to_add_before ) {
 				if ( apply_filters( 'wcj_price_labels_check_on_applying_label', true, $price, $text_to_add_before ) ) {
 					$price = $text_to_add_before . $price;
@@ -335,16 +335,16 @@ class WCJ_Price_Labels extends WCJ_Module {
 			// Global price labels - Between regular and sale prices
 			$text_to_add_between_regular_and_sale = get_option( 'wcj_global_price_labels_between_regular_and_sale_text' );
 			if ( '' != $text_to_add_between_regular_and_sale ) {
-				$price = apply_filters( 'booster_get_option', $price, str_replace( '</del> <ins>', '</del>' . $text_to_add_between_regular_and_sale . '<ins>', $price ) );
+				$price = apply_filters( 'booster_option', $price, str_replace( '</del> <ins>', '</del>' . $text_to_add_between_regular_and_sale . '<ins>', $price ) );
 			}
 			// Global price labels - Remove text from price
-			$text_to_remove = apply_filters( 'booster_get_option', '', get_option( 'wcj_global_price_labels_remove_text' ) );
+			$text_to_remove = apply_filters( 'booster_option', '', get_option( 'wcj_global_price_labels_remove_text' ) );
 			if ( '' != $text_to_remove ) {
 				$price = str_replace( $text_to_remove, '', $price );
 			}
 			// Global price labels - Replace in price
-			$text_to_replace = apply_filters( 'booster_get_option', '', get_option( 'wcj_global_price_labels_replace_text' ) );
-			$text_to_replace_with = apply_filters( 'booster_get_option', '', get_option( 'wcj_global_price_labels_replace_with_text' ) );
+			$text_to_replace = apply_filters( 'booster_option', '', get_option( 'wcj_global_price_labels_replace_text' ) );
+			$text_to_replace_with = apply_filters( 'booster_option', '', get_option( 'wcj_global_price_labels_replace_with_text' ) );
 			if ( '' != $text_to_replace && '' != $text_to_replace_with ) {
 				$price = str_replace( $text_to_replace, $text_to_replace_with, $price );
 			}

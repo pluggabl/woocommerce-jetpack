@@ -28,7 +28,7 @@ class WCJ_Sorting extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_remove_all_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sorting_remove_all_enabled', 'no' ) ) ) {
 				// Remove All Sorting
 				add_action( 'wp_loaded',       array( $this, 'remove_sorting' ),          PHP_INT_MAX );
 				add_filter( 'wc_get_template', array( $this, 'remove_sorting_template' ), PHP_INT_MAX, 5 );
@@ -43,7 +43,7 @@ class WCJ_Sorting extends WCJ_Module {
 				}
 
 				// Remove or Rename Default Sorting
-				if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_default_sorting_enabled', 'no' ) ) ) {
+				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sorting_default_sorting_enabled', 'no' ) ) ) {
 					add_filter( 'woocommerce_catalog_orderby',                 array( $this, 'remove_default_sortings' ), PHP_INT_MAX );
 					add_filter( 'woocommerce_catalog_orderby',                 array( $this, 'rename_default_sortings' ), PHP_INT_MAX );
 					add_filter( 'woocommerce_default_catalog_orderby_options', array( $this, 'remove_default_sortings' ), PHP_INT_MAX );
@@ -107,7 +107,7 @@ class WCJ_Sorting extends WCJ_Module {
 		$default_sortings = $this->get_woocommerce_default_sortings();
 		foreach ( $default_sortings as $sorting_key => $sorting_desc ) {
 			$option_key = str_replace( '-', '_', $sorting_key );
-			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_default_sorting_' . $option_key . '_disable', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sorting_default_sorting_' . $option_key . '_disable', 'no' ) ) ) {
 				unset( $sortby[ $sorting_key ] );
 			}
 		}
@@ -125,7 +125,7 @@ class WCJ_Sorting extends WCJ_Module {
 		foreach ( $default_sortings as $sorting_key => $sorting_desc ) {
 			$option_key = str_replace( '-', '_', $sorting_key );
 			if ( isset( $sortby[ $sorting_key ] ) ) {
-				$sortby[ $sorting_key ] = apply_filters( 'booster_get_option', $sorting_desc,
+				$sortby[ $sorting_key ] = apply_filters( 'booster_option', $sorting_desc,
 					get_option( 'wcj_sorting_default_sorting_' . $option_key, $sorting_desc ) );
 			}
 		}
@@ -242,13 +242,13 @@ class WCJ_Sorting extends WCJ_Module {
 				$args['meta_key'] = '';
 			break;
 			case 'sku_asc':
-				$args['orderby']  = ( 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
+				$args['orderby']  = ( 'no' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
 					'meta_value' : 'meta_value_num';
 				$args['order']    = 'asc';
 				$args['meta_key'] = '_sku';
 			break;
 			case 'sku_desc':
-				$args['orderby']  = ( 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
+				$args['orderby']  = ( 'no' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sorting_by_sku_num_enabled', 'no' ) ) ) ?
 					'meta_value' : 'meta_value_num';
 				$args['order']    = 'desc';
 				$args['meta_key'] = '_sku';

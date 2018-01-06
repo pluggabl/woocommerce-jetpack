@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency per Product
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -107,11 +107,11 @@ $settings = array(
 			'manual' => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
 			'auto'   => __( 'Automatically via Currency Exchange Rates module', 'woocommerce-jetpack' ),
 		),
-		'desc'     => ( '' == apply_filters( 'booster_get_message', '', 'desc' ) ) ?
+		'desc'     => ( '' == apply_filters( 'booster_message', '', 'desc' ) ) ?
 			__( 'Visit', 'woocommerce-jetpack' ) . ' <a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
 			:
-			apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+			apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',
@@ -128,9 +128,9 @@ $settings = array(
 		'id'       => 'wcj_currency_per_product_total_number',
 		'default'  => 1,
 		'type'     => 'custom_number',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => array_merge(
-			is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
+			is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ? apply_filters( 'booster_message', '', 'readonly' ) : array(),
 			array( 'step' => '1', 'min'  => '1', )
 		),
 	),
@@ -147,7 +147,7 @@ if ( 'yes' === get_option( 'wcj_currency_per_product_by_product_cats_enabled', '
 if ( 'yes' === get_option( 'wcj_currency_per_product_by_product_tags_enabled', 'no' ) ) {
 	$product_tags_as_options = wcj_get_terms( 'product_tag' );
 }
-$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
+$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$currency_to = get_option( 'wcj_currency_per_product_currency_' . $i, $currency_from );
 	$custom_attributes = array(
@@ -229,6 +229,22 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_currency_per_product_currencies_options',
+	),
+	array(
+		'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_currency_per_product_advanced_options',
+	),
+	array(
+		'title'    => __( 'Save Converted Product Prices in Array', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_per_product_save_prices',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_currency_per_product_advanced_options',
 	),
 ) );
 return $settings;

@@ -92,10 +92,10 @@ class WCJ_Product_By_Date extends WCJ_Module {
 				'%product_title%'   => $_product->get_title(),
 			);
 			$message = ( ( '-' === $_date ) ?
-				apply_filters( 'booster_get_option', __( '<p style="color:red;">%product_title% is not available this month.</p>', 'woocommerce-jetpack' ),
+				apply_filters( 'booster_option', __( '<p style="color:red;">%product_title% is not available this month.</p>', 'woocommerce-jetpack' ),
 					get_option( 'wcj_product_by_date_unavailable_message_month_off',
 						__( '<p style="color:red;">%product_title% is not available this month.</p>', 'woocommerce-jetpack' ) ) ) :
-				apply_filters( 'booster_get_option', __( '<p style="color:red;">%product_title% is available only on %date_this_month% this month.</p>', 'woocommerce-jetpack' ),
+				apply_filters( 'booster_option', __( '<p style="color:red;">%product_title% is available only on %date_this_month% this month.</p>', 'woocommerce-jetpack' ),
 					get_option( 'wcj_product_by_date_unavailable_message',
 						__( '<p style="color:red;">%product_title% is available only on %date_this_month% this month.</p>', 'woocommerce-jetpack' ) ) )
 			);

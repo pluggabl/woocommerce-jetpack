@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Manager
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -87,7 +87,7 @@ class WCJ_Settings_Manager {
 	/**
 	 * manage_options_export.
 	 *
-	 * @version 2.9.0
+	 * @version 3.2.5
 	 * @since   2.5.2
 	 */
 	function manage_options_export() {
@@ -108,7 +108,7 @@ class WCJ_Settings_Manager {
 			}
 		}
 		$export_settings = json_encode( $export_settings );
-		$export_settings = 'Booster for WooCommerce v' . get_option( 'booster_for_woocommerce_version', 'NA' ) . PHP_EOL . $export_settings;
+		$export_settings = 'Booster for WooCommerce v' . get_option( WCJ_VERSION_OPTION, 'NA' ) . PHP_EOL . $export_settings;
 		header( "Content-Type: application/octet-stream" );
 		header( "Content-Disposition: attachment; filename=booster_settings.txt" );
 		header( "Content-Type: application/octet-stream" );

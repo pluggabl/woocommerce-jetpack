@@ -59,8 +59,8 @@ return array(
 		'id'       => 'wcj_shipping_left_to_free_info_enabled_mini_cart',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
 	),
 	array(
 		'title'    => '',
@@ -96,8 +96,8 @@ return array(
 		'id'       => 'wcj_shipping_left_to_free_info_enabled_checkout',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
 	),
 	array(
 		'title'    => '',

@@ -39,8 +39,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 					add_action( 'wp', array( $this, 'stop_from_seeing_checkout' ), PHP_INT_MAX );
 				}
 				if (
-					'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_order_quantities_min_per_item_quantity_per_product', 'no' ) ) ||
-					'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_order_quantities_max_per_item_quantity_per_product', 'no' ) )
+					'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_min_per_item_quantity_per_product', 'no' ) ) ||
+					'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_max_per_item_quantity_per_product', 'no' ) )
 				) {
 					add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 					add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
@@ -97,11 +97,11 @@ class WCJ_Order_Quantities extends WCJ_Module {
 			return $default_qty;
 		}
 		if (
-			'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity_per_product', 'no' ) ) &&
+			'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity_per_product', 'no' ) ) &&
 			0 != ( $max_or_max_per_item_quantity_per_product = get_post_meta( wcj_get_product_id( $_product ), '_' . 'wcj_order_quantities_' . $min_or_max, true ) )
 		) {
 			return $max_or_max_per_item_quantity_per_product;
-		} elseif ( 0 != ( $max_or_max_per_item_quantity = apply_filters( 'booster_get_option', 0, get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity', 0 ) ) ) ) {
+		} elseif ( 0 != ( $max_or_max_per_item_quantity = apply_filters( 'booster_option', 0, get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity', 0 ) ) ) ) {
 			return $max_or_max_per_item_quantity;
 		} else {
 			return $default_qty;
@@ -271,7 +271,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				}
 			}
 		}
-		if ( apply_filters( 'booster_get_option', 'no', get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity_per_product', 'no' ) ) ) {
+		if ( apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity_per_product', 'no' ) ) ) {
 			foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
 				if ( 0 != ( $max_or_max_per_item_quantity = get_post_meta( $_product_id, '_' . 'wcj_order_quantities_' . $min_or_max, true ) ) ) {
 					if (
@@ -287,10 +287,10 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				}
 			}
 		}
-		if ( 0 != ( $max_or_max_per_item_quantity = apply_filters( 'booster_get_option', 0, get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity', 0 ) ) ) ) {
+		if ( 0 != ( $max_or_max_per_item_quantity = apply_filters( 'booster_option', 0, get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity', 0 ) ) ) ) {
 			foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
 				if (
-					'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity_per_product', 'no' ) ) &&
+					'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity_per_product', 'no' ) ) &&
 					0 != get_post_meta( $_product_id, '_' . 'wcj_order_quantities_' . $min_or_max, true )
 				) {
 					continue;

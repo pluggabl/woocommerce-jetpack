@@ -294,7 +294,7 @@ class WCJ_Settings_Custom_Fields {
 		$tooltip_html = ( isset( $value['desc_tip'] ) && '' != $value['desc_tip'] ) ?
 			'<span class="woocommerce-help-tip" data-tip="' . $value['desc_tip'] . '"></span>' : '';
 		$description  = ' <span class="description">' . $value['desc'] . '</span>';
-		$save_button  = apply_filters( 'booster_get_option', '',
+		$save_button  = apply_filters( 'booster_option', '',
 			' <input name="save" class="button-primary" type="submit" value="' . __( 'Save changes', 'woocommerce' ) . '">' );
 		// Custom attribute handling
 		$custom_attributes = array();

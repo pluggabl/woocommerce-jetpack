@@ -37,7 +37,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			'external_url_enabled'   => get_option( 'wcj_product_by_user_external_url_enabled', 'no' ),
 			'cats_enabled'           => get_option( 'wcj_product_by_user_cats_enabled', 'no' ),
 			'tags_enabled'           => get_option( 'wcj_product_by_user_tags_enabled', 'no' ),
-			'image_enabled'          => apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_user_image_enabled', 'no' ) ),
+			'image_enabled'          => apply_filters( 'booster_option', 'no', get_option( 'wcj_product_by_user_image_enabled', 'no' ) ),
 
 			'desc_required'          => get_option( 'wcj_product_by_user_desc_required', 'no' ),
 			'short_desc_required'    => get_option( 'wcj_product_by_user_short_desc_required', 'no' ),
@@ -46,7 +46,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			'external_url_required'  => get_option( 'wcj_product_by_user_external_url_required', 'no' ),
 			'cats_required'          => get_option( 'wcj_product_by_user_cats_required', 'no' ),
 			'tags_required'          => get_option( 'wcj_product_by_user_tags_required', 'no' ),
-			'image_required'         => apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_by_user_image_required', 'no' ) ),
+			'image_required'         => apply_filters( 'booster_option', 'no', get_option( 'wcj_product_by_user_image_required', 'no' ) ),
 
 			'visibility'             => implode( ',', get_option( 'wcj_product_by_user_user_visibility', array() ) ),
 			'module'                 => 'product_by_user',
@@ -58,7 +58,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 			$this->the_atts['external_url_required'] = 'no';
 		}
 
-		$this->the_atts['custom_taxonomies_total'] = apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_by_user_custom_taxonomies_total', 1 ) );
+		$this->the_atts['custom_taxonomies_total'] = apply_filters( 'booster_option', 1, get_option( 'wcj_product_by_user_custom_taxonomies_total', 1 ) );
 		for ( $i = 1; $i <= $this->the_atts['custom_taxonomies_total']; $i++ ) {
 			$this->the_atts[ 'custom_taxonomy_' . $i . '_enabled' ]  = get_option( 'wcj_product_by_user_custom_taxonomy_' . $i . '_enabled',  'no' );
 			$this->the_atts[ 'custom_taxonomy_' . $i . '_required' ] = get_option( 'wcj_product_by_user_custom_taxonomy_' . $i . '_required', 'no' );

@@ -40,7 +40,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ||
 				'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' ) ||
 				'yes' === get_option( 'wcj_add_to_cart_button_ajax_per_product_enabled', 'no' ) ||
-				'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) ||
+				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) ||
 				'per_product' === get_option( 'wcj_add_to_cart_on_visit_enabled', 'no' )
 			) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
@@ -49,14 +49,14 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
 			// Customize "Continue shopping" or "View cart" messages
 			if (
-				'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_add_to_cart_message_continue_shopping_enabled', 'no' ) ) ||
-				'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_add_to_cart_message_view_cart_enabled', 'no' ) )
+				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_add_to_cart_message_continue_shopping_enabled', 'no' ) ) ||
+				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_add_to_cart_message_view_cart_enabled', 'no' ) )
 			) {
 				add_filter( 'wc_add_to_cart_message_html', array( $this, 'change_add_to_cart_message_html' ), PHP_INT_MAX, 2 );
 			}
 
 			// Local Redirect
-			if ( 'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) || 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) ) {
+			if ( 'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) || 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) ) {
 				add_filter( 'woocommerce_add_to_cart_redirect', array( $this, 'maybe_redirect_to_url' ), PHP_INT_MAX );
 			}
 
@@ -66,7 +66,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			}
 
 			// Variable Add to Cart Template
-			if ( 'yes' === apply_filters( 'booster_get_option', 'wcj', get_option( 'wcj_add_to_cart_variable_as_radio_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'wcj', get_option( 'wcj_add_to_cart_variable_as_radio_enabled', 'no' ) ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_variable_add_to_cart_scripts' ) );
 				add_filter( 'wc_get_template',    array( $this, 'change_variable_add_to_cart_template' ), PHP_INT_MAX, 5 );
 			}
@@ -150,10 +150,10 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	 */
 	function change_add_to_cart_message_html( $message, $products ) {
 
-		if ( 'yes' === get_option( 'woocommerce_cart_redirect_after_add' ) && 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_add_to_cart_message_continue_shopping_enabled', 'no' ) ) ) {
+		if ( 'yes' === get_option( 'woocommerce_cart_redirect_after_add' ) && 'no' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_add_to_cart_message_continue_shopping_enabled', 'no' ) ) ) {
 			return $message;
 		}
-		if ( 'yes' !== get_option( 'woocommerce_cart_redirect_after_add' ) && 'no' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_add_to_cart_message_view_cart_enabled', 'no' ) ) ) {
+		if ( 'yes' !== get_option( 'woocommerce_cart_redirect_after_add' ) && 'no' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_add_to_cart_message_view_cart_enabled', 'no' ) ) ) {
 			return $message;
 		}
 
@@ -379,7 +379,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	 * @version 2.9.0
 	 */
 	function maybe_redirect_to_url( $url, $product_id = false ) {
-		if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) && ( $product_id || isset( $_REQUEST['add-to-cart'] ) ) ) {
+		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) && ( $product_id || isset( $_REQUEST['add-to-cart'] ) ) ) {
 			if ( ! $product_id ) {
 				$product_id = apply_filters( 'woocommerce_add_to_cart_product_id', absint( $_REQUEST['add-to-cart'] ) );
 			}
@@ -434,7 +434,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				// Maybe perform add to cart redirect
 				if ( false !== $was_added_to_cart && (
 					'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ||
-					'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) )
+					'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) )
 				) ) {
 					if ( $redirect_url = $this->maybe_redirect_to_url( false, $product_id ) ) {
 						if ( wp_safe_redirect( $redirect_url ) ) {

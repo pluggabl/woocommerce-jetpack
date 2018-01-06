@@ -155,7 +155,7 @@ class WCJ_Order_Statuses_Tool {
 				$color_html    = '<input disabled type="color" value="' . $icon_data['color'] . '">';
 				$delete_button = '<a class="button-primary" href="' . add_query_arg( 'delete', $status, remove_query_arg( 'edit' ) ) .
 					'" onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')">' . __( 'Delete', 'woocommerce-jetpack' ) . '</a>';
-				$edit_button   = '<a class="button-primary"' . ( '' != apply_filters( 'booster_get_message', '', 'desc' ) ?
+				$edit_button   = '<a class="button-primary"' . ( '' != apply_filters( 'booster_message', '', 'desc' ) ?
 					' disabled title="' . __( 'Get Booster Plus to enable.', 'woocommerce-jetpack' ) . '"' :
 					' href="' . add_query_arg( 'edit', $status, remove_query_arg( 'delete' ) ) . '"' ) . '>' . __( 'Edit', 'woocommerce-jetpack' ) . '</a>';
 				$row = array_merge( $row, array(

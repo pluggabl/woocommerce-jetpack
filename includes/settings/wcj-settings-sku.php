@@ -29,8 +29,8 @@ $settings = array(
 		),
 		'desc_tip' => __( 'Number generation method.', 'woocommerce-jetpack' ) . ' ' .
 			__( 'Possible values: from product ID, sequential or pseudorandom.', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Sequential Number Generation - Counter', 'woocommerce-jetpack' ),
@@ -38,20 +38,20 @@ $settings = array(
 		'id'       => 'wcj_sku_number_generation_sequential',
 		'default'  => 1,
 		'type'     => 'number',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => array_merge(
-			is_array( apply_filters( 'booster_get_message', '', 'readonly' ) ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : array(),
+			is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ? apply_filters( 'booster_message', '', 'readonly' ) : array(),
 			array( 'step' => '1', 'min'  => '0', )
 		),
 	),
 	array(
 		'title'    => __( 'Sequential Number Generation - By Category', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Enables sequential number generation by category.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc_tip' => __( 'Enables sequential number generation by category.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_sku_number_generation_sequential_by_cat',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Prefix', 'woocommerce-jetpack' ),
@@ -95,8 +95,8 @@ $settings = array(
 			'as_variation'            => __( 'Generate different SKU for each variation', 'woocommerce-jetpack' ),
 			'as_variable_with_suffix' => __( 'SKU same as parent\'s product + variation letter suffix', 'woocommerce-jetpack' ),
 		),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',
@@ -120,8 +120,8 @@ if ( ! empty( $product_categories ) && ! is_wp_error( $product_categories ) ){
 				'id'       => 'wcj_sku_prefix_cat_' . $product_category->term_id,
 				'default'  => '',
 				'type'     => 'text',
-				'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+				'desc_tip' => apply_filters( 'booster_message', '', 'desc_no_link' ),
+				'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 			),
 			array(
 				'title'    => '',

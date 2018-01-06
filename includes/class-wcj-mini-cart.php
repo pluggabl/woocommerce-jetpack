@@ -27,7 +27,7 @@ class WCJ_Mini_Cart extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				add_action(
 					get_option( 'wcj_mini_cart_custom_info_hook_' . $i, 'woocommerce_after_mini_cart' ),
@@ -46,7 +46,7 @@ class WCJ_Mini_Cart extends WCJ_Module {
 	function add_mini_cart_custom_info() {
 		$current_filter = current_filter();
 		$current_filter_priority = wcj_current_filter_priority();
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_mini_cart_custom_info_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if (
 				''                       != get_option( 'wcj_mini_cart_custom_info_content_'  . $i ) &&

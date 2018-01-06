@@ -46,7 +46,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 	 * @since   2.5.2
 	 */
 	function price_format( $args ) {
-		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
 			if ( get_woocommerce_currency() === get_option( 'wcj_price_formats_currency_' . $i ) ) {
 				if ( defined( 'ICL_LANGUAGE_CODE' ) && '' != ( $wpml_language = get_option( 'wcj_price_formats_wpml_language_' . $i, '' ) ) ) {
 					$wpml_language = explode( ',', trim( str_replace( ' ', '', $wpml_language ), ',' ) );

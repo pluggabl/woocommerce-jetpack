@@ -86,8 +86,8 @@ class WCJ_Exchange_Rates_Crons {
 
 		if ( wcj_is_module_enabled( 'price_by_country' ) ) {
 			// Currency Pairs - Preparation - Price by Country
-			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_price_by_country_auto_exchange_rates', 'manual' ) ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+			if ( 'manual' != apply_filters( 'booster_option', 'manual', get_option( 'wcj_price_by_country_auto_exchange_rates', 'manual' ) ) ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 					$currency_to = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
 					$currency_pairs = $this->get_currency_pair( $currency_pairs, $currency_to, 'wcj_price_by_country_exchange_rate_group_' . $i );
 				}
@@ -96,8 +96,8 @@ class WCJ_Exchange_Rates_Crons {
 
 		if ( wcj_is_module_enabled( 'multicurrency' ) ) {
 			// Currency Pairs - Preparation - Multicurrency
-			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_multicurrency_exchange_rate_update_auto', 'manual' ) ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
+			if ( 'manual' != apply_filters( 'booster_option', 'manual', get_option( 'wcj_multicurrency_exchange_rate_update_auto', 'manual' ) ) ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
 					$currency_to = get_option( 'wcj_multicurrency_currency_' . $i );
 					$currency_pairs = $this->get_currency_pair( $currency_pairs, $currency_to, 'wcj_multicurrency_exchange_rate_' . $i );
 				}
@@ -106,8 +106,8 @@ class WCJ_Exchange_Rates_Crons {
 
 		if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
 			// Currency Pairs - Preparation - Multicurrency Product Base Price
-			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_multicurrency_base_price_exchange_rate_update', 'manual' ) ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
+			if ( 'manual' != apply_filters( 'booster_option', 'manual', get_option( 'wcj_multicurrency_base_price_exchange_rate_update', 'manual' ) ) ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
 					$currency_to = get_option( 'wcj_multicurrency_base_price_currency_' . $i );
 					$currency_pairs = $this->get_currency_pair( $currency_pairs, $currency_to, 'wcj_multicurrency_base_price_exchange_rate_' . $i );
 				}
@@ -116,8 +116,8 @@ class WCJ_Exchange_Rates_Crons {
 
 		if ( wcj_is_module_enabled( 'currency_per_product' ) ) {
 			// Currency Pairs - Preparation - Currency per Product
-			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_currency_per_product_exchange_rate_update', 'manual' ) ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) ); $i++ ) {
+			if ( 'manual' != apply_filters( 'booster_option', 'manual', get_option( 'wcj_currency_per_product_exchange_rate_update', 'manual' ) ) ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_currency_per_product_total_number', 1 ) ); $i++ ) {
 					$currency_to = get_option( 'wcj_currency_per_product_currency_' . $i );
 					$currency_pairs = $this->get_currency_pair( $currency_pairs, $currency_to, 'wcj_currency_per_product_exchange_rate_' . $i );
 				}
@@ -126,7 +126,7 @@ class WCJ_Exchange_Rates_Crons {
 
 		if ( wcj_is_module_enabled( 'payment_gateways_currency' ) ) {
 			// Currency Pairs - Preparation - Gateway Currency
-			if ( 'manual' != apply_filters( 'booster_get_option', 'manual', get_option( 'wcj_gateways_currency_exchange_rate_update_auto', 'manual' ) ) ) {
+			if ( 'manual' != apply_filters( 'booster_option', 'manual', get_option( 'wcj_gateways_currency_exchange_rate_update_auto', 'manual' ) ) ) {
 				global $woocommerce;
 				$available_gateways = $woocommerce->payment_gateways->payment_gateways();
 				foreach ( $available_gateways as $key => $gateway ) {
@@ -145,7 +145,7 @@ class WCJ_Exchange_Rates_Crons {
 		}
 
 		// Additional currencies (via custom currencies section)
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_exchange_custom_currencies_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_exchange_custom_currencies_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'disabled' != ( $additional_currency = get_option( 'wcj_currency_exchange_custom_currencies_' . $i, 'disabled' ) ) ) {
 				$currency_pairs = $this->get_currency_pair( $currency_pairs, $additional_currency, false );

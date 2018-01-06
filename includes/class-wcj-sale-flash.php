@@ -32,9 +32,9 @@ class WCJ_Sale_Flash extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			$this->globally_enabled     = ( 'yes' === get_option( 'wcj_product_images_sale_flash_enabled', 'no' ) );
-			$this->per_product_enabled  = ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sale_flash_per_product_enabled', 'no' ) ) );
-			$this->per_category_enabled = ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sale_flash_per_' . 'product_cat' . '_enabled', 'no' ) ) );
-			$this->per_tag_enabled      = ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_sale_flash_per_' . 'product_tag' . '_enabled', 'no' ) ) );
+			$this->per_product_enabled  = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sale_flash_per_product_enabled', 'no' ) ) );
+			$this->per_category_enabled = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sale_flash_per_' . 'product_cat' . '_enabled', 'no' ) ) );
+			$this->per_tag_enabled      = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sale_flash_per_' . 'product_tag' . '_enabled', 'no' ) ) );
 			add_filter( 'woocommerce_sale_flash', array( $this, 'customize_sale_flash' ), PHP_INT_MAX, 3 );
 			if ( $this->per_product_enabled ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );

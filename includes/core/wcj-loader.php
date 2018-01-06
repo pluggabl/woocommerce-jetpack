@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -27,7 +27,7 @@ load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( 
 // Include required core files used in admin and on the frontend
 
 // Constants
-require_once( WCJ_PLUGIN_PATH . '/includes/constants/wcj-constants.php' );
+require_once( 'wcj-constants.php' );
 
 // Functions
 require_once( 'wcj-functions.php' );

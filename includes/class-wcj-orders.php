@@ -48,7 +48,7 @@ class WCJ_Orders extends WCJ_Module {
 			}
 
 			// Bulk Regenerate Download Permissions
-			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_order_bulk_regenerate_download_permissions_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_bulk_regenerate_download_permissions_enabled', 'no' ) ) ) {
 				// Actions
 				if ( 'yes' === get_option( 'wcj_order_bulk_regenerate_download_permissions_actions', 'no' ) ) {
 					add_filter( 'bulk_actions-edit-shop_order',        array( $this, 'register_bulk_actions_regenerate_download_permissions' ), PHP_INT_MAX );
@@ -59,7 +59,7 @@ class WCJ_Orders extends WCJ_Module {
 				// Admin notices
 				add_filter( 'admin_notices', array( $this, 'admin_notice_regenerate_download_permissions' ) );
 				// All orders - Cron
-				if ( 'disabled' != apply_filters( 'booster_get_option', 'disabled', get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) ) ) {
+				if ( 'disabled' != apply_filters( 'booster_option', 'disabled', get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) ) ) {
 					add_action( 'init',       array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
 					add_action( 'admin_init', array( $this, 'schedule_bulk_regenerate_download_permissions_all_orders_cron' ) );
 					add_filter( 'cron_schedules', 'wcj_crons_add_custom_intervals' );
@@ -124,7 +124,7 @@ class WCJ_Orders extends WCJ_Module {
 	function schedule_bulk_regenerate_download_permissions_all_orders_cron() {
 		wcj_crons_schedule_the_events(
 			'wcj_bulk_regenerate_download_permissions_all_orders_cron',
-			apply_filters( 'booster_get_option', 'disabled', get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) )
+			apply_filters( 'booster_option', 'disabled', get_option( 'wcj_order_bulk_regenerate_download_permissions_all_orders_cron', 'disabled' ) )
 		);
 	}
 

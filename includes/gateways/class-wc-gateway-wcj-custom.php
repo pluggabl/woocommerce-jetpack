@@ -109,8 +109,8 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 							'type'              => 'number',
 							'desc_tip'          => __( 'If you want to set minimum order amount (excluding fees) to show this gateway on frontend, enter a number here. Set to 0 to disable.', 'woocommerce-jetpack' ),
 							'default'           => 0,
-							'description'       => apply_filters( 'booster_get_message', '', 'desc' ),
-							'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+							'description'       => apply_filters( 'booster_message', '', 'desc' ),
+							'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 						),
 
 						'enable_for_methods' => array(
@@ -167,8 +167,8 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					);
 
 					if ( 1 != $this->id_count ) {
-						$this->form_fields['enabled']['description'] = apply_filters( 'booster_get_message', '', 'desc' );
-						$this->form_fields['enabled']['custom_attributes'] = apply_filters( 'booster_get_message', '', 'disabled' );
+						$this->form_fields['enabled']['description'] = apply_filters( 'booster_message', '', 'desc' );
+						$this->form_fields['enabled']['custom_attributes'] = apply_filters( 'booster_message', '', 'disabled' );
 					}
 				}
 
@@ -193,7 +193,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				function is_available() {
 
 					// Check min amount
-					$min_amount = apply_filters( 'booster_get_option', 0, $this->min_amount );
+					$min_amount = apply_filters( 'booster_option', 0, $this->min_amount );
 					if ( $min_amount > 0 && isset( WC()->cart->total ) && '' != WC()->cart->total && isset( WC()->cart->fee_total ) ) {
 						$total_excluding_fees = WC()->cart->total - WC()->cart->fee_total;
 						if ( $total_excluding_fees < $min_amount )
@@ -389,7 +389,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 			 * @version 2.5.6
 			 */
 			function add_wc_gateway_wcj_custom_classes( $methods ) {
-				$the_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_custom_payment_gateways_number', 1 ) );
+				$the_number = apply_filters( 'booster_option', 1, get_option( 'wcj_custom_payment_gateways_number', 1 ) );
 				for ( $i = 1; $i <= $the_number; $i++ ) {
 					$the_method = new WC_Gateway_WCJ_Custom_Template();
 					$the_method->init( $i );

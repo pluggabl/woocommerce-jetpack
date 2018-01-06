@@ -47,7 +47,7 @@ class WCJ_Payment_Gateways_Icons extends WCJ_Module {
 	 * @version 2.3.1
 	 */
 	function set_icon( $icon, $key ) {
-		$default_gateways = apply_filters( 'booster_get_option', array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' ), array() );
+		$default_gateways = apply_filters( 'booster_option', array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' ), array() );
 		if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
 			return $icon;
 		}

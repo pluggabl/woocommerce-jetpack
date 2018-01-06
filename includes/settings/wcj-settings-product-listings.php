@@ -86,8 +86,8 @@ return array(
 		'id'       => 'wcj_product_listings_hide_cats_count_on_archive',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
 	),
 	array(
 		'title'    => __( 'Exclude Subcategories', 'woocommerce-jetpack' ),

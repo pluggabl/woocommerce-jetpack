@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 2.9.0
+ * @version 3.2.5
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -45,14 +45,21 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	}
 
 	/**
-	 * gateways_fees.
+	 * get_current_gateway.
 	 *
-	 * @version 2.8.2
+	 * @version 3.2.5
+	 * @since   3.2.5
 	 */
-	function gateways_fees() {
-		global $woocommerce;
-		$is_paypal_express = ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) ? true : false;
-		if ( ! $is_paypal_express ) {
+	function get_current_gateway() {
+		if ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) {
+			return 'paypal_express'; // PayPal for WooCommerce (By Angell EYE)
+		} elseif (
+			( isset( $_GET['wc-ajax'] ) && 'wc_ppec_generate_cart' === $_GET['wc-ajax'] ) ||
+			( isset( $_GET['startcheckout'] ) && 'true' === $_GET['startcheckout'] )
+		) {
+			return 'ppec_paypal'; // WooCommerce PayPal Express Checkout Payment Gateway (By WooCommerce)
+		} else {
+			global $woocommerce;
 			$current_gateway = $woocommerce->session->chosen_payment_method;
 			$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
 			if ( ! array_key_exists( $current_gateway, $available_gateways ) ) {
@@ -62,9 +69,18 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 					$current_gateway = isset( $current_gateway->id ) ? $current_gateway->id : '';
 				}
 			}
-		} else {
-			$current_gateway = 'paypal_express';
+			return $current_gateway;
 		}
+	}
+
+	/**
+	 * gateways_fees.
+	 *
+	 * @version 3.2.5
+	 */
+	function gateways_fees() {
+		global $woocommerce;
+		$current_gateway = $this->get_current_gateway();
 		if ( '' != $current_gateway ) {
 			$fee_text  = get_option( 'wcj_gateways_fees_text_' . $current_gateway );
 			$min_cart_amount = get_option( 'wcj_gateways_fees_min_cart_amount_' . $current_gateway );

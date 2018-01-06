@@ -31,8 +31,8 @@ $settings = array(
 		'type'     => 'checkbox',
 		'id'       => 'wcj_product_price_by_formula_enable_for_all_products',
 		'default'  => 'no',
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc_no_link' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Total Params', 'woocommerce-jetpack' ),

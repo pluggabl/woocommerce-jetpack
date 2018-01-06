@@ -28,11 +28,11 @@ $paypal_tip = sprintf( __( 'PayPal allows only these currencies: %s.', 'woocomme
 foreach ( $gateways as $key => $gateway ) {
 	$default_gateways = array( 'bacs' );
 	if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
-		$custom_attributes = apply_filters( 'booster_get_message', '', 'disabled' );
+		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
 		if ( '' == $custom_attributes ) {
 			$custom_attributes = array();
 		}
-		$desc_tip = apply_filters( 'booster_get_message', '', 'desc_no_link' );
+		$desc_tip = apply_filters( 'booster_message', '', 'desc_no_link' );
 	} else {
 		$custom_attributes = array();
 		$desc_tip = '';

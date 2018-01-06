@@ -133,11 +133,11 @@ $settings = array_merge( $settings, array(
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
 		'options'  => $product_cats_options,
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 ) );
-$categories = apply_filters( 'booster_get_option', '', get_option( 'wcj_price_by_user_role_categories', '' ) );
+$categories = apply_filters( 'booster_option', '', get_option( 'wcj_price_by_user_role_categories', '' ) );
 if ( ! empty( $categories ) ) {
 	foreach ( $categories as $category ) {
 		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {

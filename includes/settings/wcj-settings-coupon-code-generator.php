@@ -41,8 +41,8 @@ return array(
 		'type'     => 'select',
 		'options'  => $algorithms,
 		'desc_tip' => sprintf( __( 'Algorithms: %s.', 'woocommerce-jetpack' ), implode( '; ', $algorithms ) ),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Length', 'woocommerce-jetpack' ),
@@ -50,8 +50,8 @@ return array(
 		'id'       => 'wcj_coupons_code_generator_length',
 		'default'  => 0,
 		'type'     => 'number',
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'type'     => 'sectionend',

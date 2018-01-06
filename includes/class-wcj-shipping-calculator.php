@@ -29,7 +29,7 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 			add_filter( 'woocommerce_shipping_calculator_enable_city' ,    array( $this, 'enable_city' ) );
 			add_filter( 'woocommerce_shipping_calculator_enable_postcode', array( $this, 'enable_postcode' ) );
 			add_action( 'wp_head',                                         array( $this, 'add_custom_styles' ) );
-			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_shipping_calculator_labels_enabled', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_shipping_calculator_labels_enabled', 'no' ) ) ) {
 				add_action( 'wp_enqueue_scripts',                          array( $this, 'change_labels' ) );
 			}
 		}

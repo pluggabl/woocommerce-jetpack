@@ -27,11 +27,11 @@ $settings = array(
 $gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $gateways as $key => $gateway ) {
 	if ( ! in_array( $key, array( 'bacs', 'cod' ) ) ) {
-		$custom_attributes = apply_filters( 'booster_get_message', '', 'disabled' );
+		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
 		if ( '' == $custom_attributes ) {
 			$custom_attributes = array();
 		}
-		$desc_tip = apply_filters( 'booster_get_message', '', 'desc_no_link' );
+		$desc_tip = apply_filters( 'booster_message', '', 'desc_no_link' );
 	} else {
 		$custom_attributes = array();
 		$desc_tip = '';

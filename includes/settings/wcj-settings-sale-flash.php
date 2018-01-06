@@ -63,11 +63,11 @@ $settings = array(
 	array(
 		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
 		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
-		'desc_tip' => __( 'This will add meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc_tip' => __( 'This will add meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_sale_flash_per_product_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',
@@ -88,11 +88,11 @@ foreach ( $product_terms as $id => $product_term ) {
 		array(
 			'title'    => $title,
 			'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
-			'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
+			'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
 			'id'       => 'wcj_sale_flash_per_' . $id . '_enabled',
 			'default'  => 'no',
 			'type'     => 'checkbox',
-			'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 	) );
 	foreach ( $product_term as $term_id => $term_desc ) {

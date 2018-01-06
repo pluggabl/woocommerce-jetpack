@@ -27,7 +27,7 @@ if ( $_product->is_type( 'variable' ) ) {
 }
 $quantities = array();
 foreach ( $products as $product_id => $desc ) {
-	if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_order_quantities_min_per_item_quantity_per_product', 'no' ) ) ) {
+	if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_min_per_item_quantity_per_product', 'no' ) ) ) {
 		$quantities = array_merge( $quantities, array(
 			array(
 				'name'       => 'wcj_order_quantities_min' . '_' . $product_id,
@@ -42,7 +42,7 @@ foreach ( $products as $product_id => $desc ) {
 			),
 		) );
 	}
-	if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_order_quantities_max_per_item_quantity_per_product', 'no' ) ) ) {
+	if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_max_per_item_quantity_per_product', 'no' ) ) ) {
 		$quantities = array_merge( $quantities, array(
 			array(
 				'name'       => 'wcj_order_quantities_max' . '_' . $product_id,

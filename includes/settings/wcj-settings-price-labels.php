@@ -30,8 +30,8 @@ return array(
 		'id'        => 'wcj_global_price_labels_add_before_text',
 		'default'   => '',
 		'type'      => 'custom_textarea',
-		'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'css'       => 'width:30%;min-width:300px;',
 	),
 	array(
@@ -48,8 +48,8 @@ return array(
 		'id'        => 'wcj_global_price_labels_between_regular_and_sale_text',
 		'default'   => '',
 		'type'      => 'custom_textarea',
-		'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'css'       => 'width:30%;min-width:300px;',
 	),
 	array(
@@ -59,8 +59,8 @@ return array(
 		'id'        => 'wcj_global_price_labels_remove_text',
 		'default'   => '',
 		'type'      => 'custom_textarea',
-		'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'css'       => 'width:30%;min-width:300px;',
 	),
 	array(
@@ -69,9 +69,9 @@ return array(
 		'id'        => 'wcj_global_price_labels_replace_text',
 		'default'   => '',
 		'type'      => 'custom_textarea',
-		'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
+		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes'
-					=> apply_filters( 'booster_get_message', '', 'readonly' ),
+					=> apply_filters( 'booster_message', '', 'readonly' ),
 		'css'       => 'width:30%;min-width:300px;',
 	),
 	array(
@@ -80,8 +80,8 @@ return array(
 		'id'        => 'wcj_global_price_labels_replace_with_text',
 		'default'   => '',
 		'type'      => 'custom_textarea',
-		'desc'      => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		'css'       => 'width:30%;min-width:300px;',
 	),
 	array(

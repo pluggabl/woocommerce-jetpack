@@ -67,7 +67,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 		$products_total = $wp_query->found_posts;
 
 		$select_form = '<select name="wcj_products_per_page" id="wcj_products_per_page" class="sortby rounded_corners_class" onchange="this.form.submit()">';
-		$products_per_page_select_options = apply_filters( 'booster_get_option',
+		$products_per_page_select_options = apply_filters( 'booster_option',
 			'10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1',
 			get_option( 'wcj_products_per_page_select_options', '10|10' . PHP_EOL . '25|25' . PHP_EOL . '50|50' . PHP_EOL . '100|100' . PHP_EOL . 'All|-1' ) );
 		$products_per_page_select_options = explode( PHP_EOL, $products_per_page_select_options );

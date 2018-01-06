@@ -146,7 +146,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_product_base_currency' )
 	 */
 	function wcj_get_currency_exchange_rate_product_base_currency( $currency_code ) {
 		$currency_exchange_rate = 1;
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( $currency_code === get_option( 'wcj_multicurrency_base_price_currency_' . $i ) ) {
 				$currency_exchange_rate = get_option( 'wcj_multicurrency_base_price_exchange_rate_' . $i );
@@ -317,7 +317,7 @@ if ( ! function_exists( 'wcj_update_products_price_by_country_for_single_product
 		$_product = wc_get_product( $product_id );
 		if ( $_product->is_type( 'variable' ) ) {
 			$available_variations = $_product->get_available_variations();
-			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 				$min_variation_price = PHP_INT_MAX;
 				$max_variation_price = 0;
 				foreach ( $available_variations as $variation ) {
@@ -346,7 +346,7 @@ if ( ! function_exists( 'wcj_update_products_price_by_country_for_single_product
 			if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
 				$_old_price = wcj_price_by_product_base_currency( $_old_price, $product_id );
 			}
-			for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 				$price_by_country = wcj_price_by_country( $_old_price, $product_id, $i, WCJ_PRODUCT_GET_PRICE_FILTER );
 				update_post_meta( $product_id, '_' . 'wcj_price_by_country_' . $i, $price_by_country );
 			}
@@ -412,7 +412,7 @@ if ( ! function_exists( 'wcj_get_currency_by_country' ) ) {
 	 */
 	function wcj_get_currency_by_country( $country_code ) {
 		$currency_code = '';
-		for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 			switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
 				case 'comma_list':
 					$country_exchange_rate_group = get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
@@ -446,7 +446,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate' ) ) {
 		$currency_exchange_rate = 1;
 		if ( wcj_is_module_enabled( $module ) ) {
 			if ( 'multicurrency' === $module ) {
-				$total_number = apply_filters( 'booster_get_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+				$total_number = apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
 				for ( $i = 1; $i <= $total_number; $i++ ) {
 					if ( $currency_code === get_option( 'wcj_multicurrency_currency_' . $i ) ) {
 						$currency_exchange_rate = get_option( 'wcj_multicurrency_exchange_rate_' . $i );
@@ -479,7 +479,7 @@ if ( ! function_exists( 'wc_get_product_purchase_price' ) ) {
 		if ( 'yes' === get_option( 'wcj_purchase_price_affiliate_commission_enabled', 'no' ) ) {
 			$purchase_price += (float) get_post_meta( $product_id, '_' . 'wcj_purchase_price_affiliate_commission', true );
 		}
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_purchase_data_custom_price_fields_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( '' == get_option( 'wcj_purchase_data_custom_price_field_name_' . $i, '' ) ) {
 				continue;
@@ -522,7 +522,7 @@ if ( ! function_exists( 'wcj_get_currencies_names_and_symbols' ) ) {
 		}
 		if ( wcj_is_module_enabled( 'currency' ) && ( 'all' === $scope || 'custom_only' === $scope ) ) {
 			// Custom currencies
-			$custom_currency_total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
+			$custom_currency_total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
 			for ( $i = 1; $i <= $custom_currency_total_number; $i++) {
 				$custom_currency_code   = get_option( 'wcj_currency_custom_currency_code_'   . $i );
 				$custom_currency_name   = get_option( 'wcj_currency_custom_currency_name_'   . $i );
@@ -557,7 +557,7 @@ if ( ! function_exists( 'wcj_get_currency_symbol' ) ) {
 		$currencies = wcj_get_currencies_names_and_symbols( 'symbols', 'no_custom' );
 		if ( isset( $currencies[ $currency_code ] ) ) {
 			if ( wcj_is_module_enabled( 'currency' ) ) {
-				$return = apply_filters( 'booster_get_option', $currencies[ $currency_code ], get_option( 'wcj_currency_' . $currency_code, $currencies[ $currency_code ] ) );
+				$return = apply_filters( 'booster_option', $currencies[ $currency_code ], get_option( 'wcj_currency_' . $currency_code, $currencies[ $currency_code ] ) );
 			} else {
 				$return = $currencies[ $currency_code ];
 			}

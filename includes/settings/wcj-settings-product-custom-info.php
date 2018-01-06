@@ -52,15 +52,15 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 			'id'       => 'wcj_product_custom_info_total_number_' . $single_or_archive,
 			'default'  => 1,
 			'type'     => 'custom_number',
-			'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-			'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+			'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+			'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		),
 		array(
 			'type'     => 'sectionend',
 			'id'       => 'wcj_product_custom_info_options_' . $single_or_archive,
 		),
 	) );
-	for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
+	for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product_custom_info_total_number_' . $single_or_archive, 1 ) ); $i++ ) {
 
 		wcj_maybe_convert_and_update_option_value( array(
 			array( 'id' => 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i, 'default' => '' ),

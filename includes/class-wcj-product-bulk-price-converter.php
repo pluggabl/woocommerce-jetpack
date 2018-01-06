@@ -45,7 +45,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 		if ( '' != $the_price && 0 != $the_price ) {
 			$precision = get_option( 'woocommerce_price_num_decimals', 2 );
 			$the_modified_price = round( $the_price * $multiply_price_by, $precision );
-			if ( isset( $_POST['make_pretty_prices_threshold'] ) && apply_filters( 'booster_get_option', 0, $_POST['make_pretty_prices_threshold'] ) > 0 ) {
+			if ( isset( $_POST['make_pretty_prices_threshold'] ) && apply_filters( 'booster_option', 0, $_POST['make_pretty_prices_threshold'] ) > 0 ) {
 				$the_modified_price = $this->make_pretty_price( $the_modified_price );
 			}
 			if ( $the_modified_price < 0 ) {
@@ -163,7 +163,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 //				'orderby'        => 'date',
 //				'order'          => 'ASC',
 			);
-			if ( isset( $_POST['wcj_product_cat'] ) && 'wcj_any' != $_POST['wcj_product_cat'] && 'any' != apply_filters( 'booster_get_option', 'any', '' ) ) {
+			if ( isset( $_POST['wcj_product_cat'] ) && 'wcj_any' != $_POST['wcj_product_cat'] && 'any' != apply_filters( 'booster_option', 'any', '' ) ) {
 				$args['tax_query'] = array(
 					array(
 						'taxonomy' => 'product_cat',
@@ -256,22 +256,22 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 				if ( '' != $select_options_html ) {
 					$data_table[] = array(
 						__( 'Products category', 'woocommerce-jetpack' ),
-						'<select name="wcj_product_cat" ' . apply_filters( 'booster_get_option', 'disabled', '' ) . '>' .
+						'<select name="wcj_product_cat" ' . apply_filters( 'booster_option', 'disabled', '' ) . '>' .
 							'<option value="wcj_any">' . __( 'Any', 'woocommerce-jetpack' ) . '</option>' .
 							$select_options_html .
 							'<option value="wcj_none"' . selected( 'wcj_none', $selected_option, false ) . '>' . __( 'None', 'woocommerce-jetpack' ) . '</option>' .
 						'</select>',
-						apply_filters( 'booster_get_message', '', 'desc' ),
+						apply_filters( 'booster_message', '', 'desc' ),
 					);
 				}
 				$make_pretty_prices_threshold = isset( $_POST['make_pretty_prices_threshold'] ) ? $_POST['make_pretty_prices_threshold'] : 0;
 				$data_table[] = array(
 					__( '"Pretty prices" threshold', 'woocommerce-jetpack' ),
 					'<input class="" type="number" step="0.000001" min="0" name="make_pretty_prices_threshold" id="make_pretty_prices_threshold" value="' .
-						$make_pretty_prices_threshold . '"' . apply_filters( 'booster_get_option', 'disabled', '' ) . '>',
-					( '' == apply_filters( 'booster_get_message', '', 'desc' ) ) ?
+						$make_pretty_prices_threshold . '"' . apply_filters( 'booster_option', 'disabled', '' ) . '>',
+					( '' == apply_filters( 'booster_message', '', 'desc' ) ) ?
 						'<em>' . __( 'Leave zero to disable', 'woocommerce-jetpack' ) . '</em>' :
-						apply_filters( 'booster_get_message', '', 'desc' ),
+						apply_filters( 'booster_message', '', 'desc' ),
 				);
 				$data_table[] = array(
 					'<input class="button-primary" type="submit" name="bulk_change_prices_preview" id="bulk_change_prices_preview" value="' .

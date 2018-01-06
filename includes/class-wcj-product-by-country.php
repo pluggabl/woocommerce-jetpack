@@ -43,7 +43,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_product_by_country_query', 'no' ) ) {
 					add_action( 'pre_get_posts',                  array( $this, 'product_by_country_pre_get_posts' ) );
 				}
-				if ( 'manual' === apply_filters( 'booster_get_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
+				if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
 					add_action( 'init',                           array( $this, 'save_country_in_session' ), PHP_INT_MAX ) ;
 				}
 			}
@@ -75,14 +75,14 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	function render_product_column( $column ) {
 		if ( 'wcj_product_by_country_visible_countries' === $column ) {
 			$result = '';
-			if ( 'invisible' != apply_filters( 'booster_get_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
+			if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
 				if ( $countries = get_post_meta( get_the_ID(), '_' . 'wcj_product_by_country_visible', true ) ) {
 					if ( is_array( $countries ) ) {
 						$result .= '<span style="color:green;">' . implode( ', ', $countries ) . '</span>';
 					}
 				}
 			}
-			if ( 'visible' != apply_filters( 'booster_get_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
+			if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
 				if ( $countries = get_post_meta( get_the_ID(), '_' . 'wcj_product_by_country_invisible', true ) ) {
 					if ( is_array( $countries ) ) {
 						if ( '' != $result ) {
@@ -148,7 +148,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	 * @since   3.1.0
 	 */
 	function is_product_visible_in_country( $product_id, $country ) {
-		if ( 'invisible' != apply_filters( 'booster_get_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
+		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
 			$countries = get_post_meta( $product_id, '_' . 'wcj_product_by_country_visible', true );
 			if ( ! empty( $countries ) && is_array( $countries ) ) {
 				if ( in_array( 'EU', $countries ) ) {
@@ -159,7 +159,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 				}
 			}
 		}
-		if ( 'visible' != apply_filters( 'booster_get_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
+		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
 			$countries = get_post_meta( $product_id, '_' . 'wcj_product_by_country_invisible', true );
 			if ( ! empty( $countries ) && is_array( $countries ) ) {
 				if ( in_array( 'EU', $countries ) ) {
@@ -193,7 +193,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	 * @since   3.1.0
 	 */
 	function get_country() {
-		if ( 'manual' === apply_filters( 'booster_get_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
+		if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
 			if ( '' == wcj_session_get( 'wcj_selected_country' ) ) {
 				$country = wcj_get_country_by_ip();
 				wcj_session_set( 'wcj_selected_country', $country );

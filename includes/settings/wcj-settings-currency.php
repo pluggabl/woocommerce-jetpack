@@ -37,11 +37,11 @@ foreach ( $currency_names as $currency_code => $currency_name ) {
 		array(
 			'title'    => $currency_name . ' [' . $currency_code . ']',
 			'desc'     => $country_flag,
-			'desc_tip' => apply_filters( 'booster_get_message', '', 'desc_no_link' ),
+			'desc_tip' => apply_filters( 'booster_message', '', 'desc_no_link' ),
 			'id'       => 'wcj_currency_' . $currency_code,
 			'default'  => $currency_symbols[ $currency_code ],
 			'type'     => 'text',
-			'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+			'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		),
 	) );
 }
@@ -60,11 +60,11 @@ $settings = array_merge( $settings, array(
 			'id'       => 'wcj_currency_custom_currency_total_number',
 			'default'  => 1,
 			'type'     => 'custom_number',
-			'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-			'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+			'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+			'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 ) );
-$custom_currency_total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
+$custom_currency_total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
 for ( $i = 1; $i <= $custom_currency_total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(

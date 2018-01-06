@@ -67,7 +67,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 		if ( empty( $free_shipping_granting_products ) ) {
 			return $is_available;
 		}
-		$free_shipping_granting_products_type = apply_filters( 'booster_get_option', 'all', get_option( 'wcj_shipping_free_shipping_by_product_type', 'all' ) );
+		$free_shipping_granting_products_type = apply_filters( 'booster_option', 'all', get_option( 'wcj_shipping_free_shipping_by_product_type', 'all' ) );
 		$package_grants_free_shipping = false;
 		foreach( $package['contents'] as $item ) {
 			if ( in_array( $item['product_id'], $free_shipping_granting_products ) ) {
@@ -92,7 +92,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	 * @since   2.5.6
 	 */
 	function shipping_icon( $label, $method ) {
-		$shipping_icons_visibility = apply_filters( 'booster_get_option', 'both', get_option( 'wcj_shipping_icons_visibility', 'both' ) );
+		$shipping_icons_visibility = apply_filters( 'booster_option', 'both', get_option( 'wcj_shipping_icons_visibility', 'both' ) );
 		if ( 'checkout_only' === $shipping_icons_visibility && is_cart() ) {
 			return $label;
 		}
@@ -114,7 +114,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	 * @since   2.5.6
 	 */
 	function shipping_description( $label, $method ) {
-		$shipping_descriptions_visibility = apply_filters( 'booster_get_option', 'both', get_option( 'wcj_shipping_descriptions_visibility', 'both' ) );
+		$shipping_descriptions_visibility = apply_filters( 'booster_option', 'both', get_option( 'wcj_shipping_descriptions_visibility', 'both' ) );
 		if ( 'checkout_only' === $shipping_descriptions_visibility && is_cart() ) {
 			return $label;
 		}
@@ -141,12 +141,12 @@ class WCJ_Shipping_Options extends WCJ_Module {
 				$free_shipping_rates[ $rate_key ] = $rate;
 			} else {
 				if (
-					'except_local_pickup' === apply_filters( 'booster_get_option', 'hide_all', get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
+					'except_local_pickup' === apply_filters( 'booster_option', 'hide_all', get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
 					false !== strpos( $rate_key, 'local_pickup' )
 				) {
 					$free_shipping_rates[ $rate_key ] = $rate;
 				} elseif (
-					'flat_rate_only' === apply_filters( 'booster_get_option', 'hide_all', get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
+					'flat_rate_only' === apply_filters( 'booster_option', 'hide_all', get_option( 'wcj_shipping_hide_if_free_available_type', 'hide_all' ) ) &&
 					false === strpos( $rate_key, 'flat_rate' )
 				) {
 					$free_shipping_rates[ $rate_key ] = $rate;
@@ -185,8 +185,8 @@ class WCJ_Shipping_Options extends WCJ_Module {
 							'except_local_pickup' => __( 'Hide all except "Local Pickup"', 'woocommerce-jetpack' ),
 							'flat_rate_only'      => __( 'Hide "Flat Rate" only', 'woocommerce-jetpack' ),
 						),
-						'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-						'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+						'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+						'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 					),
 				) );
 			}

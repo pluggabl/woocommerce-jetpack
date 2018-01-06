@@ -141,7 +141,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	 * @since   2.5.0
 	 */
 	function save_meta_box_value( $option_value, $option_name, $module_id ) {
-		if ( true === apply_filters( 'booster_get_option', false, true ) ) {
+		if ( true === apply_filters( 'booster_option', false, true ) ) {
 			return $option_value;
 		}
 		if ( 'no' === $option_value ) {
@@ -202,7 +202,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	 */
 	function is_price_by_formula_product( $_product ) {
 		return (
-			'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_price_by_formula_enable_for_all_products', 'no' ) ) ||
+			'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_price_by_formula_enable_for_all_products', 'no' ) ) ||
 			'yes' === get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_' . 'wcj_product_price_by_formula_enabled', true )
 		);
 	}

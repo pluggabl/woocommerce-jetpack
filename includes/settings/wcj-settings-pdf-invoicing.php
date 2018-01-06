@@ -56,15 +56,15 @@ foreach ( $invoice_types as $k => $invoice_type ) {
 			'type'     => 'multiselect',
 			'class'    => 'chosen_select',
 			'options'  => $create_on_array,
-			'desc'     => ( 0 === $k ) ? '' : apply_filters( 'booster_get_message', '', 'desc' ),
-			'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'booster_get_message', '', 'disabled' ),
+			'desc'     => ( 0 === $k ) ? '' : apply_filters( 'booster_message', '', 'desc' ),
+			'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'booster_message', '', 'disabled' ),
 		),
 		array(
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_skip_zero_total',
 			'default'  => 'no',
 			'type'     => 'checkbox',
 			'desc'     => __( 'Do not create if order total equals zero', 'woocommerce-jetpack' ),
-			'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'booster_get_message', '', 'disabled' ),
+			'custom_attributes' => ( 0 === $k ) ? '' : apply_filters( 'booster_message', '', 'disabled' ),
 		),
 	) );
 }

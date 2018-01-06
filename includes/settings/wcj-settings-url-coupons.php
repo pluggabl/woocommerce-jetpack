@@ -38,8 +38,8 @@ $settings = array(
 			'checkout' => __( 'Redirect to checkout', 'woocommerce-jetpack' ),
 			'custom'   => __( 'Redirect to custom local URL', 'woocommerce-jetpack' ),
 		),
-		'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'desc'     => __( 'Custom Local URL', 'woocommerce-jetpack' ),
@@ -55,8 +55,8 @@ $settings = array(
 		'id'       => 'wcj_url_coupons_fixed_product_discount_add_products',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'desc_tip' => apply_filters( 'booster_get_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',

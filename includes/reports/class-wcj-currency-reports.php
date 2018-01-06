@@ -45,19 +45,19 @@ class WCJ_Currency_Reports {
 			$currency_symbols[ $the_current_code ] = $the_current_code;
 			$currency_symbols[ get_woocommerce_currency() ] = get_woocommerce_currency();
 			if ( wcj_is_module_enabled( 'price_by_country' ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
 					$the_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
 					$currency_symbols[ $the_code ] = $the_code;
 				}
 			}
 			if ( wcj_is_module_enabled( 'multicurrency' ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) ); $i++ ) {
 					$the_code = get_option( 'wcj_multicurrency_currency_' . $i );
 					$currency_symbols[ $the_code ] = $the_code;
 				}
 			}
 			/* if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_get_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
+				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
 					$the_code = get_option( 'wcj_multicurrency_base_price_currency_' . $i );
 					$currency_symbols[ $the_code ] = $the_code;
 				}

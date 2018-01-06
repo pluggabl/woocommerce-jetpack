@@ -177,6 +177,9 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.2.5 - 06/01/2018 =
+-D	* Dev - PRICES & CURRENCIES - Currency per Product - Advanced Options - "Save Converted Product Prices in Array" option added.
+-D	* Dev - PAYMENT GATEWAYS - Gateways by Country or State - Admin settings description updated.
+!	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "WooCommerce PayPal Express Checkout Payment Gateway" (by WooCommerce) plugin support added.
 !D	* Dev - PRODUCTS - Product Add to Cart - "Add to Cart Button Position Options" section added.
 ~D	* Dev - SHIPPING & ORDERS - Orders - "Country by IP" section added.
 ~D	* Dev - BUTTON & PRICE LABELS - More Button Labels - "Override Default Text" option added.
@@ -221,6 +224,11 @@ D	* Dev - PRODUCTS - Product Addons - Admin settings minor restyling.
 !D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `product_barcode` column added.
 !D	* Dev - Shortcodes - Products - `[wcj_product_barcode]` shortcode added.
 ~D	* Dev - Functions - General - `wcj_tcpdf_barcode()` - Border removed.
+	* Dev - Functions - Booster Core - `wcj-functions-core.php` file renamed to `wcj-functions-booster-core.php`.
+	* Dev - Functions - "Core" functions file added.
+	* Dev - `wcj-constants.php` file moved to `core` directory.
+-!	* Dev - Some filters renamed.
+-!	* Dev - Version option name changed.
 
 = 3.2.4 - 27/12/2017 =
 * Dev - PRICES & CURRENCIES - Currencies - More cryptocurrencies added.

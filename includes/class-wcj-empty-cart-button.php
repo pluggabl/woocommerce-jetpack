@@ -29,7 +29,7 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			add_action( 'init', array( $this, 'maybe_empty_cart' ) );
-			if ( 'disable' != ( $empty_cart_cart_position = apply_filters( 'booster_get_option', 'woocommerce_after_cart',
+			if ( 'disable' != ( $empty_cart_cart_position = apply_filters( 'booster_option', 'woocommerce_after_cart',
 				get_option( 'wcj_empty_cart_position', 'woocommerce_after_cart' ) ) )
 			) {
 				add_action( $empty_cart_cart_position, array( $this, 'add_empty_cart_link' ) );

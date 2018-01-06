@@ -19,11 +19,11 @@ $settings = array(
 );
 foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
 	if ( ! in_array( $method->id, array( 'flat_rate', 'free_shipping' ) ) ) {
-		$custom_attributes = apply_filters( 'booster_get_message', '', 'disabled' );
+		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
 		if ( '' == $custom_attributes ) {
 			$custom_attributes = array();
 		}
-		$desc_tip = apply_filters( 'booster_get_message', '', 'desc_no_link' );
+		$desc_tip = apply_filters( 'booster_message', '', 'desc_no_link' );
 	} else {
 		$custom_attributes = array();
 		$desc_tip = '';

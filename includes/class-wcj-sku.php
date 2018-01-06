@@ -115,12 +115,12 @@ class WCJ_SKU extends WCJ_Module {
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
 
-		/* if ( 'random' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+		/* if ( 'random' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$sku_number = rand();
 		} */
-		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+		if ( 'sequential' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$sku_number = $this->get_sequential_counter( $product_id );
-		} elseif ( 'hash_crc32' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+		} elseif ( 'hash_crc32' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 			$sku_number = sprintf( "%u", crc32( $product_id ) );
 		} else { // if 'product_id'
 			$sku_number = $product_id;
@@ -131,7 +131,7 @@ class WCJ_SKU extends WCJ_Module {
 		$this->set_sku( $product_id, $sku_number, '', $is_preview, $product_id, $product );
 
 		// Handling variable products
-		$variation_handling = apply_filters( 'booster_get_option', 'as_variable', get_option( 'wcj_sku_variations_handling', 'as_variable' ) );
+		$variation_handling = apply_filters( 'booster_option', 'as_variable', get_option( 'wcj_sku_variations_handling', 'as_variable' ) );
 		if ( $product->is_type( 'variable' ) ) {
 			$variations = $this->get_all_variations( $product );
 			if ( 'as_variable' === $variation_handling ) {
@@ -140,9 +140,9 @@ class WCJ_SKU extends WCJ_Module {
 				}
 			} elseif ( 'as_variation' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
-					if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+					if ( 'sequential' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 						$sku_number = $this->get_sequential_counter( $product_id );
-					} elseif ( 'hash_crc32' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+					} elseif ( 'hash_crc32' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
 						$sku_number = sprintf( "%u", crc32( $variation['variation_id'] ) );
 					} else { // if 'product_id'
 						$sku_number = $variation['variation_id'];
@@ -189,7 +189,7 @@ class WCJ_SKU extends WCJ_Module {
 		$format_template = get_option( 'wcj_sku_template',
 			'{category_prefix}{prefix}{sku_number}{suffix}{category_suffix}{variation_suffix}' );
 		$replace_values = array(
-			'{category_prefix}'  => apply_filters( 'booster_get_option', '', $category_prefix ),
+			'{category_prefix}'  => apply_filters( 'booster_option', '', $category_prefix ),
 //			'{tag_prefix}'       => $tag_prefix,
 			'{prefix}'           => get_option( 'wcj_sku_prefix', '' ),
 			'{sku_number}'       => sprintf( '%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 's', $sku_number ),
@@ -221,8 +221,8 @@ class WCJ_SKU extends WCJ_Module {
 	 * @since   2.9.0
 	 */
 	function maybe_get_sequential_counters() {
-		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-			$this->sequential_counter = apply_filters( 'booster_get_option', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
+		if ( 'sequential' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+			$this->sequential_counter = apply_filters( 'booster_option', 1, get_option( 'wcj_sku_number_generation_sequential', 1 ) );
 			if ( 'yes' === get_option( 'wcj_sku_number_generation_sequential_by_cat', 'no' ) ) {
 				$this->product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
 				if ( ! empty( $this->product_categories ) && ! is_wp_error( $this->product_categories ) ) {
@@ -241,7 +241,7 @@ class WCJ_SKU extends WCJ_Module {
 	 * @since   2.9.0
 	 */
 	function maybe_save_sequential_counters( $is_preview = false ) {
-		if ( 'sequential' === apply_filters( 'booster_get_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) && ! $is_preview ) {
+		if ( 'sequential' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) && ! $is_preview ) {
 			update_option( 'wcj_sku_number_generation_sequential', $this->sequential_counter );
 			if ( 'yes' === get_option( 'wcj_sku_number_generation_sequential_by_cat', 'no' ) ) {
 				if ( ! empty( $this->product_categories ) && ! is_wp_error( $this->product_categories ) ) {

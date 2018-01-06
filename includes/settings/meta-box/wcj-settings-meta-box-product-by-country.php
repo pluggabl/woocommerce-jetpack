@@ -9,10 +9,10 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$countries = ( 'wc' === apply_filters( 'booster_get_option', 'all', get_option( 'wcj_product_by_country_country_list', 'all' ) ) ? WC()->countries->get_allowed_countries() : wcj_get_countries() );
+$countries = ( 'wc' === apply_filters( 'booster_option', 'all', get_option( 'wcj_product_by_country_country_list', 'all' ) ) ? WC()->countries->get_allowed_countries() : wcj_get_countries() );
 
 $options = array();
-if ( 'invisible' != apply_filters( 'booster_get_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
+if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
 	$options = array_merge( $options, array(
 		array(
 			'title'    => __( 'Visible in Countries', 'woocommerce-jetpack' ),
@@ -28,7 +28,7 @@ if ( 'invisible' != apply_filters( 'booster_get_option', 'visible', get_option( 
 		),
 	) );
 }
-if ( 'visible' != apply_filters( 'booster_get_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
+if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
 	$options = array_merge( $options, array(
 		array(
 			'title'    => __( 'Invisible in Countries', 'woocommerce-jetpack' ),

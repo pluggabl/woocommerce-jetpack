@@ -71,7 +71,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	function remove_subcategory_count( $count_html ) {
 		if (
 			( is_shop() && 'yes' === get_option( 'wcj_product_listings_hide_cats_count_on_shop' ) ) ||
-			( ! is_shop() && 'yes' === apply_filters( 'booster_get_option', 'wcj', get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) )
+			( ! is_shop() && 'yes' === apply_filters( 'booster_option', 'wcj', get_option( 'wcj_product_listings_hide_cats_count_on_archive' ) ) )
 		) {
 			return '';
 		}

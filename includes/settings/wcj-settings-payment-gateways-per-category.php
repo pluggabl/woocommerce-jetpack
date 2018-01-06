@@ -51,12 +51,12 @@ foreach ( $available_gateways as $gateway_id => $gateway ) {
 		wcj_get_settings_as_multiselect_or_text(
 			array(
 				'title'    => '',
-				'desc'     => __( 'Products - Include', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'booster_get_message', '', 'desc' ),
+				'desc'     => __( 'Products - Include', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'booster_message', '', 'desc' ),
 				'desc_tip' => __( 'Show gateway only if there is selected products in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_gateways_per_products_' . $gateway_id,
 				'default'  => '',
 				'css'      => 'width: 450px;',
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 			),
 			$products,
 			$is_multiselect_products
@@ -64,12 +64,12 @@ foreach ( $available_gateways as $gateway_id => $gateway ) {
 		wcj_get_settings_as_multiselect_or_text(
 			array(
 				'title'    => '',
-				'desc'     => __( 'Products - Exclude', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'booster_get_message', '', 'desc' ),
+				'desc'     => __( 'Products - Exclude', 'woocommerce-jetpack' ) . '. ' . apply_filters( 'booster_message', '', 'desc' ),
 				'desc_tip' => __( 'Hide gateway if there is selected products in cart. Leave blank to disable the option.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_gateways_per_products_excl_' . $gateway_id,
 				'default'  => '',
 				'css'      => 'width: 450px;',
-				'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 			),
 			$products,
 			$is_multiselect_products

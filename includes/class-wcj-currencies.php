@@ -71,9 +71,9 @@ class WCJ_Currencies extends WCJ_Module {
 					'id'       => 'wcj_currency_' . get_woocommerce_currency(),
 					'type'     => 'text',
 					'default'  => get_woocommerce_currency_symbol(),
-					'desc'     => apply_filters( 'booster_get_message', '', 'desc' ),
+					'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 					'css'      => 'width: 50px;',
-					'custom_attributes' => apply_filters( 'booster_get_message', '', 'readonly' ),
+					'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 				);
 			}
 			$updated_settings[] = $section;

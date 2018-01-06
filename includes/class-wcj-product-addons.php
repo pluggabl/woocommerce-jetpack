@@ -284,7 +284,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$addons = array();
 		// All Products
 		if ( 'yes' === get_option( 'wcj_product_addons_all_products_enabled', 'no' ) ) {
-			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_product_addons_all_products_total_number', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_product_addons_all_products_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( 'yes' === get_option( 'wcj_product_addons_all_products_enabled_' . $i, 'yes' ) ) {
 					if ( ! $this->is_global_addon_visible( $i, $product_id ) ) {

@@ -18,21 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( ! function_exists( 'wcj_is_plugin_active' ) ) {
-	/**
-	 * wcj_is_plugin_active.
-	 *
-	 * @version 2.8.0
-	 * @since   2.8.0
-	 * @return  bool
-	 */
-	function wcj_is_plugin_active( $plugin ) {
-		return (
-			in_array( $plugin, apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) ) ) ||
-			( is_multisite() && array_key_exists( $plugin, get_site_option( 'active_sitewide_plugins', array() ) ) )
-		);
-	}
-}
+// Core functions
+require_once( 'includes/functions/wcj-functions-core.php' );
 
 // Check if WooCommerce is active
 if ( ! wcj_is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
@@ -70,7 +57,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.2.5-dev-20180106-0155';
+	public $version = '3.2.5-dev-20180106-0625';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class

@@ -149,7 +149,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 						'by_total_cart_weight_table'   => __( 'By Total Cart Weight Table', 'woocommerce-jetpack' ),
 						'by_total_cart_quantity'       => __( 'By Total Cart Quantity', 'woocommerce-jetpack' ),
 					);
-					$type_options = apply_filters( 'booster_get_option', $type_options, array_merge( $type_options, array(
+					$type_options = apply_filters( 'booster_option', $type_options, array_merge( $type_options, array(
 						'by_total_cart_quantity_table' => __( 'By Total Cart Quantity Table', 'woocommerce-jetpack' ),
 					) ) );
 					$this->instance_form_fields = array(
@@ -163,7 +163,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 						'type' => array(
 							'title'       => __( 'Type', 'woocommerce' ),
 							'type'        => 'select',
-							'description' => __( 'Cost calculation type.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_get_message', '', 'desc_advanced_no_link', array( 'option' => __( 'By Total Cart Quantity Table', 'woocommerce-jetpack' ) ) ),
+							'description' => __( 'Cost calculation type.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc_advanced_no_link', array( 'option' => __( 'By Total Cart Quantity Table', 'woocommerce-jetpack' ) ) ),
 							'default'     => 'flat_rate',
 							'desc_tip'    => true,
 							'options'     => $type_options,

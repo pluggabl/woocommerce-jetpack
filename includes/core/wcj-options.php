@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Options
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  * @todo    (maybe) this only loads Enable, Tools and Reset settings for each module
@@ -27,7 +27,7 @@ if ( is_admin() ) {
 			$status_settings = $module->add_enable_module_setting( array() );
 			$this->module_statuses[] = $status_settings[1];
 		}
-		if ( get_option( 'booster_for_woocommerce_version' ) === $this->version ) {
+		if ( get_option( WCJ_VERSION_OPTION ) === $this->version ) {
 			continue;
 		}
 		$values = $module->get_settings();
@@ -43,8 +43,8 @@ if ( is_admin() ) {
 			}
 		}
 	}
-	if ( get_option( 'booster_for_woocommerce_version' ) !== $this->version ) {
-		update_option( 'booster_for_woocommerce_version', $this->version );
+	if ( get_option( WCJ_VERSION_OPTION ) !== $this->version ) {
+		update_option( WCJ_VERSION_OPTION, $this->version );
 		add_action( 'admin_notices', 'wcj_admin_notices_version_updated' );
 	}
 }

@@ -54,8 +54,8 @@ class WCJ_Purchase_Data extends WCJ_Module {
 
 			// Products columns
 			if (
-				'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_purchase_data_custom_products_columns_purchase_cost', 'no' ) ) ||
-				'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_purchase_data_custom_products_columns_profit', 'no' ) )
+				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_purchase_data_custom_products_columns_purchase_cost', 'no' ) ) ||
+				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_purchase_data_custom_products_columns_profit', 'no' ) )
 			) {
 				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),    PHP_INT_MAX );
 				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_columns' ), PHP_INT_MAX );
@@ -111,10 +111,10 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	 * @todo    (maybe) output columns immediately after standard "Price"
 	 */
 	function add_product_columns( $columns ) {
-		if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_purchase_data_custom_products_columns_purchase_cost', 'no' ) ) ) {
+		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_purchase_data_custom_products_columns_purchase_cost', 'no' ) ) ) {
 			$columns['purchase_cost'] = __( 'Cost', 'woocommerce-jetpack' );
 		}
-		if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_purchase_data_custom_products_columns_profit', 'no' ) ) ) {
+		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_purchase_data_custom_products_columns_profit', 'no' ) ) ) {
 			$columns['profit'] = __( 'Profit', 'woocommerce-jetpack' );
 		}
 		return $columns;

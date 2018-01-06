@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -10,7 +10,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 $wcj_function_files = array(
-	'wcj-functions-core.php',
+	'wcj-functions-booster-core.php',
 	'wcj-functions-debug.php',
 	'wcj-functions-admin.php',
 	'wcj-functions-general.php',

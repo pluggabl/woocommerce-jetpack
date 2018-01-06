@@ -100,7 +100,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	 */
 	function shop_order_sortable_columns( $columns ) {
 		$custom = array();
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
 				if ( 'no' != get_option( 'wcj_orders_list_custom_columns_sortable_' . $i, 'no' ) && '' != get_option( 'wcj_orders_list_custom_columns_sortable_key_' . $i, '' ) ) {
@@ -332,7 +332,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 		if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
 			$columns['currency'] = __( 'Currency Code', 'woocommerce-jetpack' );
 		}
-		$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
 				$columns[ 'wcj_orders_custom_column_' . $i ] = get_option( 'wcj_orders_list_custom_columns_label_' . $i, '' );
@@ -356,7 +356,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 		} elseif ( 'currency' === $column && 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
 			echo do_shortcode( '[wcj_order_currency]' );
 		} else {
-			$total_number = apply_filters( 'booster_get_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
+			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_orders_list_custom_columns_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_enabled_' . $i, 'no' ) ) {
 					if ( 'wcj_orders_custom_column_' . $i === $column ) {

@@ -38,7 +38,7 @@ class WCJ_Shipping_By_Order_Amount extends WCJ_Module {
 	 *
 	 * @version 3.2.1
 	 * @since   3.2.1
-	 * @todo    apply_filters( 'booster_get_option' )
+	 * @todo    apply_filters( 'booster_option' )
 	 * @todo    (maybe) add option to include or exclude taxes when calculating cart total
 	 */
 	function available_shipping_methods( $rates, $package ) {

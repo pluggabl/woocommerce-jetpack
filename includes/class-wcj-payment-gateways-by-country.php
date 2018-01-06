@@ -35,6 +35,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	 * available_payment_gateways.
 	 *
 	 * @version 2.8.0
+	 * @todo    (maybe) add option to detect customer's country by IP (instead of `wcj_customer_get_country()`)
 	 */
 	function available_payment_gateways( $_available_gateways ) {
 		if ( isset( WC()->customer ) ) {

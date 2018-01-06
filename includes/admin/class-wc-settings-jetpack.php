@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -243,7 +243,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard.
 	 *
-	 * @version 3.2.4
+	 * @version 3.2.5
 	 * @todo    (maybe) remove `woojetpack_readme`
 	 */
 	function output_dashboard( $current_section ) {
@@ -335,7 +335,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		$plugin_data  = get_plugin_data( WCJ_PLUGIN_FILE );
 		$plugin_title = ( isset( $plugin_data['Name'] ) ? '[' . $plugin_data['Name'] . '] ' : '' );
 		echo '<p style="text-align:right;color:gray;font-size:x-small;font-style:italic;">' . $plugin_title .
-			__( 'Version', 'woocommerce-jetpack' ) . ': ' . get_option( 'booster_for_woocommerce_version', 'N/A' ) . '</p>';
+			__( 'Version', 'woocommerce-jetpack' ) . ': ' . get_option( WCJ_VERSION_OPTION, 'N/A' ) . '</p>';
 
 		$readme_html .= '</pre>';
 		if ( isset( $_GET['woojetpack_readme'] ) ) echo $readme_html;
@@ -432,7 +432,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 		global $current_section;
 		$settings = $this->get_settings( $current_section );
 		WC_Admin_Settings::save_fields( $settings );
-		echo apply_filters( 'booster_get_message', '', 'global' );
+		echo apply_filters( 'booster_message', '', 'global' );
 		do_action( 'woojetpack_after_settings_save', $this->get_sections(), $current_section );
 	}
 

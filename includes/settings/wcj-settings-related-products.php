@@ -149,11 +149,11 @@ $settings = array_merge( $settings, array(
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This will add metabox to each product\'s edit page.', 'woocommerce-jetpack' ) .
 			' ' . __( 'You will be able to select related products manually for each product individually. There is also an option to remove related products on per product basis.', 'woocommerce-jetpack' ) .
-			' ' . apply_filters( 'booster_get_message', '', 'desc' ),
+			' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_product_info_related_products_per_product',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-		'custom_attributes' => apply_filters( 'booster_get_message', '', 'disabled' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',

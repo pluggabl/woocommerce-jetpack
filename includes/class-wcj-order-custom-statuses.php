@@ -52,17 +52,17 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				add_action( 'admin_footer', array( $this, 'bulk_admin_footer' ), 11 );
 			}
 
-			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions', 'no' ) ) ) {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_actions_buttons' ), PHP_INT_MAX, 2 );
 				add_action( 'admin_head',                      array( $this, 'add_custom_status_actions_buttons_css' ) );
 			}
 
-			if ( 'hide' != apply_filters( 'booster_get_option', 'hide', get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) ) ) {
+			if ( 'hide' != apply_filters( 'booster_option', 'hide', get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) ) ) {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_to_processing_and_completed_actions' ), PHP_INT_MAX, 2 );
 			}
 
 			// Is order editable
-			if ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_orders_custom_statuses_is_order_editable', 'no' ) ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_is_order_editable', 'no' ) ) ) {
 				add_filter( 'wc_order_is_editable', array( $this, 'add_custom_order_statuses_to_order_editable' ), PHP_INT_MAX, 2 );
 			}
 
@@ -121,7 +121,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			}
 			global $post;
 			$default_actions = array();
-			$show = apply_filters( 'booster_get_option', 'hide', get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) );
+			$show = apply_filters( 'booster_option', 'hide', get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) );
 			if (
 				( 'show_both' === $show || 'show_processing' === $show ) &&
 				$_order->has_status( array_merge( array( 'pending', 'on-hold' ), $custom_order_statuses_without_wc_prefix ) )
@@ -201,7 +201,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 		$custom_order_statuses = $this->get_custom_order_statuses( true );
 		foreach ( $custom_order_statuses as $slug => $label ) {
 			$icon_data   = $this->get_status_icon_data( $slug );
-			$color_style = ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions_colored', 'no' ) ) ) ?
+			$color_style = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions_colored', 'no' ) ) ) ?
 				' color: ' . $icon_data['color'] . ' !important;' : '';
 			echo '<style>.view.' . $slug . '::after { font-family: WooCommerce !important;' . $color_style .
 				' content: "\\' . $icon_data['content'] . '" !important; }</style>';

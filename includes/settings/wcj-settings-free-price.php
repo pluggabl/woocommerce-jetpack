@@ -45,8 +45,8 @@ foreach ( $product_types as $product_type => $product_type_desc ) {
 				'default'  => $default_value,
 				'type'     => 'textarea',
 				'css'      => 'width:30%;min-width:300px;min-height:50px;',
-				'desc'     => ( 'variable' === $product_type ) ? apply_filters( 'booster_get_message', '', 'desc' ) : '',
-				'custom_attributes' => ( 'variable' === $product_type ) ? apply_filters( 'booster_get_message', '', 'readonly' ) : '',
+				'desc'     => ( 'variable' === $product_type ) ? apply_filters( 'booster_message', '', 'desc' ) : '',
+				'custom_attributes' => ( 'variable' === $product_type ) ? apply_filters( 'booster_message', '', 'readonly' ) : '',
 			),
 		) );
 	}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Constants
  *
- * @version 3.2.0
+ * @version 3.2.5
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -77,4 +77,14 @@ if ( ! defined( 'WCJ_SESSION_TYPE' ) ) {
 	 * @since   3.1.0
 	 */
 	define( 'WCJ_SESSION_TYPE', ( 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? get_option( 'wcj_general_advanced_session_type', 'standard' ) : 'standard' ) );
+}
+
+if ( ! defined( 'WCJ_VERSION_OPTION' ) ) {
+	/**
+	 * Booster version option name.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 */
+	define( 'WCJ_VERSION_OPTION', ( 'woocommerce-jetpack.php' === basename( WCJ_PLUGIN_FILE ) ? 'booster_for_woocommerce_version' : 'booster_plus_for_woocommerce_version' ) );
 }

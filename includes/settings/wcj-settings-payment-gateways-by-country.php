@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways by Country or State
  *
- * @version 2.8.0
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -13,7 +13,7 @@ $settings = array(
 	array(
 		'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 		'type'  => 'title',
-		'desc'  => __( 'Leave empty to disable.', 'woocommerce-jetpack' ),
+		'desc'  => __( 'Country and state are detected by customer\'s billing address.', 'woocommerce-jetpack' ) . ' ' . __( 'Leave empty to disable.', 'woocommerce-jetpack' ),
 		'id'    => 'wcj_payment_gateways_by_country_gateways_options',
 	),
 );
@@ -23,11 +23,11 @@ $gateways  = WC()->payment_gateways->payment_gateways();
 foreach ( $gateways as $key => $gateway ) {
 	$default_gateways = array( 'bacs' );
 	if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
-		$custom_attributes = apply_filters( 'booster_get_message', '', 'disabled' );
+		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
 		if ( '' == $custom_attributes ) {
 			$custom_attributes = array();
 		}
-		$desc_tip = apply_filters( 'booster_get_message', '', 'desc_no_link' );
+		$desc_tip = apply_filters( 'booster_message', '', 'desc_no_link' );
 	} else {
 		$custom_attributes = array();
 		$desc_tip = '';

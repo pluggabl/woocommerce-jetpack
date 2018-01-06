@@ -46,7 +46,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 					get_option( 'wcj_offer_price_button_position_priority', 31 )
 				);
 			}
-			if ( 'disable' != ( $_hook = apply_filters( 'booster_get_option', 'disable', get_option( 'wcj_offer_price_button_position_archives', 'disable' ) ) ) ) {
+			if ( 'disable' != ( $_hook = apply_filters( 'booster_option', 'disable', get_option( 'wcj_offer_price_button_position_archives', 'disable' ) ) ) ) {
 				add_action(
 					$_hook,
 					array( $this, 'add_offer_price_button' ),
@@ -56,7 +56,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 			add_action( 'woocommerce_before_main_content',    array( $this, 'add_offer_price_form' ) );
 			add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
 			add_action( 'init',                               array( $this, 'offer_price' ) );
-			if ( 'per_product' === apply_filters( 'booster_get_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) ) {
+			if ( 'per_product' === apply_filters( 'booster_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) ) {
 				add_action( 'add_meta_boxes',                 array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product',              array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
@@ -171,7 +171,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @since   2.9.0
 	 */
 	function is_offer_price_enabled_for_product( $product_id ) {
-		switch ( apply_filters( 'booster_get_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) ) {
+		switch ( apply_filters( 'booster_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) ) {
 			case 'all_products':
 				return true;
 			case 'empty_prices':
@@ -190,7 +190,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	 * @todo    (maybe) rethink `str_replace( '\'', '"', ... )`
 	 */
 	function get_wcj_data_array( $product_id ) {
-		$is_per_product_enabled = ( 'per_product' === apply_filters( 'booster_get_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) );
+		$is_per_product_enabled = ( 'per_product' === apply_filters( 'booster_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) );
 		// Price input - price step
 		$price_step = ( ! $is_per_product_enabled || '' === ( $price_step_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_price_step', true ) ) ?
 			get_option( 'wcj_offer_price_price_step', get_option( 'woocommerce_price_num_decimals' ) ) :

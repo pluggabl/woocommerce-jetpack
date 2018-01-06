@@ -152,15 +152,15 @@ class WCJ_Call_For_Price extends WCJ_module {
 	 */
 	function on_empty_price( $price, $_product ) {
 		if ( '' !== get_option( 'wcj_call_for_price_text_variation' ) && $_product->is_type( 'variation' ) ) {
-			return do_shortcode( apply_filters( 'booster_get_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_variation' ) ) );
+			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_variation' ) ) );
 		} elseif ( '' !== get_option( 'wcj_call_for_price_text' ) && is_single( get_the_ID() ) ) {
-			return do_shortcode( apply_filters( 'booster_get_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text' ) ) );
+			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text' ) ) );
 		} elseif ( '' !== get_option( 'wcj_call_for_price_text_on_related' ) && is_single() && ! is_single( get_the_ID() ) ) {
-			return do_shortcode( apply_filters( 'booster_get_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_on_related' ) ) );
+			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_on_related' ) ) );
 		} elseif ( '' !== get_option( 'wcj_call_for_price_text_on_archive' ) && is_archive() ) {
-			return do_shortcode( apply_filters( 'booster_get_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_on_archive' ) ) );
+			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_on_archive' ) ) );
 		} elseif ( '' !== get_option( 'wcj_call_for_price_text_on_home' ) && is_front_page() ) {
-			return do_shortcode( apply_filters( 'booster_get_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_on_home' ) ) );
+			return do_shortcode( apply_filters( 'booster_option', '<strong>Call for price</strong>', get_option( 'wcj_call_for_price_text_on_home' ) ) );
 		} else {
 			return $price;
 		}

@@ -64,7 +64,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 * @since   2.5.0
 	 */
 	function save_meta_box_value( $option_value, $option_name, $module_id ) {
-		if ( true === apply_filters( 'booster_get_option', false, true ) ) {
+		if ( true === apply_filters( 'booster_option', false, true ) ) {
 			return $option_value;
 		}
 		if ( 'no' === $option_value ) {
@@ -239,7 +239,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		}
 
 		// By category
-		$categories = apply_filters( 'booster_get_option', '', get_option( 'wcj_price_by_user_role_categories', '' ) );
+		$categories = apply_filters( 'booster_option', '', get_option( 'wcj_price_by_user_role_categories', '' ) );
 		if ( ! empty( $categories ) ) {
 			$product_categories = get_the_terms( wcj_get_product_id_or_variation_parent_id( $_product ), 'product_cat' );
 			if ( ! empty( $product_categories ) ) {
@@ -278,7 +278,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$user_role = wcj_get_current_user_first_role();
-		$categories = apply_filters( 'booster_get_option', '', get_option( 'wcj_price_by_user_role_categories', '' ) );
+		$categories = apply_filters( 'booster_option', '', get_option( 'wcj_price_by_user_role_categories', '' ) );
 		$price_hash['wcj_user_role'] = array(
 			$user_role,
 			get_option( 'wcj_price_by_user_role_' . $user_role, 1 ),

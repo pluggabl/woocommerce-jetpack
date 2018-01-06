@@ -21,8 +21,8 @@ $available_gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $available_gateways as $key => $gateway ) {
 	$default_gateways = array( 'cod', 'cheque', 'bacs', 'mijireh_checkout', 'paypal' );
 	if ( ! empty( $default_gateways ) && ! in_array( $key, $default_gateways ) ) {
-		$custom_attributes = apply_filters( 'booster_get_message', '', 'disabled' );
-		$desc_tip = apply_filters( 'booster_get_message', '', 'desc' );
+		$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
+		$desc_tip = apply_filters( 'booster_message', '', 'desc' );
 	} else {
 		$custom_attributes = array();
 		$desc_tip = '';

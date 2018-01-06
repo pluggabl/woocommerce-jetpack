@@ -55,7 +55,7 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 		// Actions
 		$result = $this->perform_actions();
 		// Preparing products data
-		$_products = wcj_get_products( array(), 'any', 512, ( 'yes' === apply_filters( 'booster_get_option', 'no', get_option( 'wcj_product_bulk_meta_editor_add_variations', 'no' ) ) ) );
+		$_products = wcj_get_products( array(), 'any', 512, ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_bulk_meta_editor_add_variations', 'no' ) ) ) );
 		$selected_products = isset( $_POST['wcj_product_bulk_meta_editor_products'] ) ? $_POST['wcj_product_bulk_meta_editor_products'] : array();
 		// Output
 		echo $this->get_tool_html( $result['meta_name'], $result['result_message'], $_products, $selected_products, $result['set_meta'] );
