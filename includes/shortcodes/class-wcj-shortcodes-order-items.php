@@ -25,7 +25,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.2.2
+	 * @version 3.2.5
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -60,6 +60,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			'hide_zero_prices'                    => 'no',
 			'multicolumns_glue'                   => '<br>',
 			'sort_by_column'                      => 0,
+			'product_barcode_width'               => 60,
+			'product_barcode_height'              => 60,
 		), $atts );
 		return $modified_atts;
 	}
@@ -726,12 +728,29 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 
 			case 'product_barcode':
 				if ( is_object( $the_product ) ) {
+					if ( ! isset( $column_param ) || '' == $column_param ) {
+						$code = $the_product->get_sku();
+					} else {
+						switch ( $column_param ) {
+							case '%id%':
+								$code = $the_product->get_id();
+								break;
+							case '%sku%':
+								$code = $the_product->get_sku();
+								break;
+							case '%url%':
+								$code = $the_product->get_permalink();
+								break;
+							default: // meta
+								$code = get_post_meta( $the_product->get_id(), $column_param, true );
+						}
+					}
 					$atts = array(
-						'code'                  => ( isset( $column_param ) && 'url' == $column_param ? $the_product->get_permalink() : $the_product->get_sku() ),
+						'code'                  => $code,
 						'type'                  => 'PDF417',
 						'dimension'             => '2D',
-						'width'                 => 60,
-						'height'                => 60,
+						'width'                 => $atts['product_barcode_width'],
+						'height'                => $atts['product_barcode_height'],
 						'color'                 => 'black',
 					);
 					return wcj_tcpdf_barcode( $atts );

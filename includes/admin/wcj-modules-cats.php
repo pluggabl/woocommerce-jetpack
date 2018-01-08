@@ -71,6 +71,7 @@ return apply_filters( 'wcj_modules', array(
 			'stock',
 			'product_input_fields',
 			'product_add_to_cart',
+			'add_to_cart_button_visibility',
 			'purchase_data',
 			'product_bookings',
 			'crowdfunding',
@@ -158,6 +159,7 @@ return apply_filters( 'wcj_modules', array(
 			'pdf_invoicing_page',
 			'pdf_invoicing_emails',
 			'pdf_invoicing_display',
+			'pdf_invoicing_advanced',
 		),
 	),
 

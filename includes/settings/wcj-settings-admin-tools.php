@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 2.9.1
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -80,6 +80,13 @@ return array(
 		'title'    => __( 'Show Product Meta', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_admin_tools_show_product_meta_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Show Variable Product Pricing Table', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_admin_tools_variable_product_pricing_table_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

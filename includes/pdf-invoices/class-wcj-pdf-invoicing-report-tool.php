@@ -302,7 +302,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 
 		$columns = get_option( 'wcj_pdf_invoicing_report_tool_columns', '' );
 		if ( empty( $columns ) ) {
-			$columns = array_keys( WCJ()->modules['pdf_invoicing']->get_report_columns() );
+			$columns = array_keys( WCJ()->modules['pdf_invoicing_advanced']->get_report_columns() );
 		}
 
 		$total_sum          = 0;
@@ -451,7 +451,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	 */
 	function get_headers( $columns ) {
 		$headers = array();
-		$all_headers = WCJ()->modules['pdf_invoicing']->get_report_columns();
+		$all_headers = WCJ()->modules['pdf_invoicing_advanced']->get_report_columns();
 		foreach ( $columns as $column ) {
 			$headers[] = $all_headers[ $column ];
 		}

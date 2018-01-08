@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Prices and Currencies by Country
  *
- * @version 2.8.0
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,8 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.5
+	 * @todo    cleanup
 	 */
 	function __construct() {
 
@@ -51,7 +52,12 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				// Backend
 				include_once( 'reports/class-wcj-currency-reports.php' );
 				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
-					include_once( 'price-by-country/class-wcj-price-by-country-local.php' );
+					if ( 'inline' === get_option( 'wcj_price_by_country_local_options_style', 'inline' ) ) {
+						include_once( 'price-by-country/class-wcj-price-by-country-local.php' );
+					} else {
+						add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+						add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+					}
 				}
 
 				// Reset Price Filter

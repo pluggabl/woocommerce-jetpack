@@ -113,6 +113,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'width'                 => 0,
 			'height'                => 0,
 			'color'                 => 'black',
+			'meta_key'              => '',
 		);
 
 		parent::__construct();
@@ -159,19 +160,23 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 3.2.5
 	 * @since   3.2.5
-	 * @todo    (maybe) more options for `code` (e.g. `id`)
 	 */
 	function wcj_product_barcode( $atts ) {
 		switch ( $atts['code'] ) {
-			case 'url':
-				$atts['code'] = $this->the_product->get_permalink();
+			case '%id%':
+				$atts['code'] = $atts['product_id'];
 				break;
-			default: // 'sku'
+			case '%sku%':
 				$atts['code'] = $this->the_product->get_sku();
 				break;
-		}
-		if ( '' == $atts['code'] ) {
-			return '';
+			case '%url%':
+				$atts['code'] = $this->the_product->get_permalink();
+				break;
+			case '%meta%':
+				$atts['code'] = get_post_meta( $atts['product_id'], $atts['meta_key'], true );
+				break;
+			default:
+				return '';
 		}
 		return wcj_barcode( $atts );
 	}

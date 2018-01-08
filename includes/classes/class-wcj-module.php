@@ -317,7 +317,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			if ( $is_enabled ) {
 				if ( 'title' === $option['type'] ) {
 					$html .= '<tr>';
-					$html .= '<th colspan="3" style="text-align:left;font-weight:bold;">' . $option['title'] . '</th>';
+					$html .= '<th colspan="3" style="' . ( isset( $option['css'] ) ? $option['css'] : 'text-align:left;font-weight:bold;' ) . '">' . $option['title'] . '</th>';
 					$html .= '</tr>';
 				} else {
 					$custom_attributes = '';

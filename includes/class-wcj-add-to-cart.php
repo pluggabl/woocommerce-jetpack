@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Add to Cart
  *
- * @version 2.8.0
+ * @version 3.2.5
  * @author  Algoritmika Ltd.
  */
 
@@ -15,12 +15,12 @@ class WCJ_Add_To_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.5
 	 */
 	function __construct() {
 
 		$this->id         = 'add_to_cart';
-		$this->short_desc = __( 'Add to Cart Labels', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Add to Cart Button Labels', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Change text for Add to Cart button by WooCommerce product type, by product category or for individual products.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-add-to-cart-labels';
 		parent::__construct();

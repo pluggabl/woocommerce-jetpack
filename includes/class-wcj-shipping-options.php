@@ -18,6 +18,8 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	 *
 	 * @version 3.2.4
 	 * @since   2.9.0
+	 * @todo    (maybe) move "Display radio buttons instead of drop box for variable products" to new module(s)
+	 * @todo    (maybe) remove (or at least mark ass deprecated) "Grant free shipping on per product basis" (offer to use "Shipping Methods by Products" module instead)
 	 */
 	function __construct() {
 

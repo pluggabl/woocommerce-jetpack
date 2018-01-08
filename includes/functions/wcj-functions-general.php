@@ -9,6 +9,19 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_js_confirmation' ) ) {
+	/**
+	 * wcj_get_js_confirmation.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    use where needed
+	 */
+	function wcj_get_js_confirmation() {
+		return ' onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')"';
+	}
+}
+
 if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
 	/**
 	 * wcj_tcpdf_barcode.

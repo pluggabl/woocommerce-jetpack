@@ -109,6 +109,16 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc'     => __( 'Per product options style', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_country_local_options_style',
+		'default'  => 'inline',
+		'type'     => 'select',
+		'options'  => array(
+			'inline'   => __( 'Inline', 'woocommerce-jetpack' ),
+			'meta_box' => __( 'Separate meta box', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
 		'title'    => __( 'Price Filter Widget and Sorting by Price Support', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => '<a href="' . add_query_arg( 'recalculate_price_filter_products_prices', '1', remove_query_arg( array( 'wcj_generate_country_groups', 'wcj_generate_country_groups_confirm' ) ) ) . '">' .
@@ -187,10 +197,18 @@ $settings = array(
 	),
 );
 for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
+	$admin_title = get_option( 'wcj_price_by_country_countries_group_admin_title_' . $i, __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i );
+	if ( __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i == $admin_title ) {
+		$admin_title = '';
+	} else {
+		$admin_title = ': ' . $admin_title;
+	}
+	$admin_title = __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i . $admin_title;
 	switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
 		case 'comma_list':
 			$settings[] = array(
-				'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
+				'title'    => $admin_title . ( '' != get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, '' ) ?
+					' (' . count( explode( ',', get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, '' ) ) ) . ')' : '' ),
 				'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predifined sets visit <a href="http://booster.io/country-codes/" target="_blank">http://booster.io/country-codes/</a>', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_exchange_rate_countries_group_' . $i,
 				'default'  => '',
@@ -200,7 +218,8 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_b
 			break;
 		case 'multiselect':
 			$settings[] = array(
-				'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
+				'title'    => $admin_title . ( is_array( get_option( 'wcj_price_by_country_countries_group_' . $i, '' ) ) ?
+					' (' . count( get_option( 'wcj_price_by_country_countries_group_' . $i, '' ) ) . ')' : '' ),
 				'id'       => 'wcj_price_by_country_countries_group_' . $i,
 				'default'  => '',
 				'type'     => 'multiselect',
@@ -210,7 +229,8 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_b
 			break;
 		case 'chosen_select':
 			$settings[] = array(
-				'title'    => __( 'Group', 'woocommerce-jetpack' ) . ' #' . $i,
+				'title'    => $admin_title . ( is_array( get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' ) ) ?
+					' (' . count( get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' ) ) . ')' : '' ),
 				'id'       => 'wcj_price_by_country_countries_group_chosen_select_' . $i,
 				'default'  => '',
 				'type'     => 'multiselect',

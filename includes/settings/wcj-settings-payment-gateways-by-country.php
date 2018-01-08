@@ -13,7 +13,7 @@ $settings = array(
 	array(
 		'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 		'type'  => 'title',
-		'desc'  => __( 'Country and state are detected by customer\'s billing address.', 'woocommerce-jetpack' ) . ' ' . __( 'Leave empty to disable.', 'woocommerce-jetpack' ),
+		'desc'  => __( 'Country and state are defined from customer\'s entered billing address.', 'woocommerce-jetpack' ) . '<br>' . __( 'Leave empty to disable.', 'woocommerce-jetpack' ),
 		'id'    => 'wcj_payment_gateways_by_country_gateways_options',
 	),
 );

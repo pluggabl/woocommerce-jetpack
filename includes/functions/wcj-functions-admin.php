@@ -9,6 +9,33 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_product_ids_for_meta_box_options' ) ) {
+	/**
+	 * wcj_get_product_ids_for_meta_box_options.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    use this function where needed
+	 */
+	function wcj_get_product_ids_for_meta_box_options( $main_product_id ) {
+		$_product = wc_get_product( $main_product_id );
+		if ( ! $_product ) {
+			return array();
+		}
+		$products = array();
+		if ( $_product->is_type( 'variable' ) ) {
+			$available_variations = $_product->get_available_variations();
+			foreach ( $available_variations as $variation ) {
+				$variation_product = wc_get_product( $variation['variation_id'] );
+				$products[ $variation['variation_id'] ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
+			}
+		} else {
+			$products[ $main_product_id ] = '';
+		}
+		return $products;
+	}
+}
+
 if ( ! function_exists( 'wcj_is_admin_product_edit_page' ) ) {
 	/**
 	 * wcj_is_admin_product_edit_page.

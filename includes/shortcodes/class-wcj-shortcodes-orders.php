@@ -138,6 +138,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'height'                      => 0,
 			'color'                       => 'black',
 			'currency'                    => '',
+			'doc_type'                    => 'invoice',
 		), $atts );
 
 		return $modified_atts;
@@ -145,20 +146,29 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * init_atts.
+	 *
+	 * @todo    (maybe) `if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) return false;`
 	 */
 	function init_atts( $atts ) {
 
 		// Atts
-		$atts['excl_tax'] = ( 'yes' === $atts['excl_tax'] ) ? true : false;
+		$atts['excl_tax'] = ( 'yes' === $atts['excl_tax'] );
 
-		if ( 0 == $atts['order_id'] ) $atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID();
-		if ( 0 == $atts['order_id'] ) $atts['order_id'] = ( isset( $_GET['pdf_invoice'] ) ) ? $_GET['pdf_invoice'] : 0; // PDF Invoices V1 compatibility
-		if ( 0 == $atts['order_id'] ) return false;
-		//if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) return false;
+		if ( 0 == $atts['order_id'] ) {
+			$atts['order_id'] = ( isset( $_GET['order_id'] ) ) ? $_GET['order_id'] : get_the_ID();
+		}
+		if ( 0 == $atts['order_id'] ) {
+			$atts['order_id'] = ( isset( $_GET['pdf_invoice'] ) ) ? $_GET['pdf_invoice'] : 0; // PDF Invoices V1 compatibility
+		}
+		if ( 0 == $atts['order_id'] ) {
+			return false;
+		}
 
 		// Class properties
 		$this->the_order = ( 'shop_order' === get_post_type( $atts['order_id'] ) ) ? wc_get_order( $atts['order_id'] ) : null;
-		if ( ! $this->the_order ) return false;
+		if ( ! $this->the_order ) {
+			return false;
+		}
 
 		return $atts;
 	}
@@ -250,10 +260,24 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 3.2.5
 	 * @since   3.2.5
-	 * @todo    add more options for `code` (e.g.: `id`, `tracking number/url` (e.g. UPS) etc.)
 	 */
 	function wcj_order_tcpdf_barcode( $atts ) {
-		$atts['code'] = $this->the_order->get_view_order_url();
+		switch ( $atts['code'] ) {
+			case '%url%':
+				$atts['code'] = $this->the_order->get_view_order_url();
+				break;
+			case '%id%':
+				$atts['code'] = $atts['order_id'];
+				break;
+			case '%doc_number%':
+				$atts['code'] = wcj_get_invoice_number( $atts['order_id'], $atts['doc_type'] );
+				break;
+			case '%meta%':
+				$atts['code'] = get_post_meta( $atts['order_id'], $atts['meta_key'], true );
+				break;
+			default:
+				return '';
+		}
 		return wcj_tcpdf_barcode( $atts );
 	}
 

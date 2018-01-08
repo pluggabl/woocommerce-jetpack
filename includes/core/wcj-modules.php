@@ -22,6 +22,7 @@ $wcj_module_files = array(
 	'class-wcj-product-custom-info.php',
 	'class-wcj-product-info.php',
 	'class-wcj-product-add-to-cart.php',
+	'class-wcj-add-to-cart-button-visibility.php',
 	'class-wcj-related-products.php',
 	'class-wcj-sku.php',
 	'class-wcj-stock.php',
@@ -118,6 +119,7 @@ $wcj_module_files = array(
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-page.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-emails.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php',
+	'pdf-invoices/submodules/class-wcj-pdf-invoicing-advanced.php',
 );
 
 $this->modules = array();

@@ -11,19 +11,9 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( is_admin() ) {
-	// Modules statuses
-	$submodules_classes = array(
-		'WCJ_PDF_Invoicing_Display',
-		'WCJ_PDF_Invoicing_Emails',
-		'WCJ_PDF_Invoicing_Footer',
-		'WCJ_PDF_Invoicing_Header',
-		'WCJ_PDF_Invoicing_Numbering',
-		'WCJ_PDF_Invoicing_Page',
-		'WCJ_PDF_Invoicing_Styling',
-		'WCJ_PDF_Invoicing_Templates',
-	);
 	foreach ( $this->modules as $module ) {
-		if ( ! in_array( get_class( $module ), $submodules_classes ) ) {
+		// Modules statuses
+		if ( '' == $module->parent_id ) { // i.e. not submodule
 			$status_settings = $module->add_enable_module_setting( array() );
 			$this->module_statuses[] = $status_settings[1];
 		}

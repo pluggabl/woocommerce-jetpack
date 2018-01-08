@@ -17,7 +17,8 @@ class WCJ_Settings_Manager {
 	 * Constructor.
 	 *
 	 * @version 2.9.0
-	 * @version 2.9.0
+	 * @since   2.9.0
+	 * @todo    add options to import/export selected modules only
 	 */
 	function __construct() {
 		// Import / Export / Reset Booster's settings

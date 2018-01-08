@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Custom Gateways
  *
- * @version 2.8.0
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -44,6 +44,23 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_custom_payment_gateways_options',
+	),
+	array(
+		'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_custom_payment_gateways_advanced_options',
+	),
+	array(
+		'title'    => __( 'Gateways Input Fields', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add "Delete" button', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add "Delete" button to custom payment gateways input fields admin order meta box.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_custom_payment_gateways_input_fields_delete_button',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_custom_payment_gateways_advanced_options',
 	),
 ) );
 return $settings;

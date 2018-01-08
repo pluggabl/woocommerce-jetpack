@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce Settings - Address Formats
+ * Booster for WooCommerce - Settings - Address Formats
  *
  * @version 2.8.0
  * @since   2.8.0

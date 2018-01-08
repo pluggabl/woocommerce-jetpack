@@ -262,7 +262,6 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	 *
 	 * @version 3.2.5
 	 * @since   3.2.5
-	 * @todo    ! maybe I need to save `cart_item_id` and not `product_id`
 	 */
 	function maybe_return_saved_converted_price( $_product, $_currency ) {
 		if ( $this->do_save_converted_prices ) {

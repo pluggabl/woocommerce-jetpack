@@ -5,6 +5,7 @@
  * @version 3.2.5
  * @author  Algoritmika Ltd.
  * @todo    clean up
+ * @todo    (maybe) remove this and leave only standard meta box option (i.e. only `'meta_box' === get_option( 'wcj_price_by_country_local_options_style', 'inline' )`)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -138,7 +139,7 @@ class WCJ_Price_by_Country_Local {
 
 			array(
 				'id'      => 'wcj_' . $meta_box_id . '_make_empty_price_' . $this->scope . '_',
-				'title'   => __( 'Make empty price', 'woocommerce' ),
+				'title'   => __( 'Make empty price', 'woocommerce-jetpack' ),
 				'type'    => 'checkbox',
 				'default' => 'off',
 			),
@@ -157,8 +158,9 @@ class WCJ_Price_by_Country_Local {
 				if ( isset( $_POST[ $option['id'] . $i . $variation_id_addon ] ) ) {
 					update_post_meta( $post_id, '_' . $option['id'] . $i, $_POST[ $option['id'] . $i . $variation_id_addon ] );
 				}
-				elseif ( 'checkbox' === $option['type'] )
+				elseif ( 'checkbox' === $option['type'] ) {
 					update_post_meta( $post_id, '_' . $option['id'] . $i, 'off' );
+				}
 			}
 		}
 	}

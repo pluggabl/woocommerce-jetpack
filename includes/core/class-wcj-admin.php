@@ -37,7 +37,7 @@ class WCJ_Admin {
 	 *
 	 * @version 3.2.5
 	 * @since   2.5.9
-	 * @todo    expand "Please upgrade ..." message (i.e. "... you can downgrade to Booster v3.2.4 or earlier from ...")
+	 * @todo    (maybe) expand "Please upgrade ..." message
 	 */
 	function check_plus_version() {
 		if ( ! is_admin() ) {

@@ -107,14 +107,14 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @version 3.2.5
 	 * @since   3.2.5
 	 * @see     https://tcpdf.org/examples/example_012/
-	 * @todo    not finished!
+	 * @todo    add more atts (e.g. style, fill color etc.)
 	 * @todo    (maybe) move all `tcpdf` shortcodes to `class-wcj-shortcodes-tcpdf.php`
 	 * @todo    (maybe) create general `[wcj_tcpdf_method]` shortcode (not sure how to solve `$params` part though)
 	 */
 	function wcj_tcpdf_rectangle( $atts ) {
 
 		$style        = 'D';
-		$border_style = array( 'all' => array( 'width' => 1, 'cap' => 'round', 'join' => 'round', 'dash' => '2,10', 'color' => array( 255, 0, 0 ) ) );
+		$border_style = array( 'all' => array( 'width' => 0.5, 'cap' => 'round', 'join' => 'round', 'dash' => 0, 'color' => array( 0, 0, 0 ) ) );
 		$fill_color   = array();
 
 		$params = array(

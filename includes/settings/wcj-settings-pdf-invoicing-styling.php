@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Styling
  *
- * @version 3.2.2
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -81,56 +81,4 @@ foreach ( $invoice_types as $invoice_type ) {
 		),
 	) );
 }
-if ( 'yes' === get_option( 'wcj_invoicing_fonts_manager_do_not_download', 'no' ) ) {
-	$fonts_manager_desc = __( 'Fonts download is disabled.', 'woocommerce-jetpack' );
-} else {
-	if ( $is_full_fonts ) {
-		$fonts_manager_desc = __( 'Fonts are up to date.', 'woocommerce-jetpack' ) . ' ' . sprintf(
-			__( 'Latest successful download or version check was on %s.', 'woocommerce-jetpack' ),
-			date( 'Y-m-d H:i:s', get_option( 'wcj_invoicing_fonts_version_timestamp', null ) )
-		);
-	} else {
-		$fonts_manager_desc = __( 'Fonts are NOT up to date. Please try downloading by pressing the button below.', 'woocommerce-jetpack' );
-		if ( null != get_option( 'wcj_invoicing_fonts_version', null ) ) {
-			$fonts_manager_desc .= ' ' . sprintf(
-				__( 'Latest successful downloaded version is %s.', 'woocommerce-jetpack' ),
-				get_option( 'wcj_invoicing_fonts_version', null )
-			);
-		}
-		if ( null != get_option( 'wcj_invoicing_fonts_version_timestamp', null ) ) {
-			$fonts_manager_desc .= ' ' . sprintf(
-				__( 'Latest download executed on %s.', 'woocommerce-jetpack' ),
-				date( 'Y-m-d H:i:s', get_option( 'wcj_invoicing_fonts_version_timestamp', null ) )
-			);
-		}
-	}
-}
-// $hook_time = date( 'Y-m-d H:i:s', get_option( 'wcj_download_tcpdf_fonts_hook_timestamp', null ) ); // for debug
-$settings = array_merge( $settings, array(
-	array(
-		'title'    => __( 'Fonts Manager', 'woocommerce-jetpack' ),
-		'desc'     => $fonts_manager_desc,
-		'type'     => 'title',
-		'id'       => 'wcj_invoicing_fonts_manager_styling_options',
-	),
-	array(
-		'title'    => __( 'Actions', 'woocommerce-jetpack' ),
-		'type'     => 'custom_link',
-		'link'     => '<a class="button-primary" href="' . add_query_arg( 'wcj_download_fonts', '1' ) . '">' .
-			( $is_full_fonts ? __( 'Re-download', 'woocommerce-jetpack' ) : __( 'Download', 'woocommerce-jetpack' ) )
-			. '</a>',
-		'id'       => 'wcj_invoicing_fonts_manager_styling_option',
-	),
-	array(
-		'title'    => __( 'Disable Fonts Download', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
-		'type'     => 'checkbox',
-		'default'  => 'no',
-		'id'       => 'wcj_invoicing_fonts_manager_do_not_download',
-	),
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_invoicing_fonts_manager_styling_options',
-	),
-) );
 return $settings;

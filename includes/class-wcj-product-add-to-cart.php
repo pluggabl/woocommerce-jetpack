@@ -17,6 +17,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 3.2.5
+	 * @todo    (maybe) move "Display radio buttons instead of drop box for variable products" to new module
+	 * @todo    (maybe) rename to "Add to Cart Button (Options)"
 	 */
 	function __construct() {
 
@@ -26,7 +28,6 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			. ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Display radio buttons instead of drop box for variable products.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
-			. ' ' . __( 'Disable add to cart button on per product basis.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Open external products on add to cart in new window.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Customize Add to Cart messages.', 'woocommerce-jetpack' );
@@ -37,7 +38,6 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
 			// Metaboxes
 			if (
-				'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ||
 				'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' ) ||
 				'yes' === get_option( 'wcj_add_to_cart_button_ajax_per_product_enabled', 'no' ) ||
 				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) ||
@@ -87,20 +87,6 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 				add_filter( 'woocommerce_is_sold_individually', '__return_true', PHP_INT_MAX );
 			}
 
-			// Button - Disabling - Archives
-			if ( 'yes' === get_option( 'wcj_add_to_cart_button_disable_archives', 'no' ) ) {
-				add_action( 'init', array( $this, 'add_to_cart_button_disable_archives' ), PHP_INT_MAX );
-			}
-			// Button - Disabling - Single Product
-			if ( 'yes' === get_option( 'wcj_add_to_cart_button_disable_single', 'no' ) ) {
-				add_action( 'init', array( $this, 'add_to_cart_button_disable_single' ), PHP_INT_MAX );
-			}
-			// Button per product - Disabling
-			if ( 'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ) {
-				add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_to_cart_button_disable_start' ), PHP_INT_MAX, 0 );
-				add_action( 'woocommerce_after_add_to_cart_button',  array( $this, 'add_to_cart_button_disable_end' ),   PHP_INT_MAX, 0 );
-				add_filter( 'woocommerce_loop_add_to_cart_link',     array( $this, 'add_to_cart_button_loop_disable' ),  PHP_INT_MAX, 2 );
-			}
 			// Button per product Custom URL
 			if ( 'yes' === get_option( 'wcj_add_to_cart_button_custom_loop_url_per_product_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_product_add_to_cart_url', array( $this, 'custom_add_to_cart_loop_url' ), PHP_INT_MAX, 2 );
@@ -176,26 +162,6 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 		}
 
 		return $message;
-	}
-
-	/**
-	 * add_to_cart_button_disable_single.
-	 *
-	 * @version 2.6.0
-	 * @since   2.6.0
-	 */
-	function add_to_cart_button_disable_single() {
-		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
-	}
-
-	/**
-	 * add_to_cart_button_disable_archives.
-	 *
-	 * @version 2.6.0
-	 * @since   2.6.0
-	 */
-	function add_to_cart_button_disable_archives() {
-		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
 	}
 
 	/**
@@ -294,44 +260,6 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			return $custom_url;
 		}
 		return $url;
-	}
-
-	/**
-	 * add_to_cart_button_loop_disable.
-	 *
-	 * @version 3.2.5
-	 * @since   2.5.2
-	 */
-	function add_to_cart_button_loop_disable( $link, $_product ) {
-		if ( 0 != get_the_ID() && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_loop_disable', true ) ) {
-			return do_shortcode( get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_disable_content', true ) );
-		}
-		return $link;
-	}
-
-	/**
-	 * add_to_cart_button_disable_end.
-	 *
-	 * @version 3.2.5
-	 * @since   2.5.2
-	 */
-	function add_to_cart_button_disable_end() {
-		if ( 0 != get_the_ID() && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_disable', true ) ) {
-			ob_end_clean();
-			echo do_shortcode( get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_loop_disable_content', true ) );
-		}
-	}
-
-	/**
-	 * add_to_cart_button_disable_start.
-	 *
-	 * @version 2.5.2
-	 * @since   2.5.2
-	 */
-	function add_to_cart_button_disable_start() {
-		if ( 0 != get_the_ID() && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_add_to_cart_button_disable', true ) ) {
-			ob_start();
-		}
 	}
 
 	/**
