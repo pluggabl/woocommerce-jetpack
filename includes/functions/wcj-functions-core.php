@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Functions - Core
  *
- * @version 3.2.5
- * @since   3.2.5
+ * @version 3.3.0
+ * @since   3.3.0
  * @author  Algoritmika Ltd.
  */
 

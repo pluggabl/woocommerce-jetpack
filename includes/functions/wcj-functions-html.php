@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - HTML Functions
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -55,7 +55,7 @@ if ( ! function_exists( 'wcj_get_option_html' ) ) {
 	/**
 	 * wcj_get_option_html.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function wcj_get_option_html( $option_type, $option_id, $option_value, $option_description, $option_class ) {
 

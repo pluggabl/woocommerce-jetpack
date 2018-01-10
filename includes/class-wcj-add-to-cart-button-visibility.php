@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Add to Cart Button Visibility
  *
- * @version 3.2.5
- * @since   3.2.5
+ * @version 3.3.0
+ * @since   3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function __construct() {
 
@@ -70,8 +70,8 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * add_to_cart_button_disable_end_per_category.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function add_to_cart_button_disable_end_per_category() {
 		$cats_to_hide = get_option( 'wcj_add_to_cart_button_per_category_disable_single', '' );
@@ -84,8 +84,8 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * add_to_cart_button_disable_start_per_category.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function add_to_cart_button_disable_start_per_category() {
 		$cats_to_hide = get_option( 'wcj_add_to_cart_button_per_category_disable_single', '' );
@@ -97,8 +97,8 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * add_to_cart_button_loop_disable_per_category.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function add_to_cart_button_loop_disable_per_category( $link, $_product ) {
 		$cats_to_hide = get_option( 'wcj_add_to_cart_button_per_category_disable_loop', '' );
@@ -131,7 +131,7 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * add_to_cart_button_loop_disable.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.2
 	 */
 	function add_to_cart_button_loop_disable( $link, $_product ) {
@@ -144,7 +144,7 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * add_to_cart_button_disable_end.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.2
 	 */
 	function add_to_cart_button_disable_end() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -354,7 +354,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled_per_product' ) ) {
 	/**
 	 * wcj_is_product_wholesale_enabled_per_product.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.0
 	 */
 	function wcj_is_product_wholesale_enabled_per_product( $product_id ) {
@@ -369,7 +369,7 @@ if ( ! function_exists( 'wcj_is_product_wholesale_enabled' ) ) {
 	/**
 	 * wcj_is_product_wholesale_enabled.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function wcj_is_product_wholesale_enabled( $product_id ) {
 		if ( wcj_is_module_enabled( 'wholesale_price' ) ) {

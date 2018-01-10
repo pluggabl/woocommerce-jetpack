@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @todo    (maybe) add `[wcj_product_stock_price]`
 	 */
 	function __construct() {
@@ -122,7 +122,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Inits shortcode atts and properties.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @param   array $atts Shortcode atts.
 	 * @return  array The (modified) shortcode atts.
 	 */
@@ -158,8 +158,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_barcode.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function wcj_product_barcode( $atts ) {
 		switch ( $atts['code'] ) {

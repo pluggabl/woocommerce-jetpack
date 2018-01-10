@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Booster Core
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -37,7 +37,7 @@ if ( ! function_exists( 'wcj_is_module_enabled' ) ) {
 	/*
 	 * wcj_is_module_enabled.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.4.0
 	 * @return  boolean
 	 */

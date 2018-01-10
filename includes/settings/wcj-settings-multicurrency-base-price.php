@@ -50,7 +50,7 @@ $settings = array(
 		'custom_attributes' => array( 'min' => 0 ),
 	),
 	array(
-		'title'    => __( 'Advanced: Saved Calculated Products Prices', 'woocommerce-jetpack' ),
+		'title'    => __( 'Advanced: Save Calculated Products Prices', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_base_price_save_prices',

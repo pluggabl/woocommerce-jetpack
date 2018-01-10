@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function __construct() {
 
@@ -66,8 +66,8 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * make_original_variable_product_pricing_readonly.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    this is not really making fields readonly (e.g. field is still editable via keyboard tab button)
 	 */
 	function make_original_variable_product_pricing_readonly() {
@@ -81,8 +81,8 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * maybe_add_variable_product_pricing_meta_box.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function maybe_add_variable_product_pricing_meta_box() {
 		if ( ( $_product = wc_get_product() ) && $_product->is_type( 'variable' ) ) {
@@ -165,7 +165,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * create_admin_tools_tool.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function create_admin_tools_tool() {
 		// Delete log

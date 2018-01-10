@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Custom Gateways
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

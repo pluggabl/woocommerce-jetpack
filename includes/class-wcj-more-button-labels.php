@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - More Button Labels
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function __construct() {
 
@@ -37,8 +37,8 @@ class WCJ_More_Button_Labels extends WCJ_Module {
 	/**
 	 * override_order_button_text.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function override_order_button_text() {
 		if ( function_exists( 'WC' ) && method_exists( WC(), 'payment_gateways' ) && isset( WC()->payment_gateways()->payment_gateways ) ) {

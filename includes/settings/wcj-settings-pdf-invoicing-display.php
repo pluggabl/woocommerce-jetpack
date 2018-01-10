@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Display
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add "Save all settings" buttons to each document type

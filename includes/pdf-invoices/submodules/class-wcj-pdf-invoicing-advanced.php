@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Advanced
  *
- * @version 3.2.5
- * @since   3.2.5
+ * @version 3.3.0
+ * @since   3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_PDF_Invoicing_Advanced extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function __construct() {
 		$this->id         = 'pdf_invoicing_advanced';
@@ -30,8 +30,8 @@ class WCJ_PDF_Invoicing_Advanced extends WCJ_Module {
 	/**
 	 * get_report_default_columns.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function get_report_default_columns() {
 		return array_keys( array(
@@ -53,8 +53,8 @@ class WCJ_PDF_Invoicing_Advanced extends WCJ_Module {
 	/**
 	 * get_report_columns.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    (maybe) `order_discount_tax`
 	 */
 	function get_report_columns() {

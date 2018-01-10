@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Local
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  * @todo    clean up
  * @todo    (maybe) remove this and leave only standard meta box option (i.e. only `'meta_box' === get_option( 'wcj_price_by_country_local_options_style', 'inline' )`)
@@ -232,7 +232,7 @@ class WCJ_Price_by_Country_Local {
 	/**
 	 * get_all_options_html.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function get_all_options_html( $simple_or_variable, $current_post_id, $total_number, $variation_id_addon = '' ) {
 		$html = '';

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function __construct() {
 
@@ -95,7 +95,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -197,7 +197,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_price_shortcode.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
 		if ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) {
@@ -219,8 +219,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_cost.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function wcj_order_items_cost( $atts ) {
 		$atts['type'] = 'items_cost';
@@ -230,8 +230,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_profit.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function wcj_order_profit( $atts ) {
 		$total = 0;
@@ -258,8 +258,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_tcpdf_barcode.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function wcj_order_tcpdf_barcode( $atts ) {
 		switch ( $atts['code'] ) {

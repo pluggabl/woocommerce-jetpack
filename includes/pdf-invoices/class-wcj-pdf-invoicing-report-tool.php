@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -295,7 +295,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Invoices Report Data function.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.7
 	 */
 	function get_invoices_report_data( $year, $month, $invoice_type_id ) {
@@ -446,8 +446,8 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * get_headers.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function get_headers( $columns ) {
 		$headers = array();

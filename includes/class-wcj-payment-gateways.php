@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Gateways
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function __construct() {
 
@@ -37,8 +37,8 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 	/**
 	 * maybe_delete_payment_gateway_input_fields.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function maybe_delete_payment_gateway_input_fields() {
 		if ( isset( $_GET['wcj_delete_payment_gateway_input_fields'] ) ) {
@@ -100,7 +100,7 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 	/**
 	 * create_custom_payment_gateways_fields_admin_order_meta_box.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.2
 	 */
 	function create_custom_payment_gateways_fields_admin_order_meta_box() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -68,7 +68,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * maybe_override_fields.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   3.1.0
 	 * @todo    (maybe) add option to choose `$options_to_override`
 	 * @todo    (maybe) add to `$options_to_override`: enabled; class;

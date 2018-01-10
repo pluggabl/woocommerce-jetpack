@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -228,7 +228,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @todo    rewrite this with less filters (e.g. `woocommerce_get_price_html` only) - at least for `! WCJ_IS_WC_VERSION_BELOW_3`
 	 */
 	function custom_price( $price, $product ) {

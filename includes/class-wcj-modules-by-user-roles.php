@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Modules By User Roles
  *
- * @version 3.2.5
- * @since   3.2.5
+ * @version 3.3.0
+ * @since   3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Modules_By_User_Roles extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function __construct() {
 

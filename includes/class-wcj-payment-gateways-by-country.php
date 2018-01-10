@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -34,7 +34,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @todo    (maybe) add option to detect customer's country by IP (instead of `wcj_customer_get_country()`); probably won't work with states though...
 	 */
 	function available_payment_gateways( $_available_gateways ) {

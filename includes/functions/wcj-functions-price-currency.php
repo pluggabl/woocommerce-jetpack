@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -161,7 +161,7 @@ if ( ! function_exists( 'wcj_price_by_product_base_currency' ) ) {
 	/**
 	 * wcj_price_by_product_base_currency.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.6
 	 */
 	function wcj_price_by_product_base_currency( $price, $product_id ) {

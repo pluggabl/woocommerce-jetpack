@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Options
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  * @todo    (maybe) this only loads Enable, Tools and Reset settings for each module

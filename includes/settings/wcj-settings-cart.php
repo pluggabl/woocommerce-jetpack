@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Cart Custom Info
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) 'Hide "Note: Shipping and taxes are estimated..." message on Cart page' - `wcj_cart_hide_shipping_and_taxes_estimated_message`

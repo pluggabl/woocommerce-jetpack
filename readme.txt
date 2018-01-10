@@ -43,12 +43,12 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 
 **Products**
 
+* *Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Open external products on add to cart in new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages.
 * *Add to Cart Button Visibility* - Enable/disable WooCommerce Add to Cart button globally or on per product basis.
 * *Admin Products List* - Customize WooCommerce admin products list.
 * *Bookings* - Add bookings products to WooCommerce.
 * *Cost of Goods* - Save WooCommerce product purchase costs data for admin reports.
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
-* *Product Add to Cart* - Set any local url to redirect to on WooCommerce Add to Cart. Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products. Disable quantity input. Open external products on add to cart in new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages.
 * *Product Addons* - Add (paid/free/discount) addons to WooCommerce products.
 * *Product Availability by Date* - WooCommerce product availability by date.
 * *Product Availability by Time* - WooCommerce product availability by time.
@@ -178,11 +178,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.2.5 - 10/01/2018 =
+= 3.3.0 - 10/01/2018 =
 D	* Dev - PRICES & CURRENCIES - Currencies - Belarusian ruble code updated (from `BYR` to `BYN`).
-D X	* Dev - PRICES & CURRENCIES - Currency per Product - Advanced Options - "Save Converted Product Prices in Array" option added.
+D T	* Dev - PRICES & CURRENCIES - Currency per Product - Advanced Options - "Save Converted Product Prices in Array" option added.
 D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Per product options style" option added.
-D T	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Per product settings (`inline`) restyled.
+D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Per product settings (`inline`) restyled.
 D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Groups - "Admin Title" option added.
 D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Admin settings restyled.
 D	* Dev - PRICES & CURRENCIES - Wholesale Price - "Round single product price" option added.
@@ -241,13 +241,12 @@ D	* Dev - Functions - General - `wcj_tcpdf_barcode()` - Border removed.
 	* Dev - Functions - "Core" functions file added.
 	* Dev - Functions - Exchange Rates - `wcj_get_saved_exchange_rate()` - Returning `1` when `currency_from` equals `currency_to`.
 	* Fix - Functions - Price and Currency - `wcj_price_by_product_base_currency()` - Checking if currency exchange rate not equals zero (so no division by zero can happen).
+	* Dev - Settings - Readme generator `woojetpack_readme` removed.
+	* Dev - Classes - `WCJ_Module` - `create_meta_box()` - Tooltip restyled. Optional `css` attribute added to `title` type.
 	* Dev - Core - Options - Code refactoring.
-	* Dev - `WCJ_Module` - `create_meta_box()` - Tooltip restyled. Optional `css` attribute added to `title` type.
-	* Dev - `wcj-constants.php` file moved to `core` directory.
-	* Dev - Some filters renamed.
-  T	* Dev - Version option name changed.
-	* Dev - Code refactoring - Shortcodes objects saved in `WCJ()->shortcodes` array.
-	* Dev - "WC tested up to" added to plugin's header.
+	* Dev - Core - Shortcodes - Code refactoring - Shortcodes objects saved in `WCJ()->shortcodes` array.
+	* Dev - Core - `wcj-constants.php` file moved to `core` directory.
+	* Dev - Version option name changed. Some filters renamed. "WC tested up to" added to plugin's header.
 
 = 3.2.4 - 27/12/2017 =
 * Dev - PRICES & CURRENCIES - Currencies - More cryptocurrencies added.

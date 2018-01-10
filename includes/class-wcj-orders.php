@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @todo    Bulk Regenerate Download Permissions - copy "cron" to plugin
 	 * @todo    Bulk Regenerate Download Permissions - maybe move "bulk actions" to free
 	 * @todo    Bulk Regenerate Download Permissions - maybe as new module
@@ -78,8 +78,8 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * add_country_by_ip_meta_box.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function add_country_by_ip_meta_box() {
 		add_meta_box(
@@ -95,8 +95,8 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * create_country_by_ip_meta_box.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function create_country_by_ip_meta_box() {
 		if (

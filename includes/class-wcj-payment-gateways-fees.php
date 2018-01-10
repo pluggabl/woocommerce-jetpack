@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -47,8 +47,8 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * get_current_gateway.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function get_current_gateway() {
 		if ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) {
@@ -76,7 +76,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * gateways_fees.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function gateways_fees() {
 		global $woocommerce;

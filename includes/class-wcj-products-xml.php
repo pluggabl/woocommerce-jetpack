@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    create all files at once (manually and synchronize update)
@@ -17,7 +17,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.7
 	 */
 	function __construct() {
@@ -104,7 +104,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * admin_notices.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.7
 	 */
 	function admin_notices() {
@@ -123,7 +123,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * wcj_create_products_xml.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.7
 	 */
 	function wcj_create_products_xml() {

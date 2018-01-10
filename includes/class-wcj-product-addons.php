@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -17,7 +17,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.3
 	 * @todo    (maybe) add "in progress" ajax message
 	 * @todo    (maybe) for variable products - show addons only if variation is selected (e.g. move to addons from `woocommerce_before_add_to_cart_button` to variation description)
@@ -87,8 +87,8 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * maybe_reduce_addons_qty.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    (maybe) $order->add_order_note
 	 */
 	function maybe_reduce_addons_qty( $order_id ) {
@@ -276,7 +276,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_product_addons.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.3
 	 * @todo    (maybe) `checkbox_key` is mislabelled, should be `key` (or maybe `value_key`)
 	 */

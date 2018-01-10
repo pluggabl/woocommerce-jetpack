@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Currencies
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -10,7 +10,7 @@ if ( ! function_exists( 'wcj_get_currencies_array' ) ) {
 	/**
 	 * wcj_get_currencies_array.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function wcj_get_currencies_array() {
 		return array(

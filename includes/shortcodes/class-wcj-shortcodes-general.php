@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function __construct() {
 
@@ -104,8 +104,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_tcpdf_rectangle.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @see     https://tcpdf.org/examples/example_012/
 	 * @todo    add more atts (e.g. style, fill color etc.)
 	 * @todo    add options to take `width` and `height` from custom source (e.g. item or order meta)
@@ -137,7 +137,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_tcpdf_barcode.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   3.2.4
 	 */
 	function wcj_tcpdf_barcode( $atts ) {
@@ -147,7 +147,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_barcode.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   3.2.4
 	 * @todo    (maybe) current page url as `code`
 	 */

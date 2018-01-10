@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 3.2.5
- * @since   3.2.5
+ * @version 3.3.0
+ * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) create "Tools (Options)" submodule
  */

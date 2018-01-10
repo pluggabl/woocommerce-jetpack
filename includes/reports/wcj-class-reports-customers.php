@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Customers
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -126,7 +126,7 @@ class WCJ_Reports_Customers {
 	/**
 	 * get_data function.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function get_html( $data, $total_customers, $report_type = 'all_countries' ) {
 		$html = '';

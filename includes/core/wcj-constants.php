@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Constants
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -83,8 +83,8 @@ if ( ! defined( 'WCJ_VERSION_OPTION' ) ) {
 	/**
 	 * Booster version option name.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	define( 'WCJ_VERSION_OPTION', ( 'woocommerce-jetpack.php' === basename( WCJ_PLUGIN_FILE ) ? 'booster_for_woocommerce_version' : 'booster_plus_for_woocommerce_version' ) );
 }

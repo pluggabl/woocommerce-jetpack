@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function __construct() {
 
@@ -75,8 +75,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * admin_validate_vat_and_maybe_remove_taxes.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function admin_validate_vat_and_maybe_remove_taxes() {
 		if ( isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
@@ -105,8 +105,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * add_billing_eu_vat_number_to_ajax_get_customer_details.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 */
 	function add_billing_eu_vat_number_to_ajax_get_customer_details( $data, $customer, $user_id ) {
 		$data['billing']['eu_vat_number'] = get_user_meta( $user_id, 'billing_eu_vat_number', true );
@@ -136,7 +136,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.6.0
 	 */
 	function create_meta_box() {

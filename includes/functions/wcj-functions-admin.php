@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_get_module_settings_admin_url' ) ) {
 	/**
 	 * wcj_get_module_settings_admin_url.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    use this function where needed
 	 */
 	function wcj_get_module_settings_admin_url( $module_id ) {
@@ -26,8 +26,8 @@ if ( ! function_exists( 'wcj_get_module_category' ) ) {
 	/**
 	 * wcj_get_module_category.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    better solution for `global $wcj_modules_cats`
 	 * @todo    use this function where needed (e.g. in `class-wc-settings-jetpack.php`)
 	 */
@@ -49,8 +49,8 @@ if ( ! function_exists( 'wcj_get_product_ids_for_meta_box_options' ) ) {
 	/**
 	 * wcj_get_product_ids_for_meta_box_options.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    use this function where needed
 	 */
 	function wcj_get_product_ids_for_meta_box_options( $main_product_id ) {
@@ -91,7 +91,7 @@ if ( ! function_exists( 'wcj_admin_notices_version_updated' ) ) {
 	/**
 	 * wcj_admin_notices_version_updated.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.8.0
 	 */
 	function wcj_admin_notices_version_updated() {

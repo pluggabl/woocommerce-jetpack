@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -303,7 +303,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @todo    `placeholder` for textarea
 	 * @todo    `class` for all types (now only for select)
 	 * @todo    `show_value` for all types (now only for multiple select)
@@ -408,7 +408,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * is_enabled.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function is_enabled() {
 		return wcj_is_module_enabled( ( 'module' === $this->type ? $this->id : $this->parent_id ) );

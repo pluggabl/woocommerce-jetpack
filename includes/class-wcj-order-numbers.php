@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -168,7 +168,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add Renumerate Orders tool to WooCommerce menu (the content).
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @todo    restyle
 	 * @todo    add more result info (e.g. number of regenerated orders etc.)
 	 */
@@ -211,8 +211,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * maybe_reset_sequential_counter.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    use transactions on `wcj_order_number_use_mysql_transaction_enabled`
 	 */
 	function maybe_reset_sequential_counter( $current_order_number, $order_id ) {
@@ -253,7 +253,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {
 		if ( 'shop_order' !== get_post_type( $order_id ) || 'auto-draft' === get_post_status( $order_id ) ) {
@@ -294,7 +294,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Renumerate orders function.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @todo    renumerate in date range only
 	 * @todo    (maybe) selectable `post_status`
 	 * @todo    (maybe) set default value for `wcj_order_numbers_renumerate_tool_orderby` to `ID` (instead of `date`)

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @todo    (maybe) move "Display radio buttons instead of drop box for variable products" to new module
 	 * @todo    (maybe) rename to "Add to Cart Button (Options)"
 	 */
@@ -122,8 +122,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * reposition_add_to_cart_button_loop.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    (maybe) add option to duplicate the button (i.e. not replace)
 	 */
 	function reposition_add_to_cart_button_loop() {
@@ -138,8 +138,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * reposition_add_to_cart_button_single.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    (maybe) add option to duplicate the button (i.e. not replace)
 	 */
 	function reposition_add_to_cart_button_single() {

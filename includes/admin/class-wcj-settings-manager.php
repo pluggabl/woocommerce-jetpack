@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Manager
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -88,7 +88,7 @@ class WCJ_Settings_Manager {
 	/**
 	 * manage_options_export.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.2
 	 */
 	function manage_options_export() {

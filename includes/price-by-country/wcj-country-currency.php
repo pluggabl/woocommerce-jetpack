@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Country Currency functions
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -12,7 +12,7 @@ if ( ! function_exists( 'wcj_get_yahoo_exchange_rates_supported_currency' ) ) {
 	/**
 	 * wcj_get_yahoo_exchange_rates_supported_currency.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function wcj_get_yahoo_exchange_rates_supported_currency() {
 		return array(
@@ -234,7 +234,7 @@ if ( ! function_exists( 'wcj_get_country_currency' ) ) {
 	/**
 	 * wcj_get_country_currency.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 */
 	function wcj_get_country_currency() {
 		return array(

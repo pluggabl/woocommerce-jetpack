@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -35,7 +35,7 @@ class WCJ_Admin {
 	/**
 	 * check_plus_version.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.9
 	 * @todo    (maybe) expand "Please upgrade ..." message
 	 */
@@ -112,7 +112,7 @@ class WCJ_Admin {
 	/**
 	 * Show action links on the plugin screen
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @param   mixed $links
 	 * @return  array
 	 */

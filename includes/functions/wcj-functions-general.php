@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_get_js_confirmation' ) ) {
 	/**
 	 * wcj_get_js_confirmation.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    use where needed
 	 */
 	function wcj_get_js_confirmation() {
@@ -26,8 +26,8 @@ if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
 	/**
 	 * wcj_tcpdf_barcode.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    `color`
 	 * @todo    `align` (try 'T')
 	 */
@@ -95,8 +95,8 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 	/**
 	 * wcj_barcode.
 	 *
-	 * @version 3.2.5
-	 * @since   3.2.5
+	 * @version 3.3.0
+	 * @since   3.3.0
 	 * @todo    (maybe) "Barcodes" module
 	 * @todo    (maybe) `getBarcodePNG()`
 	 */
@@ -466,7 +466,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	/*
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.4.4
 	 * @return  string
 	 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency per Product
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -236,7 +236,8 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_currency_per_product_advanced_options',
 	),
 	array(
-		'title'    => __( 'Save Converted Product Prices in Array', 'woocommerce-jetpack' ),
+		'title'    => __( 'Advanced: Save Calculated Products Prices', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_per_product_save_prices',
 		'default'  => 'no',

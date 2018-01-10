@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Crowdfunding
  *
- * @version 3.2.5
+ * @version 3.3.0
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  */
@@ -46,7 +46,7 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Inits shortcode atts and properties.
 	 *
-	 * @version 3.2.5
+	 * @version 3.3.0
 	 * @since   2.5.4
 	 * @param   array $atts Shortcode atts.
 	 * @return  array The (modified) shortcode atts.
