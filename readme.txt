@@ -244,7 +244,7 @@ D	* Dev - Functions - General - `wcj_tcpdf_barcode()` - Border removed.
 	* Dev - Core - Options - Code refactoring.
 	* Dev - `WCJ_Module` - `create_meta_box()` - Tooltip restyled. Optional `css` attribute added to `title` type.
 	* Dev - `wcj-constants.php` file moved to `core` directory.
-  X	* Dev - Some filters renamed.
+	* Dev - Some filters renamed.
   T	* Dev - Version option name changed.
 	* Dev - Code refactoring - Shortcodes objects saved in `WCJ()->shortcodes` array.
 	* Dev - "WC tested up to" added to plugin's header.
