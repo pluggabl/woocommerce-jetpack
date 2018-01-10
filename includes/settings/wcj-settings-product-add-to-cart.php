@@ -269,6 +269,13 @@ return array(
 		'id'       => 'wcj_product_add_to_cart_button_position_options',
 	),
 	array(
+		'title'    => __( 'Add to Cart Button Position', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'       => 'wcj_product_add_to_cart_button_position_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'title'    => __( 'Reposition Button on Single Product Pages', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_add_to_cart_button_position_single_enabled',
@@ -276,8 +283,19 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'desc'     => __( 'Position (default 30)', 'woocommerce-jetpack' ),
-		'desc_tip' => sprintf( __( 'Position is set via priority. Here are the default WooCommerce priorities: %s', 'woocommerce-jetpack' ),
+		'title'    => __( 'Position', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_add_to_cart_button_position_hook_single',
+		'default'  => 'woocommerce_single_product_summary',
+		'type'     => 'select',
+		'options'  => array(
+			'woocommerce_before_single_product_summary' => __( 'Before single product summary', 'woocommerce-jetpack' ),
+			'woocommerce_single_product_summary'        => __( 'Inside single product summary', 'woocommerce-jetpack' ),
+			'woocommerce_after_single_product_summary'  => __( 'After single product summary', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Priority', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Here are the default WooCommerce priorities for "Inside single product summary" position: %s', 'woocommerce-jetpack' ),
 			implode( ', ', array(
 				'5 - '  . __( 'Title', 'woocommerce-jetpack' ),
 				'10 - ' . __( 'Rating', 'woocommerce-jetpack' ),
@@ -290,6 +308,31 @@ return array(
 		) ),
 		'id'       => 'wcj_product_add_to_cart_button_position_single',
 		'default'  => 30,
+		'type'     => 'number',
+	),
+	array(
+		'title'    => __( 'Reposition Button on Category/Archive Pages', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_add_to_cart_button_position_loop_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Position', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_add_to_cart_button_position_hook_loop',
+		'default'  => 'woocommerce_after_shop_loop_item',
+		'type'     => 'select',
+		'options'  => array(
+			'woocommerce_before_shop_loop_item'       => __( 'Before product', 'woocommerce-jetpack' ),
+			'woocommerce_before_shop_loop_item_title' => __( 'Before product title', 'woocommerce-jetpack' ),
+			'woocommerce_after_shop_loop_item'        => __( 'After product', 'woocommerce-jetpack' ),
+			'woocommerce_after_shop_loop_item_title'  => __( 'After product title', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Priority', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_add_to_cart_button_position_loop',
+		'default'  => 10,
 		'type'     => 'number',
 	),
 	array(

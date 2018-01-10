@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Info
  *
- * @version 2.8.0
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -41,7 +41,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'id'       => 'wcj_checkout_custom_info_content_' . $i,
 			'default'  => '[wcj_cart_items_total_weight before="Total weight: " after=" kg"]',
 			'type'     => 'textarea',
-			'css'      => 'width:30%;min-width:300px;height:100px;',
+			'css'      => 'width:100%;height:200px;',
 		),
 		array(
 			'title'    => __( 'Position', 'woocommerce-jetpack' ),
@@ -79,14 +79,12 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				*/
 				'woocommerce_thankyou'                          => __( 'Order Received (Thank You) page', 'woocommerce-jetpack' ),
 			),
-			'css'      => 'width:250px;',
 		),
 		array(
 			'title'    => __( 'Position Order (i.e. Priority)', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_checkout_custom_info_priority_' . $i,
 			'default'  => 10,
 			'type'     => 'number',
-			'css'      => 'width:250px;',
 		),
 		array(
 			'type'     => 'sectionend',

@@ -23,7 +23,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'product_add_to_cart';
-		$this->short_desc = __( 'Product Add to Cart', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Add to Cart', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set any local url to redirect to on WooCommerce Add to Cart.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Display radio buttons instead of drop box for variable products.', 'woocommerce-jetpack' )
@@ -106,23 +106,49 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			}
 
 			// Reposition Add to Cart button
-			if ( 'yes' === get_option( 'wcj_product_add_to_cart_button_position_single_enabled', 'no' ) ) {
-				add_action( 'init', array( $this, 'reposition_add_to_cart_button' ), PHP_INT_MAX );
+			if ( 'yes' === get_option( 'wcj_product_add_to_cart_button_position_enabled', 'no' ) ) {
+				// Single product pages
+				if ( 'yes' === get_option( 'wcj_product_add_to_cart_button_position_single_enabled', 'no' ) ) {
+					add_action( 'init', array( $this, 'reposition_add_to_cart_button_single' ), PHP_INT_MAX );
+				}
+				// Archives
+				if ( 'yes' === get_option( 'wcj_product_add_to_cart_button_position_loop_enabled', 'no' ) ) {
+					add_action( 'init', array( $this, 'reposition_add_to_cart_button_loop' ), PHP_INT_MAX );
+				}
 			}
 		}
 	}
 
 	/**
-	 * reposition_add_to_cart_button.
+	 * reposition_add_to_cart_button_loop.
 	 *
 	 * @version 3.2.5
 	 * @since   3.2.5
-	 * @todo    add button repositioning on archives (loop)
-	 * @todo    add option to duplicate the button (i.e. not replace)
+	 * @todo    (maybe) add option to duplicate the button (i.e. not replace)
 	 */
-	function reposition_add_to_cart_button() {
+	function reposition_add_to_cart_button_loop() {
+		remove_action( 'woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 10 );
+		add_action(
+			get_option( 'wcj_product_add_to_cart_button_position_hook_loop', 'woocommerce_after_shop_loop_item' ),
+			'woocommerce_template_loop_add_to_cart',
+			get_option( 'wcj_product_add_to_cart_button_position_loop', 10 )
+		);
+	}
+
+	/**
+	 * reposition_add_to_cart_button_single.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    (maybe) add option to duplicate the button (i.e. not replace)
+	 */
+	function reposition_add_to_cart_button_single() {
 		remove_action( 'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', 30 );
-		add_action(    'woocommerce_single_product_summary', 'woocommerce_template_single_add_to_cart', get_option( 'wcj_product_add_to_cart_button_position_single', 30 ) );
+		add_action(
+			get_option( 'wcj_product_add_to_cart_button_position_hook_single', 'woocommerce_single_product_summary' ),
+			'woocommerce_template_single_add_to_cart',
+			get_option( 'wcj_product_add_to_cart_button_position_single', 30 )
+		);
 	}
 
 	/**

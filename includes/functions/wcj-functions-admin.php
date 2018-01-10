@@ -9,6 +9,42 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_module_settings_admin_url' ) ) {
+	/**
+	 * wcj_get_module_settings_admin_url.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    use this function where needed
+	 */
+	function wcj_get_module_settings_admin_url( $module_id ) {
+		return admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=' . wcj_get_module_category( $module_id ) . '&section=' . $module_id );
+	}
+}
+
+if ( ! function_exists( 'wcj_get_module_category' ) ) {
+	/**
+	 * wcj_get_module_category.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 * @todo    better solution for `global $wcj_modules_cats`
+	 * @todo    use this function where needed (e.g. in `class-wc-settings-jetpack.php`)
+	 */
+	function wcj_get_module_category( $module_id ) {
+		global $wcj_modules_cats;
+		if ( ! isset( $wcj_modules_cats ) ) {
+			$wcj_modules_cats = include( WCJ_PLUGIN_PATH . '/includes/admin/wcj-modules-cats.php' );
+		}
+		foreach ( $wcj_modules_cats as $cat_id => $cat_data ) {
+			if ( ! empty( $cat_data['all_cat_ids'] ) && in_array( $module_id, $cat_data['all_cat_ids'] ) ) {
+				return $cat_id;
+			}
+		}
+		return '';
+	}
+}
+
 if ( ! function_exists( 'wcj_get_product_ids_for_meta_box_options' ) ) {
 	/**
 	 * wcj_get_product_ids_for_meta_box_options.

@@ -108,6 +108,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @since   3.2.5
 	 * @see     https://tcpdf.org/examples/example_012/
 	 * @todo    add more atts (e.g. style, fill color etc.)
+	 * @todo    add options to take `width` and `height` from custom source (e.g. item or order meta)
 	 * @todo    (maybe) move all `tcpdf` shortcodes to `class-wcj-shortcodes-tcpdf.php`
 	 * @todo    (maybe) create general `[wcj_tcpdf_method]` shortcode (not sure how to solve `$params` part though)
 	 */

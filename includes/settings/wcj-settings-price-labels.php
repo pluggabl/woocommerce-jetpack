@@ -2,22 +2,34 @@
 /**
  * Booster for WooCommerce - Settings - Custom Price Labels
  *
- * @version 2.8.0
+ * @version 3.2.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$product_cats = array();
-$product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );
-foreach ( $product_categories as $product_category ) {
-	$product_cats[ $product_category->term_id ] = $product_category->name;
-}
-
-$products = wcj_get_products();
+$product_cats = wcj_get_terms( 'product_cat' );
+$products     = wcj_get_products();
 
 return array(
+	array(
+		'title'     => __( 'Custom Price Labels - Per Product', 'woocommerce-jetpack' ),
+		'type'      => 'title',
+		'id'        => 'wcj_local_price_labels_options'
+	),
+	array(
+		'title'     => __( 'Per Product', 'woocommerce-jetpack' ),
+		'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip'  => __( 'This will add metaboxes to each product\'s admin edit page.', 'woocommerce-jetpack' ),
+		'id'        => 'wcj_local_price_labels_enabled',
+		'default'   => 'yes',
+		'type'      => 'checkbox',
+	),
+	array(
+		'type'      => 'sectionend',
+		'id'        => 'wcj_local_price_labels_options',
+	),
 	array(
 		'title'     => __( 'Custom Price Labels - Globally', 'woocommerce-jetpack' ),
 		'type'      => 'title',
@@ -32,7 +44,7 @@ return array(
 		'type'      => 'custom_textarea',
 		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
-		'css'       => 'width:30%;min-width:300px;',
+		'css'       => 'width:100%;',
 	),
 	array(
 		'title'     => __( 'Add after the price', 'woocommerce-jetpack' ),
@@ -40,7 +52,7 @@ return array(
 		'id'        => 'wcj_global_price_labels_add_after_text',
 		'default'   => '',
 		'type'      => 'custom_textarea',
-		'css'       => 'width:30%;min-width:300px;',
+		'css'       => 'width:100%;',
 	),
 	array(
 		'title'     => __( 'Add between regular and sale prices', 'woocommerce-jetpack' ),
@@ -50,18 +62,17 @@ return array(
 		'type'      => 'custom_textarea',
 		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
-		'css'       => 'width:30%;min-width:300px;',
+		'css'       => 'width:100%;',
 	),
 	array(
 		'title'     => __( 'Remove from price', 'woocommerce-jetpack' ),
-//				'desc'      => __( 'Enable the Custom Price Labels feature', 'woocommerce-jetpack' ),
 		'desc_tip'  => __( 'Enter text to remove from all products prices. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_global_price_labels_remove_text',
 		'default'   => '',
 		'type'      => 'custom_textarea',
 		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
-		'css'       => 'width:30%;min-width:300px;',
+		'css'       => 'width:100%;',
 	),
 	array(
 		'title'     => __( 'Replace in price', 'woocommerce-jetpack' ),
@@ -72,7 +83,7 @@ return array(
 		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes'
 					=> apply_filters( 'booster_message', '', 'readonly' ),
-		'css'       => 'width:30%;min-width:300px;',
+		'css'       => 'width:100%;',
 	),
 	array(
 		'title'     => '',
@@ -82,7 +93,7 @@ return array(
 		'type'      => 'custom_textarea',
 		'desc'      => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
-		'css'       => 'width:30%;min-width:300px;',
+		'css'       => 'width:100%;',
 	),
 	array(
 		'title'     => __( 'Instead of the price', 'woocommerce-jetpack' ),
@@ -90,7 +101,7 @@ return array(
 		'id'        => 'wcj_global_price_labels_instead_text',
 		'default'   => '',
 		'type'      => 'custom_textarea',
-		'css'       => 'width:30%;min-width:300px;',
+		'css'       => 'width:100%;',
 	),
 	array(
 		'title'     => __( 'Products - Include', 'woocommerce-jetpack' ),
@@ -99,7 +110,6 @@ return array(
 		'default'   => '',
 		'type'      => 'multiselect',
 		'class'     => 'chosen_select',
-		'css'       => 'width: 450px;',
 		'options'   => $products,
 	),
 	array(
@@ -109,7 +119,6 @@ return array(
 		'default'   => '',
 		'type'      => 'multiselect',
 		'class'     => 'chosen_select',
-		'css'       => 'width: 450px;',
 		'options'   => $products,
 	),
 	array(
@@ -119,7 +128,6 @@ return array(
 		'default'   => '',
 		'type'      => 'multiselect',
 		'class'     => 'chosen_select',
-		'css'       => 'width: 450px;',
 		'options'   => $product_cats,
 	),
 	array(
@@ -129,7 +137,6 @@ return array(
 		'default'   => '',
 		'type'      => 'multiselect',
 		'class'     => 'chosen_select',
-		'css'       => 'width: 450px;',
 		'options'   => $product_cats,
 	),
 	array(
@@ -139,27 +146,10 @@ return array(
 		'default'   => '',
 		'type'      => 'multiselect',
 		'class'     => 'chosen_select',
-		'css'       => 'width: 450px;',
 		'options'   => array_merge( wc_get_product_types(), array( 'variation' => __( 'Variable product\'s variation', 'woocommerce-jetpack' ) ) ),
 	),
 	array(
 		'type'      => 'sectionend',
 		'id'        => 'wcj_global_price_labels_options',
-	),
-	array(
-		'title'     => __( 'Custom Price Labels - Per Product', 'woocommerce-jetpack' ),
-		'type'      => 'title',
-		'id'        => 'wcj_local_price_labels_options'
-	),
-	array(
-		'title'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc'      => __( 'This will add metaboxes to each product\'s admin edit page.', 'woocommerce-jetpack' ),
-		'id'        => 'wcj_local_price_labels_enabled',
-		'default'   => 'yes',
-		'type'      => 'checkbox',
-	),
-	array(
-		'type'      => 'sectionend',
-		'id'        => 'wcj_local_price_labels_options',
 	),
 );

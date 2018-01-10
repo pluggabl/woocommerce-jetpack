@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 3.2.4
+ * @version 3.2.5
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.2.5
 	 */
 	function __construct() {
 
@@ -34,10 +34,6 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 		) );
 
 		if ( $this->is_enabled() ) {
-			/* if ( ! session_id() ) {
-				session_start();
-			} */
-//			add_action( 'init',                                        'session_start' );
 			add_action( 'init',                                        array( $this, 'start_session' ) );
 			add_filter( 'woocommerce_checkout_fields',                 array( $this, 'add_eu_vat_number_checkout_field_to_frontend' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_admin_billing_fields',            array( $this, 'add_billing_eu_vat_number_field_to_admin_order_display' ), PHP_INT_MAX );
@@ -67,8 +63,54 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			// EU VAT number summary on order edit page
 			if ( 'yes' === get_option( 'wcj_eu_vat_number_add_order_edit_metabox', 'no' ) ) {
 				add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ) );
+				// "Validate VAT and remove taxes" button
+				add_action( 'admin_init', array( $this, 'admin_validate_vat_and_maybe_remove_taxes' ), PHP_INT_MAX );
 			}
+
+			// Admin order edit - "Load billing address" button
+			add_filter( 'woocommerce_ajax_get_customer_details', array( $this, 'add_billing_eu_vat_number_to_ajax_get_customer_details' ), PHP_INT_MAX, 3 );
 		}
+	}
+
+	/**
+	 * admin_validate_vat_and_maybe_remove_taxes.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 */
+	function admin_validate_vat_and_maybe_remove_taxes() {
+		if ( isset( $_GET['validate_vat_and_maybe_remove_taxes'] ) ) {
+			$order_id = $_GET['validate_vat_and_maybe_remove_taxes'];
+			$order    = wc_get_order( $order_id );
+			if ( $order ) {
+				$vat_id = get_post_meta( $order_id, '_billing_eu_vat_number', true );
+				if ( '' != $vat_id && strlen( $vat_id ) > 2 ) {
+					if ( wcj_validate_vat( substr( $vat_id, 0, 2 ), substr( $vat_id, 2 ) ) ) {
+						foreach ( $order->get_items( array( 'line_item', 'fee' ) ) as $item_id => $item ) {
+							$item->set_taxes( false );
+						}
+						foreach ( $order->get_shipping_methods() as $item_id => $item ) {
+							$item->set_taxes( false );
+						}
+						$order->update_taxes();
+						$order->calculate_totals( false );
+					}
+				}
+			}
+			wp_safe_redirect( remove_query_arg( 'validate_vat_and_maybe_remove_taxes' ) );
+			exit;
+		}
+	}
+
+	/**
+	 * add_billing_eu_vat_number_to_ajax_get_customer_details.
+	 *
+	 * @version 3.2.5
+	 * @since   3.2.5
+	 */
+	function add_billing_eu_vat_number_to_ajax_get_customer_details( $data, $customer, $user_id ) {
+		$data['billing']['eu_vat_number'] = get_user_meta( $user_id, 'billing_eu_vat_number', true );
+		return $data;
 	}
 
 	/**
@@ -94,7 +136,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.7.0
+	 * @version 3.2.5
 	 * @since   2.6.0
 	 */
 	function create_meta_box() {
@@ -157,6 +199,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			), */
 		);
 		echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
+		echo '<p>' . '<a href="' . add_query_arg( 'validate_vat_and_maybe_remove_taxes', $order_id ) . '">' .
+			__( 'Validate VAT and remove taxes', 'woocommerce-jetpack' ) . '</a>' . '</p>';
 	}
 
 	/**
