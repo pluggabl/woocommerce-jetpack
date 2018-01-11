@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.2.4
+Stable tag: 3.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -178,75 +178,77 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.0 - 10/01/2018 =
-D	* Dev - PRICES & CURRENCIES - Currencies - Belarusian ruble code updated (from `BYR` to `BYN`).
-D T	* Dev - PRICES & CURRENCIES - Currency per Product - Advanced Options - "Save Converted Product Prices in Array" option added.
-D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Per product options style" option added.
-D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Per product settings (`inline`) restyled.
-D	* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Groups - "Admin Title" option added.
-D	* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Admin settings restyled.
-D	* Dev - PRICES & CURRENCIES - Wholesale Price - "Round single product price" option added.
-	* Fix - PRICES & CURRENCIES - Wholesale Price - `wcj_is_product_wholesale_enabled()` - "Products to exclude" option fixed.
-D	* Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Module renamed (was "Add to Cart Labels").
-D	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Passing product object to shortcodes (instead of product id).
-	* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Admin settings restyled etc.
-D	* Dev - BUTTON & PRICE LABELS - More Button Labels - "Override Default Text" option added.
-D	* Dev - PRODUCTS - Add to Cart - "Add to Cart Button Position Options" section added.
-D	* Dev - PRODUCTS - Add to Cart - Module renamed (was "Product Add to Cart").
-D	* Dev - PRODUCTS - Add to Cart Button Visibility - Per Product - "Content" options added.
-D	* Dev - PRODUCTS - Add to Cart Button Visibility - "Per Category" options added.
-D	* Dev - PRODUCTS - Add to Cart Button Visibility - Initial module release (copied from "Product Add to Cart - Add to Cart Button Disabling").
-D	* Dev - PRODUCTS - Product Addons - "Quantity" options added.
-D	* Dev - PRODUCTS - Product Addons - Admin settings minor restyling.
-D	* Dev - PRODUCTS - Product Visibility by User Role - Settings (meta box) restyled.
-D	* Dev - PRODUCTS - Products XML Feeds - Admin settings - Minor changes.
-	* Dev - CART & CHECKOUT - Cart Custom Info - Admin settings minor restyling.
-	* Fix - CART & CHECKOUT - Checkout Core Fields - Override Fields - `required` added to options.
-	* Dev - CART & CHECKOUT - Checkout Custom Info - Admin settings minor restyling.
-	* Dev - CART & CHECKOUT - EU VAT Number - Admin order edit - Customer's VAT number added on admin customer select and on "Load billing address".
-D T	* Dev - CART & CHECKOUT - EU VAT Number - Admin order edit - "Validate VAT and remove taxes" button added.
-D	* Dev - PAYMENT GATEWAYS - Custom Gateways - Advanced Options - Gateways Input Fields - "Add 'Delete' button" option added.
-D	* Dev - PAYMENT GATEWAYS - Gateways by Country or State - Admin settings description updated. Minor code refactoring.
-	* Fix - PAYMENT GATEWAYS - Gateways by Currency - Admin settings - `$paypal_allowed_currencies_and_names` type fixed (changed to array).
-  T	* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "WooCommerce PayPal Express Checkout Payment Gateway" (by WooCommerce) plugin support added.
-D	* Dev - SHIPPING & ORDERS - Admin Orders List - Admin settings - Minor restyling.
-D T	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Outputting "You have Free delivery" if free shipping is available without order minimum amount (e.g. coupon).
-D	* Dev - SHIPPING & ORDERS - Left to Free Shipping - Admin settings - Minor restyling.
-D	* Fix - SHIPPING & ORDERS - Order Numbers - Orders Renumerate Tool - More info added when sequential number generation is enabled.
-D T	* Fix - SHIPPING & ORDERS - Order Numbers - `add_order_number_meta()` - Bug fixed (when "Number Generation" is set to "Order ID").
-D	* Dev - SHIPPING & ORDERS - Order Numbers - Admin settings - Minor restyling.
-D T	* Dev - SHIPPING & ORDERS - Order Numbers - "Sequential: Reset Counter" option added.
-D	* Dev - SHIPPING & ORDERS - Orders - "Country by IP" section added.
-D	* Dev - PDF INVOICING & PACKING SLIPS - "Advanced" submodule added (some settings moved from "General", "Styling" and "Display & Misc." sections).
-	* Dev - PDF INVOICING & PACKING SLIPS - Display - Admin order meta box - Message if no document types are enabled added.
-D	* Dev - PDF INVOICING & PACKING SLIPS - General - Admin settings minor restyling.
-D	* Dev - PDF INVOICING & PACKING SLIPS - General - Report Tool Options - Report Columns - "Cart Total Excl. Tax", "Shipping Total Excl. Tax", "Cart Tax", "Shipping Tax", "Cart Tax %", "Shipping Tax %" columns added.
-D	* Dev - PDF INVOICING & PACKING SLIPS - General - Report Tool Options - "Report Columns" option added.
-D	* Dev - PDF INVOICING & PACKING SLIPS - General - Report Tool Options - "Tax Percent Precision" option added.
-D	* Dev - PDF INVOICING & PACKING SLIPS - Templates - Admin settings minor restyling.
-D	* Dev - EMAILS & MISC. - Admin Tools - Log tool restyled.
-D	* Dev - EMAILS & MISC. - Admin Tools - "Show Variable Product Pricing Table" option added.
-D T	* Dev - EMAILS & MISC. - Modules By User Roles - Initial module release.
-	* Fix - EMAILS & MISC. - Reports - Customers - Flag images fixed.
-D	* Dev - Shortcodes - General - `[wcj_tcpdf_rectangle]` shortcode added.
-	* Dev - Shortcodes - General - `[wcj_tcpdf_barcode]` and `[wcj_barcode]` - Code refactoring (corresponding functions added to `wcj-functions-general.php`).
-D T	* Dev - Shortcodes - Orders - `currency` attribute added to all shortcodes which use `wcj_price_shortcode()` function.
-D	* Dev - Shortcodes - Orders - `[wcj_order_tcpdf_barcode]` shortcode added.
-  T	* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_subtotal_tax_excl`, `item_subtotal_tax_incl`, `line_subtotal_tax_excl`, `line_subtotal_tax_incl` and `line_subtax` columns fixed for "custom" items (i.e. "shipping and discount as item") for WC from v3.0.0.
-D	* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `product_barcode` column added.
-D	* Dev - Shortcodes - Orders - `[wcj_order_profit]` and `[wcj_order_items_cost]` shortcodes added.
-D	* Dev - Shortcodes - Products - `[wcj_product_barcode]` shortcode added.
-D	* Dev - Functions - General - `wcj_tcpdf_barcode()` - Border removed.
-	* Dev - Functions - Booster Core - `wcj-functions-core.php` file renamed to `wcj-functions-booster-core.php`.
-	* Dev - Functions - "Core" functions file added.
-	* Dev - Functions - Exchange Rates - `wcj_get_saved_exchange_rate()` - Returning `1` when `currency_from` equals `currency_to`.
-	* Fix - Functions - Price and Currency - `wcj_price_by_product_base_currency()` - Checking if currency exchange rate not equals zero (so no division by zero can happen).
-	* Dev - Settings - Readme generator `woojetpack_readme` removed.
-	* Dev - Classes - `WCJ_Module` - `create_meta_box()` - Tooltip restyled. Optional `css` attribute added to `title` type.
-	* Dev - Core - Options - Code refactoring.
-	* Dev - Core - Shortcodes - Code refactoring - Shortcodes objects saved in `WCJ()->shortcodes` array.
-	* Dev - Core - `wcj-constants.php` file moved to `core` directory.
-	* Dev - Version option name changed. Some filters renamed. "WC tested up to" added to plugin's header.
+= 3.3.0 - 11/01/2018 =
+* Dev - PRICES & CURRENCIES - Currencies - Belarusian ruble code updated (from `BYR` to `BYN`).
+* Dev - PRICES & CURRENCIES - Currency per Product - Advanced Options - "Save Converted Product Prices in Array" option added.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Per product options style" option added.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Per product settings (`inline`) restyled.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Groups - "Admin Title" option added.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Admin settings restyled.
+* Dev - PRICES & CURRENCIES - Wholesale Price - "Round single product price" option added.
+* Fix - PRICES & CURRENCIES - Wholesale Price - `wcj_is_product_wholesale_enabled()` - "Products to exclude" option fixed.
+* Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Module renamed (was "Add to Cart Labels").
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Passing product object to shortcodes (instead of product id).
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Admin settings restyled etc.
+* Dev - BUTTON & PRICE LABELS - More Button Labels - "Override Default Text" option added.
+* Dev - PRODUCTS - Add to Cart - "Add to Cart Button Position Options" section added.
+* Dev - PRODUCTS - Add to Cart - Module renamed (was "Product Add to Cart").
+* Dev - PRODUCTS - Add to Cart Button Visibility - Per Product - "Content" options added.
+* Dev - PRODUCTS - Add to Cart Button Visibility - "Per Category" options added.
+* Dev - PRODUCTS - Add to Cart Button Visibility - Initial module release (copied from "Product Add to Cart - Add to Cart Button Disabling").
+* Dev - PRODUCTS - Product Addons - "Quantity" options added.
+* Dev - PRODUCTS - Product Addons - Admin settings minor restyling.
+* Dev - PRODUCTS - Product Visibility by User Role - Settings (meta box) restyled.
+* Dev - PRODUCTS - Products XML Feeds - Admin settings - Minor changes.
+* Dev - CART & CHECKOUT - Cart Custom Info - Admin settings minor restyling.
+* Fix - CART & CHECKOUT - Checkout Core Fields - Override Fields - `required` added to options.
+* Dev - CART & CHECKOUT - Checkout Custom Info - Admin settings minor restyling.
+* Dev - CART & CHECKOUT - Checkout Customization - Customize "Returning customer?" message option added.
+* Dev - CART & CHECKOUT - EU VAT Number - Admin order edit - Customer's VAT number added on admin customer select and on "Load billing address".
+* Dev - CART & CHECKOUT - EU VAT Number - Admin order edit - "Validate VAT and remove taxes" button added.
+* Dev - PAYMENT GATEWAYS - Custom Gateways - Advanced Options - Gateways Input Fields - "Add 'Delete' button" option added.
+* Dev - PAYMENT GATEWAYS - Gateways by Country or State - Admin settings description updated. Minor code refactoring.
+* Fix - PAYMENT GATEWAYS - Gateways by Currency - Admin settings - `$paypal_allowed_currencies_and_names` type fixed (changed to array).
+* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "WooCommerce PayPal Express Checkout Payment Gateway" (by WooCommerce) plugin support added.
+* Dev - SHIPPING & ORDERS - Admin Orders List - Admin settings - Minor restyling.
+* Dev - SHIPPING & ORDERS - Left to Free Shipping - Outputting "You have Free delivery" if free shipping is available without order minimum amount (e.g. coupon).
+* Dev - SHIPPING & ORDERS - Left to Free Shipping - Admin settings - Minor restyling.
+* Fix - SHIPPING & ORDERS - Order Numbers - Orders Renumerate Tool - More info added when sequential number generation is enabled.
+* Fix - SHIPPING & ORDERS - Order Numbers - `add_order_number_meta()` - Bug fixed (when "Number Generation" is set to "Order ID").
+* Dev - SHIPPING & ORDERS - Order Numbers - Admin settings - Minor restyling.
+* Dev - SHIPPING & ORDERS - Order Numbers - "Sequential: Reset Counter" option added.
+* Dev - SHIPPING & ORDERS - Orders - "Country by IP" section added.
+* Dev - PDF INVOICING & PACKING SLIPS - "Advanced" submodule added (some settings moved from "General", "Styling" and "Display & Misc." sections).
+* Dev - PDF INVOICING & PACKING SLIPS - Display - Admin order meta box - Message if no document types are enabled added.
+* Dev - PDF INVOICING & PACKING SLIPS - General - Admin settings minor restyling.
+* Dev - PDF INVOICING & PACKING SLIPS - General - Report Tool Options - Report Columns - "Cart Total Excl. Tax", "Shipping Total Excl. Tax", "Cart Tax", "Shipping Tax", "Cart Tax %", "Shipping Tax %" columns added.
+* Dev - PDF INVOICING & PACKING SLIPS - General - Report Tool Options - "Report Columns" option added.
+* Dev - PDF INVOICING & PACKING SLIPS - General - Report Tool Options - "Tax Percent Precision" option added.
+* Dev - PDF INVOICING & PACKING SLIPS - Templates - Admin settings minor restyling.
+* Dev - EMAILS & MISC. - Admin Tools - Log tool restyled.
+* Dev - EMAILS & MISC. - Admin Tools - "Show Variable Product Pricing Table" option added.
+* Dev - EMAILS & MISC. - Modules By User Roles - Initial module release.
+* Fix - EMAILS & MISC. - Reports - Customers - Flag images fixed.
+* Dev - EMAILS & MISC. - Reports - Customers - Country sets updated.
+* Dev - Shortcodes - General - `[wcj_tcpdf_rectangle]` shortcode added.
+* Dev - Shortcodes - General - `[wcj_tcpdf_barcode]` and `[wcj_barcode]` - Code refactoring (corresponding functions added to `wcj-functions-general.php`).
+* Dev - Shortcodes - Orders - `currency` attribute added to all shortcodes which use `wcj_price_shortcode()` function.
+* Dev - Shortcodes - Orders - `[wcj_order_tcpdf_barcode]` shortcode added.
+* Fix - Shortcodes - Orders - `[wcj_order_items_table]` - `item_subtotal_tax_excl`, `item_subtotal_tax_incl`, `line_subtotal_tax_excl`, `line_subtotal_tax_incl` and `line_subtax` columns fixed for "custom" items (i.e. "shipping and discount as item") for WC from v3.0.0.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `product_barcode` column added.
+* Dev - Shortcodes - Orders - `[wcj_order_profit]` and `[wcj_order_items_cost]` shortcodes added.
+* Dev - Shortcodes - Products - `[wcj_product_barcode]` shortcode added.
+* Dev - Functions - General - `wcj_tcpdf_barcode()` - Border removed.
+* Dev - Functions - Booster Core - `wcj-functions-core.php` file renamed to `wcj-functions-booster-core.php`.
+* Dev - Functions - "Core" functions file added.
+* Dev - Functions - Exchange Rates - `wcj_get_saved_exchange_rate()` - Returning `1` when `currency_from` equals `currency_to`.
+* Fix - Functions - Price and Currency - `wcj_price_by_product_base_currency()` - Checking if currency exchange rate not equals zero (so no division by zero can happen).
+* Dev - Settings - Readme generator `woojetpack_readme` removed.
+* Dev - Classes - `WCJ_Module` - `create_meta_box()` - Tooltip restyled. Optional `css` attribute added to `title` type.
+* Dev - Core - Options - Code refactoring.
+* Dev - Core - Shortcodes - Code refactoring - Shortcodes objects saved in `WCJ()->shortcodes` array.
+* Dev - Core - `wcj-constants.php` file moved to `core` directory.
+* Dev - Version option name changed. Some filters renamed. "WC tested up to" added to plugin's header.
 
 = 3.2.4 - 27/12/2017 =
 * Dev - PRICES & CURRENCIES - Currencies - More cryptocurrencies added.

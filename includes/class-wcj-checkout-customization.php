@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 3.1.0
+ * @version 3.3.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.3.0
 	 * @since   2.7.0
 	 * @todo    "Disable Fields on Checkout for Logged Users" - billing and shipping country ('select' type)
 	 * @todo    "Disable Fields on Checkout for Logged Users" - other core fields (e.g. account fields)
@@ -66,7 +66,21 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_checkout_customization_order_received_message_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_thankyou_order_received_text', array( $this, 'customize_order_received_message' ), PHP_INT_MAX, 2 );
 			}
+			// Custom checkout login message
+			if ( 'yes' === get_option( 'wcj_checkout_customization_checkout_login_message_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_checkout_login_message', array( $this, 'checkout_login_message' ), PHP_INT_MAX );
+			}
 		}
+	}
+
+	/**
+	 * checkout_login_message.
+	 *
+	 * @version 3.3.0
+	 * @since   3.3.0
+	 */
+	function checkout_login_message( $message ) {
+		return get_option( 'wcj_checkout_customization_checkout_login_message', __( 'Returning customer?', 'woocommerce' ) );
 	}
 
 	/**

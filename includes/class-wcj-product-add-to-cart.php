@@ -158,7 +158,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	 * @since   2.8.0
 	 * @see     `wc_add_to_cart_message()` in `wc-cart-functions.php`
 	 * @todo    (maybe) product specific messages: foreach ( $products as $product_id => $qty ) ...
-	 * @todo    (maybe) if ( IS_WCJ_VERSION_BELOW_3 ) apply_filters( 'wc_add_to_cart_message' ) with 2 params: $message, $product_id
+	 * @todo    (maybe) if ( WCJ_IS_WC_VERSION_BELOW_3 ) apply_filters( 'wc_add_to_cart_message' ) with 2 params: $message, $product_id
 	 */
 	function change_add_to_cart_message_html( $message, $products ) {
 

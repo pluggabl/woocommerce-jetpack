@@ -59,7 +59,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 		) {
 			return 'ppec_paypal'; // WooCommerce PayPal Express Checkout Payment Gateway (By WooCommerce)
 		} else {
-			global $woocommerce;
+			/* global $woocommerce;
 			$current_gateway = $woocommerce->session->chosen_payment_method;
 			$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
 			if ( ! array_key_exists( $current_gateway, $available_gateways ) ) {
@@ -69,7 +69,8 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 					$current_gateway = isset( $current_gateway->id ) ? $current_gateway->id : '';
 				}
 			}
-			return $current_gateway;
+			return $current_gateway; */
+			return WC()->session->chosen_payment_method;
 		}
 	}
 

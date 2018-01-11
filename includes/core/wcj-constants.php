@@ -85,6 +85,7 @@ if ( ! defined( 'WCJ_VERSION_OPTION' ) ) {
 	 *
 	 * @version 3.3.0
 	 * @since   3.3.0
+	 * @todo    (maybe) option should have `wcj_` prefix (however it will be deleted during "Reset", and "Booster was updated to v..." message will show up)
 	 */
 	define( 'WCJ_VERSION_OPTION', ( 'woocommerce-jetpack.php' === basename( WCJ_PLUGIN_FILE ) ? 'booster_for_woocommerce_version' : 'booster_plus_for_woocommerce_version' ) );
 }
