@@ -368,6 +368,10 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.5.8
 	 * @since   2.5.8
+	 * @see     https://docs.woocommerce.com/wc-apidocs/class-WC_Customer.html
+	 * @todo    move all customer shortcodes to new class `WCJ_Customers_Shortcodes` (and there `$this->the_customer = new WC_Customer( $current_user->ID )`)
+	 * @todo    add `[wcj_customer_taxable_address]` (with `$customer->get_taxable_address()`)
+	 * @todo    add `[wcj_customer_prop]` (with `$customer->get_{$atts['key']}()`)
 	 */
 	function wcj_customer_billing_country( $atts ) {
 		if ( is_user_logged_in() ) {

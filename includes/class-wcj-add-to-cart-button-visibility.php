@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Add to Cart Button Visibility
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @since   3.3.0
 	 */
 	function __construct() {
@@ -38,10 +38,12 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 				// Archives
 				if ( 'yes' === get_option( 'wcj_add_to_cart_button_disable_archives', 'no' ) ) {
 					add_action( 'init', array( $this, 'add_to_cart_button_disable_archives' ), PHP_INT_MAX );
+					add_action( 'woocommerce_after_shop_loop_item', array( $this, 'add_to_cart_button_archives_content' ), 10 );
 				}
 				// Single Product
 				if ( 'yes' === get_option( 'wcj_add_to_cart_button_disable_single', 'no' ) ) {
 					add_action( 'init', array( $this, 'add_to_cart_button_disable_single' ), PHP_INT_MAX );
+					add_action( 'woocommerce_single_product_summary', array( $this, 'add_to_cart_button_single_content' ), 30 );
 				}
 			}
 			// Per category
@@ -65,6 +67,30 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 			}
 		}
 
+	}
+
+	/**
+	 * add_to_cart_button_archives_content.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function add_to_cart_button_archives_content() {
+		if ( '' != ( $content = get_option( 'wcj_add_to_cart_button_archives_content', '' ) ) ) {
+			echo do_shortcode( $content );
+		}
+	}
+
+	/**
+	 * add_to_cart_button_single_content.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function add_to_cart_button_single_content() {
+		if ( '' != ( $content = get_option( 'wcj_add_to_cart_button_single_content', '' ) ) ) {
+			echo do_shortcode( $content );
+		}
 	}
 
 	/**

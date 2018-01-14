@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  */
 
@@ -134,7 +134,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * custom_override_checkout_fields.
 	 *
-	 * @version 2.8.0
+	 * @version 3.3.1
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Custom Fields module)
 	 * @todo    (maybe) enable if was not enabled by default, i.e. `! isset( $checkout_fields[ $section ][ $field ] )`
 	 */
@@ -172,7 +172,30 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 				}
 			}
 		}
+		if ( 'yes' === get_option( 'wcj_checkout_core_fields_force_sort_by_priority', 'no' ) ) {
+			$field_sets = array( 'billing', 'shipping', 'account', 'order' );
+			foreach ( $field_sets as $field_set ) {
+				if ( isset( $checkout_fields[ $field_set ] ) ) {
+					uasort( $checkout_fields[ $field_set ], array( $this, 'sort_by_priority' ) );
+				}
+			}
+		}
 		return $checkout_fields;
+	}
+
+	/**
+	 * sort_by_priority.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function sort_by_priority( $a, $b ) {
+		$a = ( isset( $a['priority'] ) ? $a['priority'] : 0 );
+		$b = ( isset( $b['priority'] ) ? $b['priority'] : 0 );
+		if ( $a == $b ) {
+			return 0;
+		}
+		return ( $a < $b ) ? -1 : 1;
 	}
 
 }

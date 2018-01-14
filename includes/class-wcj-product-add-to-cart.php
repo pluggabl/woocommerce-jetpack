@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -330,7 +330,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/*
 	 * maybe_redirect_to_url.
 	 *
-	 * @version 2.9.0
+	 * @version 3.3.1
 	 */
 	function maybe_redirect_to_url( $url, $product_id = false ) {
 		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) && ( $product_id || isset( $_REQUEST['add-to-cart'] ) ) ) {
@@ -340,7 +340,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			if ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_add_to_cart_redirect_enabled', true ) ) {
 				$redirect_url = get_post_meta( $product_id,  '_' . 'wcj_add_to_cart_redirect_url', true );
 				if ( '' === $redirect_url ) {
-					$redirect_url = WC()->cart->get_checkout_url();
+					$redirect_url = wc_get_checkout_url();
 				}
 				return $redirect_url;
 			}
@@ -348,7 +348,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 		if ( 'yes' === get_option( 'wcj_add_to_cart_redirect_enabled', 'no' ) ) {
 			$redirect_url = get_option( 'wcj_add_to_cart_redirect_url', '' );
 			if ( '' === $redirect_url ) {
-				$redirect_url = WC()->cart->get_checkout_url();
+				$redirect_url = wc_get_checkout_url();
 			}
 			return $redirect_url;
 		}

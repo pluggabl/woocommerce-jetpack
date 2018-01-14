@@ -178,6 +178,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.3.1 - 13/01/2018 =
+D T	* Dev - PRODUCTS - Add to Cart - `get_checkout_url()` replaced with `wc_get_checkout_url()`.
+  W	* Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - Allowed User Roles - Selected user roles are now checked when creating and/or deleting documents (was hard-coded Administrator and Shop Manager).
+D W * Dev - SHIPPING & ORDERS - Custom Shipping - "Apply Formula to Costs" option added.
+D T	* Dev - CART & CHECKOUT - Checkout Core Fields - General Options - "Force Fields Sort by Priority" option added.
+D	* Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Content" options added.
+
 = 3.3.0 - 11/01/2018 =
 * Dev - PRICES & CURRENCIES - Currencies - Belarusian ruble code updated (from `BYR` to `BYN`).
 * Dev - PRICES & CURRENCIES - Currency per Product - Advanced Options - "Save Converted Product Prices in Array" option added.

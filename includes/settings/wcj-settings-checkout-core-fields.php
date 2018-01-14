@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Core Fields
  *
- * @version 3.1.0
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -36,6 +36,14 @@ $settings = array(
 			'shipping' => __( 'Override with shipping fields', 'woocommerce-jetpack' ),
 			'disable'  => __( 'Do not override', 'woocommerce-jetpack' ),
 		),
+	),
+	array(
+		'title'    => __( 'Force Fields Sort by Priority', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you are having theme related issues with "priority (i.e. order)" options.', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_checkout_core_fields_force_sort_by_priority',
+		'default'  => 'no',
 	),
 	array(
 		'type'     => 'sectionend',

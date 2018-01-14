@@ -2,9 +2,10 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 2.8.0
+ * @version 3.3.1
  * @since   2.5.6
  * @author  Algoritmika Ltd.
+ * @todo    clean up
  */
 
 add_action( 'init', 'init_wc_shipping_wcj_custom_w_zones_class' );
@@ -18,7 +19,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 			/*
 			 * WC_Shipping_WCJ_Custom_W_Zones class.
 			 *
-			 * @version 2.8.0
+			 * @version 3.3.1
 			 * @since   2.5.6
 			 */
 			class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
@@ -38,7 +39,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * Init settings
 				 *
-				 * @version 2.8.0
+				 * @version 3.3.1
 				 * @since   2.5.6
 				 * @access  public
 				 * @return  void
@@ -61,12 +62,13 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 //					$this->init_settings();
 
 					// Define user set variables
-					$this->title      = $this->get_option( 'title' );
-					$this->cost       = $this->get_option( 'cost' );
-					$this->min_weight = $this->get_option( 'min_weight' );
-					$this->max_weight = $this->get_option( 'max_weight' );
-					$this->type       = $this->get_option( 'type' );
-					$this->weight_table_total_rows = $this->get_option( 'weight_table_total_rows' );
+					$this->title                      = $this->get_option( 'title' );
+					$this->cost                       = $this->get_option( 'cost' );
+					$this->min_weight                 = $this->get_option( 'min_weight' );
+					$this->max_weight                 = $this->get_option( 'max_weight' );
+					$this->type                       = $this->get_option( 'type' );
+					$this->apply_formula              = apply_filters( 'booster_option', 'no', $this->get_option( 'apply_formula' ) );
+					$this->weight_table_total_rows    = $this->get_option( 'weight_table_total_rows' );
 					/* for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
 						$option_name = 'weight_table_weight_row_' . $i;
 						$this->{$option_name} = $this->get_option( $option_name );
@@ -84,7 +86,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * add_table_rows.
 				 *
-				 * @version 2.8.0
+				 * @version 3.3.1
 				 * @since   2.6.0
 				 */
 				function add_table_rows( $instance_form_fields ) {
@@ -99,14 +101,14 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 										'type'        => 'number',
 										'default'     => 0,
 										'desc_tip'    => true,
-										'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+										'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
 									),
 									'weight_table_cost_row_' . $i => array(   // mislabeled, should be 'table_cost_row_'
 										'title'       => __( 'Cost', 'woocommerce' ) . ' #' . $i,
-										'type'        => 'number',
+										'type'        => 'text',
 										'default'     => 0,
 										'desc_tip'    => true,
-										'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+//										'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
 									),
 								) );
 							}
@@ -139,18 +141,18 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * Initialise Settings Form Fields
 				 *
-				 * @version 2.8.0
+				 * @version 3.3.1
 				 * @since   2.5.6
 				 */
 				function init_instance_form_fields() {
 					$type_options = array(
-						'flat_rate'                    => __( 'Flat Rate', 'woocommerce-jetpack' ),
-						'by_total_cart_weight'         => __( 'By Total Cart Weight', 'woocommerce-jetpack' ),
-						'by_total_cart_weight_table'   => __( 'By Total Cart Weight Table', 'woocommerce-jetpack' ),
-						'by_total_cart_quantity'       => __( 'By Total Cart Quantity', 'woocommerce-jetpack' ),
+						'flat_rate'                    => __( 'Flat rate', 'woocommerce-jetpack' ),
+						'by_total_cart_weight'         => __( 'By total cart weight', 'woocommerce-jetpack' ),
+						'by_total_cart_weight_table'   => __( 'By total cart weight table', 'woocommerce-jetpack' ),
+						'by_total_cart_quantity'       => __( 'By total cart quantity', 'woocommerce-jetpack' ),
 					);
 					$type_options = apply_filters( 'booster_option', $type_options, array_merge( $type_options, array(
-						'by_total_cart_quantity_table' => __( 'By Total Cart Quantity Table', 'woocommerce-jetpack' ),
+						'by_total_cart_quantity_table' => __( 'By total cart quantity table', 'woocommerce-jetpack' ),
 					) ) );
 					$this->instance_form_fields = array(
 						'title' => array(
@@ -170,11 +172,11 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 						),
 						'cost' => array(
 							'title'       => __( 'Cost', 'woocommerce' ),
-							'type'        => 'number',
+							'type'        => 'text',
 							'description' => __( 'Cost. If calculating by weight - then cost per one weight unit. If calculating by quantity - then cost per one piece.', 'woocommerce-jetpack' ),
 							'default'     => 0,
 							'desc_tip'    => true,
-							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+//							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
 						),
 						'min_weight' => array(
 							'title'       => __( 'Min Weight', 'woocommerce' ),
@@ -182,7 +184,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 							'description' => __( 'Minimum total cart weight. Set zero to disable.', 'woocommerce-jetpack' ),
 							'default'     => 0,
 							'desc_tip'    => true,
-							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
 						),
 						'max_weight' => array(
 							'title'       => __( 'Max Weight', 'woocommerce' ),
@@ -190,7 +192,15 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 							'description' => __( 'Maximum total cart weight. Set zero to disable.', 'woocommerce-jetpack' ),
 							'default'     => 0,
 							'desc_tip'    => true,
-							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
+						),
+						'apply_formula' => array(
+							'title'       => __( 'Apply Formula to Costs', 'woocommerce' ),
+							'description' => apply_filters( 'booster_message', '', 'desc_no_link' ),
+							'desc_tip'    => true,
+							'type'        => 'checkbox',
+							'default'     => 'no',
+							'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 						),
 						'weight_table_total_rows' => array( // mislabeled, should be 'table_total_rows'
 							'title'       => __( 'Table Total Rows', 'woocommerce' ),
@@ -198,7 +208,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 							'description' => __( 'Press "Save changes" and reload the page after you change this number.', 'woocommerce-jetpack' ),
 							'default'     => 0,
 							'desc_tip'    => true,
-							'custom_attributes' => array( 'min'  => '0', ),
+							'custom_attributes' => array( 'min'  => '0' ),
 						),
 					);
 					/* for ( $i = 1; $i <= $this->get_option( 'weight_table_total_rows' ); $i++ ) {
@@ -208,14 +218,14 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 								'type'        => 'number',
 								'default'     => 0,
 								'desc_tip'    => true,
-								'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+								'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
 							),
 							'weight_table_cost_row_' . $i => array(
 								'title'       => __( 'Cost', 'woocommerce' ) . ' #' . $i,
 								'type'        => 'number',
 								'default'     => 0,
 								'desc_tip'    => true,
-								'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+								'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
 							),
 						) );
 					} */
@@ -243,7 +253,34 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				}
 
 				/**
-				 * cget_total_cart_quantity.
+				 * maybe_apply_formula.
+				 *
+				 * @version 3.3.1
+				 * @since   3.3.1
+				 */
+				function maybe_apply_formula( $formula ) {
+					if ( 'yes' !== $this->apply_formula ) {
+						return $formula;
+					}
+					require_once( wcj_plugin_path() . '/includes/lib/PHPMathParser/Math.php' );
+					$math    = new Alg_Math();
+					$variables = array(
+						'quantity' => $this->get_total_cart_quantity(),
+						'weight'   => WC()->cart->get_cart_contents_weight(),
+					);
+					foreach ( $variables as $key => $value ) {
+						$math->registerVariable( $key, $value );
+						$formula = str_replace( $key, '$' . $key, $formula );
+					}
+					try {
+						return $math->evaluate( $formula );
+					} catch ( Exception $e ) {
+						return $formula;
+					}
+				}
+
+				/**
+				 * get_total_cart_quantity.
 				 *
 				 * @version 2.8.0
 				 * @since   2.8.0
@@ -259,7 +296,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 				/**
 				 * calculate_shipping function.
 				 *
-				 * @version 2.8.0
+				 * @version 3.3.1
 				 * @since   2.5.6
 				 * @access  public
 				 * @param   mixed $package
@@ -286,7 +323,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 					$rate = array(
 						'id'       => $this->get_rate_id(),
 						'label'    => $this->title,
-						'cost'     => $cost,
+						'cost'     => $this->maybe_apply_formula( $cost ),
 						'calc_tax' => 'per_order',
 					);
 					// Register the rate

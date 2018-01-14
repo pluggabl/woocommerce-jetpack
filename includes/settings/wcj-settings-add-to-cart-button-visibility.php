@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Add to Cart Button Visibility
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    "Per Tag"
@@ -33,11 +33,27 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc'     => __( 'Content', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Content to replace with on archives (can be empty). You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_archives_content',
+		'default'  => '',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:100%',
+	),
+	array(
 		'title'    => __( 'Disable Buttons on Single Product Pages', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_add_to_cart_button_disable_single',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Content', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Content to replace with on single product pages (can be empty). You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_single_content',
+		'default'  => '',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:100%',
 	),
 	array(
 		'type'     => 'sectionend',
