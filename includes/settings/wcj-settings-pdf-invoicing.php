@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - General
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -43,7 +43,7 @@ foreach ( $invoice_types as $k => $invoice_type ) {
 				'id'       => 'wcj_invoicing_custom_doc_total_number',
 				'default'  => 1,
 				'type'     => 'custom_number',
-				'custom_attributes' => array( 'min' => '1' ),
+				'custom_attributes' => array( 'min' => '1', 'max' => '100' ),
 			),
 		) );
 	}

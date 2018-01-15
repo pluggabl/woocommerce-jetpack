@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 3.2.0
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  */
 
@@ -200,7 +200,7 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 	/*
 	 * wcj_get_invoice_types.
 	 *
-	 * @version 3.1.0
+	 * @version 3.3.1
 	 */
 	function wcj_get_invoice_types() {
 		$invoice_types = array(
@@ -229,7 +229,7 @@ if ( ! function_exists( 'wcj_get_invoice_types' ) ) {
 				'color'    => 'red',
 			),
 		);
-		$total_custom_docs = get_option( 'wcj_invoicing_custom_doc_total_number', 1 );
+		$total_custom_docs = min( get_option( 'wcj_invoicing_custom_doc_total_number', 1 ), 100 );
 		for ( $i = 1; $i <= $total_custom_docs; $i++ ) {
 			$invoice_types[] = array(
 				'id'       => ( 1 == $i ? 'custom_doc' : 'custom_doc' . '_' . $i ),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Options
  *
- * @version 3.2.4
+ * @version 3.3.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -89,117 +89,6 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_shipping_free_shipping_by_product_options',
-	),
-) );
-$settings = array_merge( $settings, array(
-	array(
-		'title'    => __( 'Shipping Descriptions', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'desc'     => sprintf( __( 'This section will allow you to add any text (e.g. description) for shipping method. Text will be visible on cart and checkout pages. You can add HTML tags here, e.g. try "%s"', 'woocommerce-jetpack' ), esc_html( '<br><small>Your shipping description.</small>' ) ),
-		'id'       => 'wcj_shipping_description_options',
-	),
-	array(
-		'title'    => __( 'Shipping Descriptions', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_shipping_description_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Description Visibility', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_shipping_descriptions_visibility',
-		'default'  => 'both',
-		'type'     => 'select',
-		'options'  => array(
-			'both'          => __( 'On both cart and checkout pages', 'woocommerce-jetpack' ),
-			'cart_only'     => __( 'Only on cart page', 'woocommerce-jetpack' ),
-			'checkout_only' => __( 'Only on checkout page', 'woocommerce-jetpack' ),
-		),
-		'desc_tip' => __( 'Possible values: on both cart and checkout pages; only on cart page; only on checkout page', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-	),
-) );
-foreach ( WC()->shipping->get_shipping_methods() as $method ) {
-	$settings = array_merge( $settings, array(
-		array(
-			'title'    => $method->method_title,
-			'id'       => 'wcj_shipping_description_' . $method->id,
-			'default'  => '',
-			'type'     => 'textarea',
-			'css'      => 'width:30%;min-width:300px;',
-		),
-	) );
-}
-$settings = array_merge( $settings, array(
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_shipping_description_options',
-	),
-) );
-$settings = array_merge( $settings, array(
-	array(
-		'title'    => __( 'Shipping Icons', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'desc'     => __( 'This section will allow you to add icons for shipping method. Icons will be visible on cart and checkout pages.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_shipping_icons_options',
-	),
-	array(
-		'title'    => __( 'Shipping Icons', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable Section', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_shipping_icons_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Icon Position', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_shipping_icons_position',
-		'default'  => 'before',
-		'type'     => 'select',
-		'options'  => array(
-			'before' => __( 'Before label', 'woocommerce-jetpack' ),
-			'after'  => __( 'After label', 'woocommerce-jetpack' ),
-		),
-	),
-	array(
-		'title'    => __( 'Icon Visibility', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_shipping_icons_visibility',
-		'default'  => 'both',
-		'type'     => 'select',
-		'options'  => array(
-			'both'          => __( 'On both cart and checkout pages', 'woocommerce-jetpack' ),
-			'cart_only'     => __( 'Only on cart page', 'woocommerce-jetpack' ),
-			'checkout_only' => __( 'Only on checkout page', 'woocommerce-jetpack' ),
-		),
-		'desc_tip' => __( 'Possible values: on both cart and checkout pages; only on cart page; only on checkout page', 'woocommerce-jetpack' ),
-		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
-		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
-	),
-	array(
-		'title'    => __( 'Icon Style', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'You can also style icons with CSS class "wcj_shipping_icon", or id "wcj_shipping_icon_method_id"', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_shipping_icons_style',
-		'default'  => 'display:inline;',
-		'type'     => 'text',
-		'css'      => 'width:20%;min-width:300px;',
-	),
-) );
-foreach ( WC()->shipping->get_shipping_methods() as $method ) {
-	$settings = array_merge( $settings, array(
-		array(
-			'title'    => $method->method_title,
-			'desc_tip' => __( 'Image URL', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_shipping_icon_' . $method->id,
-			'default'  => '',
-			'type'     => 'text',
-			'css'      => 'width:30%;min-width:300px;',
-		),
-	) );
-}
-$settings = array_merge( $settings, array(
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_shipping_icons_options',
 	),
 ) );
 return $settings;

@@ -111,10 +111,12 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
 * *Orders* - WooCommerce orders auto-complete; admin order currency; bulk regenerate download permissions for orders.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
+* *Shipping Descriptions* - Add descriptions to shipping methods on frontend.
+* *Shipping Icons* - Add icons to shipping methods on frontend.
 * *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for WooCommerce shipping methods to show up.
 * *Shipping Methods by Products* - Set products, product categories or tags to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for WooCommerce shipping methods to show up.
-* *Shipping Options* - Add descriptions and icons to shipping methods on frontend. Hide WooCommerce shipping when free is available. Grant free shipping on per product basis.
+* *Shipping Options* - Hide WooCommerce shipping when free is available. Grant free shipping on per product basis.
 
 **PDF Invoicing & Packing Slips**
 
@@ -178,7 +180,12 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 13/01/2018 =
+= 3.3.1 - 15/01/2018 =
+D T * Dev - SHIPPING & ORDERS - Shipping Descriptions - Initial module release (copied from "Shipping Options" module).
+D T * Dev - SHIPPING & ORDERS - Shipping Icons - Initial module release (copied from "Shipping Options" module).
+D W * Dev - Shortcodes - General - `[wcj_customer_total_spent]` shortcode added.
+D W * Dev - Shortcodes - General - `[wcj_customer_order_count]` shortcode added.
+D T * Dev - PDF INVOICING & PACKING SLIPS - General - Number of Custom Documents - Limited to max 100.
 D T	* Dev - PRODUCTS - Add to Cart - `get_checkout_url()` replaced with `wc_get_checkout_url()`.
   W	* Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - Allowed User Roles - Selected user roles are now checked when creating and/or deleting documents (was hard-coded Administrator and Shop Manager).
 D W * Dev - SHIPPING & ORDERS - Custom Shipping - "Apply Formula to Costs" option added.

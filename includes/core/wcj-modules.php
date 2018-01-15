@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -71,6 +71,8 @@ $wcj_module_files = array(
 	'class-wcj-payment-gateways-by-shipping.php',
 	'class-wcj-shipping.php',
 	'class-wcj-shipping-options.php',
+	'class-wcj-shipping-icons.php',
+	'class-wcj-shipping-description.php',
 	'class-wcj-left-to-free-shipping.php',
 	'class-wcj-shipping-calculator.php',
 	'class-wcj-shipping-by-user-role.php',

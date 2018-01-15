@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 */
 	function __construct() {
 
@@ -39,7 +39,9 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_current_timestamp',
 			'wcj_customer_billing_country',
 			'wcj_customer_meta',
+			'wcj_customer_order_count',
 			'wcj_customer_shipping_country',
+			'wcj_customer_total_spent',
 			'wcj_empty_cart_button',
 			'wcj_get_left_to_free_shipping',
 			'wcj_product_category_count',
@@ -361,6 +363,42 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_current_timestamp( $atts ) {
 		return current_time( 'timestamp' );
+	}
+
+	/**
+	 * wcj_customer_order_count.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 * @todo    `hide_if_zero`
+	 */
+	function wcj_customer_order_count( $atts ) {
+		if ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			$customer     = new WC_Customer( $current_user->ID );
+			return $customer->get_order_count();
+		} else {
+			return '';
+		}
+	}
+
+	/**
+	 * wcj_customer_total_spent.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 * @todo    `hide_if_zero`
+	 * @todo    `hide_currency`
+	 * @todo    (maybe) solve multicurrency issue
+	 */
+	function wcj_customer_total_spent( $atts ) {
+		if ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			$customer     = new WC_Customer( $current_user->ID );
+			return wc_price( $customer->get_total_spent() );
+		} else {
+			return '';
+		}
 	}
 
 	/**
