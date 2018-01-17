@@ -180,17 +180,18 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 15/01/2018 =
+= 3.3.1 - 17/01/2018 =
+D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Columns - `product_weight_multiply_qty` column added.
 D T * Dev - SHIPPING & ORDERS - Shipping Descriptions - Initial module release (copied from "Shipping Options" module).
 D T * Dev - SHIPPING & ORDERS - Shipping Icons - Initial module release (copied from "Shipping Options" module).
 D W * Dev - Shortcodes - General - `[wcj_customer_total_spent]` shortcode added.
 D W * Dev - Shortcodes - General - `[wcj_customer_order_count]` shortcode added.
 D T * Dev - PDF INVOICING & PACKING SLIPS - General - Number of Custom Documents - Limited to max 100.
-D T	* Dev - PRODUCTS - Add to Cart - `get_checkout_url()` replaced with `wc_get_checkout_url()`.
-  W	* Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - Allowed User Roles - Selected user roles are now checked when creating and/or deleting documents (was hard-coded Administrator and Shop Manager).
+D T * Dev - PRODUCTS - Add to Cart - `get_checkout_url()` replaced with `wc_get_checkout_url()`.
+  W * Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - Allowed User Roles - Selected user roles are now checked when creating and/or deleting documents (was hard-coded Administrator and Shop Manager).
 D W * Dev - SHIPPING & ORDERS - Custom Shipping - "Apply Formula to Costs" option added.
-D T	* Dev - CART & CHECKOUT - Checkout Core Fields - General Options - "Force Fields Sort by Priority" option added.
-D	* Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Content" options added.
+D T * Dev - CART & CHECKOUT - Checkout Core Fields - General Options - "Force Fields Sort by Priority" option added.
+D   * Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Content" options added.
 
 = 3.3.0 - 11/01/2018 =
 * Dev - PRICES & CURRENCIES - Currencies - Belarusian ruble code updated (from `BYR` to `BYN`).

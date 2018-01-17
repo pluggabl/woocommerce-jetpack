@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  */
 
@@ -440,7 +440,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_cell.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @since   3.2.0
 	 */
 	function get_cell( $column, $column_param, $atts, $the_order, $columns, $item_counter, $item_id, $item, $the_product ) {
@@ -682,6 +682,10 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 			case 'item_weight':
 			case 'product_weight':
 				return ( ! is_object( $the_product ) ) ? '' : $the_product->get_weight();
+
+			case 'item_weight_multiply_qty':
+			case 'product_weight_multiply_qty':
+				return ( ! is_object( $the_product ) ) ? '' : $the_product->get_weight() * $item['qty'];
 
 			case 'item_width':
 			case 'product_width':
