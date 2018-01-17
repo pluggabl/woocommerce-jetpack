@@ -2,19 +2,39 @@
 /**
  * Booster for WooCommerce - Settings - Gateways by Country or State
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    change `textarea` to `readonly`
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $settings = array(
 	array(
-		'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
-		'type'  => 'title',
-		'desc'  => __( 'Country and state are defined from customer\'s entered billing address.', 'woocommerce-jetpack' ) . '<br>' . __( 'Leave empty to disable.', 'woocommerce-jetpack' ),
-		'id'    => 'wcj_payment_gateways_by_country_gateways_options',
+		'title'     => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'      => 'title',
+		'id'        => 'wcj_gateways_by_location_general_options',
+	),
+	array(
+		'title'     => __( 'Postcode Type', 'woocommerce-jetpack' ),
+		'id'        => 'wcj_gateways_by_location_postcodes_type',
+		'type'      => 'select',
+		'default'   => 'billing',
+		'options'   => array(
+			'billing'  => __( 'Billing postcode', 'woocommerce-jetpack' ),
+			'shipping' => __( 'Shipping postcode', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'type'      => 'sectionend',
+		'id'        => 'wcj_gateways_by_location_general_options',
+	),
+	array(
+		'title'     => __( 'Payment Gateways', 'woocommerce-jetpack' ),
+		'type'      => 'title',
+		'desc'      => __( 'Country and state are defined from customer\'s entered billing address.', 'woocommerce-jetpack' ) . '<br>' . __( 'Leave empty to disable.', 'woocommerce-jetpack' ),
+		'id'        => 'wcj_payment_gateways_by_country_gateways_options',
 	),
 );
 $countries = wcj_get_countries();
@@ -41,52 +61,63 @@ foreach ( $gateways as $key => $gateway ) {
 			'default'   => '',
 			'type'      => 'multiselect',
 			'class'     => 'chosen_select',
-			'css'       => 'width: 450px;',
 			'options'   => $countries,
 			'custom_attributes' => $custom_attributes,
 		),
 		array(
-			'title'     => '',
 			'desc_tip'  => $desc_tip,
 			'desc'      => __( 'Exclude Countries', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_gateways_countries_exclude_' . $key,
 			'default'   => '',
 			'type'      => 'multiselect',
 			'class'     => 'chosen_select',
-			'css'       => 'width: 450px;',
 			'options'   => $countries,
 			'custom_attributes' => $custom_attributes,
 		),
 		array(
-			'title'     => '',
 			'desc_tip'  => $desc_tip,
 			'desc'      => __( 'Include States (Base Country)', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_gateways_states_include_' . $key,
 			'default'   => '',
 			'type'      => 'multiselect',
 			'class'     => 'chosen_select',
-			'css'       => 'width: 450px;',
 			'options'   => $states,
 			'custom_attributes' => $custom_attributes,
 		),
 		array(
-			'title'     => '',
 			'desc_tip'  => $desc_tip,
 			'desc'      => __( 'Exclude States (Base Country)', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_gateways_states_exclude_' . $key,
 			'default'   => '',
 			'type'      => 'multiselect',
 			'class'     => 'chosen_select',
-			'css'       => 'width: 450px;',
 			'options'   => $states,
+			'custom_attributes' => $custom_attributes,
+		),
+		array(
+			'desc_tip'  => $desc_tip,
+			'desc'      => __( 'Include Postcodes', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_gateways_by_location_postcodes_include_' . $key,
+			'default'   => '',
+			'type'      => 'textarea',
+			'css'       => 'height:200px;',
+			'custom_attributes' => $custom_attributes,
+		),
+		array(
+			'desc_tip'  => $desc_tip,
+			'desc'      => __( 'Exclude Postcodes', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_gateways_by_location_postcodes_exclude_' . $key,
+			'default'   => '',
+			'type'      => 'textarea',
+			'css'       => 'height:200px;',
 			'custom_attributes' => $custom_attributes,
 		),
 	) );
 }
 $settings = array_merge( $settings, array(
 	array(
-		'type'  => 'sectionend',
-		'id'    => 'wcj_payment_gateways_by_country_gateways_options',
+		'type'      => 'sectionend',
+		'id'        => 'wcj_payment_gateways_by_country_gateways_options',
 	),
 ) );
 return $settings;

@@ -181,6 +181,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.3.1 - 17/01/2018 =
+D X * Dev - PAYMENT GATEWAYS - Gateways by Country or State - "Include/Exclude Postcodes" options added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Columns - `product_weight_multiply_qty` column added.
 D T * Dev - SHIPPING & ORDERS - Shipping Descriptions - Initial module release (copied from "Shipping Options" module).
 D T * Dev - SHIPPING & ORDERS - Shipping Icons - Initial module release (copied from "Shipping Options" module).
