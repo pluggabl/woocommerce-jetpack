@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -330,7 +330,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.9.0
+	 * @version 3.3.1
 	 */
 	function enqueue_scripts() {
 		if ( 'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) ) {
@@ -338,10 +338,10 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			wp_localize_script( 'wcj-eu-vat-number', 'ajax_object', array(
 				'ajax_url'                        => admin_url( 'admin-ajax.php' ),
 				'add_progress_text'               => get_option( 'wcj_eu_vat_number_add_progress_text', 'no' ),
-				'progress_text_validating'        => get_option( 'wcj_eu_vat_number_progress_text_validating', __( 'Validating VAT. Please wait...', 'woocommerce-jetpack' ) ),
-				'progress_text_valid'             => get_option( 'wcj_eu_vat_number_progress_text_valid', __( 'VAT is valid.', 'woocommerce-jetpack' ) ),
-				'progress_text_not_valid'         => get_option( 'wcj_eu_vat_number_progress_text_not_valid', __( 'VAT is not valid.', 'woocommerce-jetpack' ) ),
-				'progress_text_validation_failed' => get_option( 'wcj_eu_vat_number_progress_text_validation_failed', __( 'Validation failed. Please try again.', 'woocommerce-jetpack' ) ),
+				'progress_text_validating'        => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_validating',        __( 'Validating VAT. Please wait...', 'woocommerce-jetpack' ) ) ),
+				'progress_text_valid'             => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_valid',             __( 'VAT is valid.', 'woocommerce-jetpack' ) ) ),
+				'progress_text_not_valid'         => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_not_valid',         __( 'VAT is not valid.', 'woocommerce-jetpack' ) ) ),
+				'progress_text_validation_failed' => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_validation_failed', __( 'Validation failed. Please try again.', 'woocommerce-jetpack' ) ) ),
 			) );
 		}
 	}

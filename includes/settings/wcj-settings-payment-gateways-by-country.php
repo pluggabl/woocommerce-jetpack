@@ -33,7 +33,8 @@ $settings = array(
 	array(
 		'title'     => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 		'type'      => 'title',
-		'desc'      => __( 'Country and state are defined from customer\'s entered billing address.', 'woocommerce-jetpack' ) . '<br>' . __( 'Leave empty to disable.', 'woocommerce-jetpack' ),
+		'desc'      => __( 'Country and state are defined from customer\'s entered billing address.', 'woocommerce-jetpack' ) . '<br>' .
+			__( 'If any field is left empty - it\'s ignored.', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_payment_gateways_by_country_gateways_options',
 	),
 );
@@ -96,8 +97,8 @@ foreach ( $gateways as $key => $gateway ) {
 		),
 		array(
 			'desc_tip'  => $desc_tip,
-			'desc'      => __( 'Include Postcodes', 'woocommerce-jetpack' ),
-			'id'        => 'wcj_gateways_by_location_postcodes_include_' . $key,
+			'desc'      => __( 'Include Postcodes (one per line)', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_gateways_postcodes_include_' . $key,
 			'default'   => '',
 			'type'      => 'textarea',
 			'css'       => 'height:200px;',
@@ -105,8 +106,8 @@ foreach ( $gateways as $key => $gateway ) {
 		),
 		array(
 			'desc_tip'  => $desc_tip,
-			'desc'      => __( 'Exclude Postcodes', 'woocommerce-jetpack' ),
-			'id'        => 'wcj_gateways_by_location_postcodes_exclude_' . $key,
+			'desc'      => __( 'Exclude Postcodes (one per line)', 'woocommerce-jetpack' ),
+			'id'        => 'wcj_gateways_postcodes_exclude_' . $key,
 			'default'   => '',
 			'type'      => 'textarea',
 			'css'       => 'height:200px;',

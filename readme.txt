@@ -93,7 +93,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Gateways Fees and Discounts* - Enable extra fees or discounts for WooCommerce payment gateways.
 * *Gateways Icons* - Change or completely remove icons (images) for any (default or custom) WooCommerce payment gateway.
 * *Gateways Min/Max Amounts* - Add min/max amounts for WooCommerce payment gateways to show up.
-* *Gateways by Country or State* - Set countries or states to include/exclude for WooCommerce payment gateways to show up.
+* *Gateways by Country or State* - Set countries, states or postcodes to include/exclude for WooCommerce payment gateways to show up.
 * *Gateways by Currency* - Set allowed currencies for WooCommerce payment gateways to show up.
 * *Gateways by Shipping* - Set "enable for shipping methods" for WooCommerce payment gateways.
 * *Gateways by User Role* - Set user roles to include/exclude for WooCommerce payment gateways to show up.
@@ -181,6 +181,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.3.1 - 17/01/2018 =
+D T * Dev - CART & CHECKOUT - EU VAT Number - Shortcodes can now be used in all "Progress Messages" (e.g. it can now be translated with `[wcj_wpml]`).
 D X * Dev - PAYMENT GATEWAYS - Gateways by Country or State - "Include/Exclude Postcodes" options added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Columns - `product_weight_multiply_qty` column added.
 D T * Dev - SHIPPING & ORDERS - Shipping Descriptions - Initial module release (copied from "Shipping Options" module).
