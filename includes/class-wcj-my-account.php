@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 2.9.0
+ * @version 3.3.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.3.1
 	 * @since   2.9.0
 	 */
 	function __construct() {
@@ -31,6 +31,38 @@ class WCJ_My_Account extends WCJ_Module {
 			add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'maybe_add_my_account_order_actions' ), 10, 2 );
 			add_action( 'wp_footer',                                array( $this, 'maybe_add_js_conformation' ) );
 			add_action( 'init',                                     array( $this, 'process_woocommerce_mark_order_status' ) );
+			// Custom info
+			if ( 'yes' === get_option( 'wcj_my_account_custom_info_enabled', 'no' ) ) {
+				$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_my_account_custom_info_total_number', 1 ) );
+				for ( $i = 1; $i <= $total_number; $i++ ) {
+					add_action(
+						get_option( 'wcj_my_account_custom_info_hook_' . $i, 'woocommerce_account_dashboard' ),
+						array( $this, 'add_my_account_custom_info' ),
+						get_option( 'wcj_my_account_custom_info_priority_' . $i, 10 )
+					);
+				}
+			}
+		}
+	}
+
+	/**
+	 * add_my_account_custom_info.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function add_my_account_custom_info() {
+		$current_filter          = current_filter();
+		$current_filter_priority = wcj_current_filter_priority();
+		$total_number            = apply_filters( 'booster_option', 1, get_option( 'wcj_my_account_custom_info_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if (
+				''                       != get_option( 'wcj_my_account_custom_info_content_'  . $i ) &&
+				$current_filter         === get_option( 'wcj_my_account_custom_info_hook_'     . $i, 'woocommerce_account_dashboard' ) &&
+				$current_filter_priority == get_option( 'wcj_my_account_custom_info_priority_' . $i, 10 )
+			) {
+				echo do_shortcode( get_option( 'wcj_my_account_custom_info_content_' . $i ) );
+			}
 		}
 	}
 

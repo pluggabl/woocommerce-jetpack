@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  */
 
@@ -276,7 +276,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * create_invoices_meta_box.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @since   2.8.0
 	 */
 	function create_invoices_meta_box() {
@@ -292,14 +292,16 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				if ( wcj_is_invoice_created( $order_id, $invoice_type['id'] ) ) {
 					// "Document (View)" link
 					$query_args    = array( 'order_id' => $order_id, 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
+					$target        = ' target="_blank"';
 					if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
 						$query_args['save_pdf_invoice'] = '1';
+						$target = '';
 					}
 					$the_url       = add_query_arg( $query_args, remove_query_arg( array ( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) );
 					$the_name      = __( 'View', 'woocommerce-jetpack' );
 					$the_invoice   = wcj_get_invoice( $order_id, $invoice_type['id'] );
 					$the_number    = ' [#' . $the_invoice->get_invoice_number() . ']';
-					$view_link     = '<a href="' .  $the_url . '">' . $the_name . '</a>';
+					$view_link     = '<a' . $target . ' href="' .  $the_url . '">' . $the_name . '</a>';
 					// "Delete" link
 					$query_args    = array( 'delete_invoice_for_order_id' => $order_id, 'invoice_type_id' => $invoice_type['id'] );
 					$the_url       = add_query_arg( $query_args, remove_query_arg( 'create_invoice_for_order_id' ) );

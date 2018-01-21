@@ -45,13 +45,16 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_empty_cart_button',
 			'wcj_get_left_to_free_shipping',
 			'wcj_product_category_count',
+			'wcj_request_value',
 			'wcj_selector',
+			'wcj_session_value',
 			'wcj_site_url',
 			'wcj_store_address',
 			'wcj_tcpdf_barcode',
 			'wcj_tcpdf_pagebreak',
 			'wcj_tcpdf_rectangle',
 			'wcj_text',
+			'wcj_wc_session_value',
 			'wcj_wholesale_price_table',
 			'wcj_wp_option',
 			'wcj_wpml',
@@ -101,6 +104,38 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_wc_session_value.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 * @todo    handle arrays
+	 */
+	function wcj_wc_session_value( $atts ) {
+		return ( '' === $atts['key'] ? '' : WC()->session->get( $atts['key'], '' ) );
+	}
+
+	/**
+	 * wcj_session_value.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 return ( '' === $atts['key'] ? '' : WC()->session->get( $atts['key'], '' ) );
+	 */
+	function wcj_session_value( $atts ) {
+		return ( '' === $atts['key'] || ! isset( $_SESSION[ $atts['key'] ] ) ? '' : $_SESSION[ $atts['key'] ] );
+	}
+
+	/**
+	 * wcj_request_value.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function wcj_request_value( $atts ) {
+		return ( '' === $atts['key'] || ! isset( $_REQUEST[ $atts['key'] ] ) ? '' : $_REQUEST[ $atts['key'] ] );
 	}
 
 	/**

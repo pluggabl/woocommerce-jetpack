@@ -180,7 +180,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 17/01/2018 =
+= 3.3.1 - 21/01/2018 =
+D T * Dev - EMAILS & MISC. - My Account - "Custom Info Blocks" section added.
+D   * Dev - Shortcodes - General - `[wcj_wc_session_value]` shortcode added.
+D   * Dev - Shortcodes - General - `[wcj_session_value]` shortcode added.
+D   * Dev - Shortcodes - General - `[wcj_request_value]` shortcode added.
+  T * Dev - PDF INVOICING & PACKING SLIPS - PDF Invoices Order Meta Box - "View" link is opened in new window now.
+  T * Dev - Admin Settings - Modules submenu now is sorted by title.
 D T * Dev - CART & CHECKOUT - EU VAT Number - Shortcodes can now be used in all "Progress Messages" (e.g. it can now be translated with `[wcj_wpml]`).
 D X * Dev - PAYMENT GATEWAYS - Gateways by Country or State - "Include/Exclude Postcodes" options added.
 D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Columns - `product_weight_multiply_qty` column added.

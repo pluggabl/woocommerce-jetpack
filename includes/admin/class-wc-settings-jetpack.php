@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -57,7 +57,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output sections (modules) sub menu
 	 *
-	 * @version 3.0.0
+	 * @version 3.3.1
 	 */
 	function output_sections_submenu() {
 		global $current_section;
@@ -107,12 +107,19 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				unset( $this->cats[ $current_cat ]['all_cat_ids'][ $key ] );
 			}
 		}
-		echo '<ul class="subsubsub">';
+		$menu = array();
 		foreach ( $this->cats[ $current_cat ]['all_cat_ids'] as $id ) {
-			$label = $sections[ $id ];
-			echo '<li><a href="' . admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . $current_cat . '&section=' . sanitize_title( $id ) ) . '" class="' . ( $current_section == $id ? 'current' : '' ) . '">' . $label . '</a> ' . ( end( $this->cats[ $current_cat ]['all_cat_ids'] ) == $id ? '' : '|' ) . ' </li>';
+			$menu[ $id ] = $sections[ $id ];
 		}
-		echo '</ul>' . '<br class="clear" />';
+		if ( 'dashboard' !== $current_cat && 'pdf_invoicing' !== $current_cat ) {
+			asort( $menu );
+		}
+		$menu_links = array();
+		foreach ( $menu as $id => $label ) {
+			$url = admin_url( 'admin.php?page=wc-settings&tab=' . $this->id . '&wcj-cat=' . $current_cat . '&section=' . sanitize_title( $id ) );
+			$menu_links[] = '<a href="' . $url . '" class="' . ( $current_section == $id ? 'current' : '' ) . '">' . $label . '</a>';
+		}
+		echo '<ul class="subsubsub">' . '<li>' . implode( '</li> | <li>', $menu_links ) . '</li>' . '</ul>' . '<br class="clear" />';
 	}
 
 	/**
