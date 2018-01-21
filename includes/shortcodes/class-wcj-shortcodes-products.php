@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @todo    (maybe) add `[wcj_product_stock_price]`
 	 */
 	function __construct() {
@@ -56,6 +56,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_sku',
 			'wcj_product_stock_availability',
 			'wcj_product_stock_quantity',
+			'wcj_product_stock_status',
 			'wcj_product_tags',
 			'wcj_product_tax_class',
 			'wcj_product_time_since_last_sale',
@@ -114,6 +115,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'height'                => 0,
 			'color'                 => 'black',
 			'meta_key'              => '',
+			'outofstock'            => __( 'Out of stock', 'woocommerce' ),
+			'instock'               => __( 'In stock', 'woocommerce' ),
 		);
 
 		parent::__construct();
@@ -540,6 +543,16 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_product_formatted_name( $atts ) {
 		return $this->the_product->get_formatted_name();
+	}
+
+	/**
+	 * wcj_product_stock_status.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function wcj_product_stock_status( $atts ) {
+		return ( 'outofstock' === $this->the_product->get_stock_status() ? $atts['outofstock'] : $atts['instock'] );
 	}
 
 	/**
