@@ -21,7 +21,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'payment_gateways_by_country';
-		$this->short_desc = __( 'Gateways by Country or State', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Gateways by Country, State or Postcode', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set countries, states or postcodes to include/exclude for WooCommerce payment gateways to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-payment-gateways-by-country-or-state';
 		parent::__construct();
@@ -47,7 +47,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 				$postcode = '';
 				if ( isset( $_REQUEST['postcode'] ) && 'billing' === get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' ) ) {
 					$postcode = $_REQUEST['postcode'];
-				} elseif ( isset( $_REQUEST['s_postcode'] ) && 'shipping' === get_option( 'wcj_gateways_postcodes_type', 'billing' ) ) {
+				} elseif ( isset( $_REQUEST['s_postcode'] ) && 'shipping' === get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' ) ) {
 					$postcode = $_REQUEST['s_postcode'];
 				}
 				if ( '' == $postcode ) {
@@ -62,7 +62,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	 *
 	 * @version 3.3.1
 	 * @todo    ! ranges and wildcards in postcodes
-	 * @todo    ! rename module to "Payment Gateways by (Customer's) Location" or "Gateways by Country, State or Postcode"
+	 * @todo    ! (maybe) rename module to "Payment Gateways by (Customer's) Location"
 	 * @todo    check naming, should be `wcj_gateways_by_location_` (however it's too long...)
 	 * @todo    code refactoring
 	 * @todo    add more locations options (e.g. "... by city")
