@@ -180,7 +180,8 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 21/01/2018 =
+= 3.3.1 - 22/01/2018 =
+  T * Fix - SHIPPING & ORDERS - Order Numbers - Sequential: Reset Counter - Bug fixed.
 D W * Dev - Shortcodes - Products - `[wcj_product_stock_status]` shortcode added.
 D T * Dev - EMAILS & MISC. - My Account - "Custom Info Blocks" section added.
 D   * Dev - Shortcodes - General - `[wcj_wc_session_value]` shortcode added.

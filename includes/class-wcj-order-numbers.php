@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  */
 
@@ -253,7 +253,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {
 		if ( 'shop_order' !== get_post_type( $order_id ) || 'auto-draft' === get_post_status( $order_id ) ) {
@@ -268,7 +268,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				if ( NULL != $result_select ) {
 					$current_order_number = $this->maybe_reset_sequential_counter( $result_select->option_value, $order_id );
 					$result_update = $wpdb->update( $wp_options_table, array( 'option_value' => ( $current_order_number + 1 ) ), array( 'option_name' => 'wcj_order_number_counter' ) );
-					if ( NULL != $result_update ) {
+					if ( NULL != $result_update || $result_select->option_value == ( $current_order_number + 1 ) ) {
 						$wpdb->query( 'COMMIT' ); // all ok
 						update_post_meta( $order_id, '_wcj_order_number', $current_order_number );
 					} else {
