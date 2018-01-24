@@ -605,7 +605,9 @@ class WCJ_Product_Input_Fields_Core {
 	}
 
 	/**
-	 * add_product_input_fields_to_cart_item_data - from $_POST to $cart_item_data
+	 * add_product_input_fields_to_cart_item_data.
+	 *
+	 * from `$_POST` to `$cart_item_data`
 	 *
 	 * @version 3.1.0
 	 */

@@ -122,7 +122,6 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 3.3.1
 	 * @since   3.3.1
-	 return ( '' === $atts['key'] ? '' : WC()->session->get( $atts['key'], '' ) );
 	 */
 	function wcj_session_value( $atts ) {
 		return ( '' === $atts['key'] || ! isset( $_SESSION[ $atts['key'] ] ) ? '' : $_SESSION[ $atts['key'] ] );
@@ -141,7 +140,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_tcpdf_rectangle.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @since   3.3.0
 	 * @see     https://tcpdf.org/examples/example_012/
 	 * @todo    add more atts (e.g. style, fill color etc.)
@@ -165,10 +164,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			$fill_color,
 		);
 
-		require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/include/tcpdf_static.php' );
-		$params = TCPDF_STATIC::serializeTCPDFtagParameters( $params );
-		$method = 'Rect';
-		return '<tcpdf method="' . $method . '" params="' . $params . '" />';
+		return wcj_tcpdf_method( 'Rect', $params );
 	}
 
 	/**

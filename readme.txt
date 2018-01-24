@@ -180,7 +180,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 22/01/2018 =
+= 3.3.1 - 24/01/2018 =
+  T * Fix - CART & CHECKOUT - Cart Custom Info - Cart Items Table Custom Info - `wp_reset_postdata()` added.
+  T * Dev - CART & CHECKOUT - Checkout Custom Fields - `wcj_checkout_custom_field_visible` filter added.
+  T * Fix - Functions - General - Additional checks in `wcj_session_maybe_start()`.
+  T * Dev - Functions - General - Code refactoring - `wcj_tcpdf_method()`.
+  X!* Dev - PDF INVOICING & PACKING SLIPS - TCPDF library version updated to v6.2.13.
+  T!* Dev - PRODUCTS - SKU - "Remove SKU from Admin Emails" option added.
   T * Fix - SHIPPING & ORDERS - Order Numbers - Sequential: Reset Counter - Bug fixed.
 D W * Dev - Shortcodes - Products - `[wcj_product_stock_status]` shortcode added.
 D T * Dev - EMAILS & MISC. - My Account - "Custom Info Blocks" section added.

@@ -12,6 +12,8 @@ if ( ! function_exists( 'wcj_get_fonts_list' ) ) {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    (maybe) update existing fonts files
+	 * @todo    (maybe) add more fonts
 	 */
 	function wcj_get_fonts_list() {
 		return array(
@@ -105,6 +107,7 @@ if ( ! function_exists( 'wcj_get_tcpdf_fonts_version' ) ) {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
+	 * @todo    (maybe) save old (i.e. fallback) versions
 	 */
 	function wcj_get_tcpdf_fonts_version() {
 		return '2.9.0';

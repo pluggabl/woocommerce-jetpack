@@ -2,7 +2,7 @@
 //============================================================+
 // File name   : tcpdf_config.php
 // Begin       : 2004-06-11
-// Last Update : 2014-01-25
+// Last Update : 2014-12-11
 //
 // Description : Configuration file for TCPDF.
 // Author      : Nicola Asuni - Tecnick.com LTD - www.tecnick.com - info@tecnick.com
@@ -58,32 +58,12 @@
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
 //define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
-////////////////////////////////////////////
-// Algoritmika - Booster - version 2.9.0 / since 2.9.0
-if ( wcj_check_tcpdf_fonts_version( true ) ) {
-	define( 'K_PATH_FONTS', wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/' );
-}
-////////////////////////////////////////////
 
 /**
  * Default images directory.
  * By default it is automatically set but you can also set it as a fixed string to improve performances.
  */
-// Algoritmika - Booster version 2.4.4
-switch ( get_option( 'wcj_invoicing_general_header_images_path', 'empty' ) ) {
-	case 'tcpdf_default':
-		//define ( 'K_PATH_IMAGES', '' );
-		break;
-	case 'empty':
-		define ( 'K_PATH_IMAGES', '' );
-		break;
-	case 'document_root':
-		define ( 'K_PATH_IMAGES', $_SERVER['DOCUMENT_ROOT'] );
-		break;
-	case 'abspath':
-		define ( 'K_PATH_IMAGES', ABSPATH );
-		break;
-}
+//define ('K_PATH_IMAGES', '');
 
 /**
  * Deafult image logo used be the default Header() method.
@@ -230,15 +210,17 @@ define('K_THAI_TOPCHARS', true);
  * If true allows to call TCPDF methods using HTML syntax
  * IMPORTANT: For security reason, disable this feature if you are printing user HTML content.
  */
-define('K_TCPDF_CALLS_IN_HTML', true);
+define('K_TCPDF_CALLS_IN_HTML', false);
 
 /**
  * If true and PHP version is greater than 5, then the Error() method throw new exception instead of terminating the execution.
  */
-// Algoritmika - Booster version 2.4.5
-if (!defined('K_TCPDF_THROW_EXCEPTION_ERROR')) {
-	define('K_TCPDF_THROW_EXCEPTION_ERROR', false);
-}
+define('K_TCPDF_THROW_EXCEPTION_ERROR', false);
+
+/**
+ * Default timezone for datetime functions
+ */
+define('K_TIMEZONE', 'UTC');
 
 //============================================================+
 // END OF FILE

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - SKU
  *
- * @version 3.1.3
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    tags (check SKU plugin); template: '{category_prefix}{tag_prefix}{prefix}{sku_number}{suffix}{tag_suffix}{category_suffix}{variation_suffix}'
@@ -197,6 +197,14 @@ $settings = array_merge( $settings, array(
 		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Adds product SKU to customer\'s emails.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_sku_add_to_customer_emails',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Remove SKU from Admin Emails', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Remove', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Removes product SKU from admin\'s emails.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_sku_remove_from_admin_emails',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -22,11 +22,25 @@ if ( ! function_exists( 'wcj_get_js_confirmation' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_tcpdf_method' ) ) {
+	/**
+	 * wcj_tcpdf_method.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function wcj_tcpdf_method( $method, $params ) {
+		require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/include/tcpdf_static.php' );
+		$params = TCPDF_STATIC::serializeTCPDFtagParameters( $params );
+		return '<tcpdf method="' . $method . '" params="' . $params . '" />';
+	}
+}
+
 if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
 	/**
 	 * wcj_tcpdf_barcode.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @since   3.3.0
 	 * @todo    `color`
 	 * @todo    `align` (try 'T')
@@ -84,10 +98,7 @@ if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
 				false, // distort
 			);
 		}
-		require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/include/tcpdf_static.php' );
-		$params = TCPDF_STATIC::serializeTCPDFtagParameters( $params );
-		$method = ( '1D' === $atts['dimension'] ? 'write1DBarcode' : 'write2DBarcode' );
-		return '<tcpdf method="' . $method . '" params="' . $params . '" />';
+		return wcj_tcpdf_method( ( '1D' === $atts['dimension'] ? 'write1DBarcode' : 'write2DBarcode' ), $params );
 	}
 }
 
@@ -95,7 +106,7 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 	/**
 	 * wcj_barcode.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @since   3.3.0
 	 * @todo    (maybe) "Barcodes" module
 	 * @todo    (maybe) `getBarcodePNG()`
@@ -114,10 +125,10 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 			$atts['height'] = ( '1D' === $atts['dimension'] ? 30 : 10 );
 		}
 		if ( '1D' === $atts['dimension'] ) {
-			require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/tcpdf_barcodes_1d.php' );
+			require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_1d.php' );
 			$barcode = new TCPDFBarcode( $atts['code'], $atts['type'] );
 		} else {
-			require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf_min/tcpdf_barcodes_2d.php' );
+			require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/tcpdf_barcodes_2d.php' );
 			$barcode = new TCPDF2DBarcode( $atts['code'], $atts['type'] );
 		}
 		$barcode_array = $barcode->getBarcodeArray();
@@ -150,13 +161,14 @@ if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 	/**
 	 * wcj_session_maybe_start.
 	 *
-	 * @version 3.1.0
+	 * @version 3.3.1
 	 * @since   3.1.0
+	 * @todo    use where needed (search for `$_SESSION`)
 	 */
 	function wcj_session_maybe_start() {
 		switch ( WCJ_SESSION_TYPE ) {
 			case 'wc':
-				if ( ! WC()->session->has_session() ) {
+				if ( function_exists( 'WC' ) && WC()->session && ! WC()->session->has_session() ) {
 					WC()->session->set_customer_session_cookie( true );
 				}
 				break;

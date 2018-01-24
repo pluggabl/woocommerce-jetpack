@@ -45,10 +45,6 @@
  * @version 1.0.001
  * @author Nicola Asuni - info@tecnick.com
  */
-
-// Added by Algoritmika
-if ( class_exists( 'TCPDF_FONT_DATA' ) ) return;
-
 class TCPDF_FONT_DATA {
 
 /**

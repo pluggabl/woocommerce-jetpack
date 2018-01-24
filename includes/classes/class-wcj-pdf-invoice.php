@@ -24,6 +24,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	 * prepare_pdf.
 	 *
 	 * @version 3.2.4
+	 * @todo    check `addTTFfont()`
 	 */
 	function prepare_pdf() {
 
@@ -130,9 +131,6 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$pdf->setFontSubsetting( true );
 
 		// Set font
-		/* if ( 'DroidSansFallback' === $tcpdf_font ) {
-			$pdf->addTTFfont( wcj_plugin_path() . '/includes/lib/tcpdf_min/fonts/' . 'DroidSansFallback.ttf' );
-		} */
 		$pdf->SetFont( $tcpdf_font, '', get_option( 'wcj_invoicing_' . $invoice_type . '_general_font_size', 8 ), '', true );
 
 		// Add a page

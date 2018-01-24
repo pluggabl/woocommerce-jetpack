@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 3.2.3
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.3
+	 * @version 3.3.1
 	 */
 	function __construct() {
 
@@ -46,6 +46,9 @@ class WCJ_SKU extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_sku_add_to_customer_emails', 'no' ) ) {
 				add_filter( 'woocommerce_email_order_items_args', array( $this, 'add_sku_to_customer_emails' ), PHP_INT_MAX, 1 );
 			}
+			if ( 'yes' === get_option( 'wcj_sku_remove_from_admin_emails', 'no' ) ) {
+				add_filter( 'woocommerce_email_order_items_args', array( $this, 'remove_sku_from_admin_emails' ), PHP_INT_MAX, 1 );
+			}
 			// Search by SKU
 			if ( 'yes' === get_option( 'wcj_sku_search_enabled', 'no' ) ) {
 				add_filter( 'pre_get_posts', array( $this, 'add_search_by_sku_to_frontend' ), PHP_INT_MAX );
@@ -58,13 +61,28 @@ class WCJ_SKU extends WCJ_Module {
 	}
 
 	/**
+	 * remove_sku_from_admin_emails.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function remove_sku_from_admin_emails( $args ) {
+		if ( $args['sent_to_admin'] ) {
+			$args['show_sku'] = false;
+		}
+		return $args;
+	}
+
+	/**
 	 * add_sku_to_customer_emails.
 	 *
-	 * @version 2.5.5
+	 * @version 3.3.1
 	 * @since   2.5.5
 	 */
 	function add_sku_to_customer_emails( $args ) {
-		$args['show_sku'] = true;
+		if ( ! $args['sent_to_admin'] ) {
+			$args['show_sku'] = true;
+		}
 		return $args;
 	}
 
