@@ -2,7 +2,7 @@
 
 //namespace PHPMathParser;
 
-abstract class Alg_TerminalExpression {
+abstract class WCJ_TerminalExpression {
 
     protected $value = '';
 
@@ -13,27 +13,27 @@ abstract class Alg_TerminalExpression {
     public static function factory($value) {
 
 //        var_dump($value);
-        if (is_object($value) && $value instanceof Alg_TerminalExpression) {
+        if (is_object($value) && $value instanceof WCJ_TerminalExpression) {
             return $value;
         } elseif (is_numeric($value)) {
-            return new Alg_Number($value);
+            return new WCJ_Number($value);
         } elseif ($value == '+') {
-            return new Alg_Addition($value);
+            return new WCJ_Addition($value);
         } elseif ($value == '-') {
-            return new Alg_Subtraction($value);
+            return new WCJ_Subtraction($value);
         } elseif ($value == '*') {
-            return new Alg_Multiplication($value);
+            return new WCJ_Multiplication($value);
         } elseif ($value == '/') {
-            return new Alg_Division($value);
+            return new WCJ_Division($value);
         } elseif (in_array($value, array('(', ')'))) {
-            return new Alg_Parenthesis($value);
+            return new WCJ_Parenthesis($value);
         } elseif ($value == '^') {
-            return new Alg_Power($value);
+            return new WCJ_Power($value);
         }
         throw new Exception('Undefined Value ' . $value);
     }
 
-    abstract public function operate(Alg_Stack $stack);
+    abstract public function operate(WCJ_Stack $stack);
 
     public function isOperator() {
         return false;

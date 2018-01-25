@@ -163,7 +163,7 @@ if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 	 *
 	 * @version 3.3.1
 	 * @since   3.1.0
-	 * @todo    use where needed (search for `$_SESSION`)
+	 * @todo    make `wc` sessions the default method
 	 */
 	function wcj_session_maybe_start() {
 		switch ( WCJ_SESSION_TYPE ) {
@@ -185,13 +185,15 @@ if ( ! function_exists( 'wcj_session_set' ) ) {
 	/**
 	 * wcj_session_set.
 	 *
-	 * @version 3.1.0
+	 * @version 3.3.1
 	 * @since   3.1.0
 	 */
 	function wcj_session_set( $key, $value ) {
 		switch ( WCJ_SESSION_TYPE ) {
 			case 'wc':
-				WC()->session->set( $key, $value );
+				if ( function_exists( 'WC' ) && WC()->session ) {
+					WC()->session->set( $key, $value );
+				}
 				break;
 			default: // 'standard'
 				$_SESSION[ $key ] = $value;
@@ -204,13 +206,13 @@ if ( ! function_exists( 'wcj_session_get' ) ) {
 	/**
 	 * wcj_session_get.
 	 *
-	 * @version 3.1.0
+	 * @version 3.3.1
 	 * @since   3.1.0
 	 */
 	function wcj_session_get( $key, $default = null ) {
 		switch ( WCJ_SESSION_TYPE ) {
 			case 'wc':
-				return WC()->session->get( $key, $default );
+				return ( function_exists( 'WC' ) && WC()->session ? WC()->session->get( $key, $default ) : $default );
 			default: // 'standard'
 				return ( isset( $_SESSION[ $key ] ) ? $_SESSION[ $key ] : $default );
 		}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -105,14 +105,14 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_server_name' ) ) {
 	}
 }
 
-if ( ! function_exists( 'alg_get_exchange_rate' ) ) {
+if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 	/*
-	 * alg_get_exchange_rate.
+	 * wcj_get_exchange_rate.
 	 *
 	 * @version 3.2.4
 	 * @since   2.6.0
 	 */
-	function alg_get_exchange_rate( $currency_from, $currency_to ) {
+	function wcj_get_exchange_rate( $currency_from, $currency_to ) {
 		$exchange_rates_server = wcj_get_currency_exchange_rate_server( $currency_from, $currency_to );
 		if ( 'yes' === ( $calculate_by_invert = get_option( 'wcj_currency_exchange_rates_calculate_by_invert', 'no' ) ) ) {
 			$_currency_to  = $currency_to;
@@ -121,22 +121,22 @@ if ( ! function_exists( 'alg_get_exchange_rate' ) ) {
 		}
 		switch ( $exchange_rates_server ) {
 			case 'tcmb':
-				$return = alg_tcmb_get_exchange_rate( $currency_from, $currency_to );
+				$return = wcj_tcmb_get_exchange_rate( $currency_from, $currency_to );
 				break;
 			case 'ecb':
-				$return = alg_ecb_get_exchange_rate( $currency_from, $currency_to );
+				$return = wcj_ecb_get_exchange_rate( $currency_from, $currency_to );
 				break;
 			case 'fixer':
-				$return = alg_fixer_io_get_exchange_rate( $currency_from, $currency_to );
+				$return = wcj_fixer_io_get_exchange_rate( $currency_from, $currency_to );
 				break;
 			case 'coinbase':
-				$return = alg_coinbase_get_exchange_rate( $currency_from, $currency_to );
+				$return = wcj_coinbase_get_exchange_rate( $currency_from, $currency_to );
 				break;
 			case 'coinmarketcap':
-				$return = alg_coinmarketcap_get_exchange_rate( $currency_from, $currency_to );
+				$return = wcj_coinmarketcap_get_exchange_rate( $currency_from, $currency_to );
 				break;
 			default: // 'yahoo'
-				$return = alg_yahoo_get_exchange_rate( $currency_from, $currency_to );
+				$return = wcj_yahoo_get_exchange_rate( $currency_from, $currency_to );
 				break;
 		}
 		return ( 'yes' === $calculate_by_invert ) ? round( ( 1 / $return ), 6 ) : $return;
@@ -166,9 +166,9 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	}
 }
 
-if ( ! function_exists( 'alg_coinmarketcap_get_exchange_rate_specific' ) ) {
+if ( ! function_exists( 'wcj_coinmarketcap_get_exchange_rate_specific' ) ) {
 	/*
-	 * alg_coinmarketcap_get_exchange_rate_specific.
+	 * wcj_coinmarketcap_get_exchange_rate_specific.
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
@@ -176,7 +176,7 @@ if ( ! function_exists( 'alg_coinmarketcap_get_exchange_rate_specific' ) ) {
 	 * @todo    add more `$cryptocurrencies_ids`
 	 * @todo    (maybe) try reverse only if `! isset( $cryptocurrencies_ids[ $currency_from ] )`
 	 */
-	function alg_coinmarketcap_get_exchange_rate_specific( $currency_from, $currency_to, $try_reverse = true ) {
+	function wcj_coinmarketcap_get_exchange_rate_specific( $currency_from, $currency_to, $try_reverse = true ) {
 		$return = false;
 		$cryptocurrencies_ids = array(
 			'BTC' => 'bitcoin',
@@ -190,7 +190,7 @@ if ( ! function_exists( 'alg_coinmarketcap_get_exchange_rate_specific' ) ) {
 			}
 		}
 		if ( false === $return && $try_reverse ) {
-			$return = alg_coinmarketcap_get_exchange_rate_specific( $currency_to, $currency_from, false );
+			$return = wcj_coinmarketcap_get_exchange_rate_specific( $currency_to, $currency_from, false );
 			if ( 0 != $return ) {
 				$return = round( ( 1 / $return ), 12 );
 			}
@@ -199,18 +199,18 @@ if ( ! function_exists( 'alg_coinmarketcap_get_exchange_rate_specific' ) ) {
 	}
 }
 
-if ( ! function_exists( 'alg_coinmarketcap_get_exchange_rate' ) ) {
+if ( ! function_exists( 'wcj_coinmarketcap_get_exchange_rate' ) ) {
 	/*
-	 * alg_coinmarketcap_get_exchange_rate.
+	 * wcj_coinmarketcap_get_exchange_rate.
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
 	 * @see     https://coinmarketcap.com/api/
 	 * @todo    `WCJ()->modules['currency_exchange_rates']->coinmarketcap_response`
-	 * @todo    `alg_coinmarketcap_get_exchange_rate_specific()`
+	 * @todo    `wcj_coinmarketcap_get_exchange_rate_specific()`
 	 * @todo    (maybe) `limit=0`
 	 */
-	function alg_coinmarketcap_get_exchange_rate( $currency_from, $currency_to, $try_reverse = true ) {
+	function wcj_coinmarketcap_get_exchange_rate( $currency_from, $currency_to, $try_reverse = true ) {
 		$return = false;
 		/*
 		if ( ! isset( WCJ()->modules['currency_exchange_rates']->coinmarketcap_response ) ) {
@@ -232,7 +232,7 @@ if ( ! function_exists( 'alg_coinmarketcap_get_exchange_rate' ) ) {
 			}
 		}
 		if ( false === $return && $try_reverse ) {
-			$return = alg_coinmarketcap_get_exchange_rate( $currency_to, $currency_from, false );
+			$return = wcj_coinmarketcap_get_exchange_rate( $currency_to, $currency_from, false );
 			if ( 0 != $return ) {
 				$return = round( ( 1 / $return ), 12 );
 			}
@@ -241,27 +241,27 @@ if ( ! function_exists( 'alg_coinmarketcap_get_exchange_rate' ) ) {
 	}
 }
 
-if ( ! function_exists( 'alg_coinbase_get_exchange_rate' ) ) {
+if ( ! function_exists( 'wcj_coinbase_get_exchange_rate' ) ) {
 	/*
-	 * alg_coinbase_get_exchange_rate.
+	 * wcj_coinbase_get_exchange_rate.
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
 	 */
-	function alg_coinbase_get_exchange_rate( $currency_from, $currency_to ) {
+	function wcj_coinbase_get_exchange_rate( $currency_from, $currency_to ) {
 		$response = wcj_get_currency_exchange_rates_url_response( "https://api.coinbase.com/v2/exchange-rates?currency=$currency_from" );
 		return ( isset( $response->data->rates->{$currency_to} ) ? $response->data->rates->{$currency_to} : false );
 	}
 }
 
-if ( ! function_exists( 'alg_ecb_get_exchange_rate' ) ) {
+if ( ! function_exists( 'wcj_ecb_get_exchange_rate' ) ) {
 	/*
-	 * alg_ecb_get_exchange_rate.
+	 * wcj_ecb_get_exchange_rate.
 	 *
 	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
-	function alg_ecb_get_exchange_rate( $currency_from, $currency_to ) {
+	function wcj_ecb_get_exchange_rate( $currency_from, $currency_to ) {
 		$final_rate = false;
 		if ( function_exists( 'simplexml_load_file' ) ) {
 			$xml = simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
@@ -292,14 +292,14 @@ if ( ! function_exists( 'alg_ecb_get_exchange_rate' ) ) {
 	}
 }
 
-if ( ! function_exists( 'alg_tcmb_get_exchange_rate_TRY' ) ) {
+if ( ! function_exists( 'wcj_tcmb_get_exchange_rate_TRY' ) ) {
 	/*
-	 * alg_tcmb_get_exchange_rate_TRY.
+	 * wcj_tcmb_get_exchange_rate_TRY.
 	 *
 	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
-	function alg_tcmb_get_exchange_rate_TRY( $currency_from ) {
+	function wcj_tcmb_get_exchange_rate_TRY( $currency_from ) {
 		if ( 'TRY' === $currency_from ) {
 			return 1;
 		}
@@ -340,19 +340,19 @@ if ( ! function_exists( 'alg_tcmb_get_exchange_rate_TRY' ) ) {
 	}
 }
 
-if ( ! function_exists( 'alg_tcmb_get_exchange_rate' ) ) {
+if ( ! function_exists( 'wcj_tcmb_get_exchange_rate' ) ) {
 	/*
-	 * alg_tcmb_get_exchange_rate.
+	 * wcj_tcmb_get_exchange_rate.
 	 *
 	 * @version 2.7.0
 	 * @since   2.6.0
 	 */
-	function alg_tcmb_get_exchange_rate( $currency_from, $currency_to ) {
-		$currency_from_TRY = alg_tcmb_get_exchange_rate_TRY( strtoupper( $currency_from ) );
+	function wcj_tcmb_get_exchange_rate( $currency_from, $currency_to ) {
+		$currency_from_TRY = wcj_tcmb_get_exchange_rate_TRY( strtoupper( $currency_from ) );
 		if ( false == $currency_from_TRY  ) {
 			return false;
 		}
-		$currency_to_TRY = alg_tcmb_get_exchange_rate_TRY( strtoupper( $currency_to )  );
+		$currency_to_TRY = wcj_tcmb_get_exchange_rate_TRY( strtoupper( $currency_to )  );
 		if ( false == $currency_to_TRY ) {
 			return false;
 		}
@@ -363,15 +363,14 @@ if ( ! function_exists( 'alg_tcmb_get_exchange_rate' ) ) {
 	}
 }
 
-if ( ! function_exists( 'alg_yahoo_get_exchange_rate' ) ) {
+if ( ! function_exists( 'wcj_yahoo_get_exchange_rate' ) ) {
 	/*
-	 * alg_yahoo_get_exchange_rate.
+	 * wcj_yahoo_get_exchange_rate.
 	 *
 	 * @version 3.2.4
 	 * @return  float rate on success, else 0
-	 * @todo    `alg_` to `wcj_`
 	 */
-	function alg_yahoo_get_exchange_rate( $currency_from, $currency_to ) {
+	function wcj_yahoo_get_exchange_rate( $currency_from, $currency_to ) {
 		$response = wcj_get_currency_exchange_rates_url_response( "https://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json" );
 		if ( ! isset( $response->list->resources ) ) {
 			return false;
@@ -402,15 +401,15 @@ if ( ! function_exists( 'alg_yahoo_get_exchange_rate' ) ) {
 	}
 }
 
-if ( ! function_exists( 'alg_fixer_io_get_exchange_rate' ) ) {
+if ( ! function_exists( 'wcj_fixer_io_get_exchange_rate' ) ) {
 	/*
-	 * alg_fixer_io_get_exchange_rate.
+	 * wcj_fixer_io_get_exchange_rate.
 	 *
 	 * @version 3.2.2
 	 * @since   3.2.2
 	 * @return  false or rate
 	 */
-	function alg_fixer_io_get_exchange_rate( $currency_from, $currency_to ) {
+	function wcj_fixer_io_get_exchange_rate( $currency_from, $currency_to ) {
 		return wcj_fixer_io_get_exchange_rate_by_date( $currency_from, $currency_to, 'latest' );
 	}
 }

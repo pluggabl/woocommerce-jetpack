@@ -43,7 +43,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	 * @todo    (maybe) move this to `class-wcj-exchange-rates.php`
 	 */
 	function wcj_ajax_get_exchange_rates() {
-		echo alg_get_exchange_rate( $_POST['wcj_currency_from'], $_POST['wcj_currency_to'] );
+		echo wcj_get_exchange_rate( $_POST['wcj_currency_from'], $_POST['wcj_currency_to'] );
 		die();
 	}
 

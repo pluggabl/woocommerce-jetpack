@@ -744,6 +744,17 @@ class PDF417 {
 		$maxecl = 8; // starting error level
 		$maxerrsize = (928 - $numcw); // available codewords for error
 		while ($maxecl > 0) {
+
+			/*
+			 * Booster modification (Algoritmika)
+			 *
+			 * @version 3.3.1
+			 * @since   3.3.1
+			 */
+			if ( version_compare( PHP_VERSION, '7.0.0' ) >= 0 && $ecl < 0 ) {
+				$ecl = 0;
+			}
+
 			$errsize = (2 << $ecl);
 			if ($maxerrsize >= $errsize) {
 				break;

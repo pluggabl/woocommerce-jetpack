@@ -263,7 +263,7 @@ if ( ! function_exists( 'init_wc_shipping_wcj_custom_w_zones_class' ) ) {
 						return $formula;
 					}
 					require_once( wcj_plugin_path() . '/includes/lib/PHPMathParser/Math.php' );
-					$math    = new Alg_Math();
+					$math    = new WCJ_Math();
 					$variables = array(
 						'quantity' => $this->get_total_cart_quantity(),
 						'weight'   => WC()->cart->get_cart_contents_weight(),

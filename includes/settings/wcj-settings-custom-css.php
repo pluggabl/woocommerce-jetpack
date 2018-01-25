@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Custom CSS
  *
- * @version 2.8.0
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -20,20 +20,20 @@ return array(
 		'id'       => 'wcj_general_custom_css',
 		'default'  => '',
 		'type'     => 'custom_textarea',
-		'css'      => 'width:66%;min-width:300px;min-height:300px;',
+		'css'      => 'width:100%;min-height:300px;font-family:monospace;',
 	),
 	array(
 		'title'    => __( 'Custom CSS - Back end (Admin)', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_custom_admin_css',
 		'default'  => '',
 		'type'     => 'custom_textarea',
-		'css'      => 'width:66%;min-width:300px;min-height:300px;',
+		'css'      => 'width:100%;min-height:300px;font-family:monospace;',
 	),
 	array(
 		'title'    => __( 'Custom CSS on per Product Basis', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Set product specific CSS to be loaded only on specific product\'s single page.', 'woocommerce-jetpack' ) .
-			' ' . __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
+			' ' . __( 'This will add meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_custom_css_per_product',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -43,7 +43,7 @@ return array(
 		'id'       => 'wcj_custom_css_per_product_default_value',
 		'default'  => '',
 		'type'     => 'custom_textarea',
-		'css'      => 'width:66%;min-width:300px;min-height:100px;',
+		'css'      => 'width:100%;min-height:100px;font-family:monospace;',
 	),
 	array(
 		'type'     => 'sectionend',

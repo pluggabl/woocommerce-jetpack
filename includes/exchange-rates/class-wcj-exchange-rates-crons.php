@@ -164,7 +164,7 @@ class WCJ_Exchange_Rates_Crons {
 		foreach ( $currency_pairs as $currency_pair ) {
 			$currency_from = $currency_pair['currency_from'];
 			$currency_to   = $currency_pair['currency_to'];
-			$the_rate = alg_get_exchange_rate( $currency_from, $currency_to );
+			$the_rate = wcj_get_exchange_rate( $currency_from, $currency_to );
 			if ( 0 != $the_rate ) {
 				if ( 0 != $rate_offset_percent ) {
 					$the_rate = round( $the_rate * $rate_offset_percent, 6 );

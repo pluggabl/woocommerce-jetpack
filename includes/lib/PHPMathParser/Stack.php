@@ -2,7 +2,7 @@
 
 //namespace PHPMathParser;
 
-class Alg_Stack {
+class WCJ_Stack {
 
     protected $data = array();
 

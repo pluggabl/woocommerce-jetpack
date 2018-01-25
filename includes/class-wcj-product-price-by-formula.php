@@ -85,7 +85,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 					if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
 						return wcj_get_product_display_price( $_product );
 					}
-					$math = new /* PHPMathParser\ */Alg_Math();
+					$math = new WCJ_Math();
 					$math->registerVariable( 'x', $price );
 					for ( $i = 1; $i <= $total_params; $i++ ) {
 						$the_param = ( $is_per_product )

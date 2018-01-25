@@ -2,11 +2,11 @@
 
 //namespace PHPMathParser;
 
-class Alg_Parenthesis extends Alg_TerminalExpression {
+class WCJ_Parenthesis extends WCJ_TerminalExpression {
 
     protected $precedence = 6;
 
-    public function operate(Alg_Stack $stack) {
+    public function operate(WCJ_Stack $stack) {
     }
 
     public function getPrecedence() {
@@ -27,15 +27,15 @@ class Alg_Parenthesis extends Alg_TerminalExpression {
 
 }
 
-class Alg_Number extends Alg_TerminalExpression {
+class WCJ_Number extends WCJ_TerminalExpression {
 
-    public function operate(Alg_Stack $stack) {
+    public function operate(WCJ_Stack $stack) {
         return $this->value;
     }
 
 }
 
-abstract class Alg_Operator extends Alg_TerminalExpression {
+abstract class WCJ_Operator extends WCJ_TerminalExpression {
 
     protected $precedence = 0;
     protected $leftAssoc = true;
@@ -54,21 +54,21 @@ abstract class Alg_Operator extends Alg_TerminalExpression {
 
 }
 
-class Alg_Addition extends Alg_Operator {
+class WCJ_Addition extends WCJ_Operator {
 
     protected $precedence = 4;
 
-    public function operate(Alg_Stack $stack) {
+    public function operate(WCJ_Stack $stack) {
         return $stack->pop()->operate($stack) + $stack->pop()->operate($stack);
     }
 
 }
 
-class Alg_Subtraction extends Alg_Operator {
+class WCJ_Subtraction extends WCJ_Operator {
 
     protected $precedence = 4;
 
-    public function operate(Alg_Stack $stack) {
+    public function operate(WCJ_Stack $stack) {
         $left = $stack->pop()->operate($stack);
         $right = $stack->pop()->operate($stack);
         return $right - $left;
@@ -76,21 +76,21 @@ class Alg_Subtraction extends Alg_Operator {
 
 }
 
-class Alg_Multiplication extends Alg_Operator {
+class WCJ_Multiplication extends WCJ_Operator {
 
     protected $precedence = 5;
 
-    public function operate(Alg_Stack $stack) {
+    public function operate(WCJ_Stack $stack) {
         return $stack->pop()->operate($stack) * $stack->pop()->operate($stack);
     }
 
 }
 
-class Alg_Division extends Alg_Operator {
+class WCJ_Division extends WCJ_Operator {
 
     protected $precedence = 5;
 
-    public function operate(Alg_Stack $stack) {
+    public function operate(WCJ_Stack $stack) {
         $left = $stack->pop()->operate($stack);
         $right = $stack->pop()->operate($stack);
         return $right / $left;
@@ -98,11 +98,11 @@ class Alg_Division extends Alg_Operator {
 
 }
 
-class Alg_Power extends Alg_Operator {
+class WCJ_Power extends WCJ_Operator {
 
     protected $precedence = 5;
 
-    public function operate(Alg_Stack $stack) {
+    public function operate(WCJ_Stack $stack) {
         $left = $stack->pop()->operate($stack);
         $right = $stack->pop()->operate($stack);
         return pow($left,$right);

@@ -180,10 +180,17 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 24/01/2018 =
+= 3.3.1 - 25/01/2018 =
+    * Dev - EMAILS & MISC. - Custom JS - Admin settings - Minor restyling.
+    * Dev - EMAILS & MISC. - Custom CSS - Admin settings - Minor restyling.
+E X!* Dev - Code refactoring - `alg_` replaced with `wcj_` in function and class names.
+  X!* Dev - CART & CHECKOUT - Checkout Files Upload - "WC Sessions" support added.
+  X!* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "WC Sessions" support added.
+  X!* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "WC Sessions" support added.
+  T!* Dev - CART & CHECKOUT - EU VAT Number - "WC Sessions" support added.
   T * Fix - CART & CHECKOUT - Cart Custom Info - Cart Items Table Custom Info - `wp_reset_postdata()` added.
   T * Dev - CART & CHECKOUT - Checkout Custom Fields - `wcj_checkout_custom_field_visible` filter added.
-  T * Fix - Functions - General - Additional checks in `wcj_session_maybe_start()`.
+  T * Fix - Functions - General - Additional checks in `wcj_session_` functions.
   T * Dev - Functions - General - Code refactoring - `wcj_tcpdf_method()`.
   X!* Dev - PDF INVOICING & PACKING SLIPS - TCPDF library version updated to v6.2.13.
   T!* Dev - PRODUCTS - SKU - "Remove SKU from Admin Emails" option added.
