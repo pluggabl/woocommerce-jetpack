@@ -24,7 +24,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Info', 'woocommerce-jetpack' ),
-		'desc'     => sprintf( __( 'You can use <a target="_blank" href="%s">Booster\'s products shortcodes</a> here.', 'woocommerce-jetpack' ), 'http://booster.io/category/shortcodes/products-shortcodes/' ),
+		'desc'     => sprintf( __( 'You can use <a target="_blank" href="%s">Booster\'s products shortcodes</a> here.', 'woocommerce-jetpack' ), 'https://booster.io/category/shortcodes/products-shortcodes/' ),
 		'type'     => 'custom_textarea',
 		'id'       => 'wcj_product_info_in_email_order_item_name',
 		'default'  => '[wcj_product_categories strip_tags="yes" before="<hr><em>" after="</em>"]',

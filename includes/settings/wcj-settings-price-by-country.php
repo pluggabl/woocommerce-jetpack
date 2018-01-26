@@ -209,7 +209,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_b
 			$settings[] = array(
 				'title'    => $admin_title . ( '' != get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, '' ) ?
 					' (' . count( explode( ',', get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, '' ) ) ) . ')' : '' ),
-				'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predifined sets visit <a href="http://booster.io/country-codes/" target="_blank">http://booster.io/country-codes/</a>', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predifined sets visit <a href="https://booster.io/country-codes/" target="_blank">https://booster.io/country-codes/</a>', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_exchange_rate_countries_group_' . $i,
 				'default'  => '',
 				'type'     => 'textarea',

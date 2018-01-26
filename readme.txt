@@ -180,41 +180,40 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 25/01/2018 =
-    * Dev - EMAILS & MISC. - Custom JS - Admin settings - Minor restyling.
-    * Dev - EMAILS & MISC. - Custom CSS - Admin settings - Minor restyling.
-E X!* Dev - Code refactoring - `alg_` replaced with `wcj_` in function and class names.
-  X!* Dev - CART & CHECKOUT - Checkout Files Upload - "WC Sessions" support added.
-  X!* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "WC Sessions" support added.
-  X!* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "WC Sessions" support added.
-  T!* Dev - CART & CHECKOUT - EU VAT Number - "WC Sessions" support added.
-  T * Fix - CART & CHECKOUT - Cart Custom Info - Cart Items Table Custom Info - `wp_reset_postdata()` added.
-  T * Dev - CART & CHECKOUT - Checkout Custom Fields - `wcj_checkout_custom_field_visible` filter added.
-  T * Fix - Functions - General - Additional checks in `wcj_session_` functions.
-  T * Dev - Functions - General - Code refactoring - `wcj_tcpdf_method()`.
-  X!* Dev - PDF INVOICING & PACKING SLIPS - TCPDF library version updated to v6.2.13.
-  T!* Dev - PRODUCTS - SKU - "Remove SKU from Admin Emails" option added.
-  T * Fix - SHIPPING & ORDERS - Order Numbers - Sequential: Reset Counter - Bug fixed.
-D W * Dev - Shortcodes - Products - `[wcj_product_stock_status]` shortcode added.
-D T * Dev - EMAILS & MISC. - My Account - "Custom Info Blocks" section added.
-D   * Dev - Shortcodes - General - `[wcj_wc_session_value]` shortcode added.
-D   * Dev - Shortcodes - General - `[wcj_session_value]` shortcode added.
-D   * Dev - Shortcodes - General - `[wcj_request_value]` shortcode added.
-  T * Dev - PDF INVOICING & PACKING SLIPS - PDF Invoices Order Meta Box - "View" link is opened in new window now.
-  T * Dev - Admin Settings - Modules submenu now is sorted by title.
-D T * Dev - CART & CHECKOUT - EU VAT Number - Shortcodes can now be used in all "Progress Messages" (e.g. it can now be translated with `[wcj_wpml]`).
-D X * Dev - PAYMENT GATEWAYS - Gateways by Country or State - "Include/Exclude Postcodes" options added.
-D   * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Columns - `product_weight_multiply_qty` column added.
-D T * Dev - SHIPPING & ORDERS - Shipping Descriptions - Initial module release (copied from "Shipping Options" module).
-D T * Dev - SHIPPING & ORDERS - Shipping Icons - Initial module release (copied from "Shipping Options" module).
-D W * Dev - Shortcodes - General - `[wcj_customer_total_spent]` shortcode added.
-D W * Dev - Shortcodes - General - `[wcj_customer_order_count]` shortcode added.
-D T * Dev - PDF INVOICING & PACKING SLIPS - General - Number of Custom Documents - Limited to max 100.
-D T * Dev - PRODUCTS - Add to Cart - `get_checkout_url()` replaced with `wc_get_checkout_url()`.
-  W * Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - Allowed User Roles - Selected user roles are now checked when creating and/or deleting documents (was hard-coded Administrator and Shop Manager).
-D W * Dev - SHIPPING & ORDERS - Custom Shipping - "Apply Formula to Costs" option added.
-D T * Dev - CART & CHECKOUT - Checkout Core Fields - General Options - "Force Fields Sort by Priority" option added.
-D   * Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Content" options added.
+= 3.3.1 - 27/01/2018 =
+  T I * Dev - SHIPPING & ORDERS - Custom Shipping - Code refactoring.
+      * Fix - EMAILS & MISC. - Admin Bar - Booster: Active - Title fixed.
+  T   * Dev - Link changed from `http://booster.io` to `https://booster.io` in all plugin files.
+      * Dev - EMAILS & MISC. - Custom JS - Admin settings - Minor restyling.
+      * Dev - EMAILS & MISC. - Custom CSS - Admin settings - Minor restyling.
+E T I * Dev - Code refactoring - `alg_` replaced with `wcj_` in function and class names.
+D X I * Dev - Speed Optimization - "WC Sessions" is now the default option (can be changed in "General" module).
+  T I * Dev - Speed Optimization - "WC Sessions" support added to EU VAT Number, Checkout Files Upload, Multicurrency (Currency Switcher) and Prices and Currencies by Country modules.
+  T   * Fix - CART & CHECKOUT - Cart Custom Info - Cart Items Table Custom Info - `wp_reset_postdata()` added.
+D T   * Dev - CART & CHECKOUT - Checkout Custom Fields - `wcj_checkout_custom_field_visible` filter added.
+  T   * Fix - Functions - General - Additional checks in `wcj_session_` functions.
+  T   * Dev - Functions - General - Code refactoring - `wcj_tcpdf_method()`.
+  T I * Dev - PDF INVOICING & PACKING SLIPS - TCPDF library version updated to v6.2.13.
+D T I * Dev - PRODUCTS - SKU - "Remove SKU from Admin Emails" option added.
+  T   * Fix - SHIPPING & ORDERS - Order Numbers - Sequential: Reset Counter - Bug fixed.
+D     * Dev - Shortcodes - Products - `[wcj_product_stock_status]` shortcode added.
+D T   * Dev - EMAILS & MISC. - My Account - "Custom Info Blocks" section added.
+D     * Dev - Shortcodes - General - `[wcj_wc_session_value]`, `[wcj_session_value]`, `[wcj_request_value]` shortcodes added.
+  T   * Dev - PDF INVOICING & PACKING SLIPS - PDF Invoices Order Meta Box - "View" link is opened in new window now.
+  T   * Dev - Admin Settings - Modules submenu now is sorted by title.
+D T   * Dev - CART & CHECKOUT - EU VAT Number - Shortcodes can now be used in all "Progress Messages" (e.g. it can now be translated with `[wcj_wpml]`).
+D T I * Dev - PAYMENT GATEWAYS - Gateways by Country or State - "Include/Exclude Postcodes" options added.
+D     * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Columns - `product_weight_multiply_qty` column added.
+D T   * Dev - SHIPPING & ORDERS - Shipping Descriptions - Initial module release (copied from "Shipping Options" module).
+D T   * Dev - SHIPPING & ORDERS - Shipping Icons - Initial module release (copied from "Shipping Options" module).
+D     * Dev - Shortcodes - General - `[wcj_customer_total_spent]` shortcode added.
+D     * Dev - Shortcodes - General - `[wcj_customer_order_count]` shortcode added.
+D T   * Dev - PDF INVOICING & PACKING SLIPS - General - Number of Custom Documents - Limited to max 100.
+D T   * Dev - PRODUCTS - Add to Cart - `get_checkout_url()` replaced with `wc_get_checkout_url()`.
+  T I * Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - Allowed User Roles - Selected user roles are now checked when creating and/or deleting documents (was hard-coded Administrator and Shop Manager).
+D W   * Dev - SHIPPING & ORDERS - Custom Shipping - "Apply Formula to Costs" option added.
+D T   * Dev - CART & CHECKOUT - Checkout Core Fields - General Options - "Force Fields Sort by Priority" option added.
+D     * Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Content" options added.
 
 = 3.3.0 - 11/01/2018 =
 * Dev - PRICES & CURRENCIES - Currencies - Belarusian ruble code updated (from `BYR` to `BYN`).

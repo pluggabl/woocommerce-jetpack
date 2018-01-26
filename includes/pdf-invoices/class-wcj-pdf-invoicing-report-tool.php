@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -42,9 +42,24 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	}
 
 	/**
+	 * check_user_roles.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 * @todo    this function is similar to `WCJ_PDF_Invoicing::check_user_roles()` - maybe it should be just one function for both classes..
+	 */
+	function check_user_roles( $invoice_type_id ) {
+		$allowed_user_roles = get_option( 'wcj_invoicing_' . $invoice_type_id . '_roles', array( 'administrator', 'shop_manager' ) );
+		if ( empty( $allowed_user_roles ) ) {
+			$allowed_user_roles = array( 'administrator' );
+		}
+		return wcj_is_user_role( $allowed_user_roles );
+	}
+
+	/**
 	 * generate_report_zip.
 	 *
-	 * @version 3.1.0
+	 * @version 3.3.1
 	 * @since   2.3.10
 	 */
 	function generate_report_zip() {
@@ -59,7 +74,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 				$_month        = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : date( 'n' );
 				$_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
 				if ( ! empty( $_year ) && ! empty( $_month ) && ! empty( $_invoice_type ) ) {
-					if ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) {
+					if ( $this->check_user_roles() ) {
 						$result = $this->get_invoices_report_zip( $_year, $_month, $_invoice_type );
 						if ( false === $result ) {
 							$this->notice = '<div class="error"><p><strong>' . __( 'Sorry, but something went wrong...', 'woocommerce-jetpack' ) . '</strong></p></div>';

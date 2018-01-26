@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $settings = array(
 	array(
 		'title'    => __( 'Products Info', 'woocommerce-jetpack' ), 'type' => 'title',
-		'desc'     => __( 'For full list of short codes, please visit <a target="_blank" href="http://booster.io/shortcodes/">http://booster.io/shortcodes/</a>.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'For full list of short codes, please visit <a target="_blank" href="https://booster.io/shortcodes/">https://booster.io/shortcodes/</a>.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_more_product_info_options',
 	),
 );

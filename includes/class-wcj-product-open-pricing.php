@@ -182,7 +182,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 		}
 		?><div class="error"><p><?php
 			echo '<div class="message">'
-				. __( 'Booster: Free plugin\'s version is limited to only one open pricing product enabled at a time. You will need to get <a href="http://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of open pricing products.', 'woocommerce-jetpack' )
+				. __( 'Booster: Free plugin\'s version is limited to only one open pricing product enabled at a time. You will need to get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of open pricing products.', 'woocommerce-jetpack' )
 				. '</div>';
 		?></p></div><?php
 	}

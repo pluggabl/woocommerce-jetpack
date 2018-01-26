@@ -115,8 +115,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'height'                => 0,
 			'color'                 => 'black',
 			'meta_key'              => '',
-			'outofstock'            => __( 'Out of stock', 'woocommerce' ),
-			'instock'               => __( 'In stock', 'woocommerce' ),
+//			'outofstock'            => __( 'Out of stock', 'woocommerce' ),
+//			'instock'               => __( 'In stock', 'woocommerce' ),
 		);
 
 		parent::__construct();
@@ -552,7 +552,14 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * @since   3.3.1
 	 */
 	function wcj_product_stock_status( $atts ) {
-		return ( 'outofstock' === $this->the_product->get_stock_status() ? $atts['outofstock'] : $atts['instock'] );
+		if ( ! isset( $atts['instock'] ) ) {
+			$atts['instock'] = __( 'In stock', 'woocommerce' );
+		}
+		if ( ! isset( $atts['outofstock'] ) ) {
+			$atts['outofstock'] = __( 'Out of stock', 'woocommerce' );
+		}
+		$stock_status = $this->the_product->get_stock_status();
+		return ( isset( $atts[ $stock_status ] ) ? $atts[ $stock_status ] : $stock_status );
 	}
 
 	/**

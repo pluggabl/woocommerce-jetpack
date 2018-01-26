@@ -58,14 +58,43 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	}
 
 	/**
+	 * range_match.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function range_match( $postcode_range, $postcode_to_check ) {
+		$postcode_range = explode( '...', $postcode_range );
+		return ( 2 === count( $postcode_range ) && $postcode_to_check >= $postcode_range[0] && $postcode_to_check <= $postcode_range[1] );
+	}
+
+	/**
+	 * check_postcode.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function check_postcode( $postcode_to_check, $postcodes ) {
+		foreach ( $postcodes as $postcode ) {
+			if (
+				( false !== strpos( $postcode, '*' )   && fnmatch( $postcode, $postcode_to_check ) ) ||
+				( false !== strpos( $postcode, '...' ) && $this->range_match( $postcode, $postcode_to_check ) ) ||
+				( $postcode === $postcode_to_check )
+			) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * available_payment_gateways.
 	 *
 	 * @version 3.3.1
-	 * @todo    ! ranges and wildcards in postcodes
-	 * @todo    ! (maybe) rename module to "Payment Gateways by (Customer's) Location"
-	 * @todo    check naming, should be `wcj_gateways_by_location_` (however it's too long...)
-	 * @todo    code refactoring
-	 * @todo    add more locations options (e.g. "... by city")
+	 * @todo    (maybe) rename module to "Payment Gateways by (Customer's) Location"
+	 * @todo    (maybe) check naming, should be `wcj_gateways_by_location_` (however it's too long...)
+	 * @todo    (maybe) code refactoring
+	 * @todo    (maybe) add more locations options (e.g. "... by city")
 	 * @todo    (maybe) add option to detect customer's country and state by current `$_REQUEST` (as it is now done with postcodes)
 	 * @todo    (maybe) add option to detect customer's country by IP (instead of `wcj_customer_get_country()`); probably won't work with states though...
 	 */
@@ -102,7 +131,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 				$include_postcodes = get_option( 'wcj_gateways_postcodes_include_' . $key, '' );
 				if ( ! empty( $include_postcodes ) ) {
 					$include_postcodes = array_filter( array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $include_postcodes ) ) ) );
-					if ( ! in_array( $postcode, $include_postcodes ) ) {
+					if ( ! $this->check_postcode( $postcode, $include_postcodes ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}
@@ -110,7 +139,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 				$exclude_postcodes = get_option( 'wcj_gateways_postcodes_exclude_' . $key, '' );
 				if ( ! empty( $exclude_postcodes ) ) {
 					$exclude_postcodes = array_filter( array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $exclude_postcodes ) ) ) );
-					if ( in_array( $postcode, $exclude_postcodes ) ) {
+					if ( $this->check_postcode( $postcode, $exclude_postcodes ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}

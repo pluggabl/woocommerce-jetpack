@@ -335,10 +335,10 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		$this->save_as_pdf     = ( isset( $_GET['save_pdf_invoice'] ) && '1' == $_GET['save_pdf_invoice'] );
 		$this->get_invoice     = ( isset( $_GET['get_invoice'] ) && '1' == $_GET['get_invoice'] );
 
-		if ( isset( $_GET['create_invoice_for_order_id'] ) && $this->check_user_roles() ) {
+		if ( isset( $_GET['create_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
 			$this->create_document( $_GET['create_invoice_for_order_id'], $this->invoice_type_id );
 		}
-		if ( isset( $_GET['delete_invoice_for_order_id'] ) && $this->check_user_roles() ) {
+		if ( isset( $_GET['delete_invoice_for_order_id'] ) && $this->check_user_roles( false ) ) {
 			$this->delete_document( $_GET['delete_invoice_for_order_id'], $this->invoice_type_id );
 		}
 	}
@@ -346,12 +346,12 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * check_user_roles.
 	 *
-	 * @version 2.9.0
+	 * @version 3.3.1
 	 * @since   2.9.0
 	 * @todo    check if `current_user_can( 'administrator' )` is the same as checking role directly
 	 */
-	function check_user_roles() {
-		if ( get_current_user_id() == intval( get_post_meta( $this->order_id, '_customer_user', true ) ) ) {
+	function check_user_roles( $allow_order_owner = true ) {
+		if ( $allow_order_owner && get_current_user_id() == intval( get_post_meta( $this->order_id, '_customer_user', true ) ) ) {
 			return true;
 		}
 		$allowed_user_roles = get_option( 'wcj_invoicing_' . $this->invoice_type_id . '_roles', array( 'administrator', 'shop_manager' ) );

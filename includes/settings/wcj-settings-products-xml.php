@@ -87,7 +87,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product
 			'title'    => __( 'XML Item', 'woocommerce-jetpack' ),
 			'desc'     => sprintf(
 				__( 'You can use shortcodes here. Please take a look at <a target="_blank" href="%s">Booster\'s products shortcodes</a>.', 'woocommerce-jetpack' ),
-				'http://booster.io/category/shortcodes/products-shortcodes/'
+				'https://booster.io/category/shortcodes/products-shortcodes/'
 			),
 			'id'       => 'wcj_products_xml_item_' . $i,
 			'default'  =>

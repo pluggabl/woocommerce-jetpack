@@ -579,7 +579,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_currency_select_link_list.
 	 *
-	 * @version 2.9.0
+	 * @version 3.3.1
 	 * @since   2.4.5
 	 */
 	function wcj_currency_select_link_list( $atts, $content ) {
@@ -588,8 +588,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		// Options
 		$currencies = wcj_get_currencies_names_and_symbols( 'names' );
 		$selected_currency = '';
-		if ( isset( $_SESSION['wcj-currency'] ) ) {
-			$selected_currency = $_SESSION['wcj-currency'];
+		if ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {
+			$selected_currency = $session_value;
 		} else {
 			$module_roles = get_option( 'wcj_multicurrency_role_defaults_roles', '' );
 			if ( ! empty( $module_roles ) ) {
@@ -651,7 +651,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_currency_selector.
 	 *
-	 * @version 2.9.0
+	 * @version 3.3.1
 	 * @since   2.4.5
 	 */
 	private function get_currency_selector( $atts, $content, $type = 'select' ) {
@@ -668,8 +668,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		// Options
 		$currencies = wcj_get_currencies_names_and_symbols( 'names' );
 		$selected_currency = '';
-		if ( isset( $_SESSION['wcj-currency'] ) ) {
-			$selected_currency = $_SESSION['wcj-currency'];
+		if ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {
+			$selected_currency = $session_value;
 		} else {
 			$module_roles = get_option( 'wcj_multicurrency_role_defaults_roles', '' );
 			if ( ! empty( $module_roles ) ) {
@@ -732,7 +732,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_country_select_drop_down_list.
 	 *
-	 * @version 2.5.9
+	 * @version 3.3.1
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
 
@@ -763,7 +763,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		} else {
 			$selected_country = ( isset( $_POST[ 'wcj-country' ] ) ) ? $_POST[ 'wcj-country' ] : '';
 		} */
-		$selected_country = ( isset( $_SESSION[ 'wcj-country' ] ) ) ? $_SESSION[ 'wcj-country' ] : '';
+		$selected_country = ( null !== ( $session_value = wcj_session_get( 'wcj-country' ) ) ? $session_value : '' );
 
 		if ( 'yes' === $atts['replace_with_currency'] ) {
 			$currencies_names_and_symbols = wcj_get_currencies_names_and_symbols();

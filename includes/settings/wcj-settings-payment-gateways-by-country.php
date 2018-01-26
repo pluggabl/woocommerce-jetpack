@@ -97,7 +97,8 @@ foreach ( $gateways as $key => $gateway ) {
 		),
 		array(
 			'desc_tip'  => $desc_tip,
-			'desc'      => __( 'Include Postcodes (one per line)', 'woocommerce-jetpack' ),
+			'desc'      => __( 'Include Postcodes (one per line)', 'woocommerce-jetpack' ) . '<br>' .
+				'<em>' . __( 'Postcodes containing wildcards (e.g. CB23*) and fully numeric ranges (e.g. <code>90210...99000</code>) are also supported.', 'woocommerce' ) . '</em>',
 			'id'        => 'wcj_gateways_postcodes_include_' . $key,
 			'default'   => '',
 			'type'      => 'textarea',
@@ -106,7 +107,8 @@ foreach ( $gateways as $key => $gateway ) {
 		),
 		array(
 			'desc_tip'  => $desc_tip,
-			'desc'      => __( 'Exclude Postcodes (one per line)', 'woocommerce-jetpack' ),
+			'desc'      => __( 'Exclude Postcodes (one per line)', 'woocommerce-jetpack' ) . '<br>' .
+				'<em>' . __( 'Postcodes containing wildcards (e.g. CB23*) and fully numeric ranges (e.g. <code>90210...99000</code>) are also supported.', 'woocommerce' ) . '</em>',
 			'id'        => 'wcj_gateways_postcodes_exclude_' . $key,
 			'default'   => '',
 			'type'      => 'textarea',

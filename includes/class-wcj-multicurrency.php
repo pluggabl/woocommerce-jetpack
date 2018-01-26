@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.2.2
+ * @version 3.3.1
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -51,16 +51,14 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 3.2.2
+	 * @version 3.3.1
 	 * @todo    (maybe) replace all `PHP_INT_MAX - 1` with `$this->price_hooks_priority` (especially for `woocommerce_currency_symbol` and `woocommerce_currency`)
 	 */
 	function add_hooks() {
 		// Session
-		if ( ! session_id() ) {
-			session_start();
-		}
+		wcj_session_maybe_start();
 		if ( isset( $_REQUEST['wcj-currency'] ) ) {
-			$_SESSION['wcj-currency'] = $_REQUEST['wcj-currency'];
+			wcj_session_set( 'wcj-currency', $_REQUEST['wcj-currency'] );
 		}
 		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
 			// Prices - Compatibility - "WooCommerce TM Extra Product Options" plugin
@@ -272,11 +270,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * get_current_currency_code.
 	 *
-	 * @version 2.5.5
+	 * @version 3.3.1
 	 */
 	function get_current_currency_code( $default_currency = '' ) {
-		if ( isset( $_SESSION['wcj-currency'] ) ) {
-			return $_SESSION['wcj-currency'];
+		if ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {
+			return $session_value;
 		} else {
 			$module_roles = get_option( 'wcj_multicurrency_role_defaults_roles', '' );
 			if ( ! empty( $module_roles ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 3.1.0
+ * @version 3.3.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -228,7 +228,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_active_admin_bar.
 	 *
-	 * @version 3.1.0
+	 * @version 3.3.1
 	 * @since   3.1.0
 	 */
 	function add_booster_active_admin_bar( $wp_admin_bar ) {
@@ -244,6 +244,9 @@ class WCJ_Admin_Bar extends WCJ_Module {
 			'booster-active' => array(
 				'title'  => '<span class="ab-icon"></span>' . __( 'Booster: Active', 'woocommerce-jetpack' ),
 				'href'   => admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=dashboard&section=active' ),
+				'meta'   => array(
+					'title'  => __( 'Booster - Active', 'woocommerce-jetpack' ),
+				),
 				'nodes'  => array_merge( $this->active_modules, $tools ),
 			),
 		);

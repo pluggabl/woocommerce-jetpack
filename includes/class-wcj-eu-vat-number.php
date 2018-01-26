@@ -319,9 +319,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	 * @version 3.3.1
 	 */
 	function start_session() {
-		if ( ! session_id() ) {
-			session_start();
-		}
+		wcj_session_maybe_start();
 		$args = array();
 		if ( isset( $_POST['post_data'] ) ) {
 			parse_str( $_POST['post_data'], $args );

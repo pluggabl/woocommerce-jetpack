@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -389,14 +389,14 @@ if ( ! function_exists( 'wcj_get_current_currency_code' ) ) {
 	/**
 	 * wcj_get_current_currency_code.
 	 *
-	 * @version 2.5.0
+	 * @version 3.3.1
 	 * @since   2.5.0
 	 */
 	function wcj_get_current_currency_code( $module ) {
 		$current_currency_code = get_woocommerce_currency();
 		if ( wcj_is_module_enabled( $module ) ) {
 			if ( 'multicurrency' === $module ) {
-				$current_currency_code = ( isset( $_SESSION['wcj-currency'] ) ) ? $_SESSION['wcj-currency'] : $current_currency_code;
+				$current_currency_code = ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ? $session_value : $current_currency_code );
 			}
 		}
 		return $current_currency_code;

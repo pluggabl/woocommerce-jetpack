@@ -112,7 +112,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		}
 		?><div class="error"><p><?php
 			echo '<div class="message">'
-				. __( 'Booster: Free plugin\'s version is limited to only one price by user role per products settings product enabled at a time. You will need to get <a href="http://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of price by user role per product settings products.', 'woocommerce-jetpack' )
+				. __( 'Booster: Free plugin\'s version is limited to only one price by user role per products settings product enabled at a time. You will need to get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of price by user role per product settings products.', 'woocommerce-jetpack' )
 				. '</div>';
 		?></p></div><?php
 	}

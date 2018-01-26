@@ -391,7 +391,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 		}
 		?><div class="error"><p><?php
 			echo '<div class="message">'
-				. __( 'Booster: Free plugin\'s version is limited to only one bookings product enabled at a time. You will need to get <a href="http://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of bookings products.', 'woocommerce-jetpack' )
+				. __( 'Booster: Free plugin\'s version is limited to only one bookings product enabled at a time. You will need to get <a href="https://booster.io/plus/" target="_blank">Booster Plus</a> to add unlimited number of bookings products.', 'woocommerce-jetpack' )
 				. '</div>';
 		?></p></div><?php
 	}

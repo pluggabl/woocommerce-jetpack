@@ -12,7 +12,7 @@ return apply_filters( 'wcj_modules', array(
 
 	'dashboard' => array(
 		'label'          => __( 'Dashboard', 'woocommerce-jetpack' ),
-		'desc'           => __( 'This dashboard lets you enable/disable any Booster\'s module. Each checkbox comes with short module\'s description. Please visit <a href="http://booster.io" target="_blank">http://booster.io</a> for detailed info on each feature.', 'woocommerce-jetpack' ),
+		'desc'           => __( 'This dashboard lets you enable/disable any Booster\'s module. Each checkbox comes with short module\'s description. Please visit <a href="https://booster.io" target="_blank">https://booster.io</a> for detailed info on each feature.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'alphabetically',
 			'by_category',
