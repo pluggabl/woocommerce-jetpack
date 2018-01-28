@@ -180,7 +180,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 27/01/2018 =
+= 3.3.1 - 28/01/2018 =
   T I * Dev - SHIPPING & ORDERS - Custom Shipping - Code refactoring.
       * Fix - EMAILS & MISC. - Admin Bar - Booster: Active - Title fixed.
   T   * Dev - Link changed from `http://booster.io` to `https://booster.io` in all plugin files.
@@ -211,7 +211,7 @@ D     * Dev - Shortcodes - General - `[wcj_customer_order_count]` shortcode adde
 D T   * Dev - PDF INVOICING & PACKING SLIPS - General - Number of Custom Documents - Limited to max 100.
 D T   * Dev - PRODUCTS - Add to Cart - `get_checkout_url()` replaced with `wc_get_checkout_url()`.
   T I * Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - Allowed User Roles - Selected user roles are now checked when creating and/or deleting documents (was hard-coded Administrator and Shop Manager).
-D W   * Dev - SHIPPING & ORDERS - Custom Shipping - "Apply Formula to Costs" option added.
+D T I * Dev - SHIPPING & ORDERS - Custom Shipping - "Apply Formula to Costs" option added.
 D T   * Dev - CART & CHECKOUT - Checkout Core Fields - General Options - "Force Fields Sort by Priority" option added.
 D     * Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Content" options added.
 
