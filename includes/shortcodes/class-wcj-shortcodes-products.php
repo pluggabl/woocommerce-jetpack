@@ -75,6 +75,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'image_size'            => 'shop_thumbnail',
 			'image_nr'              => 1,
 			'multiply_by'           => '',
+			'multiply_by_meta'      => '',
 			'hide_currency'         => 'no',
 			'excerpt_length'        => 0, // deprecated
 			'length'                => 0,
@@ -727,7 +728,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Returns product (modified) price.
 	 *
-	 * @version 3.2.4
+	 * @version 3.3.1
 	 * @todo    variable products: a) not range; and b) price by country.
 	 * @return  string The product (modified) price
 	 */
@@ -748,6 +749,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$min = $min * $exchange_rate;
 				$max = $max * $exchange_rate;
 			}
+			if ( '' !== $atts['multiply_by_meta'] ) {
+				$meta_value = get_post_meta( wcj_get_product_id( $this->the_product ), $atts['multiply_by_meta'], true );
+				if ( is_numeric( $meta_value ) ) {
+					$min = $min * $meta_value;
+					$max = $max * $meta_value;
+				}
+			}
 			if ( 'yes' !== $atts['hide_currency'] ) {
 				$min = wc_price( $min, array( 'currency' => $atts['currency'] ) );
 				$max = wc_price( $max, array( 'currency' => $atts['currency'] ) );
@@ -766,6 +774,12 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				0 != ( $exchange_rate = wcj_get_saved_exchange_rate( $base_product_currency, $atts['currency'] ) )
 			) {
 				$the_price = $the_price * $exchange_rate;
+			}
+			if ( '' !== $atts['multiply_by_meta'] ) {
+				$meta_value = get_post_meta( wcj_get_product_id( $this->the_product ), $atts['multiply_by_meta'], true );
+				if ( is_numeric( $meta_value ) ) {
+					$the_price = $the_price * $meta_value;
+				}
 			}
 			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price, array( 'currency' => $atts['currency'] ) );
 		}

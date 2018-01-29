@@ -2,17 +2,31 @@
 /**
  * Booster for WooCommerce - Settings - Stock
  *
- * @version 2.8.0
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    get_stock_html: ( WCJ_IS_WC_VERSION_BELOW_3 ? `woocommerce_stock_html` : `woocommerce_get_stock_html` )
- * @todo    apply_filters( 'woocommerce_stock_html', $html, $availability['availability'], $product );
- * @todo    apply_filters( 'woocommerce_get_stock_html', $html, $product );
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 return array(
+	array(
+		'title'    => __( 'Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_stock_general_options',
+	),
+	array(
+		'title'    => __( 'Remove Stock Display', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will remove stock display from frontend.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Remove', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_stock_remove_frontend_display_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_stock_general_options',
+	),
 	array(
 		'title'    => __( 'Custom Out of Stock Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',

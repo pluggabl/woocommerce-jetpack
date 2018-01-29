@@ -149,6 +149,19 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 					continue;
 				}
 			}
+			// enabled - per products, categories, tags
+			if ( ! $this->is_visible( array(
+					'include_products'   => '',
+					'exclude_products'   => '',
+					'include_categories' => get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_incl', '' ),
+					'exclude_categories' => get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_excl', '' ),
+					'include_tags'       => '',
+					'exclude_tags'       => '',
+				) )
+			) {
+				unset( $checkout_fields[ $section ][ $field ] );
+				continue;
+			}
 			if ( isset( $checkout_fields[ $section ][ $field ] ) ) {
 				// required
 				if ( 'default' != ( $is_required = get_option( 'wcj_checkout_fields_' . $field . '_' . 'is_required', 'default' ) ) ) {
@@ -181,6 +194,28 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 			}
 		}
 		return $checkout_fields;
+	}
+
+	/**
+	 * is_visible.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 * @todo    (maybe) save `$this->cart_product_ids` array (instead of calling `WC()->cart->get_cart()` for each field)
+	 */
+	function is_visible( $args ) {
+		foreach ( $args as $arg ) {
+			if ( ! empty( $arg ) ) {
+				// At least one arg is filled - checking products in cart
+				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+					if ( ! wcj_is_enabled_for_product( $values['product_id'], $args ) ) {
+						return false;
+					}
+				}
+				break;
+			}
+		}
+		return true;
 	}
 
 	/**

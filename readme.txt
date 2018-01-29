@@ -180,7 +180,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 28/01/2018 =
+= 3.3.1 - 29/01/2018 =
+D     * Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_meta` attribute added.
+D   $ * Dev - PRODUCTS - Stock - "Remove Stock Display" option added.
+D W $ * Dev - CART & CHECKOUT - Checkout Core Fields - "Include/exclude product categories" options added.
   T I * Dev - SHIPPING & ORDERS - Custom Shipping - Code refactoring.
       * Fix - EMAILS & MISC. - Admin Bar - Booster: Active - Title fixed.
   T   * Dev - Link changed from `http://booster.io` to `https://booster.io` in all plugin files.

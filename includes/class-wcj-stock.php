@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Stock
  *
- * @version 2.8.0
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,9 +16,10 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.3.1
 	 * @since   2.8.0
-	 * @todo    (maybe) products_stock or product_stock
+	 * @todo    custom stock html
+	 * @todo    (maybe) "woocommerce-products-stock" or "woocommerce-product-stock"
 	 */
 	function __construct() {
 
@@ -29,6 +30,11 @@ class WCJ_Stock extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			// Remove stock display
+			if ( 'yes' === get_option( 'wcj_stock_remove_frontend_display_enabled', 'no' ) ) {
+				add_filter( ( WCJ_IS_WC_VERSION_BELOW_3 ? 'woocommerce_stock_html' : 'woocommerce_get_stock_html' ), '__return_empty_string', PHP_INT_MAX );
+			}
+			// Custom "Out of Stock"
 			if ( 'yes' === get_option( 'wcj_stock_custom_out_of_stock_section_enabled', 'no' ) ) {
 				if ( 'yes' === get_option( 'wcj_stock_custom_out_of_stock_enabled', 'no' ) ) {
 					add_filter( 'woocommerce_get_availability_text', array( $this, 'custom_out_of_stock' ), PHP_INT_MAX, 2 );
