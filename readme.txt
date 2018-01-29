@@ -181,14 +181,19 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.3.1 - 29/01/2018 =
+D W   * Dev - PRODUCTS - Product Addons - Admin Settings - Restyling.
+D W I * Dev - PRODUCTS - Product Addons - "Frontend Templates" section added.
+D     * Dev - PRODUCTS - Stock - Admin Settings - Minor restyling.
+D T $ * Dev - PRODUCTS - Stock - "Custom Stock HTML" section added.
+D T $ * Dev - PRODUCTS - Stock - "Custom In Stock" section added.
 D     * Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_meta` attribute added.
 D   $ * Dev - PRODUCTS - Stock - "Remove Stock Display" option added.
 D W $ * Dev - CART & CHECKOUT - Checkout Core Fields - "Include/exclude product categories" options added.
   T I * Dev - SHIPPING & ORDERS - Custom Shipping - Code refactoring.
       * Fix - EMAILS & MISC. - Admin Bar - Booster: Active - Title fixed.
   T   * Dev - Link changed from `http://booster.io` to `https://booster.io` in all plugin files.
-      * Dev - EMAILS & MISC. - Custom JS - Admin settings - Minor restyling.
-      * Dev - EMAILS & MISC. - Custom CSS - Admin settings - Minor restyling.
+      * Dev - EMAILS & MISC. - Custom JS - Admin Settings - Minor restyling.
+      * Dev - EMAILS & MISC. - Custom CSS - Admin Settings - Minor restyling.
 E T I * Dev - Code refactoring - `alg_` replaced with `wcj_` in function and class names.
 D X I * Dev - Speed Optimization - "WC Sessions" is now the default option (can be changed in "General" module).
   T I * Dev - Speed Optimization - "WC Sessions" support added to EU VAT Number, Checkout Files Upload, Multicurrency (Currency Switcher) and Prices and Currencies by Country modules.

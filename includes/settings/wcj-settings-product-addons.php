@@ -2,10 +2,9 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    add "frontend template" options
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
  */
 
@@ -183,46 +182,6 @@ $settings = array_merge( $settings, array(
 		'options'  => $qty_triggers,
 	),
 	array(
-		'title'    => __( 'Addon in Cart Format', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Before', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_addons_cart_format_start',
-		'default'  => '<dl class="variation">',
-		'type'     => 'textarea',
-	),
-	array(
-		'desc'     => __( 'Each Addon', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'You can use %addon_label% and %addon_price%.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_addons_cart_format_each_addon',
-		'default'  => '<dt>%addon_label%:</dt><dd>%addon_price%</dd>',
-		'type'     => 'textarea',
-	),
-	array(
-		'desc'     => __( 'After', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_addons_cart_format_end',
-		'default'  => '</dl>',
-		'type'     => 'textarea',
-	),
-	array(
-		'title'    => __( 'Addon in Order Details Table Format', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Before', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_addons_order_details_format_start',
-		'default'  => '',
-		'type'     => 'textarea',
-	),
-	array(
-		'desc'     => __( 'Each Addon', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'You can use %addon_label% and %addon_price%.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_addons_order_details_format_each_addon',
-		'default'  => '&nbsp;| %addon_label%: %addon_price%',
-		'type'     => 'textarea',
-	),
-	array(
-		'desc'     => __( 'After', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_addons_order_details_format_end',
-		'default'  => '',
-		'type'     => 'textarea',
-	),
-	array(
 		'title'    => __( 'Admin Order Page', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Hide all addons', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_addons_hide_on_admin_order_page',
@@ -239,6 +198,125 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_addons_options',
+	),
+	array(
+		'title'    => __( 'Frontend Templates', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_addons_template_options',
+	),
+	array(
+		'title'    => __( 'Each Addon - Title', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%addon_id%', '%addon_title%' ) ),
+		'id'       => 'wcj_product_addons_template_title',
+		'default'  => '<p><label for="%addon_id%">%addon_title%</label></p>',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'Each Addon - Type: Checkbox', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%addon_input%', '%addon_id%', '%addon_label%', '%addon_price%', '%addon_tooltip%' ) ),
+		'id'       => 'wcj_product_addons_template_type_checkbox',
+		'default'  => '<p>%addon_input% <label for="%addon_id%">%addon_label% (%addon_price%)</label>%addon_tooltip%</p>',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'Each Addon - Type: Text', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%addon_input%', '%addon_id%', '%addon_label%', '%addon_price%', '%addon_tooltip%' ) ),
+		'id'       => 'wcj_product_addons_template_type_text',
+		'default'  => '<p><label for="%addon_id%">%addon_label% (%addon_price%)</label> %addon_input%%addon_tooltip%</p>',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'Each Addon - Type: Select Box', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%addon_input%', '%addon_tooltip%' ) ),
+		'id'       => 'wcj_product_addons_template_type_select',
+		'default'  => '<p>%addon_input%%addon_tooltip%</p>',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'Each Addon - Type: Radio Button (Each)', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%addon_input%', '%addon_id%', '%addon_label%', '%addon_price%', '%addon_tooltip%' ) ),
+		'id'       => 'wcj_product_addons_template_type_radio',
+		'default'  => '<p>%addon_input% <label for="%addon_id%">%addon_label% (%addon_price%)</label>%addon_tooltip%</p>',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'All Addons - Final', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%addons_html%' ) ),
+		'id'       => 'wcj_product_addons_template_final',
+		'default'  => '<div id="wcj_product_addons">%addons_html%</div>',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_addons_template_options',
+	),
+	array(
+		'title'    => __( 'Cart Template', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_addons_template_cart_options',
+	),
+	array(
+		'title'    => __( 'Before', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_cart_format_start',
+		'default'  => '<dl class="variation">',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'Each Addon', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%addon_label%', '%addon_price%' ) ),
+		'id'       => 'wcj_product_addons_cart_format_each_addon',
+		'default'  => '<dt>%addon_label%:</dt><dd>%addon_price%</dd>',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'After', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_cart_format_end',
+		'default'  => '</dl>',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_addons_template_cart_options',
+	),
+	array(
+		'title'    => __( 'Order Details Table Template', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_addons_template_order_details_options',
+	),
+	array(
+		'title'    => __( 'Before', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_order_details_format_start',
+		'default'  => '',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'Each Addon', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%addon_label%', '%addon_price%' ) ),
+		'id'       => 'wcj_product_addons_order_details_format_each_addon',
+		'default'  => '&nbsp;| %addon_label%: %addon_price%',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'After', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_order_details_format_end',
+		'default'  => '',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_addons_template_order_details_options',
 	),
 ) );
 return $settings;

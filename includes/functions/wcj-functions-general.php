@@ -9,6 +9,18 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_handle_replacements' ) ) {
+	/**
+	 * wcj_handle_replacements.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function wcj_handle_replacements( $replacements, $template ) {
+		return str_replace( array_keys( $replacements ), $replacements, $template );
+	}
+}
+
 if ( ! function_exists( 'wcj_get_js_confirmation' ) ) {
 	/**
 	 * wcj_get_js_confirmation.

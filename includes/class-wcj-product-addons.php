@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -488,16 +488,19 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 3.2.2
+	 * @version 3.3.1
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {
-		$html = '';
-		$addons = $this->get_product_addons( get_the_ID() );
+		$html     = '';
+		$addons   = $this->get_product_addons( get_the_ID() );
 		$_product = wc_get_product( get_the_ID() );
 		foreach ( $addons as $addon ) {
 			if ( '' != $addon['title'] ) {
-				$html .= '<p>' .'<label for="' . $addon['checkbox_key'] . '">' . $addon['title'] . '</label>' . '</p>';
+				$html .= wcj_handle_replacements( array(
+						'%addon_id%'    => $addon['checkbox_key'],
+						'%addon_title%' => $addon['title'],
+					), get_option( 'wcj_product_addons_template_title', '<p><label for="%addon_id%">%addon_title%</label></p>' ) );
 			}
 			$is_required = ( 'yes' === $addon['is_required'] ) ? ' required' : '';
 			if ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) {
@@ -510,21 +513,27 @@ class WCJ_Product_Addons extends WCJ_Module {
 				$maybe_tooltip = ( '' != $addon['tooltip'] ) ?
 					' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $addon['tooltip'] . '">' :
 					'';
-				$html .= '<p>' .
-						'<input type="checkbox" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '"' . $is_checked . $is_required . '>' . ' ' .
-						'<label for="' . $addon['checkbox_key'] . '">' . $addon['label_value'] . ' ('. wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $addon['price_value'] ) ) ) . ')' . '</label>' .
-						$maybe_tooltip .
-					'</p>';
+				$html .= wcj_handle_replacements( array(
+						'%addon_input%'   => '<input type="checkbox" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '"' . $is_checked . $is_required . '>',
+						'%addon_id%'      => $addon['checkbox_key'],
+						'%addon_label%'   => $addon['label_value'],
+						'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $addon['price_value'] ) ) ),
+						'%addon_tooltip%' => $maybe_tooltip,
+					), get_option( 'wcj_product_addons_template_type_checkbox',
+						'<p>%addon_input% <label for="%addon_id%">%addon_label% (%addon_price%)</label>%addon_tooltip%</p>' ) );
 			} elseif ( 'text' == $addon['type'] ) {
 				$default_value = ( isset( $_POST[ $addon['checkbox_key'] ] ) ? $_POST[ $addon['checkbox_key'] ] : $addon['default'] );
 				$maybe_tooltip = ( '' != $addon['tooltip'] ) ?
 					' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $addon['tooltip'] . '">' :
 					'';
-				$html .= '<p>' .
-						'<label for="' . $addon['checkbox_key'] . '">' . $addon['label_value'] . ' ('. wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $addon['price_value'] ) ) ) . ')' . '</label>' . ' ' .
-						'<input type="text" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '" placeholder="' . $addon['placeholder'] . '" value="' . $default_value . '"' . $is_required . '>' .
-						$maybe_tooltip .
-					'</p>';
+				$html .= wcj_handle_replacements( array(
+						'%addon_input%'   => '<input type="text" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '" placeholder="' . $addon['placeholder'] . '" value="' . $default_value . '"' . $is_required . '>',
+						'%addon_id%'      => $addon['checkbox_key'],
+						'%addon_label%'   => $addon['label_value'],
+						'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $addon['price_value'] ) ) ),
+						'%addon_tooltip%' => $maybe_tooltip,
+					), get_option( 'wcj_product_addons_template_type_text',
+						'<p><label for="%addon_id%">%addon_label% (%addon_price%)</label> %addon_input%%addon_tooltip%</p>' ) );
 			} elseif ( 'radio' === $addon['type'] || 'select' === $addon['type'] ) {
 				$prices   = explode( PHP_EOL, $addon['price_value'] );
 				$labels   = explode( PHP_EOL, $addon['label_value'] );
@@ -548,11 +557,14 @@ class WCJ_Product_Addons extends WCJ_Module {
 							$maybe_tooltip = ( isset( $tooltips[ $i ] ) && '' != $tooltips[ $i ] ) ?
 								' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $tooltips[ $i ] . '">' :
 								'';
-							$html .= '<p>' .
-								'<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>' . ' ' .
-								'<label for="' . $addon['checkbox_key'] . '-' . $label . '">' . $labels[ $i ] . ' ('. wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ] ) ) ) . ')' . '</label>' .
-								$maybe_tooltip .
-							'</p>';
+							$html .= wcj_handle_replacements( array(
+									'%addon_input%'   => '<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>',
+									'%addon_id%'      => $addon['checkbox_key'] . '-' . $label,
+									'%addon_label%'   => $labels[ $i ],
+									'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ] ) ) ),
+									'%addon_tooltip%' => $maybe_tooltip,
+								), get_option( 'wcj_product_addons_template_type_radio',
+									'<p>%addon_input% <label for="%addon_id%">%addon_label% (%addon_price%)</label>%addon_tooltip%</p>' ) );
 						} else {
 							$select_options .= '<option value="' . $label . '"' . $is_checked . '>' . $labels[ $i ] . ' ('. wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ] ) ) ) . ')' . '</option>';
 						}
@@ -564,17 +576,19 @@ class WCJ_Product_Addons extends WCJ_Module {
 						if ( '' != $addon['placeholder'] ) {
 							$select_options = '<option value="">' . $addon['placeholder'] . '</option>' . $select_options;
 						}
-						$html .= '<p>' .
-							'<select' . $is_required . ' id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '">' . $select_options . '</select>' .
-							$maybe_tooltip .
-						'</p>';
+						$html .= wcj_handle_replacements( array(
+								'%addon_input%'   => '<select' . $is_required . ' id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '">' . $select_options . '</select>',
+								'%addon_tooltip%' => $maybe_tooltip,
+							), get_option( 'wcj_product_addons_template_type_select', '<p>%addon_input%%addon_tooltip%</p>' ) );
 					}
 				}
 			}
 		}
 		// Output
 		if ( ! empty( $html ) ) {
-			echo '<div id="wcj_product_addons">' . $html . '</div>';
+			echo wcj_handle_replacements( array(
+					'%addons_html%' => $html,
+				), get_option( 'wcj_product_addons_template_final', '<div id="wcj_product_addons">%addons_html%</div>' ) );
 		}
 	}
 
