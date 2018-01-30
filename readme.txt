@@ -181,6 +181,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.3.1 - 29/01/2018 =
+D W   * Dev - PRODUCTS - Product Info - Admin Settings - Descriptions updated.
 D W   * Dev - PRODUCTS - Product Addons - Admin Settings - Restyling.
 D W I * Dev - PRODUCTS - Product Addons - "Frontend Templates" section added.
 D     * Dev - PRODUCTS - Stock - Admin Settings - Minor restyling.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Info
  *
- * @version 3.1.0
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -40,10 +40,10 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 		$extra_filters = $extra_filters_result;
 	}
 
-	$single_or_archive_desc = ( 'single' === $single_or_archive ) ? __( 'Single', 'woocommerce-jetpack' ) : __( 'Archive', 'woocommerce-jetpack' );
+	$single_or_archive_desc = ( 'single' === $single_or_archive ? __( 'Single Product Pages', 'woocommerce-jetpack' ) : __( 'Archives', 'woocommerce-jetpack' ) );
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => __( 'Product Custom Info Blocks', 'woocommerce-jetpack' ) . ' - ' . $single_or_archive_desc,
+			'title'    => $single_or_archive_desc,
 			'type'     => 'title',
 			'id'       => 'wcj_product_custom_info_options_' . $single_or_archive,
 		),
@@ -69,7 +69,7 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 
 		$settings = array_merge( $settings, array(
 			array(
-				'title'    => __( 'Info Block', 'woocommerce-jetpack' ) . ' #' . $i . ' - ' . $single_or_archive_desc,
+				'title'    => sprintf( __( 'Block #%s', 'woocommerce-jetpack' ), $i ),
 				'type'     => 'title',
 				'id'       => 'wcj_product_custom_info_options_' . $single_or_archive . '_' . $i,
 			),
@@ -185,7 +185,7 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 	}
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ) . ' - ' . $single_or_archive_desc,
+			'title'    => $single_or_archive_desc . ': ' . __( 'Advanced Options', 'woocommerce-jetpack' ),
 			'type'     => 'title',
 			'id'       => 'wcj_product_custom_info_advanced_options_' . $single_or_archive,
 		),
