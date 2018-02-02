@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -136,10 +136,11 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 	/**
 	 * wcj_get_product_display_price.
 	 *
-	 * @version 2.8.0
+	 * @version 3.3.1
 	 * @since   2.7.0
+	 * @todo    `$scope` in `WCJ_IS_WC_VERSION_BELOW_3` (i.e. `cart`)
 	 */
-	function wcj_get_product_display_price( $_product, $price = '', $qty = 1 ) {
+	function wcj_get_product_display_price( $_product, $price = '', $qty = 1, $scope = 'shop' ) {
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 			return $_product->get_display_price( $price, $qty );
 		} else {
@@ -148,7 +149,14 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 				$minus_sign = '-';
 				$price *= -1;
 			}
-			return $minus_sign . wc_get_price_to_display( $_product, array( 'price' => $price, 'qty' => $qty ) );
+			if ( 'cart' === $scope ) {
+				$display_price = ( 'incl' === get_option( 'woocommerce_tax_display_cart' ) ?
+					wc_get_price_including_tax( $_product, array( 'price' => $price, 'qty' => $qty ) ) :
+					wc_get_price_excluding_tax( $_product, array( 'price' => $price, 'qty' => $qty ) ) );
+			} else { // 'shop'
+				$display_price = wc_get_price_to_display( $_product, array( 'price' => $price, 'qty' => $qty ) );
+			}
+			return $minus_sign . $display_price;
 		}
 	}
 }

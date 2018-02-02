@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Orders
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -42,6 +42,24 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_order_admin_currency_options',
+	),
+	array(
+		'title'    => __( 'Admin Order Navigation', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_orders_navigation_options',
+	),
+	array(
+		'title'    => __( 'Admin Order Navigation', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'When enabled, this will add "Booster: Order Navigation" metabox to each order\'s admin edit page.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'Metabox will contain "Previous order" and "Next order" links.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_orders_navigation_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_orders_navigation_options',
 	),
 	array(
 		'title'    => __( 'Orders Auto-Complete', 'woocommerce-jetpack' ),

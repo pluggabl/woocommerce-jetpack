@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @todo    Bulk Regenerate Download Permissions - copy "cron" to plugin
 	 * @todo    Bulk Regenerate Download Permissions - maybe move "bulk actions" to free
 	 * @todo    Bulk Regenerate Download Permissions - maybe as new module
@@ -24,7 +24,7 @@ class WCJ_Orders extends WCJ_Module {
 
 		$this->id         = 'orders';
 		$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
-		$this->desc       = __( 'WooCommerce orders auto-complete; admin order currency; bulk regenerate download permissions for orders.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'WooCommerce orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-orders';
 		parent::__construct();
 
@@ -72,7 +72,58 @@ class WCJ_Orders extends WCJ_Module {
 				add_action( 'add_meta_boxes', array( $this, 'add_country_by_ip_meta_box' ) );
 			}
 
+			// Orders navigation
+			if ( 'yes' === get_option( 'wcj_orders_navigation_enabled', 'no' ) ) {
+				add_action( 'add_meta_boxes', array( $this, 'add_orders_navigation_meta_box' ) );
+				add_action( 'admin_init',     array( $this, 'handle_orders_navigation' ) );
+			}
+
 		}
+	}
+
+	/**
+	 * handle_orders_navigation.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function handle_orders_navigation() {
+		if ( isset( $_GET['wcj_orders_navigation'] ) ) {
+			$url = ( ! isset( $_GET['post'] ) || false === ( $adjacent_order_id = wcj_get_adjacent_order_id( $_GET['post'], $_GET['wcj_orders_navigation'] ) ) ?
+				remove_query_arg( 'wcj_orders_navigation' ) :
+				admin_url( 'post.php?post=' . $adjacent_order_id . '&action=edit' ) );
+			wp_safe_redirect( $url );
+			exit;
+		}
+	}
+
+	/**
+	 * add_orders_navigation_meta_box.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function add_orders_navigation_meta_box() {
+		add_meta_box(
+			'wc-jetpack-' . $this->id . '-navigation',
+			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Order Navigation', 'woocommerce-jetpack' ),
+			array( $this, 'create_orders_navigation_meta_box' ),
+			'shop_order',
+			'side',
+			'high'
+		);
+	}
+
+	/**
+	 * create_orders_navigation_meta_box.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 * @todo    this will output the link, even if there no prev/next orders available
+	 */
+	function create_orders_navigation_meta_box() {
+		echo '<a href="' . add_query_arg( 'wcj_orders_navigation', 'prev' ) . '">' . '&lt;&lt; ' . __( 'Previous order', 'woocommerce-jetpack' ) . '</a>' .
+			 '<a href="' . add_query_arg( 'wcj_orders_navigation', 'next' ) . '" style="float:right;">' . __( 'Next order', 'woocommerce-jetpack' ) . ' &gt;&gt;' . '</a>';
 	}
 
 	/**

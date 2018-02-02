@@ -250,7 +250,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 */
 	function output_dashboard( $current_section ) {
 
@@ -299,15 +299,24 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 					'<em>' . __( 'Import all Booster\'s options from a file.', 'woocommerce-jetpack' ) . '</em>',
 				),
 				array(
-					'<button style="width:100px;" class="button-primary" type="submit" name="booster_reset_settings" onclick="return confirm(\'' . __( 'This will reset settings to defaults for all Booster modules. Are you sure?', 'woocommerce-jetpack' ) . '\')">'  . __( 'Reset', 'woocommerce-jetpack' )  . '</button>',
+					'<button style="width:100px;" class="button-primary" type="submit" name="booster_reset_settings"' .
+						wcj_get_js_confirmation( __( 'This will reset settings to defaults for all Booster modules. Are you sure?', 'woocommerce-jetpack' ) ) . '>' .
+							__( 'Reset', 'woocommerce-jetpack' )  . '</button>',
 					'<em>' . __( 'Reset all Booster\'s options.', 'woocommerce-jetpack' ) . '</em>',
+				),
+				array(
+					'<button style="width:100px;" class="button-primary" type="submit" name="booster_reset_settings_meta"' .
+						wcj_get_js_confirmation( __( 'This will delete all Booster meta. Are you sure?', 'woocommerce-jetpack' ) ) . '>'  .
+							__( 'Reset meta', 'woocommerce-jetpack' )  . '</button>',
+					'<em>' . __( 'Reset all Booster\'s meta.', 'woocommerce-jetpack' ) . '</em>',
 				),
 			);
 			$manager_settings = $this->get_manager_settings();
 			foreach ( $manager_settings as $manager_settings_field ) {
 				$table_data[] = array(
 					'<label for="' . $manager_settings_field['id'] . '">' .
-						'<input name="' . $manager_settings_field['id'] . '" id="' . $manager_settings_field['id'] . '" type="' . $manager_settings_field['type'] . '" class="" value="1" ' . checked( get_option( $manager_settings_field['id'], $manager_settings_field['default'] ), 'yes', false ) . '>' .
+						'<input name="' . $manager_settings_field['id'] . '" id="' . $manager_settings_field['id'] . '" type="' . $manager_settings_field['type'] . '"' .
+							' class="" value="1" ' . checked( get_option( $manager_settings_field['id'], $manager_settings_field['default'] ), 'yes', false ) . '>' .
 						' ' . '<strong>' . $manager_settings_field['title'] . '</strong>' .
 					'</label>',
 					'<em>' . $manager_settings_field['desc'] . '</em>',

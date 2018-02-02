@@ -25,12 +25,15 @@ if ( ! function_exists( 'wcj_get_js_confirmation' ) ) {
 	/**
 	 * wcj_get_js_confirmation.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @since   3.3.0
 	 * @todo    use where needed
 	 */
-	function wcj_get_js_confirmation() {
-		return ' onclick="return confirm(\'' . __( 'Are you sure?', 'woocommerce-jetpack' ) . '\')"';
+	function wcj_get_js_confirmation( $confirmation_message = '' ) {
+		if ( '' === $confirmation_message ) {
+			$confirmation_message = __( 'Are you sure?', 'woocommerce-jetpack' );
+		}
+		return ' onclick="return confirm(\'' . $confirmation_message . '\')"';
 	}
 }
 
@@ -492,7 +495,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	/*
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @since   2.4.4
 	 * @return  string
 	 */
@@ -501,7 +504,8 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 			foreach ( $packages as $i => $package ) {
 				$available_shipping_methods = $package['rates'];
 				foreach ( $available_shipping_methods as $available_shipping_method ) {
-					if ( 'free_shipping' === $available_shipping_method->get_method_id() ) {
+					$method_id = ( WCJ_IS_WC_VERSION_BELOW_3_2_0 ? $available_shipping_method->method_id : $available_shipping_method->get_method_id() );
+					if ( 'free_shipping' === $method_id ) {
 						return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
 					}
 				}

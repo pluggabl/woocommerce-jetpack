@@ -109,7 +109,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Order Min/Max Quantities* - Set min/max product quantities in WooCommerce order.
 * *Order Minimum Amount* - Minimum WooCommerce order amount (optionally by user role).
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
-* *Orders* - WooCommerce orders auto-complete; admin order currency; bulk regenerate download permissions for orders.
+* *Orders* - WooCommerce orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 * *Shipping Descriptions* - Add descriptions to shipping methods on frontend.
 * *Shipping Icons* - Add icons to shipping methods on frontend.
@@ -180,7 +180,15 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 29/01/2018 =
+= 3.3.1 - 02/02/2018 =
+D W $ * Dev - SHIPPING & ORDERS - Orders - "Admin Order Navigation" added.
+  X I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` taxes display fixed.
+  T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - Price taxes display fixed.
+  T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` case fixed.
+  T I * Dev - Functions - General - `wcj_get_left_to_free_shipping()` - WooCommerce v3.2.0 backward compatibility added.
+D T   * Dev - Settings Manager - "Reset meta" button added (separated from "Reset" options button).
+D W   * Dev - CART & CHECKOUT - Checkout Files Upload - Admin order view - "Delete all files" button added.
+  T I * Dev - PRODUCTS - Product Tabs - Now `do_shortcode()` is used in tabs output, instead of applying `the_content` filter.
 D W   * Dev - PRODUCTS - Product Info - Admin Settings - Descriptions updated.
 D W   * Dev - PRODUCTS - Product Addons - Admin Settings - Restyling.
 D W I * Dev - PRODUCTS - Product Addons - "Frontend Templates" section added.

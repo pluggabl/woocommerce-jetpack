@@ -4,6 +4,7 @@
  *
  * @version 2.8.0
  * @author  Algoritmika Ltd.
+ * @deprecated
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -223,24 +224,6 @@ class WCJ_Product_Info extends WCJ_Module {
 			return;
 		}
 
-		/* foreach ( $this->product_info_shortcodes_array as $product_info_short_code ) {
-			if ( false !== strpos( $the_product_info, $product_info_short_code ) ) {
-				// We found short code in the text
-				$replace_with_phrase = $this->get_product_info_short_code( $product_info_short_code );
-				if ( false === $replace_with_phrase && true === $remove_on_empty ) {
-					// No phrase to replace exists, then empty the text and continue with next field
-					$the_product_info = '';
-					return;
-				}
-				else {
-					if ( false === $replace_with_phrase ) $replace_with_phrase = '';
-					// Replacing the short code
-					$the_product_info = str_replace( $product_info_short_code, $replace_with_phrase, $the_product_info );
-				}
-			}
-		} */
-
-		//echo apply_filters( 'the_content', $the_product_info );
 		echo do_shortcode( $the_product_info );
 	}
 

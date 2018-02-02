@@ -2,12 +2,42 @@
 /**
  * Booster for WooCommerce - Functions - Orders
  *
- * @version 3.2.4
+ * @version 3.3.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_adjacent_order_id' ) ) {
+	/**
+	 * wcj_get_adjacent_order_id.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 * @todo    isn't there an easier way?
+	 */
+	function wcj_get_adjacent_order_id( $current_id, $direction = 'next' ) {
+		$args = array(
+			'post_type'      => 'shop_order',
+			'post_status'    => array_keys( wc_get_order_statuses() ),
+			'posts_per_page' => -1,
+			'orderby'        => 'ID',
+			'order'          => 'ASC',
+			'fields'         => 'ids',
+		);
+		$loop = new WP_Query( $args );
+		if ( $loop->have_posts() ) {
+			foreach ( $loop->posts as $post_id ) {
+				if ( $current_id == $post_id ) {
+					return $direction( $loop->posts );
+				}
+				next( $loop->posts );
+			}
+		}
+		return false;
+	}
+}
 
 if ( ! function_exists( 'wcj_get_order_status' ) ) {
 	/**

@@ -154,7 +154,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * create_file_admin_order_meta_box.
 	 *
-	 * @version 2.5.6
+	 * @version 3.3.1
 	 * @since   2.4.5
 	 */
 	function create_file_admin_order_meta_box() {
@@ -176,6 +176,9 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		}
 		if ( ! $files_exists ) {
 			$html .= '<p><em>' . __( 'No files uploaded.', 'woocommerce-jetpack' ) . '</em></p>';
+		} else {
+			$html .= '<p><a style="color:#a00;" href="' . add_query_arg( 'wcj_download_checkout_file_admin_delete_all', $order_id ) . '"' . wcj_get_js_confirmation() . '>' .
+				__( 'Delete all files', 'woocommerce-jetpack' ) . '</a></p>';
 		}
 		echo $html;
 	}
@@ -326,6 +329,21 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				readfile( $tmp_file_name );
 				exit();
 			}
+		}
+		// Admin all files delete
+		if ( isset( $_GET['wcj_download_checkout_file_admin_delete_all'] ) && ( wcj_is_user_role( 'administrator' ) || is_shop_manager() ) ) {
+			$order_id    = $_GET['wcj_download_checkout_file_admin_delete_all'];
+			$total_files = get_post_meta( $order_id, '_' . 'wcj_checkout_files_total_files', true );
+			for ( $i = 1; $i <= $total_files; $i++ ) {
+				if ( '' != ( $order_file_name = get_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_' . $i, true ) ) ) {
+					unlink( wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name );
+				}
+				delete_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_'           . $i );
+				delete_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_real_name_' . $i );
+			}
+			delete_post_meta( $order_id, '_' . 'wcj_checkout_files_total_files' );
+			wp_safe_redirect( remove_query_arg( 'wcj_download_checkout_file_admin_delete_all' ) );
+			exit;
 		}
 		// User file download
 		if ( isset( $_GET['wcj_download_checkout_file'] ) && isset( $_GET['_wpnonce'] ) && ( false !== wp_verify_nonce( $_GET['_wpnonce'], 'wcj_download_checkout_file' ) ) ) {
