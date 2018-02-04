@@ -2,9 +2,14 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Availability by Date
  *
- * @version 3.0.0
+ * @version 3.3.1
  * @since   2.9.1
  * @author  Algoritmika Ltd.
+ * @todo    ! Direct Date: load datepicker.js
+ * @todo    ! Direct Date: tooltip
+ * @todo    (maybe) Direct Date: all products
+ * @todo    (maybe) Direct Date: option to disable months in admin product edit page
+ * @todo    (maybe) Direct Date: add time also
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -20,6 +25,12 @@ $settings = array(
 			'yes' => __( 'Enabled', 'woocommerce-jetpack' ),
 		),
 //		'tooltip'  => __( 'Date formats:', 'woocommerce-jetpack' ) . ' ' . '<code>DD-DD</code>' . ', ' . '<code>DD-DD,DD-DD</code>' . ', ' . '<code>-</code>' . '.',
+	),
+	array(
+		'title'    => __( 'Direct Date', 'woocommerce-jetpack' ),
+		'name'     => 'wcj_product_by_date_direct_date',
+		'default'  => '',
+		'type'     => 'date',
 	),
 );
 $_timestamp = 1; //  January 1 1970

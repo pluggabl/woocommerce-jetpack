@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Date
  *
- * @version 2.9.1
+ * @version 3.3.1
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -57,7 +57,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	 * get_default_date.
 	 *
 	 * @version 2.9.1
-	 * @version 2.9.1
+	 * @since   2.9.1
 	 */
 	function get_default_date( $i ) {
 		$date_defaults = array(
@@ -78,32 +78,50 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	}
 
 	/**
+	 * maybe_get_direct_date.
+	 *
+	 * @version 3.3.1
+	 * @since   3.3.1
+	 */
+	function maybe_get_direct_date( $product_id ) {
+		return (
+			'yes' === get_option( 'wcj_product_by_date_per_product_enabled', 'no' ) &&
+			'yes' === get_post_meta( $product_id, '_' . 'wcj_product_by_date_enabled', true ) &&
+			'' != ( $direct_date = get_post_meta( $product_id, '_' . 'wcj_product_by_date_direct_date', true ) )
+		) ? $direct_date : false;
+	}
+
+	/**
 	 * maybe_add_unavailable_by_date_message.
 	 *
-	 * @version 2.9.1
-	 * @version 2.9.1
+	 * @version 3.3.1
+	 * @since   2.9.1
+	 * @todo    ! message on direct date
 	 */
 	function maybe_add_unavailable_by_date_message() {
 		$_product = wc_get_product();
 		if ( ! $this->check_is_purchasable_by_date( true, $_product ) ) {
-			$_date = $this->get_product_availability_this_month( $_product );
-			$replaceable_values = array(
-				'%date_this_month%' => $_date,
-				'%product_title%'   => $_product->get_title(),
-			);
-			$message = ( ( '-' === $_date ) ?
-				apply_filters( 'booster_option', __( '<p style="color:red;">%product_title% is not available this month.</p>', 'woocommerce-jetpack' ),
-					get_option( 'wcj_product_by_date_unavailable_message_month_off',
-						__( '<p style="color:red;">%product_title% is not available this month.</p>', 'woocommerce-jetpack' ) ) ) :
-				apply_filters( 'booster_option', __( '<p style="color:red;">%product_title% is available only on %date_this_month% this month.</p>', 'woocommerce-jetpack' ),
-					get_option( 'wcj_product_by_date_unavailable_message',
-						__( '<p style="color:red;">%product_title% is available only on %date_this_month% this month.</p>', 'woocommerce-jetpack' ) ) )
-			);
-			echo str_replace(
-				array_keys( $replaceable_values ),
-				array_values( $replaceable_values ),
-				do_shortcode( $message )
-			);
+			if ( false !== ( $direct_date = $this->maybe_get_direct_date( wcj_get_product_id_or_variation_parent_id( $_product ) ) ) ) {
+				$replaceable_values = array(
+					'%direct_date%' => $direct_date,
+				);
+				$message = '<p style="color:red;">' . __( '%product_title% will be available on %direct_date%', 'woocommerce-jetpack' ) . '</p>';
+			} else {
+				$_date = $this->get_product_availability_this_month( $_product );
+				$replaceable_values = array(
+					'%date_this_month%' => $_date,
+				);
+				$message = ( ( '-' === $_date ) ?
+					apply_filters( 'booster_option', __( '<p style="color:red;">%product_title% is not available this month.</p>', 'woocommerce-jetpack' ),
+						get_option( 'wcj_product_by_date_unavailable_message_month_off',
+							__( '<p style="color:red;">%product_title% is not available this month.</p>', 'woocommerce-jetpack' ) ) ) :
+					apply_filters( 'booster_option', __( '<p style="color:red;">%product_title% is available only on %date_this_month% this month.</p>', 'woocommerce-jetpack' ),
+						get_option( 'wcj_product_by_date_unavailable_message',
+							__( '<p style="color:red;">%product_title% is available only on %date_this_month% this month.</p>', 'woocommerce-jetpack' ) ) )
+				);
+			}
+			$replaceable_values['%product_title%'] = $_product->get_title();
+			echo str_replace( array_keys( $replaceable_values ), $replaceable_values, do_shortcode( $message ) );
 		}
 	}
 
@@ -111,7 +129,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	 * get_product_availability_this_month.
 	 *
 	 * @version 2.9.1
-	 * @version 2.9.1
+	 * @since   2.9.1
 	 */
 	function get_product_availability_this_month( $_product ) {
 		$product_id = wcj_get_product_id_or_variation_parent_id( $_product );
@@ -127,19 +145,23 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	/**
 	 * check_is_purchasable_by_date.
 	 *
-	 * @version 2.9.1
-	 * @version 2.9.1
+	 * @version 3.3.1
+	 * @since   2.9.1
 	 * @todo    validate `wcj_product_by_date_` option before checking (or even better earlier, when option is saved by admin)
 	 */
 	function check_is_purchasable_by_date( $purchasable, $_product ) {
 		if ( $purchasable ) {
-			$_date = $this->get_product_availability_this_month( $_product );
-			if ( '-' === $_date ) {
-				return false;
-			} elseif ( '' == $_date ) {
-				return true;
+			if ( false !== ( $direct_date = $this->maybe_get_direct_date( wcj_get_product_id_or_variation_parent_id( $_product ) ) ) ) {
+				return ( $this->time_now >= strtotime( $direct_date ) );
 			} else {
-				return wcj_check_date( $_date, array( 'day_now' => $this->day_now ) );
+				$_date = $this->get_product_availability_this_month( $_product );
+				if ( '-' === $_date ) {
+					return false;
+				} elseif ( '' == $_date ) {
+					return true;
+				} else {
+					return wcj_check_date( $_date, array( 'day_now' => $this->day_now ) );
+				}
 			}
 		}
 		return $purchasable;
