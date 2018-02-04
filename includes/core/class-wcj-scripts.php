@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Scripts
  *
- * @version 3.0.0
+ * @version 3.3.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Scripts {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.0
+	 * @version 3.3.1
 	 * @since   2.9.0
 	 */
 	function __construct() {
@@ -28,7 +28,8 @@ class WCJ_Scripts {
 				wcj_is_module_enabled( 'purchase_data' ) ||
 				wcj_is_module_enabled( 'pdf_invoicing' ) ||
 				wcj_is_module_enabled( 'crowdfunding' ) ||
-				wcj_is_module_enabled( 'reports' )
+				wcj_is_module_enabled( 'reports' ) ||
+				wcj_is_module_enabled( 'product_by_date' )
 			) {
 				add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_backend_scripts' ) );
 			}

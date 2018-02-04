@@ -180,8 +180,8 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 03/02/2018 =
-D X $ * Dev - PRODUCTS - Product Availability by Date - "Direct Date" option added.
+= 3.3.1 - 04/02/2018 =
+D W I * Dev - PRODUCTS - Product Availability by Date - "Direct Date" option added.
 D W $ * Dev - SHIPPING & ORDERS - Orders - "Admin Order Navigation" added.
   X I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` taxes display fixed.
   T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - Price taxes display fixed.

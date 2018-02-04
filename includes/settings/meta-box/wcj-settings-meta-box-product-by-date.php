@@ -5,8 +5,6 @@
  * @version 3.3.1
  * @since   2.9.1
  * @author  Algoritmika Ltd.
- * @todo    ! Direct Date: load datepicker.js
- * @todo    ! Direct Date: tooltip
  * @todo    (maybe) Direct Date: all products
  * @todo    (maybe) Direct Date: option to disable months in admin product edit page
  * @todo    (maybe) Direct Date: add time also
@@ -31,6 +29,8 @@ $settings = array(
 		'name'     => 'wcj_product_by_date_direct_date',
 		'default'  => '',
 		'type'     => 'date',
+		'tooltip'  => __( 'Fill this if you want to set one date from which the product will be available.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'If this field is filled in, monthly settings fields are ignored.', 'woocommerce-jetpack' ),
 	),
 );
 $_timestamp = 1; //  January 1 1970

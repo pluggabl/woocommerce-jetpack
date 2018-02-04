@@ -96,7 +96,6 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	 *
 	 * @version 3.3.1
 	 * @since   2.9.1
-	 * @todo    ! message on direct date
 	 */
 	function maybe_add_unavailable_by_date_message() {
 		$_product = wc_get_product();
@@ -105,7 +104,8 @@ class WCJ_Product_By_Date extends WCJ_Module {
 				$replaceable_values = array(
 					'%direct_date%' => $direct_date,
 				);
-				$message = '<p style="color:red;">' . __( '%product_title% will be available on %direct_date%', 'woocommerce-jetpack' ) . '</p>';
+				$message = get_option( 'wcj_product_by_date_unavailable_message_direct_date',
+					'<p style="color:red;">' . __( '%product_title% is not available until %direct_date%.', 'woocommerce-jetpack' ) . '</p>' );
 			} else {
 				$_date = $this->get_product_availability_this_month( $_product );
 				$replaceable_values = array(
