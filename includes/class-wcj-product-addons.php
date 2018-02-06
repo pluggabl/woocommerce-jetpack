@@ -276,7 +276,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_product_addons.
 	 *
-	 * @version 3.3.0
+	 * @version 3.3.1
 	 * @since   2.5.3
 	 * @todo    (maybe) `checkbox_key` is mislabelled, should be `key` (or maybe `value_key`)
 	 */
@@ -303,6 +303,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 						'label_value'  => get_option( 'wcj_product_addons_all_products_label_' . $i ),
 						'title'        => get_option( 'wcj_product_addons_all_products_title_' . $i, '' ),
 						'placeholder'  => get_option( 'wcj_product_addons_all_products_placeholder_' . $i, '' ),
+						'class'        => get_option( 'wcj_product_addons_all_products_class_' . $i, '' ),
 						'tooltip'      => get_option( 'wcj_product_addons_all_products_tooltip_' . $i, '' ),
 						'type'         => get_option( 'wcj_product_addons_all_products_type_' . $i, 'checkbox' ),
 						'default'      => get_option( 'wcj_product_addons_all_products_default_' . $i, '' ),
@@ -331,6 +332,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 							'label_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_label_' . $i, true ),
 							'title'        => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_title_' . $i, true ),
 							'placeholder'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_placeholder_' . $i, true ),
+							'class'        => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_class_' . $i, true ),
 							'tooltip'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_tooltip_' . $i, true ),
 							'type'         => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_type_' . $i, true ),
 							'default'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_default_' . $i, true ),
@@ -514,7 +516,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 					' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $addon['tooltip'] . '">' :
 					'';
 				$html .= wcj_handle_replacements( array(
-						'%addon_input%'   => '<input type="checkbox" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '"' . $is_checked . $is_required . '>',
+						'%addon_input%'   => '<input type="checkbox" id="' . $addon['checkbox_key'] . '" class="' . $addon['class'] . '" name="' . $addon['checkbox_key'] . '"' . $is_checked . $is_required . '>',
 						'%addon_id%'      => $addon['checkbox_key'],
 						'%addon_label%'   => $addon['label_value'],
 						'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $addon['price_value'] ) ) ),
@@ -527,7 +529,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 					' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $addon['tooltip'] . '">' :
 					'';
 				$html .= wcj_handle_replacements( array(
-						'%addon_input%'   => '<input type="text" id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '" placeholder="' . $addon['placeholder'] . '" value="' . $default_value . '"' . $is_required . '>',
+						'%addon_input%'   => '<input type="text" id="' . $addon['checkbox_key'] . '" class="' . $addon['class'] . '" name="' . $addon['checkbox_key'] . '" placeholder="' . $addon['placeholder'] . '" value="' . $default_value . '"' . $is_required . '>',
 						'%addon_id%'      => $addon['checkbox_key'],
 						'%addon_label%'   => $addon['label_value'],
 						'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $addon['price_value'] ) ) ),
@@ -558,7 +560,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 								' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . $tooltips[ $i ] . '">' :
 								'';
 							$html .= wcj_handle_replacements( array(
-									'%addon_input%'   => '<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>',
+									'%addon_input%'   => '<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" class="' . $addon['class'] . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>',
 									'%addon_id%'      => $addon['checkbox_key'] . '-' . $label,
 									'%addon_label%'   => $labels[ $i ],
 									'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ] ) ) ),
@@ -577,7 +579,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 							$select_options = '<option value="">' . $addon['placeholder'] . '</option>' . $select_options;
 						}
 						$html .= wcj_handle_replacements( array(
-								'%addon_input%'   => '<select' . $is_required . ' id="' . $addon['checkbox_key'] . '" name="' . $addon['checkbox_key'] . '">' . $select_options . '</select>',
+								'%addon_input%'   => '<select' . $is_required . ' id="' . $addon['checkbox_key'] . '" class="' . $addon['class'] . '" name="' . $addon['checkbox_key'] . '">' . $select_options . '</select>',
 								'%addon_tooltip%' => $maybe_tooltip,
 							), get_option( 'wcj_product_addons_template_type_select', '<p>%addon_input%%addon_tooltip%</p>' ) );
 					}

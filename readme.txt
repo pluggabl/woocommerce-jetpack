@@ -180,7 +180,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 04/02/2018 =
+= 3.3.1 - 06/02/2018 =
+D     * Dev - Shortcodes - Orders - `[wcj_order_notes]` shortcode added.
+D X I * Dev - PRODUCTS - Product Addons - "CSS Class" options added.
+D W I * Dev - PRODUCTS - Product Input Fields - "CSS Class" options added.
 D W I * Dev - PRODUCTS - Product Availability by Date - "Direct Date" option added.
 D W $ * Dev - SHIPPING & ORDERS - Orders - "Admin Order Navigation" added.
   X I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` taxes display fixed.

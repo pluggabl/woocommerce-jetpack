@@ -131,6 +131,12 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'type'     => 'text',
 		),
 		array(
+			'desc'    => __( 'CSS Class', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_product_addons_all_products_class_' . $i,
+			'default'  => '',
+			'type'     => 'text',
+		),
+		array(
 			'desc'     => __( 'Is Required', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_product_addons_all_products_required_' . $i,
 			'default'  => 'no',

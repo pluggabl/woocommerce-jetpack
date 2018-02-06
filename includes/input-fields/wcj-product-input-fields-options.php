@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Options
  *
- * @version 3.1.0
+ * @version 3.3.1
  * @since   3.1.0
  * @author  Algoritmika Ltd.
  */
@@ -68,6 +68,12 @@ return array(
 		'id'                => 'wcj_product_input_fields_required_message_' . $this->scope . '_',
 		'title'             => __( 'Message on required', 'woocommerce-jetpack' ),
 		'type'              => 'textarea',
+		'default'           => '',
+	),
+	array(
+		'id'                => 'wcj_product_input_fields_class_' . $this->scope . '_',
+		'title'             => __( 'CSS Class', 'woocommerce-jetpack' ),
+		'type'              => 'text',
 		'default'           => '',
 	),
 	/* array(

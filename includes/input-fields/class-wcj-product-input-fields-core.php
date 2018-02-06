@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 3.2.4
+ * @version 3.3.1
  * @author  Algoritmika Ltd.
  */
 
@@ -411,7 +411,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 3.2.4
+	 * @version 3.3.1
 	 * @todo    `$set_value` - add "default" option for all other types except checkbox
 	 * @todo    `$set_value` - 'file' type
 	 * @todo    add `required` attributes
@@ -477,6 +477,12 @@ class WCJ_Product_Input_Fields_Core {
 				);
 
 				$html = '';
+
+				$class = $this->get_value( 'wcj_product_input_fields_class_' . $this->scope . '_' . $i, $_product_id, '' );
+				if ( '' != $class ) {
+					$class = ' ' . $class;
+				}
+
 				switch ( $type ) {
 
 					case 'number':
@@ -485,7 +491,7 @@ class WCJ_Product_Input_Fields_Core {
 					case 'password':
 					case 'email':
 					case 'tel':
-						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '" type="' . $type . '" name="' .
+						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" type="' . $type . '" name="' .
 							$field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
 						break;
 
@@ -495,33 +501,33 @@ class WCJ_Product_Input_Fields_Core {
 							'on',
 							false
 						);
-						$html = '<input class="wcj_product_input_fields" id="' . $field_name . '" type="' . $type . '" name="' . $field_name . '"' .
+						$html = '<input class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" type="' . $type . '" name="' . $field_name . '"' .
 							$custom_attributes . $checked . '>';
 						break;
 
 					case 'datepicker':
-						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '" ' . $datepicker_year . 'firstday="' .
+						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" ' . $datepicker_year . 'firstday="' .
 							$datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' .
 							$datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' .
 							$type . '" display="date" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
 						break;
 
 					case 'weekpicker':
-						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '" ' . $datepicker_year . 'firstday="' .
+						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" ' . $datepicker_year . 'firstday="' .
 							$datepicker_firstday . '" dateformat="' . $datepicker_format . '" mindate="' .
 							$datepicker_mindate . '" maxdate="' . $datepicker_maxdate . '" type="' .
 							$type . '" display="week" name="' . $field_name . '" placeholder="' . $placeholder . '"' . $custom_attributes . '>';
 						break;
 
 					case 'timepicker':
-						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields" id="' . $field_name . '"' .
+						$html = '<input value="' . $set_value . '" class="wcj_product_input_fields' . $class . '" id="' . $field_name . '"' .
 							$timepicker_mintime . $timepicker_maxtime . ' interval="' . $timepicker_interval . '" timeformat="' .
 							$timepicker_format . '" type="' . $type . '" display="time" name="' . $field_name . '" placeholder="' .
 							$placeholder . '"' . $custom_attributes . '>';
 						break;
 
 					case 'textarea':
-						$html = '<textarea class="wcj_product_input_fields" id="' . $field_name . '" name="' . $field_name . '" placeholder="' . $placeholder . '">' .
+						$html = '<textarea class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name . '" placeholder="' . $placeholder . '">' .
 							$set_value . '</textarea>';
 						break;
 
@@ -541,7 +547,7 @@ class WCJ_Product_Input_Fields_Core {
 								$select_options_html .= '</option>';
 							}
 						}
-						$html = '<select class="wcj_product_input_fields" id="' . $field_name . '" name="' . $field_name . '">' . $select_options_html . '</select>';
+						$html = '<select class="wcj_product_input_fields' . $class . '" id="' . $field_name . '" name="' . $field_name . '">' . $select_options_html . '</select>';
 						break;
 
 					case 'radio':
@@ -555,7 +561,7 @@ class WCJ_Product_Input_Fields_Core {
 								'%radio_field_html%<label for="%radio_field_id%" class="radio">%radio_field_title%</label><br>' );
 							foreach ( $select_options as $option_key => $option_text ) {
 								$replaced_values = array(
-									'%radio_field_html%'  => '<input type="radio" class="input-radio wcj_product_input_fields" value="' . esc_attr( $option_key ) .
+									'%radio_field_html%'  => '<input type="radio" class="input-radio wcj_product_input_fields' . $class . '" value="' . esc_attr( $option_key ) .
 										'" name="' . $field_name . '" id="' . $field_name . '_' . esc_attr( $option_key ) . '"' . checked( $value, $option_key, false ) . ' />',
 									'%radio_field_id%'    => $field_name . '_' . esc_attr( $option_key ),
 									'%radio_field_title%' => $option_text,
@@ -570,7 +576,7 @@ class WCJ_Product_Input_Fields_Core {
 						$countries = WC()->countries->get_allowed_countries();
 						if ( sizeof( $countries ) > 1 ) {
 							$value = ( '' != $set_value ? $set_value : key( $countries ) );
-							$field = '<select name="' . $field_name . '" id="' . $field_name . '" class="country_to_state country_select wcj_product_input_fields">' .
+							$field = '<select name="' . $field_name . '" id="' . $field_name . '" class="country_to_state country_select wcj_product_input_fields' . $class . '">' .
 								'<option value="">'.__( 'Select a country&hellip;', 'woocommerce' ) .'</option>';
 							foreach ( $countries as $ckey => $cvalue ) {
 								$field .= '<option value="' . esc_attr( $ckey ) . '" '.selected( $value, $ckey, false ) .'>'.__( $cvalue, 'woocommerce' ) .'</option>';

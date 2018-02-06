@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Addons
  *
- * @version 3.3.0
+ * @version 3.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -91,6 +91,12 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'title'    => __( 'Placeholder', 'woocommerce-jetpack' ),
 			'tooltip'  => __( 'For "Select Box" type only.', 'woocommerce-jetpack' ),
 			'name'     => 'wcj_product_addons_per_product_placeholder_' . $i,
+			'default'  => '',
+			'type'     => 'text',
+		),
+		array(
+			'title'    => __( 'CSS Class', 'woocommerce-jetpack' ),
+			'name'     => 'wcj_product_addons_per_product_class_' . $i,
 			'default'  => '',
 			'type'     => 'text',
 		),
