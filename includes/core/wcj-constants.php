@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Constants
  *
- * @version 3.3.0
+ * @version 3.4.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -73,10 +73,10 @@ if ( ! defined( 'WCJ_SESSION_TYPE' ) ) {
 	/**
 	 * Session type.
 	 *
-	 * @version 3.1.0
+	 * @version 3.4.0
 	 * @since   3.1.0
 	 */
-	define( 'WCJ_SESSION_TYPE', ( 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? get_option( 'wcj_general_advanced_session_type', 'standard' ) : 'standard' ) );
+	define( 'WCJ_SESSION_TYPE', ( 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? get_option( 'wcj_general_advanced_session_type', 'wc' ) : 'wc' ) );
 }
 
 if ( ! defined( 'WCJ_VERSION_OPTION' ) ) {

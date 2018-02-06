@@ -125,23 +125,27 @@ foreach ( $this->woocommerce_core_checkout_fields as $field ) {
 		),
 		array(
 			'desc'     => __( 'include product categories', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'If not empty - selected categories products must be in cart for current field to appear.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'If not empty - selected categories products must be in cart for current field to appear.', 'woocommerce-jetpack' ) . ' ' .
+				apply_filters( 'booster_message', '', 'desc_no_link' ),
 			'id'       => 'wcj_checkout_fields_' . $field . '_' . 'cats_incl',
 			'default'  => '',
 			'type'     => 'multiselect',
 			'class'    => 'chosen_select',
 			'css'      => 'min-width:300px;width:50%;',
 			'options'  => $product_cats,
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 		array(
 			'desc'     => __( 'exclude product categories', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'If not empty - current field is hidden, if selected categories products are in cart.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'If not empty - current field is hidden, if selected categories products are in cart.', 'woocommerce-jetpack' ) . ' ' .
+				apply_filters( 'booster_message', '', 'desc_no_link' ),
 			'id'       => 'wcj_checkout_fields_' . $field . '_' . 'cats_excl',
 			'default'  => '',
 			'type'     => 'multiselect',
 			'class'    => 'chosen_select',
 			'css'      => 'min-width:300px;width:50%;',
 			'options'  => $product_cats,
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 	) );
 }

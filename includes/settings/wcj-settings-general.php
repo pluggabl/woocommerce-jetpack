@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 3.2.3
+ * @version 3.4.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add link to Booster's shortcodes list
@@ -89,7 +89,7 @@ $settings = array(
 		'title'    => __( 'Session Type in Booster', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_session_type',
 		'default'  => 'standard',
-		'type'     => 'select',
+		'type'     => 'wc',
 		'options'  => array(
 			'standard' => __( 'Standard PHP sessions', 'woocommerce-jetpack' ),
 			'wc'       => __( 'WC sessions', 'woocommerce-jetpack' ),

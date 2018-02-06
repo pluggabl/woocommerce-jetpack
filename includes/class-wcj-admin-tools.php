@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 3.3.0
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -199,7 +199,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * get_system_info_table_array.
 	 *
-	 * @version 2.7.0
+	 * @version 3.4.0
 	 * @since   2.5.7
 	 * @todo    (maybe) 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_CHARSET', 'DB_COLLATE'
 	 */
@@ -213,6 +213,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 			'DISABLE_WP_CRON',
 			'WP_CRON_LOCK_TIMEOUT',
 			'WCJ_WC_VERSION',
+			'WCJ_SESSION_TYPE',
 		);
 		foreach ( $constants_array as $the_constant ) {
 			$system_info[] = array( $the_constant, ( defined( $the_constant ) ? constant( $the_constant ) : __( 'NOT DEFINED', 'woocommerce-jetpack' ) ) );

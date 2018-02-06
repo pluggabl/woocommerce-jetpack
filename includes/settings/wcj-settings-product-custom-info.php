@@ -79,7 +79,7 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'default'  => '[wcj_product_total_sales before="Total sales: " after=" pcs."]',
 				'type'     => 'custom_textarea',
 				'desc_tip' => __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
-				'css'      => 'width:60%;min-width:300px;height:100px;',
+				'css'      => 'width:100%;height:200px;',
 			),
 			array(
 				'title'    => __( 'Position', 'woocommerce-jetpack' ),
@@ -106,14 +106,12 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 						'woocommerce_after_shop_loop_item'        => __( 'After product', 'woocommerce-jetpack' ),
 					) ),
 					$extra_filters ),
-				'css'      => 'width:250px;',
 			),
 			array(
 				'title'    => __( 'Position Order (i.e. Priority)', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_custom_info_priority_' . $single_or_archive . '_' . $i,
 				'default'  => 10,
 				'type'     => 'number',
-				'css'      => 'width:250px;',
 			),
 			array(
 				'title'    => __( 'Product Categories to Include', 'woocommerce-jetpack' ),
@@ -122,7 +120,6 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'default'  => '',
 				'type'     => 'multiselect',
 				'class'    => 'chosen_select',
-				'css'      => 'width: 450px;',
 				'options'  => $product_cats,
 			),
 			array(
@@ -132,7 +129,6 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'default'  => '',
 				'type'     => 'multiselect',
 				'class'    => 'chosen_select',
-				'css'      => 'width: 450px;',
 				'options'  => $product_cats,
 			),
 			array(
@@ -142,7 +138,6 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'default'  => '',
 				'type'     => 'multiselect',
 				'class'    => 'chosen_select',
-				'css'      => 'width: 450px;',
 				'options'  => $product_tags,
 			),
 			array(
@@ -152,7 +147,6 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				'default'  => '',
 				'type'     => 'multiselect',
 				'class'    => 'chosen_select',
-				'css'      => 'width: 450px;',
 				'options'  => $product_tags,
 			),
 			wcj_get_settings_as_multiselect_or_text(
@@ -161,7 +155,6 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 					'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i,
 					'default'  => '',
-					'css'      => 'width: 450px;',
 				),
 				$products,
 				$is_multiselect_products
@@ -172,7 +165,6 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 					'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
 					'id'       => 'wcj_product_custom_info_products_to_exclude_' . $single_or_archive . '_' . $i,
 					'default'  => '',
-					'css'      => 'width: 450px;',
 				),
 				$products,
 				$is_multiselect_products
@@ -192,11 +184,12 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 		array(
 			'title'    => __( 'Extra Filters', 'woocommerce-jetpack' ),
 			'desc_tip' => __( 'Leave blank to disable.', 'woocommerce-jetpack' ),
-			'desc'     => __( 'You can add custom filters here (one per line, in filter|title format). E.g.: <code>rehub_woo_after_compact_grid_title|Rehub: After title</code>.', 'woocommerce-jetpack' ),
+			'desc'     => __( 'You can add custom filters here (one per line, in filter|title format).', 'woocommerce-jetpack' ) . '<br>' .
+				sprintf( __( 'E.g.: %s.', 'woocommerce-jetpack' ), '<code>rehub_woo_after_compact_grid_title|Rehub: After title</code>' ),
 			'id'       => 'wcj_product_custom_info_extra_filters_' . $single_or_archive,
 			'default'  => '',
 			'type'     => 'custom_textarea',
-			'css'      => 'width:450px;height:100px',
+			'css'      => 'height:100px',
 		),
 		array(
 			'type'     => 'sectionend',

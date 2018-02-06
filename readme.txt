@@ -181,35 +181,35 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.4.0 - 06/02/2018 =
-D     * Dev - PRODUCTS - Product Addons - Admin Settings - Per Product - Restyling.
+D     * Dev - EMAILS & MISC. - Admin Tools - System Info - `WCJ_SESSION_TYPE` constant info added.
 D     * Dev - Shortcodes - Orders - `[wcj_order_notes]` shortcode added.
 D     * Dev - PRODUCTS - Product Addons - "HTML Class" options added.
 D W I * Dev - PRODUCTS - Product Input Fields - "HTML Class" options added.
 D W I * Dev - PRODUCTS - Product Availability by Date - "Direct Date" option added.
 D W P * Dev - SHIPPING & ORDERS - Orders - "Admin Order Navigation" added.
-  X I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` taxes display fixed.
+  T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` and `fixed` discount taxes display fixed.
   T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - Price taxes display fixed.
   T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` case fixed.
-  T I * Dev - Functions - General - `wcj_get_left_to_free_shipping()` - WooCommerce v3.2.0 backward compatibility added.
+  T I * Dev - Functions - General - `wcj_get_left_to_free_shipping()` - Backward compatibility with WooCommerce below v3.2.0 added.
 D T   * Dev - Settings Manager - "Reset meta" button added (separated from "Reset" options button).
 D W   * Dev - CART & CHECKOUT - Checkout Files Upload - Admin order view - "Delete all files" button added.
   T I * Dev - PRODUCTS - Product Tabs - Now `do_shortcode()` is used in tabs output, instead of applying `the_content` filter.
-D W   * Dev - PRODUCTS - Product Info - Admin Settings - Descriptions updated.
-D W   * Dev - PRODUCTS - Product Addons - Admin Settings - Restyling.
-D W I * Dev - PRODUCTS - Product Addons - "Frontend Templates" section added.
+D     * Dev - PRODUCTS - Product Info - Admin Settings - Descriptions updated and settings restyled.
+D     * Dev - PRODUCTS - Product Addons - Admin Settings (General and Per Product) - Restyling.
+D T I * Dev - PRODUCTS - Product Addons - "Frontend Templates" section added.
 D     * Dev - PRODUCTS - Stock - Admin Settings - Minor restyling.
 D T P * Dev - PRODUCTS - Stock - "Custom Stock HTML" section added.
 D T P * Dev - PRODUCTS - Stock - "Custom In Stock" section added.
 D     * Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_meta` attribute added.
 D   P * Dev - PRODUCTS - Stock - "Remove Stock Display" option added.
-D W P * Dev - CART & CHECKOUT - Checkout Core Fields - "Include/exclude product categories" options added.
+D W I * Dev - CART & CHECKOUT - Checkout Core Fields - "Include/exclude product categories" options added.
   T I * Dev - SHIPPING & ORDERS - Custom Shipping - Code refactoring.
       * Fix - EMAILS & MISC. - Admin Bar - Booster: Active - Title fixed.
   T   * Dev - Link changed from `http://booster.io` to `https://booster.io` in all plugin files.
       * Dev - EMAILS & MISC. - Custom JS - Admin Settings - Minor restyling.
       * Dev - EMAILS & MISC. - Custom CSS - Admin Settings - Minor restyling.
-E T I * Dev - Code refactoring - `alg_` replaced with `wcj_` in function and class names.
-D X I * Dev - Speed Optimization - "WC Sessions" is now the default option (can be changed in "General" module).
+  T I * Dev - Code refactoring - `alg_` replaced with `wcj_` in function and class names.
+D T I * Dev - Speed Optimization - "WC Sessions" is now the default option for `WCJ_SESSION_TYPE` (can be changed in "General" module).
   T I * Dev - Speed Optimization - "WC Sessions" support added to EU VAT Number, Checkout Files Upload, Multicurrency (Currency Switcher) and Prices and Currencies by Country modules.
   T   * Fix - CART & CHECKOUT - Cart Custom Info - Cart Items Table Custom Info - `wp_reset_postdata()` added.
 D T   * Dev - CART & CHECKOUT - Checkout Custom Fields - `wcj_checkout_custom_field_visible` filter added.

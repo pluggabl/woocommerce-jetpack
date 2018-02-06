@@ -153,8 +153,8 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 			if ( ! $this->is_visible( array(
 					'include_products'   => '',
 					'exclude_products'   => '',
-					'include_categories' => get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_incl', '' ),
-					'exclude_categories' => get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_excl', '' ),
+					'include_categories' => apply_filters( 'booster_option', '', get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_incl', '' ) ),
+					'exclude_categories' => apply_filters( 'booster_option', '', get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_excl', '' ) ),
 					'include_tags'       => '',
 					'exclude_tags'       => '',
 				) )

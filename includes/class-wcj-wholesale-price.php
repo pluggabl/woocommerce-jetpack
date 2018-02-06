@@ -50,10 +50,27 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	}
 
 	/**
+	 * get_price_for_cart.
+	 *
+	 * @version 3.4.0
+	 * @since   3.4.0
+	 */
+	function get_price_for_cart( $price, $_product ) {
+		$product_prices_include_tax = ( 'yes'  === get_option( 'woocommerce_prices_include_tax' ) );
+		$cart_prices_include_tax    = ( 'incl' === get_option( 'woocommerce_tax_display_cart' ) );
+		if ( $product_prices_include_tax != $cart_prices_include_tax ) {
+			return ( $cart_prices_include_tax ?
+				wc_get_price_including_tax( $_product, array( 'price' => $price, 'qty' => 1 ) ) :
+				wc_get_price_excluding_tax( $_product, array( 'price' => $price, 'qty' => 1 ) ) );
+		} else {
+			return $price;
+		}
+	}
+
+	/**
 	 * add_discount_info_to_cart_page.
 	 *
 	 * @version 3.4.0
-	 * @todo    rethink `wcj_get_product_display_price()` - must take into account the "Prices entered with tax" option
 	 */
 	function add_discount_info_to_cart_page( $price_html, $cart_item, $cart_item_key ) {
 
@@ -73,12 +90,12 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 						$saved_wcj_wholesale_price = $_product->wcj_wholesale_price;
 						unset( $_product->wcj_wholesale_price );
 					}
-					$discount = wc_price( wcj_get_product_display_price( $_product, ( $_product->get_price() - $discount ), 1, 'cart' ) );
+					$discount = wc_price( $this->get_price_for_cart( ( $_product->get_price() - $discount ), $_product ) );
 					if ( false !== $saved_wcj_wholesale_price ) {
 						$_product->wcj_wholesale_price = $saved_wcj_wholesale_price;
 					}
 				} elseif ( 'fixed' === $discount_type ) {
-					$discount = wc_price( $discount );
+					$discount = wc_price( $this->get_price_for_cart( $discount, $cart_item['data'] ) );
 				} else {
 					$discount = $discount . '%';
 				}

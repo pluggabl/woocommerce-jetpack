@@ -178,7 +178,6 @@ if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 	 *
 	 * @version 3.4.0
 	 * @since   3.1.0
-	 * @todo    make `wc` sessions the default method (`wcj_general_advanced_session_type`)
 	 */
 	function wcj_session_maybe_start() {
 		switch ( WCJ_SESSION_TYPE ) {
