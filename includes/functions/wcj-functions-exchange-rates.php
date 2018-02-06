@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */

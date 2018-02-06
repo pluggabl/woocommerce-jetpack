@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function __construct() {
 
@@ -34,8 +34,8 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * get_location.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function get_location( $type ) {
 		switch ( $type ) {
@@ -60,8 +60,8 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * range_match.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function range_match( $postcode_range, $postcode_to_check ) {
 		$postcode_range = explode( '...', $postcode_range );
@@ -71,8 +71,8 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * check_postcode.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function check_postcode( $postcode_to_check, $postcodes ) {
 		foreach ( $postcodes as $postcode ) {
@@ -90,7 +90,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @todo    (maybe) rename module to "Payment Gateways by (Customer's) Location"
 	 * @todo    (maybe) check naming, should be `wcj_gateways_by_location_` (however it's too long...)
 	 * @todo    (maybe) code refactoring

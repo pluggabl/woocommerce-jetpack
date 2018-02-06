@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cart Custom Info
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -43,7 +43,7 @@ class WCJ_Cart extends WCJ_Module {
 	/**
 	 * add_custom_info_to_cart_item_name.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.3.9
 	 * @todo    (maybe) `wc_setup_product_data( $post );`
 	 */

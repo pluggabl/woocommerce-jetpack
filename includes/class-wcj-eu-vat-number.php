@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @todo    clean up
@@ -288,7 +288,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * add_default_checkout_billing_eu_vat_number.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function add_default_checkout_billing_eu_vat_number( $default_value, $field_key ) {
 		if ( null !== ( $eu_vat_number_to_check = wcj_session_get( 'wcj_eu_vat_number_to_check' ) ) ) {
@@ -316,7 +316,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * start_session.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function start_session() {
 		wcj_session_maybe_start();
@@ -333,7 +333,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function enqueue_scripts() {
 		if ( 'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) ) {
@@ -352,7 +352,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * wcj_validate_eu_vat_number.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function wcj_validate_eu_vat_number( $param ) {
 //		if ( ! isset( $_GET['wcj_validate_eu_vat_number'] ) ) return;
@@ -390,7 +390,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * maybe_exclude_vat.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 //	function maybe_exclude_vat( $matched_tax_rates, $args ) {
 	function maybe_exclude_vat() {
@@ -435,7 +435,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * checkout_validate_vat.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function checkout_validate_vat( $_posted ) {
 		if ( 'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) ) {

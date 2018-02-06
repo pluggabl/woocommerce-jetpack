@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @todo    (maybe) add `[wcj_product_stock_price]`
 	 */
 	function __construct() {
@@ -549,8 +549,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_stock_status.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function wcj_product_stock_status( $atts ) {
 		if ( ! isset( $atts['instock'] ) ) {
@@ -728,7 +728,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Returns product (modified) price.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @todo    variable products: a) not range; and b) price by country.
 	 * @return  string The product (modified) price
 	 */

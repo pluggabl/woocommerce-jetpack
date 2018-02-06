@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options
@@ -92,7 +92,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * validate_on_checkout.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.4.5
 	 */
 	function validate_on_checkout( $posted ) {
@@ -154,7 +154,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * create_file_admin_order_meta_box.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.4.5
 	 */
 	function create_file_admin_order_meta_box() {
@@ -207,7 +207,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_to_order.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.4.5
 	 */
 	function add_files_to_order( $order_id, $posted ) {
@@ -240,7 +240,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.4.5
 	 */
 	function process_checkout_files_upload() {
@@ -605,7 +605,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_upload_form_to_checkout_frontend_all.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.5.2
 	 */
 	function add_files_upload_form_to_checkout_frontend_all( $is_direct_call = false ) {

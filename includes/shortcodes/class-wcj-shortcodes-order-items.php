@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -440,7 +440,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_cell.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   3.2.0
 	 */
 	function get_cell( $column, $column_param, $atts, $the_order, $columns, $item_counter, $item_id, $item, $the_product ) {

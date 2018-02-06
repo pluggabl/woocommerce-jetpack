@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Icons
  *
- * @version 3.3.1
- * @since   3.3.1
+ * @version 3.4.0
+ * @since   3.4.0
  * @author  Algoritmika Ltd.
  */
 

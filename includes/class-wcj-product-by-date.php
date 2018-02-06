@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Date
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -80,8 +80,8 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	/**
 	 * maybe_get_direct_date.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function maybe_get_direct_date( $product_id ) {
 		return (
@@ -94,7 +94,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	/**
 	 * maybe_add_unavailable_by_date_message.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.9.1
 	 */
 	function maybe_add_unavailable_by_date_message() {
@@ -145,7 +145,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	/**
 	 * check_is_purchasable_by_date.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.9.1
 	 * @todo    validate `wcj_product_by_date_` option before checking (or even better earlier, when option is saved by admin)
 	 */

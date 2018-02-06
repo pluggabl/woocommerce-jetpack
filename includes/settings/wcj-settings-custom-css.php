@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Custom CSS
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

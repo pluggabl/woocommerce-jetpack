@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Scripts
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Scripts {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.9.0
 	 */
 	function __construct() {

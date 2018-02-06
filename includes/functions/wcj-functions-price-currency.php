@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -389,7 +389,7 @@ if ( ! function_exists( 'wcj_get_current_currency_code' ) ) {
 	/**
 	 * wcj_get_current_currency_code.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.5.0
 	 */
 	function wcj_get_current_currency_code( $module ) {

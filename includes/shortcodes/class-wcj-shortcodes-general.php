@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function __construct() {
 
@@ -109,8 +109,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_wc_session_value.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 * @todo    handle arrays
 	 */
 	function wcj_wc_session_value( $atts ) {
@@ -120,8 +120,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_session_value.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function wcj_session_value( $atts ) {
 		return ( '' === $atts['key'] || ! isset( $_SESSION[ $atts['key'] ] ) ? '' : $_SESSION[ $atts['key'] ] );
@@ -130,8 +130,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_request_value.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function wcj_request_value( $atts ) {
 		return ( '' === $atts['key'] || ! isset( $_REQUEST[ $atts['key'] ] ) ? '' : $_REQUEST[ $atts['key'] ] );
@@ -140,7 +140,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_tcpdf_rectangle.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   3.3.0
 	 * @see     https://tcpdf.org/examples/example_012/
 	 * @todo    add more atts (e.g. style, fill color etc.)
@@ -399,8 +399,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_customer_order_count.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 * @todo    `hide_if_zero`
 	 */
 	function wcj_customer_order_count( $atts ) {
@@ -416,8 +416,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_customer_total_spent.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 * @todo    `hide_if_zero`
 	 * @todo    `hide_currency`
 	 * @todo    (maybe) solve multicurrency issue
@@ -579,7 +579,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_currency_select_link_list.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.4.5
 	 */
 	function wcj_currency_select_link_list( $atts, $content ) {
@@ -651,7 +651,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_currency_selector.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.4.5
 	 */
 	private function get_currency_selector( $atts, $content, $type = 'select' ) {
@@ -732,7 +732,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_country_select_drop_down_list.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
 

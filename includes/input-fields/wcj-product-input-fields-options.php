@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Options
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   3.1.0
  * @author  Algoritmika Ltd.
  */
@@ -72,7 +72,7 @@ return array(
 	),
 	array(
 		'id'                => 'wcj_product_input_fields_class_' . $this->scope . '_',
-		'title'             => __( 'CSS Class', 'woocommerce-jetpack' ),
+		'title'             => __( 'HTML Class', 'woocommerce-jetpack' ),
 		'type'              => 'text',
 		'default'           => '',
 	),

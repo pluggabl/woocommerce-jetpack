@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Orders
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_get_adjacent_order_id' ) ) {
 	/**
 	 * wcj_get_adjacent_order_id.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 * @todo    isn't there an easier way?
 	 */
 	function wcj_get_adjacent_order_id( $current_id, $direction = 'next' ) {

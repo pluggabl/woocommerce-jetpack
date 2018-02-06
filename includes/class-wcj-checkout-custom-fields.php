@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -466,7 +466,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * is_visible.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.6.0
 	 * @todo    add "user roles to include/exclude"
 	 */

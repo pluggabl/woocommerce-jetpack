@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -330,7 +330,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/*
 	 * maybe_redirect_to_url.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function maybe_redirect_to_url( $url, $product_id = false ) {
 		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_add_to_cart_redirect_per_product_enabled', 'no' ) ) && ( $product_id || isset( $_REQUEST['add-to-cart'] ) ) ) {

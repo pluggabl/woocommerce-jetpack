@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -134,7 +134,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * custom_override_checkout_fields.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Custom Fields module)
 	 * @todo    (maybe) enable if was not enabled by default, i.e. `! isset( $checkout_fields[ $section ][ $field ] )`
 	 */
@@ -199,8 +199,8 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * is_visible.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 * @todo    (maybe) save `$this->cart_product_ids` array (instead of calling `WC()->cart->get_cart()` for each field)
 	 */
 	function is_visible( $args ) {
@@ -221,8 +221,8 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * sort_by_priority.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function sort_by_priority( $a, $b ) {
 		$a = ( isset( $a['priority'] ) ? $a['priority'] : 0 );

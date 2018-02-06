@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.5.6
  * @author  Algoritmika Ltd.
  * @todo    clean up
@@ -29,7 +29,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * Init settings
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.5.6
 	 * @access  public
 	 * @return  void
@@ -76,7 +76,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * add_table_rows.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.6.0
 	 */
 	function add_table_rows( $instance_form_fields ) {
@@ -131,7 +131,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * Initialise Settings Form Fields
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.5.6
 	 */
 	function init_instance_form_fields() {
@@ -248,8 +248,8 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * maybe_apply_formula.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function maybe_apply_formula( $formula ) {
 		if ( 'yes' !== $this->apply_formula ) {
@@ -289,7 +289,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * calculate_shipping function.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.5.6
 	 * @access  public
 	 * @param   mixed $package

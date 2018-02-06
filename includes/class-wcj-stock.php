@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Stock
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.8.0
 	 * @todo    custom stock html
 	 * @todo    (maybe) "woocommerce-products-stock" or "woocommerce-product-stock"
@@ -66,8 +66,8 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_stock_html_below_wc_3.
 	 *
-	 * @version 3.3.1
-	 * @version 3.3.1
+	 * @version 3.4.0
+	 * @version 3.4.0
 	 */
 	function custom_stock_html_below_wc_3( $html, $availability_availability, $product ) {
 		$availability = $product->get_availability();
@@ -82,8 +82,8 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_stock_html.
 	 *
-	 * @version 3.3.1
-	 * @version 3.3.1
+	 * @version 3.4.0
+	 * @version 3.4.0
 	 */
 	function custom_stock_html( $html, $product ) {
 		$availability = $product->get_availability();
@@ -98,8 +98,8 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_in_stock_class.
 	 *
-	 * @version 3.3.1
-	 * @version 3.3.1
+	 * @version 3.4.0
+	 * @version 3.4.0
 	 */
 	function custom_in_stock_class( $class, $_product ) {
 		if ( $_product->is_in_stock() ) {
@@ -111,8 +111,8 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_in_stock.
 	 *
-	 * @version 3.3.1
-	 * @version 3.3.1
+	 * @version 3.4.0
+	 * @version 3.4.0
 	 */
 	function custom_in_stock( $availability, $_product ) {
 		if ( $_product->is_in_stock() ) {

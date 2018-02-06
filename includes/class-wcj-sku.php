@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function __construct() {
 
@@ -63,8 +63,8 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * remove_sku_from_admin_emails.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function remove_sku_from_admin_emails( $args ) {
 		if ( $args['sent_to_admin'] ) {
@@ -76,7 +76,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * add_sku_to_customer_emails.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.5.5
 	 */
 	function add_sku_to_customer_emails( $args ) {

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Shipping Descriptions
  *
- * @version 3.3.1
- * @since   3.3.1
+ * @version 3.4.0
+ * @since   3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Shipping_Descriptions extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function __construct() {
 

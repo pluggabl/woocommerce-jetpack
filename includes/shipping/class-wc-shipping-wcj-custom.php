@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */

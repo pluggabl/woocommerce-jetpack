@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -44,8 +44,8 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * check_user_roles.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 * @todo    this function is similar to `WCJ_PDF_Invoicing::check_user_roles()` - maybe it should be just one function for both classes..
 	 */
 	function check_user_roles( $invoice_type_id ) {
@@ -59,7 +59,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * generate_report_zip.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.3.10
 	 */
 	function generate_report_zip() {

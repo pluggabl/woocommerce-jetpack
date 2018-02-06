@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Add to Cart Button Visibility
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   3.3.0
 	 */
 	function __construct() {
@@ -72,8 +72,8 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * add_to_cart_button_archives_content.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function add_to_cart_button_archives_content() {
 		if ( '' != ( $content = get_option( 'wcj_add_to_cart_button_archives_content', '' ) ) ) {
@@ -84,8 +84,8 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * add_to_cart_button_single_content.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function add_to_cart_button_single_content() {
 		if ( '' != ( $content = get_option( 'wcj_add_to_cart_button_single_content', '' ) ) ) {

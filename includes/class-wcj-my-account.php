@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.9.0
 	 */
 	function __construct() {
@@ -48,8 +48,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * add_my_account_custom_info.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function add_my_account_custom_info() {
 		$current_filter          = current_filter();

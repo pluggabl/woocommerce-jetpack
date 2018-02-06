@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -51,7 +51,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @todo    (maybe) replace all `PHP_INT_MAX - 1` with `$this->price_hooks_priority` (especially for `woocommerce_currency_symbol` and `woocommerce_currency`)
 	 */
 	function add_hooks() {
@@ -270,7 +270,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * get_current_currency_code.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function get_current_currency_code( $default_currency = '' ) {
 		if ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {

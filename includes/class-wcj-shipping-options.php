@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Options
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.9.0
 	 * @todo    (maybe) remove (or at least mark as deprecated) "Grant free shipping on per product basis" (offer to use "Shipping Methods by Products" module instead)
 	 */

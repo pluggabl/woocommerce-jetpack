@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -57,7 +57,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output sections (modules) sub menu
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function output_sections_submenu() {
 		global $current_section;
@@ -250,7 +250,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * output_dashboard.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function output_dashboard( $current_section ) {
 

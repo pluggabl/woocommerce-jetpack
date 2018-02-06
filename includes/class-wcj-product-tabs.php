@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -467,7 +467,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_new_custom_product_tab_local.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function create_new_custom_product_tab_local( $key, $tab ) {
 		echo do_shortcode( get_post_meta( get_the_ID(), '_' . 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) );
@@ -476,7 +476,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * create_new_custom_product_tab_global.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function create_new_custom_product_tab_global( $key, $tab ) {
 		echo do_shortcode( get_option( 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['global'][ $key ] ) );

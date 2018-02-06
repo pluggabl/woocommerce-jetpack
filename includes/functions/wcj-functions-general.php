@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_handle_replacements' ) ) {
 	/**
 	 * wcj_handle_replacements.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function wcj_handle_replacements( $replacements, $template ) {
 		return str_replace( array_keys( $replacements ), $replacements, $template );
@@ -25,7 +25,7 @@ if ( ! function_exists( 'wcj_get_js_confirmation' ) ) {
 	/**
 	 * wcj_get_js_confirmation.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   3.3.0
 	 * @todo    use where needed
 	 */
@@ -41,8 +41,8 @@ if ( ! function_exists( 'wcj_tcpdf_method' ) ) {
 	/**
 	 * wcj_tcpdf_method.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 */
 	function wcj_tcpdf_method( $method, $params ) {
 		require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/include/tcpdf_static.php' );
@@ -55,7 +55,7 @@ if ( ! function_exists( 'wcj_tcpdf_barcode' ) ) {
 	/**
 	 * wcj_tcpdf_barcode.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   3.3.0
 	 * @todo    `color`
 	 * @todo    `align` (try 'T')
@@ -121,7 +121,7 @@ if ( ! function_exists( 'wcj_barcode' ) ) {
 	/**
 	 * wcj_barcode.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   3.3.0
 	 * @todo    (maybe) "Barcodes" module
 	 * @todo    (maybe) `getBarcodePNG()`
@@ -176,7 +176,7 @@ if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 	/**
 	 * wcj_session_maybe_start.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   3.1.0
 	 * @todo    make `wc` sessions the default method (`wcj_general_advanced_session_type`)
 	 */
@@ -200,7 +200,7 @@ if ( ! function_exists( 'wcj_session_set' ) ) {
 	/**
 	 * wcj_session_set.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   3.1.0
 	 */
 	function wcj_session_set( $key, $value ) {
@@ -221,7 +221,7 @@ if ( ! function_exists( 'wcj_session_get' ) ) {
 	/**
 	 * wcj_session_get.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   3.1.0
 	 */
 	function wcj_session_get( $key, $default = null ) {
@@ -495,7 +495,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	/*
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.4.4
 	 * @return  string
 	 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -131,7 +131,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'type'     => 'text',
 		),
 		array(
-			'desc'    => __( 'CSS Class', 'woocommerce-jetpack' ),
+			'desc'    => __( 'HTML Class', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_product_addons_all_products_class_' . $i,
 			'default'  => '',
 			'type'     => 'text',

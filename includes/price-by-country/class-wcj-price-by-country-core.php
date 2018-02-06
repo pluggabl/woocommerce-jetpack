@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -30,7 +30,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * maybe_init.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.9.0
 	 */
 	function maybe_init() {
@@ -48,7 +48,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * maybe_init_customer_country_by_ip.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.9.0
 	 */
 	function maybe_init_customer_country_by_ip() {
@@ -215,7 +215,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @todo    (maybe) add `cart_and_checkout` override option
 	 */
 	function get_customer_country_group_id() {

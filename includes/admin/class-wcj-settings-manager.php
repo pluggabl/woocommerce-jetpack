@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Manager - Import / Export / Reset Booster's settings
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -27,7 +27,7 @@ class WCJ_Settings_Manager {
 	/**
 	 * manage_options.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.5.2
 	 */
 	function manage_options() {
@@ -125,8 +125,8 @@ class WCJ_Settings_Manager {
 	/**
 	 * manage_options_reset_meta.
 	 *
-	 * @version 3.3.1
-	 * @since   3.3.1
+	 * @version 3.4.0
+	 * @since   3.4.0
 	 * @todo    order items meta
 	 * @todo    `... LIKE 'wcj_%'`
 	 */
@@ -144,7 +144,7 @@ class WCJ_Settings_Manager {
 	/**
 	 * manage_options_reset.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.5.2
 	 */
 	function manage_options_reset() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -52,7 +52,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * add_discount_info_to_cart_page.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @todo    rethink `wcj_get_product_display_price()` - must take into account the "Prices entered with tax" option
 	 */
 	function add_discount_info_to_cart_page( $price_html, $cart_item, $cart_item_key ) {
@@ -179,7 +179,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * calculate_totals.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.5.0
 	 */
 	function calculate_totals( $cart ) {

@@ -180,12 +180,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.3.1 - 06/02/2018 =
+= 3.4.0 - 06/02/2018 =
+D     * Dev - PRODUCTS - Product Addons - Admin Settings - Per Product - Restyling.
 D     * Dev - Shortcodes - Orders - `[wcj_order_notes]` shortcode added.
-D X I * Dev - PRODUCTS - Product Addons - "CSS Class" options added.
-D W I * Dev - PRODUCTS - Product Input Fields - "CSS Class" options added.
+D     * Dev - PRODUCTS - Product Addons - "HTML Class" options added.
+D W I * Dev - PRODUCTS - Product Input Fields - "HTML Class" options added.
 D W I * Dev - PRODUCTS - Product Availability by Date - "Direct Date" option added.
-D W $ * Dev - SHIPPING & ORDERS - Orders - "Admin Order Navigation" added.
+D W P * Dev - SHIPPING & ORDERS - Orders - "Admin Order Navigation" added.
   X I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` taxes display fixed.
   T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - Price taxes display fixed.
   T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` case fixed.
@@ -197,11 +198,11 @@ D W   * Dev - PRODUCTS - Product Info - Admin Settings - Descriptions updated.
 D W   * Dev - PRODUCTS - Product Addons - Admin Settings - Restyling.
 D W I * Dev - PRODUCTS - Product Addons - "Frontend Templates" section added.
 D     * Dev - PRODUCTS - Stock - Admin Settings - Minor restyling.
-D T $ * Dev - PRODUCTS - Stock - "Custom Stock HTML" section added.
-D T $ * Dev - PRODUCTS - Stock - "Custom In Stock" section added.
+D T P * Dev - PRODUCTS - Stock - "Custom Stock HTML" section added.
+D T P * Dev - PRODUCTS - Stock - "Custom In Stock" section added.
 D     * Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_meta` attribute added.
-D   $ * Dev - PRODUCTS - Stock - "Remove Stock Display" option added.
-D W $ * Dev - CART & CHECKOUT - Checkout Core Fields - "Include/exclude product categories" options added.
+D   P * Dev - PRODUCTS - Stock - "Remove Stock Display" option added.
+D W P * Dev - CART & CHECKOUT - Checkout Core Fields - "Include/exclude product categories" options added.
   T I * Dev - SHIPPING & ORDERS - Custom Shipping - Code refactoring.
       * Fix - EMAILS & MISC. - Admin Bar - Booster: Active - Title fixed.
   T   * Dev - Link changed from `http://booster.io` to `https://booster.io` in all plugin files.

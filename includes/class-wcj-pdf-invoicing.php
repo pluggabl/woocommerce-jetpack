@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -327,7 +327,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * catch_args.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 */
 	function catch_args() {
 		$this->order_id        = ( isset( $_GET['order_id'] ) )        ? $_GET['order_id']        : 0;
@@ -346,7 +346,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * check_user_roles.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.9.0
 	 * @todo    check if `current_user_can( 'administrator' )` is the same as checking role directly
 	 */

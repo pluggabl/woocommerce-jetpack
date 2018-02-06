@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.3.1
+ * @version 3.4.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -136,7 +136,7 @@ if ( ! function_exists( 'wcj_get_product_display_price' ) ) {
 	/**
 	 * wcj_get_product_display_price.
 	 *
-	 * @version 3.3.1
+	 * @version 3.4.0
 	 * @since   2.7.0
 	 * @todo    `$scope` in `WCJ_IS_WC_VERSION_BELOW_3` (i.e. `cart`)
 	 */
