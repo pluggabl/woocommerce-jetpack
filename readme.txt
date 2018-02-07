@@ -180,7 +180,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.0 - 06/02/2018 =
+= 3.4.0 - 07/02/2018 =
+  X I * Dev - Checking for activated WooCommerce plugin updated.
+      * Fix - Functions - Users - `wcj_get_current_user_all_roles()` - Additional checks added.
+  W   * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Code cleanup.
+      * Fix - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Additional checks added for WC cart to exist.
 D     * Dev - EMAILS & MISC. - Admin Tools - System Info - `WCJ_SESSION_TYPE` constant info added.
 D     * Dev - Shortcodes - Orders - `[wcj_order_notes]` shortcode added.
 D     * Dev - PRODUCTS - Product Addons - "HTML Class" options added.

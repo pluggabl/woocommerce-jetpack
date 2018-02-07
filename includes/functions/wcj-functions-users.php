@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 3.2.2
+ * @version 3.4.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -42,10 +42,13 @@ if ( ! function_exists( 'wcj_get_current_user_all_roles' ) ) {
 	/**
 	 * wcj_get_current_user_all_roles.
 	 *
-	 * @version 2.5.6
+	 * @version 3.4.0
 	 * @since   2.5.6
 	 */
 	function wcj_get_current_user_all_roles() {
+		if ( ! function_exists( 'wp_get_current_user' ) ) {
+			require_once( ABSPATH . 'wp-includes/pluggable.php' );
+		}
 		$current_user = wp_get_current_user();
 		return ( ! empty( $current_user->roles ) ) ? $current_user->roles : array( 'guest' );
 	}
