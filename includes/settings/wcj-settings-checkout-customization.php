@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Customization
  *
- * @version 3.3.0
+ * @version 3.4.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -11,9 +11,35 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 return array(
 	array(
-		'title'    => __( 'Options', 'woocommerce-jetpack' ),
+		'title'    => __( 'Restrict Countries by Customer\'s IP Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'id'       => 'wcj_checkout_customization_options',
+		'id'       => 'wcj_checkout_restrict_countries_options',
+	),
+	array(
+		'title'    => __( 'Restrict Billing Countries by Customer\'s IP', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_restrict_countries_by_customer_ip_billing',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Restrict Shipping Countries by Customer\'s IP', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'To restrict shipping countries, "Shipping location(s)" option in %s must be set to "Ship to specific countries only" (and you can leave "Ship to specific countries" option empty there).', 'woocommerce-jetpack' ),
+			'<a target="_blank" href="' . admin_url( 'admin.php?page=wc-settings&tab=general' ) . '">' .
+				__( 'WooCommerce > Settings > General', 'woocommerce-jetpack' ) . '</a>' ),
+		'id'       => 'wcj_checkout_restrict_countries_by_customer_ip_shipping',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_checkout_restrict_countries_options',
+	),
+	array(
+		'title'    => __( '"Create an account?" Checkbox Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_checkout_create_account_checkbox_options',
 	),
 	array(
 		'title'    => __( '"Create an account?" Checkbox', 'woocommerce-jetpack' ),
@@ -28,6 +54,15 @@ return array(
 		),
 	),
 	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_checkout_create_account_checkbox_options',
+	),
+	array(
+		'title'    => __( '"Order Again" Button Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_checkout_order_again_button_options',
+	),
+	array(
 		'title'    => __( 'Hide "Order Again" Button on "View Order" Page', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_checkout_hide_order_again',
@@ -35,7 +70,16 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_checkout_order_again_button_options',
+	),
+	array(
 		'title'    => __( 'Disable Fields on Checkout for Logged Users', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_options',
+	),
+	array(
+		'title'    => __( 'Fields to Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_checkout_customization_disable_fields_for_logged',
 		'default'  => '',
 		'type'     => 'multiselect',
@@ -74,7 +118,16 @@ return array(
 		'css'      => 'width:100%;',
 	),
 	array(
-		'title'    => __( 'Customize "order received" message', 'woocommerce-jetpack' ),
+		'type'     => 'sectionend',
+		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_options',
+	),
+	array(
+		'title'    => __( '"Order received" Message Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_checkout_customization_order_received_message_options',
+	),
+	array(
+		'title'    => __( 'Customize Message', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_checkout_customization_order_received_message_enabled',
 		'default'  => 'no',
@@ -88,7 +141,16 @@ return array(
 		'css'      => 'width:100%;',
 	),
 	array(
-		'title'    => __( 'Customize "Returning customer?" message', 'woocommerce-jetpack' ),
+		'type'     => 'sectionend',
+		'id'       => 'wcj_checkout_customization_order_received_message_options',
+	),
+	array(
+		'title'    => __( '"Returning customer?" Message Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_checkout_customization_checkout_login_message_options',
+	),
+	array(
+		'title'    => __( 'Customize Message', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_checkout_customization_checkout_login_message_enabled',
 		'default'  => 'no',
@@ -102,6 +164,6 @@ return array(
 	),
 	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_checkout_customization_options',
+		'id'       => 'wcj_checkout_customization_checkout_login_message_options',
 	),
 );

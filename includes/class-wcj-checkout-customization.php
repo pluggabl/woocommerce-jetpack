@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 3.3.0
+ * @version 3.4.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
+	 * @version 3.4.0
 	 * @since   2.7.0
 	 * @todo    "Disable Fields on Checkout for Logged Users" - billing and shipping country ('select' type)
 	 * @todo    "Disable Fields on Checkout for Logged Users" - other core fields (e.g. account fields)
@@ -70,7 +70,26 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_checkout_customization_checkout_login_message_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_checkout_login_message', array( $this, 'checkout_login_message' ), PHP_INT_MAX );
 			}
+			// Restrict countries by customer's IP
+			if ( 'yes' === get_option( 'wcj_checkout_restrict_countries_by_customer_ip_billing', 'no' ) ) {
+				add_filter( 'woocommerce_countries_allowed_countries', array( $this, 'restrict_countries_by_customer_ip' ), PHP_INT_MAX );
+			}
+			if ( 'yes' === get_option( 'wcj_checkout_restrict_countries_by_customer_ip_shipping', 'no' ) ) {
+				add_filter( 'woocommerce_countries_shipping_countries', array( $this, 'restrict_countries_by_customer_ip' ), PHP_INT_MAX );
+			}
 		}
+	}
+
+	/**
+	 * restrict_countries_by_customer_ip.
+	 *
+	 * @version 3.4.0
+	 * @since   3.4.0
+	 * @todo    (maybe) for shipping countries - filter `woocommerce_ship_to_countries` option
+	 */
+	function restrict_countries_by_customer_ip( $countries ) {
+		$user_country = wcj_get_country_by_ip();
+		return array( $user_country => wcj_get_country_name_by_code( $user_country ) );
 	}
 
 	/**

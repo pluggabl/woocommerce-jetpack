@@ -180,8 +180,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.0 - 07/02/2018 =
-  X I * Dev - Checking for activated WooCommerce plugin updated.
+= 3.4.0 - 08/02/2018 =
+D     * Dev - CART & CHECKOUT - Checkout Customization - Admin Settings - Descriptions updated and settings restyled.
+D W I * Dev - CART & CHECKOUT - Checkout Customization - "Restrict Billing/Shipping Countries by Customer's IP" options added.
+  X I * Dev - Checking for activated WooCommerce plugin function updated.
       * Fix - Functions - Users - `wcj_get_current_user_all_roles()` - Additional checks added.
   W   * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Code cleanup.
       * Fix - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Additional checks added for WC cart to exist.

@@ -30,7 +30,6 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_custom_meta_field',
 			'wcj_order_customer_meta',
 			'wcj_order_customer_note',
-			'wcj_order_notes',
 			'wcj_order_customer_user',
 			'wcj_order_customer_user_roles',
 			'wcj_order_date',
@@ -45,6 +44,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_items_total_quantity',
 			'wcj_order_items_total_weight', // deprecated - use 'wcj_order_total_weight' instead
 			'wcj_order_meta',
+			'wcj_order_notes',
 			'wcj_order_number',
 			'wcj_order_payment_method',
 			'wcj_order_payment_method_transaction_id',
