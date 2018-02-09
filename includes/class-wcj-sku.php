@@ -16,6 +16,7 @@ class WCJ_SKU extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 3.4.0
+	 * @todo    Search by SKU: is `WCJ_IS_WC_VERSION_BELOW_3` correct?
 	 */
 	function __construct() {
 
@@ -51,13 +52,56 @@ class WCJ_SKU extends WCJ_Module {
 			}
 			// Search by SKU
 			if ( 'yes' === get_option( 'wcj_sku_search_enabled', 'no' ) ) {
-				add_filter( 'pre_get_posts', array( $this, 'add_search_by_sku_to_frontend' ), PHP_INT_MAX );
+				if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+					add_filter( 'pre_get_posts', array( $this, 'add_search_by_sku_to_frontend' ), PHP_INT_MAX );
+				} else {
+					add_filter( 'posts_search',  array( $this, 'add_search_by_sku_to_frontend_v2' ), 9 );
+				}
 			}
 			// Disable SKU
 			if ( 'yes' === get_option( 'wcj_sku_disabled', 'no' ) ) {
 				add_filter( 'wc_product_sku_enabled', '__return_false', PHP_INT_MAX );
 			}
 		}
+	}
+
+	/**
+	 * add_search_by_sku_to_frontend_v2.
+	 *
+	 * @version 3.4.0
+	 * @since   3.4.0
+	 * @see     https://plugins.svn.wordpress.org/search-by-sku-for-woocommerce/
+	 */
+	function add_search_by_sku_to_frontend_v2( $where ) {
+		global $pagenow, $wpdb, $wp;
+		if (
+			( is_admin() && 'edit.php' != $pagenow ) ||
+			! is_search() ||
+			! isset( $wp->query_vars['s'] ) ||
+			( isset( $wp->query_vars['post_type'] ) && 'product' != $wp->query_vars['post_type'] ) ||
+			( isset( $wp->query_vars['post_type'] ) && is_array( $wp->query_vars['post_type'] ) && ! in_array( 'product', $wp->query_vars['post_type'] ) )
+		) {
+			return $where;
+		}
+		$search_ids = array();
+		$terms = explode( ',', $wp->query_vars['s'] );
+		foreach ( $terms as $term ) {
+			if ( is_admin() && is_numeric( $term ) ) {
+				$search_ids[] = $term;
+			}
+			$variations_query = "SELECT p.post_parent as post_id" .
+				" FROM {$wpdb->posts} as p join {$wpdb->postmeta} pm on p.ID = pm.post_id and pm.meta_key='_sku' and pm.meta_value" .
+				" LIKE '%%%s%%' where p.post_parent <> 0 group by p.post_parent";
+			$regular_products_query = "SELECT post_id FROM {$wpdb->postmeta} WHERE meta_key='_sku' AND meta_value LIKE '%%%s%%';";
+			$sku_to_parent_id = $wpdb->get_col( $wpdb->prepare( $variations_query,       wc_clean( $term ) ) );
+			$sku_to_id        = $wpdb->get_col( $wpdb->prepare( $regular_products_query, wc_clean( $term ) ) );
+			$search_ids = array_merge( $search_ids, $sku_to_id, $sku_to_parent_id );
+		}
+		$search_ids = array_filter( array_map( 'absint', $search_ids ) );
+		if ( sizeof( $search_ids ) > 0 ) {
+			$where = str_replace( ')))', ") OR ({$wpdb->posts}.ID IN (" . implode( ',', $search_ids ) . "))))", $where );
+		}
+		return $where;
 	}
 
 	/**

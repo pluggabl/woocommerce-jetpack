@@ -180,7 +180,8 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.0 - 08/02/2018 =
+= 3.4.0 - 09/02/2018 =
+D X I * Fix - PRODUCTS - SKU - Search by SKU - Rewritten.
 D     * Dev - CART & CHECKOUT - Checkout Customization - Admin Settings - Descriptions updated and settings restyled.
 D W P * Dev - CART & CHECKOUT - Checkout Customization - "Restrict Billing/Shipping Countries by Customer's IP" options added.
   X I * Dev - Checking for activated WooCommerce plugin function updated.
