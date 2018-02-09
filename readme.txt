@@ -78,7 +78,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Checkout Core Fields* - Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders.
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
-* *Checkout Customization* - Customize WooCommerce checkout - hide "Order Again" button; disable selected fields on checkout for logged users and more.
+* *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP; hide "Order Again" button; disable selected fields on checkout for logged users and more.
 * *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
 * *Coupon Code Generator* - WooCommerce coupon code generator.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
@@ -182,10 +182,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 3.4.0 - 08/02/2018 =
 D     * Dev - CART & CHECKOUT - Checkout Customization - Admin Settings - Descriptions updated and settings restyled.
-D W I * Dev - CART & CHECKOUT - Checkout Customization - "Restrict Billing/Shipping Countries by Customer's IP" options added.
+D W P * Dev - CART & CHECKOUT - Checkout Customization - "Restrict Billing/Shipping Countries by Customer's IP" options added.
   X I * Dev - Checking for activated WooCommerce plugin function updated.
       * Fix - Functions - Users - `wcj_get_current_user_all_roles()` - Additional checks added.
-  W   * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Code cleanup.
+D     * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - `do_shortcode` added.
+      * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Code cleanup.
       * Fix - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Additional checks added for WC cart to exist.
 D     * Dev - EMAILS & MISC. - Admin Tools - System Info - `WCJ_SESSION_TYPE` constant info added.
 D     * Dev - Shortcodes - Orders - `[wcj_order_notes]` shortcode added.

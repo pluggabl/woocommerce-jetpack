@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Add to Cart
  *
- * @version 2.8.0
+ * @version 3.4.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -124,27 +124,27 @@ $groups_by_product_type = array(
 	array(
 		'id'       => 'simple',
 		'title'    => __( 'Simple product', 'woocommerce-jetpack' ),
-		'default'  => 'Add to cart',
+		'default'  => __( 'Add to cart', 'woocommerce' ),
 	),
 	array(
 		'id'       => 'variable',
 		'title'    => __( 'Variable product', 'woocommerce-jetpack' ),
-		'default'  => 'Select options',
+		'default'  => __( 'Select options', 'woocommerce' ),
 	),
 	array(
 		'id'       => 'external',
 		'title'    => __( 'External product', 'woocommerce-jetpack' ),
-		'default'  => 'Buy product',
+		'default'  => __( 'Buy product', 'woocommerce' ),
 	),
 	array(
 		'id'       => 'grouped',
 		'title'    => __( 'Grouped product', 'woocommerce-jetpack' ),
-		'default'  => 'View products',
+		'default'  => __( 'View products', 'woocommerce' ),
 	),
 	array(
 		'id'       => 'other',
 		'title'    => __( 'Other product', 'woocommerce-jetpack' ),
-		'default'  => 'Read more',
+		'default'  => __( 'Read more', 'woocommerce' ),
 	),
 );
 foreach ( $groups_by_product_type as $group_by_product_type ) {

@@ -27,7 +27,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 
 		$this->id         = 'checkout_customization';
 		$this->short_desc = __( 'Checkout Customization', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce checkout - hide "Order Again" button; disable selected fields on checkout for logged users and more.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize WooCommerce checkout - restrict countries by customer\'s IP; hide "Order Again" button; disable selected fields on checkout for logged users and more.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-customization';
 		parent::__construct();
 
@@ -85,6 +85,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
+	 * @todo    (maybe) handle case when `wcj_get_country_by_ip()` returns empty string
 	 * @todo    (maybe) for shipping countries - filter `woocommerce_ship_to_countries` option
 	 */
 	function restrict_countries_by_customer_ip( $countries ) {

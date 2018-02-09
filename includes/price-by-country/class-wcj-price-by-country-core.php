@@ -84,7 +84,7 @@ class WCJ_Price_by_Country_Core {
 		if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
 			add_filter( 'woocommerce_price_filter_meta_keys',    array( $this, 'price_filter_meta_keys' ), PHP_INT_MAX, 1 );
 			add_filter( 'woocommerce_product_query_meta_query',  array( $this, 'price_filter_meta_query' ), PHP_INT_MAX, 2 );
-			add_filter( 'woocommerce_get_catalog_ordering_args', array( $this, 'sorting_by_price_fix' ), PHP_INT_MAX ); // Sorting
+			add_filter( 'woocommerce_get_catalog_ordering_args', array( $this, 'sorting_by_price_fix' ), PHP_INT_MAX );
 		}
 	}
 
