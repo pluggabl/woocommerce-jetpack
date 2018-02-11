@@ -135,6 +135,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	 * custom_override_checkout_fields.
 	 *
 	 * @version 3.4.0
+	 * @todo    add "per products", "per products tags"
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Custom Fields module)
 	 * @todo    (maybe) enable if was not enabled by default, i.e. `! isset( $checkout_fields[ $section ][ $field ] )`
 	 */
@@ -149,7 +150,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 					continue;
 				}
 			}
-			// enabled - per products, categories, tags
+			// enabled - per products categories
 			if ( ! $this->is_visible( array(
 					'include_products'   => '',
 					'exclude_products'   => '',

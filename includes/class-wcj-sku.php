@@ -51,8 +51,11 @@ class WCJ_SKU extends WCJ_Module {
 			}
 			// Search by SKU
 			if ( 'yes' === get_option( 'wcj_sku_search_enabled', 'no' ) ) {
-				add_filter( 'pre_get_posts', array( $this, 'add_search_by_sku_to_frontend' ), PHP_INT_MAX );
-//				add_filter( 'posts_search',  array( $this, 'add_search_by_sku_to_frontend_v2' ), 9 );
+				if ( 'pre_get_posts' === get_option( 'wcj_sku_search_hook', 'pre_get_posts' ) ) {
+					add_filter( 'pre_get_posts', array( $this, 'add_search_by_sku_to_frontend' ), PHP_INT_MAX );
+				} else { // 'posts_search'
+					add_filter( 'posts_search',  array( $this, 'add_search_by_sku_to_frontend_posts_search' ), 9 );
+				}
 			}
 			// Disable SKU
 			if ( 'yes' === get_option( 'wcj_sku_disabled', 'no' ) ) {
@@ -62,14 +65,13 @@ class WCJ_SKU extends WCJ_Module {
 	}
 
 	/**
-	 * add_search_by_sku_to_frontend_v2.
+	 * add_search_by_sku_to_frontend_posts_search.
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
-	 * @todo    not used
 	 * @see     https://plugins.svn.wordpress.org/search-by-sku-for-woocommerce/
 	 */
-	function add_search_by_sku_to_frontend_v2( $where ) {
+	function add_search_by_sku_to_frontend_posts_search( $where ) {
 		global $pagenow, $wpdb, $wp;
 		if (
 			( is_admin() && 'edit.php' != $pagenow ) ||

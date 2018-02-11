@@ -18,7 +18,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.4.0
 	 * @todo    save all info in product meta
 	 */
 	function __construct( $scope ) {
@@ -44,7 +44,11 @@ class WCJ_Product_Input_Fields_Core {
 			add_filter( 'woocommerce_order_item_name',              array( $this, 'add_product_input_fields_to_order_item_name' ), 100, 2 );
 
 			// Add item meta from cart to order
-			add_action( 'woocommerce_add_order_item_meta',          array( $this, 'add_product_input_fields_to_order_item_meta' ), 100, 3 );
+			if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+				add_action( 'woocommerce_add_order_item_meta',      array( $this, 'add_product_input_fields_to_order_item_meta' ), 100, 3 );
+			} else {
+				add_action( 'woocommerce_new_order_item',           array( $this, 'add_product_input_fields_to_order_item_meta_wc3' ), 100, 3 );
+			}
 
 			// Make nicer name for product input fields in order at backend (shop manager)
 			add_action( 'woocommerce_after_order_itemmeta',         array( $this, 'output_custom_input_fields_in_admin_order' ), 100, 3 );
@@ -760,6 +764,19 @@ class WCJ_Product_Input_Fields_Core {
 			}
 		}
 		return $item_data;
+	}
+
+	/**
+	 * add_product_input_fields_to_order_item_meta_wc3.
+	 *
+	 * @version 3.4.0
+	 * @since   3.4.0
+	 * @todo    this is only a temporary solution: must replace `$item->legacy_values` (check "Bookings" module)
+	 */
+	function add_product_input_fields_to_order_item_meta_wc3( $item_id, $item, $order_id  ) {
+		if ( is_a( $item, 'WC_Order_Item_Product' ) ) {
+			$this->add_product_input_fields_to_order_item_meta( $item_id, $item->legacy_values, null );
+		}
 	}
 
 	/**

@@ -185,6 +185,17 @@ $settings = array_merge( $settings, array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc'     => __( 'Advanced: Search by SKU Hook', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If you are experiencing any issues with searching by SKU, try changing this option.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_sku_search_hook',
+		'default'  => 'pre_get_posts',
+		'type'     => 'select',
+		'options'  => array(
+			'pre_get_posts' => 'pre_get_posts',
+			'posts_search'  => 'posts_search',
+		),
+	),
+	array(
 		'title'    => __( 'Generate SKUs Only for Products with Empty SKU', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This may help if you are going to use Autogenerate SKUs tool, but don\'t want to change your existing SKUs.', 'woocommerce-jetpack' ),

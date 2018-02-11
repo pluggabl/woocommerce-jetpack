@@ -17,7 +17,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
+	 * @version 3.4.0
 	 * @since   2.5.3
 	 * @todo    (maybe) add "in progress" ajax message
 	 * @todo    (maybe) for variable products - show addons only if variation is selected (e.g. move to addons from `woocommerce_before_add_to_cart_button` to variation description)
@@ -59,7 +59,11 @@ class WCJ_Product_Addons extends WCJ_Module {
 				// Show details at cart, order details, emails
 				add_filter( 'woocommerce_cart_item_name',                 array( $this, 'add_info_to_cart_item_name' ), PHP_INT_MAX, 3 );
 				add_filter( 'woocommerce_order_item_name',                array( $this, 'add_info_to_order_item_name' ), PHP_INT_MAX, 2 );
-				add_action( 'woocommerce_add_order_item_meta',            array( $this, 'add_info_to_order_item_meta' ), PHP_INT_MAX, 3 );
+				if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
+					add_action( 'woocommerce_add_order_item_meta',        array( $this, 'add_info_to_order_item_meta' ), PHP_INT_MAX, 3 );
+				} else {
+					add_action( 'woocommerce_new_order_item',             array( $this, 'add_info_to_order_item_meta_wc3' ), PHP_INT_MAX, 3 );
+				}
 			}
 			if ( is_admin() ) {
 				if ( 'yes' === get_option( 'wcj_product_addons_hide_on_admin_order_page', 'no' ) ) {
@@ -344,6 +348,19 @@ class WCJ_Product_Addons extends WCJ_Module {
 			}
 		}
 		return $addons;
+	}
+
+	/**
+	 * add_info_to_order_item_meta_wc3.
+	 *
+	 * @version 3.4.0
+	 * @since   3.4.0
+	 * @todo    this is only a temporary solution: must replace `$item->legacy_values` (check "Bookings" module)
+	 */
+	function add_info_to_order_item_meta_wc3( $item_id, $item, $order_id  ) {
+		if ( is_a( $item, 'WC_Order_Item_Product' ) ) {
+			$this->add_info_to_order_item_meta( $item_id, $item->legacy_values, null );
+		}
 	}
 
 	/**

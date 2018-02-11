@@ -242,6 +242,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	 *
 	 * @version 3.4.0
 	 * @since   2.4.5
+	 * @todo    add option for admin to delete files one by one (i.e. not all at once)
 	 */
 	function process_checkout_files_upload() {
 		wcj_session_maybe_start();

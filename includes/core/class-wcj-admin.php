@@ -37,6 +37,7 @@ class WCJ_Admin {
 	 *
 	 * @version 3.4.0
 	 * @since   2.5.9
+	 * @todo    (maybe) use `wcj_is_plugin_active_by_file()`
 	 * @todo    (maybe) expand "Please upgrade ..." message
 	 */
 	function check_plus_version() {
@@ -47,12 +48,10 @@ class WCJ_Admin {
 				if ( 'booster-plus-for-woocommerce.php' === $active_plugin[1] ) {
 					return;
 				} elseif ( 'woocommerce-jetpack-plus.php' === $active_plugin[1] || 'woocommerce-booster-plus.php' === $active_plugin[1] ) {
-					$is_deprecated_plus_active = true;
+					$is_deprecated_plus_active = true; // can't `brake` because of possible active `booster-plus-for-woocommerce.php`
 				}
 			}
 		}
-		/* $is_deprecated_plus_active = ( ! wcj_is_plugin_active_by_file( 'booster-plus-for-woocommerce.php' ) &&
-			( wcj_is_plugin_active_by_file( 'woocommerce-booster-plus.php' ) || wcj_is_plugin_active_by_file( 'woocommerce-jetpack-plus.php' ) ) ); */
 		if ( $is_deprecated_plus_active ) {
 			$class   = 'notice notice-error';
 			$message = __( 'Please update <strong>Booster Plus for WooCommerce</strong> plugin.', 'woocommerce-jetpack' ) . ' ' .
