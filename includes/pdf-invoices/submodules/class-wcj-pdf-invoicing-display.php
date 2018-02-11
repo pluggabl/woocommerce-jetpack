@@ -15,7 +15,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.4.0
 	 */
 	function __construct() {
 
@@ -37,7 +37,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			add_action( 'admin_enqueue_scripts',                    array( $this, 'enqueue_scripts' ) );
 			// Make Sortable Columns
 			add_filter( 'manage_edit-shop_order_sortable_columns',  array( $this, 'shop_order_sortable_columns' ) );
-			add_action( 'pre_get_posts',                            array( $this, 'shop_order_pre_get_posts_order_by_column' ), 1 );
+			add_action( 'pre_get_posts',                            array( $this, 'shop_order_pre_get_posts_order_by_column' ) );
 			// Meta box on admin order page
 			add_action( 'add_meta_boxes',                           array( $this, 'add_invoices_meta_box' ) );
 		}

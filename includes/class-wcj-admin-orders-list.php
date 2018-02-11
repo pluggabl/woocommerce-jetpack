@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 3.2.4
+ * @version 3.4.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 3.4.0
 	 * @since   3.2.4
 	 */
 	function __construct() {
@@ -40,7 +40,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 				}
 				// Maybe make sortable custom columns
 				add_filter( 'manage_edit-shop_order_sortable_columns',  array( $this, 'shop_order_sortable_columns' ) );
-				add_action( 'pre_get_posts',                            array( $this, 'shop_order_pre_get_posts_order_by_column' ), 1 );
+				add_action( 'pre_get_posts',                            array( $this, 'shop_order_pre_get_posts_order_by_column' ) );
 			}
 
 			// Multiple status

@@ -103,14 +103,17 @@ return array(
 		'id'       => 'wcj_stock_custom_stock_html_section_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'HTML', 'woocommerce-jetpack' ),
-		'desc'     => wcj_message_replaced_values( array( '%class%', '%availability%' ) ),
+		'desc'     => wcj_message_replaced_values( array( '%class%', '%availability%' ) ) . '. ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_stock_custom_stock_html',
 		'default'  => '<p class="stock %class%">%availability%</p>',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;height:100px;',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'type'     => 'sectionend',
@@ -123,11 +126,12 @@ return array(
 	),
 	array(
 		'title'    => __( 'Remove Stock Display', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This will remove stock display from frontend.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will remove stock display from frontend.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'desc'     => __( 'Remove', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_stock_remove_frontend_display_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',

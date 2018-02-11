@@ -74,7 +74,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_checkout_restrict_countries_by_customer_ip_billing', 'no' ) ) {
 				add_filter( 'woocommerce_countries_allowed_countries', array( $this, 'restrict_countries_by_customer_ip' ), PHP_INT_MAX );
 			}
-			if ( 'yes' === get_option( 'wcj_checkout_restrict_countries_by_customer_ip_shipping', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_checkout_restrict_countries_by_customer_ip_shipping', 'no' ) ) ) {
 				add_filter( 'woocommerce_countries_shipping_countries', array( $this, 'restrict_countries_by_customer_ip' ), PHP_INT_MAX );
 			}
 		}

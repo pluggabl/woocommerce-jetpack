@@ -16,7 +16,6 @@ class WCJ_SKU extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 3.4.0
-	 * @todo    Search by SKU: is `WCJ_IS_WC_VERSION_BELOW_3` correct?
 	 */
 	function __construct() {
 
@@ -52,11 +51,8 @@ class WCJ_SKU extends WCJ_Module {
 			}
 			// Search by SKU
 			if ( 'yes' === get_option( 'wcj_sku_search_enabled', 'no' ) ) {
-				if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
-					add_filter( 'pre_get_posts', array( $this, 'add_search_by_sku_to_frontend' ), PHP_INT_MAX );
-				} else {
-					add_filter( 'posts_search',  array( $this, 'add_search_by_sku_to_frontend_v2' ), 9 );
-				}
+				add_filter( 'pre_get_posts', array( $this, 'add_search_by_sku_to_frontend' ), PHP_INT_MAX );
+//				add_filter( 'posts_search',  array( $this, 'add_search_by_sku_to_frontend_v2' ), 9 );
 			}
 			// Disable SKU
 			if ( 'yes' === get_option( 'wcj_sku_disabled', 'no' ) ) {
@@ -70,6 +66,7 @@ class WCJ_SKU extends WCJ_Module {
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
+	 * @todo    not used
 	 * @see     https://plugins.svn.wordpress.org/search-by-sku-for-woocommerce/
 	 */
 	function add_search_by_sku_to_frontend_v2( $where ) {

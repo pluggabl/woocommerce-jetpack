@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 3.3.0
+ * @version 3.4.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -21,7 +21,7 @@ class WCJ_Admin {
 	 */
 	function __construct() {
 		if ( is_admin() ) {
-			add_filter( 'booster_message',                                      'wcj_get_plus_message', 100, 3 );
+			add_filter( 'booster_message',                                           'wcj_get_plus_message', 100, 3 );
 			add_filter( 'woocommerce_get_settings_pages',                            array( $this, 'add_wcj_settings_tab' ), 1 );
 			add_filter( 'plugin_action_links_' . plugin_basename( WCJ_PLUGIN_FILE ), array( $this, 'action_links' ) );
 			add_action( 'admin_menu',                                                array( $this, 'booster_menu' ), 100 );
@@ -35,21 +35,13 @@ class WCJ_Admin {
 	/**
 	 * check_plus_version.
 	 *
-	 * @version 3.3.0
+	 * @version 3.4.0
 	 * @since   2.5.9
 	 * @todo    (maybe) expand "Please upgrade ..." message
 	 */
 	function check_plus_version() {
-		if ( ! is_admin() ) {
-			return;
-		}
-		// Check if Plus is installed and activated
 		$is_deprecated_plus_active = false;
-		$active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins', array() ) );
-		if ( is_multisite() ) {
-			$active_plugins = array_merge( $active_plugins, array_keys( get_site_option( 'active_sitewide_plugins', array() ) ) );
-		}
-		foreach ( $active_plugins as $active_plugin ) {
+		foreach ( wcj_get_active_plugins() as $active_plugin ) {
 			$active_plugin = explode( '/', $active_plugin );
 			if ( isset( $active_plugin[1] ) ) {
 				if ( 'booster-plus-for-woocommerce.php' === $active_plugin[1] ) {
@@ -59,7 +51,8 @@ class WCJ_Admin {
 				}
 			}
 		}
-		// Check Plus version
+		/* $is_deprecated_plus_active = ( ! wcj_is_plugin_active_by_file( 'booster-plus-for-woocommerce.php' ) &&
+			( wcj_is_plugin_active_by_file( 'woocommerce-booster-plus.php' ) || wcj_is_plugin_active_by_file( 'woocommerce-jetpack-plus.php' ) ) ); */
 		if ( $is_deprecated_plus_active ) {
 			$class   = 'notice notice-error';
 			$message = __( 'Please update <strong>Booster Plus for WooCommerce</strong> plugin.', 'woocommerce-jetpack' ) . ' ' .

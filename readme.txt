@@ -180,11 +180,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.0 - 09/02/2018 =
-D X I * Fix - PRODUCTS - SKU - Search by SKU - Rewritten.
+= 3.4.0 - 11/02/2018 =
+      * Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - `pre_get_posts` hook priority fixed.
+      * Fix - SHIPPING & ORDERS - Admin Orders List - `pre_get_posts` hook priority fixed.
+D W I * Fix - PRODUCTS - SKU - Search by SKU - Rewritten.
 D     * Dev - CART & CHECKOUT - Checkout Customization - Admin Settings - Descriptions updated and settings restyled.
-D W P * Dev - CART & CHECKOUT - Checkout Customization - "Restrict Billing/Shipping Countries by Customer's IP" options added.
-  X I * Dev - Checking for activated WooCommerce plugin function updated.
+D W   * Dev - CART & CHECKOUT - Checkout Customization - "Restrict Billing/Shipping Countries by Customer's IP" options added.
+  W I * Dev - Functions - Core - Function for checking for active plugin rewritten.
       * Fix - Functions - Users - `wcj_get_current_user_all_roles()` - Additional checks added.
 D     * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - `do_shortcode` added.
       * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Code cleanup.
@@ -194,7 +196,7 @@ D     * Dev - Shortcodes - Orders - `[wcj_order_notes]` shortcode added.
 D     * Dev - PRODUCTS - Product Addons - "HTML Class" options added.
 D W I * Dev - PRODUCTS - Product Input Fields - "HTML Class" options added.
 D W I * Dev - PRODUCTS - Product Availability by Date - "Direct Date" option added.
-D W P * Dev - SHIPPING & ORDERS - Orders - "Admin Order Navigation" added.
+D W   * Dev - SHIPPING & ORDERS - Orders - "Admin Order Navigation" added.
   T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` and `fixed` discount taxes display fixed.
   T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - Price taxes display fixed.
   T I * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` case fixed.
@@ -206,10 +208,10 @@ D     * Dev - PRODUCTS - Product Info - Admin Settings - Descriptions updated an
 D     * Dev - PRODUCTS - Product Addons - Admin Settings (General and Per Product) - Restyling.
 D T I * Dev - PRODUCTS - Product Addons - "Frontend Templates" section added.
 D     * Dev - PRODUCTS - Stock - Admin Settings - Minor restyling.
-D T P * Dev - PRODUCTS - Stock - "Custom Stock HTML" section added.
-D T P * Dev - PRODUCTS - Stock - "Custom In Stock" section added.
+D T   * Dev - PRODUCTS - Stock - "Custom Stock HTML" section added.
+D T   * Dev - PRODUCTS - Stock - "Custom In Stock" section added.
 D     * Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_meta` attribute added.
-D   P * Dev - PRODUCTS - Stock - "Remove Stock Display" option added.
+D     * Dev - PRODUCTS - Stock - "Remove Stock Display" option added.
 D W I * Dev - CART & CHECKOUT - Checkout Core Fields - "Include/exclude product categories" options added.
   T I * Dev - SHIPPING & ORDERS - Custom Shipping - Code refactoring.
       * Fix - EMAILS & MISC. - Admin Bar - Booster: Active - Title fixed.

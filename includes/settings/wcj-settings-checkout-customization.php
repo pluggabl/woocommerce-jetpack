@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 return array(
 	array(
-		'title'    => __( 'Restrict Countries by Customer\'s IP Options', 'woocommerce-jetpack' ),
+		'title'    => __( 'Restrict Countries by Customer\'s IP', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_checkout_restrict_countries_options',
 	),
@@ -27,10 +27,11 @@ return array(
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf( __( 'To restrict shipping countries, "Shipping location(s)" option in %s must be set to "Ship to specific countries only" (and you can leave "Ship to specific countries" option empty there).', 'woocommerce-jetpack' ),
 			'<a target="_blank" href="' . admin_url( 'admin.php?page=wc-settings&tab=general' ) . '">' .
-				__( 'WooCommerce > Settings > General', 'woocommerce-jetpack' ) . '</a>' ),
+				__( 'WooCommerce > Settings > General', 'woocommerce-jetpack' ) . '</a>' ) . '<br>' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_checkout_restrict_countries_by_customer_ip_shipping',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',

@@ -49,7 +49,7 @@ class WCJ_Stock extends WCJ_Module {
 				}
 			}
 			// Custom stock HTML
-			if ( 'yes' === get_option( 'wcj_stock_custom_stock_html_section_enabled', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_stock_custom_stock_html_section_enabled', 'no' ) ) ) {
 				if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 					add_filter( 'woocommerce_stock_html',     array( $this, 'custom_stock_html_below_wc_3' ), PHP_INT_MAX, 3 );
 				} else {
@@ -57,7 +57,7 @@ class WCJ_Stock extends WCJ_Module {
 				}
 			}
 			// Remove stock display
-			if ( 'yes' === get_option( 'wcj_stock_remove_frontend_display_enabled', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_stock_remove_frontend_display_enabled', 'no' ) ) ) {
 				add_filter( ( WCJ_IS_WC_VERSION_BELOW_3 ? 'woocommerce_stock_html' : 'woocommerce_get_stock_html' ), '__return_empty_string', PHP_INT_MAX );
 			}
 		}
@@ -75,8 +75,8 @@ class WCJ_Stock extends WCJ_Module {
 			'%class%'        => ( ! empty( $availability['class'] )        ? $availability['class']        : '' ),
 			'%availability%' => $availability_availability,
 		);
-		return str_replace( array_keys( $replacements ), $replacements, get_option( 'wcj_stock_custom_stock_html',
-			'<p class="stock %class%">%availability%</p>' ) );
+		return str_replace( array_keys( $replacements ), $replacements, apply_filters( 'booster_option', '<p class="stock %class%">%availability%</p>',
+			get_option( 'wcj_stock_custom_stock_html', '<p class="stock %class%">%availability%</p>' ) ) );
 	}
 
 	/**
@@ -91,8 +91,8 @@ class WCJ_Stock extends WCJ_Module {
 			'%class%'        => ( ! empty( $availability['class'] )        ? $availability['class']        : '' ),
 			'%availability%' => ( ! empty( $availability['availability'] ) ? $availability['availability'] : '' ),
 		);
-		return str_replace( array_keys( $replacements ), $replacements, get_option( 'wcj_stock_custom_stock_html',
-			'<p class="stock %class%">%availability%</p>' ) );
+		return str_replace( array_keys( $replacements ), $replacements, apply_filters( 'booster_option', '<p class="stock %class%">%availability%</p>',
+			get_option( 'wcj_stock_custom_stock_html', '<p class="stock %class%">%availability%</p>' ) ) );
 	}
 
 	/**
