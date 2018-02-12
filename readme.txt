@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.3.0
+Stable tag: 3.4.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -180,7 +180,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.0 - 11/02/2018 =
+= 3.4.0 - 12/02/2018 =
 * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - Price taxes display fixed.
 * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` and `fixed` discount taxes display fixed.
 * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - `price_directly` case fixed.
