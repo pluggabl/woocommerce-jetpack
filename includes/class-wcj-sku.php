@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 3.4.0
+ * @version 3.4.1
  * @author  Algoritmika Ltd.
  */
 
@@ -424,30 +424,30 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * search_post_join.
 	 *
-	 * @version 2.9.0
+	 * @version 3.4.1
 	 * @since   2.9.0
 	 */
 	function search_post_join( $join = '' ) {
-		global $wp_the_query;
+		global $wpdb, $wp_the_query;
 		if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) ) {
 			return $join;
 		}
-		$join .= "INNER JOIN wp_postmeta AS wcj_sku ON (wp_posts.ID = wcj_sku.post_id)";
+		$join .= "INNER JOIN {$wpdb->prefix}postmeta AS wcj_sku ON ({$wpdb->prefix}posts.ID = wcj_sku.post_id)";
 		return $join;
 	}
 
 	/**
 	 * search_post_where.
 	 *
-	 * @version 3.2.3
+	 * @version 3.4.1
 	 * @since   2.9.0
 	 */
 	function search_post_where( $where = '' ) {
-		global $wp_the_query;
+		global $wpdb, $wp_the_query;
 		if ( empty( $wp_the_query->query_vars['wc_query'] ) || empty( $wp_the_query->query_vars['s'] ) ) {
 			return $where;
 		}
-		$where = preg_replace( "/\(\s*wp_posts.post_title\s+LIKE\s*(\'[^\']+\')\s*\)/", "(wp_posts.post_title LIKE $1) OR (wcj_sku.meta_key = '_sku' AND CAST(wcj_sku.meta_value AS CHAR) LIKE $1)", $where );
+		$where = preg_replace( "/\(\s*{$wpdb->prefix}posts.post_title\s+LIKE\s*(\'[^\']+\')\s*\)/", "({$wpdb->prefix}posts.post_title LIKE $1) OR (wcj_sku.meta_key = '_sku' AND CAST(wcj_sku.meta_value AS CHAR) LIKE $1)", $where );
 		return $where;
 	}
 
