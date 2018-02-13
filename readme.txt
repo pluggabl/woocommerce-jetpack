@@ -111,8 +111,8 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Order Numbers* - WooCommerce sequential order numbering, custom order number prefix, suffix and number width.
 * *Orders* - WooCommerce orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
-* *Shipping Descriptions* - Add descriptions to shipping methods on frontend.
-* *Shipping Icons* - Add icons to shipping methods on frontend.
+* *Shipping Descriptions* - Add descriptions to WooCommerce shipping methods on frontend.
+* *Shipping Icons* - Add icons to WooCommerce shipping methods on frontend.
 * *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for WooCommerce shipping methods to show up.
 * *Shipping Methods by Products* - Set products, product categories or tags to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for WooCommerce shipping methods to show up.
@@ -179,6 +179,10 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 3.4.1 - 12/02/2018 =
+      * Dev - SHIPPING & ORDERS - Shipping Descriptions - Description updated.
+      * Dev - SHIPPING & ORDERS - Shipping Icons - Description updated.
 
 = 3.4.0 - 12/02/2018 =
 * Fix - PRICES & CURRENCIES - Wholesale Price - Discount info on cart page - Price taxes display fixed.
