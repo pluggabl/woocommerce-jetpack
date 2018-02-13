@@ -2,9 +2,30 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 3.4.0
+ * @version 3.4.2
  * @author  Algoritmika Ltd.
  */
+
+if ( ! function_exists( 'wcj_get_invoicing_default_images_directory' ) ) {
+	/**
+	 * wcj_get_invoicing_default_images_directory.
+	 *
+	 * @version 3.4.2
+	 * @since   3.4.2
+	 */
+	function wcj_get_invoicing_default_images_directory() {
+		switch ( get_option( 'wcj_invoicing_general_header_images_path', 'empty' ) ) {
+			case 'empty':
+				return '';
+			case 'document_root':
+				return $_SERVER['DOCUMENT_ROOT'];
+			case 'abspath':
+				return ABSPATH;
+			default: // 'tcpdf_default'
+				return false;
+		}
+	}
+}
 
 if ( ! function_exists( 'wcj_get_fonts_list' ) ) {
 	/**

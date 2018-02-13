@@ -6,6 +6,7 @@
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) create "Tools (Options)" submodule
+ * @todo    (maybe) remove `tcpdf_default` option in `wcj_invoicing_general_header_images_path`
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly

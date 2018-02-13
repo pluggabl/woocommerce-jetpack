@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.4.1
+Stable tag: 3.4.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -179,6 +179,10 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 3.4.2 - 13/02/2018 =
+* Fix - Forcing session type to `standard` (and "Session Type in Booster" option temporary disabled). Affected modules: Checkout Files Upload, EU VAT Number, Multicurrency (Currency Switcher), Product Visibility by Country, Product Custom Visibility, Tax Display, Prices and Currencies by Country.
+* Dev - PDF INVOICING & PACKING SLIPS - Header - Header Image - Admin description (with image path) added.
 
 = 3.4.1 - 13/02/2018 =
 * Fix - PRODUCTS - SKU - Search by SKU - `pre_get_posts` - `$wpdb->prefix` is used instead of hard-coded `wp_` prefix.
