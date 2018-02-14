@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.4.2
+Stable tag: 3.4.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -179,6 +179,13 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 3.4.3 - 14/02/2018 =
+* Dev - PDF INVOICING & PACKING SLIPS - Checking header image and background image to exist (before adding to PDF).
+* Dev - PDF INVOICING & PACKING SLIPS - Header - Header Image - Admin description expanded.
+* Dev - PDF INVOICING & PACKING SLIPS - Page Settings - Background Image - Admin description (with image path) added; admin description expanded.
+* Dev - PDF INVOICING & PACKING SLIPS - Advanced - Default Images Directory - Default value set to `DOCUMENT_ROOT`.
+* Dev - EMAILS & MISC. - Admin Tools - System Info - `$_SERVER` info added (works with `wcj_debug` param).
 
 = 3.4.2 - 13/02/2018 =
 * Fix - Forcing session type to `standard` (and "Session Type in Booster" option temporary disabled). Affected modules: Checkout Files Upload, EU VAT Number, Multicurrency (Currency Switcher), Product Visibility by Country, Product Custom Visibility, Tax Display, Prices and Currencies by Country.

@@ -2,19 +2,40 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 3.4.2
+ * @version 3.4.3
  * @author  Algoritmika Ltd.
  */
+
+if ( ! function_exists( 'wcj_get_invoicing_current_image_path_desc' ) ) {
+	/**
+	 * wcj_get_invoicing_current_image_path_desc.
+	 *
+	 * @version 3.4.3
+	 * @since   3.4.3
+	 */
+	function wcj_get_invoicing_current_image_path_desc( $option_name ) {
+		if ( '' != ( $current_image = get_option( $option_name, '' ) ) ) {
+			if ( false !== ( $default_images_directory = wcj_get_invoicing_default_images_directory() ) ) {
+				$image_path = $default_images_directory . parse_url( $current_image, PHP_URL_PATH );
+				$style      = ( file_exists( $image_path ) ? ' style="color:green;"' : '' );
+				$current_image = '<br>' . sprintf( __( 'Current image path: %s.', 'woocommerce-jetpack' ), '<code' . $style . '>' . $image_path . '</code>' );
+			} else {
+				$current_image = '';
+			}
+		}
+		return $current_image;
+	}
+}
 
 if ( ! function_exists( 'wcj_get_invoicing_default_images_directory' ) ) {
 	/**
 	 * wcj_get_invoicing_default_images_directory.
 	 *
-	 * @version 3.4.2
+	 * @version 3.4.3
 	 * @since   3.4.2
 	 */
 	function wcj_get_invoicing_default_images_directory() {
-		switch ( get_option( 'wcj_invoicing_general_header_images_path', 'empty' ) ) {
+		switch ( get_option( 'wcj_invoicing_general_header_images_path', 'document_root' ) ) {
 			case 'empty':
 				return '';
 			case 'document_root':

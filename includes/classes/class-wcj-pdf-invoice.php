@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.2.4
+ * @version 3.4.3
  * @author  Algoritmika Ltd.
  * @todo    clean up
  */
@@ -23,7 +23,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * prepare_pdf.
 	 *
-	 * @version 3.2.4
+	 * @version 3.4.3
 	 * @todo    check `addTTFfont()`
 	 */
 	function prepare_pdf() {
@@ -75,6 +75,10 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 			if ( '' != ( $header_image = do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_header_image', '' ) ) ) ) {
 				$the_logo = parse_url( $header_image, PHP_URL_PATH );
 				$the_logo_width_mm = get_option( 'wcj_invoicing_' . $invoice_type . '_header_image_width_mm', 50 );
+				if ( ! file_exists( K_PATH_IMAGES . $the_logo ) ) {
+					$the_logo = '';
+					$the_logo_width_mm = 0;
+				}
 			}
 			$pdf->SetHeaderData(
 				$the_logo,
@@ -144,7 +148,9 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		// Background image
 		if ( '' != ( $background_image = do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_background_image', '' ) ) ) ) {
 			$background_image = parse_url( $background_image, PHP_URL_PATH );
-			$pdf->Image( $background_image, 0, 0, $pdf->getPageWidth(), $pdf->getPageHeight() );
+			if ( file_exists( K_PATH_IMAGES . $background_image ) ) {
+				$pdf->Image( $background_image, 0, 0, $pdf->getPageWidth(), $pdf->getPageHeight() );
+			}
 		}
 
 		return $pdf;

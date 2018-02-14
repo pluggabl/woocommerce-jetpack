@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Page Settings
  *
- * @version 3.2.4
+ * @version 3.4.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -79,7 +79,12 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => '',
 			'type'     => 'text',
 			'desc'     => sprintf( __( 'Enter a local URL to an image. Upload your image using the <a href="%s">media uploader</a>.', 'woocommerce-jetpack' ),
-				admin_url( 'media-new.php' ) ),
+					admin_url( 'media-new.php' ) ) .
+				wcj_get_invoicing_current_image_path_desc( 'wcj_invoicing_' . $invoice_type['id'] . '_background_image' ) . '<br>' .
+				sprintf( __( 'If you are experiencing issues with displaying background image, please try setting different values for the "Advanced: Default Images Directory" option in %s.', 'woocommerce-jetpack' ),
+					'<a target="_blank" href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing_advanced' ) . '">' .
+						__( 'PDF Invoicing & Packing Slips > Advanced', 'woocommerce-jetpack' ) .
+					'</a>' ),
 			'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
 			'class'    => 'widefat',
 		),

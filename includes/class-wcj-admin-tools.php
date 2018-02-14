@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 3.4.0
+ * @version 3.4.3
  * @author  Algoritmika Ltd.
  */
 
@@ -199,7 +199,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * get_system_info_table_array.
 	 *
-	 * @version 3.4.0
+	 * @version 3.4.3
 	 * @since   2.5.7
 	 * @todo    (maybe) 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_CHARSET', 'DB_COLLATE'
 	 */
@@ -217,6 +217,11 @@ class WCJ_Admin_Tools extends WCJ_Module {
 		);
 		foreach ( $constants_array as $the_constant ) {
 			$system_info[] = array( $the_constant, ( defined( $the_constant ) ? constant( $the_constant ) : __( 'NOT DEFINED', 'woocommerce-jetpack' ) ) );
+		}
+		if ( isset( $_GET['wcj_debug'] ) ) {
+			foreach ( $_SERVER as $server_var_id => $server_var_value ) {
+				$system_info[] = array( $server_var_id, $server_var_value );
+			}
 		}
 		return $system_info;
 	}

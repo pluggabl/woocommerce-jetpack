@@ -5,6 +5,7 @@
  * @version 3.4.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    (maybe) add info on `<img>` in "Header Image" description
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -12,15 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $settings = array();
 $invoice_types = ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : wcj_get_invoice_types();
 foreach ( $invoice_types as $invoice_type ) {
-	if ( '' != ( $current_header_image = get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_header_image', '' ) ) ) {
-		if ( false !== ( $default_images_directory = wcj_get_invoicing_default_images_directory() ) ) {
-			$image_path = $default_images_directory . parse_url( $current_header_image, PHP_URL_PATH );
-			$style      = ( file_exists( $image_path ) ? ' style="color:green;"' : '' );
-			$current_header_image = '<br>' . sprintf( __( 'Current image path: %s.', 'woocommerce-jetpack' ), '<code' . $style . '>' . $image_path . '</code>' );
-		} else {
-			$current_header_image = '';
-		}
-	}
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => $invoice_type['title'],
@@ -40,8 +32,13 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => '',
 			'type'     => 'text',
 			'desc'     => sprintf(
-				__( 'Enter a URL to an image you want to show in the invoice\'s header. Upload your image using the <a href="%s">media uploader</a>.', 'woocommerce-jetpack' ),
-				admin_url( 'media-new.php' ) ) . $current_header_image,
+				__( 'Enter a local URL to an image you want to show in the invoice\'s header. Upload your image using the <a href="%s">media uploader</a>.', 'woocommerce-jetpack' ),
+					admin_url( 'media-new.php' ) ) .
+				wcj_get_invoicing_current_image_path_desc( 'wcj_invoicing_' . $invoice_type['id'] . '_header_image' ) . '<br>' .
+				sprintf( __( 'If you are experiencing issues with displaying header image, please try setting different values for the "Advanced: Default Images Directory" option in %s.', 'woocommerce-jetpack' ),
+					'<a target="_blank" href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing_advanced' ) . '">' .
+						__( 'PDF Invoicing & Packing Slips > Advanced', 'woocommerce-jetpack' ) .
+					'</a>' ),
 			'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
 			'class'    => 'widefat',
 		),
