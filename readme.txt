@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.4.3
+Stable tag: 3.4.4
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -180,6 +180,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.4.4 - 15/02/2018 =
+* Fix - PDF INVOICING & PACKING SLIPS - `K_TCPDF_CALLS_IN_HTML` set to `true` (fixes the issue with using TCPDF methods in HTML, e.g. `[wcj_tcpdf_pagebreak]` shortcode).
+
 = 3.4.3 - 14/02/2018 =
 * Dev - PDF INVOICING & PACKING SLIPS - Checking header image and background image to exist (before adding to PDF).
 * Dev - PDF INVOICING & PACKING SLIPS - Header - Header Image - Admin description expanded.
@@ -242,7 +245,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Fix - PDF INVOICING & PACKING SLIPS - Display & Misc. - `pre_get_posts` hook priority fixed.
 * Dev - PDF INVOICING & PACKING SLIPS - General - Number of Custom Documents - Limited to max 100.
 * Dev - PDF INVOICING & PACKING SLIPS - PDF Invoices Order Meta Box - "View" link is opened in new window now.
-* Dev - PDF INVOICING & PACKING SLIPS - TCPDF library version updated to v6.2.13.
+* Dev - PDF INVOICING & PACKING SLIPS - TCPDF library version updated to v6.2.13 (was v6.0.084).
 * Fix - EMAILS & MISC. - Admin Bar - Booster: Active - Title fixed.
 * Dev - EMAILS & MISC. - Admin Tools - System Info - `WCJ_SESSION_TYPE` constant info added.
 * Dev - EMAILS & MISC. - Custom CSS - Admin Settings - Minor restyling.

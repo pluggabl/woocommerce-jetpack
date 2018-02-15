@@ -210,7 +210,14 @@ define('K_THAI_TOPCHARS', true);
  * If true allows to call TCPDF methods using HTML syntax
  * IMPORTANT: For security reason, disable this feature if you are printing user HTML content.
  */
-define('K_TCPDF_CALLS_IN_HTML', false);
+/*
+ * Booster modification (Algoritmika)
+ *
+ * @version 3.4.4
+ * @since   3.4.4
+ */
+//define('K_TCPDF_CALLS_IN_HTML', false);
+define( 'K_TCPDF_CALLS_IN_HTML', true );
 
 /**
  * If true and PHP version is greater than 5, then the Error() method throw new exception instead of terminating the execution.
