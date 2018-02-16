@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.4.0
+ * @version 3.4.5
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.2
+	 * @version 3.4.5
+	 * @todo    check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {
 
@@ -34,7 +35,14 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 			$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'multicurrency' );
 
-//			add_filter( 'init', array( $this, 'add_hooks' ) );
+			// Session
+			if ( 'wc' === WCJ_SESSION_TYPE ) {
+				// `init()` executed on `init` hook because we need to use `WC()->session`
+				add_action( 'init', array( $this, 'init' ) );
+			} else {
+				$this->init();
+			}
+
 			$this->add_hooks();
 
 			if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) ) {
@@ -51,26 +59,19 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 3.4.0
+	 * @version 3.4.5
 	 * @todo    (maybe) replace all `PHP_INT_MAX - 1` with `$this->price_hooks_priority` (especially for `woocommerce_currency_symbol` and `woocommerce_currency`)
 	 */
 	function add_hooks() {
-		// Session
-		wcj_session_maybe_start();
-		if ( isset( $_REQUEST['wcj-currency'] ) ) {
-			wcj_session_set( 'wcj-currency', $_REQUEST['wcj-currency'] );
-		}
-		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+		if ( wcj_is_frontend() ) {
+
 			// Prices - Compatibility - "WooCommerce TM Extra Product Options" plugin
-			add_filter( 'woocommerce_tm_epo_price_on_cart',           array( $this, 'change_price_by_currency_tm_extra_product_options_plugin_cart' ), PHP_INT_MAX - 1, 1 );
-			add_filter( 'wc_epo_price',                               array( $this, 'change_price_by_currency_tm_extra_product_options_plugin' ),      PHP_INT_MAX - 1, 3 );
-//			add_filter( 'woocommerce_tm_epo_price_per_currency_diff', array( $this, 'change_price_by_currency_tm_extra_product_options_plugin_cart' ), PHP_INT_MAX - 1, 1 );
-//			add_filter( 'woocommerce_tm_epo_price_add_on_cart',       array( $this, 'change_price_by_currency_tm_extra_product_options_plugin_cart' ), PHP_INT_MAX - 1, 1 );
-//			add_filter( 'wc_aelia_cs_enabled_currencies',             array( $this, 'add_currency' ), PHP_INT_MAX - 1, 1 );
+			add_filter( 'woocommerce_tm_epo_price_on_cart', array( $this, 'change_price_by_currency_tm_extra_product_options_plugin_cart' ), PHP_INT_MAX - 1, 1 );
+			add_filter( 'wc_epo_price',                     array( $this, 'change_price_by_currency_tm_extra_product_options_plugin' ),      PHP_INT_MAX - 1, 3 );
 
 			// Currency hooks
-			add_filter( 'woocommerce_currency_symbol',                array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 );
-			add_filter( 'woocommerce_currency',                       array( $this, 'change_currency_code' ),   PHP_INT_MAX - 1, 1 );
+			add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 );
+			add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ),   PHP_INT_MAX - 1, 1 );
 
 			// Add "Change Price" hooks
 			wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
@@ -88,6 +89,20 @@ class WCJ_Multicurrency extends WCJ_Module {
 			} else {
 				$this->additional_price_filters = array();
 			}
+
+		}
+	}
+
+	/**
+	 * init.
+	 *
+	 * @version 3.4.5
+	 * @since   3.4.5
+	 */
+	function init() {
+		wcj_session_maybe_start();
+		if ( isset( $_REQUEST['wcj-currency'] ) ) {
+			wcj_session_set( 'wcj-currency', $_REQUEST['wcj-currency'] );
 		}
 	}
 

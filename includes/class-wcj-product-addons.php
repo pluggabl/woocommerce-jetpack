@@ -38,7 +38,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 				add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
 				$this->co = 'wcj_product_addons_per_product_settings_enabled';
 			}
-			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( wcj_is_frontend() ) {
 				if ( 'yes' === get_option( 'wcj_product_addons_ajax_enabled', 'no' ) ) {
 					// Scripts
 					add_action( 'wp_enqueue_scripts',                         array( $this, 'enqueue_scripts' ) );

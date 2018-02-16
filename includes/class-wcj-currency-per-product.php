@@ -35,29 +35,26 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
-			//if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			// Currency code and symbol
+			add_filter( 'woocommerce_currency_symbol',                array( $this, 'change_currency_symbol' ),     PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_currency',                       array( $this, 'change_currency_code' ),       PHP_INT_MAX );
 
-				// Currency code and symbol
-				add_filter( 'woocommerce_currency_symbol',                array( $this, 'change_currency_symbol' ),     PHP_INT_MAX, 2 );
-				add_filter( 'woocommerce_currency',                       array( $this, 'change_currency_code' ),       PHP_INT_MAX );
+			// Add to cart
+			add_filter( 'woocommerce_add_cart_item_data',             array( $this, 'add_cart_item_data' ),         PHP_INT_MAX, 3 );
+			add_filter( 'woocommerce_add_cart_item',                  array( $this, 'add_cart_item' ),              PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_get_cart_item_from_session',     array( $this, 'get_cart_item_from_session' ), PHP_INT_MAX, 3 );
+			add_filter( 'woocommerce_add_to_cart_validation',         array( $this, 'validate_on_add_to_cart' ),    PHP_INT_MAX, 2 );
 
-				// Add to cart
-				add_filter( 'woocommerce_add_cart_item_data',             array( $this, 'add_cart_item_data' ),         PHP_INT_MAX, 3 );
-				add_filter( 'woocommerce_add_cart_item',                  array( $this, 'add_cart_item' ),              PHP_INT_MAX, 2 );
-				add_filter( 'woocommerce_get_cart_item_from_session',     array( $this, 'get_cart_item_from_session' ), PHP_INT_MAX, 3 );
-				add_filter( 'woocommerce_add_to_cart_validation',         array( $this, 'validate_on_add_to_cart' ),    PHP_INT_MAX, 2 );
+			// Price
+			add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                 array( $this, 'change_price' ),               PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_product_variation_get_price',    array( $this, 'change_price' ),               PHP_INT_MAX, 2 );
 
-				// Price
-				add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                 array( $this, 'change_price' ),               PHP_INT_MAX, 2 );
-				add_filter( 'woocommerce_product_variation_get_price',    array( $this, 'change_price' ),               PHP_INT_MAX, 2 );
+			// Grouped
+			add_filter( 'woocommerce_grouped_price_html',             array( $this, 'grouped_price_html' ),         PHP_INT_MAX, 2 );
 
-				// Grouped
-				add_filter( 'woocommerce_grouped_price_html',             array( $this, 'grouped_price_html' ),         PHP_INT_MAX, 2 );
+			// Shipping
+			add_filter( 'woocommerce_package_rates',                  array( $this, 'change_shipping_price' ),      PHP_INT_MAX, 2 );
 
-				// Shipping
-				add_filter( 'woocommerce_package_rates',                  array( $this, 'change_shipping_price' ),      PHP_INT_MAX, 2 );
-
-			//}
 		}
 	}
 

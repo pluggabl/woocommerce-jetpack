@@ -40,7 +40,7 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module {
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			// Core
-			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( wcj_is_frontend() ) {
 				if ( 'yes' === get_option( 'wcj_product_custom_visibility_visibility', 'yes' ) ) {
 					add_filter( 'woocommerce_product_is_visible', array( $this, 'product_custom_visibility_visibility' ), PHP_INT_MAX, 2 );
 				}

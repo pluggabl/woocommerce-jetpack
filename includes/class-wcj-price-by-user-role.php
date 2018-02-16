@@ -34,7 +34,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
-			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( wcj_is_frontend() ) {
 				if ( 'no' === get_option( 'wcj_price_by_user_role_for_bots_disabled', 'no' ) || ! wcj_is_bot() ) {
 					wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 					if ( ( $this->disable_for_regular_price = ( 'yes' === get_option( 'wcj_price_by_user_role_disable_for_regular_price', 'no' ) ) ) ) {

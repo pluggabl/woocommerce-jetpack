@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 3.2.4
+ * @version 3.4.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -30,10 +30,10 @@ return array(
 	array(
 		'title'    => __( 'Shop Page Display Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'desc'     => sprintf(
-			__( 'You can control what is shown on the product archive in <a href="%s">WooCommerce > Settings > Products > Display > Shop page display</a>.', 'woocommerce-jetpack' ),
-			admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
-		),
+		'desc'     => ( WCJ_IS_WC_VERSION_BELOW_3_3_0 ? sprintf(
+				__( 'You can control what is shown on the product archive in <a href="%s">WooCommerce > Settings > Products > Display > Shop page display</a>.', 'woocommerce-jetpack' ),
+				admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
+			) : '' ),
 		'id'       => 'wcj_product_listings_shop_page_options',
 	),
 	array(
@@ -74,10 +74,10 @@ return array(
 	array(
 		'title'    => __( 'Category Display Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'desc'     => sprintf(
-			__( 'You can control what is shown on category archives in <a href="%s">WooCommerce > Settings > Products > Display > Default category display</a>.', 'woocommerce-jetpack' ),
-			admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
-		),
+		'desc'     => ( WCJ_IS_WC_VERSION_BELOW_3_3_0 ? sprintf(
+				__( 'You can control what is shown on category archives in <a href="%s">WooCommerce > Settings > Products > Display > Default category display</a>.', 'woocommerce-jetpack' ),
+				admin_url( 'admin.php?page=wc-settings&tab=products&section=display' )
+			) : '' ),
 		'id'       => 'wcj_product_listings_archive_pages_options',
 	),
 	array(

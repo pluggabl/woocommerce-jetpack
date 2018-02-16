@@ -180,6 +180,16 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.4.5 - 16/02/2018 =
+D X   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Update all rates now" button added.
+D X   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset (Percent)" options added for each currency pair.
+D X   * Dev - PRODUCTS - Product Listings - Admin Settings - Descriptions updated.
+  X   * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Session init moved to the `init` hook (on "WC Sessions").
+  X   * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Session init moved to the `init` hook (on "WC Sessions").
+D X   * Dev - EMAILS & MISC. - General - "Session Type in Booster" option re-enabled.
+  X   * Dev - Speed Optimization - "WC Sessions" is now the default option for `WCJ_SESSION_TYPE`.
+      * Dev - Code refactoring - `wcj_is_frontend()` used where needed (instead of longer code).
+
 = 3.4.4 - 15/02/2018 =
 * Fix - PDF INVOICING & PACKING SLIPS - `K_TCPDF_CALLS_IN_HTML` set to `true` (fixes the issue with using TCPDF methods in HTML, e.g. `[wcj_tcpdf_pagebreak]` shortcode).
 

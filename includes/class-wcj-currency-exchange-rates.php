@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency Exchange Rates
  *
- * @version 3.2.4
+ * @version 3.4.5
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.4.5
 	 */
 	function __construct() {
 
@@ -31,8 +31,22 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			include_once( 'exchange-rates/class-wcj-exchange-rates-crons.php' );
+			add_action( 'admin_init', array( $this, 'maybe_update_all_rates' ) );
 		}
 		include_once( 'exchange-rates/class-wcj-exchange-rates.php' );
+	}
+
+	/**
+	 * maybe_update_all_rates.
+	 *
+	 * @version 3.4.5
+	 * @since   3.4.5
+	 */
+	function maybe_update_all_rates() {
+		if ( isset( $_GET['wcj_currency_exchange_rates_update_now'] ) ) {
+			do_action( 'auto_update_exchange_rates_hook' );
+			wp_safe_redirect( remove_query_arg( 'wcj_currency_exchange_rates_update_now' ) );
+		}
 	}
 
 	/**
@@ -178,24 +192,64 @@ class WCJ_Currency_Exchange_Rates extends WCJ_Module {
 	}
 
 	/**
+	 * add_currency_pair_offset_percent_setting.
+	 *
+	 * @version 3.4.5
+	 * @since   3.4.5
+	 */
+	function add_currency_pair_offset_percent_setting( $currency_from, $currency_to, $default_offset, $settings ) {
+		if ( $currency_from != $currency_to ) {
+			$field_id = 'wcj_currency_exchange_rates_offset_percent_' . sanitize_title( $currency_from . $currency_to );
+			foreach ( $settings as $setting ) {
+				if ( $setting['id'] === $field_id ) {
+					return $settings;
+				}
+			}
+			$settings[] = array(
+				'desc'     => __( 'Exchange Rates Offset (Percent)', 'woocommerce-jetpack' ),
+				'id'       => $field_id,
+				'default'  => 'default_offset',
+				'type'     => 'select',
+				'options'  => array(
+					'default_offset' => sprintf( __( 'Use default: %s%%', 'woocommerce-jetpack' ), $default_offset ),
+					'custom_offset'  => __( 'Custom offset', 'woocommerce-jetpack' ),
+				),
+			);
+			$settings[] = array(
+				'desc'     => __( 'Custom offset (Percent)', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Used when "Custom offset" option is selected above.', 'woocommerce-jetpack' ),
+				'id'       => $field_id . '_' . 'custom_offset',
+				'default'  => 0,
+				'type'     => 'number',
+				'custom_attributes' => array( 'step' => '0.001' ),
+			);
+		}
+		return $settings;
+	}
+
+	/**
 	 * get_all_currencies_exchange_rates_settings.
 	 *
-	 * @version 3.2.4
+	 * @version 3.4.5
 	 * @since   2.9.0
 	 */
-	function get_all_currencies_exchange_rates_settings( $add_server = false ) {
-		if ( $add_server ) {
+	function get_all_currencies_exchange_rates_settings( $add_extra_settings = false ) {
+		if ( $add_extra_settings ) {
+			// Server
 			$exchange_rate_servers = wcj_get_currency_exchange_rate_servers();
 			$exchange_rate_server  = get_option( 'wcj_currency_exchange_rates_server', 'ecb' );
 			$default_server        = ( isset( $exchange_rate_servers[ $exchange_rate_server ] ) ? $exchange_rate_servers[ $exchange_rate_server ] : $exchange_rate_server );
+			// Offset
+			$default_offset = get_option( 'wcj_currency_exchange_rates_offset_percent', 0 );
 		}
 		$settings = array();
 		$currency_from = get_option( 'woocommerce_currency' );
 		$currencies = $this->get_all_currencies_exchange_rates_currencies();
 		foreach ( $currencies as $currency ) {
 			$settings = $this->add_currency_pair_setting( $currency_from, $currency, $settings );
-			if ( $add_server ) {
+			if ( $add_extra_settings ) {
 				$settings = $this->add_currency_pair_server_setting( $currency_from, $currency, $default_server, $settings );
+				$settings = $this->add_currency_pair_offset_percent_setting( $currency_from, $currency, $default_offset, $settings );
 			}
 		}
 		return $settings;

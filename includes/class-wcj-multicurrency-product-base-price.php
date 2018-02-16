@@ -34,7 +34,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 
 			add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_on_product_edit' ), PHP_INT_MAX, 2 );
 
-			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( wcj_is_frontend() ) {
 				wcj_add_change_price_hooks( $this, PHP_INT_MAX - 10, false );
 			}
 

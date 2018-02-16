@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exchange Rates Crons
  *
- * @version 2.9.0
+ * @version 3.4.5
  * @author  Algoritmika Ltd.
  */
 
@@ -77,7 +77,7 @@ class WCJ_Exchange_Rates_Crons {
 	/**
 	 * On the scheduled action hook, run a function.
 	 *
-	 * @version 2.9.0
+	 * @version 3.4.5
 	 * @todo    get currency pairs from "Currency Exchange Rates" module (see `get_all_currencies_exchange_rates_currencies()`)
 	 */
 	function update_the_exchange_rates( $interval ) {
@@ -153,10 +153,6 @@ class WCJ_Exchange_Rates_Crons {
 		}
 
 		// Currency Pairs - Final
-		$rate_offset_percent = get_option( 'wcj_currency_exchange_rates_offset_percent', 0 );
-		if ( 0 != $rate_offset_percent ) {
-			$rate_offset_percent = 1 + ( $rate_offset_percent / 100 );
-		}
 		$rate_offset_fixed = get_option( 'wcj_currency_exchange_rates_offset_fixed', 0 );
 		if ( $rate_rounding_enabled = ( 'yes' === get_option( 'wcj_currency_exchange_rates_rounding_enabled', 'no' ) ) ) {
 			$rate_rounding_precision = get_option( 'wcj_currency_exchange_rates_rounding_precision', 0 );
@@ -164,6 +160,10 @@ class WCJ_Exchange_Rates_Crons {
 		foreach ( $currency_pairs as $currency_pair ) {
 			$currency_from = $currency_pair['currency_from'];
 			$currency_to   = $currency_pair['currency_to'];
+			$rate_offset_percent = wcj_get_currency_exchange_rate_offset_percent( $currency_from, $currency_to );
+			if ( 0 != $rate_offset_percent ) {
+				$rate_offset_percent = 1 + ( $rate_offset_percent / 100 );
+			}
 			$the_rate = wcj_get_exchange_rate( $currency_from, $currency_to );
 			if ( 0 != $the_rate ) {
 				if ( 0 != $rate_offset_percent ) {

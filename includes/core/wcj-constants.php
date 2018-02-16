@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Constants
  *
- * @version 3.4.2
+ * @version 3.4.5
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -39,6 +39,16 @@ if ( ! defined( 'WCJ_IS_WC_VERSION_BELOW_3_2_0' ) ) {
 	define( 'WCJ_IS_WC_VERSION_BELOW_3_2_0', version_compare( WCJ_WC_VERSION, '3.2.0', '<' ) );
 }
 
+if ( ! defined( 'WCJ_IS_WC_VERSION_BELOW_3_3_0' ) ) {
+	/**
+	 * WooCommerce version - is below version 3.3.0.
+	 *
+	 * @version 3.4.5
+	 * @since   3.4.5
+	 */
+	define( 'WCJ_IS_WC_VERSION_BELOW_3_3_0', version_compare( WCJ_WC_VERSION, '3.3.0', '<' ) );
+}
+
 if ( ! defined( 'WCJ_PRODUCT_GET_PRICE_FILTER' ) ) {
 	/**
 	 * Price filters - price.
@@ -73,12 +83,10 @@ if ( ! defined( 'WCJ_SESSION_TYPE' ) ) {
 	/**
 	 * Session type.
 	 *
-	 * @version 3.4.2
+	 * @version 3.4.5
 	 * @since   3.1.0
-	 * @todo    ! this is only a temporary "fix"
 	 */
-	define( 'WCJ_SESSION_TYPE', 'standard' );
-//	define( 'WCJ_SESSION_TYPE', ( 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? get_option( 'wcj_general_advanced_session_type', 'wc' ) : 'wc' ) );
+	define( 'WCJ_SESSION_TYPE', ( 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? get_option( 'wcj_general_advanced_session_type', 'wc' ) : 'wc' ) );
 }
 
 if ( ! defined( 'WCJ_VERSION_OPTION' ) ) {

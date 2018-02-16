@@ -32,7 +32,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
-			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( wcj_is_frontend() ) {
 				if ( 'yes' === get_option( 'wcj_product_by_user_role_visibility', 'yes' ) ) {
 					add_filter( 'woocommerce_product_is_visible', array( $this, 'product_by_user_role_visibility' ), PHP_INT_MAX, 2 );
 				}

@@ -33,7 +33,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
-			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( wcj_is_frontend() ) {
 				add_action( 'wp_enqueue_scripts',                         array( $this, 'enqueue_scripts' ) );
 				add_action( 'wp_ajax_price_change',                       array( $this, 'price_change_ajax' ) );
 				add_action( 'wp_ajax_nopriv_price_change',                array( $this, 'price_change_ajax' ) );

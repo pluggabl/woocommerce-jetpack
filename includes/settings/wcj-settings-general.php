@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 3.4.2
+ * @version 3.4.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add link to Booster's shortcodes list
@@ -85,7 +85,7 @@ $settings = array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
-	/* array(
+	array(
 		'title'    => __( 'Session Type in Booster', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_session_type',
 		'default'  => 'wc',
@@ -94,7 +94,7 @@ $settings = array(
 			'standard' => __( 'Standard PHP sessions', 'woocommerce-jetpack' ),
 			'wc'       => __( 'WC sessions', 'woocommerce-jetpack' ),
 		),
-	), */
+	),
 	array(
 		'title'    => __( 'Disable Loading Datepicker/Weekpicker CSS', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),

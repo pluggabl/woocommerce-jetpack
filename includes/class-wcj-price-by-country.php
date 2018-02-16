@@ -31,7 +31,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
-			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( wcj_is_frontend() ) {
 				$do_load_core = true;
 				/* if ( is_admin() ) {
 					global $pagenow;

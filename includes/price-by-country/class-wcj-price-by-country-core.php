@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.4.0
+ * @version 3.4.5
  * @author  Algoritmika Ltd.
  */
 
@@ -15,12 +15,20 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.4.5
+	 * @todo    check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {
 		$this->customer_country_group_id = null;
 		if ( 'no' === get_option( 'wcj_price_by_country_for_bots_disabled', 'no' ) || ! wcj_is_bot() ) {
-			$this->maybe_init();
+			if ( in_array( get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ), array( 'by_user_selection', 'by_ip_then_by_user_selection' ) ) ) {
+				if ( 'wc' === WCJ_SESSION_TYPE ) {
+					// `init()` executed on `init` hook because we need to use `WC()->session`
+					add_action( 'init', array( $this, 'init' ) );
+				} else {
+					$this->init();
+				}
+			}
 			$this->add_hooks();
 			// `maybe_init_customer_country_by_ip()` executed on `init` hook - in case we need to call `get_customer_country_by_ip()` `WC_Geolocation` class is ready
 			add_action( 'init', array( $this, 'maybe_init_customer_country_by_ip' ) );
@@ -28,20 +36,15 @@ class WCJ_Price_by_Country_Core {
 	}
 
 	/**
-	 * maybe_init.
+	 * init.
 	 *
-	 * @version 3.4.0
+	 * @version 3.4.5
 	 * @since   2.9.0
 	 */
-	function maybe_init() {
-		if (
-			'by_user_selection'            === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ) ||
-			'by_ip_then_by_user_selection' === get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' )
-		) {
-			wcj_session_maybe_start();
-			if ( isset( $_REQUEST[ 'wcj-country' ] ) ) {
-				wcj_session_set( 'wcj-country', $_REQUEST[ 'wcj-country' ] );
-			}
+	function init() {
+		wcj_session_maybe_start();
+		if ( isset( $_REQUEST[ 'wcj-country' ] ) ) {
+			wcj_session_set( 'wcj-country', $_REQUEST[ 'wcj-country' ] );
 		}
 	}
 

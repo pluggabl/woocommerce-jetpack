@@ -30,7 +30,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( wcj_is_frontend() ) {
 				wcj_add_change_price_hooks( $this, PHP_INT_MAX, false );
 			}
 		}

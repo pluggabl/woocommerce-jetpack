@@ -2,10 +2,10 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 3.2.4
+ * @version 3.4.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    add "rounding" and "offset" options for each pair separately
+ * @todo    add "rounding" and "fixed offset" options for each pair separately (and option to enable/disable these per pair extra settings)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -34,13 +34,14 @@ $settings = array(
 		'default'  => 'daily',
 		'type'     => 'select',
 		'options'  => array(
-//			'manual'     => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
 			'minutely'   => __( 'Update Every Minute', 'woocommerce-jetpack' ),
 			'hourly'     => __( 'Update Hourly', 'woocommerce-jetpack' ),
 			'twicedaily' => __( 'Update Twice Daily', 'woocommerce-jetpack' ),
 			'daily'      => __( 'Update Daily', 'woocommerce-jetpack' ),
 			'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
 		),
+		'desc'     => ( $this->is_enabled() ?
+			'<br>' . '<a href="' . add_query_arg( 'wcj_currency_exchange_rates_update_now', '1' ) . '">' . __( 'Update all rates now', 'woocommerce-jetpack' ) . '</a>' : '' ),
 	),
 	array(
 		'title'    => __( 'Exchange Rates Server', 'woocommerce-jetpack' ),

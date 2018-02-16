@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.4.0
+ * @version 3.4.5
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -88,6 +88,22 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_server' ) ) {
 			return get_option( 'wcj_currency_exchange_rates_server', 'ecb' );
 		}
 		return $server;
+	}
+}
+
+if ( ! function_exists( 'wcj_get_currency_exchange_rate_offset_percent' ) ) {
+	/*
+	 * wcj_get_currency_exchange_rate_offset_percent.
+	 *
+	 * @version 3.4.5
+	 * @since   3.4.5
+	 */
+	function wcj_get_currency_exchange_rate_offset_percent( $currency_from, $currency_to ) {
+		$field_id = 'wcj_currency_exchange_rates_offset_percent_' . sanitize_title( $currency_from . $currency_to );
+		if ( 'default_offset' === get_option( $field_id, 'default_offset' ) ) {
+			return get_option( 'wcj_currency_exchange_rates_offset_percent', 0 );
+		}
+		return get_option( $field_id . '_' . 'custom_offset', 0 );
 	}
 }
 

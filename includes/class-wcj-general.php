@@ -130,7 +130,7 @@ class WCJ_General extends WCJ_Module {
 	 * @todo    this is only temporary solution!
 	 */
 	function fix_mini_cart() {
-		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+		if ( wcj_is_frontend() ) {
 			if ( null !== ( $wc = WC() ) ) {
 				if ( isset( $wc->cart ) ) {
 					$wc->cart->calculate_totals();
