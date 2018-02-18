@@ -2,15 +2,32 @@
 /**
  * Booster for WooCommerce Settings - Product Tabs
  *
- * @version 3.2.4
+ * @version 3.4.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    clean up
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $settings = array(
+	// General settings
+	array(
+		'title'     => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'      => 'title',
+		'id'        => 'wcj_custom_product_tabs_general_options',
+	),
+	array(
+		'title'     => sprintf( __( 'Apply %s Filter', 'woocommerce-jetpack' ), 'the_content' ),
+		'desc_tip'  => sprintf( __( 'Apply %s filter on custom tabs content. This will format new lines as paragraphs etc.', 'woocommerce-jetpack' ), '<code>the_content</code>' ),
+		'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
+		'type'      => 'checkbox',
+		'id'        => 'wcj_custom_product_tabs_general_apply_the_content_filter',
+		'default'   => 'no',
+	),
+	array(
+		'type'      => 'sectionend',
+		'id'        => 'wcj_custom_product_tabs_general_options',
+	),
 	// Global Custom Tabs
 	array(
 		'title'     => __( 'Custom Product Tabs - All Products', 'woocommerce-jetpack' ),

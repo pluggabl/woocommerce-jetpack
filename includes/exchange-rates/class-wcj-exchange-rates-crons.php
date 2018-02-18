@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce Exchange Rates Crons
+ * Booster for WooCommerce - Exchange Rates - Crons
  *
  * @version 3.4.5
  * @author  Algoritmika Ltd.
@@ -59,7 +59,6 @@ class WCJ_Exchange_Rates_Crons {
 	 * @since   2.3.0
 	 */
 	function get_currency_pair( $currency_pairs, $currency_to, $option_name ) {
-
 		foreach ( $currency_pairs as $k => $currency_pair ) {
 			if ( $currency_pair['currency_to'] == $currency_to ) {
 				$currency_pairs[ $k ]['option_name'][] = $option_name;
@@ -82,7 +81,7 @@ class WCJ_Exchange_Rates_Crons {
 	 */
 	function update_the_exchange_rates( $interval ) {
 
-		$currency_pairs[] = array();
+		$currency_pairs = array();
 
 		if ( wcj_is_module_enabled( 'price_by_country' ) ) {
 			// Currency Pairs - Preparation - Price by Country

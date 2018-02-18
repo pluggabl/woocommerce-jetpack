@@ -25,7 +25,6 @@ $settings = array(
 	array(
 		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'desc'     => __( 'All currencies from all <strong>enabled</strong> modules (with "Exchange Rates Updates" set to "Automatically via Currency Exchange Rates module") will be automatically added to the list.', 'woocommerce-jetpack' ) . $desc,
 		'id'       => 'wcj_currency_exchange_rates_options',
 	),
 	array(
@@ -41,7 +40,7 @@ $settings = array(
 			'weekly'     => __( 'Update Weekly', 'woocommerce-jetpack' ),
 		),
 		'desc'     => ( $this->is_enabled() ?
-			'<br>' . '<a href="' . add_query_arg( 'wcj_currency_exchange_rates_update_now', '1' ) . '">' . __( 'Update all rates now', 'woocommerce-jetpack' ) . '</a>' : '' ),
+			$desc . ' ' . '<a href="' . add_query_arg( 'wcj_currency_exchange_rates_update_now', '1' ) . '">' . __( 'Update all rates now', 'woocommerce-jetpack' ) . '</a>' : '' ),
 	),
 	array(
 		'title'    => __( 'Exchange Rates Server', 'woocommerce-jetpack' ),
@@ -59,6 +58,7 @@ $settings = array(
 	),
 	array(
 		'desc'     => __( 'Rounding Precision', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Rounding precision sets number of decimal digits to round to.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_exchange_rates_rounding_precision',
 		'default'  => 0,
 		'type'     => 'number',
@@ -156,6 +156,7 @@ if ( ! empty( $exchange_rate_settings ) ) {
 		array(
 			'title'    => __( 'Exchange Rates', 'woocommerce-jetpack' ),
 			'type'     => 'title',
+			'desc'     => __( 'All currencies from all <strong>enabled</strong> modules (with "Exchange Rates Updates" set to "Automatically via Currency Exchange Rates module") will be automatically added to the list.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_currency_exchange_rates_rates',
 		),
 	) );

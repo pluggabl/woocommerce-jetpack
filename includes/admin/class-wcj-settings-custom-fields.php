@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Custom Fields
  *
- * @version 3.2.4
+ * @version 3.4.5
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -36,7 +36,7 @@ class WCJ_Settings_Custom_Fields {
 	/**
 	 * output_exchange_rate_settings_button.
 	 *
-	 * @version 3.2.4
+	 * @version 3.4.5
 	 */
 	function output_exchange_rate_settings_button( $value ) {
 
@@ -62,7 +62,8 @@ class WCJ_Settings_Custom_Fields {
 		$tip                   = '';
 		$description           = '';
 		$exchange_rate_server  = wcj_get_currency_exchange_rate_server_name( $value['custom_attributes_button']['currency_from'], $value['custom_attributes_button']['currency_to'] );
-		$value_title           = sprintf( __( 'Grab %s rate from %s', 'woocommerce-jetpack' ), $value['value'], $exchange_rate_server );
+		$value_title           = sprintf( __( 'Grab raw %s rate from %s.', 'woocommerce-jetpack' ), $value['value'], $exchange_rate_server ) .
+			' ' . __( 'Doesn\'t apply rounding, offset etc.', 'woocommerce-jetpack' );
 		?>
 		<tr valign="top">
 			<th scope="row" class="titledesc">
