@@ -17,12 +17,15 @@ $settings = array(
 		'id'        => 'wcj_custom_product_tabs_general_options',
 	),
 	array(
-		'title'     => sprintf( __( 'Apply %s Filter', 'woocommerce-jetpack' ), 'the_content' ),
-		'desc_tip'  => sprintf( __( 'Apply %s filter on custom tabs content. This will format new lines as paragraphs etc.', 'woocommerce-jetpack' ), '<code>the_content</code>' ),
-		'desc'      => __( 'Enable', 'woocommerce-jetpack' ),
-		'type'      => 'checkbox',
-		'id'        => 'wcj_custom_product_tabs_general_apply_the_content_filter',
-		'default'   => 'no',
+		'title'     => __( 'Content Processing', 'woocommerce-jetpack' ),
+		'type'      => 'select',
+		'id'        => 'wcj_custom_product_tabs_general_content_processing',
+		'default'   => 'the_content',
+		'options'   => array(
+			'the_content'  => sprintf( __( 'Apply %s filter', 'woocommerce-jetpack' ), 'the_content' ),
+			'do_shortcode' => __( 'Only process shortcodes', 'woocommerce-jetpack' ),
+			'disabled'     => __( 'Do nothing', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'type'      => 'sectionend',

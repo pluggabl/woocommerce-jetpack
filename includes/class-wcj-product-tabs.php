@@ -471,8 +471,14 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 * @since   3.4.5
 	 */
 	function get_tab_output( $content ) {
-		return ( 'yes' === get_option( 'wcj_custom_product_tabs_general_apply_the_content_filter', 'no' ) ?
-			apply_filters( 'the_content', $content ) : do_shortcode( $content ) );
+		switch ( get_option( 'wcj_custom_product_tabs_general_content_processing', 'the_content' ) ) {
+			case 'disabled':
+				return $content;
+			case 'do_shortcode':
+				return do_shortcode( $content );
+			default: // case 'the_content':
+				return apply_filters( 'the_content', $content );
+		}
 	}
 
 	/**
