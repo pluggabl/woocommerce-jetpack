@@ -180,6 +180,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.4.6 - 19/02/2018 =
+D T   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Google" server added.
+
 = 3.4.5 - 19/02/2018 =
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - Crons - "Undefined index..." notices in log fixed.
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - "Exchange Rates Offset (Percent)" options added for each currency pair.

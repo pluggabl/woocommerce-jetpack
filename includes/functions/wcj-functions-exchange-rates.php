@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.4.5
+ * @version 3.4.6
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -61,7 +61,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate_servers.
 	 *
-	 * @version 3.2.4
+	 * @version 3.4.6
 	 * @since   2.6.0
 	 */
 	function wcj_get_currency_exchange_rate_servers() {
@@ -72,6 +72,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 			'fixer'           => __( 'Fixer.io', 'woocommerce-jetpack' ),
 			'coinbase'        => __( 'Coinbase', 'woocommerce-jetpack' ),
 			'coinmarketcap'   => __( 'CoinMarketCap', 'woocommerce-jetpack' ),
+			'google'          => __( 'Google', 'woocommerce-jetpack' ),
 		);
 	}
 }
@@ -125,7 +126,7 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 	/*
 	 * wcj_get_exchange_rate.
 	 *
-	 * @version 3.2.4
+	 * @version 3.4.6
 	 * @since   2.6.0
 	 */
 	function wcj_get_exchange_rate( $currency_from, $currency_to ) {
@@ -151,6 +152,9 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 			case 'coinmarketcap':
 				$return = wcj_coinmarketcap_get_exchange_rate( $currency_from, $currency_to );
 				break;
+			case 'google':
+				$return = wcj_google_get_exchange_rate( $currency_from, $currency_to );
+				break;
 			default: // 'yahoo'
 				$return = wcj_yahoo_get_exchange_rate( $currency_from, $currency_to );
 				break;
@@ -163,11 +167,11 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	/*
 	 * wcj_get_currency_exchange_rates_url_response.
 	 *
-	 * @version 3.2.4
+	 * @version 3.4.6
 	 * @since   3.2.4
 	 * @todo    use where needed
 	 */
-	function wcj_get_currency_exchange_rates_url_response( $url ) {
+	function wcj_get_currency_exchange_rates_url_response( $url, $do_json_decode = true ) {
 		$response = '';
 		if ( 'no' === get_option( 'wcj_currency_exchange_rates_always_curl', 'no' ) && ini_get( 'allow_url_fopen' ) ) {
 			$response = file_get_contents( $url );
@@ -178,7 +182,32 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 			$response = curl_exec( $curl );
 			curl_close( $curl );
 		}
-		return ( '' != $response ? json_decode( $response ) : false );
+		return ( '' != $response ? ( $do_json_decode ? json_decode( $response ) : $response ) : false );
+	}
+}
+
+if ( ! function_exists( 'wcj_google_get_exchange_rate' ) ) {
+	/*
+	 * wcj_google_get_exchange_rate.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 * @see     https://gist.github.com/daveismyname/8067095
+	 */
+	function wcj_google_get_exchange_rate( $currency_from, $currency_to ) {
+		$amount = 1;
+		$url    = 'https://finance.google.com/finance/converter?a=' . $amount . '&from=' . $currency_from . '&to=' . $currency_to;
+		if ( false != ( $response = wcj_get_currency_exchange_rates_url_response( $url, false ) ) ) {
+			preg_match( "/<span class=bld>(.*)<\/span>/", $response, $converted );
+			if ( isset( $converted[1] ) ) {
+				if ( $converted = preg_replace( "/[^0-9.]/", "", $converted[1] ) ) {
+					if ( $return = round( $converted, 6 ) ) {
+						return $return;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }
 

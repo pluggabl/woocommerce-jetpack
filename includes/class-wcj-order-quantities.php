@@ -47,12 +47,12 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				}
 				add_filter( 'woocommerce_available_variation', array( $this, 'set_quantity_input_min_max_variation' ), PHP_INT_MAX, 3 );
 				if ( 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
-					add_filter( 'woocommerce_quantity_input_min',  array( $this, 'set_quantity_input_min' ), PHP_INT_MAX, 2 );
+					add_filter( 'woocommerce_quantity_input_min', array( $this, 'set_quantity_input_min' ), PHP_INT_MAX, 2 );
 				}
 				if ( 'yes' === get_option( 'wcj_order_quantities_max_section_enabled', 'no' ) ) {
-					add_filter( 'woocommerce_quantity_input_max',  array( $this, 'set_quantity_input_max' ), PHP_INT_MAX, 2 );
+					add_filter( 'woocommerce_quantity_input_max', array( $this, 'set_quantity_input_max' ), PHP_INT_MAX, 2 );
 				}
-				add_action( 'wp_enqueue_scripts',              array( $this, 'enqueue_script' ) );
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_script' ) );
 			}
 		}
 	}
