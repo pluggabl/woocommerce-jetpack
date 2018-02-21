@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -145,6 +145,7 @@ return apply_filters( 'wcj_modules', array(
 			'order_numbers',
 			'order_custom_statuses',
 			'order_quantities',
+			'max_products_per_user',
 		),
 	),
 

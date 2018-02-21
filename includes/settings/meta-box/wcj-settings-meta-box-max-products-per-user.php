@@ -1,0 +1,21 @@
+<?php
+/**
+ * Booster for WooCommerce - Settings Meta Box - Max Products per User
+ *
+ * @version 3.4.6
+ * @since   3.4.6
+ * @author  Algoritmika Ltd.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+return array(
+	array(
+		'title'   => __( 'Max Qty', 'woocommerce-jetpack' ),
+		'name'    => 'wcj_max_products_per_user_qty',
+		'default' => 0,
+		'type'    => 'number',
+		'tooltip' => __( 'If set to zero, and "All Products" section is enabled - global maximum quantity will be used; in case if "All Products" section is disabled - no maximum quantity will be used.', 'woocommerce-jetpack' ),
+		'custom_attributes' => 'min="0"',
+	),
+);

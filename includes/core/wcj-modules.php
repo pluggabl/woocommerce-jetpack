@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -85,6 +85,7 @@ $wcj_module_files = array(
 	'class-wcj-order-numbers.php',
 	'class-wcj-order-custom-statuses.php',
 	'class-wcj-order-quantities.php',
+	'class-wcj-max-products-per-user.php',
 	'class-wcj-pdf-invoicing.php',
 	'class-wcj-emails.php',
 	'class-wcj-email-options.php',

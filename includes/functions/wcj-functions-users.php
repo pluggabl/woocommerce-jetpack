@@ -2,12 +2,27 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_current_user_id' ) ) {
+	/**
+	 * wcj_get_current_user_id.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 */
+	function wcj_get_current_user_id() {
+		if ( ! function_exists( 'get_current_user_id' ) ) {
+			require_once( ABSPATH . 'wp-includes/pluggable.php' );
+		}
+		return get_current_user_id();
+	}
+}
 
 if ( ! function_exists( 'wcj_get_users_as_options' ) ) {
 	/**

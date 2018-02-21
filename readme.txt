@@ -105,6 +105,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Admin Orders List* - Customize WooCommerce admin orders list: add custom columns; add multiple status filtering.
 * *Custom Shipping* - Add multiple custom shipping methods to WooCommerce.
 * *Left to Free Shipping* - Display "left to free shipping" info in WooCommerce.
+* *Maximum Products per User* - Limit number of items your WooCommerce customers can buy.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Min/Max Quantities* - Set min/max product quantities in WooCommerce order.
 * *Order Minimum Amount* - Minimum WooCommerce order amount (optionally by user role).
@@ -180,7 +181,8 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 19/02/2018 =
+= 3.4.6 - 21/02/2018 =
+D W $ * Dev - SHIPPING & ORDERS - Maximum Products per User - Initial module release.
 D T   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Google" server added.
 
 = 3.4.5 - 19/02/2018 =
