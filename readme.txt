@@ -181,7 +181,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 21/02/2018 =
+= 3.4.6 - 22/02/2018 =
 D W $ * Dev - SHIPPING & ORDERS - Maximum Products per User - Initial module release.
 D T   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Google" server added.
 

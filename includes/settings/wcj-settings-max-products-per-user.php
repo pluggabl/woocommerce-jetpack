@@ -72,6 +72,16 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'Calculate Data', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_max_products_per_user_calculate_data',
+		'default'  => '',
+		'type'     => 'custom_link',
+		'link'     => '<a class="button" href="' .
+			add_query_arg( 'wcj_max_products_per_user_calculate_data', '1', remove_query_arg( 'wcj_max_products_per_user_calculate_data_finished' ) ) . '">' .
+				__( 'Calculate Data', 'woocommerce-jetpack' ) .
+			'</a>',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_max_products_per_user_general_options',
 	),

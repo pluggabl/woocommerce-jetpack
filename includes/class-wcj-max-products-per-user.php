@@ -20,6 +20,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	 * @since   3.4.6
 	 * @todo    (maybe) JS
 	 * @todo    (maybe) zero quantity for "Guest"
+	 * @todo    (maybe) editable sales date (i.e. change "Qty Bought" for product for user)
 	 */
 	function __construct() {
 
@@ -44,6 +45,61 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 			}
 			add_action( 'woocommerce_order_status_completed', array( $this, 'save_quantities' ), PHP_INT_MAX );
 			add_action( 'add_meta_boxes',                     array( $this, 'add_report_meta_box' ) );
+			add_action( 'admin_init',                         array( $this, 'calculate_data' ) );
+			add_action( 'admin_notices',                      array( $this, 'calculate_data_notice' ) );
+		}
+	}
+
+	/**
+	 * calculate_data_notice.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 */
+	function calculate_data_notice() {
+		if ( isset( $_GET['wcj_max_products_per_user_calculate_data_finished'] ) ) {
+			$class = 'notice notice-info';
+			$message = __( 'Data re-calculated.', 'woocommerce-jetpack' ) . ' ' .
+				sprintf( __( '%s order(s) processed.', 'woocommerce-jetpack' ), $_GET['wcj_max_products_per_user_calculate_data_finished'] );
+			printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+		}
+	}
+
+	/**
+	 * calculate_data.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 * @todo    reset `wcj_max_products_per_user_report` and `wcj_max_products_per_user_saved` meta
+	 */
+	function calculate_data() {
+		if ( isset( $_GET['wcj_max_products_per_user_calculate_data'] ) ) {
+			$offset       = 0;
+			$block_size   = 512;
+			$total_orders = 0;
+			while( true ) {
+				$args = array(
+					'post_type'      => 'shop_order',
+					'post_status'    => 'wc-completed',
+					'posts_per_page' => $block_size,
+					'orderby'        => 'ID',
+					'order'          => 'DESC',
+					'offset'         => $offset,
+					'fields'         => 'ids',
+				);
+				$loop = new WP_Query( $args );
+				if ( ! $loop->have_posts() ) {
+					break;
+				}
+				foreach ( $loop->posts as $_order_id ) {
+					$this->save_quantities( $_order_id );
+					$total_orders++;
+				}
+				$offset += $block_size;
+			}
+			wp_safe_redirect( add_query_arg( 'wcj_max_products_per_user_calculate_data_finished', $total_orders,
+				remove_query_arg( 'wcj_max_products_per_user_calculate_data' ) ) );
+			exit;
 		}
 	}
 
@@ -56,7 +112,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	function add_report_meta_box() {
 		add_meta_box(
 			'wc-jetpack-' . $this->id . '-report',
-			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Maximum Products per User: Report', 'woocommerce-jetpack' ),
+			__( 'Booster', 'woocommerce-jetpack' ) . ': ' . __( 'Maximum Products per User: Sales Data', 'woocommerce-jetpack' ),
 			array( $this, 'create_report_meta_box' ),
 			'product',
 			'normal',
