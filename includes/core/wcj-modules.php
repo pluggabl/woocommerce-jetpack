@@ -73,6 +73,7 @@ $wcj_module_files = array(
 	'class-wcj-shipping-options.php',
 	'class-wcj-shipping-icons.php',
 	'class-wcj-shipping-description.php',
+	'class-wcj-shipping-time.php',
 	'class-wcj-left-to-free-shipping.php',
 	'class-wcj-shipping-calculator.php',
 	'class-wcj-shipping-by-user-role.php',

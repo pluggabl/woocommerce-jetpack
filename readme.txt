@@ -105,7 +105,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Admin Orders List* - Customize WooCommerce admin orders list: add custom columns; add multiple status filtering.
 * *Custom Shipping* - Add multiple custom shipping methods to WooCommerce.
 * *Left to Free Shipping* - Display "left to free shipping" info in WooCommerce.
-* *Maximum Products per User* - Limit number of items your WooCommerce customers can buy.
+* *Maximum Products per User* - Limit number of items your WooCommerce customers (logged) can buy.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
 * *Order Min/Max Quantities* - Set min/max product quantities in WooCommerce order.
 * *Order Minimum Amount* - Minimum WooCommerce order amount (optionally by user role).
@@ -118,6 +118,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Shipping Methods by Products* - Set products, product categories or tags to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Options* - Hide WooCommerce shipping when free is available. Grant free shipping on per product basis.
+* *Shipping Time* - Add delivery time estimation to WooCommerce shipping methods.
 
 **PDF Invoicing & Packing Slips**
 
@@ -181,7 +182,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 22/02/2018 =
+= 3.4.6 - 24/02/2018 =
+D X   * Dev - Shortcodes - Products - `[wcj_product_shipping_time]` shortcode added.
+D X $ * Dev - SHIPPING & ORDERS - Shipping Time - Initial module release.
 D W $ * Dev - SHIPPING & ORDERS - Maximum Products per User - Initial module release.
 D T   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Google" server added.
 
