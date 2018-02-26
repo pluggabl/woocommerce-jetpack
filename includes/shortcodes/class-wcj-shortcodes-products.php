@@ -787,7 +787,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Returns product (modified) price.
 	 *
-	 * @version 3.4.0
+	 * @version 3.4.6
 	 * @todo    variable products: a) not range; and b) price by country.
 	 * @return  string The product (modified) price
 	 */
@@ -815,6 +815,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 					$max = $max * $meta_value;
 				}
 			}
+			if ( isset( $atts['multiply_by_attribute'] ) && '' !== $atts['multiply_by_attribute'] ) {
+				$attribute = $this->the_product->get_attribute( $atts['multiply_by_attribute'] );
+				if ( is_numeric( $attribute ) ) {
+					$min = $min * $attribute;
+					$max = $max * $attribute;
+				}
+			}
 			if ( 'yes' !== $atts['hide_currency'] ) {
 				$min = wc_price( $min, array( 'currency' => $atts['currency'] ) );
 				$max = wc_price( $max, array( 'currency' => $atts['currency'] ) );
@@ -838,6 +845,12 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$meta_value = get_post_meta( wcj_get_product_id( $this->the_product ), $atts['multiply_by_meta'], true );
 				if ( is_numeric( $meta_value ) ) {
 					$the_price = $the_price * $meta_value;
+				}
+			}
+			if ( isset( $atts['multiply_by_attribute'] ) && '' !== $atts['multiply_by_attribute'] ) {
+				$attribute = $this->the_product->get_attribute( $atts['multiply_by_attribute'] );
+				if ( is_numeric( $attribute ) ) {
+					$the_price = $the_price * $attribute;
 				}
 			}
 			return ( 'yes' === $atts['hide_currency'] ) ? $the_price : wc_price( $the_price, array( 'currency' => $atts['currency'] ) );

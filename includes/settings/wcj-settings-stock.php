@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Stock
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -30,6 +30,7 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_stock_custom_in_stock',
 		'default'  => '',
 		'type'     => 'custom_textarea',
@@ -71,6 +72,7 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_stock_custom_out_of_stock',
 		'default'  => '',
 		'type'     => 'custom_textarea',
@@ -108,6 +110,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'HTML', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ),
 		'desc'     => wcj_message_replaced_values( array( '%class%', '%availability%' ) ) . '. ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_stock_custom_stock_html',
 		'default'  => '<p class="stock %class%">%availability%</p>',

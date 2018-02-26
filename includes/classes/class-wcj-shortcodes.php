@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 3.1.0
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -57,7 +57,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 3.1.0
+	 * @version 3.4.6
 	 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 	 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 	 */
@@ -174,8 +174,14 @@ class WCJ_Shortcodes {
 		}
 
 		// Check if language is ok
-		if ( 'wcj_wpml' === $shortcode || 'wcj_wpml_translate' === $shortcode ) $atts['wpml_language']     = isset( $atts['lang'] ) ? $atts['lang'] : '';
-		if ( 'wcj_wpml' === $shortcode || 'wcj_wpml_translate' === $shortcode ) $atts['wpml_not_language'] = isset( $atts['not_lang'] ) ? $atts['not_lang'] : '';
+		if ( 'wcj_wpml' === $shortcode || 'wcj_wpml_translate' === $shortcode ) {
+			if ( isset( $atts['lang'] ) ) {
+				$atts['wpml_language'] = $atts['lang'];
+			}
+			if ( isset( $atts['not_lang'] ) ) {
+				$atts['wpml_not_language'] = $atts['not_lang'];
+			}
+		}
 		if ( '' != $atts['wpml_language'] ) {
 			if ( ! defined( 'ICL_LANGUAGE_CODE' ) ) {
 				return '';

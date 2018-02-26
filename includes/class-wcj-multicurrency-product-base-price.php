@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 2.8.0
+ * @version 3.4.6
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -45,26 +45,6 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	}
 
 	/**
-	 * get_currency_exchange_rate.
-	 *
-	 * @version 2.5.6
-	 */
-	function get_currency_exchange_rate( $currency_code ) {
-		/*
-		$currency_exchange_rate = 1;
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) );
-		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( $currency_code === get_option( 'wcj_multicurrency_base_price_currency_' . $i ) ) {
-				$currency_exchange_rate = get_option( 'wcj_multicurrency_base_price_exchange_rate_' . $i );
-				break;
-			}
-		}
-		return $currency_exchange_rate;
-		*/
-		return wcj_get_currency_exchange_rate_product_base_currency( $currency_code );
-	}
-
-	/**
 	 * change_price_grouped.
 	 *
 	 * @version 2.7.0
@@ -96,14 +76,16 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.7.0
+	 * @version 3.4.6
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$multicurrency_base_price_currency = get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product, true ), '_' . 'wcj_multicurrency_base_price_currency', true );
-		$currency_exchange_rate = $this->get_currency_exchange_rate( $multicurrency_base_price_currency );
 		$price_hash['wcj_base_currency'] = array(
-			$multicurrency_base_price_currency,
-			$currency_exchange_rate,
+			'currency'           => $multicurrency_base_price_currency,
+			'exchange_rate'      => wcj_get_currency_exchange_rate_product_base_currency( $multicurrency_base_price_currency ),
+			'rounding'           => get_option( 'wcj_multicurrency_base_price_round_enabled', 'no' ),
+			'rounding_precision' => get_option( 'wcj_multicurrency_base_price_round_precision', get_option( 'woocommerce_price_num_decimals' ) ),
+			'save_prices'        => get_option( 'wcj_multicurrency_base_price_save_prices', 'no' ),
 		);
 		return $price_hash;
 	}

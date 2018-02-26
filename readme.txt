@@ -182,7 +182,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 24/02/2018 =
+= 3.4.6 - 26/02/2018 =
+      * Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Missing options (rounding etc.) added to variation prices hash and hash array restructured.
+      * Dev - Functions - Price and Currency - `wcj_get_currency_exchange_rate_product_base_currency()` - Minor code refactoring.
+      * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Minor code refactoring.
+D     * Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_attribute` attribute added.
+      * Dev - Classes - Shortcodes - Minor code refactoring.
+D     * Dev - PRODUCTS - Stock - Now shortcodes are processed in all "HTML" options.
 D X   * Dev - Shortcodes - Products - `[wcj_product_shipping_time]` shortcode added.
 D X $ * Dev - SHIPPING & ORDERS - Shipping Time - Initial module release.
 D W $ * Dev - SHIPPING & ORDERS - Maximum Products per User - Initial module release.
