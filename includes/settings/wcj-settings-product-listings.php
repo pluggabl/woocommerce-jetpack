@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 3.4.5
+ * @version 3.4.6
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -66,6 +66,16 @@ return array(
 		'id'       => 'wcj_product_listings_show_products_if_no_cats_on_shop',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Exclude Categories Products', 'woocommerce-jetpack' ),
+		'desc_tip' => __(' Excludes one or more categories products from the shop page. Leave blank to disable.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_listings_exclude_cats_products_on_shop',
+		'default'  => '',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'css'      => 'width: 450px;',
+		'options'  => $product_cats,
 	),
 	array(
 		'type'     => 'sectionend',

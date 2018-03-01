@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 3.2.4
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,12 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 3.4.6
+	 * @todo    more descriptions in settings (i.e. Storefront etc.)
+	 * @todo    add deprecated options (which were moved to Storefront)
+	 * @todo    add options to enable/disable each section
+	 * @todo    add "Exclude Categories Products" to "Category Display Options" also
+	 * @todo    add "Exclude Products" and "Exclude Tags Products"
 	 */
 	function __construct() {
 		$this->id         = 'product_listings';
@@ -40,7 +45,23 @@ class WCJ_Product_Listings extends WCJ_Module {
 				add_filter( 'woocommerce_product_is_visible', array( $this, 'product_visibility_by_price' ), PHP_INT_MAX, 2 );
 			}
 
+			// Product visibility by category
+			$this->cats_products_to_hide_on_shop = get_option( 'wcj_product_listings_exclude_cats_products_on_shop', '' );
+			if ( ! empty( $this->cats_products_to_hide_on_shop ) ) {
+				add_filter( 'woocommerce_product_is_visible', array( $this, 'product_visibility_by_category' ), PHP_INT_MAX, 2 );
+			}
+
 		}
+	}
+
+	/**
+	 * product_visibility_by_category.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 */
+	function product_visibility_by_category( $visible, $product_id ) {
+		return ( ! isset( $_GET['s'] ) && is_shop() && wcj_is_product_term( $product_id, $this->cats_products_to_hide_on_shop, 'product_cat' ) ? false : $visible );
 	}
 
 	/**

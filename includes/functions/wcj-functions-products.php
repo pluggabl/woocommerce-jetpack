@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -333,8 +333,8 @@ if ( ! function_exists( 'wcj_product_has_terms' ) ) {
 	/**
 	 * wcj_product_has_terms.
 	 *
-	 * @version 2.8.2
-	 * @version 2.8.2
+	 * @version 3.4.6
+	 * @since   2.8.2
 	 */
 	function wcj_product_has_terms( $_product, $_values, $_term ) {
 		if ( is_string( $_values ) ) {
@@ -343,7 +343,8 @@ if ( ! function_exists( 'wcj_product_has_terms' ) ) {
 		if ( empty( $_values ) ) {
 			return false;
 		}
-		$product_categories = get_the_terms( wcj_get_product_id_or_variation_parent_id( $_product ), $_term );
+		$product_id = ( is_numeric( $_product ) ? $_product : wcj_get_product_id_or_variation_parent_id( $_product ) );
+		$product_categories = get_the_terms( $product_id, $_term );
 		if ( empty( $product_categories ) ) {
 			return false;
 		}

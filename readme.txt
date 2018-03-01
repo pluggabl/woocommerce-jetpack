@@ -182,7 +182,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 26/02/2018 =
+= 3.4.6 - 28/02/2018 =
+D X   * Dev - PRODUCTS - Product Listings - "Exclude Categories Products" option added.
+  T   * Dev - Functions - Products - `wcj_product_has_terms()` - Function now also accepts product id as param.
       * Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Missing options (rounding etc.) added to variation prices hash and hash array restructured.
       * Dev - Functions - Price and Currency - `wcj_get_currency_exchange_rate_product_base_currency()` - Minor code refactoring.
       * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Minor code refactoring.
