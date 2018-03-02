@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Visibility by Country
  *
- * @version 3.1.1
+ * @version 3.4.6
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -36,6 +36,13 @@ return array(
 		'desc_tip' => __( 'This will hide selected products completely (including direct link).', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_by_country_query',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc_tip' => __( 'Enable this if you are still seeing hidden products in "Products" widgets.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_by_country_query_widgets',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

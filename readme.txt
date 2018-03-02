@@ -182,7 +182,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 28/02/2018 =
+= 3.4.6 - 03/03/2018 =
+D     * Dev - Shortcodes - Orders - `[wcj_order_notes]` - `limit` attribute added.
+D X   * Dev - PRODUCTS - Product Visibility by Country - Modify Query - "Widgets" option added.
 D X   * Dev - PRODUCTS - Product Listings - "Exclude Categories Products" option added.
   T   * Dev - Functions - Products - `wcj_product_has_terms()` - Function now also accepts product id as param.
       * Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Missing options (rounding etc.) added to variation prices hash and hash array restructured.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -713,41 +713,36 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_notes.
 	 *
-	 * @version 3.4.0
+	 * @version 3.4.6
 	 * @since   3.4.0
 	 * @todo    (maybe) run `strip_tags` on `comment_content`
 	 */
 	function wcj_order_notes( $atts ) {
+		$notes = array();
 		if ( '' == $atts['type'] || 'customer_notes' === $atts['type'] ) {
-			$notes = array();
 			foreach ( $this->the_order->get_customer_order_notes() as $note ) {
 				$notes[] = $note->comment_content;
 			}
-			return implode( $atts['sep'], $notes );
 		} else { // 'private_notes' or 'all_notes'
-			$notes = array();
 			$args  = array(
 				'post_id' => wcj_get_order_id( $this->the_order ),
 				'approve' => 'approve',
 				'type'    => '',
 			);
-
 			remove_filter( 'comments_clauses', array( 'WC_Comments', 'exclude_order_comments' ) );
-
 			$comments = get_comments( $args );
-
 			foreach ( $comments as $comment ) {
-
 				if ( 'private_notes' === $atts['type'] && get_comment_meta( $comment->comment_ID, 'is_customer_note', true ) ) {
 					continue;
 				}
 				$notes[] = make_clickable( $comment->comment_content );
 			}
-
 			add_filter( 'comments_clauses', array( 'WC_Comments', 'exclude_order_comments' ) );
-
-			return implode( $atts['sep'], $notes );
 		}
+		if ( isset( $atts['limit'] ) && $atts['limit'] > 0 ) {
+			$notes = array_slice( $notes, 0, $atts['limit'] );
+		}
+		return implode( $atts['sep'], $notes );
 	}
 
 	/**

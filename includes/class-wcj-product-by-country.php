@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 3.2.4
+ * @version 3.4.6
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,8 +16,9 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.4.6
 	 * @since   2.5.0
+	 * @todo    ! add `wcj_product_by_country_query_widgets` option to all "Product Visibility ..." modules
 	 */
 	function __construct() {
 
@@ -42,6 +43,9 @@ class WCJ_Product_By_Country extends WCJ_Module {
 				}
 				if ( 'yes' === get_option( 'wcj_product_by_country_query', 'no' ) ) {
 					add_action( 'pre_get_posts',                  array( $this, 'product_by_country_pre_get_posts' ) );
+					if ( 'yes' === get_option( 'wcj_product_by_country_query_widgets', 'no' ) ) {
+						add_filter( 'woocommerce_products_widget_query_args', array( $this, 'products_widget_query' ), PHP_INT_MAX );
+					}
 				}
 				if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
 					add_action( 'init',                           array( $this, 'save_country_in_session' ), PHP_INT_MAX ) ;
@@ -94,6 +98,30 @@ class WCJ_Product_By_Country extends WCJ_Module {
 			}
 			echo $result;
 		}
+	}
+
+	/**
+	 * products_widget_query.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 */
+	function products_widget_query( $query_args ) {
+		remove_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
+		$country        = $this->get_country();
+		$post__not_in = ( isset( $query_args['post__not_in'] ) ? $query_args['post__not_in'] : array() );
+		$args           = $query_args;
+		$args['fields'] = 'ids';
+		$args['posts_per_page'] = -1;
+		$loop           = new WP_Query( $args );
+		foreach ( $loop->posts as $product_id ) {
+			if ( ! $this->is_product_visible_in_country( $product_id, $country ) ) {
+				$post__not_in[] = $product_id;
+			}
+		}
+		$query_args['post__not_in'] = $post__not_in;
+		add_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
+		return $query_args;
 	}
 
 	/**

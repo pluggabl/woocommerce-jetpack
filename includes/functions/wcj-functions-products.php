@@ -343,7 +343,7 @@ if ( ! function_exists( 'wcj_product_has_terms' ) ) {
 		if ( empty( $_values ) ) {
 			return false;
 		}
-		$product_id = ( is_numeric( $_product ) ? $_product : wcj_get_product_id_or_variation_parent_id( $_product ) );
+		$product_id = ( is_numeric( $_product ) && $_product > 0 ? $_product : wcj_get_product_id_or_variation_parent_id( $_product ) );
 		$product_categories = get_the_terms( $product_id, $_term );
 		if ( empty( $product_categories ) ) {
 			return false;
