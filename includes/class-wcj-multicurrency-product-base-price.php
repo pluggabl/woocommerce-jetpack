@@ -80,7 +80,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$multicurrency_base_price_currency = get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product, true ), '_' . 'wcj_multicurrency_base_price_currency', true );
-		$price_hash['wcj_base_currency'] = array(
+		$price_hash['wcj_multicurrency_base_price'] = array(
 			'currency'           => $multicurrency_base_price_currency,
 			'exchange_rate'      => wcj_get_currency_exchange_rate_product_base_currency( $multicurrency_base_price_currency ),
 			'rounding'           => get_option( 'wcj_multicurrency_base_price_round_enabled', 'no' ),

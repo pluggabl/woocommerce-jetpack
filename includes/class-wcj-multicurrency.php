@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.4.5
+ * @version 3.4.6
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -172,15 +172,16 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.5.0
+	 * @version 3.4.6
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$currency_code = $this->get_current_currency_code();
-		$currency_exchange_rate = $this->get_currency_exchange_rate( $currency_code );
-		$price_hash['wcj_multicurrency_data'] = array(
-			$currency_code,
-			$currency_exchange_rate,
-			get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ),
+		$price_hash['wcj_multicurrency'] = array(
+			'currency'           => $currency_code,
+			'exchange_rate'      => $this->get_currency_exchange_rate( $currency_code ),
+			'per_product'        => get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ),
+			'rounding'           => get_option( 'wcj_multicurrency_rounding', 'no_round' ),
+			'rounding_precision' => get_option( 'wcj_multicurrency_rounding_precision', absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) ),
 		);
 		return $price_hash;
 	}
@@ -326,7 +327,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 		if ( $this->do_revert() ) {
 			return $package_rates;
 		}
-		$currency_exchange_rate     = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
+		$currency_exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
 		return wcj_change_price_shipping_package_rates( $package_rates, $currency_exchange_rate );
 	}
 
