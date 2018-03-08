@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -59,7 +59,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * generate_report_zip.
 	 *
-	 * @version 3.4.0
+	 * @version 3.4.6
 	 * @since   2.3.10
 	 */
 	function generate_report_zip() {
@@ -74,7 +74,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 				$_month        = ( ! empty( $_POST['report_month'] ) ) ? $_POST['report_month'] : date( 'n' );
 				$_invoice_type = ( ! empty( $_POST['invoice_type'] ) ) ? $_POST['invoice_type'] : 'invoice';
 				if ( ! empty( $_year ) && ! empty( $_month ) && ! empty( $_invoice_type ) ) {
-					if ( $this->check_user_roles() ) {
+					if ( $this->check_user_roles( $_invoice_type ) ) {
 						$result = $this->get_invoices_report_zip( $_year, $_month, $_invoice_type );
 						if ( false === $result ) {
 							$this->notice = '<div class="error"><p><strong>' . __( 'Sorry, but something went wrong...', 'woocommerce-jetpack' ) . '</strong></p></div>';
@@ -164,7 +164,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * get_invoices_report_zip.
 	 *
-	 * @version 3.1.0
+	 * @version 3.4.6
 	 * @since   2.3.10
 	 */
 	function get_invoices_report_zip( $year, $month, $invoice_type_id ) {
@@ -174,7 +174,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		}
 		$zip           = new ZipArchive();
 		$zip_file_name = $this->get_report_file_name( $year, $month, $invoice_type_id, 'zip' );
-		$zip_file_path = sys_get_temp_dir() . '/' . $zip_file_name;
+		$zip_file_path = wcj_get_invoicing_temp_dir() . '/' . $zip_file_name;
 		if ( file_exists( $zip_file_path ) ) {
 			unlink ( $zip_file_path );
 		}

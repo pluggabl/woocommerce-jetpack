@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.4.3
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  * @todo    clean up
  */
@@ -159,7 +159,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 3.2.4
+	 * @version 3.4.6
 	 * @todo    pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 	 */
 	function get_pdf( $dest ) {
@@ -191,19 +191,13 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$result_pdf = $pdf->Output( '', 'S' );
 		$file_name = $this->get_file_name();
 
-		$tmp_dir = get_option( 'wcj_invoicing_general_tmp_dir', '' );
-		if ( '' === $tmp_dir ) {
-			$tmp_dir = sys_get_temp_dir();
-		}
-
 		if ( 'F' === $dest ) {
-			$file_path = $tmp_dir . '/' . $file_name;
+			$file_path = wcj_get_invoicing_temp_dir() . '/' . $file_name;
 			if ( ! file_put_contents( $file_path, $result_pdf ) ) {
 				return null;
 			}
 			return $file_path;
-		}
-		elseif ( 'D' === $dest || 'I' === $dest ) {
+		} elseif ( 'D' === $dest || 'I' === $dest ) {
 			if ( 'D' === $dest ) {
 				header( "Content-Type: application/octet-stream" );
 				header( "Content-Disposition: attachment; filename=" . urlencode( $file_name ) );
@@ -220,7 +214,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 				echo $result_pdf;
 			} else {
 
-				$file_path = $tmp_dir . '/' . $file_name;
+				$file_path = wcj_get_invoicing_temp_dir() . '/' . $file_name;
 				if ( ! file_put_contents( $file_path, $result_pdf ) ) {
 					return null;
 				}

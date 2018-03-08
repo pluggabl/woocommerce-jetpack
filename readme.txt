@@ -182,7 +182,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 04/03/2018 =
+= 3.4.6 - 06/03/2018 =
+  T   * Fix - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - "Download all monthly documents PDFs in single ZIP file" - `check_user_roles()` fixed.
+  T   * Fix - PDF INVOICING & PACKING SLIPS - Advanced - Temp Directory - Option now used in "Invoices Report" tool and in orders "Bulk Actions".
   W   * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Missing options (rounding) added to variation prices hash and hash array restructured.
 D     * Dev - Shortcodes - Orders - `[wcj_order_notes]` - `limit` attribute added.
 D X   * Dev - PRODUCTS - Product Visibility by Country - Modify Query - "Widgets" option added.

@@ -2,9 +2,21 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 3.4.3
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  */
+
+if ( ! function_exists( 'wcj_get_invoicing_temp_dir' ) ) {
+	/**
+	 * wcj_get_invoicing_temp_dir.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 */
+	function wcj_get_invoicing_temp_dir() {
+		return ( '' === ( $tmp_dir = get_option( 'wcj_invoicing_general_tmp_dir', '' ) ) ? sys_get_temp_dir() : $tmp_dir );
+	}
+}
 
 if ( ! function_exists( 'wcj_get_invoicing_current_image_path_desc' ) ) {
 	/**

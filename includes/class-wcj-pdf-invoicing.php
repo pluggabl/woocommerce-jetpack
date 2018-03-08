@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -206,7 +206,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * get_invoices_zip.
 	 *
-	 * @version 3.1.0
+	 * @version 3.4.6
 	 * @since   2.5.7
 	 */
 	function get_invoices_zip( $invoice_type_id, $post_ids ) {
@@ -216,7 +216,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		// Creating Zip
 		$zip           = new ZipArchive();
 		$zip_file_name = $invoice_type_id . '.zip';
-		$zip_file_path = sys_get_temp_dir() . '/' . $zip_file_name;
+		$zip_file_path = wcj_get_invoicing_temp_dir() . '/' . $zip_file_name;
 		if ( file_exists( $zip_file_path ) ) {
 			unlink ( $zip_file_path );
 		}
