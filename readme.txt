@@ -182,7 +182,14 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 06/03/2018 =
+= 3.4.6 - 10/03/2018 =
+D X I * Dev - EMAILS & MISC. - Admin Tools - Editable product and order metas added.
+D X   * Dev - PDF INVOICING & PACKING SLIPS - Editable invoice numbers added.
+D W   * Dev - EMAILS & MISC. - Admin Tools - Show Variable Product Pricing Table - Displaying all variations (instead of only available variations).
+  W   * Dev - Functions - Debug - `error_reporting( E_ALL )` moved to `wcj-loader.php`.
+  T   * Dev - Functions - Debug - `wcj_log()` - `$do_var_dump` param added.
+D T   * Dev - PAYMENT GATEWAYS - Gateways by Shipping - "Use Shipping Instances" option added.
+  T   * Dev - PAYMENT GATEWAYS - Gateways by Shipping - Code refactoring (`wcj_get_shipping_methods()`).
   T   * Fix - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - "Download all monthly documents PDFs in single ZIP file" - `check_user_roles()` fixed.
   T   * Fix - PDF INVOICING & PACKING SLIPS - Advanced - Temp Directory - Option now used in "Invoices Report" tool and in orders "Bulk Actions".
   W   * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Missing options (rounding) added to variation prices hash and hash array restructured.
@@ -193,7 +200,7 @@ D X   * Dev - PRODUCTS - Product Listings - "Exclude Categories Products" option
       * Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Missing options (rounding etc.) added to variation prices hash and hash array restructured.
       * Dev - Functions - Price and Currency - `wcj_get_currency_exchange_rate_product_base_currency()` - Minor code refactoring.
       * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Minor code refactoring.
-D     * Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_attribute` attribute added.
+D X   * Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_attribute` attribute added.
       * Dev - Classes - Shortcodes - Minor code refactoring.
 D     * Dev - PRODUCTS - Stock - Now shortcodes are processed in all "HTML" options.
 D X   * Dev - Shortcodes - Products - `[wcj_product_shipping_time]` shortcode added.

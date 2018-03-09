@@ -2,13 +2,18 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 3.3.0
+ * @version 3.4.6
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+
+// Debug Mode
+if ( 'yes' === get_option( 'wcj_admin_tools_enabled', 'no' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
+	error_reporting( E_ALL );
 }
 
 if ( ! defined( 'WCJ_PLUGIN_PATH' ) ) {

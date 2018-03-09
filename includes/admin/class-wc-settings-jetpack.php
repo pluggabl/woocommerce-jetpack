@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -167,7 +167,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * Output the settings.
 	 *
-	 * @version 3.0.0
+	 * @version 3.4.6
 	 * @todo    (maybe) admin_notices
 	 */
 	function output() {
@@ -208,7 +208,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 			echo '</div>';
 		}
 
-		if ( 'yes' === get_option( 'wcj_admin_tools_enabled' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
+		if ( 'yes' === get_option( 'wcj_admin_tools_enabled', 'no' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
 			// Breadcrumbs
 			$breadcrumbs_html = '';
 			$breadcrumbs_html .= '<p>';

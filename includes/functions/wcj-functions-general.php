@@ -1,13 +1,50 @@
 <?php
 /**
- * Booster for WooCommerce - Functions
+ * Booster for WooCommerce - Functions - General
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_shipping_methods' ) ) {
+	/**
+	 * wcj_get_shipping_methods.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 * @todo    move to `wcj-functions-shipping.php`
+	 */
+	function wcj_get_shipping_methods() {
+		$shipping_methods = array();
+		foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
+			$shipping_methods[ $method->id ] = $method->get_method_title();
+		}
+		return $shipping_methods;
+	}
+}
+
+if ( ! function_exists( 'wcj_get_shipping_methods_instances' ) ) {
+	/**
+	 * wcj_get_shipping_methods_instances.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 * @todo    move to `wcj-functions-shipping.php`
+	 * @todo    ! add "Locations not covered by your other zones"
+	 */
+	function wcj_get_shipping_methods_instances() {
+		$shipping_methods = array();
+		foreach ( WC_Shipping_Zones::get_zones() as $zone_id => $zone_data ) {
+			foreach ( $zone_data['shipping_methods'] as $shipping_method ) {
+				$shipping_methods[ $shipping_method->instance_id ] = $zone_data['formatted_zone_location'] . ': ' . $shipping_method->title;
+			}
+		}
+		return $shipping_methods;
+	}
+}
 
 if ( ! function_exists( 'wcj_handle_replacements' ) ) {
 	/**

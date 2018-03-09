@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 3.3.0
+ * @version 3.4.6
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -49,21 +49,29 @@ if ( ! function_exists( 'wcj_get_product_ids_for_meta_box_options' ) ) {
 	/**
 	 * wcj_get_product_ids_for_meta_box_options.
 	 *
-	 * @version 3.3.0
+	 * @version 3.4.6
 	 * @since   3.3.0
 	 * @todo    use this function where needed
 	 */
-	function wcj_get_product_ids_for_meta_box_options( $main_product_id ) {
+	function wcj_get_product_ids_for_meta_box_options( $main_product_id, $do_get_all_variations = false ) {
 		$_product = wc_get_product( $main_product_id );
 		if ( ! $_product ) {
 			return array();
 		}
 		$products = array();
 		if ( $_product->is_type( 'variable' ) ) {
-			$available_variations = $_product->get_available_variations();
-			foreach ( $available_variations as $variation ) {
-				$variation_product = wc_get_product( $variation['variation_id'] );
-				$products[ $variation['variation_id'] ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
+			if ( $do_get_all_variations ) {
+				$all_variations = $_product->get_children();
+				foreach ( $all_variations as $variation_id ) {
+					$variation_product = wc_get_product( $variation_id );
+					$products[ $variation_id ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
+				}
+			} else {
+				$available_variations = $_product->get_available_variations();
+				foreach ( $available_variations as $variation ) {
+					$variation_product = wc_get_product( $variation['variation_id'] );
+					$products[ $variation['variation_id'] ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
+				}
 			}
 		} else {
 			$products[ $main_product_id ] = '';

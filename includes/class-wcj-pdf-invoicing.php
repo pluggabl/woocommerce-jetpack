@@ -15,7 +15,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.0
+	 * @version 3.4.6
 	 */
 	function __construct() {
 
@@ -63,6 +63,14 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 						}
 					}
 				}
+			}
+
+			if ( true ) { // todo // (in case this is moved, current function version was: v3.2.0)
+				$this->meta_box_screen   = 'shop_order';
+				$this->meta_box_context  = 'side';
+				$this->meta_box_priority = 'low';
+				add_action( 'add_meta_boxes',       array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
 		}
 	}

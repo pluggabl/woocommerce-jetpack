@@ -2,28 +2,27 @@
 /**
  * Booster for WooCommerce - Functions - Debug
  *
- * @version 3.3.0
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-// Debug Mode
-if ( wcj_is_module_enabled( 'admin_tools' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
-	error_reporting( E_ALL );
-}
-
 if ( ! function_exists( 'wcj_log' ) ) {
 	/**
 	 * wcj_log.
 	 *
-	 * @version 3.3.0
+	 * @version 3.4.6
 	 */
-	function wcj_log( $message = '' ) {
+	function wcj_log( $message = '', $do_var_dump = false ) {
 		if ( ! wcj_is_module_enabled( 'admin_tools' ) || ( 'no' === get_option( 'wcj_logging_enabled', 'no' ) && 'no' === get_option( 'wcj_wc_logging_enabled', 'no' ) ) ) {
 			return;
 		}
-		if ( is_array( $message ) || is_object( $message ) ) {
+		if ( $do_var_dump ) {
+			ob_start();
+			var_dump( $message );
+			$message = ob_get_clean();
+		} elseif ( is_array( $message ) || is_object( $message ) ) {
 			$message = print_r( $message, true );
 		}
 		if ( 'yes' === get_option( 'wcj_logging_enabled', 'no' ) ) {

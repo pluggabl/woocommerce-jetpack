@@ -817,6 +817,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			}
 			if ( isset( $atts['multiply_by_attribute'] ) && '' !== $atts['multiply_by_attribute'] ) {
 				$attribute = $this->the_product->get_attribute( $atts['multiply_by_attribute'] );
+				$attribute = str_replace( ',', '.', $attribute );
 				if ( is_numeric( $attribute ) ) {
 					$min = $min * $attribute;
 					$max = $max * $attribute;
@@ -849,6 +850,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			}
 			if ( isset( $atts['multiply_by_attribute'] ) && '' !== $atts['multiply_by_attribute'] ) {
 				$attribute = $this->the_product->get_attribute( $atts['multiply_by_attribute'] );
+				$attribute = str_replace( ',', '.', $attribute );
 				if ( is_numeric( $attribute ) ) {
 					$the_price = $the_price * $attribute;
 				}

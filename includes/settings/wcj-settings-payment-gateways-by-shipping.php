@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Payment Gateways by Shipping
  *
- * @version 2.8.0
+ * @version 3.4.6
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) remove COD, Custom Booster Payment Gateways (and maybe other payment gateways) that already have `enable_for_methods` option
@@ -10,20 +10,36 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$shipping_methods = array();
-if ( is_admin() ) {
-	foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
-		$shipping_methods[ $method->id ] = $method->get_method_title();
-	}
-}
+$use_shipping_instance = ( 'yes' === get_option( 'wcj_payment_gateways_by_shipping_use_shipping_instance', 'no' ) );
+$shipping_methods = ( $use_shipping_instance ? wcj_get_shipping_methods_instances() : wcj_get_shipping_methods() );
 $settings = array(
+	array(
+		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_payment_gateways_by_shipping_general_options',
+	),
+	array(
+		'title'    => __( 'Use Shipping Instances', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you want to use shipping methods instances instead of shipping methods.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'Save changes after enabling this option.', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_payment_gateways_by_shipping_use_shipping_instance',
+		'default'  => 'no',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_payment_gateways_by_shipping_general_options',
+	),
+);
+$settings = array_merge( $settings, array(
 	array(
 		'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 		'type'  => 'title',
 		'desc'  => __( 'If payment gateway is only available for certain methods, set it up here. Leave blank to enable for all methods.', 'woocommerce-jetpack' ),
 		'id'    => 'wcj_payment_gateways_by_shipping_options',
 	),
-);
+) );
 $gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $gateways as $key => $gateway ) {
 	if ( ! in_array( $key, array( 'bacs', 'cod' ) ) ) {
@@ -41,7 +57,7 @@ foreach ( $gateways as $key => $gateway ) {
 			'title'             => $gateway->title,
 			'desc_tip'          => $desc_tip,
 			'desc'              => __( 'Enable for shipping methods', 'woocommerce' ),
-			'id'                => 'wcj_gateways_by_shipping_enable_' . $key,
+			'id'                => ( $use_shipping_instance ? 'wcj_gateways_by_shipping_enable_instance_' . $key : 'wcj_gateways_by_shipping_enable_' . $key ),
 			'default'           => '',
 			'type'              => 'multiselect',
 			'class'             => 'chosen_select',
