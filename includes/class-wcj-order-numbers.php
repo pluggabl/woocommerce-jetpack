@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -15,8 +15,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.3
-	 * @todo    (maybe) add option (order meta box) to set number directly
+	 * @version 3.4.6
 	 * @todo    (maybe) rename "Orders Renumerate" to "Renumerate orders"
 	 * @todo    (maybe) use `woocommerce_new_order` hook instead of `wp_insert_post`
 	 */
@@ -50,6 +49,27 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			foreach ( $woocommerce_subscriptions_types as $woocommerce_subscriptions_type ) {
 				add_filter( 'wcs_' . $woocommerce_subscriptions_type . '_meta', array( $this, 'woocommerce_subscriptions_remove_meta_copy' ), PHP_INT_MAX, 3 );
 			}
+			// Editable order number
+			if ( 'yes' === get_option( 'wcj_order_number_editable_order_number_meta_box_enabled', 'no' ) ) {
+				$this->meta_box_screen   = 'shop_order';
+				$this->meta_box_context  = 'side';
+				$this->meta_box_priority = 'high';
+				add_action( 'add_meta_boxes',       array( $this, 'maybe_add_meta_box' ), PHP_INT_MAX, 2 );
+				add_action( 'save_post_shop_order', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
+		}
+	}
+
+	/**
+	 * maybe_add_meta_box.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 * @todo    re-think if setting number for yet not-numbered order should be allowed (i.e. do not check for `( '' !== get_post_meta( $post->ID, '_wcj_order_number', true ) )`)
+	 */
+	function maybe_add_meta_box( $post_type, $post ) {
+		if ( '' !== get_post_meta( $post->ID, '_wcj_order_number', true ) ) {
+			parent::add_meta_box();
 		}
 	}
 

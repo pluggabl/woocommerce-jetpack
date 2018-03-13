@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 3.4.3
+ * @version 3.4.6
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) create "Tools (Options)" submodule
@@ -92,7 +92,7 @@ return array(
 	array(
 		'title'    => __( 'Actions', 'woocommerce-jetpack' ),
 		'type'     => 'custom_link',
-		'link'     => '<a class="button-primary" href="' . add_query_arg( 'wcj_download_fonts', '1' ) . '">' .
+		'link'     => '<a class="button" href="' . add_query_arg( 'wcj_download_fonts', '1' ) . '">' .
 			( $is_full_fonts ? __( 'Re-download', 'woocommerce-jetpack' ) : __( 'Download', 'woocommerce-jetpack' ) )
 			. '</a>',
 		'id'       => 'wcj_invoicing_fonts_manager_styling_option',
@@ -117,6 +117,12 @@ return array(
 		'title'    => __( 'Add PDF Invoices Meta Box to Admin Edit Order Page', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_invoicing_add_order_meta_box',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Add editable numbers', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_invoicing_add_order_meta_box_numbering',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
 	),

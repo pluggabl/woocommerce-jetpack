@@ -5,7 +5,6 @@
  * @version 3.4.6
  * @since   3.3.0
  * @author  Algoritmika Ltd.
- * @todo    finish "Editable meta" (for products and orders)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -36,27 +35,5 @@ foreach ( $products as $product_id => $desc ) {
 			'meta_name'  => '_sale_price',
 		),
 	) );
-	/*
-	// Editable meta
-	if ( true ) { // todo
-		$all_meta = get_post_meta( $product_id );
-		foreach ( $all_meta as $meta_key => $meta_value ) {
-			if ( is_array( $meta_value[0] ) || is_serialized( $meta_value[0] ) || is_object( $meta_value[0] ) ) {
-				continue;
-			}
-			$settings = array_merge( $settings, array(
-				array(
-					'name'       => $meta_key . '_' . $product_id,
-					'default'    => '',
-					'type'       => 'textarea',
-					'title'      => $meta_key,
-					'product_id' => $product_id,
-					'meta_name'  => $meta_key,
-					'css'        => 'width:100%;',
-				),
-			) );
-		}
-	}
-	*/
 }
 return $settings;

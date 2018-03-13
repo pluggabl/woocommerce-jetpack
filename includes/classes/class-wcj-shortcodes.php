@@ -94,6 +94,7 @@ class WCJ_Shortcodes {
 			'on_empty'                         => '',
 			'on_zero'                          => 0,
 			'time'                             => '',
+			'multiply'                         => 1,
 		);
 		$atts = array_merge( $global_defaults, $atts );
 
@@ -259,6 +260,9 @@ class WCJ_Shortcodes {
 			}
 			if ( 'yes' === $atts['strip_tags'] ) {
 				$result = strip_tags( $result );
+			}
+			if ( 1 != $atts['multiply'] ) {
+				$result = $result * $atts['multiply'];
 			}
 			return $atts['before'] . apply_filters( 'wcj_shortcode_result', $result, $atts, $content, $shortcode ) . $atts['after'];
 		}

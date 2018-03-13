@@ -16,6 +16,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 3.3.0
+	 * @todo    (maybe) add editable (product and order) metas
 	 */
 	function __construct() {
 

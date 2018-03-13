@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price by User Role
  *
- * @version 3.2.2
+ * @version 3.4.6
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -159,8 +159,9 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.2.2
+	 * @version 3.4.6
 	 * @since   2.5.0
+	 * @todo    (maybe) code refactoring (cats/tags)
 	 */
 	function change_price( $price, $_product ) {
 
@@ -257,6 +258,25 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			}
 		}
 
+		// By tag
+		$tags = apply_filters( 'booster_option', '', get_option( 'wcj_price_by_user_role_tags', '' ) );
+		if ( ! empty( $tags ) ) {
+			$product_tags = get_the_terms( wcj_get_product_id_or_variation_parent_id( $_product ), 'product_tag' );
+			if ( ! empty( $product_tags ) ) {
+				foreach ( $product_tags as $product_tag ) {
+					foreach ( $tags as $tag ) {
+						if ( $product_tag->term_id == $tag ) {
+							if ( 'yes' === get_option( 'wcj_price_by_user_role_tag_empty_price_' . $tag . '_' . $current_user_role, 'no' ) ) {
+								return '';
+							}
+							$koef_tag = get_option( 'wcj_price_by_user_role_tag_' . $tag . '_' . $current_user_role, 1 );
+							return ( '' === $price ) ? $price : $price * $koef_tag;
+						}
+					}
+				}
+			}
+		}
+
 		// Global
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_empty_price_' . $current_user_role, 'no' ) ) {
 			return '';
@@ -272,13 +292,15 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 3.2.0
+	 * @version 3.4.6
 	 * @since   2.5.0
 	 * @todo    only hash categories that is relevant to the product
+	 * @todo    (maybe) code refactoring (cats/tags)
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		$user_role = wcj_get_current_user_first_role();
+		$user_role  = wcj_get_current_user_first_role();
 		$categories = apply_filters( 'booster_option', '', get_option( 'wcj_price_by_user_role_categories', '' ) );
+		$tags       = apply_filters( 'booster_option', '', get_option( 'wcj_price_by_user_role_tags', '' ) );
 		$price_hash['wcj_user_role'] = array(
 			$user_role,
 			get_option( 'wcj_price_by_user_role_' . $user_role, 1 ),
@@ -288,11 +310,18 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			get_option( 'wcj_price_by_user_role_disable_for_products_on_sale', 'no' ),
 			$this->disable_for_regular_price,
 			$categories,
+			$tags,
 		);
 		if ( ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
 				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $user_role, 'no' );
 				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $user_role, 1 );
+			}
+		}
+		if ( ! empty( $tags ) ) {
+			foreach ( $tags as $tag ) {
+				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_tag_empty_price_' . $tag . '_' . $user_role, 'no' );
+				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_tag_' . $tag . '_' . $user_role, 1 );
 			}
 		}
 		return $price_hash;

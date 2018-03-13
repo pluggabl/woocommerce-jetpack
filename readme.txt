@@ -182,9 +182,14 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 10/03/2018 =
-D X I * Dev - EMAILS & MISC. - Admin Tools - Editable product and order metas added.
-D X   * Dev - PDF INVOICING & PACKING SLIPS - Editable invoice numbers added.
+= 3.4.6 - 13/03/2018 =
+D W $ * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Editable Order Number Meta Box" option added.
+D W   * Dev - PRICES & CURRENCIES - Price by User Role - "Price by User Role by Products Tags" section added.
+D W   * Dev - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Amount - "Use Shipping Instances" option added.
+D   $ * Dev - EMAILS & MISC. - Email Options - Email Forwarding - "Orders Emails: Enable for Statuses" option added.
+D T   * Dev - Shortcodes - `multiply` common attribute added.
+D     * Dev - Shortcodes - General - `[wcj_cart_total]` - `multiply_by` attribute added.
+D W   * Dev - PDF INVOICING & PACKING SLIPS - Advanced - General Display Options - Meta Box - Editable invoice numbers added.
 D W   * Dev - EMAILS & MISC. - Admin Tools - Show Variable Product Pricing Table - Displaying all variations (instead of only available variations).
   W   * Dev - Functions - Debug - `error_reporting( E_ALL )` moved to `wcj-loader.php`.
   T   * Dev - Functions - Debug - `wcj_log()` - `$do_var_dump` param added.

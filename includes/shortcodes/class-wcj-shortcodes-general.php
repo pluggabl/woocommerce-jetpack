@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -857,12 +857,17 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_cart_total.
 	 *
-	 * @version 2.8.0
+	 * @version 3.4.6
 	 * @since   2.8.0
 	 */
 	function wcj_cart_total( $atts ) {
 		if ( $_cart = WC()->cart ) {
-			return $_cart->get_cart_total();
+			if ( 1 != $atts['multiply_by'] ) {
+				$cart_total = wc_prices_include_tax() ? WC()->cart->get_cart_contents_total() + WC()->cart->get_cart_contents_tax() : WC()->cart->get_cart_contents_total();
+				return wc_price( $atts['multiply_by'] * $cart_total );
+			} else {
+				return $_cart->get_cart_total();
+			}
 		}
 		return '';
 	}

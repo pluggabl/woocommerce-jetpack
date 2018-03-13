@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Options
  *
- * @version 2.9.1
+ * @version 3.4.6
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Email_Options extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.1
+	 * @version 3.4.6
 	 * @since   2.9.1
 	 * @todo    meta customizer - check "gravity-forms-emails-woocommerce" plugin
 	 */
@@ -31,10 +31,10 @@ class WCJ_Email_Options extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			// Email Forwarding
 			if ( '' != get_option( 'wcj_emails_bcc_email', '' ) ) {
-				add_filter( 'woocommerce_email_headers', array( $this, 'add_bcc_email' ) );
+				add_filter( 'woocommerce_email_headers', array( $this, 'add_bcc_email' ), PHP_INT_MAX, 3 );
 			}
 			if ( '' != get_option( 'wcj_emails_cc_email', '' ) ) {
-				add_filter( 'woocommerce_email_headers', array( $this, 'add_cc_email' ) );
+				add_filter( 'woocommerce_email_headers', array( $this, 'add_cc_email' ), PHP_INT_MAX, 3 );
 			}
 			// Product Info
 			if ( 'yes' === get_option( 'wcj_product_info_in_email_order_item_name_enabled', 'no' ) ) {
@@ -63,27 +63,43 @@ class WCJ_Email_Options extends WCJ_Module {
 	}
 
 	/**
-	 * Add another email recipient to all WooCommerce emails.
+	 * maybe_check_order_status.
 	 *
-	 * @version 2.9.1
+	 * @version 3.4.6
+	 * @since   3.4.6
 	 */
-	function add_bcc_email( $email_headers ) {
-		return $email_headers . "Bcc: " . get_option( 'wcj_emails_bcc_email', '' ) . "\r\n";
+	function maybe_check_order_status( $_object ) {
+		$enable_order_statuses = get_option( 'wcj_emails_forwarding_enable_order_status', '' );
+		if ( ! empty( $enable_order_statuses ) && isset( $_object ) && is_object( $_object ) && 'WC_Order' === get_class( $_object ) ) {
+			if ( ! in_array( $_object->get_status(), $enable_order_statuses ) ) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
 	 * Add another email recipient to all WooCommerce emails.
 	 *
-	 * @version 2.9.1
+	 * @version 3.4.6
 	 */
-	function add_cc_email( $email_headers ) {
-		return $email_headers . "Cc: " . get_option( 'wcj_emails_cc_email', '' ) . "\r\n";
+	function add_bcc_email( $email_headers, $id, $_object ) {
+		return ( $this->maybe_check_order_status( $_object ) ? $email_headers . "Bcc: " . get_option( 'wcj_emails_bcc_email', '' ) . "\r\n" : $email_headers );
+	}
+
+	/**
+	 * Add another email recipient to all WooCommerce emails.
+	 *
+	 * @version 3.4.6
+	 */
+	function add_cc_email( $email_headers, $id, $_object ) {
+		return ( $this->maybe_check_order_status( $_object ) ? $email_headers . "Cc: " . get_option( 'wcj_emails_cc_email', '' ) . "\r\n" : $email_headers );
 	}
 
 	/**
 	 * get_emails_forwarding_settings.
 	 *
-	 * @version 2.3.9
+	 * @version 3.4.6
 	 * @since   2.3.9
 	 */
 	function get_emails_forwarding_settings( $extended_title = false ) {
@@ -109,6 +125,15 @@ class WCJ_Email_Options extends WCJ_Module {
 				'id'       => 'wcj_emails_bcc_email',
 				'default'  => '',
 				'type'     => 'text',
+			),
+			array(
+				'title'    => __( 'Orders Emails: Enable for Statuses', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Leave blank to send for all orders statuses.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_emails_forwarding_enable_order_status',
+				'default'  => '',
+				'type'     => 'multiselect',
+				'class'    => 'chosen_select',
+				'options'  => wcj_get_order_statuses(),
 			),
 			array(
 				'type'     => 'sectionend',

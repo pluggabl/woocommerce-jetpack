@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Min/Max Order Amount
  *
- * @version 3.2.1
+ * @version 3.4.6
  * @since   3.2.1
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_By_Order_Amount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.1
+	 * @version 3.4.6
 	 * @since   3.2.1
 	 * @todo    (maybe) add customer messages on cart and checkout pages (if some shipping method is not available)
 	 */
@@ -29,6 +29,7 @@ class WCJ_Shipping_By_Order_Amount extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			$this->use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_by_order_amount_use_shipping_instance', 'no' ) );
 			add_filter( 'woocommerce_package_rates', array( $this, 'available_shipping_methods' ), PHP_INT_MAX, 2 );
 		}
 	}
@@ -36,7 +37,7 @@ class WCJ_Shipping_By_Order_Amount extends WCJ_Module {
 	/**
 	 * available_shipping_methods.
 	 *
-	 * @version 3.2.1
+	 * @version 3.4.6
 	 * @since   3.2.1
 	 * @todo    apply_filters( 'booster_option' )
 	 * @todo    (maybe) add option to include or exclude taxes when calculating cart total
@@ -47,8 +48,10 @@ class WCJ_Shipping_By_Order_Amount extends WCJ_Module {
 		}
 		$total_in_cart = WC()->cart->cart_contents_total;
 		foreach ( $rates as $rate_key => $rate ) {
-			$min = get_option( 'wcj_shipping_by_order_amount_min_' . $rate->method_id, 0 );
-			$max = get_option( 'wcj_shipping_by_order_amount_max_' . $rate->method_id, 0 );
+			$min = ( $this->use_shipping_instances ?
+				get_option( 'wcj_shipping_by_order_amount_min_instance_' . $rate->instance_id, 0 ) : get_option( 'wcj_shipping_by_order_amount_min_' . $rate->method_id, 0 ) );
+			$max = ( $this->use_shipping_instances ?
+				get_option( 'wcj_shipping_by_order_amount_max_instance_' . $rate->instance_id, 0 ) : get_option( 'wcj_shipping_by_order_amount_max_' . $rate->method_id, 0 ) );
 			if ( 0 != $min && $total_in_cart < $min ) {
 				unset( $rates[ $rate_key ] );
 			} elseif ( 0 != $max && $total_in_cart > $max ) {

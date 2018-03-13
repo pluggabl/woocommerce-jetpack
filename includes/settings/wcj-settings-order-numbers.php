@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Numbers
  *
- * @version 3.3.0
+ * @version 3.4.6
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `wcj_order_number_counter_previous_order_date` as `hidden` field (for proper module reset)
@@ -112,6 +112,13 @@ return array(
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_number_search_by_custom_number_enabled',
 		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Enable Editable Order Number Meta Box', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_number_editable_order_number_meta_box_enabled',
+		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(

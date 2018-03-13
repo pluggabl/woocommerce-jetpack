@@ -35,11 +35,20 @@ if ( ! function_exists( 'wcj_get_shipping_methods_instances' ) ) {
 	 * @todo    move to `wcj-functions-shipping.php`
 	 * @todo    ! add "Locations not covered by your other zones"
 	 */
-	function wcj_get_shipping_methods_instances() {
+	function wcj_get_shipping_methods_instances( $full_data = false ) {
 		$shipping_methods = array();
 		foreach ( WC_Shipping_Zones::get_zones() as $zone_id => $zone_data ) {
 			foreach ( $zone_data['shipping_methods'] as $shipping_method ) {
-				$shipping_methods[ $shipping_method->instance_id ] = $zone_data['formatted_zone_location'] . ': ' . $shipping_method->title;
+				if ( $full_data ) {
+					$shipping_methods[ $shipping_method->instance_id ] = array(
+						'formatted_zone_location'     => $zone_data['formatted_zone_location'],
+						'shipping_method_title'       => $shipping_method->title,
+						'shipping_method_id'          => $shipping_method->id,
+						'shipping_method_instance_id' => $shipping_method->instance_id,
+					);
+				} else {
+					$shipping_methods[ $shipping_method->instance_id ] = $zone_data['formatted_zone_location'] . ': ' . $shipping_method->title;
+				}
 			}
 		}
 		return $shipping_methods;
