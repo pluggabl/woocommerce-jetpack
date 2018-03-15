@@ -182,7 +182,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 13/03/2018 =
+= 3.4.6 - 15/03/2018 =
+D T $ * Dev - SHIPPING & ORDERS - Shipping Descriptions - "Description Position" option added.
+D T $ * Dev - SHIPPING & ORDERS - Order Numbers - "Minimal Order ID" option added.
 D W $ * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Editable Order Number Meta Box" option added.
 D W   * Dev - PRICES & CURRENCIES - Price by User Role - "Price by User Role by Products Tags" section added.
 D W   * Dev - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Amount - "Use Shipping Instances" option added.

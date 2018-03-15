@@ -122,6 +122,15 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'Minimal Order ID', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If you wish to disable order numbering for some (older) orders, you can set order ID to start here.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'Set to zero to enable numbering for all orders.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_numbers_min_order_id',
+		'default'  => 0,
+		'type'     => 'number',
+		'custom_attributes' => array( 'min' => 0 ),
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_order_numbers_options',
 	),

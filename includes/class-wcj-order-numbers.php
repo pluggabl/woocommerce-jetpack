@@ -273,13 +273,17 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 3.4.0
+	 * @version 3.4.6
+	 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {
 		if ( 'shop_order' !== get_post_type( $order_id ) || 'auto-draft' === get_post_status( $order_id ) ) {
 			return;
 		}
 		if ( true === $do_overwrite || 0 == get_post_meta( $order_id, '_wcj_order_number', true ) ) {
+			if ( $order_id < get_option( 'wcj_order_numbers_min_order_id', 0 ) ) {
+				return;
+			}
 			if ( 'yes' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) && 'yes' === get_option( 'wcj_order_number_use_mysql_transaction_enabled', 'yes' ) ) {
 				global $wpdb;
 				$wpdb->query( 'START TRANSACTION' );
