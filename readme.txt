@@ -182,7 +182,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 15/03/2018 =
+= 3.4.6 - 16/03/2018 =
+      * Dev - Functions - Shipping - `wcj-functions-shipping.php` added.
+D T I * Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` (Shipping Methods by Products / Users) -  "Use Shipping Instances" option added.
+D T   * Dev - PRICES & CURRENCIES - Price Formats - `wc_get_price_decimals` filter added.
 D T $ * Dev - SHIPPING & ORDERS - Shipping Descriptions - "Description Position" option added.
 D T $ * Dev - SHIPPING & ORDERS - Order Numbers - "Minimal Order ID" option added.
 D W $ * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Editable Order Number Meta Box" option added.

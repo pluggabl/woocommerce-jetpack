@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Condition
  *
- * @version 3.2.4
+ * @version 3.4.6
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `abstract class WCJ_Module_Shipping_By_Condition`
@@ -18,12 +18,13 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 3.4.6
 	 * @since   3.2.0
 	 */
 	function __construct( $type = 'module' ) {
 		parent::__construct( $type );
 		if ( $this->is_enabled() ) {
+			$this->use_shipping_instances = ( 'yes' === get_option( 'wcj_' . $this->id . '_use_shipping_instance', 'no' ) );
 			add_filter( 'woocommerce_package_rates', array( $this, 'available_shipping_methods' ), wcj_get_woocommerce_package_rates_module_filter_priority( $this->id ) , 2 );
 		}
 	}
@@ -31,7 +32,7 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * available_shipping_methods.
 	 *
-	 * @version 3.2.1
+	 * @version 3.4.6
 	 * @since   3.2.0
 	 * @todo    apply_filters( 'booster_option' )
 	 */
@@ -41,12 +42,18 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 				if ( 'no' === get_option( 'wcj_shipping_by_' . $options_id . '_section_enabled', 'yes' ) ) {
 					continue;
 				}
-				$include = get_option( 'wcj_shipping_' . $options_id . '_include_' . $rate->method_id, '' );
+				$include = ( $this->use_shipping_instances ?
+					get_option( 'wcj_shipping_' . $options_id . '_include_' . 'instance_' . $rate->instance_id, '' ) :
+					get_option( 'wcj_shipping_' . $options_id . '_include_' .               $rate->method_id, '' )
+				);
 				if ( ! empty( $include ) && ! $this->check( $options_id, $include, 'include' ) ) {
 					unset( $rates[ $rate_key ] );
 					break;
 				}
-				$exclude = get_option( 'wcj_shipping_' . $options_id . '_exclude_' . $rate->method_id, '' );
+				$exclude = ( $this->use_shipping_instances ?
+					get_option( 'wcj_shipping_' . $options_id . '_exclude_' . 'instance_' . $rate->instance_id, '' ) :
+					get_option( 'wcj_shipping_' . $options_id . '_exclude_' .               $rate->method_id, '' )
+				);
 				if ( ! empty( $exclude ) && $this->check( $options_id, $exclude , 'exclude' ) ) {
 					unset( $rates[ $rate_key ] );
 					break;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price Formats
  *
- * @version 3.2.4
+ * @version 3.4.6
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.3
+	 * @version 3.4.6
 	 * @since   2.5.2
 	 */
 	function __construct() {
@@ -34,9 +34,43 @@ class WCJ_Price_Formats extends WCJ_Module {
 			}
 			// Price Formats by Currency (or WPML)
 			if ( 'yes' === get_option( 'wcj_price_formats_by_currency_enabled', 'yes' ) ) {
-				add_filter( 'wc_price_args', array( $this, 'price_format' ), PHP_INT_MAX );
+				add_filter( 'wc_price_args',         array( $this, 'price_format' ), PHP_INT_MAX );
+				add_action( 'init',                  array( $this, 'add_hooks' ), PHP_INT_MAX );
 			}
 		}
+	}
+
+	/**
+	 * add_hooks.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 */
+	function add_hooks() {
+		add_filter( 'wc_get_price_decimals', array( $this, 'price_decimals' ), PHP_INT_MAX );
+	}
+
+	/**
+	 * price_decimals.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 * @todo    code refactoring
+	 */
+	function price_decimals( $price_decimals_num ) {
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
+			if ( get_woocommerce_currency() === get_option( 'wcj_price_formats_currency_' . $i ) ) {
+				if ( defined( 'ICL_LANGUAGE_CODE' ) && '' != ( $wpml_language = get_option( 'wcj_price_formats_wpml_language_' . $i, '' ) ) ) {
+					$wpml_language = explode( ',', trim( str_replace( ' ', '', $wpml_language ), ',' ) );
+					if ( ! in_array( ICL_LANGUAGE_CODE, $wpml_language ) ) {
+						continue;
+					}
+				}
+				$price_decimals_num = get_option( 'wcj_price_formats_number_of_decimals_' . $i );
+				break;
+			}
+		}
+		return $price_decimals_num;
 	}
 
 	/**

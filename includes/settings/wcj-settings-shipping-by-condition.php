@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping by Condition
  *
- * @version 3.2.4
+ * @version 3.4.6
  * @since   3.2.1
  * @author  Algoritmika Ltd.
  */
@@ -11,7 +11,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
+$use_shipping_instances = ( 'yes' === get_option( 'wcj_' . $this->id . '_use_shipping_instance', 'no' ) );
+$shipping_methods       = ( $use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->load_shipping_methods() );
 $settings = array();
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_' . $this->id . '_general_options',
+	),
+	array(
+		'title'    => __( 'Use Shipping Instances', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you want to use shipping methods instances instead of shipping methods.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'Save changes after enabling this option.', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_' . $this->id . '_use_shipping_instance',
+		'default'  => 'no',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_' . $this->id . '_general_options',
+	),
+) );
 foreach ( $this->condition_options as $options_id => $options_data ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -29,8 +51,9 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 		),
 	) );
 	$settings = array_merge( $settings, $this->get_additional_section_settings( $options_id ) );
-	foreach ( WC()->shipping()->load_shipping_methods() as $method ) {
-		if ( ! in_array( $method->id, array( 'flat_rate', 'local_pickup' ) ) ) {
+	foreach ( $shipping_methods as $method ) {
+		$method_id = ( $use_shipping_instances ? $method['shipping_method_id'] : $method->id );
+		if ( ! in_array( $method_id, array( 'flat_rate', 'local_pickup' ) ) ) {
 			$custom_attributes = apply_filters( 'booster_message', '', 'disabled' );
 			if ( '' == $custom_attributes ) {
 				$custom_attributes = array();
@@ -42,10 +65,10 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 		}
 		$settings = array_merge( $settings, array(
 			array(
-				'title'     => $method->get_method_title(),
+				'title'     => ( $use_shipping_instances ? $method['formatted_zone_location'] . ': ' . $method['shipping_method_title']: $method->get_method_title() ),
 				'desc_tip'  => $desc_tip,
 				'desc'      => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ),
-				'id'        => 'wcj_shipping_' . $options_id . '_include_' . $method->id,
+				'id'        => 'wcj_shipping_' . $options_id . '_include_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id ),
 				'default'   => '',
 				'type'      => 'multiselect',
 				'class'     => 'chosen_select',
@@ -56,7 +79,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 			array(
 				'desc_tip'  => $desc_tip,
 				'desc'      => '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ),
-				'id'        => 'wcj_shipping_' . $options_id . '_exclude_' . $method->id,
+				'id'        => 'wcj_shipping_' . $options_id . '_exclude_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id ),
 				'default'   => '',
 				'type'      => 'multiselect',
 				'class'     => 'chosen_select',

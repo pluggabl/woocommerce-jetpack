@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price Formats
  *
- * @version 3.2.4
+ * @version 3.4.6
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `desc_tip` to `wcj_price_formats_general_trim_zeros`
@@ -108,7 +108,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_f
 		array(
 			'desc'     => __( 'Number of Decimals', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_price_formats_number_of_decimals_' . $i,
-			'default'  => wc_get_price_decimals(),
+			'default'  => get_option( 'woocommerce_price_num_decimals', 2 ),
 			'type'     => 'number',
 			'custom_attributes' => array( 'min'  => 0, 'step' => 1 ),
 			'css'      => 'width:300px;',
