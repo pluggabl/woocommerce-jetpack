@@ -52,7 +52,7 @@ foreach ( $shipping_methods as $method ) {
 	$custom_attributes = array_merge( $custom_attributes, array( 'min' => 0 ) );
 	$settings = array_merge( $settings, array(
 		array(
-			'title'     => ( $use_shipping_instances ? $method['formatted_zone_location'] . ': ' . $method['shipping_method_title']: $method->get_method_title() ),
+			'title'     => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title']: $method->get_method_title() ),
 			'desc_tip'  => $desc_tip,
 			'desc'      => '<br>' . __( 'Minimum order amount', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_shipping_by_order_amount_min_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id ),

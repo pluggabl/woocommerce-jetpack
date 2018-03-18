@@ -595,57 +595,36 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 3.4.6
 	 * @since   3.4.6
+	 * @todo    rename to `[wcj_product_shipping_time_table]`
+	 * @todo    customizable `$method_title` format
+	 * @todo    predefined `$matching_zone_id` (i.e. `$atts['shipping_zone_id']`)
+	 * @todo    all zones (i.e. no `$matching_zone_id`)
 	 * @todo    customizable final message
 	 * @todo    check for "Shipping Time" module to be enabled
 	 * @todo    time in hours (i.e. not days)
 	 * @todo    check for `WC()` etc. to exist
-	 * @todo    `$atts['shipping_method']`
+	 * @todo    `$atts['shipping_method']` (i.e. `[wcj_product_shipping_time]`)
 	 * @todo    explode "from-to"
-	 * @todo    make `wcj_customer_shipping_country()` function
-	 * @todo    (maybe) add `$atts['show_all']` to show all shipping methods (table)
 	 */
 	function wcj_product_shipping_time( $atts ) {
-
-		// Shipping method
-		if ( ! isset( $atts['shipping_method'] ) ) {
-			$atts['shipping_method'] = 'flat_rate';
-		}
-
-		// Shipping zone
-		$package = false;
-		if ( is_user_logged_in() ) {
-			$current_user = wp_get_current_user();
-			if ( '' != ( $meta = get_user_meta( $current_user->ID, 'shipping_country', true ) ) ) {
-				$package['destination']['country']  = $meta;
-				$package['destination']['state']    = '';
-				$package['destination']['postcode'] = '';
+		$use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
+		$use_shipping_classes   = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) );
+		$shipping_methods       = ( $use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->load_shipping_methods() );
+		$matching_zone_id       = wcj_get_customer_shipping_matching_zone_id();
+		$table_data             = array();
+		foreach ( $shipping_methods as $method ) {
+			if ( $use_shipping_instances && $method['zone_id'] != $matching_zone_id ) {
+				continue;
+			}
+			$option_id_shipping_method = ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
+			$option_id_shipping_class  = ( $use_shipping_classes ? '_class_' . wcj_get_product_shipping_class_term_id( $this->the_product ) : '' );
+			$option_id                 = 'wcj_shipping_time_' . $option_id_shipping_method . $option_id_shipping_class;
+			if ( '' !== ( $time = get_option( $option_id, '' ) ) ) {
+				$method_title = ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title']: $method->get_method_title() );
+				$table_data[] = array( $method_title, sprintf( __( '%s day(s)' ), $time ) );
 			}
 		}
-		if ( false === $package ) {
-			$package['destination'] = wc_get_customer_default_location();
-			$package['destination']['postcode'] = '';
-		}
-		$data_store       = WC_Data_Store::load( 'shipping-zone' );
-		$matching_zone_id = $data_store->get_zone_id_from_package( $package );
-
-		// Shipping class
-		$product_shipping_class_id = 0;
-		$product_shipping_class    = $this->the_product->get_shipping_class();
-		if ( '' != $product_shipping_class ) {
-			foreach ( WC()->shipping->get_shipping_classes() as $shipping_class ) {
-				if ( $product_shipping_class === $shipping_class->slug ) {
-					$product_shipping_class_id = $shipping_class->term_id;
-					break;
-				}
-			}
-		}
-
-		// Final output
-		if ( '' !== ( $time = get_option( 'wcj_shipping_time_' . $matching_zone_id . '_' . $atts['shipping_method'] . '_' . $product_shipping_class_id, '' ) ) ) {
-			return sprintf( __( '%s day(s)' ), $time );
-		} else {
-			return '';
-		}
+		return ( empty( $table_data ) ? '' : wcj_get_table_html( $table_data, array( 'table_heading_type' => 'vertical' ) ) );
 	}
 
 	/**

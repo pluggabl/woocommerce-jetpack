@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 3.4.1
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -227,13 +227,16 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku.
 	 *
-	 * @version 2.9.0
+	 * @version 3.4.6
 	 */
 	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview, $parent_product_id, $_product ) {
+
+		$parent_product = wc_get_product( $parent_product_id );
 
 		$old_sku = $_product->get_sku();
 		$do_generate_new_sku = ( 'no' === get_option( 'wcj_sku_generate_only_for_empty_sku', 'no' ) || '' === $old_sku );
 
+		// {category_prefix} & {category_suffix}
 		$category_prefix = '';
 		$category_suffix = '';
 		$product_cat = '';
@@ -247,17 +250,31 @@ class WCJ_SKU extends WCJ_Module {
 			}
 		}
 
+		// {variation_attributes}
+		$variation_attributes = '';
+		if ( 'WC_Product_Variation' === get_class( $_product ) ) {
+			$attr_slugs = array();
+			foreach ( $_product->get_variation_attributes() as $attr_key => $attr_slug  ) {
+				$attr_slugs[] = $attr_slug;
+			}
+			$sep = get_option( 'wcj_sku_variations_product_slug_sep', '-' );
+			$variation_attributes = implode( $sep, $attr_slugs );
+		}
+
 		$format_template = get_option( 'wcj_sku_template',
 			'{category_prefix}{prefix}{sku_number}{suffix}{category_suffix}{variation_suffix}' );
 		$replace_values = array(
-			'{category_prefix}'  => apply_filters( 'booster_option', '', $category_prefix ),
-//			'{tag_prefix}'       => $tag_prefix,
-			'{prefix}'           => get_option( 'wcj_sku_prefix', '' ),
-			'{sku_number}'       => sprintf( '%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 's', $sku_number ),
-			'{suffix}'           => get_option( 'wcj_sku_suffix', '' ),
-//			'{tag_suffix}'       => $tag_suffix,
-			'{category_suffix}'  => $category_suffix,
-			'{variation_suffix}' => $variation_suffix,
+			'{product_slug}'         => $_product->get_slug(),
+			'{parent_product_slug}'  => $parent_product->get_slug(),
+			'{variation_attributes}' => $variation_attributes,
+			'{category_prefix}'      => apply_filters( 'booster_option', '', $category_prefix ),
+//			'{tag_prefix}'           => $tag_prefix,
+			'{prefix}'               => get_option( 'wcj_sku_prefix', '' ),
+			'{sku_number}'           => sprintf( '%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 's', $sku_number ),
+			'{suffix}'               => get_option( 'wcj_sku_suffix', '' ),
+//			'{tag_suffix}'           => $tag_suffix,
+			'{category_suffix}'      => $category_suffix,
+			'{variation_suffix}'     => $variation_suffix,
 		);
 		$the_sku = ( $do_generate_new_sku ) ? str_replace( array_keys( $replace_values ), array_values( $replace_values ), $format_template ) : $old_sku;
 

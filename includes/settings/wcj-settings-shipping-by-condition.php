@@ -65,7 +65,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 		}
 		$settings = array_merge( $settings, array(
 			array(
-				'title'     => ( $use_shipping_instances ? $method['formatted_zone_location'] . ': ' . $method['shipping_method_title']: $method->get_method_title() ),
+				'title'     => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title']: $method->get_method_title() ),
 				'desc_tip'  => $desc_tip,
 				'desc'      => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ),
 				'id'        => 'wcj_shipping_' . $options_id . '_include_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id ),

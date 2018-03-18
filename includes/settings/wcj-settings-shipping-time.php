@@ -5,51 +5,77 @@
  * @version 3.4.6
  * @since   3.4.6
  * @author  Algoritmika Ltd.
- * @todo    ! add "Locations not covered by your other zones"
  * @todo    estimated date calculation
  * @todo    add e.g.: "... order before 2 PM to receive"
  * @todo    check for `WC()` etc. to exist
  * @todo    other display options (besides shortcode)
+ * @todo    (maybe) rename to "Delivery Time"
  * @todo    (maybe) global fallback time
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+$use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
+$use_shipping_classes   = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) );
+$shipping_methods       = ( $use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->load_shipping_methods() );
+$shipping_classes_data  = ( $use_shipping_classes ? wcj_get_shipping_classes() : array( '' => '' ) );
 $settings = array();
-$shipping_classes = WC()->shipping->get_shipping_classes();
-$shipping_classes_data = array();
-foreach ( $shipping_classes as $shipping_class ) {
-	$shipping_classes_data[ $shipping_class->term_id ] = $shipping_class->name;
-}
-$shipping_classes_data[0] = __( 'No shipping class', 'woocommerce' );
-foreach ( WC_Shipping_Zones::get_zones() as $zone_id => $zone_data ) {
-	$settings = array_merge( $settings, array(
-		array(
-			'title'    => $zone_data['formatted_zone_location'],
-			'type'     => 'title',
-			'id'       => 'wcj_shipping_time_' . $zone_id . '_options',
-		),
-	) );
-	foreach ( $zone_data['shipping_methods'] as $shipping_method ) {
-		$is_first = true;
-		foreach ( $shipping_classes_data as $shipping_class_id => $shipping_class_name ) {
-			$settings = array_merge( $settings, array(
-				array(
-					'title'    => ( $is_first ? $shipping_method->method_title : '' ),
-					'desc'     => $shipping_class_name,
-					'id'       => 'wcj_shipping_time_' . $zone_id . '_' . $shipping_method->id . '_' . $shipping_class_id,
-					'type'     => 'text',
-					'default'  => '',
-				),
-			) );
-			$is_first = false;
-		}
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_shipping_time_general_options',
+	),
+	array(
+		'title'    => __( 'Use Shipping Instances', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you want to use shipping methods instances instead of shipping methods.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'Save changes after enabling this option.', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_shipping_time_use_shipping_instance',
+		'default'  => 'no',
+	),
+	array(
+		'title'    => __( 'Use Shipping Classes', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you want to set options for each shipping class separately.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'Save changes after enabling this option.', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_shipping_time_use_shipping_classes',
+		'default'  => 'no',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_shipping_time_general_options',
+	),
+) );
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Shipping Time Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_shipping_time_options',
+	),
+) );
+foreach ( $shipping_methods as $method ) {
+	$method_id = ( $use_shipping_instances ? $method['shipping_method_id'] : $method->id );
+	foreach ( $shipping_classes_data as $shipping_class_id => $shipping_class_name ) {
+		$settings = array_merge( $settings, array(
+			array(
+				'title'    => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title']: $method->get_method_title() ),
+				'desc'     => ( $use_shipping_classes ? $shipping_class_name : '' ),
+				'id'       => 'wcj_shipping_time_' .
+					( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id ) .
+					( $use_shipping_classes ? '_class_' . $shipping_class_id : '' ),
+				'type'     => 'text',
+				'default'  => '',
+			),
+		) );
 	}
-	$settings = array_merge( $settings, array(
-		array(
-			'type'     => 'sectionend',
-			'id'       => 'wcj_shipping_time_' . $zone_id . '_options',
-		),
-	) );
 }
+$settings = array_merge( $settings, array(
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_shipping_time_options',
+	),
+) );
 return $settings;

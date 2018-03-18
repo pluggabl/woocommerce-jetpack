@@ -2,9 +2,10 @@
 /**
  * Booster for WooCommerce - Settings - SKU
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    deprecate `wcj_sku_prefix` and `wcj_sku_suffix` (as user can now add it directly to "Template")
  * @todo    tags (check SKU plugin); template: '{category_prefix}{tag_prefix}{prefix}{sku_number}{suffix}{tag_suffix}{category_suffix}{variation_suffix}'
  * @todo    add "Sequential Number Generation - By Category" to SKU plugin
  */
@@ -75,9 +76,19 @@ $settings = array(
 		'type'     => 'text',
 	),
 	array(
+		'title'    => __( 'Attributes Separator', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Used in %s.', 'woocommerce-jetpack' ), '<em>{variation_attributes}</em>' ),
+		'id'       => 'wcj_sku_variations_product_slug_sep',
+		'default'  => '-',
+		'type'     => 'text',
+		'css'      => 'width:50px;',
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
+	),
+	array(
 		'title'    => __( 'Template', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'SKU template.', 'woocommerce-jetpack' ),
-		'desc'     => wcj_message_replaced_values( array( '{category_prefix}', '{category_suffix}', '{prefix}', '{suffix}', '{variation_suffix}', '{sku_number}' ) ),
+		'desc'     => wcj_message_replaced_values( array( '{category_prefix}', '{category_suffix}', '{prefix}', '{suffix}', '{variation_suffix}', '{sku_number}', '{product_slug}', '{parent_product_slug}', '{variation_attributes}' ) ),
 		'id'       => 'wcj_sku_template',
 		'default'  => '{category_prefix}{prefix}{sku_number}{suffix}{category_suffix}{variation_suffix}',
 		'type'     => 'text',

@@ -9,6 +9,75 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_customer_shipping_matching_zone_id' ) ) {
+	/**
+	 * wcj_get_customer_shipping_matching_zone_id.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 * @todo    (maybe) move to `wcj-functions-users.php`
+	 * @todo    (maybe) add `wcj_get_customer_shipping_destination()` function
+	 */
+	function wcj_get_customer_shipping_matching_zone_id() {
+		$package = false;
+		if ( is_user_logged_in() ) {
+			$current_user = wp_get_current_user();
+			if ( '' != ( $meta = get_user_meta( $current_user->ID, 'shipping_country', true ) ) ) {
+				$package['destination']['country']  = $meta;
+				$package['destination']['state']    = get_user_meta( $current_user->ID, 'shipping_state', true );
+				$package['destination']['postcode'] = '';
+			}
+		}
+		if ( false === $package ) {
+			$package['destination'] = wc_get_customer_default_location();
+			$package['destination']['postcode'] = '';
+		}
+		$data_store = WC_Data_Store::load( 'shipping-zone' );
+		return $data_store->get_zone_id_from_package( $package );
+	}
+}
+
+if ( ! function_exists( 'wcj_get_product_shipping_class_term_id' ) ) {
+	/**
+	 * wcj_get_product_shipping_class_term_id.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 * @todo    (maybe) move to `wcj-functions-products.php`
+	 */
+	function wcj_get_product_shipping_class_term_id( $_product ) {
+		$product_shipping_class = $_product->get_shipping_class();
+		if ( '' != $product_shipping_class ) {
+			foreach ( WC()->shipping->get_shipping_classes() as $shipping_class ) {
+				if ( $product_shipping_class === $shipping_class->slug ) {
+					return $shipping_class->term_id;
+				}
+			}
+		}
+		return 0;
+	}
+}
+
+if ( ! function_exists( 'wcj_get_shipping_classes' ) ) {
+	/**
+	 * wcj_get_shipping_classes.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 */
+	function wcj_get_shipping_classes( $include_empty_shipping_class = true ) {
+		$shipping_classes = WC()->shipping->get_shipping_classes();
+		$shipping_classes_data = array();
+		foreach ( $shipping_classes as $shipping_class ) {
+			$shipping_classes_data[ $shipping_class->term_id ] = $shipping_class->name;
+		}
+		if ( $include_empty_shipping_class ) {
+			$shipping_classes_data[0] = __( 'No shipping class', 'woocommerce' );
+		}
+		return $shipping_classes_data;
+	}
+}
+
 if ( ! function_exists( 'wcj_get_shipping_methods' ) ) {
 	/**
 	 * wcj_get_shipping_methods.
@@ -58,13 +127,15 @@ if ( ! function_exists( 'wcj_get_shipping_methods_instances' ) ) {
 			foreach ( $zone_data['shipping_methods'] as $shipping_method ) {
 				if ( $full_data ) {
 					$shipping_methods[ $shipping_method->instance_id ] = array(
+						'zone_id'                     => $zone_id,
+						'zone_name'                   => $zone_data['zone_name'],
 						'formatted_zone_location'     => $zone_data['formatted_zone_location'],
 						'shipping_method_title'       => $shipping_method->title,
 						'shipping_method_id'          => $shipping_method->id,
 						'shipping_method_instance_id' => $shipping_method->instance_id,
 					);
 				} else {
-					$shipping_methods[ $shipping_method->instance_id ] = $zone_data['formatted_zone_location'] . ': ' . $shipping_method->title;
+					$shipping_methods[ $shipping_method->instance_id ] = $zone_data['zone_name'] . ': ' . $shipping_method->title;
 				}
 			}
 		}
