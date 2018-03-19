@@ -182,8 +182,8 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 18/03/2018 =
-D     * Dev - PRODUCTS - SKU - `{product_slug}`, `{parent_product_slug}`, `{variation_attributes}` replaced values added.
+= 3.4.6 - 19/03/2018 =
+D     * Dev - PRODUCTS - SKU - `{product_slug}`, `{parent_product_slug}`, `{variation_attributes}`, `{parent_sku}` replaced values added.
       * Dev - SHIPPING & ORDERS - Left to Free Shipping - Admin settings - Descriptions updated.
       * Dev - Functions - Shipping - `wcj-functions-shipping.php` added.
 D T I * Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` (Shipping Methods by Products / Users) -  "Use Shipping Instances" option added.

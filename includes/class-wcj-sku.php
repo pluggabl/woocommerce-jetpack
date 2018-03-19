@@ -264,6 +264,7 @@ class WCJ_SKU extends WCJ_Module {
 		$format_template = get_option( 'wcj_sku_template',
 			'{category_prefix}{prefix}{sku_number}{suffix}{category_suffix}{variation_suffix}' );
 		$replace_values = array(
+			'{parent_sku}'           => $parent_product->get_sku(),
 			'{product_slug}'         => $_product->get_slug(),
 			'{parent_product_slug}'  => $parent_product->get_slug(),
 			'{variation_attributes}' => $variation_attributes,
