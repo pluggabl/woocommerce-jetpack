@@ -183,6 +183,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.4.6 - 21/03/2018 =
+D X I * Dev - SHIPPING & ORDERS - Order Numbers - `%order_items_skus%` replaced value added.
 D     * Dev - Shortcodes - Orders - `[wcj_order_items]` - Special `_sku` value added for the `field` attribute.
   X I * Fix - SHIPPING & ORDERS - Left to Free Shipping - Now taxes are always added when calculating cart total.
 D     * Dev - SHIPPING & ORDERS - Left to Free Shipping - `%cart_total%` replaced value added.

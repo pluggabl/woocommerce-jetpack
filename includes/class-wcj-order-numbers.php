@@ -163,7 +163,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Display order number.
 	 *
-	 * @version 2.7.0
+	 * @version 3.4.6
 	 */
 	function display_order_number( $order_number, $order ) {
 		$order_id = wcj_get_order_id( $order );
@@ -182,6 +182,9 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				date_i18n( get_option( 'wcj_order_number_date_suffix', '' ), $order_timestamp )
 			)
 		);
+		if ( false !== strpos( $order_number, '%order_items_skus%' ) ) {
+			$order_number = str_replace( '%order_items_skus%', do_shortcode( '[wcj_order_items order_id="' . $order_id . '" field="_sku"]' ), $order_number );
+		}
 		return $order_number;
 	}
 
