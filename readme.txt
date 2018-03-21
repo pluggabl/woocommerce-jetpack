@@ -183,6 +183,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.4.6 - 21/03/2018 =
+D     * Dev - Shortcodes - Orders - `[wcj_order_items]` - Special `_sku` value added for the `field` attribute.
   X I * Fix - SHIPPING & ORDERS - Left to Free Shipping - Now taxes are always added when calculating cart total.
 D     * Dev - SHIPPING & ORDERS - Left to Free Shipping - `%cart_total%` replaced value added.
 D X I * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Booster - Selector" (country) widget now overrides "Booster - Country Switcher" widget.

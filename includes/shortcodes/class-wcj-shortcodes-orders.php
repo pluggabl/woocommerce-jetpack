@@ -796,7 +796,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items
 	 *
-	 * @version 2.8.0
+	 * @version 3.4.6
 	 * @since   2.5.7
 	 */
 	function wcj_order_items( $atts ) {
@@ -809,6 +809,12 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 					break;
 				case '_qty_x_name':
 					$items[] = ( isset( $item['qty'] ) && isset( $item['name'] ) ) ? $item['qty'] . ' x ' . $item['name'] : '';
+					break;
+				case '_sku':
+					$_product_id = ( 0 != $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
+					if ( $_product = wc_get_product( $_product_id ) ) {
+						$items[] = $_product->get_sku();
+					}
 					break;
 				default: // case 'name' etc.
 					$items[] = ( isset( $item[ $atts['field'] ] ) ) ? $item[ $atts['field'] ] : '';
