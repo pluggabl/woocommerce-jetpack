@@ -183,7 +183,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 			)
 		);
 		if ( false !== strpos( $order_number, '%order_items_skus%' ) ) {
-			$order_number = str_replace( '%order_items_skus%', do_shortcode( '[wcj_order_items order_id="' . $order_id . '" field="_sku"]' ), $order_number );
+			$order_number = str_replace( '%order_items_skus%', do_shortcode( '[wcj_order_items order_id="' . $order_id . '" field="_sku" sep="-"]' ), $order_number );
 		}
 		return $order_number;
 	}
