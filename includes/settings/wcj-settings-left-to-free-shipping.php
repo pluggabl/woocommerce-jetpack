@@ -17,9 +17,10 @@ return array(
 			sprintf( __( 'You can also use <em>Booster - Left to Free Shipping</em> widget, %s shortcode or %s function.', 'woocommerce-jetpack' ),
 				'<code>[wcj_get_left_to_free_shipping content=""]</code>',
 				'<code>wcj_get_left_to_free_shipping( $content );</code>' ) . '<br>' . '<br>' .
-			sprintf( __( 'In content replaced values are: %s and %s.', 'woocommerce-jetpack' ),
+			sprintf( __( 'In content replaced values are: %s, %s and %s.', 'woocommerce-jetpack' ),
 				'<code>%left_to_free%</code>',
-				'<code>%free_shipping_min_amount%</code>' ),
+				'<code>%free_shipping_min_amount%</code>',
+				'<code>%cart_total%</code>' ),
 		'id'       => 'wcj_shipping_left_to_free_info_options',
 	),
 	array(

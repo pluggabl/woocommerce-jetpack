@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.4.5
+ * @version 3.4.6
  * @author  Algoritmika Ltd.
  */
 
@@ -38,13 +38,16 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * init.
 	 *
-	 * @version 3.4.5
+	 * @version 3.4.6
 	 * @since   2.9.0
 	 */
 	function init() {
 		wcj_session_maybe_start();
 		if ( isset( $_REQUEST[ 'wcj-country' ] ) ) {
 			wcj_session_set( 'wcj-country', $_REQUEST[ 'wcj-country' ] );
+		}
+		if ( isset( $_REQUEST[ 'wcj_country_selector' ] ) ) {
+			wcj_session_set( 'wcj-country', $_REQUEST[ 'wcj_country_selector' ] );
 		}
 	}
 

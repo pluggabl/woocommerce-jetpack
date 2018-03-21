@@ -182,7 +182,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 19/03/2018 =
+= 3.4.6 - 21/03/2018 =
+  X I * Fix - SHIPPING & ORDERS - Left to Free Shipping - Now taxes are always added when calculating cart total.
+D     * Dev - SHIPPING & ORDERS - Left to Free Shipping - `%cart_total%` replaced value added.
+D X I * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Booster - Selector" (country) widget now overrides "Booster - Country Switcher" widget.
 D     * Dev - PRODUCTS - SKU - `{product_slug}`, `{parent_product_slug}`, `{variation_attributes}`, `{parent_sku}` replaced values added.
       * Dev - SHIPPING & ORDERS - Left to Free Shipping - Admin settings - Descriptions updated.
       * Dev - Functions - Shipping - `wcj-functions-shipping.php` added.
