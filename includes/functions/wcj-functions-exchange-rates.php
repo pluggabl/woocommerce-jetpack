@@ -73,6 +73,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 			'coinbase'        => __( 'Coinbase', 'woocommerce-jetpack' ),
 			'coinmarketcap'   => __( 'CoinMarketCap', 'woocommerce-jetpack' ),
 			'google'          => __( 'Google', 'woocommerce-jetpack' ),
+			'boe'             => __( 'Bank of England (BOE)', 'woocommerce-jetpack' ),
 		);
 	}
 }
@@ -140,8 +141,8 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 			case 'tcmb':
 				$return = wcj_tcmb_get_exchange_rate( $currency_from, $currency_to );
 				break;
-			case 'ecb':
-				$return = wcj_ecb_get_exchange_rate( $currency_from, $currency_to );
+			case 'yahoo':
+				$return = wcj_yahoo_get_exchange_rate( $currency_from, $currency_to );
 				break;
 			case 'fixer':
 				$return = wcj_fixer_io_get_exchange_rate( $currency_from, $currency_to );
@@ -155,8 +156,11 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 			case 'google':
 				$return = wcj_google_get_exchange_rate( $currency_from, $currency_to );
 				break;
-			default: // 'yahoo'
-				$return = wcj_yahoo_get_exchange_rate( $currency_from, $currency_to );
+			case 'boe':
+				$return = wcj_boe_get_exchange_rate( $currency_from, $currency_to );
+				break;
+			default: // 'ecb'
+				$return = wcj_ecb_get_exchange_rate( $currency_from, $currency_to );
 				break;
 		}
 		return ( 'yes' === $calculate_by_invert ) ? round( ( 1 / $return ), 6 ) : $return;
@@ -183,6 +187,89 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 			curl_close( $curl );
 		}
 		return ( '' != $response ? ( $do_json_decode ? json_decode( $response ) : $response ) : false );
+	}
+}
+
+if ( ! function_exists( 'wcj_boe_get_exchange_rate_gbp' ) ) {
+	/*
+	 * wcj_boe_get_exchange_rate_gbp.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 */
+	function wcj_boe_get_exchange_rate_gbp( $currency_to ) {
+		if ( 'GBP' == $currency_to ) {
+			return 1;
+		}
+		$final_rate = false;
+		$currency_codes = array(
+			'AUD' => 'EC3', // Australian Dollar
+			'CAD' => 'ECL', // Canadian Dollar
+			'CNY' => 'INB', // Chinese Yuan
+			'CZK' => 'DS7', // Czech Koruna
+			'DKK' => 'ECH', // Danish Krone
+			'EUR' => 'C8J', // Euro
+			'HKD' => 'ECN', // Hong Kong Dollar
+			'HUF' => '5LA', // Hungarian Forint
+			'INR' => 'INE', // Indian Rupee
+			'ILS' => 'IN7', // Israeli Shekel
+			'JPY' => 'C8N', // Japanese Yen
+			'MYR' => 'IN8', // Malaysian ringgit
+			'NZD' => 'ECO', // New Zealand Dollar
+			'NOK' => 'EC6', // Norwegian Krone
+			'PLN' => '5OW', // Polish Zloty
+			'RUB' => 'IN9', // Russian Ruble
+			'SAR' => 'ECZ', // Saudi Riyal
+			'SGD' => 'ECQ', // Singapore Dollar
+			'ZAR' => 'ECE', // South African Rand
+			'KRW' => 'INC', // South Korean Won
+			'SEK' => 'ECC', // Swedish Krona
+			'CHF' => 'ECU', // Swiss Franc
+			'TWD' => 'ECD', // Taiwan Dollar
+			'THB' => 'INA', // Thai Baht
+			'TRY' => 'IND', // Turkish Lira
+			'USD' => 'C8P', // US Dollar
+		);
+		if ( isset( $currency_codes[ $currency_to ] ) && function_exists( 'simplexml_load_file' ) ) {
+			$date         = time() - 24*60*60;
+			$date_from_d  = date( 'd', $date );
+			$date_from_m  = date( 'M', $date );
+			$date_from_y  = date( 'Y', $date );
+			$date_to_d    = date( 'd', $date );
+			$date_to_m    = date( 'M', $date );
+			$date_to_y    = date( 'Y', $date );
+			$date_url     = '&FD=' . $date_from_d . '&FM=' . $date_from_m . '&FY=' . $date_from_y . '&TD=' . $date_to_d . '&TM=' . $date_to_m . '&TY=' . $date_to_y;
+			$url          = 'http://www.bankofengland.co.uk/boeapps/iadb/fromshowcolumns.asp?Travel=NIxRSxSUx&FromSeries=1&ToSeries=50&DAT=RNG' . $date_url .
+				'&VFD=Y&xml.x=23&xml.y=18&CSVF=TT&C=' . $currency_codes[ $currency_to ] . '&Filter=N';
+			$xml          = simplexml_load_file( $url );
+			$json_string  = json_encode( $xml );
+			$result_array = json_decode( $json_string, true );
+			if ( isset( $result_array['Cube']['Cube'] ) ) {
+				$last_element_index = count( $result_array['Cube']['Cube'] ) - 1;
+				if ( isset( $result_array['Cube']['Cube'][ $last_element_index ]['@attributes']['OBS_VALUE'] ) ) {
+					return $result_array['Cube']['Cube'][ $last_element_index ]['@attributes']['OBS_VALUE'];
+				}
+			}
+		}
+		return $final_rate;
+	}
+}
+
+if ( ! function_exists( 'wcj_boe_get_exchange_rate' ) ) {
+	/*
+	 * wcj_boe_get_exchange_rate.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 */
+	function wcj_boe_get_exchange_rate( $currency_from, $currency_to ) {
+		if (
+			false != ( $gbp_currency_from = wcj_boe_get_exchange_rate_gbp( $currency_from ) ) &&
+			false != ( $gbp_currency_to   = wcj_boe_get_exchange_rate_gbp( $currency_to ) )
+		) {
+			return round( $gbp_currency_to / $gbp_currency_from, 6 );
+		}
+		return false;
 	}
 }
 

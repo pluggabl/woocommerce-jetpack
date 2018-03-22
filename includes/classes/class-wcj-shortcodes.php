@@ -60,6 +60,7 @@ class WCJ_Shortcodes {
 	 * @version 3.4.6
 	 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 	 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
+	 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result
 	 */
 	function wcj_shortcode( $atts, $content, $shortcode ) {
 

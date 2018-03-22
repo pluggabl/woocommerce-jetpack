@@ -11,6 +11,7 @@ if ( ! function_exists( 'wcj_get_currencies_array' ) ) {
 	 * wcj_get_currencies_array.
 	 *
 	 * @version 3.3.0
+	 * @todo    clean up / rewrite
 	 */
 	function wcj_get_currencies_array() {
 		return array(
