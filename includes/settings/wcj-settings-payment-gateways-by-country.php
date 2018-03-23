@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways by Country or State
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    change `textarea` to `readonly`
@@ -17,7 +17,28 @@ $settings = array(
 		'id'        => 'wcj_gateways_by_location_general_options',
 	),
 	array(
-		'title'     => __( 'Postcode Type', 'woocommerce-jetpack' ),
+		'title'     => __( 'Country', 'woocommerce-jetpack' ),
+		'id'        => 'wcj_gateways_by_location_country_type',
+		'type'      => 'select',
+		'default'   => 'billing',
+		'options'   => array(
+			'billing'  => __( 'Billing country', 'woocommerce-jetpack' ),
+			'shipping' => __( 'Shipping country', 'woocommerce-jetpack' ),
+			'by_ip'    => __( 'Country by IP', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'title'     => __( 'State', 'woocommerce-jetpack' ),
+		'id'        => 'wcj_gateways_by_location_state_type',
+		'type'      => 'select',
+		'default'   => 'billing',
+		'options'   => array(
+			'billing'  => __( 'Billing state', 'woocommerce-jetpack' ),
+			'shipping' => __( 'Shipping state', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'title'     => __( 'Postcode', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_gateways_by_location_postcodes_type',
 		'type'      => 'select',
 		'default'   => 'billing',

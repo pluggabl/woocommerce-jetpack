@@ -182,7 +182,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 22/03/2018 =
+= 3.4.6 - 24/03/2018 =
+D X I * Dev - PRODUCTS - SKU - Autogenerate SKUs tool - Option to generate SKUs only for selected products added.
+D T P * Dev - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - General Options - "Country Type" (billing / shipping / by IP) and "State Type" (billing / shipping) options added.
   T   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - ECB option set as fallback.
 D T I * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Bank of England (BOE)" server added.
 D X I * Dev - SHIPPING & ORDERS - Order Numbers - `%order_items_skus%` replaced value added.
@@ -195,12 +197,12 @@ D     * Dev - PRODUCTS - SKU - `{product_slug}`, `{parent_product_slug}`, `{vari
       * Dev - Functions - Shipping - `wcj-functions-shipping.php` added.
 D T I * Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` (Shipping Methods by Products / Users) -  "Use Shipping Instances" option added.
 D T   * Dev - PRICES & CURRENCIES - Price Formats - `wc_get_price_decimals` filter added.
-D T $ * Dev - SHIPPING & ORDERS - Shipping Descriptions - "Description Position" option added.
-D T $ * Dev - SHIPPING & ORDERS - Order Numbers - "Minimal Order ID" option added.
-D W $ * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Editable Order Number Meta Box" option added.
+D T P * Dev - SHIPPING & ORDERS - Shipping Descriptions - "Description Position" option added.
+D T P * Dev - SHIPPING & ORDERS - Order Numbers - "Minimal Order ID" option added.
+D W P * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Editable Order Number Meta Box" option added.
 D W   * Dev - PRICES & CURRENCIES - Price by User Role - "Price by User Role by Products Tags" section added.
 D W   * Dev - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Amount - "Use Shipping Instances" option added.
-D   $ * Dev - EMAILS & MISC. - Email Options - Email Forwarding - "Orders Emails: Enable for Statuses" option added.
+D   P * Dev - EMAILS & MISC. - Email Options - Email Forwarding - "Orders Emails: Enable for Statuses" option added.
 D T   * Dev - Shortcodes - `multiply` common attribute added.
 D     * Dev - Shortcodes - General - `[wcj_cart_total]` - `multiply_by` attribute added.
 D W   * Dev - PDF INVOICING & PACKING SLIPS - Advanced - General Display Options - Meta Box - Editable invoice numbers added.
@@ -223,8 +225,8 @@ D X   * Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_attri
       * Dev - Classes - Shortcodes - Minor code refactoring.
 D     * Dev - PRODUCTS - Stock - Now shortcodes are processed in all "HTML" options.
 D X   * Dev - Shortcodes - Products - `[wcj_product_shipping_time]` shortcode added.
-D X $ * Dev - SHIPPING & ORDERS - Shipping Time - Initial module release.
-D W $ * Dev - SHIPPING & ORDERS - Maximum Products per User - Initial module release.
+D X P * Dev - SHIPPING & ORDERS - Shipping Time - Initial module release.
+D W P * Dev - SHIPPING & ORDERS - Maximum Products per User - Initial module release.
 D T   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Google" server added.
 
 = 3.4.5 - 19/02/2018 =

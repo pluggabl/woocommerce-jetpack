@@ -44,6 +44,7 @@ if ( ! function_exists( 'wcj_get_customer_country' ) ) {
 	 *
 	 * @version 2.9.0
 	 * @return  string
+	 * @todo    re-check: there is also `wcj_customer_get_country()`
 	 */
 	function wcj_get_customer_country( $user_id ) {
 		$user_meta = get_user_meta( $user_id );

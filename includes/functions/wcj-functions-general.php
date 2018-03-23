@@ -307,9 +307,23 @@ if ( ! function_exists( 'wcj_customer_get_country' ) ) {
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
+	 * @todo    (maybe) move to `wcj-functions-users.php`
 	 */
 	function wcj_customer_get_country() {
 		return ( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_country() : WC()->customer->get_billing_country() );
+	}
+}
+
+if ( ! function_exists( 'wcj_customer_get_country_state' ) ) {
+	/**
+	 * wcj_customer_get_country_state.
+	 *
+	 * @version 3.4.6
+	 * @since   3.4.6
+	 * @todo    (maybe) move to `wcj-functions-users.php`
+	 */
+	function wcj_customer_get_country_state() {
+		return ( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_state() : WC()->customer->get_billing_state() );
 	}
 }
 

@@ -341,6 +341,10 @@ class WCJ_SKU extends WCJ_Module {
 		$this->maybe_get_sequential_counters();
 		$limit = 512;
 		$offset = 0;
+		/*
+		$start_id = isset( $_GET['start_id'] ) ? $_GET['start_id'] : 0;
+		$end_id   = isset( $_GET['end_id'] )   ? $_GET['end_id']   : PHP_INT_MAX;
+		*/
 		while ( true ) {
 			$posts = new WP_Query( array(
 				'posts_per_page' => $limit,
@@ -355,6 +359,9 @@ class WCJ_SKU extends WCJ_Module {
 				break;
 			}
 			foreach ( $posts->posts as $post_id ) {
+				/* if ( $post_id < $start_id || $post_id > $end_id ) {
+					continue;
+				} */
 				$this->set_sku_with_variable( $post_id, $is_preview );
 			}
 			$offset += $limit;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 3.4.0
+ * @version 3.4.6
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -34,15 +34,21 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * get_location.
 	 *
-	 * @version 3.4.0
+	 * @version 3.4.6
 	 * @since   3.4.0
+	 * @todo    on `WCJ_IS_WC_VERSION_BELOW_3` recheck if `get_shipping_country()` and `get_shipping_state()` work correctly
 	 */
 	function get_location( $type ) {
 		switch ( $type ) {
 			case 'country':
-				return ( isset( WC()->customer ) ? wcj_customer_get_country() : '' );
+				$country_type = get_option( 'wcj_gateways_by_location_country_type', 'billing' );
+				return ( 'by_ip' === $country_type ?
+					wcj_get_country_by_ip() :
+					( isset( WC()->customer ) ? ( 'billing' === $country_type ? wcj_customer_get_country() : WC()->customer->get_shipping_country() ) : '' ) );
 			case 'state':
-				return ( isset( WC()->customer ) ? ( WCJ_IS_WC_VERSION_BELOW_3 ? WC()->customer->get_state() : WC()->customer->get_billing_state() ) : '' );
+				return ( isset( WC()->customer ) ?
+					( 'billing' === get_option( 'wcj_gateways_by_location_state_type', 'billing' ) ? wcj_customer_get_country_state() : WC()->customer->get_shipping_state() ) :
+					'' );
 			case 'postcode':
 				$postcode = '';
 				if ( isset( $_REQUEST['postcode'] ) && 'billing' === get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' ) ) {
@@ -96,7 +102,6 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	 * @todo    (maybe) code refactoring
 	 * @todo    (maybe) add more locations options (e.g. "... by city")
 	 * @todo    (maybe) add option to detect customer's country and state by current `$_REQUEST` (as it is now done with postcodes)
-	 * @todo    (maybe) add option to detect customer's country by IP (instead of `wcj_customer_get_country()`); probably won't work with states though...
 	 */
 	function available_payment_gateways( $_available_gateways ) {
 		$customer_country = $this->get_location( 'country' );
