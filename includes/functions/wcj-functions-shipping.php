@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Functions - Shipping
  *
- * @version 3.4.6
- * @since   3.4.6
+ * @version 3.5.0
+ * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_get_customer_shipping_matching_zone_id' ) ) {
 	/**
 	 * wcj_get_customer_shipping_matching_zone_id.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 * @todo    (maybe) move to `wcj-functions-users.php`
 	 * @todo    (maybe) add `wcj_get_customer_shipping_destination()` function
 	 */
@@ -41,8 +41,8 @@ if ( ! function_exists( 'wcj_get_product_shipping_class_term_id' ) ) {
 	/**
 	 * wcj_get_product_shipping_class_term_id.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 * @todo    (maybe) move to `wcj-functions-products.php`
 	 */
 	function wcj_get_product_shipping_class_term_id( $_product ) {
@@ -62,8 +62,8 @@ if ( ! function_exists( 'wcj_get_shipping_classes' ) ) {
 	/**
 	 * wcj_get_shipping_classes.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function wcj_get_shipping_classes( $include_empty_shipping_class = true ) {
 		$shipping_classes = WC()->shipping->get_shipping_classes();
@@ -82,8 +82,8 @@ if ( ! function_exists( 'wcj_get_shipping_methods' ) ) {
 	/**
 	 * wcj_get_shipping_methods.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function wcj_get_shipping_methods() {
 		$shipping_methods = array();
@@ -98,8 +98,8 @@ if ( ! function_exists( 'wcj_get_shipping_zones' ) ) {
 	/**
 	 * wcj_get_shipping_zones.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function wcj_get_shipping_zones( $include_empty_zone = true ) {
 		$zones = WC_Shipping_Zones::get_zones();
@@ -118,8 +118,8 @@ if ( ! function_exists( 'wcj_get_shipping_methods_instances' ) ) {
 	/**
 	 * wcj_get_shipping_methods_instances.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function wcj_get_shipping_methods_instances( $full_data = false ) {
 		$shipping_methods = array();
@@ -168,7 +168,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	/*
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.4.4
 	 * @return  string
 	 */

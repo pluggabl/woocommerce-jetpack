@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Stock
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -65,7 +65,7 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_stock_html_below_wc_3.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   3.4.0
 	 */
 	function custom_stock_html_below_wc_3( $html, $availability_availability, $product ) {
@@ -81,7 +81,7 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_stock_html.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   3.4.0
 	 */
 	function custom_stock_html( $html, $product ) {
@@ -110,7 +110,7 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_in_stock.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   3.4.0
 	 */
 	function custom_in_stock( $availability, $_product ) {
@@ -136,7 +136,7 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_out_of_stock.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.8.0
 	 * @todo    html tags in < WC3
 	 */

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Shipping Time
  *
- * @version 3.4.6
- * @since   3.4.6
+ * @version 3.5.0
+ * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Shipping_Time extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function __construct() {
 

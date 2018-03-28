@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price Formats
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.5.2
 	 */
 	function __construct() {
@@ -43,8 +43,8 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function add_hooks() {
 		add_filter( 'wc_get_price_decimals', array( $this, 'price_decimals' ), PHP_INT_MAX );
@@ -53,8 +53,8 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * price_decimals.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 * @todo    code refactoring
 	 */
 	function price_decimals( $price_decimals_num ) {

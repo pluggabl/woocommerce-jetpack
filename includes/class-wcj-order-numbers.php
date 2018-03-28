@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @todo    (maybe) rename "Orders Renumerate" to "Renumerate orders"
 	 * @todo    (maybe) use `woocommerce_new_order` hook instead of `wp_insert_post`
 	 */
@@ -63,8 +63,8 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * maybe_add_meta_box.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 * @todo    re-think if setting number for yet not-numbered order should be allowed (i.e. do not check for `( '' !== get_post_meta( $post->ID, '_wcj_order_number', true ) )`)
 	 */
 	function maybe_add_meta_box( $post_type, $post ) {
@@ -163,7 +163,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Display order number.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 */
 	function display_order_number( $order_number, $order ) {
 		$order_id = wcj_get_order_id( $order );
@@ -276,7 +276,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {

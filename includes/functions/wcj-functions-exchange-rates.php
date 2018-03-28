@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -61,7 +61,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate_servers.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.6.0
 	 */
 	function wcj_get_currency_exchange_rate_servers() {
@@ -127,7 +127,7 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 	/*
 	 * wcj_get_exchange_rate.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.6.0
 	 */
 	function wcj_get_exchange_rate( $currency_from, $currency_to ) {
@@ -171,7 +171,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 	/*
 	 * wcj_get_currency_exchange_rates_url_response.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   3.2.4
 	 * @todo    use where needed
 	 */
@@ -194,8 +194,8 @@ if ( ! function_exists( 'wcj_boe_get_exchange_rate_gbp' ) ) {
 	/*
 	 * wcj_boe_get_exchange_rate_gbp.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function wcj_boe_get_exchange_rate_gbp( $currency_to ) {
 		if ( 'GBP' == $currency_to ) {
@@ -259,8 +259,8 @@ if ( ! function_exists( 'wcj_boe_get_exchange_rate' ) ) {
 	/*
 	 * wcj_boe_get_exchange_rate.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function wcj_boe_get_exchange_rate( $currency_from, $currency_to ) {
 		if (
@@ -277,8 +277,8 @@ if ( ! function_exists( 'wcj_google_get_exchange_rate' ) ) {
 	/*
 	 * wcj_google_get_exchange_rate.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 * @see     https://gist.github.com/daveismyname/8067095
 	 */
 	function wcj_google_get_exchange_rate( $currency_from, $currency_to ) {

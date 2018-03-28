@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -59,7 +59,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * generate_report_zip.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.3.10
 	 */
 	function generate_report_zip() {
@@ -164,7 +164,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * get_invoices_report_zip.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.3.10
 	 */
 	function get_invoices_report_zip( $year, $month, $invoice_type_id ) {

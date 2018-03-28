@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.0
 	 */
 	function __construct() {
 
@@ -28,6 +28,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_currency',
 			'wcj_order_custom_field',
 			'wcj_order_custom_meta_field',
+			'wcj_order_customer_data',
 			'wcj_order_customer_meta',
 			'wcj_order_customer_note',
 			'wcj_order_customer_user',
@@ -429,6 +430,22 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * wcj_order_customer_data.
+	 *
+	 * @version 3.5.0
+	 * @since   3.5.0
+	 * @todo    add similar `[wcj_customer_data]`
+	 */
+	function wcj_order_customer_data( $atts ) {
+		if ( '' != $atts['key'] && ( $_customer_id = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->the_order->customer_user : $this->the_order->get_customer_id() ) ) ) {
+			if ( ( $user_data = get_userdata( $_customer_id ) ) && isset( $user_data->{$atts['key']} ) ) {
+				return $user_data->{$atts['key']};
+			}
+		}
+		return '';
+	}
+
+	/**
 	 * wcj_order_customer_user_roles.
 	 *
 	 * @version 2.7.0
@@ -713,7 +730,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_notes.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   3.4.0
 	 * @todo    (maybe) run `strip_tags` on `comment_content`
 	 */
@@ -796,7 +813,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.5.7
 	 */
 	function wcj_order_items( $atts ) {

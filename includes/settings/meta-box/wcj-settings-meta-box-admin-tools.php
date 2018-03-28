@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Admin Tools
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  */

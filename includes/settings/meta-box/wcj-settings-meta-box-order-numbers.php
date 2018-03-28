@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Order Numbers
  *
- * @version 3.4.6
- * @since   3.4.6
+ * @version 3.5.0
+ * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
 

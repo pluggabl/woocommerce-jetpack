@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Listings
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @todo    more descriptions in settings (i.e. Storefront etc.)
 	 * @todo    add deprecated options (which were moved to Storefront)
 	 * @todo    add options to enable/disable each section
@@ -57,8 +57,8 @@ class WCJ_Product_Listings extends WCJ_Module {
 	/**
 	 * product_visibility_by_category.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function product_visibility_by_category( $visible, $product_id ) {
 		return ( ! isset( $_GET['s'] ) && is_shop() && wcj_is_product_term( $product_id, $this->cats_products_to_hide_on_shop, 'product_cat' ) ? false : $visible );

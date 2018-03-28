@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -857,7 +857,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_cart_total.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.8.0
 	 */
 	function wcj_cart_total( $atts ) {

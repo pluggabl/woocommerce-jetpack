@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Min/Max Order Amount
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   3.2.1
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_By_Order_Amount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   3.2.1
 	 * @todo    (maybe) add customer messages on cart and checkout pages (if some shipping method is not available)
 	 */
@@ -37,7 +37,7 @@ class WCJ_Shipping_By_Order_Amount extends WCJ_Module {
 	/**
 	 * available_shipping_methods.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   3.2.1
 	 * @todo    apply_filters( 'booster_option' )
 	 * @todo    (maybe) add option to include or exclude taxes when calculating cart total

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_get_current_user_id' ) ) {
 	/**
 	 * wcj_get_current_user_id.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function wcj_get_current_user_id() {
 		if ( ! function_exists( 'get_current_user_id' ) ) {

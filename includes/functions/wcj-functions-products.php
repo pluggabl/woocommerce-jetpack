@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -333,7 +333,7 @@ if ( ! function_exists( 'wcj_product_has_terms' ) ) {
 	/**
 	 * wcj_product_has_terms.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.8.2
 	 */
 	function wcj_product_has_terms( $_product, $_values, $_term ) {

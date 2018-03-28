@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 */
 	function __construct() {
 
@@ -212,7 +212,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * get_invoices_zip.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.5.7
 	 */
 	function get_invoices_zip( $invoice_type_id, $post_ids ) {

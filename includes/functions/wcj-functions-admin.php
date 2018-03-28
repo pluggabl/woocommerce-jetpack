@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -49,7 +49,7 @@ if ( ! function_exists( 'wcj_get_product_ids_for_meta_box_options' ) ) {
 	/**
 	 * wcj_get_product_ids_for_meta_box_options.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   3.3.0
 	 * @todo    use this function where needed
 	 */

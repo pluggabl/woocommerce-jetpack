@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Visibility by Country
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */

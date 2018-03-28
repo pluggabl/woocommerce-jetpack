@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -10,8 +10,8 @@ if ( ! function_exists( 'wcj_get_invoicing_temp_dir' ) ) {
 	/**
 	 * wcj_get_invoicing_temp_dir.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function wcj_get_invoicing_temp_dir() {
 		return ( '' === ( $tmp_dir = get_option( 'wcj_invoicing_general_tmp_dir', '' ) ) ? sys_get_temp_dir() : $tmp_dir );

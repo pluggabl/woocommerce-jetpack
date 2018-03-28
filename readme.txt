@@ -182,7 +182,12 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.4.6 - 24/03/2018 =
+= 3.5.0 - 29/03/2018 =
+D T   * Dev - Shortcodes - Orders - `[wcj_order_customer_data]` shortcode added.
+D X I * Dev - Classes - `WCJ_PDF_Invoice` - "Multiple Docs" option added.
+  T   * Dev - Classes - `WCJ_PDF_Invoice` - Minor code refactoring.
+  X I * Dev - PRODUCTS - Product Input Fields - Local input fields are saved as array now in product's meta.
+D X   * Dev - Shortcodes - `site_visibility` - `front_page` option added.
 D X I * Dev - PRODUCTS - SKU - Autogenerate SKUs tool - Option to generate SKUs only for selected products added.
 D T P * Dev - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - General Options - "Country Type" (billing / shipping / by IP) and "State Type" (billing / shipping) options added.
   T   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - ECB option set as fallback.

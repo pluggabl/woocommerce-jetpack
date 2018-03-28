@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -76,7 +76,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$multicurrency_base_price_currency = get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product, true ), '_' . 'wcj_multicurrency_base_price_currency', true );

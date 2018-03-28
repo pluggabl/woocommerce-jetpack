@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -38,7 +38,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * init.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.9.0
 	 */
 	function init() {

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 3.4.6
- * @since   3.4.6
+ * @version 3.5.0
+ * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 * @todo    (maybe) JS
 	 * @todo    (maybe) zero quantity for "Guest"
 	 * @todo    (maybe) editable sales date (i.e. change "Qty Bought" for product for user)
@@ -53,8 +53,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * calculate_data_notice.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function calculate_data_notice() {
 		if ( isset( $_GET['wcj_max_products_per_user_calculate_data_finished'] ) ) {
@@ -68,8 +68,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * calculate_data.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 * @todo    reset `wcj_max_products_per_user_report` and `wcj_max_products_per_user_saved` meta
 	 */
 	function calculate_data() {
@@ -106,8 +106,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * add_report_meta_box.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function add_report_meta_box() {
 		add_meta_box(
@@ -123,8 +123,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * create_report_meta_box.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function create_report_meta_box() {
 		if ( $users_quantities = get_post_meta( get_the_ID(), '_' . 'wcj_max_products_per_user_report', true ) ) {
@@ -148,8 +148,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * save_quantities.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 * @todo    (maybe) customizable `save_quantities` trigger
 	 */
 	function save_quantities( $order_id ) {
@@ -180,8 +180,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * get_max_qty.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 * @todo    (maybe) local - add "enabled/disabled" option
 	 * @todo    (maybe) global - apply only to selected products (i.e. include/exclude products, cats, tags)
 	 * @todo    (maybe) per user and/or per user role (both global and local)
@@ -199,8 +199,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * stop_from_seeing_checkout.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function stop_from_seeing_checkout() {
 		if ( ! function_exists( 'is_checkout' ) || ! is_checkout() ) {
@@ -215,8 +215,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * check_cart_quantities.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function check_cart_quantities() {
 		$this->check_quantities();
@@ -225,8 +225,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * check_quantities.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function check_quantities( $add_notices = true ) {
 		$result = true;

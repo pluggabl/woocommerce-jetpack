@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.5.0
 	 * @todo    ! add `wcj_product_by_country_query_widgets` option to all "Product Visibility ..." modules
 	 */
@@ -103,8 +103,8 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * products_widget_query.
 	 *
-	 * @version 3.4.6
-	 * @since   3.4.6
+	 * @version 3.5.0
+	 * @since   3.5.0
 	 */
 	function products_widget_query( $query_args ) {
 		remove_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );

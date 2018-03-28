@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price Formats
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `desc_tip` to `wcj_price_formats_general_trim_zeros`

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -34,7 +34,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * get_location.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   3.4.0
 	 * @todo    on `WCJ_IS_WC_VERSION_BELOW_3` recheck if `get_shipping_country()` and `get_shipping_state()` work correctly
 	 */

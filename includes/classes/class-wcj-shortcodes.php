@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -57,7 +57,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 	 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 	 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result
@@ -159,9 +159,10 @@ class WCJ_Shortcodes {
 		// Check if site visibility is ok
 		if ( '' != $atts['site_visibility'] ) {
 			if (
-				( 'single'  === $atts['site_visibility'] && ! is_single() ) ||
-				( 'page'    === $atts['site_visibility'] && ! is_page() ) ||
-				( 'archive' === $atts['site_visibility'] && ! is_archive() )
+				( 'single'     === $atts['site_visibility'] && ! is_single() ) ||
+				( 'page'       === $atts['site_visibility'] && ! is_page() ) ||
+				( 'archive'    === $atts['site_visibility'] && ! is_archive() ) ||
+				( 'front_page' === $atts['site_visibility'] && ! is_front_page() )
 			) {
 				return '';
 			}

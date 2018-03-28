@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 3.4.0
+ * @version 3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -70,33 +70,32 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * Save product input fields on Product Edit.
 	 *
-	 * @version 2.2.9
+	 * @version 3.5.0
 	 */
 	function save_local_product_input_fields_on_product_edit( $post_id, $post ) {
-
 		// Check that we are saving with input fields displayed.
-		if ( ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) )
+		if ( ! isset( $_POST['woojetpack_product_input_fields_save_post'] ) ) {
 			return;
-
-		// Save enabled, required, title etc.
-		$default_total_input_fields = apply_filters( 'booster_option', 1, get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
-		$total_input_fields_before_saving = get_post_meta( $post_id, '_' . 'wcj_product_input_fields_local_total_number', true );
+		}
+		// Save values
+		$default_total_input_fields       = apply_filters( 'booster_option', 1, get_option( 'wcj_product_input_fields_local_total_number_default', 1 ) );
+		$total_input_fields_before_saving = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_local_total_number', $post_id, 1 ) );
 		$total_input_fields_before_saving = ( '' != $total_input_fields_before_saving ) ? $total_input_fields_before_saving : $default_total_input_fields;
-		$options = $this->get_options();
+		$options                          = $this->get_options();
+		$values                           = array();
+		$values['local_total_number']     = isset( $_POST['wcj_product_input_fields_local_total_number'] ) ?
+			$_POST['wcj_product_input_fields_local_total_number'] : $default_total_input_fields;
 		for ( $i = 1; $i <= $total_input_fields_before_saving; $i++ ) {
 			foreach ( $options as $option ) {
+				$option_name = str_replace( 'wcj_product_input_fields_', '', $option['id'] . $i );
 				if ( isset( $_POST[ $option['id'] . $i ] ) ) {
-					update_post_meta( $post_id, '_' . $option['id'] . $i, $_POST[ $option['id'] . $i ] );
+					$values[ $option_name ] = $_POST[ $option['id'] . $i ];
 				} elseif ( 'checkbox' === $option['type'] ) {
-					update_post_meta( $post_id, '_' . $option['id'] . $i, 'off' );
+					$values[ $option_name ] = 'off';
 				}
 			}
 		}
-
-		// Save total product input fields number
-		$option_name = 'wcj_product_input_fields_local_total_number';
-		$total_input_fields = isset( $_POST[ $option_name ] ) ? $_POST[ $option_name ] : $default_total_input_fields;
-		update_post_meta( $post_id, '_' . $option_name, $_POST[ $option_name ] );
+		update_post_meta( $post_id, '_wcj_product_input_fields', $values );
 	}
 
 	/**
@@ -118,8 +117,8 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * create_local_product_input_fields_meta_box.
 	 *
-	 * @version 3.1.0
-	 * @todo    output options via standard "meta-box" mechanism
+	 * @version 3.5.0
+	 * @todo    output options via standard "meta-box" mechanism (and make "serialized" meta box type)
 	 */
 	function create_local_product_input_fields_meta_box() {
 
@@ -130,10 +129,12 @@ class WCJ_Product_Input_Fields_Core {
 
 		// Get total number
 		$current_post_id = get_the_ID();
+		$this->maybe_update_local_input_fields( $current_post_id );
 		$option_name = 'wcj_' . $meta_box_id . '_local_total_number';
 		// If none total number set - check for the default
-		if ( ! ( $total_number = apply_filters( 'booster_option', 1, get_post_meta( $current_post_id, '_' . $option_name, true ) ) ) )
+		if ( ! ( $total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_product_input_fields_local_total_number', $current_post_id, 1 ) ) ) ) {
 			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_' . $meta_box_id . '_local_total_number_default', 1 ) );
+		}
 
 		// Start html
 		$html = '';
@@ -162,12 +163,8 @@ class WCJ_Product_Input_Fields_Core {
 			$html .= '<hr>';
 			$html .= '<h3>' . __( 'Product Input Field', 'woocommerce-jetpack' ) . ' #' . $i . '</h3>';
 			foreach ( $options as $option ) {
-				$option_id = $option['id'] . $i;
-				$option_value = get_post_meta( $current_post_id, '_' . $option_id, true );
-
-				if ( ! metadata_exists( 'post', $current_post_id, '_' . $option_id ) ) {
-					$option_value = $option['default'];
-				}
+				$option_id    = $option['id'] . $i;
+				$option_value = $this->get_value( $option_id, $current_post_id, $option['default'] );
 
 				if ( 'checkbox' === $option['type'] )
 					$is_checked = checked( $option_value, 'on', false );
@@ -345,10 +342,19 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * get_value.
 	 *
-	 * @version 3.1.0
+	 * @version 3.5.0
 	 */
 	function get_value( $option_name, $product_id, $default ) {
-		return ( 'global' === $this->scope ? get_option( $option_name, $default ) : get_post_meta( $product_id, '_' . $option_name, true ) );
+		if ( 'global' === $this->scope ) {
+			return get_option( $option_name, $default );
+		} else { // local
+			if ( '' != ( $options = get_post_meta( $product_id, '_' . 'wcj_product_input_fields', true ) ) ) {
+				$option_name = str_replace( 'wcj_product_input_fields_', '', $option_name );
+				return ( isset( $options[ $option_name ] ) ? $options[ $option_name ] : $default );
+			} else { // Booster version  < 3.5.0
+				return get_post_meta( $product_id, '_' . $option_name, true );
+			}
+		}
 	}
 
 	/**
@@ -413,9 +419,43 @@ class WCJ_Product_Input_Fields_Core {
 	}
 
 	/**
+	 * maybe_update_local_input_fields.
+	 *
+	 * @version 3.5.0
+	 * @since   3.5.0
+	 * @todo    (maybe) if `$total_number` is not set - use `$default_total_input_fields` instead
+	 */
+	function maybe_update_local_input_fields( $_product_id ) {
+		if ( 'local' != $this->scope ) {
+			return;
+		}
+		if ( '' != get_post_meta( $_product_id, '_' . 'wcj_product_input_fields', true ) ) {
+			return;
+		}
+		$values       = array();
+		$options      = $this->get_options();
+		$total_number = apply_filters( 'booster_option', 1, get_post_meta( $_product_id, '_' . 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', true ) );
+		$values[ $this->scope . '_total_number' ] = $total_number;
+		delete_post_meta( $_product_id, '_' . 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number' );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			foreach ( $options as $option ) {
+				$option_id = $option['id'] . $i;
+				if ( metadata_exists( 'post', $_product_id, '_' . $option_id ) ) {
+					$option_value = get_post_meta( $_product_id, '_' . $option_id, true );
+					delete_post_meta( $_product_id, '_' . $option_id );
+				} else {
+					$option_value = $option['default'];
+				}
+				$values[ str_replace( 'wcj_product_input_fields_', '', $option_id ) ] = $option_value;
+			}
+		}
+		update_post_meta( $_product_id, '_wcj_product_input_fields', $values );
+	}
+
+	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.0
 	 * @todo    `$set_value` - add "default" option for all other types except checkbox
 	 * @todo    `$set_value` - 'file' type
 	 * @todo    add `required` attributes
@@ -426,6 +466,7 @@ class WCJ_Product_Input_Fields_Core {
 			return;
 		}
 		$_product_id = wcj_get_product_id_or_variation_parent_id( $product );
+		$this->maybe_update_local_input_fields( $_product_id );
 		$fields = array();
 		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {

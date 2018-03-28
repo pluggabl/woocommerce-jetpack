@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.4.6
+ * @version 3.5.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -141,7 +141,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_product_base_currency' )
 	/**
 	 * wcj_get_currency_exchange_rate_product_base_currency.
 	 *
-	 * @version 3.4.6
+	 * @version 3.5.0
 	 * @since   2.5.6
 	 */
 	function wcj_get_currency_exchange_rate_product_base_currency( $currency_code ) {
