@@ -294,7 +294,7 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 	/**
 	 * wcj_get_products.
 	 *
-	 * @version 2.8.0
+	 * @version 3.5.0
 	 */
 	function wcj_get_products( $products = array(), $post_status = 'any', $block_size = 256, $add_variations = false ) {
 		$offset = 0;
@@ -313,12 +313,12 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 				break;
 			}
 			foreach ( $loop->posts as $post_id ) {
-				$products[ $post_id ] = get_the_title( $post_id );
+				$products[ $post_id ] = get_the_title( $post_id ) . ' (ID:' . $post_id . ')';
 				if ( $add_variations ) {
 					$_product = wc_get_product( $post_id );
 					if ( $_product->is_type( 'variable' ) ) {
 						foreach ( $_product->get_children() as $child_id ) {
-							$products[ $child_id ] = get_the_title( $child_id );
+							$products[ $child_id ] = get_the_title( $child_id ) . ' (ID:' . $child_id . ')';
 						}
 					}
 				}

@@ -445,7 +445,7 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	/**
 	 * get_manager_settings.
 	 *
-	 * @version 3.2.4
+	 * @version 3.5.0
 	 * @since   2.6.0
 	 * @return  array
 	 */
@@ -470,6 +470,24 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 					__( 'Related Products', 'woocommerce-jetpack' ),
 				) ) ),
 				'id'      => 'wcj_list_for_products',
+				'default' => 'yes',
+			),
+			array(
+				'title'   => __( 'Use List Instead of Comma Separated Text for Products Categories in Settings', 'woocommerce-jetpack' ),
+				'type'    => 'checkbox',
+				'desc'    => sprintf( __( 'Supported modules: %s.', 'woocommerce-jetpack' ), implode( ', ', array(
+					__( 'Product Info', 'woocommerce-jetpack' ),
+				) ) ),
+				'id'      => 'wcj_list_for_products_cats',
+				'default' => 'yes',
+			),
+			array(
+				'title'   => __( 'Use List Instead of Comma Separated Text for Products Tags in Settings', 'woocommerce-jetpack' ),
+				'type'    => 'checkbox',
+				'desc'    => sprintf( __( 'Supported modules: %s.', 'woocommerce-jetpack' ), implode( ', ', array(
+					__( 'Product Info', 'woocommerce-jetpack' ),
+				) ) ),
+				'id'      => 'wcj_list_for_products_tags',
 				'default' => 'yes',
 			),
 		);
