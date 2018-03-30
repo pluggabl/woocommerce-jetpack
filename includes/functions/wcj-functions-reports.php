@@ -74,6 +74,7 @@ if ( ! function_exists( 'wcj_get_reports_custom_ranges' ) ) {
 	 *
 	 * @version 3.2.4
 	 * @since   2.9.0
+	 * @todo    fix `-1 month` - sometimes it produces the wrong result (e.g. on current date = "2018.03.30")
 	 */
 	function wcj_get_reports_custom_ranges() {
 		$current_time = (int) current_time( 'timestamp' );

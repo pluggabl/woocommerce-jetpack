@@ -78,10 +78,11 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	 *
 	 * Using Javascript until WordPress core fixes: http://core.trac.wordpress.org/ticket/16031
 	 *
-	 * @todo    add "print" action
 	 * @see     https://www.skyverge.com/blog/add-custom-bulk-action/
-	 * @version 2.5.7
+	 * @version 3.5.0
 	 * @since   2.5.7
+	 * @todo    add bulk actions in a correct way for newer WP
+	 * @todo    `merge` (i.e. `invoice_merge_docs`) is not used anywhere - clean it up
 	 */
 	function bulk_actions_pdfs_admin_footer() {
 		global $post_type;
@@ -102,6 +103,22 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				?>jQuery(function() {
 					jQuery('<option>').val('download_<?php echo $key; ?>').text('<?php echo __( 'Download', 'woocommerce-jetpack' ) . ' ' . $title; ?>').appendTo('select[name="action"]');
 					jQuery('<option>').val('download_<?php echo $key; ?>').text('<?php echo __( 'Download', 'woocommerce-jetpack' ) . ' ' . $title; ?>').appendTo('select[name="action2"]');
+				});<?php
+			}
+			/* foreach ( $invoice_types as $invoice_type ) {
+				$key   = $invoice_type['id'];
+				$title = $invoice_type['title'];
+				?>jQuery(function() {
+					jQuery('<option>').val('merge_<?php echo $key; ?>').text('<?php echo __( 'Merge (Print)', 'woocommerce-jetpack' ) . ' ' . $title; ?>').appendTo('select[name="action"]');
+					jQuery('<option>').val('merge_<?php echo $key; ?>').text('<?php echo __( 'Merge (Print)', 'woocommerce-jetpack' ) . ' ' . $title; ?>').appendTo('select[name="action2"]');
+				});<?php
+			} */
+			foreach ( $invoice_types as $invoice_type ) {
+				$key   = $invoice_type['id'];
+				$title = $invoice_type['title'];
+				?>jQuery(function() {
+					jQuery('<option>').val('mergepdfs_<?php echo $key; ?>').text('<?php echo __( 'Merge (Print)', 'woocommerce-jetpack' ) . ' ' . $title; ?>').appendTo('select[name="action"]');
+					jQuery('<option>').val('mergepdfs_<?php echo $key; ?>').text('<?php echo __( 'Merge (Print)', 'woocommerce-jetpack' ) . ' ' . $title; ?>').appendTo('select[name="action2"]');
 				});<?php
 			}
 			?></script><?php
@@ -142,8 +159,9 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * bulk_actions_pdfs.
 	 *
-	 * @version 3.1.0
+	 * @version 3.5.0
 	 * @since   2.5.7
+	 * @todo    clean up
 	 */
 	function bulk_actions_pdfs() {
 
@@ -156,7 +174,10 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 
 		// Validate the action
 		$action_exploded = explode( '_', $action, 2 );
-		if ( empty( $action_exploded ) || ! is_array( $action_exploded ) || 2 !== count( $action_exploded ) || ! in_array( $action_exploded[0], array( 'generate', 'download' ) ) ) {
+		if (
+			! isset( $_GET['post'] ) || empty( $action_exploded ) || ! is_array( $action_exploded ) || 2 !== count( $action_exploded ) ||
+			! in_array( $action_exploded[0], array( 'generate', 'download', 'merge', 'mergepdfs' ) )
+		) {
 			return;
 		}
 		// Perform the action
@@ -200,6 +221,39 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 					);
 				}
 				break;
+			case 'merge':
+			case 'mergepdfs':
+				$merge_ids = array();
+				foreach( $post_ids as $post_id ) {
+					if ( wcj_is_invoice_created( $post_id, $the_type ) ) {
+						$merge_ids[] = $post_id;
+					}
+				}
+				if ( ! empty( $merge_ids ) ) {
+					if ( 'merge' === $the_action ) {
+						$sendback = add_query_arg(
+							array(
+								'invoice_merge_docs' => implode( ',', $merge_ids ),
+								'order_id'           => 0,
+								'invoice_type_id'    => $the_type,
+								'get_invoice'        => 1,
+							),
+							$sendback
+						);
+					} else { // 'mergepdfs'
+						if ( '' != ( $result = $this->merge_pdfs( $the_type, $merge_ids ) ) ) {
+							$sendback = add_query_arg(
+								array(
+									'post_type'          => 'shop_order',
+									'post_status'        => $_GET['post_status'],
+									'wcj_notice'         => $result,
+								),
+								$sendback
+							);
+						}
+					}
+				}
+				break;
 			default:
 				return;
 		}
@@ -210,10 +264,46 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	}
 
 	/**
+	 * merge_pdfs.
+	 *
+	 * @version 3.5.0
+	 * @since   3.5.0
+	 * @see     https://www.setasign.com/products/fpdi/demos/concatenate-fake/
+	 * @todo    add errors notices
+	 */
+	function merge_pdfs( $invoice_type_id, $post_ids ) {
+		$files = array();
+		foreach( $post_ids as $post_id ) {
+			$the_invoice = wcj_get_pdf_invoice( $post_id, $invoice_type_id );
+			$files[]     = $the_invoice->get_pdf( 'F' );
+		}
+		if ( empty( $files ) ) {
+			return 'merge_pdfs_no_files';
+		}
+		require_once( wcj_plugin_path() . '/includes/lib/FPDI/src/autoload.php' );
+		$fpdi_pdf = new \setasign\Fpdi\TcpdfFpdi();
+		$fpdi_pdf->SetTitle( 'docs.pdf' );
+		$fpdi_pdf->setPrintHeader( false );
+		$fpdi_pdf->setPrintFooter( false );
+		foreach( $files as $file ) {
+			$page_count = $fpdi_pdf->setSourceFile( $file );
+			for ( $page_nr = 1; $page_nr <= $page_count; $page_nr++ ) {
+				$page_id = $fpdi_pdf->ImportPage( $page_nr );
+				$s = $fpdi_pdf->getTemplatesize( $page_id );
+				$fpdi_pdf->AddPage( $s['orientation'], $s );
+				$fpdi_pdf->useImportedPage( $page_id );
+			}
+		}
+		$fpdi_pdf->Output( 'docs.pdf', ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type_id . '_save_as_enabled', 'no' ) ? 'D' : 'I' ) );
+		die();
+	}
+
+	/**
 	 * get_invoices_zip.
 	 *
 	 * @version 3.5.0
 	 * @since   2.5.7
+	 * @todo    add `ZipArchive` fallback
 	 */
 	function get_invoices_zip( $invoice_type_id, $post_ids ) {
 		if ( ! class_exists( 'ZipArchive' ) ) {
@@ -385,12 +475,12 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * generate_pdf_on_init.
 	 *
-	 * @version 2.9.0
+	 * @version 3.5.0
 	 */
 	function generate_pdf_on_init() {
 
 		// Check if all is OK
-		if ( true !== $this->get_invoice || 0 == $this->order_id || ! is_user_logged_in() || ! $this->check_user_roles() ) {
+		if ( true !== $this->get_invoice || ( 0 == $this->order_id && ! isset( $_GET['invoice_merge_docs'] ) ) || ! is_user_logged_in() || ! $this->check_user_roles() ) {
 			return;
 		}
 

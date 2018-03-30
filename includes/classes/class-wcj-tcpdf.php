@@ -37,6 +37,7 @@ class WCJ_TCPDF extends TCPDF {
 	 * Page footer.
 	 *
 	 * @version 2.9.0
+	 * @todo    fix pagination on `invoice_merge_docs`
 	 * @todo    (maybe) e.g. "Set font" - `$this->SetFont( 'helvetica', 'I', 8 );`
 	 */
 	function Footer() {

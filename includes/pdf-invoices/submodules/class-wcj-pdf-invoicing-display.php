@@ -173,8 +173,9 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Output custom columns for products
 	 *
-	 * @param   string $column
 	 * @version 2.4.7
+	 * @param   string $column
+	 * @todo    clean up
 	 */
 	function render_order_columns( $column ) {
 		$invoice_types_ids = wcj_get_enabled_invoice_types_ids();

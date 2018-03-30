@@ -182,12 +182,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.0 - 30/03/2018 =
+= 3.5.0 - 31/03/2018 =
+  T   * Fix - Classes - `WCJ_Invoice` - `get_file_name()` - Empty file name fallback fixed.
 D T   * Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products Categories/Tags in Settings" options added (Supported modules: Product Info).
 D T I * Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Products" section - "Add Products Variations" option added.
   T I * Dev - Functions - Products - `wcj_get_products()` - Product's ID info added.
 D T   * Dev - Shortcodes - Orders - `[wcj_order_customer_data]` shortcode added.
-D X I * Dev - Classes - `WCJ_PDF_Invoice` - "Multiple Docs" option added.
+D W I * Dev - PDF INVOICING & PACKING SLIPS - Bulk Actions - "Merge (Print)" bulk action added.
   T   * Dev - Classes - `WCJ_PDF_Invoice` - Minor code refactoring.
   X I * Dev - PRODUCTS - Product Input Fields - Local input fields are saved as array now in product's meta.
 D X   * Dev - Shortcodes - `site_visibility` - `front_page` option added.

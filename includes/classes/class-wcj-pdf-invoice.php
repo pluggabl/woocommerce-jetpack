@@ -25,6 +25,8 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	 * @version 3.4.3
 	 * @todo    check `addTTFfont()`
 	 * @todo    clean up
+	 * @todo    fix header and background image on `invoice_merge_docs` (e.g. when using shortcodes like `[wcj_order_id]`)
+	 * @todo    (maybe) option to set different font in footer (and maybe also header)
 	 */
 	function prepare_pdf() {
 
@@ -191,8 +193,8 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	 * @todo    (maybe) `die()` on success
 	 */
 	function get_pdf( $dest ) {
-		if ( isset( $_GET['wcj_multiple_docs'] ) ) {
-			$multiple_docs = $_GET['wcj_multiple_docs'];
+		if ( isset( $_GET['invoice_merge_docs'] ) ) {
+			$multiple_docs = $_GET['invoice_merge_docs'];
 			$multiple_docs = explode( ',', $multiple_docs );
 			$html = '';
 			foreach ( $multiple_docs as $i => $order_id ) {
@@ -209,7 +211,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$pdf = $this->prepare_pdf();
 		$pdf->writeHTMLCell( 0, 0, '', '', $styling . $html, 0, 1, 0, true, '', true );
 		$result_pdf = $pdf->Output( '', 'S' );
-		$file_name  = $this->get_file_name();
+		$file_name  = ( isset( $_GET['invoice_merge_docs'] ) ? 'docs.pdf' : $this->get_file_name() );
 		if ( 'F' === $dest ) {
 			$file_path = wcj_get_invoicing_temp_dir() . '/' . $file_name;
 			if ( ! file_put_contents( $file_path, $result_pdf ) ) {

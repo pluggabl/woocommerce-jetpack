@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Invoice
  *
- * @version 3.2.2
+ * @version 3.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -73,12 +73,15 @@ class WCJ_Invoice {
 
 	/**
 	 * get_file_name.
+	 *
+	 * @version 3.5.0
 	 */
 	function get_file_name() {
-		$the_file_name = do_shortcode( get_option( 'wcj_invoicing_' . $this->invoice_type . '_file_name', 'invoice-' . $this->order_id ) . '.pdf' );
-		if ( '' == $the_file_name ) $the_file_name = 'invoice';
-		$the_file_name = sanitize_file_name( $the_file_name );
-		return apply_filters( 'wcj_get_' . $this->invoice_type . '_file_name', $the_file_name, $this->order_id );
+		$_file_name = sanitize_file_name( do_shortcode( get_option( 'wcj_invoicing_' . $this->invoice_type . '_file_name', '' ) ) );
+		if ( '' === $_file_name ) {
+			$_file_name = $this->invoice_type . '-' . $this->order_id;
+		}
+		return apply_filters( 'wcj_get_' . $this->invoice_type . '_file_name', $_file_name . '.pdf', $this->order_id );
 	}
 
 	/**
