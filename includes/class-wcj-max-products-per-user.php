@@ -20,7 +20,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	 * @since   3.5.0
 	 * @todo    (maybe) JS
 	 * @todo    (maybe) zero quantity for "Guest"
-	 * @todo    (maybe) editable sales date (i.e. change "Qty Bought" for product for user)
+	 * @todo    (maybe) editable sales data (i.e. change "Qty Bought" for product for user)
 	 */
 	function __construct() {
 

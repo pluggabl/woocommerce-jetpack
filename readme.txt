@@ -182,6 +182,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.5.1 - 04/04/2018 =
+      * Dev - SHIPPING & ORDERS - Shipping Time - Admin settings - Description updated.
+
 = 3.5.0 - 04/04/2018 =
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Bank of England (BOE)" server added.
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Google" server added.

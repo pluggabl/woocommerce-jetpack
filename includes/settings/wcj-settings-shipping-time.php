@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Time
  *
- * @version 3.5.0
+ * @version 3.5.1
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  * @todo    estimated date calculation
@@ -36,7 +36,7 @@ $settings = array_merge( $settings, array(
 		'default'  => 'no',
 	),
 	array(
-		'title'    => __( 'Use Shipping Classes', 'woocommerce-jetpack' ),
+		'title'    => __( 'Use Product Shipping Classes', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Enable this if you want to set options for each shipping class separately.', 'woocommerce-jetpack' ) . ' ' .
 			__( 'Save changes after enabling this option.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
