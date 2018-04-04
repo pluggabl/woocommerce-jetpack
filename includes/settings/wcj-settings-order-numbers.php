@@ -120,6 +120,8 @@ return array(
 		'id'       => 'wcj_order_number_editable_order_number_meta_box_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Minimal Order ID', 'woocommerce-jetpack' ),

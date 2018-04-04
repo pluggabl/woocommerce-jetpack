@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.4.5
+Stable tag: 3.5.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -182,61 +182,66 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.0 - 31/03/2018 =
-  T   * Fix - Classes - `WCJ_Invoice` - `get_file_name()` - Empty file name fallback fixed.
-D T   * Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products Categories/Tags in Settings" options added (Supported modules: Product Info).
-D T I * Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Products" section - "Add Products Variations" option added.
-  T I * Dev - Functions - Products - `wcj_get_products()` - Product's ID info added.
-D T   * Dev - Shortcodes - Orders - `[wcj_order_customer_data]` shortcode added.
-D W I * Dev - PDF INVOICING & PACKING SLIPS - Bulk Actions - "Merge (Print)" bulk action added.
-  T   * Dev - Classes - `WCJ_PDF_Invoice` - Minor code refactoring.
-  X I * Dev - PRODUCTS - Product Input Fields - Local input fields are saved as array now in product's meta.
-D X   * Dev - Shortcodes - `site_visibility` - `front_page` option added.
-D X I * Dev - PRODUCTS - SKU - Autogenerate SKUs tool - Option to generate SKUs only for selected products added.
-D T P * Dev - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - General Options - "Country Type" (billing / shipping / by IP) and "State Type" (billing / shipping) options added.
-  T   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - ECB option set as fallback.
-D T I * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Bank of England (BOE)" server added.
-D X I * Dev - SHIPPING & ORDERS - Order Numbers - `%order_items_skus%` replaced value added.
-D     * Dev - Shortcodes - Orders - `[wcj_order_items]` - Special `_sku` value added for the `field` attribute.
-  X I * Fix - SHIPPING & ORDERS - Left to Free Shipping - Now taxes are always added when calculating cart total.
-D     * Dev - SHIPPING & ORDERS - Left to Free Shipping - `%cart_total%` replaced value added.
-D X I * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Booster - Selector" (country) widget now overrides "Booster - Country Switcher" widget.
-D     * Dev - PRODUCTS - SKU - `{product_slug}`, `{parent_product_slug}`, `{variation_attributes}`, `{parent_sku}` replaced values added.
-      * Dev - SHIPPING & ORDERS - Left to Free Shipping - Admin settings - Descriptions updated.
-      * Dev - Functions - Shipping - `wcj-functions-shipping.php` added.
-D T I * Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` (Shipping Methods by Products / Users) -  "Use Shipping Instances" option added.
-D T   * Dev - PRICES & CURRENCIES - Price Formats - `wc_get_price_decimals` filter added.
-D T P * Dev - SHIPPING & ORDERS - Shipping Descriptions - "Description Position" option added.
-D T P * Dev - SHIPPING & ORDERS - Order Numbers - "Minimal Order ID" option added.
-D W P * Dev - SHIPPING & ORDERS - Order Numbers - "Enable Editable Order Number Meta Box" option added.
-D W   * Dev - PRICES & CURRENCIES - Price by User Role - "Price by User Role by Products Tags" section added.
-D W   * Dev - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Amount - "Use Shipping Instances" option added.
-D   P * Dev - EMAILS & MISC. - Email Options - Email Forwarding - "Orders Emails: Enable for Statuses" option added.
-D T   * Dev - Shortcodes - `multiply` common attribute added.
-D     * Dev - Shortcodes - General - `[wcj_cart_total]` - `multiply_by` attribute added.
-D W   * Dev - PDF INVOICING & PACKING SLIPS - Advanced - General Display Options - Meta Box - Editable invoice numbers added.
-D W   * Dev - EMAILS & MISC. - Admin Tools - Show Variable Product Pricing Table - Displaying all variations (instead of only available variations).
-  W   * Dev - Functions - Debug - `error_reporting( E_ALL )` moved to `wcj-loader.php`.
-  T   * Dev - Functions - Debug - `wcj_log()` - `$do_var_dump` param added.
-D T   * Dev - PAYMENT GATEWAYS - Gateways by Shipping - "Use Shipping Instances" option added.
-  T   * Dev - PAYMENT GATEWAYS - Gateways by Shipping - Code refactoring (`wcj_get_shipping_methods()`).
-  T   * Fix - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - "Download all monthly documents PDFs in single ZIP file" - `check_user_roles()` fixed.
-  T   * Fix - PDF INVOICING & PACKING SLIPS - Advanced - Temp Directory - Option now used in "Invoices Report" tool and in orders "Bulk Actions".
-  W   * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Missing options (rounding) added to variation prices hash and hash array restructured.
-D     * Dev - Shortcodes - Orders - `[wcj_order_notes]` - `limit` attribute added.
-D X   * Dev - PRODUCTS - Product Visibility by Country - Modify Query - "Widgets" option added.
-D X   * Dev - PRODUCTS - Product Listings - "Exclude Categories Products" option added.
-  T   * Dev - Functions - Products - `wcj_product_has_terms()` - Function now also accepts product id as param.
-      * Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Missing options (rounding etc.) added to variation prices hash and hash array restructured.
-      * Dev - Functions - Price and Currency - `wcj_get_currency_exchange_rate_product_base_currency()` - Minor code refactoring.
-      * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Minor code refactoring.
-D X   * Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_attribute` attribute added.
-      * Dev - Classes - Shortcodes - Minor code refactoring.
-D     * Dev - PRODUCTS - Stock - Now shortcodes are processed in all "HTML" options.
-D X   * Dev - Shortcodes - Products - `[wcj_product_shipping_time]` shortcode added.
-D X P * Dev - SHIPPING & ORDERS - Shipping Time - Initial module release.
-D W P * Dev - SHIPPING & ORDERS - Maximum Products per User - Initial module release.
-D T   * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Google" server added.
+= 3.5.0 - 04/04/2018 =
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Bank of England (BOE)" server added.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Google" server added.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - ECB option set as fallback; marked as "recommended".
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Missing options (rounding) added to variation prices hash and hash array restructured.
+* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Missing options (rounding etc.) added to variation prices hash and hash array restructured.
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Minor code refactoring.
+* Dev - PRICES & CURRENCIES - Price Formats - `wc_get_price_decimals` filter added.
+* Dev - PRICES & CURRENCIES - Price by User Role - "Price by User Role by Products Tags" section added.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Booster - Selector" (country) widget now overrides "Booster - Country Switcher" widget (in case if both widgets are enabled).
+* Dev - PRODUCTS - Product Input Fields - Local input fields are saved as array now in product's meta.
+* Dev - PRODUCTS - Product Listings - Shop Page Display Options - "Exclude Categories Products" option added.
+* Dev - PRODUCTS - Product Visibility by Country - Modify Query - "Widgets" option added.
+* Dev - PRODUCTS - SKU - Autogenerate SKUs tool - Optional "Min ID" and "Max ID" options added (to generate SKUs only for selected products).
+* Dev - PRODUCTS - SKU - `{product_slug}`, `{parent_product_slug}`, `{variation_attributes}`, `{parent_sku}` replaced values added.
+* Dev - PRODUCTS - Stock - Now shortcodes are processed in all "HTML" options.
+* Dev - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - General Options - "Detect Country by" (billing / shipping / by IP) and "Detect State by" (billing / shipping) options added.
+* Dev - PAYMENT GATEWAYS - Gateways by Shipping - "Use Shipping Instances" option added.
+* Dev - PAYMENT GATEWAYS - Gateways by Shipping - Code refactoring (`wcj_get_shipping_methods()`).
+* Fix - SHIPPING & ORDERS - Left to Free Shipping - Calculating cart total exactly as in `WC_Shipping_Free_Shipping` class.
+* Dev - SHIPPING & ORDERS - Left to Free Shipping - Admin settings - Descriptions updated.
+* Dev - SHIPPING & ORDERS - Left to Free Shipping - `%cart_total%` replaced value added.
+* Dev - SHIPPING & ORDERS - Maximum Products per User - Initial module release.
+* Dev - SHIPPING & ORDERS - Order Numbers - "Enable Editable Order Number Meta Box" option added.
+* Dev - SHIPPING & ORDERS - Order Numbers - "Minimal Order ID" option added.
+* Dev - SHIPPING & ORDERS - Order Numbers - `%order_items_skus%` replaced value added.
+* Dev - SHIPPING & ORDERS - Shipping Descriptions - "Description Position" option added.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Amount - "Use Shipping Instances" option added.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Products" section - "Add Products Variations" option added.
+* Dev - SHIPPING & ORDERS - Shipping Time - Initial module release.
+* Dev - SHIPPING & ORDERS - `WCJ_Module_Shipping_By_Condition` (Shipping Methods by Products / Users) -  "Use Shipping Instances" option added.
+* Fix - PDF INVOICING & PACKING SLIPS - Advanced - Temp Directory - Option now used in "Invoices Report" tool and in orders "Bulk Actions".
+* Dev - PDF INVOICING & PACKING SLIPS - Advanced - General Display Options - Meta Box - Editable invoice numbers added.
+* Fix - PDF INVOICING & PACKING SLIPS - Invoices Report Tool - "Download all monthly documents PDFs in single ZIP file" - `check_user_roles()` fixed.
+* Dev - PDF INVOICING & PACKING SLIPS - Bulk Actions - "Merge (Print)" bulk action added.
+* Dev - PDF INVOICING & PACKING SLIPS - Bulk Actions - Code refactoring.
+* Dev - PDF INVOICING & PACKING SLIPS - Bulk Actions - Download - Code refactoring (`wcj_send_file()` function added).
+* Dev - PDF INVOICING & PACKING SLIPS - Bulk Actions - Download - Site URL and min/max orders IDs added to zip filename.
+* Dev - PDF INVOICING & PACKING SLIPS - Bulk Actions - Download - `ZIPARCHIVE::OVERWRITE` added when creating zip file.
+* Dev - EMAILS & MISC. - Admin Tools - Show Variable Product Pricing Table - Displaying all variations (instead of only available variations).
+* Dev - EMAILS & MISC. - Email Options - Email Forwarding - "Orders Emails: Enable for Statuses" option added.
+* Dev - Shortcodes - General - `[wcj_cart_total]` - `multiply_by` attribute added.
+* Dev - Shortcodes - General - `[wcj_shipping_time_table]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_customer_data]` shortcode added.
+* Dev - Shortcodes - Orders - `[wcj_order_items]` - Special `_sku` value added for the `field` attribute.
+* Dev - Shortcodes - Orders - `[wcj_order_notes]` - `limit` attribute added.
+* Dev - Shortcodes - Products - `[wcj_product_price]` - `multiply_by_attribute` attribute added.
+* Dev - Shortcodes - Products - `[wcj_product_shipping_time_table]` shortcode added.
+* Dev - Shortcodes - `multiply` common attribute added.
+* Dev - Shortcodes - `site_visibility` common attribute - `front_page` option added.
+* Dev - Functions - Debug - `error_reporting( E_ALL )` moved to `wcj-loader.php`.
+* Dev - Functions - Debug - `wcj_log()` - `$do_var_dump` param added.
+* Dev - Functions - Price and Currency - `wcj_get_currency_exchange_rate_product_base_currency()` - Minor code refactoring.
+* Dev - Functions - Products - `wcj_get_products()` - Product's ID info added.
+* Dev - Functions - Products - `wcj_product_has_terms()` - Function now also accepts product id as param.
+* Dev - Functions - Shipping - `wcj-functions-shipping.php` added.
+* Fix - Classes - `WCJ_Invoice` - `get_file_name()` - Empty file name fallback fixed.
+* Dev - Classes - Shortcodes - Minor code refactoring.
+* Dev - Classes - `WCJ_PDF_Invoice` - Minor code refactoring.
+* Dev - Manage Settings - "Use List Instead of Comma Separated Text for Products Categories/Tags in Settings" options added (Supported modules: Product Info).
 
 = 3.4.5 - 19/02/2018 =
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - Crons - "Undefined index..." notices in log fixed.

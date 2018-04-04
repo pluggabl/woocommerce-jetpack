@@ -52,7 +52,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_regular_price',
 			'wcj_product_sale_price',
 			'wcj_product_shipping_class',
-			'wcj_product_shipping_time',
+			'wcj_product_shipping_time_table',
 			'wcj_product_short_description',
 			'wcj_product_sku',
 			'wcj_product_stock_availability',
@@ -591,40 +591,18 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
-	 * wcj_product_shipping_time.
+	 * wcj_product_shipping_time_table.
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
-	 * @todo    rename to `[wcj_product_shipping_time_table]`
-	 * @todo    customizable `$method_title` format
-	 * @todo    predefined `$matching_zone_id` (i.e. `$atts['shipping_zone_id']`)
-	 * @todo    all zones (i.e. no `$matching_zone_id`)
-	 * @todo    customizable final message
-	 * @todo    check for "Shipping Time" module to be enabled
-	 * @todo    time in hours (i.e. not days)
-	 * @todo    check for `WC()` etc. to exist
 	 * @todo    `$atts['shipping_method']` (i.e. `[wcj_product_shipping_time]`)
 	 * @todo    explode "from-to"
 	 */
-	function wcj_product_shipping_time( $atts ) {
-		$use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
-		$use_shipping_classes   = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) );
-		$shipping_methods       = ( $use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->load_shipping_methods() );
-		$matching_zone_id       = wcj_get_customer_shipping_matching_zone_id();
-		$table_data             = array();
-		foreach ( $shipping_methods as $method ) {
-			if ( $use_shipping_instances && $method['zone_id'] != $matching_zone_id ) {
-				continue;
-			}
-			$option_id_shipping_method = ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
-			$option_id_shipping_class  = ( $use_shipping_classes ? '_class_' . wcj_get_product_shipping_class_term_id( $this->the_product ) : '' );
-			$option_id                 = 'wcj_shipping_time_' . $option_id_shipping_method . $option_id_shipping_class;
-			if ( '' !== ( $time = get_option( $option_id, '' ) ) ) {
-				$method_title = ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title']: $method->get_method_title() );
-				$table_data[] = array( $method_title, sprintf( __( '%s day(s)' ), $time ) );
-			}
-		}
-		return ( empty( $table_data ) ? '' : wcj_get_table_html( $table_data, array( 'table_heading_type' => 'vertical' ) ) );
+	function wcj_product_shipping_time_table( $atts ) {
+		$do_use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
+		$do_use_shipping_classes   = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) ) );
+		$option_id_shipping_class  = ( $do_use_shipping_classes ? '_class_' . wcj_get_product_shipping_class_term_id( $this->the_product ) : '' );
+		return wcj_get_shipping_time_table( $do_use_shipping_instances, $option_id_shipping_class );
 	}
 
 	/**
@@ -796,7 +774,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			}
 			if ( isset( $atts['multiply_by_attribute'] ) && '' !== $atts['multiply_by_attribute'] ) {
 				$attribute = $this->the_product->get_attribute( $atts['multiply_by_attribute'] );
-				$attribute = str_replace( ',', '.', $attribute );
+				$attribute = wcj_parse_number( $attribute );
 				if ( is_numeric( $attribute ) ) {
 					$min = $min * $attribute;
 					$max = $max * $attribute;
@@ -829,7 +807,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			}
 			if ( isset( $atts['multiply_by_attribute'] ) && '' !== $atts['multiply_by_attribute'] ) {
 				$attribute = $this->the_product->get_attribute( $atts['multiply_by_attribute'] );
-				$attribute = str_replace( ',', '.', $attribute );
+				$attribute = wcj_parse_number( $attribute );
 				if ( is_numeric( $attribute ) ) {
 					$the_price = $the_price * $attribute;
 				}

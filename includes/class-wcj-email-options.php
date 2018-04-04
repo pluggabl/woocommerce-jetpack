@@ -69,7 +69,7 @@ class WCJ_Email_Options extends WCJ_Module {
 	 * @since   3.5.0
 	 */
 	function maybe_check_order_status( $_object ) {
-		$enable_order_statuses = get_option( 'wcj_emails_forwarding_enable_order_status', '' );
+		$enable_order_statuses = apply_filters( 'booster_option', '', get_option( 'wcj_emails_forwarding_enable_order_status', '' ) );
 		if ( ! empty( $enable_order_statuses ) && isset( $_object ) && is_object( $_object ) && 'WC_Order' === get_class( $_object ) ) {
 			if ( ! in_array( $_object->get_status(), $enable_order_statuses ) ) {
 				return false;
@@ -128,12 +128,14 @@ class WCJ_Email_Options extends WCJ_Module {
 			),
 			array(
 				'title'    => __( 'Orders Emails: Enable for Statuses', 'woocommerce-jetpack' ),
-				'desc_tip' => __( 'Leave blank to send for all orders statuses.', 'woocommerce-jetpack' ),
+				'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+				'desc_tip' => __( 'If you want to forward emails for certain orders only, set order statuses here. Leave blank to send for all orders statuses.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_emails_forwarding_enable_order_status',
 				'default'  => '',
 				'type'     => 'multiselect',
 				'class'    => 'chosen_select',
 				'options'  => wcj_get_order_statuses(),
+				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 			),
 			array(
 				'type'     => 'sectionend',

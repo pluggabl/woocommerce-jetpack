@@ -67,7 +67,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 	function wcj_get_currency_exchange_rate_servers() {
 		return array(
 			'yahoo'           => __( 'Yahoo', 'woocommerce-jetpack' ),
-			'ecb'             => __( 'European Central Bank (ECB)', 'woocommerce-jetpack' ),
+			'ecb'             => __( 'European Central Bank (ECB)', 'woocommerce-jetpack' ) . ' [' . __( 'recommended', 'woocommerce-jetpack' ) . ']',
 			'tcmb'            => __( 'TCMB', 'woocommerce-jetpack' ),
 			'fixer'           => __( 'Fixer.io', 'woocommerce-jetpack' ),
 			'coinbase'        => __( 'Coinbase', 'woocommerce-jetpack' ),
@@ -231,23 +231,25 @@ if ( ! function_exists( 'wcj_boe_get_exchange_rate_gbp' ) ) {
 			'USD' => 'C8P', // US Dollar
 		);
 		if ( isset( $currency_codes[ $currency_to ] ) && function_exists( 'simplexml_load_file' ) ) {
-			$date         = time() - 24*60*60;
-			$date_from_d  = date( 'd', $date );
-			$date_from_m  = date( 'M', $date );
-			$date_from_y  = date( 'Y', $date );
-			$date_to_d    = date( 'd', $date );
-			$date_to_m    = date( 'M', $date );
-			$date_to_y    = date( 'Y', $date );
-			$date_url     = '&FD=' . $date_from_d . '&FM=' . $date_from_m . '&FY=' . $date_from_y . '&TD=' . $date_to_d . '&TM=' . $date_to_m . '&TY=' . $date_to_y;
-			$url          = 'http://www.bankofengland.co.uk/boeapps/iadb/fromshowcolumns.asp?Travel=NIxRSxSUx&FromSeries=1&ToSeries=50&DAT=RNG' . $date_url .
-				'&VFD=Y&xml.x=23&xml.y=18&CSVF=TT&C=' . $currency_codes[ $currency_to ] . '&Filter=N';
-			$xml          = simplexml_load_file( $url );
-			$json_string  = json_encode( $xml );
-			$result_array = json_decode( $json_string, true );
-			if ( isset( $result_array['Cube']['Cube'] ) ) {
-				$last_element_index = count( $result_array['Cube']['Cube'] ) - 1;
-				if ( isset( $result_array['Cube']['Cube'][ $last_element_index ]['@attributes']['OBS_VALUE'] ) ) {
-					return $result_array['Cube']['Cube'][ $last_element_index ]['@attributes']['OBS_VALUE'];
+			for ( $i = 1; $i <= 7; $i++ ) {
+				$date         = time() - $i*24*60*60;
+				$date_from_d  = date( 'd', $date );
+				$date_from_m  = date( 'M', $date );
+				$date_from_y  = date( 'Y', $date );
+				$date_to_d    = date( 'd', $date );
+				$date_to_m    = date( 'M', $date );
+				$date_to_y    = date( 'Y', $date );
+				$date_url     = '&FD=' . $date_from_d . '&FM=' . $date_from_m . '&FY=' . $date_from_y . '&TD=' . $date_to_d . '&TM=' . $date_to_m . '&TY=' . $date_to_y;
+				$url          = 'http://www.bankofengland.co.uk/boeapps/iadb/fromshowcolumns.asp?Travel=NIxRSxSUx&FromSeries=1&ToSeries=50&DAT=RNG' . $date_url .
+					'&VFD=Y&xml.x=23&xml.y=18&CSVF=TT&C=' . $currency_codes[ $currency_to ] . '&Filter=N';
+				$xml          = simplexml_load_file( $url );
+				$json_string  = json_encode( $xml );
+				$result_array = json_decode( $json_string, true );
+				if ( isset( $result_array['Cube']['Cube'] ) ) {
+					$last_element_index = count( $result_array['Cube']['Cube'] ) - 1;
+					if ( isset( $result_array['Cube']['Cube'][ $last_element_index ]['@attributes']['OBS_VALUE'] ) ) {
+						return $result_array['Cube']['Cube'][ $last_element_index ]['@attributes']['OBS_VALUE'];
+					}
 				}
 			}
 		}

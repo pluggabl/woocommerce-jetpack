@@ -5,6 +5,7 @@
  * @version 3.5.0
  * @since   3.3.0
  * @author  Algoritmika Ltd.
+ * @todo    (maybe) sort `$products` with available variations listed at the top
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly

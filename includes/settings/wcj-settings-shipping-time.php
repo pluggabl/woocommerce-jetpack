@@ -16,7 +16,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
-$use_shipping_classes   = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) );
+$use_shipping_classes   = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) ) );
 $shipping_methods       = ( $use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->load_shipping_methods() );
 $shipping_classes_data  = ( $use_shipping_classes ? wcj_get_shipping_classes() : array( '' => '' ) );
 $settings = array();
@@ -39,10 +39,11 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Use Shipping Classes', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Enable this if you want to set options for each shipping class separately.', 'woocommerce-jetpack' ) . ' ' .
-			__( 'Save changes after enabling this option.', 'woocommerce-jetpack' ),
+			__( 'Save changes after enabling this option.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'type'     => 'checkbox',
 		'id'       => 'wcj_shipping_time_use_shipping_classes',
 		'default'  => 'no',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',
@@ -52,6 +53,7 @@ $settings = array_merge( $settings, array(
 $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Shipping Time Options', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Set estimated shipping time in <strong>days</strong>.', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_shipping_time_options',
 	),

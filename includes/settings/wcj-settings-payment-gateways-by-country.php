@@ -17,7 +17,7 @@ $settings = array(
 		'id'        => 'wcj_gateways_by_location_general_options',
 	),
 	array(
-		'title'     => __( 'Country', 'woocommerce-jetpack' ),
+		'title'     => __( 'Detect Country by', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_gateways_by_location_country_type',
 		'type'      => 'select',
 		'default'   => 'billing',
@@ -28,7 +28,7 @@ $settings = array(
 		),
 	),
 	array(
-		'title'     => __( 'State', 'woocommerce-jetpack' ),
+		'title'     => __( 'Detect State by', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_gateways_by_location_state_type',
 		'type'      => 'select',
 		'default'   => 'billing',
@@ -38,7 +38,7 @@ $settings = array(
 		),
 	),
 	array(
-		'title'     => __( 'Postcode', 'woocommerce-jetpack' ),
+		'title'     => __( 'Detect Postcode by', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_gateways_by_location_postcodes_type',
 		'type'      => 'select',
 		'default'   => 'billing',
@@ -54,8 +54,7 @@ $settings = array(
 	array(
 		'title'     => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 		'type'      => 'title',
-		'desc'      => __( 'Country and state are defined from customer\'s entered billing address.', 'woocommerce-jetpack' ) . '<br>' .
-			__( 'If any field is left empty - it\'s ignored.', 'woocommerce-jetpack' ),
+		'desc'      => __( 'If any field is left empty - it\'s ignored.', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_payment_gateways_by_country_gateways_options',
 	),
 );

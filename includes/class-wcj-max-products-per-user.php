@@ -32,13 +32,13 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			if ( 'yes' === get_option( 'wcj_max_products_per_user_global_enabled', 'no' ) || 'yes' === get_option( 'wcj_max_products_per_user_local_enabled', 'no' ) ) {
+			if ( 'yes' === get_option( 'wcj_max_products_per_user_global_enabled', 'no' ) || 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_max_products_per_user_local_enabled', 'no' ) ) ) {
 				add_action( 'woocommerce_checkout_process', array( $this, 'check_cart_quantities' ), PHP_INT_MAX );
 				add_action( 'woocommerce_before_cart',      array( $this, 'check_cart_quantities' ), PHP_INT_MAX );
 				if ( 'yes' === get_option( 'wcj_max_products_per_user_stop_from_seeing_checkout', 'no' ) ) {
 					add_action( 'wp', array( $this, 'stop_from_seeing_checkout' ), PHP_INT_MAX );
 				}
-				if ( 'yes' === get_option( 'wcj_max_products_per_user_local_enabled', 'no' ) ) {
+				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_max_products_per_user_local_enabled', 'no' ) ) ) {
 					add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 					add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				}
@@ -187,7 +187,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	 * @todo    (maybe) per user and/or per user role (both global and local)
 	 */
 	function get_max_qty( $product_id ) {
-		if ( 'yes' === get_option( 'wcj_max_products_per_user_local_enabled', 'no' ) && 0 != ( $qty = get_post_meta( $product_id, '_' . 'wcj_max_products_per_user_qty', true ) ) ) {
+		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_max_products_per_user_local_enabled', 'no' ) ) && 0 != ( $qty = get_post_meta( $product_id, '_' . 'wcj_max_products_per_user_qty', true ) ) ) {
 			return $qty;
 		} elseif ( 'yes' === get_option( 'wcj_max_products_per_user_global_enabled', 'no' ) ) {
 			return get_option( 'wcj_max_products_per_user_global_max_qty', 1 );

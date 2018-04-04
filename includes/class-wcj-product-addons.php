@@ -355,7 +355,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
-	 * @todo    this is only a temporary solution: must replace `$item->legacy_values` (check "Bookings" module)
+	 * @todo    this is only a temporary solution: must replace `$item->legacy_values` (check "Bookings" module - `woocommerce_checkout_create_order_line_item` hook)
 	 */
 	function add_info_to_order_item_meta_wc3( $item_id, $item, $order_id  ) {
 		if ( is_a( $item, 'WC_Order_Item_Product' ) ) {

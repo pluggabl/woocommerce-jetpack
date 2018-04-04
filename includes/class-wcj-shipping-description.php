@@ -29,7 +29,7 @@ class WCJ_Shipping_Descriptions extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			$this->shipping_descriptions_visibility = apply_filters( 'booster_option', 'both', get_option( 'wcj_shipping_descriptions_visibility', 'both' ) );
-			$this->shipping_descriptions_position   = get_option( 'wcj_shipping_descriptions_position', 'after' );
+			$this->shipping_descriptions_position   = apply_filters( 'booster_option', 'after', get_option( 'wcj_shipping_descriptions_position', 'after' ) );
 			add_filter( 'woocommerce_cart_shipping_method_full_label', array( $this, 'shipping_description' ), PHP_INT_MAX, 2 );
 		}
 	}

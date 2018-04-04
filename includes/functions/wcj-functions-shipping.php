@@ -9,6 +9,39 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_shipping_time_table' ) ) {
+	/**
+	 * wcj_get_shipping_time_table.
+	 *
+	 * @version 3.5.0
+	 * @since   3.5.0
+	 * @todo    customizable `$method_title` format
+	 * @todo    predefined `$matching_zone_id` (i.e. `$atts['shipping_zone_id']`)
+	 * @todo    all zones (i.e. no `$matching_zone_id`)
+	 * @todo    customizable final message
+	 * @todo    check for "Shipping Time" module to be enabled
+	 * @todo    time in hours (i.e. not days)
+	 * @todo    check for `WC()` etc. to exist
+	 */
+	function wcj_get_shipping_time_table( $do_use_shipping_instances, $option_id_shipping_class ) {
+		$shipping_methods = ( $do_use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->load_shipping_methods() );
+		$matching_zone_id = wcj_get_customer_shipping_matching_zone_id();
+		$table_data       = array();
+		foreach ( $shipping_methods as $method ) {
+			if ( $do_use_shipping_instances && $method['zone_id'] != $matching_zone_id ) {
+				continue;
+			}
+			$option_id_shipping_method = ( $do_use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
+			$option_id                 = 'wcj_shipping_time_' . $option_id_shipping_method . $option_id_shipping_class;
+			if ( '' !== ( $time = get_option( $option_id, '' ) ) ) {
+				$method_title = ( $do_use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title']: $method->get_method_title() );
+				$table_data[] = array( $method_title, sprintf( __( '%s day(s)' ), $time ) );
+			}
+		}
+		return ( empty( $table_data ) ? '' : wcj_get_table_html( $table_data, array( 'table_heading_type' => 'vertical' ) ) );
+	}
+}
+
 if ( ! function_exists( 'wcj_get_customer_shipping_matching_zone_id' ) ) {
 	/**
 	 * wcj_get_customer_shipping_matching_zone_id.
@@ -221,10 +254,15 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 		}
 		// Outputting "left to free shipping"
 		if ( 0 != $min_free_shipping_amount ) {
-			if ( isset( WC()->cart->cart_contents_total ) ) {
-				$cart_taxes = ( WCJ_IS_WC_VERSION_BELOW_3_2_0 ? WC()->cart->taxes : WC()->cart->get_cart_contents_taxes() );
-//				$total = ( WC()->cart->prices_include_tax ) ? WC()->cart->cart_contents_total + array_sum( $cart_taxes ) : WC()->cart->cart_contents_total;
-				$total = WC()->cart->cart_contents_total + array_sum( $cart_taxes );
+			if ( isset( WC()->cart ) ) {
+				// Getting cart total
+				$total = WC()->cart->get_displayed_subtotal();
+				if ( WC()->cart->display_prices_including_tax() ) {
+					$total = round( $total - ( WC()->cart->get_discount_total() + WC()->cart->get_discount_tax() ), wc_get_price_decimals() );
+				} else {
+					$total = round( $total - WC()->cart->get_discount_total(), wc_get_price_decimals() );
+				}
+				// Final message
 				if ( $total >= $min_free_shipping_amount ) {
 					return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
 				} else {

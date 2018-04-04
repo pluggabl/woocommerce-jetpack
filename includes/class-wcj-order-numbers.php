@@ -50,7 +50,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				add_filter( 'wcs_' . $woocommerce_subscriptions_type . '_meta', array( $this, 'woocommerce_subscriptions_remove_meta_copy' ), PHP_INT_MAX, 3 );
 			}
 			// Editable order number
-			if ( 'yes' === get_option( 'wcj_order_number_editable_order_number_meta_box_enabled', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_number_editable_order_number_meta_box_enabled', 'no' ) ) ) {
 				$this->meta_box_screen   = 'shop_order';
 				$this->meta_box_context  = 'side';
 				$this->meta_box_priority = 'high';

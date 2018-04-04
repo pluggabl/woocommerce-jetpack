@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.0
 	 */
 	function __construct() {
 
@@ -48,6 +48,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_request_value',
 			'wcj_selector',
 			'wcj_session_value',
+			'wcj_shipping_time_table',
 			'wcj_site_url',
 			'wcj_store_address',
 			'wcj_tcpdf_barcode',
@@ -104,6 +105,21 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_shipping_time_table.
+	 *
+	 * @version 3.5.0
+	 * @since   3.5.0
+	 * @todo    `$atts['shipping_class_term_id']` - class term ID is not visible anywhere for admin, so probably need to use `slug` instead
+	 */
+	function wcj_shipping_time_table( $atts ) {
+		$do_use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_time_use_shipping_instance', 'no' ) );
+		$do_use_shipping_classes   = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_shipping_time_use_shipping_classes', 'no' ) ) );
+		$shipping_class_term_id    = ( isset( $atts['shipping_class_term_id'] ) ? $atts['shipping_class_term_id'] : '0' );
+		$option_id_shipping_class  = ( $do_use_shipping_classes ? '_class_' . $shipping_class_term_id : '' );
+		return wcj_get_shipping_time_table( $do_use_shipping_instances, $option_id_shipping_class );
 	}
 
 	/**

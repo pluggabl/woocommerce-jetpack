@@ -9,6 +9,60 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_send_file' ) ) {
+	/**
+	 * wcj_send_file.
+	 *
+	 * @version 3.5.0
+	 * @since   3.5.0
+	 * @todo    use where needed
+	 * @todo    add more cases for `$file_type`
+	 */
+	function wcj_send_file( $file_name, $file_path, $file_type, $do_cleanup = true ) {
+		switch ( $file_type ) {
+			default: // 'zip'
+				header( "Content-Type: application/octet-stream" );
+				header( "Content-Disposition: attachment; filename=" . urlencode( $file_name ) );
+				header( "Content-Type: application/octet-stream" );
+				header( "Content-Type: application/download" );
+				header( "Content-Description: File Transfer" );
+				header( "Content-Length: " . filesize( $file_path ) );
+				break;
+		}
+		flush(); // this doesn't really matter.
+		if ( false !== ( $fp = fopen( $file_path, "r" ) ) ) {
+			while ( ! feof( $fp ) ) {
+				echo fread( $fp, 65536 );
+				flush(); // this is essential for large downloads
+			}
+			fclose( $fp );
+			if ( $do_cleanup ) {
+				@unlink( $file_path );
+			}
+			exit();
+		} else {
+			die( __( 'Unexpected error', 'woocommerce-jetpack' ) );
+		}
+	}
+}
+
+if ( ! function_exists( 'wcj_parse_number' ) ) {
+	/**
+	 * wcj_parse_number.
+	 *
+	 * @version 3.5.0
+	 * @since   3.5.0
+	 * @todo    maybe there is a better way (e.g. `numfmt_parse()`)
+	 */
+	function wcj_parse_number( $number_string ) {
+		if ( false !== strpos( $number_string, '.' ) ) {
+			return str_replace( ',', '', $number_string );
+		} else {
+			return str_replace( ',', '.', $number_string );
+		}
+	}
+}
+
 if ( ! function_exists( 'wcj_handle_replacements' ) ) {
 	/**
 	 * wcj_handle_replacements.

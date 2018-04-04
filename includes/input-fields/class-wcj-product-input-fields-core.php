@@ -19,7 +19,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * Constructor.
 	 *
 	 * @version 3.4.0
-	 * @todo    save all info in product meta
+	 * @todo    save all info (e.g. label etc.) in order meta
 	 */
 	function __construct( $scope ) {
 		$this->scope = $scope;
@@ -283,7 +283,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * hide_custom_input_fields_default_output_in_admin_order.
 	 *
-	 * @todo Get actual (max) number of fields in case of local scope.
+	 * @todo    get actual (max) number of fields in case of local scope
 	 */
 	function hide_custom_input_fields_default_output_in_admin_order( $hidden_metas ) {
 		$total_number = 0;
@@ -812,7 +812,7 @@ class WCJ_Product_Input_Fields_Core {
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
-	 * @todo    this is only a temporary solution: must replace `$item->legacy_values` (check "Bookings" module)
+	 * @todo    this is only a temporary solution: must replace `$item->legacy_values` (check "Bookings" module - `woocommerce_checkout_create_order_line_item` hook)
 	 */
 	function add_product_input_fields_to_order_item_meta_wc3( $item_id, $item, $order_id  ) {
 		if ( is_a( $item, 'WC_Order_Item_Product' ) ) {

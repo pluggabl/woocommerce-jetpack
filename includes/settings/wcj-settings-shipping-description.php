@@ -27,7 +27,7 @@ $settings = array(
 			'cart_only'     => __( 'Only on cart page', 'woocommerce-jetpack' ),
 			'checkout_only' => __( 'Only on checkout page', 'woocommerce-jetpack' ),
 		),
-		'desc_tip' => __( 'Possible values: on both cart and checkout pages; only on cart page; only on checkout page', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Possible values: on both cart and checkout pages; only on cart page; only on checkout page.', 'woocommerce-jetpack' ),
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
@@ -41,6 +41,9 @@ $settings = array(
 			'before'  => __( 'Before the label', 'woocommerce-jetpack' ),
 			'instead' => __( 'Instead of the label', 'woocommerce-jetpack' ),
 		),
+		'desc_tip' => __( 'Possible values: after the label; before the label; instead of the label.', 'woocommerce-jetpack' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',
