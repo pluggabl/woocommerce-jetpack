@@ -182,7 +182,8 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.1 - 04/04/2018 =
+= 3.5.1 - 05/04/2018 =
+      * Fix - SHIPPING & ORDERS - Left to Free Shipping - `wcj_get_left_to_free_shipping()` - WooCommerce below v3.3.0 compatibility issue fixed.
       * Dev - SHIPPING & ORDERS - Shipping Time - Admin settings - Description updated.
 
 = 3.5.0 - 04/04/2018 =

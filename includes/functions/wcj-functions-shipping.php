@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Shipping
  *
- * @version 3.5.0
+ * @version 3.5.1
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -201,7 +201,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	/*
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.1
 	 * @since   2.4.4
 	 * @return  string
 	 */
@@ -257,7 +257,9 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 			if ( isset( WC()->cart ) ) {
 				// Getting cart total
 				$total = WC()->cart->get_displayed_subtotal();
-				if ( WC()->cart->display_prices_including_tax() ) {
+				$is_cart_display_prices_including_tax = ( WCJ_IS_WC_VERSION_BELOW_3_3_0 ?
+					( 'incl' === WC()->cart->tax_display_cart ) : WC()->cart->display_prices_including_tax() );
+				if ( $is_cart_display_prices_including_tax ) {
 					$total = round( $total - ( WC()->cart->get_discount_total() + WC()->cart->get_discount_tax() ), wc_get_price_decimals() );
 				} else {
 					$total = round( $total - WC()->cart->get_discount_total(), wc_get_price_decimals() );
