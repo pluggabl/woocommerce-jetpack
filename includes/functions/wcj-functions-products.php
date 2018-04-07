@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.5.0
+ * @version 3.5.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -197,31 +197,59 @@ if ( ! function_exists( 'wcj_get_product_image_url' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_get_product_input_field_value' ) ) {
+	/**
+	 * wcj_get_product_input_field_value.
+	 *
+	 * @version 3.5.1
+	 * @since   3.5.1
+	 */
+	function wcj_get_product_input_field_value( $item, $key, $field ) {
+		$key         = explode( '_', str_replace( '_wcj_product_input_fields_', '', $key ) );
+		$scope       = $key[0];
+		$option_name = 'wcj_product_input_fields_' . $field . '_' . $scope . '_' . $key[1];
+		$product_id  = $item['product_id'];
+		$default     = '';
+		if ( 'global' === $scope ) {
+			return get_option( $option_name, $default );
+		} else { // local
+			if ( '' != ( $options = get_post_meta( $product_id, '_' . 'wcj_product_input_fields', true ) ) ) {
+				$option_name = str_replace( 'wcj_product_input_fields_', '', $option_name );
+				return ( isset( $options[ $option_name ] ) ? $options[ $option_name ] : $default );
+			} else { // Booster version  < 3.5.0
+				return get_post_meta( $product_id, '_' . $option_name, true );
+			}
+		}
+	}
+}
+
 if ( ! function_exists( 'wcj_get_product_input_fields' ) ) {
 	/*
 	 * wcj_get_product_input_fields.
 	 *
-	 * @version 3.2.1
+	 * @version 3.5.1
 	 * @since   2.4.4
 	 * @return  string
 	 * @todo    (maybe) better handle "file" type
 	 */
-	function wcj_get_product_input_fields( $item ) {
+	function wcj_get_product_input_fields( $item, $do_add_titles = false, $sep = ', ' ) {
 		$product_input_fields = array();
 		if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
 			foreach ( $item as $key => $value ) {
 				if ( false !== strpos( $key, 'wcj_product_input_fields_' ) ) {
-					$product_input_fields[] = wcj_maybe_unserialize_and_implode( $value );
+					$title = ( $do_add_titles ? wcj_get_product_input_field_value( $item, $key, 'title' ) . ': ' : '' );
+					$product_input_fields[] = $title . wcj_maybe_unserialize_and_implode( $value );
 				}
 			}
 		} else {
 			foreach ( $item->get_meta_data() as $value ) {
 				if ( isset( $value->key ) && isset( $value->value ) && false !== strpos( $value->key, 'wcj_product_input_fields_' ) ) {
-					$product_input_fields[] = wcj_maybe_unserialize_and_implode( $value->value );
+					$title = ( $do_add_titles ? wcj_get_product_input_field_value( $item, $value->key, 'title' ) . ': ' : '' );
+					$product_input_fields[] = $title . wcj_maybe_unserialize_and_implode( $value->value );
 				}
 			}
 		}
-		return ( ! empty( $product_input_fields ) ) ? implode( ', ', array_map( 'wcj_maybe_implode', $product_input_fields ) ) : '';
+		return ( ! empty( $product_input_fields ) ) ? implode( $sep, array_map( 'wcj_maybe_implode', $product_input_fields ) ) : '';
 	}
 }
 

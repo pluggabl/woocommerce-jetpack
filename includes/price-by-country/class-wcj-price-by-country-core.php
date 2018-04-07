@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.5.0
+ * @version 3.5.1
  * @author  Algoritmika Ltd.
  */
 
@@ -70,7 +70,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.9.0
+	 * @version 3.5.1
 	 */
 	function add_hooks() {
 
@@ -79,12 +79,14 @@ class WCJ_Price_by_Country_Core {
 			add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_wselect_scripts' ) );
 		}
 
+		$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'price_by_country' );
+
 		// Price hooks
-		wcj_add_change_price_hooks( $this, PHP_INT_MAX - 1 );
+		wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 
 		// Currency hooks
-		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX - 1, 2 );
-		add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ),   PHP_INT_MAX - 1, 1 );
+		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), $this->price_hooks_priority, 2 );
+		add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ),   $this->price_hooks_priority, 1 );
 
 		// Price Filter Widget
 		if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {

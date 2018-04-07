@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 3.4.0
+ * @version 3.5.1
  * @author  Algoritmika Ltd.
  */
 
@@ -440,7 +440,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_cell.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.1
 	 * @since   3.2.0
 	 */
 	function get_cell( $column, $column_param, $atts, $the_order, $columns, $item_counter, $item_id, $item, $the_product ) {
@@ -528,6 +528,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 
 			case 'item_product_input_fields':
 				return wcj_get_product_input_fields( $item );
+
+			case 'item_product_input_fields_with_titles':
+				return wcj_get_product_input_fields( $item, true, ( '' != $column_param ? $column_param : ', ' ) );
 
 			case 'item_product_addons':
 				return wcj_get_product_addons( $item, wcj_get_order_currency( $this->the_order ) );

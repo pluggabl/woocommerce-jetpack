@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.5.0
+ * @version 3.5.1
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -26,12 +26,13 @@ if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 	/**
 	 * wcj_get_module_price_hooks_priority.
 	 *
-	 * @version 3.2.2
+	 * @version 3.5.1
 	 * @since   3.2.2
 	 * @todo    add all corresponding modules
 	 */
 	function wcj_get_module_price_hooks_priority( $module_id ) {
 		$modules_priorities = array(
+			'price_by_country'       => PHP_INT_MAX - 1,
 			'multicurrency'          => PHP_INT_MAX - 1,
 			'price_by_user_role'     => PHP_INT_MAX - 200,
 		);

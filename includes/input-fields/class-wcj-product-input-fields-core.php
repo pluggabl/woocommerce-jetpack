@@ -343,6 +343,7 @@ class WCJ_Product_Input_Fields_Core {
 	 * get_value.
 	 *
 	 * @version 3.5.0
+	 * @todo    `wcj_get_product_input_field_value()` is almost identical
 	 */
 	function get_value( $option_name, $product_id, $default ) {
 		if ( 'global' === $this->scope ) {

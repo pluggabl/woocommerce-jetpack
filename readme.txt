@@ -182,7 +182,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.1 - 05/04/2018 =
+= 3.5.1 - 07/04/2018 =
+D     * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Columns - `item_product_input_fields_with_titles` column added.
+      * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Advanced: Price Filters Priority - Added to all hooks.
+D     * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Advanced: Price Filters Priority" option added.
       * Fix - SHIPPING & ORDERS - Left to Free Shipping - `wcj_get_left_to_free_shipping()` - WooCommerce below v3.3.0 compatibility issue fixed.
       * Dev - SHIPPING & ORDERS - Shipping Time - Admin settings - Description updated.
 
