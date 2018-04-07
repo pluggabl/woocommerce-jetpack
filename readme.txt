@@ -183,6 +183,8 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.5.1 - 07/04/2018 =
+D     * Dev - CART & CHECKOUT - Mini Cart Custom Info - Admin settings restyled.
+D     * Dev - Shortcodes - General - `[wcj_cart_subtotal]`, `[wcj_cart_tax]`, `[wcj_cart_total_ex_tax]`, `[wcj_cart_shipping_total]` shortcodes added.
 D     * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Columns - `item_product_input_fields_with_titles` column added.
       * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Advanced: Price Filters Priority - Added to all hooks.
 D     * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Advanced: Price Filters Priority" option added.
