@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 3.3.0
+ * @version 3.5.1
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -15,6 +15,7 @@ if ( ! wcj_is_module_enabled( 'general' ) || ( wcj_is_module_enabled( 'general' 
 
 	$wcj_shortcodes_files = array(
 		'general'                   => 'class-wcj-shortcodes-general.php',
+		'cart'                      => 'class-wcj-shortcodes-cart.php',
 		'invoices'                  => 'class-wcj-shortcodes-invoices.php',
 		'orders'                    => 'class-wcj-shortcodes-orders.php',
 		'order_items'               => 'class-wcj-shortcodes-order-items.php',

@@ -22,13 +22,6 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$this->the_shortcodes = array(
 			'wcj_barcode',
 			'wcj_button_toggle_tax_display',
-			'wcj_cart_items_total_quantity',
-			'wcj_cart_items_total_weight',
-			'wcj_cart_shipping_total',
-			'wcj_cart_subtotal',
-			'wcj_cart_tax',
-			'wcj_cart_total',
-			'wcj_cart_total_ex_tax',
 			'wcj_country_select_drop_down_list',
 			'wcj_currency_exchange_rate',
 			'wcj_currency_exchange_rates_table',
@@ -849,115 +842,6 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 */
 	function wcj_wpml_translate( $atts, $content ) {
 		return $this->wcj_wpml( $atts, $content );
-	}
-
-	/**
-	 * wcj_cart_items_total_quantity.
-	 *
-	 * @version 2.7.0
-	 * @since   2.7.0
-	 * @todo    check `get_cart_item_quantities()`
-	 */
-	function wcj_cart_items_total_quantity( $atts ) {
-		$total_quantity = 0;
-		$_items = WC()->cart->get_cart();
-		foreach( $_items as $_item ) {
-			$total_quantity += $_item['quantity'];
-		}
-		return $total_quantity;
-	}
-
-	/**
-	 * wcj_cart_items_total_weight.
-	 *
-	 * @todo    check `get_cart_contents_weight()`
-	 */
-	function wcj_cart_items_total_weight( $atts ) {
-		$the_cart = WC()->cart;
-		return $the_cart->cart_contents_weight;
-	}
-
-	/**
-	 * wcj_cart_total.
-	 *
-	 * Gets the cart contents total (after calculation).
-	 *
-	 * @version 3.5.0
-	 * @since   2.8.0
-	 */
-	function wcj_cart_total( $atts ) {
-		if ( $_cart = WC()->cart ) {
-			if ( 1 != $atts['multiply_by'] ) {
-				$cart_total = wc_prices_include_tax() ? WC()->cart->get_cart_contents_total() + WC()->cart->get_cart_contents_tax() : WC()->cart->get_cart_contents_total();
-				return wc_price( $atts['multiply_by'] * $cart_total );
-			} else {
-				return $_cart->get_cart_total();
-			}
-		}
-		return '';
-	}
-
-	/**
-	 * wcj_cart_subtotal.
-	 *
-	 * Gets the sub total (after calculation).
-	 *
-	 * @version 3.5.1
-	 * @since   3.5.1
-	 * @todo    move all `wcj_cart_` shortcodes to `class-wcj-shortcodes-cart.php`
-	 * @todo    `get_cart_subtotal( boolean $compound = false )` (i.e. add `$atts['compound']`)
-	 * @todo    `multiply_by`
-	 * @todo    check `$_cart->get_displayed_subtotal()`
-	 * @todo    check `$_cart->get_subtotal()`
-	 */
-	function wcj_cart_subtotal( $atts ) {
-		if ( $_cart = WC()->cart ) {
-			return $_cart->get_cart_subtotal();
-		}
-		return '';
-	}
-
-	/**
-	 * wcj_cart_tax.
-	 *
-	 * Gets the cart tax (after calculation).
-	 *
-	 * @version 3.5.1
-	 * @since   3.5.1
-	 */
-	function wcj_cart_tax( $atts ) {
-		if ( $_cart = WC()->cart ) {
-			return $_cart->get_cart_tax();
-		}
-		return '';
-	}
-
-	/**
-	 * wcj_cart_total_ex_tax.
-	 *
-	 * Gets the total excluding taxes.
-	 *
-	 * @version 3.5.1
-	 * @since   3.5.1
-	 */
-	function wcj_cart_total_ex_tax( $atts ) {
-		if ( $_cart = WC()->cart ) {
-			return $_cart->get_total_ex_tax();
-		}
-		return '';
-	}
-
-	/**
-	 * wcj_cart_shipping_total.
-	 *
-	 * @version 3.5.1
-	 * @since   3.5.1
-	 */
-	function wcj_cart_shipping_total( $atts ) {
-		if ( $_cart = WC()->cart ) {
-			return $_cart->get_cart_shipping_total();
-		}
-		return '';
 	}
 
 	/**
