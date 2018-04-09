@@ -2,15 +2,21 @@
 /**
  * Booster for WooCommerce - Settings - Product Open Pricing
  *
- * @version 3.3.0
+ * @version 3.5.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
+ * @todo    (maybe) `$positions` - add `woocommerce_before_add_to_cart_quantity` and `woocommerce_after_add_to_cart_quantity` (on `! WCJ_IS_WC_VERSION_BELOW_3` and also recheck "Grouped product add to cart" template)
+ * @todo    (maybe) `$positions` - add "Frontend Position Priority" option
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $default_price_step = 1 / pow( 10, absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) );
+$positions = array(
+	'woocommerce_before_add_to_cart_button' => __( 'Before add to cart button', 'woocommerce-jetpack' ), // since WC v2.1.0
+	'woocommerce_after_add_to_cart_button'  => __( 'After add to cart button', 'woocommerce-jetpack' ),  // since WC v2.1.0
+);
 return array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -53,6 +59,13 @@ return array(
 		'default'  => $default_price_step,
 		'type'     => 'number',
 		'custom_attributes' => array( 'step' => '0.0001', 'min' => '0.0001' ),
+	),
+	array(
+		'title'    => __( 'Frontend Position', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_open_price_position',
+		'default'  => 'woocommerce_before_add_to_cart_button',
+		'type'     => 'select',
+		'options'  => $positions,
 	),
 	array(
 		'title'    => __( 'Message on Empty Price', 'woocommerce-jetpack' ),

@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.5.0
+Stable tag: 3.5.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -182,17 +182,23 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.1 - 08/04/2018 =
-      * Dev - Shortcodes - Cart - `[wcj_cart_items_total_weight]` - Code refactoring.
-      * Dev - Shortcodes - Cart - `[wcj_cart_items_total_quantity]` - Code refactoring.
-D     * Dev - Shortcodes - Cart - `[wcj_cart_subtotal]`, `[wcj_cart_subtotal_tax]`, `[wcj_cart_tax]`, `[wcj_cart_total_ex_tax]`, `[wcj_cart_shipping_total]`, `[wcj_cart_shipping_tax]`, `[wcj_cart_function]`, `[wcj_cart_fee_tax]`, `[wcj_cart_fee_total]`, `[wcj_cart_discount_tax]`, `[wcj_cart_discount_total]` shortcodes added.
-D     * Dev - Shortcodes - Code refactoring - "Cart" shortcodes moved to new `class-wcj-shortcodes-cart.php` file.
-D     * Dev - CART & CHECKOUT - Mini Cart Custom Info - Admin settings restyled.
-D     * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Columns - `item_product_input_fields_with_titles` column added.
-      * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Advanced: Price Filters Priority - Added to all hooks.
-D     * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Advanced: Price Filters Priority" option added.
-      * Fix - SHIPPING & ORDERS - Left to Free Shipping - `wcj_get_left_to_free_shipping()` - WooCommerce below v3.3.0 compatibility issue fixed.
-      * Dev - SHIPPING & ORDERS - Shipping Time - Admin settings - Description updated.
+= 3.5.1 - 09/04/2018 =
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Advanced: Price Filters Priority - Added to all hooks.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Advanced: Price Filters Priority" option added.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Frontend Position" option added.
+* Dev - CART & CHECKOUT - Mini Cart Custom Info - Admin settings restyled.
+* Fix - SHIPPING & ORDERS - Left to Free Shipping - `wcj_get_left_to_free_shipping()` - WooCommerce below v3.3.0 compatibility issue fixed.
+* Dev - SHIPPING & ORDERS - Shipping Time - Admin settings - Description updated.
+* Dev - Shortcodes - Code refactoring - "Cart" shortcodes moved to new `class-wcj-shortcodes-cart.php` file.
+* Dev - Shortcodes - Cart - `[wcj_cart_items_total_quantity]` - Code refactoring.
+* Dev - Shortcodes - Cart - `[wcj_cart_items_total_weight]` - Code refactoring.
+* Dev - Shortcodes - Cart - `[wcj_cart_discount_tax]`, `[wcj_cart_discount_total]` shortcodes added.
+* Dev - Shortcodes - Cart - `[wcj_cart_fee_tax]`, `[wcj_cart_fee_total]` shortcodes added.
+* Dev - Shortcodes - Cart - `[wcj_cart_function]` shortcode added.
+* Dev - Shortcodes - Cart - `[wcj_cart_shipping_total]`, `[wcj_cart_shipping_tax]` shortcodes added.
+* Dev - Shortcodes - Cart - `[wcj_cart_subtotal]`, `[wcj_cart_subtotal_tax]` shortcodes added.
+* Dev - Shortcodes - Cart - `[wcj_cart_tax]`, `[wcj_cart_total_ex_tax]` shortcodes added.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - Columns - `item_product_input_fields_with_titles` column added.
 
 = 3.5.0 - 04/04/2018 =
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "Bank of England (BOE)" server added.
