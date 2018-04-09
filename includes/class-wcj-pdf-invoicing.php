@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 3.5.0
+ * @version 3.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -116,7 +116,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * bulk_actions_pdfs_notices.
 	 *
-	 * @version 3.1.0
+	 * @version 3.5.2
 	 * @since   2.5.7
 	 */
 	function bulk_actions_pdfs_notices() {
@@ -137,6 +137,21 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 					case 'ziparchive_error':
 						echo '<div class="notice notice-error"><p>' .
 							__( 'Booster: ZipArchive error.', 'woocommerce-jetpack' ) .
+						'</p></div>';
+						break;
+					case 'merge_pdfs_no_files':
+						echo '<div class="notice notice-error"><p>' .
+							__( 'Booster: Merge PDFs: No files.', 'woocommerce-jetpack' ) .
+						'</p></div>';
+						break;
+					case 'merge_pdfs_php_version':
+						echo '<div class="notice notice-error"><p>' .
+							sprintf( __( 'Booster: Merge PDFs: Command requires PHP version 5.3.0 at least. You have PHP version %s installed.', 'woocommerce-jetpack' ), PHP_VERSION ) .
+						'</p></div>';
+						break;
+					default:
+						echo '<div class="notice notice-error"><p>' .
+							sprintf( __( 'Booster: %s.', 'woocommerce-jetpack' ), '<code>' . $_GET['wcj_notice'] . '</code>' ) .
 						'</p></div>';
 						break;
 				}
@@ -238,14 +253,16 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * merge_pdfs.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.2
 	 * @since   3.5.0
 	 * @see     https://www.setasign.com/products/fpdi/demos/concatenate-fake/
-	 * @todo    add errors notices
 	 * @todo    rethink filename (i.e. 'docs.pdf')
 	 * @todo    (maybe) always save/download instead of display on output
 	 */
 	function merge_pdfs( $invoice_type_id, $post_ids ) {
+		if ( version_compare( PHP_VERSION, '5.3.0', '<' ) ) {
+			return 'merge_pdfs_php_version';
+		}
 		$files = array();
 		foreach( $post_ids as $post_id ) {
 			$the_invoice = wcj_get_pdf_invoice( $post_id, $invoice_type_id );
@@ -255,7 +272,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 			return 'merge_pdfs_no_files';
 		}
 		require_once( wcj_plugin_path() . '/includes/lib/FPDI/src/autoload.php' );
-		$fpdi_pdf = new \setasign\Fpdi\TcpdfFpdi();
+		$fpdi_pdf = require_once( wcj_plugin_path() . '/includes/pdf-invoices/tcpdffpdi.php' );
 		$fpdi_pdf->SetTitle( 'docs.pdf' );
 		$fpdi_pdf->setPrintHeader( false );
 		$fpdi_pdf->setPrintFooter( false );
