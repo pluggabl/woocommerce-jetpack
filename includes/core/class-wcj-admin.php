@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 3.4.0
+ * @version 3.5.3
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -89,14 +89,14 @@ class WCJ_Admin {
 	/**
 	 * Add menu item
 	 *
-	 * @version 2.9.0
+	 * @version 3.5.3
 	 */
 	function booster_menu() {
 		add_submenu_page(
 			'woocommerce',
 			__( 'Booster for WooCommerce', 'woocommerce-jetpack' ),
 			__( 'Booster Settings', 'woocommerce-jetpack' ) ,
-			'manage_woocommerce',
+			( 'yes' === get_option( 'wcj_' . 'admin_tools' . '_enabled', 'no' ) && 'yes' === get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
 			'admin.php?page=wc-settings&tab=jetpack'
 		);
 	}

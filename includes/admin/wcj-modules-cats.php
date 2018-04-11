@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 3.5.0
+ * @version 3.5.3
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -66,6 +66,8 @@ return apply_filters( 'wcj_modules', array(
 			'product_tabs',
 			'product_custom_info',
 			'related_products',
+			'cross_sells',
+			'upsells',
 			'sorting',
 			'sku',
 			'stock',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 3.3.0
+ * @version 3.5.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -14,6 +14,13 @@ return array(
 		'title'    => __( 'Admin Tools Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_admin_tools_module_options',
+	),
+	array(
+		'title'    => __( 'Show Booster Menus Only to Admin', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_admin_tools_show_menus_to_admin_only',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Log', 'woocommerce-jetpack' ),

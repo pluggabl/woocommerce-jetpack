@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 3.5.0
+ * @version 3.5.3
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -24,6 +24,8 @@ $wcj_module_files = array(
 	'class-wcj-product-add-to-cart.php',
 	'class-wcj-add-to-cart-button-visibility.php',
 	'class-wcj-related-products.php',
+	'class-wcj-cross-sells.php',
+	'class-wcj-upsells.php',
 	'class-wcj-sku.php',
 	'class-wcj-stock.php',
 	'class-wcj-product-tabs.php',

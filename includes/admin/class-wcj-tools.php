@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Tools
  *
- * @version 2.5.7
+ * @version 3.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -24,14 +24,14 @@ class WCJ_Tools {
 	/**
 	 * add_wcj_tools.
 	 *
-	 * @version 2.5.7
+	 * @version 3.5.3
 	 */
 	function add_wcj_tools() {
 		add_submenu_page(
 			'woocommerce',
 			__( 'Booster for WooCommerce Tools', 'woocommerce-jetpack' ),
 			__( 'Booster Tools', 'woocommerce-jetpack' ),
-			'manage_woocommerce',
+			( 'yes' === get_option( 'wcj_' . 'admin_tools' . '_enabled', 'no' ) && 'yes' === get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
 			'wcj-tools',
 			array( $this, 'create_tools_page' )
 		);

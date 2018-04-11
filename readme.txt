@@ -182,6 +182,12 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.5.3 - 11/04/2018 =
+D W P * Dev - PRODUCTS - Upsells - Initial module release.
+  T I * Fix - PDF INVOICING & PACKING SLIPS - Email Options - Checking for invoice to be created before attaching it to email (fixes the issue with empty invoices attached with zero total orders, and "Do not create if order total equals zero" option enabled).
+D T E * Dev - EMAILS & MISC. - Admin Tools - "Show Booster Menus Only to Admin" option added.
+D T P * Dev - PRODUCTS - Cross Sells - Initial module release.
+
 = 3.5.2 - 09/04/2018 =
 * Dev - PDF INVOICING & PACKING SLIPS - Bulk Actions - Merge (Print) - Error messages output added.
 * Dev - PDF INVOICING & PACKING SLIPS - Bulk Actions - Merge (Print) - Namespaces parse error in PHP < 5.3.0 fixed.
