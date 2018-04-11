@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Empty Cart Button
  *
- * @version 2.8.0
+ * @version 3.5.3
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -16,8 +16,9 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
-	 * @todo    copy additional options form "Empty Cart Button" plugin
+	 * @version 3.5.3
+	 * @since   2.2.1
+	 * @todo    recheck and maybe copy additional options form "Empty Cart Button" plugin
 	 */
 	function __construct() {
 
@@ -35,6 +36,19 @@ class WCJ_Empty_Cart_Button extends WCJ_Module {
 				add_action( $empty_cart_cart_position, array( $this, 'add_empty_cart_link' ) );
 			}
 			if ( 'disable' != ( $empty_cart_checkout_position = get_option( 'wcj_empty_cart_checkout_position', 'disable' ) ) ) {
+				$deprecated_hooks = array(
+					'woocommerce_checkout_before_customer_details'  => 'woocommerce_before_checkout_form',
+					'woocommerce_checkout_billing'                  => 'woocommerce_before_checkout_form',
+					'woocommerce_checkout_shipping'                 => 'woocommerce_before_checkout_form',
+					'woocommerce_checkout_after_customer_details'   => 'woocommerce_after_checkout_form',
+					'woocommerce_checkout_before_order_review'      => 'woocommerce_after_checkout_form',
+					'woocommerce_checkout_order_review'             => 'woocommerce_after_checkout_form',
+					'woocommerce_checkout_after_order_review'       => 'woocommerce_after_checkout_form',
+				);
+				if ( isset( $deprecated_hooks[ $empty_cart_checkout_position ] ) ) {
+					$empty_cart_checkout_position = $deprecated_hooks[ $empty_cart_checkout_position ];
+					update_option( 'wcj_empty_cart_checkout_position', $empty_cart_checkout_position );
+				}
 				add_action( $empty_cart_checkout_position, array( $this, 'add_empty_cart_link' ) );
 			}
 		}

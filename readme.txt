@@ -48,6 +48,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Admin Products List* - Customize WooCommerce admin products list.
 * *Bookings* - Add bookings products to WooCommerce.
 * *Cost of Goods* - Save WooCommerce product purchase costs data for admin reports.
+* *Cross-sells* - Customize WooCommerce cross-sells products display.
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
 * *Product Addons* - Add (paid/free/discount) addons to WooCommerce products.
 * *Product Availability by Date* - WooCommerce product availability by date.
@@ -69,6 +70,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Sorting* - Add more WooCommerce sorting options; rename or remove default sorting options; rearrange sorting options on frontend.
 * *Stock* - WooCommerce products stock management.
 * *Tax Display* - Customize WooCommerce tax display.
+* *Upsells* - Customize WooCommerce upsells products display.
 * *User Products* - Let users add new WooCommerce products from frontend.
 
 **Cart & Checkout**
@@ -183,9 +185,11 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.5.3 - 11/04/2018 =
+D     * Fix - CART & CHECKOUT - Empty Cart Button - Button position on the Checkout page - Some possible positions removed (fixes the issue with "Place order" button not working etc.).
+D     * Dev - CART & CHECKOUT - Empty Cart Button - Button position on the Cart page - More possible positions added.
 D W P * Dev - PRODUCTS - Upsells - Initial module release.
   T I * Fix - PDF INVOICING & PACKING SLIPS - Email Options - Checking for invoice to be created before attaching it to email (fixes the issue with empty invoices attached with zero total orders, and "Do not create if order total equals zero" option enabled).
-D T E * Dev - EMAILS & MISC. - Admin Tools - "Show Booster Menus Only to Admin" option added.
+D T   * Dev - EMAILS & MISC. - Admin Tools - "Show Booster Menus Only to Admin" option added.
 D T P * Dev - PRODUCTS - Cross Sells - Initial module release.
 
 = 3.5.2 - 09/04/2018 =

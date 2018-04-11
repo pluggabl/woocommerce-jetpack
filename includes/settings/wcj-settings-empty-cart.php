@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Empty Cart Button
  *
- * @version 2.8.0
+ * @version 3.5.3
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -37,11 +37,17 @@ return array(
 		'default'  => 'woocommerce_after_cart',
 		'type'     => 'select',
 		'options'  => array(
-			'disable'                         => __( 'Do not add', 'woocommerce-jetpack' ),
-			'woocommerce_after_cart'          => __( 'After Cart', 'woocommerce-jetpack' ),
-			'woocommerce_before_cart'         => __( 'Before Cart', 'woocommerce-jetpack' ),
-			'woocommerce_proceed_to_checkout' => __( 'After Proceed to Checkout button', 'woocommerce-jetpack' ),
-			'woocommerce_after_cart_totals'   => __( 'After Cart Totals', 'woocommerce-jetpack' ),
+			'disable'                                    => __( 'Do not add', 'woocommerce-jetpack' ),
+			'woocommerce_before_cart'                    => __( 'Before cart', 'woocommerce-jetpack' ),
+			'woocommerce_before_cart_totals'             => __( 'Cart totals: Before cart totals', 'woocommerce-jetpack' ),
+			'woocommerce_cart_totals_before_shipping'    => __( 'Cart totals: Before shipping', 'woocommerce-jetpack' ),
+			'woocommerce_cart_totals_after_shipping'     => __( 'Cart totals: After shipping', 'woocommerce-jetpack' ),
+			'woocommerce_cart_totals_before_order_total' => __( 'Cart totals: Before order total', 'woocommerce-jetpack' ),
+			'woocommerce_cart_totals_after_order_total'  => __( 'Cart totals: After order total', 'woocommerce-jetpack' ),
+			'woocommerce_proceed_to_checkout'            => __( 'Cart totals: After proceed to checkout button', 'woocommerce-jetpack' ),
+			'woocommerce_after_cart_totals'              => __( 'Cart totals: After cart totals', 'woocommerce-jetpack' ),
+			'woocommerce_cart_collaterals'               => __( 'After cart collaterals', 'woocommerce-jetpack' ),
+			'woocommerce_after_cart'                     => __( 'After cart', 'woocommerce-jetpack' ),
 		),
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
@@ -52,16 +58,9 @@ return array(
 		'default'  => 'disable',
 		'type'     => 'select',
 		'options'  => array(
-			'disable'                                       => __( 'Do not add', 'woocommerce-jetpack' ),
-			'woocommerce_before_checkout_form'              => __( 'Before checkout form', 'woocommerce-jetpack' ),
-			'woocommerce_checkout_before_customer_details'  => __( 'Before customer details', 'woocommerce-jetpack' ),
-			'woocommerce_checkout_billing'                  => __( 'Billing', 'woocommerce-jetpack' ),
-			'woocommerce_checkout_shipping'                 => __( 'Shipping', 'woocommerce-jetpack' ),
-			'woocommerce_checkout_after_customer_details'   => __( 'After customer details', 'woocommerce-jetpack' ),
-			'woocommerce_checkout_before_order_review'      => __( 'Before order review', 'woocommerce-jetpack' ),
-			'woocommerce_checkout_order_review'             => __( 'Order review', 'woocommerce-jetpack' ),
-			'woocommerce_checkout_after_order_review'       => __( 'After order review', 'woocommerce-jetpack' ),
-			'woocommerce_after_checkout_form'               => __( 'After checkout form', 'woocommerce-jetpack' ),
+			'disable'                          => __( 'Do not add', 'woocommerce-jetpack' ),
+			'woocommerce_before_checkout_form' => __( 'Before checkout form', 'woocommerce-jetpack' ),
+			'woocommerce_after_checkout_form'  => __( 'After checkout form', 'woocommerce-jetpack' ),
 		),
 	),
 	array(
