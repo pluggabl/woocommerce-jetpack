@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 3.5.0
+ * @version 3.5.3
  * @author  Algoritmika Ltd.
  */
 
@@ -20,6 +20,7 @@ class WCJ_Product_Input_Fields_Core {
 	 *
 	 * @version 3.4.0
 	 * @todo    save all info (e.g. label etc.) in order meta
+	 * @todo    add `do_shortcode()` to all applicable options (e.g. "Message on required")
 	 */
 	function __construct( $scope ) {
 		$this->scope = $scope;
@@ -456,7 +457,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.3
 	 * @todo    `$set_value` - add "default" option for all other types except checkbox
 	 * @todo    `$set_value` - 'file' type
 	 * @todo    add `required` attributes
@@ -493,10 +494,10 @@ class WCJ_Product_Input_Fields_Core {
 				$datepicker_year = '';
 			}
 
-			$timepicker_format = $this->get_value( 'wcj_product_input_fields_type_timepicker_format_' . $this->scope . '_' . $i, $_product_id, 'hh:mm p' );
+			$timepicker_format   = $this->get_value( 'wcj_product_input_fields_type_timepicker_format_' . $this->scope . '_' . $i, $_product_id, 'hh:mm p' );
 			$timepicker_interval = $this->get_value( 'wcj_product_input_fields_type_timepicker_interval_' . $this->scope . '_' . $i, $_product_id, 15 );
-			$timepicker_mintime = $this->get_value( 'wcj_product_input_fields_type_timepicker_mintime_' . $this->scope . '_' . $i, $_product_id, '' );
-			$timepicker_maxtime = $this->get_value( 'wcj_product_input_fields_type_timepicker_maxtime_' . $this->scope . '_' . $i, $_product_id, '' );
+			$timepicker_mintime  = $this->get_value( 'wcj_product_input_fields_type_timepicker_mintime_' . $this->scope . '_' . $i, $_product_id, '' );
+			$timepicker_maxtime  = $this->get_value( 'wcj_product_input_fields_type_timepicker_maxtime_' . $this->scope . '_' . $i, $_product_id, '' );
 			if ( '' != $timepicker_mintime ) {
 				$timepicker_mintime = ' mintime="' . $timepicker_mintime . '"';
 			}
@@ -639,10 +640,10 @@ class WCJ_Product_Input_Fields_Core {
 					$field_order = $i;
 				}
 				$fields[ $field_order ] = apply_filters( 'wcj_product_input_field_frontend_html', $html, array(
-					'title'             => $title,
+					'title'             => do_shortcode( $title ),
 					'type'              => $type,
 					'field_name'        => $field_name,
-					'placeholder'       => $placeholder,
+					'placeholder'       => do_shortcode( $placeholder ),
 					'custom_attributes' => $custom_attributes,
 					'_product_id'       => $_product_id,
 					'_field_nr'         => $i,

@@ -20,7 +20,7 @@ class WCJ_Upsells extends WCJ_Module {
 	 * @since   3.5.3
 	 * @todo    (maybe) Hide Upsells - maybe better by `remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );`
 	 * @todo    (maybe) use `apply_filters( 'woocommerce_upsell_display_args', array( 'posts_per_page' => $limit, 'orderby' => $orderby, 'columns' => $columns ) );`
-	 * @todo    (maybe) use `apply_filters( 'woocommerce_product_upsell_ids', $this->get_upsell_ids(), $this );`
+	 * @todo    (maybe) use `apply_filters( 'woocommerce_product_upsell_ids', $this->get_upsell_ids(), $this );` and `woocommerce_product_get_upsell_ids` (since WC v3.0.0)
 	 */
 	function __construct() {
 
@@ -32,9 +32,9 @@ class WCJ_Upsells extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			add_filter( 'woocommerce_upsells_total',     array( $this, 'upsells_total' ),   PHP_INT_MAX );
-			add_filter( 'woocommerce_upsells_columns',   array( $this, 'upsells_columns' ), PHP_INT_MAX );
-			add_filter( 'woocommerce_upsells_orderby',   array( $this, 'upsells_orderby' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_upsells_total',      array( $this, 'upsells_total' ),   PHP_INT_MAX );
+			add_filter( 'woocommerce_upsells_columns',    array( $this, 'upsells_columns' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_upsells_orderby',    array( $this, 'upsells_orderby' ), PHP_INT_MAX );
 		}
 
 	}

@@ -18,6 +18,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	 *
 	 * @version 3.5.3
 	 * @since   3.5.3
+	 * @todo    use `woocommerce_product_get_cross_sell_ids` (since WC v3.0.0)
 	 */
 	function __construct() {
 

@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.5.2
+Stable tag: 3.5.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -184,13 +184,14 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.3 - 11/04/2018 =
-D     * Fix - CART & CHECKOUT - Empty Cart Button - Button position on the Checkout page - Some possible positions removed (fixes the issue with "Place order" button not working etc.).
-D     * Dev - CART & CHECKOUT - Empty Cart Button - Button position on the Cart page - More possible positions added.
-D W P * Dev - PRODUCTS - Upsells - Initial module release.
-  T I * Fix - PDF INVOICING & PACKING SLIPS - Email Options - Checking for invoice to be created before attaching it to email (fixes the issue with empty invoices attached with zero total orders, and "Do not create if order total equals zero" option enabled).
-D T   * Dev - EMAILS & MISC. - Admin Tools - "Show Booster Menus Only to Admin" option added.
-D T P * Dev - PRODUCTS - Cross Sells - Initial module release.
+= 3.5.3 - 12/04/2018 =
+* Dev - PRODUCTS - Cross Sells - Initial module release.
+* Dev - PRODUCTS - Product Input Fields - Shortcodes are now processed in product input fields titles and placeholders.
+* Dev - PRODUCTS - Upsells - Initial module release.
+* Fix - CART & CHECKOUT - Empty Cart Button - Button position on the Checkout page - Some possible positions removed (fixes the issue with "Place order" button not working etc.).
+* Dev - CART & CHECKOUT - Empty Cart Button - Button position on the Cart page - More possible positions added.
+* Fix - PDF INVOICING & PACKING SLIPS - Email Options - Checking for invoice to be created before attaching it to email (fixes the issue with empty invoices attached with zero total orders, and "Do not create if order total equals zero" option enabled).
+* Dev - EMAILS & MISC. - Admin Tools - "Show Booster Menus Only to Admin" option added.
 
 = 3.5.2 - 09/04/2018 =
 * Dev - PDF INVOICING & PACKING SLIPS - Bulk Actions - Merge (Print) - Error messages output added.
