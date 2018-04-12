@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Core Fields
  *
- * @version 3.4.0
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -97,6 +97,14 @@ foreach ( $this->woocommerce_core_checkout_fields as $field ) {
 			'desc'     => __( 'placeholder', 'woocommerce-jetpack' ),
 			'desc_tip' => __( 'Leave blank for WooCommerce defaults.', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_checkout_fields_' . $field . '_' . 'placeholder',
+			'default'  => '',
+			'type'     => 'text',
+			'css'      => 'min-width:300px;width:50%;',
+		),
+		array(
+			'desc'     => __( 'description', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Leave blank for WooCommerce defaults.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_checkout_fields_' . $field . '_' . 'description',
 			'default'  => '',
 			'type'     => 'text',
 			'css'      => 'min-width:300px;width:50%;',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 3.4.0
+ * @version 3.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.5.4
 	 * @see     https://docs.woocommerce.com/document/tutorial-customising-checkout-fields-using-actions-and-filters/
 	 * @todo    (maybe) default overrides should be `disable`
 	 */
@@ -23,7 +23,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 
 		$this->id         = 'checkout_core_fields';
 		$this->short_desc = __( 'Checkout Core Fields', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders etc.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-core-fields';
 		parent::__construct();
 
@@ -70,6 +70,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	 *
 	 * @version 3.3.0
 	 * @since   3.1.0
+	 * @todo    add `description`
 	 * @todo    (maybe) add option to choose `$options_to_override`
 	 * @todo    (maybe) add to `$options_to_override`: enabled; class;
 	 */
@@ -134,7 +135,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * custom_override_checkout_fields.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.4
 	 * @todo    add "per products", "per products tags"
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Custom Fields module)
 	 * @todo    (maybe) enable if was not enabled by default, i.e. `! isset( $checkout_fields[ $section ][ $field ] )`
@@ -175,6 +176,10 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 				// placeholder
 				if ( '' != ( $placeholder = get_option( 'wcj_checkout_fields_' . $field . '_' . 'placeholder', '' ) ) ) {
 					$checkout_fields[ $section ][ $field ]['placeholder'] = $placeholder;
+				}
+				// description
+				if ( '' != ( $description = get_option( 'wcj_checkout_fields_' . $field . '_' . 'description', '' ) ) ) {
+					$checkout_fields[ $section ][ $field ]['description'] = $description;
 				}
 				// class
 				if ( 'default' != ( $class = get_option( 'wcj_checkout_fields_' . $field . '_' . 'class', 'default' ) ) ) {
