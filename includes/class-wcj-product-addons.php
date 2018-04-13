@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 3.4.0
+ * @version 3.5.4
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names);
@@ -280,7 +280,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_product_addons.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.4
 	 * @since   2.5.3
 	 * @todo    (maybe) `checkbox_key` is mislabelled, should be `key` (or maybe `value_key`)
 	 */
@@ -304,11 +304,11 @@ class WCJ_Product_Addons extends WCJ_Module {
 						'price_key'    => 'wcj_product_all_products_addons_price_' . $i,
 						'label_key'    => 'wcj_product_all_products_addons_label_' . $i,
 						'price_value'  => get_option( 'wcj_product_addons_all_products_price_' . $i ),
-						'label_value'  => get_option( 'wcj_product_addons_all_products_label_' . $i ),
-						'title'        => get_option( 'wcj_product_addons_all_products_title_' . $i, '' ),
-						'placeholder'  => get_option( 'wcj_product_addons_all_products_placeholder_' . $i, '' ),
+						'label_value'  => do_shortcode( get_option( 'wcj_product_addons_all_products_label_' . $i ) ),
+						'title'        => do_shortcode( get_option( 'wcj_product_addons_all_products_title_' . $i, '' ) ),
+						'placeholder'  => do_shortcode( get_option( 'wcj_product_addons_all_products_placeholder_' . $i, '' ) ),
 						'class'        => get_option( 'wcj_product_addons_all_products_class_' . $i, '' ),
-						'tooltip'      => get_option( 'wcj_product_addons_all_products_tooltip_' . $i, '' ),
+						'tooltip'      => do_shortcode( get_option( 'wcj_product_addons_all_products_tooltip_' . $i, '' ) ),
 						'type'         => get_option( 'wcj_product_addons_all_products_type_' . $i, 'checkbox' ),
 						'default'      => get_option( 'wcj_product_addons_all_products_default_' . $i, '' ),
 						'is_required'  => get_option( 'wcj_product_addons_all_products_required_' . $i, 'no' ),
@@ -333,11 +333,11 @@ class WCJ_Product_Addons extends WCJ_Module {
 							'price_key'    => 'wcj_product_per_product_addons_price_' . $i,
 							'label_key'    => 'wcj_product_per_product_addons_label_' . $i,
 							'price_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_price_' . $i, true ),
-							'label_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_label_' . $i, true ),
-							'title'        => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_title_' . $i, true ),
-							'placeholder'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_placeholder_' . $i, true ),
+							'label_value'  => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_label_' . $i, true ) ),
+							'title'        => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_title_' . $i, true ) ),
+							'placeholder'  => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_placeholder_' . $i, true ) ),
 							'class'        => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_class_' . $i, true ),
-							'tooltip'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_tooltip_' . $i, true ),
+							'tooltip'      => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_tooltip_' . $i, true ) ),
 							'type'         => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_type_' . $i, true ),
 							'default'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_default_' . $i, true ),
 							'is_required'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_required_' . $i, true ),

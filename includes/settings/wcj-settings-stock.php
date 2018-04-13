@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Stock
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -93,6 +93,48 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_stock_custom_out_of_stock_options',
+	),
+	array(
+		'title'    => __( 'Custom "Available on backorder" Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_stock_custom_backorder_options',
+	),
+	array(
+		'title'    => __( 'Custom "Available on backorder"', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'       => 'wcj_stock_custom_backorder_section_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Custom "Available on backorder" HTML', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_stock_custom_backorder_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_stock_custom_backorder',
+		'default'  => '',
+		'type'     => 'custom_textarea',
+		'css'      => 'width:100%;height:100px;',
+	),
+	array(
+		'title'    => __( 'Custom "Available on backorder" Class', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_stock_custom_backorder_class_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'id'       => 'wcj_stock_custom_backorder_class',
+		'default'  => '',
+		'type'     => 'text',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_stock_custom_backorder_options',
 	),
 	array(
 		'title'    => __( 'Custom Stock HTML', 'woocommerce-jetpack' ),

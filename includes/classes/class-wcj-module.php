@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.3.0
+ * @version 3.5.4
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -258,13 +258,19 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * save_meta_box.
 	 *
-	 * @since 2.5.0
+	 * @version 3.5.4
+	 * @since   2.5.0
+	 * @todo    (maybe) also order_id in `$the_post_id = ...`
 	 */
-	function save_meta_box( $post_id, $post ) {
+	function save_meta_box( $post_id, $__post ) {
 		// Check that we are saving with current metabox displayed.
 		if ( ! isset( $_POST[ 'woojetpack_' . $this->id . '_save_post' ] ) ) {
 			return;
 		}
+		// Setup post (just in case...)
+		global $post;
+		$post = get_post( $post_id );
+		setup_postdata( $post );
 		// Save options
 		foreach ( $this->get_meta_box_options() as $option ) {
 			if ( 'title' === $option['type'] ) {
@@ -273,11 +279,13 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 			$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 			if ( $is_enabled ) {
 				$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : $option['default'];
-				$the_post_id   = ( isset( $option['product_id'] )     ) ? $option['product_id']     : $post_id; // todo: maybe also order_id?
+				$the_post_id   = ( isset( $option['product_id'] )     ) ? $option['product_id']     : $post_id;
 				$the_meta_name = ( isset( $option['meta_name'] ) )      ? $option['meta_name']      : '_' . $option['name'];
 				update_post_meta( $the_post_id, $the_meta_name, apply_filters( 'wcj_save_meta_box_value', $option_value, $option['name'], $this->id ) );
 			}
 		}
+		// Reset post
+		wp_reset_postdata();
 	}
 
 	/**

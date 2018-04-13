@@ -184,8 +184,12 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 12/04/2018 =
-D X P * Dev - CART & CHECKOUT - Checkout Core Fields - "description" options added to each field.
+= 3.5.4 - 14/04/2018 =
+D X I * Dev - "Standard PHP sessions" is now the default option for `WCJ_SESSION_TYPE`. Affected modules: Checkout Files Upload, EU VAT Number, Multicurrency (Currency Switcher), Product Visibility by Country, Product Custom Visibility, Tax Display, Prices and Currencies by Country.
+  T I * Dev - Classes - `WCJ_Module` - `save_meta_box()` - Global post setup added.
+D W   * Dev - PRODUCTS - Stock - 'Custom "Available on backorder"' section added.
+D     * Dev - PRODUCTS - Product Addons - Shortcodes are now processed in labels, titles, placeholders and tooltips.
+D W P * Dev - CART & CHECKOUT - Checkout Core Fields - "description" options added to each field.
 
 = 3.5.3 - 12/04/2018 =
 * Dev - PRODUCTS - Cross Sells - Initial module release.

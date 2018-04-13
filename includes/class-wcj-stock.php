@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Stock
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,9 +16,10 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.4
 	 * @since   2.8.0
 	 * @todo    (maybe) change `link_slug` to "woocommerce-products-stock" or "woocommerce-product-stock"
+	 * @todo    customize "Available on backorder" message in cart
 	 */
 	function __construct() {
 
@@ -47,6 +48,15 @@ class WCJ_Stock extends WCJ_Module {
 					add_filter( 'woocommerce_get_availability_class', array( $this, 'custom_out_of_stock_class' ), PHP_INT_MAX, 2 );
 				}
 			}
+			// Custom "Available on backorder"
+			if ( 'yes' === get_option( 'wcj_stock_custom_backorder_section_enabled', 'no' ) ) {
+				if ( 'yes' === get_option( 'wcj_stock_custom_backorder_enabled', 'no' ) ) {
+					add_filter( 'woocommerce_get_availability_text', array( $this, 'custom_backorder' ), PHP_INT_MAX, 2 );
+				}
+				if ( 'yes' === get_option( 'wcj_stock_custom_backorder_class_enabled', 'no' ) ) {
+					add_filter( 'woocommerce_get_availability_class', array( $this, 'custom_backorder_class' ), PHP_INT_MAX, 2 );
+				}
+			}
 			// Custom stock HTML
 			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_stock_custom_stock_html_section_enabled', 'no' ) ) ) {
 				if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
@@ -60,6 +70,35 @@ class WCJ_Stock extends WCJ_Module {
 				add_filter( ( WCJ_IS_WC_VERSION_BELOW_3 ? 'woocommerce_stock_html' : 'woocommerce_get_stock_html' ), '__return_empty_string', PHP_INT_MAX );
 			}
 		}
+
+	}
+
+	/**
+	 * custom_backorder_class.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 * @todo    ! re-check conditions
+	 */
+	function custom_backorder_class( $class, $_product ) {
+		if ( $_product->managing_stock() && $_product->is_on_backorder( 1 ) && $_product->backorders_require_notification() ) {
+			return get_option( 'wcj_stock_custom_backorder_class', '' );
+		}
+		return $class;
+	}
+
+	/**
+	 * custom_backorder.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 * @todo    ! re-check conditions
+	 */
+	function custom_backorder( $availability, $_product ) {
+		if ( $_product->managing_stock() && $_product->is_on_backorder( 1 ) && $_product->backorders_require_notification() ) {
+			return do_shortcode( get_option( 'wcj_stock_custom_backorder', '' ) );
+		}
+		return $availability;
 	}
 
 	/**
@@ -99,6 +138,7 @@ class WCJ_Stock extends WCJ_Module {
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
+	 * @todo    ! re-check conditions
 	 */
 	function custom_in_stock_class( $class, $_product ) {
 		if ( $_product->is_in_stock() ) {
@@ -112,6 +152,7 @@ class WCJ_Stock extends WCJ_Module {
 	 *
 	 * @version 3.5.0
 	 * @since   3.4.0
+	 * @todo    ! re-check conditions
 	 */
 	function custom_in_stock( $availability, $_product ) {
 		if ( $_product->is_in_stock() ) {
@@ -125,6 +166,7 @@ class WCJ_Stock extends WCJ_Module {
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
+	 * @todo    ! re-check conditions
 	 */
 	function custom_out_of_stock_class( $class, $_product ) {
 		if ( ! $_product->is_in_stock() ) {
@@ -139,6 +181,7 @@ class WCJ_Stock extends WCJ_Module {
 	 * @version 3.5.0
 	 * @since   2.8.0
 	 * @todo    html tags in < WC3
+	 * @todo    ! re-check conditions
 	 */
 	function custom_out_of_stock( $availability, $_product ) {
 		if ( ! $_product->is_in_stock() ) {
