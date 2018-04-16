@@ -184,7 +184,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 14/04/2018 =
+= 3.5.4 - 16/04/2018 =
+      * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Code refactoring.
+D   P * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - "Advanced: Custom fields (readonly)" and "Advanced: Custom fields (disabled)" options added.
+D     * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Fields to Disable - "Billing country" and "Shipping country" fields added.
 D X I * Dev - "Standard PHP sessions" is now the default option for `WCJ_SESSION_TYPE`. Affected modules: Checkout Files Upload, EU VAT Number, Multicurrency (Currency Switcher), Product Visibility by Country, Product Custom Visibility, Tax Display, Prices and Currencies by Country.
   T I * Dev - Classes - `WCJ_Module` - `save_meta_box()` - Global post setup added.
 D W   * Dev - PRODUCTS - Stock - 'Custom "Available on backorder"' section added.

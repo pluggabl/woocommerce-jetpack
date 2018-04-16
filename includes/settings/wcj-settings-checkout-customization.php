@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Customization
  *
- * @version 3.4.0
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -86,7 +86,7 @@ return array(
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
 		'options'  => array(
-//			'billing_country'     => __( 'Billing country', 'woocommerce-jetpack' ),
+			'billing_country'     => __( 'Billing country', 'woocommerce-jetpack' ),
 			'billing_first_name'  => __( 'Billing first name', 'woocommerce-jetpack' ),
 			'billing_last_name'   => __( 'Billing last name', 'woocommerce-jetpack' ),
 			'billing_company'     => __( 'Billing company', 'woocommerce-jetpack' ),
@@ -97,7 +97,7 @@ return array(
 			'billing_postcode'    => __( 'Billing postcode', 'woocommerce-jetpack' ),
 			'billing_email'       => __( 'Billing email', 'woocommerce-jetpack' ),
 			'billing_phone'       => __( 'Billing phone', 'woocommerce-jetpack' ),
-//			'shipping_country'    => __( 'Shipping country', 'woocommerce-jetpack' ),
+			'shipping_country'    => __( 'Shipping country', 'woocommerce-jetpack' ),
 			'shipping_first_name' => __( 'Shipping first name', 'woocommerce-jetpack' ),
 			'shipping_last_name'  => __( 'Shipping last name', 'woocommerce-jetpack' ),
 			'shipping_company'    => __( 'Shipping company', 'woocommerce-jetpack' ),
@@ -106,7 +106,6 @@ return array(
 			'shipping_city'       => __( 'Shipping city', 'woocommerce-jetpack' ),
 			'shipping_state'      => __( 'Shipping state', 'woocommerce-jetpack' ),
 			'shipping_postcode'   => __( 'Shipping postcode', 'woocommerce-jetpack' ),
-//			'account_password'    => __( 'Account password', 'woocommerce-jetpack' ),
 			'order_comments'      => __( 'Order comments', 'woocommerce-jetpack' ),
 		),
 	),
@@ -116,6 +115,22 @@ return array(
 		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_message',
 		'default'  => '<em>' . __( 'This field can not be changed', 'woocommerce-jetpack' ) . '</em>',
 		'type'     => 'custom_textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'desc'     => __( 'Advanced: Custom fields (readonly)', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Comma separated list of fields ids, e.g.: %s.', 'woocommerce-jetpack' ), '<em>billing_wcj_checkout_field_1, billing_wcj_checkout_field_2</em>' ),
+		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_custom_r',
+		'default'  => '',
+		'type'     => 'text',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'desc'     => __( 'Advanced: Custom fields (disabled)', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Comma separated list of fields ids, e.g.: %s.', 'woocommerce-jetpack' ), '<em>billing_wcj_checkout_field_1, billing_wcj_checkout_field_2</em>' ),
+		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_custom_d',
+		'default'  => '',
+		'type'     => 'text',
 		'css'      => 'width:100%;',
 	),
 	array(
