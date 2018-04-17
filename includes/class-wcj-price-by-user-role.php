@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price by User Role
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -159,7 +159,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @since   2.5.0
 	 * @todo    (maybe) code refactoring (cats/tags)
 	 */
@@ -167,6 +167,17 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 
 		$current_user_role = wcj_get_current_user_first_role();
 		$_current_filter   = current_filter();
+
+		if ( ! apply_filters( 'wcj_price_by_user_role_do_change_price', true, $price, $_product, $current_user_role, $_current_filter ) ) {
+			return $price;
+		}
+
+		if ( 'yes' === get_option( 'wcj_price_by_user_role_check_for_product_changes_price', 'no' ) && $_product ) {
+			$product_changes = $_product->get_changes();
+			if ( ! empty( $product_changes ) && isset( $product_changes['price'] ) ) {
+				return $price;
+			}
+		}
 
 		// Per product
 		if ( 'yes' === get_option( 'wcj_price_by_user_role_per_product_enabled', 'yes' ) ) {

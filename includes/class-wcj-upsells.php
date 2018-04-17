@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Upsells
  *
- * @version 3.5.3
+ * @version 3.5.4
  * @since   3.5.3
  * @author  Algoritmika Ltd.
  */
@@ -16,11 +16,12 @@ class WCJ_Upsells extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.3
+	 * @version 3.5.4
 	 * @since   3.5.3
 	 * @todo    (maybe) Hide Upsells - maybe better by `remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );`
 	 * @todo    (maybe) use `apply_filters( 'woocommerce_upsell_display_args', array( 'posts_per_page' => $limit, 'orderby' => $orderby, 'columns' => $columns ) );`
-	 * @todo    (maybe) use `apply_filters( 'woocommerce_product_upsell_ids', $this->get_upsell_ids(), $this );` and `woocommerce_product_get_upsell_ids` (since WC v3.0.0)
+	 * @todo    (maybe) Global Upsells - on per category/tag basis
+	 * @todo    (maybe) Global Upsells - ids instead of list
 	 */
 	function __construct() {
 
@@ -35,8 +36,30 @@ class WCJ_Upsells extends WCJ_Module {
 			add_filter( 'woocommerce_upsells_total',      array( $this, 'upsells_total' ),   PHP_INT_MAX );
 			add_filter( 'woocommerce_upsells_columns',    array( $this, 'upsells_columns' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_upsells_orderby',    array( $this, 'upsells_orderby' ), PHP_INT_MAX );
+			if ( 'yes' === get_option( 'wcj_upsells_global_enabled', 'no' ) ) {
+				$upsell_ids_filter = ( WCJ_IS_WC_VERSION_BELOW_3 ? 'woocommerce_product_upsell_ids' : 'woocommerce_product_get_upsell_ids' );
+				add_filter( $upsell_ids_filter, array( $this, 'upsell_ids' ), PHP_INT_MAX, 2 );
+			}
 		}
 
+	}
+
+	/**
+	 * upsell_ids.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function upsell_ids( $ids, $_product ) {
+		$global_upsells = get_option( 'wcj_upsells_global_ids', '' );
+		if ( ! empty( $global_upsells ) ) {
+			$global_upsells = array_unique( $global_upsells );
+			$product_id     = wcj_get_product_id_or_variation_parent_id( $_product );
+			if ( false !== ( $key = array_search( $product_id, $global_upsells ) ) ) {
+				unset( $global_upsells[ $key ] );
+			}
+		}
+		return ( empty( $global_upsells ) ? $ids : array_unique( array_merge( $ids, $global_upsells ) ) );
 	}
 
 	/**

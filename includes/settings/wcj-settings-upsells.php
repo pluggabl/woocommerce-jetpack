@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Upsells
  *
- * @version 3.5.3
+ * @version 3.5.4
  * @since   3.5.3
  * @author  Algoritmika Ltd.
  */
@@ -53,6 +53,22 @@ $settings = array(
 		'type'     => 'checkbox',
 		'id'       => 'wcj_upsells_hide',
 		'default'  => 'no',
+	),
+	array(
+		'title'    => __( 'Global Upsells', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this section if you want to add same upsells to all products.', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_upsells_global_enabled',
+		'default'  => 'no',
+	),
+	array(
+		'desc'     => __( 'Global upsells', 'woocommerce-jetpack' ),
+		'type'     => 'multiselect',
+		'id'       => 'wcj_upsells_global_ids',
+		'default'  => '',
+		'class'    => 'chosen_select',
+		'options'  => wcj_get_products(),
 	),
 	array(
 		'type'     => 'sectionend',

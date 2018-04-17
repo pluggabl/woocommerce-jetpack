@@ -184,7 +184,12 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 16/04/2018 =
+= 3.5.4 - 18/04/2018 =
+D W   * Dev - PRICES & CURRENCIES - Price by User Role - "Advanced: Price Changes" option added.
+D W   * Dev - PRICES & CURRENCIES - Price by User Role - `wcj_price_by_user_role_do_change_price` filter added.
+  T   * Dev - PRODUCTS - Product Tabs - WPML support added.
+D   P * Dev - PRODUCTS - Cross-sells - "Global Cross-sells" options added.
+D   P * Dev - PRODUCTS - Upsells - "Global Upsells" options added.
       * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Code refactoring.
 D   P * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - "Advanced: Custom fields (readonly)" and "Advanced: Custom fields (disabled)" options added.
 D     * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Fields to Disable - "Billing country" and "Shipping country" fields added.

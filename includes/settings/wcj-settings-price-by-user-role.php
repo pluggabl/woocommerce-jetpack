@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price by User Role
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -71,6 +71,14 @@ $settings = array(
 		'id'       => 'wcj_price_by_user_role_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',
+	),
+	array(
+		'title'    => __( 'Advanced: Price Changes', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable Price by User Role for Products with Price Changes', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Try enabling this checkbox, if you are having compatibility issues with other plugins.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_check_for_product_changes_price',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',

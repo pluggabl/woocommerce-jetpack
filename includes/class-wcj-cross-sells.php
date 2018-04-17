@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cross-sells
  *
- * @version 3.5.3
+ * @version 3.5.4
  * @since   3.5.3
  * @author  Algoritmika Ltd.
  */
@@ -16,9 +16,8 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.3
+	 * @version 3.5.4
 	 * @since   3.5.3
-	 * @todo    use `woocommerce_product_get_cross_sell_ids` (since WC v3.0.0)
 	 */
 	function __construct() {
 
@@ -36,8 +35,34 @@ class WCJ_Cross_Sells extends WCJ_Module {
 			if ( ! WCJ_IS_WC_VERSION_BELOW_3_3_0 ) {
 				add_filter( 'woocommerce_cross_sells_order', array( $this, 'cross_sells_order' ),   PHP_INT_MAX );
 			}
+			if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
+				if ( 'yes' === get_option( 'wcj_cross_sells_global_enabled', 'no' ) ) {
+					add_filter( 'woocommerce_product_get_cross_sell_ids', array( $this, 'cross_sells_ids' ), PHP_INT_MAX, 2 );
+				}
+			}
 		}
 
+	}
+
+	/**
+	 * cross_sells_ids.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 * @todo    (maybe) on per category/tag basis
+	 * @todo    (maybe) ids instead of list
+	 * @todo    (maybe) on cart update (i.e. product removed) cross-sells are not updated (so it may be needed to reload page manually to see new cross-sells)
+	 */
+	function cross_sells_ids( $ids, $_product ) {
+		$global_cross_sells = get_option( 'wcj_cross_sells_global_ids', '' );
+		if ( ! empty( $global_cross_sells ) ) {
+			$global_cross_sells = array_unique( $global_cross_sells );
+			$product_id     = wcj_get_product_id_or_variation_parent_id( $_product );
+			if ( false !== ( $key = array_search( $product_id, $global_cross_sells ) ) ) {
+				unset( $global_cross_sells[ $key ] );
+			}
+		}
+		return ( empty( $global_cross_sells ) ? $ids : array_unique( array_merge( $ids, $global_cross_sells ) ) );
 	}
 
 	/**

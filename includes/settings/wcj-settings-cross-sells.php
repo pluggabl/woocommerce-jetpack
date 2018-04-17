@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Cross-sells
  *
- * @version 3.5.3
+ * @version 3.5.4
  * @since   3.5.3
  * @author  Algoritmika Ltd.
  */
@@ -69,6 +69,28 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_cross_sells_hide',
 		'default'  => 'no',
 	),
+) );
+if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
+	$settings = array_merge( $settings, array(
+		array(
+			'title'    => __( 'Global Cross-sells', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Enable this section if you want to add same cross-sells to all products.', 'woocommerce-jetpack' ),
+			'type'     => 'checkbox',
+			'id'       => 'wcj_cross_sells_global_enabled',
+			'default'  => 'no',
+		),
+		array(
+			'desc'     => __( 'Global cross-sells', 'woocommerce-jetpack' ),
+			'type'     => 'multiselect',
+			'id'       => 'wcj_cross_sells_global_ids',
+			'default'  => '',
+			'class'    => 'chosen_select',
+			'options'  => wcj_get_products(),
+		),
+	) );
+}
+$settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_cross_sells_options',
