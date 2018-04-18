@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 3.4.0
+ * @version 3.5.4
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options
@@ -377,7 +377,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * is_visible.
 	 *
-	 * @version 2.5.8
+	 * @version 3.5.4
 	 * @since   2.4.7
 	 */
 	function is_visible( $i, $order_id = 0 ) {
@@ -385,6 +385,18 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		if ( apply_filters( 'wcj_checkout_files_always_visible_on_empty_cart', false ) && 0 == $order_id && WC()->cart->is_empty() ) {
 			// Added for "One Page Checkout" plugin compatibility.
 			return true;
+		}
+
+		// Include by user role
+		$user_roles = get_option( 'wcj_checkout_files_upload_show_user_roles_' . $i, '' );
+		if ( ! empty( $user_roles ) && ! in_array( wcj_get_current_user_first_role(), $user_roles ) ) {
+			return false;
+		}
+
+		// Exclude by user role
+		$user_roles = get_option( 'wcj_checkout_files_upload_hide_user_roles_' . $i, '' );
+		if ( ! empty( $user_roles ) && in_array( wcj_get_current_user_first_role(), $user_roles ) ) {
+			return false;
 		}
 
 		// Include by product id

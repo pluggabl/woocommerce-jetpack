@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Files Upload
  *
- * @version 3.2.3
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -12,6 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $product_tags_options = wcj_get_terms( 'product_tag' );
 $product_cats_options = wcj_get_terms( 'product_cat' );
 $products_options     = wcj_get_products();
+$user_roles_options   = wcj_get_user_roles_options();
 $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -177,6 +178,15 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'options'  => $product_tags_options,
 		),
 		array(
+			'desc'     => __( 'USER ROLES to show this field', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Leave blank to show for all user roles.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_checkout_files_upload_show_user_roles_' . $i,
+			'default'  => '',
+			'class'    => 'chosen_select',
+			'type'     => 'multiselect',
+			'options'  => $user_roles_options,
+		),
+		array(
 			'title'    => '',
 			'desc'     => __( 'PRODUCTS to hide this field', 'woocommerce-jetpack' ),
 			'desc_tip' => __( 'To hide this field if at least one selected product is in cart, enter products here. Leave blank to show for all products.', 'woocommerce-jetpack' ),
@@ -205,6 +215,15 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'class'    => 'chosen_select',
 			'type'     => 'multiselect',
 			'options'  => $product_tags_options,
+		),
+		array(
+			'desc'     => __( 'USER ROLES to hide this field', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Leave blank to show for all user roles.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_checkout_files_upload_hide_user_roles_' . $i,
+			'default'  => '',
+			'class'    => 'chosen_select',
+			'type'     => 'multiselect',
+			'options'  => $user_roles_options,
 		),
 	) );
 }

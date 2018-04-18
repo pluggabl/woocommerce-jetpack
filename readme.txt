@@ -185,6 +185,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.5.4 - 18/04/2018 =
+D T P * Dev - CART & CHECKOUT - Checkout Files Upload - "USER ROLES to show this field" and "USER ROLES to hide this field" options added.
 D W   * Dev - PRICES & CURRENCIES - Price by User Role - "Advanced: Price Changes" option added.
 D W   * Dev - PRICES & CURRENCIES - Price by User Role - `wcj_price_by_user_role_do_change_price` filter added.
   T   * Dev - PRODUCTS - Product Tabs - WPML support added.
