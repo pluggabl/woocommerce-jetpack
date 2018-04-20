@@ -21,6 +21,11 @@ if ( $_product->is_type( 'variable' ) ) {
 		$variation_product = wc_get_product( $variation['variation_id'] );
 		$products[ $variation['variation_id'] ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
 	}
+	/* $available_variations = $_product->get_children();
+	foreach ( $available_variations as $variation_id ) {
+		$variation_product = wc_get_product( $variation_id );
+		$products[ $variation_id ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
+	} */
 } else {
 	$products[ $main_product_id ] = '';
 }

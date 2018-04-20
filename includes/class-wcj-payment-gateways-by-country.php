@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -96,7 +96,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.4
 	 * @todo    (maybe) rename module to "Payment Gateways by (Customer's) Location"
 	 * @todo    (maybe) check naming, should be `wcj_gateways_by_location_` (however it's too long...)
 	 * @todo    (maybe) code refactoring
@@ -109,7 +109,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 		$postcode         = $this->get_location( 'postcode' );
 		foreach ( $_available_gateways as $key => $gateway ) {
 			if ( '' != $customer_country ) {
-				$include_countries = get_option( 'wcj_gateways_countries_include_' . $key, '' );
+				$include_countries = wcj_maybe_add_european_union_countries( get_option( 'wcj_gateways_countries_include_' . $key, '' ) );
 				if ( ! empty( $include_countries ) && ! in_array( $customer_country, $include_countries ) ) {
 					unset( $_available_gateways[ $key ] );
 					continue;

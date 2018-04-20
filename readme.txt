@@ -184,8 +184,17 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 18/04/2018 =
-D T P * Dev - CART & CHECKOUT - Checkout Files Upload - "USER ROLES to show this field" and "USER ROLES to hide this field" options added.
+= 3.5.4 - 20/04/2018 =
+D T   * Dev - PRODUCTS - SKU - "Characters Case" option added.
+D X I * Dev - PRODUCTS - SKU - `{product_slug_acronym}`, `{parent_product_slug_acronym}`, `{attribute=X}`, `{parent_attribute=X}`, `{variation_attribute=X}` replaced values added.
+      * Dev - PRODUCTS - SKU - Minor code refactoring.
+  T   * Fix - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - "European Union" selection fixed.
+  T I * Fix - Functions - Admin - `wcj_is_admin_product_edit_page()` - AJAX loading variations included.
+  T I * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price by country disabled for admin product edit page.
+  X I * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Meta box options - `get_available_variations()` replaced with `get_children()`.
+D T I * Dev - PRICES & CURRENCIES - Wholesale Price - "Use total cart quantity instead of product quantity" option replaced with "Quantity calculation" ("Product quantity", "Total cart quantity (wholesale products only)", "Total cart quantity").
+D     * Dev - PRICES & CURRENCIES - Wholesale Price - Admin settings - Minor restyling and descriptions updated.
+D T   * Dev - CART & CHECKOUT - Checkout Files Upload - "USER ROLES to show this field" and "USER ROLES to hide this field" options added.
 D W   * Dev - PRICES & CURRENCIES - Price by User Role - "Advanced: Price Changes" option added.
 D W   * Dev - PRICES & CURRENCIES - Price by User Role - `wcj_price_by_user_role_do_change_price` filter added.
   T   * Dev - PRODUCTS - Product Tabs - WPML support added.

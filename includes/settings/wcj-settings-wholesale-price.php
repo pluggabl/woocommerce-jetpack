@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 3.3.0
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -14,22 +14,28 @@ $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'desc'     => __( 'Wholesale Price Levels Options. If you want to display prices table on frontend, use [wcj_product_wholesale_price_table] shortcode.', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'If you want to display prices table on frontend, use %s shortcode.', 'woocommerce-jetpack' ),
+			'<code>[wcj_product_wholesale_price_table]</code>' ),
 		'id'       => 'wcj_wholesale_price_general_options',
 	),
 	array(
-		'title'    => __( 'Enable per Product', 'woocommerce-jetpack' ),
+		'title'    => __( 'Enable per product', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_per_product_enable',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Use total cart quantity instead of product quantity', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'title'    => __( 'Quantity calculation', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_use_total_cart_quantity',
 		'default'  => 'no',
-		'type'     => 'checkbox',
+		'type'     => 'select',
+		'options'  => array(
+			'no'              => __( 'Product quantity', 'woocommerce-jetpack' ),
+			'total_wholesale' => __( 'Total cart quantity (wholesale products only)', 'woocommerce-jetpack' ),
+			'yes'             => __( 'Total cart quantity', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'title'    => __( 'Apply wholesale discount only if no other cart discounts were applied', 'woocommerce-jetpack' ),
@@ -62,7 +68,7 @@ $settings = array(
 		'css'      => 'width:100%;',
 	),
 	array(
-		'title'    => __( 'Discount Type', 'woocommerce-jetpack' ),
+		'title'    => __( 'Discount type', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_discount_type',
 		'default'  => 'percent',
 		'type'     => 'select',
@@ -141,7 +147,7 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_wholesale_price_by_user_role_options',
 	),
 	array(
-		'title'    => __( 'User Roles Settings', 'woocommerce-jetpack' ),
+		'title'    => __( 'User roles settings', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Save settings after you change this option. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'type'     => 'multiselect',
 		'id'       => 'wcj_wholesale_price_by_user_role_roles',

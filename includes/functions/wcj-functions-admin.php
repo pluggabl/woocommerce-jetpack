@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -84,14 +84,20 @@ if ( ! function_exists( 'wcj_is_admin_product_edit_page' ) ) {
 	/**
 	 * wcj_is_admin_product_edit_page.
 	 *
-	 * @version 3.2.4
+	 * @version 3.5.4
 	 * @since   3.2.4
 	 * @todo    use where appropriate
 	 * @todo    (maybe) move to `wcj-functions-conditional.php`
 	 */
 	function wcj_is_admin_product_edit_page() {
 		global $pagenow;
-		return ( is_admin() && 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] && 'product' === get_post_type() );
+		if ( is_admin() && 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] && 'product' === get_post_type() ) {
+			return true;
+		} elseif ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX && isset( $_REQUEST['action'] ) && 'woocommerce_load_variations' === $_REQUEST['action'] ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 

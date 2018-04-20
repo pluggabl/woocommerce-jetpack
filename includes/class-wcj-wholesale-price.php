@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 3.4.0
+ * @version 3.5.4
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -68,17 +68,38 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	}
 
 	/**
+	 * get_quantity.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function get_quantity( $cart, $cart_item ) {
+		switch ( get_option( 'wcj_wholesale_price_use_total_cart_quantity', 'no' ) ) {
+			case 'total_wholesale': // Total cart quantity (wholesale products only)
+				$qty = $cart->cart_contents_count;
+				foreach ( $cart->cart_contents as $item_key => $item ) {
+					if ( ! wcj_is_product_wholesale_enabled( $item['product_id'] ) ) {
+						$qty -= $item['quantity'];
+					}
+				}
+				return $qty;
+			case 'yes':             // Total cart quantity
+				return $cart->cart_contents_count;
+			default: // 'no'        // Product quantity
+				return $cart_item['quantity'];
+		}
+	}
+
+	/**
 	 * add_discount_info_to_cart_page.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.4
 	 */
 	function add_discount_info_to_cart_page( $price_html, $cart_item, $cart_item_key ) {
 
 		if ( isset( $cart_item['wcj_wholesale_price'] ) ) {
-			$the_quantity = ( 'yes' === get_option( 'wcj_wholesale_price_use_total_cart_quantity', 'no' ) )
-				? WC()->cart->cart_contents_count
-				: $cart_item['quantity'];
-			$discount = $this->get_discount_by_quantity( $the_quantity, $cart_item['product_id'] );
+			$the_quantity = $this->get_quantity( WC()->cart, $cart_item );
+			$discount     = $this->get_discount_by_quantity( $the_quantity, $cart_item['product_id'] );
 			if ( 0 != $discount ) {
 				$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $cart_item['product_id'] ) )
 					? get_post_meta( $cart_item['product_id'], '_' . 'wcj_wholesale_price_discount_type', true )
@@ -230,9 +251,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			}
 
 			// Maybe set wholesale price
-			$the_quantity = ( 'yes' === get_option( 'wcj_wholesale_price_use_total_cart_quantity', 'no' ) )
-				? $cart->cart_contents_count
-				: $item['quantity'];
+			$the_quantity = $this->get_quantity( $cart, $item );
 			if ( $the_quantity > 0 ) {
 				$wholesale_price = $this->get_wholesale_price( $price, $the_quantity, wcj_get_product_id_or_variation_parent_id( $_product ) );
 				if ( 'yes' === get_option( 'wcj_wholesale_price_rounding_enabled', 'yes' ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.5.1
+ * @version 3.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -15,12 +15,12 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.5
+	 * @version 3.5.4
 	 * @todo    check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {
 		$this->customer_country_group_id = null;
-		if ( 'no' === get_option( 'wcj_price_by_country_for_bots_disabled', 'no' ) || ! wcj_is_bot() ) {
+		if ( ( 'no' === get_option( 'wcj_price_by_country_for_bots_disabled', 'no' ) || ! wcj_is_bot() ) && ! wcj_is_admin_product_edit_page() ) {
 			if ( in_array( get_option( 'wcj_price_by_country_customer_country_detection_method', 'by_ip' ), array( 'by_user_selection', 'by_ip_then_by_user_selection' ) ) ) {
 				if ( 'wc' === WCJ_SESSION_TYPE ) {
 					// `init()` executed on `init` hook because we need to use `WC()->session`
