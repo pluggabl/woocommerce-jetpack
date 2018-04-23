@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -14,6 +14,7 @@ $wcj_function_files = array(
 	'wcj-functions-debug.php',
 	'wcj-functions-admin.php',
 	'wcj-functions-general.php',
+	'wcj-functions-math.php',
 	'wcj-functions-shipping.php',
 	'wcj-functions-date-time.php',
 	'wcj-functions-crons.php',

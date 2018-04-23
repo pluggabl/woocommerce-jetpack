@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
- * @version 3.1.1
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -50,8 +50,38 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 		'type'     => 'text',
 	);
 }
-$settings[] = array(
-	'type'         => 'sectionend',
-	'id'           => 'wcj_product_price_by_formula_options',
-);
+$settings = array_merge( $settings, array(
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_price_by_formula_options',
+	),
+	array(
+		'title'    => __( 'General Settings', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_price_by_formula_general_options',
+	),
+	array(
+		'title'    => __( 'Rounding', 'woocommerce-jetpack' ),
+		'type'     => 'select',
+		'id'       => 'wcj_product_price_by_formula_rounding',
+		'default'  => 'no_rounding',
+		'options'  => array(
+			'no_rounding' => __( 'No rounding (disabled)', 'woocommerce-jetpack' ),
+			'round'       => __( 'Round', 'woocommerce-jetpack' ),
+			'wcj_ceil'    => __( 'Round up', 'woocommerce-jetpack' ),
+			'wcj_floor'   => __( 'Round down', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'rounding precision', 'woocommerce-jetpack' ),
+		'type'     => 'number',
+		'id'       => 'wcj_product_price_by_formula_rounding_precision',
+		'default'  => 0,
+		'custom_attributes' => array( 'min' => 0 ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_price_by_formula_general_options',
+	),
+) );
 return $settings;

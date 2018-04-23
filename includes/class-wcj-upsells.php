@@ -18,7 +18,6 @@ class WCJ_Upsells extends WCJ_Module {
 	 *
 	 * @version 3.5.4
 	 * @since   3.5.3
-	 * @todo    (maybe) Hide Upsells - maybe better by `remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );`
 	 * @todo    (maybe) use `apply_filters( 'woocommerce_upsell_display_args', array( 'posts_per_page' => $limit, 'orderby' => $orderby, 'columns' => $columns ) );`
 	 * @todo    (maybe) Global Upsells - on per category/tag basis
 	 * @todo    (maybe) Global Upsells - ids instead of list
@@ -40,8 +39,22 @@ class WCJ_Upsells extends WCJ_Module {
 				$upsell_ids_filter = ( WCJ_IS_WC_VERSION_BELOW_3 ? 'woocommerce_product_upsell_ids' : 'woocommerce_product_get_upsell_ids' );
 				add_filter( $upsell_ids_filter, array( $this, 'upsell_ids' ), PHP_INT_MAX, 2 );
 			}
+			if ( 'yes' === get_option( 'wcj_upsells_hide', 'no' ) ) {
+				add_action( 'init', array( $this, 'hide_upsells' ), PHP_INT_MAX );
+			}
 		}
 
+	}
+
+	/**
+	 * hide_upsells.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function hide_upsells() {
+		remove_action( 'woocommerce_after_single_product_summary', 'storefront_upsell_display',  15 );
+		remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_upsell_display', 15 );
 	}
 
 	/**
@@ -87,14 +100,11 @@ class WCJ_Upsells extends WCJ_Module {
 	/**
 	 * upsells_total.
 	 *
-	 * @version 3.5.3
+	 * @version 3.5.4
 	 * @since   3.5.3
 	 * @todo    (maybe) check for `isset( $args['posts_per_page'] )`
 	 */
 	function upsells_total( $limit ) {
-		if ( 'yes' === get_option( 'wcj_upsells_hide', 'no' ) ) {
-			return 0;
-		}
 		return ( 0 != ( $_limit = get_option( 'wcj_upsells_total', 0 ) ) ? $_limit : $limit );
 	}
 

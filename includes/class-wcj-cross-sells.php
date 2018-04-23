@@ -40,8 +40,21 @@ class WCJ_Cross_Sells extends WCJ_Module {
 					add_filter( 'woocommerce_product_get_cross_sell_ids', array( $this, 'cross_sells_ids' ), PHP_INT_MAX, 2 );
 				}
 			}
+			if ( 'yes' === get_option( 'wcj_cross_sells_hide', 'no' ) ) {
+				add_action( 'init', array( $this, 'hide_cross_sells' ), PHP_INT_MAX );
+			}
 		}
 
+	}
+
+	/**
+	 * hide_cross_sells.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function hide_cross_sells() {
+		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
 	}
 
 	/**
@@ -98,13 +111,10 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * cross_sells_total.
 	 *
-	 * @version 3.5.3
+	 * @version 3.5.4
 	 * @since   3.5.3
 	 */
 	function cross_sells_total( $limit ) {
-		if ( 'yes' === get_option( 'wcj_cross_sells_hide', 'no' ) ) {
-			return 0;
-		}
 		return ( 0 != ( $_limit = get_option( 'wcj_cross_sells_total', 0 ) ) ? $_limit : $limit );
 	}
 

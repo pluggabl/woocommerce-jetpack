@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by User Role
  *
- * @version 3.1.0
+ * @version 3.5.4
  * @since   2.5.5
  * @author  Algoritmika Ltd.
  */
@@ -16,9 +16,9 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.5.4
 	 * @since   2.5.5
-	 * @todo    add "Admin Products List Column" option (same as in "Product Visibility by Country" module)
+	 * @todo    add "Quick and bulk edit" options to all product visibility modules
 	 */
 	function __construct() {
 
@@ -43,7 +43,113 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 					add_action( 'pre_get_posts',                  array( $this, 'product_by_user_role_pre_get_posts' ) );
 				}
 			}
+			// Quick and bulk edit
+			if (
+				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_by_user_role_admin_bulk_edit', 'no' ) ) ||
+				'yes' === get_option( 'wcj_product_by_user_role_admin_quick_edit', 'no' )
+			) {
+				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_by_user_role_admin_bulk_edit', 'no' ) ) ) {
+					add_action( 'woocommerce_product_bulk_edit_end', array( $this, 'add_bulk_and_quick_edit_fields' ), PHP_INT_MAX );
+				}
+				if ( 'yes' === get_option( 'wcj_product_by_user_role_admin_quick_edit', 'no' ) ) {
+					add_action( 'woocommerce_product_quick_edit_end', array( $this, 'add_bulk_and_quick_edit_fields' ), PHP_INT_MAX );
+				}
+				add_action( 'woocommerce_product_bulk_and_quick_edit', array( $this, 'save_bulk_and_quick_edit_fields' ), PHP_INT_MAX, 2 );
+			}
+			// Admin products list
+			if ( 'yes' === get_option( 'wcj_product_by_user_role_admin_add_column', 'no' ) ) {
+				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),   PHP_INT_MAX );
+				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column' ), PHP_INT_MAX );
+			}
 		}
+	}
+
+	/**
+	 * add_product_columns.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function add_product_columns( $columns ) {
+		$columns[ 'wcj_product_by_user_role' ] = __( 'User Roles', 'woocommerce-jetpack' );
+		return $columns;
+	}
+
+	/**
+	 * render_product_column.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function render_product_column( $column ) {
+		if ( 'wcj_product_by_user_role' === $column ) {
+			$result = '';
+			if ( $user_roles = get_post_meta( get_the_ID(), '_' . 'wcj_product_by_user_role_visible', true ) ) {
+				if ( is_array( $user_roles ) ) {
+					$result .= '<span style="color:green;">' . implode( ', ', $user_roles ) . '</span>';
+				}
+			}
+			echo $result;
+		}
+	}
+
+	/**
+	 * add_bulk_and_quick_edit_fields.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function add_bulk_and_quick_edit_fields() {
+		$all_roles_options = '';
+		$all_roles_options .= '<option value="wcj_no_change" selected>' . __( '— No change —', 'woocommerce' ) . '</option>';
+		foreach ( wcj_get_user_roles_options() as $role_id => $role_desc ) {
+			$all_roles_options .= '<option value="' . $role_id . '">' . $role_desc . '</option>';
+		}
+		?><br class="clear" />
+		<label>
+			<span class="title"><?php esc_html_e( 'User roles: Visible', 'woocommerce-jetpack' ); ?></span>
+			<select multiple id="wcj_product_by_user_role_visible" name="wcj_product_by_user_role_visible[]">
+				<?php echo $all_roles_options; ?>
+			</select>
+		</label><?php
+	}
+
+	/**
+	 * save_bulk_and_quick_edit_fields.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function save_bulk_and_quick_edit_fields( $post_id, $post ) {
+		// If this is an autosave, our form has not been submitted, so we don't want to do anything.
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return $post_id;
+		}
+		// Don't save revisions and autosaves.
+		if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) || 'product' !== $post->post_type || ! current_user_can( 'edit_post', $post_id ) ) {
+			return $post_id;
+		}
+		// Check nonce.
+		if ( ! isset( $_REQUEST['woocommerce_quick_edit_nonce'] ) || ! wp_verify_nonce( $_REQUEST['woocommerce_quick_edit_nonce'], 'woocommerce_quick_edit_nonce' ) ) { // WPCS: input var ok, sanitization ok.
+			return $post_id;
+		}
+		// Check bulk or quick edit.
+		if ( ! empty( $_REQUEST['woocommerce_quick_edit'] ) ) { // WPCS: input var ok.
+			if ( 'no' === get_option( 'wcj_product_by_user_role_admin_quick_edit', 'no' ) ) {
+				return $post_id;
+			}
+		} else {
+			if ( 'no' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_by_user_role_admin_bulk_edit', 'no' ) ) ) {
+				return $post_id;
+			}
+		}
+		// Save.
+		if ( ! isset( $_REQUEST['wcj_product_by_user_role_visible'] ) ) {
+			update_post_meta( $post_id, '_' . 'wcj_product_by_user_role_visible', array() );
+		} elseif ( is_array( $_REQUEST['wcj_product_by_user_role_visible'] ) && ! in_array( 'wcj_no_change', $_REQUEST['wcj_product_by_user_role_visible'] ) ) {
+			update_post_meta( $post_id, '_' . 'wcj_product_by_user_role_visible', $_REQUEST['wcj_product_by_user_role_visible'] );
+		}
+		return $post_id;
 	}
 
 	/**

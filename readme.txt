@@ -184,9 +184,16 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 20/04/2018 =
-D T   * Dev - PRODUCTS - SKU - "Characters Case" option added.
-D X I * Dev - PRODUCTS - SKU - `{product_slug_acronym}`, `{parent_product_slug_acronym}`, `{attribute=X}`, `{parent_attribute=X}`, `{variation_attribute=X}` replaced values added.
+= 3.5.4 - 24/04/2018 =
+D T   * Dev - PRICES & CURRENCIES - Product Price by Formula - "Rounding" options added.
+      * Dev - Functions - Code refactoring - `wcj-functions-math.php` added.
+D T I * Dev - PRODUCTS - Product Visibility by User Role - "Admin Options" section added ("Quick Edit", "Bulk Edit" and "Products List Column" options).
+D T   * Fix - EMAILS & MISC. - Admin Bar - Checking for `current_user_can( 'manage_woocommerce' )` before displaying the menus.
+  T I * Fix - PRODUCTS - Cross-sells - Hide Cross-sells - Fixed.
+  T I * Fix - PRODUCTS - Upsells - Hide Upsells - Fixed.
+D W   * Dev - EMAILS & MISC. - User Tracking - Track Orders - "Order List Columns" option added.
+D     * Dev - PRODUCTS - SKU - "Characters Case" option added.
+D T I * Dev - PRODUCTS - SKU - `{product_slug_acronym}`, `{parent_product_slug_acronym}`, `{attribute=X}`, `{parent_attribute=X}`, `{variation_attribute=X}` replaced values added.
       * Dev - PRODUCTS - SKU - Minor code refactoring.
   T   * Fix - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - "European Union" selection fixed.
   T I * Fix - Functions - Admin - `wcj_is_admin_product_edit_page()` - AJAX loading variations included.

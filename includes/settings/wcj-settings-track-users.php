@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - User Tracking
  *
- * @version 3.1.3
+ * @version 3.5.4
  * @since   3.1.3
  * @author  Algoritmika Ltd.
  */
@@ -49,6 +49,22 @@ return array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'desc'     => __( 'Order List Columns: Referer', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'This will add "Referer" column to the <a href="%s">orders list</a>.', 'woocommerce-jetpack' ),
+			admin_url( 'edit.php?post_type=shop_order' ) ),
+		'id'       => 'wcj_track_users_shop_order_columns_referer',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Order List Columns: Referer Type', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'This will add "Referer Type" column to the <a href="%s">orders list</a>.', 'woocommerce-jetpack' ),
+			admin_url( 'edit.php?post_type=shop_order' ) ),
+		'id'       => 'wcj_track_users_shop_order_columns_referer_type',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',

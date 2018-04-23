@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 3.4.0
+ * @version 3.5.4
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -228,10 +228,13 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_active_admin_bar.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.4
 	 * @since   3.1.0
 	 */
 	function add_booster_active_admin_bar( $wp_admin_bar ) {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			return;
+		}
 		$tools = array(
 			'tools' => array(
 				'title'  => __( 'Tools', 'woocommerce-jetpack' ),
@@ -256,10 +259,13 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_admin_bar.
 	 *
-	 * @version 2.9.1
+	 * @version 3.5.4
 	 * @since   2.9.0
 	 */
 	function add_booster_admin_bar( $wp_admin_bar ) {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			return;
+		}
 		$nodes = array(
 			'booster' => array(
 				'title'  => '<span class="ab-icon"></span>' . __( 'Booster', 'woocommerce-jetpack' ),
@@ -328,7 +334,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_bar.
 	 *
-	 * @version 2.9.0
+	 * @version 3.5.4
 	 * @since   2.9.0
 	 * @todo    (maybe) reports > customers > customers > add dates
 	 * @todo    (maybe) reports > taxes > taxes_by_code > add dates
@@ -337,6 +343,9 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	 * @todo    (maybe) extensions > add sections
 	 */
 	function add_woocommerce_admin_bar( $wp_admin_bar ) {
+		if ( ! current_user_can( 'manage_woocommerce' ) ) {
+			return;
+		}
 		$nodes = array(
 			'wcj-wc' => array(
 				'title'  => '<span class="ab-icon"></span>' . __( 'WooCommerce', 'woocommerce' ),

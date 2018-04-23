@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 3.0.0
+ * @version 3.5.4
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.0
+	 * @version 3.5.4
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -39,6 +39,9 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 
 			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
+
+			$this->rounding           = get_option( 'wcj_product_price_by_formula_rounding', 'no_rounding' );
+			$this->rounding_precision = get_option( 'wcj_product_price_by_formula_rounding_precision', 0 );
 		}
 	}
 
@@ -65,7 +68,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.7.0
+	 * @version 3.5.4
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product, $output_errors = false ) {
@@ -105,6 +108,9 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 							echo '<p style="color:red;">' . __( 'Error in formula', 'woocommerce-jetpack' ) . ': ' . $e->getMessage() . '</p>';
 						}
 					}
+					if ( 'no_rounding' != $this->rounding ) {
+						$price = wcj_round( $price, $this->rounding_precision, $this->rounding );
+					}
 				}
 			}
 		}
@@ -114,7 +120,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 2.7.0
+	 * @version 3.5.4
 	 * @since   2.5.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
@@ -126,9 +132,11 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 				$the_params[] = get_option( 'wcj_product_price_by_formula_param_' . $i, '' );
 			}
 			$price_hash['wcj_price_by_formula'] = array(
-				$the_formula,
-				$total_params,
-				$the_params,
+				'formula'            => $the_formula,
+				'total_params'       => $total_params,
+				'params'             => $the_params,
+				'rounding'           => $this->rounding,
+				'rounding_precision' => $this->rounding_precision,
 			);
 		}
 		return $price_hash;
