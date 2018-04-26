@@ -43,8 +43,23 @@ class WCJ_Cross_Sells extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_cross_sells_hide', 'no' ) ) {
 				add_action( 'init', array( $this, 'hide_cross_sells' ), PHP_INT_MAX );
 			}
+			if ( 'no_changes' != get_option( 'wcj_cross_sells_position', 'no_changes' ) ) {
+				add_action( 'init', array( $this, 'reposition_cross_sells' ), PHP_INT_MAX );
+			}
 		}
 
+	}
+
+	/**
+	 * reposition_cross_sells.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 * @todo    (maybe) check `woocommerce\templates\cart\cart.php` for more positions
+	 */
+	function reposition_cross_sells() {
+		$this->hide_cross_sells();
+		add_action( get_option( 'wcj_cross_sells_position', 'no_changes' ), 'woocommerce_cross_sell_display', get_option( 'wcj_cross_sells_position_priority', 10 ) );
 	}
 
 	/**

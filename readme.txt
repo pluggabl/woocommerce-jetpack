@@ -184,7 +184,15 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 24/04/2018 =
+= 3.5.4 - 26/04/2018 =
+D T I * Dev - PRICES & CURRENCIES - Price by User Role - Price by User Role by Products Categories/Tags - Negative multiplier option added (and default multipliers set to `-1`).
+  W I * Dev - PRODUCTS - Product Visibility by Country - WPML support added.
+  W I * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - WPML support added.
+D T I * Dev - PRODUCTS - Stock - Major code refactoring.
+D W   * Dev - PRODUCTS - Stock - Custom "In Stock" - "Low amount" and "Can be backordered" text options added.
+D     * Dev - PRODUCTS - Stock - Custom "Available on backorder" - Section added.
+D T   * Dev - PRODUCTS - Cross-sells - "Cross-sells Position in Cart" option added.
+  W I * Dev - PRODUCTS - Product Visibility by User Role - WPML support added.
 D T   * Dev - PRICES & CURRENCIES - Product Price by Formula - "Rounding" options added.
       * Dev - Functions - Code refactoring - `wcj-functions-math.php` added.
 D T I * Dev - PRODUCTS - Product Visibility by User Role - "Admin Options" section added ("Quick Edit", "Bulk Edit" and "Products List Column" options).
@@ -212,7 +220,6 @@ D   P * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Check
 D     * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Fields to Disable - "Billing country" and "Shipping country" fields added.
 D X I * Dev - "Standard PHP sessions" is now the default option for `WCJ_SESSION_TYPE`. Affected modules: Checkout Files Upload, EU VAT Number, Multicurrency (Currency Switcher), Product Visibility by Country, Product Custom Visibility, Tax Display, Prices and Currencies by Country.
   T I * Dev - Classes - `WCJ_Module` - `save_meta_box()` - Global post setup added.
-D W   * Dev - PRODUCTS - Stock - 'Custom "Available on backorder"' section added.
 D     * Dev - PRODUCTS - Product Addons - Shortcodes are now processed in labels, titles, placeholders and tooltips.
 D W P * Dev - CART & CHECKOUT - Checkout Core Fields - "description" options added to each field.
 

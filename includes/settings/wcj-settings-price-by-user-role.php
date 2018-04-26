@@ -169,10 +169,11 @@ foreach ( $taxonomies as $taxonomy ) {
 				$settings = array_merge( $settings, array(
 					array(
 						'title'    => $product_taxonomies_options[ $_taxonomy ] . ': ' . $role_data['name'],
+						'desc_tip' => __( 'Multiplier is ignored if set to negative number (e.g.: -1). Global multiplier will be used instead.', 'woocommerce-jetpack' ),
 						'id'       => 'wcj_price_by_user_role_' . $taxonomy['option_id'] . '_' . $_taxonomy . '_' . $role_key,
-						'default'  => 1,
+						'default'  => -1,
 						'type'     => 'wcj_number_plus_checkbox_start',
-						'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0', ),
+						'custom_attributes' => array( 'step' => '0.000001', 'min' => -1 ),
 					),
 					array(
 						'desc'     => __( 'Make Empty Price', 'woocommerce-jetpack' ),

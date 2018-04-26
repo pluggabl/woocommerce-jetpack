@@ -2,12 +2,28 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.5.1
+ * @version 3.5.4
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_maybe_get_product_id_wpml' ) ) {
+	/**
+	 * wcj_maybe_get_product_id_wpml.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function wcj_maybe_get_product_id_wpml( $product_id ) {
+		if ( function_exists( 'icl_object_id' ) ) {
+			global $sitepress;
+			$product_id = icl_object_id( $product_id, 'product', true, $sitepress->get_default_language() );
+		}
+		return $product_id;
+	}
+}
 
 if ( ! function_exists( 'wcj_is_enabled_for_product' ) ) {
 	/*

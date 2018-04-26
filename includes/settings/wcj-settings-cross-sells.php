@@ -63,6 +63,25 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3_3_0 ) {
 };
 $settings = array_merge( $settings, array(
 	array(
+		'title'    => __( 'Cross-sells Position in Cart', 'woocommerce-jetpack' ),
+		'type'     => 'select',
+		'id'       => 'wcj_cross_sells_position',
+		'default'  => 'no_changes',
+		'options'  => array(
+			'no_changes'                   => __( 'No changes (default)', 'woocommerce-jetpack' ),
+			'woocommerce_before_cart'      => __( 'Before cart', 'woocommerce-jetpack' ),
+			'woocommerce_cart_collaterals' => __( 'Cart collaterals', 'woocommerce-jetpack' ),
+			'woocommerce_after_cart'       => __( 'After cart', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Position priority', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Ignored if "Cross-sells Position in Cart" option above is set to "No changes (default)".', 'woocommerce-jetpack' ),
+		'type'     => 'number',
+		'id'       => 'wcj_cross_sells_position_priority',
+		'default'  => 10,
+	),
+	array(
 		'title'    => __( 'Hide Cross-sells', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
 		'type'     => 'checkbox',

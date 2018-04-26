@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -73,21 +73,21 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * render_product_column.
 	 *
-	 * @version 3.1.1
+	 * @version 3.5.4
 	 * @since   2.9.0
 	 */
 	function render_product_column( $column ) {
 		if ( 'wcj_product_by_country_visible_countries' === $column ) {
 			$result = '';
 			if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
-				if ( $countries = get_post_meta( get_the_ID(), '_' . 'wcj_product_by_country_visible', true ) ) {
+				if ( $countries = get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_' . 'wcj_product_by_country_visible', true ) ) {
 					if ( is_array( $countries ) ) {
 						$result .= '<span style="color:green;">' . implode( ', ', $countries ) . '</span>';
 					}
 				}
 			}
 			if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
-				if ( $countries = get_post_meta( get_the_ID(), '_' . 'wcj_product_by_country_invisible', true ) ) {
+				if ( $countries = get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_' . 'wcj_product_by_country_invisible', true ) ) {
 					if ( is_array( $countries ) ) {
 						if ( '' != $result ) {
 							$result .= '<br>';
@@ -172,12 +172,12 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * is_product_visible_in_country.
 	 *
-	 * @version 3.1.1
+	 * @version 3.5.4
 	 * @since   3.1.0
 	 */
 	function is_product_visible_in_country( $product_id, $country ) {
 		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
-			$countries = get_post_meta( $product_id, '_' . 'wcj_product_by_country_visible', true );
+			$countries = get_post_meta( wcj_maybe_get_product_id_wpml( $product_id ), '_' . 'wcj_product_by_country_visible', true );
 			if ( ! empty( $countries ) && is_array( $countries ) ) {
 				if ( in_array( 'EU', $countries ) ) {
 					$countries = array_merge( $countries, wcj_get_european_union_countries() );
@@ -188,7 +188,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 			}
 		}
 		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
-			$countries = get_post_meta( $product_id, '_' . 'wcj_product_by_country_invisible', true );
+			$countries = get_post_meta( wcj_maybe_get_product_id_wpml( $product_id ), '_' . 'wcj_product_by_country_invisible', true );
 			if ( ! empty( $countries ) && is_array( $countries ) ) {
 				if ( in_array( 'EU', $countries ) ) {
 					$countries = array_merge( $countries, wcj_get_european_union_countries() );

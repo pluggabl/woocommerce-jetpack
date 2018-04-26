@@ -161,6 +161,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 *
 	 * @version 3.5.4
 	 * @since   2.5.0
+	 * @todo    (maybe) add "enable compound multipliers" option
+	 * @todo    (maybe) check for `( '' === $price )` only once, at the beginning of the function (instead of comparing before each `return`)
 	 * @todo    (maybe) code refactoring (cats/tags)
 	 */
 	function change_price( $price, $_product ) {
@@ -261,8 +263,9 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 							if ( 'yes' === get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $current_user_role, 'no' ) ) {
 								return '';
 							}
-							$koef_category = get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $current_user_role, 1 );
-							return ( '' === $price ) ? $price : $price * $koef_category;
+							if ( ( $koef_category = get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $current_user_role, -1 ) ) >= 0 ) {
+								return ( '' === $price ) ? $price : $price * $koef_category;
+							}
 						}
 					}
 				}
@@ -280,8 +283,9 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 							if ( 'yes' === get_option( 'wcj_price_by_user_role_tag_empty_price_' . $tag . '_' . $current_user_role, 'no' ) ) {
 								return '';
 							}
-							$koef_tag = get_option( 'wcj_price_by_user_role_tag_' . $tag . '_' . $current_user_role, 1 );
-							return ( '' === $price ) ? $price : $price * $koef_tag;
+							if ( ( $koef_tag = get_option( 'wcj_price_by_user_role_tag_' . $tag . '_' . $current_user_role, -1 ) ) >= 0 ) {
+								return ( '' === $price ) ? $price : $price * $koef_tag;
+							}
 						}
 					}
 				}
@@ -303,7 +307,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @since   2.5.0
 	 * @todo    only hash categories that is relevant to the product
 	 * @todo    (maybe) code refactoring (cats/tags)
@@ -326,13 +330,13 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 		if ( ! empty( $categories ) ) {
 			foreach ( $categories as $category ) {
 				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $user_role, 'no' );
-				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $user_role, 1 );
+				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $user_role, -1 );
 			}
 		}
 		if ( ! empty( $tags ) ) {
 			foreach ( $tags as $tag ) {
 				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_tag_empty_price_' . $tag . '_' . $user_role, 'no' );
-				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_tag_' . $tag . '_' . $user_role, 1 );
+				$price_hash['wcj_user_role'][] = get_option( 'wcj_price_by_user_role_tag_' . $tag . '_' . $user_role, -1 );
 			}
 		}
 		return $price_hash;

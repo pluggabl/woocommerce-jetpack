@@ -155,7 +155,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * product_by_user_role_pre_get_posts.
 	 *
-	 * @version 3.1.0
+	 * @version 3.5.4
 	 * @since   2.6.0
 	 * @todo    (maybe) add global function for this, as similar code is in "Product Visibility by Country" module
 	 * @todo    check if `purchasable` and `pre_get_posts` hooks should be added to other "Product Visibility" modules
@@ -171,7 +171,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 		$args['fields'] = 'ids';
 		$loop = new WP_Query( $args );
 		foreach ( $loop->posts as $product_id ) {
-			$visible_user_roles = get_post_meta( $product_id, '_' . 'wcj_product_by_user_role_visible', true );
+			$visible_user_roles = get_post_meta( wcj_maybe_get_product_id_wpml( $product_id ), '_' . 'wcj_product_by_user_role_visible', true );
 			if ( is_array( $visible_user_roles ) && ! empty( $visible_user_roles ) ) {
 				$the_intersect = array_intersect( $visible_user_roles, $current_user_roles );
 				if ( empty( $the_intersect ) ) {
@@ -196,11 +196,11 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * product_by_user_role_visibility.
 	 *
-	 * @version 2.6.0
+	 * @version 3.5.4
 	 * @since   2.5.5
 	 */
 	function product_by_user_role_visibility( $visible, $product_id ) {
-		$visible_user_roles = get_post_meta( $product_id, '_' . 'wcj_product_by_user_role_visible', true );
+		$visible_user_roles = get_post_meta( wcj_maybe_get_product_id_wpml( $product_id ), '_' . 'wcj_product_by_user_role_visible', true );
 		if ( is_array( $visible_user_roles ) && ! empty( $visible_user_roles ) ) {
 			$current_user_roles = wcj_get_current_user_all_roles();
 			$the_intersect = array_intersect( $visible_user_roles, $current_user_roles );

@@ -40,21 +40,6 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	}
 
 	/**
-	 * get_product_id.
-	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
-	 */
-	function get_product_id() {
-		$product_id = get_the_ID();
-		if ( function_exists( 'icl_object_id' ) ) { // WPML stuff
-			global $sitepress;
-			$product_id = icl_object_id( $product_id, 'product', true, $sitepress->get_default_language() );
-		}
-		return $product_id;
-	}
-
-	/**
 	 * enqueue_admin_scripts.
 	 *
 	 * @version 3.2.4
@@ -190,7 +175,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 */
 	function customize_product_tabs( $tabs ) {
 
-		$product_id = $this->get_product_id();
+		$product_id = wcj_maybe_get_product_id_wpml( get_the_ID() );
 
 		// Default Tabs
 		$tabs = $this->customize_default_tabs( $tabs );
@@ -450,7 +435,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 * @since   2.8.0
 	 */
 	function maybe_add_js_links() {
-		$current_post_id = $this->get_product_id();
+		$current_post_id = wcj_maybe_get_product_id_wpml( get_the_ID() );
 		// Global tabs
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_custom_product_tabs_global_total_number', 1 ) ); $i++ ) {
 			if ( $this->is_global_tab_visible( $i, $current_post_id ) ) {
@@ -502,7 +487,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 * @version 3.5.4
 	 */
 	function create_new_custom_product_tab_local( $key, $tab ) {
-		echo $this->get_tab_output( get_post_meta( $this->get_product_id(), '_' . 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) );
+		echo $this->get_tab_output( get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_' . 'wcj_custom_product_tabs_content_' . $this->tab_option_keys['local'][ $key ], true ) );
 	}
 
 	/**
@@ -575,7 +560,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	 */
 	function create_custom_tabs_meta_box() {
 
-		$current_post_id = $this->get_product_id();
+		$current_post_id = wcj_maybe_get_product_id_wpml( get_the_ID() );
 		$option_name = 'wcj_custom_product_tabs_local_total_number';
 		if ( ! ( $total_custom_tabs = get_post_meta( $current_post_id, '_' . $option_name, true ) ) )
 			$total_custom_tabs = apply_filters( 'booster_option', 1, get_option( 'wcj_custom_product_tabs_local_total_number_default', 1 ) );

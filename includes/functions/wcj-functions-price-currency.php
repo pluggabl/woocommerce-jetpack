@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.5.1
+ * @version 3.5.4
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -198,7 +198,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 	/**
 	 * wcj_price_by_country.
 	 *
-	 * @version 2.7.0
+	 * @version 3.5.4
 	 * @since   2.5.3
 	 */
 	function wcj_price_by_country( $price, $product, $group_id, $the_current_filter = '' ) {
@@ -215,6 +215,8 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 			} else {
 				$the_product_id = wcj_get_product_id( $product );
 			}
+
+			$the_product_id = wcj_maybe_get_product_id_wpml( $the_product_id );
 
 			$meta_id = '_' . 'wcj_' . $meta_box_id . '_make_empty_price_' . $scope . '_' . $group_id;
 			if ( 'on' === get_post_meta( $the_product_id, $meta_id, true ) ) {
@@ -245,8 +247,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 					$price_by_country = $regular_price;
 				}
 
-			}
-			elseif (
+			} elseif (
 				WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER              == $the_current_filter ||
 				WCJ_PRODUCT_GET_SALE_PRICE_FILTER                 == $the_current_filter ||
 				'woocommerce_variation_prices_regular_price'      == $the_current_filter ||
