@@ -184,7 +184,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 26/04/2018 =
+= 3.5.4 - 28/04/2018 =
+  T I * Fix - PRODUCTS - Product Visibility by Country - Modify Query - Pagination issue fixed.
+  T I * Fix - PRODUCTS - Product Custom Visibility - Modify Query - Pagination issue fixed.
+  T I * Fix - PRODUCTS - Product Visibility by User Role - Modify Query - Pagination issue fixed.
+  T   * Dev - PRODUCTS - Product Visibility by User Role - Code refactoring.
 D T I * Dev - PRICES & CURRENCIES - Price by User Role - Price by User Role by Products Categories/Tags - Negative multiplier option added (and default multipliers set to `-1`).
   W I * Dev - PRODUCTS - Product Visibility by Country - WPML support added.
   W I * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - WPML support added.

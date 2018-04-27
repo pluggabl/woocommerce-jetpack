@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Custom Visibility
  *
- * @version 3.2.4
+ * @version 3.5.4
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -58,7 +58,7 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module {
 	/**
 	 * product_custom_visibility_pre_get_posts.
 	 *
-	 * @version 3.2.4
+	 * @version 3.5.4
 	 * @since   3.2.4
 	 */
 	function product_custom_visibility_pre_get_posts( $query ) {
@@ -66,11 +66,21 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module {
 			return;
 		}
 		remove_action( 'pre_get_posts', array( $this, 'product_custom_visibility_pre_get_posts' ) );
-		$selection      = $this->get_selection();
-		$post__not_in   = $query->get( 'post__not_in' );
-		$args           = $query->query;
-		$args['fields'] = 'ids';
-		$loop           = new WP_Query( $args );
+		$selection    = $this->get_selection();
+		$post__not_in = $query->get( 'post__not_in' );
+		$args = array(
+			'post_type'      => 'product',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_query'     => array(
+				array(
+					'key'     => '_' . 'wcj_product_custom_visibility_visible',
+					'value'   => '',
+					'compare' => '!=',
+				),
+			),
+		);
+		$loop = new WP_Query( $args );
 		foreach ( $loop->posts as $product_id ) {
 			if ( ! $this->is_product_visible( $product_id, $selection ) ) {
 				$post__not_in[] = $product_id;

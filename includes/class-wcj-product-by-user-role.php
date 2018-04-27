@@ -157,8 +157,6 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	 *
 	 * @version 3.5.4
 	 * @since   2.6.0
-	 * @todo    (maybe) add global function for this, as similar code is in "Product Visibility by Country" module
-	 * @todo    check if `purchasable` and `pre_get_posts` hooks should be added to other "Product Visibility" modules
 	 */
 	function product_by_user_role_pre_get_posts( $query ) {
 		if ( is_admin() ) {
@@ -166,17 +164,23 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 		}
 		remove_action( 'pre_get_posts', array( $this, 'product_by_user_role_pre_get_posts' ) );
 		$current_user_roles = wcj_get_current_user_all_roles();
-		$post__not_in = $query->get( 'post__not_in' );
-		$args = $query->query;
-		$args['fields'] = 'ids';
+		$post__not_in       = $query->get( 'post__not_in' );
+		$args = array(
+			'post_type'      => 'product',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_query'     => array(
+				array(
+					'key'     => '_' . 'wcj_product_by_user_role_visible',
+					'value'   => '',
+					'compare' => '!=',
+				),
+			),
+		);
 		$loop = new WP_Query( $args );
 		foreach ( $loop->posts as $product_id ) {
-			$visible_user_roles = get_post_meta( wcj_maybe_get_product_id_wpml( $product_id ), '_' . 'wcj_product_by_user_role_visible', true );
-			if ( is_array( $visible_user_roles ) && ! empty( $visible_user_roles ) ) {
-				$the_intersect = array_intersect( $visible_user_roles, $current_user_roles );
-				if ( empty( $the_intersect ) ) {
-					$post__not_in[] = $product_id;
-				}
+			if ( ! $this->is_product_visible( $product_id, $current_user_roles ) ) {
+				$post__not_in[] = $product_id;
 			}
 		}
 		$query->set( 'post__not_in', $post__not_in );
@@ -186,11 +190,11 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	/**
 	 * product_by_user_role_purchasable.
 	 *
-	 * @version 2.7.0
+	 * @version 3.5.4
 	 * @since   2.6.0
 	 */
 	function product_by_user_role_purchasable( $purchasable, $_product ) {
-		return $this->product_by_user_role_visibility( $purchasable, wcj_get_product_id_or_variation_parent_id( $_product ) );
+		return ( ! $this->is_product_visible( wcj_get_product_id_or_variation_parent_id( $_product ), wcj_get_current_user_all_roles() ) ? false : $purchasable );
 	}
 
 	/**
@@ -200,15 +204,24 @@ class WCJ_Product_By_User_Role extends WCJ_Module {
 	 * @since   2.5.5
 	 */
 	function product_by_user_role_visibility( $visible, $product_id ) {
+		return ( ! $this->is_product_visible( $product_id, wcj_get_current_user_all_roles() ) ? false : $visible );
+	}
+
+	/**
+	 * is_product_visible.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function is_product_visible( $product_id, $current_user_roles ) {
 		$visible_user_roles = get_post_meta( wcj_maybe_get_product_id_wpml( $product_id ), '_' . 'wcj_product_by_user_role_visible', true );
 		if ( is_array( $visible_user_roles ) && ! empty( $visible_user_roles ) ) {
-			$current_user_roles = wcj_get_current_user_all_roles();
 			$the_intersect = array_intersect( $visible_user_roles, $current_user_roles );
 			if ( empty( $the_intersect ) ) {
 				return false;
 			}
 		}
-		return $visible;
+		return true;
 	}
 
 }

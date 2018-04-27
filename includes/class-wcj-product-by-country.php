@@ -105,6 +105,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
+	 * @todo    check if pagination needs to be fixed (as in `product_by_country_pre_get_posts()`)
 	 */
 	function products_widget_query( $query_args ) {
 		remove_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
@@ -127,7 +128,7 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	/**
 	 * product_by_country_pre_get_posts.
 	 *
-	 * @version 3.1.0
+	 * @version 3.5.4
 	 * @since   2.9.0
 	 */
 	function product_by_country_pre_get_posts( $query ) {
@@ -137,9 +138,31 @@ class WCJ_Product_By_Country extends WCJ_Module {
 		remove_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
 		$country        = $this->get_country();
 		$post__not_in   = $query->get( 'post__not_in' );
-		$args           = $query->query;
-		$args['fields'] = 'ids';
-		$loop           = new WP_Query( $args );
+		$meta_query     = array();
+		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
+			$meta_query[] = array(
+				'key'     => '_' . 'wcj_product_by_country_visible',
+				'value'   => '',
+				'compare' => '!=',
+			);
+		}
+		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
+			$meta_query[] = array(
+				'key'     => '_' . 'wcj_product_by_country_invisible',
+				'value'   => '',
+				'compare' => '!=',
+			);
+		}
+		if ( count( $meta_query ) > 1 ) {
+			$meta_query['relation'] = 'OR';
+		}
+		$args = array(
+			'post_type'      => 'product',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_query'     => $meta_query,
+		);
+		$loop = new WP_Query( $args );
 		foreach ( $loop->posts as $product_id ) {
 			if ( ! $this->is_product_visible_in_country( $product_id, $country ) ) {
 				$post__not_in[] = $product_id;
