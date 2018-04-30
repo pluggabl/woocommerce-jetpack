@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 3.4.5
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add "rounding" and "fixed offset" options for each pair separately (and option to enable/disable these per pair extra settings)
@@ -57,7 +57,7 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'desc'     => __( 'Rounding Precision', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Number of decimals', 'woocommerce' ) . ' (' . __( 'i.e. rounding precision', 'woocommerce-jetpack' ) . ')',
 		'desc_tip' => __( 'Rounding precision sets number of decimal digits to round to.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_exchange_rates_rounding_precision',
 		'default'  => 0,

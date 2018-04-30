@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -92,7 +92,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Add Invoices Report tool to WooCommerce menu (the content).
 	 *
-	 * @version 3.1.0
+	 * @version 3.5.4
 	 */
 	function create_invoices_report_tool() {
 		$result_message = '';
@@ -110,7 +110,6 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		$html = '';
 		$html .= '<div class="wrap">';
 		$html .= WCJ()->modules['pdf_invoicing']->get_tool_header_html( 'invoices_report' );
-		$html .= $result_message;
 		$html .= '<p><form method="post" action="">';
 		// Type
 		$invoice_type_select_html = '<select name="invoice_type" class="widefat">';
@@ -139,7 +138,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			// Get Report Button
 			array(
 				'',
-				'<input class="button-primary" type="submit" name="get_invoices_report" value="' .
+				'<input class="button-primary" style="background-color:#006799;" type="submit" name="get_invoices_report" value="' .
 					__( 'Display monthly documents table', 'woocommerce-jetpack' ) . '">',
 			),
 			// Get Report Zip Button
@@ -157,6 +156,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 		);
 		$html .= wcj_get_table_html( $data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
 		$html .= '</form></p>';
+		$html .= $result_message;
 		$html .= '</div>';
 		echo $html;
 	}
@@ -310,7 +310,7 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * Invoices Report Data function.
 	 *
-	 * @version 3.3.0
+	 * @version 3.5.4
 	 * @since   2.5.7
 	 */
 	function get_invoices_report_data( $year, $month, $invoice_type_id ) {
@@ -453,18 +453,18 @@ class WCJ_PDF_Invoicing_Report_Tool {
 			$offset += $block_size;
 		}
 
-		$headers = $this->get_headers( $columns );
+		$headers = $this->get_data_headers( $columns );
 
 		return ( ! empty( $data ) ? array_merge( array( $headers ), $data ) : array() );
 	}
 
 	/**
-	 * get_headers.
+	 * get_data_headers.
 	 *
-	 * @version 3.3.0
+	 * @version 3.5.4
 	 * @since   3.3.0
 	 */
-	function get_headers( $columns ) {
+	function get_data_headers( $columns ) {
 		$headers = array();
 		$all_headers = WCJ()->modules['pdf_invoicing_advanced']->get_report_columns();
 		foreach ( $columns as $column ) {

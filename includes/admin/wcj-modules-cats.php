@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 3.5.3
+ * @version 3.5.4
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -140,6 +140,7 @@ return apply_filters( 'wcj_modules', array(
 			'shipping_calculator',
 			'shipping_by_user_role',
 			'shipping_by_products',
+			'shipping_by_cities',
 			'shipping_by_order_amount',
 			'address_formats',
 			'orders',

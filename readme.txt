@@ -184,7 +184,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 28/04/2018 =
+= 3.5.4 - 30/04/2018 =
+D T I * Dev - SHIPPING & ORDERS - Shipping Methods by Cities - Initial module release.
+D T   * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report - Restyling. Code refactoring.
+D     * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Admin settings - Description updated.
   T I * Fix - PRODUCTS - Product Visibility by Country - Modify Query - Pagination issue fixed.
   T I * Fix - PRODUCTS - Product Custom Visibility - Modify Query - Pagination issue fixed.
   T I * Fix - PRODUCTS - Product Visibility by User Role - Modify Query - Pagination issue fixed.

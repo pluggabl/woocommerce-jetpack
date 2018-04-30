@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Shipping
  *
- * @version 3.5.1
+ * @version 3.5.4
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -180,7 +180,7 @@ if ( ! function_exists( 'wcj_get_woocommerce_package_rates_module_filter_priorit
 	/**
 	 * wcj_get_woocommerce_package_rates_module_filter_priority.
 	 *
-	 * @version 3.2.4
+	 * @version 3.5.4
 	 * @since   3.2.4
 	 * @todo    add `shipping_by_order_amount` module
 	 */
@@ -189,6 +189,7 @@ if ( ! function_exists( 'wcj_get_woocommerce_package_rates_module_filter_priorit
 			'shipping_options_hide_free_shipping'  => PHP_INT_MAX,
 			'shipping_by_products'                 => PHP_INT_MAX - 100,
 			'shipping_by_user_role'                => PHP_INT_MAX - 100,
+			'shipping_by_cities'                   => PHP_INT_MAX - 100,
 		);
 		return ( 0 != ( $priority = get_option( 'wcj_' . $module_id . '_filter_priority', 0 ) ) ?
 			$priority :

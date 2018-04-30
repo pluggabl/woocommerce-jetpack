@@ -58,10 +58,11 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	 * Output sections (modules) sub menu
 	 *
 	 * @version 3.4.0
+	 * @todo    (maybe) for case insensitive sorting: `array_multisort( array_map( 'strtolower', $menu ), $menu );` instead of `asort( $menu );` (see http://php.net/manual/en/function.asort.php)
 	 */
 	function output_sections_submenu() {
 		global $current_section;
-		$sections = $this->get_sections();
+		$sections    = $this->get_sections();
 		$current_cat = empty( $_REQUEST['wcj-cat'] ) ? 'dashboard' : sanitize_title( $_REQUEST['wcj-cat'] );
 		if ( 'dashboard' === $current_cat ) {
 

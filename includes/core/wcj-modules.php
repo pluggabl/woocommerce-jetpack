@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 3.5.3
+ * @version 3.5.4
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -80,6 +80,7 @@ $wcj_module_files = array(
 	'class-wcj-shipping-calculator.php',
 	'class-wcj-shipping-by-user-role.php',
 	'class-wcj-shipping-by-products.php',
+	'class-wcj-shipping-by-cities.php',
 	'class-wcj-shipping-by-order-amount.php',
 	'class-wcj-address-formats.php',
 	'class-wcj-orders.php',
