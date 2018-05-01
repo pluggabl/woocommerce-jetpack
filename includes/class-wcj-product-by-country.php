@@ -11,14 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WCJ_Product_By_Country' ) ) :
 
-class WCJ_Product_By_Country extends WCJ_Module {
+class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @since   2.5.0
-	 * @todo    ! add `wcj_product_by_country_query_widgets` option to all "Product Visibility ..." modules
 	 */
 	function __construct() {
 
@@ -27,201 +26,54 @@ class WCJ_Product_By_Country extends WCJ_Module {
 		$this->desc       = __( 'Display WooCommerce products by customer\'s country.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-visibility-by-country';
 		$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Visibility by Country" meta box to each product\'s edit page.', 'woocommerce-jetpack' );
+
+		$this->title      = __( 'Countries', 'woocommerce-jetpack' );
+
 		parent::__construct();
 
-		if ( $this->is_enabled() ) {
-			// Product meta box
-			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
-			// Core
-			if ( wcj_is_frontend() ) {
-				if ( 'yes' === get_option( 'wcj_product_by_country_visibility', 'yes' ) ) {
-					add_filter( 'woocommerce_product_is_visible', array( $this, 'product_by_country' ), PHP_INT_MAX, 2 );
-				}
-				if ( 'yes' === get_option( 'wcj_product_by_country_purchasable', 'no' ) ) {
-					add_filter( 'woocommerce_is_purchasable',     array( $this, 'product_by_country_purchasable' ), PHP_INT_MAX, 2 );
-				}
-				if ( 'yes' === get_option( 'wcj_product_by_country_query', 'no' ) ) {
-					add_action( 'pre_get_posts',                  array( $this, 'product_by_country_pre_get_posts' ) );
-					if ( 'yes' === get_option( 'wcj_product_by_country_query_widgets', 'no' ) ) {
-						add_filter( 'woocommerce_products_widget_query_args', array( $this, 'products_widget_query' ), PHP_INT_MAX );
-					}
-				}
-				if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
-					add_action( 'init',                           array( $this, 'save_country_in_session' ), PHP_INT_MAX ) ;
-				}
-			}
-			// Admin products list
-			if ( 'yes' === get_option( 'wcj_product_by_country_add_column_visible_countries', 'no' ) ) {
-				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),   PHP_INT_MAX );
-				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column' ), PHP_INT_MAX );
-			}
-		}
 	}
 
 	/**
-	 * add_product_columns.
-	 *
-	 * @version 2.9.0
-	 * @since   2.9.0
-	 */
-	function add_product_columns( $columns ) {
-		$columns[ 'wcj_product_by_country_visible_countries' ] = __( 'Countries', 'woocommerce-jetpack' );
-		return $columns;
-	}
-
-	/**
-	 * render_product_column.
+	 * get_options_list.
 	 *
 	 * @version 3.5.4
-	 * @since   2.9.0
+	 * @since   3.5.4
 	 */
-	function render_product_column( $column ) {
-		if ( 'wcj_product_by_country_visible_countries' === $column ) {
-			$result = '';
-			if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
-				if ( $countries = get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_' . 'wcj_product_by_country_visible', true ) ) {
-					if ( is_array( $countries ) ) {
-						$result .= '<span style="color:green;">' . implode( ', ', $countries ) . '</span>';
-					}
-				}
-			}
-			if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
-				if ( $countries = get_post_meta( wcj_maybe_get_product_id_wpml( get_the_ID() ), '_' . 'wcj_product_by_country_invisible', true ) ) {
-					if ( is_array( $countries ) ) {
-						if ( '' != $result ) {
-							$result .= '<br>';
-						}
-						$result .= '<span style="color:red;">' . implode( ', ', $countries ) . '</span>';
-					}
-				}
-			}
-			echo $result;
-		}
+	function get_options_list() {
+		return ( 'wc' === apply_filters( 'booster_option', 'all', get_option( 'wcj_product_by_country_country_list', 'all' ) ) ?
+			WC()->countries->get_allowed_countries() : wcj_get_countries() );
 	}
 
 	/**
-	 * products_widget_query.
-	 *
-	 * @version 3.5.0
-	 * @since   3.5.0
-	 * @todo    check if pagination needs to be fixed (as in `product_by_country_pre_get_posts()`)
-	 */
-	function products_widget_query( $query_args ) {
-		remove_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
-		$country        = $this->get_country();
-		$post__not_in = ( isset( $query_args['post__not_in'] ) ? $query_args['post__not_in'] : array() );
-		$args           = $query_args;
-		$args['fields'] = 'ids';
-		$args['posts_per_page'] = -1;
-		$loop           = new WP_Query( $args );
-		foreach ( $loop->posts as $product_id ) {
-			if ( ! $this->is_product_visible_in_country( $product_id, $country ) ) {
-				$post__not_in[] = $product_id;
-			}
-		}
-		$query_args['post__not_in'] = $post__not_in;
-		add_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
-		return $query_args;
-	}
-
-	/**
-	 * product_by_country_pre_get_posts.
+	 * get_check_option.
 	 *
 	 * @version 3.5.4
-	 * @since   2.9.0
+	 * @since   3.5.4
 	 */
-	function product_by_country_pre_get_posts( $query ) {
-		if ( is_admin() ) {
-			return;
-		}
-		remove_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
-		$country        = $this->get_country();
-		$post__not_in   = $query->get( 'post__not_in' );
-		$meta_query     = array();
-		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
-			$meta_query[] = array(
-				'key'     => '_' . 'wcj_product_by_country_visible',
-				'value'   => '',
-				'compare' => '!=',
-			);
-		}
-		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
-			$meta_query[] = array(
-				'key'     => '_' . 'wcj_product_by_country_invisible',
-				'value'   => '',
-				'compare' => '!=',
-			);
-		}
-		if ( count( $meta_query ) > 1 ) {
-			$meta_query['relation'] = 'OR';
-		}
-		$args = array(
-			'post_type'      => 'product',
-			'posts_per_page' => -1,
-			'fields'         => 'ids',
-			'meta_query'     => $meta_query,
-		);
-		$loop = new WP_Query( $args );
-		foreach ( $loop->posts as $product_id ) {
-			if ( ! $this->is_product_visible_in_country( $product_id, $country ) ) {
-				$post__not_in[] = $product_id;
+	function get_check_option() {
+		if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
+			if ( '' == wcj_session_get( 'wcj_selected_country' ) ) {
+				$country = wcj_get_country_by_ip();
+				wcj_session_set( 'wcj_selected_country', $country );
+				return $country;
+			} else {
+				return wcj_session_get( 'wcj_selected_country' );
 			}
+		} else {
+			return wcj_get_country_by_ip();
 		}
-		$query->set( 'post__not_in', $post__not_in );
-		add_action( 'pre_get_posts', array( $this, 'product_by_country_pre_get_posts' ) );
 	}
 
 	/**
-	 * product_by_country_purchasable.
-	 *
-	 * @version 3.1.0
-	 * @since   2.9.0
-	 */
-	function product_by_country_purchasable( $purchasable, $_product ) {
-		return ( ! $this->is_product_visible_in_country( wcj_get_product_id_or_variation_parent_id( $_product ), $this->get_country() ) ? false : $purchasable );
-	}
-
-	/**
-	 * product_by_country.
-	 *
-	 * @version 3.1.0
-	 * @since   2.5.0
-	 */
-	function product_by_country( $visible, $product_id ) {
-		return ( ! $this->is_product_visible_in_country( $product_id, $this->get_country() ) ? false : $visible );
-	}
-
-	/**
-	 * is_product_visible_in_country.
+	 * maybe_add_extra_frontend_filters.
 	 *
 	 * @version 3.5.4
-	 * @since   3.1.0
+	 * @since   3.5.4
 	 */
-	function is_product_visible_in_country( $product_id, $country ) {
-		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
-			$countries = get_post_meta( wcj_maybe_get_product_id_wpml( $product_id ), '_' . 'wcj_product_by_country_visible', true );
-			if ( ! empty( $countries ) && is_array( $countries ) ) {
-				if ( in_array( 'EU', $countries ) ) {
-					$countries = array_merge( $countries, wcj_get_european_union_countries() );
-				}
-				if ( ! in_array( $country, $countries ) ) {
-					return false;
-				}
-			}
+	function maybe_add_extra_frontend_filters() {
+		if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
+			add_action( 'init', array( $this, 'save_country_in_session' ), PHP_INT_MAX ) ;
 		}
-		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_product_by_country_visibility_method', 'visible' ) ) ) {
-			$countries = get_post_meta( wcj_maybe_get_product_id_wpml( $product_id ), '_' . 'wcj_product_by_country_invisible', true );
-			if ( ! empty( $countries ) && is_array( $countries ) ) {
-				if ( in_array( 'EU', $countries ) ) {
-					$countries = array_merge( $countries, wcj_get_european_union_countries() );
-				}
-				if ( in_array( $country, $countries ) ) {
-					return false;
-				}
-			}
-		}
-		return true;
 	}
 
 	/**
@@ -238,23 +90,81 @@ class WCJ_Product_By_Country extends WCJ_Module {
 	}
 
 	/**
-	 * get_country.
+	 * maybe_extra_options_process.
 	 *
-	 * @version 3.2.4
-	 * @since   3.1.0
+	 * @version 3.5.4
+	 * @since   3.5.4
 	 */
-	function get_country() {
-		if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
-			if ( '' == wcj_session_get( 'wcj_selected_country' ) ) {
-				$country = wcj_get_country_by_ip();
-				wcj_session_set( 'wcj_selected_country', $country );
-				return $country;
-			} else {
-				return wcj_session_get( 'wcj_selected_country' );
-			}
-		} else {
-			return wcj_get_country_by_ip();
+	function maybe_extra_options_process( $options ) {
+		if ( in_array( 'EU', $options ) ) {
+			$options = array_merge( $options, wcj_get_european_union_countries() );
 		}
+		return $options;
+	}
+
+	/**
+	 * maybe_add_extra_settings.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 * @todo    (maybe) move "Country List" inside the "Admin Options" section
+	 */
+	function maybe_add_extra_settings() {
+		return array(
+			array(
+				'title'    => __( 'User Country Selection Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_by_country_selection_options',
+			),
+			array(
+				'title'    => __( 'User Country Selection Method', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Possible values: "Automatically by IP" or "Manually".', 'woocommerce-jetpack' ),
+				'desc'     => sprintf(
+					'<p>' . __( 'If "Manually" option is selected, you can add country selection drop box to frontend with "%s" widget or %s shortcode.', 'woocommerce-jetpack' ),
+						__( 'Booster - Selector', 'woocommerce-jetpack' ),
+						'<code>' . '[wcj_selector selector_type="country"]' . '</code>' ) .
+					'<br>' . apply_filters( 'booster_message', '', 'desc' ) . '</p>',
+				'id'       => 'wcj_product_by_country_selection_method',
+				'default'  => 'by_ip',
+				'type'     => 'select',
+				'options'  => array(
+					'by_ip'  => __( 'Automatically by IP', 'woocommerce-jetpack' ),
+					'manual' => __( 'Manually', 'woocommerce-jetpack' ),
+				),
+				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+				'css'      => 'min-width:250px;',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_by_country_selection_options',
+			),
+			array(
+				'title'    => __( 'Admin Country List Options', 'woocommerce-jetpack' ),
+				'type'     => 'title',
+				'id'       => 'wcj_product_by_country_admin_country_list_options',
+			),
+			array(
+				'title'    => __( 'Country List', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'This option sets which countries will be added to list in product\'s edit page. Possible values: "All countries" or "WooCommerce selling locations".', 'woocommerce-jetpack' ),
+				'desc'     => sprintf(
+					'<p>' . __( 'If "WooCommerce selling locations" option is selected, country list will be set by <a href="%s">WooCommerce > Settings > General > Selling location(s)</a>.', 'woocommerce-jetpack' ),
+						admin_url( 'admin.php?page=wc-settings' ) ) .
+					'<br>' . apply_filters( 'booster_message', '', 'desc' ) . '</p>',
+				'id'       => 'wcj_product_by_country_country_list',
+				'default'  => 'all',
+				'type'     => 'select',
+				'options'  => array(
+					'all' => __( 'All countries', 'woocommerce-jetpack' ),
+					'wc'  => __( 'WooCommerce selling locations', 'woocommerce-jetpack' ),
+				),
+				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+				'css'      => 'min-width:250px;',
+			),
+			array(
+				'type'     => 'sectionend',
+				'id'       => 'wcj_product_by_country_admin_country_list_options',
+			),
+		);
 	}
 
 }

@@ -48,6 +48,28 @@ $settings = array(
 		),
 	),
 	array(
+		'title'    => __( 'Upsells Position', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Upsells position on single product page.', 'woocommerce-jetpack' ),
+		'type'     => 'select',
+		'id'       => 'wcj_upsells_position',
+		'default'  => 'no_changes',
+		'options'  => array(
+			'no_changes'                                => __( 'No changes (default)', 'woocommerce-jetpack' ),
+			'woocommerce_before_single_product'         => __( 'Before single product', 'woocommerce-jetpack' ),
+			'woocommerce_before_single_product_summary' => __( 'Before single product summary', 'woocommerce-jetpack' ),
+			'woocommerce_single_product_summary'        => __( 'Inside single product summary', 'woocommerce-jetpack' ),
+			'woocommerce_after_single_product_summary'  => __( 'After single product summary', 'woocommerce-jetpack' ),
+			'woocommerce_after_single_product'          => __( 'After single product', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Position priority', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Ignored if "Upsells Position" option above is set to "No changes (default)".', 'woocommerce-jetpack' ),
+		'type'     => 'number',
+		'id'       => 'wcj_upsells_position_priority',
+		'default'  => 15,
+	),
+	array(
 		'title'    => __( 'Hide Upsells', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
 		'type'     => 'checkbox',

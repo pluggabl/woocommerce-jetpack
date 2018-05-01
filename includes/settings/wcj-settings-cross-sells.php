@@ -63,7 +63,8 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3_3_0 ) {
 };
 $settings = array_merge( $settings, array(
 	array(
-		'title'    => __( 'Cross-sells Position in Cart', 'woocommerce-jetpack' ),
+		'title'    => __( 'Cross-sells Position', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Cross-sells position in cart.', 'woocommerce-jetpack' ),
 		'type'     => 'select',
 		'id'       => 'wcj_cross_sells_position',
 		'default'  => 'no_changes',
@@ -76,7 +77,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'desc'     => __( 'Position priority', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Ignored if "Cross-sells Position in Cart" option above is set to "No changes (default)".', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Ignored if "Cross-sells Position" option above is set to "No changes (default)".', 'woocommerce-jetpack' ),
 		'type'     => 'number',
 		'id'       => 'wcj_cross_sells_position_priority',
 		'default'  => 10,

@@ -42,8 +42,26 @@ class WCJ_Upsells extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_upsells_hide', 'no' ) ) {
 				add_action( 'init', array( $this, 'hide_upsells' ), PHP_INT_MAX );
 			}
+			if ( 'no_changes' != get_option( 'wcj_upsells_position', 'no_changes' ) ) {
+				add_action( 'init', array( $this, 'reposition_upsells' ), PHP_INT_MAX );
+			}
 		}
 
+	}
+
+	/**
+	 * reposition_upsells.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function reposition_upsells() {
+		$this->hide_upsells();
+		if ( function_exists( 'storefront_upsell_display' ) ) {
+			add_action( get_option( 'wcj_upsells_position', 'no_changes' ), 'storefront_upsell_display',  get_option( 'wcj_upsells_position_priority', 15 ) );
+		} else {
+			add_action( get_option( 'wcj_upsells_position', 'no_changes' ), 'woocommerce_upsell_display', get_option( 'wcj_upsells_position_priority', 15 ) );
+		}
 	}
 
 	/**

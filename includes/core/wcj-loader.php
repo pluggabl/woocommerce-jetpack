@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -39,6 +39,7 @@ require_once( 'wcj-functions.php' );
 
 // Classes
 require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-module.php' );
+require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-module-product-by-condition.php' );
 require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-module-shipping-by-condition.php' );
 require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-invoice.php' );
 require_once( WCJ_PLUGIN_PATH . '/includes/classes/class-wcj-pdf-invoice.php' );

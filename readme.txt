@@ -184,7 +184,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 30/04/2018 =
+= 3.5.4 - 01/05/2018 =
+D T   * Dev - PRODUCTS - Upsells - "Upsells Position" option added.
+  T I * Fix - Functions - General - `wcj_get_select_options()` - Handling empty string (`$select_options_raw`) correctly now.
+  W I * Dev - Classes - `WCJ_Module_Product_By_Condition` class added (affected modules: "Product Custom Visibility", "Product Visibility by User Role", "Product Visibility by Country").
+D T I * Dev - PRODUCTS - Product Custom Visibility - Admin Options - "Visibility Method", "Products List Column", "Quick Edit", "Bulk Edit" options added. Modify Query - "Widgets" option added.
+D T I * Dev - PRODUCTS - Product Visibility by Country - Admin Options - "Quick Edit", "Bulk Edit" options added.
+D T I * Dev - PRODUCTS - Product Visibility by User Role - Admin Options - "Visibility Method" option added. Modify Query - "Widgets" option added.
 D T I * Dev - SHIPPING & ORDERS - Shipping Methods by Cities - Initial module release.
 D T   * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report - Restyling. Code refactoring.
 D     * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Admin settings - Description updated.
@@ -198,7 +204,7 @@ D T I * Dev - PRICES & CURRENCIES - Price by User Role - Price by User Role by P
 D T I * Dev - PRODUCTS - Stock - Major code refactoring.
 D W   * Dev - PRODUCTS - Stock - Custom "In Stock" - "Low amount" and "Can be backordered" text options added.
 D     * Dev - PRODUCTS - Stock - Custom "Available on backorder" - Section added.
-D T   * Dev - PRODUCTS - Cross-sells - "Cross-sells Position in Cart" option added.
+D T   * Dev - PRODUCTS - Cross-sells - "Cross-sells Position" option added.
   W I * Dev - PRODUCTS - Product Visibility by User Role - WPML support added.
 D T   * Dev - PRICES & CURRENCIES - Product Price by Formula - "Rounding" options added.
       * Dev - Functions - Code refactoring - `wcj-functions-math.php` added.
