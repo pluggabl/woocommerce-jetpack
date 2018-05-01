@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Reports
  *
- * @version 3.2.4
+ * @version 3.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -24,7 +24,8 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.5.4
+	 * @todo    "orders report by meta" abstract class (see `WCJ_Reports_Product_Sales_Gateways`): by referer (`_wcj_track_users_http_referer`); by shipping (stored as item); by country (`_billing_country` or `_shipping_country`) etc.
 	 */
 	function __construct() {
 
@@ -45,6 +46,7 @@ class WCJ_Reports extends WCJ_Module {
 				include_once( 'reports/wcj-class-reports-customers.php' );
 				include_once( 'reports/wcj-class-reports-stock.php' );
 				include_once( 'reports/wcj-class-reports-sales-daily.php' );
+				include_once( 'reports/wcj-class-reports-sales-gateways.php' );
 				include_once( 'reports/wcj-class-reports-sales.php' );
 				include_once( 'reports/wcj-class-reports-monthly-sales.php' );
 
@@ -169,11 +171,23 @@ class WCJ_Reports extends WCJ_Module {
 
 	/**
 	 * get_report_monthly_sales.
+	 *
 	 * @version 2.4.7
 	 * @since   2.4.7
 	 */
 	function get_report_monthly_sales() {
 		$report = new WCJ_Reports_Monthly_Sales();
+		echo $report->get_report();
+	}
+
+	/**
+	 * get_report_orders_gateways.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function get_report_orders_gateways() {
+		$report = new WCJ_Reports_Product_Sales_Gateways();
 		echo $report->get_report();
 	}
 
@@ -199,7 +213,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Add reports to WooCommerce > Reports > Sales
 	 *
-	 * @version 2.9.1
+	 * @version 3.5.4
 	 * @since   2.3.0
 	 */
 	function add_sales_reports( $reports ) {
@@ -223,6 +237,13 @@ class WCJ_Reports extends WCJ_Module {
 			'description' => '',
 			'hide_title'  => false,
 			'callback'    => array( $this, 'get_report_monthly_sales' ),
+		);
+
+		$reports['orders']['reports']['booster_gateways'] = array(
+			'title'       => __( 'Booster: Payment Gateways', 'woocommerce-jetpack' ),
+			'description' => '',
+			'hide_title'  => false,
+			'callback'    => array( $this, 'get_report_orders_gateways' ),
 		);
 
 		return $reports;

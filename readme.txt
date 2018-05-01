@@ -184,7 +184,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 01/05/2018 =
+= 3.5.4 - 02/05/2018 =
+  T   * Fix - PRICES & CURRENCIES - Currency per Product - Safety checks added, so no division by zero could happen.
+D T I * Dev - EMAILS & MISC. - Reports - Orders - "Payment Gateways" report added.
 D T   * Dev - PRODUCTS - Upsells - "Upsells Position" option added.
   T I * Fix - Functions - General - `wcj_get_select_options()` - Handling empty string (`$select_options_raw`) correctly now.
   W I * Dev - Classes - `WCJ_Module_Product_By_Condition` class added (affected modules: "Product Custom Visibility", "Product Visibility by User Role", "Product Visibility by Country").
