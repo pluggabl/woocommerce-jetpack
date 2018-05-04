@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 3.4.0
+ * @version 3.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -67,7 +67,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * maybe_enqueue_scripts.
 	 *
-	 * @version 3.2.0
+	 * @version 3.5.4
 	 * @since   3.2.0
 	 */
 	function maybe_enqueue_scripts( $fields ) {
@@ -77,7 +77,11 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i, 'no' ) ) {
 					if ( 'select' === get_option( 'wcj_checkout_custom_field_type_' . $i, 'text' ) ) {
 						if ( 'yes' === get_option( 'wcj_checkout_custom_field_select_select2_' . $i, 'no' ) ) {
-							$select2_fields[] = get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ) . '_' . 'wcj_checkout_field_' . $i;
+							$select2_fields[] = array(
+								'field_id'           => get_option( 'wcj_checkout_custom_field_section_' . $i, 'billing' ) . '_' . 'wcj_checkout_field_' . $i,
+								'minimumInputLength' => get_option( 'wcj_checkout_custom_field_select_select2_min_input_length' . $i, 0 ),
+								'maximumInputLength' => get_option( 'wcj_checkout_custom_field_select_select2_max_input_length' . $i, 0 ),
+							);
 						}
 					}
 				}

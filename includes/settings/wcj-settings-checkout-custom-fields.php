@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Fields
  *
- * @version 3.2.4
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -210,6 +210,24 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkou
 				'id'       => 'wcj_checkout_custom_field_select_select2_' . $i,
 				'default'  => 'no',
 				'type'     => 'checkbox',
+			),
+			array(
+				'desc'     => __( 'select2: min input length', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'select2: Number of characters necessary to start a search.', 'woocommerce-jetpack' ) . ' ' .
+					__( 'Ignored if set to zero.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_custom_field_select_select2_min_input_length' . $i,
+				'default'  => 0,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 0 ),
+			),
+			array(
+				'desc'     => __( 'select2: max input length', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'select2: Maximum number of characters that can be entered for an input.', 'woocommerce-jetpack' ) . ' ' .
+					__( 'Ignored if set to zero.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_custom_field_select_select2_max_input_length' . $i,
+				'default'  => 0,
+				'type'     => 'number',
+				'custom_attributes' => array( 'min' => 0 ),
 			),
 			array(
 				'id'       => 'wcj_checkout_custom_field_checkbox_yes_' . $i,

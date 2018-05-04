@@ -185,6 +185,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.5.4 - 02/05/2018 =
+D T   * Dev - CART & CHECKOUT - Checkout Custom Fields - select2 - "min input length" and "max input length" options added.
   T   * Fix - PRICES & CURRENCIES - Currency per Product - Safety checks added, so no division by zero could happen.
 D T I * Dev - EMAILS & MISC. - Reports - Orders - "Payment Gateways" report added.
 D T   * Dev - PRODUCTS - Upsells - "Upsells Position" option added.
