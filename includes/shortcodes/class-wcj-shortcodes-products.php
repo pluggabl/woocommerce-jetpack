@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @todo    (maybe) add `[wcj_product_stock_price]`
 	 */
 	function __construct() {
@@ -55,6 +55,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			'wcj_product_shipping_time_table',
 			'wcj_product_short_description',
 			'wcj_product_sku',
+			'wcj_product_slug',
 			'wcj_product_stock_availability',
 			'wcj_product_stock_quantity',
 			'wcj_product_stock_status',
@@ -158,6 +159,16 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 		}
 
 		return $atts;
+	}
+
+	/**
+	 * wcj_product_slug.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function wcj_product_slug( $atts ) {
+		return $this->the_product->get_slug();
 	}
 
 	/**
