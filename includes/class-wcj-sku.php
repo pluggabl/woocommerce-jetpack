@@ -302,11 +302,19 @@ class WCJ_SKU extends WCJ_Module {
 	 * set_sku.
 	 *
 	 * @version 3.5.4
+	 * @todo    `{tag_prefix}`, `{tag_suffix}`
+	 * @todo    add option to disable shortcodes processing
 	 */
 	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview, $parent_product_id, $_product ) {
 
 		$format_template = get_option( 'wcj_sku_template',
 			'{category_prefix}{prefix}{sku_number}{suffix}{category_suffix}{variation_suffix}' );
+
+		global $post;
+		$post = get_post( $product_id );
+		setup_postdata( $post );
+		$format_template = do_shortcode( $format_template );
+		wp_reset_postdata();
 
 		$parent_product = wc_get_product( $parent_product_id );
 
@@ -362,11 +370,9 @@ class WCJ_SKU extends WCJ_Module {
 			'{parent_product_slug_acronym}'  => $parent_product_slug_acronym,
 			'{variation_attributes}'         => $variation_attributes,
 			'{category_prefix}'              => apply_filters( 'booster_option', '', $category_prefix ),
-//			'{tag_prefix}'                   => $tag_prefix,
 			'{prefix}'                       => get_option( 'wcj_sku_prefix', '' ),
 			'{sku_number}'                   => sprintf( '%0' . get_option( 'wcj_sku_minimum_number_length', 0 ) . 's', $sku_number ),
 			'{suffix}'                       => get_option( 'wcj_sku_suffix', '' ),
-//			'{tag_suffix}'                   => $tag_suffix,
 			'{category_suffix}'              => $category_suffix,
 			'{variation_suffix}'             => $variation_suffix,
 		);
