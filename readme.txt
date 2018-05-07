@@ -59,6 +59,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Product Info* - Add additional info to WooCommerce category and single product pages.
 * *Product Input Fields* - WooCommerce product input fields.
 * *Product Listings* - Change WooCommerce display options for shop and category pages: show/hide categories count, exclude categories, show/hide empty categories.
+* *Product MSRP* - Save and display product MSRP in WooCommerce.
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs.
 * *Product Visibility by Country* - Display WooCommerce products by customer's country.
 * *Product Visibility by User Role* - Display WooCommerce products by customer's user role.
@@ -116,6 +117,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 * *Shipping Descriptions* - Add descriptions to WooCommerce shipping methods on frontend.
 * *Shipping Icons* - Add icons to WooCommerce shipping methods on frontend.
+* *Shipping Methods by Cities* - Set cities to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for WooCommerce shipping methods to show up.
 * *Shipping Methods by Products* - Set products, product categories or tags to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for WooCommerce shipping methods to show up.
@@ -184,8 +186,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 05/05/2018 =
-D T I * Dev - Shortcodes - Products - `[wcj_product_slug]` shortcode added.
+= 3.5.4 - 07/05/2018 =
+D W   * Dev - PRODUCTS - Product MSRP - Initial module release.
+D     * Dev - Shortcodes - Products - `[wcj_product_slug]` shortcode added.
 D T I * Dev - PRODUCTS - SKU - Shortcodes are now processed in template.
 D T   * Dev - CART & CHECKOUT - Checkout Custom Fields - select2 - "min input length" and "max input length" options added.
   T   * Fix - PRICES & CURRENCIES - Currency per Product - Safety checks added, so no division by zero could happen.
@@ -219,7 +222,7 @@ D T   * Fix - EMAILS & MISC. - Admin Bar - Checking for `current_user_can( 'mana
   T I * Fix - PRODUCTS - Upsells - Hide Upsells - Fixed.
 D W   * Dev - EMAILS & MISC. - User Tracking - Track Orders - "Order List Columns" option added.
 D     * Dev - PRODUCTS - SKU - "Characters Case" option added.
-D T I * Dev - PRODUCTS - SKU - `{product_slug_acronym}`, `{parent_product_slug_acronym}`, `{attribute=X}`, `{parent_attribute=X}`, `{variation_attribute=X}` replaced values added.
+D X I * Dev - PRODUCTS - SKU - `{product_slug_acronym}`, `{parent_product_slug_acronym}`, `{attribute=X}`, `{parent_attribute=X}`, `{variation_attribute=X}` replaced values added.
       * Dev - PRODUCTS - SKU - Minor code refactoring.
   T   * Fix - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - "European Union" selection fixed.
   T I * Fix - Functions - Admin - `wcj_is_admin_product_edit_page()` - AJAX loading variations included.

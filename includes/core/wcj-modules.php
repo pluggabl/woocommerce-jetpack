@@ -38,6 +38,7 @@ $wcj_module_files = array(
 	'class-wcj-product-addons.php',
 	'class-wcj-wholesale-price.php',
 	'class-wcj-product-open-pricing.php',
+	'class-wcj-product-msrp.php',
 	'class-wcj-offer-price.php',
 	'class-wcj-price-by-user-role.php',
 	'class-wcj-global-discount.php',

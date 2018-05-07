@@ -99,7 +99,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Template', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'SKU template.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'SKU template.', 'woocommerce-jetpack' ) . ' ' . __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
 		'desc'     => wcj_message_replaced_values( array(
 			'{category_prefix}',
 			'{category_suffix}',

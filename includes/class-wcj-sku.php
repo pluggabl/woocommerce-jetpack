@@ -302,8 +302,9 @@ class WCJ_SKU extends WCJ_Module {
 	 * set_sku.
 	 *
 	 * @version 3.5.4
+	 * @todo    re-check if some of "replaced values" can be replaced by Booster products shortcodes (and update description in settings)
 	 * @todo    `{tag_prefix}`, `{tag_suffix}`
-	 * @todo    add option to disable shortcodes processing
+	 * @todo    (maybe) add option to disable shortcodes processing
 	 */
 	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview, $parent_product_id, $_product ) {
 
