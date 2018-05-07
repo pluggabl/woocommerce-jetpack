@@ -95,13 +95,11 @@ if ( ! function_exists( 'wcj_tcpdf_method' ) ) {
 	/**
 	 * wcj_tcpdf_method.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.4
 	 * @since   3.4.0
 	 */
 	function wcj_tcpdf_method( $method, $params ) {
-		require_once( WCJ_PLUGIN_PATH . '/includes/lib/tcpdf/include/tcpdf_static.php' );
-		$params = TCPDF_STATIC::serializeTCPDFtagParameters( $params );
-		return '<tcpdf method="' . $method . '" params="' . $params . '" />';
+		return '<tcpdf method="' . $method . '" wcj_tcpdf_method_params_start' . serialize( $params ) . 'wcj_tcpdf_method_params_end />';
 	}
 }
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -158,16 +158,36 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	}
 
 	/**
+	 * maybe_replace_tcpdf_method_params.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function maybe_replace_tcpdf_method_params( $html, $pdf ) {
+		$start_str        = 'wcj_tcpdf_method_params_start';
+		$end_str          = 'wcj_tcpdf_method_params_end';
+		$start_str_length = strlen( $start_str );
+		$end_str_length   = strlen( $end_str );
+		while ( false !== ( $start = strpos( $html, $start_str ) ) ) {
+			$params_start  = $start + $start_str_length;
+			$params_length = strpos( $html, $end_str ) - $params_start;
+			$params        = $pdf->serializeTCPDFtagParameters( unserialize( substr( $html, $params_start, $params_length ) ) );
+			$html          = substr_replace( $html, 'params="' . $params . '"', $start, $start_str_length + $params_length + $end_str_length );
+		}
+		return $html;
+	}
+
+	/**
 	 * get_html.
 	 *
 	 * Gets invoice content HTML.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @since   3.5.0
 	 * @todo    pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 	 * @todo    `force_balance_tags()` - there are some bugs and performance issues, see http://wordpress.stackexchange.com/questions/89121/why-doesnt-default-wordpress-page-view-use-force-balance-tags
 	 */
-	function get_html( $order_id ) {
+	function get_html( $order_id, $pdf ) {
 		$_GET['order_id'] = $order_id;
 		$the_order = wc_get_order( $order_id );
 		if ( ! isset( $_GET['billing_country'] ) ) {
@@ -182,20 +202,21 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		}
 		$html = do_shortcode( get_option( 'wcj_invoicing_' . $this->invoice_type . '_template',
 			WCJ()->modules['pdf_invoicing_templates']->get_default_template( $this->invoice_type ) ) );
+		$html = $this->maybe_replace_tcpdf_method_params( $html, $pdf );
 		return force_balance_tags( $html );
 	}
 
 	/**
 	 * get_pdf.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @todo    (maybe) `die()` on success
 	 */
 	function get_pdf( $dest ) {
-		$html = $this->get_html( $this->order_id );
+		$pdf     = $this->prepare_pdf();
+		$html    = $this->get_html( $this->order_id, $pdf );
 		$styling = '<style>' . get_option( 'wcj_invoicing_' . $this->invoice_type . '_css',
 			WCJ()->modules['pdf_invoicing_styling']->get_default_css_template( $this->invoice_type ) ) . '</style>';
-		$pdf = $this->prepare_pdf();
 		$pdf->writeHTMLCell( 0, 0, '', '', $styling . $html, 0, 1, 0, true, '', true );
 		$result_pdf = $pdf->Output( '', 'S' );
 		$file_name  = $this->get_file_name();
