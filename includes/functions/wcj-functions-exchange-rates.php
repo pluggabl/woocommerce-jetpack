@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -61,11 +61,11 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate_servers.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @since   2.6.0
 	 */
 	function wcj_get_currency_exchange_rate_servers() {
-		return array(
+		return apply_filters( 'wcj_currency_exchange_rates_servers', array(
 			'yahoo'           => __( 'Yahoo', 'woocommerce-jetpack' ),
 			'ecb'             => __( 'European Central Bank (ECB)', 'woocommerce-jetpack' ) . ' [' . __( 'recommended', 'woocommerce-jetpack' ) . ']',
 			'tcmb'            => __( 'TCMB', 'woocommerce-jetpack' ),
@@ -74,7 +74,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 			'coinmarketcap'   => __( 'CoinMarketCap', 'woocommerce-jetpack' ),
 			'google'          => __( 'Google', 'woocommerce-jetpack' ),
 			'boe'             => __( 'Bank of England (BOE)', 'woocommerce-jetpack' ),
-		);
+		) );
 	}
 }
 
@@ -127,7 +127,7 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 	/*
 	 * wcj_get_exchange_rate.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @since   2.6.0
 	 */
 	function wcj_get_exchange_rate( $currency_from, $currency_to ) {
@@ -159,10 +159,13 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 			case 'boe':
 				$return = wcj_boe_get_exchange_rate( $currency_from, $currency_to );
 				break;
-			default: // 'ecb'
+			case 'ecb':
 				$return = wcj_ecb_get_exchange_rate( $currency_from, $currency_to );
 				break;
+			default:
+				$return = false;
 		}
+		$return = apply_filters( 'wcj_currency_exchange_rate', $return, $exchange_rates_server, $currency_from, $currency_to );
 		return ( 'yes' === $calculate_by_invert ) ? round( ( 1 / $return ), 6 ) : $return;
 	}
 }

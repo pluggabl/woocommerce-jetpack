@@ -187,6 +187,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.5.4 - 07/05/2018 =
+D     * Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_servers` and `wcj_currency_exchange_rate` filters added.
 D W   * Dev - PRODUCTS - Product MSRP - Initial module release.
 D     * Dev - Shortcodes - Products - `[wcj_product_slug]` shortcode added.
 D T I * Dev - PRODUCTS - SKU - Shortcodes are now processed in template.
