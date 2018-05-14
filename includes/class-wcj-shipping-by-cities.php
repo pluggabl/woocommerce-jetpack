@@ -48,7 +48,7 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 	 * @todo    `$_REQUEST['city']` (i.e. billing city)
 	 * @todo    `get_base_city()` - do we really need this?
 	 */
-	function check( $options_id, $values, $include_or_exclude ) {
+	function check( $options_id, $values, $include_or_exclude, $package ) {
 		switch( $options_id ) {
 			case 'cities':
 				$customer_city = strtoupper( isset( $_REQUEST['s_city'] ) ? $_REQUEST['s_city'] : WC()->countries->get_base_city() );

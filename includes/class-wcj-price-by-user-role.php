@@ -17,7 +17,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.2
+	 * @version 3.5.4
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -44,7 +44,55 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			}
 			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
 			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
+			// Admin settings - "copy price" buttons
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_script' ) );
 		}
+	}
+
+	/**
+	 * get_admin_settings_copy_link.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function get_admin_settings_copy_link( $action, $regular_or_sale, $source_product, $source_role, $dest_roles, $dest_products ) {
+		switch ( $action ) {
+			case 'copy_to_roles_and_variations':
+				$dashicon = 'links';
+				$title    = __( 'user roles & variations', 'woocommerce-jetpack' );
+				break;
+			case 'copy_to_variations':
+				$dashicon = 'page';
+				$title    = __( 'variations', 'woocommerce-jetpack' );
+				break;
+			default: // 'copy_to_roles'
+				$dashicon = 'users';
+				$title    = __( 'user roles', 'woocommerce-jetpack' );
+				break;
+		}
+		$data_array = array(
+			'action'         => $action,
+			'price'          => $regular_or_sale,
+			'source_product' => $source_product,
+			'source_role'    => $source_role,
+			'dest_roles'     => $dest_roles,
+			'dest_products'  => $dest_products,
+		);
+		return '<a href="#" class="wcj-copy-price" wcj-copy-data=\'' . json_encode( $data_array ) . '\'>' .
+			'<span class="dashicons dashicons-admin-' . $dashicon . '" style="font-size:small;float:right;" title="' .
+				sprintf( __( 'Copy price to all %s', 'woocommerce-jetpack' ), $title ) . '">' .
+			'</span>' .
+		'</a>';
+}
+
+	/**
+	 * enqueue_admin_script.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function enqueue_admin_script() {
+		wp_enqueue_script( 'wcj-price-by-user-role-admin', wcj_plugin_url() . '/includes/js/wcj-price-by-user-role-admin.js', array( 'jquery' ), WCJ()->version, true );
 	}
 
 	/**

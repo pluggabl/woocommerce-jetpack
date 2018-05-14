@@ -44,7 +44,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 		),
 		array(
 			'title'   => sprintf( __( 'Shipping Methods by %s', 'woocommerce-jetpack' ), $options_data['title'] ),
-			'desc'    => __( 'Enable section', 'woocommerce-jetpack' ),
+			'desc'    => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
 			'id'      => 'wcj_shipping_by_' . $options_id . '_section_enabled',
 			'type'    => 'checkbox',
 			'default' => 'yes',

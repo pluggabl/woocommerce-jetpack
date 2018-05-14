@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Products
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.0
+	 * @version 3.5.4
 	 * @since   3.2.0
 	 * @todo    (maybe) add customer messages on cart and checkout pages (if some shipping method is not available)
 	 */
@@ -24,7 +24,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 
 		$this->id         = 'shipping_by_products';
 		$this->short_desc = __( 'Shipping Methods by Products', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set products, product categories or tags to include/exclude for WooCommerce shipping methods to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set products, product categories, tags or shipping classes to include/exclude for WooCommerce shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-products';
 
 		$this->condition_options = array(
@@ -40,25 +40,62 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 				'title' => __( 'Product Tags', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Shipping methods by <strong>products tags</strong>.', 'woocommerce-jetpack' ),
 			),
+			'classes' => array(
+				'title' => __( 'Product Shipping Classes', 'woocommerce-jetpack' ),
+				'desc'  => '',
+			),
 		);
 
 		parent::__construct();
 	}
 
 	/**
+	 * check_for_data.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function check_for_data( $cart_instead_of_package, $package ) {
+		if ( $cart_instead_of_package ) {
+			if ( ! isset( WC()->cart ) || WC()->cart->is_empty() ) {
+				return false;
+			}
+		} else {
+			if ( ! isset( $package['contents'] ) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	/**
+	 * get_items.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function get_items( $cart_instead_of_package, $package ) {
+		return ( $cart_instead_of_package ? WC()->cart->get_cart() : $package['contents'] );
+	}
+
+	/**
 	 * check.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @since   3.2.0
+	 * @todo    variations in `classes`
+	 * @todo    check for `if ( is_object( $product ) && is_callable( array( $product, 'get_shipping_class_id' ) ) ) { ... }`
+	 * @todo    check for `isset( $item['variation_id'] )`, `isset( $item['product_id'] )` and `isset( $item['data'] )` before using it
 	 * @todo    (maybe) if needed, prepare `$products_variations` earlier (and only once)
 	 */
-	function check( $options_id, $products_or_cats_or_tags, $include_or_exclude ) {
-		if ( ! isset( WC()->cart ) || WC()->cart->is_empty() ) {
+	function check( $options_id, $values, $include_or_exclude, $package ) {
+		$cart_instead_of_package = ( 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_cart_not_package', 'yes' ) );
+		if ( ! $this->check_for_data( $cart_instead_of_package, $package ) ) {
 			return true;
 		}
 		if ( 'products' === $options_id && ( $do_add_variations = ( 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_add_variations_enabled', 'no' ) ) ) ) {
 			$products_variations = array();
-			foreach ( $products_or_cats_or_tags as $_product_id ) {
+			foreach ( $values as $_product_id ) {
 				$_product = wc_get_product( $_product_id );
 				if ( $_product->is_type( 'variable' ) ) {
 					$products_variations = array_merge( $products_variations, $_product->get_children() );
@@ -66,22 +103,22 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 					$products_variations[] = $_product_id;
 				}
 			}
-			$products_or_cats_or_tags = array_unique( $products_variations );
+			$values = array_unique( $products_variations );
 		}
 		$validate_all_for_include = ( 'include' === $include_or_exclude && 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_validate_all_enabled', 'no' ) );
-		foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+		foreach ( $this->get_items( $cart_instead_of_package, $package ) as $item ) {
 			switch( $options_id ) {
 				case 'products':
-					$_product_id = ( $do_add_variations && 0 != $values['variation_id'] ? $values['variation_id'] : $values['product_id'] );
-					if ( $validate_all_for_include && ! in_array( $_product_id, $products_or_cats_or_tags ) ) {
+					$_product_id = ( $do_add_variations && 0 != $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
+					if ( $validate_all_for_include && ! in_array( $_product_id, $values ) ) {
 						return false;
-					} elseif ( ! $validate_all_for_include && in_array( $_product_id, $products_or_cats_or_tags ) ) {
+					} elseif ( ! $validate_all_for_include && in_array( $_product_id, $values ) ) {
 						return true;
 					}
 					break;
 				case 'product_cats':
 				case 'product_tags':
-					$product_terms = get_the_terms( $values['product_id'], ( 'product_cats' === $options_id ? 'product_cat' : 'product_tag' ) );
+					$product_terms = get_the_terms( $item['product_id'], ( 'product_cats' === $options_id ? 'product_cat' : 'product_tag' ) );
 					if ( empty( $product_terms ) ) {
 						if ( $validate_all_for_include ) {
 							return false;
@@ -90,11 +127,20 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 						}
 					}
 					foreach( $product_terms as $product_term ) {
-						if ( $validate_all_for_include && ! in_array( $product_term->term_id, $products_or_cats_or_tags ) ) {
+						if ( $validate_all_for_include && ! in_array( $product_term->term_id, $values ) ) {
 							return false;
-						} elseif ( ! $validate_all_for_include && in_array( $product_term->term_id, $products_or_cats_or_tags ) ) {
+						} elseif ( ! $validate_all_for_include && in_array( $product_term->term_id, $values ) ) {
 							return true;
 						}
+					}
+					break;
+				case 'classes':
+					$product = $item['data'];
+					$product_shipping_class = $product->get_shipping_class_id();
+					if ( $validate_all_for_include && ! in_array( $product_shipping_class, $values ) ) {
+						return false;
+					} elseif ( ! $validate_all_for_include && in_array( $product_shipping_class, $values ) ) {
+						return true;
 					}
 					break;
 			}
@@ -105,24 +151,33 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * get_condition_options.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @since   3.2.0
 	 */
 	function get_condition_options( $options_id ) {
 		switch( $options_id ) {
 			case 'products':
-				return ( 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_add_variations_enabled', 'no' ) ? wcj_get_products( array(), 'any', 256, true ) : wcj_get_products() );
+				return ( 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_add_variations_enabled', 'no' ) ?
+					wcj_get_products( array(), 'any', 256, true ) : wcj_get_products() );
 			case 'product_cats':
 				return wcj_get_terms( 'product_cat' );
 			case 'product_tags':
 				return wcj_get_terms( 'product_tag' );
+			case 'classes':
+				$wc_shipping              = WC_Shipping::instance();
+				$shipping_classes_terms   = $wc_shipping->get_shipping_classes();
+				$shipping_classes_options = array( 0 => __( 'No shipping class', 'woocommerce' ) );
+				foreach ( $shipping_classes_terms as $shipping_classes_term ) {
+					$shipping_classes_options[ $shipping_classes_term->term_id ] = $shipping_classes_term->name;
+				}
+				return $shipping_classes_options;
 		}
 	}
 
 	/**
 	 * get_additional_section_settings.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @since   3.2.1
 	 */
 	function get_additional_section_settings( $options_id ) {
@@ -134,6 +189,14 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 				'id'       => 'wcj_shipping_by_' . $options_id . '_validate_all_enabled',
 				'type'     => 'checkbox',
 				'default'  => 'no',
+			),
+			array(
+				'title'    => __( 'Cart instead of Package', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Enable this checkbox if you want to check all cart products instead of package.', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_shipping_by_' . $options_id . '_cart_not_package',
+				'type'     => 'checkbox',
+				'default'  => 'yes',
 			),
 		);
 		if ( 'products' === $options_id ) {

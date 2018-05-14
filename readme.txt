@@ -119,7 +119,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Shipping Icons* - Add icons to WooCommerce shipping methods on frontend.
 * *Shipping Methods by Cities* - Set cities to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for WooCommerce shipping methods to show up.
-* *Shipping Methods by Products* - Set products, product categories or tags to include/exclude for WooCommerce shipping methods to show up.
+* *Shipping Methods by Products* - Set products, product categories, tags or shipping classes to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for WooCommerce shipping methods to show up.
 * *Shipping Options* - Hide WooCommerce shipping when free is available. Grant free shipping on per product basis.
 * *Shipping Time* - Add delivery time estimation to WooCommerce shipping methods.
@@ -186,7 +186,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 08/05/2018 =
+= 3.5.4 - 14/05/2018 =
+D T   * Dev - PRODUCTS - Product Availability by Date - Per Product - "Direct Date Admin Input Date Format" option added.
+D     * Dev - PRODUCTS - Cost of Goods - Admin Settings - Minor descriptions updates.
+D T I * Dev - PRICES & CURRENCIES - Price by User Role - Admin Settings - "Copy price to all user roles", "Copy price to all variations" and "Copy to all user roles & variations" buttons added.
+D T I * Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Shipping Methods by Product Shipping Classes" section added.
+D T I * Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Cart or Package" options added.
+      * Dev - Classes - `WCJ_Module_Shipping_By_Condition` - Changed to `abstract`.
   T I * Fix - PDF INVOICING & PACKING SLIPS - `wcj_tcpdf_method()` - Params fixed.
       * Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_servers` and `wcj_currency_exchange_rate` filters added.
 D W   * Dev - PRODUCTS - Product MSRP - Initial module release.

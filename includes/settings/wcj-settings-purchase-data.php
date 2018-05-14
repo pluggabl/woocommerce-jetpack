@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Cost Price
  *
- * @version 2.9.0
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add options to set fields and column titles
@@ -14,7 +14,7 @@ $settings = array(
 	array(
 		'title'     => __( 'Price Fields', 'woocommerce-jetpack' ),
 		'type'      => 'title',
-		'desc'      => __( 'This fields will be added to product\'s edit page and will be included in product\'s purchase cost calculation.', 'woocommerce-jetpack' ),
+		'desc'      => __( 'These fields will be added to product\'s edit page and will be included in product\'s purchase cost calculation.', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_purchase_data_price_fields_options',
 	),
 	array(
@@ -45,7 +45,7 @@ $settings = array(
 	array(
 		'title'     => __( 'Custom Price Fields', 'woocommerce-jetpack' ),
 		'type'      => 'title',
-		'desc'      => __( 'This fields will be added to product\'s edit page and will be included in product\'s purchase cost calculation.', 'woocommerce-jetpack' ),
+		'desc'      => __( 'These fields will be added to product\'s edit page and will be included in product\'s purchase cost calculation.', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_purchase_data_custom_price_fields_options',
 	),
 	array(
@@ -95,7 +95,7 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'     => __( 'Info Fields', 'woocommerce-jetpack' ),
 		'type'      => 'title',
-		'desc'      => __( 'This fields will be added to product\'s edit page.', 'woocommerce-jetpack' ),
+		'desc'      => __( 'These fields will be added to product\'s edit page.', 'woocommerce-jetpack' ),
 		'id'        => 'wcj_purchase_data_info_fields_options',
 	),
 	array(

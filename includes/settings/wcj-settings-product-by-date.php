@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Availability by Date
  *
- * @version 3.4.0
+ * @version 3.5.4
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -55,6 +55,14 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_product_by_date_per_product_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Direct Date Admin Input Date Format', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'E.g. %s.', 'woocommerce-jetpack' ), '<code>Y-m-d</code>' ),
+		'desc_tip' => __( 'Leave blank to use the default date format.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_by_date_direct_date_format',
+		'default'  => '',
+		'type'     => 'text',
 	),
 	array(
 		'type'     => 'sectionend',

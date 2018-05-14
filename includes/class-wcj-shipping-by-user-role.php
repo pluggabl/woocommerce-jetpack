@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by User Role
  *
- * @version 3.2.1
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -54,10 +54,10 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * check.
 	 *
-	 * @version 3.2.1
+	 * @version 3.5.4
 	 * @since   3.2.0
 	 */
-	function check( $options_id, $user_roles_or_ids_or_membership_plans, $include_or_exclude ) {
+	function check( $options_id, $user_roles_or_ids_or_membership_plans, $include_or_exclude, $package ) {
 		switch( $options_id ) {
 			case 'user_roles':
 				if ( ! isset( $this->customer_role ) ) {

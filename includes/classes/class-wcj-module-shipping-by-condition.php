@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Condition
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `abstract class WCJ_Module_Shipping_By_Condition`
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WCJ_Module_Shipping_By_Condition' ) ) :
 
-class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
+abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 
 	/**
 	 * Constructor.
@@ -32,7 +32,7 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * available_shipping_methods.
 	 *
-	 * @version 3.5.0
+	 * @version 3.5.4
 	 * @since   3.2.0
 	 * @todo    apply_filters( 'booster_option' )
 	 */
@@ -46,7 +46,7 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 					get_option( 'wcj_shipping_' . $options_id . '_include_' . 'instance_' . $rate->instance_id, '' ) :
 					get_option( 'wcj_shipping_' . $options_id . '_include_' .               $rate->method_id, '' )
 				);
-				if ( ! empty( $include ) && ! $this->check( $options_id, $include, 'include' ) ) {
+				if ( ! empty( $include ) && ! $this->check( $options_id, $include, 'include', $package ) ) {
 					unset( $rates[ $rate_key ] );
 					break;
 				}
@@ -54,7 +54,7 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 					get_option( 'wcj_shipping_' . $options_id . '_exclude_' . 'instance_' . $rate->instance_id, '' ) :
 					get_option( 'wcj_shipping_' . $options_id . '_exclude_' .               $rate->method_id, '' )
 				);
-				if ( ! empty( $exclude ) && $this->check( $options_id, $exclude , 'exclude' ) ) {
+				if ( ! empty( $exclude ) && $this->check( $options_id, $exclude , 'exclude', $package ) ) {
 					unset( $rates[ $rate_key ] );
 					break;
 				}
@@ -76,22 +76,18 @@ class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * check.
 	 *
-	 * @version 3.2.1
+	 * @version 3.5.4
 	 * @since   3.2.0
 	 */
-	function check( $options_id, $args, $include_or_exclude ) {
-		return true;
-	}
+	abstract function check( $options_id, $args, $include_or_exclude, $package );
 
 	/**
 	 * get_condition_options.
 	 *
-	 * @version 3.2.0
+	 * @version 3.5.4
 	 * @since   3.2.0
 	 */
-	function get_condition_options( $options_id ) {
-		return array();
-	}
+	abstract function get_condition_options( $options_id );
 
 	/**
 	 * get_additional_section_settings.
