@@ -138,7 +138,7 @@ if ( ! function_exists( 'wcj_check_time' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wcj_date_format_php_to_js_v2' ) ) {
+if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
 	/*
 	 * Matches each symbol of PHP date format standard
 	 * with jQuery equivalent codeword
@@ -148,7 +148,7 @@ if ( ! function_exists( 'wcj_date_format_php_to_js_v2' ) ) {
 	 * @version 2.4.0
 	 * @since   2.4.0
 	 */
-	function wcj_date_format_php_to_js_v2( $php_format ) {
+	function wcj_date_format_php_to_js( $php_format ) {
 		$SYMBOLS_MATCHING = array(
 			// Day
 			'd' => 'dd',

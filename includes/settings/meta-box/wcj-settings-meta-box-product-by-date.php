@@ -32,7 +32,7 @@ $settings = array(
 		'tooltip'  => __( 'Fill this if you want to set one date from which the product will be available.', 'woocommerce-jetpack' ) . ' ' .
 			__( 'If this field is filled in, monthly settings fields are ignored.', 'woocommerce-jetpack' ),
 		'custom_attributes' => ( '' != ( $format = get_option( 'wcj_product_by_date_direct_date_format', '' ) ) ?
-			'dateformat="' . wcj_date_format_php_to_js_v2( $format ) . '"' : '' ),
+			'dateformat="' . wcj_date_format_php_to_js( $format ) . '"' : '' ),
 	),
 );
 $_timestamp = 1; //  January 1 1970

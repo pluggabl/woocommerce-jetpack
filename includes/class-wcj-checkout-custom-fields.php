@@ -576,7 +576,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					if ( 'datepicker' === $the_type || 'weekpicker' === $the_type ) {
 						$datepicker_format_option = get_option( 'wcj_checkout_custom_field_datepicker_format_' . $i, '' );
 						$datepicker_format = ( '' == $datepicker_format_option ) ? get_option( 'date_format' ) : $datepicker_format_option;
-						$datepicker_format = wcj_date_format_php_to_js_v2( $datepicker_format );
+						$datepicker_format = wcj_date_format_php_to_js( $datepicker_format );
 						$custom_attributes['dateformat'] = $datepicker_format;
 						$custom_attributes['mindate']    = get_option( 'wcj_checkout_custom_field_datepicker_mindate_' . $i, -365 );
 						if ( 0 == $custom_attributes['mindate'] ) {

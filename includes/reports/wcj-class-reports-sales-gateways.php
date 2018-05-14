@@ -130,10 +130,10 @@ class WCJ_Reports_Product_Sales_Gateways {
 		$filter_form .= '<input type="hidden" name="tab" value="'        . $_GET['tab']      . '" />';
 		$filter_form .= '<input type="hidden" name="report" value="'     . $_GET['report']   . '" />';
 		$filter_form .= '<label style="font-style:italic;" for="start_date">' . __( 'From:', 'woocommerce-jetpack' ) . '</label>' . ' ' .
-			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js_v2( 'Y-m-d' ) . '" name="start_date" title="" value="' . $this->start_date . '" />';
+			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js( 'Y-m-d' ) . '" name="start_date" title="" value="' . $this->start_date . '" />';
 		$filter_form .= ' ';
 		$filter_form .= '<label style="font-style:italic;" for="end_date">' . __( 'To:', 'woocommerce-jetpack' ) . '</label>' . ' ' .
-			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js_v2( 'Y-m-d' ) . '" name="end_date" title="" value="' . $this->end_date . '" />';
+			'<input type="text" display="date" dateformat="' . wcj_date_format_php_to_js( 'Y-m-d' ) . '" name="end_date" title="" value="' . $this->end_date . '" />';
 		$filter_form .= ' ';
 		$filter_form .= '<input type="submit" value="' . __( 'Filter', 'woocommerce-jetpack' ) . '" />';
 		$filter_form .= '</form>';

@@ -482,7 +482,7 @@ class WCJ_Product_Input_Fields_Core {
 			if ( '' == $datepicker_format ) {
 				$datepicker_format = get_option( 'date_format' );
 			}
-			$datepicker_format     = wcj_date_format_php_to_js_v2( $datepicker_format );
+			$datepicker_format     = wcj_date_format_php_to_js( $datepicker_format );
 			$datepicker_mindate    = $this->get_value( 'wcj_product_input_fields_type_datepicker_mindate_' . $this->scope . '_' . $i, $_product_id, -365 );
 			$datepicker_maxdate    = $this->get_value( 'wcj_product_input_fields_type_datepicker_maxdate_' . $this->scope . '_' . $i, $_product_id, 365 );
 			$datepicker_firstday   = $this->get_value( 'wcj_product_input_fields_type_datepicker_firstday_' . $this->scope . '_' . $i, $_product_id, 0 );
