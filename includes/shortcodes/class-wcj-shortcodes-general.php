@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.5.1
+ * @version 3.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.1
+	 * @version 3.5.4
 	 */
 	function __construct() {
 
@@ -23,6 +23,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_barcode',
 			'wcj_button_toggle_tax_display',
 			'wcj_country_select_drop_down_list',
+			'wcj_cross_sell_display',
 			'wcj_currency_exchange_rate',
 			'wcj_currency_exchange_rates_table',
 			'wcj_currency_select_drop_down_list',
@@ -52,6 +53,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_tcpdf_pagebreak',
 			'wcj_tcpdf_rectangle',
 			'wcj_text',
+			'wcj_upsell_display',
 			'wcj_wc_session_value',
 			'wcj_wholesale_price_table',
 			'wcj_wp_option',
@@ -102,6 +104,88 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_upsell_display.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 * @todo    move to Products shortcodes
+	 */
+	function wcj_upsell_display( $atts ) {
+
+		$limit   = ( isset( $atts['limit'] )   ? $atts['limit']   : '-1' );
+		$columns = ( isset( $atts['columns'] ) ? $atts['columns'] : 4 );
+		$orderby = ( isset( $atts['orderby'] ) ? $atts['orderby'] : 'rand' );
+		$order   = ( isset( $atts['order'] )   ? $atts['order']   : 'desc' );
+
+		global $product;
+
+		if ( ! $product ) {
+			return;
+		}
+
+		// Handle the legacy filter which controlled posts per page etc.
+		$args = apply_filters( 'woocommerce_upsell_display_args', array(
+			'posts_per_page' => $limit,
+			'orderby'        => $orderby,
+			'columns'        => $columns,
+		) );
+		wc_set_loop_prop( 'name', 'up-sells' );
+		wc_set_loop_prop( 'columns', apply_filters( 'woocommerce_upsells_columns', isset( $args['columns'] ) ? $args['columns'] : $columns ) );
+
+		$orderby = apply_filters( 'woocommerce_upsells_orderby', isset( $args['orderby'] ) ? $args['orderby'] : $orderby );
+		$limit   = apply_filters( 'woocommerce_upsells_total', isset( $args['posts_per_page'] ) ? $args['posts_per_page'] : $limit );
+
+		// Get visible upsells then sort them at random, then limit result set.
+		$upsells = wc_products_array_orderby( array_filter( array_map( 'wc_get_product', $product->get_upsell_ids() ), 'wc_products_array_filter_visible' ), $orderby, $order );
+		$upsells = $limit > 0 ? array_slice( $upsells, 0, $limit ) : $upsells;
+
+		wc_get_template( 'single-product/up-sells.php', array(
+			'upsells'        => $upsells,
+
+			// Not used now, but used in previous version of up-sells.php.
+			'posts_per_page' => $limit,
+			'orderby'        => $orderby,
+			'columns'        => $columns,
+		) );
+	}
+
+	/**
+	 * wcj_cross_sell_display.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function wcj_cross_sell_display( $atts ) {
+
+		$limit   = ( isset( $atts['limit'] )   ? $atts['limit']   : 2 );
+		$columns = ( isset( $atts['columns'] ) ? $atts['columns'] : 2 );
+		$orderby = ( isset( $atts['orderby'] ) ? $atts['orderby'] : 'rand' );
+		$order   = ( isset( $atts['order'] )   ? $atts['order']   : 'desc' );
+
+		// Get visible cross sells then sort them at random.
+		$cross_sells = array_filter( array_map( 'wc_get_product', WC()->cart->get_cross_sells() ), 'wc_products_array_filter_visible' );
+
+		wc_set_loop_prop( 'name', 'cross-sells' );
+		wc_set_loop_prop( 'columns', apply_filters( 'woocommerce_cross_sells_columns', $columns ) );
+
+		// Handle orderby and limit results.
+		$orderby     = apply_filters( 'woocommerce_cross_sells_orderby', $orderby );
+		$order       = apply_filters( 'woocommerce_cross_sells_order', $order );
+		$cross_sells = wc_products_array_orderby( $cross_sells, $orderby, $order );
+		$limit       = apply_filters( 'woocommerce_cross_sells_total', $limit );
+		$cross_sells = $limit > 0 ? array_slice( $cross_sells, 0, $limit ) : $cross_sells;
+
+		wc_get_template( 'cart/cross-sells.php', array(
+			'cross_sells'    => $cross_sells,
+
+			// Not used now, but used in previous version of up-sells.php.
+			'posts_per_page' => $limit,
+			'orderby'        => $orderby,
+			'columns'        => $columns,
+		) );
 	}
 
 	/**

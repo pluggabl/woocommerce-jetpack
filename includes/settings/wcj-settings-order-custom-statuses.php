@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Order Custom Statuses
  *
- * @version 3.2.2
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -79,6 +79,15 @@ return array(
 		'desc'     => __( 'Enable Colors', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Choose if you want the buttons to have colors.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_orders_custom_statuses_add_to_order_list_actions_colored',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Enable Colors in Status Column', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you want the statuses in Status column to have colors.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
+		'id'       => 'wcj_orders_custom_statuses_column_colored',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),

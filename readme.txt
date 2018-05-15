@@ -186,7 +186,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 14/05/2018 =
+= 3.5.4 - 15/05/2018 =
+D W P * Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Text Color" option added.
+D X I * Dev - Shortcodes - General - `[wcj_upsell_display]` shortcode added.
+D T I * Dev - Shortcodes - General - `[wcj_cross_sell_display]` shortcode added.
+D T P * Dev - SHIPPING & ORDERS - Order Custom Statuses - "Enable Colors in Status Column" option added.
 D T   * Dev - PRODUCTS - Product Availability by Date - Per Product - "Direct Date Admin Input Date Format" option added.
 D     * Dev - PRODUCTS - Cost of Goods - Admin Settings - Minor descriptions updates.
 D T I * Dev - PRICES & CURRENCIES - Price by User Role - Admin Settings - "Copy price to all user roles", "Copy price to all variations" and "Copy to all user roles & variations" buttons added.

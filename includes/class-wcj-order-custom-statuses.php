@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 3.2.2
+ * @version 3.5.4
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.2
+	 * @version 3.5.4
 	 * @todo    check all changes from Custom Order Status plugin
 	 * @todo    `wcj_orders_custom_statuses_processing_and_completed_actions` to Custom Order Status plugin
 	 * @todo    (maybe) add options to change icon and icon's color for all statuses (i.e. not only custom)
@@ -41,6 +41,9 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 			add_filter( 'wc_order_statuses',                  array( $this, 'add_custom_statuses_to_filter' ), PHP_INT_MAX );
 			add_action( 'init',                               array( $this, 'register_custom_post_statuses' ) );
 			add_action( 'admin_head',                         array( $this, 'hook_statuses_icons_css' ) );
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_column_colored', 'no' ) ) ) {
+				add_action( 'admin_head',                     array( $this, 'hook_statuses_column_css' ) );
+			}
 
 			add_filter( 'woocommerce_default_order_status',   array( $this, 'set_default_order_status' ), PHP_INT_MAX );
 
@@ -176,17 +179,21 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * get_status_icon_data.
 	 *
-	 * @version 3.2.2
+	 * @version 3.5.4
 	 * @since   3.2.2
 	 */
 	function get_status_icon_data( $status_slug_without_wc_prefix ) {
 		$return = array(
-			'content' => 'e011',
-			'color'   => '#999999',
+			'content'    => 'e011',
+			'color'      => '#999999',
+			'text_color' => '#000000',
 		);
 		if ( '' != ( $icon_data = get_option( 'wcj_orders_custom_status_icon_data_' . $status_slug_without_wc_prefix, '' ) ) ) {
 			$return['content'] = $icon_data['content'];
 			$return['color']   = $icon_data['color'];
+			if ( isset( $icon_data['text_color'] ) ) {
+				$return['text_color'] = $icon_data['text_color'];
+			}
 		}
 		return $return;
 	}
@@ -259,9 +266,27 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	}
 
 	/**
+	 * hook_statuses_column_css.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 */
+	function hook_statuses_column_css() {
+		$output   = '';
+		$statuses = $this->get_custom_order_statuses( true );
+		foreach( $statuses as $status => $status_name ) {
+			$icon_data = $this->get_status_icon_data( $status );
+			$output .= 'mark.order-status.status-' . $status . ' { color: ' . $icon_data['text_color'] . '; background-color: ' . $icon_data['color'] . '; }';
+		}
+		if ( '' != $output ) {
+			echo '<style>' . $output . '</style>';
+		}
+	}
+
+	/**
 	 * hook_statuses_icons_css.
 	 *
-	 * @verison 3.2.2
+	 * @version 3.2.2
 	 */
 	function hook_statuses_icons_css() {
 		$output   = '';
