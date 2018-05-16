@@ -113,5 +113,25 @@ $settings = array_merge( $settings, array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_by_date_messages_options',
 	),
+	array(
+		'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_by_date_advanced_options',
+	),
+	array(
+		'title'    => __( 'Action', 'woocommerce-jetpack' ),
+		'desc'     => '<br>' . __( 'Action to be taken, when product is not available by date.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_by_date_action',
+		'default'  => 'non_purchasable',
+		'type'     => 'select',
+		'options'  => array(
+			'non_purchasable' => __( 'Make product non-purchasable', 'woocommerce-jetpack' ),
+			'blank'           => __( 'Only output message', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_by_date_advanced_options',
+	),
 ) );
 return $settings;

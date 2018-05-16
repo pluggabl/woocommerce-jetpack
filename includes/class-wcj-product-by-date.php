@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Date
  *
- * @version 3.4.0
+ * @version 3.5.4
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.1
+	 * @version 3.5.4
 	 * @since   2.9.1
 	 * @todo    per category
 	 * @todo    per tag
@@ -47,7 +47,9 @@ class WCJ_Product_By_Date extends WCJ_Module {
 				$this->day_now   = intval( date( 'j', $this->time_now ) ); // Day of the month without leading zeros: 1 to 31
 				$this->month_now = intval( date( 'n', $this->time_now ) ); // Numeric representation of a month, without leading zeros: 1 through 12
 				// Filters
-				add_filter( 'woocommerce_is_purchasable',         array( $this, 'check_is_purchasable_by_date' ),          PHP_INT_MAX, 2 );
+				if ( 'non_purchasable' === get_option( 'wcj_product_by_date_action', 'non_purchasable' ) ) {
+					add_filter( 'woocommerce_is_purchasable', array( $this, 'check_is_purchasable_by_date' ), PHP_INT_MAX, 2 );
+				}
 				add_action( 'woocommerce_single_product_summary', array( $this, 'maybe_add_unavailable_by_date_message' ), 30 );
 			}
 		}

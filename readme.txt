@@ -186,7 +186,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 15/05/2018 =
+= 3.5.4 - 17/05/2018 =
+D T   * Dev - PRODUCTS - Product Availability by Date - Advanced Options - "Action" option added.
+  W I * Dev - PRICES & CURRENCIES - Price by User Role - WPML support added.
 D W P * Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Text Color" option added.
 D X I * Dev - Shortcodes - General - `[wcj_upsell_display]` shortcode added.
 D T I * Dev - Shortcodes - General - `[wcj_cross_sell_display]` shortcode added.
