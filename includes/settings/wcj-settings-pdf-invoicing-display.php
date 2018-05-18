@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Display
  *
- * @version 3.3.0
+ * @version 3.5.4
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add "Save all settings" buttons to each document type
@@ -43,22 +43,6 @@ foreach ( $invoice_types as $invoice_type ) {
 			'type'     => 'text',
 			'class'    => 'widefat',
 		),
-		/* array(
-			'title'    => '',
-			'desc'     => __( 'Create Button', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'Set empty to disable the button', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_column_create_btn',
-			'default'  => __( 'Create', 'woocommerce-jetpack' ),
-			'type'     => 'text',
-		),
-		array(
-			'title'    => '',
-			'desc'     => __( 'Delete Button', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'Set empty to disable the button', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_column_delete_btn',
-			'default'  => __( 'Delete', 'woocommerce-jetpack' ),
-			'type'     => 'text',
-		), */
 		array(
 			'desc'     => __( 'Add "View" button', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_admin_orders_view_btn',
@@ -93,6 +77,27 @@ foreach ( $invoice_types as $invoice_type ) {
 			'default'  => 'yes',
 			'type'     => 'checkbox',
 			'checkboxgroup' => 'end',
+		),
+		array(
+			'title'    => __( 'Thank You Page', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Add link', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_enabled_on_thankyou_page',
+			'default'  => 'no',
+			'type'     => 'checkbox',
+		),
+		array(
+			'desc'     => __( 'Link Text', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_thankyou_page_link_text',
+			'default'  => $invoice_type['title'],
+			'type'     => 'text',
+			'class'    => 'widefat',
+		),
+		array(
+			'desc'     => __( 'HTML Template', 'woocommerce-jetpack' ) . '. ' . wcj_message_replaced_values( array( '%link%' ) ),
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_thankyou_page_template',
+			'default'  => '<p><strong>' . sprintf( __( 'Your %s:', 'woocommerce-jetpack' ), $invoice_type['title'] ) . ' </strong> %link%</p>',
+			'type'     => 'custom_textarea',
+			'class'    => 'widefat',
 		),
 		array(
 			'title'    => __( 'Customer\'s "My Account" Page', 'woocommerce-jetpack' ),

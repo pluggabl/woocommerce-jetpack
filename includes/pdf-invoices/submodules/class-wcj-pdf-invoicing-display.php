@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 3.5.0
+ * @version 3.5.4
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 3.5.4
 	 */
 	function __construct() {
 
@@ -31,6 +31,8 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			add_action( 'manage_shop_order_posts_custom_column',    array( $this, 'render_order_columns' ), 2 );
 			// Action Links on Customer's My Account page
 			add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'add_pdf_invoices_action_links' ), PHP_INT_MAX, 2 );
+			// Action Links on Customer's Thank You page
+			add_action( 'woocommerce_thankyou',                     array( $this, 'add_pdf_invoices_links_to_thankyou_page' ), 10, 1 );
 			// Action Buttons to Admin's Orders list
 			add_filter( 'woocommerce_admin_order_actions',          array( $this, 'add_pdf_invoices_admin_actions' ), PHP_INT_MAX, 2 );
 			add_filter( 'admin_head',                               array( $this, 'add_pdf_invoices_admin_actions_buttons_css' ) );
@@ -175,7 +177,6 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	 *
 	 * @version 2.4.7
 	 * @param   string $column
-	 * @todo    clean up
 	 */
 	function render_order_columns( $column ) {
 		$invoice_types_ids = wcj_get_enabled_invoice_types_ids();
@@ -194,35 +195,38 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type_id . '_save_as_enabled', 'no' ) ) {
 				$query_args['save_pdf_invoice'] = '1';
 			}
-			$html .= '<a href="'
-				. add_query_arg( $query_args, remove_query_arg( array( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) )
-				. '">' . $the_number . '</a>';
-
-			/* // Delete button
-			$delete_button_label = get_option( 'wcj_invoicing_' . $invoice_type_id . '_admin_column_delete_btn', __( 'Delete', 'woocommerce-jetpack' ) );
-			if ( '' != $delete_button_label ) {
-				$html .= ' ';
-				$html .= '<a href="';
-				$html .= add_query_arg(
-					array( 'delete_invoice_for_order_id' => $order_id, 'invoice_type_id' => $invoice_type_id ),
-					remove_query_arg( 'create_invoice_for_order_id' )
-				);
-				$html .= '"><span style="color:gray;font-style:italic;font-size:x-small;text-decoration:underline;">' . $delete_button_label . '</span></a>';
-			} */
-		} /* else {
-
-			// Create Button
-			$create_button_label = get_option( 'wcj_invoicing_' . $invoice_type_id . '_admin_column_create_btn', __( 'Create', 'woocommerce-jetpack' ) );
-			if ( '' != $create_button_label ) {
-				$html .= '<a href="';
-				$html .= add_query_arg(
-					array( 'create_invoice_for_order_id' => $order_id, 'invoice_type_id' => $invoice_type_id ),
-					remove_query_arg( 'delete_invoice_for_order_id' )
-				);
-				$html .= '"><span style="color:gray;font-style:italic;font-size:x-small;text-decoration:underline;">' . $create_button_label . '</span></a>';
-			}
-		} */
+			$html .= '<a href="' . add_query_arg( $query_args, remove_query_arg( array( 'create_invoice_for_order_id', 'delete_invoice_for_order_id' ) ) ) . '">' .
+				$the_number . '</a>';
+		}
 		echo $html;
+	}
+
+	/**
+	 * add_pdf_invoices_links_to_thankyou_page.
+	 *
+	 * @version 3.5.4
+	 * @since   3.5.4
+	 * @todo    option to change priority for the hook (probably for all docs at once)
+	 */
+	function add_pdf_invoices_links_to_thankyou_page( $order_id ) {
+		$invoice_types = wcj_get_enabled_invoice_types();
+		foreach ( $invoice_types as $invoice_type ) {
+			if ( ! wcj_is_invoice_created( $order_id, $invoice_type['id'] ) ) {
+				continue;
+			}
+			if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_enabled_on_thankyou_page', 'no' ) ) {
+				$query_args = array( 'order_id' => $order_id, 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
+				if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
+					$query_args['save_pdf_invoice'] = '1';
+				}
+				if ( '' == ( $title = get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_thankyou_page_link_text', $invoice_type['title'] ) ) ) {
+					$title = $invoice_type['title'];
+				}
+				echo str_replace( '%link%', '<a target="_blank" href="' . add_query_arg( $query_args ) . '">' . $title . '</a>',
+					get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_thankyou_page_template',
+						'<p><strong>' . sprintf( __( 'Your %s:', 'woocommerce-jetpack' ), $invoice_type['title'] ) . ' </strong> %link%</p>' ) );
+			}
+		}
 	}
 
 	/**
