@@ -41,7 +41,7 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 	 * @version 2.5.7
 	 * @since   2.5.7
 	 */
-	 function change_labels() {
+	function change_labels() {
 		if ( function_exists( 'is_cart' ) && is_cart() ) {
 			wp_enqueue_style(   'wcj-shipping-calculator',    wcj_plugin_url() . '/includes/css/wcj-shipping-calculator.css', array(),           WCJ()->version );
 			wp_enqueue_script(  'wcj-shipping-calculator-js', wcj_plugin_url() . '/includes/js/wcj-shipping-calculator.js',   array( 'jquery' ), WCJ()->version, true );
@@ -50,7 +50,7 @@ class WCJ_Shipping_Calculator extends WCJ_Module {
 				'update_totals_label'      => get_option( 'wcj_shipping_calculator_label_update_totals', '' ),
 			) );
 		}
-	 }
+	}
 
 	/**
 	 * add_custom_styles.

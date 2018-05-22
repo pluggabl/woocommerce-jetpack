@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -70,8 +70,8 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * get_quantity.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_quantity( $cart, $cart_item ) {
 		switch ( get_option( 'wcj_wholesale_price_use_total_cart_quantity', 'no' ) ) {
@@ -93,7 +93,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * add_discount_info_to_cart_page.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 */
 	function add_discount_info_to_cart_page( $price_html, $cart_item, $cart_item_key ) {
 

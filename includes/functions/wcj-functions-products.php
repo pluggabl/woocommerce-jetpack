@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_maybe_get_product_id_wpml' ) ) {
 	/**
 	 * wcj_maybe_get_product_id_wpml.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function wcj_maybe_get_product_id_wpml( $product_id ) {
 		if ( function_exists( 'icl_object_id' ) ) {

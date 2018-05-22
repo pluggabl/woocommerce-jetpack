@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @todo    check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {

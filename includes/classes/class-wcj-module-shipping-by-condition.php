@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Condition
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `abstract class WCJ_Module_Shipping_By_Condition`
@@ -32,7 +32,7 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * available_shipping_methods.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.0
 	 * @todo    apply_filters( 'booster_option' )
 	 */
@@ -76,7 +76,7 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * check.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.0
 	 */
 	abstract function check( $options_id, $args, $include_or_exclude, $package );
@@ -84,7 +84,7 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * get_condition_options.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.0
 	 */
 	abstract function get_condition_options( $options_id );

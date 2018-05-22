@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Upsells
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.5.3
  * @author  Algoritmika Ltd.
  */

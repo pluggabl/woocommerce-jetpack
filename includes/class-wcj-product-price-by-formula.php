@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -68,7 +68,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product, $output_errors = false ) {
@@ -120,7 +120,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.5.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {

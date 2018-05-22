@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Products
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.0
 	 * @todo    (maybe) add customer messages on cart and checkout pages (if some shipping method is not available)
 	 */
@@ -52,8 +52,8 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * check_for_data.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function check_for_data( $cart_instead_of_package, $package ) {
 		if ( $cart_instead_of_package ) {
@@ -71,8 +71,8 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * get_items.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_items( $cart_instead_of_package, $package ) {
 		return ( $cart_instead_of_package ? WC()->cart->get_cart() : $package['contents'] );
@@ -81,7 +81,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * check.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.0
 	 * @todo    variations in `classes`
 	 * @todo    check for `if ( is_object( $product ) && is_callable( array( $product, 'get_shipping_class_id' ) ) ) { ... }`
@@ -151,7 +151,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * get_condition_options.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.0
 	 */
 	function get_condition_options( $options_id ) {
@@ -177,7 +177,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * get_additional_section_settings.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.1
 	 */
 	function get_additional_section_settings( $options_id ) {

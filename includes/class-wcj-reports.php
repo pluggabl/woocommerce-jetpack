@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Reports
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -24,7 +24,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @todo    "orders report by meta" abstract class (see `WCJ_Reports_Product_Sales_Gateways`): by referer (`_wcj_track_users_http_referer`); by shipping (stored as item); by country (`_billing_country` or `_shipping_country`) etc.
 	 */
 	function __construct() {
@@ -183,8 +183,8 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * get_report_orders_gateways.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_report_orders_gateways() {
 		$report = new WCJ_Reports_Product_Sales_Gateways();
@@ -213,7 +213,7 @@ class WCJ_Reports extends WCJ_Module {
 	/**
 	 * Add reports to WooCommerce > Reports > Sales
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.3.0
 	 */
 	function add_sales_reports( $reports ) {

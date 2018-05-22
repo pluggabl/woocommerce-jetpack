@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Availability by Date
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  * @todo    (maybe) Direct Date: all products

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price by User Role
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -17,7 +17,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -52,8 +52,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_admin_settings_copy_link.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_admin_settings_copy_link( $action, $regular_or_sale, $source_product, $source_role, $dest_roles, $dest_products ) {
 		switch ( $action ) {
@@ -88,8 +88,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * enqueue_admin_script.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function enqueue_admin_script() {
 		wp_enqueue_script( 'wcj-price-by-user-role-admin', wcj_plugin_url() . '/includes/js/wcj-price-by-user-role-admin.js', array( 'jquery' ), WCJ()->version, true );
@@ -207,7 +207,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.5.0
 	 * @todo    (maybe) add "enable compound multipliers" option
 	 * @todo    (maybe) check for `( '' === $price )` only once, at the beginning of the function (instead of comparing before each `return`)
@@ -355,7 +355,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.5.0
 	 * @todo    only hash categories that is relevant to the product
 	 * @todo    (maybe) code refactoring (cats/tags)

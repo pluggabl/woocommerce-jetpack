@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -160,8 +160,8 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * maybe_replace_tcpdf_method_params.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function maybe_replace_tcpdf_method_params( $html, $pdf ) {
 		$start_str        = 'wcj_tcpdf_method_params_start';
@@ -182,7 +182,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	 *
 	 * Gets invoice content HTML.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.5.0
 	 * @todo    pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 	 * @todo    `force_balance_tags()` - there are some bugs and performance issues, see http://wordpress.stackexchange.com/questions/89121/why-doesnt-default-wordpress-page-view-use-force-balance-tags
@@ -209,7 +209,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @todo    (maybe) `die()` on success
 	 */
 	function get_pdf( $dest ) {

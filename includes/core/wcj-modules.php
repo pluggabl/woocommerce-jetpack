@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -108,6 +108,7 @@ $wcj_module_files = array(
 	'class-wcj-breadcrumbs.php',
 	'class-wcj-url-coupons.php',
 	'class-wcj-coupon-code-generator.php',
+	'class-wcj-coupon-by-user-role.php',
 	'class-wcj-admin-bar.php',
 	'class-wcj-my-account.php',
 	'class-wcj-custom-css.php',

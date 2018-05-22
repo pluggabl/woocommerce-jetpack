@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - SKU
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    deprecate `wcj_sku_prefix` and `wcj_sku_suffix` (as user can now add it directly to "Template")

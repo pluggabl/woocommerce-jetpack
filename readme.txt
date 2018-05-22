@@ -84,6 +84,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP; hide "Order Again" button; disable selected fields on checkout for logged users and more.
 * *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
 * *Coupon Code Generator* - WooCommerce coupon code generator.
+* *Coupon by User Role* - WooCommerce coupons by user roles.
 * *EU VAT Number* - Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.
 * *Empty Cart Button* - Add (and customize) "Empty Cart" button to WooCommerce cart and checkout pages.
 * *Mini Cart Custom Info* - Add custom info to WooCommerce mini cart widget.
@@ -186,7 +187,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.5.4 - 17/05/2018 =
+= 3.6.0 - 22/05/2018 =
+D W P * Dev - CART & CHECKOUT - Coupon by User Role - Initial module release.
+D T   * Dev - SHIPPING & ORDERS - Order Min/Max Quantities - "Single Item Cart" options section added.
+  T   * Dev - CART & CHECKOUT - URL Coupons - Minor code refactoring.
+  T I * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Per product - Algorithm re-written.
 D T   * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Thank You Page" options added.
 D T   * Dev - PRODUCTS - Product Availability by Date - Advanced Options - "Action" option added.
   W I * Dev - PRICES & CURRENCIES - Price by User Role - WPML support added.

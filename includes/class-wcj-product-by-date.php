@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Date
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.9.1
 	 * @todo    per category
 	 * @todo    per tag

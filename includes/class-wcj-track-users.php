@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.1.3
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.1.3
 	 * @todo    (maybe) if `wcj_track_users_enabled` set to `yes`, check if "General" module is also enabled (when upgrading from version 3.1.2)
 	 */
@@ -70,8 +70,8 @@ class WCJ_User_Tracking extends WCJ_Module {
 	/**
 	 * add_order_columns.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function add_order_columns( $columns ) {
 		if ( 'yes' === get_option( 'wcj_track_users_shop_order_columns_referer', 'no' ) ) {
@@ -87,8 +87,8 @@ class WCJ_User_Tracking extends WCJ_Module {
 	 * render_order_columns.
 	 *
 	 * @param   string $column
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function render_order_columns( $column ) {
 		if ( 'wcj_track_users_referer' === $column || 'wcj_track_users_referer_type' === $column ) {

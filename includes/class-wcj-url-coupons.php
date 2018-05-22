@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - URL Coupons
  *
- * @version 2.9.1
+ * @version 3.6.0
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -33,28 +33,6 @@ class WCJ_URL_Coupons extends WCJ_Module {
 	}
 
 	/**
-	 * is_product_in_cart.
-	 *
-	 * @version 2.9.1
-	 * @since   2.9.1
-	 */
-	function is_product_in_cart( $product_id ) {
-		if ( 0 != $product_id ) {
-			if ( isset( WC()->cart->cart_contents ) && is_array( WC()->cart->cart_contents ) ) {
-				foreach ( WC()->cart->cart_contents as $cart_item_key => $cart_item_data ) {
-					if (
-						( isset( $cart_item_data['product_id'] )   && $product_id == $cart_item_data['product_id'] ) ||
-						( isset( $cart_item_data['variation_id'] ) && $product_id == $cart_item_data['variation_id'] )
-					) {
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * get_redirect_url.
 	 *
 	 * @version 2.9.1
@@ -76,7 +54,7 @@ class WCJ_URL_Coupons extends WCJ_Module {
 	/**
 	 * maybe_add_products_to_cart.
 	 *
-	 * @version 2.9.1
+	 * @version 3.6.0
 	 * @since   2.9.1
 	 * @todo    (maybe) check if coupon is valid
 	 */
@@ -96,7 +74,7 @@ class WCJ_URL_Coupons extends WCJ_Module {
 			$product_ids = $the_coupon->get_product_ids();
 			if ( ! empty( $product_ids ) ) {
 				foreach ( $product_ids as $product_id ) {
-					if ( ! $this->is_product_in_cart( $product_id ) ) {
+					if ( ! wcj_is_product_in_cart( $product_id ) ) {
 						WC()->cart->add_to_cart( $product_id );
 					}
 				}

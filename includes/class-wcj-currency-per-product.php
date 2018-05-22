@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -239,7 +239,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_currency_exchange_rate.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.5.2
 	 */
 	function get_currency_exchange_rate( $currency_code ) {

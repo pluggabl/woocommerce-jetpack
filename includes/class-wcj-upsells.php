@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Upsells
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.5.3
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Upsells extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.5.3
 	 * @todo    (maybe) use `apply_filters( 'woocommerce_upsell_display_args', array( 'posts_per_page' => $limit, 'orderby' => $orderby, 'columns' => $columns ) );`
 	 * @todo    (maybe) Global Upsells - on per category/tag basis
@@ -52,8 +52,8 @@ class WCJ_Upsells extends WCJ_Module {
 	/**
 	 * reposition_upsells.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function reposition_upsells() {
 		$this->hide_upsells();
@@ -67,8 +67,8 @@ class WCJ_Upsells extends WCJ_Module {
 	/**
 	 * hide_upsells.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function hide_upsells() {
 		remove_action( 'woocommerce_after_single_product_summary', 'storefront_upsell_display',  15 );
@@ -78,8 +78,8 @@ class WCJ_Upsells extends WCJ_Module {
 	/**
 	 * upsell_ids.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function upsell_ids( $ids, $_product ) {
 		$global_upsells = get_option( 'wcj_upsells_global_ids', '' );
@@ -118,7 +118,7 @@ class WCJ_Upsells extends WCJ_Module {
 	/**
 	 * upsells_total.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.5.3
 	 * @todo    (maybe) check for `isset( $args['posts_per_page'] )`
 	 */

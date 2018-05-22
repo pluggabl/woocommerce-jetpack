@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -96,7 +96,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @todo    (maybe) rename module to "Payment Gateways by (Customer's) Location"
 	 * @todo    (maybe) check naming, should be `wcj_gateways_by_location_` (however it's too long...)
 	 * @todo    (maybe) code refactoring

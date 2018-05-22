@@ -1,7 +1,7 @@
 /**
  * wcj-checkout-custom-fields.
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.2.0
  */
 

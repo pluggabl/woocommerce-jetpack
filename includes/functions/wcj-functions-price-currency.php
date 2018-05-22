@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -198,7 +198,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 	/**
 	 * wcj_price_by_country.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.5.3
 	 */
 	function wcj_price_by_country( $price, $product, $group_id, $the_current_filter = '' ) {

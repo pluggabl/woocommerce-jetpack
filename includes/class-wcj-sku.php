@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -227,8 +227,8 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_acronym.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    move to `wcj_get_acronym()`
 	 */
 	function get_acronym( $str, $sep ) {
@@ -245,8 +245,8 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * maybe_process_attributes.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function maybe_process_attributes( $_product, $format_template, $str, $is_variation = false ) {
 		while ( false !== ( $pos = strpos( $format_template, '{' . $str . '=' ) ) ) {
@@ -301,7 +301,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @todo    re-check if some of "replaced values" can be replaced by Booster products shortcodes (and update description in settings)
 	 * @todo    `{tag_prefix}`, `{tag_suffix}`
 	 * @todo    (maybe) add option to disable shortcodes processing

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by User Role
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.5.5
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module_Product_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.5.5
 	 */
 	function __construct() {
@@ -36,8 +36,8 @@ class WCJ_Product_By_User_Role extends WCJ_Module_Product_By_Condition {
 	/**
 	 * get_options_list.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_options_list() {
 		return wcj_get_user_roles_options();
@@ -46,8 +46,8 @@ class WCJ_Product_By_User_Role extends WCJ_Module_Product_By_Condition {
 	/**
 	 * get_check_option.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_check_option() {
 		return wcj_get_current_user_all_roles();

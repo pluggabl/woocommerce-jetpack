@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Product MSRP
  *
- * @version 3.5.4
- * @since   3.5.4
+ * @version 3.6.0
+ * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) option to change `_wcj_msrp` meta key
 	 * @todo    (maybe) REST API
 	 * @todo    (maybe) grouped products
@@ -56,8 +56,8 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * add_msrp_input_variable.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function add_msrp_input_variable( $loop, $variation_data, $variation ) {
 		woocommerce_wp_text_input( array(
@@ -73,8 +73,8 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * save_msrp_input_variable.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function save_msrp_input_variable( $variation_id, $i ) {
 		if ( isset( $_POST['variable_wcj_msrp'][ $i ] ) ) {
@@ -85,8 +85,8 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * add_msrp_input.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) rethink `$product_id`
 	 */
 	function add_msrp_input() {
@@ -102,8 +102,8 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * save_msrp_input.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function save_msrp_input( $post_id, $__post ) {
 		if ( isset( $_POST['_wcj_msrp'] ) ) {
@@ -114,8 +114,8 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * display.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) multicurrency
 	 * @todo    (maybe) variable product's msrp
 	 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Reports
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

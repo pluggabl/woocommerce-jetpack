@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 3.5.4
- * @since   3.5.4
+ * @version 3.6.0
+ * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function __construct( $type = 'module' ) {
 
@@ -67,8 +67,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * add_product_columns.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function add_product_columns( $columns ) {
 		$columns[ 'wcj_' . $this->id ] = $this->title;
@@ -78,8 +78,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * render_product_column.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function render_product_column( $column ) {
 		if ( 'wcj_' . $this->id === $column ) {
@@ -108,8 +108,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * add_bulk_and_quick_edit_fields.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function add_bulk_and_quick_edit_fields() {
 		$all_options = '';
@@ -140,8 +140,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * save_bulk_and_quick_edit_fields.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function save_bulk_and_quick_edit_fields( $post_id, $post ) {
 		// If this is an autosave, our form has not been submitted, so we don't want to do anything.
@@ -187,8 +187,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * products_widget_query.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) check if pagination needs to be fixed (as in `$this->pre_get_posts()`)
 	 */
 	function products_widget_query( $query_args ) {
@@ -212,8 +212,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * pre_get_posts.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function pre_get_posts( $query ) {
 		if ( is_admin() ) {
@@ -259,8 +259,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * is_purchasable.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function is_purchasable( $purchasable, $_product ) {
 		return ( ! $this->is_product_visible( wcj_get_product_id_or_variation_parent_id( $_product ), $this->get_check_option() ) ? false : $purchasable );
@@ -269,8 +269,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * is_visible.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function is_visible( $visible, $product_id ) {
 		return ( ! $this->is_product_visible( $product_id, $this->get_check_option() ) ? false : $visible );
@@ -279,8 +279,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * is_product_visible.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) replace with `abstract is_product_visible()`
 	 */
 	function is_product_visible( $product_id, $option_to_check ) {
@@ -320,8 +320,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * add_settings_from_file.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function add_settings_from_file( $settings ) {
 		return $this->maybe_fix_settings( require( wcj_plugin_path() . '/includes/settings/wcj-settings-product-by-condition.php' ) );
@@ -330,8 +330,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * get_meta_box_options.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_meta_box_options() {
 		$filename = wcj_plugin_path() . '/includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php';
@@ -341,8 +341,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * maybe_add_extra_frontend_filters.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) replace with action
 	 */
 	function maybe_add_extra_frontend_filters() {
@@ -352,8 +352,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * maybe_extra_options_process.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) replace with filter (or remove completely - i.e. `abstract is_product_visible()`)
 	 */
 	function maybe_extra_options_process( $options ) {
@@ -363,8 +363,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * maybe_add_extra_settings.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) replace with filter
 	 */
 	function maybe_add_extra_settings() {
@@ -374,16 +374,16 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * get_options_list.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	abstract function get_options_list();
 
 	/**
 	 * get_check_option.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	abstract function get_check_option();
 

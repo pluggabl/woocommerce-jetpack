@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -228,7 +228,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_active_admin_bar.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.1.0
 	 */
 	function add_booster_active_admin_bar( $wp_admin_bar ) {
@@ -259,7 +259,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_admin_bar.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.9.0
 	 */
 	function add_booster_admin_bar( $wp_admin_bar ) {
@@ -334,7 +334,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_bar.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.9.0
 	 * @todo    (maybe) reports > customers > customers > add dates
 	 * @todo    (maybe) reports > taxes > taxes_by_code > add dates

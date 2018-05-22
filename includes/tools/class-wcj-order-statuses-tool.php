@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.2.2
  * @author  Algoritmika Ltd.
  */
@@ -27,7 +27,7 @@ class WCJ_Order_Statuses_Tool {
 	/**
 	 * add_custom_status.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 */
 	function add_custom_status( $new_status, $new_status_label, $new_status_icon_content, $new_status_icon_color, $new_status_text_color ) {
 		// Checking function arguments
@@ -67,7 +67,7 @@ class WCJ_Order_Statuses_Tool {
 	/**
 	 * edit_custom_status.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.2
 	 */
 	function edit_custom_status( $new_status, $new_status_label, $new_status_icon_content, $new_status_icon_color, $new_status_text_color ) {
@@ -131,7 +131,7 @@ class WCJ_Order_Statuses_Tool {
 	/**
 	 * get_custom_statuses_table.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.2
 	 */
 	function get_custom_statuses_table() {
@@ -189,7 +189,7 @@ class WCJ_Order_Statuses_Tool {
 	/**
 	 * get_custom_statuses_add_edit_table.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.2
 	 */
 	function get_custom_statuses_add_edit_table() {
@@ -242,7 +242,7 @@ class WCJ_Order_Statuses_Tool {
 	/**
 	 * process_actions.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.2
 	 * @todo    (maybe) use `init` hook for processing actions
 	 */

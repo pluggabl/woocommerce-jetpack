@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @todo    check all changes from Custom Order Status plugin
 	 * @todo    `wcj_orders_custom_statuses_processing_and_completed_actions` to Custom Order Status plugin
 	 * @todo    (maybe) add options to change icon and icon's color for all statuses (i.e. not only custom)
@@ -179,7 +179,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * get_status_icon_data.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.2
 	 */
 	function get_status_icon_data( $status_slug_without_wc_prefix ) {
@@ -268,8 +268,8 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * hook_statuses_column_css.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function hook_statuses_column_css() {
 		$output   = '';

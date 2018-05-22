@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Stock
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.8.0
 	 * @todo    (maybe) change `link_slug` to "woocommerce-products-stock" or "woocommerce-product-stock"
 	 * @todo    customize "Available on backorder" message in cart
@@ -67,8 +67,8 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_availability_text.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @see     `wc_format_stock_for_display()`
 	 * @todo    `$this->is_custom_out_of_stock_text` - html tags in < WC3
 	 * @todo    last `else` (i.e. `( ! $_product->managing_stock() )`
@@ -114,8 +114,8 @@ class WCJ_Stock extends WCJ_Module {
 	/**
 	 * custom_availability_class.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function custom_availability_class( $class, $_product ) {
 		if ( ! $_product->is_in_stock() ) {

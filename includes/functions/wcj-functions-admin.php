@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -84,7 +84,7 @@ if ( ! function_exists( 'wcj_is_admin_product_edit_page' ) ) {
 	/**
 	 * wcj_is_admin_product_edit_page.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.4
 	 * @todo    use where appropriate
 	 * @todo    (maybe) move to `wcj-functions-conditional.php`

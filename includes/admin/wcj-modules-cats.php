@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -102,6 +102,7 @@ return apply_filters( 'wcj_modules', array(
 			'mini_cart',
 			'url_coupons',
 			'coupon_code_generator',
+			'coupon_by_user_role',
 			'checkout_core_fields',
 			'checkout_custom_fields',
 			'checkout_files_upload',

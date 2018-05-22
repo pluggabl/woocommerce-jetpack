@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
- * @version 3.2.3
+ * @version 3.6.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) generate settings in loop ( min / max )
@@ -169,5 +169,31 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_order_quantities_general_options',
+	),
+	array(
+		'title'    => __( '"Single Item Cart" Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_order_quantities_single_item_cart_options',
+	),
+	array(
+		'title'    => __( 'Enable "Single Item Cart" Mode', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'When enabled, only one item will be allowed to be added to the cart (quantity is not checked).', 'woocommerce-jetpack' ) . ' ' .
+			apply_filters( 'booster_message', '', 'desc' ),
+		'id'       => 'wcj_order_quantities_single_item_cart_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Message', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_single_item_cart_message',
+		'default'  => __( 'Only one item can be added to the cart. Clear the cart or finish the order, before adding another item to the cart.', 'woocommerce-jetpack' ),
+		'type'     => 'custom_textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_order_quantities_single_item_cart_options',
 	),
 );

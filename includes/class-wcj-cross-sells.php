@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cross-sells
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.5.3
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.5.3
 	 */
 	function __construct() {
@@ -57,8 +57,8 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * reposition_cross_sells.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) check `woocommerce\templates\cart\cart.php` for more positions
 	 */
 	function reposition_cross_sells() {
@@ -69,8 +69,8 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * hide_cross_sells.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function hide_cross_sells() {
 		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
@@ -79,8 +79,8 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * cross_sells_ids.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) on per category/tag basis
 	 * @todo    (maybe) ids instead of list
 	 * @todo    (maybe) on cart update (i.e. product removed) cross-sells are not updated (so it may be needed to reload page manually to see new cross-sells)
@@ -130,7 +130,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * cross_sells_total.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.5.3
 	 */
 	function cross_sells_total( $limit ) {

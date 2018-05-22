@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Shipping
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -180,7 +180,7 @@ if ( ! function_exists( 'wcj_get_woocommerce_package_rates_module_filter_priorit
 	/**
 	 * wcj_get_woocommerce_package_rates_module_filter_priority.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.4
 	 * @todo    add `shipping_by_order_amount` module
 	 */

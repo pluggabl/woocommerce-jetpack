@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 3.3.0
+ * @version 3.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -228,7 +228,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 3.3.0
+	 * @version 3.6.0
 	 * @todo    rewrite this with less filters (e.g. `woocommerce_get_price_html` only) - at least for `! WCJ_IS_WC_VERSION_BELOW_3`
 	 */
 	function custom_price( $price, $product ) {
@@ -364,37 +364,30 @@ class WCJ_Price_Labels extends WCJ_Module {
 				}
 				if ( 'on' === $labels_array[ 'variation_enabled' ] ) {
 					if (
-						( ( 'off' === $labels_array['variation_home'] )     && ( is_front_page() ) ) ||
-						( ( 'off' === $labels_array['variation_products'] ) && ( is_archive() ) ) ||
-						( ( 'off' === $labels_array['variation_single'] )   && ( is_single() ) ) ||
-						( ( 'off' === $labels_array['variation_page'] )     && ( is_page() && ! is_front_page() ) )
-					) {
-						if ( 'woocommerce_cart_item_price' === $current_filter_name && 'on' === $labels_array['variation_cart'] ) {
-							continue;
-						}
-						$variable_filters_array = array(
+						( 'on' === $labels_array['variation_home']      && is_front_page() ) ||
+						( 'on' === $labels_array['variation_products']  && is_archive() ) ||
+						( 'on' === $labels_array['variation_single']    && is_single() ) ||
+						( 'on' === $labels_array['variation_page']      && is_page() && ! is_front_page() ) ||
+						( 'on' === $labels_array['variation_cart']      && 'woocommerce_cart_item_price' === $current_filter_name ) ||
+						( 'on' === $labels_array['variation_variable']  && in_array( $current_filter_name, array(
 							'woocommerce_variable_empty_price_html',
 							'woocommerce_variable_free_price_html',
 							'woocommerce_variable_free_sale_price_html',
 							'woocommerce_variable_price_html',
 							'woocommerce_variable_sale_price_html',
 							'woocommerce_variable_subscription_price_html',
-						);
-						$variation_filters_array = array(
+						) ) ) ||
+						( 'on' === $labels_array['variation_variation'] && in_array( $current_filter_name, array(
 							'woocommerce_variation_empty_price_html',
 							'woocommerce_variation_free_price_html',
 							'woocommerce_variation_price_html',
 							'woocommerce_variation_sale_price_html',
 							'woocommerce_variation_subscription_price_html', // pseudo filter!
-						);
-						if (
-							(   in_array( $current_filter_name, $variable_filters_array )  && ( 'off' === $labels_array['variation_variable'] ) ) ||
-							(   in_array( $current_filter_name, $variation_filters_array ) && ( 'off' === $labels_array['variation_variation'] ) ) ||
-							( ! in_array( $current_filter_name, $variable_filters_array )  && ! in_array( $current_filter_name, $variation_filters_array ) )
-						) {
-							$price = $this->customize_price( $price, $custom_tab_section, $labels_array['variation_text'] );
-						}
+						) ) )
+					) {
+						continue;
 					}
+					$price = $this->customize_price( $price, $custom_tab_section, $labels_array['variation_text'] );
 				}
 			}
 		}

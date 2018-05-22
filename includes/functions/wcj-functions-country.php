@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Country
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -10,8 +10,8 @@ if ( ! function_exists( 'wcj_maybe_add_european_union_countries' ) ) {
 	/**
 	 * wcj_maybe_add_european_union_countries.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    use where needed
 	 */
 	function wcj_maybe_add_european_union_countries( $countries ) {

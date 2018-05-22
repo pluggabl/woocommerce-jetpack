@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Product MSRP
  *
- * @version 3.5.4
- * @since   3.5.4
+ * @version 3.6.0
+ * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
 

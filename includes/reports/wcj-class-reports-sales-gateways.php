@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Reports - Product Sales - Gateways
  *
- * @version 3.5.4
- * @since   3.5.4
+ * @version 3.6.0
+ * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Reports_Product_Sales_Gateways {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function __construct( $args = null ) {
 		return true;
@@ -26,8 +26,8 @@ class WCJ_Reports_Product_Sales_Gateways {
 	/**
 	 * get_report.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_report() {
 		$this->get_report_args();
@@ -38,8 +38,8 @@ class WCJ_Reports_Product_Sales_Gateways {
 	/*
 	 * get_report_args.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_report_args() {
 		$current_time = (int) current_time( 'timestamp' );
@@ -50,8 +50,8 @@ class WCJ_Reports_Product_Sales_Gateways {
 	/*
 	 * get_report_data.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    by "order status"
 	 * @todo    use `get_post_meta( $order_id, '_payment_method_title', true )`
 	 */
@@ -96,8 +96,8 @@ class WCJ_Reports_Product_Sales_Gateways {
 	/*
 	 * output_report_data.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function output_report_data() {
 		return $this->output_report_header() . $this->output_report_results();
@@ -106,8 +106,8 @@ class WCJ_Reports_Product_Sales_Gateways {
 	/*
 	 * output_report_header.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function output_report_header() {
 		// Settings link and dates menu
@@ -144,8 +144,8 @@ class WCJ_Reports_Product_Sales_Gateways {
 	/*
 	 * output_report_results.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function output_report_results() {
 		if ( ! empty( $this->gateways ) ) {

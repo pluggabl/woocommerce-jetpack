@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options
@@ -377,7 +377,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * is_visible.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.4.7
 	 */
 	function is_visible( $i, $order_id = 0 ) {

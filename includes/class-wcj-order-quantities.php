@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 3.2.3
+ * @version 3.6.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.2
+	 * @version 3.6.0
 	 * @since   2.9.0
 	 * @todo    for cart: `apply_filters( 'woocommerce_quantity_input_args', wp_parse_args( $args, $defaults ), $product );`
 	 * @todo    loop (`woocommerce_loop_add_to_cart_link`)
@@ -54,7 +54,30 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				}
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_script' ) );
 			}
+			// Limit cart items (i.e. "Single Item Cart" Mode)
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_single_item_cart_enabled', 'no' ) ) ) {
+				add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'single_item_cart' ), PHP_INT_MAX, 4 );
+			}
 		}
+	}
+
+	/**
+	 * single_item_cart.
+	 *
+	 * @version 3.6.0
+	 * @since   3.6.0
+	 */
+	function single_item_cart( $passed, $product_id, $quantity = 0, $variation_id = 0 ) {
+		if ( ! WC()->cart->is_empty() ) {
+			if ( is_array( WC()->cart->cart_contents ) && 1 == count( WC()->cart->cart_contents ) && wcj_is_product_in_cart( ( 0 != $variation_id ? $variation_id : $product_id ) ) ) {
+				return $passed;
+			} else {
+				wc_add_notice( get_option( 'wcj_order_quantities_single_item_cart_message',
+					__( 'Only one item can be added to the cart. Clear the cart or finish the order, before adding another item to the cart.', 'woocommerce-jetpack' ) ), 'error' );
+				return false;
+			}
+		}
+		return $passed;
 	}
 
 	/**

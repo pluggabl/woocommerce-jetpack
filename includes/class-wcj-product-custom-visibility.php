@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Custom Visibility
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module_Product_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.2.4
 	 */
 	function __construct() {
@@ -40,8 +40,8 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module_Product_By_Condition {
 	/**
 	 * get_options_list.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_options_list() {
 		return wcj_get_select_options( get_option( 'wcj_product_custom_visibility_options_list', '' ) );
@@ -50,8 +50,8 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module_Product_By_Condition {
 	/**
 	 * get_check_option.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_check_option() {
 		return wcj_session_get( 'wcj_selected_product_custom_visibility' );
@@ -60,8 +60,8 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module_Product_By_Condition {
 	/**
 	 * maybe_add_extra_frontend_filters.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function maybe_add_extra_frontend_filters() {
 		add_action( 'init', array( $this, 'save_selection_in_session' ), PHP_INT_MAX );
@@ -83,8 +83,8 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module_Product_By_Condition {
 	/**
 	 * maybe_add_extra_settings.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function maybe_add_extra_settings() {
 		return array(

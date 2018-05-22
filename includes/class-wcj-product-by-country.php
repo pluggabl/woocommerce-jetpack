@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -36,8 +36,8 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	/**
 	 * get_options_list.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_options_list() {
 		return ( 'wc' === apply_filters( 'booster_option', 'all', get_option( 'wcj_product_by_country_country_list', 'all' ) ) ?
@@ -47,8 +47,8 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	/**
 	 * get_check_option.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function get_check_option() {
 		if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
@@ -67,8 +67,8 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	/**
 	 * maybe_add_extra_frontend_filters.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function maybe_add_extra_frontend_filters() {
 		if ( 'manual' === apply_filters( 'booster_option', 'by_ip', get_option( 'wcj_product_by_country_selection_method', 'by_ip' ) ) ) {
@@ -92,8 +92,8 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	/**
 	 * maybe_extra_options_process.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 */
 	function maybe_extra_options_process( $options ) {
 		if ( in_array( 'EU', $options ) ) {
@@ -105,8 +105,8 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	/**
 	 * maybe_add_extra_settings.
 	 *
-	 * @version 3.5.4
-	 * @since   3.5.4
+	 * @version 3.6.0
+	 * @since   3.6.0
 	 * @todo    (maybe) move "Country List" inside the "Admin Options" section
 	 */
 	function maybe_add_extra_settings() {

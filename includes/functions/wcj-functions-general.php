@@ -2,12 +2,36 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 3.5.4
+ * @version 3.6.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_is_product_in_cart' ) ) {
+	/**
+	 * wcj_is_product_in_cart.
+	 *
+	 * @version 3.6.0
+	 * @since   2.9.1
+	 */
+	function wcj_is_product_in_cart( $product_id ) {
+		if ( 0 != $product_id ) {
+			if ( isset( WC()->cart->cart_contents ) && is_array( WC()->cart->cart_contents ) ) {
+				foreach ( WC()->cart->cart_contents as $cart_item_key => $cart_item_data ) {
+					if (
+						( isset( $cart_item_data['product_id'] )   && $product_id == $cart_item_data['product_id'] ) ||
+						( isset( $cart_item_data['variation_id'] ) && $product_id == $cart_item_data['variation_id'] )
+					) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+}
 
 if ( ! function_exists( 'wcj_send_file' ) ) {
 	/**
@@ -95,7 +119,7 @@ if ( ! function_exists( 'wcj_tcpdf_method' ) ) {
 	/**
 	 * wcj_tcpdf_method.
 	 *
-	 * @version 3.5.4
+	 * @version 3.6.0
 	 * @since   3.4.0
 	 */
 	function wcj_tcpdf_method( $method, $params ) {
@@ -613,7 +637,7 @@ if ( ! function_exists( 'wcj_get_select_options' ) ) {
 	/*
 	 * wcj_get_select_options()
 	 *
-	 * @version  3.5.4
+	 * @version  3.6.0
 	 * @since    2.3.0
 	 * @return   array
 	 */
