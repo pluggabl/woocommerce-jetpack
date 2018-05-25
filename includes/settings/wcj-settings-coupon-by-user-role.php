@@ -34,7 +34,7 @@ return array(
 		'options'  => wcj_get_user_roles_options(),
 	),
 	array(
-		'title'    => __( 'Coupon not Valid Message', 'woocommerce-jetpack' ),
+		'title'    => __( '"Coupon is not valid" Message', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Message that will be displayed for invalid coupons by user role.', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'default'  => __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ),

@@ -202,15 +202,19 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	/*
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 3.5.1
+	 * @version 3.6.0
 	 * @since   2.4.4
 	 * @return  string
+	 * @todo    (maybe) go through all packages instead of only `$packages[0]`
 	 */
 	function wcj_get_left_to_free_shipping( $content, $multiply_by = 1 ) {
 		// "You have Free delivery"
 		if ( function_exists( 'WC' ) && ( WC()->shipping ) && ( $packages = WC()->shipping->get_packages() ) ) {
 			foreach ( $packages as $i => $package ) {
 				$available_shipping_methods = $package['rates'];
+				if ( wcj_is_module_enabled( 'shipping_by_user_role' ) ) {
+					$available_shipping_methods = WCJ()->modules['shipping_by_user_role']->available_shipping_methods( $available_shipping_methods, false );
+				}
 				foreach ( $available_shipping_methods as $available_shipping_method ) {
 					$method_id = ( WCJ_IS_WC_VERSION_BELOW_3_2_0 ? $available_shipping_method->method_id : $available_shipping_method->get_method_id() );
 					if ( 'free_shipping' === $method_id ) {
@@ -238,6 +242,9 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 					if ( $wc_shipping->enabled ) {
 						if ( $packages = $wc_cart->get_shipping_packages() ) {
 							$shipping_methods = $wc_shipping->load_shipping_methods( $packages[0] );
+							if ( wcj_is_module_enabled( 'shipping_by_user_role' ) ) {
+								$shipping_methods = WCJ()->modules['shipping_by_user_role']->available_shipping_methods( $shipping_methods, false );
+							}
 							foreach ( $shipping_methods as $shipping_method ) {
 								if ( 'yes' === $shipping_method->enabled && 0 != $shipping_method->instance_id ) {
 									if ( 'WC_Shipping_Free_Shipping' === get_class( $shipping_method ) ) {

@@ -20,6 +20,7 @@ class WCJ_Coupon_By_User_Role extends WCJ_Module {
 	 * @since   3.6.0
 	 * @todo    per coupon
 	 * @todo    (maybe) init all options in constructor
+	 * @todo    (maybe) use another error code (instead of 10000)
 	 */
 	function __construct() {
 

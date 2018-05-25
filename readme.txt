@@ -187,7 +187,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.6.0 - 22/05/2018 =
+= 3.6.0 - 25/05/2018 =
+D T   * Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Forecast - Year forecast added and output restyled.
+  T I * Dev - SHIPPING & ORDERS - Left to Free Shipping - "Shipping Methods by Users" module support added.
 D W P * Dev - CART & CHECKOUT - Coupon by User Role - Initial module release.
 D T   * Dev - SHIPPING & ORDERS - Order Min/Max Quantities - "Single Item Cart" options section added.
   T   * Dev - CART & CHECKOUT - URL Coupons - Minor code refactoring.

@@ -104,7 +104,7 @@ $reports_and_settings = array(
 	),
 	array(
 		'id'        => 'wcj_reports_orders_monthly_sales_forecast',
-		'desc'      => __( 'Forecast total orders and sum (excl. TAX) for current month', 'woocommerce-jetpack' ),
+		'desc'      => __( 'Forecast total orders and sum (excl. TAX) for current month and year', 'woocommerce-jetpack' ),
 		'type'      => 'checkbox',
 		'default'   => 'no',
 		'checkboxgroup' => 'end',

@@ -56,6 +56,7 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module_Shipping_By_Condition {
 	 *
 	 * @version 3.6.0
 	 * @since   3.2.0
+	 * @todo    use `$package` (and in this case update `wcj_get_left_to_free_shipping()`)
 	 */
 	function check( $options_id, $user_roles_or_ids_or_membership_plans, $include_or_exclude, $package ) {
 		switch( $options_id ) {

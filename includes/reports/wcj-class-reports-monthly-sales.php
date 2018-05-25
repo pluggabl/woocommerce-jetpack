@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Monthly Sales (with Currency Conversion)
  *
- * @version 3.2.2
+ * @version 3.6.0
  * @since   2.4.7
  * @author  Algoritmika Ltd.
  */
@@ -71,7 +71,7 @@ class WCJ_Reports_Monthly_Sales {
 	/*
 	 * get_monthly_sales_report.
 	 *
-	 * @version 3.2.2
+	 * @version 3.6.0
 	 * @since   2.4.7
 	 * @todo    (maybe) visible rows selection by admin (as option)
 	 * @todo    (maybe) take not monthly average, but "Close" of closest day (probably create new "Daily Sales (with Currency Conversion)" report)
@@ -197,8 +197,8 @@ class WCJ_Reports_Monthly_Sales {
 				$forecast_total_orders = ( $average_sales_result ) * ( date( 't', strtotime( $this->year . '-' . sprintf( '%02d', $i ) . '-' . '01' ) ) );
 			}
 			$total_orders_array[] = ( $total_orders > 0 ? $total_orders . ( $is_current_month && $do_forecast ?
-				' <span style="font-size:smaller;">(' . round( $forecast_total_orders ) . ')</span>' : ''
-				) : '-'
+				wc_help_tip( sprintf( __( 'Forecast: %s', 'woocommerce-jetpack' ), round( $forecast_total_orders ) ), true ) : ''
+				) : ''
 			);
 			$total_orders_total  += $total_orders;
 			// Sales Average
@@ -210,9 +210,9 @@ class WCJ_Reports_Monthly_Sales {
 			// Sum excl. Tax
 			$total_orders_sum_excl_tax_array[] = ( $total_orders_sum_excl_tax > 0 ?
 				$report_currency . ' ' . number_format( $total_orders_sum_excl_tax, 2, '.', ',' ) . ( $is_current_month && $do_forecast ?
-					' <span style="font-size:smaller;">(' . $report_currency . ' ' .
-						number_format( $forecast_total_orders * $total_orders_sum_excl_tax / $total_orders, 2 ) . ')</span>' : ''
-				) : '-'
+					wc_help_tip( sprintf( __( 'Forecast: %s', 'woocommerce-jetpack' ), $report_currency . ' ' .
+						number_format( $forecast_total_orders * $total_orders_sum_excl_tax / $total_orders, 2 ) ), true ) : ''
+				) : ''
 			);
 			$total_orders_sum_excl_tax_total  += $total_orders_sum_excl_tax;
 
@@ -274,12 +274,22 @@ class WCJ_Reports_Monthly_Sales {
 		}
 
 		// Totals
+		if ( $do_forecast ) {
+			$part_of_the_year_for_forecast            = ( $total_months_days > 0 ? ( date( 'z', strtotime( date( 'Y-12-31' ) ) ) + 1 ) / $total_months_days : 0 );
+			$forecast_total_orders_year               = ( $part_of_the_year_for_forecast > 0 && date( 'Y' ) == $this->year ?
+				wc_help_tip( sprintf( __( 'Forecast: %s', 'woocommerce-jetpack' ), round( $part_of_the_year_for_forecast * $total_orders_total ) ), true ) : '' );
+			$forecast_total_orders_sum_excl_tax_total = ( $part_of_the_year_for_forecast > 0 && date( 'Y' ) == $this->year ?
+				wc_help_tip( sprintf( __( 'Forecast: %s', 'woocommerce-jetpack' ),
+					$report_currency . ' ' . number_format( $part_of_the_year_for_forecast * $total_orders_sum_excl_tax_total, 2, '.', ',' ) ), true ) : '' );
+		}
 		$months_array[]                          = __( 'Totals', 'woocommerce-jetpack' );
 		$months_days_array[]                     = $total_months_days;
-		$total_orders_array[]                    = $total_orders_total;
+		$total_orders_array[]                    = $total_orders_total .
+			( $do_forecast ? $forecast_total_orders_year : '' );
 		$total_orders_average_array[]            = ( $total_months_days > 0 ? number_format( ( $total_orders_total / $total_months_days ), 2, '.', ',' ) : '-' );
 		$total_orders_sum_array[]                = $report_currency . ' ' . number_format( $total_orders_sum_total, 2, '.', ',' );
-		$total_orders_sum_excl_tax_array[]       = $report_currency . ' ' . number_format( $total_orders_sum_excl_tax_total, 2, '.', ',' );
+		$total_orders_sum_excl_tax_array[]       = $report_currency . ' ' . number_format( $total_orders_sum_excl_tax_total, 2, '.', ',' ) .
+			( $do_forecast ? $forecast_total_orders_sum_excl_tax_total : '' );
 		$total_orders_sum_average_order_array[]  = ( $total_orders_total > 0 ?
 			$report_currency . ' ' . number_format( ( $total_orders_sum_excl_tax_total / $total_orders_total ), 2, '.', ',' ) : '-' );
 		$total_orders_sum_average_array[]        = ( $total_months_days  > 0 ?
@@ -319,7 +329,7 @@ class WCJ_Reports_Monthly_Sales {
 		$html .= '<h4>' . __( 'Report currency', 'woocommerce-jetpack' ) . ': ' . $report_currency . '</h4>';
 		$months_styles = array();
 		for ( $i = 1; $i <= 12; $i++ ) {
-			$months_styles[] = 'width:6%;';
+			$months_styles[] = ( $i == date( 'm' ) && $this->year == date( 'Y' ) ? 'width:8%;' : 'width:6%;' );
 		}
 		$html .= '<form method="post" action="">';
 		$html .= wcj_get_table_html( $table_data, array(
@@ -328,7 +338,7 @@ class WCJ_Reports_Monthly_Sales {
 				'columns_styles'     => array_merge(
 					array( 'width:16%;' ),
 					$months_styles,
-					array( 'width:12%;font-weight:bold;' )
+					array( ( $this->year == date( 'Y' ) ? 'width:10%;' : 'width:12%;' ) . 'font-weight:bold;' )
 				),
 		) );
 		$html .= '<p style="font-size:x-small;"><em>' . sprintf( __( 'Report generated in: %s s', 'woocommerce-jetpack' ),

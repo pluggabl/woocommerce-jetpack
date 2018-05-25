@@ -492,7 +492,7 @@ if ( ! function_exists( 'wcj_get_terms' ) ) {
 	 * wcj_get_terms.
 	 *
 	 * @version 2.8.0
-	 * @version 2.8.0
+	 * @since   2.8.0
 	 */
 	function wcj_get_terms( $args ) {
 		if ( ! is_array( $args ) ) {

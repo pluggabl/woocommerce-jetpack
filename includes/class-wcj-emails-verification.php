@@ -18,7 +18,6 @@ class WCJ_Email_Verification extends WCJ_Module {
 	 *
 	 * @version 3.1.0
 	 * @since   2.8.0
-	 * @see     idea from ticket #4752
 	 */
 	function __construct() {
 
