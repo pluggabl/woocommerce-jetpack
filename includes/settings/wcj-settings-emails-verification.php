@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Email Verification
  *
- * @version 3.1.0
+ * @version 3.6.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -20,7 +20,7 @@ return array(
 		'type'     => 'multiselect',
 		'options'  => wcj_get_user_roles_options(),
 		'id'       => 'wcj_emails_verification_skip_user_roles',
-		'default'  => 'administrator',
+		'default'  => array( 'administrator' ),
 		'class'    => 'chosen_select',
 	),
 	array(

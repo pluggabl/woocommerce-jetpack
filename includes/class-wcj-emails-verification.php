@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 3.1.0
+ * @version 3.6.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -80,7 +80,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * check_if_user_email_is_verified.
 	 *
-	 * @version 2.9.0
+	 * @version 3.6.0
 	 * @since   2.8.0
 	 */
 	function check_if_user_email_is_verified( $userdata ) {
@@ -89,10 +89,9 @@ class WCJ_Email_Verification extends WCJ_Module {
 			( 'no'  === get_option( 'wcj_emails_verification_already_registered_enabled', 'no' ) && '0' === get_user_meta( $userdata->ID, 'wcj_is_activated', true ) )
 		) {
 			if ( isset( $userdata->roles ) && ! empty( $userdata->roles ) ) {
-				if ( ! is_array( $userdata->roles ) ) {
-					$userdata->roles = array( $userdata->roles );
-				}
-				$_intersect = array_intersect( $userdata->roles, get_option( 'wcj_emails_verification_skip_user_roles', array( 'administrator' ) ) );
+				$userdata_roles  = wcj_get_array( $userdata->roles );
+				$skip_user_roles = wcj_get_array( get_option( 'wcj_emails_verification_skip_user_roles', array( 'administrator' ) ) );
+				$_intersect = array_intersect( $userdata_roles, $skip_user_roles );
 				if ( ! empty( $_intersect ) ) {
 					return $userdata;
 				}

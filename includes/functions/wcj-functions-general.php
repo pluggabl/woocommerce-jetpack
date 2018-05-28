@@ -9,6 +9,18 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_get_array' ) ) {
+	/**
+	 * wcj_get_array.
+	 *
+	 * @version 3.6.0
+	 * @since   3.6.0
+	 */
+	function wcj_get_array( $value ) {
+		return ( ! is_array( $value ) ? array( $value ) : $value );
+	}
+}
+
 if ( ! function_exists( 'wcj_is_product_in_cart' ) ) {
 	/**
 	 * wcj_is_product_in_cart.

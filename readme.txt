@@ -187,7 +187,8 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.6.0 - 25/05/2018 =
+= 3.6.0 - 27/05/2018 =
+  T I * Fix - EMAILS & MISC. - Email Verification - Skip Email Verification for User Roles - Default value (being not an array) bug fixed.
 D T   * Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Forecast - Year forecast added and output restyled.
   T I * Dev - SHIPPING & ORDERS - Left to Free Shipping - "Shipping Methods by Users" module support added.
 D W P * Dev - CART & CHECKOUT - Coupon by User Role - Initial module release.
