@@ -21,7 +21,6 @@ if ( ! function_exists( 'wcj_get_product_sales_daily_report_columns' ) ) {
 			'date'                   => __( 'Date', 'woocommerce-jetpack' ),
 			'daily_total_sum'        => __( 'Daily Total Sum', 'woocommerce-jetpack' ),
 			'daily_total_quantity'   => __( 'Daily Total Quantity', 'woocommerce-jetpack' ),
-			'date'                   => __( 'Date', 'woocommerce-jetpack' ),
 			'product_id'             => __( 'Product ID', 'woocommerce-jetpack' ),
 			'item_title'             => __( 'Item Title', 'woocommerce-jetpack' ),
 			'item_quantity'          => __( 'Quantity', 'woocommerce-jetpack' ),

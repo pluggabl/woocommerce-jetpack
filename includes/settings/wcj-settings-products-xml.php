@@ -2,9 +2,10 @@
 /**
  * Booster for WooCommerce - Settings - Products XML
  *
- * @version 3.3.0
+ * @version 3.6.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    (maybe) add more options to `wcj_products_xml_orderby_` (see https://codex.wordpress.org/Class_Reference/WP_Query#Order_.26_Orderby_Parameters)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -203,6 +204,39 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product
 				'featured_only'     => __( 'Only products that are featured', 'woocommerce-jetpack' ),
 				'not_featured_only' => __( 'Only products that are not featured', 'woocommerce-jetpack' ),
 			),
+		),
+		array(
+			'title'    => __( 'Sort Products by', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_products_xml_orderby_' . $i,
+			'default'  => 'date',
+			'type'     => 'select',
+			'options'  => array(
+				'date'              => __( 'Date', 'woocommerce-jetpack' ),
+				'ID'                => __( 'ID', 'woocommerce-jetpack' ),
+				'author'            => __( 'Author', 'woocommerce-jetpack' ),
+				'title'             => __( 'Title', 'woocommerce-jetpack' ),
+				'name'              => __( 'Slug', 'woocommerce-jetpack' ),
+				'modified'          => __( 'Modified', 'woocommerce-jetpack' ),
+				'rand'              => __( 'Rand', 'woocommerce-jetpack' ),
+			),
+		),
+		array(
+			'title'    => __( 'Sorting Order', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_products_xml_order_' . $i,
+			'default'  => 'DESC',
+			'type'     => 'select',
+			'options'  => array(
+				'DESC'              => __( 'Descending', 'woocommerce-jetpack' ),
+				'ASC'               => __( 'Ascending', 'woocommerce-jetpack' ),
+			),
+		),
+		array(
+			'title'    => __( 'Max Products', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Set to -1 to include all products.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_products_xml_max_' . $i,
+			'default'  => -1,
+			'type'     => 'number',
+			'custom_attributes' => array( 'min' => -1 ),
 		),
 		array(
 			'type'     => 'sectionend',

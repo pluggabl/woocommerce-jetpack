@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 3.3.0
+ * @version 3.6.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    create all files at once (manually and synchronize update)
@@ -155,7 +155,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * create_products_xml.
 	 *
-	 * @version 3.2.4
+	 * @version 3.6.0
 	 * @since   2.5.7
 	 * @todo    check the `str_replace` and `html_entity_decode` part
 	 */
@@ -171,15 +171,19 @@ class WCJ_Products_XML extends WCJ_Module {
 		$products_tags_in_ids = get_option( 'wcj_products_xml_tags_incl_'     . $file_num, '' );
 		$products_tags_ex_ids = get_option( 'wcj_products_xml_tags_excl_'     . $file_num, '' );
 		$products_scope       = get_option( 'wcj_products_xml_scope_'         . $file_num, 'all' );
-		$offset = 0;
-		$block_size = get_option( 'wcj_products_xml_block_size', 256 );
+		$order_by             = get_option( 'wcj_products_xml_orderby_'       . $file_num, 'date' );
+		$order                = get_option( 'wcj_products_xml_order_'         . $file_num, 'DESC' );
+		$max                  = get_option( 'wcj_products_xml_max_'           . $file_num, -1 );
+		$block_size           = get_option( 'wcj_products_xml_block_size', 256 );
+		$offset               = 0;
+		$counter              = 0;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'product',
 				'post_status'    => 'publish',
 				'posts_per_page' => $block_size,
-				'orderby'        => 'date',
-				'order'          => 'DESC',
+				'orderby'        => $order_by,
+				'order'          => $order,
 				'offset'         => $offset,
 			);
 			if ( 'all' != $products_scope ) {
@@ -254,10 +258,17 @@ class WCJ_Products_XML extends WCJ_Module {
 				break;
 			}
 			while ( $loop->have_posts() ) {
+				if ( -1 != $max && $counter >= $max ) {
+					break;
+				}
 				$loop->the_post();
 				$xml_items .= str_replace( '&', '&amp;', html_entity_decode( do_shortcode( $xml_item_template ) ) );
+				$counter++;
 			}
 			$offset += $block_size;
+			if ( -1 != $max && $counter >= $max ) {
+				break;
+			}
 		}
 		wp_reset_postdata();
 		return file_put_contents(
