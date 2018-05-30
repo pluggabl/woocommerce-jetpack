@@ -99,7 +99,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Template', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'SKU template.', 'woocommerce-jetpack' ) . ' ' . __( 'You can use shortcodes here.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'SKU template.', 'woocommerce-jetpack' ),
 		'desc'     => wcj_message_replaced_values( array(
 			'{category_prefix}',
 			'{category_suffix}',
@@ -115,7 +115,10 @@ $settings = array(
 			'{variation_attribute=X}',
 			'{attribute=X}',
 			'{parent_attribute=X}',
-		) ),
+		) ) . '<br>' . sprintf( __( 'You can also use shortcodes here, e.g.: %s etc.', 'woocommerce-jetpack' ), '<code>' . implode( '</code>, <code>', array(
+			'[wcj_product_author]',
+			'[wcj_product_title]',
+		) ) . '</code>' ),
 		'id'       => 'wcj_sku_template',
 		'default'  => '{category_prefix}{prefix}{sku_number}{suffix}{category_suffix}{variation_suffix}',
 		'type'     => 'text',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Multicurrency (Currency Switcher)
  *
- * @version 2.8.0
+ * @version 3.6.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,16 +16,13 @@ if ( ! $_product ) {
 }
 $products = array();
 if ( $_product->is_type( 'variable' ) ) {
-	$available_variations = $_product->get_available_variations();
+	$list_available_variations_only = ( 'yes' === get_option( 'wcj_multicurrency_per_product_list_available_variations_only', 'yes' ) );
+	$available_variations = ( $list_available_variations_only ? $_product->get_available_variations() : $_product->get_children() );
 	foreach ( $available_variations as $variation ) {
-		$variation_product = wc_get_product( $variation['variation_id'] );
-		$products[ $variation['variation_id'] ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
-	}
-	/* $available_variations = $_product->get_children();
-	foreach ( $available_variations as $variation_id ) {
+		$variation_id      = ( $list_available_variations_only ? $variation['variation_id'] : $variation );
 		$variation_product = wc_get_product( $variation_id );
 		$products[ $variation_id ] = ' (' . wcj_get_product_formatted_variation( $variation_product, true ) . ')';
-	} */
+	}
 } else {
 	$products[ $main_product_id ] = '';
 }

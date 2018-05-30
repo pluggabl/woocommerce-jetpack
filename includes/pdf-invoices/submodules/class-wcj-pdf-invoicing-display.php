@@ -281,7 +281,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * create_invoices_meta_box.
 	 *
-	 * @version 3.5.0
+	 * @version 3.6.0
 	 * @since   2.8.0
 	 */
 	function create_invoices_meta_box() {
@@ -297,7 +297,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 				if ( wcj_is_invoice_created( $order_id, $invoice_type['id'] ) ) {
 					// "Document (View)" link
 					$query_args    = array( 'order_id' => $order_id, 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
-					$target        = ' target="_blank"';
+					$target        = ( 'yes' === get_option( 'wcj_invoicing_order_meta_box_open_in_new_window', 'yes' ) ? ' target="_blank"' : '' );
 					if ( 'yes' === get_option( 'wcj_invoicing_' . $invoice_type['id'] . '_save_as_enabled', 'no' ) ) {
 						$query_args['save_pdf_invoice'] = '1';
 						$target = '';

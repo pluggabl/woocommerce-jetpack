@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - My Account
  *
- * @version 3.4.0
+ * @version 3.6.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $settings = array(
 	array(
-		'title'    => __( 'Options', 'woocommerce-jetpack' ),
+		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_my_account_options',
 	),
@@ -23,6 +23,29 @@ $settings = array(
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
 		'options'  => wcj_get_order_statuses(),
+	),
+	array(
+		'title'    => __( 'Add User Role Selection to Registration Form', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Let your customers choose their user role manually.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_my_account_registration_extra_fields_user_role_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Default user role', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_my_account_registration_extra_fields_user_role_default',
+		'default'  => 'customer',
+		'type'     => 'select',
+		'options'  => wcj_get_user_roles_options(),
+	),
+	array(
+		'desc'     => __( 'User roles options', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_my_account_registration_extra_fields_user_role_options',
+		'default'  => array( 'customer' ),
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => wcj_get_user_roles_options(),
 	),
 	array(
 		'type'     => 'sectionend',

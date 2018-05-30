@@ -229,18 +229,22 @@ if ( ! function_exists( 'wcj_get_plus_message' ) ) {
 	/**
 	 * wcj_get_plus_message.
 	 *
-	 * @version 2.9.0
+	 * @version 3.6.0
 	 */
 	function wcj_get_plus_message( $value, $message_type, $args = array() ) {
 
 		switch ( $message_type ) {
 
 			case 'global':
-				return '<div class="updated">
-							<p class="main"><strong>' . __( 'Install Booster Plus to unlock all features', 'woocommerce-jetpack' ) . '</strong></p>
-							<span>' . sprintf( __( 'Some settings fields are locked and you will need %s to modify all locked fields.', 'woocommerce-jetpack'), '<a href="https://booster.io/plus/" target="_blank">Booster for WooCommerce Plus</a>' ) . '</span>
-							<p><a href="https://booster.io/plus/" target="_blank" class="button button-primary">' . __( 'Buy now', 'woocommerce-jetpack' ) . '</a> <a href="https://booster.io" target="_blank" class="button">'. __( 'Visit Booster Site', 'woocommerce-jetpack' ) . '</a></p>
-						</div>';
+				return '<div class="notice notice-warning">' .
+						'<p><strong>' . __( 'Install Booster Plus to unlock all features', 'woocommerce-jetpack' ) . '</strong></p>' .
+						'<p><span>' . sprintf( __( 'Some settings fields are locked and you will need %s to modify all locked fields.', 'woocommerce-jetpack'),
+							'<a href="https://booster.io/plus/" target="_blank">Booster for WooCommerce Plus</a>' ) . '</span></p>' .
+						'<p>' .
+							'<a href="https://booster.io/plus/" target="_blank" class="button button-primary">' . __( 'Buy now', 'woocommerce-jetpack' ) . '</a>' . ' ' .
+							'<a href="https://booster.io" target="_blank" class="button">' . __( 'Visit Booster Site', 'woocommerce-jetpack' ) . '</a>' .
+						'</p>' .
+					'</div>';
 
 			case 'desc':
 				return sprintf( __( 'Get <a href="%s" target="_blank">Booster Plus</a> to change value.', 'woocommerce-jetpack' ), 'https://booster.io/plus/' );

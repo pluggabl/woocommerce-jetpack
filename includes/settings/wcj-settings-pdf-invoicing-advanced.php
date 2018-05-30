@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 3.5.0
+ * @version 3.6.0
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) create "Tools (Options)" submodule
@@ -117,6 +117,12 @@ return array(
 		'title'    => __( 'Add PDF Invoices Meta Box to Admin Edit Order Page', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_invoicing_add_order_meta_box',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Open docs in new window', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_invoicing_order_meta_box_open_in_new_window',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
 	),

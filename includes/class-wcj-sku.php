@@ -171,20 +171,21 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku_with_variable.
 	 *
-	 * @version 2.9.0
+	 * @version 3.6.0
 	 * @todo    `as_variable_with_suffix` - handle cases with more than 26 variations
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
 
-		/* if ( 'random' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-			$sku_number = rand();
-		} */
-		if ( 'sequential' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-			$sku_number = $this->get_sequential_counter( $product_id );
-		} elseif ( 'hash_crc32' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-			$sku_number = sprintf( "%u", crc32( $product_id ) );
-		} else { // if 'product_id'
-			$sku_number = $product_id;
+		switch ( apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+			case 'sequential':
+				$sku_number = $this->get_sequential_counter( $product_id );
+				break;
+			case 'hash_crc32':
+				$sku_number = sprintf( "%u", crc32( $product_id ) );
+				break;
+			default: // 'product_id'
+				$sku_number = $product_id;
+				break;
 		}
 
 		$product = wc_get_product( $product_id );
@@ -302,8 +303,9 @@ class WCJ_SKU extends WCJ_Module {
 	 * set_sku.
 	 *
 	 * @version 3.6.0
-	 * @todo    re-check if some of "replaced values" can be replaced by Booster products shortcodes (and update description in settings)
+	 * @todo    deprecate `{prefix}` and `{suffix}`
 	 * @todo    `{tag_prefix}`, `{tag_suffix}`
+	 * @todo    (maybe) remove some "replaced values" that can be replaced by Booster products shortcodes, e.g.: `[wcj_product_slug]` (and update description in settings)
 	 * @todo    (maybe) add option to disable shortcodes processing
 	 */
 	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview, $parent_product_id, $_product ) {

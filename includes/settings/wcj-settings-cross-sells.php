@@ -95,10 +95,12 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 		array(
 			'title'    => __( 'Global Cross-sells', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'Enable this section if you want to add same cross-sells to all products.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Enable this section if you want to add same cross-sells to all products.', 'woocommerce-jetpack' ) . ' ' .
+				apply_filters( 'booster_message', '', 'desc' ),
 			'type'     => 'checkbox',
 			'id'       => 'wcj_cross_sells_global_enabled',
 			'default'  => 'no',
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 		array(
 			'desc'     => __( 'Global cross-sells', 'woocommerce-jetpack' ),

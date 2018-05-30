@@ -127,8 +127,8 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	function maybe_add_description( $field, $key, $args, $value ) {
 		if ( is_user_logged_in() ) {
 			$fields_to_disable          = get_option( 'wcj_checkout_customization_disable_fields_for_logged', '' );
-			$fields_to_disable_custom_r = array_map( 'trim', explode( ',', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_r', '' ) ) );
-			$fields_to_disable_custom_d = array_map( 'trim', explode( ',', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) );
+			$fields_to_disable_custom_r = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_r', '' ) ) ) );
+			$fields_to_disable_custom_d = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) ) );
 			$fields_to_disable          = array_merge( $fields_to_disable, $fields_to_disable_custom_r, $fields_to_disable_custom_d );
 			if ( ! empty( $fields_to_disable ) ) {
 				if ( in_array( $key, $fields_to_disable ) ) {
@@ -155,8 +155,8 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	function maybe_disable_fields( $checkout_fields ) {
 		if ( is_user_logged_in() ) {
 			$fields_to_disable          = get_option( 'wcj_checkout_customization_disable_fields_for_logged', '' );
-			$fields_to_disable_custom_r = array_map( 'trim', explode( ',', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_r', '' ) ) );
-			$fields_to_disable_custom_d = array_map( 'trim', explode( ',', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) );
+			$fields_to_disable_custom_r = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_r', '' ) ) ) );
+			$fields_to_disable_custom_d = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) ) );
 			$fields_to_disable          = array_merge( $fields_to_disable, $fields_to_disable_custom_r, $fields_to_disable_custom_d );
 			$disable_type_fields        = array_merge( array( 'billing_country', 'shipping_country' ), $fields_to_disable_custom_d );
 			$do_add_desc_placeholder    = ( '' != get_option( 'wcj_checkout_customization_disable_fields_for_logged_message',

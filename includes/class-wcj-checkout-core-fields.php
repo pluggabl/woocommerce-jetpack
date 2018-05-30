@@ -68,9 +68,8 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * maybe_override_fields.
 	 *
-	 * @version 3.3.0
+	 * @version 3.6.0
 	 * @since   3.1.0
-	 * @todo    add `description`
 	 * @todo    (maybe) add option to choose `$options_to_override`
 	 * @todo    (maybe) add to `$options_to_override`: enabled; class;
 	 */
@@ -80,6 +79,9 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 				'default'   => '',
 			),
 			'placeholder' => array(
+				'default'   => '',
+			),
+			'description' => array(
 				'default'   => '',
 			),
 			'priority'    => array(

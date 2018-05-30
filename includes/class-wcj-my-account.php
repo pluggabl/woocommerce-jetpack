@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 3.4.0
+ * @version 3.6.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 3.6.0
 	 * @since   2.9.0
 	 */
 	function __construct() {
@@ -41,6 +41,52 @@ class WCJ_My_Account extends WCJ_Module {
 						get_option( 'wcj_my_account_custom_info_priority_' . $i, 10 )
 					);
 				}
+			}
+			// Registration extra fields
+			if ( 'yes' === get_option( 'wcj_my_account_registration_extra_fields_user_role_enabled', 'no' ) ) {
+				add_action( 'woocommerce_register_form',    array( $this, 'add_registration_extra_fields' ), PHP_INT_MAX );
+				add_action( 'woocommerce_created_customer', array( $this, 'process_registration_extra_fields' ), PHP_INT_MAX, 3 );
+			}
+		}
+	}
+
+	/**
+	 * add_registration_extra_fields.
+	 *
+	 * @version 3.6.0
+	 * @since   3.6.0
+	 * @todo    (maybe) more fields to choose from (i.e. not only "user role" field)
+	 * @todo    (maybe) customizable position (check for other hooks or at least customizable priority on `woocommerce_register_form`)
+	 * @todo    (maybe) move to new module (e.g. "Registration Form")
+	 */
+	function add_registration_extra_fields() {
+		$user_roles_options_html = '';
+		$current_user_role_input = ! empty( $_POST['wcj_user_role'] ) ? $_POST['wcj_user_role'] :
+			get_option( 'wcj_my_account_registration_extra_fields_user_role_default', 'customer' );
+		$user_roles_options      = get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
+		$all_user_roles          = wcj_get_user_roles_options();
+		foreach ( $user_roles_options as $user_role_id ) {
+			$user_roles_options_html .= '<option value="' . $user_role_id . '" ' . selected( $user_role_id, $current_user_role_input, false ) . '>' .
+				( isset( $all_user_roles[ $user_role_id ] ) ? $all_user_roles[ $user_role_id ] : $user_role_id ) . '</option>';
+		}
+		?><p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+			<label for="reg_wcj_user_role"><?php esc_html_e( 'User role', 'woocommerce-jetpack' ); ?></label>
+			<select name="wcj_user_role" id="reg_wcj_user_role"><?php echo $user_roles_options_html; ?></select>
+		</p><?php
+	}
+
+	/**
+	 * process_registration_extra_fields.
+	 *
+	 * @version 3.6.0
+	 * @since   3.6.0
+	 * @todo    (maybe) optional admin confirmation for some user roles (probably will need to create additional `...-pending` user roles)
+	 */
+	function process_registration_extra_fields( $customer_id, $new_customer_data, $password_generated ) {
+		if ( isset( $_POST['wcj_user_role'] ) && '' != $_POST['wcj_user_role'] ) {
+			$user_roles_options = get_option( 'wcj_my_account_registration_extra_fields_user_role_options', array( 'customer' ) );
+			if ( ! empty( $user_roles_options ) && in_array( $_POST['wcj_user_role'], $user_roles_options ) ) {
+				wp_update_user( array( 'ID' => $customer_id, 'role' => $_POST['wcj_user_role'] ) );
 			}
 		}
 	}

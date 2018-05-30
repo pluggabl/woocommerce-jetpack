@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 3.5.0
+ * @version 3.6.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -431,16 +431,28 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 	}
 
 	/**
-	 * Save settings
+	 * Save settings.
 	 *
-	 * @version 2.2.6
+	 * @version 3.6.0
 	 */
 	function save() {
 		global $current_section;
 		$settings = $this->get_settings( $current_section );
 		WC_Admin_Settings::save_fields( $settings );
-		echo apply_filters( 'booster_message', '', 'global' );
+		add_action( 'admin_notices', array( $this, 'booster_message_global' ) );
 		do_action( 'woojetpack_after_settings_save', $this->get_sections(), $current_section );
+	}
+
+	/**
+	 * booster_message_global.
+	 *
+	 * @version 3.6.0
+	 * @since   3.6.0
+	 */
+	function booster_message_global() {
+		if ( '' != ( $message = apply_filters( 'booster_message', '', 'global' ) ) ) {
+			echo $message;
+		}
 	}
 
 	/**

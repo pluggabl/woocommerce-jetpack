@@ -17,7 +17,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.6.0
 	 * @since   2.4.5
 	 */
 	function __construct() {
@@ -31,6 +31,9 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 			add_action( 'add_meta_boxes', array( $this, 'add_file_admin_order_meta_box' ) );
 			add_action( 'init', array( $this, 'process_checkout_files_upload' ) );
+			if ( 'yes' === get_option( 'wcj_checkout_files_upload_remove_on_empty_cart', 'no' ) ) {
+				add_action( 'woocommerce_cart_item_removed', array( $this, 'remove_files_on_empty_cart' ), PHP_INT_MAX, 2 );
+			}
 			$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 			for ( $i = 1; $i <= $total_number; $i++ ) {
 				if ( 'disable' != ( $the_hook = get_option( 'wcj_checkout_files_upload_hook_' . $i, 'woocommerce_before_checkout_form' ) ) ) {
@@ -238,6 +241,31 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	}
 
 	/**
+	 * remove_files_on_empty_cart.
+	 *
+	 * @version 3.6.0
+	 * @since   3.6.0
+	 */
+	function remove_files_on_empty_cart( $cart_item_key, $cart ) {
+		if ( $cart->is_empty() ) {
+			wcj_session_maybe_start();
+			$any_files_removed = false;
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) ); $i++ ) {
+				if ( null != ( $session_data = wcj_session_get( 'wcj_checkout_files_upload_' . $i ) ) ) {
+					$any_files_removed = true;
+					if ( isset( $session_data['tmp_name'] ) ) {
+						unlink( $session_data['tmp_name'] );
+					}
+					wcj_session_set( 'wcj_checkout_files_upload_' . $i, null );
+				}
+			}
+			if ( $any_files_removed && 'yes' === get_option( 'wcj_checkout_files_upload_remove_on_empty_cart_add_notice', 'no' ) ) {
+				wc_add_notice( get_option( 'wcj_checkout_files_upload_notice_remove_on_empty_cart', __( 'Files were successfully removed.', 'woocommerce-jetpack' ) ) );
+			}
+		}
+	}
+
+	/**
 	 * process_checkout_files_upload.
 	 *
 	 * @version 3.6.0
@@ -246,8 +274,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	 */
 	function process_checkout_files_upload() {
 		wcj_session_maybe_start();
-		// Remove file
 		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+		// Remove file
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( isset( $_POST[ 'wcj_remove_checkout_file_' . $i ] ) ) {
 				if ( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ) {

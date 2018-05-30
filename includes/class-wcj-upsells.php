@@ -35,7 +35,7 @@ class WCJ_Upsells extends WCJ_Module {
 			add_filter( 'woocommerce_upsells_total',      array( $this, 'upsells_total' ),   PHP_INT_MAX );
 			add_filter( 'woocommerce_upsells_columns',    array( $this, 'upsells_columns' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_upsells_orderby',    array( $this, 'upsells_orderby' ), PHP_INT_MAX );
-			if ( 'yes' === get_option( 'wcj_upsells_global_enabled', 'no' ) ) {
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_upsells_global_enabled', 'no' ) ) ) {
 				$upsell_ids_filter = ( WCJ_IS_WC_VERSION_BELOW_3 ? 'woocommerce_product_upsell_ids' : 'woocommerce_product_get_upsell_ids' );
 				add_filter( $upsell_ids_filter, array( $this, 'upsell_ids' ), PHP_INT_MAX, 2 );
 			}

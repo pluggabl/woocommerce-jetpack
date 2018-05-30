@@ -40,6 +40,8 @@ return array(
 		'default'  => __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_coupon_by_user_role_invalid_message',
 		'css'      => 'width:100%;',
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'type'     => 'sectionend',

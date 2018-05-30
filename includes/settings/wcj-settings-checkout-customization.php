@@ -118,20 +118,24 @@ return array(
 		'css'      => 'width:100%;',
 	),
 	array(
-		'desc'     => __( 'Advanced: Custom fields (readonly)', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Advanced: Custom fields (readonly).', 'woocommerce-jetpack' ) . ' ' .
+			apply_filters( 'booster_message', '', 'desc' ),
 		'desc_tip' => sprintf( __( 'Comma separated list of fields ids, e.g.: %s.', 'woocommerce-jetpack' ), '<em>billing_wcj_checkout_field_1, billing_wcj_checkout_field_2</em>' ),
 		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_custom_r',
 		'default'  => '',
 		'type'     => 'text',
 		'css'      => 'width:100%;',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'desc'     => __( 'Advanced: Custom fields (disabled)', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Advanced: Custom fields (disabled).', 'woocommerce-jetpack' ) . ' ' .
+			apply_filters( 'booster_message', '', 'desc' ),
 		'desc_tip' => sprintf( __( 'Comma separated list of fields ids, e.g.: %s.', 'woocommerce-jetpack' ), '<em>billing_wcj_checkout_field_1, billing_wcj_checkout_field_2</em>' ),
 		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_custom_d',
 		'default'  => '',
 		'type'     => 'text',
 		'css'      => 'width:100%;',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
 		'type'     => 'sectionend',

@@ -85,6 +85,7 @@ if ( ! defined( 'WCJ_SESSION_TYPE' ) ) {
 	 *
 	 * @version 3.6.0
 	 * @since   3.1.0
+	 * @todo    (maybe) set default to `wc`
 	 */
 	define( 'WCJ_SESSION_TYPE', ( 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? get_option( 'wcj_general_advanced_session_type', 'standard' ) : 'standard' ) );
 }

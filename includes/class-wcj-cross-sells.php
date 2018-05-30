@@ -40,7 +40,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 				add_filter( 'woocommerce_cross_sells_order', array( $this, 'cross_sells_order' ),   PHP_INT_MAX );
 			}
 			if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
-				if ( 'yes' === get_option( 'wcj_cross_sells_global_enabled', 'no' ) ) {
+				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_cross_sells_global_enabled', 'no' ) ) ) {
 					add_filter( 'woocommerce_product_get_cross_sell_ids', array( $this, 'cross_sells_ids' ), PHP_INT_MAX, 2 );
 				}
 			}

@@ -60,7 +60,8 @@ class WCJ_Coupon_By_User_Role extends WCJ_Module {
 	function coupon_valid( $valid, $coupon, $discounts ) {
 		$invalid_user_roles = get_option( 'wcj_coupon_by_user_role_invalid', '' );
 		if ( ! empty( $invalid_user_roles ) && in_array( wcj_get_current_user_first_role(), $invalid_user_roles ) ) {
-			throw new Exception( get_option( 'wcj_coupon_by_user_role_invalid_message', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ) ), 10000 );
+			throw new Exception( apply_filters( 'booster_option', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ),
+				get_option( 'wcj_coupon_by_user_role_invalid_message', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ) ) ), 10000 );
 			return false;
 		}
 		return $valid;
@@ -74,7 +75,8 @@ class WCJ_Coupon_By_User_Role extends WCJ_Module {
 	 */
 	function coupon_not_valid_message( $message, $code, $coupon ) {
 		if ( 10000 === $code ) {
-			return get_option( 'wcj_coupon_by_user_role_invalid_message', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ) );
+			return apply_filters( 'booster_option', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ),
+				get_option( 'wcj_coupon_by_user_role_invalid_message', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ) ) );
 		}
 		return $message;
 	}
