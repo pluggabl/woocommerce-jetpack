@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Icons
  *
- * @version 3.4.0
+ * @version 3.6.0
  * @since   3.4.0
  * @author  Algoritmika Ltd.
  */
@@ -56,13 +56,24 @@ $settings = array(
 		'type'     => 'title',
 		'id'       => 'wcj_shipping_icons_methods_options',
 	),
+	array(
+		'title'    => __( 'Use Shipping Instances', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you want to use shipping methods instances instead of shipping methods.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'Save changes after enabling this option.', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_shipping_icons_use_shipping_instance',
+		'default'  => 'no',
+	),
 );
-foreach ( WC()->shipping->get_shipping_methods() as $method ) {
+$use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_icons_use_shipping_instance', 'no' ) );
+$shipping_methods       = ( $use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->get_shipping_methods() );
+foreach ( $shipping_methods as $method ) {
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => $method->method_title,
+			'title'    => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title'] : $method->method_title ),
 			'desc_tip' => __( 'Image URL', 'woocommerce-jetpack' ),
-			'id'       => 'wcj_shipping_icon_' . $method->id,
+			'id'       => 'wcj_shipping_icon_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id ),
 			'default'  => '',
 			'type'     => 'text',
 			'css'      => 'width:100%;',

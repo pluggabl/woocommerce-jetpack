@@ -289,6 +289,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 							__( 'File "%s" was successfully removed.', 'woocommerce-jetpack' ) ), $file_name ) );
 						delete_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_' . $i );
 						delete_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_real_name_' . $i );
+						do_action( 'wcj_checkout_files_upload', 'remove_file', $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] );
 					}
 				} else {
 					$session_data = wcj_session_get( 'wcj_checkout_files_upload_' . $i );
@@ -296,10 +297,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 					wc_add_notice( sprintf( get_option( 'wcj_checkout_files_upload_notice_success_remove_' . $i,
 						__( 'File "%s" was successfully removed.', 'woocommerce-jetpack' ) ), $session_data['name'] ) );
 					wcj_session_set( 'wcj_checkout_files_upload_' . $i, null );
+					do_action( 'wcj_checkout_files_upload', 'remove_file', false );
 				}
-				// Action
-				do_action( 'wcj_checkout_files_upload', 'remove_file',
-					( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ? $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] : false ) );
 			}
 		}
 		// Upload file
@@ -342,7 +341,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 						}
 						// Action
 						do_action( 'wcj_checkout_files_upload', 'upload_file',
-							( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ? $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] : false ) );
+							( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ? $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] : false ),
+							$_FILES[ $file_name ]['name'] );
 					}
 				} else {
 					wc_add_notice( get_option( 'wcj_checkout_files_upload_notice_upload_no_file_' . $i,

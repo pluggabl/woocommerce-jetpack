@@ -137,7 +137,7 @@ class WCJ_Product_MSRP extends WCJ_Module {
 		$position         = get_option( 'wcj_product_msrp_display_on_' . $section_id . '_position', 'after_price' );
 		$default_template = '<div class="price"><label for="wcj_product_msrp">MSRP</label>: <span id="wcj_product_msrp"><del>%msrp%</del>%you_save%</span></div>';
 		$template         = apply_filters( 'booster_option', $default_template, get_option( 'wcj_product_msrp_display_on_' . $section_id . '_template', $default_template ) );
-		$diff             = $msrp - $price;
+		$diff             = $msrp - ( float ) $price;
 		$you_save         = ( $diff > 0 ? get_option( 'wcj_product_msrp_display_on_' . $section_id . '_you_save',         ' (%you_save_raw%)' )           : '' );
 		$you_save_percent = ( $diff > 0 ? get_option( 'wcj_product_msrp_display_on_' . $section_id . '_you_save_percent', ' (%you_save_percent_raw% %)' ) : '' );
 		$you_save_round   = get_option( 'wcj_product_msrp_display_on_' . $section_id . '_you_save_percent_round', 0 );

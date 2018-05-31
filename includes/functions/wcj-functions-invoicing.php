@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Invoicing
  *
- * @version 3.5.0
+ * @version 3.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -198,7 +198,7 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 	/**
 	 * wcj_check_and_maybe_download_tcpdf_fonts.
 	 *
-	 * @version 2.9.0
+	 * @version 3.6.0
 	 * @since   2.9.0
 	 * @todo    (maybe) check file size > 0 or even for exact size (not only if file exists in directory)
 	 * @todo    (maybe) use `download_url()` instead of `file_get_contents()` or `curl` (in all Booster files)
@@ -225,7 +225,7 @@ if ( ! function_exists( 'wcj_check_and_maybe_download_tcpdf_fonts' ) ) {
 		require_once( ABSPATH . 'wp-admin/includes/file.php' );
 		foreach ( $tcpdf_fonts_files as $tcpdf_fonts_file ) {
 			if ( ! in_array( $tcpdf_fonts_file, $tcpdf_fonts_dir_files ) ) {
-				$url = 'http://storage.algoritmika.com/booster/tcpdf_fonts/' . $tcpdf_fonts_file;
+				$url = 'http://storage.booster.io/tcpdf_fonts/' . $tcpdf_fonts_file;
 				if ( '.php' === substr( $tcpdf_fonts_file, -4 ) ) {
 					$url .= '.data';
 				}

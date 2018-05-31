@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Descriptions
  *
- * @version 3.5.0
+ * @version 3.6.0
  * @since   3.4.0
  * @author  Algoritmika Ltd.
  */
@@ -54,12 +54,23 @@ $settings = array(
 		'type'     => 'title',
 		'id'       => 'wcj_shipping_description_methods_options',
 	),
+	array(
+		'title'    => __( 'Use Shipping Instances', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you want to use shipping methods instances instead of shipping methods.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'Save changes after enabling this option.', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_shipping_descriptions_use_shipping_instance',
+		'default'  => 'no',
+	),
 );
-foreach ( WC()->shipping->get_shipping_methods() as $method ) {
+$use_shipping_instances = ( 'yes' === get_option( 'wcj_shipping_descriptions_use_shipping_instance', 'no' ) );
+$shipping_methods       = ( $use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->get_shipping_methods() );
+foreach ( $shipping_methods as $method ) {
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => $method->method_title,
-			'id'       => 'wcj_shipping_description_' . $method->id,
+			'title'    => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title'] : $method->method_title ),
+			'id'       => 'wcj_shipping_description_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id ),
 			'default'  => '',
 			'type'     => 'textarea',
 			'css'      => 'width:100%;',

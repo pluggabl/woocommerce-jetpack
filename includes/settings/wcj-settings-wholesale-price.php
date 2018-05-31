@@ -143,7 +143,7 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Additional User Roles Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'desc'     => __( 'If you want to set different wholesale pricing options for different user roles, fill this section. Please note that you can also use Booster\'s "Price by User Role" module without filling this section.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'If you want to set different wholesale pricing options for different user roles, fill this section. Please note that you can also use Booster\'s "Price based on User Role" module without filling this section.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_by_user_role_options',
 	),
 	array(

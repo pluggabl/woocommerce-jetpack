@@ -18,7 +18,6 @@ class WCJ_Coupon_By_User_Role extends WCJ_Module {
 	 *
 	 * @version 3.6.0
 	 * @since   3.6.0
-	 * @todo    per coupon
 	 * @todo    (maybe) init all options in constructor
 	 * @todo    (maybe) use another error code (instead of 10000)
 	 */
@@ -34,6 +33,13 @@ class WCJ_Coupon_By_User_Role extends WCJ_Module {
 			add_filter( 'woocommerce_coupons_enabled', array( $this, 'coupons_enabled' ),          PHP_INT_MAX, 1 );
 			add_filter( 'woocommerce_coupon_is_valid', array( $this, 'coupon_valid' ),             PHP_INT_MAX, 3 );
 			add_filter( 'woocommerce_coupon_error',    array( $this, 'coupon_not_valid_message' ), PHP_INT_MAX, 3 );
+			if ( $this->invalid_per_coupon_enabled = ( 'yes' === get_option( 'wcj_coupon_by_user_role_invalid_per_coupon', 'no' ) ) ) {
+				$this->meta_box_screen   = 'shop_coupon';
+				$this->meta_box_context  = 'side';
+				$this->meta_box_priority = 'default';
+				add_action( 'add_meta_boxes',        array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_shop_coupon', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
 		}
 	}
 
@@ -56,9 +62,19 @@ class WCJ_Coupon_By_User_Role extends WCJ_Module {
 	 *
 	 * @version 3.6.0
 	 * @since   3.6.0
+	 * @todo    (maybe) check if `$coupon->get_id()` is working in WC below v3.0.0
 	 */
 	function coupon_valid( $valid, $coupon, $discounts ) {
 		$invalid_user_roles = get_option( 'wcj_coupon_by_user_role_invalid', '' );
+		if ( empty( $invalid_user_roles ) ) {
+			$invalid_user_roles = array();
+		}
+		if ( $this->invalid_per_coupon_enabled ) {
+			$invalid_user_roles_per_coupon = get_post_meta( $coupon->get_id(), '_' . 'wcj_coupon_by_user_role_invalid', true );
+			if ( ! empty( $invalid_user_roles_per_coupon ) ) {
+				$invalid_user_roles = array_merge( $invalid_user_roles, $invalid_user_roles_per_coupon );
+			}
+		}
 		if ( ! empty( $invalid_user_roles ) && in_array( wcj_get_current_user_first_role(), $invalid_user_roles ) ) {
 			throw new Exception( apply_filters( 'booster_option', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ),
 				get_option( 'wcj_coupon_by_user_role_invalid_message', __( 'Coupon is not valid for your user role.', 'woocommerce-jetpack' ) ) ), 10000 );

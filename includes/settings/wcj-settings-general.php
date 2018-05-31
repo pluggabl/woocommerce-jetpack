@@ -193,7 +193,7 @@ $settings = array(
 	array(
 		'title'    => __( 'Booster User Roles Changer Options', 'woocommerce-jetpack' ),
 		'desc'     => __( 'This will add user roles changer tool to admin bar.', 'woocommerce-jetpack' )/*  . ' ' .
-			__( 'You will be able to change user roles for Booster modules (e.g. when creating orders manually by admin for "Price by User Role" module).', 'woocommerce-jetpack' ) */,
+			__( 'You will be able to change user roles for Booster modules (e.g. when creating orders manually by admin for "Price based on User Role" module).', 'woocommerce-jetpack' ) */,
 		'type'     => 'title',
 		'id'       => 'wcj_general_user_role_changer_options',
 	),

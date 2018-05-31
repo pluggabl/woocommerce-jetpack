@@ -171,22 +171,14 @@ class WCJ_User_Tracking extends WCJ_Module {
 	/**
 	 * get_referer_type.
 	 *
-	 * @version 2.9.1
+	 * @version 3.6.0
 	 * @since   2.9.1
-	 * @todo    this is not finished!
+	 * @todo    group hosts by type (i.e. "Search Engines", "Social" etc.)
 	 */
 	function get_referer_type( $http_referer ) {
 		if ( '' != $http_referer && 'N/A' != $http_referer ) {
 			if ( ( $http_referer_info = parse_url( $http_referer ) ) && isset( $http_referer_info['host'] ) ) {
-				if ( false !== stripos( $http_referer_info['host'], 'google.' ) ) {
-					return 'Google';
-				} elseif ( false !== stripos( $http_referer_info['host'], 'wordpress.' ) ) {
-					return 'WordPress';
-				} elseif ( false !== stripos( $http_referer_info['host'], 'facebook.' ) ) {
-					return 'Facebook';
-				} else {
-					return __( 'Other', 'woocommerce-jetpack' );
-				}
+				return $http_referer_info['host'];
 			}
 		}
 		return 'N/A';

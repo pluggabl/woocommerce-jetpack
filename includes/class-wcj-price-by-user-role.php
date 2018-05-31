@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Module - Price by User Role
+ * Booster for WooCommerce - Module - Price based on User Role
  *
  * @version 3.6.0
  * @since   2.5.0
@@ -23,7 +23,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	function __construct() {
 
 		$this->id         = 'price_by_user_role';
-		$this->short_desc = __( 'Price by User Role', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Price based on User Role', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Display WooCommerce products prices by user roles.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-price-by-user-role';
 		parent::__construct();

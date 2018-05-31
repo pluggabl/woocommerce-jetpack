@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Settings Meta Box - Price by User Role
+ * Booster for WooCommerce - Settings Meta Box - Price based on User Role
  *
  * @version 3.6.0
  * @since   2.8.0

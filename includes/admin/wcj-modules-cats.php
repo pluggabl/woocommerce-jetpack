@@ -23,7 +23,7 @@ return apply_filters( 'wcj_modules', array(
 
 	'prices_and_currencies' => array(
 		'label'          => __( 'Prices & Currencies', 'woocommerce-jetpack' ),
-		'desc'           => __( 'Multicurrency, Price Converter, Wholesale Pricing, Name You Price, Price by User Role and more.', 'woocommerce-jetpack' ),
+		'desc'           => __( 'Multicurrency, Price Converter, Wholesale Pricing, Name You Price, Price based on User Role and more.', 'woocommerce-jetpack' ),
 		'all_cat_ids'    => array(
 			'price_by_country',
 			'multicurrency',

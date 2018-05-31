@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Settings - Price by User Role
+ * Booster for WooCommerce - Settings - Price based on User Role
  *
  * @version 3.6.0
  * @since   2.8.0
@@ -18,7 +18,7 @@ $settings = array(
 	array(
 		'title'    => __( 'Enable per Product Settings', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'When enabled, this will add new "Booster: Price by User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'When enabled, this will add new "Booster: Price based on User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
 		'type'     => 'checkbox',
 		'id'       => 'wcj_price_by_user_role_per_product_enabled',
 		'default'  => 'yes',
@@ -51,7 +51,7 @@ $settings = array(
 		'default'  => 'no',
 	),
 	array(
-		'title'    => __( 'Disable Price by User Role for Regular Price', 'woocommerce-jetpack' ),
+		'title'    => __( 'Disable Price based on User Role for Regular Price', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Disable price by user role for regular price when using multipliers (global or per product).', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_disable_for_regular_price',
@@ -60,7 +60,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Search Engine Bots', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Disable Price by User Role for Bots', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable Price based on User Role for Bots', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_for_bots_disabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -74,7 +74,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Advanced: Price Changes', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Disable Price by User Role for Products with Price Changes', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable Price based on User Role for Products with "Price Changes"', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Try enabling this checkbox, if you are having compatibility issues with other plugins.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_check_for_product_changes_price',
 		'default'  => 'no',
@@ -92,7 +92,7 @@ $settings = array(
 		'id'       => 'wcj_price_by_user_role_multipliers_options',
 	),
 	array(
-		'title'    => __( 'Disable Price by User Role for Products on Sale', 'woocommerce-jetpack' ),
+		'title'    => __( 'Disable Price based on User Role for Products on Sale', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_disable_for_products_on_sale',
 		'default'  => 'no',
@@ -146,7 +146,7 @@ foreach ( $taxonomies as $taxonomy ) {
 	}
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => sprintf( __( 'Price by User Role by %s', 'woocommerce-jetpack' ), $taxonomy['title'] ),
+			'title'    => sprintf( __( 'Price based on User Role by %s', 'woocommerce-jetpack' ), $taxonomy['title'] ),
 			'type'     => 'title',
 			'id'       => 'wcj_price_by_user_role_' . $taxonomy['name'] . '_options',
 		),

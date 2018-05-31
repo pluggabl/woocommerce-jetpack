@@ -53,7 +53,6 @@ class WCJ_Reports_Product_Sales_Gateways {
 	 * @version 3.6.0
 	 * @since   3.6.0
 	 * @todo    by "order status"
-	 * @todo    use `get_post_meta( $order_id, '_payment_method_title', true )`
 	 */
 	function get_report_data() {
 		$this->gateways = array();
@@ -81,8 +80,8 @@ class WCJ_Reports_Product_Sales_Gateways {
 				break;
 			}
 			foreach ( $loop_orders->posts as $order_id ) {
-				if ( '' == ( $payment_gateway = get_post_meta( $order_id, '_payment_method', true ) ) ) {
-					$payment_gateway = 'other';
+				if ( '' == ( $payment_gateway = get_post_meta( $order_id, '_payment_method_title', true ) ) ) {
+					$payment_gateway = __( 'N/A', 'woocommerce-jetpack' );
 				}
 				if ( ! isset( $this->gateways[ $payment_gateway ] ) ) {
 					$this->gateways[ $payment_gateway ] = 0;
