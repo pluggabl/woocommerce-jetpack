@@ -250,6 +250,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	 *
 	 * @version 3.4.0
 	 * @since   3.4.0
+	 * @todo    use WC math library instead of `PHPMathParser`
 	 */
 	function maybe_apply_formula( $formula ) {
 		if ( 'yes' !== $this->apply_formula ) {

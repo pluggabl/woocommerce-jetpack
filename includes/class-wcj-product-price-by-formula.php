@@ -18,6 +18,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	 *
 	 * @version 3.6.0
 	 * @since   2.5.0
+	 * @todo    use WC math library instead of `PHPMathParser`
 	 */
 	function __construct() {
 

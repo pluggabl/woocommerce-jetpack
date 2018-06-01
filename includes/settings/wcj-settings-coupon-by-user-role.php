@@ -45,10 +45,12 @@ return array(
 	array(
 		'title'    => __( 'Invalidate per Coupon', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This will add "Booster: Coupon by User Role" meta box to each coupon\'s admin edit page.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add "Booster: Coupon by User Role" meta box to each coupon\'s admin edit page.', 'woocommerce-jetpack' ) . '<br>' .
+			apply_filters( 'booster_message', '', 'desc' ),
 		'type'     => 'checkbox',
 		'default'  => 'no',
 		'id'       => 'wcj_coupon_by_user_role_invalid_per_coupon',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',

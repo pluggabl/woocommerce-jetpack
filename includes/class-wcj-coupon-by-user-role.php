@@ -33,7 +33,7 @@ class WCJ_Coupon_By_User_Role extends WCJ_Module {
 			add_filter( 'woocommerce_coupons_enabled', array( $this, 'coupons_enabled' ),          PHP_INT_MAX, 1 );
 			add_filter( 'woocommerce_coupon_is_valid', array( $this, 'coupon_valid' ),             PHP_INT_MAX, 3 );
 			add_filter( 'woocommerce_coupon_error',    array( $this, 'coupon_not_valid_message' ), PHP_INT_MAX, 3 );
-			if ( $this->invalid_per_coupon_enabled = ( 'yes' === get_option( 'wcj_coupon_by_user_role_invalid_per_coupon', 'no' ) ) ) {
+			if ( $this->invalid_per_coupon_enabled = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_coupon_by_user_role_invalid_per_coupon', 'no' ) ) ) ) {
 				$this->meta_box_screen   = 'shop_coupon';
 				$this->meta_box_context  = 'side';
 				$this->meta_box_priority = 'default';

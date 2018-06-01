@@ -30,7 +30,8 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'desc'     => __( '"In Stock" text.', 'woocommerce-jetpack' ),
+		'desc'     => __( '"In Stock" text.', 'woocommerce-jetpack' ) . ' ' .
+			sprintf( __( 'If needed, use %s to insert stock quantity.', 'woocommerce-jetpack' ), '<code>%s</code>' ),
 		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_stock_custom_in_stock',
 		'default'  => '',
@@ -38,7 +39,8 @@ return array(
 		'css'      => 'width:100%;height:100px;',
 	),
 	array(
-		'desc'     => __( 'Low amount text.', 'woocommerce-jetpack' ) . ' ' . __( 'Ignored if empty.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Low amount text.', 'woocommerce-jetpack' ) . ' ' . __( 'Ignored if empty.', 'woocommerce-jetpack' ) . ' ' .
+			sprintf( __( 'If needed, use %s to insert stock quantity.', 'woocommerce-jetpack' ), '<code>%s</code>' ),
 		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) . ' ' .
 			sprintf( __( 'Used only if %s is selected for %s in %s.', 'woocommerce-jetpack' ),
 				'<em>' . __( 'Only show quantity remaining in stock when low', 'woocommerce-jetpack' ) . '</em>',
@@ -65,6 +67,8 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc'     => sprintf( __( 'Default: %s.', 'woocommerce-jetpack' ), '<code>in-stock</code>' ),
+		'css'      => 'width:100%;',
 		'id'       => 'wcj_stock_custom_in_stock_class',
 		'default'  => '',
 		'type'     => 'text',
@@ -94,6 +98,7 @@ return array(
 	),
 	array(
 		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'Default: %s.', 'woocommerce-jetpack' ), '<code>' . __( 'Out of stock', 'woocommerce' ) . '</code>' ),
 		'id'       => 'wcj_stock_custom_out_of_stock',
 		'default'  => '',
 		'type'     => 'custom_textarea',
@@ -107,6 +112,8 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc'     => sprintf( __( 'Default: %s.', 'woocommerce-jetpack' ), '<code>out-of-stock</code>' ),
+		'css'      => 'width:100%;',
 		'id'       => 'wcj_stock_custom_out_of_stock_class',
 		'default'  => '',
 		'type'     => 'text',
@@ -136,6 +143,7 @@ return array(
 	),
 	array(
 		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'Default: %s or empty string.', 'woocommerce-jetpack' ), '<code>' . __( 'Available on backorder', 'woocommerce' ) . '</code>' ),
 		'id'       => 'wcj_stock_custom_backorder',
 		'default'  => '',
 		'type'     => 'custom_textarea',
@@ -149,6 +157,8 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc'     => sprintf( __( 'Default: %s.', 'woocommerce-jetpack' ), '<code>available-on-backorder</code>' ),
+		'css'      => 'width:100%;',
 		'id'       => 'wcj_stock_custom_backorder_class',
 		'default'  => '',
 		'type'     => 'text',

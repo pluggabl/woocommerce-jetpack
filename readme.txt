@@ -69,7 +69,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *SKU* - Generate WooCommerce SKUs automatically. Search by SKU on frontend.
 * *Sale Flash* - Customize WooCommerce products sale flash.
 * *Sorting* - Add more WooCommerce sorting options; rename or remove default sorting options; rearrange sorting options on frontend.
-* *Stock* - WooCommerce products stock management.
+* *Stock* - WooCommerce products stock display management.
 * *Tax Display* - Customize WooCommerce tax display.
 * *Upsells* - Customize WooCommerce upsells products display.
 * *User Products* - Let users add new WooCommerce products from frontend.
@@ -187,96 +187,97 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.6.0 - 01/06/2018 =
-D     * Dev - SHIPPING & ORDERS - Shipping Descriptions - "Use Shipping Instances" option added.
-D     * Dev - SHIPPING & ORDERS - Shipping Icons - "Use Shipping Instances" option added.
-D   P * Dev - CART & CHECKOUT - Coupon by User Role - Initial module release.
-D W   * Dev - PRODUCTS - Stock - Custom "In Stock" - "Low amount" and "Can be backordered" text options added.
-  W   * Dev - Classes - `WCJ_Module_Product_By_Condition` class added (affected modules: "Product Custom Visibility", "Product Visibility by User Role", "Product Visibility by Country").
-  T   * Fix - PDF INVOICING & PACKING SLIPS - `wcj_tcpdf_method()` - Params fixed.
-      * Dev - BUTTON & PRICE LABELS - Custom Price Labels - Per product - Algorithm re-written.
-      * Dev - Booster global message restyled.
-      * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Code refactoring.
-      * Dev - CART & CHECKOUT - URL Coupons - Minor code refactoring.
-      * Dev - Classes - `WCJ_Module_Shipping_By_Condition` - Changed to `abstract`.
-      * Dev - Classes - `WCJ_Module` - `save_meta_box()` - Global post setup added.
-      * Dev - Functions - Code refactoring - `wcj-functions-math.php` added.
-      * Dev - PDF INVOICING & PACKING SLIPS - `http://storage.algoritmika.com/booster/tcpdf_fonts/` changed to `http://storage.booster.io/tcpdf_fonts/`.
-      * Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_servers` and `wcj_currency_exchange_rate` filters added.
-      * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Meta box options - Minor code refactoring.
-      * Dev - PRICES & CURRENCIES - Price based on User Role - WPML support added.
-      * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - WPML support added.
-      * Dev - PRODUCTS - Product Tabs - WPML support added.
-      * Dev - PRODUCTS - Product Visibility by User Role - Code refactoring.
-      * Dev - PRODUCTS - SKU - Minor code refactoring.
-      * Dev - PRODUCTS - `WCJ_Module_Product_By_Condition` - WPML support added.
-      * Dev - SHIPPING & ORDERS - Left to Free Shipping - "Shipping Methods by Users" module support added.
-      * Fix - EMAILS & MISC. - Email Verification - Skip Email Verification for User Roles - Default value (being not an array) bug fixed.
-      * Fix - Functions - Admin - `wcj_is_admin_product_edit_page()` - AJAX loading variations included.
-      * Fix - Functions - General - `wcj_get_select_options()` - Handling empty string (`$select_options_raw`) correctly now.
-      * Fix - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - "European Union" selection fixed.
-      * Fix - PRICES & CURRENCIES - Currency per Product - Safety checks added, so no division by zero could happen.
-      * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price by country disabled for admin product edit page.
-      * Fix - PRODUCTS - Cross-sells - Hide Cross-sells - Fixed.
-      * Fix - PRODUCTS - Product Custom Visibility - Modify Query - Pagination issue fixed.
-      * Fix - PRODUCTS - Product Visibility by Country - Modify Query - Pagination issue fixed.
-      * Fix - PRODUCTS - Product Visibility by User Role - Modify Query - Pagination issue fixed.
-      * Fix - PRODUCTS - Upsells - Hide Upsells - Fixed.
-D     * Dev - "Standard PHP sessions" is now the default option for `WCJ_SESSION_TYPE`. Affected modules: Checkout Files Upload, EU VAT Number, Multicurrency (Currency Switcher), Product Visibility by Country, Product Custom Visibility, Tax Display, Prices and Currencies by Country.
-D     * Dev - CART & CHECKOUT - Checkout Core Fields - "description" options added to each field.
-D     * Dev - CART & CHECKOUT - Checkout Custom Fields - select2 - "min input length" and "max input length" options added.
-D     * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - "Advanced: Custom fields (readonly)" and "Advanced: Custom fields (disabled)" options added.
-D     * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Fields to Disable - "Billing country" and "Shipping country" fields added.
-D     * Dev - CART & CHECKOUT - Checkout Files Upload - "USER ROLES to show this field" and "USER ROLES to hide this field" options added.
-D     * Dev - CART & CHECKOUT - Checkout Files Upload - Admin Settings - Restyling.
-D     * Dev - CART & CHECKOUT - Checkout Files Upload - General Options - "Remove All Uploaded Files on Empty Cart" options added.
-D     * Dev - CART & CHECKOUT - Checkout Files Upload - `wcj_checkout_files_upload` action added.
-D     * Dev - EMAILS & MISC. - My Account - "Add User Role Selection to Registration Form" options added.
-D     * Dev - EMAILS & MISC. - Reports - Orders - "Payment Gateways" report added.
-D     * Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Forecast - Year forecast added and output restyled.
-D     * Dev - EMAILS & MISC. - User Tracking - Track Orders - "Order List Columns" option added.
-D     * Dev - PDF INVOICING & PACKING SLIPS - Advanced - General Display Options - PDF Invoices Meta Box on Admin Edit Order Page - "Open docs in new window" option added.
-D     * Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Thank You Page" options added.
-D     * Dev - PDF INVOICING & PACKING SLIPS - Invoices Report - Restyling. Code refactoring.
-D     * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Admin settings - Description updated.
-D     * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Variable products: list available/active variations only" option added.
-D     * Dev - PRICES & CURRENCIES - Price based on User Role - "Advanced: Price Changes" option added.
-D     * Dev - PRICES & CURRENCIES - Price based on User Role - Admin Settings - "Copy price to all user roles", "Copy price to all variations" and "Copy to all user roles & variations" buttons added.
-D     * Dev - PRICES & CURRENCIES - Price based on User Role - Module renamed (from "Price by User Role").
-D     * Dev - PRICES & CURRENCIES - Price based on User Role - Price based on User Role by Products Categories/Tags - Negative multiplier option added (and default multipliers set to `-1`).
-D     * Dev - PRICES & CURRENCIES - Price based on User Role - `wcj_price_by_user_role_do_change_price` filter added.
-D     * Dev - PRICES & CURRENCIES - Product Price by Formula - "Rounding" options added.
-D     * Dev - PRICES & CURRENCIES - Wholesale Price - "Use total cart quantity instead of product quantity" option replaced with "Quantity calculation" ("Product quantity", "Total cart quantity (wholesale products only)", "Total cart quantity").
-D     * Dev - PRICES & CURRENCIES - Wholesale Price - Admin settings - Minor restyling and descriptions updated.
-D     * Dev - PRODUCTS - Cost of Goods - Admin Settings - Minor descriptions updates.
-D     * Dev - PRODUCTS - Cross-sells - "Cross-sells Position" option added.
-D     * Dev - PRODUCTS - Cross-sells - "Global Cross-sells" options added.
-D     * Dev - PRODUCTS - Product Addons - Shortcodes are now processed in labels, titles, placeholders and tooltips.
-D     * Dev - PRODUCTS - Product Availability by Date - Advanced Options - "Action" option added.
-D     * Dev - PRODUCTS - Product Availability by Date - Per Product - "Direct Date Admin Input Date Format" option added.
-D     * Dev - PRODUCTS - Product Custom Visibility - Admin Options - "Visibility Method", "Products List Column", "Quick Edit", "Bulk Edit" options added. Modify Query - "Widgets" option added.
-D     * Dev - PRODUCTS - Product MSRP - Initial module release.
-D     * Dev - PRODUCTS - Product Visibility by Country - Admin Options - "Quick Edit", "Bulk Edit" options added.
-D     * Dev - PRODUCTS - Product Visibility by User Role - "Admin Options" section added ("Quick Edit", "Bulk Edit" and "Products List Column" options).
-D     * Dev - PRODUCTS - Product Visibility by User Role - Admin Options - "Visibility Method" option added. Modify Query - "Widgets" option added.
-D     * Dev - PRODUCTS - Products XML Feeds - "Sort Products by", "Sorting Order" and "Max Products" options added to each XML file.
-D     * Dev - PRODUCTS - SKU - "Characters Case" option added.
-D     * Dev - PRODUCTS - SKU - Shortcodes are now processed in template.
-D     * Dev - PRODUCTS - SKU - `{product_slug_acronym}`, `{parent_product_slug_acronym}`, `{attribute=X}`, `{parent_attribute=X}`, `{variation_attribute=X}` replaced values added.
-D     * Dev - PRODUCTS - Stock - Custom "Available on backorder" - Section added.
-D     * Dev - PRODUCTS - Stock - Major code refactoring.
-D     * Dev - PRODUCTS - Upsells - "Global Upsells" options added.
-D     * Dev - PRODUCTS - Upsells - "Upsells Position" option added.
-D     * Dev - SHIPPING & ORDERS - Order Custom Statuses - "Enable Colors in Status Column" option added.
-D     * Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Text Color" option added.
-D     * Dev - SHIPPING & ORDERS - Order Min/Max Quantities - "Single Item Cart" options section added.
-D     * Dev - SHIPPING & ORDERS - Shipping Methods by Cities - Initial module release.
-D     * Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Cart or Package" options added.
-D     * Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Shipping Methods by Product Shipping Classes" section added.
-D     * Dev - Shortcodes - General - `[wcj_cross_sell_display]` shortcode added.
-D     * Dev - Shortcodes - General - `[wcj_upsell_display]` shortcode added.
-D     * Dev - Shortcodes - Products - `[wcj_product_slug]` shortcode added.
-D     * Fix - EMAILS & MISC. - Admin Bar - Checking for `current_user_can( 'manage_woocommerce' )` before displaying the menus.
+= 3.6.0 - 02/06/2018 =
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Admin settings - Description updated.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_servers` and `wcj_currency_exchange_rate` filters added.
+* Fix - PRICES & CURRENCIES - Currency per Product - Safety checks added, so no division by zero could happen.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Meta box options - Minor code refactoring.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Variable products: list available/active variations only" option added.
+* Dev - PRICES & CURRENCIES - Price based on User Role - "Advanced: Price Changes" option added.
+* Dev - PRICES & CURRENCIES - Price based on User Role - Admin Settings - "Copy price to all user roles", "Copy price to all variations" and "Copy to all user roles & variations" buttons added.
+* Dev - PRICES & CURRENCIES - Price based on User Role - Module renamed (from "Price by User Role").
+* Dev - PRICES & CURRENCIES - Price based on User Role - By Products Categories/Tags - Negative multiplier option added (and default multipliers set to `-1`).
+* Dev - PRICES & CURRENCIES - Price based on User Role - WPML support added.
+* Dev - PRICES & CURRENCIES - Price based on User Role - `wcj_price_by_user_role_do_change_price` filter added.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Price by country disabled for admin product edit page.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - WPML support added.
+* Dev - PRICES & CURRENCIES - Product Price by Formula - "Rounding" options added.
+* Dev - PRICES & CURRENCIES - Wholesale Price - "Use total cart quantity instead of product quantity" option replaced with "Quantity calculation" ("Product quantity", "Total cart quantity (wholesale products only)", "Total cart quantity").
+* Dev - PRICES & CURRENCIES - Wholesale Price - Admin settings - Minor restyling and descriptions updated.
+* Dev - BUTTON & PRICE LABELS - Custom Price Labels - Per product - Algorithm re-written.
+* Dev - PRODUCTS - Cost of Goods - Admin Settings - Minor descriptions updates.
+* Fix - PRODUCTS - Cross-sells - Hide Cross-sells - Fixed.
+* Dev - PRODUCTS - Cross-sells - "Cross-sells Position" option added.
+* Dev - PRODUCTS - Cross-sells - "Global Cross-sells" options added.
+* Dev - PRODUCTS - Product Addons - Shortcodes are now processed in labels, titles, placeholders and tooltips.
+* Dev - PRODUCTS - Product Availability by Date - Advanced Options - "Action" option added.
+* Dev - PRODUCTS - Product Availability by Date - Per Product - "Direct Date Admin Input Date Format" option added.
+* Fix - PRODUCTS - Product Custom Visibility - Modify Query - Pagination issue fixed.
+* Dev - PRODUCTS - Product Custom Visibility - Admin Options - "Visibility Method", "Products List Column", "Quick Edit", "Bulk Edit" options added. Modify Query - "Widgets" option added.
+* Dev - PRODUCTS - Product MSRP - Initial module release.
+* Dev - PRODUCTS - Product Tabs - WPML support added.
+* Fix - PRODUCTS - Product Visibility by Country - Modify Query - Pagination issue fixed.
+* Dev - PRODUCTS - Product Visibility by Country - Admin Options - "Quick Edit", "Bulk Edit" options added.
+* Fix - PRODUCTS - Product Visibility by User Role - Modify Query - Pagination issue fixed.
+* Dev - PRODUCTS - Product Visibility by User Role - "Admin Options" section added ("Quick Edit", "Bulk Edit" and "Products List Column" options).
+* Dev - PRODUCTS - Product Visibility by User Role - Admin Options - "Visibility Method" option added. Modify Query - "Widgets" option added.
+* Dev - PRODUCTS - Product Visibility by User Role - Code refactoring.
+* Dev - PRODUCTS - Products XML Feeds - "Sort Products by", "Sorting Order" and "Max Products" options added to each XML file.
+* Dev - PRODUCTS - SKU - "Characters Case" option added.
+* Dev - PRODUCTS - SKU - Minor code refactoring.
+* Dev - PRODUCTS - SKU - Shortcodes are now processed in template.
+* Dev - PRODUCTS - SKU - `{product_slug_acronym}`, `{parent_product_slug_acronym}`, `{attribute=X}`, `{parent_attribute=X}`, `{variation_attribute=X}` replaced values added.
+* Dev - PRODUCTS - Stock - Module description updated.
+* Dev - PRODUCTS - Stock - Custom "Available on backorder" - Section added.
+* Dev - PRODUCTS - Stock - Custom "In Stock" - "Low amount" and "Can be backordered" text options added.
+* Dev - PRODUCTS - Stock - Major code refactoring.
+* Fix - PRODUCTS - Upsells - Hide Upsells - Fixed.
+* Dev - PRODUCTS - Upsells - "Global Upsells" options added.
+* Dev - PRODUCTS - Upsells - "Upsells Position" option added.
+* Dev - PRODUCTS - `WCJ_Module_Product_By_Condition` - WPML support added.
+* Dev - CART & CHECKOUT - Checkout Core Fields - "description" options added to each field.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - select2 - "min input length" and "max input length" options added.
+* Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - "Advanced: Custom fields (readonly)" and "Advanced: Custom fields (disabled)" options added.
+* Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Code refactoring.
+* Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Fields to Disable - "Billing country" and "Shipping country" fields added.
+* Dev - CART & CHECKOUT - Checkout Files Upload - "USER ROLES to show this field" and "USER ROLES to hide this field" options added.
+* Dev - CART & CHECKOUT - Checkout Files Upload - Admin Settings - Restyling.
+* Dev - CART & CHECKOUT - Checkout Files Upload - General Options - "Remove All Uploaded Files on Empty Cart" options added.
+* Dev - CART & CHECKOUT - Checkout Files Upload - `wcj_checkout_files_upload` action added.
+* Dev - CART & CHECKOUT - Coupon by User Role - Initial module release.
+* Dev - CART & CHECKOUT - URL Coupons - Minor code refactoring.
+* Fix - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - "European Union" selection fixed.
+* Dev - SHIPPING & ORDERS - Left to Free Shipping - "Shipping Methods by Users" module support added.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - "Enable Colors in Status Column" option added.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Tool - "Text Color" option added.
+* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - "Single Item Cart" options section added.
+* Dev - SHIPPING & ORDERS - Shipping Descriptions - "Use Shipping Instances" option added.
+* Dev - SHIPPING & ORDERS - Shipping Icons - "Use Shipping Instances" option added.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Cities - Initial module release.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Cart or Package" options added.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Products - "Shipping Methods by Product Shipping Classes" section added.
+* Fix - PDF INVOICING & PACKING SLIPS - `wcj_tcpdf_method()` - Params fixed.
+* Dev - PDF INVOICING & PACKING SLIPS - Advanced - General Display Options - PDF Invoices Meta Box on Admin Edit Order Page - "Open docs in new window" option added.
+* Dev - PDF INVOICING & PACKING SLIPS - Display & Misc. - "Thank You Page" options added.
+* Dev - PDF INVOICING & PACKING SLIPS - Invoices Report - Restyling. Code refactoring.
+* Dev - PDF INVOICING & PACKING SLIPS - `http://storage.algoritmika.com/booster/tcpdf_fonts/` changed to `http://storage.booster.io/tcpdf_fonts/`.
+* Fix - EMAILS & MISC. - Admin Bar - Checking for `current_user_can( 'manage_woocommerce' )` before displaying the menus.
+* Fix - EMAILS & MISC. - Email Verification - Skip Email Verification for User Roles - Default value (being not an array) bug fixed.
+* Dev - EMAILS & MISC. - My Account - "Add User Role Selection to Registration Form" options added.
+* Dev - EMAILS & MISC. - Reports - Orders - "Payment Gateways" report added.
+* Dev - EMAILS & MISC. - Reports - Orders - Monthly Sales (with Currency Conversion) - Forecast - Year forecast added and output restyled.
+* Dev - EMAILS & MISC. - User Tracking - Track Orders - "Order List Columns" option added.
+* Dev - Shortcodes - General - `[wcj_cross_sell_display]` shortcode added.
+* Dev - Shortcodes - General - `[wcj_upsell_display]` shortcode added.
+* Dev - Shortcodes - Products - `[wcj_product_slug]` shortcode added.
+* Fix - Functions - Admin - `wcj_is_admin_product_edit_page()` - AJAX loading variations included.
+* Fix - Functions - General - `wcj_get_select_options()` - Handling empty string (`$select_options_raw`) correctly now.
+* Dev - Functions - Code refactoring - `wcj-functions-math.php` added.
+* Dev - Classes - `WCJ_Module_Product_By_Condition` class added (affected modules: "Product Custom Visibility", "Product Visibility by User Role", "Product Visibility by Country").
+* Dev - Classes - `WCJ_Module_Shipping_By_Condition` - Changed to `abstract`.
+* Dev - Classes - `WCJ_Module` - `save_meta_box()` - Global post setup added.
+* Dev - Admin - Booster global message restyled.
+* Dev - "Standard PHP sessions" is now the default option for `WCJ_SESSION_TYPE`. Affected modules: Checkout Files Upload, EU VAT Number, Multicurrency (Currency Switcher), Product Visibility by Country, Product Custom Visibility, Tax Display, Prices and Currencies by Country.
 
 = 3.5.3 - 12/04/2018 =
 * Dev - PRODUCTS - Cross Sells - Initial module release.
