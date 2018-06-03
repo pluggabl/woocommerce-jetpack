@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.5.3
+Stable tag: 3.6.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -187,7 +187,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.6.0 - 02/06/2018 =
+= 3.6.0 - 03/06/2018 =
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Admin settings - Description updated.
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - `wcj_currency_exchange_rates_servers` and `wcj_currency_exchange_rate` filters added.
 * Fix - PRICES & CURRENCIES - Currency per Product - Safety checks added, so no division by zero could happen.

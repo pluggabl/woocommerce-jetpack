@@ -39,7 +39,7 @@ return array(
 		'css'      => 'width:100%;height:100px;',
 	),
 	array(
-		'desc'     => __( 'Low amount text.', 'woocommerce-jetpack' ) . ' ' . __( 'Ignored if empty.', 'woocommerce-jetpack' ) . ' ' .
+		'desc'     => __( '"Low amount" text.', 'woocommerce-jetpack' ) . ' ' . __( 'Ignored if empty.', 'woocommerce-jetpack' ) . ' ' .
 			sprintf( __( 'If needed, use %s to insert stock quantity.', 'woocommerce-jetpack' ), '<code>%s</code>' ),
 		'desc_tip' => __( 'You can also use shortcodes here.', 'woocommerce-jetpack' ) . ' ' .
 			sprintf( __( 'Used only if %s is selected for %s in %s.', 'woocommerce-jetpack' ),

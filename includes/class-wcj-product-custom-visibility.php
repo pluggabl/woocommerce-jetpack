@@ -96,6 +96,7 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module_Product_By_Condition {
 			array(
 				'title'    => __( 'Options', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'One per line.', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Can not be empty. Options will be added to each product\'s admin edit page and to the selection drop box on frontend.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_custom_visibility_options_list',
 				'default'  => '',
 				'type'     => 'textarea',
