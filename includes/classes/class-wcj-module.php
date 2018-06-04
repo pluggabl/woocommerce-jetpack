@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -217,14 +217,21 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * reset_settings.
 	 *
-	 * @version 2.5.9
+	 * @version 3.6.2
 	 * @since   2.4.0
+	 * @todo    (maybe) always `delete_option()` (instead of `update_option()`)
 	 */
 	function reset_settings() {
 		if ( isset( $_GET['wcj_reset_settings'] ) && $this->id === $_GET['wcj_reset_settings'] && wcj_is_user_role( 'administrator' ) && ! isset( $_POST['save'] ) ) {
 			foreach ( $this->get_settings() as $settings ) {
-				$default_value = isset( $settings['default'] ) ? $settings['default'] : '';
-				update_option( $settings['id'], $default_value );
+				if ( false !== strpos( $settings['id'], '[' ) ) {
+					$id = explode( '[', $settings['id'] );
+					$id = $id[0];
+					delete_option( $id );
+				} else {
+					$default_value = isset( $settings['default'] ) ? $settings['default'] : '';
+					update_option( $settings['id'], $default_value );
+				}
 			}
 			wp_safe_redirect( remove_query_arg( 'wcj_reset_settings' ) );
 			exit();

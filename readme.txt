@@ -188,7 +188,10 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.6.2 - 04/06/2018 =
-* Dev - PRICES & CURRENCIES - Offer Your Price - Position On Single Product Page - "Before add to cart form" and "After add to cart form" positions added.
+  T I * Dev - Classes - `WCJ_Module` - `reset_settings()` - Array type options reset handling added.
+D W I * Dev - CART & CHECKOUT - Checkout Fees - Initial module release.
+D T I * Dev - PRICES & CURRENCIES - Wholesale Price - "Product Categories to include" and "Product Categories to exclude" options added.
+D     * Dev - PRICES & CURRENCIES - Offer Your Price - Position On Single Product Page - "Before add to cart form" and "After add to cart form" positions added.
 
 = 3.6.1 - 04/06/2018 =
 * Fix - Functions - Products - `wcj_maybe_get_product_id_wpml()` - "Call to a member function get_default_language() on null ..." fatal error fixed.

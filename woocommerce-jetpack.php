@@ -57,7 +57,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.6.2-dev-20180604-1819';
+	public $version = '3.6.2-dev-20180604-2206';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class

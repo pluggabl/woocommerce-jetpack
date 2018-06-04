@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -108,6 +108,7 @@ return apply_filters( 'wcj_modules', array(
 			'checkout_files_upload',
 			'checkout_custom_info',
 			'checkout_customization',
+			'checkout_fees',
 			'eu_vat_number',
 		),
 	),

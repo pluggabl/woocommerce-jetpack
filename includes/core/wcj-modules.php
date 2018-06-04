@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -62,6 +62,7 @@ $wcj_module_files = array(
 	'class-wcj-checkout-files-upload.php',
 	'class-wcj-checkout-custom-info.php',
 	'class-wcj-checkout-customization.php',
+	'class-wcj-checkout-fees.php',
 	'class-wcj-payment-gateways.php',
 	'class-wcj-payment-gateways-icons.php',
 	'class-wcj-payment-gateways-fees.php',
