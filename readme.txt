@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.6.0
+Stable tag: 3.6.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -186,6 +186,9 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 3.6.1 - 04/06/2018 =
+* Fix - Functions - Products - `wcj_maybe_get_product_id_wpml()` - "Call to a member function get_default_language() on null ..." fatal error fixed.
 
 = 3.6.0 - 03/06/2018 =
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Admin settings - Description updated.
