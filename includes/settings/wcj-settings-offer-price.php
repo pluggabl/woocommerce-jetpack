@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Offer Price
  *
- * @version 2.9.0
+ * @version 3.6.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -70,6 +70,8 @@ return array(
 			'woocommerce_before_single_product'         => __( 'Before single product', 'woocommerce-jetpack' ),
 			'woocommerce_before_single_product_summary' => __( 'Before single product summary', 'woocommerce-jetpack' ),
 			'woocommerce_single_product_summary'        => __( 'Inside single product summary', 'woocommerce-jetpack' ),
+			'woocommerce_before_add_to_cart_form'       => __( 'Before add to cart form', 'woocommerce-jetpack' ),
+			'woocommerce_after_add_to_cart_form'        => __( 'After add to cart form', 'woocommerce-jetpack' ),
 			'woocommerce_after_single_product_summary'  => __( 'After single product summary', 'woocommerce-jetpack' ),
 			'woocommerce_after_single_product'          => __( 'After single product', 'woocommerce-jetpack' ),
 		),

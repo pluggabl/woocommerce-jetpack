@@ -187,6 +187,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.6.2 - 04/06/2018 =
+* Dev - PRICES & CURRENCIES - Offer Your Price - Position On Single Product Page - "Before add to cart form" and "After add to cart form" positions added.
+
 = 3.6.1 - 04/06/2018 =
 * Fix - Functions - Products - `wcj_maybe_get_product_id_wpml()` - "Call to a member function get_default_language() on null ..." fatal error fixed.
 
