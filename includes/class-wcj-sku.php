@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @author  Algoritmika Ltd.
  */
 
@@ -302,7 +302,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku.
 	 *
-	 * @version 3.6.0
+	 * @version 3.6.2
 	 * @todo    deprecate `{prefix}` and `{suffix}`
 	 * @todo    `{tag_prefix}`, `{tag_suffix}`
 	 * @todo    (maybe) remove some "replaced values" that can be replaced by Booster products shortcodes, e.g.: `[wcj_product_slug]` (and update description in settings)
@@ -327,16 +327,19 @@ class WCJ_SKU extends WCJ_Module {
 		// {category_prefix} & {category_suffix}
 		$category_prefix = '';
 		$category_suffix = '';
-		$product_cat = '';
+		$product_cat     = array();
 		$product_terms = get_the_terms( $parent_product_id, 'product_cat' );
 		if ( is_array( $product_terms ) ) {
 			foreach ( $product_terms as $term ) {
-				$product_cat = esc_html( $term->name );
-				$category_prefix = get_option( 'wcj_sku_prefix_cat_' . $term->term_id, '' );
-				$category_suffix = get_option( 'wcj_sku_suffix_cat_' . $term->term_id, '' );
-				break;
+				$product_cat[]    = esc_html( $term->name );
+				$category_prefix .= get_option( 'wcj_sku_prefix_cat_' . $term->term_id, '' );
+				$category_suffix .= get_option( 'wcj_sku_suffix_cat_' . $term->term_id, '' );
+				if ( 'first' === get_option( 'wcj_sku_categories_multiple', 'first' ) ) {
+					break;
+				}
 			}
 		}
+		$product_cat = implode( ', ', $product_cat );
 
 		// {variation_attributes}
 		$variation_attributes = '';

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 3.5.0
+ * @version 3.6.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -168,11 +168,15 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 	/**
 	 * wcj_is_user_role.
 	 *
-	 * @version 3.1.3
+	 * @version 3.6.2
 	 * @since   2.5.0
 	 * @return  bool
+	 * @todo    clean up
 	 */
 	function wcj_is_user_role( $user_role, $user_id = 0 ) {
+		if ( ! function_exists( 'wp_get_current_user' ) ) {
+			include( ABSPATH . 'wp-includes/pluggable.php' );
+		}
 		$_user = ( 0 == $user_id ? wp_get_current_user() : get_user_by( 'id', $user_id ) );
 		if ( ! isset( $_user->roles ) || empty( $_user->roles ) ) {
 			$_user->roles = array( 'guest' );

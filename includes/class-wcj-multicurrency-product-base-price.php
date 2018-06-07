@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 3.5.0
+ * @version 3.6.2
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.6.2
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -34,13 +34,8 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 
 			add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_on_product_edit' ), PHP_INT_MAX, 2 );
 
-			if ( wcj_is_frontend() ) {
-				wcj_add_change_price_hooks( $this, PHP_INT_MAX - 10, false );
-			}
+			wcj_add_change_price_hooks( $this, PHP_INT_MAX - 10, false );
 
-			/* if ( is_admin() ) {
-				include_once( 'reports/class-wcj-currency-reports.php' );
-			} */
 		}
 	}
 
@@ -92,6 +87,8 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 
 	/**
 	 * change_currency_symbol_on_product_edit.
+	 *
+	 * @todo    (maybe) `'edit.php' === $pagenow && isset( $_GET['post_type'] ) && 'product' === $_GET['post_type']`
 	 */
 	function change_currency_symbol_on_product_edit( $currency_symbol, $currency ) {
 		if ( is_admin() ) {

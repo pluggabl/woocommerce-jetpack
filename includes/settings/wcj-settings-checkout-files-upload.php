@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Files Upload
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -305,6 +305,19 @@ $settings = array_merge( $settings, array(
 		'default'  => '</table>',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'Show images in field', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_files_upload_form_template_field_show_images',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Image style', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_files_upload_form_template_field_image_style',
+		'default'  => 'width:64px;',
+		'type'     => 'text',
 	),
 	array(
 		'type'     => 'sectionend',

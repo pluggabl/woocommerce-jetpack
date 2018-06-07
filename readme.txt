@@ -187,7 +187,17 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.6.2 - 04/06/2018 =
+= 3.6.2 - 07/06/2018 =
+  T I * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products on sale" options added.
+  W I * Dev - SHIPPING & ORDERS - Admin Orders List - Multiple Status - Multiple select list - Restyled as "chosen select" class input.
+  W I * Dev - PRODUCTS - SKU - Categories Options - "Multiple Categories" option added.
+  X I * Dev - PRODUCTS - Product Addons - "Multicurrency Product Base Price" conversions added.
+  X I * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Price hooks are now also applied on backend.
+  W I * Dev - PRODUCTS - Add to Cart - Add to Cart Variable Product - Radio buttons template - Updated to the latest template version (WooCommerce v3.4.1).
+  W I * Fix - CART & CHECKOUT - Checkout Files Upload - User file download - Fixed for order downloads.
+D T I * Dev - CART & CHECKOUT - Checkout Files Upload - Form Template Options - "Show images in field" options added.
+D T I * Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Per Product - "Per product options - backend user role visibility" option added.
+  W I * Dev - Functions - Users - `wcj_is_user_role()` - Checking for `wp_get_current_user()` function to exist.
   T I * Dev - Classes - `WCJ_Module` - `reset_settings()` - Array type options reset handling added.
 D W I * Dev - CART & CHECKOUT - Checkout Fees - Initial module release.
 D T I * Dev - PRICES & CURRENCIES - Wholesale Price - "Product Categories to include" and "Product Categories to exclude" options added.

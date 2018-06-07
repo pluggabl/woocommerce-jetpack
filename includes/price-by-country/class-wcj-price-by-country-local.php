@@ -4,7 +4,6 @@
  *
  * @version 3.3.0
  * @author  Algoritmika Ltd.
- * @todo    clean up
  * @todo    (maybe) remove this and leave only standard meta box option (i.e. only `'meta_box' === get_option( 'wcj_price_by_country_local_options_style', 'inline' )`)
  */
 
@@ -20,27 +19,12 @@ class WCJ_Price_by_Country_Local {
 	 * @version 2.3.9
 	 */
 	function __construct() {
-//		add_action( 'add_meta_boxes',                                   array( $this, 'add_custom_meta_box_to_product_edit' ) );
 		add_action( 'woocommerce_ajax_save_product_variations',         array( $this, 'save_custom_meta_box_on_product_edit_ajax' ), PHP_INT_MAX, 1 );
 		add_action( 'save_post_product',                                array( $this, 'save_custom_meta_box_on_product_edit' ), PHP_INT_MAX, 2 );
 		add_action( 'woocommerce_product_options_pricing',              array( $this, 'add_simple_pricing' ), PHP_INT_MAX, 0 );
 		add_action( 'woocommerce_product_after_variable_attributes',    array( $this, 'add_variable_pricing' ), PHP_INT_MAX, 3 );
-//		add_action( 'woocommerce_variation_options',                    array( $this, 'add_variable_pricing' ), PHP_INT_MAX, 3 );
 		add_action( 'woocommerce_product_options_general_product_data', array( $this, 'add_hidden_save' ), PHP_INT_MAX, 0 );
 		add_action( 'woocommerce_product_after_variable_attributes',    array( $this, 'add_hidden_save' ), PHP_INT_MAX, 0 );
-	}
-
-	/**
-	 * add_custom_meta_box_to_product_edit.
-	 *
-	function add_custom_meta_box_to_product_edit() {
-		add_meta_box(
-			'wc-jetpack-' . 'price-by-country',
-			__( 'Price and Currency by Country', 'woocommerce-jetpack' ),
-			array( $this, 'create_custom_meta_box' ),
-			'product',
-			'normal',
-			'high' );
 	}
 
 	/**
@@ -64,9 +48,9 @@ class WCJ_Price_by_Country_Local {
 
 		$current_post_id = ( $product_id == 0) ? get_the_ID() : $product_id;
 		$the_product = wc_get_product( $current_post_id );
-		if ( ! $the_product )
+		if ( ! $the_product ) {
 			return;
-
+		}
 
 		$total_country_groups_number = $this->get_total_country_groups_number();
 
@@ -75,22 +59,7 @@ class WCJ_Price_by_Country_Local {
 
 		if ( $the_product->is_type( 'variation' ) ) {
 			$html .= $this->get_all_options_html( $simple_or_variable, $current_post_id, $total_country_groups_number, '_' . $current_post_id );
-			//$html = '</p>' . $html . '<p>';
-		}
-		/*
-		//if ( $the_product->is_type( 'variable' ) ) {
-		if ( true === false ) {
-			$variations = $the_product->get_available_variations();
-			if ( ! empty( $variations ) ) {
-				$variation_counter = 1;
-				foreach ( $variations as $variation ) {
-					$html .= $this->get_all_options_html( $simple_or_variable, $variation['variation_id'], $total_country_groups_number, '_' . $variation_counter );
-					$variation_counter++;
-				}
-			}
-		}
-		*/
-		else {
+		} else {
 			$html .= $this->get_all_options_html( $simple_or_variable, $current_post_id, $total_country_groups_number );
 		}
 
@@ -194,12 +163,10 @@ class WCJ_Price_by_Country_Local {
 
 		if ( $the_product->is_type( 'variable' ) ) {
 			$variations = $the_product->get_available_variations();
-			if ( empty( $variations ) )
+			if ( empty( $variations ) ) {
 				return;
-			//$variation_counter = 1;
+			}
 			foreach ( $variations as $variation ) {
-				//$this->save_options( $variation['variation_id'], $total_options_groups, '_' . $variation_counter );
-				//$variation_counter++;
 				$this->save_options( $variation['variation_id'], $total_options_groups, '_' . $variation['variation_id'] );
 			}
 		}
@@ -215,16 +182,6 @@ class WCJ_Price_by_Country_Local {
 		$html = '';
 		$option_value = get_post_meta( $current_post_id, '_' . $option_id, true );
 		$option_id .= $variation_id_addon;
-		/*if ( 'select' === $option['type'] ) {
-			$original_value = $option_value;
-			$option_value = '';
-			$currency_names_and_symbols = wcj_get_currencies_and_symbols();
-			foreach( $currency_names_and_symbols as $symbol => $name ) {
-				$option_value .= '<option value="' . $symbol . '" ' . selected( $original_value, $symbol, false ) . '>';
-				$option_value .= $name;
-				$option_value .= '</option>';
-			}
-		}*/
 		$html .= wcj_get_option_html( $option['type'], $option_id,  $option_value, '', 'short' );
 		return $html;
 	}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 3.4.0
+ * @version 3.6.2
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -187,7 +187,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * multiple_shop_order_statuses.
 	 *
-	 * @version 2.5.7
+	 * @version 3.6.2
 	 * @since   2.5.7
 	 */
 	function multiple_shop_order_statuses( $type ) {
@@ -195,7 +195,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 		$html = '';
 		$html .= ( 'checkboxes' === $type ) ?
 			'<span id="wcj_admin_filter_shop_order_statuses">' :
-			'<select multiple name="wcj_admin_filter_statuses[]" id="wcj_admin_filter_shop_order_statuses">';
+			'<select multiple name="wcj_admin_filter_statuses[]" id="wcj_admin_filter_shop_order_statuses" class="chosen_select">';
 		$num_posts = wp_count_posts( 'shop_order', 'readable' );
 		foreach ( wc_get_order_statuses() as $status_id => $status_title ) {
 			$total_number = ( isset( $num_posts->{$status_id} ) ) ? $num_posts->{$status_id} : 0;

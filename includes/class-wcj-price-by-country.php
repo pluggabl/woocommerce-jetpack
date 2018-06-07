@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Prices and Currencies by Country
  *
- * @version 3.3.0
+ * @version 3.6.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,8 +15,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
-	 * @todo    cleanup
+	 * @version 3.6.2
 	 */
 	function __construct() {
 
@@ -33,12 +32,6 @@ class WCJ_Price_By_Country extends WCJ_Module {
 
 			if ( wcj_is_frontend() ) {
 				$do_load_core = true;
-				/* if ( is_admin() ) {
-					global $pagenow;
-					if ( 'admin-ajax.php' === $pagenow ) {
-						$do_load_core = false;
-					}
-				} */
 				if ( ! defined( 'DOING_AJAX' ) && '/wc-api/WC_Gateway_Paypal/' == $_SERVER['REQUEST_URI'] ) {
 					// "Wrong currency in emails" bug fix
 					$do_load_core = false;
@@ -52,11 +45,14 @@ class WCJ_Price_By_Country extends WCJ_Module {
 				// Backend
 				include_once( 'reports/class-wcj-currency-reports.php' );
 				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
-					if ( 'inline' === get_option( 'wcj_price_by_country_local_options_style', 'inline' ) ) {
-						include_once( 'price-by-country/class-wcj-price-by-country-local.php' );
-					} else {
-						add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-						add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+					$backend_user_roles = get_option( 'wcj_price_by_country_backend_user_roles', '' );
+					if ( empty( $backend_user_roles ) || wcj_is_user_role( $backend_user_roles ) ) {
+						if ( 'inline' === get_option( 'wcj_price_by_country_local_options_style', 'inline' ) ) {
+							include_once( 'price-by-country/class-wcj-price-by-country-local.php' );
+						} else {
+							add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+							add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+						}
 					}
 				}
 

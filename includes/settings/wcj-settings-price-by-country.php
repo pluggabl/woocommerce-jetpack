@@ -2,15 +2,13 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 3.5.1
+ * @version 3.6.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    clean up
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-//global $wcj_notice;
 $settings = array(
 	array(
 		'title'    => __( 'Price by Country Options', 'woocommerce-jetpack' ),
@@ -28,21 +26,8 @@ $settings = array(
 			'by_ip'                        => __( 'by IP', 'woocommerce-jetpack' ),
 			'by_ip_then_by_user_selection' => __( 'by IP, then by user selection', 'woocommerce-jetpack' ),
 			'by_user_selection'            => __( 'by user selection', 'woocommerce-jetpack' ),
-//			'by_wpml'                      => __( 'by WPML', 'woocommerce-jetpack' ),
 		),
 	),
-	/*
-	array(
-		'title'    => __( 'Countries in [wcj_country_select_drop_down_list] shortcode\'s list', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Leave blank to list all countries', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_price_by_country_shortcode_countries',
-		'default'  => '',
-		'type'     => 'multiselect',
-		'options'  => wcj_get_countries(),
-		'class'    => 'chosen_select',
-//		'css'      => 'width:50%;min-width:300px;height:100px;',
-	),
-	*/
 	array(
 		'title'    => __( 'Override Country Options', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_country_override_on_checkout_with_billing_country',
@@ -61,7 +46,6 @@ $settings = array(
 		'type'     => 'select',
 		'options'  => array(
 			'all'               => __( 'All site', 'woocommerce-jetpack' ),
-//			'cart_and_checkout' => __( 'Cart and checkout only', 'woocommerce-jetpack' ),
 			'checkout'          => __( 'Checkout only', 'woocommerce-jetpack' ),
 		),
 	),
@@ -110,7 +94,7 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'desc'     => __( 'Per product options style', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Per product options - backend style', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_country_local_options_style',
 		'default'  => 'inline',
 		'type'     => 'select',
@@ -118,6 +102,15 @@ $settings = array(
 			'inline'   => __( 'Inline', 'woocommerce-jetpack' ),
 			'meta_box' => __( 'Separate meta box', 'woocommerce-jetpack' ),
 		),
+	),
+	array(
+		'desc'     => __( 'Per product options - backend user role visibility', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Leave empty to show to all user roles.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_country_backend_user_roles',
+		'default'  => '',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => wcj_get_user_roles_options(),
 	),
 	array(
 		'title'    => __( 'Price Filter Widget and Sorting by Price Support', 'woocommerce-jetpack' ),
@@ -175,7 +168,7 @@ $settings = array(
 		'title'    => __( 'Autogenerate Groups', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_' . $this->id . '_module_tools',
 		'type'     => 'custom_link',
-		'link'     => /* '<pre>' . $wcj_notice . '</pre>' . */
+		'link'     =>
 			'<pre>' .
 				__( 'Currencies supported in both PayPal and Yahoo Exchange Rates:', 'woocommerce-jetpack' ) . ' ' .
 				'<a href="' . add_query_arg( 'wcj_generate_country_groups', 'paypal_and_yahoo_exchange_rates_only', remove_query_arg( array( 'wcj_generate_country_groups_confirm', 'recalculate_price_filter_products_prices' ) ) ) . '">' .
@@ -310,15 +303,6 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_b
 			'custom_attributes_button' => $custom_attributes,
 			'value'    => $currency_from . '/' . $currency_to,
 		),
-		/*
-		array(
-//			'id'       => 'wcj_price_by_country_exchange_rate_refresh_group_' . $i,
-			'class'    => 'exchage_rate_button',
-			'type'     => 'custom_number',
-			'css'      => 'width:300px;',
-			'custom_attributes' => $custom_attributes,
-		),
-		*/
 		array(
 			'desc'     => __( 'Make empty price', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_price_by_country_make_empty_price_group_' . $i,
@@ -333,55 +317,4 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_price_by_country_exchange_rate_options',
 	),
 ) );
-/*
-$settings = array_merge( $settings, array(
-	array(
-		'title'    => __( 'Country Select Box Customization', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'desc'     => __( 'Only if "by user selection" method selected in "Customer Country Detection Method"', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_price_by_country_country_selection_box_options',
-	),
-	array(
-		'title'    => __( 'Position', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_price_by_country_country_selection_box_position',
-		'default'  => 'woocommerce_get_price_html',
-		'type'     => 'select',
-		'options'  => array(
-			'woocommerce_get_price_html' => __( 'woocommerce_get_price_html', 'woocommerce-jetpack' ),
-		),
-	),
-	array(
-		'title'    => __( 'Position Priority (Order)', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_price_by_country_country_selection_box_priority',
-		'default'  => 10,
-		'type'     => 'number',
-	),
-	array(
-		'title'    => __( 'Custom Class', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_price_by_country_country_selection_box_class',
-		'default'  => '',
-		'type'     => 'text',
-	),
-	array(
-		'title'    => __( 'Custom Style', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_price_by_country_country_selection_box_style',
-		'default'  => '',
-		'type'     => 'text',
-	),
-	array(
-		'title'    => __( 'Method (GET/POST)', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_price_by_country_country_selection_box_method',
-		'default'  => 'get',
-		'type'     => 'select',
-		'options'  => array(
-			'get'  => __( 'GET', 'woocommerce-jetpack' ),
-			'post' => __( 'POST', 'woocommerce-jetpack' ),
-		),
-	),
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_price_by_country_country_selection_box_options',
-	),
-) );
-*/
 return $settings;
