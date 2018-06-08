@@ -16,7 +16,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 3.6.2
 	 * @since   3.2.4
 	 */
 	function __construct() {
@@ -56,6 +56,9 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_order_admin_list_hide_default_statuses_menu', 'no' ) ) {
 					add_action( 'admin_head', array( $this, 'hide_default_statuses_menu' ), PHP_INT_MAX );
 				}
+				if ( 'yes' === get_option( 'wcj_order_admin_list_multiple_status_admin_menu', 'no' ) ) {
+					add_action( 'admin_menu', array( $this, 'admin_menu_multiple_status' ) );
+				}
 			}
 
 			// Columns Order
@@ -64,6 +67,38 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 			}
 
 		}
+	}
+
+	/**
+	 * admin_menu_multiple_status.
+	 *
+	 * @version 3.6.2
+	 * @since   3.6.2
+	 * @todo    add presets as links (same as "Not completed" link)
+	 * @todo    fix: custom (i.e. presets) menus are not highlighted
+	 */
+	function admin_menu_multiple_status() {
+		// Remove "Coupons" menu (to get "Orders" menus on top)
+		$coupons_menu = remove_submenu_page( 'woocommerce', 'edit.php?post_type=shop_coupon' );
+		// Maybe remove original "Orders" menu
+		if ( 'yes' === get_option( 'wcj_order_admin_list_multiple_status_admin_menu_remove_original', 'no' ) ) {
+			remove_submenu_page( 'woocommerce', 'edit.php?post_type=shop_order' );
+		}
+		// Add presets
+		$titles       = get_option( 'wcj_order_admin_list_multiple_status_presets_titles',   array() );
+		$statuses     = get_option( 'wcj_order_admin_list_multiple_status_presets_statuses', array() );
+		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_order_admin_list_multiple_status_presets_total_number', 1 ) );
+		for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( ! empty( $titles[ $i ] ) && ! empty( $statuses[ $i ] ) ) {
+				$menu_slug = 'edit.php?post_type=shop_order';
+				foreach ( $statuses[ $i ] as $x => $status ) {
+					$menu_slug .= "&wcj_admin_filter_statuses[{$x}]={$status}";
+				}
+				add_submenu_page( 'woocommerce', $titles[ $i ], $titles[ $i ], 'edit_shop_orders', $menu_slug );
+			}
+		}
+		// Re-add "Coupons" menu
+		add_submenu_page( 'woocommerce', $coupons_menu[0], $coupons_menu[3], $coupons_menu[1], $coupons_menu[2] );
 	}
 
 	/**
@@ -201,8 +236,10 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 			$total_number = ( isset( $num_posts->{$status_id} ) ) ? $num_posts->{$status_id} : 0;
 			if ( $total_number > 0 ) {
 				$html .= ( 'checkboxes' === $type ) ?
-					'<input type="checkbox" name="wcj_admin_filter_statuses[]" value="' . $status_id . '"' . checked( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . ' (' . $total_number . ') ' :
-					'<option value="' . $status_id . '"' . selected( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . ' (' . $total_number . ') ' . '</option>';
+					'<input type="checkbox" name="wcj_admin_filter_statuses[]" style="width:16px;height:16px;" value="' . $status_id . '"' .
+						checked( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' . $status_title . ' (' . $total_number . ') ' :
+					'<option value="' . $status_id . '"' . selected( in_array( $status_id, $checked_post_statuses ), true, false ) . '>' .
+						$status_title . ' (' . $total_number . ') ' . '</option>';
 			}
 		}
 		$html .= ( 'checkboxes' === $type ) ?

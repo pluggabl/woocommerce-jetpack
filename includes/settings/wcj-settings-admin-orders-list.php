@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Orders List
  *
- * @version 3.3.0
+ * @version 3.6.2
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -136,6 +136,51 @@ $settings = array_merge( $settings, array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
+	array(
+		'title'    => __( 'Add Presets to Admin Menu', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' .  __( 'Add presets', 'woocommerce-jetpack' ) . '</strong>',
+		'desc_tip' => __( 'To add presets, "Multiple Status Filtering" option must be enabled (as multiple select or as checkboxes).', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_admin_list_multiple_status_admin_menu',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Remove original "Orders" menu', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_admin_list_multiple_status_admin_menu_remove_original',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Total Presets', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_admin_list_multiple_status_presets_total_number',
+		'default'  => 1,
+		'type'     => 'custom_number',
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
+	),
+) );
+$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_order_admin_list_multiple_status_presets_total_number', 1 ) );
+for ( $i = 1; $i <= $total_number; $i++ ) {
+	$settings = array_merge( $settings, array(
+		array(
+			'desc'     => __( 'Title', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Must be not empty.', 'woocommerce-jetpack' ),
+			'id'       => "wcj_order_admin_list_multiple_status_presets_titles[$i]",
+			'default'  => __( 'Preset', 'woocommerce-jetpack' ) . ' #' . $i,
+			'type'     => 'text',
+		),
+		array(
+			'desc'     => __( 'Statuses', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Must be not empty.', 'woocommerce-jetpack' ),
+			'id'       => "wcj_order_admin_list_multiple_status_presets_statuses[$i]",
+			'default'  => array(),
+			'type'     => 'multiselect',
+			'class'    => 'chosen_select',
+			'options'  => wcj_get_order_statuses( false ),
+		),
+	) );
+}
+$settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_order_admin_list_multiple_status_options',
