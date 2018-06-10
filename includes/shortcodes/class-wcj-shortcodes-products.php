@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @author  Algoritmika Ltd.
  */
 
@@ -830,7 +830,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 3.1.0
+	 * @version 3.6.2
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
 
@@ -922,7 +922,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 					$the_price = $the_price - $wholesale_price_level['discount'];
 				} else { // 'percent'
 					$coefficient = 1.0 - ( $wholesale_price_level['discount'] / 100.0 );
-					$the_price = $the_price * $coefficient;
+					$the_price = ( float ) $the_price * $coefficient;
 				}
 				$the_price_original = apply_filters( 'wcj_product_wholesale_price_table_price_after', $the_price_original, $this->the_product );
 				$the_price          = apply_filters( 'wcj_product_wholesale_price_table_price_after', $the_price,          $this->the_product );

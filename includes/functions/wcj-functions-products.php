@@ -486,11 +486,13 @@ if ( ! function_exists( 'wcj_is_product_term' ) ) {
 	/**
 	 * wcj_is_product_term.
 	 *
-	 * @version 2.9.0
+	 * @version 3.6.2
 	 * @since   2.9.0
-	 * @todo    (maybe) check if $term_ids is empty
 	 */
 	function wcj_is_product_term( $product_id, $term_ids, $taxonomy ) {
+		if ( empty( $term_ids ) ) {
+			return false;
+		}
 		$product_terms = get_the_terms( $product_id, $taxonomy );
 		if ( empty( $product_terms ) ) {
 			return false;

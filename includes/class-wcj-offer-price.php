@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 3.0.0
+ * @version 3.6.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,12 +16,12 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.9.0
+	 * @version 3.6.2
 	 * @since   2.9.0
-	 * @todo    css - better default colors
 	 * @todo    settings - more info about position priorities, e.g.: __( 'Standard priorities for "Inside single product summary": title - 5, rating - 10, price - 10, excerpt - 20, add to cart - 30, meta - 40, sharing - 50', 'woocommerce-jetpack' )
+	 * @todo    (maybe) css - customizable fonts etc.
+	 * @todo    (maybe) css - better default colors
 	 * @todo    (maybe) better solution for the form hook (instead of `woocommerce_before_main_content`)
-	 * @todo    (maybe) css - customizable colors, fonts etc.
 	 * @todo    (maybe) per product settings - add "use global values/use values below" for price step etc. (instead of placeholders etc.)
 	 * @todo    (maybe) recheck multicurrency
 	 * @todo    (maybe) more "Make an offer" button position options (on both single and archives)
@@ -63,7 +63,50 @@ class WCJ_Offer_Price extends WCJ_Module {
 			// Offer history
 			add_action( 'add_meta_boxes',                     array( $this, 'add_offer_price_history_meta_box' ) );
 			add_action( 'save_post_product',                  array( $this, 'delete_offer_price_product_history' ), PHP_INT_MAX, 2 );
+			// CSS
+			add_action( 'wp_head',                            array( $this, 'add_styling' ), PHP_INT_MAX );
 		}
+	}
+
+	/**
+	 * add_styling.
+	 *
+	 * @version 3.6.2
+	 * @since   3.6.2
+	 */
+	function add_styling() {
+		$styling_default = array(
+			'form_content_width'     => '80%',
+			'form_header_back_color' => '#5cb85c',
+			'form_header_text_color' => '#ffffff',
+			'form_footer_back_color' => '#5cb85c',
+			'form_footer_text_color' => '#ffffff',
+		);
+		$styling_options = get_option( 'wcj_offer_price_styling', array() );
+		foreach ( $styling_default as $option => $default ) {
+			if ( ! isset( $styling_options[ $option ] ) ) {
+				$styling_options[ $option ] = $default;
+			}
+		}
+		echo "<style type=\"text/css\">
+			.wcj-offer-price-modal-content {
+				width: {$styling_options['form_content_width']};
+			}
+			.wcj-offer-modal-header {
+				background-color: {$styling_options['form_header_back_color']};
+				color: {$styling_options['form_header_text_color']};
+			}
+			.wcj-offer-modal-header h1, .wcj-offer-modal-header h2, .wcj-offer-modal-header h3, .wcj-offer-modal-header h4, .wcj-offer-modal-header h5, .wcj-offer-modal-header h6 {
+				color: {$styling_options['form_header_text_color']};
+			}
+			.wcj-offer-price-modal-footer {
+				background-color: {$styling_options['form_footer_back_color']};
+				color: {$styling_options['form_footer_text_color']};
+			}
+			.wcj-offer-price-modal-footer h1, .wcj-offer-price-modal-footer h2, .wcj-offer-price-modal-footer h3, .wcj-offer-price-modal-footer h4, .wcj-offer-price-modal-footer h5, .wcj-offer-price-modal-footer h6 {
+				color: {$styling_options['form_footer_text_color']};
+			}
+		</style>";
 	}
 
 	/**
@@ -167,7 +210,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * is_offer_price_enabled_for_product.
 	 *
-	 * @version 2.9.0
+	 * @version 3.6.2
 	 * @since   2.9.0
 	 */
 	function is_offer_price_enabled_for_product( $product_id ) {
@@ -179,6 +222,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 				return ( '' === $_product->get_price() );
 			case 'per_product':
 				return ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_offer_price_enabled', true ) );
+			case 'per_category':
+				return wcj_is_product_term( $product_id, get_option( 'wcj_offer_price_enabled_cats', array() ), 'product_cat' );
 		}
 	}
 

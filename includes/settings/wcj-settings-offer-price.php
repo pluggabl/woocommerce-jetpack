@@ -17,7 +17,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Possible values: Enable for all products; Enable for all products with empty price; Enable per product.', 'woocommerce-jetpack' ) . ' ' .
+		'desc_tip' => __( 'Possible values: Enable for all products; Enable for all products with empty price; Enable per product; Enable per category.', 'woocommerce-jetpack' ) . ' ' .
 			__( 'If Enable per product is selected, this will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_enabled_type',
 		'type'     => 'select',
@@ -26,8 +26,19 @@ return array(
 			'all_products' => __( 'Enable for all products', 'woocommerce-jetpack' ),
 			'empty_prices' => __( 'Enable for all products with empty price', 'woocommerce-jetpack' ),
 			'per_product'  => __( 'Enable per product', 'woocommerce-jetpack' ),
+			'per_category' => __( 'Enable per category', 'woocommerce-jetpack' ),
 		),
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'desc'     => __( 'Product categories', 'woocommerce-jetpack' ) . '<br>' . apply_filters( 'booster_message', '', 'desc' ),
+		'desc_tip' => __( 'Ignored if "Enable per category" option is not selected above.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_enabled_cats',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'default'  => array(),
+		'options'  => wcj_get_terms( 'product_cat' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
@@ -222,6 +233,45 @@ return array(
 	),
 	array(
 		'id'       => 'wcj_offer_price_form_options',
+		'type'     => 'sectionend',
+	),
+	array(
+		'title'    => __( 'Styling Options', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_styling_options',
+		'type'     => 'title',
+	),
+	array(
+		'title'    => __( 'Form Width', 'woocommerce-jetpack' ),
+		'id'       => "wcj_offer_price_styling[form_content_width]",
+		'type'     => 'text',
+		'default'  => '80%',
+	),
+	array(
+		'title'    => __( 'Header Background Color', 'woocommerce-jetpack' ),
+		'id'       => "wcj_offer_price_styling[form_header_back_color]",
+		'type'     => 'color',
+		'default'  => '#5cb85c',
+	),
+	array(
+		'title'    => __( 'Header Text Color', 'woocommerce-jetpack' ),
+		'id'       => "wcj_offer_price_styling[form_header_text_color]",
+		'type'     => 'color',
+		'default'  => '#ffffff',
+	),
+	array(
+		'title'    => __( 'Footer Background Color', 'woocommerce-jetpack' ),
+		'id'       => "wcj_offer_price_styling[form_footer_back_color]",
+		'type'     => 'color',
+		'default'  => '#5cb85c',
+	),
+	array(
+		'title'    => __( 'Footer Text Color', 'woocommerce-jetpack' ),
+		'id'       => "wcj_offer_price_styling[form_footer_text_color]",
+		'type'     => 'color',
+		'default'  => '#ffffff',
+	),
+	array(
+		'id'       => 'wcj_offer_price_styling_options',
 		'type'     => 'sectionend',
 	),
 	array(

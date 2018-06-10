@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Empty Cart Button
  *
- * @version 3.5.3
+ * @version 3.6.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -29,6 +29,12 @@ return array(
 		'desc_tip' => __( 'Style for the button\'s div. Default is "float: right;"', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_empty_cart_div_style',
 		'default'  => 'float: right;',
+		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Button HTML Class', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_empty_cart_button_class',
+		'default'  => 'button',
 		'type'     => 'text',
 	),
 	array(

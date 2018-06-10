@@ -1,7 +1,7 @@
 /**
  * wcj-offer-price.
  *
- * @version 2.9.0
+ * @version 3.6.2
  * @since   2.9.0
  */
 
@@ -27,7 +27,7 @@
 	margin: auto;
 	padding: 0;
 	border: 1px solid #888;
-	width: 80%;
+	/* width: 80%; */
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
 	-webkit-animation-name: animatetop;
 	-webkit-animation-duration: 0.4s;
@@ -66,18 +66,21 @@
 	cursor: pointer;
 }
 
+/* Header */
 .wcj-offer-modal-header {
 	padding: 2px 16px;
-	background-color: #5cb85c;
-	color: white;
+	/* background-color: #5cb85c; */
+	/* color: white; */
 }
 
+/* Body */
 .wcj-offer-price-modal-body {
 	padding: 2px 16px;
 }
 
+/* Footer */
 .wcj-offer-price-modal-footer {
 	padding: 2px 16px;
-	background-color: #5cb85c;
-	color: white;
+	/* background-color: #5cb85c; */
+	/* color: white; */
 }

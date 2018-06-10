@@ -187,7 +187,12 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.6.2 - 08/06/2018 =
+= 3.6.2 - 10/06/2018 =
+      * Dev - Functions - Products - `wcj_is_product_term()` - Checking for empty `$term_ids` param now.
+D W   * Dev - PRICES & CURRENCIES - Offer Your Price - "Enable per category" options added.
+D W   * Dev - PRICES & CURRENCIES - Offer Your Price - "Styling Options" section added (and default header text color set to white).
+  W   * Fix - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - "Non-numeric value encountered" warning fixed (appeared in PHP 7.1 for products with empty price).
+D     * Dev - CART & CHECKOUT - Empty Cart Button - "Button HTML Class" option added.
 D W I * Dev - SHIPPING & ORDERS - Admin Orders List - Multiple Status - "Add Presets to Admin Menu" options added.
   T I * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products on sale" options added.
   W   * Dev - SHIPPING & ORDERS - Admin Orders List - Multiple Status - Multiple select list restyled as "chosen select" class input. Checkboxes size fixed.
