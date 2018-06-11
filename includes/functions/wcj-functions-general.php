@@ -2,12 +2,31 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_wpml_default_language' ) ) {
+	/**
+	 * wcj_get_wpml_default_language.
+	 *
+	 * @version 3.6.2
+	 * @since   3.6.2
+	 */
+	function wcj_get_wpml_default_language() {
+		global $sitepress;
+		if ( $sitepress ) {
+			return $sitepress->get_default_language();
+		} elseif ( function_exists( 'icl_get_setting' ) ) {
+			return icl_get_setting( 'default_language' );
+		} else {
+			return null;
+		}
+	}
+}
 
 if ( ! function_exists( 'wcj_get_array' ) ) {
 	/**

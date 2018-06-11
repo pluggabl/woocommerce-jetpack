@@ -187,7 +187,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.6.2 - 10/06/2018 =
+= 3.6.2 - 11/06/2018 =
+      * Dev - Functions - Products - `wcj_maybe_get_product_id_wpml()` - Code refactoring (`wcj_get_wpml_default_language()` function added).
+  W   * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Additionally checking for `WC_Order` class before adding email attachments.
       * Dev - Functions - Products - `wcj_is_product_term()` - Checking for empty `$term_ids` param now.
 D W   * Dev - PRICES & CURRENCIES - Offer Your Price - "Enable per category" options added.
 D W   * Dev - PRICES & CURRENCIES - Offer Your Price - "Styling Options" section added (and default header text color set to white).

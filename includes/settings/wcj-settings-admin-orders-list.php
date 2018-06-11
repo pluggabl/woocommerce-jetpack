@@ -145,6 +145,12 @@ $settings = array_merge( $settings, array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc'     => __( 'Add order counter', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_admin_list_multiple_status_admin_menu_counter',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'desc'     => __( 'Remove original "Orders" menu', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_admin_list_multiple_status_admin_menu_remove_original',
 		'default'  => 'no',

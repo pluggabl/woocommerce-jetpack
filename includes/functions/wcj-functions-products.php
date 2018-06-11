@@ -13,20 +13,12 @@ if ( ! function_exists( 'wcj_maybe_get_product_id_wpml' ) ) {
 	/**
 	 * wcj_maybe_get_product_id_wpml.
 	 *
-	 * @version 3.6.1
+	 * @version 3.6.2
 	 * @since   3.6.0
 	 */
 	function wcj_maybe_get_product_id_wpml( $product_id ) {
 		if ( function_exists( 'icl_object_id' ) ) {
-			global $sitepress;
-			if ( $sitepress ) {
-				$default_language = $sitepress->get_default_language();
-			} elseif ( function_exists( 'icl_get_setting' ) ) {
-				$default_language = icl_get_setting( 'default_language' );
-			} else {
-				$default_language = null;
-			}
-			$product_id = icl_object_id( $product_id, 'product', true, $default_language );
+			$product_id = icl_object_id( $product_id, 'product', true, wcj_get_wpml_default_language() );
 		}
 		return $product_id;
 	}

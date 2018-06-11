@@ -94,7 +94,15 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 				foreach ( $statuses[ $i ] as $x => $status ) {
 					$menu_slug .= "&wcj_admin_filter_statuses[{$x}]={$status}";
 				}
-				add_submenu_page( 'woocommerce', $titles[ $i ], $titles[ $i ], 'edit_shop_orders', $menu_slug );
+				$orders_count_html = '';
+				if ( 'yes' === get_option( 'wcj_order_admin_list_multiple_status_admin_menu_counter', 'no' ) ) {
+					$order_count = 0;
+					foreach ( $statuses[ $i ] as $x => $status ) {
+						$order_count += wc_orders_count( substr( $status, 3 ) );
+					}
+					$orders_count_html = ' <span class="awaiting-mod update-plugins count-' . esc_attr( $order_count ) . ' wcj-order-count-wrapper"><span class="wcj-order-count">' . number_format_i18n( $order_count ) . '</span></span>'; // WPCS: override ok.
+				}
+				add_submenu_page( 'woocommerce', $titles[ $i ], $titles[ $i ] . $orders_count_html, 'edit_shop_orders', $menu_slug );
 			}
 		}
 		// Re-add "Coupons" menu
