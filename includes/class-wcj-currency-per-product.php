@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -416,10 +416,25 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_cart_checkout_currency.
 	 *
-	 * @version 2.8.0
+	 * @version 3.6.2
 	 * @since   2.7.0
 	 */
 	function get_cart_checkout_currency() {
+		if ( false !== ( $value = apply_filters( 'wcj_currency_per_product_cart_checkout_currency', false, $cart_checkout_behaviour ) ) ) {
+			return $value;
+		}
+		/*
+		 * `wcj_currency_per_product_cart_checkout_currency` filter example:
+		 *
+		 *	if ( function_exists( 'YITH_Request_Quote' ) && isset( YITH_Request_Quote()->raq_content ) ) {
+		 *		foreach ( YITH_Request_Quote()->raq_content as $raq_product ) {
+		 *			if ( isset( $raq_product['product_id'] ) ) {
+		 *				return get_post_meta( $raq_product['product_id'], '_' . 'wcj_currency_per_product_currency', true );
+		 *			}
+		 *		}
+		 *	}
+		 *
+		 */
 		if ( ! isset( WC()->cart ) || WC()->cart->is_empty() ) {
 			return false;
 		}
@@ -439,12 +454,21 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * is_cart_or_checkout_or_ajax.
 	 *
-	 * @version 2.7.0
+	 * @version 3.6.2
 	 * @since   2.7.0
 	 * @todo    fix AJAX issue (for minicart)
 	 */
 	function is_cart_or_checkout_or_ajax() {
-		return ( ( function_exists( 'is_cart' ) && is_cart() ) || ( function_exists( 'is_checkout' ) && is_checkout() ) /* || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) */ );
+		return apply_filters( 'wcj_currency_per_product_is_cart_or_checkout',
+			( ( function_exists( 'is_cart' ) && is_cart() ) || ( function_exists( 'is_checkout' ) && is_checkout() ) /* || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) */ ) );
+		/*
+		 * `wcj_currency_per_product_is_cart_or_checkout` filter example:
+		 *
+		 *	if ( function_exists( 'YITH_Request_Quote' ) && 0 != ( $raq_page_id = YITH_Request_Quote()->get_raq_page_id() ) && $raq_page_id == get_the_ID() ) {
+		 *		return true;
+		 *	}
+		 *
+		 */
 	}
 
 	/**

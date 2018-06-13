@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 3.4.0
+ * @version 3.6.2
  * @author  Algoritmika Ltd.
  */
 
@@ -292,13 +292,18 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	* Auto Complete all WooCommerce orders.
 	*
-	* @version 2.7.0
+	* @version 3.6.2
+	* @todo    (maybe) at first check if status is not `completed` already (however `WC_Order::set_status()` checks that anyway)
 	*/
 	function auto_complete_order( $order_id ) {
 		if ( ! $order_id ) {
 			return;
 		}
 		$order = wc_get_order( $order_id );
+		$payment_methods = apply_filters( 'booster_option', '', get_option( 'wcj_order_auto_complete_payment_methods', array() ) );
+		if ( ! empty( $payment_methods ) && ! in_array( $order->get_payment_method(), $payment_methods ) ) {
+			return;
+		}
 		$order->update_status( 'completed' );
 	}
 

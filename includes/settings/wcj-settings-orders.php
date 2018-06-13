@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Orders
  *
- * @version 3.4.0
+ * @version 3.6.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -12,6 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $bulk_regenerate_download_permissions_all_orders_cron_desc = '';
 if ( $this->is_enabled() && 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_bulk_regenerate_download_permissions_enabled', 'no' ) ) ) {
 	$bulk_regenerate_download_permissions_all_orders_cron_desc = wcj_crons_get_next_event_time_message( 'wcj_bulk_regenerate_download_permissions_all_orders_cron_time' );
+}
+
+$payment_gateways_options = array();
+if ( function_exists( 'WC' ) && is_callable( array( WC()->payment_gateways, 'payment_gateways' ) ) ) {
+	foreach ( WC()->payment_gateways->payment_gateways() as $payment_gateway_key => $payment_gateway_data ) {
+		$payment_gateways_options[ $payment_gateway_key ] = $payment_gateway_data->title;
+	}
 }
 
 $settings = array(
@@ -74,6 +81,16 @@ $settings = array(
 		'id'       => 'wcj_order_auto_complete_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Payment methods', 'woocommerce-jetpack' ) . '<br>' . apply_filters( 'booster_message', '', 'desc' ),
+		'desc_tip' => __( 'Fill this, if you want orders to be auto-completed for selected payment methods only. Leave blank to auto-complete all orders.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_auto_complete_payment_methods',
+		'default'  => array(),
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => $payment_gateways_options,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'type'     => 'sectionend',

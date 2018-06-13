@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @author  Algoritmika Ltd.
  */
 
@@ -718,7 +718,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_currency_selector.
 	 *
-	 * @version 3.4.0
+	 * @version 3.6.2
 	 * @since   2.4.5
 	 */
 	private function get_currency_selector( $atts, $content, $type = 'select' ) {
@@ -747,6 +747,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			}
 		}
 		if ( '' === $selected_currency && '' != $atts['default'] ) {
+			wcj_session_set( 'wcj-currency', $atts['default'] );
 			$selected_currency = $atts['default'];
 		}
 		$switcher_template = get_option( 'wcj_multicurrency_switcher_template', '%currency_name% (%currency_symbol%)' );

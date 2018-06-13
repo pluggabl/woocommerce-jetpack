@@ -187,7 +187,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.6.2 - 11/06/2018 =
+= 3.6.2 - 13/06/2018 =
+      * Fix - Shortcodes - General - `[wcj_currency_select_radio_list]` and `[wcj_currency_select_drop_down_list]` - Setting session value, when `default` attribute is set.
+D     * Dev - PRICES & CURRENCIES - Currency per Product - `wcj_currency_per_product_cart_checkout_currency` and `wcj_currency_per_product_is_cart_or_checkout` filters added.
+D     * Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - "Payment methods" option added.
       * Dev - Functions - Products - `wcj_maybe_get_product_id_wpml()` - Code refactoring (`wcj_get_wpml_default_language()` function added).
   W   * Dev - PDF INVOICING & PACKING SLIPS - Email Options - Additionally checking for `WC_Order` class before adding email attachments.
       * Dev - Functions - Products - `wcj_is_product_term()` - Checking for empty `$term_ids` param now.
@@ -196,10 +199,10 @@ D W   * Dev - PRICES & CURRENCIES - Offer Your Price - "Styling Options" section
   W   * Fix - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - "Non-numeric value encountered" warning fixed (appeared in PHP 7.1 for products with empty price).
 D     * Dev - CART & CHECKOUT - Empty Cart Button - "Button HTML Class" option added.
 D W I * Dev - SHIPPING & ORDERS - Admin Orders List - Multiple Status - "Add Presets to Admin Menu" options added.
-  T I * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products on sale" options added.
+D T I * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products on sale" options added.
   W   * Dev - SHIPPING & ORDERS - Admin Orders List - Multiple Status - Multiple select list restyled as "chosen select" class input. Checkboxes size fixed.
-  W I * Dev - PRODUCTS - SKU - Categories Options - "Multiple Categories" option added.
-  W I * Dev - PRODUCTS - Product Addons - "Multicurrency Product Base Price" conversions added.
+D W I * Dev - PRODUCTS - SKU - Categories Options - "Multiple Categories" option added.
+D W I * Dev - PRODUCTS - Product Addons - "Multicurrency Product Base Price" conversions added.
   W I * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Price hooks are now also applied on backend.
   W I * Dev - PRODUCTS - Add to Cart - Add to Cart Variable Product - Radio buttons template - Updated to the latest template version (WooCommerce v3.4.1).
   W I * Fix - CART & CHECKOUT - Checkout Files Upload - User file download - Fixed for order downloads.
