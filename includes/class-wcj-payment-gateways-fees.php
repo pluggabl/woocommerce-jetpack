@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 3.3.0
+ * @version 3.6.2
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -17,6 +17,8 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.0
+	 * @todo    (maybe) move all settings to arrays
+	 * @todo    (maybe) add settings subsections for each gateway
 	 */
 	function __construct() {
 
@@ -59,25 +61,48 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 		) {
 			return 'ppec_paypal'; // WooCommerce PayPal Express Checkout Payment Gateway (By WooCommerce)
 		} else {
-			/* global $woocommerce;
-			$current_gateway = $woocommerce->session->chosen_payment_method;
-			$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
-			if ( ! array_key_exists( $current_gateway, $available_gateways ) ) {
-				$current_gateway = get_option( 'woocommerce_default_gateway', '' );
-				if ( '' == $current_gateway ) {
-					$current_gateway = current( $available_gateways );
-					$current_gateway = isset( $current_gateway->id ) ? $current_gateway->id : '';
-				}
-			}
-			return $current_gateway; */
 			return WC()->session->chosen_payment_method;
 		}
 	}
 
 	/**
+	 * check_cart_products.
+	 *
+	 * @version 3.6.2
+	 * @since   3.6.2
+	 * @todo    add WPML support
+	 * @todo    add product variations
+	 * @todo    add product cats and tags
+	 */
+	function check_cart_products( $gateway ) {
+		$require_products = apply_filters( 'booster_option', array(), get_option( 'wcj_gateways_fees_include_products', array() ) );
+		if ( ! empty( $require_products[ $gateway ] ) ) {
+			$passed = false;
+			foreach ( WC()->cart->get_cart() as $item ) {
+				if ( in_array( $item['product_id'], $require_products[ $gateway ] ) ) {
+					$passed = true;
+					break;
+				}
+			}
+			if ( ! $passed ) {
+				return false;
+			}
+		}
+		$exclude_products = apply_filters( 'booster_option', array(), get_option( 'wcj_gateways_fees_exclude_products', array() ) );
+		if ( ! empty( $exclude_products[ $gateway ] ) ) {
+			foreach ( WC()->cart->get_cart() as $item ) {
+				if ( in_array( $item['product_id'], $exclude_products[ $gateway ] ) ) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
+	/**
 	 * gateways_fees.
 	 *
-	 * @version 3.3.0
+	 * @version 3.6.2
 	 */
 	function gateways_fees() {
 		global $woocommerce;
@@ -95,7 +120,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				$woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total :
 				$woocommerce->cart->cart_contents_total
 			);
-			if ( '' != $fee_text && $total_in_cart >= $min_cart_amount  && ( 0 == $max_cart_amount || $total_in_cart <= $max_cart_amount ) ) {
+			if ( '' != $fee_text && $total_in_cart >= $min_cart_amount  && ( 0 == $max_cart_amount || $total_in_cart <= $max_cart_amount ) && $this->check_cart_products( $current_gateway ) ) {
 				$fee_value = get_option( 'wcj_gateways_fees_value_' . $current_gateway );
 				$fee_type  = get_option( 'wcj_gateways_fees_type_'  . $current_gateway );
 				$final_fee_to_add = 0;

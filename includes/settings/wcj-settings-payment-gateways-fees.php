@@ -2,21 +2,21 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Fees and Discounts
  *
- * @version 2.8.2
+ * @version 3.6.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$settings = array();
+$products           = wcj_get_products();
+$settings           = array();
 $available_gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $available_gateways as $key => $gateway ) {
 	$settings = array_merge( $settings, array(
 		array(
-			'title'     => $gateway->title,
+			'title'     => $gateway->title . ( $gateway->is_available() ? ' &#10003;' : '' ),
 			'type'      => 'title',
-//			'desc'      => ( $gateway->is_available() ? __( 'Available', 'woocommerce-jetpack' ) : __( 'Not available', 'woocommerce-jetpack' ) ),
 			'id'        => 'wcj_gateways_fees_options_' . $key,
 		),
 		array(
@@ -53,7 +53,7 @@ foreach ( $available_gateways as $key => $gateway ) {
 			'id'        => 'wcj_gateways_fees_min_cart_amount_' . $key,
 			'default'   => 0,
 			'type'      => 'number',
-			'custom_attributes' => array( 'step' => '0.01', 'min'  => '0' ),
+			'custom_attributes' => array( 'step' => '0.01', 'min' => '0' ),
 		),
 		array(
 			'title'     => __( 'Maximum Cart Amount', 'woocommerce-jetpack' ),
@@ -62,7 +62,7 @@ foreach ( $available_gateways as $key => $gateway ) {
 			'id'        => 'wcj_gateways_fees_max_cart_amount_' . $key,
 			'default'   => 0,
 			'type'      => 'number',
-			'custom_attributes' => array( 'step' => '0.01', 'min'  => '0' ),
+			'custom_attributes' => array( 'step' => '0.01', 'min' => '0' ),
 		),
 		array(
 			'title'     => __( 'Rounding', 'woocommerce-jetpack' ),
@@ -73,11 +73,11 @@ foreach ( $available_gateways as $key => $gateway ) {
 		),
 		array(
 			'title'     => __( 'Rounding Precision', 'woocommerce-jetpack' ),
-			'desc_tip'  => __( 'If Rounding is enabled, set precision here.', 'woocommerce-jetpack' ),
+			'desc_tip'  => __( 'If Rounding is enabled, set precision (i.e. number of decimals) here.', 'woocommerce-jetpack' ),
 			'id'        => 'wcj_gateways_fees_round_precision_' . $key,
-			'default'   => 0,
+			'default'   => get_option( 'woocommerce_price_num_decimals', 2 ),
 			'type'      => 'number',
-			'custom_attributes' => array( 'step' => '1', 'min'  => '0' ),
+			'custom_attributes' => array( 'step' => '1', 'min' => '0' ),
 		),
 		array(
 			'title'     => __( 'Taxing', 'woocommerce-jetpack' ),
@@ -101,6 +101,30 @@ foreach ( $available_gateways as $key => $gateway ) {
 			'id'        => 'wcj_gateways_fees_exclude_shipping_' . $key,
 			'default'   => 'no',
 			'type'      => 'checkbox',
+		),
+		array(
+			'title'     => __( 'Require Products', 'woocommerce-jetpack' ),
+			'desc_tip'  => __( 'Require at least one of selected products to be in cart for fee to be applied.', 'woocommerce-jetpack' ) . ' ' .
+				__( 'Ignored if empty.', 'woocommerce-jetpack' ),
+			'id'        => "wcj_gateways_fees_include_products[$key]",
+			'default'   => '',
+			'type'      => 'multiselect',
+			'class'     => 'chosen_select',
+			'options'   => $products,
+			'desc'      => apply_filters( 'booster_message', '', 'desc' ),
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		),
+		array(
+			'title'     => __( 'Exclude Products', 'woocommerce-jetpack' ),
+			'desc_tip'  => __( 'Do not apply fee, if at least one of selected products is in cart.', 'woocommerce-jetpack' ) . ' ' .
+				__( 'Ignored if empty.', 'woocommerce-jetpack' ),
+			'id'        => "wcj_gateways_fees_exclude_products[$key]",
+			'default'   => '',
+			'type'      => 'multiselect',
+			'class'     => 'chosen_select',
+			'options'   => $products,
+			'desc'      => apply_filters( 'booster_message', '', 'desc' ),
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 		array(
 			'type'      => 'sectionend',

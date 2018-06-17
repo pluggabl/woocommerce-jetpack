@@ -1,5 +1,5 @@
 === Booster for WooCommerce ===
-Contributors: algoritmika, anbinder
+Contributors: algoritmika, anbinder, debugeris
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
@@ -82,6 +82,7 @@ Booster for WooCommerce is a WordPress plugin that supercharges your site with a
 * *Checkout Custom Fields* - Add custom fields to WooCommerce checkout page.
 * *Checkout Custom Info* - Add custom info to WooCommerce checkout page.
 * *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP; hide "Order Again" button; disable selected fields on checkout for logged users and more.
+* *Checkout Fees* - Add fees to WooCommerce cart & checkout.
 * *Checkout Files Upload* - Let customers upload files on (or after) WooCommerce checkout.
 * *Coupon Code Generator* - WooCommerce coupon code generator.
 * *Coupon by User Role* - WooCommerce coupons by user roles.
@@ -187,7 +188,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.6.2 - 13/06/2018 =
+= 3.6.2 - 15/06/2018 =
+D     * Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Rounding Precision option default value changed.
+D     * Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Require Products" and "Exclude Products" options added.
       * Fix - Shortcodes - General - `[wcj_currency_select_radio_list]` and `[wcj_currency_select_drop_down_list]` - Setting session value, when `default` attribute is set.
 D     * Dev - PRICES & CURRENCIES - Currency per Product - `wcj_currency_per_product_cart_checkout_currency` and `wcj_currency_per_product_is_cart_or_checkout` filters added.
 D     * Dev - SHIPPING & ORDERS - Orders - Orders Auto-Complete - "Payment methods" option added.
