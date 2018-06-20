@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Order Min/Max Quantities
  *
- * @version 3.2.2
+ * @version 3.6.2
  * @since   3.2.2
  * @author  Algoritmika Ltd.
  * @todo    test "Set 0 to use global settings. Set -1 to disable"
@@ -27,7 +27,7 @@ if ( $_product->is_type( 'variable' ) ) {
 }
 $quantities = array();
 foreach ( $products as $product_id => $desc ) {
-	if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_min_per_item_quantity_per_product', 'no' ) ) ) {
+	if ( $this->is_min_per_product_enabled ) {
 		$quantities = array_merge( $quantities, array(
 			array(
 				'name'       => 'wcj_order_quantities_min' . '_' . $product_id,
@@ -42,7 +42,7 @@ foreach ( $products as $product_id => $desc ) {
 			),
 		) );
 	}
-	if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_max_per_item_quantity_per_product', 'no' ) ) ) {
+	if ( $this->is_max_per_product_enabled ) {
 		$quantities = array_merge( $quantities, array(
 			array(
 				'name'       => 'wcj_order_quantities_max' . '_' . $product_id,
@@ -57,5 +57,20 @@ foreach ( $products as $product_id => $desc ) {
 			),
 		) );
 	}
+}
+if ( $this->is_step_per_product_enabled ) {
+	$quantities = array_merge( $quantities, array(
+		array(
+			'name'       => 'wcj_order_quantities_step' . '_' . $main_product_id,
+			'default'    => '',
+			'type'       => 'number',
+			'title'      => __( 'Quantity Step', 'woocommerce-jetpack' ),
+			'desc'       => ( $_product->is_type( 'variable' ) ? __( 'All variations', 'woocommerce-jetpack' ) : '' ),
+			'product_id' => $main_product_id,
+			'meta_name'  => '_' . 'wcj_order_quantities_step',
+			'custom_attributes' => 'min="0"',
+			'tooltip'    => __( 'Set 0 to use global settings.', 'woocommerce-jetpack' ),
+		),
+	) );
 }
 return $quantities;

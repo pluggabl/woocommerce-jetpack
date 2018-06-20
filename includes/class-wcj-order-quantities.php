@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,12 +16,11 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 3.6.2
 	 * @since   2.9.0
-	 * @todo    for cart: `apply_filters( 'woocommerce_quantity_input_args', wp_parse_args( $args, $defaults ), $product );`
+	 * @todo    maybe rename the module to "Order Quantities" or "Order Product Quantities" or "Product Quantities"?
 	 * @todo    loop (`woocommerce_loop_add_to_cart_link`)
 	 * @todo    (maybe) order quantities by user roles
-	 * @todo    (maybe) `woocommerce_quantity_input_step`
 	 */
 	function __construct() {
 
@@ -32,18 +31,12 @@ class WCJ_Order_Quantities extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			// Min/max quantities
 			if ( 'yes' === get_option( 'wcj_order_quantities_max_section_enabled', 'no' ) || 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
 				add_action( 'woocommerce_checkout_process', array( $this, 'check_order_quantities' ) );
 				add_action( 'woocommerce_before_cart',      array( $this, 'check_order_quantities' ) );
 				if ( 'yes' === get_option( 'wcj_order_quantities_stop_from_seeing_checkout', 'no' ) ) {
 					add_action( 'wp', array( $this, 'stop_from_seeing_checkout' ), PHP_INT_MAX );
-				}
-				if (
-					'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_min_per_item_quantity_per_product', 'no' ) ) ||
-					'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_max_per_item_quantity_per_product', 'no' ) )
-				) {
-					add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-					add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				}
 				add_filter( 'woocommerce_available_variation', array( $this, 'set_quantity_input_min_max_variation' ), PHP_INT_MAX, 3 );
 				if ( 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
@@ -54,11 +47,62 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				}
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_script' ) );
 			}
+			// Quantity step
+			if ( 'yes' === get_option( 'wcj_order_quantities_step_section_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_quantity_input_step', array( $this, 'set_quantity_input_step' ), PHP_INT_MAX, 2 );
+			}
+			// Meta box
+			$this->is_min_per_product_enabled = ( 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) &&
+				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_min_per_item_quantity_per_product', 'no' ) ) );
+			$this->is_max_per_product_enabled = ( 'yes' === get_option( 'wcj_order_quantities_max_section_enabled', 'no' ) &&
+				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_max_per_item_quantity_per_product', 'no' ) ) );
+			$this->is_step_per_product_enabled = ( 'yes' === get_option( 'wcj_order_quantities_step_section_enabled', 'no' ) &&
+				'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_step_per_product', 'no' ) ) );
+			if ( $this->is_min_per_product_enabled || $this->is_max_per_product_enabled || $this->is_step_per_product_enabled ) {
+				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
 			// Limit cart items (i.e. "Single Item Cart" Mode)
 			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_single_item_cart_enabled', 'no' ) ) ) {
 				add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'single_item_cart' ), PHP_INT_MAX, 4 );
 			}
+			// For cart
+			add_filter( 'woocommerce_quantity_input_args', array( $this, 'set_quantity_input_args' ), PHP_INT_MAX, 2 );
 		}
+	}
+
+	/**
+	 * set_quantity_input_args.
+	 *
+	 * @version 3.6.2
+	 * @since   3.6.2
+	 */
+	function set_quantity_input_args( $args, $product ) {
+		if ( 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
+			$args['min_value'] = $this->set_quantity_input_min( $args['min_value'], $product );
+		}
+		if ( 'yes' === get_option( 'wcj_order_quantities_max_section_enabled', 'no' ) ) {
+			$args['max_value'] = $this->set_quantity_input_max( $args['max_value'], $product );
+		}
+		if ( 'yes' === get_option( 'wcj_order_quantities_step_section_enabled', 'no' ) ) {
+			$args['step'] = $this->set_quantity_input_step( $args['step'], $product );
+		}
+		return $args;
+	}
+
+	/**
+	 * set_quantity_input_step.
+	 *
+	 * @version 3.6.2
+	 * @since   3.6.2
+	 */
+	function set_quantity_input_step( $qty, $product ) {
+		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_step_per_product', 'no' ) ) ) {
+			if ( '' != ( $step = get_post_meta( wcj_get_product_id_or_variation_parent_id( $product ), '_' . 'wcj_order_quantities_step', true ) ) && 0 != $step ) {
+				return $step;
+			}
+		}
+		return ( 0 != ( $step = get_option( 'wcj_order_quantities_step', 1 ) ) ? $step : $qty );
 	}
 
 	/**

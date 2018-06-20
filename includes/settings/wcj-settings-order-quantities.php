@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
- * @version 3.6.0
+ * @version 3.6.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) generate settings in loop ( min / max )
@@ -171,13 +171,46 @@ return array(
 		'id'       => 'wcj_order_quantities_general_options',
 	),
 	array(
+		'title'    => __( 'Quantity Step Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_order_quantities_step_options',
+	),
+	array(
+		'title'    => __( 'Quantity Step', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'       => 'wcj_order_quantities_step_section_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Step', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Ignored if set to zero.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_step',
+		'default'  => 1,
+		'type'     => 'number',
+		'custom_attributes' => array( 'min' => 1 ),
+	),
+	array(
+		'title'    => __( 'Per product', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
+		'id'       => 'wcj_order_quantities_step_per_product',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_order_quantities_step_options',
+	),
+	array(
 		'title'    => __( '"Single Item Cart" Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_order_quantities_single_item_cart_options',
 	),
 	array(
 		'title'    => __( 'Enable "Single Item Cart" Mode', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
 		'desc_tip' => __( 'When enabled, only one item will be allowed to be added to the cart (quantity is not checked).', 'woocommerce-jetpack' ) . ' ' .
 			apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_order_quantities_single_item_cart_enabled',

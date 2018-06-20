@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency per Product
  *
- * @version 3.3.0
+ * @version 3.6.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -54,6 +54,23 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_currency_per_product_cart_options',
+	),
+	array(
+		'title'    => __( 'Per Product Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_currency_per_product_per_product_options',
+	),
+	array(
+		'title'    => __( 'Currency per Product', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add meta box to each product\'s edit page', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_currency_per_product_per_product',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_currency_per_product_per_product_options',
 	),
 	array(
 		'title'    => __( 'Additional Options', 'woocommerce-jetpack' ),

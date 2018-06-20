@@ -188,7 +188,11 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.6.2 - 15/06/2018 =
+= 3.6.2 - 20/06/2018 =
+D T I * Dev - PRICES & CURRENCIES - Currency per Product - Meta box - "Default" (i.e. empty) currency option added.
+D T I * Dev - PRICES & CURRENCIES - Currency per Product - "Per Product Options" settings section added.
+D T   * Fix - SHIPPING & ORDERS - Order Min/Max Quantities - Cart quantities fixed.
+D T   * Dev - SHIPPING & ORDERS - Order Min/Max Quantities - "Quantity Step Options" section added.
 D     * Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Rounding Precision option default value changed.
 D     * Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - "Require Products" and "Exclude Products" options added.
       * Fix - Shortcodes - General - `[wcj_currency_select_radio_list]` and `[wcj_currency_select_drop_down_list]` - Setting session value, when `default` attribute is set.

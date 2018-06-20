@@ -16,7 +16,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
+	 * @version 3.6.2
 	 * @since   2.5.2
 	 * @todo    (maybe) add `$this->price_hooks_priority`
 	 */
@@ -32,8 +32,11 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 
 			$this->do_save_converted_prices = ( 'yes' === get_option( 'wcj_currency_per_product_save_prices', 'no' ) );
 
-			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			$this->is_currency_per_product_by_product_enabled = ( 'yes' === get_option( 'wcj_currency_per_product_per_product', 'yes' ) );
+			if ( $this->is_currency_per_product_by_product_enabled ) {
+				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
 
 			// Currency code and symbol
 			add_filter( 'woocommerce_currency_symbol',                array( $this, 'change_currency_symbol' ),     PHP_INT_MAX, 2 );
@@ -97,8 +100,9 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_product_currency.
 	 *
-	 * @version 2.9.0
+	 * @version 3.6.2
 	 * @since   2.9.0
+	 * @todo    (maybe) return empty string or false, if it's shop default currency: `return ( get_option( 'woocommerce_currency' ) != ( $return = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true ) ) ? $return : false );`
 	 */
 	function get_product_currency( $product_id ) {
 		// By users or user roles
@@ -151,7 +155,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			}
 		}
 		// By product meta
-		return get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true );
+		return ( $this->is_currency_per_product_by_product_enabled ? get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true ) : false );
 	}
 
 	/**
@@ -200,14 +204,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 		foreach ( $_product->get_children() as $child_id ) {
 			$child_prices[ $child_id ] = get_post_meta( $child_id, '_price', true );
 		}
-//		$child_prices = array_unique( $child_prices );
 		if ( ! empty( $child_prices ) ) {
-			/*
-			$min_price = min( $child_prices );
-			$max_price = max( $child_prices );
-			$min_price_id = min( array_keys( $child_prices, min( $child_prices ) ) );
-			$max_price_id = max( array_keys( $child_prices, max( $child_prices ) ) );
-			*/
 			asort( $child_prices );
 			$min_price = current( $child_prices );
 			$min_price_id = key( $child_prices );
@@ -420,6 +417,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	 * @since   2.7.0
 	 */
 	function get_cart_checkout_currency() {
+		$cart_checkout_behaviour = get_option( 'wcj_currency_per_product_cart_checkout', 'convert_shop_default' );
 		if ( false !== ( $value = apply_filters( 'wcj_currency_per_product_cart_checkout_currency', false, $cart_checkout_behaviour ) ) ) {
 			return $value;
 		}
@@ -438,7 +436,6 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 		if ( ! isset( WC()->cart ) || WC()->cart->is_empty() ) {
 			return false;
 		}
-		$cart_checkout_behaviour = get_option( 'wcj_currency_per_product_cart_checkout', 'convert_shop_default' );
 		if ( 'convert_shop_default' === $cart_checkout_behaviour ) {
 			return false;
 		}
