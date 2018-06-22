@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Customization
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -82,7 +82,7 @@ return array(
 	array(
 		'title'    => __( 'Fields to Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_checkout_customization_disable_fields_for_logged',
-		'default'  => '',
+		'default'  => array(),
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
 		'options'  => array(
@@ -110,7 +110,7 @@ return array(
 		),
 	),
 	array(
-		'desc'     => __( 'Message for logged users', 'woocommerce-jetpack' ),
+		'title'    => __( 'Message for Logged Users', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'You can use HTML here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_message',
 		'default'  => '<em>' . __( 'This field can not be changed', 'woocommerce-jetpack' ) . '</em>',
@@ -118,8 +118,8 @@ return array(
 		'css'      => 'width:100%;',
 	),
 	array(
-		'desc'     => __( 'Advanced: Custom fields (readonly).', 'woocommerce-jetpack' ) . ' ' .
-			apply_filters( 'booster_message', '', 'desc' ),
+		'title'    => __( 'Advanced: Custom Fields (Readonly)', 'woocommerce-jetpack' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'desc_tip' => sprintf( __( 'Comma separated list of fields ids, e.g.: %s.', 'woocommerce-jetpack' ), '<em>billing_wcj_checkout_field_1, billing_wcj_checkout_field_2</em>' ),
 		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_custom_r',
 		'default'  => '',
@@ -128,8 +128,8 @@ return array(
 		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 	),
 	array(
-		'desc'     => __( 'Advanced: Custom fields (disabled).', 'woocommerce-jetpack' ) . ' ' .
-			apply_filters( 'booster_message', '', 'desc' ),
+		'title'    => __( 'Advanced: Custom Fields (Disabled)', 'woocommerce-jetpack' ),
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'desc_tip' => sprintf( __( 'Comma separated list of fields ids, e.g.: %s.', 'woocommerce-jetpack' ), '<em>billing_wcj_checkout_field_1, billing_wcj_checkout_field_2</em>' ),
 		'id'       => 'wcj_checkout_customization_disable_fields_for_logged_custom_d',
 		'default'  => '',

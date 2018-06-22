@@ -188,6 +188,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.7.1 - 23/06/2018 =
+* Fix - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Empty value fixed for "Fields to Disable" option.
+* Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Admin Settings - Minor restyling.
+
 = 3.7.0 - 22/06/2018 =
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products on sale" options added.
 * Feature - CART & CHECKOUT - Checkout Fees - Initial module release.

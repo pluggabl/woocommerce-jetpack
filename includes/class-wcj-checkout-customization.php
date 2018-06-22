@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -121,12 +121,15 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * maybe_add_description.
 	 *
-	 * @version 3.6.0
+	 * @version 3.7.1
 	 * @since   2.9.0
 	 */
 	function maybe_add_description( $field, $key, $args, $value ) {
 		if ( is_user_logged_in() ) {
-			$fields_to_disable          = get_option( 'wcj_checkout_customization_disable_fields_for_logged', '' );
+			$fields_to_disable          = get_option( 'wcj_checkout_customization_disable_fields_for_logged', array() );
+			if ( empty( $fields_to_disable ) ) {
+				$fields_to_disable = array();
+			}
 			$fields_to_disable_custom_r = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_r', '' ) ) ) );
 			$fields_to_disable_custom_d = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) ) );
 			$fields_to_disable          = array_merge( $fields_to_disable, $fields_to_disable_custom_r, $fields_to_disable_custom_d );
@@ -146,7 +149,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * maybe_disable_fields.
 	 *
-	 * @version 3.6.0
+	 * @version 3.7.1
 	 * @since   2.9.0
 	 * @see     woocommerce_form_field
 	 * @todo    (maybe) add single option (probably checkbox) to disable all fields
@@ -154,7 +157,10 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	 */
 	function maybe_disable_fields( $checkout_fields ) {
 		if ( is_user_logged_in() ) {
-			$fields_to_disable          = get_option( 'wcj_checkout_customization_disable_fields_for_logged', '' );
+			$fields_to_disable          = get_option( 'wcj_checkout_customization_disable_fields_for_logged', array() );
+			if ( empty( $fields_to_disable ) ) {
+				$fields_to_disable = array();
+			}
 			$fields_to_disable_custom_r = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_r', '' ) ) ) );
 			$fields_to_disable_custom_d = array_map( 'trim', explode( ',', apply_filters( 'booster_option', '', get_option( 'wcj_checkout_customization_disable_fields_for_logged_custom_d', '' ) ) ) );
 			$fields_to_disable          = array_merge( $fields_to_disable, $fields_to_disable_custom_r, $fields_to_disable_custom_d );
