@@ -22,7 +22,7 @@ class WCJ_Sorting extends WCJ_Module {
 
 		$this->id         = 'sorting';
 		$this->short_desc = __( 'Sorting', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add more WooCommerce sorting options; rename or remove default sorting options; rearrange sorting options on frontend.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add more sorting options; rename or remove default sorting options; rearrange sorting options on frontend.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-sorting';
 		parent::__construct();
 

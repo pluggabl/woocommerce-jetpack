@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 3.5.1
+ * @version 3.7.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -23,7 +23,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 
 		$this->id         = 'product_open_pricing';
 		$this->short_desc = __( 'Product Open Pricing (Name Your Price)', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Let your WooCommerce store customers enter price for the product manually.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Let your store customers enter price for the product manually.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-open-pricing-name-your-price';
 		parent::__construct();
 
@@ -338,16 +338,19 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_open_price_input_field_to_frontend.
 	 *
-	 * @version 2.7.0
+	 * @version 3.7.0
 	 * @since   2.4.8
 	 */
 	function add_open_price_input_field_to_frontend() {
+		if ( isset( $this->is_open_price_input_field_displayed ) ) {
+			return;
+		}
 		$the_product = wc_get_product();
 		if ( $this->is_open_price_product( $the_product ) ) {
 			// Title
 			$title = get_option( 'wcj_product_open_price_label_frontend', __( 'Name Your Price', 'woocommerce-jetpack' ) );
 			// Prices
-			$_product_id = wcj_get_product_id_or_variation_parent_id( $the_product );
+			$_product_id   = wcj_get_product_id_or_variation_parent_id( $the_product );
 			$min_price     = get_post_meta( $_product_id, '_' . 'wcj_product_open_price_min_price', true );
 			$max_price     = get_post_meta( $_product_id, '_' . 'wcj_product_open_price_max_price', true );
 			$default_price = get_post_meta( $_product_id, '_' . 'wcj_product_open_price_default_price', true );
@@ -386,6 +389,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				array_values( $replacement_values ),
 				get_option( 'wcj_product_open_price_frontend_template', '<label for="wcj_open_price">%frontend_label%</label> %open_price_input% %currency_symbol%' )
 			);
+			$this->is_open_price_input_field_displayed = true;
 		}
 	}
 

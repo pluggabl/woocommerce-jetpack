@@ -23,7 +23,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 
 		$this->id         = 'payment_gateways_min_max';
 		$this->short_desc = __( 'Gateways Min/Max Amounts', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add min/max amounts for WooCommerce payment gateways to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add min/max amounts for payment gateways to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-payment-gateways-min-max-amounts';
 		parent::__construct();
 

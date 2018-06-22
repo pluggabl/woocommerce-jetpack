@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.5.2
 	 * @todo    (maybe) add `$this->price_hooks_priority`
 	 */
@@ -24,7 +24,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 
 		$this->id         = 'currency_per_product';
 		$this->short_desc = __( 'Currency per Product', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Display prices for WooCommerce products in different currencies.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Display prices for products in different currencies.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-currency-per-product';
 		parent::__construct();
 
@@ -100,7 +100,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_product_currency.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.9.0
 	 * @todo    (maybe) return empty string or false, if it's shop default currency: `return ( get_option( 'woocommerce_currency' ) != ( $return = get_post_meta( $product_id, '_' . 'wcj_currency_per_product_currency', true ) ) ? $return : false );`
 	 */
@@ -413,7 +413,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * get_cart_checkout_currency.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.7.0
 	 */
 	function get_cart_checkout_currency() {
@@ -451,7 +451,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * is_cart_or_checkout_or_ajax.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.7.0
 	 * @todo    fix AJAX issue (for minicart)
 	 */

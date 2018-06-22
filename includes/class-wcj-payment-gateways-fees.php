@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -24,7 +24,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 
 		$this->id         = 'payment_gateways_fees';
 		$this->short_desc = __( 'Gateways Fees and Discounts', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Enable extra fees or discounts for WooCommerce payment gateways.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Enable extra fees or discounts for payment gateways.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-payment-gateways-fees-and-discounts';
 		parent::__construct();
 
@@ -68,8 +68,8 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * check_cart_products.
 	 *
-	 * @version 3.6.2
-	 * @since   3.6.2
+	 * @version 3.7.0
+	 * @since   3.7.0
 	 * @todo    add WPML support
 	 * @todo    add product variations
 	 * @todo    add product cats and tags
@@ -102,7 +102,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * gateways_fees.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 */
 	function gateways_fees() {
 		global $woocommerce;

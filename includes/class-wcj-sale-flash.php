@@ -26,7 +26,7 @@ class WCJ_Sale_Flash extends WCJ_Module {
 
 		$this->id         = 'sale_flash';
 		$this->short_desc = __( 'Sale Flash', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce products sale flash.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize products sale flash.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-sale-flash';
 		parent::__construct();
 

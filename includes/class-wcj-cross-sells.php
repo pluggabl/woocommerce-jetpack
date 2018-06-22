@@ -28,7 +28,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 				'<code>[wcj_cross_sell_display]</code>',
 				'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=cart_and_checkout&section=checkout_custom_info' ) . '">' .
 					__( 'Checkout Custom Info', 'woocommerce-jetpack' ) . '</a>' );
-		$this->desc       = __( 'Customize WooCommerce cross-sells products display.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize cross-sells products display.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-cross-sells';
 		parent::__construct();
 

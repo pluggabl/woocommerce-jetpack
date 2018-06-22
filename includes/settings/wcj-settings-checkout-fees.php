@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Fees
  *
- * @version 3.6.2
- * @since   3.6.2
+ * @version 3.7.0
+ * @since   3.7.0
  * @author  Algoritmika Ltd.
  */
 

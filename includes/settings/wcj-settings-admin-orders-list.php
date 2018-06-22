@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Orders List
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */

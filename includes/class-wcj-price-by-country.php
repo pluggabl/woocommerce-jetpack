@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Prices and Currencies by Country
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,13 +15,13 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 */
 	function __construct() {
 
 		$this->id         = 'price_by_country';
 		$this->short_desc = __( 'Prices and Currencies by Country', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Change WooCommerce product price and currency automatically by customer\'s country.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Change product price and currency automatically by customer\'s country.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-prices-and-currencies-by-country';
 		parent::__construct();
 

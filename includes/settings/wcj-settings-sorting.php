@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Settings - TODO
+ * Booster for WooCommerce - Settings - Sorting
  *
  * @version 2.8.0
  * @since   2.8.0

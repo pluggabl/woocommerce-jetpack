@@ -23,7 +23,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 
 		$this->id         = 'checkout_core_fields';
 		$this->short_desc = __( 'Checkout Core Fields', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce core checkout fields. Disable/enable fields, set required, change labels and/or placeholders etc.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders etc.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-core-fields';
 		parent::__construct();
 

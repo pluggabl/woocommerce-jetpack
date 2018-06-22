@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -21,7 +21,7 @@ class WCJ_SKU extends WCJ_Module {
 
 		$this->id         = 'sku';
 		$this->short_desc = __( 'SKU', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Generate WooCommerce SKUs automatically. Search by SKU on frontend.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Generate SKUs automatically. Search by SKU on frontend.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-sku';
 		parent::__construct();
 
@@ -302,7 +302,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @todo    deprecate `{prefix}` and `{suffix}`
 	 * @todo    `{tag_prefix}`, `{tag_suffix}`
 	 * @todo    (maybe) remove some "replaced values" that can be replaced by Booster products shortcodes, e.g.: `[wcj_product_slug]` (and update description in settings)
@@ -325,19 +325,25 @@ class WCJ_SKU extends WCJ_Module {
 		$do_generate_new_sku = ( 'no' === get_option( 'wcj_sku_generate_only_for_empty_sku', 'no' ) || '' === $old_sku );
 
 		// {category_prefix} & {category_suffix}
-		$category_prefix = '';
-		$category_suffix = '';
+		$category_prefix = array();
+		$category_suffix = array();
 		$product_cat     = array();
 		$product_terms = get_the_terms( $parent_product_id, 'product_cat' );
 		if ( is_array( $product_terms ) ) {
 			foreach ( $product_terms as $term ) {
-				$product_cat[]    = esc_html( $term->name );
-				$category_prefix .= get_option( 'wcj_sku_prefix_cat_' . $term->term_id, '' );
-				$category_suffix .= get_option( 'wcj_sku_suffix_cat_' . $term->term_id, '' );
-				if ( 'first' === get_option( 'wcj_sku_categories_multiple', 'first' ) ) {
-					break;
-				}
+				$product_cat[]     = esc_html( $term->name );
+				$category_prefix[] = get_option( 'wcj_sku_prefix_cat_' . $term->term_id, '' );
+				$category_suffix[] = get_option( 'wcj_sku_suffix_cat_' . $term->term_id, '' );
 			}
+		}
+		$category_prefix = array_filter( $category_prefix );
+		$category_suffix = array_filter( $category_suffix );
+		if ( 'first' === get_option( 'wcj_sku_categories_multiple', 'first' ) ) {
+			$category_prefix = reset( $category_prefix );
+			$category_suffix = reset( $category_suffix );
+		} else {
+			$category_prefix = implode( get_option( 'wcj_sku_categories_multiple_glue', '' ), $category_prefix );
+			$category_suffix = implode( get_option( 'wcj_sku_categories_multiple_glue', '' ), $category_suffix );
 		}
 		$product_cat = implode( ', ', $product_cat );
 

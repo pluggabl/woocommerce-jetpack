@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -24,7 +24,7 @@ class WCJ_Orders extends WCJ_Module {
 
 		$this->id         = 'orders';
 		$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
-		$this->desc       = __( 'WooCommerce orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-orders';
 		parent::__construct();
 
@@ -292,7 +292,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	* Auto Complete all WooCommerce orders.
 	*
-	* @version 3.6.2
+	* @version 3.7.0
 	* @todo    (maybe) at first check if status is not `completed` already (however `WC_Order::set_status()` checks that anyway)
 	*/
 	function auto_complete_order( $order_id ) {

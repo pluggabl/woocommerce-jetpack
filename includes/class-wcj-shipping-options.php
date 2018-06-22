@@ -24,7 +24,7 @@ class WCJ_Shipping_Options extends WCJ_Module {
 
 		$this->id         = 'shipping_options';
 		$this->short_desc = __( 'Shipping Options', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Hide WooCommerce shipping when free is available.', 'woocommerce-jetpack') . ' ' .
+		$this->desc       = __( 'Hide shipping when free is available.', 'woocommerce-jetpack') . ' ' .
 			__( 'Grant free shipping on per product basis.', 'woocommerce-jetpack');
 		$this->link_slug  = 'woocommerce-shipping-options';
 		parent::__construct();

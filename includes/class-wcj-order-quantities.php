@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.9.0
 	 * @todo    maybe rename the module to "Order Quantities" or "Order Product Quantities" or "Product Quantities"?
 	 * @todo    loop (`woocommerce_loop_add_to_cart_link`)
@@ -74,8 +74,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * set_quantity_input_args.
 	 *
-	 * @version 3.6.2
-	 * @since   3.6.2
+	 * @version 3.7.0
+	 * @since   3.7.0
 	 */
 	function set_quantity_input_args( $args, $product ) {
 		if ( 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
@@ -93,8 +93,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * set_quantity_input_step.
 	 *
-	 * @version 3.6.2
-	 * @since   3.6.2
+	 * @version 3.7.0
+	 * @since   3.7.0
 	 */
 	function set_quantity_input_step( $qty, $product ) {
 		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_step_per_product', 'no' ) ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cart Custom Info
  *
- * @version 3.4.0
+ * @version 3.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -21,7 +21,7 @@ class WCJ_Cart extends WCJ_Module {
 
 		$this->id         = 'cart';
 		$this->short_desc = __( 'Cart Custom Info', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add custom info to WooCommerce cart page.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add custom info to the cart page.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-cart-custom-info';
 		parent::__construct();
 
@@ -43,7 +43,7 @@ class WCJ_Cart extends WCJ_Module {
 	/**
 	 * add_custom_info_to_cart_item_name.
 	 *
-	 * @version 3.4.0
+	 * @version 3.7.0
 	 * @since   2.3.9
 	 * @todo    (maybe) `wc_setup_product_data( $post );`
 	 */
@@ -51,7 +51,8 @@ class WCJ_Cart extends WCJ_Module {
 		$custom_content = get_option( 'wcj_cart_custom_info_item' );
 		if ( '' != $custom_content ) {
 			global $post;
-			$post = get_post( $cart_item['product_id'] );
+			$product_id = ( ! empty( $cart_item['variation_id'] ) ? $cart_item['variation_id'] : $cart_item['product_id'] );
+			$post       = get_post( $product_id );
 			setup_postdata( $post );
 			$product_title .= do_shortcode( $custom_content );
 			wp_reset_postdata();

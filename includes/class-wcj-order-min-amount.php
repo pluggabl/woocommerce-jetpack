@@ -24,7 +24,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 
 		$this->id         = 'order_min_amount';
 		$this->short_desc = __( 'Order Minimum Amount', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Minimum WooCommerce order amount (optionally by user role).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Minimum order amount (optionally by user role).', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-order-minimum-amount';
 		parent::__construct();
 

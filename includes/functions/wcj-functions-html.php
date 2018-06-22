@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - HTML Functions
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -23,7 +23,6 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 			'columns_classes'    => array(),
 			'columns_styles'     => array(),
 		);
-//		wp_parse_args( $args, $defaults );
 		$args = array_merge( $defaults, $args );
 		extract( $args );
 		$table_class = ( '' == $table_class ) ? '' : ' class="' . $table_class . '"';
@@ -88,7 +87,7 @@ if ( ! function_exists( 'wcj_empty_cart_button_html' ) ) {
 	/**
 	 * wcj_empty_cart_button_html.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.8.0
 	 * @todo    optional function parameters instead of default `get_option()` calls
 	 */

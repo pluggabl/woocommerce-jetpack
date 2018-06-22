@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -217,7 +217,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * reset_settings.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.4.0
 	 * @todo    (maybe) always `delete_option()` (instead of `update_option()`)
 	 */
@@ -322,6 +322,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * @todo    `placeholder` for textarea
 	 * @todo    `class` for all types (now only for select)
 	 * @todo    `show_value` for all types (now only for multiple select)
+	 * @todo    `$the_post_id` maybe also `order_id` (i.e. not only `product_id`)?
 	 */
 	function create_meta_box() {
 		$current_post_id = get_the_ID();
@@ -336,7 +337,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 					$html .= '</tr>';
 				} else {
 					$custom_attributes = '';
-					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id; // todo: maybe also order_id?
+					$the_post_id   = ( isset( $option['product_id'] ) ) ? $option['product_id'] : $current_post_id;
 					$the_meta_name = ( isset( $option['meta_name'] ) )  ? $option['meta_name']  : '_' . $option['name'];
 					if ( get_post_meta( $the_post_id, $the_meta_name ) ) {
 						$option_value = get_post_meta( $the_post_id, $the_meta_name, true );

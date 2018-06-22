@@ -26,7 +26,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 
 		$this->id         = 'purchase_data';
 		$this->short_desc = __( 'Cost of Goods', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Save WooCommerce product purchase costs data for admin reports.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Save product purchase costs data for admin reports.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-cost-of-goods';
 		parent::__construct();
 

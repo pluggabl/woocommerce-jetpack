@@ -2,9 +2,9 @@
 /**
  * Variable product add to cart - radio inputs
  *
- * WC template version: 3.4.1
+ * Original WC template version: 3.4.1
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */

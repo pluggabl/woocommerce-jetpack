@@ -5,7 +5,6 @@
  * @version 2.8.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
- * @todo    refill image on not validated (or after successful addition); more messages options; more styling options; custom fields;
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -19,6 +18,8 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.8.0
 	 * @since   2.5.0
+	 * @todo    refill image on not validated (or after successful addition); more messages options; more styling options; custom fields;
+	 * @todo    (maybe) `product_id => ( isset( $_GET['wcj_edit_product'] ) ? $_GET['wcj_edit_product'] : 0 )`
 	 */
 	function __construct() {
 
@@ -27,7 +28,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		);
 
 		$this->the_atts = array(
-			'product_id'             => /* ( isset( $_GET['wcj_edit_product'] ) ) ? $_GET['wcj_edit_product'] :  */ 0, // todo?
+			'product_id'             => 0,
 			'post_status'            => get_option( 'wcj_product_by_user_status', 'draft' ),
 
 			'desc_enabled'           => get_option( 'wcj_product_by_user_desc_enabled', 'no' ),
@@ -74,6 +75,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.8.0
 	 * @since   2.5.0
+	 * @todo    image gallery: `<input type="file" multiple>` or separate `<input type="file">` for each file; `update_post_meta( $product_id, '_product_image_gallery', implode( ',', $attach_ids ) );`
 	 */
 	function wc_add_new_product( $args, $shortcode_atts ) {
 
@@ -142,11 +144,6 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 
 				set_post_thumbnail( $product_id, $attach_id );
 			}
-
-			// TODO:
-			// Image gallery
-			// <input type="file" multiple> or separate <input type="file"> for each file
-			// update_post_meta( $product_id, '_product_image_gallery', implode( ',', $attach_ids ) );
 
 			wp_update_post( array( 'ID' => $product_id, 'post_status' => $shortcode_atts['post_status'] ) );
 		}
@@ -251,6 +248,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.8.0
 	 * @since   2.5.0
+	 * @todo    `multipart` only if image
 	 */
 	function wcj_product_add_new( $atts ) {
 
@@ -298,7 +296,6 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 								get_option( 'wcj_product_by_user_message_product_successfully_edited', __( '"%product_title%" successfully edited!', 'woocommerce-jetpack' ) ) ) .
 							'</div></div>';
 					}
-//					$atts['product_id'] = $result;
 				}
 			} else {
 				$notice_html .= '<div class="woocommerce"><ul class="woocommerce-error">' . $validate_args . '</ul></div>';
@@ -325,7 +322,7 @@ class WCJ_Products_Add_Form_Shortcodes extends WCJ_Shortcodes {
 		$header_html .= ( 0 == $atts['product_id'] ) ? __( 'Add New Product', 'woocommerce-jetpack' ) : __( 'Edit Product', 'woocommerce-jetpack' );
 		$header_html .= '</h3>';
 		$header_html .= '<form method="post" action="' . remove_query_arg( array( 'wcj_edit_product_image_delete', 'wcj_delete_product' ) ) .
-			'" enctype="multipart/form-data">'; // todo multipart only if image...
+			'" enctype="multipart/form-data">';
 
 		$required_mark_html_template = '&nbsp;<abbr class="required" title="' . __( 'required', 'woocommerce-jetpack' ) . '">*</abbr>';
 

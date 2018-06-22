@@ -23,7 +23,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 
 		$this->id         = 'eu_vat_number';
 		$this->short_desc = __( 'EU VAT Number', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Collect and validate EU VAT numbers on WooCommerce checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-eu-vat-number';
 		parent::__construct();
 

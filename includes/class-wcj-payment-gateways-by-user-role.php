@@ -23,7 +23,7 @@ class WCJ_Payment_Gateways_By_User_Role extends WCJ_Module {
 
 		$this->id         = 'payment_gateways_by_user_role';
 		$this->short_desc = __( 'Gateways by User Role', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set user roles to include/exclude for WooCommerce payment gateways to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set user roles to include/exclude for payment gateways to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-payment-gateways-by-user-role';
 		parent::__construct();
 

@@ -23,7 +23,7 @@ class WCJ_Product_Custom_Visibility extends WCJ_Module_Product_By_Condition {
 
 		$this->id         = 'product_custom_visibility';
 		$this->short_desc = __( 'Product Custom Visibility', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Display WooCommerce products by custom param.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Display products by custom param.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-custom-visibility';
 		$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Custom Visibility" meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . '<br>' .
 			sprintf(

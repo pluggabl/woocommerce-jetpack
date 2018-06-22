@@ -24,7 +24,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 
 		$this->id         = 'shipping_by_products';
 		$this->short_desc = __( 'Shipping Methods by Products', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set products, product categories, tags or shipping classes to include/exclude for WooCommerce shipping methods to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-products';
 
 		$this->condition_options = array(

@@ -23,7 +23,7 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 
 		$this->id         = 'shipping_by_cities';
 		$this->short_desc = __( 'Shipping Methods by Cities', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set cities to include/exclude for WooCommerce shipping methods to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set cities to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-cities';
 
 		$this->condition_options = array(

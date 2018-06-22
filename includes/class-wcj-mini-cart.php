@@ -22,7 +22,7 @@ class WCJ_Mini_Cart extends WCJ_Module {
 
 		$this->id         = 'mini_cart';
 		$this->short_desc = __( 'Mini Cart Custom Info', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add custom info to WooCommerce mini cart widget.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add custom info to the mini cart widget.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-mini-cart';
 		parent::__construct();
 

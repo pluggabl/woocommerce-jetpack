@@ -250,6 +250,8 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 3.2.2
 	 * @todo    `sort_by_column` - fix `item_number`
+	 * @todo    `$item['is_custom']` may be defined only if WCJ_IS_WC_VERSION_BELOW_3
+	 * @todo    `if ( '' !== $column_cell_data )` - this may be optional?
 	 * @todo    (maybe) `if ( $columns_total_number !== count( $columns_titles ) || $columns_total_number !== count( $columns_styles ) ) { return __( 'Please recheck that there is the same number of columns in "columns", "columns_titles" and "columns_styles" attributes.', 'woocommerce-jetpack' ); }`
 	 */
 	function wcj_order_items_table( $atts, $content = '' ) {
@@ -314,7 +316,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 		$data = array();
 		$item_counter = 0;
 		foreach ( $the_items as $item_id => $item ) {
-			$item['is_custom'] = ( isset( $item['is_custom'] ) ); // todo: $item['is_custom'] may be defined only if WCJ_IS_WC_VERSION_BELOW_3
+			$item['is_custom'] = ( isset( $item['is_custom'] ) );
 			$the_product = ( true === $item['is_custom'] ) ? null : $the_order->get_product_from_item( $item );
 			// Check if it's not excluded by category
 			if ( '' != $atts['exclude_by_categories'] && $the_product ) {
@@ -363,7 +365,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						'product'      => $the_product,
 						'order'        => $this->the_order,
 					) );
-					if ( '' !== $column_cell_data ) { // todo - this may be optional?
+					if ( '' !== $column_cell_data ) {
 						$cell_data[] = $column_cell_data;
 					}
 				}
@@ -442,6 +444,9 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 3.5.1
 	 * @since   3.2.0
+	 * @todo    do we need `pa_` replacement?
+	 * @todo    "WooCommerce TM Extra Product Options" plugin options: this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency)
+	 * @todo    `if ( isset( $option['price'] ) && 'yes' === $atts['wc_extra_product_options_show_price'] )` - `wc_extra_product_options_show_price` is temporary, until price_per_currency issue is solved
 	 */
 	function get_cell( $column, $column_param, $atts, $the_order, $columns, $item_counter, $item_id, $item, $the_product ) {
 
@@ -494,12 +499,11 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						if ( 'yes' === $atts['variation_as_metadata'] ) {
 							$the_item_title .= wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, true, $the_product );
 						} elseif ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) {
-							$the_item_title .= str_replace( 'pa_', '', urldecode( wcj_get_product_formatted_variation( $the_product, true ) ) ); // todo - do we need pa_ replacement?
+							$the_item_title .= str_replace( 'pa_', '', urldecode( wcj_get_product_formatted_variation( $the_product, true ) ) );
 						}
 						$the_item_title .= '</div>';
 					}
 					// "WooCommerce TM Extra Product Options" plugin options
-					// todo - this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency).
 					$tmcartepo_data = ( WCJ_IS_WC_VERSION_BELOW_3 ?
 						( isset( $item['tmcartepo_data'] ) ? maybe_unserialize( $item['tmcartepo_data'] ) : '' ) :
 						$item->get_meta( '_tmcartepo_data' )
@@ -514,7 +518,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 							if ( isset( $option['value'] ) && '' != $option['value'] ) {
 								$option_info .= $option['value'];
 							}
-							if ( isset( $option['price'] ) && 'yes' === $atts['wc_extra_product_options_show_price'] ) { // todo - wc_extra_product_options_show_price is temporary, until price_per_currency issue is solved
+							if ( isset( $option['price'] ) && 'yes' === $atts['wc_extra_product_options_show_price'] ) {
 								$option_info .= ( $option['price'] > 0 ) ? ' +' . wc_price( $option['price'] ) : ' ' . wc_price( $option['price'] );
 							}
 							if ( '' != $option_info ) {
@@ -583,7 +587,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 					if ( 'yes' === $atts['variation_as_metadata'] ) {
 						return wcj_get_order_item_meta_info( $item_id, $item, $this->the_order, true, $the_product );
 					} elseif ( is_object( $the_product ) && $the_product->is_type( 'variation' ) ) {
-						return str_replace( 'pa_', '', urldecode( wcj_get_product_formatted_variation( $the_product, true ) ) ); // todo - do we need pa_ replacement?
+						return str_replace( 'pa_', '', urldecode( wcj_get_product_formatted_variation( $the_product, true ) ) );
 					} else {
 						return '';
 					}

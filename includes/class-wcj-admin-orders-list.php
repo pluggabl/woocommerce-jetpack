@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -16,14 +16,14 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   3.2.4
 	 */
 	function __construct() {
 
 		$this->id         = 'admin_orders_list';
 		$this->short_desc = __( 'Admin Orders List', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce admin orders list: add custom columns; add multiple status filtering.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize admin orders list: add custom columns; add multiple status filtering.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-admin-orders-list';
 		parent::__construct();
 
@@ -72,8 +72,8 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * admin_menu_multiple_status.
 	 *
-	 * @version 3.6.2
-	 * @since   3.6.2
+	 * @version 3.7.0
+	 * @since   3.7.0
 	 * @todo    add presets as links (same as "Not completed" link)
 	 * @todo    fix: custom (i.e. presets) menus are not highlighted
 	 */
@@ -230,7 +230,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * multiple_shop_order_statuses.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.5.7
 	 */
 	function multiple_shop_order_statuses( $type ) {
@@ -240,7 +240,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 			'<span id="wcj_admin_filter_shop_order_statuses">' :
 			'<select multiple name="wcj_admin_filter_statuses[]" id="wcj_admin_filter_shop_order_statuses" class="chosen_select">';
 		$num_posts = wp_count_posts( 'shop_order', 'readable' );
-		foreach ( wc_get_order_statuses() as $status_id => $status_title ) {
+		foreach ( array_merge( wc_get_order_statuses(), array( 'trash' => __( 'Trash', 'woocommerce-jetpack' ) ) ) as $status_id => $status_title ) {
 			$total_number = ( isset( $num_posts->{$status_id} ) ) ? $num_posts->{$status_id} : 0;
 			if ( $total_number > 0 ) {
 				$html .= ( 'checkboxes' === $type ) ?

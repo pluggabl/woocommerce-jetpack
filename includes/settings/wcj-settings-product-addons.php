@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 3.4.0
+ * @version 3.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -100,6 +100,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'id'       => 'wcj_product_addons_all_products_label_' . $i,
 			'default'  => '',
 			'type'     => 'textarea',
+			'css'      => 'height:100px;',
 		),
 		array(
 			'desc'     => __( 'Price(s)', 'woocommerce-jetpack' ),
@@ -107,6 +108,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'id'       => 'wcj_product_addons_all_products_price_' . $i,
 			'default'  => 0,
 			'type'     => 'textarea',
+			'css'      => 'height:100px;',
 			'custom_attributes' => array( 'step' => '0.0001' ),
 		),
 		array(
@@ -115,6 +117,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'id'       => 'wcj_product_addons_all_products_tooltip_' . $i,
 			'default'  => '',
 			'type'     => 'textarea',
+			'css'      => 'height:100px;',
 		),
 		array(
 			'desc'     => __( 'Default Value', 'woocommerce-jetpack' ),
@@ -195,11 +198,32 @@ $settings = array_merge( $settings, array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'Position on Frontend', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_position',
+		'default'  => 'woocommerce_before_add_to_cart_button',
+		'type'     => 'select',
+		'options'  => array(
+			'woocommerce_before_add_to_cart_button' => __( 'Before add to cart button', 'woocommerce-jetpack' ),
+			'woocommerce_after_add_to_cart_button'  => __( 'After add to cart button', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
 		'title'    => __( 'Position Priority on Frontend', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Set to zero to use the default priority.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_addons_position_priority',
 		'default'  => 0,
 		'type'     => 'number',
+	),
+	array(
+		'title'    => __( 'Advanced: Apply Price Filter', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_apply_price_filters',
+		'default'  => 'by_module',
+		'type'     => 'select',
+		'options'  => array(
+			'by_module' => __( 'By module', 'woocommerce-jetpack' ),
+			'yes'       => __( 'Yes', 'woocommerce-jetpack' ),
+			'no'        => __( 'No', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'type'     => 'sectionend',

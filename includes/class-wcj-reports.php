@@ -31,7 +31,7 @@ class WCJ_Reports extends WCJ_Module {
 
 		$this->id         = 'reports';
 		$this->short_desc = __( 'Reports', 'woocommerce-jetpack' );
-		$this->desc       = __( 'WooCommerce stock, sales, customers etc. reports.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Stock, sales, customers etc. reports.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-reports';
 		parent::__construct();
 

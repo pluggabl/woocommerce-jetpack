@@ -21,7 +21,7 @@ class WCJ_Old_Slugs extends WCJ_Module {
 
 		$this->id         = 'old_slugs';
 		$this->short_desc = __( 'Old Slugs', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Remove old WooCommerce products slugs.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Remove old products slugs.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-remove-old-products-slugs';
 		parent::__construct();
 

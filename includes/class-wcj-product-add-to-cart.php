@@ -24,7 +24,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
 		$this->id         = 'product_add_to_cart';
 		$this->short_desc = __( 'Add to Cart', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set any local url to redirect to on WooCommerce Add to Cart.', 'woocommerce-jetpack' )
+		$this->desc       = __( 'Set any local url to redirect to on Add to Cart.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Display radio buttons instead of drop box for variable products.', 'woocommerce-jetpack' )
 			. ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )

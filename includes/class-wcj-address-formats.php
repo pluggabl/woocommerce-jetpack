@@ -22,7 +22,7 @@ class WCJ_Address_Formats extends WCJ_Module {
 
 		$this->id         = 'address_formats';
 		$this->short_desc = __( 'Address Formats', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set address format in WooCommerce orders on per country basis. Force base country display.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set address format in orders on per country basis. Force base country display.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-address-formats';
 		parent::__construct();
 

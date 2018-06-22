@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - SKU
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    deprecate `wcj_sku_prefix` and `wcj_sku_suffix` (as user can now add it directly to "Template")
@@ -160,6 +160,13 @@ $settings = array_merge( $settings, array(
 			'first' => __( 'Use first category', 'woocommerce-jetpack' ),
 			'glue'  => __( '"Glue" categories', 'woocommerce-jetpack' ),
 		),
+	),
+	array(
+		'desc'     => __( 'Category separator (i.e. "glue")', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Ignored if "Use first category" is selected above.', 'woocommerce-jetpack' ),
+		'type'     => 'text',
+		'id'       => 'wcj_sku_categories_multiple_glue',
+		'default'  => '',
 	),
 ) );
 $product_categories = get_terms( 'product_cat', 'orderby=name&hide_empty=0' );

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Addons
  *
- * @version 3.4.0
+ * @version 3.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -66,7 +66,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'name'     => 'wcj_product_addons_per_product_label_' . $i,
 			'default'  => '',
 			'type'     => 'textarea',
-			'css'      => 'width:100%;',
+			'css'      => 'width:100%;height:100px;',
 		),
 		array(
 			'title'    => __( 'Price(s)', 'woocommerce-jetpack' ),
@@ -82,7 +82,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'name'     => 'wcj_product_addons_per_product_tooltip_' . $i,
 			'default'  => '',
 			'type'     => 'textarea',
-			'css'      => 'width:100%;',
+			'css'      => 'width:100%;height:100px;',
 		),
 		array(
 			'title'    => __( 'Default Value', 'woocommerce-jetpack' ),

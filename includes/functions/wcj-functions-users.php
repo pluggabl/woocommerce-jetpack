@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -168,7 +168,7 @@ if ( ! function_exists( 'wcj_is_user_role' ) ) {
 	/**
 	 * wcj_is_user_role.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.5.0
 	 * @return  bool
 	 * @todo    clean up

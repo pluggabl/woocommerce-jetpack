@@ -22,7 +22,7 @@ class WCJ_Product_Custom_info extends WCJ_Module {
 
 		$this->id         = 'product_custom_info';
 		$this->short_desc = __( 'Product Info', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add additional info to WooCommerce category and single product pages.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add additional info to category and single product pages.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-info';
 		parent::__construct();
 

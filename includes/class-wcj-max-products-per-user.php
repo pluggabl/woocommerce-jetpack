@@ -26,7 +26,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 
 		$this->id         = 'max_products_per_user';
 		$this->short_desc = __( 'Maximum Products per User', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Limit number of items your WooCommerce customers (logged) can buy.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Limit number of items your (logged) customers can buy.', 'woocommerce-jetpack' );
 		$this->extra_desc = __( 'Please note, that there is no maximum quantity set for not-logged (i.e. guest) users. Product quantities are updated, when order status is changed to completed.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-maximum-products-per-user';
 		parent::__construct();

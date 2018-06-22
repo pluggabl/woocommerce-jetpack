@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -16,14 +16,14 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.4.8
 	 */
 	function __construct() {
 
 		$this->id         = 'multicurrency_base_price';
 		$this->short_desc = __( 'Multicurrency Product Base Price', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Enter prices for WooCommerce products in different currencies.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Enter prices for products in different currencies.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-multicurrency-product-base-price';
 		parent::__construct();
 
@@ -34,7 +34,11 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 
 			add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_on_product_edit' ), PHP_INT_MAX, 2 );
 
-			wcj_add_change_price_hooks( $this, PHP_INT_MAX - 10, false );
+			$this->do_convert_in_back_end = ( 'yes' === get_option( 'wcj_multicurrency_base_price_do_convert_in_back_end', 'no' ) );
+
+			if ( $this->do_convert_in_back_end || wcj_is_frontend() ) {
+				wcj_add_change_price_hooks( $this, PHP_INT_MAX - 10, false );
+			}
 
 		}
 	}
@@ -63,6 +67,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	 * change_price.
 	 *
 	 * @version 2.7.0
+	 * @since   2.4.8
 	 */
 	function change_price( $price, $_product ) {
 		return wcj_price_by_product_base_currency( $price, wcj_get_product_id_or_variation_parent_id( $_product ) );
@@ -72,6 +77,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	 * get_variation_prices_hash.
 	 *
 	 * @version 3.5.0
+	 * @since   2.4.8
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$multicurrency_base_price_currency = get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product, true ), '_' . 'wcj_multicurrency_base_price_currency', true );
@@ -88,12 +94,16 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * change_currency_symbol_on_product_edit.
 	 *
-	 * @todo    (maybe) `'edit.php' === $pagenow && isset( $_GET['post_type'] ) && 'product' === $_GET['post_type']`
+	 * @version 3.7.0
+	 * @since   2.4.8
 	 */
 	function change_currency_symbol_on_product_edit( $currency_symbol, $currency ) {
 		if ( is_admin() ) {
 			global $pagenow;
-			if ( 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] ) {
+			if (
+				( 'post.php' === $pagenow && isset( $_GET['action'] ) && 'edit' === $_GET['action'] ) ||                                          // admin product edit page
+				( ! $this->do_convert_in_back_end && 'edit.php' === $pagenow && isset( $_GET['post_type'] ) && 'product' === $_GET['post_type'] ) // admin products list
+			) {
 				$multicurrency_base_price_currency = get_post_meta( get_the_ID(), '_' . 'wcj_multicurrency_base_price_currency', true );
 				if ( '' != $multicurrency_base_price_currency ) {
 					return wcj_get_currency_symbol( $multicurrency_base_price_currency );

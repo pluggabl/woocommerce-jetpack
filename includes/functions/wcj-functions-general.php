@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_get_wpml_default_language' ) ) {
 	/**
 	 * wcj_get_wpml_default_language.
 	 *
-	 * @version 3.6.2
-	 * @since   3.6.2
+	 * @version 3.7.0
+	 * @since   3.7.0
 	 */
 	function wcj_get_wpml_default_language() {
 		global $sitepress;
@@ -73,7 +73,7 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 	 * @todo    use where needed
 	 * @todo    add more cases for `$file_type`
 	 */
-	function wcj_send_file( $file_name, $file_path, $file_type, $do_cleanup = true ) {
+	function wcj_send_file( $file_name, $file_path, $file_type, $do_clean_up = true ) {
 		switch ( $file_type ) {
 			default: // 'zip'
 				header( "Content-Type: application/octet-stream" );
@@ -91,7 +91,7 @@ if ( ! function_exists( 'wcj_send_file' ) ) {
 				flush(); // this is essential for large downloads
 			}
 			fclose( $fp );
-			if ( $do_cleanup ) {
+			if ( $do_clean_up ) {
 				@unlink( $file_path );
 			}
 			exit();

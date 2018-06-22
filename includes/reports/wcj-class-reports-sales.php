@@ -69,8 +69,11 @@ class WCJ_Reports_Sales {
 	 *
 	 * @version 3.2.4
 	 * @since   2.3.0
-	 * @todo    (maybe) currency conversion
 	 * @todo    fix when variable and variations are all (wrongfully) counted in total sums
+	 * @todo    display more info for "Parent product deleted" and "Product deleted"
+	 * @todo    (maybe) currency conversion
+	 * @todo    (maybe) `sort_by_total_sales` instead of `sort_by_title`
+	 * @todo    (maybe) `if ( 0 == $product_purchase_price ) { if ( 0 != $the_data['sales'] ) { $product_purchase_price = ( $the_data['total_sum'] / $the_data['sales'] ) * 0.80; } $_product = wc_get_product( $the_data['product_id'] ); if ( is_object( $_product ) ) { $product_purchase_price = $_product->get_price(); } }`
 	 */
 	function get_products_sales() {
 
@@ -79,8 +82,8 @@ class WCJ_Reports_Sales {
 		$totals_data = array();
 		$years = array();
 		$total_orders = 0;
-		$offset = 0;
-		$block_size = 512;
+		$offset       = 0;
+		$block_size   = 512;
 		while( true ) {
 			$args_orders = array(
 				'post_type'      => 'shop_order',
@@ -117,20 +120,19 @@ class WCJ_Reports_Sales {
 							$products_data[ $product_id ][ 'title' ] = '';
 							$_product = wc_get_product( $product_id );
 							if ( is_object( $_product ) ) {
-								$products_data[ $product_id ][ 'title' ] .= $_product->get_title(); // get_the_title( $product_id );
+								$products_data[ $product_id ][ 'title' ] .= $_product->get_title();
 								if ( 'WC_Product_Variation' === get_class( $_product ) && $this->do_product_parent_exist( $_product ) ) {
 									$products_data[ $product_id ][ 'title' ] .= '<br><em>' . wcj_get_product_formatted_variation( $_product, true ) . '</em>';
 								} elseif ( 'WC_Product_Variation' === get_class( $_product ) ) {
-//									$products_data[ $product_id ][ 'title' ] .= ' [PARENT PRODUCT DELETED]'; // todo
-									$products_data[ $product_id ][ 'title' ] .= $item['name'] . '<br><em>' . __( 'Variation', 'woocommerce-jetpack' ) . '</em>'; // get_the_title( $product_id );
+									// Parent product deleted
+									$products_data[ $product_id ][ 'title' ] .= $item['name'] . '<br><em>' . __( 'Variation', 'woocommerce-jetpack' ) . '</em>';
 									$products_data[ $product_id ][ 'title' ] = '<del>' . $products_data[ $product_id ][ 'title' ] . '</del>';
 								}
 							} else {
-//								$products_data[ $product_id ][ 'title' ] .= $item['name'] . ' [PRODUCT DELETED]'; // todo
+								// Product deleted
 								$products_data[ $product_id ][ 'title' ] .= $item['name'];
 								$products_data[ $product_id ][ 'title' ] = '<del>' . $products_data[ $product_id ][ 'title' ] . '</del>';
 							}
-//							$products_data[ $product_id ][ 'title' ] .= ' [ID: ' . $product_id . ']';
 						}
 						if ( ! ( '' == $this->product_title || false !== stripos( $products_data[ $product_id ][ 'title' ], $this->product_title ) ) ) {
 							unset( $products_data[ $product_id ] );
@@ -145,7 +147,8 @@ class WCJ_Reports_Sales {
 						if ( ! isset( $products_data[ $product_id ][ 'total_sum' ] ) ) {
 							$products_data[ $product_id ][ 'total_sum' ] = 0;
 						}
-						$products_data[ $product_id ][ 'total_sum' ] += ( $item['line_total'] + ( 'yes' === get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ? $item['line_tax'] : 0 ) );
+						$products_data[ $product_id ][ 'total_sum' ] += ( $item['line_total'] + ( 'yes' === get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ?
+							$item['line_tax'] : 0 ) );
 						// Sales by Month
 						$month = date( 'n', get_the_time( 'U', $order_id ) );
 						$year  = date( 'Y', get_the_time( 'U', $order_id ) );
@@ -158,7 +161,8 @@ class WCJ_Reports_Sales {
 						if ( ! isset( $products_data[ $product_id ][ 'sales_by_month_sum' ][ $year ][ $month ] ) ) {
 							$products_data[ $product_id ][ 'sales_by_month_sum' ][ $year ][ $month ] = 0;
 						}
-						$products_data[ $product_id ][ 'sales_by_month_sum' ][ $year ][ $month ] += $item['line_total'] + ( 'yes' === get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ? $item['line_tax'] : 0 );
+						$products_data[ $product_id ][ 'sales_by_month_sum' ][ $year ][ $month ] += $item['line_total'] +
+							( 'yes' === get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ? $item['line_tax'] : 0 );
 						// Sales by Month (Totals)
 						if ( ! isset( $totals_data[ 'sales_by_month' ][ $year ][ $month ] ) ) {
 							$totals_data[ 'sales_by_month' ][ $year ][ $month ] = 0;
@@ -168,7 +172,8 @@ class WCJ_Reports_Sales {
 						if ( ! isset( $totals_data[ 'sales_by_month_sum' ][ $year ][ $month ] ) ) {
 							$totals_data[ 'sales_by_month_sum' ][ $year ][ $month ] = 0;
 						}
-						$totals_data[ 'sales_by_month_sum' ][ $year ][ $month ] += $item['line_total'] + ( 'yes' === get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ? $item['line_tax'] : 0 );
+						$totals_data[ 'sales_by_month_sum' ][ $year ][ $month ] += $item['line_total'] +
+							( 'yes' === get_option( 'wcj_reports_products_sales_include_taxes', 'no' ) ? $item['line_tax'] : 0 );
 						// Last Sale Time
 						if ( ! isset( $products_data[ $product_id ][ 'last_sale' ] ) ) {
 							$products_data[ $product_id ][ 'last_sale' ] = date( 'Y-m-d H:i:s', get_the_time( 'U', $order_id ) );
@@ -183,7 +188,6 @@ class WCJ_Reports_Sales {
 			}
 			$offset += $block_size;
 		}
-//		usort( $products_data, array( $this, 'sort_by_total_sales' ) );
 		usort( $products_data, array( $this, 'sort_by_title' ) );
 
 		// Output report table
@@ -193,7 +197,6 @@ class WCJ_Reports_Sales {
 			__( 'Product', 'woocommerce-jetpack' ),
 			__( 'Last Sale', 'woocommerce-jetpack' ),
 			__( 'Total', 'woocommerce-jetpack' ),
-//			__( 'Purchase Price', 'woocommerce-jetpack' ),
 		);
 		foreach ( $years as $year => $value ) {
 			if ( $year != $this->year ) continue;
@@ -203,98 +206,83 @@ class WCJ_Reports_Sales {
 		}
 		$total_profit = 0;
 		$table_data[] = $the_header;
-		foreach ( $products_data as /* $product_id => */ $the_data ) {
-//			if ( '' == $this->product_title || false !== stripos( $the_data['title'], $this->product_title ) ) {
-				$product_purchase_price = wc_get_product_purchase_price( $the_data['product_id'] );
-				// todo
-				/* if ( 0 == $product_purchase_price ) {
-					if ( 0 != $the_data['sales'] ) {
-						$product_purchase_price = ( $the_data['total_sum'] / $the_data['sales'] ) * 0.80;
-					}
-					*//* $_product = wc_get_product( $the_data['product_id'] );
-					if ( is_object( $_product ) ) {
-						$product_purchase_price = $_product->get_price();
-					} *//*
-				} */
-				$profit = $the_data['total_sum'] - $product_purchase_price * $the_data['sales'];
-				$total_profit += $profit;
-				$the_row = array(
-					$the_data['product_id'],
-					$the_data['title'],
-					$the_data['last_sale'],
-					'<strong>' . $the_data['sales'] . '</strong>',
-//					wc_price( wc_get_product_purchase_price( $the_data['product_id'] ) ),
-				);
-				$the_row2 = array(
-					$the_data['product_id'],
-					$the_data['title'],
-					$the_data['last_sale'],
-					'<strong>' . wc_price( $the_data['total_sum'] ) . '</strong>',
-//					wc_price( wc_get_product_purchase_price( $the_data['product_id'] ) ),
-				);
-				$the_row3 = array(
-					$the_data['product_id'],
-					$the_data['title'],
-					$the_data['last_sale'],
-					'<strong>' . wc_price( $profit ) . '</strong>',
-//					wc_price( wc_get_product_purchase_price( $the_data['product_id'] ) ),
-				);
-				foreach ( $years as $year => $value ) {
-					if ( $year != $this->year ) continue;
-					for ( $i = 12; $i >= 1; $i-- ) {
-						if ( isset( $the_data['sales_by_month'][ $year ][ $i ] ) ) {
-							// Sales
-							if ( $i > 1 ) {
-								$prev_month_data = ( isset( $the_data['sales_by_month'][ $year ][ $i - 1 ] ) ) ?
-									$the_data['sales_by_month'][ $year ][ $i - 1 ] :
-									0;
-								$color = ( $prev_month_data >= $the_data['sales_by_month'][ $year ][ $i ] ) ? 'red' : 'green';
-							} else {
-								$color = 'green';
-							}
-							$the_row[] = '<span style="color:' . $color . ';">' . $the_data['sales_by_month'][ $year ][ $i ] . '</span>';
-							// Sum
-							if ( $i > 1 ) {
-								$prev_month_data = ( isset( $the_data['sales_by_month_sum'][ $year ][ $i - 1 ] ) ) ?
-									$the_data['sales_by_month_sum'][ $year ][ $i - 1 ] :
-									0;
-								$color = ( $prev_month_data >= $the_data['sales_by_month_sum'][ $year ][ $i ] ) ? 'red' : 'green';
-							} else {
-								$color = 'green';
-							}
-							$the_row2[] = '<span style="color:' . $color . ';">' . wc_price( $the_data['sales_by_month_sum'][ $year ][ $i ] ) . '</span>';
-							// Profit
-							if ( ! isset( $totals_data['profit_by_month'][ $year ][ $i ] ) ) {
-								$totals_data['profit_by_month'][ $year ][ $i ] = 0;
-							}
-							$profit_by_month_for_product = $the_data['sales_by_month_sum'][ $year ][ $i ] - $product_purchase_price * $the_data['sales_by_month'][ $year ][ $i ];
-							$totals_data['profit_by_month'][ $year ][ $i ] += $profit_by_month_for_product;
-							if ( $i > 1 ) {
-								$prev_month_data = ( isset( $the_data['sales_by_month_sum'][ $year ][ $i - 1 ] ) ) ?
-									$the_data['sales_by_month_sum'][ $year ][ $i - 1 ] - $product_purchase_price * $the_data['sales_by_month'][ $year ][ $i - 1 ] :
-									0;
-								$color = ( $prev_month_data >= $profit_by_month_for_product ) ? 'red' : 'green';
-							} else {
-								$color = 'green';
-							}
-							$the_row3[] = '<span style="color:' . $color . ';">' . wc_price( $profit_by_month_for_product ) . '</span>';
+		foreach ( $products_data as $the_data ) {
+			$product_purchase_price = wc_get_product_purchase_price( $the_data['product_id'] );
+			$profit = $the_data['total_sum'] - $product_purchase_price * $the_data['sales'];
+			$total_profit += $profit;
+			$the_row = array(
+				$the_data['product_id'],
+				$the_data['title'],
+				$the_data['last_sale'],
+				'<strong>' . $the_data['sales'] . '</strong>',
+			);
+			$the_row2 = array(
+				$the_data['product_id'],
+				$the_data['title'],
+				$the_data['last_sale'],
+				'<strong>' . wc_price( $the_data['total_sum'] ) . '</strong>',
+			);
+			$the_row3 = array(
+				$the_data['product_id'],
+				$the_data['title'],
+				$the_data['last_sale'],
+				'<strong>' . wc_price( $profit ) . '</strong>',
+			);
+			foreach ( $years as $year => $value ) {
+				if ( $year != $this->year ) continue;
+				for ( $i = 12; $i >= 1; $i-- ) {
+					if ( isset( $the_data['sales_by_month'][ $year ][ $i ] ) ) {
+						// Sales
+						if ( $i > 1 ) {
+							$prev_month_data = ( isset( $the_data['sales_by_month'][ $year ][ $i - 1 ] ) ) ?
+								$the_data['sales_by_month'][ $year ][ $i - 1 ] :
+								0;
+							$color = ( $prev_month_data >= $the_data['sales_by_month'][ $year ][ $i ] ) ? 'red' : 'green';
 						} else {
-							$the_row[] = '';
-							$the_row2[] = '';
-							$the_row3[] = '';
+							$color = 'green';
 						}
+						$the_row[] = '<span style="color:' . $color . ';">' . $the_data['sales_by_month'][ $year ][ $i ] . '</span>';
+						// Sum
+						if ( $i > 1 ) {
+							$prev_month_data = ( isset( $the_data['sales_by_month_sum'][ $year ][ $i - 1 ] ) ) ?
+								$the_data['sales_by_month_sum'][ $year ][ $i - 1 ] :
+								0;
+							$color = ( $prev_month_data >= $the_data['sales_by_month_sum'][ $year ][ $i ] ) ? 'red' : 'green';
+						} else {
+							$color = 'green';
+						}
+						$the_row2[] = '<span style="color:' . $color . ';">' . wc_price( $the_data['sales_by_month_sum'][ $year ][ $i ] ) . '</span>';
+						// Profit
+						if ( ! isset( $totals_data['profit_by_month'][ $year ][ $i ] ) ) {
+							$totals_data['profit_by_month'][ $year ][ $i ] = 0;
+						}
+						$profit_by_month_for_product = $the_data['sales_by_month_sum'][ $year ][ $i ] - $product_purchase_price * $the_data['sales_by_month'][ $year ][ $i ];
+						$totals_data['profit_by_month'][ $year ][ $i ] += $profit_by_month_for_product;
+						if ( $i > 1 ) {
+							$prev_month_data = ( isset( $the_data['sales_by_month_sum'][ $year ][ $i - 1 ] ) ) ?
+								$the_data['sales_by_month_sum'][ $year ][ $i - 1 ] - $product_purchase_price * $the_data['sales_by_month'][ $year ][ $i - 1 ] :
+								0;
+							$color = ( $prev_month_data >= $profit_by_month_for_product ) ? 'red' : 'green';
+						} else {
+							$color = 'green';
+						}
+						$the_row3[] = '<span style="color:' . $color . ';">' . wc_price( $profit_by_month_for_product ) . '</span>';
+					} else {
+						$the_row[] = '';
+						$the_row2[] = '';
+						$the_row3[] = '';
 					}
 				}
-				if ( 'yes' === get_option( 'wcj_reports_products_sales_display_sales', 'yes' ) ) {
-					$table_data[] = $the_row;
-				}
-				if ( 'yes' === get_option( 'wcj_reports_products_sales_display_sales_sum', 'yes' ) ) {
-					$table_data[] = $the_row2;
-				}
-				if ( 'yes' === get_option( 'wcj_reports_products_sales_display_profit', 'no' ) ) {
-					$table_data[] = $the_row3;
-				}
-//			}
+			}
+			if ( 'yes' === get_option( 'wcj_reports_products_sales_display_sales', 'yes' ) ) {
+				$table_data[] = $the_row;
+			}
+			if ( 'yes' === get_option( 'wcj_reports_products_sales_display_sales_sum', 'yes' ) ) {
+				$table_data[] = $the_row2;
+			}
+			if ( 'yes' === get_option( 'wcj_reports_products_sales_display_profit', 'no' ) ) {
+				$table_data[] = $the_row3;
+			}
 		}
 
 		// Totals
@@ -320,22 +308,29 @@ class WCJ_Reports_Sales {
 			}
 		}
 		if ( 'yes' === get_option( 'wcj_reports_products_sales_display_sales', 'yes' ) ) {
-			$table_data[] = array_merge( array( '', '', '<strong>' . __( 'Total Items', 'woocommerce-jetpack' ) . '</strong>', '<strong>' . $totals_sales_by_month . '</strong>' ), $totals_row );
+			$table_data[] = array_merge( array( '', '', '<strong>' . __( 'Total Items', 'woocommerce-jetpack' ) . '</strong>',
+				'<strong>' . $totals_sales_by_month . '</strong>' ), $totals_row );
 		}
 		if ( 'yes' === get_option( 'wcj_reports_products_sales_display_sales_sum', 'yes' ) ) {
-			$table_data[] = array_merge( array( '', '', '<strong>' . __( 'Total Sum', 'woocommerce-jetpack' ) . '</strong>', '<strong>' . wc_price( $totals_sales_by_month_sum . '</strong>' ) ), $totals_row2 );
+			$table_data[] = array_merge( array( '', '', '<strong>' . __( 'Total Sum', 'woocommerce-jetpack' ) . '</strong>',
+				'<strong>' . wc_price( $totals_sales_by_month_sum . '</strong>' ) ), $totals_row2 );
 		}
 		if ( 'yes' === get_option( 'wcj_reports_products_sales_display_profit', 'no' ) ) {
-			$table_data[] = array_merge( array( '', '', '<strong>' . __( 'Total Profit', 'woocommerce-jetpack' ) . '</strong>', '<strong>' . wc_price( $total_profit . '</strong>' ) ), $totals_row3 );
+			$table_data[] = array_merge( array( '', '', '<strong>' . __( 'Total Profit', 'woocommerce-jetpack' ) .
+				'</strong>', '<strong>' . wc_price( $total_profit . '</strong>' ) ), $totals_row3 );
 		}
 
-		$settings_link = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=reports' ) . '">' . '<< ' . __( 'Reports Settings', 'woocommerce-jetpack' ) . '</a>';
+		$settings_link = '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=reports' ) . '">' .
+			'<< ' . __( 'Reports Settings', 'woocommerce-jetpack' ) . '</a>';
 
 		$menu = '';
 		$menu .= '<ul class="subsubsub">';
-		$menu .= '<li><a href="' . add_query_arg( 'year', date( 'Y' ) )         . '" class="' . ( ( $this->year == date( 'Y' ) ) ? 'current' : '' ) . '">' . date( 'Y' ) . '</a> | </li>';
-		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 1 ) ) . '" class="' . ( ( $this->year == ( date( 'Y' ) - 1 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 1 ) . '</a> | </li>';
-		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 2 ) ) . '" class="' . ( ( $this->year == ( date( 'Y' ) - 2 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 2 ) . '</a></li>';
+		$menu .= '<li><a href="' . add_query_arg( 'year', date( 'Y' ) )         . '" class="' .
+			( ( $this->year == date( 'Y' ) ) ? 'current' : '' ) . '">' . date( 'Y' ) . '</a> | </li>';
+		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 1 ) ) . '" class="' .
+			( ( $this->year == ( date( 'Y' ) - 1 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 1 ) . '</a> | </li>';
+		$menu .= '<li><a href="' . add_query_arg( 'year', ( date( 'Y' ) - 2 ) ) . '" class="' .
+			( ( $this->year == ( date( 'Y' ) - 2 ) ) ? 'current' : '' ) . '">' . ( date( 'Y' ) - 2 ) . '</a></li>';
 		$menu .= '</ul>';
 		$menu .= '<br class="clear">';
 
@@ -345,7 +340,8 @@ class WCJ_Reports_Sales {
 		$filter_form .= '<input type="hidden" name="tab" value="'    . $_GET['tab']    . '" />';
 		$filter_form .= '<input type="hidden" name="report" value="' . $_GET['report'] . '" />';
 		$filter_form .= '<input type="hidden" name="year" value="'   . $this->year     . '" />';
-		$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" /><input type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';
+		$filter_form .= '<input type="text" name="product_title" title="" value="' . $this->product_title . '" />' .
+			'<input type="submit" value="' . __( 'Filter products', 'woocommerce-jetpack' ) . '" />';
 		$filter_form .= '</form>';
 
 		$the_results = ( ! empty( $products_data ) ) ?

@@ -24,7 +24,7 @@ class WCJ_Shipping_By_Order_Amount extends WCJ_Module {
 
 		$this->id         = 'shipping_by_order_amount';
 		$this->short_desc = __( 'Shipping Methods by Min/Max Order Amount', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set minimum and/or maximum order amount for WooCommerce shipping methods to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set minimum and/or maximum order amount for shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-min-max-order-amount';
 		parent::__construct();
 

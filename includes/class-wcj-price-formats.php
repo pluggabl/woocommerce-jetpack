@@ -23,7 +23,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 
 		$this->id         = 'price_formats';
 		$this->short_desc = __( 'Price Formats', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set different WooCommerce price formats for different currencies. Set general price format options.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set different price formats for different currencies. Set general price format options.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-price-formats';
 		parent::__construct();
 

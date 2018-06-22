@@ -21,7 +21,7 @@ class WCJ_Add_To_Cart extends WCJ_Module {
 
 		$this->id         = 'add_to_cart';
 		$this->short_desc = __( 'Add to Cart Button Labels', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Change text for Add to Cart button by WooCommerce product type, by product category or for individual products.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Change text for Add to Cart button by product type, by product category or for individual products.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-add-to-cart-labels';
 		parent::__construct();
 

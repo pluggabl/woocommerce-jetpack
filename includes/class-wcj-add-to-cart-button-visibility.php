@@ -23,7 +23,7 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 
 		$this->id         = 'add_to_cart_button_visibility';
 		$this->short_desc = __( 'Add to Cart Button Visibility', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Enable/disable WooCommerce Add to Cart button globally or on per product basis.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Enable/disable Add to Cart button globally or on per product basis.', 'woocommerce-jetpack' );
 		$this->extra_desc = '<em>' . sprintf(
 			__( 'If you need to enable/disable Add to Cart button for some <strong>user roles</strong> only, we suggest using this module in conjunction with Booster\'s %s module.', 'woocommerce-jetpack' ),
 			'<a href="' . wcj_get_module_settings_admin_url( 'modules_by_user_roles' ) . '">' .

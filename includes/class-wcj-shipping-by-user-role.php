@@ -23,7 +23,7 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module_Shipping_By_Condition {
 
 		$this->id         = 'shipping_by_user_role';
 		$this->short_desc = __( 'Shipping Methods by Users', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set user roles, users or membership plans to include/exclude for WooCommerce shipping methods to show up.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set user roles, users or membership plans to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-users';
 
 		$this->condition_options = array(

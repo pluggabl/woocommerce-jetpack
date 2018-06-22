@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Email Options
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -48,7 +48,7 @@ class WCJ_PDF_Invoicing_Emails extends WCJ_Module {
 	/**
 	 * add_pdf_invoice_email_attachment.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 */
 	function add_pdf_invoice_email_attachment( $attachments, $status, $order ) {
 		if ( ! $order || ! is_object( $order ) || 'WC_Order' != get_class( $order ) ) {

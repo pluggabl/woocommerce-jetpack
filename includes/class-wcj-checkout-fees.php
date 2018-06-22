@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Checkout Fees
  *
- * @version 3.6.2
- * @since   3.6.2
+ * @version 3.7.0
+ * @since   3.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.2
-	 * @since   3.6.2
+	 * @version 3.7.0
+	 * @since   3.7.0
 	 * @todo    (maybe) rename module to "Cart & Checkout Fees"
 	 */
 	function __construct() {
@@ -36,8 +36,8 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	/**
 	 * add_fees.
 	 *
-	 * @version 3.6.2
-	 * @since   3.6.2
+	 * @version 3.7.0
+	 * @since   3.7.0
 	 * @todo    fees with same title
 	 * @todo    options: `tax_class`
 	 * @todo    options: `cart total` (for percent) - include/exclude shipping etc. - https://docs.woocommerce.com/wc-apidocs/class-WC_Cart.html
@@ -46,6 +46,7 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	 * @todo    options: `products, cats, tags to include/exclude`
 	 * @todo    options: `countries to include/exclude`
 	 * @todo    options: `user roles to include/exclude`
+	 * @todo    see https://wcbooster.zendesk.com/agent/tickets/446
 	 */
 	function add_fees( $cart ) {
 		if ( ! wcj_is_frontend() ) {

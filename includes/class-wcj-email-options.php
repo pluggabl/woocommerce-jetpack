@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Options
  *
- * @version 3.5.0
+ * @version 3.7.0
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -48,13 +48,14 @@ class WCJ_Email_Options extends WCJ_Module {
 	/**
 	 * add_product_info_to_email_order_item_name.
 	 *
-	 * @version 2.7.0
+	 * @version 3.7.0
 	 * @since   2.7.0
 	 */
 	function add_product_info_to_email_order_item_name( $item_name, $item ) {
 		if ( $item['product_id'] ) {
 			global $post;
-			$post = get_post( $item['product_id'] );
+			$product_id = ( ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
+			$post       = get_post( $product_id );
 			setup_postdata( $post );
 			$item_name .= do_shortcode( get_option( 'wcj_product_info_in_email_order_item_name', '[wcj_product_categories strip_tags="yes" before="<hr><em>" after="</em>"]' ) );
 			wp_reset_postdata();

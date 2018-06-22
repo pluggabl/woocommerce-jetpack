@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Info
  *
- * @version 3.5.0
+ * @version 3.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -109,6 +109,8 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 						'woocommerce_before_add_to_cart_button'     => __( 'Before add to cart button', 'woocommerce-jetpack' ),
 						'woocommerce_after_add_to_cart_button'      => __( 'After add to cart button', 'woocommerce-jetpack' ),
 						'woocommerce_after_add_to_cart_form'        => __( 'After add to cart form', 'woocommerce-jetpack' ),
+						'woocommerce_product_meta_start'            => __( 'Product meta start', 'woocommerce-jetpack' ),
+						'woocommerce_product_meta_end'              => __( 'Product meta end', 'woocommerce-jetpack' ),
 					) :
 					array(
 						'woocommerce_before_shop_loop_item'       => __( 'Before product', 'woocommerce-jetpack' ),

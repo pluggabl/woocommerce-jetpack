@@ -23,7 +23,7 @@ class WCJ_Product_Bulk_Meta_Editor extends WCJ_Module {
 
 		$this->id         = 'product_bulk_meta_editor';
 		$this->short_desc = __( 'Product Bulk Meta Editor', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set WooCommerce products meta with bulk editor.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set products meta with bulk editor.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-bulk-meta-editor';
 		parent::__construct();
 

@@ -2,18 +2,16 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
- * @version 3.2.4
+ * @version 3.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    (maybe) `if ( isset( $all_currencies[ $currency_from ] ) ) { unset( $all_currencies[ $currency_from ] ); }`
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $currency_from  = get_woocommerce_currency();
 $all_currencies = wcj_get_currencies_names_and_symbols();
-/* if ( isset( $all_currencies[ $currency_from ] ) ) {
-	unset( $all_currencies[ $currency_from ] );
-} */
 $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -44,10 +42,18 @@ $settings = array(
 	),
 	array(
 		'desc'     => __( 'rounding precision', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Number of decimals.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_base_price_round_precision',
 		'default'  => get_option( 'woocommerce_price_num_decimals' ),
 		'type'     => 'number',
 		'custom_attributes' => array( 'min' => 0 ),
+	),
+	array(
+		'title'    => __( 'Convert Product Prices in Admin Products List', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_base_price_do_convert_in_back_end',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Advanced: Save Calculated Products Prices', 'woocommerce-jetpack' ),

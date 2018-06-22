@@ -22,7 +22,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 
 		$this->id         = 'bulk_price_converter';
 		$this->short_desc = __( 'Bulk Price Converter', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Multiply all WooCommerce products prices by set value.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Multiply all products prices by set value.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-bulk-price-converter';
 		parent::__construct();
 

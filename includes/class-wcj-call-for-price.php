@@ -23,7 +23,7 @@ class WCJ_Call_For_Price extends WCJ_module {
 
 		$this->id         = 'call_for_price';
 		$this->short_desc = __( 'Call for Price', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Create any custom price label for all WooCommerce products with empty price.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Create any custom price label for all products with empty price.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-call-for-price';
 		parent::__construct();
 

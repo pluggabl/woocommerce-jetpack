@@ -21,7 +21,7 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 
 		$this->id         = 'currency_external_products';
 		$this->short_desc = __( 'Currency for External Products', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set different currency for external WooCommerce products.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set different currency for external products.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-currency-for-external-products';
 		parent::__construct();
 

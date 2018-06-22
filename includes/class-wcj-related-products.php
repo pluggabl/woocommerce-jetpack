@@ -36,7 +36,7 @@ class WCJ_Related_Products extends WCJ_Module {
 
 		$this->id         = 'related_products';
 		$this->short_desc = __( 'Related Products', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Change displayed WooCommerce related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-related-products';
 		$this->extra_desc = sprintf(
 			__( 'You may need to <a class="button" href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),

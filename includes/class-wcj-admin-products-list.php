@@ -23,7 +23,7 @@ class WCJ_Admin_Products_List extends WCJ_Module {
 
 		$this->id         = 'admin_products_list';
 		$this->short_desc = __( 'Admin Products List', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce admin products list.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize admin products list.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-admin-products-list';
 		parent::__construct();
 

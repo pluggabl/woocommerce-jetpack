@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options
@@ -24,7 +24,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 
 		$this->id         = 'checkout_files_upload';
 		$this->short_desc = __( 'Checkout Files Upload', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Let customers upload files on (or after) WooCommerce checkout.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Let customers upload files on (or after) the checkout.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-checkout-files-upload';
 		parent::__construct();
 
@@ -268,9 +268,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.4.5
-	 * @todo    User file download - fix in "My Account"
 	 * @todo    add option for admin to delete files one by one (i.e. not all at once)
 	 */
 	function process_checkout_files_upload() {
@@ -384,16 +383,21 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		// User file download
 		if ( isset( $_GET['wcj_download_checkout_file'] ) && isset( $_GET['_wpnonce'] ) && ( false !== wp_verify_nonce( $_GET['_wpnonce'], 'wcj_download_checkout_file' ) ) ) {
 			$i = $_GET['wcj_download_checkout_file'];
-			if ( isset( $_GET['key'] ) ) {
-				if ( isset( $_GET['order-received'] ) ) {
-					$order_id = $_GET['order-received'];
-				} elseif ( isset( $_GET['view-order'] ) ) {
-					$order_id = $_GET['view-order'];
-				} else {
-					$order_id = wc_get_order_id_by_order_key( $_GET['key'] );
-				}
-				if ( ! ( $order = wc_get_order( $order_id ) ) || ! $order->key_is_valid( $_GET['key'] ) ) {
+			if ( ! empty( $_GET['wcj_download_checkout_file_order_id'] ) ) {
+				$order_id = $_GET['wcj_download_checkout_file_order_id'];
+				if ( ! ( $order = wc_get_order( $order_id ) ) ) {
 					return;
+				}
+				if ( isset( $_GET['key'] ) ) {
+					// Thank you page
+					if ( ! $order->key_is_valid( $_GET['key'] ) ) {
+						return;
+					}
+				} else {
+					// My Account
+					if ( ! wcj_is_user_logged_in() || $order->get_customer_id() != wcj_get_current_user_id() ) {
+						return;
+					}
 				}
 				$order_file_name = get_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_' . $i, true );
 				$tmp_file_name   = wcj_get_wcj_uploads_dir( 'checkout_files_upload' ) . '/' . $order_file_name;
@@ -568,8 +572,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * maybe_get_image.
 	 *
-	 * @version 3.6.2
-	 * @since   3.6.2
+	 * @version 3.7.0
+	 * @since   3.7.0
 	 */
 	function maybe_get_image( $link, $i, $order_id = 0 ) {
 		if ( 'yes' === get_option( 'wcj_checkout_files_upload_form_template_field_show_images', 'no' ) ) {
@@ -590,7 +594,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_the_form.
 	 *
-	 * @version 3.6.2
+	 * @version 3.7.0
 	 * @since   2.5.0
 	 */
 	function get_the_form( $i, $file_name, $order_id = 0 ) {
@@ -619,7 +623,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				' value="'      . get_option( 'wcj_checkout_files_upload_label_upload_button_' . $i, __( 'Upload', 'woocommerce-jetpack' ) ) . '"' .
 				' data-value="' . get_option( 'wcj_checkout_files_upload_label_upload_button_' . $i, __( 'Upload', 'woocommerce-jetpack' ) ) . '">';
 		} else {
-			$link        = add_query_arg( array( 'wcj_download_checkout_file' => $i, '_wpnonce' => wp_create_nonce( 'wcj_download_checkout_file' ) ) );
+			$link        = add_query_arg( array( 'wcj_download_checkout_file' => $i, '_wpnonce' => wp_create_nonce( 'wcj_download_checkout_file' ), 'wcj_download_checkout_file_order_id' => $order_id ) );
 			$field_html  = '<a href="' . $link . '">' . $this->maybe_get_image( $link, $i, $order_id ) . $file_name . '</a>';
 			$button_html = '<input type="submit"' .
 				' class="button"' .

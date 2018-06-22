@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Fees and Discounts
  *
- * @version 3.6.2
+ * @version 3.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

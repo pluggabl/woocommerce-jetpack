@@ -23,7 +23,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 
 		$this->id         = 'order_numbers';
 		$this->short_desc = __( 'Order Numbers', 'woocommerce-jetpack' );
-		$this->desc       = __( 'WooCommerce sequential order numbering, custom order number prefix, suffix and number width.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Sequential order numbering, custom order number prefix, suffix and number width.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-custom-order-numbers';
 		parent::__construct();
 

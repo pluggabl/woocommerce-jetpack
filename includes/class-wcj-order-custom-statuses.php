@@ -20,6 +20,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	 * @todo    check all changes from Custom Order Status plugin
 	 * @todo    `wcj_orders_custom_statuses_processing_and_completed_actions` to Custom Order Status plugin
 	 * @todo    (maybe) add options to change icon and icon's color for all statuses (i.e. not only custom)
+	 * @todo    (maybe) rename module to "Custom Order Statuses"
 	 */
 	function __construct() {
 
@@ -246,14 +247,13 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 		$custom_statuses = $this->get_custom_order_statuses();
 		foreach ( $custom_statuses as $slug => $label )
 			register_post_status( $slug, array(
-					'label'                     => $label,
-					'public'                    => true,
-					'exclude_from_search'       => false,
-					'show_in_admin_all_list'    => true,
-					'show_in_admin_status_list' => true,
-					'label_count'               => _n_noop( $label . ' <span class="count">(%s)</span>', $label . ' <span class="count">(%s)</span>' ),
-				)
-			);
+				'label'                     => $label,
+				'public'                    => true,
+				'exclude_from_search'       => false,
+				'show_in_admin_all_list'    => true,
+				'show_in_admin_status_list' => true,
+				'label_count'               => _n_noop( $label . ' <span class="count">(%s)</span>', $label . ' <span class="count">(%s)</span>' ),
+			) );
 	}
 
 	/**
