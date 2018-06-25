@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 3.2.4
+ * @version 3.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -322,6 +322,25 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_input_fields_admin_view_options',
+	),
+) );
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_input_fields_advanced_options',
+	),
+	array(
+		'title'    => __( 'Check for Outputted Data', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable this if you see data outputted on frontend twice. Disable if you see no data outputted.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_input_fields_check_for_outputted_data',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_input_fields_advanced_options',
 	),
 ) );
 return $settings;

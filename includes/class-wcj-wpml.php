@@ -121,6 +121,7 @@ class WCJ_WPML extends WCJ_Module {
 	 * create_wpml_xml_file.
 	 *
 	 * @version 3.7.1
+	 * @see     https://wpml.org/documentation/support/language-configuration-files/#admin-texts
 	 */
 	function create_wpml_xml_file() {
 		$file_path = wcj_plugin_path() . '/wpml-config.xml';
