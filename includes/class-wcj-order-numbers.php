@@ -35,12 +35,15 @@ class WCJ_Order_Numbers extends WCJ_Module {
 		) );
 
 		if ( $this->is_enabled() ) {
+			// Add & display custom order number
 			add_action( 'wp_insert_post',           array( $this, 'add_new_order_number' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_order_number', array( $this, 'display_order_number' ), PHP_INT_MAX, 2 );
+			// Order tracking
 			if ( 'yes' === get_option( 'wcj_order_number_order_tracking_enabled', 'yes' ) ) {
 				add_filter( 'woocommerce_shortcode_order_tracking_order_id', array( $this, 'add_order_number_to_tracking' ), PHP_INT_MAX );
 				add_action( 'init',                                          array( $this, 'remove_order_tracking_sanitize_order_id_filter' ) );
 			}
+			// Search by custom number
 			if ( 'yes' === get_option( 'wcj_order_number_search_by_custom_number_enabled', 'yes' ) ) {
 				add_action( 'pre_get_posts', array( $this, 'search_by_custom_number' ) );
 			}

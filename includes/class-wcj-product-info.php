@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Module - Product Info V1
+ * Booster for WooCommerce - Module - Product Info V1 (Deprecated)
  *
  * @version 2.8.0
  * @author  Algoritmika Ltd.
@@ -45,7 +45,6 @@ class WCJ_Product_Info extends WCJ_Module {
 			'wcj_categories'                           => 'wcj_product_categories',
 			'%list_attributes%'                        => '[wcj_product_list_attributes]',
 			'wcj_list_attributes'                      => 'wcj_product_list_attributes',
-//			'%list_attribute%'                         => '[wcj_product_list_attribute]',
 			'wcj_list_attribute options='              => 'wcj_product_list_attribute name=',
 			'wcjp_list_attribute attribute_name='      => 'wcj_product_list_attribute name=',
 			'%stock_quantity%'                         => '[wcj_product_stock_quantity]',
@@ -194,7 +193,6 @@ class WCJ_Product_Info extends WCJ_Module {
 	 * @version 2.4.0
 	 */
 	function add_more_product_info( $single_or_archive ) {
-		//$single_or_archive = 'archive';
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 4, get_option( 'wcj_more_product_info_on_' . $single_or_archive . '_fields_total', 4 ) ); $i++ ) {
 			$field_id = 'wcj_more_product_info_on_' . $single_or_archive . '_' . $i ;
 			$the_product_info = get_option( $field_id );
@@ -247,7 +245,7 @@ class WCJ_Product_Info extends WCJ_Module {
 				'class'    => 'chosen_select',
 				'default'  => 'woocommerce_after_shop_loop_item_title',
 				'type'     => 'select',
-				'options'  => $filters_array, //$this->product_info_on_archive_filters_array,
+				'options'  => $filters_array,
 				'desc_tip' => true,
 			),
 			array(
@@ -285,13 +283,8 @@ class WCJ_Product_Info extends WCJ_Module {
 				case 3: $default_value = '<li>' . __( '[wcj_product_total_sales before="Total sales: "]', 'woocommerce-jetpack' ) . '</li>'; break;
 				case 4: $default_value = '</ul>'; break;
 			}
-//			$desc = ( '' != $default_value ) ? __( 'Default', 'woocommerce-jetpack' ) . ': ' . esc_html( $default_value ) : '';
-//			$short_codes_list = '%you_save%, %total_sales%';
-//			$desc_tip = __( 'Field Nr. ', 'woocommerce-jetpack' ) . $i . '<br>' . __( 'Available short codes: ', 'woocommerce-jetpack' ) . $short_codes_list;
 			$settings[] = array(
 				'title'    => '',
-//				'desc_tip' => $desc_tip,
-//				'desc'     => $desc,
 				'id'       => $field_id,
 				'default'  => $default_value,
 				'type'     => 'textarea',

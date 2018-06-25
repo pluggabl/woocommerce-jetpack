@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 2.8.0
+ * @version 3.7.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.7.1
 	 */
 	function __construct() {
 
@@ -28,67 +28,22 @@ class WCJ_WPML extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			add_action( 'init', array( $this, 'create_wpml_xml_file_tool' ), PHP_INT_MAX );
+			if ( 'yes' === get_option( 'wcj_wpml_config_xml_auto_regenerate', 'no' ) ) {
+				add_action( 'wcj_version_updated', array( $this, 'create_wpml_xml_file' ) );
+			}
 		}
 
 		$this->notice = '';
 	}
 
 	/**
-	 * create_wpml_xml_file.
+	 * get_default_modules_to_skip.
 	 *
-	 * @version 2.5.0
-	 * @since   2.4.1
+	 * @version 3.7.1
+	 * @since   3.7.1
 	 */
-	function create_wpml_xml_file_tool() {
-		if ( ! isset( $_GET['create_wpml_xml_file'] ) || ! wcj_is_user_role( 'administrator' ) ) {
-			return;
-		}
-		if ( ! isset( $_GET['section'] ) || 'wpml' != $_GET['section'] ) {
-			return;
-		}
-		$this->create_wpml_xml_file();
-		$this->notice = __( 'File wpml-config.xml successfully regenerated!', 'woocommerce-jetpack' );
-	}
-
-	/**
-	 * create_wpml_xml_file.
-	 *
-	 * @version 2.4.4
-	 */
-	function create_wpml_xml_file() {
-		$file_path = wcj_plugin_path() . '/wpml-config.xml';
-		if ( false !== ( $handle = fopen( $file_path, 'w' ) ) ) {
-			fwrite( $handle, '<wpml-config>' . PHP_EOL );
-			fwrite( $handle, "\t" );
-			fwrite( $handle, '<admin-texts>' . PHP_EOL );
-			$sections = apply_filters( 'wcj_settings_sections', array() );
-			foreach ( $sections as $section => $section_title ) {
-				if ( $this->is_wpml_section( $section ) ) {
-					$settings = apply_filters( 'wcj_settings_' . $section, array() );
-					foreach ( $settings as $value ) {
-						if ( $this->is_wpml_value( $value ) ) {
-							fwrite( $handle, "\t\t" );
-							fwrite( $handle, '<key name="' . $value['id'] . '" />' . PHP_EOL );
-						}
-					}
-				}
-			}
-			fwrite( $handle, "\t" );
-			fwrite( $handle, '</admin-texts>' . PHP_EOL );
-			fwrite( $handle, '</wpml-config>' . PHP_EOL );
-			fclose( $handle );
-		}
-	}
-
-	/**
-	 * is_wpml_section.
-	 *
-	 * @version 2.8.0
-	 * @since   2.4.4
-	 */
-	function is_wpml_section( $section ) {
-		$sections_to_skip = array(
-
+	function get_default_modules_to_skip() {
+		return array(
 			'price_by_country',
 			'multicurrency',
 			'multicurrency_base_price',
@@ -129,35 +84,100 @@ class WCJ_WPML extends WCJ_Module {
 			'admin_tools',
 			'emails',
 			'wpml',
-
 		);
-		return ( ! in_array( $section, $sections_to_skip ) );
+	}
+
+	/**
+	 * get_default_values_to_skip.
+	 *
+	 * @version 3.7.1
+	 * @since   3.7.1
+	 */
+	function get_default_values_to_skip() {
+		return 'wcj_product_info_products_to_exclude|' .
+			'wcj_custom_product_tabs_title_global_hide_in_product_ids_|wcj_custom_product_tabs_title_global_hide_in_cats_ids_|' .
+			'wcj_custom_product_tabs_title_global_show_in_product_ids_|wcj_custom_product_tabs_title_global_show_in_cats_ids_|' .
+			'wcj_empty_cart_div_style|';
+	}
+
+	/**
+	 * create_wpml_xml_file.
+	 *
+	 * @version 2.5.0
+	 * @since   2.4.1
+	 */
+	function create_wpml_xml_file_tool() {
+		if ( ! isset( $_GET['create_wpml_xml_file'] ) || ! wcj_is_user_role( 'administrator' ) ) {
+			return;
+		}
+		if ( ! isset( $_GET['section'] ) || 'wpml' != $_GET['section'] ) {
+			return;
+		}
+		$this->create_wpml_xml_file();
+		$this->notice = __( 'File wpml-config.xml successfully regenerated!', 'woocommerce-jetpack' );
+	}
+
+	/**
+	 * create_wpml_xml_file.
+	 *
+	 * @version 3.7.1
+	 */
+	function create_wpml_xml_file() {
+		$file_path = wcj_plugin_path() . '/wpml-config.xml';
+		if ( false !== ( $handle = fopen( $file_path, 'w' ) ) ) {
+			fwrite( $handle, '<wpml-config>' . PHP_EOL );
+			fwrite( $handle, "\t" );
+			fwrite( $handle, '<admin-texts>' . PHP_EOL );
+			$sections = apply_filters( 'wcj_settings_sections', array() );
+			foreach ( $sections as $section => $section_title ) {
+				if ( $this->is_wpml_section( $section ) ) {
+					$settings = apply_filters( 'wcj_settings_' . $section, array() );
+					foreach ( $settings as $value ) {
+						if ( $this->is_wpml_value( $value ) ) {
+							fwrite( $handle, "\t\t" );
+							if ( false === ( $pos = strpos( $value['id'], '[' ) ) ) {
+								fwrite( $handle, '<key name="' . $value['id'] . '" />' . PHP_EOL );
+							} else {
+								fwrite( $handle, '<key name="' . substr( $value['id'], 0, $pos ) . '">' . PHP_EOL );
+								fwrite( $handle, "\t\t\t" );
+								fwrite( $handle, '<key name="*" />' . PHP_EOL );
+								fwrite( $handle, "\t\t" );
+								fwrite( $handle, '</key>' . PHP_EOL );
+							}
+						}
+					}
+				}
+			}
+			fwrite( $handle, "\t" );
+			fwrite( $handle, '</admin-texts>' . PHP_EOL );
+			fwrite( $handle, '</wpml-config>' . PHP_EOL );
+			fclose( $handle );
+		}
+	}
+
+	/**
+	 * is_wpml_section.
+	 *
+	 * @version 3.7.1
+	 * @since   2.4.4
+	 */
+	function is_wpml_section( $section ) {
+		return ( ! in_array( $section, get_option( 'wcj_wpml_config_xml_modules_to_skip', $this->get_default_modules_to_skip() ) ) );
 	}
 
 	/**
 	 * is_wpml_value.
 	 *
-	 * @version 2.8.0
+	 * @version 3.7.1
 	 */
 	function is_wpml_value( $value ) {
 
 		// Type
-		$is_type_ok = ( 'textarea' === $value['type'] || 'text' === $value['type'] );
+		$is_type_ok = ( 'textarea' === $value['type'] || 'custom_textarea' === $value['type'] || 'text' === $value['type'] );
 
 		// ID
-		$values_to_skip = array(
-
-			'wcj_product_info_products_to_exclude',
-
-			'wcj_custom_product_tabs_title_global_hide_in_product_ids_',
-			'wcj_custom_product_tabs_title_global_hide_in_cats_ids_',
-			'wcj_custom_product_tabs_title_global_show_in_product_ids_',
-			'wcj_custom_product_tabs_title_global_show_in_cats_ids_',
-
-			'wcj_empty_cart_div_style',
-
-		);
-		$is_id_ok = true;
+		$values_to_skip = array_filter( array_map( 'trim', explode( '|', get_option( 'wcj_wpml_config_xml_values_to_skip', $this->get_default_values_to_skip() ) ) ) );
+		$is_id_ok       = true;
 		foreach ( $values_to_skip as $value_to_skip ) {
 			if ( false !== strpos( $value['id'], $value_to_skip ) ) {
 				$is_id_ok = false;

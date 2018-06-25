@@ -188,9 +188,14 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.7.1 - 23/06/2018 =
+= 3.7.1 - 25/06/2018 =
+* Feature - EMAILS & MISC. - Booster WPML - "Automatically Regenerate", "Modules to Skip" and "Option IDs to Skip" options added.
 * Fix - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Empty value fixed for "Fields to Disable" option.
 * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Admin Settings - Minor restyling.
+* Dev - EMAILS & MISC. - Booster WPML - `custom_textarea` type options added to the `wpml-config.xml` regeneration algorithm.
+* Dev - EMAILS & MISC. - Booster WPML - Serialized values properly handled, when regenerating `wpml-config.xml` file.
+~* Dev - EMAILS & MISC. - Booster WPML - `wpml-config.xml` file updated.
+* Dev - `wcj_version_updated` hook added (`wp_schedule_single_event()`).
 
 = 3.7.0 - 22/06/2018 =
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products on sale" options added.
