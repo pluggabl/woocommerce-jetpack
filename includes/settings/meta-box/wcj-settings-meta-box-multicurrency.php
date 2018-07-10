@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Multicurrency (Currency Switcher)
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -51,6 +51,21 @@ foreach ( $products as $product_id => $desc ) {
 				'meta_name'  => '_' . 'wcj_multicurrency_per_product_sale_price_' . $currency_code,
 			),
 		) );
+		if ( 'yes' === get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ) ) {
+			$currencies[] = array(
+				'name'       => 'wcj_multicurrency_per_product_make_empty_' . $currency_code . '_' . $product_id,
+				'default'    => 'no',
+				'type'       => 'select',
+				'options'    => array(
+					'no'  => __( 'No', 'woocommerce-jetpack' ),
+					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+				),
+				'title'      => '[' . $currency_code . '] ' . __( 'Make Empty Price', 'woocommerce-jetpack' ),
+				'desc'       => $desc,
+				'product_id' => $product_id,
+				'meta_name'  => '_' . 'wcj_multicurrency_per_product_make_empty_' . $currency_code,
+			);
+		}
 	}
 }
 return $currencies;

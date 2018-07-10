@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    "pretty prices"
@@ -47,6 +47,12 @@ $settings = array(
 		'desc_tip' => __( 'Defines which variations are listed on admin product edit page in Multicurrency meta box. Ignored if "Multicurrency on per Product Basis" option is disabled.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_per_product_list_available_variations_only',
 		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Add option to make empty price', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_per_product_make_empty',
+		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(

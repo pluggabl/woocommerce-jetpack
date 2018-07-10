@@ -266,14 +266,15 @@ $settings = array_merge( $settings, array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Send Additional Email to Admin on', 'woocommerce-jetpack' ),
+		'title'    => __( 'Send Additional Email to Admin on User Actions', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Admin email: <em>%s</em>.', 'woocommerce-jetpack' ), get_option( 'admin_email' ) ),
 		'id'       => 'wcj_checkout_files_upload_admin_email',
 		'default'  => array(),
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
 		'options'  => array(
-			'remove_file' => __( 'File removed by user on "Thank You" or "My Account" page', 'woocommerce-jetpack' ),
-			'upload_file' => __( 'File uploaded by user on "Thank You" or "My Account" page', 'woocommerce-jetpack' ),
+			'remove_file' => __( 'File removed on "Thank You" or "My Account" page', 'woocommerce-jetpack' ),
+			'upload_file' => __( 'File uploaded on "Thank You" or "My Account" page', 'woocommerce-jetpack' ),
 		),
 	),
 	array(

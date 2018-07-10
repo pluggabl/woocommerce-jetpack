@@ -2,10 +2,9 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 3.4.0
+ * @version 3.7.1
  * @since   2.5.6
  * @author  Algoritmika Ltd.
- * @todo    clean up
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -29,7 +28,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * Init settings
 	 *
-	 * @version 3.4.0
+	 * @version 3.7.1
 	 * @since   2.5.6
 	 * @access  public
 	 * @return  void
@@ -49,7 +48,6 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 
 		// Load the settings.
 		$this->init_instance_form_fields();
-//		$this->init_settings();
 
 		// Define user set variables
 		$this->title                      = $this->get_option( 'title' );
@@ -59,18 +57,14 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 		$this->type                       = $this->get_option( 'type' );
 		$this->apply_formula              = apply_filters( 'booster_option', 'no', $this->get_option( 'apply_formula' ) );
 		$this->weight_table_total_rows    = $this->get_option( 'weight_table_total_rows' );
-		/* for ( $i = 1; $i <= $this->weight_table_total_rows; $i++ ) {
-			$option_name = 'weight_table_weight_row_' . $i;
-			$this->{$option_name} = $this->get_option( $option_name );
-			$option_name = 'weight_table_cost_row_' . $i;
-			$this->{$option_name} = $this->get_option( $option_name );
-		} */
 
 		// Save settings in admin
 		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 
 		// Add weight table rows
-		add_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) );
+		if ( apply_filters( 'wcj_custom_shipping_do_add_table_rows', true ) ) {
+			add_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) );
+		}
 	}
 
 	/**
@@ -98,7 +92,6 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 							'type'        => 'text',
 							'default'     => 0,
 							'desc_tip'    => true,
-//							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
 						),
 					) );
 				}
@@ -167,7 +160,6 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 				'description' => __( 'Cost. If calculating by weight - then cost per one weight unit. If calculating by quantity - then cost per one piece.', 'woocommerce-jetpack' ),
 				'default'     => 0,
 				'desc_tip'    => true,
-//				'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
 			),
 			'min_weight' => array(
 				'title'       => __( 'Min Weight', 'woocommerce' ),
@@ -204,24 +196,6 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 				'custom_attributes' => array( 'min'  => '0' ),
 			),
 		);
-		/* for ( $i = 1; $i <= $this->get_option( 'weight_table_total_rows' ); $i++ ) {
-			$this->instance_form_fields = array_merge( $this->instance_form_fields, array(
-				'weight_table_weight_row_' . $i => array(
-					'title'       => __( 'Max Weight', 'woocommerce' ) . ' #' . $i,
-					'type'        => 'number',
-					'default'     => 0,
-					'desc_tip'    => true,
-					'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
-				),
-				'weight_table_cost_row_' . $i => array(
-					'title'       => __( 'Cost', 'woocommerce' ) . ' #' . $i,
-					'type'        => 'number',
-					'default'     => 0,
-					'desc_tip'    => true,
-					'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
-				),
-			) );
-		} */
 	}
 
 	/**

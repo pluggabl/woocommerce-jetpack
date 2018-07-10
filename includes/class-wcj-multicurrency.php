@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.5.1
+ * @version 3.7.1
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -171,16 +171,17 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 3.5.0
+	 * @version 3.7.1
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$currency_code = $this->get_current_currency_code();
 		$price_hash['wcj_multicurrency'] = array(
-			'currency'           => $currency_code,
-			'exchange_rate'      => $this->get_currency_exchange_rate( $currency_code ),
-			'per_product'        => get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ),
-			'rounding'           => get_option( 'wcj_multicurrency_rounding', 'no_round' ),
-			'rounding_precision' => get_option( 'wcj_multicurrency_rounding_precision', absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) ),
+			'currency'                => $currency_code,
+			'exchange_rate'           => $this->get_currency_exchange_rate( $currency_code ),
+			'per_product'             => get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ),
+			'per_product_make_empty'  => get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ),
+			'rounding'                => get_option( 'wcj_multicurrency_rounding', 'no_round' ),
+			'rounding_precision'      => get_option( 'wcj_multicurrency_rounding_precision', absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) ),
 		);
 		return $price_hash;
 	}
@@ -215,7 +216,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.1.2
+	 * @version 3.7.1
 	 */
 	function change_price( $price, $_product ) {
 
@@ -230,7 +231,12 @@ class WCJ_Multicurrency extends WCJ_Module {
 		// Per product
 		if ( 'yes' === get_option( 'wcj_multicurrency_per_product_enabled' , 'yes' ) && null != $_product ) {
 			$_product_id = wcj_get_product_id( $_product );
-			if ( '' != ( $regular_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_regular_price_' . $this->get_current_currency_code(), true ) ) ) {
+			if (
+				'yes' === get_option( 'wcj_multicurrency_per_product_make_empty', 'no' ) &&
+				'yes' === get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_make_empty_' . $this->get_current_currency_code(), true )
+			) {
+				return '';
+			} elseif ( '' != ( $regular_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_regular_price_' . $this->get_current_currency_code(), true ) ) ) {
 				$_current_filter = current_filter();
 				if ( 'woocommerce_get_price_including_tax' == $_current_filter || 'woocommerce_get_price_excluding_tax' == $_current_filter ) {
 					return wcj_get_product_display_price( $_product );
