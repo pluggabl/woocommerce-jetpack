@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  * @todo    styling options
@@ -268,13 +268,18 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 3.7.0
+	 * @version 3.7.1
 	 * @since   2.4.5
 	 * @todo    add option for admin to delete files one by one (i.e. not all at once)
+	 * @todo    more options for `$additional_admin_emails` customization, e.g.: admin email, subject, content, from
 	 */
 	function process_checkout_files_upload() {
 		wcj_session_maybe_start();
-		$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
+		$additional_admin_emails = get_option( 'wcj_checkout_files_upload_admin_email', array() );
+		$admin_email             = get_option( 'admin_email' );
+		$admin_email_subject     = __( 'Booster for WooCommerce: Checkout Files Upload: %action%', 'woocommerce-jetpack' );
+		$admin_email_content     = __( 'Order ID: %order_id%; File name: %file_name%', 'woocommerce-jetpack' );
+		$total_number            = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_files_upload_total_number', 1 ) );
 		// Remove file
 		for ( $i = 1; $i <= $total_number; $i++ ) {
 			if ( isset( $_POST[ 'wcj_remove_checkout_file_' . $i ] ) ) {
@@ -289,15 +294,28 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 							__( 'File "%s" was successfully removed.', 'woocommerce-jetpack' ) ), $file_name ) );
 						delete_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_' . $i );
 						delete_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_real_name_' . $i );
-						do_action( 'wcj_checkout_files_upload', 'remove_file', $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] );
+						if ( in_array( 'remove_file', $additional_admin_emails ) ) {
+							wp_mail(
+								$admin_email,
+								wcj_handle_replacements( array(
+									'%action%'    => __( 'File Removed', 'woocommerce-jetpack' ),
+								), $admin_email_subject ),
+								wcj_handle_replacements( array(
+									'%order_id%'  => $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ],
+									'%file_name%' => $file_name,
+								), $admin_email_content )
+							);
+						}
+						do_action( 'wcj_checkout_files_upload', 'remove_file', $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ], $file_name );
 					}
 				} else {
 					$session_data = wcj_session_get( 'wcj_checkout_files_upload_' . $i );
+					$file_name    = $session_data['name'];
 					unlink( $session_data['tmp_name'] );
-					wc_add_notice( sprintf( get_option( 'wcj_checkout_files_upload_notice_success_remove_' . $i,
-						__( 'File "%s" was successfully removed.', 'woocommerce-jetpack' ) ), $session_data['name'] ) );
 					wcj_session_set( 'wcj_checkout_files_upload_' . $i, null );
-					do_action( 'wcj_checkout_files_upload', 'remove_file', false );
+					wc_add_notice( sprintf( get_option( 'wcj_checkout_files_upload_notice_success_remove_' . $i,
+						__( 'File "%s" was successfully removed.', 'woocommerce-jetpack' ) ), $file_name ) );
+					do_action( 'wcj_checkout_files_upload', 'remove_file', false, $file_name );
 				}
 			}
 		}
@@ -338,6 +356,18 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 						// To order
 						if ( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ) {
 							$this->add_files_to_order( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ], null );
+							if ( in_array( 'upload_file', $additional_admin_emails ) ) {
+								wp_mail(
+									$admin_email,
+									wcj_handle_replacements( array(
+										'%action%'    => __( 'File Uploaded', 'woocommerce-jetpack' ),
+									), $admin_email_subject ),
+									wcj_handle_replacements( array(
+										'%order_id%'  => $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ],
+										'%file_name%' => $_FILES[ $file_name ]['name'],
+									), $admin_email_content )
+								);
+							}
 						}
 						// Action
 						do_action( 'wcj_checkout_files_upload', 'upload_file',

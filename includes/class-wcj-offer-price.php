@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.0
+	 * @version 3.7.1
 	 * @since   2.9.0
 	 * @todo    settings - more info about position priorities, e.g.: __( 'Standard priorities for "Inside single product summary": title - 5, rating - 10, price - 10, excerpt - 20, add to cart - 30, meta - 40, sharing - 50', 'woocommerce-jetpack' )
 	 * @todo    (maybe) css - customizable fonts etc.
@@ -52,6 +52,19 @@ class WCJ_Offer_Price extends WCJ_Module {
 					array( $this, 'add_offer_price_button' ),
 					get_option( 'wcj_offer_price_button_position_priority_archives', 10 )
 				);
+			}
+			$custom_hooks = apply_filters( 'booster_option', '', get_option( 'wcj_offer_price_button_position_custom', '' ) );
+			if ( ! empty( $custom_hooks ) ) {
+				$custom_hooks           = array_filter( array_map( 'trim', explode( '|', $custom_hooks ) ) );
+				$custom_hook_priorities = apply_filters( 'booster_option', '', get_option( 'wcj_offer_price_button_position_priority_custom', '' ) );
+				$custom_hook_priorities = array_map( 'trim', explode( '|', $custom_hook_priorities ) );
+				foreach ( $custom_hooks as $i => $custom_hook ) {
+					add_action(
+						$custom_hook,
+						array( $this, 'add_offer_price_button' ),
+						( isset( $custom_hook_priorities[ $i ] ) ? $custom_hook_priorities[ $i ] : 10 )
+					);
+				}
 			}
 			add_action( 'woocommerce_before_main_content',    array( $this, 'add_offer_price_form' ) );
 			add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );

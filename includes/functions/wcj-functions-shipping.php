@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Shipping
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -202,7 +202,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	/*
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 3.6.0
+	 * @version 3.7.1
 	 * @since   2.4.4
 	 * @return  string
 	 * @todo    (maybe) go through all packages instead of only `$packages[0]`
@@ -215,10 +215,12 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 				if ( wcj_is_module_enabled( 'shipping_by_user_role' ) ) {
 					$available_shipping_methods = WCJ()->modules['shipping_by_user_role']->available_shipping_methods( $available_shipping_methods, false );
 				}
-				foreach ( $available_shipping_methods as $available_shipping_method ) {
-					$method_id = ( WCJ_IS_WC_VERSION_BELOW_3_2_0 ? $available_shipping_method->method_id : $available_shipping_method->get_method_id() );
-					if ( 'free_shipping' === $method_id ) {
-						return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
+				if ( is_array( $available_shipping_methods ) ) {
+					foreach ( $available_shipping_methods as $available_shipping_method ) {
+						$method_id = ( WCJ_IS_WC_VERSION_BELOW_3_2_0 ? $available_shipping_method->method_id : $available_shipping_method->get_method_id() );
+						if ( 'free_shipping' === $method_id ) {
+							return do_shortcode( get_option( 'wcj_shipping_left_to_free_info_content_reached', __( 'You have Free delivery', 'woocommerce-jetpack' ) ) );
+						}
 					}
 				}
 			}

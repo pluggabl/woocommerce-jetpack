@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Offer Price
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -113,6 +113,25 @@ return array(
 		'id'       => 'wcj_offer_price_button_position_priority_archives',
 		'type'     => 'number',
 		'default'  => 10,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Advanced: Custom Position(s)', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Add custom hook. If adding more than one hook, separate with vertical bar ( | ). Ignored if empty.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_button_position_custom',
+		'type'     => 'textarea',
+		'default'  => '',
+		'css'      => 'width:100%;',
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'desc'     => __( 'Custom Position Priority (i.e. Order)', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Add custom hook priority. If adding more than one hook, separate with vertical bar ( | ).', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_button_position_priority_custom',
+		'type'     => 'textarea',
+		'default'  => '',
+		'css'      => 'width:100%;',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(

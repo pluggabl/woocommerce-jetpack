@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Files Upload
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -264,6 +264,17 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_checkout_files_upload_attach_to_customer_processing_order',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Send Additional Email to Admin on', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_files_upload_admin_email',
+		'default'  => array(),
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => array(
+			'remove_file' => __( 'File removed by user on "Thank You" or "My Account" page', 'woocommerce-jetpack' ),
+			'upload_file' => __( 'File uploaded by user on "Thank You" or "My Account" page', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'type'     => 'sectionend',

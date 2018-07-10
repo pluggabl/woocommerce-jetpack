@@ -2,12 +2,11 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add link to Booster's shortcodes list
  * @todo    clean up
- * @todo    (maybe) move `wcj_general_advanced_disable_save_sys_temp_dir` to "PDF Invoicing" module
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -127,13 +126,6 @@ $settings = array(
 		'title'    => __( 'Disable Loading Timepicker JavaScript', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_disable_timepicker_js',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Disable Saving PDFs in PHP directory for temporary files', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_general_advanced_disable_save_sys_temp_dir',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

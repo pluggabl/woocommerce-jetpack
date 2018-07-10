@@ -2,10 +2,10 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   2.5.3
  * @author  Algoritmika Ltd.
- * @todo    admin order view (names);
+ * @todo    admin order view (names)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -403,7 +403,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Adds info to order details (and emails).
 	 *
-	 * @version 3.7.0
+	 * @version 3.7.1
 	 * @since   2.5.3
 	 */
 	function add_info_to_order_item_name( $name, $item, $is_cart = false ) {
@@ -416,20 +416,22 @@ class WCJ_Product_Addons extends WCJ_Module {
 			$item_format  = get_option( 'wcj_product_addons_order_details_format_each_addon', '&nbsp;| %addon_label%: %addon_price%' );
 			$end_format   = get_option( 'wcj_product_addons_order_details_format_end', '' );
 		}
-		$name .= $start_format;
-		$addons = $this->get_product_addons( $item['product_id'] );
-		$_product = wc_get_product( $item['product_id'] );
+		$addons_info = '';
+		$addons      = $this->get_product_addons( $item['product_id'] );
+		$_product    = wc_get_product( $item['product_id'] );
 		foreach ( $addons as $addon ) {
 			if ( isset( $item[ $addon['price_key'] ] ) ) {
 				$addon_price = ( $is_cart ) ? $this->maybe_convert_currency( $item[ $addon['price_key'] ], $_product ) : $item[ $addon['price_key'] ];
-				$name .= str_replace(
+				$addons_info .= str_replace(
 					array( '%addon_label%', '%addon_price%' ),
 					array( $item[ $addon['label_key'] ], wc_price( wcj_get_product_display_price( $_product, $addon_price ) ) ),
 					$item_format
 				);
 			}
 		}
-		$name .= $end_format;
+		if ( '' != $addons_info ) {
+			$name .= $start_format . $addons_info . $end_format;
+		}
 		return $name;
 	}
 

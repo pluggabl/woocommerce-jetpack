@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -59,12 +59,12 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * generate_report_zip.
 	 *
-	 * @version 3.5.0
+	 * @version 3.7.1
 	 * @since   2.3.10
 	 */
 	function generate_report_zip() {
 		if ( isset( $_POST['get_invoices_report_zip'] ) ) {
-			if ( wcj_is_module_enabled( 'general' ) && 'yes' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
+			if ( 'yes' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 				$this->notice = '<div class="error"><p><strong>' . sprintf(
 					__( 'This option is disabled with "Disable Saving PDFs in PHP directory for temporary files" checkbox in <a href="%s" target="_blank">WooCommerce > Settings > Booster > Emails & Misc. > General > Advanced Options</a>.', 'woocommerce-jetpack' ),
 					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ) .

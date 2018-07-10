@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @author  Algoritmika Ltd.
  */
 
@@ -209,7 +209,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 3.6.0
+	 * @version 3.7.1
 	 * @todo    (maybe) `die()` on success
 	 */
 	function get_pdf( $dest ) {
@@ -237,7 +237,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 				header( "Content-type: application/pdf" );
 				header( "Content-Disposition: inline; filename=" . urlencode( $file_name ) );
 			}
-			if ( wcj_is_module_enabled( 'general' ) && 'yes' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
+			if ( 'yes' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 				header( "Content-Length: " . strlen( $result_pdf ) );
 				echo $result_pdf;
 			} else {

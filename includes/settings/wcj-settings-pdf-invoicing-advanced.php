@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) create "Tools (Options)" submodule
@@ -58,7 +58,7 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Advanced', 'woocommerce-jetpack' ) . ': ' . __( 'Default Images Directory', 'woocommerce-jetpack' ),
+		'title'    => __( 'Default Images Directory', 'woocommerce-jetpack' ),
 		'desc'     => '<br>' . __( 'Default images directory in TCPDF library (K_PATH_IMAGES).', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Try changing this if you have issues displaying images in page background or header.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_invoicing_general_header_images_path', // mislabelled, should be `wcj_invoicing_general_images_path`
@@ -72,11 +72,19 @@ return array(
 		),
 	),
 	array(
-		'title'    => __( 'Advanced', 'woocommerce-jetpack' ) . ': ' . __( 'Temp Directory', 'woocommerce-jetpack' ),
+		'title'    => __( 'Temp Directory', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Leave blank to use the default temp directory.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_invoicing_general_tmp_dir',
 		'default'  => '',
 		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Disable Saving PDFs in Temp Directory', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Please note that attaching invoices to emails and generating invoices report zip will stop working, if you enable this checkbox.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_general_advanced_disable_save_sys_temp_dir', // mislabelled, should be `wcj_invoicing_advanced_disable_save_sys_temp_dir`
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',
