@@ -333,7 +333,7 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Check for Outputted Data', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Enable this if you see data outputted on frontend twice. Disable if you see no data outputted.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Ensures that data outputted only once. Enable this if you see data outputted on frontend twice. Disable if you see no data outputted.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_input_fields_check_for_outputted_data',
 		'default'  => 'yes',
 		'type'     => 'checkbox',

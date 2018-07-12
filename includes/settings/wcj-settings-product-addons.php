@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -224,6 +224,14 @@ $settings = array_merge( $settings, array(
 			'yes'       => __( 'Yes', 'woocommerce-jetpack' ),
 			'no'        => __( 'No', 'woocommerce-jetpack' ),
 		),
+	),
+	array(
+		'title'    => __( 'Advanced: Check for Outputted Data', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Ensures that data outputted only once. Enable this if you see data outputted on frontend twice. Disable if you see no data outputted.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_check_for_outputted_data',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',

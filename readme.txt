@@ -195,12 +195,13 @@ You can see the differences between versions in this [table](https://booster.io/
 * Feature - EMAILS & MISC. - Booster WPML - "Automatically Regenerate", "Modules to Skip" and "Option IDs to Skip" options added.
 ~$* Feature - EMAILS & MISC. - My Account - "Customize Menu & Endpoints" options added.
 * Fix - PRODUCTS - Product Addons - Not outputting "before" and "after" templates for cart & order details table info, in case if no addons info was added.
-~* Fix - PRODUCTS - Product Input Fields - Advanced Options - "Check for Outputted Data" option added.
 * Fix - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Empty value fixed for "Fields to Disable" option.
 * Fix - SHIPPING & ORDERS - Left to Free Shipping - `is_array()` check added to the `wcj_get_left_to_free_shipping()` function.
 * Fix - Functions - Products - `wcj_get_product_display_price()` - Extra checks for valid `$_product` added.
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Advanced: User IP Detection Method" option added.
 !* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Speed optimized (`$this->customer_country_by_ip` added).
+~* Dev - PRODUCTS - Product Input Fields - Advanced Options - "Check for Outputted Data" option added.
+~* Dev - PRODUCTS - Product Addons - "Advanced: Check for Outputted Data" option added.
 * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Admin Settings - Minor restyling.
 * Dev - CART & CHECKOUT - Checkout Files Upload - `wcj_checkout_files_upload` filter - `remove_file` - File name parameter added.
 ~* Dev - SHIPPING & ORDERS - Custom Shipping - `wcj_custom_shipping_do_add_table_rows` filter added.

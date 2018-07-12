@@ -530,11 +530,11 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 3.7.0
+	 * @version 3.7.1
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {
-		if ( isset( $this->are_addons_displayed ) ) {
+		if ( isset( $this->are_addons_displayed ) && 'yes' === get_option( 'wcj_product_addons_check_for_outputted_data', 'yes' ) ) {
 			return;
 		}
 		$html     = '';
