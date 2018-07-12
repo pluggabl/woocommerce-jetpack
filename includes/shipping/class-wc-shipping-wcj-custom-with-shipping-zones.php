@@ -62,7 +62,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 		add_action( 'woocommerce_update_options_shipping_' . $this->id, array( $this, 'process_admin_options' ) );
 
 		// Add weight table rows
-		if ( apply_filters( 'wcj_custom_shipping_do_add_table_rows', true ) ) {
+		if ( apply_filters( 'wcj_custom_shipping_do_add_table_rows', true, $this ) ) {
 			add_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) );
 		}
 	}

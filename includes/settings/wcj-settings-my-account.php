@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - My Account
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -52,6 +52,51 @@ $settings = array(
 		'id'       => 'wcj_my_account_options',
 	),
 );
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Menu & Endpoints Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_my_account_menu_options',
+	),
+	array(
+		'title'    => __( 'Customize Menu & Endpoints', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'       => 'wcj_my_account_menu_customize_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+) );
+foreach ( array_merge( $this->account_menu_items, $this->account_menu_endpoints ) as $account_menu_item_id => $account_menu_item_title ) {
+	$settings = array_merge( $settings, array(
+		array(
+			'title'    => $account_menu_item_title,
+			'desc_tip' => __( 'Sets title.', 'woocommerce-jetpack' ) . ' ' . __( 'Set empty, to use the default title.', 'woocommerce-jetpack' ),
+			'id'       => "wcj_my_account_menu_title[{$account_menu_item_id}]",
+			'default'  => '',
+			'type'     => 'text',
+		),
+	) );
+}
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Customize Menu Order', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_my_account_menu_order_customize_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'desc_tip' => sprintf( __( 'Default: %s', 'woocommerce-jetpack' ), '<br><em>' . str_replace( PHP_EOL, '<br>', $this->menu_order_default ) . '</em>' ),
+		'id'       => 'wcj_my_account_menu_order',
+		'default'  => $this->menu_order_default,
+		'type'     => 'textarea',
+		'css'      => 'height:200px;',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_my_account_menu_options',
+	),
+) );
 $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Custom Info Blocks', 'woocommerce-jetpack' ),

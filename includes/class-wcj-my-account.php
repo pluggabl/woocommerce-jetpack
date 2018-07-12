@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 3.7.1
 	 * @since   2.9.0
 	 */
 	function __construct() {
@@ -26,6 +26,27 @@ class WCJ_My_Account extends WCJ_Module {
 		$this->desc       = __( 'WooCommerce "My Account" page customization.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-my-account';
 		parent::__construct();
+
+		$this->account_menu_items = array(
+			'dashboard'       => __( 'Dashboard', 'woocommerce' ),
+			'orders'          => __( 'Orders', 'woocommerce' ),
+			'downloads'       => __( 'Downloads', 'woocommerce' ),
+			'edit-address'    => __( 'Addresses', 'woocommerce' ),
+			'payment-methods' => __( 'Payment methods', 'woocommerce' ),
+			'edit-account'    => __( 'Account details', 'woocommerce' ),
+			'customer-logout' => __( 'Logout', 'woocommerce' ),
+		);
+		$this->account_menu_endpoints = array(
+			'orders'          => __( 'Orders', 'woocommerce' ),
+			'view-order'      => __( 'View order', 'woocommerce' ),
+			'downloads'       => __( 'Downloads', 'woocommerce' ),
+			'edit-account'    => __( 'Edit account', 'woocommerce' ) . ' (' . __( 'Account details', 'woocommerce' ) . ')',
+			'edit-address'    => __( 'Addresses', 'woocommerce' ),
+			'payment-methods' => __( 'Payment methods', 'woocommerce' ),
+			'lost-password'   => __( 'Lost password', 'woocommerce' ),
+			'customer-logout' => __( 'Logout', 'woocommerce' ),
+		);
+		$this->menu_order_default = implode( PHP_EOL, array_keys( $this->account_menu_items ) );
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'maybe_add_my_account_order_actions' ), 10, 2 );
@@ -47,7 +68,60 @@ class WCJ_My_Account extends WCJ_Module {
 				add_action( 'woocommerce_register_form',    array( $this, 'add_registration_extra_fields' ), PHP_INT_MAX );
 				add_action( 'woocommerce_created_customer', array( $this, 'process_registration_extra_fields' ), PHP_INT_MAX, 3 );
 			}
+			// Menu & Endpoints
+			if ( 'yes' === get_option( 'wcj_my_account_menu_customize_enabled', 'no' ) ) {
+				foreach ( $this->account_menu_endpoints as $account_menu_endpoint_id => $account_menu_endpoint_title ) {
+					add_filter( 'woocommerce_endpoint_' . $account_menu_endpoint_id . '_title', array( $this, 'customize_endpoint_title' ), PHP_INT_MAX, 2 );
+				}
+				add_filter( 'woocommerce_account_menu_items', array( $this, 'customize_menu' ), PHP_INT_MAX );
+			}
 		}
+	}
+
+	/**
+	 * customize_endpoint_title.
+	 *
+	 * @version 3.7.1
+	 * @since   3.7.1
+	 * @todo    (maybe) 'orders': `if ( ! empty( $wp->query_vars['orders'] ) ) { $title = sprintf( __( 'Orders (page %d)', 'woocommerce' ), intval( $wp->query_vars['orders'] ) ); }`
+	 * @todo    (maybe) 'view-order': `$title = ( $order = wc_get_order( $wp->query_vars['view-order'] ) ) ? sprintf( __( 'Order #%s', 'woocommerce' ), $order->get_order_number() ) : '';`
+	 * @todo    (maybe) 'order-pay'      => __( 'Pay for order', 'woocommerce' )
+	 * @todo    (maybe) 'order-received' => __( 'Order received', 'woocommerce' )
+	 */
+	function customize_endpoint_title( $title, $endpoint ) {
+		$menu_titles = get_option( 'wcj_my_account_menu_title', array() );
+		if ( ! empty( $menu_titles[ $endpoint ] ) ) {
+			return $menu_titles[ $endpoint ];
+		}
+		return $title;
+	}
+
+	/**
+	 * customize_menu.
+	 *
+	 * @version 3.7.1
+	 * @since   3.7.1
+	 * @todo    (maybe) option to disable menu (and maybe also info about possibility to disable endpoint(s) via "WooCommerce > Settings > Advanced > Page setup")
+	 */
+	function customize_menu( $items ) {
+		$menu_titles = get_option( 'wcj_my_account_menu_title', array() );
+		foreach ( $items as $item_id => $item_title ) {
+			if ( ! empty( $menu_titles[ $item_id ] ) ) {
+				$items[ $item_id ] = $menu_titles[ $item_id ];
+			}
+		}
+		if ( 'yes' === get_option( 'wcj_my_account_menu_order_customize_enabled', 'no' ) ) {
+			$menu_order    = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order', $this->menu_order_default ) ) );
+			$modified_menu = array();
+			foreach ( $menu_order as $item_id ) {
+				if ( isset( $items[ $item_id ] ) ) {
+					$modified_menu[ $item_id ] = $items[ $item_id ];
+					unset( $items[ $item_id ] );
+				}
+			}
+			$items = array_merge( $modified_menu, $items );
+		}
+		return $items;
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -142,6 +142,16 @@ $settings = array(
 		'id'       => 'wcj_price_by_country_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',
+	),
+	array(
+		'title'    => __( 'Advanced: User IP Detection Method', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_country_ip_detection_method',
+		'default'  => 'wc',
+		'type'     => 'select',
+		'options'  => array(
+			'wc'      => __( 'WooCommerce', 'woocommerce-jetpack' ),
+			'booster' => __( 'Booster', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'type'     => 'sectionend',

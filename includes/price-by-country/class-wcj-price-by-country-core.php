@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @author  Algoritmika Ltd.
  */
 
@@ -189,16 +189,22 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_by_ip.
 	 *
-	 * @version 2.5.1
+	 * @version 3.7.1
 	 * @since   2.5.0
 	 */
 	function get_customer_country_by_ip() {
+		if ( isset( $this->customer_country_by_ip ) ) {
+			return $this->customer_country_by_ip;
+		}
 		if ( class_exists( 'WC_Geolocation' ) ) {
 			// Get the country by IP
-			$location = WC_Geolocation::geolocate_ip();
+			$location = WC_Geolocation::geolocate_ip( ( 'wc' === get_option( 'wcj_price_by_country_ip_detection_method', 'wc' ) ? '' : wcj_get_the_ip() ) );
 			// Base fallback
 			if ( empty( $location['country'] ) ) {
 				$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
+			}
+			if ( ! empty( $location['country'] ) ) {
+				$this->customer_country_by_ip = $location['country'];
 			}
 			return ( isset( $location['country'] ) ) ? $location['country'] : null;
 		} else {
