@@ -110,7 +110,7 @@ class WCJ_My_Account extends WCJ_Module {
 				$items[ $item_id ] = $menu_titles[ $item_id ];
 			}
 		}
-		if ( 'yes' === get_option( 'wcj_my_account_menu_order_customize_enabled', 'no' ) ) {
+		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_my_account_menu_order_customize_enabled', 'no' ) ) ) {
 			$menu_order    = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order', $this->menu_order_default ) ) );
 			$modified_menu = array();
 			foreach ( $menu_order as $item_id ) {

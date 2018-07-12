@@ -84,8 +84,11 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_my_account_menu_order_customize_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
+		'desc'     => __( 'Menu order', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf( __( 'Default: %s', 'woocommerce-jetpack' ), '<br><em>' . str_replace( PHP_EOL, '<br>', $this->menu_order_default ) . '</em>' ),
 		'id'       => 'wcj_my_account_menu_order',
 		'default'  => $this->menu_order_default,
