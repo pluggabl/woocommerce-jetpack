@@ -55,6 +55,10 @@ $settings = array(
 $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Menu & Endpoints Options', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Tip', 'woocommerce-jetpack' ) . ': ' .
+			sprintf( __( 'If you wish to disable some menu items, you can do it in %s.', 'woocommerce-jetpack' ),
+				'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=advanced#woocommerce_myaccount_orders_endpoint' ). '">' .
+					__( 'WooCommerce > Settings > Advanced > Page setup > Account endpoints', 'woocommerce-jetpack' ) . '</a>' ),
 		'type'     => 'title',
 		'id'       => 'wcj_my_account_menu_options',
 	),

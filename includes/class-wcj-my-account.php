@@ -185,7 +185,7 @@ class WCJ_My_Account extends WCJ_Module {
 	 *
 	 * @version 3.7.1
 	 * @since   3.7.1
-	 * @todo    (maybe) option to disable menu (and maybe also info about possibility to disable endpoint(s) via "WooCommerce > Settings > Advanced > Page setup")
+	 * @todo    (maybe) option to disable menu
 	 */
 	function customize_menu( $items ) {
 		$menu_titles = get_option( 'wcj_my_account_menu_title', array() );
