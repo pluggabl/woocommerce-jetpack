@@ -12,11 +12,28 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $all_modules = array();
 if ( function_exists( 'WCJ' ) && ! empty( WCJ()->modules ) ) {
 	foreach ( WCJ()->modules as $module_key => $module ) {
-		$all_modules[ $module_key ] = $module->short_desc;
+		$desc_prefix = ( false !== strpos( $module_key, 'pdf_invoicing_' ) ? __( 'PDF Invoicing', 'woocommerce-jetpack' ) . ': ' : '' );
+		$all_modules[ $module_key ] = $desc_prefix . $module->short_desc;
 	}
 }
 
 $settings = array(
+	array(
+		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_wpml_general_options',
+	),
+	array(
+		'title'    => __( 'Use Translation Product IDs', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_wpml_use_translation_product_id',
+		'default'  => 'yes',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_wpml_general_options',
+	),
 	array(
 		'title'    => __( 'WPML Language Configuration File Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',

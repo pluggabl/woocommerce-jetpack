@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -217,7 +217,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * calculate_totals.
 	 *
-	 * @version 3.4.0
+	 * @version 3.7.1
 	 * @since   2.5.0
 	 */
 	function calculate_totals( $cart ) {
@@ -237,6 +237,13 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			$_product = $item['data'];
 			if ( ! wcj_is_product_wholesale_enabled( wcj_get_product_id_or_variation_parent_id( $_product ) ) ) {
 				continue;
+			}
+
+			if ( 'yes' === get_option( 'wcj_wholesale_price_check_for_product_changes_price', 'no' ) && $_product ) {
+				$product_changes = $_product->get_changes();
+				if ( ! empty( $product_changes ) && isset( $product_changes['price'] ) ) {
+					continue;
+				}
 			}
 
 			// Prices

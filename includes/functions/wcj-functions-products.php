@@ -13,11 +13,11 @@ if ( ! function_exists( 'wcj_maybe_get_product_id_wpml' ) ) {
 	/**
 	 * wcj_maybe_get_product_id_wpml.
 	 *
-	 * @version 3.7.0
+	 * @version 3.7.1
 	 * @since   3.6.0
 	 */
 	function wcj_maybe_get_product_id_wpml( $product_id ) {
-		if ( function_exists( 'icl_object_id' ) ) {
+		if ( function_exists( 'icl_object_id' ) && ( 'yes' === get_option( 'wcj_wpml_use_translation_product_id', 'yes' ) || ! wcj_is_module_enabled( 'wpml' ) ) ) {
 			$product_id = icl_object_id( $product_id, 'product', true, wcj_get_wpml_default_language() );
 		}
 		return $product_id;

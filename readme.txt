@@ -188,18 +188,21 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.7.1 - 12/07/2018 =
+= 3.7.1 - 14/07/2018 =
 ~* Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Add option to make empty price" options added.
 * Feature - PRICES & CURRENCIES - Offer Your Price - "Advanced: Custom Position(s)" options added.
 * Feature - CART & CHECKOUT - Checkout Files Upload - "Send Additional Email to Admin on" option added.
 * Feature - EMAILS & MISC. - Booster WPML - "Automatically Regenerate", "Modules to Skip" and "Option IDs to Skip" options added.
 ~$* Feature - EMAILS & MISC. - My Account - "Customize Menu & Endpoints" options added.
+!$* Feature - EMAILS & MISC. - My Account - "Dashboard Customization" options added.
+* Fix - PRICES & CURRENCIES - Wholesale Price - "Advanced: Price Changes" option added.
 * Fix - PRODUCTS - Product Addons - Not outputting "before" and "after" templates for cart & order details table info, in case if no addons info was added.
 * Fix - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Empty value fixed for "Fields to Disable" option.
 * Fix - SHIPPING & ORDERS - Left to Free Shipping - `is_array()` check added to the `wcj_get_left_to_free_shipping()` function.
 * Fix - Functions - Products - `wcj_get_product_display_price()` - Extra checks for valid `$_product` added.
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Advanced: User IP Detection Method" option added.
 !* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Speed optimized (`$this->customer_country_by_ip` added).
+* Dev - PRICES & CURRENCIES - Price based on User Role - Admin Settings - Minor update in settings descriptions.
 ~* Dev - PRODUCTS - Product Input Fields - Advanced Options - "Check for Outputted Data" option added.
 ~* Dev - PRODUCTS - Product Addons - "Advanced: Check for Outputted Data" option added.
 * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Admin Settings - Minor restyling.
@@ -208,6 +211,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~* Dev - PDF INVOICING & PACKING SLIPS - Advanced - "Disable Saving PDFs in Temp Directory" option moved from "General" module.
 * Dev - PDF INVOICING & PACKING SLIPS - Email Options - "WooCommerce Vendor Marketplace" plugin support added.
 * Dev - EMAILS & MISC. - Booster WPML - `custom_textarea` type options added to the `wpml-config.xml` regeneration algorithm.
+* Dev - EMAILS & MISC. - Booster WPML - General Options - "Use Translation Product IDs" option added.
 * Dev - EMAILS & MISC. - Booster WPML - Serialized values properly handled, when regenerating `wpml-config.xml` file.
 ~* Dev - EMAILS & MISC. - Booster WPML - `wpml-config.xml` file updated.
 * Dev - `wcj_version_updated` hook added (`wp_schedule_single_event()`).

@@ -74,8 +74,92 @@ class WCJ_My_Account extends WCJ_Module {
 					add_filter( 'woocommerce_endpoint_' . $account_menu_endpoint_id . '_title', array( $this, 'customize_endpoint_title' ), PHP_INT_MAX, 2 );
 				}
 				add_filter( 'woocommerce_account_menu_items', array( $this, 'customize_menu' ), PHP_INT_MAX );
+				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_my_account_menu_order_custom_items_enabled', 'no' ) ) ) {
+					add_filter( 'woocommerce_get_endpoint_url', array( $this, 'customize_menu_custom_endpoints' ), PHP_INT_MAX, 4 );
+				}
+			}
+			// Dashboard customization
+			if ( 'yes' === get_option( 'wcj_my_account_custom_dashboard_enabled', 'no' ) ) {
+				add_action( 'woocommerce_account_' . 'page' . '_endpoint', array( $this, 'customize_dashboard' ), PHP_INT_MAX );
 			}
 		}
+	}
+
+	/**
+	 * customize_menu_custom_endpoints.
+	 *
+	 * @version 3.7.1
+	 * @since   3.7.1
+	 */
+	function customize_menu_custom_endpoints( $url, $endpoint, $value, $permalink ) {
+		$custom_items = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order_custom_items', '' ) ) );
+		foreach ( $custom_items as $custom_item ) {
+			$parts = array_map( 'trim', explode( '|', $custom_item, 3 ) );
+			if ( 3 === count( $parts ) && $parts[0] === $endpoint ) {
+				return $parts[2];
+			}
+		}
+		return $url;
+	}
+
+	/**
+	 * customize_dashboard.
+	 *
+	 * @version 3.7.1
+	 * @since   3.7.1
+	 * @see     woocommerce/templates/myaccount/dashboard.php
+	 */
+	function customize_dashboard( $value ) {
+
+		$current_user = get_user_by( 'id', get_current_user_id() );
+
+		if ( '' != ( $custom_content = get_option( 'wcj_my_account_custom_dashboard_content', '' ) ) ) {
+			echo do_shortcode( $custom_content );
+		}
+
+		if ( 'no' === get_option( 'wcj_my_account_custom_dashboard_hide_hello', 'no' ) ) {
+			echo '<p>';
+			/* translators: 1: user display name 2: logout url */
+			printf(
+				__( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>)', 'woocommerce' ),
+				'<strong>' . esc_html( $current_user->display_name ) . '</strong>',
+				esc_url( wc_logout_url( wc_get_page_permalink( 'myaccount' ) ) )
+			);
+			echo '</p>';
+		}
+
+		if ( 'no' === get_option( 'wcj_my_account_custom_dashboard_hide_info', 'no' ) ) {
+			echo '<p>';
+			printf(
+				__( 'From your account dashboard you can view your <a href="%1$s">recent orders</a>, manage your <a href="%2$s">shipping and billing addresses</a>, and <a href="%3$s">edit your password and account details</a>.', 'woocommerce' ),
+				esc_url( wc_get_endpoint_url( 'orders' ) ),
+				esc_url( wc_get_endpoint_url( 'edit-address' ) ),
+				esc_url( wc_get_endpoint_url( 'edit-account' ) )
+			);
+			echo '</p>';
+		}
+
+		/**
+		 * My Account dashboard.
+		 *
+		 * @since 2.6.0
+		 */
+		do_action( 'woocommerce_account_dashboard' );
+
+		/**
+		 * Deprecated woocommerce_before_my_account action.
+		 *
+		 * @deprecated 2.6.0
+		 */
+		do_action( 'woocommerce_before_my_account' );
+
+		/**
+		 * Deprecated woocommerce_after_my_account action.
+		 *
+		 * @deprecated 2.6.0
+		 */
+		do_action( 'woocommerce_after_my_account' );
+
 	}
 
 	/**
@@ -120,6 +204,15 @@ class WCJ_My_Account extends WCJ_Module {
 				}
 			}
 			$items = array_merge( $modified_menu, $items );
+		}
+		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_my_account_menu_order_custom_items_enabled', 'no' ) ) ) {
+			$custom_items = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order_custom_items', '' ) ) );
+			foreach ( $custom_items as $custom_item ) {
+				$parts = array_map( 'trim', explode( '|', $custom_item, 3 ) );
+				if ( 3 === count( $parts ) ) {
+					$items[ $parts[0] ] = $parts[1];
+				}
+			}
 		}
 		return $items;
 	}

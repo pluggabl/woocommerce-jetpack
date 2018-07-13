@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -111,6 +111,14 @@ $settings = array(
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
 		'options'  => $product_cats,
+	),
+	array(
+		'title'    => __( 'Advanced: Price Changes', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable wholesale pricing for products with "Price Changes"', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Try enabling this checkbox, if you are having compatibility issues with other plugins.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_wholesale_price_check_for_product_changes_price',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',
