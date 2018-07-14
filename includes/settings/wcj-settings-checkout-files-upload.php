@@ -268,7 +268,7 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Send Additional Email to Admin on User Actions', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf( __( 'Admin email: <em>%s</em>.', 'woocommerce-jetpack' ), get_option( 'admin_email' ) ),
-		'id'       => 'wcj_checkout_files_upload_admin_email',
+		'id'       => 'wcj_checkout_files_upload_settings[additional_admin_emails]',
 		'default'  => array(),
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',

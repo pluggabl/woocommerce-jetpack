@@ -191,7 +191,7 @@ You can see the differences between versions in this [table](https://booster.io/
 = 3.7.1 - 15/07/2018 =
 ~* Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Add option to make empty price" options added.
 * Feature - PRICES & CURRENCIES - Offer Your Price - "Advanced: Custom Position(s)" options added.
-~* Feature - CART & CHECKOUT - Checkout Files Upload - "Send Additional Email to Admin on" option added.
+* Feature - CART & CHECKOUT - Checkout Files Upload - "Send Additional Email to Admin on User Actions" option added.
 !* Feature - CART & CHECKOUT - Checkout Files Upload - "Order Template Options" and "Email Template Options" subsections added.
 * Feature - EMAILS & MISC. - Booster WPML - "Automatically Regenerate", "Modules to Skip" and "Option IDs to Skip" options added.
 ~$* Feature - EMAILS & MISC. - My Account - "Customize Menu & Endpoints" options added.
