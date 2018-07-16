@@ -130,20 +130,23 @@ class WCJ_WPML extends WCJ_Module {
 			fwrite( $handle, "\t" );
 			fwrite( $handle, '<admin-texts>' . PHP_EOL );
 			$sections = apply_filters( 'wcj_settings_sections', array() );
+			$added_keys = array();
 			foreach ( $sections as $section => $section_title ) {
 				if ( $this->is_wpml_section( $section ) ) {
 					$settings = apply_filters( 'wcj_settings_' . $section, array() );
 					foreach ( $settings as $value ) {
 						if ( $this->is_wpml_value( $value ) ) {
-							fwrite( $handle, "\t\t" );
 							if ( false === ( $pos = strpos( $value['id'], '[' ) ) ) {
+								fwrite( $handle, "\t\t" );
 								fwrite( $handle, '<key name="' . $value['id'] . '" />' . PHP_EOL );
 							} else {
-								fwrite( $handle, '<key name="' . substr( $value['id'], 0, $pos ) . '">' . PHP_EOL );
-								fwrite( $handle, "\t\t\t" );
-								fwrite( $handle, '<key name="*" />' . PHP_EOL );
+								$key_name = substr( $value['id'], 0, $pos );
+								if ( in_array( $key_name, $added_keys ) ) {
+									continue;
+								}
 								fwrite( $handle, "\t\t" );
-								fwrite( $handle, '</key>' . PHP_EOL );
+								fwrite( $handle, '<key name="' . $key_name . '"><key name="*" /></key>' . PHP_EOL );
+								$added_keys[] = $key_name;
 							}
 						}
 					}
