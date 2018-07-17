@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Fees
  *
- * @version 3.7.0
+ * @version 3.7.1
  * @since   3.7.0
  * @author  Algoritmika Ltd.
  */
@@ -72,6 +72,14 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'id'       => "wcj_checkout_fees_data_taxable[$i]",
 			'default'  => 'yes',
 			'type'     => 'checkbox',
+		),
+		array(
+			'title'    => __( 'Checkout Field', 'woocommerce-jetpack' ),
+			'desc_tip' => sprintf( __( 'If you want fee to be added only if some checkout field is enabled, enter field\'s key here. For example, if you have added one custom billing checkout field with Booster\'s "Checkout Custom Fields" module, enter %s here.', 'woocommerce-jetpack' ), '<em>billing_wcj_checkout_field_1</em>' ) . ' ' .
+				__( 'Ignored if empty (i.e. fee will be always added).', 'woocommerce-jetpack' ),
+			'id'       => "wcj_checkout_fees_data_checkout_fields[$i]",
+			'default'  => '',
+			'type'     => 'text',
 		),
 		array(
 			'type'     => 'sectionend',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 3.4.0
+ * @version 3.7.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
+	 * @version 3.7.1
 	 * @todo    (maybe) move "Display radio buttons instead of drop box for variable products" to new module
 	 * @todo    (maybe) rename to "Add to Cart Button (Options)"
 	 */
@@ -98,8 +98,10 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 
 			// External Products
 			if ( 'yes' === get_option( 'wcj_add_to_cart_button_external_open_new_window_single', 'no' ) ) {
-				add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'replace_external_with_custom_add_to_cart_on_single_start' ), PHP_INT_MAX );
-				add_action( 'woocommerce_after_add_to_cart_button',  array( $this, 'replace_external_with_custom_add_to_cart_on_single_end' ), PHP_INT_MAX );
+				$start_filter = ( WCJ_IS_WC_VERSION_BELOW_3_4_0 ? 'woocommerce_before_add_to_cart_button' : 'woocommerce_before_add_to_cart_form' );
+				$end_filter   = ( WCJ_IS_WC_VERSION_BELOW_3_4_0 ? 'woocommerce_after_add_to_cart_button'  : 'woocommerce_after_add_to_cart_form' );
+				add_action( $start_filter, array( $this, 'replace_external_with_custom_add_to_cart_on_single_start' ), PHP_INT_MAX );
+				add_action( $end_filter,   array( $this, 'replace_external_with_custom_add_to_cart_on_single_end' ), PHP_INT_MAX );
 			}
 			if ( 'yes' === get_option( 'wcj_add_to_cart_button_external_open_new_window_loop', 'no' ) ) {
 				add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'replace_external_with_custom_add_to_cart_in_loop' ), PHP_INT_MAX );
@@ -232,7 +234,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * replace_external_with_custom_add_to_cart_on_single_end.
 	 *
-	 * @version 2.5.3
+	 * @version 3.7.1
 	 * @since   2.5.3
 	 */
 	function replace_external_with_custom_add_to_cart_on_single_end() {
@@ -240,7 +242,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 		if ( $product->is_type( 'external' ) ) {
 			$button_html = ob_get_contents();
 			ob_end_clean();
-			echo str_replace( '<a href=', '<a target="_blank" href=', $button_html );
+			echo ( WCJ_IS_WC_VERSION_BELOW_3_4_0 ?
+				str_replace( '<a href=', '<a target="_blank" href=', $button_html ) : str_replace( '<form ', '<form target="_blank" ', $button_html ) );
 		}
 	}
 
