@@ -188,9 +188,10 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.7.1 - 17/07/2018 =
+= 3.7.1 - 18/07/2018 =
 ~* Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Add option to make empty price" options added.
 * Feature - PRICES & CURRENCIES - Offer Your Price - "Advanced: Custom Position(s)" options added.
+!* Feature - CART & CHECKOUT - Checkout Custom Fields - "Description" options added.
 ~* Feature - CART & CHECKOUT - Checkout Fees - "Checkout Field" options added.
 ~* Feature - CART & CHECKOUT - Checkout Files Upload - "Send Additional Email to Admin on User Actions" option added.
 ~* Feature - CART & CHECKOUT - Checkout Files Upload - "Order Template Options" and "Email Template Options" subsections added.
@@ -209,6 +210,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~* Dev - PRODUCTS - Product Input Fields - Advanced Options - "Check for Outputted Data" option added.
 ~* Dev - PRODUCTS - Product Addons - "Advanced: Check for Outputted Data" option added.
 * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Admin Settings - Minor restyling.
+!* Dev - CART & CHECKOUT - Checkout Custom Fields - "Textarea Field Values" and "Textarea Line Breaks" options added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - `wcj_checkout_files_upload` filter - `remove_file` - File name parameter added.
 ~* Dev - SHIPPING & ORDERS - Custom Shipping - `wcj_custom_shipping_do_add_table_rows` filter added.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Advanced - "Disable Saving PDFs in Temp Directory" option moved from "General" module.

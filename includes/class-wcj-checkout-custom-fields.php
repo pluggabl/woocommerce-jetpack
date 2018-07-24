@@ -2,8 +2,9 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @author  Algoritmika Ltd.
+ * @todo    clean up
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -221,7 +222,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * update_custom_checkout_fields_order_meta.
 	 *
-	 * @version 2.4.7
+	 * @version 3.7.1
 	 */
 	function update_custom_checkout_fields_order_meta( $order_id ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
@@ -247,6 +248,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						$option_name_values = $the_section . '_' . 'wcj_checkout_field_select_options_' . $i;
 						$the_values = get_option( 'wcj_checkout_custom_field_select_options_' . $i );
 						update_post_meta( $order_id, '_' . $option_name_values, $the_values );
+					} elseif ( 'textarea' === $the_type && 'no' === get_option( 'wcj_checkout_custom_fields_textarea_clean', 'yes' ) ) {
+						update_post_meta( $order_id, '_' . $option_name, $_POST[ $option_name ] );
 					} else {
 						update_post_meta( $order_id, '_' . $option_name, wc_clean( $_POST[ $option_name ] ) );
 					}
@@ -292,7 +295,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 3.2.2
+	 * @version 3.7.1
 	 * @since   2.3.0
 	 * @todo    convert from before version 2.3.0
 	 */
@@ -341,6 +344,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					} else {
 						$value = $_value;
 					}
+				} elseif ( isset( $post_meta[ $type_key ][0] ) && 'textarea' === $post_meta[ $type_key ][0] && 'yes' === get_option( 'wcj_checkout_custom_fields_textarea_replace_line_breaks', 'no' ) ) {
+					$value = str_replace( PHP_EOL, '<br>', $value );
 				} else {
 					$value = $_value;
 				}
@@ -364,7 +369,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 * add_woocommerce_admin_fields.
 	 *
 	 * @version 2.4.7
-	 * @todo    Converting from before version 2.3.0: section?
+	 * @todo    converting from before version 2.3.0: section?
+	 * @todo    add alternative way of displaying fields (e.g. new meta box), so we have more control over displaying fields' values (e.g. line breaks)
 	 */
 	function add_woocommerce_admin_fields( $fields, $section ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
@@ -551,7 +557,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 3.2.4
+	 * @version 3.7.1
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 	 */
 	function add_custom_checkout_fields( $fields ) {
@@ -590,7 +596,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						$custom_attributes['timeformat'] = get_option( 'wcj_checkout_custom_field_timepicker_format_' . $i, 'hh:mm p' );
 						$custom_attributes['interval'] = get_option( 'wcj_checkout_custom_field_timepicker_interval_' . $i, 15 );
 						$custom_attributes['display'] = 'time';
-					} else/* if ( 'number' === $the_type ) */ {
+					} else /* if ( 'number' === $the_type ) */ {
 						$custom_attributes['display'] = $the_type;
 					}
 					$the_type = 'text';
@@ -602,11 +608,12 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					'type'              => $the_type,
 					'label'             => get_option( 'wcj_checkout_custom_field_label_' . $i ),
 					'placeholder'       => get_option( 'wcj_checkout_custom_field_placeholder_' . $i ),
-					'required'          => ( 'yes' === get_option( 'wcj_checkout_custom_field_required_' . $i ) ) ? true : false,
+					'required'          => ( 'yes' === get_option( 'wcj_checkout_custom_field_required_' . $i ) ),
 					'custom_attributes' => $custom_attributes,
-					'clear'             => ( 'yes' === get_option( 'wcj_checkout_custom_field_clear_' . $i ) ) ? true : false,
-					'class'             => array( get_option( 'wcj_checkout_custom_field_class_' . $i ), ),
+					'clear'             => ( 'yes' === get_option( 'wcj_checkout_custom_field_clear_' . $i ) ),
+					'class'             => array( get_option( 'wcj_checkout_custom_field_class_' . $i ) ),
 					'priority'          => get_option( 'wcj_checkout_custom_field_priority_' . $i, '' ),
+					'description'       => get_option( 'wcj_checkout_custom_field_description_' . $i, '' ),
 				);
 
 				if ( 'select' === $the_type || 'radio' === $the_type ) {

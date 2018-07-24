@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Custom Fields
  *
- * @version 3.6.0
+ * @version 3.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -77,6 +77,21 @@ $settings = array(
 		'type'     => 'textarea',
 	),
 	array(
+		'title'    => __( 'Textarea Field Values', 'woocommerce-jetpack' ),
+		'desc'     => __( 'When saving, "clean" textarea field values', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_custom_fields_textarea_clean',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Textarea Line Breaks', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'When displaying, replace line breaks with %s in textarea field values', 'woocommerce-jetpack' ), '<code>&lt;br&gt;</code>' ),
+		'desc_tip' => __( 'Does <strong>not</strong> affect admin order edit page.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_custom_fields_textarea_replace_line_breaks',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'title'    => __( 'Custom Fields Number', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Click Save changes after you change this number.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_checkout_custom_fields_total_number',
@@ -85,7 +100,7 @@ $settings = array(
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => array_merge(
 			is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ? apply_filters( 'booster_message', '', 'readonly' ) : array(),
-			array( 'step' => '1', 'min'  => '1' )
+			array( 'step' => '1', 'min' => '1' )
 		),
 		'css'      => 'width:100px;',
 	),
@@ -151,6 +166,14 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkou
 				'id'       => 'wcj_checkout_custom_field_placeholder_' . $i,
 				'default'  => '',
 				'type'     => 'textarea',
+				'css'      => 'min-width:300px;',
+			),
+			array(
+				'title'    => __( 'Description', 'woocommerce-jetpack' ),
+				'desc'     => __( 'You can use HTML here.', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_checkout_custom_field_description_' . $i,
+				'default'  => '',
+				'type'     => 'custom_textarea',
 				'css'      => 'min-width:300px;',
 			),
 			array(
