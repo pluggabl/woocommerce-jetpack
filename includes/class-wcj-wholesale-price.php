@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -217,7 +217,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * calculate_totals.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.5.0
 	 */
 	function calculate_totals( $cart ) {

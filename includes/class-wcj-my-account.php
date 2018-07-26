@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.9.0
 	 */
 	function __construct() {
@@ -88,8 +88,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * customize_menu_custom_endpoints.
 	 *
-	 * @version 3.7.1
-	 * @since   3.7.1
+	 * @version 3.8.0
+	 * @since   3.8.0
 	 */
 	function customize_menu_custom_endpoints( $url, $endpoint, $value, $permalink ) {
 		$custom_items = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order_custom_items', '' ) ) );
@@ -105,8 +105,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * customize_dashboard.
 	 *
-	 * @version 3.7.1
-	 * @since   3.7.1
+	 * @version 3.8.0
+	 * @since   3.8.0
 	 * @see     woocommerce/templates/myaccount/dashboard.php
 	 */
 	function customize_dashboard( $value ) {
@@ -165,8 +165,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * customize_endpoint_title.
 	 *
-	 * @version 3.7.1
-	 * @since   3.7.1
+	 * @version 3.8.0
+	 * @since   3.8.0
 	 * @todo    (maybe) 'orders': `if ( ! empty( $wp->query_vars['orders'] ) ) { $title = sprintf( __( 'Orders (page %d)', 'woocommerce' ), intval( $wp->query_vars['orders'] ) ); }`
 	 * @todo    (maybe) 'view-order': `$title = ( $order = wc_get_order( $wp->query_vars['view-order'] ) ) ? sprintf( __( 'Order #%s', 'woocommerce' ), $order->get_order_number() ) : '';`
 	 * @todo    (maybe) 'order-pay'      => __( 'Pay for order', 'woocommerce' )
@@ -183,8 +183,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * customize_menu.
 	 *
-	 * @version 3.7.1
-	 * @since   3.7.1
+	 * @version 3.8.0
+	 * @since   3.8.0
 	 * @todo    (maybe) option to disable menu
 	 */
 	function customize_menu( $items ) {

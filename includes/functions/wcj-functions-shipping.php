@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Shipping
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -202,7 +202,7 @@ if ( ! function_exists( 'wcj_get_left_to_free_shipping' ) ) {
 	/*
 	 * wcj_get_left_to_free_shipping.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.4.4
 	 * @return  string
 	 * @todo    (maybe) go through all packages instead of only `$packages[0]`

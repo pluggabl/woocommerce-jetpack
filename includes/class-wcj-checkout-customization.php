@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -121,7 +121,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * maybe_add_description.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.9.0
 	 */
 	function maybe_add_description( $field, $key, $args, $value ) {
@@ -149,7 +149,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * maybe_disable_fields.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.9.0
 	 * @see     woocommerce_form_field
 	 * @todo    (maybe) add single option (probably checkbox) to disable all fields

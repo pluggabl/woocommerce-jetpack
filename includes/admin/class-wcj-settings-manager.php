@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Manager - Import / Export / Reset Booster's settings
  *
- * @version 3.4.0
+ * @version 3.8.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -53,7 +53,7 @@ class WCJ_Settings_Manager {
 	/**
 	 * manage_options_import.
 	 *
-	 * @version 3.2.4
+	 * @version 3.8.0
 	 * @since   2.5.2
 	 */
 	function manage_options_import() {
@@ -65,6 +65,8 @@ class WCJ_Settings_Manager {
 		} else {
 			$import_counter = 0;
 			$import_settings = file_get_contents( $_FILES['booster_import_settings_file']['tmp_name'] );
+			$bom             = pack( 'H*','EFBBBF' );
+			$import_settings = preg_replace( "/^$bom/", '', $import_settings );
 			$import_settings = explode( PHP_EOL, preg_replace( '~(*BSR_ANYCRLF)\R~', PHP_EOL, $import_settings ) );
 			if ( ! is_array( $import_settings ) || 2 !== count( $import_settings ) ) {
 				$wcj_notice .= __( 'Wrong file format!', 'woocommerce-jetpack' );

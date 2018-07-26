@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -171,7 +171,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
 		$currency_code = $this->get_current_currency_code();
@@ -216,7 +216,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 */
 	function change_price( $price, $_product ) {
 

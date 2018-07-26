@@ -188,7 +188,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.7.1 - 18/07/2018 =
+= 3.8.0 - 25/07/2018 =
 ~* Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Add option to make empty price" options added.
 * Feature - PRICES & CURRENCIES - Offer Your Price - "Advanced: Custom Position(s)" options added.
 !* Feature - CART & CHECKOUT - Checkout Custom Fields - "Description" options added.
@@ -204,11 +204,15 @@ You can see the differences between versions in this [table](https://booster.io/
 * Fix - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Empty value fixed for "Fields to Disable" option.
 * Fix - SHIPPING & ORDERS - Left to Free Shipping - `is_array()` check added to the `wcj_get_left_to_free_shipping()` function.
 * Fix - Functions - Products - `wcj_get_product_display_price()` - Extra checks for valid `$_product` added.
+!* Fix - Dashboard - Manage Settings - Import - UTF-8 BOM sequence removal added.
 ~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Advanced: User IP Detection Method" option added.
 !* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Speed optimized (`$this->customer_country_by_ip` added).
 * Dev - PRICES & CURRENCIES - Price based on User Role - Admin Settings - Minor update in settings descriptions.
-~* Dev - PRODUCTS - Product Input Fields - Advanced Options - "Check for Outputted Data" option added.
 ~* Dev - PRODUCTS - Product Addons - "Advanced: Check for Outputted Data" option added.
+~* Dev - PRODUCTS - Product Input Fields - Advanced Options - "Check for Outputted Data" option added.
+* Dev - PRODUCTS - Product MSRP - In case if variations prices are equal, taking first variation's MSRP.
+~* Dev - PRODUCTS - Products per Page - "Saving Method" option added.
+* Dev - PRODUCTS - Products per Page - Code refactoring.
 * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Admin Settings - Minor restyling.
 !* Dev - CART & CHECKOUT - Checkout Custom Fields - "Textarea Field Values" and "Textarea Line Breaks" options added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - `wcj_checkout_files_upload` filter - `remove_file` - File name parameter added.

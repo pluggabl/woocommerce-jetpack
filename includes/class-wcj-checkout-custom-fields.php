@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @author  Algoritmika Ltd.
  * @todo    clean up
  */
@@ -222,7 +222,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * update_custom_checkout_fields_order_meta.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 */
 	function update_custom_checkout_fields_order_meta( $order_id ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
@@ -295,7 +295,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_fields_to_order_display.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.3.0
 	 * @todo    convert from before version 2.3.0
 	 */
@@ -557,7 +557,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_custom_checkout_fields.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
 	 */
 	function add_custom_checkout_fields( $fields ) {

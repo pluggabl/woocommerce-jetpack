@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -209,7 +209,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @todo    (maybe) `die()` on success
 	 */
 	function get_pdf( $dest ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   2.5.6
  * @author  Algoritmika Ltd.
  */
@@ -28,7 +28,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * Init settings
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.5.6
 	 * @access  public
 	 * @return  void

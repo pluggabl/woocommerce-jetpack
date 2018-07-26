@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.4.5
 	 * @todo    styling options
 	 */
@@ -58,8 +58,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * init_settings.
 	 *
-	 * @version 3.7.1
-	 * @since   3.7.1
+	 * @version 3.8.0
+	 * @since   3.8.0
 	 * @todo    (maybe) move (part of) this to `WCJ_Module`
 	 */
 	function init_settings() {
@@ -99,7 +99,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_files_to_order_display.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.4.7
 	 * @todo    (maybe) somehow add `%image%` to emails also
 	 */
@@ -319,8 +319,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_order_full_file_name.
 	 *
-	 * @version 3.7.1
-	 * @since   3.7.1
+	 * @version 3.8.0
+	 * @since   3.8.0
 	 * @todo    use where needed
 	 */
 	function get_order_full_file_name( $order_id, $file_num ) {
@@ -330,7 +330,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.4.5
 	 * @todo    add option for admin to delete files one by one (i.e. not all at once)
 	 * @todo    `$this->settings['additional_admin_emails']` - more customization options, e.g.: admin email, subject, content, from

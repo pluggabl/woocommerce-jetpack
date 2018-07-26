@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Multicurrency (Currency Switcher)
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

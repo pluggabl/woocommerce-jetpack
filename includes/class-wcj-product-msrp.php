@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product MSRP
  *
- * @version 3.6.0
+ * @version 3.8.0
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -114,10 +114,10 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * display.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.0
 	 * @since   3.6.0
 	 * @todo    (maybe) multicurrency
-	 * @todo    (maybe) variable product's msrp
+	 * @todo    [feature] (maybe) variable product's msrp: add another option to enter MSRP directly for the whole variable product, instead of taking first variation's MSRP
 	 */
 	function display( $price_html, $product ) {
 		$section_id = ( is_product() ? 'single' : 'archives' );
@@ -125,7 +125,17 @@ class WCJ_Product_MSRP extends WCJ_Module {
 		if ( 'hide' == $display ) {
 			return $price_html;
 		}
-		$product_id = wcj_get_product_id( $product );
+		$product_id = false;
+		if ( $product->is_type( 'variable' ) && $product->get_variation_price( 'min' ) === $product->get_variation_price( 'max' ) ) {
+			foreach ( $product->get_available_variations() as $variation ) {
+				// grab first variation's ID
+				$product_id = $variation['variation_id'];
+				break;
+			}
+		}
+		if ( ! $product_id ) {
+			$product_id = wcj_get_product_id( $product );
+		}
 		$msrp       = apply_filters( 'wcj_product_msrp', get_post_meta( $product_id, '_' . 'wcj_msrp', true ), $product );
 		if ( '' == $msrp || 0 == $msrp ) {
 			return $price_html;

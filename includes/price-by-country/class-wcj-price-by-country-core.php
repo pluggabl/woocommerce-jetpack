@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -189,7 +189,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_by_ip.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.5.0
 	 */
 	function get_customer_country_by_ip() {

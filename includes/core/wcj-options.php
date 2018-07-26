@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Options
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  * @todo    (dev) move version updated stuff to another file

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Fees
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   3.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   3.7.0
 	 * @todo    (maybe) rename module to "Cart & Checkout Fees"
 	 */
@@ -43,8 +43,8 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 3.7.1
-	 * @since   3.7.1
+	 * @version 3.8.0
+	 * @since   3.8.0
 	 */
 	function enqueue_scripts() {
 		if ( is_checkout() ) {
@@ -58,7 +58,7 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	/**
 	 * add_fees.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   3.7.0
 	 * @todo    fees with same title
 	 * @todo    options: `tax_class`

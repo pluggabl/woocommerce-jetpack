@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 */
 	function __construct() {
 
@@ -39,8 +39,8 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * get_default_modules_to_skip.
 	 *
-	 * @version 3.7.1
-	 * @since   3.7.1
+	 * @version 3.8.0
+	 * @since   3.8.0
 	 */
 	function get_default_modules_to_skip() {
 		return array(
@@ -90,8 +90,8 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * get_default_values_to_skip.
 	 *
-	 * @version 3.7.1
-	 * @since   3.7.1
+	 * @version 3.8.0
+	 * @since   3.8.0
 	 */
 	function get_default_values_to_skip() {
 		return 'wcj_product_info_products_to_exclude|' .
@@ -120,7 +120,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * create_wpml_xml_file.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @see     https://wpml.org/documentation/support/language-configuration-files/#admin-texts
 	 */
 	function create_wpml_xml_file() {
@@ -162,7 +162,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * is_wpml_section.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 * @since   2.4.4
 	 */
 	function is_wpml_section( $section ) {
@@ -172,7 +172,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * is_wpml_value.
 	 *
-	 * @version 3.7.1
+	 * @version 3.8.0
 	 */
 	function is_wpml_value( $value ) {
 

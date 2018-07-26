@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Constants
  *
- * @version 3.7.1
+ * @version 3.8.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -53,8 +53,8 @@ if ( ! defined( 'WCJ_IS_WC_VERSION_BELOW_3_4_0' ) ) {
 	/**
 	 * WooCommerce version - is below version 3.4.0.
 	 *
-	 * @version 3.7.1
-	 * @since   3.7.1
+	 * @version 3.8.0
+	 * @since   3.8.0
 	 */
 	define( 'WCJ_IS_WC_VERSION_BELOW_3_4_0', version_compare( WCJ_WC_VERSION, '3.4.0', '<' ) );
 }
