@@ -189,6 +189,7 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.8.0 - 25/07/2018 =
+* Feature - PRICES & CURRENCIES - Global Discount - "Final Correction" options added.
 ~* Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Add option to make empty price" options added.
 * Feature - PRICES & CURRENCIES - Offer Your Price - "Advanced: Custom Position(s)" options added.
 !* Feature - CART & CHECKOUT - Checkout Custom Fields - "Description" options added.
@@ -198,6 +199,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Feature - EMAILS & MISC. - Booster WPML - "Automatically Regenerate", "Modules to Skip" and "Option IDs to Skip" options added.
 ~$* Feature - EMAILS & MISC. - My Account - "Customize Menu & Endpoints" options added.
 !$* Feature - EMAILS & MISC. - My Account - "Dashboard Customization" options added.
+* Fix - PRICES & CURRENCIES - Global Discount - Empty price bug fixed.
 * Fix - PRICES & CURRENCIES - Wholesale Price - "Advanced: Price Changes" option added.
 * Fix - PRODUCTS - Add to Cart - Open External Products on Add to Cart in New Window - Enable on Single Product Pages - Fixed for WC >= v3.4.0.
 * Fix - PRODUCTS - Product Addons - Not outputting "before" and "after" templates for cart & order details table info, in case if no addons info was added.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Global Discount
  *
- * @version 3.1.3
+ * @version 3.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -72,6 +72,27 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_global_
 			'default'  => 0,
 			'type'     => 'number',
 			'custom_attributes' => array( 'max' => 0, 'step' => 0.0001 ),
+		),
+		array(
+			'title'    => __( 'Final Correction', 'woocommerce-jetpack' ),
+			'desc_tip' => sprintf( __( 'Will apply selected function and coefficient to the final price, e.g.: %s.', 'woocommerce-jetpack' ),
+				'<em>round( PRICE / COEFFICIENT ) * COEFFICIENT</em>' ),
+			'id'       => 'wcj_global_discount_sale_final_correction_func_' . $i,
+			'default'  => 'none',
+			'type'     => 'select',
+			'options'  => array(
+				'none'  => __( 'None', 'woocommerce-jetpack' ),
+				'round' => __( 'Round', 'woocommerce-jetpack' ),
+				'ceil'  => __( 'Ceil', 'woocommerce-jetpack' ),
+				'floor' => __( 'Floor', 'woocommerce-jetpack' ),
+			),
+		),
+		array(
+			'desc'     => '<br>' . __( 'Final correction coefficient', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_global_discount_sale_final_correction_coef_' . $i,
+			'default'  => 1,
+			'type'     => 'number',
+			'custom_attributes' => array( 'min' => 0.0001, 'step' => 0.0001 ),
 		),
 		array(
 			'title'    => __( 'Product Scope', 'woocommerce-jetpack' ),

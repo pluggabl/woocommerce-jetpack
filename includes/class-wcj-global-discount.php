@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 3.1.0
+ * @version 3.8.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -77,14 +77,22 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * calculate_price.
 	 *
-	 * @version 2.5.7
+	 * @version 3.8.0
 	 * @since   2.5.7
 	 */
-	function calculate_price( $price, $coefficient, $group  ) {
+	function calculate_price( $price, $coefficient, $group ) {
+		if ( '' === $price ) {
+			return $price;
+		}
 		$return_price = ( 'percent' === get_option( 'wcj_global_discount_sale_coefficient_type_' . $group, 'percent' ) ) ?
 			( $price + $price * ( $coefficient / 100 ) ) :
 			( $price + $coefficient );
-		return ( $return_price >= 0 ) ? $return_price : 0;
+		$return_price = ( $return_price >= 0 ? $return_price : 0 );
+		if ( 'none' != ( $final_correction_function = get_option( 'wcj_global_discount_sale_final_correction_func_' . $group, 'none' ) ) ) {
+			$final_correction_coef = get_option( 'wcj_global_discount_sale_final_correction_coef_' . $group, 1 );
+			$return_price          = $final_correction_function( $return_price / $final_correction_coef ) * $final_correction_coef;
+		}
+		return $return_price;
 	}
 
 	/**
