@@ -310,7 +310,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						$value = $_value;
 					}
 				} elseif ( isset( $post_meta[ $type_key ][0] ) && 'textarea' === $post_meta[ $type_key ][0] && 'yes' === get_option( 'wcj_checkout_custom_fields_textarea_replace_line_breaks', 'no' ) ) {
-					$value = str_replace( PHP_EOL, '<br>', $value );
+					$value = str_replace( PHP_EOL, '<br>', $_value );
 				} else {
 					$value = $_value;
 				}
@@ -519,6 +519,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	 *
 	 * @version 3.8.0
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Core Fields module)
+	 * @todo    (dev) (maybe) add `do_shortcode` for e.g. `description` etc.
 	 */
 	function add_custom_checkout_fields( $fields ) {
 

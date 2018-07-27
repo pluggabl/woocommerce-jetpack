@@ -192,13 +192,13 @@ You can see the differences between versions in this [table](https://booster.io/
 * Feature - PRICES & CURRENCIES - Global Discount - "Final Correction" options added.
 ~* Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Add option to make empty price" options added.
 * Feature - PRICES & CURRENCIES - Offer Your Price - "Advanced: Custom Position(s)" options added.
-!* Feature - CART & CHECKOUT - Checkout Custom Fields - "Description" options added.
-~* Feature - CART & CHECKOUT - Checkout Fees - "Checkout Field" options added.
-~* Feature - CART & CHECKOUT - Checkout Files Upload - "Send Additional Email to Admin on User Actions" options added.
-~* Feature - CART & CHECKOUT - Checkout Files Upload - "Order Template Options" and "Email Template Options" subsections added.
+* Feature - CART & CHECKOUT - Checkout Custom Fields - "Description" options added.
+* Feature - CART & CHECKOUT - Checkout Fees - "Checkout Field" options added.
+* Feature - CART & CHECKOUT - Checkout Files Upload - "Send Additional Email to Admin on User Actions" options added.
+* Feature - CART & CHECKOUT - Checkout Files Upload - "Order Template Options" and "Email Template Options" subsections added.
 * Feature - EMAILS & MISC. - Booster WPML - "Automatically Regenerate", "Modules to Skip" and "Option IDs to Skip" options added.
-~$* Feature - EMAILS & MISC. - My Account - "Customize Menu & Endpoints" options added.
-!$* Feature - EMAILS & MISC. - My Account - "Dashboard Customization" options added.
+* Feature - EMAILS & MISC. - My Account - "Customize Menu & Endpoints" options added.
+* Feature - EMAILS & MISC. - My Account - "Dashboard Customization" options added.
 * Fix - PRICES & CURRENCIES - Global Discount - Empty price bug fixed.
 * Fix - PRICES & CURRENCIES - Wholesale Price - "Advanced: Price Changes" option added.
 * Fix - PRODUCTS - Add to Cart - Open External Products on Add to Cart in New Window - Enable on Single Product Pages - Fixed for WC >= v3.4.0.
@@ -217,7 +217,7 @@ You can see the differences between versions in this [table](https://booster.io/
 ~* Dev - PRODUCTS - Products per Page - "Saving Method" option added.
 * Dev - PRODUCTS - Products per Page - Code refactoring.
 * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Admin Settings - Minor restyling.
-!* Dev - CART & CHECKOUT - Checkout Custom Fields - "Textarea Field Values" and "Textarea Line Breaks" options added.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - "Textarea Field Values" and "Textarea Line Breaks" options added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - `wcj_checkout_files_upload` filter - `remove_file` - File name parameter added.
 !* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Code refactoring - Options replaced with options arrays.
 ~* Dev - SHIPPING & ORDERS - Custom Shipping - `wcj_custom_shipping_do_add_table_rows` filter added.
