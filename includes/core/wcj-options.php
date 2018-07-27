@@ -35,8 +35,10 @@ if ( is_admin() ) {
 		}
 	}
 	if ( get_option( WCJ_VERSION_OPTION ) !== $this->version ) {
+		// "Version updated" stuff...
 		update_option( WCJ_VERSION_OPTION, $this->version );
 		add_action( 'admin_notices', 'wcj_admin_notices_version_updated' );
 		wp_schedule_single_event( time(), 'wcj_version_updated' );
+		add_action( 'init', 'wcj_handle_deprecated_options' );
 	}
 }

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.7.0
+ * @version 3.8.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -34,6 +34,37 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 		}
 		add_action( 'init', array( $this, 'add_settings' ) );
 		add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
+	}
+
+	/**
+	 * get_deprecated_options.
+	 *
+	 * @version 3.8.0
+	 * @since   3.8.0
+	 */
+	function get_deprecated_options() {
+		return false;
+	}
+
+	/**
+	 * handle_deprecated_options.
+	 *
+	 * @version 3.8.0
+	 * @since   3.8.0
+	 */
+	function handle_deprecated_options() {
+		if ( $deprecated_options = $this->get_deprecated_options() ) {
+			foreach ( $deprecated_options as $new_option => $old_options ) {
+				$new_value = get_option( $new_option, array() );
+				foreach ( $old_options as $new_key => $old_option ) {
+					if ( null !== ( $old_value = get_option( $old_option, null ) ) ) {
+						$new_value[ $new_key ] = $old_value;
+						delete_option( $old_option );
+					}
+				}
+				update_option( $new_option, $new_value );
+			}
+		}
 	}
 
 	/**

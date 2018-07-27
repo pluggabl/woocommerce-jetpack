@@ -60,20 +60,23 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	 *
 	 * @version 3.8.0
 	 * @since   3.8.0
-	 * @todo    (maybe) move (part of) this to `WCJ_Module`
+	 * @todo    (dev) (maybe) init settings on demand only
 	 */
 	function init_settings() {
-		$this->settings = get_option( 'wcj_' . $this->id . '_settings', array() );
-		$this->settings = wp_parse_args( $this->settings, array(
-			'additional_admin_emails'     => array(),
-			'admin_email_do_attach'       => 'yes',
-			'order_template_before'       => '',
-			'order_template_item'         => sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>',
-			'order_template_after'        => '',
-			'order_template_image_style'  => 'width:64px;',
-			'email_template_before'       => '',
-			'email_template_item'         => sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>',
-			'email_template_after'        => '',
+		$this->templates_settings = get_option( 'wcj_checkout_files_upload_templates', array() );
+		$this->templates_settings = wp_parse_args( $this->templates_settings, array(
+			'order_before'       => '',
+			'order_item'         => sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>',
+			'order_after'        => '',
+			'order_image_style'  => 'width:64px;',
+			'email_before'       => '',
+			'email_item'         => sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>',
+			'email_after'        => '',
+		) );
+		$this->additional_admin_emails_settings = get_option( 'wcj_checkout_files_upload_additional_admin_emails', array() );
+		$this->additional_admin_emails_settings = wp_parse_args( $this->additional_admin_emails_settings, array(
+			'actions'   => array(),
+			'do_attach' => 'yes',
 		) );
 	}
 
@@ -109,16 +112,16 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 		$total_files = get_post_meta( $order_id, '_' . 'wcj_checkout_files_total_files', true );
 		$do_add_img  = false;
 		if ( 'woocommerce_email_after_order_table' === current_filter() ) {
-			$template_before    = $this->settings['email_template_before'];
-			$template_after     = $this->settings['email_template_after'];
-			$template           = $this->settings['email_template_item'];
+			$template_before    = $this->templates_settings['email_before'];
+			$template_after     = $this->templates_settings['email_after'];
+			$template           = $this->templates_settings['email_item'];
 		} else {
-			$template_before    = $this->settings['order_template_before'];
-			$template_after     = $this->settings['order_template_after'];
-			$template           = $this->settings['order_template_item'];
+			$template_before    = $this->templates_settings['order_before'];
+			$template_after     = $this->templates_settings['order_after'];
+			$template           = $this->templates_settings['order_item'];
 			$do_add_img         = ( false !== strpos( $template, '%image%' ) );
 			if ( $do_add_img ) {
-				$img_style = $this->settings['order_template_image_style'];
+				$img_style = $this->templates_settings['order_image_style'];
 			}
 		}
 		for ( $i = 1; $i <= $total_files; $i++ ) {
@@ -333,7 +336,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	 * @version 3.8.0
 	 * @since   2.4.5
 	 * @todo    add option for admin to delete files one by one (i.e. not all at once)
-	 * @todo    `$this->settings['additional_admin_emails']` - more customization options, e.g.: admin email, subject, content, from
+	 * @todo    `$this->additional_admin_emails_settings` - more customization options, e.g.: admin email, subject, content, from
 	 */
 	function process_checkout_files_upload() {
 		wcj_session_maybe_start();
@@ -355,7 +358,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 							__( 'File "%s" was successfully removed.', 'woocommerce-jetpack' ) ), $file_name ) );
 						delete_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_' . $i );
 						delete_post_meta( $order_id, '_' . 'wcj_checkout_files_upload_real_name_' . $i );
-						if ( in_array( 'remove_file', $this->settings['additional_admin_emails'] ) ) {
+						if ( in_array( 'remove_file', $this->additional_admin_emails_settings['actions'] ) ) {
 							wp_mail(
 								$admin_email,
 								wcj_handle_replacements( array(
@@ -417,8 +420,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 						// To order
 						if ( isset( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ] ) ) {
 							$this->add_files_to_order( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ], null );
-							if ( in_array( 'upload_file', $this->settings['additional_admin_emails'] ) ) {
-								$attachments = ( 'no' === $this->settings['admin_email_do_attach'] ?
+							if ( in_array( 'upload_file', $this->additional_admin_emails_settings['actions'] ) ) {
+								$attachments = ( 'no' === $this->additional_admin_emails_settings['do_attach'] ?
 									array() : array( $this->get_order_full_file_name( $_POST[ 'wcj_checkout_files_upload_order_id_' . $i ], $i ) ) );
 								wp_mail(
 									$admin_email,

@@ -117,7 +117,7 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	 * @version 3.8.0
 	 * @since   3.6.0
 	 * @todo    (maybe) multicurrency
-	 * @todo    [feature] (maybe) variable product's msrp: add another option to enter MSRP directly for the whole variable product, instead of taking first variation's MSRP
+	 * @todo    (feature) (maybe) variable product's msrp: add another option to enter MSRP directly for the whole variable product, instead of taking first variation's MSRP
 	 */
 	function display( $price_html, $product ) {
 		$section_id = ( is_product() ? 'single' : 'archives' );

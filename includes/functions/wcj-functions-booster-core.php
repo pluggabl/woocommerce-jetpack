@@ -2,12 +2,26 @@
 /**
  * Booster for WooCommerce - Functions - Booster Core
  *
- * @version 3.3.0
+ * @version 3.8.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_handle_deprecated_options' ) ) {
+	/**
+	 * wcj_handle_deprecated_options.
+	 *
+	 * @version 3.8.0
+	 * @since   3.8.0
+	 */
+	function wcj_handle_deprecated_options() {
+		foreach ( WCJ()->modules as $module ) {
+			$module->handle_deprecated_options();
+		}
+	}
+}
 
 if ( ! function_exists( 'wcj_plugin_url' ) ) {
 	/**

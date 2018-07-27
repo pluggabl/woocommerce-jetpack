@@ -188,13 +188,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.8.0 - 26/07/2018 =
+= 3.8.0 - 27/07/2018 =
 * Feature - PRICES & CURRENCIES - Global Discount - "Final Correction" options added.
 ~* Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Add option to make empty price" options added.
 * Feature - PRICES & CURRENCIES - Offer Your Price - "Advanced: Custom Position(s)" options added.
 !* Feature - CART & CHECKOUT - Checkout Custom Fields - "Description" options added.
 ~* Feature - CART & CHECKOUT - Checkout Fees - "Checkout Field" options added.
-~* Feature - CART & CHECKOUT - Checkout Files Upload - "Send Additional Email to Admin on User Actions" option added.
+~* Feature - CART & CHECKOUT - Checkout Files Upload - "Send Additional Email to Admin on User Actions" options added.
 ~* Feature - CART & CHECKOUT - Checkout Files Upload - "Order Template Options" and "Email Template Options" subsections added.
 * Feature - EMAILS & MISC. - Booster WPML - "Automatically Regenerate", "Modules to Skip" and "Option IDs to Skip" options added.
 ~$* Feature - EMAILS & MISC. - My Account - "Customize Menu & Endpoints" options added.
@@ -219,6 +219,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Admin Settings - Minor restyling.
 !* Dev - CART & CHECKOUT - Checkout Custom Fields - "Textarea Field Values" and "Textarea Line Breaks" options added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - `wcj_checkout_files_upload` filter - `remove_file` - File name parameter added.
+!* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Code refactoring - Options replaced with options arrays.
 ~* Dev - SHIPPING & ORDERS - Custom Shipping - `wcj_custom_shipping_do_add_table_rows` filter added.
 ~* Dev - PDF INVOICING & PACKING SLIPS - Advanced - "Disable Saving PDFs in Temp Directory" option moved from "General" module.
 * Dev - PDF INVOICING & PACKING SLIPS - Email Options - "WooCommerce Vendor Marketplace" plugin support added.
@@ -227,6 +228,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - EMAILS & MISC. - Booster WPML - Serialized values properly handled, when regenerating `wpml-config.xml` file.
 ~* Dev - EMAILS & MISC. - Booster WPML - `wpml-config.xml` file updated.
 * Dev - `wcj_version_updated` hook added (`wp_schedule_single_event()`).
+!* Dev - Deprecated options handling added.
 
 = 3.7.0 - 22/06/2018 =
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products on sale" options added.

@@ -268,7 +268,7 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Send Additional Email to Admin on User Actions', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf( __( 'Admin email: <em>%s</em>.', 'woocommerce-jetpack' ), get_option( 'admin_email' ) ),
-		'id'       => 'wcj_checkout_files_upload_settings[additional_admin_emails]',
+		'id'       => 'wcj_checkout_files_upload_additional_admin_emails[actions]',
 		'default'  => array(),
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
@@ -279,7 +279,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'desc'     => __( 'Attach file on upload action', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_checkout_files_upload_settings[admin_email_do_attach]',
+		'id'       => 'wcj_checkout_files_upload_additional_admin_emails[do_attach]',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
 	),
@@ -346,11 +346,11 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Order Template Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'id'       => 'wcj_checkout_files_upload_settings[order_template_options]',
+		'id'       => 'wcj_checkout_files_upload_templates[order_options]',
 	),
 	array(
 		'title'    => __( 'Before', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_checkout_files_upload_settings[order_template_before]',
+		'id'       => 'wcj_checkout_files_upload_templates[order_before]',
 		'default'  => '',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;',
@@ -358,14 +358,14 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Item', 'woocommerce-jetpack' ),
 		'desc'     => wcj_message_replaced_values( array( '%file_name%', '%image%' ) ),
-		'id'       => 'wcj_checkout_files_upload_settings[order_template_item]',
+		'id'       => 'wcj_checkout_files_upload_templates[order_item]',
 		'default'  => sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'After', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_checkout_files_upload_settings[order_template_after]',
+		'id'       => 'wcj_checkout_files_upload_templates[order_after]',
 		'default'  => '',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;',
@@ -374,24 +374,24 @@ $settings = array_merge( $settings, array(
 		'desc'     => __( 'Image style', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf( __( 'Ignored, if %s is not included in %s option above.', 'woocommerce-jetpack' ),
 			'<em>%image%</em>', '<em>' . __( 'Item', 'woocommerce-jetpack' ) . '</em>' ),
-		'id'       => 'wcj_checkout_files_upload_settings[order_template_image_style]',
+		'id'       => 'wcj_checkout_files_upload_templates[order_image_style]',
 		'default'  => 'width:64px;',
 		'type'     => 'text',
 	),
 	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_checkout_files_upload_settings[order_template_options]',
+		'id'       => 'wcj_checkout_files_upload_templates[order_options]',
 	),
 ) );
 $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Email Template Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
-		'id'       => 'wcj_checkout_files_upload_settings[email_template_options]',
+		'id'       => 'wcj_checkout_files_upload_templates[email_options]',
 	),
 	array(
 		'title'    => __( 'Before', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_checkout_files_upload_settings[email_template_before]',
+		'id'       => 'wcj_checkout_files_upload_templates[email_before]',
 		'default'  => '',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;',
@@ -399,21 +399,21 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Item', 'woocommerce-jetpack' ),
 		'desc'     => wcj_message_replaced_values( array( '%file_name%' ) ),
-		'id'       => 'wcj_checkout_files_upload_settings[email_template_item]',
+		'id'       => 'wcj_checkout_files_upload_templates[email_item]',
 		'default'  => sprintf( __( 'File: %s', 'woocommerce-jetpack' ), '%file_name%' ) . '<br>',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'After', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_checkout_files_upload_settings[email_template_after]',
+		'id'       => 'wcj_checkout_files_upload_templates[email_after]',
 		'default'  => '',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;',
 	),
 	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_checkout_files_upload_settings[email_template_options]',
+		'id'       => 'wcj_checkout_files_upload_templates[email_options]',
 	),
 ) );
 $settings = array_merge( $settings, array(

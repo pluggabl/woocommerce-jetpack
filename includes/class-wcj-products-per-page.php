@@ -18,9 +18,9 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	 *
 	 * @version 3.8.0
 	 * @since   2.6.0
-	 * @todo    [dev] position priority for every hook
-	 * @todo    [dev] post or get
-	 * @todo    [dev] (maybe) make `session` the default `$this->products_per_page_saving_method`
+	 * @todo    (dev) position priority for every hook
+	 * @todo    (dev) post or get
+	 * @todo    (dev) (maybe) make `session` the default `$this->products_per_page_saving_method`
 	 */
 	function __construct() {
 
