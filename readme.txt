@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.7.0
+Stable tag: 3.8.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
