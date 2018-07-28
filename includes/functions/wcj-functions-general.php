@@ -9,6 +9,18 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_help_tip' ) ) {
+	/**
+	 * wcj_help_tip.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 */
+	function wcj_help_tip( $text ) {
+		return ' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . esc_html( $text ) . '">';
+	}
+}
+
 if ( ! function_exists( 'wcj_get_wpml_default_language' ) ) {
 	/**
 	 * wcj_get_wpml_default_language.

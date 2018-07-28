@@ -4,7 +4,6 @@
  *
  * @version 3.8.1
  * @author  Algoritmika Ltd.
- * @todo    clear products transients after converting prices
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -133,7 +132,8 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * change_all_products_prices
 	 *
-	 * @version 2.4.4
+	 * @version 3.8.1
+	 * @todo    (dev) clear products transients after converting prices
 	 */
 	function change_all_products_prices( $multiply_prices_by, $is_preview ) {
 		$multiply_prices_by = floatval( $multiply_prices_by );
@@ -143,7 +143,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 
 		ob_start();
 
-		echo '<table class="widefat" style="width:50%; min-width: 300px; margin-top: 10px;">';
+		echo '<table class="widefat striped" style="margin-top: 10px;">';
 		echo '<tr>' .
 				'<th>' . __( 'Product', 'woocommerce-jetpack' )        . '</th>' .
 				'<th>' . __( 'Categories', 'woocommerce-jetpack' )     . '</th>' .
@@ -152,16 +152,17 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 				'<th>' . __( 'Modified Price', 'woocommerce-jetpack' ) . '</th>' .
 			'</tr>';
 
-		$offset = 0;
-		$block_size = 96;
+		$offset     = 0;
+		$block_size = 1024;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'product',
 				'post_status'    => 'any',
 				'posts_per_page' => $block_size,
 				'offset'         => $offset,
-//				'orderby'        => 'date',
-//				'order'          => 'ASC',
+				'orderby'        => 'ID',
+				'order'          => 'DESC',
+				'fields'         => 'ids',
 			);
 			if ( isset( $_POST['wcj_product_cat'] ) && 'wcj_any' != $_POST['wcj_product_cat'] && 'any' != apply_filters( 'booster_option', 'any', '' ) ) {
 				$args['tax_query'] = array(
@@ -174,13 +175,14 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 				);
 			}
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$this->change_product_price( $loop->post->ID, $multiply_prices_by, $is_preview );
-			endwhile;
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $product_id ) {
+				$this->change_product_price( $product_id, $multiply_prices_by, $is_preview );
+			}
 			$offset += $block_size;
 		}
-		wp_reset_postdata();
 
 		echo '</table>';
 
@@ -235,7 +237,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 				$data_table = array();
 				$data_table[] = array(
 					__( 'Multiply all product prices by', 'woocommerce-jetpack' ),
-					'<input class="" type="number" step="0.000001" min="0.000001" name="multiply_prices_by" id="multiply_prices_by" value="' .
+					'<input class="" style="width:100%;" type="number" step="0.000001" min="0.000001" name="multiply_prices_by" id="multiply_prices_by" value="' .
 						$multiply_prices_by . '">',
 					'',
 				);
@@ -243,7 +245,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 				$selected_option_price_types = ( isset( $_POST['wcj_price_types'] ) ) ? $_POST['wcj_price_types'] : '';
 				$data_table[] = array(
 					__( 'Price type to modify', 'woocommerce-jetpack' ),
-					'<select name="wcj_price_types">' .
+					'<select style="width:100%;" name="wcj_price_types">' .
 						'<option value="wcj_both">' . __( 'Both', 'woocommerce-jetpack' ) . '</option>' .
 						'<option value="wcj_sale_prices"'    . selected( 'wcj_sale_prices',    $selected_option_price_types, false ) . '>'
 							. __( 'Sale prices only', 'woocommerce-jetpack' )    . '</option>' .
@@ -256,22 +258,23 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 				if ( '' != $select_options_html ) {
 					$data_table[] = array(
 						__( 'Products category', 'woocommerce-jetpack' ),
-						'<select name="wcj_product_cat" ' . apply_filters( 'booster_option', 'disabled', '' ) . '>' .
+						'<select style="width:100%;" name="wcj_product_cat" ' . apply_filters( 'booster_option', 'disabled', '' ) . '>' .
 							'<option value="wcj_any">' . __( 'Any', 'woocommerce-jetpack' ) . '</option>' .
 							$select_options_html .
 							'<option value="wcj_none"' . selected( 'wcj_none', $selected_option, false ) . '>' . __( 'None', 'woocommerce-jetpack' ) . '</option>' .
 						'</select>',
-						apply_filters( 'booster_message', '', 'desc' ),
+						'<em>' . apply_filters( 'booster_message', '', 'desc' ) . '</em>',
 					);
 				}
 				$make_pretty_prices_threshold = isset( $_POST['make_pretty_prices_threshold'] ) ? $_POST['make_pretty_prices_threshold'] : 0;
 				$data_table[] = array(
-					__( '"Pretty prices" threshold', 'woocommerce-jetpack' ),
-					'<input class="" type="number" step="0.000001" min="0" name="make_pretty_prices_threshold" id="make_pretty_prices_threshold" value="' .
+					__( '"Pretty prices" threshold', 'woocommerce-jetpack' ) . wcj_help_tip( __( 'Leave zero to disable.', 'woocommerce-jetpack' ) . ' ' .
+						__( 'Otherwise - all prices below "threshold" will end with 0,99 and all prices above or equal to "threshold" will end with 9,00.', 'woocommerce-jetpack' ) . ' ' .
+						__( 'E.g.: if you set "threshold" to 100, then all prices below 100 will be like 45,99 and all other prices will be like 109,00.', 'woocommerce-jetpack' )
+					),
+					'<input style="width:100%;" class="" type="number" step="0.000001" min="0" name="make_pretty_prices_threshold" id="make_pretty_prices_threshold" value="' .
 						$make_pretty_prices_threshold . '"' . apply_filters( 'booster_option', 'disabled', '' ) . '>',
-					( '' == apply_filters( 'booster_message', '', 'desc' ) ) ?
-						'<em>' . __( 'Leave zero to disable', 'woocommerce-jetpack' ) . '</em>' :
-						apply_filters( 'booster_message', '', 'desc' ),
+					'<em>' . apply_filters( 'booster_message', '', 'desc' ) . '</em>',
 				);
 				$data_table[] = array(
 					'<input class="button-primary" type="submit" name="bulk_change_prices_preview" id="bulk_change_prices_preview" value="' .
@@ -287,7 +290,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 						'',
 					);
 				}
-				echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none', ) );
+				echo wcj_get_table_html( $data_table, array( 'table_heading_type' => 'none', 'table_class' => 'widefat striped', 'table_style' => 'width:50%;min-width:300px;' ) );
 			echo '</form>';
 			if ( $is_preview ) echo $result_changing_prices;
 		echo '</div>';

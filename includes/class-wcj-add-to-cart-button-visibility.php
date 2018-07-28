@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Add to Cart Button Visibility
  *
- * @version 3.4.0
+ * @version 3.8.1
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  */
@@ -16,8 +16,9 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 3.8.1
 	 * @since   3.3.0
+	 * @todo    maybe add option to use `woocommerce_before_add_to_cart_form` / `woocommerce_after_add_to_cart_form` instead of `woocommerce_before_add_to_cart_button` / `woocommerce_after_add_to_cart_button`
 	 */
 	function __construct() {
 
@@ -37,36 +38,56 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_add_to_cart_button_global_enabled', 'no' ) ) {
 				// Archives
 				if ( 'yes' === get_option( 'wcj_add_to_cart_button_disable_archives', 'no' ) ) {
-					add_action( 'init', array( $this, 'add_to_cart_button_disable_archives' ), PHP_INT_MAX );
-					add_action( 'woocommerce_after_shop_loop_item', array( $this, 'add_to_cart_button_archives_content' ), 10 );
+					if ( 'remove_action' === get_option( 'wcj_add_to_cart_button_disable_archives_method', 'remove_action' ) ) {
+						add_action( 'init',                                  array( $this, 'add_to_cart_button_disable_archives' ), PHP_INT_MAX );
+						add_action( 'woocommerce_after_shop_loop_item',      array( $this, 'add_to_cart_button_archives_content' ), 10 );
+					} else { // 'add_filter'
+						add_filter( 'woocommerce_loop_add_to_cart_link',     array( $this, 'add_to_cart_button_loop_disable_all_products' ), PHP_INT_MAX, 2 );
+					}
 				}
 				// Single Product
 				if ( 'yes' === get_option( 'wcj_add_to_cart_button_disable_single', 'no' ) ) {
-					add_action( 'init', array( $this, 'add_to_cart_button_disable_single' ), PHP_INT_MAX );
-					add_action( 'woocommerce_single_product_summary', array( $this, 'add_to_cart_button_single_content' ), 30 );
+					if ( 'remove_action' === get_option( 'wcj_add_to_cart_button_disable_single_method', 'remove_action' ) ) {
+						add_action( 'init',                                  array( $this, 'add_to_cart_button_disable_single' ), PHP_INT_MAX );
+						add_action( 'woocommerce_single_product_summary',    array( $this, 'add_to_cart_button_single_content' ), 30 );
+					} else { // 'add_action'
+						add_action( 'woocommerce_before_add_to_cart_button', 'ob_start',                                          PHP_INT_MAX, 0 );
+						add_action( 'woocommerce_after_add_to_cart_button',  'ob_end_clean',                                      PHP_INT_MAX, 0 );
+						add_action( 'woocommerce_after_add_to_cart_button',  array( $this, 'add_to_cart_button_single_content' ), PHP_INT_MAX, 0 );
+					}
 				}
 			}
 			// Per category
 			if ( 'yes' === get_option( 'wcj_add_to_cart_button_per_category_enabled', 'no' ) ) {
 				// Single Product
-				add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_to_cart_button_disable_start_per_category' ), PHP_INT_MAX, 0 );
-				add_action( 'woocommerce_after_add_to_cart_button',  array( $this, 'add_to_cart_button_disable_end_per_category' ),   PHP_INT_MAX, 0 );
+				add_action( 'woocommerce_before_add_to_cart_button',         array( $this, 'add_to_cart_button_disable_start_per_category' ), PHP_INT_MAX, 0 );
+				add_action( 'woocommerce_after_add_to_cart_button',          array( $this, 'add_to_cart_button_disable_end_per_category' ),   PHP_INT_MAX, 0 );
 				// Archives
-				add_filter( 'woocommerce_loop_add_to_cart_link',     array( $this, 'add_to_cart_button_loop_disable_per_category' ),  PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_loop_add_to_cart_link',             array( $this, 'add_to_cart_button_loop_disable_per_category' ),  PHP_INT_MAX, 2 );
 			}
 			// Per product
 			if ( 'yes' === get_option( 'wcj_add_to_cart_button_per_product_enabled', 'no' ) ) {
 				// Single Product
-				add_action( 'woocommerce_before_add_to_cart_button', array( $this, 'add_to_cart_button_disable_start' ), PHP_INT_MAX, 0 );
-				add_action( 'woocommerce_after_add_to_cart_button',  array( $this, 'add_to_cart_button_disable_end' ),   PHP_INT_MAX, 0 );
+				add_action( 'woocommerce_before_add_to_cart_button',         array( $this, 'add_to_cart_button_disable_start' ), PHP_INT_MAX, 0 );
+				add_action( 'woocommerce_after_add_to_cart_button',          array( $this, 'add_to_cart_button_disable_end' ),   PHP_INT_MAX, 0 );
 				// Archives
-				add_filter( 'woocommerce_loop_add_to_cart_link',     array( $this, 'add_to_cart_button_loop_disable' ),  PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_loop_add_to_cart_link',             array( $this, 'add_to_cart_button_loop_disable' ),  PHP_INT_MAX, 2 );
 				// Metaboxes
-				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
-				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+				add_action( 'add_meta_boxes',                                array( $this, 'add_meta_box' ) );
+				add_action( 'save_post_product',                             array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
 		}
 
+	}
+
+	/**
+	 * add_to_cart_button_loop_disable_all_products.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 */
+	function add_to_cart_button_loop_disable_all_products( $link, $_product ) {
+		return do_shortcode( get_option( 'wcj_add_to_cart_button_archives_content', '' ) );
 	}
 
 	/**

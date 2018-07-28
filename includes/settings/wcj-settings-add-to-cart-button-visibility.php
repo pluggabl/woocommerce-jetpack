@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Add to Cart Button Visibility
  *
- * @version 3.4.0
+ * @version 3.8.1
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    "Per Tag"
@@ -33,6 +33,17 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'desc'     => __( 'Advanced', 'woocommerce-jetpack' ) . ': ' . __( 'Method', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Method for disabling the buttons. Try changing if buttons are not being disabled (may happen with some themes).', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_disable_archives_method',
+		'default'  => 'remove_action',
+		'type'     => 'select',
+		'options'  => array(
+			'remove_action' => __( 'Remove action', 'woocommerce-jetpack' ),
+			'add_filter'    => __( 'Add filter', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
 		'desc'     => __( 'Content', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Content to replace with on archives (can be empty). You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_add_to_cart_button_archives_content',
@@ -46,6 +57,17 @@ return array(
 		'id'       => 'wcj_add_to_cart_button_disable_single',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'desc'     => __( 'Advanced', 'woocommerce-jetpack' ) . ': ' . __( 'Method', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Method for disabling the buttons. Try changing if buttons are not being disabled (may happen with some themes).', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_add_to_cart_button_disable_single_method',
+		'default'  => 'remove_action',
+		'type'     => 'select',
+		'options'  => array(
+			'remove_action' => __( 'Remove action', 'woocommerce-jetpack' ),
+			'add_action'    => __( 'Add action', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'desc'     => __( 'Content', 'woocommerce-jetpack' ),
