@@ -2,8 +2,9 @@
 /**
  * Booster for WooCommerce - Module - Custom Price Labels
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
+ * @todo    clean up
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -228,7 +229,7 @@ class WCJ_Price_Labels extends WCJ_Module {
 	/*
 	 * custom_price - front end.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @todo    rewrite this with less filters (e.g. `woocommerce_get_price_html` only) - at least for `! WCJ_IS_WC_VERSION_BELOW_3`
 	 */
 	function custom_price( $price, $product ) {
@@ -273,11 +274,11 @@ class WCJ_Price_Labels extends WCJ_Module {
 		$do_apply_global = true;
 		$products_incl = get_option( 'wcj_global_price_labels_products_incl', array() );
 		if ( ! empty( $products_incl ) ) {
-			$do_apply_global = ( in_array( $_product_id, $products_incl ) ) ? true : false;
+			$do_apply_global = (   in_array( $_product_id, $products_incl ) );
 		}
 		$products_excl = get_option( 'wcj_global_price_labels_products_excl', array() );
 		if ( ! empty( $products_excl ) ) {
-			$do_apply_global = ( in_array( $_product_id, $products_excl ) ) ? false : true;
+			$do_apply_global = ( ! in_array( $_product_id, $products_excl ) );
 		}
 		$product_categories = get_the_terms( $_product_id, 'product_cat' );
 		$product_categories_incl = get_option( 'wcj_global_price_labels_product_cats_incl', array() );

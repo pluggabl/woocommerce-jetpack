@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Cross-sells
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   3.5.3
  * @author  Algoritmika Ltd.
  */
@@ -95,7 +95,7 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 		array(
 			'title'    => __( 'Global Cross-sells', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'Enable this section if you want to add same cross-sells to all products.', 'woocommerce-jetpack' ) . ' ' .
+			'desc_tip' => __( 'Enable this section, if you want to add same cross-sells to all products.', 'woocommerce-jetpack' ) . ' ' .
 				apply_filters( 'booster_message', '', 'desc' ),
 			'type'     => 'checkbox',
 			'id'       => 'wcj_cross_sells_global_enabled',
@@ -109,6 +109,16 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 			'default'  => '',
 			'class'    => 'chosen_select',
 			'options'  => wcj_get_products(),
+		),
+		array(
+			'title'    => __( 'Exclude "Not in Stock" Products', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Enable this, if you want to exclude "not in stock" products from cross-sells.', 'woocommerce-jetpack' ) . ' ' .
+				apply_filters( 'booster_message', '', 'desc' ),
+			'type'     => 'checkbox',
+			'id'       => 'wcj_cross_sells_exclude_not_in_stock',
+			'default'  => 'no',
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 	) );
 }

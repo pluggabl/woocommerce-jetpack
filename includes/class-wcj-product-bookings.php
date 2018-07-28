@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -422,11 +422,11 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * is_bookings_product.
 	 *
-	 * @version 2.7.0
+	 * @version 3.8.1
 	 * @since   2.5.0
 	 */
 	function is_bookings_product( $_product ) {
-		return ( 'yes' === get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_' . 'wcj_product_bookings_enabled', true ) ) ? true : false;
+		return ( 'yes' === get_post_meta( wcj_get_product_id_or_variation_parent_id( $_product ), '_' . 'wcj_product_bookings_enabled', true ) );
 	}
 
 }

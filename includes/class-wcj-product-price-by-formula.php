@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   2.5.0
 	 * @todo    use WC math library instead of `PHPMathParser`
 	 */
@@ -34,8 +34,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
-			if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) || isset( $_GET['wcj_create_products_xml'] ) ) {
-				wcj_add_change_price_hooks( $this, PHP_INT_MAX - 100, false );
+			if ( wcj_is_frontend() || isset( $_GET['wcj_create_products_xml'] ) ) {
+				wcj_add_change_price_hooks( $this, wcj_get_module_price_hooks_priority( 'product_price_by_formula' ), false );
 			}
 
 			add_filter( 'wcj_save_meta_box_value', array( $this, 'save_meta_box_value' ), PHP_INT_MAX, 3 );
@@ -69,13 +69,13 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product, $output_errors = false ) {
 		if ( $this->is_price_by_formula_product( $_product ) && '' != $price ) {
 			$_product_id = wcj_get_product_id_or_variation_parent_id( $_product );
-			$is_per_product = ( 'per_product' === get_post_meta( $_product_id, '_' . 'wcj_product_price_by_formula_calculation', true ) ) ? true : false;
+			$is_per_product = ( 'per_product' === get_post_meta( $_product_id, '_' . 'wcj_product_price_by_formula_calculation', true ) );
 			$the_formula = ( $is_per_product )
 				? get_post_meta( $_product_id, '_' . 'wcj_product_price_by_formula_eval', true )
 				: get_option( 'wcj_product_price_by_formula_eval', '' );

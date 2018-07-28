@@ -88,7 +88,6 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_total_tax_refunded',
 			'wcj_order_total_weight',
 			'wcj_order_total_width',
-//			'wcj_order_cart_discount',
 		);
 
 		parent::__construct();
@@ -1032,62 +1031,14 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
-	 * wcj_order_get_cart_discount_tax.
-	 */
-	/* function wcj_order_get_cart_discount_tax() {
-
-		$the_cart_discount = $this->the_order->get_cart_discount();
-		$is_discount_taxable = ( $the_cart_discount > 0 ) ? true : false;
-
-		if ( $is_discount_taxable ) {
-
-			/* $order_total_incl_tax = $this->the_order->get_total();
-			$order_total_tax      = $this->the_order->get_total_tax(); *//*
-
-			$order_total_incl_tax = 0;
-			$order_total_tax = 0;
-			$items = $this->the_order->get_items();
-			foreach ( $items as $item ) {
-				$order_total_incl_tax += $item['line_total'] + $item['line_tax'];
-				$order_total_tax += $item['line_tax'];
-			}
-
-			if ( 0 != $order_total_incl_tax ) {
-
-				$order_tax_rate = $order_total_tax / $order_total_incl_tax;
-				$the_tax = $the_cart_discount * $order_tax_rate;
-
-				return $the_tax;
-			}
-		}
-
-		return false;
-	} */
-
-	/**
 	 * wcj_order_total_discount.
 	 *
 	 * @version 2.4.0
 	 */
 	function wcj_order_total_discount( $atts ) {
-
 		$the_discount = $this->the_order->get_total_discount( $atts['excl_tax'] );
-
-		/* if ( true === $atts['excl_tax'] ) {
-			if ( false != ( $the_tax = $this->wcj_order_get_cart_discount_tax() ) ) {
-				$the_discount -= $the_tax;
-			}
-		} */
-
 		return $this->wcj_price_shortcode( $the_discount, $atts );
 	}
-
-	/**
-	 * wcj_order_cart_discount.
-	 */
-	/* function wcj_order_cart_discount( $atts ) {
-		return $this->wcj_price_shortcode( $this->the_order->get_cart_discount() , $atts );
-	} */
 
 	/**
 	 * wcj_order_shipping_tax.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 3.4.0
+ * @version 3.8.1
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @todo    clean up
@@ -481,7 +481,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * add_eu_vat_number_checkout_field_to_frontend.
 	 *
-	 * @version 2.4.0
+	 * @version 3.8.1
 	 */
 	function add_eu_vat_number_checkout_field_to_frontend( $fields ) {
 		$fields['billing'][ 'billing_' . $this->id ] = array(
@@ -490,9 +490,9 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			'label'             => get_option( 'wcj_eu_vat_number_field_label' ),
 			'description'       => get_option( 'wcj_eu_vat_number_field_description' ),
 			'placeholder'       => get_option( 'wcj_eu_vat_number_field_placeholder' ),
-			'required'          => ( 'yes' === get_option( 'wcj_eu_vat_number_field_required', 'no' ) ) ? true : false,
+			'required'          => ( 'yes' === get_option( 'wcj_eu_vat_number_field_required', 'no' ) ),
 			'custom_attributes' => array(),
-			'clear'             => ( 'yes' === get_option( 'wcj_eu_vat_number_field_clear', 'yes' ) ) ? true : false,
+			'clear'             => ( 'yes' === get_option( 'wcj_eu_vat_number_field_clear', 'yes' ) ),
 			'class'             => array( get_option( 'wcj_eu_vat_number_field_class', 'form-row-wide' ) ),
 			'validate'          => ( 'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) ) ? array( 'eu-vat-number' ) : array(),
 		);

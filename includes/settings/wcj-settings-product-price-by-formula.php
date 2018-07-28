@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -82,6 +82,22 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_price_by_formula_general_options',
+	),
+	array(
+		'title'    => __( 'Advanced Settings', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_price_by_formula_advanced_options',
+	),
+	array(
+		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
+		'id'       => 'wcj_product_price_by_formula_advanced_price_hooks_priority',
+		'default'  => 0,
+		'type'     => 'number',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_price_by_formula_advanced_options',
 	),
 ) );
 return $settings;

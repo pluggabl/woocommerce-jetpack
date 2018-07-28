@@ -188,6 +188,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.8.1 - 28/07/2018 =
+* Feature - PRODUCTS - Cross-sells - "Exclude Not in Stock Products" option added.
+* Fix - EMAILS & MISC. - User Tracking - Fatal error on "Update now" button fixed.
+* Dev - PRICES & CURRENCIES - Global Discount - Advanced Settings - "Price Filters Priority" option added.
+* Dev - PRICES & CURRENCIES - Product Price by Formula - Advanced Settings - "Price Filters Priority" option added.
+* Dev - Code clean up.
+
 = 3.8.0 - 28/07/2018 =
 * Feature - PRICES & CURRENCIES - Global Discount - "Final Correction" options added.
 * Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Add option to make empty price" options added.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Custom Payment Gateway
  *
- * @version 2.9.0
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -17,7 +17,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 			/**
 			 * WC_Gateway_WCJ_Custom_Template class.
 			 *
-			 * @version 2.9.0
+			 * @version 3.8.1
 			 */
 			class WC_Gateway_WCJ_Custom_Template extends WC_Payment_Gateway {
 
@@ -346,7 +346,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * init.
 				 *
-				 * @version 2.5.2
+				 * @version 3.8.1
 				 */
 				function init( $id_count ) {
 					$this->id                       = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
@@ -365,7 +365,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					$this->icon                     = $this->get_option( 'icon', '' );//apply_filters( 'woocommerce_wcj_custom_icon', $this->get_option( 'icon', '' ) );
 					$this->min_amount               = $this->get_option( 'min_amount', 0 );
 					$this->enable_for_methods       = $this->get_option( 'enable_for_methods', array() );
-					$this->enable_for_virtual       = $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes' ? true : false;
+					$this->enable_for_virtual       = $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes',
 					$this->default_order_status     = $this->get_option( 'default_order_status', 'pending' );
 					$this->send_email_to_admin      = $this->get_option( 'send_email_to_admin', 'no' );
 					$this->send_email_to_customer   = $this->get_option( 'send_email_to_customer', 'no' );

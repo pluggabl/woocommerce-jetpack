@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   3.2.2
  * @author  Algoritmika Ltd.
  */
@@ -189,11 +189,11 @@ class WCJ_Order_Statuses_Tool {
 	/**
 	 * get_custom_statuses_add_edit_table.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   3.2.2
 	 */
 	function get_custom_statuses_add_edit_table() {
-		$is_editing = ( isset( $_GET['edit'] ) ) ? true : false;
+		$is_editing = ( isset( $_GET['edit'] ) );
 		if ( $is_editing ) {
 			$edit_slug             = $_GET['edit'];
 			$custom_order_statuses = $this->module->get_custom_order_statuses();

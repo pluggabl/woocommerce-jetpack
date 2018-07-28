@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   3.1.3
  * @author  Algoritmika Ltd.
  */
@@ -108,13 +108,13 @@ class WCJ_User_Tracking extends WCJ_Module {
 	/**
 	 * track_users_update_county_stats.
 	 *
-	 * @version 2.9.1
+	 * @version 3.8.1
 	 * @since   2.9.1
 	 * @todo    (maybe) `wp_nonce`
 	 */
 	function track_users_update_county_stats() {
 		if ( isset( $_GET['wcj_track_users_update_county_stats'] ) ) {
-			$this->track_users_generate_stats_cron();
+			$this->track_users_generate_stats_cron( 'manual' );
 			wp_safe_redirect( remove_query_arg( 'wcj_track_users_update_county_stats' ) );
 			exit;
 		}

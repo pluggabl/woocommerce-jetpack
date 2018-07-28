@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cross-sells
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   3.5.3
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   3.5.3
 	 */
 	function __construct() {
@@ -42,6 +42,9 @@ class WCJ_Cross_Sells extends WCJ_Module {
 			if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_cross_sells_global_enabled', 'no' ) ) ) {
 					add_filter( 'woocommerce_product_get_cross_sell_ids', array( $this, 'cross_sells_ids' ), PHP_INT_MAX, 2 );
+				}
+				if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_cross_sells_exclude_not_in_stock', 'no' ) ) ) {
+					add_filter( 'woocommerce_product_get_cross_sell_ids', array( $this, 'cross_sells_exclude_not_in_stock' ), PHP_INT_MAX, 2 );
 				}
 			}
 			if ( 'yes' === get_option( 'wcj_cross_sells_hide', 'no' ) ) {
@@ -77,6 +80,22 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	}
 
 	/**
+	 * cross_sells_exclude_not_in_stock.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 */
+	function cross_sells_exclude_not_in_stock( $ids, $_product ) {
+		foreach ( $ids as $key => $product_id ) {
+			$product = wc_get_product( $product_id );
+			if ( ! $product->is_in_stock() ) {
+				unset( $ids[ $key ] );
+			}
+		}
+		return $ids;
+	}
+
+	/**
 	 * cross_sells_ids.
 	 *
 	 * @version 3.6.0
@@ -89,7 +108,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 		$global_cross_sells = get_option( 'wcj_cross_sells_global_ids', '' );
 		if ( ! empty( $global_cross_sells ) ) {
 			$global_cross_sells = array_unique( $global_cross_sells );
-			$product_id     = wcj_get_product_id_or_variation_parent_id( $_product );
+			$product_id         = wcj_get_product_id_or_variation_parent_id( $_product );
 			if ( false !== ( $key = array_search( $product_id, $global_cross_sells ) ) ) {
 				unset( $global_cross_sells[ $key ] );
 			}

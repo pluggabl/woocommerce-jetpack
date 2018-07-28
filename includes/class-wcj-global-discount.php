@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.8.1
 	 * @since   2.5.7
 	 * @todo    fee instead of discount
 	 * @todo    regular price coefficient
@@ -30,8 +30,9 @@ class WCJ_Global_Discount extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'global_discount' );
 			if ( wcj_is_frontend() ) {
-				wcj_add_change_price_hooks( $this, PHP_INT_MAX, false );
+				wcj_add_change_price_hooks( $this, $this->price_hooks_priority, false );
 			}
 		}
 	}
@@ -127,7 +128,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * check_if_applicable_by_product_scope.
 	 *
-	 * @version 3.1.0
+	 * @version 3.8.1
 	 * @since   3.1.0
 	 */
 	function check_if_applicable_by_product_scope( $_product, $price, $price_type, $scope ) {
@@ -145,13 +146,13 @@ class WCJ_Global_Discount extends WCJ_Module {
 				}
 			}
 		} else { // if ( 'price' === $price_type )
-			wcj_remove_change_price_hooks( $this, PHP_INT_MAX, false );
+			wcj_remove_change_price_hooks( $this, $this->price_hooks_priority, false );
 			if ( 'only_on_sale' === $scope && 0 == $_product->get_sale_price() ) {
 				$return = false;
 			} elseif ( 'only_not_on_sale' === $scope && 0 != $_product->get_sale_price() ) {
 				$return = false;
 			}
-			wcj_add_change_price_hooks( $this, PHP_INT_MAX, false );
+			wcj_add_change_price_hooks( $this, $this->price_hooks_priority, false );
 		}
 		return $return;
 	}
