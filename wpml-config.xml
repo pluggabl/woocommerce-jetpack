@@ -158,6 +158,8 @@
 		<key name="wcj_offer_price_button_label" />
 		<key name="wcj_offer_price_button_class" />
 		<key name="wcj_offer_price_button_style" />
+		<key name="wcj_offer_price_button_position_custom" />
+		<key name="wcj_offer_price_button_position_priority_custom" />
 		<key name="wcj_offer_price_price_label" />
 		<key name="wcj_offer_price_customer_email" />
 		<key name="wcj_offer_price_customer_name" />
@@ -168,9 +170,7 @@
 		<key name="wcj_offer_price_form_footer_template" />
 		<key name="wcj_offer_price_form_required_html" />
 		<key name="wcj_offer_price_customer_notice" />
-		<key name="wcj_offer_price_styling">
-			<key name="*" />
-		</key>
+		<key name="wcj_offer_price_styling"><key name="*" /></key>
 		<key name="wcj_offer_price_email_address" />
 		<key name="wcj_offer_price_email_subject" />
 		<key name="wcj_offer_price_email_template" />
@@ -180,14 +180,6 @@
 		<key name="wcj_product_images_thumbnails_custom_on_single" />
 		<key name="wcj_product_images_custom_on_archives" />
 		<key name="wcj_product_images_sale_flash_html" />
-		<key name="wcj_sale_flash_per_product_cat_16_html" />
-		<key name="wcj_sale_flash_per_product_cat_17_html" />
-		<key name="wcj_sale_flash_per_product_cat_18_html" />
-		<key name="wcj_sale_flash_per_product_cat_15_html" />
-		<key name="wcj_sale_flash_per_product_tag_29_html" />
-		<key name="wcj_sale_flash_per_product_tag_30_html" />
-		<key name="wcj_sale_flash_per_product_tag_25_html" />
-		<key name="wcj_sale_flash_per_product_tag_28_html" />
 		<key name="wcj_product_custom_visibility_options_list" />
 		<key name="wcj_product_by_time_0" />
 		<key name="wcj_product_by_time_1" />
@@ -347,6 +339,7 @@
 		<key name="wcj_checkout_custom_fields_order_received_template_after" />
 		<key name="wcj_checkout_custom_field_label_1" />
 		<key name="wcj_checkout_custom_field_placeholder_1" />
+		<key name="wcj_checkout_custom_field_description_1" />
 		<key name="wcj_checkout_custom_field_priority_1" />
 		<key name="wcj_checkout_custom_field_select_options_1" />
 		<key name="wcj_checkout_custom_field_checkbox_yes_1" />
@@ -369,6 +362,7 @@
 		<key name="wcj_checkout_files_upload_form_template_field" />
 		<key name="wcj_checkout_files_upload_form_template_after" />
 		<key name="wcj_checkout_files_upload_form_template_field_image_style" />
+		<key name="wcj_checkout_files_upload_templates"><key name="*" /></key>
 		<key name="wcj_checkout_files_upload_block_files_exts" />
 		<key name="wcj_checkout_custom_info_content_1" />
 		<key name="wcj_checkout_customization_disable_fields_for_logged_message" />
@@ -376,13 +370,9 @@
 		<key name="wcj_checkout_customization_disable_fields_for_logged_custom_d" />
 		<key name="wcj_checkout_customization_order_received_message" />
 		<key name="wcj_checkout_customization_checkout_login_message" />
-		<key name="wcj_checkout_fees_data_titles">
-			<key name="*" />
-		</key>
-		<key name="wcj_gateways_fees_text_bacs" />
-		<key name="wcj_gateways_fees_text_cheque" />
-		<key name="wcj_gateways_fees_text_cod" />
-		<key name="wcj_gateways_fees_text_paypal" />
+		<key name="wcj_checkout_fees_data_titles"><key name="*" /></key>
+		<key name="wcj_checkout_fees_data_checkout_fields"><key name="*" /></key>
+		<key name="wcj_gateways_fees_text"><key name="*" /></key>
 		<key name="wcj_shipping_icons_style" />
 		<key name="wcj_shipping_icon_flat_rate" />
 		<key name="wcj_shipping_icon_free_shipping" />
@@ -406,9 +396,7 @@
 		<key name="wcj_orders_list_custom_columns_label_1" />
 		<key name="wcj_orders_list_custom_columns_value_1" />
 		<key name="wcj_orders_list_custom_columns_sortable_key_1" />
-		<key name="wcj_order_admin_list_multiple_status_presets_titles">
-			<key name="*" />
-		</key>
+		<key name="wcj_order_admin_list_multiple_status_presets_titles"><key name="*" /></key>
 		<key name="wcj_order_admin_list_columns_order" />
 		<key name="wcj_order_minimum_amount_error_message" />
 		<key name="wcj_order_minimum_amount_cart_notice_message" />
@@ -438,6 +426,10 @@
 		<key name="wcj_url_coupons_key" />
 		<key name="wcj_url_coupons_redirect_custom_url" />
 		<key name="wcj_coupon_by_user_role_invalid_message" />
+		<key name="wcj_my_account_menu_title"><key name="*" /></key>
+		<key name="wcj_my_account_menu_order" />
+		<key name="wcj_my_account_menu_order_custom_items" />
+		<key name="wcj_my_account_custom_dashboard_content" />
 		<key name="wcj_my_account_custom_info_content_1" />
 		<key name="wcj_general_custom_css" />
 		<key name="wcj_general_custom_admin_css" />

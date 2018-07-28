@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Bookings
  *
- * @version 3.0.0
+ * @version 3.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -91,6 +91,14 @@ return array(
 		'title'    => __( 'Hide Quantity Selector for Bookings Products', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_bookings_hide_quantity',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Advanced: Check for Outputted Data', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Ensures that data outputted only once. Enable this if you see data outputted on frontend twice. Disable if you see no data outputted.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_bookings_check_for_outputted_data',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
 	),

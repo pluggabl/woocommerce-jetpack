@@ -17,7 +17,6 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.0
-	 * @todo    (maybe) move all settings to arrays
 	 * @todo    (maybe) add settings subsections for each gateway
 	 */
 	function __construct() {
@@ -154,7 +153,8 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	 * @todo    add product cats and tags
 	 */
 	function check_cart_products( $gateway ) {
-		if ( '' != ( $include_products = $this->get_option( 'include_products', $gateway ) ) ) {
+		$include_products = $this->get_option( 'include_products', $gateway );
+		if ( ! empty( $include_products ) ) {
 			$passed = false;
 			foreach ( WC()->cart->get_cart() as $item ) {
 				if ( in_array( $item['product_id'], $include_products ) ) {
@@ -166,7 +166,8 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				return false;
 			}
 		}
-		if ( '' != ( $exclude_products = $this->get_option( 'exclude_products', $gateway ) ) ) {
+		$exclude_products = $this->get_option( 'exclude_products', $gateway );
+		if ( ! empty( $exclude_products ) ) {
 			foreach ( WC()->cart->get_cart() as $item ) {
 				if ( in_array( $item['product_id'], $exclude_products ) ) {
 					return false;

@@ -92,8 +92,9 @@ class WCJ_Settings_Manager {
 	/**
 	 * manage_options_export.
 	 *
-	 * @version 3.3.0
+	 * @version 3.8.0
 	 * @since   2.5.2
+	 * @see     http://php.net/manual/en/function.header.php
 	 */
 	function manage_options_export() {
 		$export_settings = array();
@@ -114,12 +115,8 @@ class WCJ_Settings_Manager {
 		}
 		$export_settings = json_encode( $export_settings );
 		$export_settings = 'Booster for WooCommerce v' . get_option( WCJ_VERSION_OPTION, 'NA' ) . PHP_EOL . $export_settings;
-		header( "Content-Type: application/octet-stream" );
-		header( "Content-Disposition: attachment; filename=booster_settings.txt" );
-		header( "Content-Type: application/octet-stream" );
 		header( "Content-Type: application/download" );
-		header( "Content-Description: File Transfer" );
-		header( "Content-Length: " . strlen( $export_settings ) );
+		header( "Content-Disposition: attachment; filename=booster_settings.txt" );
 		echo $export_settings;
 		die();
 	}

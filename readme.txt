@@ -188,9 +188,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.8.0 - 27/07/2018 =
+= 3.8.0 - 28/07/2018 =
 * Feature - PRICES & CURRENCIES - Global Discount - "Final Correction" options added.
-~* Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Add option to make empty price" options added.
+* Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Multicurrency on per Product Basis - "Add option to make empty price" options added.
 * Feature - PRICES & CURRENCIES - Offer Your Price - "Advanced: Custom Position(s)" options added.
 * Feature - CART & CHECKOUT - Checkout Custom Fields - "Description" options added.
 * Feature - CART & CHECKOUT - Checkout Fees - "Checkout Field" options added.
@@ -207,28 +207,30 @@ You can see the differences between versions in this [table](https://booster.io/
 * Fix - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Empty value fixed for "Fields to Disable" option.
 * Fix - SHIPPING & ORDERS - Left to Free Shipping - `is_array()` check added to the `wcj_get_left_to_free_shipping()` function.
 * Fix - Functions - Products - `wcj_get_product_display_price()` - Extra checks for valid `$_product` added.
-!* Fix - Dashboard - Manage Settings - Import - UTF-8 BOM sequence removal added.
-~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Advanced: User IP Detection Method" option added.
-!* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Speed optimized (`$this->customer_country_by_ip` added).
+* Fix - Dashboard - Manage Settings - UTF-8 BOM sequence removal added on "Import". Unnecessary HTTP headers removed on "Export".
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - "Advanced: User IP Detection Method" option added.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Speed optimized (`$this->customer_country_by_ip` and `$this->customer_country_group_id` added).
 * Dev - PRICES & CURRENCIES - Price based on User Role - Admin Settings - Minor update in settings descriptions.
-~* Dev - PRODUCTS - Product Addons - "Advanced: Check for Outputted Data" option added.
-~* Dev - PRODUCTS - Product Input Fields - Advanced Options - "Check for Outputted Data" option added.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Advanced: Check for Outputted Data" option added.
+* Dev - PRODUCTS - Bookings - "Advanced: Check for Outputted Data" option added.
+* Dev - PRODUCTS - Product Addons - "Advanced: Check for Outputted Data" option added.
+* Dev - PRODUCTS - Product Input Fields - Advanced Options - "Check for Outputted Data" option added.
 * Dev - PRODUCTS - Product MSRP - In case if variations prices are equal, taking first variation's MSRP.
-~* Dev - PRODUCTS - Products per Page - "Saving Method" option added.
+* Dev - PRODUCTS - Products per Page - "Saving Method" option added.
 * Dev - PRODUCTS - Products per Page - Code refactoring.
 * Dev - CART & CHECKOUT - Checkout Customization - Disable Fields on Checkout for Logged Users - Admin Settings - Minor restyling.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - "Textarea Field Values" and "Textarea Line Breaks" options added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - `wcj_checkout_files_upload` filter - `remove_file` - File name parameter added.
-!* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Code refactoring - Options replaced with options arrays.
-~* Dev - SHIPPING & ORDERS - Custom Shipping - `wcj_custom_shipping_do_add_table_rows` filter added.
-~* Dev - PDF INVOICING & PACKING SLIPS - Advanced - "Disable Saving PDFs in Temp Directory" option moved from "General" module.
+* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Code refactoring - Standalone options replaced with options arrays.
+* Dev - SHIPPING & ORDERS - Custom Shipping - `wcj_custom_shipping_do_add_table_rows` filter added.
+* Dev - PDF INVOICING & PACKING SLIPS - Advanced - "Disable Saving PDFs in Temp Directory" option moved from "General" module.
 * Dev - PDF INVOICING & PACKING SLIPS - Email Options - "WooCommerce Vendor Marketplace" plugin support added.
 * Dev - EMAILS & MISC. - Booster WPML - `custom_textarea` type options added to the `wpml-config.xml` regeneration algorithm.
 * Dev - EMAILS & MISC. - Booster WPML - General Options - "Use Translation Product IDs" option added.
 * Dev - EMAILS & MISC. - Booster WPML - Serialized values properly handled, when regenerating `wpml-config.xml` file.
-~* Dev - EMAILS & MISC. - Booster WPML - `wpml-config.xml` file updated.
-* Dev - `wcj_version_updated` hook added (`wp_schedule_single_event()`).
-!* Dev - Deprecated options handling added.
+* Dev - EMAILS & MISC. - Booster WPML - `wpml-config.xml` file updated.
+* Dev - Core - Options - `wcj_version_updated` hook added (`wp_schedule_single_event()`).
+* Dev - Core - Options - Deprecated options handling added.
 
 = 3.7.0 - 22/06/2018 =
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products on sale" options added.
@@ -2609,7 +2611,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Fix - Product Tabs - Priority was not working in custom local tabs, fixed.
   Also added default priority in custom local product tabs.
 * Fix - *Settings* link in *WooCommerce > Jetpack Settings* was wrong, fixed.
-  This caused bug, where on non-root WordPress instalations *Settings* link gave 404 error. Reported by Brian.
+  This caused bug, where on non-root WordPress installations *Settings* link gave 404 error. Reported by Brian.
 * Fix - Product Tabs - Wrong default priority for WooCommerce Standard Product Tabs, fixed.
   *Reviews Tab* priority was 20 (wrong), changed to 30 (good), *Additional Information Tab* 30 and 20 accordingly. Reported by Patryk.
 * Feature Upgraded - Product Info - Major upgrade: added new info options with separate lines.

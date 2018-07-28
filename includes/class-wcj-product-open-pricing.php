@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 3.7.0
+ * @version 3.8.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -338,11 +338,11 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_open_price_input_field_to_frontend.
 	 *
-	 * @version 3.7.0
+	 * @version 3.8.0
 	 * @since   2.4.8
 	 */
 	function add_open_price_input_field_to_frontend() {
-		if ( isset( $this->is_open_price_input_field_displayed ) ) {
+		if ( isset( $this->is_open_price_input_field_displayed ) && 'yes' === get_option( 'wcj_product_open_price_check_for_outputted_data', 'yes' ) ) {
 			return;
 		}
 		$the_product = wc_get_product();
