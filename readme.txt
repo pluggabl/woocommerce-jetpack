@@ -188,14 +188,19 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.8.1 - 28/07/2018 =
+= 3.8.1 - 29/07/2018 =
 * Feature - PRODUCTS - Cross-sells - "Exclude Not in Stock Products" option added.
+* Feature - EMAILS & MISC. - Email Verification - "Redirect User After Successful Verification to Custom URL" option added.
 * Fix - EMAILS & MISC. - User Tracking - Fatal error on "Update now" button fixed.
 * Dev - PRICES & CURRENCIES - Global Discount - Advanced Settings - "Price Filters Priority" option added.
 * Dev - PRICES & CURRENCIES - Product Price by Formula - Advanced Settings - "Price Filters Priority" option added.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - `WP_Query` optimized to return `ids` only.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - Tool restyled. "Pretty prices threshold" option description added.
 * Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Advanced: Method" options added.
+* Dev - EMAILS & MISC. - Email Verification - Admin settings - Restyled; "Login User After Successful Verification" admin description fixed.
+* Dev - EMAILS & MISC. - Email Verification - "Message - Resend" default value fixed.
+* Dev - EMAILS & MISC. - Email Verification - "Message - Failed (no user ID)" option added.
+* Dev - EMAILS & MISC. - Email Verification - Code refactoring.
 * Dev - Code clean up.
 
 = 3.8.0 - 28/07/2018 =
