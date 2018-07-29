@@ -347,6 +347,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 * init.
 				 *
 				 * @version 3.8.1
+				 * @todo    clean up
 				 */
 				function init( $id_count ) {
 					$this->id                       = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
@@ -365,7 +366,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					$this->icon                     = $this->get_option( 'icon', '' );//apply_filters( 'woocommerce_wcj_custom_icon', $this->get_option( 'icon', '' ) );
 					$this->min_amount               = $this->get_option( 'min_amount', 0 );
 					$this->enable_for_methods       = $this->get_option( 'enable_for_methods', array() );
-					$this->enable_for_virtual       = $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes',
+					$this->enable_for_virtual       = $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes';
 					$this->default_order_status     = $this->get_option( 'default_order_status', 'pending' );
 					$this->send_email_to_admin      = $this->get_option( 'send_email_to_admin', 'no' );
 					$this->send_email_to_customer   = $this->get_option( 'send_email_to_customer', 'no' );
