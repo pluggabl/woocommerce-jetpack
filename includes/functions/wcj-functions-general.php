@@ -335,11 +335,13 @@ if ( ! function_exists( 'wcj_wrap_in_wc_email_template' ) ) {
 	/**
 	 * wcj_wrap_in_wc_email_template.
 	 *
-	 * @version 3.1.0
+	 * @version 3.8.1
 	 * @since   3.1.0
 	 */
 	function wcj_wrap_in_wc_email_template( $content, $email_heading = '' ) {
-		return wcj_get_wc_email_part( 'header', $email_heading ) . $content . wcj_get_wc_email_part( 'footer' );
+		return wcj_get_wc_email_part( 'header', $email_heading ) .
+			$content .
+		str_replace( '{site_title}', wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ), wcj_get_wc_email_part( 'footer' ) );
 	}
 }
 
