@@ -282,6 +282,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 3.2.4
 	 * @since   3.2.4
+	 * @todo    (dev) different style/class for different tax state
 	 * @todo    (maybe) `get` instead of `post`
 	 */
 	function wcj_button_toggle_tax_display( $atts ) {
