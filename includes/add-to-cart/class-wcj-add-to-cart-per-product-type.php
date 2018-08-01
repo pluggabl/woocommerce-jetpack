@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Add to Cart Button Labels - Per Product Type
  *
- * @version 3.7.0
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -27,7 +27,7 @@ class WCJ_Add_To_Cart_Per_Product_Type {
 	/**
 	 * custom_add_to_cart_button_text.
 	 *
-	 * @version 3.7.0
+	 * @version 3.8.1
 	 * @todo    (maybe) add checkbox options to enable/disable custom labels for each product type (or even for each label)
 	 */
 	function custom_add_to_cart_button_text( $add_to_cart_text ) {
@@ -53,6 +53,11 @@ class WCJ_Add_To_Cart_Per_Product_Type {
 					return do_shortcode( $text_already_in_cart );
 				}
 			}
+		}
+
+		// Not in stock
+		if ( '' != ( $text_on_not_in_stock = get_option( 'wcj_add_to_cart_text_on_' . $single_or_archive . '_not_in_stock_' . $product_type, '' ) ) && ! $product->is_in_stock() ) {
+			return do_shortcode( $text_on_not_in_stock );
 		}
 
 		// On sale

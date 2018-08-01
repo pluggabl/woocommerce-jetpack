@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 3.2.4
+ * @version 3.8.1
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -105,7 +105,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * trigger.
 	 *
-	 * @version 3.2.4
+	 * @version 3.8.1
 	 */
 	function trigger( $order_id ) {
 
@@ -117,19 +117,6 @@ class WC_Email_WCJ_Custom extends WC_Email {
 
 			$this->object = wc_get_order( $order_id ); // must be `object` as it's named so in parent class (`WC_Email`). E.g. for attachments.
 
-			if ( $this->customer_email ) {
-				$this->recipient = wcj_get_order_billing_email( $this->object );
-			} elseif ( false !== strpos( $this->recipient, '%customer%' ) ) {
-				$this->recipient = str_replace( '%customer%', wcj_get_order_billing_email( $this->object ), $this->recipient );
-			}
-
-			$this->find['order-date']      = '{order_date}';
-			$this->find['order-number']    = '{order_number}';
-
-			$this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( wcj_get_order_date( $this->object ) ) );
-			$this->replace['order-number'] = $this->object->get_order_number();
-
-			global $post;
 			if ( 'woocommerce_checkout_order_processed_notification' === current_filter() ) {
 				// Check status
 				$is_status_found = false;
@@ -147,6 +134,20 @@ class WC_Email_WCJ_Custom extends WC_Email {
 					return;
 				}
 			}
+
+			if ( $this->customer_email ) {
+				$this->recipient = wcj_get_order_billing_email( $this->object );
+			} elseif ( false !== strpos( $this->recipient, '%customer%' ) ) {
+				$this->recipient = str_replace( '%customer%', wcj_get_order_billing_email( $this->object ), $this->recipient );
+			}
+
+			$this->find['order-date']      = '{order_date}';
+			$this->find['order-number']    = '{order_number}';
+
+			$this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( wcj_get_order_date( $this->object ) ) );
+			$this->replace['order-number'] = $this->object->get_order_number();
+
+			global $post;
 			$post = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->object->post : get_post( $order_id ) );
 			setup_postdata( $post );
 		}
@@ -263,7 +264,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 					__( 'Or enter <code>%customer%</code> to send to customer billing email.', 'woocommerce-jetpack' ),
 				'placeholder'   => '',
 				'default'       => '',
-				'css'           => 'width:99%;min-width:300px;',
+				'css'           => 'width:100%;',
 			),
 			'subject' => array(
 				'title'         => __( 'Subject', 'woocommerce' ),
@@ -271,7 +272,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				'description'   => sprintf( __( 'This controls the email subject line. Leave blank to use the default subject: <code>%s</code>.', 'woocommerce' ), $this->subject ),
 				'placeholder'   => '',
 				'default'       => '',
-				'css'           => 'width:99%;min-width:300px;',
+				'css'           => 'width:100%;',
 			),
 			'email_type' => array(
 				'title'         => __( 'Email type', 'woocommerce' ),
@@ -292,7 +293,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				'description'   => sprintf( __( 'This controls the main heading contained within the email notification. Leave blank to use the default heading: <code>%s</code>.', 'woocommerce' ), $this->heading ),
 				'placeholder'   => '',
 				'default'       => '',
-				'css'           => 'width:99%;min-width:300px;',
+				'css'           => 'width:100%;',
 			),
 			'content_html_template' => array(
 				'title'         => __( 'HTML template', 'woocommerce' ),
@@ -301,7 +302,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				'description'   => '',
 				'placeholder'   => '',
 				'default'       => $default_html_template,
-				'css'           => 'width:99%;min-width:300px;height:500px;',
+				'css'           => 'width:100%;height:500px;',
 			),
 			'content_plain_template' => array(
 				'title'         => __( 'Plain text template', 'woocommerce' ),
@@ -310,7 +311,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				'description'   => '',
 				'placeholder'   => '',
 				'default'       => $default_plain_template,
-				'css'           => 'width:99%;min-width:300px;height:500px;',
+				'css'           => 'width:100%;height:500px;',
 			),
 		);
 	}
