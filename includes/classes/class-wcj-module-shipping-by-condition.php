@@ -5,7 +5,6 @@
  * @version 3.6.0
  * @since   3.2.0
  * @author  Algoritmika Ltd.
- * @todo    (maybe) `abstract class WCJ_Module_Shipping_By_Condition`
  * @todo    (maybe) add "Shipping Methods by Date/Time" module
  */
 
