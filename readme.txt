@@ -188,11 +188,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.8.1 - 31/07/2018 =
+= 3.8.1 - 09/08/2018 =
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products not in stock" option added.
 * Feature - PRODUCTS - Cross-sells - "Exclude Not in Stock Products" option added.
 * Feature - EMAILS & MISC. - Email Verification - "Redirect User After Successful Verification to Custom URL" option added.
 * Fix - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Products with empty price - Default value fixed.
+* Fix - CART & CHECKOUT - Checkout Fees - "Checkout Field" option fixed.
+* Fix - SHIPPING & ORDERS - Custom Shipping - Table rows settings are added on appropriate pages only.
 * Fix - EMAILS & MISC. - Email Verification - "Login User After Successful Verification" admin description fixed.
 * Fix - EMAILS & MISC. - Email Verification - "Message - Resend" default value fixed.
 * Fix - EMAILS & MISC. - Email Verification - "Message - Failed (no user ID)" option added.
@@ -204,9 +206,12 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - Tool restyled. "Pretty prices threshold" option description added.
 * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Admin settings restyled.
 * Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Advanced: Method" options added.
+* Dev - SHIPPING & ORDERS - Left to Free Shipping - Info on Checkout - Position - New positions added.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Products - Minor code changes.
 * Dev - EMAILS & MISC. - Custom Emails - Code cleaned up and refactored.
 * Dev - EMAILS & MISC. - Email Verification - Admin settings restyled. Code refactored.
-* Dev - Code clean up.
+* Dev - Settings - Shipping by Condition - Code optimized.
+* Dev - Code cleaned up.
 
 = 3.8.0 - 28/07/2018 =
 * Feature - PRICES & CURRENCIES - Global Discount - "Final Correction" options added.

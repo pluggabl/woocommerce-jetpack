@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Products
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  */
@@ -151,14 +151,13 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * get_condition_options.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   3.2.0
 	 */
 	function get_condition_options( $options_id ) {
 		switch( $options_id ) {
 			case 'products':
-				return ( 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_add_variations_enabled', 'no' ) ?
-					wcj_get_products( array(), 'any', 256, true ) : wcj_get_products() );
+				return wcj_get_products( array(), 'any', 1024, ( 'yes' === get_option( 'wcj_shipping_by_' . $options_id . '_add_variations_enabled', 'no' ) ) );
 			case 'product_cats':
 				return wcj_get_terms( 'product_cat' );
 			case 'product_tags':

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping by Condition
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   3.2.1
  * @author  Algoritmika Ltd.
  */
@@ -51,6 +51,10 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 		),
 	) );
 	$settings = array_merge( $settings, $this->get_additional_section_settings( $options_id ) );
+	$options  = $this->get_condition_options( $options_id );
+	$type     = ( isset( $options_data['type'] )  ? $options_data['type']  : 'multiselect' );
+	$class    = ( isset( $options_data['class'] ) ? $options_data['class'] : 'chosen_select' );
+	$css      = ( isset( $options_data['css'] )   ? $options_data['css']   : '' );
 	foreach ( $shipping_methods as $method ) {
 		$method_id = ( $use_shipping_instances ? $method['shipping_method_id'] : $method->id );
 		if ( ! in_array( $method_id, array( 'flat_rate', 'local_pickup' ) ) ) {
@@ -63,9 +67,6 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 			$custom_attributes = array();
 			$desc_tip = '';
 		}
-		$type  = ( isset( $options_data['type'] )  ? $options_data['type']  : 'multiselect' );
-		$class = ( isset( $options_data['class'] ) ? $options_data['class'] : 'chosen_select' );
-		$css   = ( isset( $options_data['css'] )   ? $options_data['css']   : '' );
 		$settings = array_merge( $settings, array(
 			array(
 				'title'     => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title'] : $method->get_method_title() ),
@@ -76,7 +77,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 				'type'      => $type,
 				'class'     => $class,
 				'css'       => $css,
-				'options'   => $this->get_condition_options( $options_id ),
+				'options'   => $options,
 				'custom_attributes' => $custom_attributes,
 			),
 			array(
@@ -87,7 +88,7 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 				'type'      => $type,
 				'class'     => $class,
 				'css'       => $css,
-				'options'   => $this->get_condition_options( $options_id ),
+				'options'   => $options,
 				'custom_attributes' => $custom_attributes,
 			),
 		) );
