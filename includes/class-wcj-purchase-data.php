@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 2.9.0
+ * @version 3.8.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -123,19 +123,49 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * render_product_columns.
 	 *
-	 * @version 2.9.0
+	 * @version 3.8.1
 	 * @since   2.9.0
-	 * @todo    variable products when `if ( 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) )`
 	 */
 	function render_product_columns( $column ) {
 		if ( 'profit' === $column || 'purchase_cost' === $column ) {
 			$product_id = get_the_ID();
-			$purchase_cost = wc_get_product_purchase_price( $product_id );
-			if ( 'purchase_cost' === $column ) {
-				echo wc_price( $purchase_cost );
-			} elseif ( 'profit' === $column ) {
-				$_product = wc_get_product( $product_id );
-				echo wc_price( $_product->get_price() - $purchase_cost );
+			$_product   = wc_get_product( $product_id );
+			if ( $_product->is_type( 'variable' ) && 'no' === get_option( 'wcj_purchase_data_variable_as_simple_enabled', 'no' ) ) {
+				$purchase_costs       = array();
+				$profits              = array();
+				$available_variations = $_product->get_available_variations();
+				foreach ( $available_variations as $variation ) {
+					$variation_id   = $variation['variation_id'];
+					$variation_cost = wc_get_product_purchase_price( $variation_id );
+					if ( 'purchase_cost' === $column ) {
+						$purchase_costs[]  = $variation_cost;
+					} elseif ( 'profit' === $column ) {
+						$variation_product = wc_get_product( $variation_id );
+						$variation_price   = $variation_product->get_price();
+						if ( is_numeric( $variation_price ) ) {
+							$profits[] = $variation_price - $variation_cost;
+						}
+					}
+				}
+				if ( 'purchase_cost' === $column ) {
+					$min_cost = min( $purchase_costs );
+					$max_cost = max( $purchase_costs );
+					echo ( $min_cost === $max_cost ? wc_price( $min_cost ) : wc_format_price_range( $min_cost, $max_cost ) );
+				} elseif ( 'profit' === $column ) {
+					$min_profit = min( $profits );
+					$max_profit = max( $profits );
+					echo ( $min_profit === $max_profit ? wc_price( $min_profit ) : wc_format_price_range( $min_profit, $max_profit ) );
+				}
+			} else {
+				$purchase_cost = wc_get_product_purchase_price( $product_id );
+				if ( 'purchase_cost' === $column ) {
+					echo wc_price( $purchase_cost );
+				} elseif ( 'profit' === $column ) {
+					$_price = $_product->get_price();
+					if ( is_numeric( $_price ) ) {
+						echo wc_price( $_price - $purchase_cost );
+					}
+				}
 			}
 		}
 	}
@@ -157,7 +187,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	}
 
 	/**
-	 * Output custom columns for orders
+	 * Output custom columns for orders.
 	 *
 	 * @param   string $column
 	 * @version 2.7.0

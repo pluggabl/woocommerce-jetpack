@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce Exchange Rates
  *
- * @version  3.2.4
- * @author   Algoritmika Ltd.
+ * @version 3.8.1
+ * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -29,11 +29,11 @@ class WCJ_Exchange_Rates {
 	/**
 	 * wcj_ajax_get_exchange_rates_average.
 	 *
-	 * @version 3.2.2
+	 * @version 3.8.1
 	 * @since   3.2.2
 	 */
 	function wcj_ajax_get_exchange_rates_average() {
-		echo wcj_fixer_io_get_exchange_rate_average( $_POST['wcj_currency_from'], $_POST['wcj_currency_to'], $_POST['wcj_start_date'], $_POST['wcj_end_date'] );
+		echo wcj_currencyconverterapi_io_get_exchange_rate_average( $_POST['wcj_currency_from'], $_POST['wcj_currency_to'], $_POST['wcj_start_date'], $_POST['wcj_end_date'] );
 		die();
 	}
 

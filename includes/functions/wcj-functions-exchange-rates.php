@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -61,19 +61,20 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate_servers.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   2.6.0
 	 */
 	function wcj_get_currency_exchange_rate_servers() {
 		return apply_filters( 'wcj_currency_exchange_rates_servers', array(
-			'yahoo'           => __( 'Yahoo', 'woocommerce-jetpack' ),
-			'ecb'             => __( 'European Central Bank (ECB)', 'woocommerce-jetpack' ) . ' [' . __( 'recommended', 'woocommerce-jetpack' ) . ']',
-			'tcmb'            => __( 'TCMB', 'woocommerce-jetpack' ),
-			'fixer'           => __( 'Fixer.io', 'woocommerce-jetpack' ),
-			'coinbase'        => __( 'Coinbase', 'woocommerce-jetpack' ),
-			'coinmarketcap'   => __( 'CoinMarketCap', 'woocommerce-jetpack' ),
-			'google'          => __( 'Google', 'woocommerce-jetpack' ),
-			'boe'             => __( 'Bank of England (BOE)', 'woocommerce-jetpack' ),
+			'ecb'                    => __( 'European Central Bank (ECB)', 'woocommerce-jetpack' ) . ' [' . __( 'recommended', 'woocommerce-jetpack' ) . ']',
+			'currencyconverterapi'   => __( 'The Free Currency Converter API', 'woocommerce-jetpack' ),
+			'boe'                    => __( 'Bank of England (BOE)', 'woocommerce-jetpack' ),
+			'tcmb'                   => __( 'TCMB', 'woocommerce-jetpack' ),
+			'coinbase'               => __( 'Coinbase', 'woocommerce-jetpack' ),
+			'coinmarketcap'          => __( 'CoinMarketCap', 'woocommerce-jetpack' ),
+			'fixer'                  => __( 'Fixer.io', 'woocommerce-jetpack' ),
+			'google'                 => __( 'Google', 'woocommerce-jetpack' ),
+			'yahoo'                  => __( 'Yahoo', 'woocommerce-jetpack' ),
 		) );
 	}
 }
@@ -127,7 +128,7 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 	/*
 	 * wcj_get_exchange_rate.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   2.6.0
 	 */
 	function wcj_get_exchange_rate( $currency_from, $currency_to ) {
@@ -159,11 +160,12 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 			case 'boe':
 				$return = wcj_boe_get_exchange_rate( $currency_from, $currency_to );
 				break;
-			case 'ecb':
+			case 'currencyconverterapi':
+				$return = wcj_currencyconverterapi_get_exchange_rate( $currency_from, $currency_to );
+				break;
+			default: // 'ecb':
 				$return = wcj_ecb_get_exchange_rate( $currency_from, $currency_to );
 				break;
-			default:
-				$return = false;
 		}
 		$return = apply_filters( 'wcj_currency_exchange_rate', $return, $exchange_rates_server, $currency_from, $currency_to );
 		return ( 'yes' === $calculate_by_invert ) ? round( ( 1 / $return ), 6 ) : $return;
@@ -190,6 +192,24 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rates_url_response' ) ) {
 			curl_close( $curl );
 		}
 		return ( '' != $response ? ( $do_json_decode ? json_decode( $response ) : $response ) : false );
+	}
+}
+
+if ( ! function_exists( 'wcj_currencyconverterapi_get_exchange_rate' ) ) {
+	/*
+	 * wcj_currencyconverterapi_get_exchange_rate.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 */
+	function wcj_currencyconverterapi_get_exchange_rate( $currency_from, $currency_to ) {
+		$pair     = $currency_from . '_' . $currency_to;
+		$url      = 'https://free.currencyconverterapi.com/api/v5/convert?q=' . $pair . '&compact=y';
+		$response = wcj_get_currency_exchange_rates_url_response( $url );
+		if ( $response ) {
+			return ( ! empty( $response->{$pair}->val ) ? $response->{$pair}->val : false );
+		}
+		return false;
 	}
 }
 
@@ -572,6 +592,7 @@ if ( ! function_exists( 'wcj_fixer_io_get_exchange_rate_average' ) ) {
 	 * @version 3.2.2
 	 * @since   3.2.2
 	 * @return  false or rate
+	 * @todo    remove this
 	 * @todo    customizable '+1 day' (could be '+1 week' etc.)
 	 */
 	function wcj_fixer_io_get_exchange_rate_average( $currency_from, $currency_to, $start_date, $end_date ) {
@@ -588,5 +609,33 @@ if ( ! function_exists( 'wcj_fixer_io_get_exchange_rate_average' ) ) {
 			}
 		}
 		return ( 0 == $average_rate || 0 == $average_rate_counter ? false : round( ( $average_rate / $average_rate_counter ), 6 ) );
+	}
+}
+
+if ( ! function_exists( 'wcj_currencyconverterapi_io_get_exchange_rate_average' ) ) {
+	/*
+	 * wcj_currencyconverterapi_io_get_exchange_rate_average.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 * @return  false or rate
+	 */
+	function wcj_currencyconverterapi_io_get_exchange_rate_average( $currency_from, $currency_to, $start_date, $end_date ) {
+		$pair                  = $currency_from . '_' . $currency_to;
+		$average_rate          = 0;
+		$average_rate_counter  = 0;
+		$date_ranges           = wcj_get_date_ranges( $start_date, $end_date, 8 );
+		foreach ( $date_ranges as $range ) {
+			$url       = 'https://free.currencyconverterapi.com/api/v6/convert?q=' . $pair . '&compact=ultra&date=' . $range['start_date'] . '&endDate=' . $range['end_date'];
+			$response  = wcj_get_currency_exchange_rates_url_response( $url );
+			if ( $response && ! empty( $response->{$pair} ) ) {
+				$response = ( array ) $response->{$pair};
+				if ( 0 != ( $response_sum = array_sum( $response ) ) ) {
+					$average_rate         += $response_sum;
+					$average_rate_counter += count( $response );
+				}
+			}
+		}
+		return ( 0 != $average_rate_counter ? round( ( $average_rate / $average_rate_counter ), 6 ) : false );
 	}
 }

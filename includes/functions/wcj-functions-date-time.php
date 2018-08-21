@@ -2,12 +2,43 @@
 /**
  * Booster for WooCommerce - Functions - Date and Time
  *
- * @version 2.9.1
+ * @version 3.8.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
+
+if ( ! function_exists( 'wcj_get_date_ranges' ) ) {
+	/*
+	 * wcj_get_date_ranges.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 * @todo    maybe we can re-write this in simpler form
+	 */
+	function wcj_get_date_ranges( $start_date, $end_date, $period ) {
+			$return      = array();
+			$_start_date = $start_date;
+			$_end_date   = date( 'Y-m-d', strtotime( '+' . ( $period - 1 ) . ' days', strtotime( $_start_date ) ) );
+			if ( strtotime( $_end_date ) > strtotime( $end_date ) ) {
+				$_end_date = $end_date;
+			}
+			$return[] = array( 'start_date' => $_start_date, 'end_date' => $_end_date );
+			while ( strtotime( $_end_date ) < strtotime( $end_date ) ) {
+				$_start_date =  date( 'Y-m-d', strtotime( '+1 day', strtotime( $_end_date ) ) );
+				if ( strtotime( $_start_date ) > strtotime( $end_date ) ) {
+					$_start_date = $end_date;
+				}
+				$_end_date = date( 'Y-m-d', strtotime( '+' . $period . ' days', strtotime( $_end_date ) ) );
+				if ( strtotime( $_end_date ) > strtotime( $end_date ) ) {
+					$_end_date = $end_date;
+				}
+				$return[] = array( 'start_date' => $_start_date, 'end_date' => $_end_date );
+			}
+			return $return;
+	}
+}
 
 if ( ! function_exists( 'wcj_check_single_date' ) ) {
 	/**

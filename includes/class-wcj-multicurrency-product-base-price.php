@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 3.7.0
+ * @version 3.8.1
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.0
+	 * @version 3.8.1
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -37,7 +37,8 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 			$this->do_convert_in_back_end = ( 'yes' === get_option( 'wcj_multicurrency_base_price_do_convert_in_back_end', 'no' ) );
 
 			if ( $this->do_convert_in_back_end || wcj_is_frontend() ) {
-				wcj_add_change_price_hooks( $this, PHP_INT_MAX - 10, false );
+				$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'multicurrency_base_price' );
+				wcj_add_change_price_hooks( $this, $this->price_hooks_priority, false );
 			}
 
 		}

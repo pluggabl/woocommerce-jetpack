@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -296,7 +296,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * save_meta_box.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   2.5.0
 	 * @todo    (maybe) also order_id in `$the_post_id = ...`
 	 */
@@ -319,6 +319,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 				$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : $option['default'];
 				$the_post_id   = ( isset( $option['product_id'] )     ) ? $option['product_id']     : $post_id;
 				$the_meta_name = ( isset( $option['meta_name'] ) )      ? $option['meta_name']      : '_' . $option['name'];
+				delete_post_meta( $the_post_id, $the_meta_name ); // solves lowercase/uppercase issue
 				update_post_meta( $the_post_id, $the_meta_name, apply_filters( 'wcj_save_meta_box_value', $option_value, $option['name'], $this->id ) );
 			}
 		}

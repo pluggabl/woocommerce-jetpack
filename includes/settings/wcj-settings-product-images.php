@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Images
  *
- * @version 3.2.4
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -79,5 +79,22 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_images_and_thumbnails_options',
+	),
+	array(
+		'title'    => __( 'Placeholder Image', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_images_placeholder_options',
+	),
+	array(
+		'title'    => __( 'Custom Placeholder Image URL', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Leave blank to use the default placeholder image.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_images_placeholder_src',
+		'default'  => '',
+		'type'     => 'text',
+		'css'      => 'width:100%',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_images_placeholder_options',
 	),
 );

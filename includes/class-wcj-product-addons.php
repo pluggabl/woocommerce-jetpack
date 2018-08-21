@@ -21,6 +21,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	 * @since   2.5.3
 	 * @todo    (maybe) add "in progress" ajax message
 	 * @todo    (maybe) for variable products - show addons only if variation is selected (e.g. move to addons from `woocommerce_before_add_to_cart_button` to variation description)
+	 * @todo    (maybe) add `product_addons` to `wcj_get_module_price_hooks_priority()`
 	 */
 	function __construct() {
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Reports
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -10,6 +10,11 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $reports_and_settings = array(
+	array(
+		'title'     => __( 'Orders Reports', 'woocommerce-jetpack' ),
+		'type'      => 'title',
+		'id'        => 'wcj_reports_orders_options',
+	),
 	array(
 		'title'     => __( 'Product Sales (Daily)', 'woocommerce-jetpack' ),
 		'tab'       => 'orders',
@@ -116,6 +121,15 @@ $reports_and_settings = array(
 		'report'    => 'booster_gateways',
 	),
 	array(
+		'id'        => 'wcj_reports_orders_options',
+		'type'      => 'sectionend',
+	),
+	array(
+		'title'     => __( 'Customers Reports', 'woocommerce-jetpack' ),
+		'type'      => 'title',
+		'id'        => 'wcj_reports_customers_options',
+	),
+	array(
 		'title'     => __( 'Customers by Country', 'woocommerce-jetpack' ),
 		'tab'       => 'customers',
 		'tab_title' => __( 'Customers', 'woocommerce-jetpack' ),
@@ -126,6 +140,15 @@ $reports_and_settings = array(
 		'tab'       => 'customers',
 		'tab_title' => __( 'Customers', 'woocommerce-jetpack' ),
 		'report'    => 'customers_by_country_sets',
+	),
+	array(
+		'id'        => 'wcj_reports_customers_options',
+		'type'      => 'sectionend',
+	),
+	array(
+		'title'     => __( 'Stock Reports', 'woocommerce-jetpack' ),
+		'type'      => 'title',
+		'id'        => 'wcj_reports_stock_options',
 	),
 	array(
 		'title'     => __( 'All in Stock with sales data', 'woocommerce-jetpack' ),
@@ -145,20 +168,37 @@ $reports_and_settings = array(
 		'tab_title' => __( 'Stock', 'woocommerce-jetpack' ),
 		'report'    => 'overstocked',
 	),
-);
-$settings = array(
 	array(
-		'title'    => __( 'Available Reports', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_reports_more_options'
+		'id'        => 'wcj_reports_stock_product_type',
+		'desc'      => __( 'product type', 'woocommerce-jetpack' ),
+		'desc_tip'  => __( 'Product type for all "Stock" reports.', 'woocommerce-jetpack' ),
+		'type'      => 'select',
+		'default'   => 'product',
+		'options'   => array(
+			'product'           => __( 'Products', 'woocommerce-jetpack' ),
+			'product_variation' => __( 'Variations', 'woocommerce-jetpack' ),
+			'both'              => __( 'Both products and variations', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'id'        => 'wcj_reports_stock_include_deleted_products',
+		'desc'      => __( 'Include deleted products', 'woocommerce-jetpack' ),
+		'desc_tip'  => __( 'Include deleted products in all "Stock" reports.', 'woocommerce-jetpack' ),
+		'type'      => 'checkbox',
+		'default'   => 'yes',
+	),
+	array(
+		'id'        => 'wcj_reports_stock_options',
+		'type'      => 'sectionend',
 	),
 );
+$settings     = array();
 $button_style = "background: orange; border-color: orange; box-shadow: 0 1px 0 orange; text-shadow: 0 -1px 1px orange,1px 0 1px orange,0 1px 1px orange,-1px 0 1px orange;";
 foreach ( $reports_and_settings as $report ) {
 	if ( isset( $report['report'] ) ) {
 		$settings = array_merge( $settings, array(
 			array(
-				'title'    => '[' . $report['tab_title'] . '] ' . $report['title'],
+				'title'    => $report['title'],
 				'desc_tip' => 'WooCommerce > Reports > ' . $report['tab_title'] . ' > ' . $report['title'],
 				'id'       => 'wcj_' . $report['report'] . '_link',
 				'type'     => 'custom_link',
@@ -172,10 +212,4 @@ foreach ( $reports_and_settings as $report ) {
 		$settings = array_merge( $settings, array ( $report ) );
 	}
 }
-$settings = array_merge( $settings, array(
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_reports_more_options',
-	),
-) );
 return $settings;

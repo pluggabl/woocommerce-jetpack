@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Files Upload
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -421,6 +421,17 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_checkout_files_upload_advanced_options',
+	),
+	array(
+		'title'    => __( 'Notice Type', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_files_upload_notice_type',
+		'default'  => 'wc_add_notice',
+		'type'     => 'select',
+		'options'  => array(
+			'wc_add_notice'   => __( 'Add notice', 'woocommerce-jetpack' ),
+			'wc_print_notice' => __( 'Print notice', 'woocommerce-jetpack' ),
+			'disable'         => __( 'Disable notice', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'title'    => __( 'Block Potentially Harmful Files', 'woocommerce-jetpack' ),

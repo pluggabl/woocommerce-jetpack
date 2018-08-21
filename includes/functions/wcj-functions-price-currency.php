@@ -32,10 +32,11 @@ if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 	 */
 	function wcj_get_module_price_hooks_priority( $module_id ) {
 		$modules_priorities = array(
-			'price_by_country'           => PHP_INT_MAX - 1,
-			'multicurrency'              => PHP_INT_MAX - 1,
-			'product_price_by_formula'   => PHP_INT_MAX - 100,
 			'price_by_user_role'         => PHP_INT_MAX - 200,
+			'product_price_by_formula'   => PHP_INT_MAX - 100,
+			'multicurrency_base_price'   => PHP_INT_MAX - 10,
+			'multicurrency'              => PHP_INT_MAX - 1,
+			'price_by_country'           => PHP_INT_MAX - 1,
 			'global_discount'            => PHP_INT_MAX,
 		);
 		return ( 0 != ( $priority = get_option( 'wcj_' . $module_id . '_advanced_price_hooks_priority', 0 ) ) ? $priority : $modules_priorities[ $module_id ] );

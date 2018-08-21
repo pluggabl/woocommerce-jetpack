@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Images
  *
- * @version 3.2.4
+ * @version 3.8.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 3.8.1
 	 * @todo    add watermarks to images (http://php.net/manual/en/image.examples-watermark.php); Filter: `wp_get_attachment_image_src`.
 	 */
 	function __construct() {
@@ -54,7 +54,23 @@ class WCJ_Product_Images extends WCJ_Module {
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
+			// Placeholder image
+			if ( '' != ( $this->product_images_placeholder_src = get_option( 'wcj_product_images_placeholder_src', '' ) ) ) {
+				add_filter( 'woocommerce_placeholder_img_src', array( $this, 'placeholder_img_src' ), PHP_INT_MAX );
+			}
+
 		}
+	}
+
+	/**
+	 * placeholder_img_src.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 * @todo    maybe add options to set different placeholder image per product category and/or product tag
+	 */
+	function placeholder_img_src( $src ) {
+		return $this->product_images_placeholder_src;
 	}
 
 	/**

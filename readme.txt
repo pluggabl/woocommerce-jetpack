@@ -188,28 +188,41 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.8.1 - 09/08/2018 =
+= 3.8.1 - 21/08/2018 =
+* Feature - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "The Free Currency Converter API" server added.
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products not in stock" option added.
 * Feature - PRODUCTS - Cross-sells - "Exclude Not in Stock Products" option added.
+* Feature - PRODUCTS - Product Images - Placeholder Image - "Custom Placeholder Image URL" option added.
 * Feature - EMAILS & MISC. - Email Verification - "Redirect User After Successful Verification to Custom URL" option added.
+* Feature - EMAILS & MISC. - Reports - Stock - "product type" option added.
+* Feature - EMAILS & MISC. - Reports - Stock - "Include deleted products" option added.
 * Fix - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Products with empty price - Default value fixed.
+* Fix - PRODUCTS - Cost of Goods - Products List Columns - Variable products fixed in both ("Profit" and "Cost") columns.
+* Fix - PRODUCTS - Cost of Goods - Products List Columns - Profit - Checking for price to be `is_numeric()`.
 * Fix - CART & CHECKOUT - Checkout Fees - "Checkout Field" option fixed.
 * Fix - SHIPPING & ORDERS - Custom Shipping - Table rows settings are added on appropriate pages only.
 * Fix - EMAILS & MISC. - Email Verification - "Login User After Successful Verification" admin description fixed.
 * Fix - EMAILS & MISC. - Email Verification - "Message - Resend" default value fixed.
 * Fix - EMAILS & MISC. - Email Verification - "Message - Failed (no user ID)" option added.
+* Fix - EMAILS & MISC. - Reports - Stock - `is_numeric()` checks added.
+* Fix - EMAILS & MISC. - Reports - Stock - "Last sale" column fixed.
 * Fix - EMAILS & MISC. - User Tracking - Fatal error on "Update now" button fixed.
+* Fix - Core - `WCJ_Module` - `save_meta_box()` - `delete_post_meta()` added.
+* Fix - Functions - Exchange Rates - Average exchange rates function fixed (used in "Booster: Monthly Sales (with Currency Conversion)" report).
 * Fix - Functions - General - `wcj_wrap_in_wc_email_template()` - `{site_title}` in footer replaced with blog name.
 * Dev - PRICES & CURRENCIES - Global Discount - Advanced Settings - "Price Filters Priority" option added.
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Advanced Settings - "Price Filters Priority" option added.
 * Dev - PRICES & CURRENCIES - Product Price by Formula - Advanced Settings - "Price Filters Priority" option added.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - `WP_Query` optimized to return `ids` only.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - Tool restyled. "Pretty prices threshold" option description added.
 * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Admin settings restyled.
 * Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Advanced: Method" options added.
+* Dev - CART & CHECKOUT - Checkout Files Upload - Advanced Options - "Notice Type" option added.
 * Dev - SHIPPING & ORDERS - Left to Free Shipping - Info on Checkout - Position - New positions added.
 * Dev - SHIPPING & ORDERS - Shipping Methods by Products - Minor code changes.
 * Dev - EMAILS & MISC. - Custom Emails - Code cleaned up and refactored.
 * Dev - EMAILS & MISC. - Email Verification - Admin settings restyled. Code refactored.
+* Dev - EMAILS & MISC. - Reports - Admin settings restyled.
 * Dev - Settings - Shipping by Condition - Code optimized.
 * Dev - Code cleaned up.
 
