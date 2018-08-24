@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -224,6 +224,13 @@ $settings = array_merge( $settings, array(
 			'yes'       => __( 'Yes', 'woocommerce-jetpack' ),
 			'no'        => __( 'No', 'woocommerce-jetpack' ),
 		),
+	),
+	array(
+		'title'    => __( 'Advanced: Price Filters Priority', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
+		'id'       => 'wcj_product_addons_advanced_price_hooks_priority',
+		'default'  => 0,
+		'type'     => 'number',
 	),
 	array(
 		'title'    => __( 'Advanced: Check for Outputted Data', 'woocommerce-jetpack' ),

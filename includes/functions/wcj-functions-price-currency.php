@@ -33,6 +33,7 @@ if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 	function wcj_get_module_price_hooks_priority( $module_id ) {
 		$modules_priorities = array(
 			'price_by_user_role'         => PHP_INT_MAX - 200,
+			'product_addons'             => PHP_INT_MAX - 100,
 			'product_price_by_formula'   => PHP_INT_MAX - 100,
 			'multicurrency_base_price'   => PHP_INT_MAX - 10,
 			'multicurrency'              => PHP_INT_MAX - 1,

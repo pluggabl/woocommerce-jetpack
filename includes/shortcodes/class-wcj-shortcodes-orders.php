@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.5.0
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.0
+	 * @version 3.8.1
 	 */
 	function __construct() {
 
@@ -49,6 +49,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_number',
 			'wcj_order_payment_method',
 			'wcj_order_payment_method_transaction_id',
+			'wcj_order_products_meta',
 			'wcj_order_profit',
 			'wcj_order_refunds_table',
 			'wcj_order_remaining_refund_amount',
@@ -861,9 +862,33 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	}
 
 	/**
+	 * wcj_order_products_meta.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 */
+	function wcj_order_products_meta( $atts ) {
+		if ( '' === $atts['meta_key'] ) {
+			return '';
+		}
+		$metas = array();
+		$items = $this->the_order->get_items();
+		foreach ( $items as $item_id => $item ) {
+			$product_id = ( ! empty( $item['variation_id'] ) ? $item['variation_id'] : $item['product_id'] );
+			if ( '' != ( $meta = get_post_meta( $product_id, $atts['meta_key'], true ) ) ) {
+				$metas[] = $meta;
+			}
+		}
+		if ( 'yes' === $atts['unique_only'] ) {
+			$metas = array_unique( $metas );
+		}
+		return ( ! empty( $metas ) ? implode( $atts['sep'], $metas ) : '' );
+	}
+
+	/**
 	 * wcj_order_items_meta.
 	 *
-	 * @version 2.7.0
+	 * @version 3.8.1
 	 * @since   2.5.3
 	 */
 	function wcj_order_items_meta( $atts ) {
@@ -877,16 +902,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			if ( '' != $the_meta ) {
 				$items_metas[] = $the_meta;
 			}
-			/* foreach ( $item as $key => $value ) {
-				if ( $atts['meta_key'] === $key ) {
-					$items_metas[] = $value;
-				}
-			} */
 		}
 		if ( 'yes' === $atts['unique_only'] ) {
 			$items_metas = array_unique( $items_metas );
 		}
-		return ( ! empty( $items_metas ) ) ? implode( ', ', $items_metas ) : '';
+		return ( ! empty( $items_metas ) ? implode( $atts['sep'], $items_metas ) : '' );
 	}
 
 	/**
