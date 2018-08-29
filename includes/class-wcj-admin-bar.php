@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 3.8.1
 	 * @since   2.9.0
 	 * @todo    (maybe) custom user nodes
 	 * @todo    (maybe) optional nodes selection
@@ -38,8 +38,10 @@ class WCJ_Admin_Bar extends WCJ_Module {
 				add_action( 'wp_head',        array( $this, 'add_woocommerce_admin_bar_icon_style' ) );
 				add_action( 'admin_head',     array( $this, 'add_woocommerce_admin_bar_icon_style' ) );
 			}
-			if ( 'yes' === get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) ) {
-				add_action( 'admin_bar_menu', array( $this, 'add_booster_admin_bar' ), PHP_INT_MAX );
+			if ( 'yes' === get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) || 'yes' === get_option( 'wcj_admin_bar_booster_active_enabled', 'yes' ) ) {
+				if ( 'yes' === get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) ) {
+					add_action( 'admin_bar_menu', array( $this, 'add_booster_admin_bar' ), PHP_INT_MAX );
+				}
 				if ( 'yes' === get_option( 'wcj_admin_bar_booster_active_enabled', 'yes' ) ) {
 					add_action( 'admin_bar_menu', array( $this, 'add_booster_active_admin_bar' ), PHP_INT_MAX );
 				}
@@ -228,12 +230,15 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_booster_active_admin_bar.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   3.1.0
 	 */
 	function add_booster_active_admin_bar( $wp_admin_bar ) {
 		if ( ! current_user_can( 'manage_woocommerce' ) ) {
 			return;
+		}
+		if ( 'no' === get_option( 'wcj_admin_bar_booster_enabled', 'yes' ) ) {
+			$this->get_nodes_booster_modules();
 		}
 		$tools = array(
 			'tools' => array(

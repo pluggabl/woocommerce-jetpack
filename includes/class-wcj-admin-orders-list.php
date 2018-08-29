@@ -190,12 +190,12 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * add_shop_order_multiple_statuses_not_completed_link.
 	 *
-	 * @version 2.5.7
+	 * @version 3.8.1
 	 * @since   2.5.7
 	 */
 	function add_shop_order_multiple_statuses_not_completed_link( $views ) {
 		global $wp_query;
-		if ( ! current_user_can( 'edit_others_pages' ) ) {
+		if ( ! wcj_current_user_can( 'edit_others_pages' ) ) {
 			return $views;
 		}
 		$all_not_completed_statuses          = wc_get_order_statuses();
@@ -212,12 +212,12 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * filter_shop_order_multiple_statuses_not_completed_link.
 	 *
-	 * @version 2.5.7
+	 * @version 3.8.1
 	 * @since   2.5.7
 	 */
 	function filter_shop_order_multiple_statuses_not_completed_link( $query ) {
 		if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) {
-			if ( current_user_can( 'edit_others_pages' ) ) {
+			if ( wcj_current_user_can( 'edit_others_pages' ) ) {
 				if ( isset( $_GET['post_status'] ) && false !== strpos( $_GET['post_status'], ',' ) ) {
 					$post_statuses = explode( ',', $_GET['post_status'] );
 					$query->query['post_status']      = $post_statuses;
@@ -271,12 +271,12 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * filter_shop_order_multiple_statuses.
 	 *
-	 * @version 2.5.7
+	 * @version 3.8.1
 	 * @since   2.5.7
 	 */
 	function filter_shop_order_multiple_statuses( $query ) {
 		if ( false !== strpos( $_SERVER['REQUEST_URI'], '/wp-admin/edit.php' ) && isset( $_GET['post_type'] ) && 'shop_order' === $_GET['post_type'] ) {
-			if ( current_user_can( 'edit_others_pages' ) ) {
+			if ( wcj_current_user_can( 'edit_others_pages' ) ) {
 				if ( isset( $_GET['wcj_admin_filter_statuses'] ) ) {
 					$post_statuses = $_GET['wcj_admin_filter_statuses'];
 					$query->query['post_status']      = $post_statuses;

@@ -207,6 +207,7 @@ $* Feature - SHIPPING & ORDERS - Custom Shipping - Shortcodes can now be used in
 * Fix - PRODUCTS - Cost of Goods - Products List Columns - Profit - Checking for price to be `is_numeric()`.
 ~* Fix - PRODUCTS - Product Addons - `maybe_convert_currency()` - "Global Discount" module conversion added.
 * Fix - CART & CHECKOUT - Checkout Fees - "Checkout Field" option fixed.
+* Fix - SHIPPING & ORDERS - Admin Orders List - Additional checks for `wp_get_current_user()` function to exist added (`wcj_current_user_can()` function added).
 ~* Fix - SHIPPING & ORDERS - Custom Shipping - Table rows settings are added on appropriate pages only.
 * Fix - EMAILS & MISC. - Email Verification - "Login User After Successful Verification" admin description fixed.
 * Fix - EMAILS & MISC. - Email Verification - "Message - Resend" default value fixed.
@@ -230,6 +231,7 @@ $* Feature - SHIPPING & ORDERS - Custom Shipping - Shortcodes can now be used in
 ~* Dev - SHIPPING & ORDERS - Custom Shipping - Admin settings restyled.
 * Dev - SHIPPING & ORDERS - Left to Free Shipping - Info on Checkout - Position - New positions added.
 * Dev - SHIPPING & ORDERS - Shipping Methods by Products - Minor code changes.
+* Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar can now be added without adding "Booster" admin bar.
 * Dev - EMAILS & MISC. - Custom Emails - Code cleaned up and refactored.
 * Dev - EMAILS & MISC. - Email Verification - Admin settings restyled. Code refactored.
 * Dev - EMAILS & MISC. - Reports - Admin settings restyled.
