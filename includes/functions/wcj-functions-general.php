@@ -716,23 +716,23 @@ if ( ! function_exists( 'wcj_get_wcj_uploads_dir' ) ) {
 	/**
 	 * wcj_get_wcj_uploads_dir.
 	 *
-	 * @version 2.9.0
+	 * @version 3.8.1
 	 * @todo    no need to `mkdir` after `wcj_get_wcj_uploads_dir`
 	 */
-	function wcj_get_wcj_uploads_dir( $subdir = '' ) {
+	function wcj_get_wcj_uploads_dir( $subdir = '', $do_mkdir = true ) {
 		$upload_dir = wp_upload_dir();
 		$upload_dir = $upload_dir['basedir'];
 		$upload_dir = $upload_dir . '/woocommerce_uploads';
-		if ( ! file_exists( $upload_dir ) ) {
+		if ( $do_mkdir && ! file_exists( $upload_dir ) ) {
 			mkdir( $upload_dir, 0755, true );
 		}
 		$upload_dir = $upload_dir . '/wcj_uploads';
-		if ( ! file_exists( $upload_dir ) ) {
+		if ( $do_mkdir && ! file_exists( $upload_dir ) ) {
 			mkdir( $upload_dir, 0755, true );
 		}
 		if ( '' != $subdir ) {
 			$upload_dir = $upload_dir . '/' . $subdir;
-			if ( ! file_exists( $upload_dir ) ) {
+			if ( $do_mkdir && ! file_exists( $upload_dir ) ) {
 				mkdir( $upload_dir, 0755, true );
 			}
 		}

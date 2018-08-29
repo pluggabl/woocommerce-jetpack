@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Local
  *
- * @version 3.3.0
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
  * @todo    (maybe) remove this and leave only standard meta box option (i.e. only `'meta_box' === get_option( 'wcj_price_by_country_local_options_style', 'inline' )`)
  */
@@ -189,7 +189,7 @@ class WCJ_Price_by_Country_Local {
 	/**
 	 * get_all_options_html.
 	 *
-	 * @version 3.3.0
+	 * @version 3.8.1
 	 */
 	function get_all_options_html( $simple_or_variable, $current_post_id, $total_number, $variation_id_addon = '' ) {
 		$html = '';
@@ -229,7 +229,7 @@ class WCJ_Price_by_Country_Local {
 					$html .= '<p class="form-row form-row-' . $column_position . '">';
 				}
 				$group_currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $i );
-				$currency_code_html = ( 'checkbox' != $option['type'] ) ? ' (' . wcj_get_currency_symbol( $group_currency_code ) . ')' : '';
+				$currency_code_html = ( 'checkbox' != $option['type'] ) ? ' (' . get_woocommerce_currency_symbol( $group_currency_code ) . ')' : '';
 				$html .= '<label for="' . $option_id . $variation_id_addon . '">' . $option['title'] . $currency_code_html . '</label>';
 				$html .= $this->get_option_field_html( $current_post_id, $option_id, $option, $variation_id_addon );
 				$html .= '</p>';

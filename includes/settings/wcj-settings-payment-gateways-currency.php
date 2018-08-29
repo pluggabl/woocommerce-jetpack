@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Currency
  *
- * @version 3.2.4
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -41,7 +41,7 @@ foreach ( $available_gateways as $key => $gateway ) {
 			'id'        => 'wcj_gateways_currency_' . $key,
 			'default'   => 'no_changes', // get_woocommerce_currency(),
 			'type'      => 'select',
-			'options'   => array_merge( array( 'no_changes' => __( 'No changes', 'woocommerce-jetpack' ) ), wcj_get_currencies_names_and_symbols() ),
+			'options'   => array_merge( array( 'no_changes' => __( 'No changes', 'woocommerce-jetpack' ) ), wcj_get_woocommerce_currencies_and_symbols() ),
 		),
 		array(
 			'title'                    => '',

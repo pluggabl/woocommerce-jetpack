@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Display
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -281,7 +281,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 	/**
 	 * create_invoices_meta_box.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   2.8.0
 	 */
 	function create_invoices_meta_box() {
@@ -294,6 +294,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 			foreach ( $invoice_types as $invoice_type ) {
 				$table_data = array();
 				$the_number = '';
+				$the_date   = '';
 				if ( wcj_is_invoice_created( $order_id, $invoice_type['id'] ) ) {
 					// "Document (View)" link
 					$query_args    = array( 'order_id' => $order_id, 'invoice_type_id' => $invoice_type['id'], 'get_invoice' => '1', );
@@ -306,23 +307,27 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 					$the_name      = __( 'View', 'woocommerce-jetpack' );
 					$the_invoice   = wcj_get_invoice( $order_id, $invoice_type['id'] );
 					$the_number    = ' [#' . $the_invoice->get_invoice_number() . ']';
+					$the_date      = '<span style="font-size:x-small;"> (' . date( 'Y-m-d', $the_invoice->get_invoice_date() ) . ')</span>';
 					$view_link     = '<a' . $target . ' href="' .  $the_url . '">' . $the_name . '</a>';
 					// "Delete" link
 					$query_args    = array( 'delete_invoice_for_order_id' => $order_id, 'invoice_type_id' => $invoice_type['id'] );
 					$the_url       = add_query_arg( $query_args, remove_query_arg( 'create_invoice_for_order_id' ) );
 					$the_name      = __( 'Delete', 'woocommerce-jetpack' );
 					$delete_link   = '<a class="wcj_need_confirmation" href="' .  $the_url . '">' . $the_name . '</a>';
-					// Numbering
+					// Numbering & date
+					$number_input  = '';
 					if ( 'yes' === get_option( 'wcj_invoicing_add_order_meta_box_numbering', 'yes' ) ) {
 						$number_option = 'wcj_invoicing_' . $invoice_type['id'] . '_number_id';
-						$number_input  = '<input style="width:100%;" type="number"' .
+						$date_option   = 'wcj_invoicing_' . $invoice_type['id'] . '_date';
+						$number_input  = '<br>' .
+							'<input style="width:100%;" type="number"' .
 								' id="' . $number_option . '" name="' . $number_option . '" value="' . get_post_meta( $order_id, '_' . $number_option, true ) . '">' .
+							'<input style="width:100%;" type="text"' .
+								' id="' . $date_option   . '" name="' . $date_option   . '" value="' . date( 'Y-m-d H:i:s', get_post_meta( $order_id, '_' . $date_option, true ) ) . '">' .
 							'<input type="hidden" name="woojetpack_pdf_invoicing_save_post" value="woojetpack_pdf_invoicing_save_post">';
-					} else {
-						$number_input  = '';
 					}
 					// Actions
-					$actions       = array( $view_link . ' | ' . $delete_link . '<br>' . $number_input );
+					$actions       = array( $view_link . ' | ' . $delete_link . $number_input );
 				} else {
 					// "Create" link
 					$query_args    = array( 'create_invoice_for_order_id' => $order_id, 'invoice_type_id' => $invoice_type['id'] );
@@ -336,7 +341,7 @@ class WCJ_PDF_Invoicing_Display extends WCJ_Module {
 					$maybe_toolptip = wc_help_tip( __( 'In case of partial refund, you need to reload the page to see created document in this meta box.', 'woocommerce-jetpack' ), true );
 				}
 				$table_data[] = array( '<span class="dashicons dashicons-media-default" style="color:' . $invoice_type['color'] . ';"></span>' . ' ' .
-					$invoice_type['title'] . $the_number . $maybe_toolptip );
+					$invoice_type['title'] . $the_number . $the_date . $maybe_toolptip );
 				$table_data[] = $actions;
 				echo '<p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) ) . '</p>';
 			}

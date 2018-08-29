@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 3.7.0
+ * @version 3.8.1
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -316,7 +316,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * Filters for post types.
 	 *
-	 * @version 2.8.0
+	 * @version 3.8.1
 	 */
 	function restrict_manage_posts() {
 		global $typenow, $wp_query;
@@ -332,7 +332,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 			}
 			if ( 'yes' === get_option( 'wcj_orders_list_custom_columns_currency', 'no' ) ) {
 				$selected_currency = isset( $_GET['currency'] ) ? $_GET['currency'] : 'all';
-				$currencies = array_merge( array( 'all' => __( 'All currencies', 'woocommerce-jetpack' ) ), wcj_get_currencies_names_and_symbols() );
+				$currencies = array_merge( array( 'all' => __( 'All currencies', 'woocommerce-jetpack' ) ), wcj_get_woocommerce_currencies_and_symbols() );
 				echo '<select id="currency" name="currency">';
 				foreach ( $currencies as $code => $name ) {
 					echo '<option value="' . $code . '" ' . selected( $code, $selected_currency, false ) . '>' . $name . '</option>';

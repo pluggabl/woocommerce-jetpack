@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency
  *
- * @version 3.2.0
+ * @version 3.8.1
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -27,7 +27,6 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-//			add_action( 'init', array( $this, 'add_hooks' ) );
 			$this->add_hooks();
 			if ( is_admin() ) {
 				include_once( 'reports/class-wcj-currency-reports.php' );
@@ -38,22 +37,21 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 2.7.0
+	 * @version 3.8.1
 	 * @since   2.3.2
 	 */
 	function add_hooks() {
-		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), PHP_INT_MAX, 2 );
-		add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ), PHP_INT_MAX, 1 );
+		add_filter( 'woocommerce_currency',                      array( $this, 'change_currency_code' ), PHP_INT_MAX, 1 );
 
-		add_filter( 'woocommerce_paypal_supported_currencies', array( $this, 'extend_paypal_supported_currencies' ), PHP_INT_MAX, 1 );
+		add_filter( 'woocommerce_paypal_supported_currencies',   array( $this, 'extend_paypal_supported_currencies' ), PHP_INT_MAX, 1 );
 
-		add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,              array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
-		add_filter( 'woocommerce_product_variation_get_price', array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
+		add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
+		add_filter( 'woocommerce_product_variation_get_price',   array( $this, 'change_price_by_gateway' ), PHP_INT_MAX, 2 );
 
-		add_filter( 'woocommerce_package_rates', array( $this, 'change_shipping_price_by_gateway' ), PHP_INT_MAX, 2 );
+		add_filter( 'woocommerce_package_rates',                 array( $this, 'change_shipping_price_by_gateway' ), PHP_INT_MAX, 2 );
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_checkout_script' ) );
-		add_action( 'init',               array( $this, 'register_script' ) );
+		add_action( 'wp_enqueue_scripts',                        array( $this, 'enqueue_checkout_script' ) );
+		add_action( 'init',                                      array( $this, 'register_script' ) );
 	}
 
 	/**
@@ -80,7 +78,6 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	 * @version 2.3.5
 	 */
 	function is_cart_or_checkout() {
-//		if ( wcj_is_frontend() ) {
 		if ( ! is_admin() ) {
 			if ( is_cart() || is_checkout() ) {
 				return true;
@@ -124,25 +121,6 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	}
 
 	/**
-	 * change_currency_symbol.
-	 *
-	 * @version 2.4.0
-	 */
-	function change_currency_symbol( $currency_symbol, $currency ) {
-		if ( $this->is_cart_or_checkout() ) {
-			global $woocommerce;
-			$current_gateway = $woocommerce->session->chosen_payment_method;
-			if ( '' != $current_gateway ) {
-				$gateway_currency = get_option( 'wcj_gateways_currency_' . $current_gateway );
-				if ( 'no_changes' != $gateway_currency ) {
-					return wcj_get_currency_symbol( $gateway_currency );
-				}
-			}
-		}
-		return $currency_symbol;
-	}
-
-	/**
 	 * change_currency_code.
 	 *
 	 * @version 2.4.0
@@ -151,16 +129,6 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		if ( $this->is_cart_or_checkout() ) {
 			global $woocommerce;
 			$current_gateway = $woocommerce->session->chosen_payment_method;
-			/*
-			$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
-			if ( ! array_key_exists( $current_gateway, $available_gateways ) ) {
-				$current_gateway = get_option( 'woocommerce_default_gateway', '' );
-				if ( '' == $current_gateway ) {
-					$current_gateway = current( $available_gateways );
-					$current_gateway = isset( $current_gateway->id ) ? $current_gateway->id : '';
-				}
-			}
-			*/
 			if ( '' != $current_gateway ) {
 				$gateway_currency = get_option( 'wcj_gateways_currency_' . $current_gateway );
 				if ( 'no_changes' != $gateway_currency ) {

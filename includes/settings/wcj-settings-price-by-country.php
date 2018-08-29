@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -257,7 +257,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_b
 			'id'       => 'wcj_price_by_country_exchange_rate_currency_group_' . $i,
 			'default'  => 'EUR',
 			'type'     => 'select',
-			'options'  => wcj_get_currencies_names_and_symbols(),
+			'options'  => wcj_get_woocommerce_currencies_and_symbols(),
 		),
 		array(
 			'desc'     => __( 'Admin Title', 'woocommerce-jetpack' ),

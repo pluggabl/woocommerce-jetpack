@@ -120,6 +120,16 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 			'default'  => 'no',
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
+		array(
+			'title'    => __( 'Replace Cart Products with Cross-sells', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Enable this, if you want original products to be removed from cart and replaced with cross-sells, if customer adds cross-sells on cart page.', 'woocommerce-jetpack' ) . ' ' .
+				apply_filters( 'booster_message', '', 'desc' ),
+			'type'     => 'checkbox',
+			'id'       => 'wcj_cross_sells_replace_with_cross_sells',
+			'default'  => 'no',
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		),
 	) );
 }
 $settings = array_merge( $settings, array(

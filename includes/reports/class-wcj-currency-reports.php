@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Currency
  *
- * @version  2.5.7
+ * @version  3.8.1
  * @author   Algoritmika Ltd.
  */
 
@@ -56,12 +56,6 @@ class WCJ_Currency_Reports {
 					$currency_symbols[ $the_code ] = $the_code;
 				}
 			}
-			/* if ( wcj_is_module_enabled( 'multicurrency_base_price' ) ) {
-				for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_multicurrency_base_price_total_number', 1 ) ); $i++ ) {
-					$the_code = get_option( 'wcj_multicurrency_base_price_currency_' . $i );
-					$currency_symbols[ $the_code ] = $the_code;
-				}
-			} */
 			if ( wcj_is_module_enabled( 'payment_gateways_currency' ) ) {
 				global $woocommerce;
 				$available_gateways = $woocommerce->payment_gateways->payment_gateways();
@@ -90,11 +84,20 @@ class WCJ_Currency_Reports {
 
 	/**
 	 * change_currency_symbol_reports.
+	 *
+	 * @version 3.8.1
 	 */
 	function change_currency_symbol_reports( $currency_symbol, $currency ) {
 		if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {
 			if ( isset( $_GET['currency'] ) ) {
-				return ( 'merge' === $_GET['currency'] ) ? '' : wcj_get_currency_symbol( $_GET['currency'] );
+				if ( 'merge' === $_GET['currency'] ) {
+					return '';
+				} else {
+					remove_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_reports'), PHP_INT_MAX, 2 );
+					$return = get_woocommerce_currency_symbol( $_GET['currency'] );
+					add_filter(    'woocommerce_currency_symbol', array( $this, 'change_currency_symbol_reports'), PHP_INT_MAX, 2 );
+					return $return;
+				}
 			}
 		}
 		return $currency_symbol;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency per Product
  *
- * @version 3.7.0
+ * @version 3.8.1
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.0
+	 * @version 3.8.1
 	 * @since   2.5.2
 	 * @todo    (maybe) add `$this->price_hooks_priority`
 	 */
@@ -39,7 +39,6 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			}
 
 			// Currency code and symbol
-			add_filter( 'woocommerce_currency_symbol',                array( $this, 'change_currency_symbol' ),     PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_currency',                       array( $this, 'change_currency_code' ),       PHP_INT_MAX );
 
 			// Add to cart
@@ -481,24 +480,6 @@ class WCJ_Currency_Per_Product extends WCJ_Module {
 			return ( false != ( $_currency = $this->get_cart_checkout_currency() ) ) ? $_currency : $currency;
 		}
 		return  $currency;
-	}
-
-	/**
-	 * change_currency_symbol.
-	 *
-	 * @version 3.2.4
-	 * @since   2.5.2
-	 * @todo    check do we really need this function? isn't `change_currency_code()` enough?
-	 */
-	function change_currency_symbol( $currency_symbol, $currency ) {
-		if ( false != ( $_currency = $this->get_current_product_id_and_currency() ) ) {
-			if ( $currency === $_currency ) {
-				return wcj_get_currency_symbol( $_currency );
-			}
-		} elseif ( $this->is_cart_or_checkout_or_ajax() ) {
-			return ( false != ( $_currency = $this->get_cart_checkout_currency() ) && $currency === $_currency ) ? wcj_get_currency_symbol( $_currency ) : $currency_symbol;
-		}
-		return $currency_symbol;
 	}
 
 }

@@ -6,30 +6,10 @@
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add link to Booster's shortcodes list
- * @todo    clean up
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-/*
-$links_html = '';
-if ( class_exists( 'RecursiveIteratorIterator' ) && class_exists( 'RecursiveDirectoryIterator' ) ) {
-	$dir = untrailingslashit( realpath( plugin_dir_path( __FILE__ ) . '/../../woocommerce/templates' ) );
-	$rii = new RecursiveIteratorIterator( new RecursiveDirectoryIterator( $dir ) );
-	foreach ( $rii as $file ) {
-		$the_name = str_replace( $dir, '', $file->getPathname() );
-		$the_name_link = str_replace( DIRECTORY_SEPARATOR, '%2F', $the_name );
-		if ( $file->isDir() ) {
-			/* $links_html .= '<strong>' . $the_name . '</strong>' . PHP_EOL; *//*
-		} else {
-			$links_html .= '<a href="' . get_admin_url( null, 'plugin-editor.php?file=woocommerce' . '%2F' . 'templates' . $the_name_link . '&plugin=woocommerce' ) . '">' .
-					'templates' . $the_name . '</a>' . PHP_EOL;
-		}
-	}
-} else {
-	$links_html = __( 'PHP 5 is required.', 'woocommerce-jetpack' );
-}
-*/
 $settings = array(
 	array(
 		'title'    => __( 'Shortcodes Options', 'woocommerce-jetpack' ),
@@ -210,22 +190,5 @@ $settings = array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_general_user_role_changer_options',
 	),
-	/*
-	array(
-		'title'    => __( 'WooCommerce Templates Editor Links', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_general_wc_templates_editor_links_options',
-	),
-	array(
-		'title'    => __( 'Templates', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_general_wc_templates_editor_links',
-		'type'     => 'custom_link',
-		'link'     => '<pre>' . $links_html . '</pre>',
-	),
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_general_wc_templates_editor_links_options',
-	),
-	*/
 );
 return $settings;

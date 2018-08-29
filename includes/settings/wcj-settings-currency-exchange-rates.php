@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency Exchange Rates
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add "rounding" and "fixed offset" options for each pair separately (and option to enable/disable these per pair extra settings)
@@ -120,7 +120,7 @@ $settings = array(
 	),
 );
 // Additional (custom) currencies
-$all_currencies = wcj_get_currencies_names_and_symbols();
+$all_currencies = wcj_get_woocommerce_currencies_and_symbols();
 $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Total Custom Currencies', 'woocommerce-jetpack' ),

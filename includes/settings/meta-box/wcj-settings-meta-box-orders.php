@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Orders
  *
- * @version 2.8.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -21,7 +21,7 @@ $options = array(
 		'name'     => ( 'filter' === get_option( 'wcj_order_admin_currency_method', 'filter' ) ? 'wcj_order_currency' : 'order_currency' ),
 		'default'  => wcj_get_order_currency( $_order ),
 		'type'     => 'select',
-		'options'  => wcj_get_currencies_names_and_symbols( 'names' ),
+		'options'  => wcj_get_woocommerce_currencies_and_symbols(),
 	),
 );
 return $options;

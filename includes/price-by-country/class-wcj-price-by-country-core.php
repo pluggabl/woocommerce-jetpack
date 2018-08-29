@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -70,7 +70,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 3.5.1
+	 * @version 3.8.1
 	 */
 	function add_hooks() {
 
@@ -85,8 +85,7 @@ class WCJ_Price_by_Country_Core {
 		wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 
 		// Currency hooks
-		add_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol' ), $this->price_hooks_priority, 2 );
-		add_filter( 'woocommerce_currency',        array( $this, 'change_currency_code' ),   $this->price_hooks_priority, 1 );
+		add_filter( 'woocommerce_currency', array( $this, 'change_currency_code' ),   $this->price_hooks_priority, 1 );
 
 		// Price Filter Widget
 		if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
@@ -298,19 +297,6 @@ class WCJ_Price_by_Country_Core {
 		// No country group found
 		$this->customer_country_group_id = -1;
 		return null;
-	}
-
-	/**
-	 * change_currency_symbol.
-	 */
-	function change_currency_symbol( $currency_symbol, $currency ) {
-		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
-			$country_currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $group_id );
-			if ( '' != $country_currency_code ) {
-				return wcj_get_currency_symbol( $country_currency_code );
-			}
-		}
-		return $currency_symbol;
 	}
 
 	/**

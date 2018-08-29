@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.7.0
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 */
 	function __construct() {
 
@@ -47,6 +47,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_selector',
 			'wcj_session_value',
 			'wcj_shipping_time_table',
+			'wcj_shipping_costs_table',
 			'wcj_site_url',
 			'wcj_store_address',
 			'wcj_tcpdf_barcode',
@@ -104,6 +105,52 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_shipping_costs_table.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 * @todo    [dev] sort `$table` before using
+	 * @todo    [feature] add `volume` prop
+	 * @todo    [feature] add `total` prop
+	 */
+	function wcj_shipping_costs_table( $atts ) {
+		if ( ! empty( $atts['table'] ) && ( $_cart = WC()->cart ) ) {
+			// E.g.: [wcj_shipping_costs_table cmp="max" prop="quantity" table="10-5|20-7.5|99999-10"]
+			// E.g.: [wcj_shipping_costs_table cmp="min" prop="quantity" table="1-5|11-7.5|21-10"]
+			if ( ! isset( $atts['cmp'] ) ) {
+				$atts['cmp'] = 'max';
+			}
+			if ( ! isset( $atts['prop'] ) ) {
+				$atts['prop'] = 'quantity';
+			}
+			switch ( $atts['prop'] ) {
+				case 'weight':
+					$param_value = $_cart->get_cart_contents_weight();
+					break;
+				default: // 'quantity'
+					$param_value = $_cart->get_cart_contents_count();
+			}
+			$table = array_map( 'trim', explode( '|', $atts['table'] ) );
+			if ( 'min' === $atts['cmp'] ) {
+				$table = array_reverse( $table );
+			}
+			foreach ( $table as $row ) {
+				$cells = array_map( 'trim', explode( '-', $row ) );
+				if ( 2 != count( $cells ) ) {
+					return '';
+				}
+				if (
+					( 'min' === $atts['cmp'] && $param_value >= $cells[0] ) ||
+					( 'max' === $atts['cmp'] && $param_value <= $cells[0] )
+				) {
+					return $cells[1];
+				}
+			}
+		}
+		return '';
 	}
 
 	/**
@@ -647,14 +694,14 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_currency_select_link_list.
 	 *
-	 * @version 3.4.0
+	 * @version 3.8.1
 	 * @since   2.4.5
 	 */
 	function wcj_currency_select_link_list( $atts, $content ) {
 		$html = '';
 		$shortcode_currencies = $this->get_shortcode_currencies( $atts );
 		// Options
-		$currencies = wcj_get_currencies_names_and_symbols( 'names' );
+		$currencies = get_woocommerce_currencies();
 		$selected_currency = '';
 		if ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {
 			$selected_currency = $session_value;
@@ -678,7 +725,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 				$template_replaced_values = array(
 					'%currency_name%'   => $currencies[ $currency_code ],
 					'%currency_code%'   => $currency_code,
-					'%currency_symbol%' => wcj_get_currency_symbol( $currency_code ),
+					'%currency_symbol%' => get_woocommerce_currency_symbol( $currency_code ),
 				);
 				$currency_switcher_output = str_replace( array_keys( $template_replaced_values ), array_values( $template_replaced_values ), $switcher_template );
 				$the_link = '<a href="' . add_query_arg( 'wcj-currency', $currency_code ) . '">' . $currency_switcher_output . '</a>';
@@ -719,7 +766,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_currency_selector.
 	 *
-	 * @version 3.7.0
+	 * @version 3.8.1
 	 * @since   2.4.5
 	 */
 	private function get_currency_selector( $atts, $content, $type = 'select' ) {
@@ -734,7 +781,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		}
 		$shortcode_currencies = $this->get_shortcode_currencies( $atts );
 		// Options
-		$currencies = wcj_get_currencies_names_and_symbols( 'names' );
+		$currencies = get_woocommerce_currencies();
 		$selected_currency = '';
 		if ( null !== ( $session_value = wcj_session_get( 'wcj-currency' ) ) ) {
 			$selected_currency = $session_value;
@@ -757,7 +804,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 				$template_replaced_values = array(
 					'%currency_name%'   => $currencies[ $currency_code ],
 					'%currency_code%'   => $currency_code,
-					'%currency_symbol%' => wcj_get_currency_symbol( $currency_code ),
+					'%currency_symbol%' => get_woocommerce_currency_symbol( $currency_code ),
 				);
 				$currency_switcher_output = str_replace( array_keys( $template_replaced_values ), array_values( $template_replaced_values ), $switcher_template );
 				if ( '' == $selected_currency ) {
@@ -801,7 +848,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_country_select_drop_down_list.
 	 *
-	 * @version 3.4.0
+	 * @version 3.8.1
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
 
@@ -835,7 +882,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$selected_country = ( null !== ( $session_value = wcj_session_get( 'wcj-country' ) ) ? $session_value : '' );
 
 		if ( 'yes' === $atts['replace_with_currency'] ) {
-			$currencies_names_and_symbols = wcj_get_currencies_names_and_symbols();
+			$currencies_names_and_symbols = wcj_get_woocommerce_currencies_and_symbols();
 		}
 
 		if ( empty( $shortcode_countries ) ) {

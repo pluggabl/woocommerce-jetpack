@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) create "Tools (Options)" submodule
@@ -90,7 +90,6 @@ return array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_pdf_invoicing_advanced_options',
 	),
-// $hook_time = date( 'Y-m-d H:i:s', get_option( 'wcj_download_tcpdf_fonts_hook_timestamp', null ) ); // for debug
 	array(
 		'title'    => __( 'Fonts Manager', 'woocommerce-jetpack' ),
 		'desc'     => $fonts_manager_desc,
@@ -135,7 +134,7 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'desc'     => __( 'Add editable numbers', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add editable numbers and dates', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_invoicing_add_order_meta_box_numbering',
 		'default'  => 'yes',
 		'type'     => 'checkbox',

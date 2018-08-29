@@ -2,10 +2,9 @@
 /**
  * Booster for WooCommerce - Settings - Currencies
  *
- * @version 2.9.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    add virtual currencies to "All Currencies for WC" plugin
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -19,32 +18,33 @@ $settings = array(
 	array(
 		'title'    => __( 'Hide Currency Symbol', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Default: no.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Hides currency symbol completely.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_currency_hide_symbol',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 );
-$currency_names   = wcj_get_currencies_names_and_symbols( 'names',   'no_custom' );
-$currency_symbols = wcj_get_currencies_names_and_symbols( 'symbols', 'no_custom' );
-$countries        = wcj_get_currency_countries();
+$currency_names = array_diff_key( array_merge( get_woocommerce_currencies(), $this->get_additional_currencies() ), $this->get_custom_currencies() );
+$countries      = wcj_get_currency_countries();
+remove_filter( 'woocommerce_currency_symbol', array( $this, 'change_currency_symbol'), PHP_INT_MAX, 2 );
 foreach ( $currency_names as $currency_code => $currency_name ) {
-	$country_flag = ( 'EUR' === $currency_code ?
-		wcj_get_country_flag_by_code( 'EU' ) :
-		( isset( $countries[ $currency_code ] ) ? wcj_get_country_flag_by_code( $countries[ $currency_code ][0] ) : '' )
-	);
+	$country_flag   = ( 'EUR' === $currency_code ?
+		wcj_get_country_flag_by_code( 'EU' ) : ( isset( $countries[ $currency_code ] ) ? wcj_get_country_flag_by_code( $countries[ $currency_code ][0] ) : '' ) );
+	$default_symbol = ( in_array( $currency_code, array_keys( $this->get_additional_currencies() ) ) ?
+		$this->get_additional_currency_symbol( $currency_code ) : get_woocommerce_currency_symbol( $currency_code ) );
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => $currency_name . ' [' . $currency_code . ']',
 			'desc'     => $country_flag,
 			'desc_tip' => apply_filters( 'booster_message', '', 'desc_no_link' ),
 			'id'       => 'wcj_currency_' . $currency_code,
-			'default'  => $currency_symbols[ $currency_code ],
+			'default'  => $default_symbol,
 			'type'     => 'text',
 			'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 		),
 	) );
 }
+add_filter(    'woocommerce_currency_symbol', array( $this, 'change_currency_symbol'), PHP_INT_MAX, 2 );
 $settings = array_merge( $settings, array(
 	array(
 			'type'     => 'sectionend',
@@ -75,14 +75,12 @@ for ( $i = 1; $i <= $custom_currency_total_number; $i++ ) {
 			'type'     => 'text',
 		),
 		array(
-			'title'    => '',
 			'desc'     => __( 'Currency Code (required)', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_currency_custom_currency_code_' . $i,
 			'default'  => '',
 			'type'     => 'text',
 		),
 		array(
-			'title'    => '',
 			'desc'     => __( 'Currency Symbol', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_currency_custom_currency_symbol_' . $i,
 			'default'  => '',

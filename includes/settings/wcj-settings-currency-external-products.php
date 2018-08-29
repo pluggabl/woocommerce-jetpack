@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Currency for External Products
  *
- * @version 2.8.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -22,7 +22,7 @@ return array(
 		'id'       => 'wcj_currency_external_products_symbol', // mislabeled, should be 'wcj_currency_external_products_code'
 		'default'  => 'EUR',
 		'type'     => 'select',
-		'options'  => wcj_get_currencies_names_and_symbols(),
+		'options'  => wcj_get_woocommerce_currencies_and_symbols(),
 	),
 	array(
 		'type'     => 'sectionend',

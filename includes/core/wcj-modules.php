@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 3.7.0
+ * @version 3.8.1
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -96,7 +96,7 @@ $wcj_module_files = array(
 	'class-wcj-emails.php',
 	'class-wcj-email-options.php',
 	'class-wcj-emails-verification.php',
-	'class-wcj-currencies.php',
+	'class-wcj-currency.php',
 	'class-wcj-multicurrency.php',
 	'class-wcj-multicurrency-product-base-price.php',
 	'class-wcj-currency-per-product.php',
@@ -121,6 +121,7 @@ $wcj_module_files = array(
 	'class-wcj-reports.php',
 	'class-wcj-wpml.php',
 	'class-wcj-modules-by-user-roles.php',
+	'class-wcj-template-editor.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-numbering.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-templates.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-styling.php',

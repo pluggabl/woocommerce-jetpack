@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - PDF Invoicing
  *
- * @version 3.5.0
+ * @version 3.8.1
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -25,6 +25,13 @@ if ( ! empty( $invoice_types ) ) {
 					'name'     => 'wcj_invoicing_' . $invoice_type['id'] . '_number_id',
 					'default'  => '',
 					'type'     => 'number',
+				),
+				array(
+					'title'    => sprintf( __( '%s date', 'woocommerce-jetpack' ), $invoice_type['title'] ),
+					'name'     => 'wcj_invoicing_' . $invoice_type['id'] . '_date',
+					'default'  => '',
+					'type'     => 'number',
+					'convert'  => 'from_date_to_timestamp',
 				),
 			) );
 		}

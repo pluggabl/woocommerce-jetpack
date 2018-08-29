@@ -63,14 +63,14 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 
 		// Add weight table rows
 		if ( apply_filters( 'wcj_custom_shipping_do_add_table_rows', true, $this ) ) {
-			if (
+			/* if (
 				is_admin() &&
 				isset( $_GET['page'] )        && 'wc-settings'      === $_GET['page'] &&
 				isset( $_GET['tab'] )         && 'shipping'         === $_GET['tab']  &&
 				isset( $_GET['instance_id'] ) && $this->instance_id ==  $_GET['instance_id']
-			) {
+			) { */
 				add_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) );
-			}
+			/* } */
 		}
 	}
 
@@ -131,7 +131,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * Initialise Settings Form Fields
 	 *
-	 * @version 3.4.0
+	 * @version 3.8.1
 	 * @since   2.5.6
 	 */
 	function init_instance_form_fields() {
@@ -151,6 +151,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 				'description' => __( 'This controls the title which the user sees during checkout.', 'woocommerce' ),
 				'default'     => __( 'Custom Shipping', 'woocommerce-jetpack' ),
 				'desc_tip'    => true,
+				'css'         => 'width:100%',
 			),
 			'type' => array(
 				'title'       => __( 'Type', 'woocommerce' ),
@@ -167,6 +168,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 				'description' => __( 'Cost. If calculating by weight - then cost per one weight unit. If calculating by quantity - then cost per one piece.', 'woocommerce-jetpack' ),
 				'default'     => 0,
 				'desc_tip'    => true,
+				'css'         => 'width:100%',
 			),
 			'min_weight' => array(
 				'title'       => __( 'Min Weight', 'woocommerce' ),
@@ -185,7 +187,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 				'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
 			),
 			'apply_formula' => array(
-				'title'       => __( 'Apply Formula to Costs', 'woocommerce' ),
+				'title'       => __( 'Apply Formula and Shortcodes to Costs', 'woocommerce' ),
 				'description' => sprintf( __( 'You can use %s and %s params in formula. E.g.: %s', 'woocommerce-jetpack' ),
 						'<em>weight</em>', '<em>quantity</em>', '<em>2.5+weight</em>' ) . '<br>' .
 					apply_filters( 'booster_message', '', 'desc_no_link' ),
@@ -229,7 +231,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * maybe_apply_formula.
 	 *
-	 * @version 3.4.0
+	 * @version 3.8.1
 	 * @since   3.4.0
 	 * @todo    use WC math library instead of `PHPMathParser`
 	 */
@@ -237,6 +239,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 		if ( 'yes' !== $this->apply_formula ) {
 			return $formula;
 		}
+		$formula = do_shortcode( $formula );
 		require_once( wcj_plugin_path() . '/includes/lib/PHPMathParser/Math.php' );
 		$math = new WCJ_Math();
 		$variables = array(

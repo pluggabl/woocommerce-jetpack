@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    "pretty prices"
@@ -11,7 +11,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $currency_from  = get_woocommerce_currency();
-$all_currencies = wcj_get_currencies_names_and_symbols();
+$all_currencies = wcj_get_woocommerce_currencies_and_symbols();
 $settings = array(
 	array(
 		'title'    => __( 'General Options', 'woocommerce-jetpack' ),

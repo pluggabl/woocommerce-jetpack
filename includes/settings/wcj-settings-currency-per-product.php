@@ -2,15 +2,15 @@
 /**
  * Booster for WooCommerce - Settings - Currency per Product
  *
- * @version 3.7.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$currency_from = get_woocommerce_currency();
-$all_currencies = wcj_get_currencies_names_and_symbols();
+$currency_from  = get_woocommerce_currency();
+$all_currencies = wcj_get_woocommerce_currencies_and_symbols();
 /*
 foreach ( $all_currencies as $currency_key => $currency_name ) {
 	if ( $currency_from == $currency_key ) {

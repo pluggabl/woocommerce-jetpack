@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price Formats
  *
- * @version 3.5.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `desc_tip` to `wcj_price_formats_general_trim_zeros`
@@ -47,12 +47,12 @@ $settings = array(
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => array_merge(
 			is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ? apply_filters( 'booster_message', '', 'readonly' ) : array(),
-			array( 'step' => '1', 'min'  => '0', )
+			array( 'step' => '1', 'min' => '0' )
 		),
 	),
 );
 for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
-	$currency_symbol = wcj_get_currency_symbol( get_option( 'wcj_price_formats_currency_' . $i, get_woocommerce_currency() ) );
+	$currency_symbol = get_woocommerce_currency_symbol( get_option( 'wcj_price_formats_currency_' . $i, get_woocommerce_currency() ) );
 	$settings = array_merge( $settings, array(
 		array(
 			'title'    => __( 'Format', 'woocommerce-jetpack' ) . ' #' . $i,
@@ -60,7 +60,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_f
 			'id'       => 'wcj_price_formats_currency_' . $i,
 			'default'  => get_woocommerce_currency(),
 			'type'     => 'select',
-			'options'  => wcj_get_currencies_names_and_symbols(),
+			'options'  => wcj_get_woocommerce_currencies_and_symbols(),
 			'css'      => 'width:300px;',
 		),
 		array(

@@ -11,7 +11,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $currency_from  = get_woocommerce_currency();
-$all_currencies = wcj_get_currencies_names_and_symbols();
+$all_currencies = wcj_get_woocommerce_currencies_and_symbols();
 $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),

@@ -497,79 +497,19 @@ if ( ! function_exists( 'wc_get_product_purchase_price' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wcj_get_currencies_names_and_symbols' ) ) {
+if ( ! function_exists( 'wcj_get_woocommerce_currencies_and_symbols' ) ) {
 	/**
-	 * wcj_get_currencies_names_and_symbols.
+	 * wcj_get_woocommerce_currencies_and_symbols.
 	 *
-	 * @version 2.4.4
+	 * @version 3.8.1
+	 * @since   3.8.1
 	 */
-	function wcj_get_currencies_names_and_symbols( $result = 'names_and_symbols', $scope = 'all' ) {
-		$currency_names_and_symbols = array();
-		/* if ( ! wcj_is_module_enabled( 'currency' ) ) {
-			return $currency_names_and_symbols;
-		} */
-		if ( 'all' === $scope || 'no_custom' === $scope ) {
-			$currencies = wcj_get_currencies_array();
-			foreach( $currencies as $data ) {
-				switch ( $result ) {
-					case 'names_and_symbols':
-						$currency_names_and_symbols[ $data['code'] ] = $data['name'] . ' (' . $data['symbol'] . ')';
-						break;
-					case 'names':
-						$currency_names_and_symbols[ $data['code'] ] = $data['name'];
-						break;
-					case 'symbols':
-						$currency_names_and_symbols[ $data['code'] ] = $data['symbol'];
-						break;
-				}
-			}
+	function wcj_get_woocommerce_currencies_and_symbols() {
+		$currencies_and_symbols = get_woocommerce_currencies();
+		foreach ( $currencies_and_symbols as $code => $name ) {
+			$currencies_and_symbols[ $code ] = $name . ' (' . get_woocommerce_currency_symbol( $code ) . ')';
 		}
-		if ( wcj_is_module_enabled( 'currency' ) && ( 'all' === $scope || 'custom_only' === $scope ) ) {
-			// Custom currencies
-			$custom_currency_total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_currency_custom_currency_total_number', 1 ) );
-			for ( $i = 1; $i <= $custom_currency_total_number; $i++) {
-				$custom_currency_code   = get_option( 'wcj_currency_custom_currency_code_'   . $i );
-				$custom_currency_name   = get_option( 'wcj_currency_custom_currency_name_'   . $i );
-				$custom_currency_symbol = get_option( 'wcj_currency_custom_currency_symbol_' . $i );
-				if ( '' != $custom_currency_code && '' != $custom_currency_name /* && '' != $custom_currency_symbol */ ) {
-					switch ( $result ) {
-						case 'names_and_symbols':
-							$currency_names_and_symbols[ $custom_currency_code ] = $custom_currency_name . ' (' . $custom_currency_symbol . ')';
-							break;
-						case 'names':
-							$currency_names_and_symbols[ $custom_currency_code ] = $custom_currency_name;
-							break;
-						case 'symbols':
-							$currency_names_and_symbols[ $custom_currency_code ] = $custom_currency_symbol;
-							break;
-					}
-				}
-			}
-		}
-		return $currency_names_and_symbols;
-	}
-}
-
-if ( ! function_exists( 'wcj_get_currency_symbol' ) ) {
-	/**
-	 * wcj_get_currency_symbol.
-	 *
-	 * @version 2.4.4
-	 */
-	function wcj_get_currency_symbol( $currency_code ) {
-		$return = '';
-		$currencies = wcj_get_currencies_names_and_symbols( 'symbols', 'no_custom' );
-		if ( isset( $currencies[ $currency_code ] ) ) {
-			if ( wcj_is_module_enabled( 'currency' ) ) {
-				$return = apply_filters( 'booster_option', $currencies[ $currency_code ], get_option( 'wcj_currency_' . $currency_code, $currencies[ $currency_code ] ) );
-			} else {
-				$return = $currencies[ $currency_code ];
-			}
-		} else {
-			$currencies = wcj_get_currencies_names_and_symbols( 'symbols', 'custom_only' );
-			$return = isset( $currencies[ $currency_code ] ) ? $currencies[ $currency_code ] : '';
-		}
-		return ( '' != $return ) ? $return : false;
+		return $currencies_and_symbols;
 	}
 }
 
