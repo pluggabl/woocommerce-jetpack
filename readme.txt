@@ -189,7 +189,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.8.1 - 29/08/2018 =
+= 3.8.1 - 03/09/2018 =
 ~* Feature - PRICES & CURRENCIES - Currencies - Shortcodes (e.g. `[wcj_wpml]`) can now be used in currency symbol fields.
 * Feature - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "The Free Currency Converter API" server added.
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products not in stock" option added.
@@ -202,6 +202,7 @@ $* Feature - SHIPPING & ORDERS - Custom Shipping - Shortcodes can now be used in
 * Feature - EMAILS & MISC. - Reports - Stock - "product type" option added.
 * Feature - EMAILS & MISC. - Reports - Stock - "Include deleted products" option added.
 !$* Feature - EMAILS & MISC. - Template Editor - Initial module release.
+* Fix - PRICES & CURRENCIES - Currency Exchange Rates - Discontinued servers (Yahoo, Google, Fixer) removed.
 * Fix - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Products with empty price - Default value fixed.
 * Fix - PRODUCTS - Cost of Goods - Products List Columns - Variable products fixed in both ("Profit" and "Cost") columns.
 * Fix - PRODUCTS - Cost of Goods - Products List Columns - Profit - Checking for price to be `is_numeric()`.
@@ -218,12 +219,14 @@ $* Feature - SHIPPING & ORDERS - Custom Shipping - Shortcodes can now be used in
 * Fix - Core - `WCJ_Module` - `save_meta_box()` - `delete_post_meta()` added.
 * Fix - Functions - Exchange Rates - Average exchange rates function fixed (used in "Booster: Monthly Sales (with Currency Conversion)" report).
 * Fix - Functions - General - `wcj_wrap_in_wc_email_template()` - `{site_title}` in footer replaced with blog name.
-!* Dev - PRICES & CURRENCIES - Currencies - Major code refactoring and optimization.
-* Dev - PRICES & CURRENCIES - Global Discount - Advanced Settings - "Price Filters Priority" option added.
-* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Advanced Settings - "Price Filters Priority" option added.
-* Dev - PRICES & CURRENCIES - Product Price by Formula - Advanced Settings - "Price Filters Priority" option added.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - `WP_Query` optimized to return `ids` only.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - Tool restyled. "Pretty prices threshold" option description added.
+!* Dev - PRICES & CURRENCIES - Currencies - Major code refactoring and optimization.
+* Dev - PRICES & CURRENCIES - Global Discount - Advanced Settings - "Price Filters Priority" option added.
+T* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Revert Currency to Shop's Default - "Revert on cart page only" and "Revert on both cart & checkout pages" options added.
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Advanced Settings - "Price Filters Priority" option added.
+~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Autogenerate Groups - Cleaned up; restyled; Yahoo exchange rates server related buttons removed; "PayPal supported currencies only" button added.
+* Dev - PRICES & CURRENCIES - Product Price by Formula - Advanced Settings - "Price Filters Priority" option added.
 * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Admin settings restyled.
 * Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Advanced: Method" options added.
 * Dev - PRODUCTS - Product Addons - Advanced Settings - "Price Filters Priority" option added.
@@ -239,6 +242,7 @@ $* Feature - SHIPPING & ORDERS - Custom Shipping - Shortcodes can now be used in
 * Dev - Shortcodes - General - `[wcj_shipping_costs_table]` shortcode added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` - `sep` attribute added.
 * Dev - Shortcodes - Orders - `[wcj_order_products_meta]` shortcode added.
+* Dev - Shortcodes - Products - `[wcj_product_price]` - `min_or_max` attribute added (for variable products).
 * Dev - Settings - Shipping by Condition - Code optimized.
 * Dev - Unnecessary `woocommerce_currency_symbol` hooks removed (affected modules: "Prices and Currencies by Country", "Currency for External Products", "Multicurrency (Currency Switcher)", "Currency per Product", "Gateways Currency Converter").
 * Dev - Code cleaned up.

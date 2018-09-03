@@ -72,9 +72,6 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 			'tcmb'                   => __( 'TCMB', 'woocommerce-jetpack' ),
 			'coinbase'               => __( 'Coinbase', 'woocommerce-jetpack' ),
 			'coinmarketcap'          => __( 'CoinMarketCap', 'woocommerce-jetpack' ),
-			'fixer'                  => __( 'Fixer.io', 'woocommerce-jetpack' ),
-			'google'                 => __( 'Google', 'woocommerce-jetpack' ),
-			'yahoo'                  => __( 'Yahoo', 'woocommerce-jetpack' ),
 		) );
 	}
 }
@@ -142,20 +139,11 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 			case 'tcmb':
 				$return = wcj_tcmb_get_exchange_rate( $currency_from, $currency_to );
 				break;
-			case 'yahoo':
-				$return = wcj_yahoo_get_exchange_rate( $currency_from, $currency_to );
-				break;
-			case 'fixer':
-				$return = wcj_fixer_io_get_exchange_rate( $currency_from, $currency_to );
-				break;
 			case 'coinbase':
 				$return = wcj_coinbase_get_exchange_rate( $currency_from, $currency_to );
 				break;
 			case 'coinmarketcap':
 				$return = wcj_coinmarketcap_get_exchange_rate( $currency_from, $currency_to );
-				break;
-			case 'google':
-				$return = wcj_google_get_exchange_rate( $currency_from, $currency_to );
 				break;
 			case 'boe':
 				$return = wcj_boe_get_exchange_rate( $currency_from, $currency_to );
@@ -293,31 +281,6 @@ if ( ! function_exists( 'wcj_boe_get_exchange_rate' ) ) {
 			false != ( $gbp_currency_to   = wcj_boe_get_exchange_rate_gbp( $currency_to ) )
 		) {
 			return round( $gbp_currency_to / $gbp_currency_from, 6 );
-		}
-		return false;
-	}
-}
-
-if ( ! function_exists( 'wcj_google_get_exchange_rate' ) ) {
-	/*
-	 * wcj_google_get_exchange_rate.
-	 *
-	 * @version 3.5.0
-	 * @since   3.5.0
-	 * @see     https://gist.github.com/daveismyname/8067095
-	 */
-	function wcj_google_get_exchange_rate( $currency_from, $currency_to ) {
-		$amount = 1;
-		$url    = 'https://finance.google.com/finance/converter?a=' . $amount . '&from=' . $currency_from . '&to=' . $currency_to;
-		if ( false != ( $response = wcj_get_currency_exchange_rates_url_response( $url, false ) ) ) {
-			preg_match( "/<span class=bld>(.*)<\/span>/", $response, $converted );
-			if ( isset( $converted[1] ) ) {
-				if ( $converted = preg_replace( "/[^0-9.]/", "", $converted[1] ) ) {
-					if ( $return = round( $converted, 6 ) ) {
-						return $return;
-					}
-				}
-			}
 		}
 		return false;
 	}
@@ -517,98 +480,6 @@ if ( ! function_exists( 'wcj_tcmb_get_exchange_rate' ) ) {
 			return round( $currency_from_TRY, 6 );
 		}
 		return round( ( $currency_from_TRY / $currency_to_TRY ), 6 );
-	}
-}
-
-if ( ! function_exists( 'wcj_yahoo_get_exchange_rate' ) ) {
-	/*
-	 * wcj_yahoo_get_exchange_rate.
-	 *
-	 * @version 3.2.4
-	 * @return  float rate on success, else 0
-	 */
-	function wcj_yahoo_get_exchange_rate( $currency_from, $currency_to ) {
-		$response = wcj_get_currency_exchange_rates_url_response( "https://finance.yahoo.com/webservice/v1/symbols/allcurrencies/quote?format=json" );
-		if ( ! isset( $response->list->resources ) ) {
-			return false;
-		}
-		$currencies = array(
-			'currency_from' => array(
-				'name'     => $currency_from . '=X',
-				'usd_rate' => false,
-			),
-			'currency_to' => array(
-				'name'     => $currency_to . '=X',
-				'usd_rate' => false,
-			),
-		);
-		foreach ( $currencies as &$currency ) {
-			foreach ( $response->list->resources as $resource ) {
-				if ( isset( $resource->resource->fields->symbol ) && $currency['name'] === $resource->resource->fields->symbol ) {
-					if ( ! isset( $resource->resource->fields->price ) ) {
-						return false;
-					}
-					$currency['usd_rate'] = $resource->resource->fields->price;
-					break;
-				}
-			}
-		}
-		return ( false == $currencies['currency_to']['usd_rate'] || false == $currencies['currency_from']['usd_rate'] ? false :
-			round( ( $currencies['currency_to']['usd_rate'] / $currencies['currency_from']['usd_rate'] ), 6 ) );
-	}
-}
-
-if ( ! function_exists( 'wcj_fixer_io_get_exchange_rate' ) ) {
-	/*
-	 * wcj_fixer_io_get_exchange_rate.
-	 *
-	 * @version 3.2.2
-	 * @since   3.2.2
-	 * @return  false or rate
-	 */
-	function wcj_fixer_io_get_exchange_rate( $currency_from, $currency_to ) {
-		return wcj_fixer_io_get_exchange_rate_by_date( $currency_from, $currency_to, 'latest' );
-	}
-}
-
-if ( ! function_exists( 'wcj_fixer_io_get_exchange_rate_by_date' ) ) {
-	/*
-	 * wcj_fixer_io_get_exchange_rate_by_date.
-	 *
-	 * @version 3.2.4
-	 * @since   3.2.2
-	 * @return  false or rate
-	 */
-	function wcj_fixer_io_get_exchange_rate_by_date( $currency_from, $currency_to, $date ) {
-		$response = wcj_get_currency_exchange_rates_url_response( 'https://api.fixer.io/' . $date . '?base=' . $currency_from . '&symbols=' . $currency_to );
-		return ( isset( $response->rates->{$currency_to} ) ? $response->rates->{$currency_to} : false );
-	}
-}
-
-if ( ! function_exists( 'wcj_fixer_io_get_exchange_rate_average' ) ) {
-	/*
-	 * wcj_fixer_io_get_exchange_rate_average.
-	 *
-	 * @version 3.2.2
-	 * @since   3.2.2
-	 * @return  false or rate
-	 * @todo    remove this
-	 * @todo    customizable '+1 day' (could be '+1 week' etc.)
-	 */
-	function wcj_fixer_io_get_exchange_rate_average( $currency_from, $currency_to, $start_date, $end_date ) {
-		$average_rate         = 0;
-		$average_rate_counter = 0;
-		$start_date = new DateTime( $start_date );
-		$end_date   = new DateTime( $end_date );
-		for ( $i = $start_date; $i <= $end_date; $i->modify( '+1 day' ) ) {
-			$date = $i->format( "Y-m-d" );
-			$rate = wcj_fixer_io_get_exchange_rate_by_date( $currency_from, $currency_to, $date );
-			if ( false != $rate ) {
-				$average_rate += $rate;
-				$average_rate_counter++;
-			}
-		}
-		return ( 0 == $average_rate || 0 == $average_rate_counter ? false : round( ( $average_rate / $average_rate_counter ), 6 ) );
 	}
 }
 

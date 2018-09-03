@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.7.0
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -755,7 +755,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Returns product (modified) price.
 	 *
-	 * @version 3.5.0
+	 * @version 3.8.1
 	 * @todo    variable products: a) not range; and b) price by country.
 	 * @return  string The product (modified) price
 	 */
@@ -794,6 +794,9 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 			if ( 'yes' !== $atts['hide_currency'] ) {
 				$min = wc_price( $min, array( 'currency' => $atts['currency'] ) );
 				$max = wc_price( $max, array( 'currency' => $atts['currency'] ) );
+			}
+			if ( ! empty( $atts['min_or_max'] ) && ( 'min' === $atts['min_or_max'] || 'max' === $atts['min_or_max'] ) ) {
+				return ( 'min' === $atts['min_or_max'] ? $min : $max );
 			}
 			return ( $min != $max ) ? sprintf( '%s-%s', $min, $max ) : $min;
 		}

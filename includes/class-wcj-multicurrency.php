@@ -205,11 +205,20 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * do_revert.
 	 *
-	 * @version 2.5.0
+	 * @version 3.8.1
 	 * @since   2.5.0
 	 */
 	function do_revert() {
-		return ( 'yes' === get_option( 'wcj_multicurrency_revert', 'no' ) && is_checkout() );
+		switch ( get_option( 'wcj_multicurrency_revert', 'no' ) ) {
+			case 'cart_only':
+				return is_cart();
+			case 'yes': // checkout only
+				return is_checkout();
+			case 'cart_and_checkout':
+				return ( is_cart() || is_checkout() );
+			default: // 'no'
+				return false;
+		}
 	}
 
 	/**

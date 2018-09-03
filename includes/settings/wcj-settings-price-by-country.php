@@ -9,6 +9,22 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+$autogenerate_buttons      = array();
+$autogenerate_buttons_data = array(
+	'all'           => __( 'All countries and currencies', 'woocommerce-jetpack' ),
+	'paypal_only'   => __( 'PayPal supported currencies only', 'woocommerce-jetpack' ),
+);
+foreach ( $autogenerate_buttons_data as $autogenerate_button_id => $autogenerate_button_desc ) {
+	$autogenerate_buttons[] = ( 1 === apply_filters( 'booster_option', 1, '' ) ?
+	'<a class="button" disabled title="' . __( 'Available in Booster Plus only.', 'woocommerce-jetpack' ) . '">' . $autogenerate_button_desc . '</a>' :
+	'<a class="button" href="' .
+		esc_url( add_query_arg( 'wcj_generate_country_groups', $autogenerate_button_id, remove_query_arg( 'recalculate_price_filter_products_prices' ) ) ) . '"' .
+		wcj_get_js_confirmation( __( 'All existing country groups will be deleted and new groups will be created. Are you sure?', 'woocommerce-jetpack' ) ) . '>' .
+			$autogenerate_button_desc .
+	'</a>' );
+}
+$autogenerate_buttons = implode( ' ', $autogenerate_buttons );
+
 $settings = array(
 	array(
 		'title'    => __( 'Price by Country Options', 'woocommerce-jetpack' ),
@@ -45,8 +61,8 @@ $settings = array(
 		'default'  => 'all',
 		'type'     => 'select',
 		'options'  => array(
-			'all'               => __( 'All site', 'woocommerce-jetpack' ),
-			'checkout'          => __( 'Checkout only', 'woocommerce-jetpack' ),
+			'all'        => __( 'All site', 'woocommerce-jetpack' ),
+			'checkout'   => __( 'Checkout only', 'woocommerce-jetpack' ),
 		),
 	),
 	array(
@@ -115,7 +131,7 @@ $settings = array(
 	array(
 		'title'    => __( 'Price Filter Widget and Sorting by Price Support', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => '<a href="' . add_query_arg( 'recalculate_price_filter_products_prices', '1', remove_query_arg( array( 'wcj_generate_country_groups', 'wcj_generate_country_groups_confirm' ) ) ) . '">' .
+		'desc_tip' => '<a href="' . add_query_arg( 'recalculate_price_filter_products_prices', '1', remove_query_arg( array( 'wcj_generate_country_groups' ) ) ) . '">' .
 			__( 'Recalculate price filter widget and sorting by price product prices', 'woocommerce-jetpack' ) . '</a>',
 		'id'       => 'wcj_price_by_country_price_filter_widget_support_enabled',
 		'default'  => 'no',
@@ -178,22 +194,7 @@ $settings = array(
 		'title'    => __( 'Autogenerate Groups', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_' . $this->id . '_module_tools',
 		'type'     => 'custom_link',
-		'link'     =>
-			'<pre>' .
-				__( 'Currencies supported in both PayPal and Yahoo Exchange Rates:', 'woocommerce-jetpack' ) . ' ' .
-				'<a href="' . add_query_arg( 'wcj_generate_country_groups', 'paypal_and_yahoo_exchange_rates_only', remove_query_arg( array( 'wcj_generate_country_groups_confirm', 'recalculate_price_filter_products_prices' ) ) ) . '">' .
-				__( 'Generate', 'woocommerce-jetpack' ) . '</a>.' .
-			'</pre>' .
-			'<pre>' .
-				__( 'Currencies supported in Yahoo Exchange Rates:', 'woocommerce-jetpack' ) . ' ' .
-				'<a href="' . add_query_arg( 'wcj_generate_country_groups', 'yahoo_exchange_rates_only', remove_query_arg( array( 'wcj_generate_country_groups_confirm', 'recalculate_price_filter_products_prices' ) ) ) . '">' .
-				__( 'Generate', 'woocommerce-jetpack' ) . '</a>.' .
-			'</pre>' .
-			'<pre>' .
-				__( 'All Countries and Currencies:', 'woocommerce-jetpack' ) . ' ' .
-				'<a href="' . add_query_arg( 'wcj_generate_country_groups', 'all', remove_query_arg( array( 'wcj_generate_country_groups_confirm', 'recalculate_price_filter_products_prices' ) ) ) . '">' .
-				__( 'Generate', 'woocommerce-jetpack' ) . '</a>' .
-			'</pre>',
+		'link'     => $autogenerate_buttons,
 	),
 	array(
 		'title'    => __( 'Groups Number', 'woocommerce-jetpack' ),
@@ -220,7 +221,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_b
 			$settings[] = array(
 				'title'    => $admin_title . ( '' != get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, '' ) ?
 					' (' . count( explode( ',', get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i, '' ) ) ) . ')' : '' ),
-				'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predifined sets visit <a href="https://booster.io/country-codes/" target="_blank">https://booster.io/country-codes/</a>', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Countries. List of comma separated country codes.<br>For country codes and predefined sets visit <a href="https://booster.io/country-codes/" target="_blank">https://booster.io/country-codes/</a>', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_price_by_country_exchange_rate_countries_group_' . $i,
 				'default'  => '',
 				'type'     => 'textarea',
@@ -283,8 +284,8 @@ $settings = array_merge( $settings, array(
 		'default'  => 'manual',
 		'type'     => 'select',
 		'options'  => array(
-			'manual'     => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
-			'auto'       => __( 'Automatically via Currency Exchange Rates module', 'woocommerce-jetpack' ),
+			'manual'   => __( 'Enter Rates Manually', 'woocommerce-jetpack' ),
+			'auto'     => __( 'Automatically via Currency Exchange Rates module', 'woocommerce-jetpack' ),
 		),
 		'desc'     => ( '' == apply_filters( 'booster_message', '', 'desc' ) )
 			? __( 'Visit', 'woocommerce-jetpack' ) . ' <a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=currency_exchange_rates' ) . '">' . __( 'Currency Exchange Rates module', 'woocommerce-jetpack' ) . '</a>'
