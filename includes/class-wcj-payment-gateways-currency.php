@@ -1,6 +1,6 @@
 <?php
 /**
- * Booster for WooCommerce - Module - Gateways Currency
+ * Booster for WooCommerce - Module - Gateways Currency Converter
  *
  * @version 3.8.1
  * @since   2.3.0
@@ -16,7 +16,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.0.0
+	 * @version 3.8.1
 	 */
 	function __construct() {
 
@@ -30,6 +30,9 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 			$this->add_hooks();
 			if ( is_admin() ) {
 				include_once( 'reports/class-wcj-currency-reports.php' );
+			}
+			if ( 'yes' === get_option( 'wcj_gateways_currency_fix_chosen_payment_method', 'no' ) ) {
+				add_action( 'woocommerce_checkout_update_order_review', array( $this, 'fix_chosen_payment_method' ) );
 			}
 		}
 	}
@@ -55,15 +58,43 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	}
 
 	/**
+	 * fix_chosen_payment_method.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 */
+	function fix_chosen_payment_method( $post_data ) {
+		$payment_gateway            = ( empty( $_POST['payment_method'] ) ? '' : $_POST['payment_method'] );
+		$available_payment_gateways = array_keys( WC()->payment_gateways->get_available_payment_gateways() );
+		if ( ! empty( $available_payment_gateways ) ) {
+			 if ( ! in_array( $payment_gateway, $available_payment_gateways ) ) {
+				$_POST['payment_method'] = $available_payment_gateways[0];
+			 }
+		} else {
+			$_POST['payment_method'] = '';
+		}
+	}
+
+	/**
+	 * get_chosen_payment_method.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 * @todo    [dev] maybe make this more complex
+	 */
+	function get_chosen_payment_method() {
+		return WC()->session->chosen_payment_method;
+	}
+
+	/**
 	 * change_shipping_price_by_gateway.
 	 *
-	 * @version 3.2.0
+	 * @version 3.8.1
 	 * @since   2.4.8
 	 */
 	function change_shipping_price_by_gateway( $package_rates, $package ) {
 		if ( $this->is_cart_or_checkout() ) {
-			global $woocommerce;
-			$current_gateway = $woocommerce->session->chosen_payment_method;
+			$current_gateway = $this->get_chosen_payment_method();
 			if ( '' != $current_gateway ) {
 				$gateway_currency_exchange_rate = get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
 				return wcj_change_price_shipping_package_rates( $package_rates, $gateway_currency_exchange_rate );
@@ -88,11 +119,12 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 
 	/**
 	 * change_price_by_gateway.
+	 *
+	 * @version 3.8.1
 	 */
 	function change_price_by_gateway( $price, $product ) {
 		if ( $this->is_cart_or_checkout() ) {
-			global $woocommerce;
-			$current_gateway = $woocommerce->session->chosen_payment_method;
+			$current_gateway = $this->get_chosen_payment_method();
 			if ( '' != $current_gateway ) {
 				$gateway_currency_exchange_rate = get_option( 'wcj_gateways_currency_exchange_rate_' . $current_gateway );
 				$price = $price * $gateway_currency_exchange_rate;
@@ -104,12 +136,11 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * extend_paypal_supported_currencies.
 	 *
-	 * @version 2.4.0
+	 * @version 3.8.1
 	 */
 	function extend_paypal_supported_currencies( $supported_currencies ) {
 		if ( $this->is_cart_or_checkout() ) {
-			global $woocommerce;
-			$current_gateway = $woocommerce->session->chosen_payment_method;
+			$current_gateway = $this->get_chosen_payment_method();
 			if ( '' != $current_gateway ) {
 				$gateway_currency = get_option( 'wcj_gateways_currency_' . $current_gateway );
 				if ( 'no_changes' != $gateway_currency ) {
@@ -123,12 +154,11 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * change_currency_code.
 	 *
-	 * @version 2.4.0
+	 * @version 3.8.1
 	 */
 	function change_currency_code( $currency ) {
 		if ( $this->is_cart_or_checkout() ) {
-			global $woocommerce;
-			$current_gateway = $woocommerce->session->chosen_payment_method;
+			$current_gateway = $this->get_chosen_payment_method();
 			if ( '' != $current_gateway ) {
 				$gateway_currency = get_option( 'wcj_gateways_currency_' . $current_gateway );
 				if ( 'no_changes' != $gateway_currency ) {

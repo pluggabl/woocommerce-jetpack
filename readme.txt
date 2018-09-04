@@ -189,7 +189,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.8.1 - 04/09/2018 =
+= 3.8.1 - 05/09/2018 =
 * Feature - PRICES & CURRENCIES - Currencies - Shortcodes (e.g. `[wcj_wpml]`) can now be used in currency symbol fields.
 * Feature - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "The Free Currency Converter API" server added.
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products not in stock" option added.
@@ -218,6 +218,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Fix - EMAILS & MISC. - Reports - Stock - "Last sale" column fixed.
 * Fix - EMAILS & MISC. - User Tracking - Fatal error on "Update now" button fixed.
 * Fix - Core - `WCJ_Module` - `save_meta_box()` - `delete_post_meta()` added.
+T * Fix - Functions - Country - `wcj_get_country_by_ip()` - Additional checks added (to prevent possible "Call to undefined function wc_format_country_state_string() ..." error).
 * Fix - Functions - Exchange Rates - Average exchange rates function fixed (used in "Booster: Monthly Sales (with Currency Conversion)" report).
 * Fix - Functions - General - `wcj_wrap_in_wc_email_template()` - `{site_title}` in footer replaced with blog name.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - `WP_Query` optimized to return `ids` only.
@@ -236,6 +237,9 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - PRODUCTS - Product Addons - Advanced Settings - "Price Filters Priority" option added.
 * Dev - PRODUCTS - Related Products - Relate Manually - "Select box type" option added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - Advanced Options - "Notice Type" option added.
+W * Dev - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - Trying to get customer country and state from `$_REQUEST` first (before accessing `WC()->customer`). Postcode code part rewritten.
+W * Dev - PAYMENT GATEWAYS - Gateways Currency Converter - "Advanced: Fix Chosen Payment Method" option added.
+* Dev - PAYMENT GATEWAYS - Gateways Currency Converter - Code refactoring (`get_chosen_payment_method()` function added; `global $woocommerce` replaced with `WC()`).
 * Dev - SHIPPING & ORDERS - Custom Shipping - Admin settings restyled.
 * Dev - SHIPPING & ORDERS - Left to Free Shipping - Info on Checkout - Position - New positions added.
 * Dev - SHIPPING & ORDERS - Shipping Methods by Products - Minor code changes.
@@ -244,8 +248,9 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - EMAILS & MISC. - Email Verification - Admin settings restyled. Code refactored.
 * Dev - EMAILS & MISC. - Reports - Admin settings restyled.
 * Dev - Functions - Price and Currency - `wcj_get_woocommerce_currencies_and_symbols()` function added. `wcj_get_currency_symbol()`, `wcj_get_currencies_names_and_symbols()` and `wcj_get_currencies_array()` functions removed. Affected modules: "Currency Exchange Rates", "Admin Orders List", "Currency for External Products", "Currency per Product", "Multicurrency Product Base Price", "Multicurrency (Currency Switcher)", "Gateways by Currency", "Gateways Currency Converter", "Prices and Currencies by Country", "Price Formats", "Orders", "Currencies".
-* Dev - Shortcodes - General - `[wcj_shipping_costs_table]` shortcode added.
+* Dev - Shortcodes - General - `[wcj_get_option]` shortcode added.
 * Dev - Shortcodes - General - `[wcj_image]` shortcode added.
+* Dev - Shortcodes - General - `[wcj_shipping_costs_table]` shortcode added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` - `sep` attribute added.
 * Dev - Shortcodes - Orders - `[wcj_order_products_meta]` shortcode added.
 * Dev - Shortcodes - Products - `[wcj_product_price]` - `min_or_max` attribute added (for variable products).

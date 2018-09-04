@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -34,7 +34,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * get_location.
 	 *
-	 * @version 3.5.0
+	 * @version 3.8.1
 	 * @since   3.4.0
 	 * @todo    on `WCJ_IS_WC_VERSION_BELOW_3` recheck if `get_shipping_country()` and `get_shipping_state()` work correctly
 	 */
@@ -42,24 +42,30 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 		switch ( $type ) {
 			case 'country':
 				$country_type = get_option( 'wcj_gateways_by_location_country_type', 'billing' );
-				return ( 'by_ip' === $country_type ?
-					wcj_get_country_by_ip() :
-					( isset( WC()->customer ) ? ( 'billing' === $country_type ? wcj_customer_get_country() : WC()->customer->get_shipping_country() ) : '' ) );
+				switch( $country_type ) {
+					case 'by_ip':
+						return wcj_get_country_by_ip();
+					case 'shipping':
+						return ( ! empty( $_REQUEST['s_country'] )  ? $_REQUEST['s_country']                : ( isset( WC()->customer ) ? WC()->customer->get_shipping_country() : '' ) );
+					default: // 'billing'
+						return ( ! empty( $_REQUEST['country'] )    ? $_REQUEST['country']                  : ( isset( WC()->customer ) ? wcj_customer_get_country()             : '' ) );
+				}
 			case 'state':
-				return ( isset( WC()->customer ) ?
-					( 'billing' === get_option( 'wcj_gateways_by_location_state_type', 'billing' ) ? wcj_customer_get_country_state() : WC()->customer->get_shipping_state() ) :
-					'' );
+				$state_type = get_option( 'wcj_gateways_by_location_state_type', 'billing' );
+				switch( $state_type ) {
+					case 'shipping':
+						return ( ! empty( $_REQUEST['s_state'] )    ? $_REQUEST['s_state']                  : ( isset( WC()->customer ) ? WC()->customer->get_shipping_state()   : '' ) );
+					default: // 'billing'
+						return ( ! empty( $_REQUEST['state'] )      ? $_REQUEST['state']                    : ( isset( WC()->customer ) ? wcj_customer_get_country_state()       : '' ) );
+				}
 			case 'postcode':
-				$postcode = '';
-				if ( isset( $_REQUEST['postcode'] ) && 'billing' === get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' ) ) {
-					$postcode = $_REQUEST['postcode'];
-				} elseif ( isset( $_REQUEST['s_postcode'] ) && 'shipping' === get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' ) ) {
-					$postcode = $_REQUEST['s_postcode'];
+				$postcodes_type = get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' );
+				switch( $postcodes_type ) {
+					case 'shipping':
+						return ( ! empty( $_REQUEST['s_postcode'] ) ? strtoupper( $_REQUEST['s_postcode'] ) : strtoupper( WC()->countries->get_base_postcode() ) );
+					default: // 'billing'
+						return ( ! empty( $_REQUEST['postcode'] )   ? strtoupper( $_REQUEST['postcode'] )   : strtoupper( WC()->countries->get_base_postcode() ) );
 				}
-				if ( '' == $postcode ) {
-					$postcode = WC()->countries->get_base_postcode();
-				}
-				return strtoupper( $postcode );
 		}
 	}
 

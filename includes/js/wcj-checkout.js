@@ -1,6 +1,7 @@
 /*
  * wcj-checkout.js
  */
+
 jQuery( function( $ ) {
 	// Define that JavaScript code should be executed in "strict mode"
 	"use strict";

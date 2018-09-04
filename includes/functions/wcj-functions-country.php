@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Country
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -26,7 +26,7 @@ if ( ! function_exists( 'wcj_get_country_by_ip' ) ) {
 	/**
 	 * wcj_get_country_by_ip.
 	 *
-	 * @version 3.1.0
+	 * @version 3.8.1
 	 * @since   3.1.0
 	 */
 	function wcj_get_country_by_ip() {
@@ -34,9 +34,12 @@ if ( ! function_exists( 'wcj_get_country_by_ip' ) ) {
 		$location = ( class_exists( 'WC_Geolocation' ) ? WC_Geolocation::geolocate_ip() : array( 'country' => '' ) );
 		// Base fallback
 		if ( empty( $location['country'] ) ) {
-			$location = wc_format_country_state_string( apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) ) );
+			$location = apply_filters( 'woocommerce_customer_default_location', get_option( 'woocommerce_default_country' ) );
+			if ( function_exists( 'wc_format_country_state_string' ) ) {
+				$location = wc_format_country_state_string( $location );
+			}
 		}
-		return ( isset( $location['country'] ) ) ? $location['country'] : '';
+		return ( isset( $location['country'] ) ? $location['country'] : '' );
 	}
 }
 

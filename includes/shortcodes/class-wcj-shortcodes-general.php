@@ -42,6 +42,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_customer_total_spent',
 			'wcj_empty_cart_button',
 			'wcj_get_left_to_free_shipping',
+			'wcj_get_option',
 			'wcj_image',
 			'wcj_product_category_count',
 			'wcj_request_value',
@@ -105,6 +106,21 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_get_option.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 * @todo    [dev] handle multidimensional arrays
+	 * @todo    [dev] maybe also add `get_site_option()`
+	 */
+	function wcj_get_option( $atts ) {
+		$result = ( isset( $atts['name'] ) ? get_option( $atts['name'], ( isset( $atts['default'] ) ? $atts['default'] : false ) ) : '' );
+		return ( is_array( $result ) ?
+			( isset( $atts['field'] ) && isset( $result[ $atts['field'] ] ) ? $result[ $atts['field'] ] : implode( ', ', $result ) ) :
+			$result );
 	}
 
 	/**
