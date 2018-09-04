@@ -28,7 +28,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * Init settings
 	 *
-	 * @version 3.8.1
+	 * @version 3.8.0
 	 * @since   2.5.6
 	 * @access  public
 	 * @return  void
@@ -63,21 +63,14 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 
 		// Add weight table rows
 		if ( apply_filters( 'wcj_custom_shipping_do_add_table_rows', true, $this ) ) {
-			/* if (
-				is_admin() &&
-				isset( $_GET['page'] )        && 'wc-settings'      === $_GET['page'] &&
-				isset( $_GET['tab'] )         && 'shipping'         === $_GET['tab']  &&
-				isset( $_GET['instance_id'] ) && $this->instance_id ==  $_GET['instance_id']
-			) { */
-				add_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) );
-			/* } */
+			add_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) );
 		}
 	}
 
 	/**
 	 * add_table_rows.
 	 *
-	 * @version 3.4.0
+	 * @version 3.8.1
 	 * @since   2.6.0
 	 */
 	function add_table_rows( $instance_form_fields ) {
@@ -92,13 +85,15 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 							'type'        => 'number',
 							'default'     => 0,
 							'desc_tip'    => true,
-							'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
+							'css'         => 'width:100%',
+							'custom_attributes' => array( 'step' => '0.000001', 'min' => '0' ),
 						),
 						'weight_table_cost_row_' . $i => array(   // mislabeled, should be 'table_cost_row_'
 							'title'       => __( 'Cost', 'woocommerce' ) . ' #' . $i,
 							'type'        => 'text',
 							'default'     => 0,
 							'desc_tip'    => true,
+							'css'         => 'width:100%',
 						),
 					) );
 				}
@@ -161,6 +156,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 				'default'     => 'flat_rate',
 				'desc_tip'    => true,
 				'options'     => $type_options,
+				'css'         => 'width:100%',
 			),
 			'cost' => array(
 				'title'       => __( 'Cost', 'woocommerce' ),
@@ -176,7 +172,8 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 				'description' => __( 'Minimum total cart weight. Set zero to disable.', 'woocommerce-jetpack' ),
 				'default'     => 0,
 				'desc_tip'    => true,
-				'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
+				'css'         => 'width:100%',
+				'custom_attributes' => array( 'step' => '0.000001', 'min' => '0' ),
 			),
 			'max_weight' => array(
 				'title'       => __( 'Max Weight', 'woocommerce' ),
@@ -184,12 +181,13 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 				'description' => __( 'Maximum total cart weight. Set zero to disable.', 'woocommerce-jetpack' ),
 				'default'     => 0,
 				'desc_tip'    => true,
-				'custom_attributes' => array( 'step' => '0.000001', 'min'  => '0' ),
+				'css'         => 'width:100%',
+				'custom_attributes' => array( 'step' => '0.000001', 'min' => '0' ),
 			),
 			'apply_formula' => array(
 				'title'       => __( 'Apply Formula and Shortcodes to Costs', 'woocommerce' ),
-				'description' => sprintf( __( 'You can use %s and %s params in formula. E.g.: %s', 'woocommerce-jetpack' ),
-						'<em>weight</em>', '<em>quantity</em>', '<em>2.5+weight</em>' ) . '<br>' .
+				'description' => sprintf( __( 'You can use %s and %s params in formula, e.g.: %s. Also you can use shortcodes, e.g.: %s.', 'woocommerce-jetpack' ),
+						'<em>weight</em>', '<em>quantity</em>', '<em>2.5+weight</em>', '<em>[wcj_shipping_costs_table prop="weight" table="25-12.25|50-14.50|9999-29.148"]</em>' ) . '<br>' .
 					apply_filters( 'booster_message', '', 'desc_no_link' ),
 				'desc_tip'    => true,
 				'type'        => 'checkbox',
@@ -202,7 +200,8 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 				'description' => __( 'Press "Save changes" and reload the page after you change this number.', 'woocommerce-jetpack' ),
 				'default'     => 0,
 				'desc_tip'    => true,
-				'custom_attributes' => array( 'min'  => '0' ),
+				'css'         => 'width:100%',
+				'custom_attributes' => array( 'min' => '0' ),
 			),
 		);
 	}

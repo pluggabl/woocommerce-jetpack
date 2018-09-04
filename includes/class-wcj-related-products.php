@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 3.1.1
+ * @version 3.8.1
  * @author  Algoritmika Ltd.
  */
 
@@ -175,7 +175,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * get_related_products_ids_wc3.
 	 *
-	 * @version 2.8.0
+	 * @version 3.8.1
 	 * @since   2.8.0
 	 */
 	function get_related_products_ids_wc3( $product_id ) {
@@ -184,9 +184,7 @@ class WCJ_Related_Products extends WCJ_Module {
 		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) ) {
 			// Relate per Product (Manual)
 			$related_per_product = get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_ids', true );
-			if ( '' != $related_per_product ) {
-				$include_ids = $related_per_product;
-			}
+			$include_ids         = ( ! empty( $related_per_product ) ? $related_per_product : false );
 		} elseif ( 'yes' === get_option( 'wcj_product_info_related_products_by_attribute_enabled', 'no' ) ) {
 			$args = array(
 				'post_type'      => 'product',
@@ -230,7 +228,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * related_products_query_wc3.
 	 *
-	 * @version 2.8.0
+	 * @version 3.8.1
 	 * @since   2.8.0
 	 * @see     WC_Product_Data_Store_CPT::get_related_products_query()
 	 * @todo    "Relate by Product Attribute" - directly to `$query['where']` instead of getting ids via `WP_Query`
@@ -241,19 +239,22 @@ class WCJ_Related_Products extends WCJ_Module {
 		//////////////////////////////////////////////////////////////////////
 		// Algoritmika
 		if ( 'yes' === get_option( 'wcj_product_info_related_products_hide', 'no' ) ) {
-			$include_ids = array( 0 );
+			$include_ids = false;
 		} else {
 			$include_ids = $this->get_related_products_ids_wc3( $product_id );
-			if ( empty( $include_ids ) ) {
+			if ( false !== $include_ids && empty( $include_ids ) ) {
 				return $_query;
 			}
 		}
-		$include_ids = implode( ',', array_map( 'absint', $include_ids ) );
+		if ( false !== $include_ids ) {
+			$include_ids = implode( ',', array_map( 'absint', $include_ids ) );
+		}
 		$cats_array  = array();
 		$tags_array  = array();
 		$_product = wc_get_product( $product_id );
 		$exclude_ids = array_merge( array( 0, $product_id ), $_product->get_upsell_ids() );
-		if ( 'yes' === get_option( 'wcj_product_info_related_products_hide', 'no' ) ) {
+		if ( false === $include_ids ) {
+			$include_ids = array( 0 );
 			$limit = 0;
 		} else {
 			$limit = get_option( 'wcj_product_info_related_products_num', 3 );

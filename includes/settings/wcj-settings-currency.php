@@ -13,6 +13,8 @@ $settings = array(
 	array(
 		'title'    => __( 'Currency Symbol Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
+		'desc'     => sprintf( __( 'You can use shortcodes in currency symbols, e.g.: %s.', 'woocommerce-jetpack' ),
+			'<code>[wcj_wpml lang="EN"]$[/wcj_wpml][wcj_wpml not_lang="EN"]USD[/wcj_wpml]</code>' ),
 		'id'       => 'wcj_all_currencies_list_options',
 	),
 	array(

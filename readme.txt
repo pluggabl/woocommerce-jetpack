@@ -190,27 +190,27 @@ You can see the differences between versions in this [table](https://booster.io/
 == Changelog ==
 
 = 3.8.1 - 04/09/2018 =
-~* Feature - PRICES & CURRENCIES - Currencies - Shortcodes (e.g. `[wcj_wpml]`) can now be used in currency symbol fields.
+* Feature - PRICES & CURRENCIES - Currencies - Shortcodes (e.g. `[wcj_wpml]`) can now be used in currency symbol fields.
 * Feature - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "The Free Currency Converter API" server added.
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products not in stock" option added.
 * Feature - PRODUCTS - Cross-sells - "Exclude Not in Stock Products" option added.
-~* Feature - PRODUCTS - Cross-sells - "Replace Cart Products with Cross-sells" option added.
+* Feature - PRODUCTS - Cross-sells - "Replace Cart Products with Cross-sells" option added.
 * Feature - PRODUCTS - Product Images - Placeholder Image - "Custom Placeholder Image URL" option added.
-$* Feature - SHIPPING & ORDERS - Custom Shipping - Shortcodes can now be used in "Cost" field (e.g.: `[wcj_shipping_costs_table]`).
-~* Feature - PDF INVOICING & PACKING SLIPS - Advanced - Add PDF Invoices Meta Box to Admin Edit Order Page - Editable date added.
+* Feature - SHIPPING & ORDERS - Custom Shipping - Shortcodes can now be used in "Cost" field (e.g.: `[wcj_shipping_costs_table]`).
+* Feature - PDF INVOICING & PACKING SLIPS - Advanced - Add PDF Invoices Meta Box to Admin Edit Order Page - Editable date added.
 * Feature - EMAILS & MISC. - Email Verification - "Redirect User After Successful Verification to Custom URL" option added.
 * Feature - EMAILS & MISC. - Reports - Stock - "product type" option added.
 * Feature - EMAILS & MISC. - Reports - Stock - "Include deleted products" option added.
-!$* Feature - EMAILS & MISC. - Template Editor - Initial module release.
+* Feature - EMAILS & MISC. - Template Editor - Initial module release.
 * Fix - PRICES & CURRENCIES - Currency Exchange Rates - Discontinued servers (Yahoo, Google, Fixer) removed.
 * Fix - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - Products with empty price - Default value fixed.
 * Fix - PRODUCTS - Cost of Goods - Products List Columns - Variable products fixed in both ("Profit" and "Cost") columns.
 * Fix - PRODUCTS - Cost of Goods - Products List Columns - Profit - Checking for price to be `is_numeric()`.
-~* Fix - PRODUCTS - Product Addons - `maybe_convert_currency()` - "Global Discount" module conversion added.
+* Fix - PRODUCTS - Product Addons - `maybe_convert_currency()` - "Global Discount" module conversion added.
 * Fix - PRODUCTS - Products XML Feeds - `html_entity_decode()` added to XML header and footer.
+* Fix - PRODUCTS - Related Products - Relate Manually - Hiding related products for current product (i.e. if enabled and no products selected) fixed.
 * Fix - CART & CHECKOUT - Checkout Fees - "Checkout Field" option fixed.
 * Fix - SHIPPING & ORDERS - Admin Orders List - Additional checks for `wp_get_current_user()` function to exist added (`wcj_current_user_can()` function added).
-~* Fix - SHIPPING & ORDERS - Custom Shipping - Table rows settings are added on appropriate pages only.
 * Fix - EMAILS & MISC. - Email Verification - "Login User After Successful Verification" admin description fixed.
 * Fix - EMAILS & MISC. - Email Verification - "Message - Resend" default value fixed.
 * Fix - EMAILS & MISC. - Email Verification - "Message - Failed (no user ID)" option added.
@@ -222,17 +222,21 @@ $* Feature - SHIPPING & ORDERS - Custom Shipping - Shortcodes can now be used in
 * Fix - Functions - General - `wcj_wrap_in_wc_email_template()` - `{site_title}` in footer replaced with blog name.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - `WP_Query` optimized to return `ids` only.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - Tool restyled. "Pretty prices threshold" option description added.
-!* Dev - PRICES & CURRENCIES - Currencies - Major code refactoring and optimization.
+* Dev - PRICES & CURRENCIES - Currencies - Major code refactoring and optimization.
 * Dev - PRICES & CURRENCIES - Global Discount - Advanced Settings - "Price Filters Priority" option added.
-T* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Revert Currency to Shop's Default - "Revert on cart page only" and "Revert on both cart & checkout pages" options added.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Revert Currency to Shop's Default - "Revert on cart page only" and "Revert on both cart & checkout pages" options added.
 * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Advanced Settings - "Price Filters Priority" option added.
-~* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Autogenerate Groups - Cleaned up; restyled; Yahoo exchange rates server related buttons removed; "PayPal supported currencies only" button added.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Autogenerate Groups - Cleaned up; restyled; Yahoo exchange rates server related buttons removed; "PayPal supported currencies only" button added.
 * Dev - PRICES & CURRENCIES - Product Price by Formula - Advanced Settings - "Price Filters Priority" option added.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Discount Info on Cart Page - `%original_price%` replaced value added.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Admin settings restyled.
 * Dev - BUTTON & PRICE LABELS - Add to Cart Button Labels - Admin settings restyled.
 * Dev - PRODUCTS - Add to Cart Button Visibility - All Products - "Advanced: Method" options added.
+* Dev - PRODUCTS - Product Addons - Advanced Settings - Apply Price Filter - "... modules to apply ..." option added.
 * Dev - PRODUCTS - Product Addons - Advanced Settings - "Price Filters Priority" option added.
+* Dev - PRODUCTS - Related Products - Relate Manually - "Select box type" option added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - Advanced Options - "Notice Type" option added.
-~* Dev - SHIPPING & ORDERS - Custom Shipping - Admin settings restyled.
+* Dev - SHIPPING & ORDERS - Custom Shipping - Admin settings restyled.
 * Dev - SHIPPING & ORDERS - Left to Free Shipping - Info on Checkout - Position - New positions added.
 * Dev - SHIPPING & ORDERS - Shipping Methods by Products - Minor code changes.
 * Dev - EMAILS & MISC. - Admin Bar - "Booster: Active" admin bar can now be added without adding "Booster" admin bar.

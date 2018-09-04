@@ -95,7 +95,7 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 		array(
 			'title'    => __( 'Global Cross-sells', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'Enable this section, if you want to add same cross-sells to all products.', 'woocommerce-jetpack' ) . ' ' .
+			'desc_tip' => __( 'Enable this section, if you want to add same cross-sells to all products.', 'woocommerce-jetpack' ) . '<br>' .
 				apply_filters( 'booster_message', '', 'desc' ),
 			'type'     => 'checkbox',
 			'id'       => 'wcj_cross_sells_global_enabled',
@@ -113,7 +113,7 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 		array(
 			'title'    => __( 'Exclude "Not in Stock" Products', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'Enable this, if you want to exclude "not in stock" products from cross-sells.', 'woocommerce-jetpack' ) . ' ' .
+			'desc_tip' => __( 'Enable this, if you want to exclude "not in stock" products from cross-sells.', 'woocommerce-jetpack' ) . '<br>' .
 				apply_filters( 'booster_message', '', 'desc' ),
 			'type'     => 'checkbox',
 			'id'       => 'wcj_cross_sells_exclude_not_in_stock',
@@ -123,7 +123,10 @@ if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
 		array(
 			'title'    => __( 'Replace Cart Products with Cross-sells', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'Enable this, if you want original products to be removed from cart and replaced with cross-sells, if customer adds cross-sells on cart page.', 'woocommerce-jetpack' ) . ' ' .
+			'desc_tip' => __( 'Enable this, if you want original products to be removed from cart and replaced with cross-sells, if customer adds cross-sells on cart page.', 'woocommerce-jetpack' ) . '<br>' .
+				sprintf( __( 'Please note that this option will work only if "%s" option is disabled in %s.', 'woocommerce-jetpack' ),
+					__( 'Enable AJAX add to cart buttons on archives', 'woocommerce' ), '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=products' ) . '">' .
+						__( 'WooCommerce > Settings > Products > General > Shop pages > Add to cart behaviour', 'woocommerce-jetpack' ) . '</a>' ) . '<br>' .
 				apply_filters( 'booster_message', '', 'desc' ),
 			'type'     => 'checkbox',
 			'id'       => 'wcj_cross_sells_replace_with_cross_sells',

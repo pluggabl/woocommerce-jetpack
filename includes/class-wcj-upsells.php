@@ -21,6 +21,7 @@ class WCJ_Upsells extends WCJ_Module {
 	 * @todo    (maybe) use `apply_filters( 'woocommerce_upsell_display_args', array( 'posts_per_page' => $limit, 'orderby' => $orderby, 'columns' => $columns ) );`
 	 * @todo    (maybe) Global Upsells - on per category/tag basis
 	 * @todo    (maybe) Global Upsells - ids instead of list
+	 * @todo    (maybe) add `wcj_upsells_replace_with_upsells` option (similar to `wcj_cross_sells_replace_with_cross_sells`)
 	 */
 	function __construct() {
 

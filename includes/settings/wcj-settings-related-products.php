@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Related Products
  *
- * @version 3.1.1
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -154,6 +154,16 @@ $settings = array_merge( $settings, array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'desc'     => __( 'Relate Manually: Select box type', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_info_related_products_per_product_box_type',
+		'default'  => 'chosen_select',
+		'type'     => 'select',
+		'options'  => array(
+			'chosen_select' => __( 'Chosen select', 'woocommerce-jetpack' ),
+			'standard'      => __( 'Standard', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'type'     => 'sectionend',

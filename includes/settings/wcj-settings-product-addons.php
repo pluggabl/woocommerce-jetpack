@@ -226,6 +226,18 @@ $settings = array_merge( $settings, array(
 		),
 	),
 	array(
+		'desc_tip' => __( 'If you have selected "By module" for "Advanced: Apply Price Filter" option, you can set which modules to apply here. Leave empty to apply all modules.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_apply_price_filters_by_module',
+		'default'  => array(),
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => array(
+			'multicurrency_base_price'   => __( 'Multicurrency Product Base Price', 'woocommerce-jetpack' ),
+			'multicurrency'              => __( 'Multicurrency (Currency Switcher)', 'woocommerce-jetpack' ),
+			'global_discount'            => __( 'Global Discount', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
 		'title'    => __( 'Advanced: Price Filters Priority', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
 		'id'       => 'wcj_product_addons_advanced_price_hooks_priority',

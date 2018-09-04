@@ -2,15 +2,16 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Related Products
  *
- * @version 2.8.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$product_id = get_the_ID();
-$products   = wcj_get_products( array(), 'publish' );
+$product_id       = get_the_ID();
+$products         = wcj_get_products( array(), 'publish' );
+$is_chosen_select = ( 'chosen_select' === get_option( 'wcj_product_info_related_products_per_product_box_type', 'chosen_select' ) );
 unset( $products[ $product_id  ] );
 $options = array(
 	array(
@@ -26,13 +27,14 @@ $options = array(
 	),
 	array(
 		'title'    => __( 'Related Products', 'woocommerce-jetpack' ),
-		'tooltip'  => __( 'Hold Control (Ctrl) key to select multiple products.', 'woocommerce-jetpack' ),
+		'tooltip'  => ( $is_chosen_select ? ''              : __( 'Hold Control (Ctrl) key to select multiple products. Ctrl and "A" to select all products.', 'woocommerce-jetpack' ) ),
 		'name'     => 'wcj_product_info_related_products_ids',
 		'default'  => '',
 		'type'     => 'select',
 		'options'  => $products,
 		'multiple' => true,
-		'css'      => 'height:300px;',
+		'css'      => ( $is_chosen_select ? 'width:100%'    : 'height:300px' ),
+		'class'    => ( $is_chosen_select ? 'chosen_select' : '' ),
 	),
 );
 return $options;

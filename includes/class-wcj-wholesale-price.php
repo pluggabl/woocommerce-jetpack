@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -93,7 +93,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * add_discount_info_to_cart_page.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 */
 	function add_discount_info_to_cart_page( $price_html, $cart_item, $cart_item_key ) {
 
@@ -104,8 +104,8 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				$discount_type = ( wcj_is_product_wholesale_enabled_per_product( $cart_item['product_id'] ) )
 					? get_post_meta( $cart_item['product_id'], '_' . 'wcj_wholesale_price_discount_type', true )
 					: get_option( 'wcj_wholesale_price_discount_type', 'percent' );
+				$_product = $cart_item['data'];
 				if ( 'price_directly' === $discount_type ) {
-					$_product = $cart_item['data'];
 					$saved_wcj_wholesale_price = false;
 					if ( isset( $_product->wcj_wholesale_price ) ) {
 						$saved_wcj_wholesale_price = $_product->wcj_wholesale_price;
@@ -116,7 +116,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 						$_product->wcj_wholesale_price = $saved_wcj_wholesale_price;
 					}
 				} elseif ( 'fixed' === $discount_type ) {
-					$discount = wc_price( $this->get_price_for_cart( $discount, $cart_item['data'] ) );
+					$discount = wc_price( $this->get_price_for_cart( $discount, $_product ) );
 				} else {
 					$discount = $discount . '%';
 				}
@@ -125,6 +125,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 				$replaced_values = array(
 					'%old_price%'        => $old_price_html,
 					'%price%'            => $price_html,
+					'%original_price%'   => wc_price( $this->get_price_for_cart( $_product->get_price(), $_product ) ),
 					'%discount_value%'   => $discount,
 					'%discount_percent%' => $discount, // deprecated (replaced with %discount_value%)
 				);

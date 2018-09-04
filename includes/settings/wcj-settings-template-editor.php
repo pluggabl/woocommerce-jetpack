@@ -7,7 +7,7 @@
  * @author  Algoritmika Ltd.
  * @todo    [dev] (maybe) always use `DIRECTORY_SEPARATOR` (instead of '\\' and '/')
  * @todo    [dev] default template: check if `$default_template_path` exists before calling `file_get_contents()`
- * @todo    [feature] (maybe) option to set custom `/woocommerce/templates/` folder
+ * @todo    [feature] (maybe) option to set custom `/woocommerce/` folder
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -23,6 +23,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Templates to Edit', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save changes after you set this option to see new options fields.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_template_editor_templates_to_edit',
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',
@@ -38,8 +39,13 @@ foreach ( get_option( 'wcj_template_editor_templates_to_edit', array() ) as $tem
 		array(
 			'title'    => $template,
 			'desc'     =>
-				sprintf( __( 'Default template path: %s', 'woocommerce-jetpack' ),  '<code>' .                $default_template_path  . '</code>' ) . '<br>' .
-				sprintf( __( 'Replaced template path: %s', 'woocommerce-jetpack' ), '<code ' . $style . '>' . $replaced_template_path . '</code>' ),
+				'<details>' .
+					'<summary>' . __( 'Info', 'woocommerce-jetpack' ) . '</summary>' .
+					wcj_get_table_html( array(
+						array( __( 'Default template path', 'woocommerce-jetpack' ),  '<span>' .                $default_template_path  . '</span>' ),
+						array( __( 'Replaced template path', 'woocommerce-jetpack' ), '<span ' . $style . '>' . $replaced_template_path . '</span>' ),
+					), array( 'table_class' => 'widefat striped', 'table_heading_type' => 'none', 'columns_styles' => array( 'padding:0', 'padding:0' ) ) ) .
+				'</details>',
 			'id'       => "wcj_template_editor_templates_content[{$template}]",
 			'type'     => 'textarea',
 			'default'  => file_get_contents( $default_template_path ),

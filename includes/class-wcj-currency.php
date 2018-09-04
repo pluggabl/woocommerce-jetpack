@@ -163,7 +163,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * add_edit_currency_symbol_field.
 	 *
-	 * @version 2.4.0
+	 * @version 3.8.1
 	 * @todo    [dev] (maybe) remove this
 	 */
 	function add_edit_currency_symbol_field( $settings ) {
@@ -177,7 +177,6 @@ class WCJ_Currencies extends WCJ_Module {
 					'type'     => 'text',
 					'default'  => get_woocommerce_currency_symbol(),
 					'desc'     => apply_filters( 'booster_message', '', 'desc' ),
-					'css'      => 'width: 50px;',
 					'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
 				);
 			}

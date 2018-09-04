@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 3.8.0
+ * @version 3.8.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -20,7 +20,7 @@ $settings = array(
 		'id'       => 'wcj_wholesale_price_general_options',
 	),
 	array(
-		'title'    => __( 'Enable per product', 'woocommerce-jetpack' ),
+		'title'    => __( 'Enable per Product', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_per_product_enable',
@@ -28,7 +28,7 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Quantity calculation', 'woocommerce-jetpack' ),
+		'title'    => __( 'Quantity Calculation', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_use_total_cart_quantity',
 		'default'  => 'no',
 		'type'     => 'select',
@@ -39,14 +39,15 @@ $settings = array(
 		),
 	),
 	array(
-		'title'    => __( 'Apply wholesale discount only if no other cart discounts were applied', 'woocommerce-jetpack' ),
+		'title'    => __( 'Exclusive Use Only', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Apply wholesale discount only if no other cart discounts were applied.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_apply_only_if_no_other_discounts',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Round single product price', 'woocommerce-jetpack' ),
+		'title'    => __( 'Round Single Product Price', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'If enabled will round single product price with precision set in WooCommerce > Settings > General > Number of decimals.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_rounding_enabled',
@@ -54,22 +55,22 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Show discount info on cart page', 'woocommerce-jetpack' ),
+		'title'    => __( 'Discount Info on Cart Page', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Show', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_show_info_on_cart',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'If show discount info on cart page is enabled, set format here', 'woocommerce-jetpack' ),
-		'desc'     => wcj_message_replaced_values( array( '%old_price%', '%price%', '%discount_value%' ) ),
+		'desc_tip' => __( 'If show discount info on cart page is enabled, set format here.', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%old_price%', '%original_price%', '%price%', '%discount_value%' ) ),
 		'id'       => 'wcj_wholesale_price_show_info_on_cart_format',
 		'default'  => '<del>%old_price%</del> %price%<br>You save: <span style="color:red;">%discount_value%</span>',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;',
 	),
 	array(
-		'title'    => __( 'Discount type', 'woocommerce-jetpack' ),
+		'title'    => __( 'Discount Type', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_discount_type',
 		'default'  => 'percent',
 		'type'     => 'select',
@@ -79,7 +80,7 @@ $settings = array(
 		),
 	),
 	array(
-		'title'    => __( 'Products to include', 'woocommerce-jetpack' ),
+		'title'    => __( 'Products to Include', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Leave blank to include all products.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_products_to_include',
 		'default'  => '',
@@ -88,7 +89,7 @@ $settings = array(
 		'options'  => $products,
 	),
 	array(
-		'title'    => __( 'Products to exclude', 'woocommerce-jetpack' ),
+		'title'    => __( 'Products to Exclude', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_products_to_exclude',
 		'default'  => '',
 		'type'     => 'multiselect',
@@ -96,7 +97,7 @@ $settings = array(
 		'options'  => $products,
 	),
 	array(
-		'title'    => __( 'Product Categories to include', 'woocommerce-jetpack' ),
+		'title'    => __( 'Product Categories to Include', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Leave blank to include all products.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_product_cats_to_include',
 		'default'  => '',
@@ -105,7 +106,7 @@ $settings = array(
 		'options'  => $product_cats,
 	),
 	array(
-		'title'    => __( 'Product Categories to exclude', 'woocommerce-jetpack' ),
+		'title'    => __( 'Product Categories to Exclude', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_product_cats_to_exclude',
 		'default'  => '',
 		'type'     => 'multiselect',
@@ -130,7 +131,7 @@ $settings = array(
 		'id'       => 'wcj_wholesale_price_level_options',
 	),
 	array(
-		'title'    => __( 'Number of levels', 'woocommerce-jetpack' ),
+		'title'    => __( 'Number of Levels', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_levels_number',
 		'default'  => 1,
 		'type'     => 'custom_number',
@@ -144,7 +145,7 @@ $settings = array(
 for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_wholesale_price_levels_number', 1 ) ); $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => __( 'Min quantity', 'woocommerce-jetpack' ) . ' #' . $i,
+			'title'    => __( 'Min Quantity', 'woocommerce-jetpack' ) . ' #' . $i,
 			'desc'     => __( 'Minimum quantity to apply discount', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_wholesale_price_level_min_qty_' . $i,
 			'default'  => 0,
@@ -173,7 +174,7 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_wholesale_price_by_user_role_options',
 	),
 	array(
-		'title'    => __( 'User roles settings', 'woocommerce-jetpack' ),
+		'title'    => __( 'User Roles Settings', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Save settings after you change this option. Leave blank to disable.', 'woocommerce-jetpack' ),
 		'type'     => 'multiselect',
 		'id'       => 'wcj_wholesale_price_by_user_role_roles',
@@ -187,7 +188,7 @@ if ( ! empty( $user_roles ) ) {
 	foreach ( $user_roles as $user_role_key ) {
 		$settings = array_merge( $settings, array(
 			array(
-				'title'   => __( 'Number of levels', 'woocommerce-jetpack' ) . ' [' . $user_role_key . ']',
+				'title'   => __( 'Number of Levels', 'woocommerce-jetpack' ) . ' [' . $user_role_key . ']',
 				'id'      => 'wcj_wholesale_price_levels_number_' . $user_role_key,
 				'default' => 1,
 				'type'    => 'custom_number',
@@ -201,7 +202,7 @@ if ( ! empty( $user_roles ) ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_wholesale_price_levels_number_' . $user_role_key, 1 ) ); $i++ ) {
 			$settings = array_merge( $settings, array(
 				array(
-					'title'   => __( 'Min quantity', 'woocommerce-jetpack' ) . ' #' . $i . ' [' . $user_role_key . ']',
+					'title'   => __( 'Min Quantity', 'woocommerce-jetpack' ) . ' #' . $i . ' [' . $user_role_key . ']',
 					'desc'    => __( 'Minimum quantity to apply discount', 'woocommerce-jetpack' ),
 					'id'      => 'wcj_wholesale_price_level_min_qty_' . $user_role_key . '_' . $i,
 					'default' => 0,

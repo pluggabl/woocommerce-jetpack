@@ -193,16 +193,17 @@ class WCJ_Product_Addons extends WCJ_Module {
 	function maybe_convert_currency( $price, $product = null ) {
 		$apply_price_filters = get_option( 'wcj_product_addons_apply_price_filters', 'by_module' );
 		if ( 'by_module' === $apply_price_filters ) {
+			$modules_to_apply = get_option( 'wcj_product_addons_apply_price_filters_by_module', array() );
 			// Multicurrency Product Base Price module
-			if ( WCJ()->modules['multicurrency_base_price']->is_enabled() ) {
+			if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency_base_price', $modules_to_apply ) ) && WCJ()->modules['multicurrency_base_price']->is_enabled() ) {
 				$price = WCJ()->modules['multicurrency_base_price']->change_price( $price, $product );
 			}
 			// Multicurrency (Currency Switcher) module
-			if ( WCJ()->modules['multicurrency']->is_enabled() ) {
+			if ( ( empty( $modules_to_apply ) || in_array( 'multicurrency',            $modules_to_apply ) ) && WCJ()->modules['multicurrency']->is_enabled() ) {
 				$price = WCJ()->modules['multicurrency']->change_price( $price, null );
 			}
 			// Global Discount module
-			if ( WCJ()->modules['global_discount']->is_enabled() ) {
+			if ( ( empty( $modules_to_apply ) || in_array( 'global_discount',          $modules_to_apply ) ) && WCJ()->modules['global_discount']->is_enabled() ) {
 				$price = WCJ()->modules['global_discount']->add_global_discount( $price, $product, 'price' );
 			}
 		} elseif ( 'yes' === $apply_price_filters ) {
