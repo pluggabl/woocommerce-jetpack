@@ -189,7 +189,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.8.1 - 03/09/2018 =
+= 3.8.1 - 04/09/2018 =
 ~* Feature - PRICES & CURRENCIES - Currencies - Shortcodes (e.g. `[wcj_wpml]`) can now be used in currency symbol fields.
 * Feature - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "The Free Currency Converter API" server added.
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products not in stock" option added.
@@ -207,6 +207,7 @@ $* Feature - SHIPPING & ORDERS - Custom Shipping - Shortcodes can now be used in
 * Fix - PRODUCTS - Cost of Goods - Products List Columns - Variable products fixed in both ("Profit" and "Cost") columns.
 * Fix - PRODUCTS - Cost of Goods - Products List Columns - Profit - Checking for price to be `is_numeric()`.
 ~* Fix - PRODUCTS - Product Addons - `maybe_convert_currency()` - "Global Discount" module conversion added.
+* Fix - PRODUCTS - Products XML Feeds - `html_entity_decode()` added to XML header and footer.
 * Fix - CART & CHECKOUT - Checkout Fees - "Checkout Field" option fixed.
 * Fix - SHIPPING & ORDERS - Admin Orders List - Additional checks for `wp_get_current_user()` function to exist added (`wcj_current_user_can()` function added).
 ~* Fix - SHIPPING & ORDERS - Custom Shipping - Table rows settings are added on appropriate pages only.
@@ -240,6 +241,7 @@ T* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Revert Curren
 * Dev - EMAILS & MISC. - Reports - Admin settings restyled.
 * Dev - Functions - Price and Currency - `wcj_get_woocommerce_currencies_and_symbols()` function added. `wcj_get_currency_symbol()`, `wcj_get_currencies_names_and_symbols()` and `wcj_get_currencies_array()` functions removed. Affected modules: "Currency Exchange Rates", "Admin Orders List", "Currency for External Products", "Currency per Product", "Multicurrency Product Base Price", "Multicurrency (Currency Switcher)", "Gateways by Currency", "Gateways Currency Converter", "Prices and Currencies by Country", "Price Formats", "Orders", "Currencies".
 * Dev - Shortcodes - General - `[wcj_shipping_costs_table]` shortcode added.
+* Dev - Shortcodes - General - `[wcj_image]` shortcode added.
 * Dev - Shortcodes - Orders - `[wcj_order_items_meta]` - `sep` attribute added.
 * Dev - Shortcodes - Orders - `[wcj_order_products_meta]` shortcode added.
 * Dev - Shortcodes - Products - `[wcj_product_price]` - `min_or_max` attribute added (for variable products).

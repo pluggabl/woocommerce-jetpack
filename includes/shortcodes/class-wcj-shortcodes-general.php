@@ -42,12 +42,13 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_customer_total_spent',
 			'wcj_empty_cart_button',
 			'wcj_get_left_to_free_shipping',
+			'wcj_image',
 			'wcj_product_category_count',
 			'wcj_request_value',
 			'wcj_selector',
 			'wcj_session_value',
-			'wcj_shipping_time_table',
 			'wcj_shipping_costs_table',
+			'wcj_shipping_time_table',
 			'wcj_site_url',
 			'wcj_store_address',
 			'wcj_tcpdf_barcode',
@@ -60,7 +61,6 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_wp_option',
 			'wcj_wpml',
 			'wcj_wpml_translate',
-//			'wcj_image',
 		);
 
 		$this->the_atts = array(
@@ -68,7 +68,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'time_format'           => get_option( 'time_format' ),
 			'datetime_format'       => get_option( 'date_format' ) . ' ' . get_option( 'time_format' ),
 			'lang'                  => '',
-			'form_method'           => 'post',//'get',
+			'form_method'           => 'post',
 			'class'                 => '',
 			'style'                 => '',
 			'countries'             => '',
@@ -926,7 +926,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @since 2.2.9
 	 */
 	function wcj_text( $atts, $content ) {
-		return /* do_shortcode(  */ $content /* ) */;
+		return $content;
 	}
 
 	/**
@@ -935,8 +935,6 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * @version 2.2.9
 	 */
 	function wcj_wpml( $atts, $content ) {
-		/* if ( '' == $atts['lang'] || ( defined( 'ICL_LANGUAGE_CODE' ) && ICL_LANGUAGE_CODE === $atts['lang'] ) ) return do_shortcode( $content );
-		else return ''; */
 		return do_shortcode( $content );
 	}
 
@@ -958,10 +956,19 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_image.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
 	 */
-	/*function wcj_image( $atts ) {
-		return '<img src="' . $atts['url'] . '" class="' . $atts['class'] . '" width="' . $atts['width'] . '" height="' . $atts['height'] . '">';
-	}*/
+	function wcj_image( $atts ) {
+		return '<img' .
+			' src="'      . ( ! empty( $atts['src'] )    ? $atts['src']    : '' ) . '"' .
+			' class="'    . ( ! empty( $atts['class'] )  ? $atts['class']  : '' ) . '"' .
+			' style="'    . ( ! empty( $atts['style'] )  ? $atts['style']  : '' ) . '"' .
+			' width="'    . ( ! empty( $atts['width'] )  ? $atts['width']  : '' ) . '"' .
+			' height="'   . ( ! empty( $atts['height'] ) ? $atts['height'] : '' ) . '"' .
+		'>';
+	}
 }
 
 endif;

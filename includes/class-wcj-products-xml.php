@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 3.6.0
+ * @version 3.8.1
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    create all files at once (manually and synchronize update)
@@ -153,11 +153,21 @@ class WCJ_Products_XML extends WCJ_Module {
 	}
 
 	/**
+	 * process_shortcode.
+	 *
+	 * @version 3.8.1
+	 * @since   3.8.1
+	 * @todo    [dev] (maybe) re-think `str_replace( '&', '&amp;', $content )`
+	 */
+	function process_shortcode( $content ) {
+		return str_replace( '&', '&amp;', html_entity_decode( do_shortcode( $content ) ) );
+	}
+
+	/**
 	 * create_products_xml.
 	 *
-	 * @version 3.6.0
+	 * @version 3.8.1
 	 * @since   2.5.7
-	 * @todo    check the `str_replace` and `html_entity_decode` part
 	 */
 	function create_products_xml( $file_num ) {
 		$xml_items = '';
@@ -262,7 +272,7 @@ class WCJ_Products_XML extends WCJ_Module {
 					break;
 				}
 				$loop->the_post();
-				$xml_items .= str_replace( '&', '&amp;', html_entity_decode( do_shortcode( $xml_item_template ) ) );
+				$xml_items .= $this->process_shortcode( $xml_item_template );
 				$counter++;
 			}
 			$offset += $block_size;
@@ -273,7 +283,7 @@ class WCJ_Products_XML extends WCJ_Module {
 		wp_reset_postdata();
 		return file_put_contents(
 			ABSPATH . get_option( 'wcj_products_xml_file_path_' . $file_num, ( ( 1 == $file_num ) ? 'products.xml' : 'products_' . $file_num . '.xml' ) ),
-			do_shortcode( $xml_header_template ) . $xml_items . do_shortcode( $xml_footer_template )
+			$this->process_shortcode( $xml_header_template ) . $xml_items . $this->process_shortcode( $xml_footer_template )
 		);
 	}
 
