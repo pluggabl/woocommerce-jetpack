@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Add to Cart Button Visibility
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.3.0
 	 * @todo    maybe add option to use `woocommerce_before_add_to_cart_form` / `woocommerce_after_add_to_cart_form` instead of `woocommerce_before_add_to_cart_button` / `woocommerce_after_add_to_cart_button`
 	 */
@@ -83,8 +83,8 @@ class WCJ_Add_To_Cart_Button_Visibility extends WCJ_Module {
 	/**
 	 * add_to_cart_button_loop_disable_all_products.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function add_to_cart_button_loop_disable_all_products( $link, $_product ) {
 		return do_shortcode( get_option( 'wcj_add_to_cart_button_archives_content', '' ) );

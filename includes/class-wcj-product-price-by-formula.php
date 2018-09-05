@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.0
 	 * @todo    use WC math library instead of `PHPMathParser`
 	 */
@@ -69,7 +69,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product, $output_errors = false ) {

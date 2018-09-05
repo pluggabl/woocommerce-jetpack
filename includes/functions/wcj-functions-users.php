@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_current_user_can' ) ) {
 	/**
 	 * wcj_current_user_can.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function wcj_current_user_can( $capability ) {
 		if ( ! function_exists( 'wp_get_current_user' ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -296,7 +296,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	/**
 	 * save_meta_box.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.0
 	 * @todo    (maybe) also order_id in `$the_post_id = ...`
 	 */

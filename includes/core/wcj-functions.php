@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */

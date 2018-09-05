@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currency for External Products
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Currency_External_Products extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function __construct() {
 

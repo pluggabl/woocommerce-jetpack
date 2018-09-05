@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bulk Price Converter
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -132,7 +132,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * change_all_products_prices
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @todo    (dev) clear products transients after converting prices
 	 */
 	function change_all_products_prices( $multiply_prices_by, $is_preview ) {
@@ -192,7 +192,7 @@ class WCJ_Bulk_Price_Converter extends WCJ_Module {
 	/**
 	 * create_bulk_price_converter_tool.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function create_bulk_price_converter_tool() {
 

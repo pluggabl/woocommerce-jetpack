@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_help_tip' ) ) {
 	/**
 	 * wcj_help_tip.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function wcj_help_tip( $text ) {
 		return ' <img style="display:inline;" class="wcj-question-icon" src="' . wcj_plugin_url() . '/assets/images/question-icon.png' . '" title="' . esc_html( $text ) . '">';
@@ -335,7 +335,7 @@ if ( ! function_exists( 'wcj_wrap_in_wc_email_template' ) ) {
 	/**
 	 * wcj_wrap_in_wc_email_template.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.1.0
 	 */
 	function wcj_wrap_in_wc_email_template( $content, $email_heading = '' ) {
@@ -452,7 +452,7 @@ if ( ! function_exists( 'wcj_is_bot' ) ) {
 	/**
 	 * wcj_is_bot.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.6
 	 */
 	function wcj_is_bot() {
@@ -716,7 +716,7 @@ if ( ! function_exists( 'wcj_get_wcj_uploads_dir' ) ) {
 	/**
 	 * wcj_get_wcj_uploads_dir.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @todo    no need to `mkdir` after `wcj_get_wcj_uploads_dir`
 	 */
 	function wcj_get_wcj_uploads_dir( $subdir = '', $do_mkdir = true ) {

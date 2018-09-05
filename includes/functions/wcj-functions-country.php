@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Country
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -26,7 +26,7 @@ if ( ! function_exists( 'wcj_get_country_by_ip' ) ) {
 	/**
 	 * wcj_get_country_by_ip.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.1.0
 	 */
 	function wcj_get_country_by_ip() {

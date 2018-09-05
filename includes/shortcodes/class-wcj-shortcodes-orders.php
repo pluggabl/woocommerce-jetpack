@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function __construct() {
 
@@ -864,8 +864,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_products_meta.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function wcj_order_products_meta( $atts ) {
 		if ( '' === $atts['meta_key'] ) {
@@ -888,7 +888,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_meta.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.3
 	 */
 	function wcj_order_items_meta( $atts ) {

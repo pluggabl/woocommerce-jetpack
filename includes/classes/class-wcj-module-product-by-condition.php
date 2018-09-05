@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 3.6.0
+ * @version 3.9.0
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -212,12 +212,15 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * pre_get_posts.
 	 *
-	 * @version 3.6.0
+	 * @version 3.9.0
 	 * @since   3.6.0
 	 */
 	function pre_get_posts( $query ) {
 		if ( is_admin() ) {
 			return;
+		}
+		if ( ! function_exists( 'is_user_logged_in' ) ) {
+			require_once( ABSPATH . 'wp-includes/pluggable.php' );
 		}
 		remove_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 		$option_to_check = $this->get_check_option();

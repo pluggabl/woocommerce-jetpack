@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - User Tracking
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   3.1.3
  * @author  Algoritmika Ltd.
  */
@@ -108,7 +108,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 	/**
 	 * track_users_update_county_stats.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.9.1
 	 * @todo    (maybe) `wp_nonce`
 	 */

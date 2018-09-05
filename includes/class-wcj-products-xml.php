@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products XML
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    create all files at once (manually and synchronize update)
@@ -155,8 +155,8 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * process_shortcode.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 * @todo    [dev] (maybe) re-think `str_replace( '&', '&amp;', $content )`
 	 */
 	function process_shortcode( $content ) {
@@ -166,7 +166,7 @@ class WCJ_Products_XML extends WCJ_Module {
 	/**
 	 * create_products_xml.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.7
 	 */
 	function create_products_xml( $file_num ) {

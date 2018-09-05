@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -175,7 +175,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * get_related_products_ids_wc3.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.8.0
 	 */
 	function get_related_products_ids_wc3( $product_id ) {
@@ -228,7 +228,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * related_products_query_wc3.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.8.0
 	 * @see     WC_Product_Data_Store_CPT::get_related_products_query()
 	 * @todo    "Relate by Product Attribute" - directly to `$query['where']` instead of getting ids via `WP_Query`

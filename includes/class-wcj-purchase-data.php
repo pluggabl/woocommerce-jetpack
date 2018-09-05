@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -123,7 +123,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * render_product_columns.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.9.0
 	 */
 	function render_product_columns( $column ) {

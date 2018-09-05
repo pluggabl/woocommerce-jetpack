@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Orders List
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -190,7 +190,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * add_shop_order_multiple_statuses_not_completed_link.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.7
 	 */
 	function add_shop_order_multiple_statuses_not_completed_link( $views ) {
@@ -212,7 +212,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * filter_shop_order_multiple_statuses_not_completed_link.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.7
 	 */
 	function filter_shop_order_multiple_statuses_not_completed_link( $query ) {
@@ -271,7 +271,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * filter_shop_order_multiple_statuses.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.7
 	 */
 	function filter_shop_order_multiple_statuses( $query ) {
@@ -316,7 +316,7 @@ class WCJ_Admin_Orders_List extends WCJ_Module {
 	/**
 	 * Filters for post types.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function restrict_manage_posts() {
 		global $typenow, $wp_query;

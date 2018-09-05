@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways by Currency
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   3.0.0
  * @author  Algoritmika Ltd.
  */

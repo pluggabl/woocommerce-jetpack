@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Date and Time
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -13,8 +13,8 @@ if ( ! function_exists( 'wcj_get_date_ranges' ) ) {
 	/*
 	 * wcj_get_date_ranges.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 * @todo    maybe we can re-write this in simpler form
 	 */
 	function wcj_get_date_ranges( $start_date, $end_date, $period ) {

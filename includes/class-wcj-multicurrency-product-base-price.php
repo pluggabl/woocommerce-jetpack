@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -95,7 +95,7 @@ class WCJ_Multicurrency_Base_Price extends WCJ_Module {
 	/**
 	 * change_currency_symbol_on_product_edit.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.4.8
 	 */
 	function change_currency_symbol_on_product_edit( $currency_symbol, $currency ) {

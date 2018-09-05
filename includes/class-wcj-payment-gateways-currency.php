@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency Converter
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function __construct() {
 
@@ -40,7 +40,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.3.2
 	 */
 	function add_hooks() {
@@ -60,8 +60,8 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * fix_chosen_payment_method.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function fix_chosen_payment_method( $post_data ) {
 		$payment_gateway            = ( empty( $_POST['payment_method'] ) ? '' : $_POST['payment_method'] );
@@ -78,8 +78,8 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * get_chosen_payment_method.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 * @todo    [dev] maybe make this more complex
 	 */
 	function get_chosen_payment_method() {
@@ -89,7 +89,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * change_shipping_price_by_gateway.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.4.8
 	 */
 	function change_shipping_price_by_gateway( $package_rates, $package ) {
@@ -120,7 +120,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * change_price_by_gateway.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function change_price_by_gateway( $price, $product ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -136,7 +136,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * extend_paypal_supported_currencies.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function extend_paypal_supported_currencies( $supported_currencies ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -154,7 +154,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * change_currency_code.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function change_currency_code( $currency ) {
 		if ( $this->is_cart_or_checkout() ) {

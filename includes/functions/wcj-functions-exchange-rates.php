@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -61,7 +61,7 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate_servers' ) ) {
 	/**
 	 * wcj_get_currency_exchange_rate_servers.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.6.0
 	 */
 	function wcj_get_currency_exchange_rate_servers() {
@@ -125,7 +125,7 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 	/*
 	 * wcj_get_exchange_rate.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.6.0
 	 */
 	function wcj_get_exchange_rate( $currency_from, $currency_to ) {
@@ -187,8 +187,8 @@ if ( ! function_exists( 'wcj_currencyconverterapi_get_exchange_rate' ) ) {
 	/*
 	 * wcj_currencyconverterapi_get_exchange_rate.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function wcj_currencyconverterapi_get_exchange_rate( $currency_from, $currency_to ) {
 		$pair     = $currency_from . '_' . $currency_to;
@@ -487,8 +487,8 @@ if ( ! function_exists( 'wcj_currencyconverterapi_io_get_exchange_rate_average' 
 	/*
 	 * wcj_currencyconverterapi_io_get_exchange_rate_average.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 * @return  false or rate
 	 */
 	function wcj_currencyconverterapi_io_get_exchange_rate_average( $currency_from, $currency_to, $start_date, $end_date ) {

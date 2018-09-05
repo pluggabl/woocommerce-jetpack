@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @todo    clean up
@@ -481,7 +481,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * add_eu_vat_number_checkout_field_to_frontend.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function add_eu_vat_number_checkout_field_to_frontend( $fields ) {
 		$fields['billing'][ 'billing_' . $this->id ] = array(

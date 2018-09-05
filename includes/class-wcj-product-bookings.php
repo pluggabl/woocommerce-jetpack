@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -422,7 +422,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * is_bookings_product.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.0
 	 */
 	function is_bookings_product( $_product ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Products
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  */
@@ -151,7 +151,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * get_condition_options.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.2.0
 	 */
 	function get_condition_options( $options_id ) {

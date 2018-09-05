@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Country Currency functions
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  * @todo    maybe move this to `functions` folder
  */
@@ -13,7 +13,7 @@ if ( ! function_exists( 'wcj_get_paypal_supported_currencies' ) ) {
 	/**
 	 * wcj_get_paypal_supported_currencies.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function wcj_get_paypal_supported_currencies() {
 		return array(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Currencies
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -39,8 +39,8 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * get_custom_currencies.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function get_custom_currencies() {
 		$custom_currencies = array();
@@ -57,8 +57,8 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * get_additional_currencies.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 * @todo    [dev] (maybe) add more cryptocurrencies
 	 */
 	function get_additional_currencies() {
@@ -102,8 +102,8 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * get_additional_currency_symbol.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function get_additional_currency_symbol( $currency_code ) {
 		return $currency_code;
@@ -112,7 +112,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * add_all_currencies.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function add_all_currencies( $currencies ) {
 		return array_merge( $currencies, $this->get_additional_currencies(), $this->get_custom_currencies() );
@@ -121,8 +121,8 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * get_saved_currency_symbol.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function get_saved_currency_symbol( $currency, $default_symbol ) {
 		if ( false === ( $saved_currency_symbol = get_option( 'wcj_currency_' . $currency, false ) ) ) {
@@ -135,7 +135,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * change_currency_symbol.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function change_currency_symbol( $currency_symbol, $currency ) {
 		// Maybe return saved value
@@ -163,7 +163,7 @@ class WCJ_Currencies extends WCJ_Module {
 	/**
 	 * add_edit_currency_symbol_field.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @todo    [dev] (maybe) remove this
 	 */
 	function add_edit_currency_symbol_field( $settings ) {

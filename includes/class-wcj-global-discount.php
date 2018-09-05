@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.5.7
 	 * @todo    fee instead of discount
 	 * @todo    regular price coefficient
@@ -128,7 +128,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * check_if_applicable_by_product_scope.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.1.0
 	 */
 	function check_if_applicable_by_product_scope( $_product, $price, $price_type, $scope ) {

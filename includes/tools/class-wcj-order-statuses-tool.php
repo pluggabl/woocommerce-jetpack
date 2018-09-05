@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Tool - Order Statuses
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   3.2.2
  * @author  Algoritmika Ltd.
  */
@@ -189,7 +189,7 @@ class WCJ_Order_Statuses_Tool {
 	/**
 	 * get_custom_statuses_add_edit_table.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.2.2
 	 */
 	function get_custom_statuses_add_edit_table() {

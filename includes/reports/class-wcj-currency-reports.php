@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Currency
  *
- * @version  3.8.1
+ * @version  3.9.0
  * @author   Algoritmika Ltd.
  */
 
@@ -85,7 +85,7 @@ class WCJ_Currency_Reports {
 	/**
 	 * change_currency_symbol_reports.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function change_currency_symbol_reports( $currency_symbol, $currency ) {
 		if ( isset( $_GET['page'] ) && 'wc-reports' === $_GET['page'] ) {

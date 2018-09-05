@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exchange Rates
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -29,7 +29,7 @@ class WCJ_Exchange_Rates {
 	/**
 	 * wcj_ajax_get_exchange_rates_average.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.2.2
 	 */
 	function wcj_ajax_get_exchange_rates_average() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -137,7 +137,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * process_email_verification.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.8.0
 	 */
 	function process_email_verification() {

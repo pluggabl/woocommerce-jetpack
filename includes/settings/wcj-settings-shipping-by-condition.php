@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping by Condition
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   3.2.1
  * @author  Algoritmika Ltd.
  */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price By Country - Group Generator
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Price_By_Country_Group_Generator {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function __construct() {
 		require_once( 'wcj-country-currency.php' );
@@ -26,8 +26,8 @@ class WCJ_Price_By_Country_Group_Generator {
 	/**
 	 * create_all_countries_groups_notices.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function create_all_countries_groups_notices() {
 		if ( isset( $_GET['wcj_generate_country_groups_finished'] ) ) {
@@ -41,7 +41,7 @@ class WCJ_Price_By_Country_Group_Generator {
 	/**
 	 * get_currency_countries.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function get_currency_countries( $limit_currencies = '' ) {
 		if ( 'paypal_only' === $limit_currencies ) {
@@ -64,7 +64,7 @@ class WCJ_Price_By_Country_Group_Generator {
 	/**
 	 * create_all_countries_groups.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @todo    add nonce verification
 	 */
 	function create_all_countries_groups() {

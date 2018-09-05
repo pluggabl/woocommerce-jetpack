@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -26,7 +26,7 @@ if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 	/**
 	 * wcj_get_module_price_hooks_priority.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.2.2
 	 * @todo    add all corresponding modules
 	 */
@@ -501,8 +501,8 @@ if ( ! function_exists( 'wcj_get_woocommerce_currencies_and_symbols' ) ) {
 	/**
 	 * wcj_get_woocommerce_currencies_and_symbols.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function wcj_get_woocommerce_currencies_and_symbols() {
 		$currencies_and_symbols = get_woocommerce_currencies();

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - PDF Invoicing
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */

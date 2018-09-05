@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Template Editor
  *
- * @version 3.8.1
- * @since   3.8.1
+ * @version 3.9.0
+ * @since   3.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Template_Editor extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function __construct() {
 
@@ -39,8 +39,8 @@ class WCJ_Template_Editor extends WCJ_Module {
 	/**
 	 * create_templates.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 * @todo    [dev] also delete on "Reset settings"
 	 */
 	function create_templates( $sections, $current_section ) {
@@ -62,8 +62,8 @@ class WCJ_Template_Editor extends WCJ_Module {
 	/**
 	 * replace_template.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 * @todo    [dev] (maybe) check for template to exist before returning (just to be sure...)
 	 */
 	function replace_template( $located, $template_name, $args, $template_path, $default_path ) {
@@ -73,8 +73,8 @@ class WCJ_Template_Editor extends WCJ_Module {
 	/**
 	 * scan_templates.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 * @todo    [dev] (maybe) optimize
 	 */
 	function scan_templates( $dir, &$results = array() ) {
@@ -94,8 +94,8 @@ class WCJ_Template_Editor extends WCJ_Module {
 	/**
 	 * delete_dir.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function delete_dir( $dir_path ) {
 		if ( ! is_dir( $dir_path ) ) {

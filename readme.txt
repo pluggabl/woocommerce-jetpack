@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.8.0
+Stable tag: 3.9.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -162,9 +162,9 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 
 == Installation ==
 
-1. Upload the entire `woocommerce-jetpack` folder to the `/wp-content/plugins/` directory.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Go to WooCommerce > Settings > Booster.
+1. Upload the entire plugin folder to the `/wp-content/plugins/` directory.
+2. Activate the plugin through the "Plugins" menu in WordPress.
+3. Go to "WooCommerce > Settings > Booster".
 
 == Frequently Asked Questions ==
 
@@ -189,7 +189,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.8.1 - 05/09/2018 =
+= 3.9.0 - 05/09/2018 =
 * Feature - PRICES & CURRENCIES - Currencies - Shortcodes (e.g. `[wcj_wpml]`) can now be used in currency symbol fields.
 * Feature - PRICES & CURRENCIES - Currency Exchange Rates - Exchange Rates Server - "The Free Currency Converter API" server added.
 * Feature - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type - "Products not in stock" option added.
@@ -207,6 +207,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Fix - PRODUCTS - Cost of Goods - Products List Columns - Variable products fixed in both ("Profit" and "Cost") columns.
 * Fix - PRODUCTS - Cost of Goods - Products List Columns - Profit - Checking for price to be `is_numeric()`.
 * Fix - PRODUCTS - Product Addons - `maybe_convert_currency()` - "Global Discount" module conversion added.
+* Fix - PRODUCTS - Product by Condition - `pre_get_posts()` - Additional checks added (to prevent possible "Call to undefined function is_user_logged_in() ..." error).
 * Fix - PRODUCTS - Products XML Feeds - `html_entity_decode()` added to XML header and footer.
 * Fix - PRODUCTS - Related Products - Relate Manually - Hiding related products for current product (i.e. if enabled and no products selected) fixed.
 * Fix - CART & CHECKOUT - Checkout Fees - "Checkout Field" option fixed.
@@ -218,7 +219,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Fix - EMAILS & MISC. - Reports - Stock - "Last sale" column fixed.
 * Fix - EMAILS & MISC. - User Tracking - Fatal error on "Update now" button fixed.
 * Fix - Core - `WCJ_Module` - `save_meta_box()` - `delete_post_meta()` added.
-T * Fix - Functions - Country - `wcj_get_country_by_ip()` - Additional checks added (to prevent possible "Call to undefined function wc_format_country_state_string() ..." error).
+* Fix - Functions - Country - `wcj_get_country_by_ip()` - Additional checks added (to prevent possible "Call to undefined function wc_format_country_state_string() ..." error).
 * Fix - Functions - Exchange Rates - Average exchange rates function fixed (used in "Booster: Monthly Sales (with Currency Conversion)" report).
 * Fix - Functions - General - `wcj_wrap_in_wc_email_template()` - `{site_title}` in footer replaced with blog name.
 * Dev - PRICES & CURRENCIES - Bulk Price Converter - `WP_Query` optimized to return `ids` only.
@@ -237,8 +238,8 @@ T * Fix - Functions - Country - `wcj_get_country_by_ip()` - Additional checks ad
 * Dev - PRODUCTS - Product Addons - Advanced Settings - "Price Filters Priority" option added.
 * Dev - PRODUCTS - Related Products - Relate Manually - "Select box type" option added.
 * Dev - CART & CHECKOUT - Checkout Files Upload - Advanced Options - "Notice Type" option added.
-W * Dev - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - Trying to get customer country and state from `$_REQUEST` first (before accessing `WC()->customer`). Postcode code part rewritten.
-W * Dev - PAYMENT GATEWAYS - Gateways Currency Converter - "Advanced: Fix Chosen Payment Method" option added.
+* Dev - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - Trying to get customer country and state from `$_REQUEST` first (before accessing `WC()->customer`). Postcode code part rewritten.
+* Dev - PAYMENT GATEWAYS - Gateways Currency Converter - "Advanced: Fix Chosen Payment Method" option added.
 * Dev - PAYMENT GATEWAYS - Gateways Currency Converter - Code refactoring (`get_chosen_payment_method()` function added; `global $woocommerce` replaced with `WC()`).
 * Dev - SHIPPING & ORDERS - Custom Shipping - Admin settings restyled.
 * Dev - SHIPPING & ORDERS - Left to Free Shipping - Info on Checkout - Position - New positions added.

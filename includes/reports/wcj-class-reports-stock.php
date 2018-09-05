@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Reports - Stock
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,7 +18,7 @@ class WCJ_Reports_Stock {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @todo    (maybe) `most_stock_price`, `sales_up`, `good_sales_low_stock`
 	 * @todo    (maybe) `echo __( 'Here you can generate reports. Some reports are generated using all your orders and products, so if you have a lot of them - it may take a while.', 'woocommerce-jetpack' );`
 	 * @todo    (maybe) get_option( 'woocommerce_manage_stock' ) -> `echo __( 'Please enable stock management in <strong>WooCommerce > Settings > Products > Inventory</strong> to generate stock based reports.', 'woocommerce-jetpack' );`
@@ -85,7 +85,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * gather_products_data.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function gather_products_data( &$products_info ) {
 		$offset     = 0;
@@ -145,7 +145,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * gather_orders_data.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function gather_orders_data( &$products_info ) {
 		$offset     = 0;
@@ -208,7 +208,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * get_stock_summary.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function get_stock_summary( $products_info ) {
 		$info                                                 = array();
@@ -250,7 +250,7 @@ class WCJ_Reports_Stock {
 	/*
 	 * get_report_html.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 */
 	function get_report_html() {
 		$products_info = $this->data_products;

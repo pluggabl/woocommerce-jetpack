@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cross-sells
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   3.5.3
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.5.3
 	 * @todo    [feature] add pop up box (for `wcj_cross_sells_replace_with_cross_sells`)
 	 */
@@ -65,8 +65,8 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * replace_with_cross_sells_to_url.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 * @todo    [dev] re-check variable products
 	 */
 	function replace_with_cross_sells_to_url( $url, $product ) {
@@ -90,8 +90,8 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * remove_from_cart_by_product_id.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 * @todo    [dev] AJAX
 	 */
 	function remove_from_cart_by_product_id() {
@@ -134,8 +134,8 @@ class WCJ_Cross_Sells extends WCJ_Module {
 	/**
 	 * cross_sells_exclude_not_in_stock.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function cross_sells_exclude_not_in_stock( $ids, $_product ) {
 		foreach ( $ids as $key => $product_id ) {

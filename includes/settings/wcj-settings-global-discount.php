@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Global Discount
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

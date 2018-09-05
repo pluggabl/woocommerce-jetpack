@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 3.8.1
+ * @version 3.9.0
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  */
@@ -58,7 +58,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * init_settings.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.8.0
 	 * @todo    (dev) (maybe) init settings on demand only
 	 */
@@ -150,8 +150,8 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * add_notice.
 	 *
-	 * @version 3.8.1
-	 * @since   3.8.1
+	 * @version 3.9.0
+	 * @since   3.9.0
 	 */
 	function add_notice( $message, $notice_type = 'success' ) {
 		if ( 'wc_add_notice' === $this->checkout_files_upload_notice_type ) {
@@ -164,7 +164,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * validate_on_checkout.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.4.5
 	 */
 	function validate_on_checkout( $posted ) {
@@ -312,7 +312,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * remove_files_on_empty_cart.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   3.6.0
 	 */
 	function remove_files_on_empty_cart( $cart_item_key, $cart ) {
@@ -348,7 +348,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * process_checkout_files_upload.
 	 *
-	 * @version 3.8.1
+	 * @version 3.9.0
 	 * @since   2.4.5
 	 * @todo    add option for admin to delete files one by one (i.e. not all at once)
 	 * @todo    `$this->additional_admin_emails_settings` - more customization options, e.g.: admin email, subject, content, from
