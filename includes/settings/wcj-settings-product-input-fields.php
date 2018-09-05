@@ -2,9 +2,10 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 3.8.0
+ * @version 3.9.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
+ * @todo    [dev] maybe set "Strip slashes" option to `yes` by default (or even remove the option completely and always strip slashes)
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -336,6 +337,14 @@ $settings = array_merge( $settings, array(
 		'desc_tip' => __( 'Ensures that data outputted only once. Enable this if you see data outputted on frontend twice. Disable if you see no data outputted.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_input_fields_check_for_outputted_data',
 		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Strip slashes', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Enable this if you have single quotes %s converted to %s.', 'woocommerce-jetpack' ), '<code>\'</code>', '<code>\\\'</code>' ),
+		'id'       => 'wcj_product_input_fields_stripslashes',
+		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.9.0
+ * @version 3.9.1
  * @author  Algoritmika Ltd.
  */
 
@@ -188,10 +188,14 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_cross_sell_display.
 	 *
-	 * @version 3.6.0
+	 * @version 3.9.1
 	 * @since   3.6.0
 	 */
 	function wcj_cross_sell_display( $atts ) {
+
+		if ( ! function_exists( 'WC' ) || ! isset( WC()->cart ) ) {
+			return '';
+		}
 
 		$limit   = ( isset( $atts['limit'] )   ? $atts['limit']   : 2 );
 		$columns = ( isset( $atts['columns'] ) ? $atts['columns'] : 2 );
@@ -211,6 +215,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 		$limit       = apply_filters( 'woocommerce_cross_sells_total', $limit );
 		$cross_sells = $limit > 0 ? array_slice( $cross_sells, 0, $limit ) : $cross_sells;
 
+		ob_start();
 		wc_get_template( 'cart/cross-sells.php', array(
 			'cross_sells'    => $cross_sells,
 
@@ -219,6 +224,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'orderby'        => $orderby,
 			'columns'        => $columns,
 		) );
+		return ob_get_clean();
 	}
 
 	/**

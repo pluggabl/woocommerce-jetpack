@@ -3,11 +3,11 @@ Contributors: algoritmika, anbinder, debugeris
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 3.9.0
+Stable tag: 3.9.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-Supercharge your WordPress WooCommerce site with these awesome powerful features.
+Supercharge your WordPress WooCommerce site with these awesome powerful features. More than 100 modules. All in one WooCommerce plugin.
 
 == Description ==
 
@@ -188,6 +188,13 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 3.9.1 - 06/09/2018 =
+* Fix - Shortcodes - General - `[wcj_cross_sell_display]` - Returning the result instead of echoing.
+* Fix - Shortcodes - General - `[wcj_cross_sell_display]` - Additional checks added for `WC()->cart` to exist before executing the shortcode's code.
+* Dev - PRODUCTS - Product Input Fields - "Strip slashes" option added.
+* Dev - Translations - Files updated: `az`, `es_ES`, `fr_FR`, `is_IS`, `it_IT`, `ja`, `nl_NL`, `pt_BR`, `ro_RO`, `ru_RU`, `sv_SE`.
+* Dev - Translations - New files added: `cs_CZ`, `el`.
 
 = 3.9.0 - 05/09/2018 =
 * Feature - PRICES & CURRENCIES - Currencies - Shortcodes (e.g. `[wcj_wpml]`) can now be used in currency symbol fields.

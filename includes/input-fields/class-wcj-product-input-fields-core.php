@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 3.8.0
+ * @version 3.9.1
  * @author  Algoritmika Ltd.
  */
 
@@ -457,9 +457,19 @@ class WCJ_Product_Input_Fields_Core {
 	}
 
 	/**
+	 * maybe_stripslashes.
+	 *
+	 * @version 3.9.1
+	 * @since   3.9.1
+	 */
+	function maybe_stripslashes( $str ) {
+		return ( 'yes' === get_option( 'wcj_product_input_fields_stripslashes', 'no' ) ? stripslashes( $str ) : $str );
+	}
+
+	/**
 	 * add_product_input_fields_to_frontend.
 	 *
-	 * @version 3.8.0
+	 * @version 3.9.1
 	 * @todo    `$set_value` - add "default" option for all other types except checkbox
 	 * @todo    `$set_value` - 'file' type
 	 * @todo    add `required` attributes
@@ -521,7 +531,7 @@ class WCJ_Product_Input_Fields_Core {
 			if ( $this->is_enabled( $i, $_product_id ) ) {
 
 				$set_value = ( isset( $_POST[ $field_name ] ) ?
-					$_POST[ $field_name ] :
+					$this->maybe_stripslashes( $_POST[ $field_name ] ) :
 					( 'checkbox' == $type ?
 						( 'yes' === $this->get_value( 'wcj_product_input_fields_type_checkbox_default_' . $this->scope . '_' . $i, $_product_id, 'no' ) ? 'on' : 'off' ) :
 						''
@@ -668,7 +678,7 @@ class WCJ_Product_Input_Fields_Core {
 	 *
 	 * from `$_POST` to `$cart_item_data`
 	 *
-	 * @version 3.1.0
+	 * @version 3.9.1
 	 */
 	function add_product_input_fields_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $product_id, 1 ) );
@@ -687,7 +697,7 @@ class WCJ_Product_Input_Fields_Core {
 				}
 			} else {
 				if ( isset( $_POST[ $value_name ] ) ) {
-					$cart_item_data[ $value_name ] = $_POST[ $value_name ];
+					$cart_item_data[ $value_name ] = $this->maybe_stripslashes( $_POST[ $value_name ] );
 				}
 			}
 		}
@@ -700,8 +710,9 @@ class WCJ_Product_Input_Fields_Core {
 	function get_cart_item_product_input_fields_from_session( $item, $values, $key ) {
 		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $item['product_id'], 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $values ) )
+			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $values ) ) {
 				$item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] = $values[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ];
+			}
 		}
 		return $item;
 	}
