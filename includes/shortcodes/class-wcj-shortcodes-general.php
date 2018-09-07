@@ -793,10 +793,10 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 */
 	private function get_currency_selector( $atts, $content, $type = 'select' ) {
 		// Start
+		$form_method   = $atts['form_method'];
+		$class         = $atts['class'];
+		$style         = $atts['style'];
 		$html = '';
-		$form_method  = $atts['form_method'];
-		$class = $atts['class'];
-		$style = $atts['style'];
 		$html .= '<form action="" method="' . $form_method . '">';
 		if ( 'select' === $type ) {
 			$html .= '<select name="wcj-currency" id="wcj-currency-select" style="' . $style . '" class="' . $class . '" onchange="this.form.submit()">';
@@ -871,6 +871,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	 * wcj_country_select_drop_down_list.
 	 *
 	 * @version 3.9.0
+	 * @todo    [dev] clean up
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
 

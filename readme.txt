@@ -189,6 +189,12 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 3.9.2 - 07/09/2018 =
+* Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Widget - "Form Method", "Class" and "Style" options added.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Module description updated.
+* Dev - Functions - Price and Currency - `wcj_update_products_price_by_country()` - `WP_Query` optimized to return `ids` only.
+* Dev - Classes - `WCJ_Module` - Module "extra description" restyled.
+
 = 3.9.1 - 06/09/2018 =
 * Fix - Shortcodes - General - `[wcj_cross_sell_display]` - Returning the result instead of echoing.
 * Fix - Shortcodes - General - `[wcj_cross_sell_display]` - Additional checks added for `WC()->cart` to exist before executing the shortcode's code.

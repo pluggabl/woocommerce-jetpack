@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.5
+	 * @version 3.9.2
 	 * @todo    check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {
@@ -25,10 +25,19 @@ class WCJ_Multicurrency extends WCJ_Module {
 		$this->short_desc = __( 'Multicurrency (Currency Switcher)', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add multiple currencies (currency switcher) to WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-multicurrency-currency-switcher';
-		$this->extra_desc = sprintf( __( 'After setting currencies in the Currencies Options section below, use %s <strong>widget</strong>, or %s <strong>shortcode</strong>. If you want to insert switcher in your <strong>PHP code</strong>, just use %s code.', 'woocommerce-jetpack' ),
-			'<em>' . __( 'Booster - Multicurrency Switcher', 'woocommerce-jetpack' ) . '</em>',
-			'<code>[wcj_currency_select_drop_down_list]</code>',
-			'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_currency_select_drop_down_list]\'&nbsp;);</code>' );
+		$this->extra_desc = sprintf( __( 'After setting currencies in the Currencies Options section below, you can add switcher to the frontend with: %s', 'woocommerce-jetpack' ),
+			'<ol>' .
+				'<li>' . sprintf( __( '<strong>Widget:</strong> "%s"', 'woocommerce-jetpack' ),
+					__( 'Booster - Multicurrency Switcher', 'woocommerce-jetpack' ) ) .
+				'</li>' .
+				'<li>' . sprintf( __( '<strong>Shortcodes:</strong> %s', 'woocommerce-jetpack' ),
+					'<code>[wcj_currency_select_drop_down_list]</code>, <code>[wcj_currency_select_radio_list]</code>, <code>[wcj_currency_select_link_list]</code>' ) .
+				'</li>' .
+				'<li>' . sprintf( __( '<strong>PHP code:</strong> by using %s function, e.g.: %s', 'woocommerce-jetpack' ),
+					'<code>do_shortcode()</code>',
+					'<code>echo&nbsp;do_shortcode(&nbsp;\'[wcj_currency_select_drop_down_list]\'&nbsp;);</code>' ) .
+				'</li>' .
+			'</ol>' );
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {

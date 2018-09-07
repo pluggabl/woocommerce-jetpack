@@ -2,9 +2,10 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
+ * @todo    clean up
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -679,14 +680,14 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * settings_section.
 	 * only for `module`
 	 *
-	 * @version 2.8.0
+	 * @version 3.9.2
 	 */
 	function add_enable_module_setting( $settings, $module_desc = '' ) {
 		if ( 'module' != $this->type ) {
 			return $settings;
 		}
 		if ( '' === $module_desc && isset( $this->extra_desc ) ) {
-			$module_desc = $this->extra_desc;
+			$module_desc = '<div style="padding: 15px; background-color: #ffffff; color: #000000;">' . $this->extra_desc . '</div>';
 		}
 		if ( ! isset( $this->link ) && isset( $this->link_slug ) && '' != $this->link_slug ) {
 			$this->link = 'https://booster.io/features/' . $this->link_slug . '/';

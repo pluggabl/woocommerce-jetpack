@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -362,12 +362,12 @@ if ( ! function_exists( 'wcj_update_products_price_by_country' ) ) {
 	/**
 	 * wcj_update_products_price_by_country - all products.
 	 *
-	 * @version 2.5.3
+	 * @version 3.9.2
 	 * @since   2.5.3
 	 */
 	function wcj_update_products_price_by_country() {
-		$offset = 0;
-		$block_size = 96;
+		$offset     = 0;
+		$block_size = 512;
 		while( true ) {
 			$args = array(
 				'post_type'      => 'product',
@@ -376,16 +376,17 @@ if ( ! function_exists( 'wcj_update_products_price_by_country' ) ) {
 				'offset'         => $offset,
 				'orderby'        => 'title',
 				'order'          => 'ASC',
+				'fields'         => 'ids',
 			);
 			$loop = new WP_Query( $args );
-			if ( ! $loop->have_posts() ) break;
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$product_id = $loop->post->ID;
+			if ( ! $loop->have_posts() ) {
+				break;
+			}
+			foreach ( $loop->posts as $product_id ) {
 				wcj_update_products_price_by_country_for_single_product( $product_id );
-			endwhile;
+			}
 			$offset += $block_size;
 		}
-		wp_reset_postdata();
 	}
 }
 
