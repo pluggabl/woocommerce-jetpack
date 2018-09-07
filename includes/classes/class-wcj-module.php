@@ -5,7 +5,7 @@
  * @version 3.9.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
- * @todo    clean up
+ * @todo    [dev] clean up
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

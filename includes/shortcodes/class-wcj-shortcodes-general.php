@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.9.1
+ * @version 3.9.2
  * @author  Algoritmika Ltd.
  */
 
@@ -870,76 +870,38 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_country_select_drop_down_list.
 	 *
-	 * @version 3.9.0
-	 * @todo    [dev] clean up
+	 * @version 3.9.2
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
-
-		$html = '';
-
-		$form_method  = $atts['form_method']; // get_option( 'wcj_price_by_country_country_selection_box_method', 'get' );
-		$select_class = $atts['class'];       // get_option( 'wcj_price_by_country_country_selection_box_class', '' );
-		$select_style = $atts['style'];       // get_option( 'wcj_price_by_country_country_selection_box_style', '' );
-
-		$html .= '<form action="" method="' . $form_method . '">';
-
-		$html .= '<select name="wcj-country" id="wcj-country" style="' . $select_style . '" class="' . $select_class . '" onchange="this.form.submit()">';
-		$countries = wcj_get_countries();
-
-		/* $shortcode_countries = get_option( 'wcj_price_by_country_shortcode_countries', array() );
-		if ( '' == $shortcode_countries ) $shortcode_countries = array(); */
-		$shortcode_countries = $atts['countries'];
-		if ( '' == $shortcode_countries ) {
-			$shortcode_countries = array();
-		} else {
-			$shortcode_countries = str_replace( ' ', '', $shortcode_countries );
-			$shortcode_countries = trim( $shortcode_countries, ',' );
-			$shortcode_countries = explode( ',', $shortcode_countries );
-		}
-
-		/* if ( 'get' == $form_method ) {
-			$selected_country = ( isset( $_GET[ 'wcj-country' ] ) ) ? $_GET[ 'wcj-country' ] : '';
-		} else {
-			$selected_country = ( isset( $_POST[ 'wcj-country' ] ) ) ? $_POST[ 'wcj-country' ] : '';
-		} */
-		$selected_country = ( null !== ( $session_value = wcj_session_get( 'wcj-country' ) ) ? $session_value : '' );
-
+		$form_method           = $atts['form_method'];
+		$select_class          = $atts['class'];
+		$select_style          = $atts['style'];
+		$countries             = wcj_get_countries();
+		$shortcode_countries   = ( empty( $atts['countries'] ) ? array() : array_map( 'trim', explode( ',', $atts['countries'] ) ) );
+		$selected_country      = ( null !== ( $session_value = wcj_session_get( 'wcj-country' ) ) ? $session_value : '' );
 		if ( 'yes' === $atts['replace_with_currency'] ) {
 			$currencies_names_and_symbols = wcj_get_woocommerce_currencies_and_symbols();
 		}
-
+		$html = '';
+		$html .= '<form action="" method="' . $form_method . '">';
+		$html .= '<select name="wcj-country" id="wcj-country" style="' . $select_style . '" class="' . $select_class . '" onchange="this.form.submit()">';
 		if ( empty( $shortcode_countries ) ) {
 			foreach ( $countries as $country_code => $country_name ) {
-
-				$data_icon = '';
-				if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {
-					$data_icon = ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"';
-				}
-
+				$data_icon    = ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ? ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"' : '' );
 				$option_label = ( 'yes' === $atts['replace_with_currency'] ) ? $currencies_names_and_symbols[ wcj_get_currency_by_country( $country_code ) ] : $country_name;
-
-				$html .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $option_label . '</option>';
+				$html        .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $option_label . '</option>';
 			}
 		} else {
 			foreach ( $shortcode_countries as $country_code ) {
 				if ( isset( $countries[ $country_code ] ) ) {
-
-					$data_icon = '';
-					if ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ) {
-						$data_icon = ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"';
-					}
-
+					$data_icon    = ( 'yes' === get_option( 'wcj_price_by_country_jquery_wselect_enabled', 'no' ) ? ' data-icon="' . wcj_plugin_url() . '/assets/images/flag-icons/' . strtolower( $country_code ) . '.png"' : '' );
 					$option_label = ( 'yes' === $atts['replace_with_currency'] ) ? $currencies_names_and_symbols[ wcj_get_currency_by_country( $country_code ) ] : $countries[ $country_code ];
-
-					$html .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $option_label . '</option>';
+					$html        .= '<option' . $data_icon . ' value="' . $country_code . '" ' . selected( $country_code, $selected_country, false ) . '>' . $option_label . '</option>';
 				}
 			}
 		}
-
 		$html .= '</select>';
-
 		$html .= '</form>';
-
 		return $html;
 	}
 
