@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -702,13 +702,21 @@ if ( ! function_exists( 'wcj_get_select_options' ) ) {
 
 if ( ! function_exists( 'wcj_is_frontend' ) ) {
 	/*
-	 * is_frontend()
+	 * wcj_is_frontend()
 	 *
-	 * @since  2.2.6
+	 * @since  3.9.2
 	 * @return boolean
 	 */
 	function wcj_is_frontend() {
-		return ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) );
+		if ( ! is_admin() ) {
+			return true;
+		} elseif ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			return ( ! isset( $_REQUEST['action'] ) || ! is_string( $_REQUEST['action'] ) || ! in_array( $_REQUEST['action'], array(
+					'woocommerce_load_variations',
+				) ) );
+		} else {
+			return false;
+		}
 	}
 }
 

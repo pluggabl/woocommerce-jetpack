@@ -189,8 +189,9 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.9.2 - 07/09/2018 =
+= 3.9.2 - 11/09/2018 =
 * Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Widget - "Form Method", "Class" and "Style" options added.
+* Fix - Functions - General - `wcj_is_frontend()` - AJAX part improved (`woocommerce_load_variations` backend `action` added).
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Module description updated.
 * Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - Code refactoring.
 * Dev - Functions - Price and Currency - `wcj_update_products_price_by_country()` - `WP_Query` optimized to return `ids` only.
