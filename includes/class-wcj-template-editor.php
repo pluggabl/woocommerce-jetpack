@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Template Editor
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   3.9.0
  * @author  Algoritmika Ltd.
  */
@@ -62,12 +62,15 @@ class WCJ_Template_Editor extends WCJ_Module {
 	/**
 	 * replace_template.
 	 *
-	 * @version 3.9.0
+	 * @version 3.9.2
 	 * @since   3.9.0
-	 * @todo    [dev] (maybe) check for template to exist before returning (just to be sure...)
 	 */
 	function replace_template( $located, $template_name, $args, $template_path, $default_path ) {
-		return ( in_array( $template_name, $this->templates_to_edit ) ? wcj_get_wcj_uploads_dir( 'templates', false ) . DIRECTORY_SEPARATOR . $template_name : $located );
+		if ( in_array( $template_name, $this->templates_to_edit ) ) {
+			$modified_template = wcj_get_wcj_uploads_dir( 'templates', false ) . DIRECTORY_SEPARATOR . $template_name;
+			return ( file_exists( $modified_template ) ? $modified_template : $located );
+		}
+		return $located;
 	}
 
 	/**

@@ -189,18 +189,24 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.9.2 - 11/09/2018 =
+= 3.9.2 - 12/09/2018 =
 * Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Widget - "Form Method", "Class" and "Style" options added.
+* Feature - PRODUCTS - Product Addons - Frontend Templates - "Each Addon - Type: Select Box (Each Option)" option added.
+* Feature - SHIPPING & ORDERS - Orders - "Editable Orders" options added.
+* Feature - EMAILS & MISC. - Admin Tools - "Suppress Admin Connect Notice" and "Suppress Admin Notices" options added.
+* Fix - PAYMENT GATEWAYS - Gateways by Shipping - Use Shipping Instances - Trying to extract shipping instance number from form with underscore symbol (e.g. "Flexible Shipping" plugin).
+* Fix - EMAILS & MISC. - Template Editor - Checking for modified template file to exist before replacing the original template.
 * Fix - Functions - General - `wcj_is_frontend()` - AJAX part improved (`woocommerce_load_variations` backend `action` added).
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Module description updated.
+* Dev - EMAILS & MISC. - Admin Tools - Admin settings restyled ("Debug Tools Options" subsection added, "Debug Log" tool renamed).
 * Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - Code refactoring.
 * Dev - Functions - Price and Currency - `wcj_update_products_price_by_country()` - `WP_Query` optimized to return `ids` only.
-* Dev - Classes - `WCJ_Module` - Module "extra description" restyled.
+* Dev - Classes - `WCJ_Module` - Modules' "extra description" restyled.
 
 = 3.9.1 - 06/09/2018 =
 * Fix - Shortcodes - General - `[wcj_cross_sell_display]` - Returning the result instead of echoing.
 * Fix - Shortcodes - General - `[wcj_cross_sell_display]` - Additional checks added for `WC()->cart` to exist before executing the shortcode's code.
-* Dev - PRODUCTS - Product Input Fields - "Strip slashes" option added.
+* Dev - PRODUCTS - Product Input Fields - "Strip Slashes" option added.
 * Dev - Translations - Files updated: `az`, `es_ES`, `fr_FR`, `is_IS`, `it_IT`, `ja`, `nl_NL`, `pt_BR`, `ro_RO`, `ru_RU`, `sv_SE`.
 * Dev - Translations - New files added: `cs_CZ`, `el`.
 

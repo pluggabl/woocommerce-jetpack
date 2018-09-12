@@ -340,7 +340,7 @@ $settings = array_merge( $settings, array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Strip slashes', 'woocommerce-jetpack' ),
+		'title'    => __( 'Strip Slashes', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf( __( 'Enable this if you have single quotes %s converted to %s.', 'woocommerce-jetpack' ), '<code>\'</code>', '<code>\\\'</code>' ),
 		'id'       => 'wcj_product_input_fields_stripslashes',

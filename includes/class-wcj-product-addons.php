@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names)
@@ -536,7 +536,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 3.8.0
+	 * @version 3.9.2
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {
@@ -617,7 +617,11 @@ class WCJ_Product_Addons extends WCJ_Module {
 								), get_option( 'wcj_product_addons_template_type_radio',
 									'<p>%addon_input% <label for="%addon_id%">%addon_label% (%addon_price%)</label>%addon_tooltip%</p>' ) );
 						} else {
-							$select_options .= '<option value="' . $label . '"' . $is_checked . '>' . $labels[ $i ] . ' ('. wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ], $_product ) ) ) . ')' . '</option>';
+							$select_option = wcj_handle_replacements( array(
+									'%addon_label%'   => $labels[ $i ],
+									'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ], $_product ) ) ),
+								), get_option( 'wcj_product_addons_template_type_select_option', '%addon_label% (%addon_price%)' ) );
+							$select_options .= '<option value="' . $label . '"' . $is_checked . '>' . $select_option . '</option>';
 						}
 					}
 					if ( 'select' === $addon['type'] ) {

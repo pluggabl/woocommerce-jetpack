@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Shipping
  *
- * @version 3.5.0
+ * @version 3.9.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -37,7 +37,7 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 	/**
 	 * check_if_enabled_for_methods.
 	 *
-	 * @version 3.5.0
+	 * @version 3.9.2
 	 * @since   2.7.0
 	 * @see     `is_available()` function in WooCommerce `WC_Gateway_COD` class
 	 * @todo    (maybe) virtual orders (`enable_for_virtual`)
@@ -108,11 +108,17 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 
 			// Shipping method instance
 			if ( $this->use_shipping_instance ) {
-				$check_method = explode( ':', $check_method, 2 );
-				if ( ! isset( $check_method[1] ) || ! is_numeric( $check_method[1] ) ) {
-					return false;
+				$_check_method = explode( ':', $check_method, 2 );
+				if ( ! isset( $_check_method[1] ) || ! is_numeric( $_check_method[1] ) ) {
+					// "Flexible Shipping" plugin (e.g. `flexible_shipping_13_2`)
+					$_check_method = explode( '_', strrev( $check_method ), 3 );
+					if ( ! isset( $_check_method[1] ) || ! is_numeric( $_check_method[1] ) ) {
+						return false;
+					} else {
+						$check_method = strrev( $_check_method[1] );
+					}
 				} else {
-					$check_method = $check_method[1];
+					$check_method = $_check_method[1];
 				}
 			}
 

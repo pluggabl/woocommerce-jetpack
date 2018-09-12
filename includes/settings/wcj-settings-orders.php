@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Orders
  *
- * @version 3.7.0
+ * @version 3.9.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -67,6 +67,32 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_orders_navigation_options',
+	),
+	array(
+		'title'    => __( 'Editable Orders', 'woocommerce-jetpack' ),
+		'desc'     => __( 'This section allows you to set which order statuses are editable.', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_orders_editable_status_options',
+	),
+	array(
+		'title'    => __( 'Editable Orders Statuses', 'woocommerce-jetpack' ),
+		'desc_tip' => apply_filters( 'booster_message', '', 'desc' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_orders_editable_status_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'id'       => 'wcj_orders_editable_status',
+		'default'  => array( 'pending', 'on-hold', 'auto-draft' ),
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => array_merge( wcj_get_order_statuses(), array( 'auto-draft' => __( 'Auto-draft', 'woocommerce-jetpack' ) ) ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_orders_editable_status_options',
 	),
 	array(
 		'title'    => __( 'Orders Auto-Complete', 'woocommerce-jetpack' ),

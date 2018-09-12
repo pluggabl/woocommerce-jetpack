@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -290,6 +290,14 @@ $settings = array_merge( $settings, array(
 		'desc'     => wcj_message_replaced_values( array( '%addon_input%', '%addon_tooltip%' ) ),
 		'id'       => 'wcj_product_addons_template_type_select',
 		'default'  => '<p>%addon_input%%addon_tooltip%</p>',
+		'type'     => 'textarea',
+		'css'      => 'width:100%;',
+	),
+	array(
+		'title'    => __( 'Each Addon - Type: Select Box (Each Option)', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%addon_label%', '%addon_price%' ) ),
+		'id'       => 'wcj_product_addons_template_type_select_option',
+		'default'  => '%addon_label% (%addon_price%)',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;',
 	),

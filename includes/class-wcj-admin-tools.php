@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 3.4.3
+ * @version 3.9.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.3.0
+	 * @version 3.9.2
 	 * @todo    (maybe) add editable (product and order) metas
 	 */
 	function __construct() {
@@ -28,7 +28,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 
 		$this->add_tools( array(
 			'admin_tools' => array(
-				'title'     => __( 'Admin Tools', 'woocommerce-jetpack' ),
+				'title'     => __( 'Debug Log', 'woocommerce-jetpack' ),
 				'desc'      => __( 'Log.', 'woocommerce-jetpack' ),
 				'tab_title' => __( 'Log', 'woocommerce-jetpack' ),
 			),
@@ -60,6 +60,13 @@ class WCJ_Admin_Tools extends WCJ_Module {
 				add_action( 'admin_head',        array( $this, 'make_original_variable_product_pricing_readonly' ) );
 				add_action( 'add_meta_boxes',    array( $this, 'maybe_add_variable_product_pricing_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
+			}
+			// Admin Notices
+			if ( 'yes' === get_option( 'wcj_admin_tools_suppress_connect_notice', 'no' ) ) {
+				add_filter( 'woocommerce_helper_suppress_connect_notice', '__return_true' );
+			}
+			if ( 'yes' === get_option( 'wcj_admin_tools_suppress_admin_notices', 'no' ) ) {
+				add_filter( 'woocommerce_helper_suppress_admin_notices', '__return_true' );
 			}
 		}
 	}
