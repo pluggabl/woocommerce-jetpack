@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Sale Flash
  *
- * @version 3.2.4
+ * @version 3.9.2
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -63,7 +63,7 @@ $settings = array(
 	array(
 		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
 		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
-		'desc_tip' => __( 'This will add meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
+		'desc_tip' => __( 'This will add meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . '<br>' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_sale_flash_per_product_enabled',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -77,7 +77,7 @@ $settings = array(
 
 $product_terms['product_cat'] = wcj_get_terms( 'product_cat' );
 $product_terms['product_tag'] = wcj_get_terms( 'product_tag' );
-foreach ( $product_terms as $id => $product_term ) {
+foreach ( $product_terms as $id => $_product_terms ) {
 	$title = ( 'product_cat' === $id ? __( 'Per Category', 'woocommerce-jetpack' ) : __( 'Per Tag', 'woocommerce-jetpack' ) );
 	$settings = array_merge( $settings, array(
 		array(
@@ -94,13 +94,22 @@ foreach ( $product_terms as $id => $product_term ) {
 			'type'     => 'checkbox',
 			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
+		array(
+			'desc_tip' => __( 'Terms to Modify', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Save changes to see new option fields.', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_sale_flash_per_' . $id . '_terms',
+			'default'  => array(),
+			'type'     => 'multiselect',
+			'class'    => 'chosen_select',
+			'options'  => $_product_terms,
+		),
 	) );
-	foreach ( $product_term as $term_id => $term_desc ) {
+	foreach ( get_option( 'wcj_sale_flash_per_' . $id . '_terms', array() ) as $term_id ) {
 		$settings = array_merge( $settings, array(
 			array(
-				'title'    => $term_desc,
+				'title'    => ( isset( $_product_terms[ $term_id ] ) ? $_product_terms[ $term_id ] : sprintf( __( 'Term #%s', 'woocommerce-jetpack' ), $term_id ) ),
 				'desc_tip' => __( 'You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
-				'id'       => 'wcj_sale_flash_per_' . $id . '_' . $term_id . '_html',
+				'id'       => "wcj_sale_flash_per_{$id}[{$term_id}]",
 				'default'  => '<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>',
 				'type'     => 'textarea',
 				'css'      => 'width:100%;',

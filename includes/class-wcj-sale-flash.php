@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sale Flash
  *
- * @version 3.2.4
+ * @version 3.9.2
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Sale_Flash extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 3.9.2
 	 * @since   3.2.4
 	 * @todo    add predefined styles
 	 * @todo    (maybe) per product/category/tag: separate "loop" and "single" options
@@ -35,6 +35,14 @@ class WCJ_Sale_Flash extends WCJ_Module {
 			$this->per_product_enabled  = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sale_flash_per_product_enabled', 'no' ) ) );
 			$this->per_category_enabled = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sale_flash_per_' . 'product_cat' . '_enabled', 'no' ) ) );
 			$this->per_tag_enabled      = ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_sale_flash_per_' . 'product_tag' . '_enabled', 'no' ) ) );
+			if ( $this->per_category_enabled ) {
+				$this->sale_flash_per_taxonomy['product_cat']['terms'] = get_option( 'wcj_sale_flash_per_product_cat_terms', array() );
+				$this->sale_flash_per_taxonomy['product_cat']['html']  = get_option( 'wcj_sale_flash_per_product_cat',       array() );
+			}
+			if ( $this->per_tag_enabled ) {
+				$this->sale_flash_per_taxonomy['product_tag']['terms'] = get_option( 'wcj_sale_flash_per_product_tag_terms', array() );
+				$this->sale_flash_per_taxonomy['product_tag']['html']  = get_option( 'wcj_sale_flash_per_product_tag',       array() );
+			}
 			add_filter( 'woocommerce_sale_flash', array( $this, 'customize_sale_flash' ), PHP_INT_MAX, 3 );
 			if ( $this->per_product_enabled ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
@@ -44,17 +52,40 @@ class WCJ_Sale_Flash extends WCJ_Module {
 	}
 
 	/**
+	 * get_deprecated_options.
+	 *
+	 * @version 3.9.2
+	 * @since   3.9.2
+	 */
+	function get_deprecated_options() {
+		$deprecated_options           = array();
+		$product_terms['product_cat'] = wcj_get_terms( 'product_cat' );
+		$product_terms['product_tag'] = wcj_get_terms( 'product_tag' );
+		foreach ( $product_terms as $id => $_product_terms ) {
+			foreach ( $_product_terms as $term_id => $term_desc ) {
+				$deprecated_options[ 'wcj_sale_flash_per_' . $id ][ $term_id ] = 'wcj_sale_flash_per_' . $id . '_' . $term_id . '_html';
+			}
+		}
+		return $deprecated_options;
+	}
+
+	/**
 	 * get_taxonomy_sale_flash.
 	 *
-	 * @version 3.2.4
+	 * @version 3.9.2
 	 */
 	function get_taxonomy_sale_flash( $product_id, $taxonomy ) {
 		$product_terms = get_the_terms( $product_id, $taxonomy );
-		return ( ! empty( $product_terms ) && isset( $product_terms[0]->term_id ) ?
-			 do_shortcode( get_option( 'wcj_sale_flash_per_' . $taxonomy . '_' . $product_terms[0]->term_id . '_html',
-				'<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>' ) ) :
-			false
-		);
+		if ( ! empty( $product_terms ) && isset( $product_terms[0]->term_id ) ) {
+			$term_id = $product_terms[0]->term_id;
+			if ( in_array( $term_id, $this->sale_flash_per_taxonomy[ $taxonomy ]['terms'] ) ) {
+				return ( isset( $this->sale_flash_per_taxonomy[ $taxonomy ]['html'][ $term_id ] ) ?
+					do_shortcode( $this->sale_flash_per_taxonomy[ $taxonomy ]['html'][ $term_id ] ) :
+					'<span class="onsale">' . __( 'Sale!', 'woocommerce' ) . '</span>'
+				);
+			}
+		}
+		return false;
 	}
 
 	/**

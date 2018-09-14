@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping by Condition
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   3.2.1
  * @author  Algoritmika Ltd.
  */
@@ -67,12 +67,14 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 			$custom_attributes = array();
 			$desc_tip = '';
 		}
+		$include_id = 'wcj_shipping_' . $options_id . '_include_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
+		$exclude_id = 'wcj_shipping_' . $options_id . '_exclude_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
 		$settings = array_merge( $settings, array(
 			array(
 				'title'     => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title'] : $method->get_method_title() ),
 				'desc_tip'  => $desc_tip,
-				'desc'      => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ),
-				'id'        => 'wcj_shipping_' . $options_id . '_include_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id ),
+				'desc'      => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $include_id ),
+				'id'        => $include_id,
 				'default'   => '',
 				'type'      => $type,
 				'class'     => $class,
@@ -82,8 +84,8 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 			),
 			array(
 				'desc_tip'  => $desc_tip,
-				'desc'      => '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ),
-				'id'        => 'wcj_shipping_' . $options_id . '_exclude_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id ),
+				'desc'      => '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $exclude_id ),
+				'id'        => $exclude_id,
 				'default'   => '',
 				'type'      => $type,
 				'class'     => $class,

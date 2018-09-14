@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Condition
  *
- * @version 3.6.0
+ * @version 3.9.2
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add "Shipping Methods by Date/Time" module
@@ -96,6 +96,16 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	 */
 	function get_additional_section_settings( $options_id ) {
 		return array();
+	}
+
+	/**
+	 * get_extra_option_desc.
+	 *
+	 * @version 3.9.2
+	 * @since   3.9.2
+	 */
+	function get_extra_option_desc( $option_id ) {
+		return '';
 	}
 
 }
