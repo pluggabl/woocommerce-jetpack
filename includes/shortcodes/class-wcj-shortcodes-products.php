@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @author  Algoritmika Ltd.
  */
 
@@ -833,7 +833,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 3.7.0
+	 * @version 3.9.2
 	 * @todo    (maybe) `if ( 'yes' === $atts['add_percent_row'] )` for 'fixed' or 'price_directly'; `if ( 'yes' === $atts['add_discount_row'] )` for 'percent' or 'price_directly'
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
@@ -855,6 +855,10 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 					break;
 				}
 			}
+		}
+
+		if ( isset( $atts['user_role'] ) ) {
+			$role_option_name_addon = '_' . $atts['user_role'];
 		}
 
 		$wholesale_price_levels = array();

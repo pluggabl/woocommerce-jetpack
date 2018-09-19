@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Cities
  *
- * @version 3.6.0
+ * @version 3.9.2
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -16,20 +16,28 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 3.9.2
 	 * @since   3.6.0
 	 */
 	function __construct() {
 
 		$this->id         = 'shipping_by_cities';
-		$this->short_desc = __( 'Shipping Methods by Cities', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set cities to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Shipping Methods by City or Postcode', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Set shipping cities or postcodes to include/exclude for shipping methods to show up.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-methods-by-cities';
 
 		$this->condition_options = array(
 			'cities' => array(
 				'title' => __( 'Cities', 'woocommerce-jetpack' ),
 				'desc'  => __( 'Otherwise enter cities one per line.', 'woocommerce-jetpack' ),
+				'type'  => 'textarea',
+				'class' => '',
+				'css'   => 'height:200px;',
+			),
+			'postcodes' => array(
+				'title' => __( 'Postcodes', 'woocommerce-jetpack' ),
+				'desc'  => __( 'Otherwise enter postcodes one per line.', 'woocommerce-jetpack' ) . '<br>' .
+					'<em>' . __( 'Postcodes containing wildcards (e.g. CB23*) and fully numeric ranges (e.g. <code>90210...99000</code>) are also supported.', 'woocommerce' ) . '</em>',
 				'type'  => 'textarea',
 				'class' => '',
 				'css'   => 'height:200px;',
@@ -43,7 +51,7 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * check.
 	 *
-	 * @version 3.6.0
+	 * @version 3.9.2
 	 * @since   3.6.0
 	 * @todo    `$_REQUEST['city']` (i.e. billing city)
 	 * @todo    `get_base_city()` - do we really need this?
@@ -54,18 +62,24 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 				$customer_city = strtoupper( isset( $_REQUEST['s_city'] ) ? $_REQUEST['s_city'] : WC()->countries->get_base_city() );
 				$values        = array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) );
 				return in_array( $customer_city, $values );
+			case 'postcodes':
+				$customer_postcode   = strtoupper( isset( $_REQUEST['s_postcode'] ) ? $_REQUEST['s_postcode'] : WC()->countries->get_base_postcode() );
+				$postcodes           = array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) );
+				return wcj_check_postcode( $customer_postcode, $postcodes );
 		}
 	}
 
 	/**
 	 * get_condition_options.
 	 *
-	 * @version 3.6.0
+	 * @version 3.9.2
 	 * @since   3.6.0
 	 */
 	function get_condition_options( $options_id ) {
 		switch( $options_id ) {
 			case 'cities':
+				return '';
+			case 'postcodes':
 				return '';
 		}
 	}

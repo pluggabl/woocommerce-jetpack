@@ -119,7 +119,8 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 * *Shipping Descriptions* - Add descriptions to shipping methods on frontend.
 * *Shipping Icons* - Add icons to shipping methods on frontend.
-* *Shipping Methods by Cities* - Set cities to include/exclude for shipping methods to show up.
+* *Shipping Methods by City or Postcode* - Set shipping cities or postcodes to include/exclude for shipping methods to show up.
+* *Shipping Methods by Current Date/Time* - Set date and/or time to include/exclude for shipping methods to show up.
 * *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for shipping methods to show up.
 * *Shipping Methods by Products* - Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up.
 * *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for shipping methods to show up.
@@ -139,6 +140,7 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Custom CSS* - Separate custom CSS for front and back end. Per product CSS.
 * *Custom Emails* - Add custom emails to WooCommerce.
 * *Custom JS* - Separate custom JS for front and back end.
+* *Custom PHP* - Custom PHP.
 * *Email Options* - WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.
 * *Email Verification* - Add WooCommerce email verification.
 * *Export* - WooCommerce export tools.
@@ -189,19 +191,31 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.9.2 - 13/09/2018 =
+= 3.9.2 - 19/09/2018 =
 * Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Widget - "Form Method", "Class" and "Style" options added.
 * Feature - PRODUCTS - Product Addons - Frontend Templates - "Each Addon - Type: Select Box (Each Option)" option added.
 * Feature - SHIPPING & ORDERS - Orders - "Editable Orders" options added.
+* Feature - SHIPPING & ORDERS - Shipping Methods by City or Postcode - "Shipping Methods by Postcodes" subsection added.
 * Feature - SHIPPING & ORDERS - Shipping Methods by Current Date/Time - Initial module release.
 * Feature - EMAILS & MISC. - Admin Tools - "Suppress Admin Connect Notice" and "Suppress Admin Notices" options added.
+* Feature - EMAILS & MISC. - Custom PHP - Initial module release.
+* Feature - EMAILS & MISC. - General - Add/Manage Custom Roles tool - "Capabilities" option added.
+* Fix - CART & CHECKOUT - EU VAT Number - Possible "Undefined index: wcj_eu_vat_number_to_check..." PHP notice fixed.
 * Fix - PAYMENT GATEWAYS - Gateways by Shipping - Use Shipping Instances - Trying to extract shipping instance number from form with underscore symbol (e.g. "Flexible Shipping" plugin).
+~* Fix - SHIPPING & ORDERS - Order Min/Max Quantities - `isEmptyObject` check added in `wcj-order-quantities.js`.
+* Fix - EMAILS & MISC. - General - Add/Manage Custom Roles tool - `sanitize_key()` added for role ID (when adding new role).
+* Fix - EMAILS & MISC. - General - Products Attributes tool - Column titles fixed.
 * Fix - EMAILS & MISC. - Template Editor - Checking for modified template file to exist before replacing the original template.
 * Fix - Functions - General - `wcj_is_frontend()` - AJAX part improved (`woocommerce_load_variations` backend `action` added).
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Module description updated.
 ~* Dev - PRODUCTS - Sale Flash - Code refactoring - "Per Category" and "Per Tag" options are stored in arrays now.
+* Dev - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - Code refactoring.
+* Dev - SHIPPING & ORDERS - Order Numbers - `wcj_order_number_meta` filter added.
 * Dev - EMAILS & MISC. - Admin Tools - Admin settings restyled ("Debug Tools Options" subsection added, "Debug Log" tool renamed).
+* Dev - EMAILS & MISC. - General - Add/Manage Custom Roles tool - Restyled; JS confirmation added etc.
+* Dev - EMAILS & MISC. - Template Editor - Admin settings minor restyling.
 * Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - Code refactoring.
+~* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `user_role` attribute added.
 * Dev - Functions - Price and Currency - `wcj_update_products_price_by_country()` - `WP_Query` optimized to return `ids` only.
 * Dev - Classes - `WCJ_Module` - Modules' "extra description" restyled.
 

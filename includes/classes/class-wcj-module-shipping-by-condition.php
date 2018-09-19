@@ -5,7 +5,6 @@
  * @version 3.9.2
  * @since   3.2.0
  * @author  Algoritmika Ltd.
- * @todo    (maybe) add "Shipping Methods by Date/Time" module
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

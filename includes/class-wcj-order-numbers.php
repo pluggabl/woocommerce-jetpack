@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 3.5.0
+ * @version 3.9.2
  * @author  Algoritmika Ltd.
  */
 
@@ -279,7 +279,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * Add/update order_number meta to order.
 	 *
-	 * @version 3.5.0
+	 * @version 3.9.2
 	 * @todo    (maybe) save order ID instead of `$current_order_number = ''` (if `'no' === get_option( 'wcj_order_number_sequential_enabled', 'yes' )`)
 	 */
 	function add_order_number_meta( $order_id, $do_overwrite ) {
@@ -300,7 +300,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 					$result_update = $wpdb->update( $wp_options_table, array( 'option_value' => ( $current_order_number + 1 ) ), array( 'option_name' => 'wcj_order_number_counter' ) );
 					if ( NULL != $result_update || $result_select->option_value == ( $current_order_number + 1 ) ) {
 						$wpdb->query( 'COMMIT' ); // all ok
-						update_post_meta( $order_id, '_wcj_order_number', $current_order_number );
+						update_post_meta( $order_id, '_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
 					} else {
 						$wpdb->query( 'ROLLBACK' ); // something went wrong, Rollback
 					}
@@ -316,7 +316,7 @@ class WCJ_Order_Numbers extends WCJ_Module {
 				} else { // 'no' === get_option( 'wcj_order_number_sequential_enabled', 'yes' ) // order ID
 					$current_order_number = '';
 				}
-				update_post_meta( $order_id, '_wcj_order_number', $current_order_number );
+				update_post_meta( $order_id, '_wcj_order_number', apply_filters( 'wcj_order_number_meta', $current_order_number, $order_id ) );
 			}
 		}
 	}

@@ -115,6 +115,7 @@ $wcj_module_files = array(
 	'class-wcj-my-account.php',
 	'class-wcj-custom-css.php',
 	'class-wcj-custom-js.php',
+	'class-wcj-custom-php.php',
 	'class-wcj-products-xml.php',
 	'class-wcj-export-import.php',
 	'class-wcj-eu-vat-number.php',

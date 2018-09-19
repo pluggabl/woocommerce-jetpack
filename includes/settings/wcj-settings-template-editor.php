@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Template Editor
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   3.9.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] (maybe) always use `DIRECTORY_SEPARATOR` (instead of '\\' and '/')
@@ -49,7 +49,7 @@ foreach ( get_option( 'wcj_template_editor_templates_to_edit', array() ) as $tem
 			'id'       => "wcj_template_editor_templates_content[{$template}]",
 			'type'     => 'textarea',
 			'default'  => file_get_contents( $default_template_path ),
-			'css'      => 'width:100%;height:500px;',
+			'css'      => 'width:100%;height:500px;font-family:monospace;',
 			'wcj_raw'  => true,
 		),
 	) );

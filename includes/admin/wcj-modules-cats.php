@@ -192,6 +192,7 @@ return apply_filters( 'wcj_modules', array(
 			'wpml',
 			'custom_css',
 			'custom_js',
+			'custom_php',
 			'track_users',
 			'modules_by_user_roles',
 			'template_editor',

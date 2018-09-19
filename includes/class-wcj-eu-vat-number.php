@@ -2,10 +2,9 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.3.9
  * @author  Algoritmika Ltd.
- * @todo    clean up
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -18,6 +17,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 3.3.0
+	 * @todo    [feature] add option to add "Verify" button to frontend
 	 */
 	function __construct() {
 
@@ -41,9 +41,6 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			add_action( 'wp_enqueue_scripts',                          array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_ajax_wcj_validate_eu_vat_number',          array( $this, 'wcj_validate_eu_vat_number' ) );
 			add_action( 'wp_ajax_nopriv_wcj_validate_eu_vat_number',   array( $this, 'wcj_validate_eu_vat_number' ) );
-//			add_filter( 'woocommerce_form_field_text',                 array( $this, 'add_eu_vat_verify_button' ), PHP_INT_MAX, 4 );
-//			add_action( 'init',                                        array( $this, 'wcj_validate_eu_vat_number' ) );
-//			add_filter( 'woocommerce_find_rates',                      array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX, 2 );
 			add_filter( 'init',                                        array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX );
 			add_action( 'woocommerce_after_checkout_validation',       array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_customer_meta_fields',            array( $this, 'add_eu_vat_number_customer_meta_field' ) );
@@ -193,11 +190,6 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				__( 'Taxes', 'woocommerce-jetpack' ),
 				$taxes,
 			),
-			/* array(
-				__( 'Customer Meta', 'woocommerce-jetpack' ),
-//				'<pre>' . print_r( get_user_meta( $_order->customer_user ), true ). '</pre>',
-				'<pre>' . print_r( get_user_by( 'ID', $_order->customer_user ), true ). '</pre>',
-			), */
 		);
 		echo wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped', 'table_heading_type' => 'vertical' ) );
 		echo '<p>' . '<a href="' . add_query_arg( 'validate_vat_and_maybe_remove_taxes', $order_id ) . '">' .
@@ -352,10 +344,9 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * wcj_validate_eu_vat_number.
 	 *
-	 * @version 3.4.0
+	 * @version 3.9.2
 	 */
 	function wcj_validate_eu_vat_number( $param ) {
-//		if ( ! isset( $_GET['wcj_validate_eu_vat_number'] ) ) return;
 		if ( isset( $_POST['wcj_eu_vat_number_to_check'] ) && '' != $_POST['wcj_eu_vat_number_to_check'] ) {
 			$eu_vat_number_to_check = substr( $_POST['wcj_eu_vat_number_to_check'], 2 );
 			$eu_vat_number_country_to_check = substr( $_POST['wcj_eu_vat_number_to_check'], 0, 2 );
@@ -374,7 +365,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			$is_valid = null;
 		}
 		wcj_session_set( 'wcj_is_eu_vat_number_valid', $is_valid );
-		wcj_session_set( 'wcj_eu_vat_number_to_check', $_POST['wcj_eu_vat_number_to_check'] );
+		wcj_session_set( 'wcj_eu_vat_number_to_check', ( isset( $_POST['wcj_eu_vat_number_to_check'] ) ? $_POST['wcj_eu_vat_number_to_check'] : '' ) );
 		if ( false === $is_valid ) {
 			echo '0';
 		} elseif ( true === $is_valid ) {
@@ -392,7 +383,6 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	 *
 	 * @version 3.4.0
 	 */
-//	function maybe_exclude_vat( $matched_tax_rates, $args ) {
 	function maybe_exclude_vat() {
 		if (
 			( is_checkout() || is_cart() || defined( 'WOOCOMMERCE_CHECKOUT' ) || defined( 'WOOCOMMERCE_CART' ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) &&
@@ -414,12 +404,6 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				$preserve_base_country_check_passed = ( strtoupper( $location['country'] ) !== strtoupper( $selected_country ) );
 			}
 			if ( $preserve_base_country_check_passed ) {
-				/* $modified_matched_tax_rates = array();
-				foreach ( $matched_tax_rates as $i => $matched_tax_rate ) {
-					$matched_tax_rate['rate'] = 0;
-					$modified_matched_tax_rates[ $i ] = $matched_tax_rate;
-				}
-				return $modified_matched_tax_rates; */
 				WC()->customer->set_is_vat_exempt( true );
 			} else {
 				WC()->customer->set_is_vat_exempt( false );
@@ -429,7 +413,6 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				WC()->customer->set_is_vat_exempt( false );
 			}
 		}
-//		return $matched_tax_rates;
 	}
 
 	/**
@@ -470,15 +453,6 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	}
 
 	/**
-	 * add_eu_vat_verify_button.
-	 *
-	function add_eu_vat_verify_button( $field, $key, $args, $value ) {
-		return ( 'billing_eu_vat_number' === $key ) ?
-			$field . '<span style="font-size:smaller !important;">' . '[<a name="billing_eu_vat_number_verify" href="">' . __( 'Verify', 'woocommerce-jetpack' ) . '</a>]' . '</span>' :
-			$field;
-	}
-
-	/**
 	 * add_eu_vat_number_checkout_field_to_frontend.
 	 *
 	 * @version 3.9.0
@@ -486,7 +460,6 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	function add_eu_vat_number_checkout_field_to_frontend( $fields ) {
 		$fields['billing'][ 'billing_' . $this->id ] = array(
 			'type'              => 'text',
-//			'default'           => ( null !== ( $eu_vat_number_to_check = wcj_session_get( 'wcj_eu_vat_number_to_check' ) ) ? $eu_vat_number_to_check : '' ),
 			'label'             => get_option( 'wcj_eu_vat_number_field_label' ),
 			'description'       => get_option( 'wcj_eu_vat_number_field_description' ),
 			'placeholder'       => get_option( 'wcj_eu_vat_number_field_placeholder' ),

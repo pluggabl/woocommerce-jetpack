@@ -5,6 +5,7 @@
  * @version 3.9.2
  * @since   3.2.1
  * @author  Algoritmika Ltd.
+ * @todo    [dev] hide settings for the disabled subsection
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

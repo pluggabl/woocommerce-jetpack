@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -70,39 +70,9 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	}
 
 	/**
-	 * range_match.
-	 *
-	 * @version 3.4.0
-	 * @since   3.4.0
-	 */
-	function range_match( $postcode_range, $postcode_to_check ) {
-		$postcode_range = explode( '...', $postcode_range );
-		return ( 2 === count( $postcode_range ) && $postcode_to_check >= $postcode_range[0] && $postcode_to_check <= $postcode_range[1] );
-	}
-
-	/**
-	 * check_postcode.
-	 *
-	 * @version 3.4.0
-	 * @since   3.4.0
-	 */
-	function check_postcode( $postcode_to_check, $postcodes ) {
-		foreach ( $postcodes as $postcode ) {
-			if (
-				( false !== strpos( $postcode, '*' )   && fnmatch( $postcode, $postcode_to_check ) ) ||
-				( false !== strpos( $postcode, '...' ) && $this->range_match( $postcode, $postcode_to_check ) ) ||
-				( $postcode === $postcode_to_check )
-			) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 3.6.0
+	 * @version 3.9.2
 	 * @todo    (maybe) rename module to "Payment Gateways by (Customer's) Location"
 	 * @todo    (maybe) check naming, should be `wcj_gateways_by_location_` (however it's too long...)
 	 * @todo    (maybe) code refactoring
@@ -142,7 +112,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 				$include_postcodes = get_option( 'wcj_gateways_postcodes_include_' . $key, '' );
 				if ( ! empty( $include_postcodes ) ) {
 					$include_postcodes = array_filter( array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $include_postcodes ) ) ) );
-					if ( ! $this->check_postcode( $postcode, $include_postcodes ) ) {
+					if ( ! wcj_check_postcode( $postcode, $include_postcodes ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}
@@ -150,7 +120,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 				$exclude_postcodes = get_option( 'wcj_gateways_postcodes_exclude_' . $key, '' );
 				if ( ! empty( $exclude_postcodes ) ) {
 					$exclude_postcodes = array_filter( array_map( 'strtoupper', array_map( 'wc_clean', explode( "\n", $exclude_postcodes ) ) ) );
-					if ( $this->check_postcode( $postcode, $exclude_postcodes ) ) {
+					if ( wcj_check_postcode( $postcode, $exclude_postcodes ) ) {
 						unset( $_available_gateways[ $key ] );
 						continue;
 					}

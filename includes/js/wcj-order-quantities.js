@@ -1,8 +1,9 @@
 /**
  * wcj-order-quantities.js
  *
- * @version 3.2.3
+ * @version 3.9.2
  * @since   3.2.2
+ * @todo    [dev] maybe `jQuery('[name=quantity]').val('0')` on `jQuery.isEmptyObject(product_quantities[variation_id])` (instead of `return`)
  */
 
 function check_qty(){
@@ -11,6 +12,11 @@ function check_qty(){
 		return;
 	}
 	var current_qty = jQuery('[name=quantity]').val();
+
+	if (jQuery.isEmptyObject(product_quantities[variation_id])){
+		return;
+	}
+
 	if (quantities_options['reset_to_min']){
 		jQuery('[name=quantity]').val(product_quantities[variation_id]['min_qty']);
 	} else if (quantities_options['reset_to_max']){
@@ -28,6 +34,11 @@ function check_qty_no_reset(){
 		return;
 	}
 	var current_qty = jQuery('[name=quantity]').val();
+
+	if (jQuery.isEmptyObject(product_quantities[variation_id])){
+		return;
+	}
+
 	if (current_qty < parseInt(product_quantities[variation_id]['min_qty'])){
 		jQuery('[name=quantity]').val(product_quantities[variation_id]['min_qty']);
 	} else if (current_qty > parseInt(product_quantities[variation_id]['max_qty'])){

@@ -9,6 +9,40 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
+if ( ! function_exists( 'wcj_range_match' ) ) {
+	/**
+	 * wcj_range_match.
+	 *
+	 * @version 3.9.2
+	 * @since   3.4.0
+	 */
+	function wcj_range_match( $postcode_range, $postcode_to_check ) {
+		$postcode_range = explode( '...', $postcode_range );
+		return ( 2 === count( $postcode_range ) && $postcode_to_check >= $postcode_range[0] && $postcode_to_check <= $postcode_range[1] );
+	}
+}
+
+if ( ! function_exists( 'wcj_check_postcode' ) ) {
+	/**
+	 * wcj_check_postcode.
+	 *
+	 * @version 3.9.2
+	 * @since   3.4.0
+	 */
+	function wcj_check_postcode( $postcode_to_check, $postcodes ) {
+		foreach ( $postcodes as $postcode ) {
+			if (
+				( $postcode === $postcode_to_check ) ||
+				( false !== strpos( $postcode, '*' )   && fnmatch( $postcode, $postcode_to_check ) ) ||
+				( false !== strpos( $postcode, '...' ) && wcj_range_match( $postcode, $postcode_to_check ) )
+			) {
+				return true;
+			}
+		}
+		return false;
+	}
+}
+
 if ( ! function_exists( 'wcj_help_tip' ) ) {
 	/**
 	 * wcj_help_tip.

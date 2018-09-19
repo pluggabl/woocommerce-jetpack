@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - HTML Functions
  *
- * @version 3.7.0
+ * @version 3.9.2
  * @author  Algoritmika Ltd.
  */
 
@@ -46,6 +46,25 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 		}
 		$html .= '</tbody>';
 		$html .= '</table>';
+		return $html;
+	}
+}
+
+if ( ! function_exists( 'wcj_get_select_html' ) ) {
+	/**
+	 * wcj_get_select_html.
+	 *
+	 * @version 3.9.2
+	 * @since   3.9.2
+	 * @todo    [dev] `selected`, `class`
+	 */
+	function wcj_get_select_html( $id, $options, $style = '' ) {
+		$html  = '';
+		$html .= '<select id="' . $id . '" name="' . $id . '" style="' . $style . '">';
+		foreach ( $options as $option_id => $option_title ) {
+			$html .= '<option value="' . $option_id . '">' . $option_title . '</option>';
+		}
+		$html .= '</select>';
 		return $html;
 	}
 }
