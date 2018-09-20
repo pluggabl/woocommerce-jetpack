@@ -191,14 +191,15 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.9.2 - 19/09/2018 =
+= 3.9.2 - 20/09/2018 =
 * Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Widget - "Form Method", "Class" and "Style" options added.
 * Feature - PRODUCTS - Product Addons - Frontend Templates - "Each Addon - Type: Select Box (Each Option)" option added.
+* Feature - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses Buttons to Admin Order Preview Actions" option added.
 * Feature - SHIPPING & ORDERS - Orders - "Editable Orders" options added.
 * Feature - SHIPPING & ORDERS - Shipping Methods by City or Postcode - "Shipping Methods by Postcodes" subsection added.
 * Feature - SHIPPING & ORDERS - Shipping Methods by Current Date/Time - Initial module release.
 * Feature - EMAILS & MISC. - Admin Tools - "Suppress Admin Connect Notice" and "Suppress Admin Notices" options added.
-* Feature - EMAILS & MISC. - Custom PHP - Initial module release.
+~* Feature - EMAILS & MISC. - Custom PHP - Initial module release.
 * Feature - EMAILS & MISC. - General - Add/Manage Custom Roles tool - "Capabilities" option added.
 * Fix - CART & CHECKOUT - EU VAT Number - Possible "Undefined index: wcj_eu_vat_number_to_check..." PHP notice fixed.
 * Fix - PAYMENT GATEWAYS - Gateways by Shipping - Use Shipping Instances - Trying to extract shipping instance number from form with underscore symbol (e.g. "Flexible Shipping" plugin).
@@ -210,6 +211,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Module description updated.
 ~* Dev - PRODUCTS - Sale Flash - Code refactoring - "Per Category" and "Per Tag" options are stored in arrays now.
 * Dev - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - Code refactoring.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Code refactoring.
 * Dev - SHIPPING & ORDERS - Order Numbers - `wcj_order_number_meta` filter added.
 * Dev - EMAILS & MISC. - Admin Tools - Admin settings restyled ("Debug Tools Options" subsection added, "Debug Log" tool renamed).
 * Dev - EMAILS & MISC. - General - Add/Manage Custom Roles tool - Restyled; JS confirmation added etc.

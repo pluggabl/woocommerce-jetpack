@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Order Custom Statuses
  *
- * @version 3.6.0
+ * @version 3.9.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -88,6 +88,16 @@ return array(
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Enable this if you want the statuses in Status column to have colors.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_orders_custom_statuses_column_colored',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Add Custom Statuses Buttons to Admin Order Preview Actions', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If you wish to add custom statuses buttons to the admin orders preview page, enable the checkbox here.', 'woocommerce-jetpack' ) . ' ' .
+			apply_filters( 'booster_message', '', 'desc' ),
+		'id'       => 'wcj_orders_custom_statuses_add_to_order_preview_actions',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),

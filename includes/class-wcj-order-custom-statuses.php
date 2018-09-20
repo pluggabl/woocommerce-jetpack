@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 3.6.0
+ * @version 3.9.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,11 +16,9 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
-	 * @todo    check all changes from Custom Order Status plugin
-	 * @todo    `wcj_orders_custom_statuses_processing_and_completed_actions` to Custom Order Status plugin
-	 * @todo    (maybe) add options to change icon and icon's color for all statuses (i.e. not only custom)
-	 * @todo    (maybe) rename module to "Custom Order Statuses"
+	 * @version 3.9.2
+	 * @todo    [feature] add options to change icon and icon's color for all statuses (i.e. not only custom)
+	 * @todo    [dev] maybe rename module to "Custom Order Statuses"
 	 */
 	function __construct() {
 
@@ -39,28 +37,41 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 
+			// Core
 			add_filter( 'wc_order_statuses',                  array( $this, 'add_custom_statuses_to_filter' ), PHP_INT_MAX );
 			add_action( 'init',                               array( $this, 'register_custom_post_statuses' ) );
+
+			// CSS
 			add_action( 'admin_head',                         array( $this, 'hook_statuses_icons_css' ) );
 			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_column_colored', 'no' ) ) ) {
 				add_action( 'admin_head',                     array( $this, 'hook_statuses_column_css' ) );
 			}
 
+			// Default order status
 			add_filter( 'woocommerce_default_order_status',   array( $this, 'set_default_order_status' ), PHP_INT_MAX );
 
+			// Add custom statuses to admin reports
 			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_reports' ) ) {
 				add_filter( 'woocommerce_reports_order_statuses', array( $this, 'add_custom_order_statuses_to_reports' ), PHP_INT_MAX );
 			}
 
+			// Add all statuses to admin order bulk actions
 			if ( 'yes' === get_option( 'wcj_orders_custom_statuses_add_to_bulk_actions' ) ) {
 				add_action( 'admin_footer', array( $this, 'bulk_admin_footer' ), 11 );
 			}
 
+			// Order list actions
 			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_list_actions', 'no' ) ) ) {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_actions_buttons' ), PHP_INT_MAX, 2 );
 				add_action( 'admin_head',                      array( $this, 'add_custom_status_actions_buttons_css' ) );
 			}
 
+			// Order preview actions
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_orders_custom_statuses_add_to_order_preview_actions', 'no' ) ) ) {
+				add_filter( 'woocommerce_admin_order_preview_actions', array( $this, 'add_custom_order_statuses_order_preview_actions' ), PHP_INT_MAX, 2 );
+			}
+
+			// "Processing" and "Complete" action buttons
 			if ( 'hide' != apply_filters( 'booster_option', 'hide', get_option( 'wcj_orders_custom_statuses_processing_and_completed_actions', 'hide' ) ) ) {
 				add_filter( 'woocommerce_admin_order_actions', array( $this, 'add_custom_status_to_processing_and_completed_actions' ), PHP_INT_MAX, 2 );
 			}
@@ -101,6 +112,68 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	}
 
 	/**
+	 * get_custom_order_statuses_actions.
+	 *
+	 * @version 3.9.2
+	 * @since   3.9.2
+	 */
+	function get_custom_order_statuses_actions( $_order ) {
+		$status_actions        = array();
+		$custom_order_statuses = $this->get_custom_order_statuses( true );
+		if ( ! empty( $custom_order_statuses ) && is_array( $custom_order_statuses ) ) {
+			foreach ( $custom_order_statuses as $custom_order_status => $label ) {
+				if ( ! $_order->has_status( array( $custom_order_status ) ) ) { // if order status is not $custom_order_status
+					$status_actions[ $custom_order_status ] = $label;
+				}
+			}
+		}
+		return $status_actions;
+	}
+
+	/**
+	 * get_custom_order_statuses_action_url.
+	 *
+	 * @version 3.9.2
+	 * @since   3.9.2
+	 */
+	function get_custom_order_statuses_action_url( $status, $order_id ) {
+		return wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $status . '&order_id=' . $order_id ), 'woocommerce-mark-order-status' );
+	}
+
+	/**
+	 * add_custom_order_statuses_order_preview_actions.
+	 *
+	 * @version 3.9.2
+	 * @since   3.9.2
+	 */
+	function add_custom_order_statuses_order_preview_actions( $actions, $_order ) {
+		$status_actions        = array();
+		$_status_actions       = $this->get_custom_order_statuses_actions( $_order );
+		if ( ! empty( $_status_actions ) ) {
+			$order_id = wcj_get_order_id( $_order );
+			foreach ( $_status_actions as $custom_order_status => $label ) {
+				$status_actions[ $custom_order_status ] = array(
+					'url'       => $this->get_custom_order_statuses_action_url( $custom_order_status, $order_id ),
+					'name'      => $label,
+					'title'     => sprintf( __( 'Change order status to %s', 'woocommerce-jetpack' ), $custom_order_status ),
+					'action'    => $custom_order_status,
+				);
+			}
+		}
+		if ( $status_actions ) {
+			if ( ! empty( $actions['status']['actions'] ) && is_array( $actions['status']['actions'] ) ) {
+				$actions['status']['actions'] = array_merge( $actions['status']['actions'], $status_actions );
+			} else {
+				$actions['status'] = array(
+					'group'   => __( 'Change status: ', 'woocommerce' ),
+					'actions' => $status_actions,
+				);
+			}
+		}
+		return $actions;
+	}
+
+	/**
 	 * add_custom_order_statuses_to_order_editable.
 	 *
 	 * @version 3.1.2
@@ -113,7 +186,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * add_custom_status_to_processing_and_completed_actions.
 	 *
-	 * @version 3.2.2
+	 * @version 3.9.2
 	 * @since   2.8.0
 	 */
 	function add_custom_status_to_processing_and_completed_actions( $actions, $_order ) {
@@ -131,8 +204,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				$_order->has_status( array_merge( array( 'pending', 'on-hold' ), $custom_order_statuses_without_wc_prefix ) )
 			) {
 				$default_actions['processing'] = array(
-					'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=processing&order_id=' . $post->ID ),
-						'woocommerce-mark-order-status' ),
+					'url'       => $this->get_custom_order_statuses_action_url( 'processing', $post->ID ),
 					'name'      => __( 'Processing', 'woocommerce' ),
 					'action'    => "processing",
 				);
@@ -142,8 +214,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				$_order->has_status( array_merge( array( 'pending', 'on-hold', 'processing' ), $custom_order_statuses_without_wc_prefix ) )
 			) {
 				$default_actions['complete'] = array(
-					'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=completed&order_id=' . $post->ID ),
-						'woocommerce-mark-order-status' ),
+					'url'       => $this->get_custom_order_statuses_action_url( 'completed', $post->ID ),
 					'name'      => __( 'Complete', 'woocommerce' ),
 					'action'    => "complete",
 				);
@@ -156,22 +227,19 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * add_custom_status_actions_buttons.
 	 *
-	 * @version 3.2.2
+	 * @version 3.9.2
 	 * @since   2.6.0
 	 */
 	function add_custom_status_actions_buttons( $actions, $_order ) {
-		$custom_order_statuses = $this->get_custom_order_statuses();
-		if ( ! empty( $custom_order_statuses ) && is_array( $custom_order_statuses ) ) {
-			foreach ( $custom_order_statuses as $slug => $label ) {
-				$custom_order_status = substr( $slug, 3 );
-				if ( ! $_order->has_status( array( $custom_order_status ) ) ) { // if order status is not $custom_order_status
-					$actions[ $custom_order_status ] = array(
-						'url'       => wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $custom_order_status . '&order_id=' .
-							wcj_get_order_id( $_order ) ), 'woocommerce-mark-order-status' ),
-						'name'      => $label,
-						'action'    => "view " . $custom_order_status, // setting "view" for proper button CSS
-					);
-				}
+		$_status_actions = $this->get_custom_order_statuses_actions( $_order );
+		if ( ! empty( $_status_actions ) ) {
+			$order_id = wcj_get_order_id( $_order );
+			foreach ( $_status_actions as $custom_order_status => $label ) {
+				$actions[ $custom_order_status ] = array(
+					'url'       => $this->get_custom_order_statuses_action_url( $custom_order_status, $order_id ),
+					'name'      => $label,
+					'action'    => "view " . $custom_order_status, // setting "view" for proper button CSS
+				);
 			}
 		}
 		return $actions;
