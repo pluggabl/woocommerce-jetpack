@@ -191,7 +191,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.9.2 - 20/09/2018 =
+= 3.9.2 - 21/09/2018 =
 * Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Widget - "Form Method", "Class" and "Style" options added.
 * Feature - PRODUCTS - Product Addons - Frontend Templates - "Each Addon - Type: Select Box (Each Option)" option added.
 * Feature - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses Buttons to Admin Order Preview Actions" option added.

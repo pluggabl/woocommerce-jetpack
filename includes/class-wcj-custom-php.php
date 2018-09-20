@@ -27,8 +27,8 @@ class WCJ_Custom_PHP extends WCJ_Module {
 		$this->short_desc = __( 'Custom PHP', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Custom PHP.', 'woocommerce-jetpack' );
 		$this->extra_desc = sprintf(
-			__( 'Please note that if you enable the module and enter non-valid PHP code here, your site will become unavailable. To fix this you will have to add %s attribute to the URL (you must be logged as shop manager or admin).', 'woocommerce-jetpack' ),
-				'<code>wcj_disable_custom_php</code>' ) . '<br>' .
+			__( 'Please note that if you enable the module and enter non-valid PHP code here, your site will become unavailable. To fix this you will have to add %s attribute to the URL (you must be logged as shop manager or admin (for this reason custom PHP code is not executed on %s page)).', 'woocommerce-jetpack' ),
+				'<code>wcj_disable_custom_php</code>', '<strong>wp-login.php</strong>' ) . ' ' .
 			sprintf( __( 'E.g.: %s', 'woocommerce-jetpack' ),
 				'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php' ) . '">' .
 					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=custom_php&wcj_disable_custom_php' ) . '</a>' );
@@ -38,11 +38,24 @@ class WCJ_Custom_PHP extends WCJ_Module {
 		add_action( 'woojetpack_after_settings_save',  array( $this, 'create_php_file' ), PHP_INT_MAX, 2 );
 
 		if ( $this->is_enabled() ) {
-			if ( ! isset( $_GET['wcj_disable_custom_php'] ) || ! wcj_current_user_can( 'manage_woocommerce' ) ) {
-				$file_path = wcj_get_wcj_uploads_dir( 'custom_php', false ) . DIRECTORY_SEPARATOR . 'booster.php';
-				if ( file_exists( $file_path ) ) {
-					include_once( $file_path );
+			if ( isset( $_GET['wcj_disable_custom_php'] ) ) {
+				if ( wcj_current_user_can( 'manage_woocommerce' ) ) {
+					// Stop custom PHP execution
+					return;
+				} elseif ( ! wcj_is_user_logged_in() ) {
+					// Redirect to login page
+					wp_redirect( wp_login_url( add_query_arg( '', '' ) ) );
+					exit;
 				}
+			}
+			if ( $GLOBALS['pagenow'] === 'wp-login.php' ) {
+				// Stop custom PHP execution if it's the login page
+				return;
+			}
+			// Executing custom PHP code
+			$file_path = wcj_get_wcj_uploads_dir( 'custom_php', false ) . DIRECTORY_SEPARATOR . 'booster.php';
+			if ( file_exists( $file_path ) ) {
+				include_once( $file_path );
 			}
 		}
 	}
