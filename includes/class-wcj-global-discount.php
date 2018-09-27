@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 3.9.2
 	 * @since   2.5.7
 	 * @todo    fee instead of discount
 	 * @todo    regular price coefficient
@@ -31,7 +31,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'global_discount' );
-			if ( wcj_is_frontend() ) {
+			if ( 'yes' === get_option( 'wcj_global_discount_enabled_in_admin', 'no' ) || wcj_is_frontend() ) {
 				wcj_add_change_price_hooks( $this, $this->price_hooks_priority, false );
 			}
 		}

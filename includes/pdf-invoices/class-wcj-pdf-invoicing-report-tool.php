@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - PDF Invoicing - Report Tool
  *
- * @version 3.8.0
+ * @version 3.9.2
  * @since   2.2.1
  * @author  Algoritmika Ltd.
  */
@@ -59,15 +59,15 @@ class WCJ_PDF_Invoicing_Report_Tool {
 	/**
 	 * generate_report_zip.
 	 *
-	 * @version 3.8.0
+	 * @version 3.9.2
 	 * @since   2.3.10
 	 */
 	function generate_report_zip() {
 		if ( isset( $_POST['get_invoices_report_zip'] ) ) {
 			if ( 'yes' === get_option( 'wcj_general_advanced_disable_save_sys_temp_dir', 'no' ) ) {
 				$this->notice = '<div class="error"><p><strong>' . sprintf(
-					__( 'This option is disabled with "Disable Saving PDFs in PHP directory for temporary files" checkbox in <a href="%s" target="_blank">WooCommerce > Settings > Booster > Emails & Misc. > General > Advanced Options</a>.', 'woocommerce-jetpack' ),
-					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=general' ) ) .
+					__( 'This option is disabled with "Disable Saving PDFs in PHP directory for temporary files" checkbox in <a href="%s" target="_blank">WooCommerce > Settings > Booster > PDF Invoicing & Packing Slips > Advanced</a>.', 'woocommerce-jetpack' ),
+					admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=pdf_invoicing&section=pdf_invoicing_advanced' ) ) .
 				'</strong></p></div>';
 			} else {
 				$_year         = ( ! empty( $_POST['report_year'] ) )  ? $_POST['report_year']  : date( 'Y' );

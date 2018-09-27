@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Currency Converter
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.3.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,8 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 3.9.2
+	 * @since   2.3.0
 	 */
 	function __construct() {
 
@@ -27,6 +28,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
+			$this->page_scope = get_option( 'wcj_gateways_currency_page_scope', 'cart_and_checkout' );
 			$this->add_hooks();
 			if ( is_admin() ) {
 				include_once( 'reports/class-wcj-currency-reports.php' );
@@ -106,12 +108,20 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	/**
 	 * is_cart_or_checkout.
 	 *
-	 * @version 2.3.5
+	 * @version 3.9.2
+	 * @since   2.3.0
+	 * @todo    [dev] rename function to `do_apply_by_page_scope()`
 	 */
 	function is_cart_or_checkout() {
 		if ( ! is_admin() ) {
-			if ( is_cart() || is_checkout() ) {
-				return true;
+			if ( 'cart_and_checkout' === $this->page_scope ) {
+				if ( is_cart() || is_checkout() ) {
+					return true;
+				}
+			} elseif ( 'checkout_only' === $this->page_scope ) {
+				if ( is_checkout() ) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -121,6 +131,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	 * change_price_by_gateway.
 	 *
 	 * @version 3.9.0
+	 * @since   2.3.0
 	 */
 	function change_price_by_gateway( $price, $product ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -137,6 +148,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	 * extend_paypal_supported_currencies.
 	 *
 	 * @version 3.9.0
+	 * @since   2.3.0
 	 */
 	function extend_paypal_supported_currencies( $supported_currencies ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -155,6 +167,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	 * change_currency_code.
 	 *
 	 * @version 3.9.0
+	 * @since   2.3.0
 	 */
 	function change_currency_code( $currency ) {
 		if ( $this->is_cart_or_checkout() ) {
@@ -173,6 +186,7 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 	 * register_script.
 	 *
 	 * @version 2.9.0
+	 * @since   2.3.0
 	 */
 	function register_script() {
 		wp_register_script( 'wcj-payment-gateways-checkout', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/wcj-checkout.js', array( 'jquery' ), WCJ()->version, true );
@@ -180,6 +194,9 @@ class WCJ_Payment_Gateways_Currency extends WCJ_Module {
 
 	/**
 	 * enqueue_checkout_script.
+	 *
+	 * @version 2.3.0
+	 * @since   2.3.0
 	 */
 	function enqueue_checkout_script() {
 		if( ! is_checkout() ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Global Discount
  *
- * @version 3.9.0
+ * @version 3.9.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -175,6 +175,14 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Advanced Settings', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_global_discount_advanced_options',
+	),
+	array(
+		'title'    => __( 'Global Discount in Admin', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will enable "global discount" product pricing in backend. It will also affect some modules, e.g.: "Products XML Feeds" module.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_global_discount_enabled_in_admin',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),

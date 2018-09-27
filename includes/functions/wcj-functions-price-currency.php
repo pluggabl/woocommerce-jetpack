@@ -412,7 +412,7 @@ if ( ! function_exists( 'wcj_get_currency_by_country' ) ) {
 	/**
 	 * wcj_get_currency_by_country.
 	 *
-	 * @version 2.5.4
+	 * @version 3.9.2
 	 * @since   2.5.4
 	 */
 	function wcj_get_currency_by_country( $country_code ) {
@@ -425,10 +425,16 @@ if ( ! function_exists( 'wcj_get_currency_by_country' ) ) {
 					$country_exchange_rate_group = explode( ',', $country_exchange_rate_group );
 					break;
 				case 'multiselect':
-					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_' . $i );
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_' . $i, '' );
+					if ( '' === $country_exchange_rate_group ) {
+						$country_exchange_rate_group = array();
+					}
 					break;
 				case 'chosen_select':
-					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i );
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' );
+					if ( '' === $country_exchange_rate_group ) {
+						$country_exchange_rate_group = array();
+					}
 					break;
 			}
 			if ( in_array( $country_code, $country_exchange_rate_group ) ) {

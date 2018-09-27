@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Price by Country
  *
- * @version 3.3.0
+ * @version 3.9.2
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  */
@@ -21,10 +21,10 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			$countries .= get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
 			break;
 		case 'multiselect':
-			$countries .= implode( ',', get_option( 'wcj_price_by_country_countries_group_' . $i ) );
+			$countries .= ( '' != ( $group = get_option( 'wcj_price_by_country_countries_group_' . $i, '' ) ) ? implode( ',', $group ) : '' );
 			break;
 		case 'chosen_select':
-			$countries .= implode( ',', get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i ) );
+			$countries .= ( '' != ( $group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' ) ) ? implode( ',', $group ) : '' );
 			break;
 	}
 	$admin_title = '<details>' . '<summary>' . $admin_title . ' [' . $group_currency_code . ']' . '</summary>' .
