@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Custom JS
  *
- * @version 3.4.0
+ * @version 3.9.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -14,6 +14,16 @@ return array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_custom_js_options',
+	),
+	array(
+		'title'    => __( 'Code Position', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_custom_js_hook',
+		'default'  => 'head',
+		'type'     => 'select',
+		'options'  => array(
+			'head'   => __( 'Header', 'woocommerce-jetpack' ),
+			'footer' => __( 'Footer', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'title'    => __( 'Custom JS - Front end (Customers)', 'woocommerce-jetpack' ),

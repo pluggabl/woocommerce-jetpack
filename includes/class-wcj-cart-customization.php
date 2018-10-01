@@ -67,7 +67,7 @@ class WCJ_Cart_Customization extends WCJ_Module {
 	 *
 	 * @version 3.1.0
 	 * @since   3.1.0
-	 * @todo    fix folder structure in /templates
+	 * @todo    [dev] fix folder structure in `/templates`
 	 */
 	function replace_empty_cart_template( $located, $template_name, $args, $template_path, $default_path ) {
 		if ( 'cart/cart-empty.php' == $template_name ) {
@@ -81,7 +81,7 @@ class WCJ_Cart_Customization extends WCJ_Module {
 	 *
 	 * @version 3.0.1
 	 * @since   3.0.1
-	 * @todo    (maybe) check if link is not empty
+	 * @todo    [dev] (maybe) check if link is not empty
 	 */
 	function change_empty_cart_return_to_shop_link( $link ) {
 		return ( is_cart() ? get_option( 'wcj_cart_customization_return_to_shop_button_link', '' ) : $link );
@@ -92,7 +92,7 @@ class WCJ_Cart_Customization extends WCJ_Module {
 	 *
 	 * @version 2.8.0
 	 * @since   2.8.0
-	 * @todo    maybe check `is_cart()`
+	 * @todo    [dev] maybe check `is_cart()`
 	 */
 	function enqueue_scripts() {
 		wp_enqueue_script(  'wcj-cart-customization', wcj_plugin_url() . '/includes/js/wcj-cart-customization.js', array( 'jquery' ), WCJ()->version, false );

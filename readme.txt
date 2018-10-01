@@ -191,7 +191,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.9.2 - 26/09/2018 =
+= 3.9.2 - 30/09/2018 =
 * Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Widget - "Form Method", "Class" and "Style" options added.
 * Feature - PRODUCTS - Product Addons - Frontend Templates - "Each Addon - Type: Select Box (Each Option)" option added.
 * Feature - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses Buttons to Admin Order Preview Actions" option added.
@@ -199,6 +199,8 @@ You can see the differences between versions in this [table](https://booster.io/
 * Feature - SHIPPING & ORDERS - Shipping Methods by City or Postcode - "Shipping Methods by Postcodes" subsection added.
 * Feature - SHIPPING & ORDERS - Shipping Methods by Current Date/Time - Initial module release.
 * Feature - EMAILS & MISC. - Admin Tools - "Suppress Admin Connect Notice" and "Suppress Admin Notices" options added.
+* Feature - EMAILS & MISC. - Custom CSS - "Code Position" option added.
+* Feature - EMAILS & MISC. - Custom JS - "Code Position" option added.
 ~* Feature - EMAILS & MISC. - Custom PHP - Initial module release.
 * Feature - EMAILS & MISC. - General - Add/Manage Custom Roles tool - "Capabilities" option added.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Default values for options and empty string checks added.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom JS
  *
- * @version 2.9.1
+ * @version 3.9.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,11 +16,10 @@ class WCJ_Custom_JS extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 3.9.2
 	 * @since   2.8.0
-	 * @todo    footer or head
-	 * @todo    (maybe) wp_safe_redirect after saving settings
-	 * @todo    (maybe) set `add_action` `priority` to `PHP_INT_MAX`
+	 * @todo    [dev] wp_safe_redirect after saving settings
+	 * @todo    [dev] (maybe) set `add_action` `priority` to `PHP_INT_MAX`
 	 */
 	function __construct() {
 
@@ -32,10 +31,10 @@ class WCJ_Custom_JS extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			if ( '' != get_option( 'wcj_custom_js_frontend', '' ) ) {
-				add_action( 'wp_head', array( $this, 'custom_frontend_js' ) );
+				add_action( 'wp_'    . get_option( 'wcj_custom_js_hook', 'head' ), array( $this, 'custom_frontend_js' ) );
 			}
 			if ( '' != get_option( 'wcj_custom_js_backend', '' ) ) {
-				add_action( 'admin_head', array( $this, 'custom_backend_js' ) );
+				add_action( 'admin_' . get_option( 'wcj_custom_js_hook', 'head' ), array( $this, 'custom_backend_js' ) );
 			}
 		}
 	}

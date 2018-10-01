@@ -17,6 +17,7 @@ class WCJ_Crowdfunding extends WCJ_Module {
 	 * Constructor.
 	 *
 	 * @version 2.8.0
+	 * @since   2.2.6
 	 */
 	function __construct() {
 
@@ -52,6 +53,7 @@ class WCJ_Crowdfunding extends WCJ_Module {
 	 * check_dates.
 	 *
 	 * @version 2.7.0
+	 * @since   2.2.6
 	 */
 	function check_dates( $purchasable, $_product ) {
 		$_product_id = wcj_get_product_id_or_variation_parent_id( $_product );
