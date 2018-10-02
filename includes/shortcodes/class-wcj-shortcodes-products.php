@@ -296,6 +296,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 2.5.4
 	 * @since   2.4.0
+	 * @todo    [dev] clean up
 	 */
 	function wcj_product_time_since_last_sale( $atts ) {
 		global $woocommerce_loop, $post;
@@ -349,20 +350,24 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_available_variations.
 	 *
-	 * @version 2.4.0
+	 * @version 3.9.2
 	 * @since   2.4.0
+	 * @todo    [dev] re-check `$attribute_name`
 	 */
 	function wcj_product_available_variations( $atts ) {
 		$return_html = '';
+		$param       = ( isset( $atts['param'] ) ? $atts['param'] : 'price_html' );
 		if ( $this->the_product->is_type( 'variable' ) ) {
 			$return_html .= '<table>';
 			foreach ( $this->the_product->get_available_variations() as $variation ) {
 				$return_html .= '<tr>';
 				foreach ( $variation['attributes'] as $attribute_slug => $attribute_name ) {
-					if ( '' == $attribute_name ) $attribute_name = __( 'Any', 'woocommerce-jetpack' );
+					if ( '' == $attribute_name ) {
+						$attribute_name = __( 'Any', 'woocommerce-jetpack' );
+					}
 					$return_html .= '<td>' . $attribute_name . '</td>';
 				}
-				$return_html .= '<td>' . $variation['price_html'] . '</td>';
+				$return_html .= '<td>' . $variation[ $param ] . '</td>';
 				$return_html .= '</tr>';
 			}
 			$return_html .= '</table>';

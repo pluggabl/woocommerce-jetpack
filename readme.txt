@@ -191,7 +191,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.9.2 - 30/09/2018 =
+= 3.9.2 - 03/10/2018 =
 * Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Widget - "Form Method", "Class" and "Style" options added.
 * Feature - PRODUCTS - Product Addons - Frontend Templates - "Each Addon - Type: Select Box (Each Option)" option added.
 * Feature - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses Buttons to Admin Order Preview Actions" option added.
@@ -225,6 +225,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - EMAILS & MISC. - Template Editor - Admin settings minor restyling.
 * Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - Code refactoring.
 ~* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `user_role` attribute added.
+~* Dev - Shortcodes - Products - `[wcj_product_available_variations]` - `param` attribute added.
 * Dev - Functions - Price and Currency - `wcj_update_products_price_by_country()` - `WP_Query` optimized to return `ids` only.
 * Dev - Classes - `WCJ_Module` - Modules' "extra description" restyled.
 
