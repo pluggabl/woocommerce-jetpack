@@ -691,7 +691,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_items_total_weight.
 	 *
-	 * @version    2.5.7
+	 * @version 2.5.7
 	 * @deprecated 2.5.7
 	 */
 	function wcj_order_items_total_weight( $atts ) {
@@ -732,7 +732,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	 *
 	 * @version 3.5.0
 	 * @since   3.4.0
-	 * @todo    (maybe) run `strip_tags` on `comment_content`
+	 * @todo    [dev] (maybe) run `strip_tags` on `comment_content`
 	 */
 	function wcj_order_notes( $atts ) {
 		$notes = array();

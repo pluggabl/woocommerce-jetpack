@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -362,7 +362,7 @@ if ( ! function_exists( 'wcj_update_products_price_by_country' ) ) {
 	/**
 	 * wcj_update_products_price_by_country - all products.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.5.3
 	 */
 	function wcj_update_products_price_by_country() {
@@ -412,7 +412,7 @@ if ( ! function_exists( 'wcj_get_currency_by_country' ) ) {
 	/**
 	 * wcj_get_currency_by_country.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.5.4
 	 */
 	function wcj_get_currency_by_country( $country_code ) {

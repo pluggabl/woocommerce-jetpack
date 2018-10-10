@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @author  Algoritmika Ltd.
  */
 
@@ -162,7 +162,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * create_custom_roles_tool.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.5.3
 	 */
 	function create_custom_roles_tool() {
@@ -178,7 +178,7 @@ class WCJ_General extends WCJ_Module {
 					$caps      = ( ! empty( $caps_role->capabilities ) && is_array( $caps_role->capabilities ) ? $caps_role->capabilities : array() );
 					$result    = add_role( $role_id, $_POST['wcj_custom_role_name'], $caps );
 					if ( null !== $result ) {
-						$custom_roles = get_option( 'wcj_custom_roles', array() ); // `wcj_custom_roles` option added since Booster v3.9.2
+						$custom_roles = get_option( 'wcj_custom_roles', array() ); // `wcj_custom_roles` option added since Booster v4.0.0
 						$custom_roles[ $role_id ] = array( 'display_name' => $_POST['wcj_custom_role_name'], 'caps_role' => $_POST['wcj_custom_role_caps'] );
 						update_option( 'wcj_custom_roles', $custom_roles );
 						echo '<p style="color:green;font-weight:bold;">' . __( 'Role successfully added!', 'woocommerce-jetpack') . '</p>';
@@ -277,7 +277,7 @@ class WCJ_General extends WCJ_Module {
 	/*
 	 * get_products_atts.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.3.9
 	 */
 	function get_products_atts() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom CSS
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Custom_CSS extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.7.0
 	 * @todo    [dev] `do_shortcode()`
 	 * @todo    [dev] wp_safe_redirect after saving settings

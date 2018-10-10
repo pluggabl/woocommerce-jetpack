@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @todo    (maybe) add editable (product and order) metas
 	 */
 	function __construct() {

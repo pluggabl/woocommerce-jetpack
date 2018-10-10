@@ -2,17 +2,17 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
- * @todo    [dev] clean up
+ * @todo    [dev] maybe should be `abstract` ?
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WCJ_Module' ) ) :
 
-/* abstract */ class WCJ_Module {
+class WCJ_Module {
 
 	public $id;
 	public $short_desc;
@@ -470,16 +470,6 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	}
 
 	/**
-	 * add_enabled_option.
-	 * only for `module`
-	 *
-	function add_enabled_option( $settings ) {
-		$all_settings = $this->get_settings();
-		$settings[] = $all_settings[1];
-		return $settings;
-	}
-
-	/**
 	 * settings_section.
 	 *
 	 * @version 2.3.0
@@ -529,7 +519,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	function add_tools_list( $settings ) {
 		return array_merge( $settings, array(
 			array(
-				'title'    => /* $this->short_desc . ' ' .  */__( 'Tools', 'woocommerce-jetpack' ),
+				'title'    => __( 'Tools', 'woocommerce-jetpack' ),
 				'type'     => 'title',
 				'desc'     => '',
 				'id'       => 'wcj_' . $this->id . '_tools_options'
@@ -680,7 +670,7 @@ if ( ! class_exists( 'WCJ_Module' ) ) :
 	 * settings_section.
 	 * only for `module`
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 */
 	function add_enable_module_setting( $settings, $module_desc = '' ) {
 		if ( 'module' != $this->type ) {

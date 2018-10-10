@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce Settings - Custom PHP
  *
- * @version 3.9.2
- * @since   3.9.2
+ * @version 4.0.0
+ * @since   4.0.0
  * @author  Algoritmika Ltd.
  */
 

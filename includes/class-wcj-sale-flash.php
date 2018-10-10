@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sale Flash
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Sale_Flash extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   3.2.4
 	 * @todo    add predefined styles
 	 * @todo    (maybe) per product/category/tag: separate "loop" and "single" options
@@ -54,8 +54,8 @@ class WCJ_Sale_Flash extends WCJ_Module {
 	/**
 	 * get_deprecated_options.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function get_deprecated_options() {
 		$deprecated_options           = array();
@@ -72,7 +72,7 @@ class WCJ_Sale_Flash extends WCJ_Module {
 	/**
 	 * get_taxonomy_sale_flash.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 */
 	function get_taxonomy_sale_flash( $product_id, $taxonomy ) {
 		$product_terms = get_the_terms( $product_id, $taxonomy );

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Time
  *
- * @version 3.9.2
- * @since   3.9.2
+ * @version 4.0.0
+ * @since   4.0.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Shipping_By_Time extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 * @todo    [dev] add more "Valid time input" examples
 	 * @todo    [feature] multiple time values (i.e. `__( 'Otherwise enter time one per line.', 'woocommerce-jetpack' )`)
 	 */
@@ -52,8 +52,8 @@ class WCJ_Shipping_By_Time extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * parse_time.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function parse_time( $value ) {
 		$value = explode( '~', $value );
@@ -72,8 +72,8 @@ class WCJ_Shipping_By_Time extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * check.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function check( $options_id, $values, $include_or_exclude, $package ) {
 		switch( $options_id ) {
@@ -89,8 +89,8 @@ class WCJ_Shipping_By_Time extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * get_condition_options.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function get_condition_options( $options_id ) {
 		switch( $options_id ) {
@@ -102,8 +102,8 @@ class WCJ_Shipping_By_Time extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * get_extra_option_desc.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function get_extra_option_desc( $option_id ) {
 		$values = get_option( $option_id, '' );

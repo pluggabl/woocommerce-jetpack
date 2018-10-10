@@ -191,7 +191,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 3.9.2 - 03/10/2018 =
+= 4.0.0 - 11/10/2018 =
 * Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Widget - "Form Method", "Class" and "Style" options added.
 * Feature - PRODUCTS - Product Addons - Frontend Templates - "Each Addon - Type: Select Box (Each Option)" option added.
 * Feature - SHIPPING & ORDERS - Order Custom Statuses - "Add Custom Statuses Buttons to Admin Order Preview Actions" option added.
@@ -201,20 +201,21 @@ You can see the differences between versions in this [table](https://booster.io/
 * Feature - EMAILS & MISC. - Admin Tools - "Suppress Admin Connect Notice" and "Suppress Admin Notices" options added.
 * Feature - EMAILS & MISC. - Custom CSS - "Code Position" option added.
 * Feature - EMAILS & MISC. - Custom JS - "Code Position" option added.
-~* Feature - EMAILS & MISC. - Custom PHP - Initial module release.
+* Feature - EMAILS & MISC. - Custom PHP - Initial module release.
 * Feature - EMAILS & MISC. - General - Add/Manage Custom Roles tool - "Capabilities" option added.
 * Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Default values for options and empty string checks added.
 * Fix - CART & CHECKOUT - EU VAT Number - Possible "Undefined index: wcj_eu_vat_number_to_check..." PHP notice fixed.
 * Fix - PAYMENT GATEWAYS - Gateways by Shipping - Use Shipping Instances - Trying to extract shipping instance number from form with underscore symbol (e.g. "Flexible Shipping" plugin).
-~* Fix - SHIPPING & ORDERS - Order Min/Max Quantities - `isEmptyObject` check added in `wcj-order-quantities.js`.
+* Fix - SHIPPING & ORDERS - Order Min/Max Quantities - `isEmptyObject` check added in `wcj-order-quantities.js`.
 * Fix - PDF INVOICING & PACKING SLIPS - Invoices Report tool - "Disable Saving PDFs in PHP directory for temporary files..." notice fixed.
 * Fix - EMAILS & MISC. - General - Add/Manage Custom Roles tool - `sanitize_key()` added for role ID (when adding new role).
 * Fix - EMAILS & MISC. - General - Products Attributes tool - Column titles fixed.
 * Fix - EMAILS & MISC. - Template Editor - Checking for modified template file to exist before replacing the original template.
+* Fix - Shortcodes - Products - `[wcj_product_time_since_last_sale]` - `date_query` fixed.
 * Fix - Functions - General - `wcj_is_frontend()` - AJAX part improved (`woocommerce_load_variations` backend `action` added).
 * Dev - PRICES & CURRENCIES - Global Discount - "Global Discount in Admin" option added.
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Module description updated.
-~* Dev - PRODUCTS - Sale Flash - Code refactoring - "Per Category" and "Per Tag" options are stored in arrays now.
+* Dev - PRODUCTS - Sale Flash - Code refactoring - "Per Category" and "Per Tag" options are stored in arrays now.
 * Dev - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - Code refactoring.
 * Dev - PAYMENT GATEWAYS - Gateways Currency Converter - "Show Converted Prices" option added.
 * Dev - PAYMENT GATEWAYS - Gateways Currency Converter - Admin settings minor restyling.
@@ -224,10 +225,12 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - EMAILS & MISC. - General - Add/Manage Custom Roles tool - Restyled; JS confirmation added etc.
 * Dev - EMAILS & MISC. - Template Editor - Admin settings minor restyling.
 * Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` - Code refactoring.
-~* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `user_role` attribute added.
-~* Dev - Shortcodes - Products - `[wcj_product_available_variations]` - `param` attribute added.
+* Dev - Shortcodes - Products - `[wcj_product_available_variations]` - `param` attribute added.
+* Dev - Shortcodes - Products - `[wcj_product_time_since_last_sale]` - Code refactoring.
+* Dev - Shortcodes - Products - `[wcj_product_wholesale_price_table]` - `user_role` attribute added.
 * Dev - Functions - Price and Currency - `wcj_update_products_price_by_country()` - `WP_Query` optimized to return `ids` only.
 * Dev - Classes - `WCJ_Module` - Modules' "extra description" restyled.
+* Dev - Code clean up.
 
 = 3.9.1 - 06/09/2018 =
 * Fix - Shortcodes - General - `[wcj_cross_sell_display]` - Returning the result instead of echoing.

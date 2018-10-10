@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Condition
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  */
@@ -100,8 +100,8 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 	/**
 	 * get_extra_option_desc.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function get_extra_option_desc( $option_id ) {
 		return '';

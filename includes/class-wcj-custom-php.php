@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Custom PHP
  *
- * @version 3.9.2
- * @since   3.9.2
+ * @version 4.0.0
+ * @since   4.0.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Custom_PHP extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 * @todo    [dev] maybe remove `wcj_disable_custom_php` from URL on settings save
 	 * @todo    [dev] allow tab in content (i.e. settings (textarea))
 	 */
@@ -63,10 +63,10 @@ class WCJ_Custom_PHP extends WCJ_Module {
 	/**
 	 * create_php_file.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
-	 * @todo    [dev] cleanup on settings reset
-	 * @todo    [dev] on empty content - delete dir also
+	 * @version 4.0.0
+	 * @since   4.0.0
+	 * @todo    [dev] `unlink` and `rmdir` on settings reset
+	 * @todo    [dev] on empty content - delete dir also (`rmdir`)
 	 */
 	function create_php_file( $sections, $current_section ) {
 		if ( $this->id === $current_section ) {

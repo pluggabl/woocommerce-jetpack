@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Multicurrency
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -33,7 +33,7 @@ class WCJ_Widget_Multicurrency extends WCJ_Widget {
 	/**
 	 * get_content.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   3.1.0
 	 */
 	function get_content( $instance ) {
@@ -60,7 +60,7 @@ class WCJ_Widget_Multicurrency extends WCJ_Widget {
 	/**
 	 * get_options.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   3.1.0
 	 */
 	function get_options() {

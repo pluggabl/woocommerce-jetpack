@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.

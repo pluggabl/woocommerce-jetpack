@@ -23,9 +23,10 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	 * prepare_pdf.
 	 *
 	 * @version 3.4.3
-	 * @todo    check `addTTFfont()`
-	 * @todo    clean up
-	 * @todo    (maybe) option to set different font in footer (and maybe also header)
+	 * @todo    [dev] check `addTTFfont()`
+	 * @todo    [dev] maybe `$pdf->SetAuthor( 'Booster for WooCommerce' )`
+	 * @todo    [dev] maybe `$pdf->setLanguageArray( $l )`
+	 * @todo    [feature] (maybe) option to set different font in footer (and maybe also header)
 	 */
 	function prepare_pdf() {
 
@@ -56,9 +57,8 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 
 		// Set document information
 		$pdf->SetCreator( PDF_CREATOR );
-//		$pdf->SetAuthor( 'Booster for WooCommerce' );
 		$invoice_title = $invoice_type;
-		$invoice_types = /* ( 'yes' === get_option( 'wcj_invoicing_hide_disabled_docs_settings', 'no' ) ) ? wcj_get_enabled_invoice_types() : */ wcj_get_invoice_types();
+		$invoice_types = wcj_get_invoice_types();
 		foreach ( $invoice_types as $invoice_type_data ) {
 			if ( $invoice_type === $invoice_type_data['id'] ) {
 				$invoice_title = $invoice_type_data['title'];
@@ -85,9 +85,9 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 				$the_logo,
 				$the_logo_width_mm,
 				do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_header_title_text', $invoice_title ) ),
-				do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_header_text', __( 'Company Name', 'woocommerce-jetpack' ) ) ),
-				wcj_hex2rgb( get_option( 'wcj_invoicing_' . $invoice_type . '_header_text_color', '#cccccc' ) ),
-				wcj_hex2rgb( get_option( 'wcj_invoicing_' . $invoice_type . '_header_line_color', '#cccccc' ) ) );
+				do_shortcode( get_option( 'wcj_invoicing_' . $invoice_type . '_header_text'      , __( 'Company Name', 'woocommerce-jetpack' ) ) ),
+				wcj_hex2rgb(  get_option( 'wcj_invoicing_' . $invoice_type . '_header_text_color', '#cccccc' ) ),
+				wcj_hex2rgb(  get_option( 'wcj_invoicing_' . $invoice_type . '_header_line_color', '#cccccc' ) ) );
 		} else {
 			$pdf->SetPrintHeader( false );
 		}
@@ -105,8 +105,8 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$tcpdf_font = wcj_get_tcpdf_font( $invoice_type );
 
 		// Set Header and Footer fonts
-		$pdf->setHeaderFont( array( /* PDF_FONT_NAME_MAIN */ $tcpdf_font, '', PDF_FONT_SIZE_MAIN ) );
-		$pdf->setFooterFont( array( /* PDF_FONT_NAME_DATA */ $tcpdf_font, '', PDF_FONT_SIZE_DATA ) );
+		$pdf->setHeaderFont( array( $tcpdf_font, '', PDF_FONT_SIZE_MAIN ) );
+		$pdf->setFooterFont( array( $tcpdf_font, '', PDF_FONT_SIZE_DATA ) );
 
 		// Set default monospaced font
 		$pdf->SetDefaultMonospacedFont( PDF_FONT_MONOSPACED );
@@ -125,12 +125,6 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 
 		// Set image scale factor
 		$pdf->setImageScale( PDF_IMAGE_SCALE_RATIO );
-
-		/*// Set some language-dependent strings (optional)
-		if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
-			require_once(dirname(__FILE__).'/lang/eng.php');
-			$pdf->setLanguageArray($l);
-		}*/
 
 		// Set default font subsetting mode
 		$pdf->setFontSubsetting( true );
@@ -184,8 +178,8 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	 *
 	 * @version 3.6.0
 	 * @since   3.5.0
-	 * @todo    pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
-	 * @todo    `force_balance_tags()` - there are some bugs and performance issues, see http://wordpress.stackexchange.com/questions/89121/why-doesnt-default-wordpress-page-view-use-force-balance-tags
+	 * @todo    [dev] pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
+	 * @todo    [fix] `force_balance_tags()` - there are some bugs and performance issues, see http://wordpress.stackexchange.com/questions/89121/why-doesnt-default-wordpress-page-view-use-force-balance-tags
 	 */
 	function get_html( $order_id, $pdf ) {
 		$_GET['order_id'] = $order_id;
@@ -210,7 +204,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	 * get_pdf.
 	 *
 	 * @version 3.8.0
-	 * @todo    (maybe) `die()` on success
+	 * @todo    [dev] (maybe) `die()` on success
 	 */
 	function get_pdf( $dest ) {
 		$pdf     = $this->prepare_pdf();

@@ -65,7 +65,6 @@ class WCJ_Export_Import extends WCJ_Module {
 	 *
 	 * @version 2.5.9
 	 * @since   2.4.8
-	 * @todo    [dev] clean up
 	 * @todo    [dev] when filtering now using `strpos`, but other options would be `stripos` (case-insensitive) or strict equality
 	 * @todo    [dev] (maybe) do filtering directly in WP_Query
 	 */
@@ -110,9 +109,6 @@ class WCJ_Export_Import extends WCJ_Module {
 				}
 			}
 		}
-		/* if ( 1 == count( $data ) ) {
-			return '<em>' . __( 'No results found.', 'woocommerce-jetpack' ) . '</em>';
-		} */
 		return $data;
 	}
 

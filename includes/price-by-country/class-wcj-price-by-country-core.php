@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,7 +16,7 @@ class WCJ_Price_by_Country_Core {
 	 * Constructor.
 	 *
 	 * @version 3.6.0
-	 * @todo    check if we can just always execute `init()` on `init` hook
+	 * @todo    [dev] check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {
 		$this->customer_country_group_id = null;
@@ -228,8 +228,8 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 3.9.2
-	 * @todo    (maybe) `( 'cart_and_checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && ( is_cart() || is_checkout() ) ) ||`
+	 * @version 4.0.0
+	 * @todo    [feature] (maybe) `( 'cart_and_checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && ( is_cart() || is_checkout() ) ) ||`
 	 */
 	function get_customer_country_group_id() {
 
@@ -314,7 +314,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.4.3
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {

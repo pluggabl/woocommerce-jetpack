@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Orders
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @todo    Bulk Regenerate Download Permissions - copy "cron" to plugin
 	 * @todo    Bulk Regenerate Download Permissions - maybe move "bulk actions" to free
 	 * @todo    Bulk Regenerate Download Permissions - maybe as new module
@@ -89,8 +89,8 @@ class WCJ_Orders extends WCJ_Module {
 	/**
 	 * editable_status.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function editable_status( $is_editable, $order ) {
 		return in_array( $order->get_status(), get_option( 'wcj_orders_editable_status', array( 'pending', 'on-hold', 'auto-draft' ) ), true );

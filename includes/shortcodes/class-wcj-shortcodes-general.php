@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @author  Algoritmika Ltd.
  */
 
@@ -870,7 +870,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_country_select_drop_down_list.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
 		$form_method           = $atts['form_method'];

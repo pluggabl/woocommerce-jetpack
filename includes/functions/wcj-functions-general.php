@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -13,7 +13,7 @@ if ( ! function_exists( 'wcj_range_match' ) ) {
 	/**
 	 * wcj_range_match.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   3.4.0
 	 */
 	function wcj_range_match( $postcode_range, $postcode_to_check ) {
@@ -26,7 +26,7 @@ if ( ! function_exists( 'wcj_check_postcode' ) ) {
 	/**
 	 * wcj_check_postcode.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   3.4.0
 	 */
 	function wcj_check_postcode( $postcode_to_check, $postcodes ) {
@@ -738,7 +738,7 @@ if ( ! function_exists( 'wcj_is_frontend' ) ) {
 	/*
 	 * wcj_is_frontend()
 	 *
-	 * @since  3.9.2
+	 * @since  4.0.0
 	 * @return boolean
 	 */
 	function wcj_is_frontend() {

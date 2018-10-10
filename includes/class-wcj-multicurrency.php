@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @todo    check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {

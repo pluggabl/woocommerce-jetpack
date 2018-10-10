@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @author  Algoritmika Ltd.
  */
 
@@ -294,16 +294,12 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_time_since_last_sale.
 	 *
-	 * @version 2.5.4
+	 * @version 4.0.0
 	 * @since   2.4.0
-	 * @todo    [dev] clean up
 	 */
 	function wcj_product_time_since_last_sale( $atts ) {
-		global $woocommerce_loop, $post;
-		$saved_wc_loop = $woocommerce_loop;
-		$saved_post    = $post;
-		$offset = 0;
-		$block_size = 96;
+		$offset     = 0;
+		$block_size = 512;
 		while( true ) {
 			// Create args for new query
 			$args = array(
@@ -313,7 +309,8 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				'offset'         => $offset,
 				'orderby'        => 'date',
 				'order'          => 'DESC',
-				'date_query'     => array( array( 'after' => strtotime( '-' . $atts['days_to_cover'] . ' days' ) ) ),
+				'date_query'     => array( 'after' => '-' . $atts['days_to_cover'] . ' days' ),
+				'fields'         => 'ids',
 			);
 			// Run new query
 			$loop = new WP_Query( $args );
@@ -321,28 +318,19 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				break;
 			}
 			// Analyze the results, i.e. orders
-			while ( $loop->have_posts() ) : $loop->the_post();
-				$order = new WC_Order( $loop->post->ID );
+			foreach ( $loop->posts as $order_id ) {
+				$order = wc_get_order( $order_id );
 				$items = $order->get_items();
 				foreach ( $items as $item ) {
 					// Run through all order's items
 					if ( $item['product_id'] == $atts['product_id'] ) {
 						// Found sale!
-						$result = sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U' ), current_time( 'timestamp' ) ) );
-//						wp_reset_postdata();
-						$woocommerce_loop = $saved_wc_loop;
-						$post             = $saved_post;
-						setup_postdata( $post );
-						return $result;
+						return sprintf( __( '%s ago', 'woocommerce-jetpack' ), human_time_diff( get_the_time( 'U', $order_id ), current_time( 'timestamp' ) ) );
 					}
 				}
-			endwhile;
+			}
 			$offset += $block_size;
 		}
-//		wp_reset_postdata();
-		$woocommerce_loop = $saved_wc_loop;
-		$post             = $saved_post;
-		setup_postdata( $post );
 		// No sales found
 		return ( 'yes' === $atts['hide_if_no_sales'] ? '' : __( 'No sales yet.', 'woocommerce-jetpack' ) );
 	}
@@ -350,7 +338,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_available_variations.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.4.0
 	 * @todo    [dev] re-check `$attribute_name`
 	 */
@@ -838,7 +826,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @todo    (maybe) `if ( 'yes' === $atts['add_percent_row'] )` for 'fixed' or 'price_directly'; `if ( 'yes' === $atts['add_discount_row'] )` for 'percent' or 'price_directly'
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {

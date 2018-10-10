@@ -3,7 +3,7 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: https://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules. All in one WooCommerce plugin.
-Version: 3.9.2-dev
+Version: 4.0.0-dev
 Author: Algoritmika Ltd
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
@@ -35,7 +35,6 @@ if ( ! defined( 'WCJ_PLUGIN_FILE' ) ) {
 	/**
 	 * WCJ_PLUGIN_FILE.
 	 *
-	 * @version 3.2.4
 	 * @since   3.2.4
 	 */
 	define( 'WCJ_PLUGIN_FILE', __FILE__ );
@@ -48,6 +47,7 @@ if ( ! class_exists( 'WC_Jetpack' ) ) :
  *
  * @class   WC_Jetpack
  * @version 3.2.4
+ * @since   1.0.0
  */
 final class WC_Jetpack {
 
@@ -57,7 +57,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '3.9.2-dev-20181003-0120';
+	public $version = '4.0.0-dev-20181011-0139';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class
@@ -65,10 +65,12 @@ final class WC_Jetpack {
 	protected static $_instance = null;
 
 	/**
-	 * Main WC_Jetpack Instance
+	 * Main WC_Jetpack Instance.
 	 *
 	 * Ensures only one instance of WC_Jetpack is loaded or can be loaded.
 	 *
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 * @static
 	 * @see    WCJ()
 	 * @return WC_Jetpack - Main instance
@@ -84,6 +86,7 @@ final class WC_Jetpack {
 	 * WC_Jetpack Constructor.
 	 *
 	 * @version 3.2.4
+	 * @since   1.0.0
 	 * @access  public
 	 */
 	function __construct() {
@@ -99,6 +102,7 @@ if ( ! function_exists( 'WCJ' ) ) {
 	 * Returns the main instance of WC_Jetpack to prevent the need to use globals.
 	 *
 	 * @version 2.5.7
+	 * @since   1.0.0
 	 * @return  WC_Jetpack
 	 */
 	function WCJ() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names)
@@ -536,7 +536,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {

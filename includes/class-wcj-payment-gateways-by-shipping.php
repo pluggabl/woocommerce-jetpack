@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Shipping
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -37,7 +37,7 @@ class WCJ_Payment_Gateways_By_Shipping extends WCJ_Module {
 	/**
 	 * check_if_enabled_for_methods.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.7.0
 	 * @see     `is_available()` function in WooCommerce `WC_Gateway_COD` class
 	 * @todo    (maybe) virtual orders (`enable_for_virtual`)

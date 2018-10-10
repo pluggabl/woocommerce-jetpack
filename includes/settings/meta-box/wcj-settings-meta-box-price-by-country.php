@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Price by Country
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Cities
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   3.6.0
 	 */
 	function __construct() {
@@ -51,7 +51,7 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * check.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   3.6.0
 	 * @todo    `$_REQUEST['city']` (i.e. billing city)
 	 * @todo    `get_base_city()` - do we really need this?
@@ -72,7 +72,7 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * get_condition_options.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   3.6.0
 	 */
 	function get_condition_options( $options_id ) {

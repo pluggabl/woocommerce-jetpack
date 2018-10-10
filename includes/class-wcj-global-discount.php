@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.5.7
 	 * @todo    fee instead of discount
 	 * @todo    regular price coefficient

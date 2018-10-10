@@ -1,7 +1,7 @@
 /**
  * wcj-order-quantities.js
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   3.2.2
  * @todo    [dev] maybe `jQuery('[name=quantity]').val('0')` on `jQuery.isEmptyObject(product_quantities[variation_id])` (instead of `return`)
  */

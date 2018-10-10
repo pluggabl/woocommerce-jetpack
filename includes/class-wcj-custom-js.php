@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom JS
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Custom_JS extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.8.0
 	 * @todo    [dev] wp_safe_redirect after saving settings
 	 * @todo    [dev] (maybe) set `add_action` `priority` to `PHP_INT_MAX`

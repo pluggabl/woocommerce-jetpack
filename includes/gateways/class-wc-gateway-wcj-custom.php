@@ -22,16 +22,6 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 			class WC_Gateway_WCJ_Custom_Template extends WC_Payment_Gateway {
 
 				/**
-				 * set_icon
-				 */
-				/* function set_icon() {
-					$icon_url = get_option( 'wcj_payment_gateways_icons_woocommerce_wcj_custom_icon', '' );
-					if ( $icon_url === '' )
-						return $this->get_option( 'icon', '' );
-					return $icon_url;
-				} */
-
-				/**
 				 * Initialise Gateway Settings Form Fields
 				 *
 				 * @version 2.5.7
@@ -48,9 +38,8 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					}
 
 					$desc = '';
-					$icon_url = $this->get_option( 'icon', '' );//apply_filters( 'woocommerce_wcj_custom_icon', $this->get_option( 'icon', '' ) );
+					$icon_url = $this->get_option( 'icon', '' );
 					if ( $icon_url !== '' ) {
-						//$desc = '<img src="' . $icon_url . '" alt="WooJetpack Custom" title="WooJetpack Custom" />';
 						$desc = '<img src="' . $icon_url . '" alt="' . $this->title . '" title="' . $this->title . '" />';
 					}
 
@@ -143,13 +132,11 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 						'send_email_to_admin' => array(
 							'title'             => __( 'Send Additional Emails', 'woocommerce-jetpack' ),
 							'label'             => __( 'Send to Admin', 'woocommerce-jetpack' ),
-//							'description'       => __( 'This may help if you are using pending or custom default status and not getting new order emails.', 'woocommerce-jetpack' ),
 							'default'           => 'no',
 							'type'              => 'checkbox',
 						),
 
 						'send_email_to_customer' => array(
-							'title'             => '',//__( 'Send Additional Email to Customer', 'woocommerce-jetpack' ),
 							'label'             => __( 'Send to Customer', 'woocommerce-jetpack' ),
 							'description'       => __( 'This may help if you are using pending or custom default status and not getting new order emails.', 'woocommerce-jetpack' ),
 							'default'           => 'no',
@@ -285,8 +272,9 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 * Output for the order received page.
 				 */
 				function thankyou_page() {
-					if ( $this->instructions )
+					if ( $this->instructions ) {
 						echo do_shortcode( wpautop( wptexturize( $this->instructions ) ) );
+					}
 				}
 
 				/**
@@ -299,7 +287,10 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 * @param   bool $plain_text
 				 */
 				function email_instructions( $order, $sent_to_admin, $plain_text = false ) {
-					if ( $this->instructions_in_email && ! $sent_to_admin && $this->id === wcj_order_get_payment_method( $order ) && $this->default_order_status === ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->status : $order->get_status() ) ) {
+					if (
+						$this->instructions_in_email && ! $sent_to_admin && $this->id === wcj_order_get_payment_method( $order ) &&
+						$this->default_order_status === ( WCJ_IS_WC_VERSION_BELOW_3 ? $order->status : $order->get_status() )
+					) {
 						echo do_shortcode( wpautop( wptexturize( $this->instructions_in_email ) ) . PHP_EOL );
 					}
 				}
@@ -347,12 +338,12 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 * init.
 				 *
 				 * @version 3.9.0
-				 * @todo    clean up
 				 */
 				function init( $id_count ) {
 					$this->id                       = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
 					$this->has_fields               = false;
-					$this->method_title             = get_option( 'wcj_custom_payment_gateways_admin_title_' . $id_count, __( 'Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count );
+					$this->method_title             = get_option( 'wcj_custom_payment_gateways_admin_title_' . $id_count,
+						__( 'Custom Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count );
 					$this->method_description       = __( 'Booster for WooCommerce: Custom Payment Gateway', 'woocommerce-jetpack' ) . ' #' . $id_count;
 					$this->id_count = $id_count;
 					// Load the settings.
@@ -360,10 +351,11 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					$this->init_settings();
 					// Define user set variables
 					$this->title                    = $this->get_option( 'title' );
-					$this->description              = do_shortcode( str_replace( '[wcj_input_field', '[wcj_input_field attach_to="' . $this->id . '"', $this->get_option( 'description' ) ) );
-					$this->instructions             = $this->get_option( 'instructions', '' );//$this->description );
+					$this->description              = do_shortcode( str_replace( '[wcj_input_field', '[wcj_input_field attach_to="' . $this->id . '"',
+						$this->get_option( 'description' ) ) );
+					$this->instructions             = $this->get_option( 'instructions', '' );
 					$this->instructions_in_email    = $this->get_option( 'instructions_in_email', '' );
-					$this->icon                     = $this->get_option( 'icon', '' );//apply_filters( 'woocommerce_wcj_custom_icon', $this->get_option( 'icon', '' ) );
+					$this->icon                     = $this->get_option( 'icon', '' );
 					$this->min_amount               = $this->get_option( 'min_amount', 0 );
 					$this->enable_for_methods       = $this->get_option( 'enable_for_methods', array() );
 					$this->enable_for_virtual       = $this->get_option( 'enable_for_virtual', 'yes' ) === 'yes';
@@ -373,8 +365,8 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					$this->custom_return_url        = $this->get_option( 'custom_return_url', '' );
 					// Actions
 					add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
-					add_action( 'woocommerce_thankyou_' . $this->id, array( $this, 'thankyou_page' ) );
-					add_action( 'woocommerce_email_before_order_table', array( $this, 'email_instructions' ), 10, 3 ); // Customer Emails
+					add_action( 'woocommerce_thankyou_'                        . $this->id, array( $this, 'thankyou_page' ) );
+					add_action( 'woocommerce_email_before_order_table',                     array( $this, 'email_instructions' ), 10, 3 ); // Customer Emails
 				}
 
 				/**

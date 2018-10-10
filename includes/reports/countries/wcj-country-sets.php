@@ -8,7 +8,6 @@
  * @todo    move to `wcj-functions-country.php`
  * @todo    use in "Price by Country" module for automatic group creation
  * @todo    add translations (`__`)
- * @todo    clean up
  */
 
 return array(
@@ -24,12 +23,10 @@ return array(
 	'European Union' => array(
 		'AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GB', 'GR', 'HU', 'HR', 'IE', 'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK',
 	),
+
 	'Europe' => array(
 		'AD', 'AL', 'AT', 'AX', 'BA', 'BE', 'BG', 'BY', 'CH', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FO', 'FR', 'FX', 'GB', 'GG', 'GI', 'GR', 'HR', 'HU', 'IE', 'IM', 'IS', 'IT', 'JE', 'LI', 'LT', 'LU', 'LV', 'MC', 'MD', 'ME', 'MK', 'MT', 'NL', 'NO', 'PL', 'PT', 'RO', 'RS', 'RU', 'SE', 'SI', 'SJ', 'SK', 'SM', 'TR', 'UA', 'VA',
 	),
-	/*'Europe excl EU' => array(
-		'AD', 'AL', 'AX', 'BA', 'BY', 'CH', 'FO', 'FX', 'GG', 'GI', 'IM', 'IS', 'JE', 'LI', 'MC', 'MD', 'ME', 'MK', 'NO', 'RS', 'RU', 'SJ', 'SM', 'TR', 'UA', 'VA',
-	),*/
 
 	'Central America' => array(
 		'AG', 'AI', 'AN', 'AW', 'BB', 'BL', 'BM', 'BS', 'BZ', 'CR', 'CU', 'DM', 'DO', 'GD', 'GL', 'GP', 'GT', 'HN', 'HT', 'JM', 'KY', 'KN', 'LC', 'MF', 'MQ', 'MS', 'NI', 'PA', 'PM', 'PR', 'SV', 'TC', 'TT', 'VC', 'VG', 'VI',

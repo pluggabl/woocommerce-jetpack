@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Custom JS
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

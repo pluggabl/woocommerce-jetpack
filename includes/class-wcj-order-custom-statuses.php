@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 3.9.2
+ * @version 4.0.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @todo    [feature] add options to change icon and icon's color for all statuses (i.e. not only custom)
 	 * @todo    [dev] maybe rename module to "Custom Order Statuses"
 	 */
@@ -114,8 +114,8 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * get_custom_order_statuses_actions.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function get_custom_order_statuses_actions( $_order ) {
 		$status_actions        = array();
@@ -133,8 +133,8 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * get_custom_order_statuses_action_url.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function get_custom_order_statuses_action_url( $status, $order_id ) {
 		return wp_nonce_url( admin_url( 'admin-ajax.php?action=woocommerce_mark_order_status&status=' . $status . '&order_id=' . $order_id ), 'woocommerce-mark-order-status' );
@@ -143,8 +143,8 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * add_custom_order_statuses_order_preview_actions.
 	 *
-	 * @version 3.9.2
-	 * @since   3.9.2
+	 * @version 4.0.0
+	 * @since   4.0.0
 	 */
 	function add_custom_order_statuses_order_preview_actions( $actions, $_order ) {
 		$status_actions        = array();
@@ -186,7 +186,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * add_custom_status_to_processing_and_completed_actions.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.8.0
 	 */
 	function add_custom_status_to_processing_and_completed_actions( $actions, $_order ) {
@@ -227,7 +227,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * add_custom_status_actions_buttons.
 	 *
-	 * @version 3.9.2
+	 * @version 4.0.0
 	 * @since   2.6.0
 	 */
 	function add_custom_status_actions_buttons( $actions, $_order ) {
