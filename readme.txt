@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
-Stable tag: 4.0.0
+Stable tag: 4.0.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -140,7 +140,7 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Custom CSS* - Separate custom CSS for front and back end. Per product CSS.
 * *Custom Emails* - Add custom emails to WooCommerce.
 * *Custom JS* - Separate custom JS for front and back end.
-* *Custom PHP* - Custom PHP.
+* *Custom PHP* - Custom PHP tool.
 * *Email Options* - WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.
 * *Email Verification* - Add WooCommerce email verification.
 * *Export* - WooCommerce export tools.
@@ -190,6 +190,10 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 4.0.1 - 12/10/2018 =
+* Fix - SHIPPING & ORDERS - Shipping Methods by Current Date/Time - Admin settings section title fixed.
+* Dev - EMAILS & MISC. - Custom PHP - Module description updated.
 
 = 4.0.0 - 11/10/2018 =
 * Feature - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Widget - "Form Method", "Class" and "Style" options added.

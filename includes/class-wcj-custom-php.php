@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom PHP
  *
- * @version 4.0.0
+ * @version 4.0.1
  * @since   4.0.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Custom_PHP extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.0.1
 	 * @since   4.0.0
 	 * @todo    [dev] maybe remove `wcj_disable_custom_php` from URL on settings save
 	 * @todo    [dev] allow tab in content (i.e. settings (textarea))
@@ -25,7 +25,7 @@ class WCJ_Custom_PHP extends WCJ_Module {
 
 		$this->id         = 'custom_php';
 		$this->short_desc = __( 'Custom PHP', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Custom PHP.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Custom PHP tool.', 'woocommerce-jetpack' );
 		$this->extra_desc = sprintf(
 			__( 'Please note that if you enable the module and enter non-valid PHP code here, your site will become unavailable. To fix this you will have to add %s attribute to the URL (you must be logged as shop manager or admin (for this reason custom PHP code is not executed on %s page)).', 'woocommerce-jetpack' ),
 				'<code>wcj_disable_custom_php</code>', '<strong>wp-login.php</strong>' ) . ' ' .

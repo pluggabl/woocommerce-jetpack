@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Time
  *
- * @version 4.0.0
+ * @version 4.0.1
  * @since   4.0.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Shipping_By_Time extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.0.1
 	 * @since   4.0.0
 	 * @todo    [dev] add more "Valid time input" examples
 	 * @todo    [feature] multiple time values (i.e. `__( 'Otherwise enter time one per line.', 'woocommerce-jetpack' )`)
@@ -30,7 +30,7 @@ class WCJ_Shipping_By_Time extends WCJ_Module_Shipping_By_Condition {
 
 		$this->condition_options = array(
 			'time' => array(
-				'title' => __( 'Time', 'woocommerce-jetpack' ),
+				'title' => __( 'Current Date/Time', 'woocommerce-jetpack' ),
 				'desc'  => '<br>' . sprintf( __( 'Current time: %s.', 'woocommerce-jetpack' ), '<code>' . current_time( 'Y-m-d H:i:s' ) . '</code>' ) . '<br>' .
 					sprintf( __( 'Time <em>from</em> and time <em>to</em> must be separated with %s symbol.', 'woocommerce-jetpack' ), '<code>~</code>' ) . ' ' .
 					sprintf( __( 'Each time input must be set in format that is parsable by PHP %s function.', 'woocommerce-jetpack' ),
