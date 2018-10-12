@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules Array
  *
- * @version 4.0.0
+ * @version 4.0.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
@@ -186,6 +186,7 @@ return apply_filters( 'wcj_modules', array(
 			'old_slugs',
 			'reports',
 			'admin_tools',
+			'debug_tools',
 			'emails',
 			'email_options',
 			'emails_verification',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 4.0.0
+ * @version 4.0.2
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -10,6 +10,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 $wcj_module_files = array(
+	'class-wcj-debug-tools.php',
 	'class-wcj-admin-tools.php',
 	'class-wcj-price-labels.php',
 	'class-wcj-call-for-price.php',

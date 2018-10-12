@@ -2,10 +2,10 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 3.8.0
+ * @version 4.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    add link to Booster's shortcodes list
+ * @todo    [dev] maybe add link to Booster's shortcodes list
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -35,22 +35,6 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_general_shortcodes_options',
-	),
-	array(
-		'title'    => __( 'Product Revisions', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_product_revisions_options',
-	),
-	array(
-		'title'    => __( 'Product Revisions', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_product_revisions_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_product_revisions_options',
 	),
 	array(
 		'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
@@ -189,6 +173,33 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_general_user_role_changer_options',
+	),
+	array(
+		'title'    => __( 'PHP Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_admin_tools_php_options',
+	),
+	array(
+		'title'    => __( 'PHP Memory Limit', 'woocommerce-jetpack' ),
+		'desc'     => __( 'megabytes.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set zero to disable.', 'woocommerce-jetpack' ) . $this->current_php_memory_limit,
+		'id'       => 'wcj_admin_tools_php_memory_limit',
+		'default'  => 0,
+		'type'     => 'number',
+		'custom_attributes' => array( 'min' => 0 ),
+	),
+	array(
+		'title'    => __( 'PHP Time Limit', 'woocommerce-jetpack' ),
+		'desc'     => __( 'seconds.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Set zero to disable.', 'woocommerce-jetpack' ) . $this->current_php_time_limit,
+		'id'       => 'wcj_admin_tools_php_time_limit',
+		'default'  => 0,
+		'type'     => 'number',
+		'custom_attributes' => array( 'min' => 0 ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_admin_tools_php_options',
 	),
 );
 return $settings;

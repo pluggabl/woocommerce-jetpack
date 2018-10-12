@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 4.0.0
+ * @version 4.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,38 +15,25 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
-	 * @todo    (maybe) add editable (product and order) metas
+	 * @version 4.0.2
+	 * @todo    [feature] (maybe) add editable (product and order) metas
 	 */
 	function __construct() {
 
 		$this->id         = 'admin_tools';
 		$this->short_desc = __( 'Admin Tools', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Booster for WooCommerce debug and log tools.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Booster for WooCommerce general back-end tools.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-booster-admin-tools';
 		parent::__construct();
 
 		$this->add_tools( array(
-			'admin_tools' => array(
-				'title'     => __( 'Debug Log', 'woocommerce-jetpack' ),
-				'desc'      => __( 'Log.', 'woocommerce-jetpack' ),
-				'tab_title' => __( 'Log', 'woocommerce-jetpack' ),
+			'products_atts'    => array(
+				'title'     => __( 'Products Attributes', 'woocommerce-jetpack' ),
+				'desc'      => __( 'All Products and All Attributes.', 'woocommerce-jetpack' ),
 			),
 		) );
 
-		$this->current_php_memory_limit = '';
-		$this->current_php_time_limit   = '';
 		if ( $this->is_enabled() ) {
-			// PHP Memory Limit
-			if ( 0 != ( $php_memory_limit = get_option( 'wcj_admin_tools_php_memory_limit', 0 ) ) ) {
-				ini_set( 'memory_limit', $php_memory_limit . 'M' );
-			}
-			$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );
-			// PHP Time Limit
-			if ( 0 != ( $php_time_limit = get_option( 'wcj_admin_tools_php_time_limit', 0 ) ) ) {
-				set_time_limit( $php_time_limit );
-			}
-			$this->current_php_time_limit = sprintf( ' ' . __( 'Current PHP time limit: %s seconds.', 'woocommerce-jetpack' ), ini_get( 'max_execution_time' ) );
 			// Order Meta
 			if ( 'yes' === get_option( 'wcj_admin_tools_show_order_meta_enabled', 'no' ) ) {
 				add_action( 'add_meta_boxes', array( $this, 'add_order_meta_meta_box' ) );
@@ -61,6 +48,10 @@ class WCJ_Admin_Tools extends WCJ_Module {
 				add_action( 'add_meta_boxes',    array( $this, 'maybe_add_variable_product_pricing_meta_box' ) );
 				add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
+			// Product revisions
+			if ( 'yes' === get_option( 'wcj_product_revisions_enabled', 'no' ) ) {
+				add_filter( 'woocommerce_register_post_type_product', array( $this, 'enable_product_revisions' ) );
+			}
 			// Admin Notices
 			if ( 'yes' === get_option( 'wcj_admin_tools_suppress_connect_notice', 'no' ) ) {
 				add_filter( 'woocommerce_helper_suppress_connect_notice', '__return_true' );
@@ -72,11 +63,22 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	}
 
 	/**
+	 * enable_product_revisions.
+	 *
+	 * @version 2.4.0
+	 * @since   2.4.0
+	 */
+	function enable_product_revisions( $args ) {
+		$args['supports'][] = 'revisions';
+		return $args;
+	}
+
+	/**
 	 * make_original_variable_product_pricing_readonly.
 	 *
 	 * @version 3.3.0
 	 * @since   3.3.0
-	 * @todo    this is not really making fields readonly (e.g. field is still editable via keyboard tab button)
+	 * @todo    [fix] this is not really making fields readonly (e.g. field is still editable via keyboard tab button)
 	 */
 	function make_original_variable_product_pricing_readonly() {
 		echo '<style>
@@ -171,67 +173,99 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	}
 
 	/**
-	 * create_admin_tools_tool.
+	 * create_products_atts_tool.
 	 *
-	 * @version 3.3.0
+	 * @version 2.3.9
+	 * @since   2.3.9
 	 */
-	function create_admin_tools_tool() {
-		// Delete log
-		if ( isset( $_GET['wcj_delete_log'] ) && wcj_is_user_role( 'administrator' ) ) {
-			update_option( 'wcj_log', '' );
-			if ( wp_safe_redirect( remove_query_arg( 'wcj_delete_log' ) ) ) {
-				exit;
-			}
-		}
-		// Header
-		$the_tools = '';
-		$the_tools .= $this->get_tool_header_html( 'admin_tools' );
-		$the_tools .= '<p><a href="' . add_query_arg( 'wcj_delete_log', '1' ) . '">' . __( 'Delete Log', 'woocommerce-jetpack' ) . '</a></p>';
-		// Log
-		$the_log = '';
-		$the_log .= '<p style="font-style:italic;color:gray;">' . sprintf( __( 'Now: %s', 'woocommerce-jetpack' ), date( 'Y-m-d H:i:s' ) ) . '</p>';
-		if ( '' != ( $log = get_option( 'wcj_log', '' ) ) ) {
-			$the_log .= '<pre style="color:green;background-color:black;padding:5px;">' . $log . '</pre>';
-		} else {
-			$the_log .= '<p style="font-style:italic;color:gray;">' . __( 'Log is empty.', 'woocommerce-jetpack' ) . '</p>';
-		}
-		// Final output
+	function create_products_atts_tool() {
 		$html = '';
-		$html .= '<div class="wrap">';
-		$html .= '<p>' . $the_tools  . '</p>';
-		$html .= '<p>' . $the_log    . '</p>';
-		$html .= '</div>';
+		$html .= $this->get_products_atts();
 		echo $html;
 	}
 
-	/**
-	 * get_system_info_table_array.
+	/*
+	 * get_products_atts.
 	 *
-	 * @version 3.4.3
-	 * @since   2.5.7
-	 * @todo    (maybe) 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_CHARSET', 'DB_COLLATE'
+	 * @version 4.0.0
+	 * @since   2.3.9
+	 * @todo    [dev] rewrite; add module link;
 	 */
-	function get_system_info_table_array() {
-		$system_info = array();
-		$constants_array = array(
-			'WP_MEMORY_LIMIT',
-			'WP_MAX_MEMORY_LIMIT',
-			'WP_DEBUG',
-			'ABSPATH',
-			'DISABLE_WP_CRON',
-			'WP_CRON_LOCK_TIMEOUT',
-			'WCJ_WC_VERSION',
-			'WCJ_SESSION_TYPE',
-		);
-		foreach ( $constants_array as $the_constant ) {
-			$system_info[] = array( $the_constant, ( defined( $the_constant ) ? constant( $the_constant ) : __( 'NOT DEFINED', 'woocommerce-jetpack' ) ) );
+	function get_products_atts() {
+
+		$total_products = 0;
+
+		$products_attributes = array();
+		$attributes_names = array();
+		$attributes_names['wcj_title']    = __( 'Product', 'woocommerce-jetpack' );
+		$attributes_names['wcj_category'] = __( 'Category', 'woocommerce-jetpack' );
+
+		$offset = 0;
+		$block_size = 96;
+		while( true ) {
+
+			$args_products = array(
+				'post_type'      => 'product',
+				'post_status'    => 'publish',
+				'posts_per_page' => $block_size,
+				'orderby'        => 'title',
+				'order'          => 'ASC',
+				'offset'         => $offset,
+			);
+			$loop_products = new WP_Query( $args_products );
+			if ( ! $loop_products->have_posts() ) break;
+			while ( $loop_products->have_posts() ) : $loop_products->the_post();
+
+				$total_products++;
+				$product_id = $loop_products->post->ID;
+				$the_product = wc_get_product( $product_id );
+
+				$products_attributes[ $product_id ]['wcj_title']    = '<a href="' . get_permalink( $product_id ) . '">' . $the_product->get_title() . '</a>';
+				$products_attributes[ $product_id ]['wcj_category'] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $product_id ) );
+
+				foreach ( $the_product->get_attributes() as $attribute ) {
+					$products_attributes[ $product_id ][ $attribute['name'] ] = $the_product->get_attribute( $attribute['name'] );
+					if ( ! isset( $attributes_names[ $attribute['name'] ] ) ) {
+						$attributes_names[ $attribute['name'] ] = wc_attribute_label( $attribute['name'] );
+					}
+				}
+
+			endwhile;
+
+			$offset += $block_size;
+
 		}
-		if ( isset( $_GET['wcj_debug'] ) ) {
-			foreach ( $_SERVER as $server_var_id => $server_var_value ) {
-				$system_info[] = array( $server_var_id, $server_var_value );
+
+		$table_data = array();
+		if ( isset( $_GET['wcj_attribute'] ) && '' != $_GET['wcj_attribute'] ) {
+			$table_data[] = array(
+				__( 'Product', 'woocommerce-jetpack' ),
+				__( 'Category', 'woocommerce-jetpack' ),
+				$_GET['wcj_attribute'],
+			);
+		} else {
+			$header = $attributes_names;
+			unset( $header['wcj_title'] );
+			unset( $header['wcj_category'] );
+			$table_data[] = array_merge( array(
+				__( 'Product', 'woocommerce-jetpack' ),
+				__( 'Category', 'woocommerce-jetpack' ),
+				), array_keys( $header ) );
+		}
+		foreach ( $attributes_names as $attributes_name => $attribute_title ) {
+
+			if ( isset( $_GET['wcj_attribute'] ) && '' != $_GET['wcj_attribute'] ) {
+				if ( 'wcj_title' != $attributes_name && 'wcj_category' != $attributes_name && $_GET['wcj_attribute'] != $attributes_name ) {
+					continue;
+				}
+			}
+
+			foreach ( $products_attributes as $product_id => $product_attributes ) {
+				$table_data[ $product_id ][ $attributes_name ] = isset( $product_attributes[ $attributes_name ] ) ? $product_attributes[ $attributes_name ] : '';
 			}
 		}
-		return $system_info;
+
+		return '<p>' . __( 'Total Products:', 'woocommerce-jetpack' ) . ' ' . $total_products . '</p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
 	}
 
 }

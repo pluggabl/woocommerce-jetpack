@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 4.0.0
+ * @version 4.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,22 +15,18 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.3
-	 * @todo    expand `$this->desc`
+	 * @version 4.0.2
+	 * @todo    [dev] maybe expand `$this->desc` (e.g.: Custom roles tool, shortcodes in WordPress text widgets etc.)
 	 */
 	function __construct() {
 
 		$this->id         = 'general';
 		$this->short_desc = __( 'General', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Custom roles tool. Shortcodes in WordPress text widgets.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Booster for WooCommerce general front-end tools.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-booster-general-tools';
 		parent::__construct();
 
 		$this->add_tools( array(
-			'products_atts'    => array(
-				'title'     => __( 'Products Attributes', 'woocommerce-jetpack' ),
-				'desc'      => __( 'All Products and All Attributes.', 'woocommerce-jetpack' ),
-			),
 			'custom_roles' => array(
 				'title'     => __( 'Add/Manage Custom Roles', 'woocommerce-jetpack' ),
 				'tab_title' => __( 'Custom Roles', 'woocommerce-jetpack' ),
@@ -38,16 +34,26 @@ class WCJ_General extends WCJ_Module {
 			),
 		) );
 
+		$this->current_php_memory_limit = '';
+		$this->current_php_time_limit   = '';
+
 		if ( $this->is_enabled() ) {
+
+			// PHP Memory Limit
+			if ( 0 != ( $php_memory_limit = get_option( 'wcj_admin_tools_php_memory_limit', 0 ) ) ) {
+				ini_set( 'memory_limit', $php_memory_limit . 'M' );
+			}
+			$this->current_php_memory_limit = sprintf( ' ' . __( 'Current PHP memory limit: %s.', 'woocommerce-jetpack' ), ini_get( 'memory_limit' ) );
+
+			// PHP Time Limit
+			if ( 0 != ( $php_time_limit = get_option( 'wcj_admin_tools_php_time_limit', 0 ) ) ) {
+				set_time_limit( $php_time_limit );
+			}
+			$this->current_php_time_limit = sprintf( ' ' . __( 'Current PHP time limit: %s seconds.', 'woocommerce-jetpack' ), ini_get( 'max_execution_time' ) );
 
 			// Recalculate cart totals
 			if ( 'yes' === get_option( 'wcj_general_advanced_recalculate_cart_totals', 'no' ) ) {
 				add_action( 'wp_loaded', array( $this, 'fix_mini_cart' ), PHP_INT_MAX );
-			}
-
-			// Product revisions
-			if ( 'yes' === get_option( 'wcj_product_revisions_enabled', 'no' ) ) {
-				add_filter( 'woocommerce_register_post_type_product', array( $this, 'enable_product_revisions' ) );
 			}
 
 			// Shortcodes in text widgets
@@ -82,7 +88,7 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.9.0
 	 * @since   2.9.0
-	 * @todo    (maybe) optionally via cookies
+	 * @todo    [dev] (maybe) optionally via cookies
 	 */
 	function change_user_role_meta() {
 		if ( isset( $_GET['wcj_booster_user_role'] ) ) {
@@ -127,7 +133,7 @@ class WCJ_General extends WCJ_Module {
 	 *
 	 * @version 2.5.2
 	 * @since   2.5.2
-	 * @todo    this is only temporary solution!
+	 * @todo    [dev] this is only temporary solution!
 	 */
 	function fix_mini_cart() {
 		if ( wcj_is_frontend() ) {
@@ -249,112 +255,6 @@ class WCJ_General extends WCJ_Module {
 			}
 		}
 		return $load_gateways;
-	}
-
-	/**
-	 * enable_product_revisions.
-	 *
-	 * @version 2.4.0
-	 * @since   2.4.0
-	 */
-	function enable_product_revisions( $args ) {
-		$args['supports'][] = 'revisions';
-		return $args;
-	}
-
-	/**
-	 * create_products_atts_tool.
-	 *
-	 * @version 2.3.9
-	 * @since   2.3.9
-	 */
-	function create_products_atts_tool() {
-		$html = '';
-		$html .= $this->get_products_atts();
-		echo $html;
-	}
-
-	/*
-	 * get_products_atts.
-	 *
-	 * @version 4.0.0
-	 * @since   2.3.9
-	 */
-	function get_products_atts() {
-
-		$total_products = 0;
-
-		$products_attributes = array();
-		$attributes_names = array();
-		$attributes_names['wcj_title']    = __( 'Product', 'woocommerce-jetpack' );
-		$attributes_names['wcj_category'] = __( 'Category', 'woocommerce-jetpack' );
-
-		$offset = 0;
-		$block_size = 96;
-		while( true ) {
-
-			$args_products = array(
-				'post_type'      => 'product',
-				'post_status'    => 'publish',
-				'posts_per_page' => $block_size,
-				'orderby'        => 'title',
-				'order'          => 'ASC',
-				'offset'         => $offset,
-			);
-			$loop_products = new WP_Query( $args_products );
-			if ( ! $loop_products->have_posts() ) break;
-			while ( $loop_products->have_posts() ) : $loop_products->the_post();
-
-				$total_products++;
-				$product_id = $loop_products->post->ID;
-				$the_product = wc_get_product( $product_id );
-
-				$products_attributes[ $product_id ]['wcj_title']    = '<a href="' . get_permalink( $product_id ) . '">' . $the_product->get_title() . '</a>';
-				$products_attributes[ $product_id ]['wcj_category'] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_product->get_categories() : wc_get_product_category_list( $product_id ) );
-
-				foreach ( $the_product->get_attributes() as $attribute ) {
-					$products_attributes[ $product_id ][ $attribute['name'] ] = $the_product->get_attribute( $attribute['name'] );
-					if ( ! isset( $attributes_names[ $attribute['name'] ] ) ) {
-						$attributes_names[ $attribute['name'] ] = wc_attribute_label( $attribute['name'] );
-					}
-				}
-
-			endwhile;
-
-			$offset += $block_size;
-
-		}
-
-		$table_data = array();
-		if ( isset( $_GET['wcj_attribute'] ) && '' != $_GET['wcj_attribute'] ) {
-			$table_data[] = array(
-				__( 'Product', 'woocommerce-jetpack' ),
-				__( 'Category', 'woocommerce-jetpack' ),
-				$_GET['wcj_attribute'],
-			);
-		} else {
-			$header = $attributes_names;
-			unset( $header['wcj_title'] );
-			unset( $header['wcj_category'] );
-			$table_data[] = array_merge( array(
-				__( 'Product', 'woocommerce-jetpack' ),
-				__( 'Category', 'woocommerce-jetpack' ),
-				), array_keys( $header ) );
-		}
-		foreach ( $attributes_names as $attributes_name => $attribute_title ) {
-
-			if ( isset( $_GET['wcj_attribute'] ) && '' != $_GET['wcj_attribute'] ) {
-				if ( 'wcj_title' != $attributes_name && 'wcj_category' != $attributes_name && $_GET['wcj_attribute'] != $attributes_name ) {
-					continue;
-				}
-			}
-
-			foreach ( $products_attributes as $product_id => $product_attributes ) {
-				$table_data[ $product_id ][ $attributes_name ] = isset( $product_attributes[ $attributes_name ] ) ? $product_attributes[ $attributes_name ] : '';
-			}
-		}
-
-		return '<p>' . __( 'Total Products:', 'woocommerce-jetpack' ) . ' ' . $total_products . '</p>' . wcj_get_table_html( $table_data, array( 'table_class' => 'widefat striped' ) );
 	}
 
 }

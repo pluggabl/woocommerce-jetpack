@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 3.6.0
+ * @version 4.0.2
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Debug Mode
-if ( 'yes' === get_option( 'wcj_admin_tools_enabled', 'no' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
+if ( 'yes' === get_option( 'wcj_debug_tools_enabled', 'no' ) && 'yes' === get_option( 'wcj_debuging_enabled', 'no' ) ) {
 	error_reporting( E_ALL );
 }
 

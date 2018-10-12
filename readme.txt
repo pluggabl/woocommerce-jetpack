@@ -134,17 +134,18 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 **Emails & Misc.**
 
 * *Admin Bar* - WooCommerce admin bar.
-* *Admin Tools* - Booster for WooCommerce debug and log tools.
+* *Admin Tools* - Booster for WooCommerce general back-end tools.
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
 * *Breadcrumbs* - Customize WooCommerce breadcrumbs.
 * *Custom CSS* - Separate custom CSS for front and back end. Per product CSS.
 * *Custom Emails* - Add custom emails to WooCommerce.
 * *Custom JS* - Separate custom JS for front and back end.
 * *Custom PHP* - Custom PHP tool.
+* *Debug Tools* - Booster for WooCommerce debug and log tools.
 * *Email Options* - WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.
 * *Email Verification* - Add WooCommerce email verification.
 * *Export* - WooCommerce export tools.
-* *General* - Custom roles tool. Shortcodes in WordPress text widgets.
+* *General* - Booster for WooCommerce general front-end tools.
 * *Modules By User Roles* - Enable/disable Booster for WooCommerce modules by user roles.
 * *My Account* - WooCommerce "My Account" page customization.
 * *Old Slugs* - Remove old products slugs.
@@ -190,6 +191,16 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 4.0.2 - 12/10/2018 =
+* Dev - EMAILS & MISC. - Admin Tools - "Products Attributes" tool moved from "General" module.
+* Dev - EMAILS & MISC. - Admin Tools - "Product Revisions" option moved from "General" module.
+* Dev - EMAILS & MISC. - Admin Tools - "Show extended info" link added.
+* Dev - EMAILS & MISC. - Admin Tools - Module description updated.
+* Dev - EMAILS & MISC. - Admin Tools - Admin settings restyled.
+* Dev - EMAILS & MISC. - Debug Tools - Initial module release (tools moved from "Admin Tools" module).
+* Dev - EMAILS & MISC. - General - "PHP Options" options moved from "Admin Tools" module.
+* Dev - EMAILS & MISC. - General - Module description updated.
 
 = 4.0.1 - 12/10/2018 =
 * Fix - SHIPPING & ORDERS - Shipping Methods by Current Date/Time - Admin settings section title fixed.
