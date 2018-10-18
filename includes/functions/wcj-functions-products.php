@@ -526,7 +526,7 @@ if ( ! function_exists( 'wcj_get_terms' ) ) {
 			$_terms = get_terms( $_taxonomy, $args );
 		}
 		$_terms_options = array();
-		if ( ! empty( $_terms ) && ! is_wp_error( $_terms ) ){
+		if ( ! empty( $_terms ) && ! is_wp_error( $_terms ) ) {
 			foreach ( $_terms as $_term ) {
 				$_terms_options[ $_term->term_id ] = $_term->name;
 			}

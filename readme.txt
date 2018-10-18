@@ -192,15 +192,15 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.0.2 - 12/10/2018 =
-* Dev - EMAILS & MISC. - Admin Tools - "Products Attributes" tool moved from "General" module.
-* Dev - EMAILS & MISC. - Admin Tools - "Product Revisions" option moved from "General" module.
-* Dev - EMAILS & MISC. - Admin Tools - "Show extended info" link added.
-* Dev - EMAILS & MISC. - Admin Tools - Module description updated.
-* Dev - EMAILS & MISC. - Admin Tools - Admin settings restyled.
-* Dev - EMAILS & MISC. - Debug Tools - Initial module release (tools moved from "Admin Tools" module).
+= 4.0.2 - 15/10/2018 =
+$* Dev - EMAILS & MISC. - Admin Bar - "WooCommerce" Admin Bar - "Categories" and "Tags" nodes added.
+* Dev - EMAILS & MISC. - Admin Tools - "Products Attributes" tool and "Product Revisions" option moved from "General" module.
+* Dev - EMAILS & MISC. - Admin Tools - Module description updated. Admin settings restyled and descriptions updated. "Show extended info" link added.
+* Dev - EMAILS & MISC. - Debug Tools - Initial module release (tools moved from "Admin Tools" module). Admin settings descriptions updated.
 * Dev - EMAILS & MISC. - General - "PHP Options" options moved from "Admin Tools" module.
-* Dev - EMAILS & MISC. - General - Module description updated.
+* Dev - EMAILS & MISC. - General - Module description updated. Admin settings descriptions updated.
+* Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `whole` attribute now automatically gets order currency symbol or currency code (set by `use_currency_symbol` attribute) (instead of `Dollars`). `decimal` attribute set to `&cent;` (instead of `Cents`).
+* Dev - Classes - `WCJ_Module_Product_By_Condition` - `pre_get_posts` - WP_Query optimized (`post__not_in` added).
 
 = 4.0.1 - 12/10/2018 =
 * Fix - SHIPPING & ORDERS - Shipping Methods by Current Date/Time - Admin settings section title fixed.

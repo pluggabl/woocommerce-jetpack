@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 3.9.0
+ * @version 4.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -97,7 +97,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 3.3.0
+	 * @version 4.0.2
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -110,8 +110,8 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'field_id'                    => '',
 			'name'                        => '',
 			'round_by_line'               => 'no',
-			'whole'                       => __( 'Dollars', 'woocommerce-jetpack' ),
-			'decimal'                     => __( 'Cents', 'woocommerce-jetpack' ),
+			'whole'                       => '',
+			'decimal'                     => '&cent;',
 			'precision'                   => get_option( 'woocommerce_price_num_decimals', 2 ),
 			'lang'                        => 'EN',
 			'unique_only'                 => 'no',
@@ -1276,39 +1276,42 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_total_in_words.
 	 *
-	 * @version 2.5.9
+	 * @version 4.0.2
 	 */
 	function wcj_order_total_in_words( $atts ) {
 
-		$order_total = ( true === $atts['excl_tax'] ) ? $this->the_order->get_total() - $this->the_order->get_total_tax() : $this->the_order->get_total();
-		$order_total_whole   = intval( $order_total );
-		$order_total_decimal = round( ( $order_total - $order_total_whole ) * 100 );
+		$order_total          = ( true === $atts['excl_tax'] ) ? $this->the_order->get_total() - $this->the_order->get_total_tax() : $this->the_order->get_total();
+		$order_total_whole    = intval( $order_total );
+		$order_total_decimal  = round( ( $order_total - $order_total_whole ) * 100 );
 
-		$the_number_in_words = '%s %s';
+		$the_number_in_words  = '%s %s';
 		$the_number_in_words .= ( 0 != $order_total_decimal ) ? ', %s %s.' : '.';
 
-		$dollars = $atts['whole'];
-		$cents = $atts['decimal'];
+		$whole   = ( '' === $atts['whole'] ?
+			( isset( $atts['use_currency_symbol'] ) && 'yes' === $atts['use_currency_symbol'] ?
+				get_woocommerce_currency_symbol( $this->the_order->get_currency() ) : $this->the_order->get_currency()
+			) : $atts['whole'] );
+		$decimal = $atts['decimal'];
 
 		switch ( $atts['lang'] ) {
 			case 'LT':
 				return sprintf( $the_number_in_words,
 					$this->mb_ucfirst( convert_number_to_words_lt( $order_total_whole ) ),
-					$dollars,
+					$whole,
 					$this->mb_ucfirst( convert_number_to_words_lt( $order_total_decimal ) ),
-					$cents );
+					$decimal );
 			case 'BG':
 				return sprintf( $the_number_in_words,
 					$this->mb_ucfirst( trim( convert_number_to_words_bg( $order_total_whole ) ) ),
-					$dollars,
+					$whole,
 					$this->mb_ucfirst( trim( convert_number_to_words_bg( $order_total_decimal ) ) ),
-					$cents );
+					$decimal );
 			default: // 'EN'
 				return sprintf( $the_number_in_words,
 					ucfirst( convert_number_to_words( $order_total_whole ) ),
-					$dollars,
+					$whole,
 					ucfirst( convert_number_to_words( $order_total_decimal ) ),
-					$cents );
+					$decimal );
 		}
 	}
 }

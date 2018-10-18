@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 3.9.0
+ * @version 4.0.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -337,9 +337,37 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	}
 
 	/**
+	 * get_nodes_product_taxonomy.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 * @todo    [dev] hierarchy
+	 * @todo    [dev] count
+	 * @todo    [dev] custom taxonomy
+	 */
+	function get_nodes_product_taxonomy( $taxonomy ) {
+		$nodes = array();
+		$terms = get_terms( array(
+			'taxonomy'   => $taxonomy,
+			'orderby'    => 'name',
+			'order'      => 'ASC',
+			'hide_empty' => false,
+		) );
+		if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$nodes[ $term->slug ] = array(
+					'title'  => $term->name,
+					'href'   => admin_url( 'edit.php?post_type=product&' . $taxonomy . '=' . $term->slug ),
+				);
+			}
+		}
+		return $nodes;
+	}
+
+	/**
 	 * add_woocommerce_admin_bar.
 	 *
-	 * @version 3.6.0
+	 * @version 4.0.2
 	 * @since   2.9.0
 	 * @todo    (maybe) reports > customers > customers > add dates
 	 * @todo    (maybe) reports > taxes > taxes_by_code > add dates
@@ -459,6 +487,16 @@ class WCJ_Admin_Bar extends WCJ_Module {
 								'href'   => admin_url( 'edit.php?post_type=product&page=product_attributes' ),
 							),
 						),
+					),
+					'categories' => array(
+						'title'  => __( 'Categories', 'woocommerce' ),
+						'href'   => admin_url( 'edit.php?post_type=product' ),
+						'nodes'  => $this->get_nodes_product_taxonomy( 'product_cat' ),
+					),
+					'tags' => array(
+						'title'  => __( 'Tags', 'woocommerce' ),
+						'href'   => admin_url( 'edit.php?post_type=product' ),
+						'nodes'  => $this->get_nodes_product_taxonomy( 'product_tag' ),
 					),
 					'coupons' => array(
 						'title'  => __( 'Coupons', 'woocommerce' ),

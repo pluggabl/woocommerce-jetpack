@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 3.9.0
+ * @version 4.0.2
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -212,7 +212,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * pre_get_posts.
 	 *
-	 * @version 3.9.0
+	 * @version 4.0.2
 	 * @since   3.6.0
 	 */
 	function pre_get_posts( $query ) {
@@ -224,8 +224,8 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 		}
 		remove_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 		$option_to_check = $this->get_check_option();
-		$post__not_in = $query->get( 'post__not_in' );
-		$meta_query = array();
+		$post__not_in    = $query->get( 'post__not_in' );
+		$meta_query      = array();
 		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
 			$meta_query[] = array(
 				'key'     => '_' . 'wcj_' . $this->id . '_visible',
@@ -248,6 +248,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 			'posts_per_page' => -1,
 			'fields'         => 'ids',
 			'meta_query'     => $meta_query,
+			'post__not_in'   => $post__not_in,
 		);
 		$loop = new WP_Query( $args );
 		foreach ( $loop->posts as $product_id ) {

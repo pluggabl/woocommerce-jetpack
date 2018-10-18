@@ -5,7 +5,6 @@
  * @version 4.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
- * @todo    [dev] maybe add link to Booster's shortcodes list
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -17,7 +16,7 @@ $settings = array(
 		'id'       => 'wcj_general_shortcodes_options',
 	),
 	array(
-		'title'    => __( 'Enable All Shortcodes in WordPress Text Widgets', 'woocommerce-jetpack' ),
+		'title'    => __( 'Shortcodes in WordPress Text Widgets', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This will enable all (including non Booster\'s) shortcodes in WordPress text widgets.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_shortcodes_in_text_widgets_enabled',
@@ -25,8 +24,9 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Disable Booster\'s Shortcodes', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Disable all Booster\'s shortcodes (for memory saving).', 'woocommerce-jetpack' ),
+		'title'    => __( 'Booster\'s Shortcodes', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Disable all <a href="%s" target="_blank">Booster\'s shortcodes</a> (for memory saving).', 'woocommerce-jetpack' ),
+			'https://booster.io/shortcodes/' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_shortcodes_disable_booster_shortcodes',
 		'default'  => 'no',
@@ -42,7 +42,9 @@ $settings = array(
 		'id'       => 'wcj_general_advanced_options',
 	),
 	array(
-		'title'    => __( 'Recalculate Cart Totals on Every Page Load', 'woocommerce-jetpack' ),
+		'title'    => __( 'Recalculate Cart Totals', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Will recalculate cart totals on every page load.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'This may solve multicurrency issues with wrong currency symbol in mini-cart.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_recalculate_cart_totals',
 		'default'  => 'no',
@@ -59,35 +61,39 @@ $settings = array(
 		),
 	),
 	array(
-		'title'    => __( 'Disable Loading Datepicker/Weekpicker CSS', 'woocommerce-jetpack' ),
+		'title'    => __( 'Datepicker/Weekpicker CSS Loading', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Disables datepicker/weekpicker CSS loading.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_disable_datepicker_css',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Datepicker/Weekpicker CSS', 'woocommerce-jetpack' ),
+		'title'    => __( 'Datepicker/Weekpicker CSS Source', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_datepicker_css',
 		'default'  => '//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/themes/base/jquery-ui.css',
 		'type'     => 'text',
 		'css'      => 'width:66%;min-width:300px;',
 	),
 	array(
-		'title'    => __( 'Disable Loading Datepicker/Weekpicker JavaScript', 'woocommerce-jetpack' ),
+		'title'    => __( 'Datepicker/Weekpicker JavaScript Loading', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Disables datepicker/weekpicker JavaScript loading.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_disable_datepicker_js',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Disable Loading Timepicker CSS', 'woocommerce-jetpack' ),
+		'title'    => __( 'Timepicker CSS Loading', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Disables timepicker CSS loading.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_disable_timepicker_css',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Disable Loading Timepicker JavaScript', 'woocommerce-jetpack' ),
+		'title'    => __( 'Timepicker JavaScript Loading', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Disables timepicker JavaScript loading.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_disable_timepicker_js',
 		'default'  => 'no',

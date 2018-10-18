@@ -17,6 +17,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Log', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enables logging to Booster log.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_logging_enabled',
 		'default'  => 'no',
@@ -24,6 +25,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'WooCommerce Log', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enables logging to WooCommerce log.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wc_logging_enabled',
 		'default'  => 'no',
@@ -31,6 +33,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Debug', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enables debug mode.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_debuging_enabled',
 		'default'  => 'no',

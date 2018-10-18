@@ -73,7 +73,7 @@ class WCJ_Debug_Tools extends WCJ_Module {
 	/**
 	 * get_system_info_table_array.
 	 *
-	 * @version 3.4.3
+	 * @version 4.0.2
 	 * @since   2.5.7
 	 * @todo    [feature] (maybe) 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_CHARSET', 'DB_COLLATE'
 	 */
@@ -94,7 +94,7 @@ class WCJ_Debug_Tools extends WCJ_Module {
 		}
 		if ( isset( $_GET['wcj_debug'] ) ) {
 			foreach ( $_SERVER as $server_var_id => $server_var_value ) {
-				$system_info[] = array( $server_var_id, $server_var_value );
+				$system_info[] = array( $server_var_id, esc_html( $server_var_value ) );
 			}
 		}
 		return $system_info;

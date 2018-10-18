@@ -17,6 +17,8 @@ return array(
 	),
 	array(
 		'title'    => __( 'Show Booster Menus Only to Admin', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Will require %s capability to see Booster menus (instead of %s capability).', 'woocommerce-jetpack' ),
+			'<code>manage_options</code>', '<code>manage_woocommerce</code>' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_admin_tools_show_menus_to_admin_only',
 		'default'  => 'no',
@@ -50,6 +52,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Show Order Meta', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Will show order meta table in meta box.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_admin_tools_show_order_meta_enabled',
 		'default'  => 'no',
@@ -66,6 +69,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Show Product Meta', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Will show product meta table in meta box.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_admin_tools_show_product_meta_enabled',
 		'default'  => 'no',
@@ -73,6 +77,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Show Variable Product Pricing Table', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Will allow to set all variations prices in single meta box.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_admin_tools_variable_product_pricing_table_enabled',
 		'default'  => 'no',
@@ -80,6 +85,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Product Revisions', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Will enable product revisions.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_revisions_enabled',
 		'default'  => 'no',
