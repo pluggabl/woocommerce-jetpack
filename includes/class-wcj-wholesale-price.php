@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 3.9.0
+ * @version 4.0.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -18,7 +18,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 4.0.2
 	 * @todo    (maybe) `woocommerce_get_variation_prices_hash`
 	 */
 	function __construct() {
@@ -37,10 +37,12 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 			}
 
 			add_action( 'woocommerce_cart_loaded_from_session', array( $this, 'cart_loaded_from_session' ), PHP_INT_MAX, 1 );
-			add_action( 'woocommerce_before_calculate_totals',  array( $this, 'calculate_totals' ), PHP_INT_MAX, 1 );
-			add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,           array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
+			add_action( 'woocommerce_before_calculate_totals',  array( $this, 'calculate_totals' ),         PHP_INT_MAX, 1 );
+
+			$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'wholesale_price' );
+			add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                  array( $this, 'wholesale_price' ), $this->price_hooks_priority, 2 );
 			if ( ! WCJ_IS_WC_VERSION_BELOW_3 ) {
-				add_filter( 'woocommerce_product_variation_get_price', array( $this, 'wholesale_price' ), PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_product_variation_get_price', array( $this, 'wholesale_price' ), $this->price_hooks_priority, 2 );
 			}
 
 			if ( 'yes' === get_option( 'wcj_wholesale_price_show_info_on_cart', 'no' ) ) {

@@ -192,7 +192,8 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.0.2 - 15/10/2018 =
+= 4.0.2 - 23/10/2018 =
+* Dev - PRICES & CURRENCIES - Wholesale Price - "Advanced: Price Filters Priority" option added.
 $* Dev - EMAILS & MISC. - Admin Bar - "WooCommerce" Admin Bar - "Categories" and "Tags" nodes added.
 * Dev - EMAILS & MISC. - Admin Tools - "Products Attributes" tool and "Product Revisions" option moved from "General" module.
 * Dev - EMAILS & MISC. - Admin Tools - Module description updated. Admin settings restyled and descriptions updated. "Show extended info" link added.
