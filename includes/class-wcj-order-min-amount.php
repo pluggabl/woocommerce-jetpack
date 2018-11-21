@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Minimum Amount
  *
- * @version 3.2.4
+ * @version 4.0.2
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    order max amount
@@ -64,7 +64,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * get_order_minimum_amount_with_user_roles.
 	 *
-	 * @version 2.7.0
+	 * @version 4.0.2
 	 * @since   2.5.3
 	 */
 	function get_order_minimum_amount_with_user_roles() {
@@ -82,6 +82,10 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		// Multicurrency (Currency Switcher) module
 		if ( WCJ()->modules['multicurrency']->is_enabled() ) {
 			$minimum = WCJ()->modules['multicurrency']->change_price( $minimum, null );
+		}
+		// Price by country module
+		elseif ( WCJ()->modules['price_by_country']->is_enabled() ) {
+			$minimum = WCJ()->modules['price_by_country']->core->change_price( $minimum, null );
 		}
 		return $minimum;
 	}

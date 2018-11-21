@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product MSRP
  *
- * @version 3.8.0
+ * @version 4.0.2
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -114,7 +114,7 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * display.
 	 *
-	 * @version 3.8.0
+	 * @version 4.0.2
 	 * @since   3.6.0
 	 * @todo    (maybe) multicurrency
 	 * @todo    (feature) (maybe) variable product's msrp: add another option to enter MSRP directly for the whole variable product, instead of taking first variation's MSRP
@@ -137,6 +137,7 @@ class WCJ_Product_MSRP extends WCJ_Module {
 			$product_id = wcj_get_product_id( $product );
 		}
 		$msrp       = apply_filters( 'wcj_product_msrp', get_post_meta( $product_id, '_' . 'wcj_msrp', true ), $product );
+		$msrp       = str_replace( ',', '.', $msrp );
 		if ( '' == $msrp || 0 == $msrp ) {
 			return $price_html;
 		}

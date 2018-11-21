@@ -192,8 +192,14 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.0.2 - 23/10/2018 =
+= 4.0.2 - 21/11/2018 =
+* Feature - Shortcodes - General - `[wcj_post_meta_sum]` shortcode added.
+* Fix - PRODUCTS - Product MSRP - Comma decimal separator issue fixed.
+* Fix - SHIPPING & ORDERS - Order Min/Max Quantities - Fix quantity attribute of add to cart button on loop pages.
+* Fix - SHIPPING & ORDERS - Order Minimum Amount - Add compatibility with Price by country module.
 * Dev - PRICES & CURRENCIES - Wholesale Price - "Advanced: Price Filters Priority" option added.
+* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Sync quantity button with add to cart button quantity.
+* Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Prevent add to cart button on shop pages from being clicked if input requirements haven't been met.
 $* Dev - EMAILS & MISC. - Admin Bar - "WooCommerce" Admin Bar - "Categories" and "Tags" nodes added.
 * Dev - EMAILS & MISC. - Admin Tools - "Products Attributes" tool and "Product Revisions" option moved from "General" module.
 * Dev - EMAILS & MISC. - Admin Tools - Module description updated. Admin settings restyled and descriptions updated. "Show extended info" link added.
@@ -201,6 +207,8 @@ $* Dev - EMAILS & MISC. - Admin Bar - "WooCommerce" Admin Bar - "Categories" and
 * Dev - EMAILS & MISC. - General - "PHP Options" options moved from "Admin Tools" module.
 * Dev - EMAILS & MISC. - General - Module description updated. Admin settings descriptions updated.
 * Dev - Shortcodes - Orders - `[wcj_order_total_in_words]` - `whole` attribute now automatically gets order currency symbol or currency code (set by `use_currency_symbol` attribute) (instead of `Dollars`). `decimal` attribute set to `&cent;` (instead of `Cents`).
+* Dev - Shortcodes - Products Crowdfunding - `get_product_orders_data()` - `start_date` and `order_status` optional attributes added.
+* Dev - Shortcodes - Products Crowdfunding - `get_product_orders_data()` - Code cleaned up.
 * Dev - Classes - `WCJ_Module_Product_By_Condition` - `pre_get_posts` - WP_Query optimized (`post__not_in` added).
 
 = 4.0.1 - 12/10/2018 =

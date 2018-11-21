@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products Crowdfunding
  *
- * @version 3.3.0
+ * @version 4.0.2
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  */
@@ -84,29 +84,21 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_product_orders_data.
 	 *
-	 * @version 2.7.0
+	 * @version 4.0.2
 	 * @since   2.2.6
 	 */
 	function get_product_orders_data( $return_value = 'total_orders', $atts ) {
-		$product_ids = array();
-		if ( $this->the_product->is_type( 'grouped' ) ) {
-			$product_ids = $this->the_product->get_children();
-		} else {
-			$product_ids = array( wcj_get_product_id_or_variation_parent_id( $this->the_product ) );
-		}
-		global $woocommerce_loop, $post;
-		$saved_wc_loop = $woocommerce_loop;
-		$saved_post    = $post;
-		$total_orders  = 0;
-		$total_qty     = 0;
-		$total_sum     = 0;
-		$offset        = 0;
-		$block_size    = 256;
-		$date_query_after = get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_startdate', true );
+		$product_ids      = ( $this->the_product->is_type( 'grouped' ) ? $this->the_product->get_children() : array( wcj_get_product_id_or_variation_parent_id( $this->the_product ) ) );
+		$total_orders     = 0;
+		$total_qty        = 0;
+		$total_sum        = 0;
+		$offset           = 0;
+		$block_size       = 512;
+		$date_query_after = ( isset( $atts['start_date'] ) ? $atts['start_date'] : get_post_meta( wcj_get_product_id_or_variation_parent_id( $this->the_product ), '_' . 'wcj_crowdfunding_startdate', true ) );
 		while( true ) {
 			$args = array(
 				'post_type'      => 'shop_order',
-				'post_status'    => 'wc-completed',
+				'post_status'    => ( isset( $atts['order_status'] ) ? array_map( 'trim', explode( ',', $atts['order_status'] ) ) : 'wc-completed' ),
 				'posts_per_page' => $block_size,
 				'offset'         => $offset,
 				'orderby'        => 'date',
@@ -124,8 +116,8 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 				break;
 			}
 			foreach ( $loop->posts as $order_id ) {
-				$the_order = wc_get_order( $order_id );
-				$the_items = $the_order->get_items();
+				$the_order  = wc_get_order( $order_id );
+				$the_items  = $the_order->get_items();
 				$item_found = false;
 				foreach( $the_items as $item ) {
 					if ( in_array( $item['product_id'], $product_ids ) ) {
@@ -140,10 +132,6 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 			}
 			$offset += $block_size;
 		}
-//		wp_reset_postdata();
-		$woocommerce_loop = $saved_wc_loop;
-		$post             = $saved_post;
-		setup_postdata( $post );
 		switch ( $return_value ) {
 			case 'orders_sum':
 				$return = $total_sum;
@@ -223,22 +211,19 @@ class WCJ_Products_Crowdfunding_Shortcodes extends WCJ_Shortcodes {
 		$days_remaining    = floor( $seconds_remaining / ( 24 * 60 * 60 ) );
 		$hours_remaining   = floor( $seconds_remaining / (      60 * 60 ) );
 		$minutes_remaining = floor( $seconds_remaining /             60   );
-		if ( $seconds_remaining <= 0 ) return '';
-		if ( $days_remaining    >  0 ) return ( 1 == $days_remaining    ) ? $days_remaining    . ' day left'    : $days_remaining    . ' days left';
-		if ( $hours_remaining   >  0 ) return ( 1 == $hours_remaining   ) ? $hours_remaining   . ' hour left'   : $hours_remaining   . ' hours left';
-		if ( $minutes_remaining >  0 ) return ( 1 == $minutes_remaining ) ? $minutes_remaining . ' minute left' : $minutes_remaining . ' minutes left';
-		return                                ( 1 == $seconds_remaining ) ? $seconds_remaining . ' second left' : $seconds_remaining . ' seconds left';
-		/* if ( ( $seconds_remaining = strtotime( $this->wcj_product_crowdfunding_deadline( $atts ) ) - time() ) <= 0 ) return '';
-		if ( ( $days_remaining = floor( $seconds_remaining / ( 24 * 60 * 60 ) ) ) > 0 ) {
-			return ( 1 === $days_remaining ) ? $days_remaining . ' day left' : $days_remaining . ' days left';
+		if ( $seconds_remaining <= 0 ) {
+			return '';
 		}
-		if ( ( $hours_remaining = floor( $seconds_remaining / ( 60 * 60 ) ) ) > 0 ) {
-			return ( 1 === $hours_remaining ) ? $hours_remaining . ' hour left' : $hours_remaining . ' hours left';
+		if ( $days_remaining    >  0 ) {
+			return ( 1 == $days_remaining    ) ? $days_remaining    . ' day left'    : $days_remaining    . ' days left';
 		}
-		if ( ( $minutes_remaining = floor( $seconds_remaining / 60 ) ) > 0 ) {
-			return ( 1 === $minutes_remaining ) ? $minutes_remaining . ' minute left' : $minutes_remaining . ' minutes left';
+		if ( $hours_remaining   >  0 ) {
+			return ( 1 == $hours_remaining   ) ? $hours_remaining   . ' hour left'   : $hours_remaining   . ' hours left';
 		}
-		return ( 1 === $seconds_remaining ) ? $seconds_remaining . ' second left' : $seconds_remaining . ' seconds left'; */
+		if ( $minutes_remaining >  0 ) {
+			return ( 1 == $minutes_remaining ) ? $minutes_remaining . ' minute left' : $minutes_remaining . ' minutes left';
+		}
+		return     ( 1 == $seconds_remaining ) ? $seconds_remaining . ' second left' : $seconds_remaining . ' seconds left';
 	}
 
 	/**

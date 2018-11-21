@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 4.0.0
+ * @version 4.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 4.0.2
 	 */
 	function __construct() {
 
@@ -44,6 +44,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			'wcj_get_left_to_free_shipping',
 			'wcj_get_option',
 			'wcj_image',
+			'wcj_post_meta_sum',
 			'wcj_product_category_count',
 			'wcj_request_value',
 			'wcj_selector',
@@ -106,6 +107,20 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 
 		parent::__construct();
 
+	}
+
+	/**
+	 * wcj_post_meta_sum.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 */
+	function wcj_post_meta_sum( $atts ) {
+		if ( '' === $atts['key'] ) {
+			return '';
+		}
+		global $wpdb;
+		return $wpdb->get_var( $wpdb->prepare( "SELECT sum(meta_value) FROM $wpdb->postmeta WHERE meta_key = %s", $atts['key'] ) );
 	}
 
 	/**

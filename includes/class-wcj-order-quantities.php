@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 3.7.0
+ * @version 4.0.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.7.0
+	 * @version 4.0.2
 	 * @since   2.9.0
 	 * @todo    maybe rename the module to "Order Quantities" or "Order Product Quantities" or "Product Quantities"?
 	 * @todo    loop (`woocommerce_loop_add_to_cart_link`)
@@ -68,7 +68,67 @@ class WCJ_Order_Quantities extends WCJ_Module {
 			}
 			// For cart
 			add_filter( 'woocommerce_quantity_input_args', array( $this, 'set_quantity_input_args' ), PHP_INT_MAX, 2 );
+			// Handle Add to cart button on loop
+			add_filter( 'woocommerce_loop_add_to_cart_args', array( $this, 'handle_wc_loop_add_to_cart_args' ), 10, 2 );
+			add_action( 'wp_footer', array( $this, 'sync_qty_input_with_add_to_cart_btn_on_loop' ) );
 		}
+	}
+
+	/**
+	 * Syncs Quantity input with Add to cart button on loop page.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 */
+	function sync_qty_input_with_add_to_cart_btn_on_loop() {
+		if ( ! is_shop() && ! is_product_category() && ! is_product_tag() && ! is_product_taxonomy() ) {
+			return;
+		}
+		$js = "
+			var wcj_sqwb = {
+				init: function () {
+					var qtyInput = document.querySelectorAll('.quantity .qty');
+					[].forEach.call(qtyInput, function (el) {
+						var productWrapper = el.closest('.products .product');
+						var addToCartBtn = productWrapper.querySelector('.ajax_add_to_cart');
+						var dataProductIDAttr = addToCartBtn.getAttribute('data-product_id');
+						el.addEventListener('change', function() {
+							if(!this.checkValidity()){
+								addToCartBtn.removeAttribute('data-product_id');
+								this.reportValidity();
+							}else{
+								wcj_sqwb.sync(this.value,addToCartBtn);
+								addToCartBtn.setAttribute('data-product_id',dataProductIDAttr);
+							}
+						});
+						wcj_sqwb.sync(el.value,addToCartBtn);
+					});
+				},
+				sync:function(qty_value,addToCartBtn){
+					addToCartBtn.setAttribute('data-quantity', qty_value);
+				}
+			};
+			jQuery(document).ready(function(){
+				wcj_sqwb.init();
+			});
+		";
+		wc_enqueue_js( $js );
+	}
+
+	/**
+	 * Handles arguments passed to add to cart loop.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 *
+	 * @param $args
+	 * @param $product
+	 *
+	 * @return mixed
+	 */
+	function handle_wc_loop_add_to_cart_args( $args, $product ) {
+		$args['quantity'] = $this->get_product_quantity( 'min', $product, $args['quantity'] );
+		return $args;
 	}
 
 	/**

@@ -43,11 +43,42 @@ class WCJ_Price_by_Country_Core {
 	 */
 	function init() {
 		wcj_session_maybe_start();
-		if ( isset( $_REQUEST[ 'wcj-country' ] ) ) {
-			wcj_session_set( 'wcj-country', $_REQUEST[ 'wcj-country' ] );
+		if ( isset( $_REQUEST['wcj-country'] ) ) {
+			wcj_session_set( 'wcj-country', $_REQUEST['wcj-country'] );
 		}
-		if ( isset( $_REQUEST[ 'wcj_country_selector' ] ) ) {
-			wcj_session_set( 'wcj-country', $_REQUEST[ 'wcj_country_selector' ] );
+		if ( isset( $_REQUEST['wcj_country_selector'] ) ) {
+			wcj_session_set( 'wcj-country', $_REQUEST['wcj_country_selector'] );
+		}
+	}
+
+	/**
+	 * Gets currency by country.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 *
+	 * @param $country
+	 *
+	 * @return bool|mixed|void
+	 */
+	function get_currency_by_country( $country ) {
+		$group_id              = $this->get_country_group_id( $country );
+		$country_currency_code = get_option( 'wcj_price_by_country_exchange_rate_currency_group_' . $group_id );
+		return ( '' != $country_currency_code ? $country_currency_code : false );
+	}
+
+	/**
+	 * Saves currency on session by country.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 *
+	 * @param $country
+	 */
+	function save_currency_on_session_by_country( $country ) {
+		$currency = $this->get_currency_by_country( $country );
+		if ( ! empty( $currency ) ) {
+			wcj_session_set( 'wcj-currency', $currency );
 		}
 	}
 
@@ -228,7 +259,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 4.0.0
+	 * @version 4.0.2
 	 * @todo    [feature] (maybe) `( 'cart_and_checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && ( is_cart() || is_checkout() ) ) ||`
 	 */
 	function get_customer_country_group_id() {
@@ -272,30 +303,46 @@ class WCJ_Price_by_Country_Core {
 			return null;
 		}
 
-		// Get the country group id - go through all the groups, first found group is returned
-		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i++ ) {
-			switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
-				case 'comma_list':
-					$country_exchange_rate_group = get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
-					$country_exchange_rate_group = str_replace( ' ', '', $country_exchange_rate_group );
-					$country_exchange_rate_group = explode( ',', $country_exchange_rate_group );
-					break;
-				case 'multiselect':
-					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_' . $i, '' );
-					break;
-				case 'chosen_select':
-					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' );
-					break;
-			}
-			if ( is_array( $country_exchange_rate_group ) && in_array( $country, $country_exchange_rate_group ) ) {
-				$this->customer_country_group_id = $i;
-				return $i;
-			}
+		$this->customer_country_group_id = $this->get_country_group_id( $country );
+		if ( - 1 != $this->customer_country_group_id ) {
+			return $this->customer_country_group_id;
 		}
 
 		// No country group found
 		$this->customer_country_group_id = -1;
 		return null;
+	}
+
+	/**
+	 * Gets country group id.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 * @param   $country
+	 *
+	 * @return int
+	 */
+	function get_country_group_id( $country ) {
+		// Get the country group id - go through all the groups, first found group is returned
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_by_country_total_groups_number', 1 ) ); $i ++ ) {
+			switch ( get_option( 'wcj_price_by_country_selection', 'comma_list' ) ) {
+				case 'comma_list':
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_exchange_rate_countries_group_' . $i );
+					$country_exchange_rate_group = str_replace( ' ', '', $country_exchange_rate_group );
+					$country_exchange_rate_group = explode( ',', $country_exchange_rate_group );
+				break;
+				case 'multiselect':
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_' . $i, '' );
+				break;
+				case 'chosen_select':
+					$country_exchange_rate_group = get_option( 'wcj_price_by_country_countries_group_chosen_select_' . $i, '' );
+				break;
+			}
+			if ( is_array( $country_exchange_rate_group ) && in_array( $country, $country_exchange_rate_group ) ) {
+				return $i;
+			}
+		}
+		return - 1;
 	}
 
 	/**
