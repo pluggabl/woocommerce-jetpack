@@ -16,7 +16,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 4.0.2
 	 * @since   2.9.0
 	 * @todo    (maybe) custom user nodes
 	 * @todo    (maybe) optional nodes selection
@@ -48,8 +48,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 				add_action( 'wp_head',        array( $this, 'add_booster_admin_bar_icon_style' ) );
 				add_action( 'admin_head',     array( $this, 'add_booster_admin_bar_icon_style' ) );
 			}
-			add_action( 'woojetpack_after_settings_save',  array( $this, 'reload_page_after_settings_save' ), PHP_INT_MAX, 2 );
 		}
+		add_action( 'woojetpack_after_settings_save',  array( $this, 'reload_page_after_settings_save' ), PHP_INT_MAX, 2 );
 	}
 
 	/**
@@ -477,26 +477,18 @@ class WCJ_Admin_Bar extends WCJ_Module {
 							'categories' => array(
 								'title'  => __( 'Categories', 'woocommerce' ),
 								'href'   => admin_url( 'edit-tags.php?taxonomy=product_cat&post_type=product' ),
+								'nodes'  => ( 'no' === get_option( 'wcj_admin_bar_wc_list_cats', 'no' ) ? array() : $this->get_nodes_product_taxonomy( 'product_cat' ) ),
 							),
 							'tags' => array(
 								'title'  => __( 'Tags', 'woocommerce' ),
 								'href'   => admin_url( 'edit-tags.php?taxonomy=product_tag&post_type=product' ),
+								'nodes'  => ( 'no' === get_option( 'wcj_admin_bar_wc_list_tags', 'no' ) ? array() : $this->get_nodes_product_taxonomy( 'product_tag' ) ),
 							),
 							'attributes' => array(
 								'title'  => __( 'Attributes', 'woocommerce' ),
 								'href'   => admin_url( 'edit.php?post_type=product&page=product_attributes' ),
 							),
 						),
-					),
-					'categories' => array(
-						'title'  => __( 'Categories', 'woocommerce' ),
-						'href'   => admin_url( 'edit.php?post_type=product' ),
-						'nodes'  => $this->get_nodes_product_taxonomy( 'product_cat' ),
-					),
-					'tags' => array(
-						'title'  => __( 'Tags', 'woocommerce' ),
-						'href'   => admin_url( 'edit.php?post_type=product' ),
-						'nodes'  => $this->get_nodes_product_taxonomy( 'product_tag' ),
 					),
 					'coupons' => array(
 						'title'  => __( 'Coupons', 'woocommerce' ),

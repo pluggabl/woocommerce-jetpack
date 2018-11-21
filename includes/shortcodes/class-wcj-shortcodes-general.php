@@ -120,7 +120,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 			return '';
 		}
 		global $wpdb;
-		return $wpdb->get_var( $wpdb->prepare( "SELECT sum(meta_value) FROM $wpdb->postmeta WHERE meta_key = %s", $atts['key'] ) );
+		$sum = $wpdb->get_var( $wpdb->prepare( "SELECT sum(meta_value) FROM $wpdb->postmeta WHERE meta_key = %s", $atts['key'] ) );
+		return ( ! empty( $atts['offset'] ) ? $sum + $atts['offset'] : $sum );
 	}
 
 	/**

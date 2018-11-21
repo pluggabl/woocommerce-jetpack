@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Images
  *
- * @version 3.9.0
+ * @version 4.0.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -76,26 +76,30 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * hide_per_product_image_on_archives_start.
 	 *
-	 * @version 2.5.2
+	 * @version 4.0.2
 	 * @since   2.5.2
 	 */
 	function hide_per_product_image_on_archives_start() {
 		$post_id = get_the_ID();
 		if ( $post_id > 0 && 'yes' === get_post_meta( $post_id, '_' . 'wcj_product_images_hide_image_on_archives', true ) ) {
-			remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
+			remove_action( 'woocommerce_before_shop_loop_item_title',
+				apply_filters( 'wcj_product_images_loop_product_thumbnail_filter', 'woocommerce_template_loop_product_thumbnail' ),
+				apply_filters( 'wcj_product_images_loop_product_thumbnail_filter_priority', 10 ) );
 		}
 	}
 
 	/**
 	 * hide_per_product_image_on_archives_end.
 	 *
-	 * @version 2.5.2
+	 * @version 4.0.2
 	 * @since   2.5.2
 	 */
 	function hide_per_product_image_on_archives_end() {
 		$post_id = get_the_ID();
 		if ( $post_id > 0 && 'yes' === get_post_meta( $post_id, '_' . 'wcj_product_images_hide_image_on_archives', true ) ) {
-			add_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
+			add_action( 'woocommerce_before_shop_loop_item_title',
+				apply_filters( 'wcj_product_images_loop_product_thumbnail_filter', 'woocommerce_template_loop_product_thumbnail' ),
+				apply_filters( 'wcj_product_images_loop_product_thumbnail_filter_priority', 10 ) );
 		}
 	}
 
@@ -117,7 +121,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * product_images_hide_on_archive.
 	 *
-	 * @version 2.2.6
+	 * @version 4.0.2
 	 */
 	function product_images_hide_on_archive() {
 		if (
@@ -125,15 +129,25 @@ class WCJ_Product_Images extends WCJ_Module {
 			'' != get_option( 'wcj_product_images_custom_on_archives', '' ) ||
 			( ( $post_id = get_the_ID() ) > 0 && '' != get_post_meta( $post_id, '_' . 'wcj_product_images_meta_custom_on_archives', true ) )
 		) {
-			remove_action( 'woocommerce_before_shop_loop_item_title', 'woocommerce_template_loop_product_thumbnail', 10 );
+			remove_action( 'woocommerce_before_shop_loop_item_title',
+				apply_filters( 'wcj_product_images_loop_product_thumbnail_filter', 'woocommerce_template_loop_product_thumbnail' ),
+				apply_filters( 'wcj_product_images_loop_product_thumbnail_filter_priority', 10 ) );
+		} else {
+			add_action( 'woocommerce_before_shop_loop_item_title',
+				apply_filters( 'wcj_product_images_loop_product_thumbnail_filter', 'woocommerce_template_loop_product_thumbnail' ),
+				apply_filters( 'wcj_product_images_loop_product_thumbnail_filter_priority', 10 ) );
 		}
 	}
 
 	/**
 	 * product_images_and_thumbnails_hide_on_single.
+	 *
+	 * @version 4.0.2
 	 */
 	function product_images_and_thumbnails_hide_on_single() {
-		remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
+		remove_action( 'woocommerce_before_single_product_summary',
+			apply_filters( 'wcj_product_images_single_product_images_filter', 'woocommerce_show_product_images' ),
+			apply_filters( 'wcj_product_images_single_product_images_filter_priority', 20 ) );
 	}
 
 	/**

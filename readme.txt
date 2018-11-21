@@ -194,13 +194,18 @@ You can see the differences between versions in this [table](https://booster.io/
 
 = 4.0.2 - 21/11/2018 =
 * Feature - Shortcodes - General - `[wcj_post_meta_sum]` shortcode added.
+* Fix - PRODUCTS - Product Images - `product_images_hide_on_archive()` - Issue with replacing single product's image with custom HTML on archives fixed.
 * Fix - PRODUCTS - Product MSRP - Comma decimal separator issue fixed.
 * Fix - SHIPPING & ORDERS - Order Min/Max Quantities - Fix quantity attribute of add to cart button on loop pages.
 * Fix - SHIPPING & ORDERS - Order Minimum Amount - Add compatibility with Price by country module.
+* Fix - PRICES & CURRENCIES - Product Price by Formula - Fix shortcodes as parameters miscalculating price on cart by adding `product_id` attribute on shortcodes
+* Fix - EMAILS & MISC. - Admin Bar - Page reload added after "Enable Module" checkbox is enabled (so admin bar is shown at once).
 * Dev - PRICES & CURRENCIES - Wholesale Price - "Advanced: Price Filters Priority" option added.
+* Dev - PRODUCTS - Product Images - `wcj_product_images_loop_product_thumbnail_filter`, `wcj_product_images_loop_product_thumbnail_filter_priority`, `wcj_product_images_single_product_images_filter` and `wcj_product_images_single_product_images_filter_priority` filters added.
+* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Shortcodes are now processed in fee titles.
 * Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Sync quantity button with add to cart button quantity.
 * Dev - SHIPPING & ORDERS - Order Min/Max Quantities - Prevent add to cart button on shop pages from being clicked if input requirements haven't been met.
-$* Dev - EMAILS & MISC. - Admin Bar - "WooCommerce" Admin Bar - "Categories" and "Tags" nodes added.
+* Dev - EMAILS & MISC. - Admin Bar - "WooCommerce" Admin Bar - "List product categories" and "List product tags" options added.
 * Dev - EMAILS & MISC. - Admin Tools - "Products Attributes" tool and "Product Revisions" option moved from "General" module.
 * Dev - EMAILS & MISC. - Admin Tools - Module description updated. Admin settings restyled and descriptions updated. "Show extended info" link added.
 * Dev - EMAILS & MISC. - Debug Tools - Initial module release (tools moved from "Admin Tools" module). Admin settings descriptions updated.

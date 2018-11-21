@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 3.9.0
+ * @version 4.0.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -67,9 +67,31 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	}
 
 	/**
+	 * Adds product id param on shortcodes.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 *
+	 * @param $the_param
+	 * @param $_product
+	 *
+	 * @return string
+	 */
+	function add_product_id_param( $the_param, $_product ) {
+		if (
+			preg_match( '/^\[.*\]$/', $the_param ) &&
+			! preg_match( '/product_id=[\'"]?\d+[\'"]?/', $the_param )
+		) {
+			$product_id = $_product->get_id();
+			$the_param  = preg_replace( '/\[[^\]]*/', "$0 product_id='{$product_id}'", $the_param );
+		}
+		return $the_param;
+	}
+
+	/**
 	 * change_price.
 	 *
-	 * @version 3.9.0
+	 * @version 4.0.2
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product, $output_errors = false ) {
@@ -95,6 +117,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 						$the_param = ( $is_per_product )
 							? get_post_meta( $_product_id, '_' . 'wcj_product_price_by_formula_param_' . $i, true )
 							: get_option( 'wcj_product_price_by_formula_param_' . $i, '' );
+						$the_param = $this->add_product_id_param( $the_param, $_product );
 						$the_param = do_shortcode( $the_param );
 						if ( '' != $the_param ) {
 							$math->registerVariable( 'p' . $i, $the_param );

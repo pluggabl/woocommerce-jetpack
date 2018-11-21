@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 3.8.0
+ * @version 4.0.2
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -180,13 +180,13 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * gateways_fees.
 	 *
-	 * @version 3.8.0
+	 * @version 4.0.2
 	 */
 	function gateways_fees() {
 		global $woocommerce;
 		$current_gateway = $this->get_current_gateway();
 		if ( '' != $current_gateway ) {
-			$fee_text        = $this->get_option( 'text', $current_gateway );
+			$fee_text        = do_shortcode( $this->get_option( 'text', $current_gateway ) );
 			$min_cart_amount = $this->get_option( 'min_cart_amount', $current_gateway );
 			$max_cart_amount = $this->get_option( 'max_cart_amount', $current_gateway );
 			// Multicurrency (Currency Switcher) module

@@ -44,7 +44,7 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 		);
 
 		parent::__construct();
-    }
+	}
 
 	/**
 	 * init_atts.
@@ -58,18 +58,13 @@ class WCJ_Invoices_Shortcodes extends WCJ_Shortcodes {
 		}
 		if ( 'shop_order' !== get_post_type( $atts['order_id'] ) ) return false;
 
-		// Class properties
-		/*if ( ! in_array( $atts['invoice_type'], wcj_enabled_invoice_types_ids() ) ) return false;
-		$this->the_invoice = wc_get_invoice( $atts['order_id'], $atts['invoice_type'] );
-		if ( ! $this->the_invoice ) return false;*/
-
 		return $atts;
 	}
 
 	/**
 	 * wcj_invoice_date.
 	 */
-    function wcj_invoice_date( $atts ) {
+	function wcj_invoice_date( $atts ) {
 		return wcj_get_invoice_date( $atts['order_id'], $atts['invoice_type'], $atts['days'], $atts['date_format'] );
 	}
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Bar
  *
- * @version 3.1.0
+ * @version 4.0.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -17,21 +17,36 @@ return array(
 	),
 	array(
 		'title'    => __( '"WooCommerce" Admin Bar', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
 		'id'       => 'wcj_admin_bar_wc_enabled',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
+		'checkboxgroup' => 'start',
+	),
+	array(
+		'desc'     => __( 'List product categories in "WooCommerce > Products > Categories"', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_admin_bar_wc_list_cats',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'checkboxgroup' => '',
+	),
+	array(
+		'desc'     => __( 'List product tags in "WooCommerce > Products > Tags"', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_admin_bar_wc_list_tags',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'checkboxgroup' => 'end',
 	),
 	array(
 		'title'    => __( '"Booster" Admin Bar', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
 		'id'       => 'wcj_admin_bar_booster_enabled',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( '"Booster: Active" Admin Bar', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable', 'woocommerce-jetpack' ) . '</strong>',
 		'id'       => 'wcj_admin_bar_booster_active_enabled',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
