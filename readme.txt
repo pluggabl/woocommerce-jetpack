@@ -1,5 +1,5 @@
 === Booster for WooCommerce ===
-Contributors: algoritmika, anbinder, debugeris
+Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 4.9
@@ -192,14 +192,24 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.0.2 - 21/11/2018 =
+= 4.0.2 - 29/11/2018 =
+* Feature - CART & CHECKOUT - Checkout Customization - Add option to recalculate checkout.
+* Feature - CART & CHECKOUT - Checkout Customization - Add option to update checkout when some field have its value changed.
+* Feature - EMAILS & MISC. - Admin Tools - Products Options - "JSON Product Search Limit" option added.
 * Feature - Shortcodes - General - `[wcj_post_meta_sum]` shortcode added.
+* Fix - PRICES & CURRENCIES - Price Formats - Current currency issue fixed (e.g. price format on admin order edit page).
+* Fix - PRICES & CURRENCIES - Product Price by Formula - Fix shortcodes as parameters miscalculating price on cart by adding `product_id` attribute on shortcodes.
+* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Empty price issue fixed.
+* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Multicurrency (Currency Switcher)" module support added.
 * Fix - PRODUCTS - Product Images - `product_images_hide_on_archive()` - Issue with replacing single product's image with custom HTML on archives fixed.
 * Fix - PRODUCTS - Product MSRP - Comma decimal separator issue fixed.
+* Fix - PAYMENT GATEWAYS - Gateways Fees and Discounts - `init_options()` is now initialized on `init` hook for better translation and performance.
 * Fix - SHIPPING & ORDERS - Order Min/Max Quantities - Fix quantity attribute of add to cart button on loop pages.
 * Fix - SHIPPING & ORDERS - Order Minimum Amount - Add compatibility with Price by country module.
-* Fix - PRICES & CURRENCIES - Product Price by Formula - Fix shortcodes as parameters miscalculating price on cart by adding `product_id` attribute on shortcodes
+* Fix - PDF INVOICING & PACKING SLIPS - Bulk actions - "Undefined variable: sendback" PHP notice fixed.
 * Fix - EMAILS & MISC. - Admin Bar - Page reload added after "Enable Module" checkbox is enabled (so admin bar is shown at once).
+* Fix - PRODUCTS - Product Input Fields - Fix multiple uploads generating a single file by renaming them uniquely.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Message on Price too Small / too Big - `%price%`, `%min_price%` and `%max_price%` replaced values added.
 * Dev - PRICES & CURRENCIES - Wholesale Price - "Advanced: Price Filters Priority" option added.
 * Dev - PRODUCTS - Product Images - `wcj_product_images_loop_product_thumbnail_filter`, `wcj_product_images_loop_product_thumbnail_filter_priority`, `wcj_product_images_single_product_images_filter` and `wcj_product_images_single_product_images_filter_priority` filters added.
 * Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Shortcodes are now processed in fee titles.
@@ -215,6 +225,8 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - Shortcodes - Products Crowdfunding - `get_product_orders_data()` - `start_date` and `order_status` optional attributes added.
 * Dev - Shortcodes - Products Crowdfunding - `get_product_orders_data()` - Code cleaned up.
 * Dev - Classes - `WCJ_Module_Product_By_Condition` - `pre_get_posts` - WP_Query optimized (`post__not_in` added).
+* Dev - Shortcodes - Products - `[wcj_product_you_save_percent]` - Add compatibility with "Dynamic Pricing" plugin.
+* Dev - PRODUCTS - Tax Display - Add shop scope on display by user role option.
 
 = 4.0.1 - 12/10/2018 =
 * Fix - SHIPPING & ORDERS - Shipping Methods by Current Date/Time - Admin settings section title fixed.

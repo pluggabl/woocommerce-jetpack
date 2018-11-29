@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Open Pricing
  *
- * @version 3.8.0
+ * @version 4.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
@@ -76,6 +76,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Message on Price too Small', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%price%', '%min_price%' ) ),
 		'id'       => 'wcj_product_open_price_messages_to_small',
 		'default'  => __( 'Entered price is too small!', 'woocommerce-jetpack' ),
 		'type'     => 'text',
@@ -83,6 +84,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Message on Price too Big', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%price%', '%max_price%' ) ),
 		'id'       => 'wcj_product_open_price_messages_to_big',
 		'default'  => __( 'Entered price is too big!', 'woocommerce-jetpack' ),
 		'type'     => 'text',

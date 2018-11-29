@@ -59,7 +59,21 @@ class WCJ_Admin_Tools extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_admin_tools_suppress_admin_notices', 'no' ) ) {
 				add_filter( 'woocommerce_helper_suppress_admin_notices', '__return_true' );
 			}
+			// JSON product search limit
+			if ( 0 != get_option( 'wcj_product_json_search_limit', 0 ) ) {
+				add_filter( 'woocommerce_json_search_limit', array( $this, 'set_json_search_limit' ) );
+			}
 		}
+	}
+
+	/**
+	 * set_json_search_limit.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 */
+	function set_json_search_limit( $limit ) {
+		return get_option( 'wcj_product_json_search_limit', 0 );
 	}
 
 	/**

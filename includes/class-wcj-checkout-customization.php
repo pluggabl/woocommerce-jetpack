@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 3.8.0
+ * @version 4.0.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 4.0.2
 	 * @since   2.7.0
 	 */
 	function __construct() {
@@ -73,7 +73,65 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_checkout_restrict_countries_by_customer_ip_shipping', 'no' ) ) ) {
 				add_filter( 'woocommerce_countries_shipping_countries', array( $this, 'restrict_countries_by_customer_ip' ), PHP_INT_MAX );
 			}
+			// Recalculate Checkout
+			if ( 'yes' === get_option( 'wcj_checkout_recalculate_checkout_update_enable', 'no' ) ) {
+				add_action( 'wp_footer', array( $this, 'recalculate_checkout' ), 50 );
+			}
+			// Update Checkout
+			if ( 'yes' === get_option( 'wcj_checkout_force_checkout_update_enable', 'no' ) ) {
+				add_action( 'wp_footer', array( $this, 'update_checkout' ), 50 );
+			}
 		}
+	}
+
+	/**
+	 * Updates checkout.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 */
+	function update_checkout() {
+		if ( ! is_checkout() ) {
+			return;
+		}
+		?>
+		<script type="text/javascript">
+			jQuery(function ($) {
+				var selector = <?php echo wp_json_encode( get_option( 'wcj_checkout_force_checkout_update_fields', '' ) ); ?>;
+				jQuery(selector).on('change', function () {
+					$('body').trigger('update_checkout');
+				});
+			});
+		</script>
+		<?php
+	}
+
+	/**
+	 * Recalculates checkout.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 */
+	function recalculate_checkout() {
+		if ( ! is_checkout() ) {
+			return;
+		}
+		?>
+		<script type="text/javascript">
+			jQuery(function ($) {
+				var old_values = [];
+				var selector = <?php echo wp_json_encode( get_option( 'wcj_checkout_recalculate_checkout_update_fields', '#billing_country, #shipping_country' ) ); ?>;
+				jQuery(document.body).on("updated_checkout", function () {
+					jQuery(selector).each(function (index) {
+						if (old_values[index] != $(this).val()) {
+							$('body').trigger('update_checkout');
+						}
+						old_values[index] = $(this).val();
+					});
+				});
+			});
+		</script>
+		<?php
 	}
 
 	/**

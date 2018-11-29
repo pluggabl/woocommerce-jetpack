@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 3.8.0
+ * @version 4.0.2
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.1
+	 * @version 4.0.2
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -57,6 +57,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_column_open_pricing' ),    PHP_INT_MAX );
 				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column_open_pricing' ), PHP_INT_MAX );
 			}
+			$this->shop_currency = get_option( 'woocommerce_currency' );
 		}
 	}
 
@@ -87,20 +88,31 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	}
 
 	/**
+	 * wc_price_shop_currency.
+	 *
+	 * @version 4.0.2
+	 * @since   4.0.2
+	 */
+	function wc_price_shop_currency( $price, $args = array() ) {
+		$args['currency'] = $this->shop_currency;
+		return wc_price( $price, $args );
+	}
+
+	/**
 	 * add_price_info_to_loop.
 	 *
-	 * @version 2.8.2
+	 * @version 4.0.2
 	 * @since   2.8.0
 	 */
 	function add_price_info_to_loop() {
 		$_product_id = get_the_ID();
 		if ( $this->is_open_price_product( $_product_id ) ) {
 			$replaceable_values = array(
-				'%default_price%' => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_default_price', true ) ),
-				'%min_price%'     => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_min_price', true ) ),
-				'%max_price%'     => wc_price( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_max_price', true ) ),
+				'%default_price%' => $this->wc_price_shop_currency( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_default_price', true ) ),
+				'%min_price%'     => $this->wc_price_shop_currency( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_min_price', true ) ),
+				'%max_price%'     => $this->wc_price_shop_currency( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_max_price', true ) ),
 			);
-			echo str_replace( array_keys( $replaceable_values ), array_values( $replaceable_values ), $this->loop_price_info_template );
+			echo wcj_handle_replacements( $replaceable_values, $this->loop_price_info_template );
 		}
 	}
 
@@ -258,39 +270,46 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * get_open_price.
 	 *
-	 * @version 2.4.8
+	 * @version 4.0.2
 	 * @since   2.4.8
 	 */
 	function get_open_price( $price, $_product ) {
-		return ( $this->is_open_price_product( $_product ) && isset( $_product->wcj_open_price ) ) ? $_product->wcj_open_price : $price;
+		if ( $this->is_open_price_product( $_product ) && isset( $_product->wcj_open_price ) ) {
+			$price = $_product->wcj_open_price;
+			// Multicurrency (Currency Switcher) module
+			if ( WCJ()->modules['multicurrency']->is_enabled() ) {
+				$price = WCJ()->modules['multicurrency']->change_price( $price, null );
+			}
+			return $price;
+		} else {
+			return $price;
+		}
 	}
 
 	/**
 	 * validate_open_price_on_add_to_cart.
 	 *
-	 * @version 2.6.0
+	 * @version 4.0.2
 	 * @since   2.4.8
 	 */
 	function validate_open_price_on_add_to_cart( $passed, $product_id ) {
 		$the_product = wc_get_product( $product_id );
 		if ( $this->is_open_price_product( $the_product ) ) {
-			$min_price = get_post_meta( $product_id, '_' . 'wcj_product_open_price_min_price', true );
-			$max_price = get_post_meta( $product_id, '_' . 'wcj_product_open_price_max_price', true );
-			if ( $min_price > 0 ) {
-				if ( ! isset( $_POST['wcj_open_price'] ) || '' === $_POST['wcj_open_price'] ) {
-					wc_add_notice( get_option( 'wcj_product_open_price_messages_required', __( 'Price is required!', 'woocommerce-jetpack' ) ), 'error' );
-					return false;
-				}
-				if ( $_POST['wcj_open_price'] < $min_price ) {
-					wc_add_notice( get_option( 'wcj_product_open_price_messages_to_small', __( 'Entered price is too small!', 'woocommerce-jetpack' ) ), 'error' );
-					return false;
-				}
+			// Empty price
+			if ( ! isset( $_POST['wcj_open_price'] ) || '' === $_POST['wcj_open_price'] ) {
+				wc_add_notice( get_option( 'wcj_product_open_price_messages_required', __( 'Price is required!', 'woocommerce-jetpack' ) ), 'error' );
+				return false;
 			}
-			if ( $max_price > 0 ) {
-				if ( isset( $_POST['wcj_open_price'] ) && $_POST['wcj_open_price'] > $max_price ) {
-					wc_add_notice( get_option( 'wcj_product_open_price_messages_to_big', __( 'Entered price is too big!', 'woocommerce-jetpack' ) ), 'error' );
-					return false;
-				}
+			// Min & Max
+			if ( ( $min_price = get_post_meta( $product_id, '_' . 'wcj_product_open_price_min_price', true ) ) > 0 && $_POST['wcj_open_price'] < $min_price ) {
+				wc_add_notice( wcj_handle_replacements( array( '%price%' => $this->wc_price_shop_currency( $_POST['wcj_open_price'] ), '%min_price%' => $this->wc_price_shop_currency( $min_price ) ),
+					get_option( 'wcj_product_open_price_messages_to_small', __( 'Entered price is too small!', 'woocommerce-jetpack' ) ) ), 'error' );
+				return false;
+			}
+			if ( ( $max_price = get_post_meta( $product_id, '_' . 'wcj_product_open_price_max_price', true ) ) > 0 && $_POST['wcj_open_price'] > $max_price ) {
+				wc_add_notice( wcj_handle_replacements( array( '%price%' => $this->wc_price_shop_currency( $_POST['wcj_open_price'] ), '%max_price%' => $this->wc_price_shop_currency( $max_price ) ),
+					get_option( 'wcj_product_open_price_messages_to_big', __( 'Entered price is too big!', 'woocommerce-jetpack' ) ) ), 'error' );
+				return false;
 			}
 		}
 		return $passed;
@@ -338,7 +357,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_open_price_input_field_to_frontend.
 	 *
-	 * @version 3.8.0
+	 * @version 4.0.2
 	 * @since   2.4.8
 	 */
 	function add_open_price_input_field_to_frontend() {
@@ -371,7 +390,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				. 'value="' . $value . '" '
 				. $custom_attributes . '>';
 			// Currency symbol
-			$currency_symbol = get_woocommerce_currency_symbol();
+			$currency_symbol = get_woocommerce_currency_symbol( $this->shop_currency );
 			// Replacing final values
 			$replacement_values = array(
 				'%frontend_label%'       => $title,
@@ -380,9 +399,9 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				'%min_price_simple%'     => $min_price,
 				'%max_price_simple%'     => $max_price,
 				'%default_price_simple%' => $default_price,
-				'%min_price%'            => wc_price( $min_price ),
-				'%max_price%'            => wc_price( $max_price ),
-				'%default_price%'        => wc_price( $default_price ),
+				'%min_price%'            => $this->wc_price_shop_currency( $min_price ),
+				'%max_price%'            => $this->wc_price_shop_currency( $max_price ),
+				'%default_price%'        => $this->wc_price_shop_currency( $default_price ),
 			);
 			echo str_replace(
 				array_keys( $replacement_values ),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Tax Display
  *
- * @version 3.2.4
+ * @version 4.0.2
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Tax_Display extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 4.0.2
 	 * @since   3.2.4
 	 */
 	function __construct() {
@@ -37,6 +37,7 @@ class WCJ_Tax_Display extends WCJ_Module {
 			// Tax Incl./Excl. by user role
 			if ( 'yes' === get_option( 'wcj_product_listings_display_taxes_by_user_role_enabled', 'no' ) ) {
 				add_filter( 'option_woocommerce_tax_display_shop', array( $this, 'tax_display_by_user_role' ), PHP_INT_MAX );
+				add_filter( 'option_woocommerce_tax_display_cart', array( $this, 'tax_display_by_user_role' ), PHP_INT_MAX );
 			}
 
 			// Tax toggle
@@ -84,7 +85,7 @@ class WCJ_Tax_Display extends WCJ_Module {
 	/**
 	 * tax_display_by_user_role.
 	 *
-	 * @version 3.2.4
+	 * @version 4.0.2
 	 * @since   3.2.0
 	 */
 	function tax_display_by_user_role( $value ) {
@@ -94,7 +95,8 @@ class WCJ_Tax_Display extends WCJ_Module {
 		if ( '' != ( $display_taxes_by_user_role_roles = get_option( 'wcj_product_listings_display_taxes_by_user_role_roles', '' ) ) ) {
 			$current_user_first_role = wcj_get_current_user_first_role();
 			if ( in_array( $current_user_first_role, $display_taxes_by_user_role_roles ) ) {
-				if ( 'no_changes' != ( $tax_display = get_option( 'wcj_product_listings_display_taxes_by_user_role_' . $current_user_first_role, 'no_changes' ) ) ) {
+				$option_name = 'option_woocommerce_tax_display_shop' === current_filter() ? 'wcj_product_listings_display_taxes_by_user_role_' . $current_user_first_role : 'wcj_product_listings_display_taxes_on_cart_by_user_role_' . $current_user_first_role;
+				if ( 'no_changes' != ( $tax_display = get_option( $option_name, 'no_changes' ) ) ) {
 					return $tax_display;
 				}
 			}

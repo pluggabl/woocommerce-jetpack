@@ -92,6 +92,15 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'JSON Product Search Limit', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will set the maximum number of products to return on JSON search (e.g. when setting Upsells and Cross-sells on product edit page).', 'woocommerce-jetpack' ) . ' ' .
+			__( 'Ignored if set to zero.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_json_search_limit',
+		'default'  => 0,
+		'type'     => 'number',
+		'custom_attributes' => array( 'min' => 0 ),
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_admin_tools_products_options',
 	),

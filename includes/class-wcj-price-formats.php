@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price Formats
  *
- * @version 3.5.0
+ * @version 4.0.2
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -76,12 +76,13 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * price_format.
 	 *
-	 * @version 3.2.4
+	 * @version 4.0.2
 	 * @since   2.5.2
 	 */
 	function price_format( $args ) {
+		$current_currency = ( '' !== $args['currency'] ? $args['currency'] : get_woocommerce_currency() );
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_price_formats_total_number', 1 ) ); $i++ ) {
-			if ( get_woocommerce_currency() === get_option( 'wcj_price_formats_currency_' . $i ) ) {
+			if ( $current_currency === get_option( 'wcj_price_formats_currency_' . $i ) ) {
 				if ( defined( 'ICL_LANGUAGE_CODE' ) && '' != ( $wpml_language = get_option( 'wcj_price_formats_wpml_language_' . $i, '' ) ) ) {
 					$wpml_language = explode( ',', trim( str_replace( ' ', '', $wpml_language ), ',' ) );
 					if ( ! in_array( ICL_LANGUAGE_CODE, $wpml_language ) ) {

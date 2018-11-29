@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Customization
  *
- * @version 3.8.0
+ * @version 4.0.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -185,5 +185,55 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_checkout_customization_checkout_login_message_options',
+	),
+	array(
+		'title'    => __( 'Recalculate Checkout', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Recalculate checkout right after the default calculation has been requested.', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_checkout_recalculate_checkout_update_options',
+	),
+	array(
+		'title'    => __( 'Recalculate Checkout', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_recalculate_checkout_update_enable',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Fields', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Required fields that need to be changed in order to recalculate checkout.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Use CSS selector syntax.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_recalculate_checkout_update_fields',
+		'default'  => '#billing_country, #shipping_country',
+		'type'     => 'text',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_checkout_recalculate_checkout_update_options',
+	),
+	array(
+		'title'    => __( 'Force Checkout Update', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Update checkout when some field have its value changed.', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_checkout_force_checkout_update_options',
+	),
+	array(
+		'title'    => __( 'Force Checkout Update', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_force_checkout_update_enable',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Fields', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Fields that need to be changed in order to update checkout.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Use CSS selector syntax.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_force_checkout_update_fields',
+		'default'  => '',
+		'type'     => 'text',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_checkout_force_checkout_update_options',
 	),
 );

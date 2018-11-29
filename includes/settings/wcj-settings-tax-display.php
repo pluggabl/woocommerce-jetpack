@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Tax Display
  *
- * @version 3.2.4
+ * @version 4.0.2
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -119,8 +119,21 @@ if ( '' != ( $display_taxes_by_user_role_roles = get_option( 'wcj_product_listin
 	foreach ( $display_taxes_by_user_role_roles as $display_taxes_by_user_role_role ) {
 		$settings = array_merge( $settings, array(
 			array(
-				'title'    => sprintf( __( 'Role: %s', 'woocommerce-jetpack' ), $display_taxes_by_user_role_role ),
+				'title'    => sprintf( __( 'Role: %s - shop', 'woocommerce-jetpack' ), $display_taxes_by_user_role_role ),
 				'id'       => 'wcj_product_listings_display_taxes_by_user_role_' . $display_taxes_by_user_role_role,
+				'desc_tip' => __( 'Setup how taxes will be applied during in the shop.', 'woocommerce-jetpack' ),
+				'default'  => 'no_changes',
+				'type'     => 'select',
+				'options'  => array(
+					'no_changes' => __( 'Default TAX display (no changes)', 'woocommerce-jetpack' ),
+					'incl'       => __( 'Including tax', 'woocommerce-jetpack' ),
+					'excl'       => __( 'Excluding tax', 'woocommerce-jetpack' ),
+				),
+			),
+			array(
+				'title'    => sprintf( __( 'Role: %s - cart', 'woocommerce-jetpack' ), $display_taxes_by_user_role_role ),
+				'id'       => 'wcj_product_listings_display_taxes_on_cart_by_user_role_' . $display_taxes_by_user_role_role,
+				'desc_tip' => __( 'Setup how taxes will be applied during cart and checkout.', 'woocommerce-jetpack' ),
 				'default'  => 'no_changes',
 				'type'     => 'select',
 				'options'  => array(

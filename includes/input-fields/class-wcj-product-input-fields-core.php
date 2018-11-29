@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 3.9.1
+ * @version 4.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -306,7 +306,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * output_custom_input_fields_in_admin_order.
 	 *
-	 * @version 3.1.0
+	 * @version 4.0.2
 	 */
 	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
 		if ( null === $_product ) {
@@ -327,7 +327,7 @@ class WCJ_Product_Input_Fields_Core {
 			if ( 'file' === $type ) {
 				$the_value = maybe_unserialize( $the_value );
 				if ( isset( $the_value['name'] ) ) {
-					$the_value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '.' . pathinfo( $the_value['name'], PATHINFO_EXTENSION ) ) . '">' . $the_value['name'] . '</a>';
+					$the_value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $the_value['name'], PATHINFO_EXTENSION ) ) . '">' . $the_value['name'] . '</a>';
 				}
 			} else {
 				if ( 'no' === get_option( 'wcj_product_input_fields_make_nicer_name_enabled', 'yes' ) ) {
@@ -842,7 +842,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * add_product_input_fields_to_order_item_meta.
 	 *
-	 * @version 2.5.0
+	 * @version 4.0.2
 	 */
 	function add_product_input_fields_to_order_item_meta( $item_id, $values, $cart_item_key  ) {
 		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
@@ -854,7 +854,7 @@ class WCJ_Product_Input_Fields_Core {
 				if ( 'file' === $type ) {
 					$tmp_name = $input_field_value['tmp_name'];
 					$ext = pathinfo( $input_field_value['name'], PATHINFO_EXTENSION );
-					$name = $item_id . '.' . $ext;//$input_field_value['name'];
+					$name = $item_id . '_' . $i . '.' . $ext;//$input_field_value['name'];
 					$upload_dir = wcj_get_wcj_uploads_dir( 'input_fields_uploads' );
 					if ( ! file_exists( $upload_dir ) ) {
 						mkdir( $upload_dir, 0755, true );

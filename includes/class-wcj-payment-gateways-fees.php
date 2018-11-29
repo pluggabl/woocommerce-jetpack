@@ -16,7 +16,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 4.0.2
 	 * @todo    (maybe) add settings subsections for each gateway
 	 */
 	function __construct() {
@@ -28,7 +28,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			$this->init_options();
+			add_action( 'init',                            array( $this, 'init_options' ) );
 			add_action( 'woocommerce_cart_calculate_fees', array( $this, 'gateways_fees' ) );
 			add_action( 'wp_enqueue_scripts',              array( $this, 'enqueue_checkout_script' ) );
 		}

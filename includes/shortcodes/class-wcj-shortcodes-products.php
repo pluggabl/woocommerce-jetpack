@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 4.0.0
+ * @version 4.0.2
  * @author  Algoritmika Ltd.
  */
 
@@ -699,7 +699,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * wcj_product_you_save_percent.
 	 *
 	 * @return  string
-	 * @version 2.4.0
+	 * @version 4.0.2
 	 */
 	function wcj_product_you_save_percent( $atts ) {
 		if ( $this->the_product->is_on_sale() ) {
@@ -707,7 +707,10 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				$you_save      = ( $this->the_product->get_variation_regular_price( 'max' ) - $this->the_product->get_variation_sale_price( 'max' ) );
 				$regular_price = $this->the_product->get_variation_regular_price( 'max' );
 			} else {
-				$you_save      = ( $this->the_product->get_regular_price() - $this->the_product->get_sale_price() );
+				$sale_price    = $this->the_product->get_sale_price();
+				$price         = $this->the_product->get_price();
+				$final_price   = ! empty( $sale_price ) && $sale_price < $price ? $this->the_product->get_sale_price() : $this->the_product->get_price();
+				$you_save      = ( $this->the_product->get_regular_price() - $final_price );
 				$regular_price = $this->the_product->get_regular_price();
 			}
 			if ( 0 != $regular_price ) {

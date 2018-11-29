@@ -73,7 +73,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		foreach ( wcj_get_user_roles() as $role_key => $role_data ) {
 			if ( $role_key === $current_user_role ) {
 				$order_minimum_amount_by_user_role = get_option( 'wcj_order_minimum_amount_by_user_role_' . $role_key, 0 );
-				if ( $order_minimum_amount_by_user_role > /* $minimum */ 0 ) {
+				if ( $order_minimum_amount_by_user_role > 0 ) {
 					$minimum = $order_minimum_amount_by_user_role;
 				}
 				break;

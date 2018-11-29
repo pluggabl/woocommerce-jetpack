@@ -378,8 +378,12 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				$the_meta      = get_post_meta( get_the_ID(), '_' . $section . '_' . $the_key, true );
 				if ( is_array( $the_meta ) ) {
 					// Converting from before version 2.3.0
-					if ( isset( $the_meta['value'] ) ) update_post_meta( get_the_ID(), '_' . $section . '_' . $the_key,       $the_meta['value'] );
-					if ( isset( $the_meta['label'] ) ) update_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, $the_meta['label'] );
+					if ( isset( $the_meta['value'] ) ) {
+						update_post_meta( get_the_ID(), '_' . $section . '_' . $the_key,       $the_meta['value'] );
+					}
+					if ( isset( $the_meta['label'] ) ) {
+						update_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, $the_meta['label'] );
+					}
 				}
 				$fields[ $the_key ] = array(
 					'type'  => $the_type,
