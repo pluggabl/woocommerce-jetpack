@@ -34,8 +34,8 @@ if ( ! function_exists( 'wcj_get_shipping_time_table' ) ) {
 			$option_id_shipping_method = ( $do_use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
 			$option_id                 = 'wcj_shipping_time_' . $option_id_shipping_method . $option_id_shipping_class;
 			if ( '' !== ( $time = get_option( $option_id, '' ) ) ) {
-				$method_title = ( $do_use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title']: $method->get_method_title() );
-				$table_data[] = array( $method_title, sprintf( __( '%s day(s)' ), $time ) );
+				$method_title = ( $do_use_shipping_instances ? __( $method['zone_name'] . ': ' . $method['shipping_method_title'] ) : $method->get_method_title() );
+				$table_data[] = array( $method_title, sprintf( _n( '%s day', '%s days', $time ), $time ) );
 			}
 		}
 		return ( empty( $table_data ) ? '' : wcj_get_table_html( $table_data, array( 'table_heading_type' => 'vertical' ) ) );
