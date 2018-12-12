@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Related Products
  *
- * @version 3.9.0
+ * @version 4.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -163,6 +163,17 @@ $settings = array_merge( $settings, array(
 		'options'  => array(
 			'chosen_select' => __( 'Chosen select', 'woocommerce-jetpack' ),
 			'standard'      => __( 'Standard', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Default metabox value', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If set to "Yes" and no products are selected it will hide related products', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_info_related_products_per_product_cmb_default',
+		'default'  => 'no',
+		'type'     => 'select',
+		'options'  => array(
+			'yes' => __( 'Yes', 'woocommerce-jetpack' ),
+			'no'  => __( 'No', 'woocommerce-jetpack' ),
 		),
 	),
 	array(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Related Products
  *
- * @version 3.9.0
+ * @version 4.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -30,7 +30,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.1
+	 * @version 4.1.0
 	 */
 	function __construct() {
 
@@ -39,7 +39,7 @@ class WCJ_Related_Products extends WCJ_Module {
 		$this->desc       = __( 'Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis. Hide related products completely.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-related-products';
 		$this->extra_desc = sprintf(
-			__( 'You may need to <a class="button" href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
+			__( 'You may need to <a href="%s">clear all products transients</a> to immediately see results on frontend after changing module\'s settings. Alternatively you can just update each product individually to clear its transients.', 'woocommerce-jetpack' ),
 			add_query_arg( 'wcj_clear_all_products_transients', 'yes' )
 		);
 		parent::__construct();
@@ -48,7 +48,6 @@ class WCJ_Related_Products extends WCJ_Module {
 		add_action( 'admin_init', array( $this, 'maybe_delete_product_transients' ), PHP_INT_MAX, 2 );
 
 		if ( $this->is_enabled() ) {
-
 			// Related per Product
 			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) ) {
 				add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
@@ -175,13 +174,16 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * get_related_products_ids_wc3.
 	 *
-	 * @version 3.9.0
+	 * @version 4.1.0
 	 * @since   2.8.0
 	 */
 	function get_related_products_ids_wc3( $product_id ) {
 		$include_ids = array();
 		// Change Related Products
-		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) ) {
+		if (
+			'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) &&
+			( 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) || ( 'yes' === get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) )
+		) {
 			// Relate per Product (Manual)
 			$related_per_product = get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_ids', true );
 			$include_ids         = ( ! empty( $related_per_product ) ? $related_per_product : false );
@@ -228,14 +230,13 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * related_products_query_wc3.
 	 *
-	 * @version 3.9.0
+	 * @version 4.1.0
 	 * @since   2.8.0
 	 * @see     WC_Product_Data_Store_CPT::get_related_products_query()
 	 * @todo    "Relate by Product Attribute" - directly to `$query['where']` instead of getting ids via `WP_Query`
 	 * @todo    rethink hide related (for >= WC3)
 	 */
 	function related_products_query_wc3( $_query, $product_id ) {
-
 		//////////////////////////////////////////////////////////////////////
 		// Algoritmika
 		if ( 'yes' === get_option( 'wcj_product_info_related_products_hide', 'no' ) ) {
@@ -262,7 +263,6 @@ class WCJ_Related_Products extends WCJ_Module {
 			$limit += 20;
 		}
 		//////////////////////////////////////////////////////////////////////
-
 		global $wpdb;
 
 		// Arrays to string.
@@ -282,7 +282,7 @@ class WCJ_Related_Products extends WCJ_Module {
 		$query['where'] .= " AND p.ID NOT IN ( {$exclude_ids} )";
 		//////////////////////////////////////////////////////////////////////
 		// Algoritmika
-		if ( $include_ids ) {
+		if ( ! is_array( $include_ids ) && $include_ids ) {
 			$query['where'] .= " AND p.ID IN ( {$include_ids} )";
 		}
 		//////////////////////////////////////////////////////////////////////
@@ -322,7 +322,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * fix_empty_initial_related_products.
 	 *
-	 * @version 2.6.0
+	 * @version 4.1.0
 	 * @since   2.6.0
 	 */
 	function fix_empty_initial_related_products( $terms, $product_id ) {
@@ -331,7 +331,7 @@ class WCJ_Related_Products extends WCJ_Module {
 			$do_fix = true;
 		} elseif (
 			'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) &&
-			'yes' === get_post_meta( $product_id, '_' . 'wcj_product_info_related_products_enabled', true ) &&
+			( 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) || ( 'yes' === get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) ) &&
 			'' != get_post_meta( $product_id, '_' . 'wcj_product_info_related_products_ids', true )
 		) {
 			$do_fix = true;
@@ -394,7 +394,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	/**
 	 * related_products_args.
 	 *
-	 * @version 2.8.0
+	 * @version 4.1.0
 	 * @todo    save custom results as product transient (for < WC3)
 	 */
 	function related_products_args( $args ) {
@@ -415,7 +415,10 @@ class WCJ_Related_Products extends WCJ_Module {
 			$args['order'] = get_option( 'wcj_product_info_related_products_order', 'desc' );
 		}
 		// Change Related Products
-		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) && 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) ) {
+		if (
+			'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_product_info_related_products_per_product', 'no' ) ) &&
+			( 'yes' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) || ( 'yes' === get_option( 'wcj_product_info_related_products_per_product_cmb_default', 'no' ) ) && '' === get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_enabled', true ) )
+		) {
 			// Relate per Product (Manual)
 			$related_per_product = get_post_meta( get_the_ID(), '_' . 'wcj_product_info_related_products_ids', true );
 			if ( '' != $related_per_product ) {

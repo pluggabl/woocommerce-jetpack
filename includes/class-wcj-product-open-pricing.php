@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -90,8 +90,8 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * wc_price_shop_currency.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 */
 	function wc_price_shop_currency( $price, $args = array() ) {
 		$args['currency'] = $this->shop_currency;
@@ -101,7 +101,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_price_info_to_loop.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.8.0
 	 */
 	function add_price_info_to_loop() {
@@ -270,7 +270,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * get_open_price.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.4.8
 	 */
 	function get_open_price( $price, $_product ) {
@@ -289,7 +289,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * validate_open_price_on_add_to_cart.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.4.8
 	 */
 	function validate_open_price_on_add_to_cart( $passed, $product_id ) {
@@ -357,7 +357,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_open_price_input_field_to_frontend.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.4.8
 	 */
 	function add_open_price_input_field_to_frontend() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 3.5.0
+ * @version 4.1.0
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,18 +16,20 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.0
+	 * @version 4.1.0
 	 * @since   3.5.0
 	 * @todo    (maybe) JS
 	 * @todo    (maybe) zero quantity for "Guest"
 	 * @todo    (maybe) editable sales data (i.e. change "Qty Bought" for product for user)
+	 * @todo    (maybe) `wcj_max_products_per_user_order_status` - add "Any" option
+	 * @todo    (maybe) `wcj_max_products_per_user_order_status` - add "Manually" option
 	 */
 	function __construct() {
 
 		$this->id         = 'max_products_per_user';
 		$this->short_desc = __( 'Maximum Products per User', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Limit number of items your (logged) customers can buy.', 'woocommerce-jetpack' );
-		$this->extra_desc = __( 'Please note, that there is no maximum quantity set for not-logged (i.e. guest) users. Product quantities are updated, when order status is changed to completed.', 'woocommerce-jetpack' );
+		$this->extra_desc = __( 'Please note, that there is no maximum quantity set for not-logged (i.e. guest) users. Product quantities are updated, when order status is changed to status listed in module\'s "Order Status" option.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-maximum-products-per-user';
 		parent::__construct();
 
@@ -43,10 +45,17 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 					add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 				}
 			}
-			add_action( 'woocommerce_order_status_completed', array( $this, 'save_quantities' ), PHP_INT_MAX );
-			add_action( 'add_meta_boxes',                     array( $this, 'add_report_meta_box' ) );
-			add_action( 'admin_init',                         array( $this, 'calculate_data' ) );
-			add_action( 'admin_notices',                      array( $this, 'calculate_data_notice' ) );
+			$this->order_status = get_option( 'wcj_max_products_per_user_order_status', array( 'wc-completed' ) );
+			if ( empty( $this->order_status ) ) {
+				$this->order_status = array( 'wc-completed' );
+			}
+			foreach ( $this->order_status as $status ) {
+				$status = substr( $status, 3 );
+				add_action( 'woocommerce_order_status_' . $status, array( $this, 'save_quantities' ), PHP_INT_MAX );
+			}
+			add_action( 'add_meta_boxes', array( $this, 'add_report_meta_box' ) );
+			add_action( 'admin_init',     array( $this, 'calculate_data' ) );
+			add_action( 'admin_notices',  array( $this, 'calculate_data_notice' ) );
 		}
 	}
 
@@ -68,7 +77,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * calculate_data.
 	 *
-	 * @version 3.5.0
+	 * @version 4.1.0
 	 * @since   3.5.0
 	 * @todo    reset `wcj_max_products_per_user_report` and `wcj_max_products_per_user_saved` meta
 	 */
@@ -80,7 +89,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 			while( true ) {
 				$args = array(
 					'post_type'      => 'shop_order',
-					'post_status'    => 'wc-completed',
+					'post_status'    => $this->order_status,
 					'posts_per_page' => $block_size,
 					'orderby'        => 'ID',
 					'order'          => 'DESC',
@@ -150,7 +159,6 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
-	 * @todo    (maybe) customizable `save_quantities` trigger
 	 */
 	function save_quantities( $order_id ) {
 		if ( $order = wc_get_order( $order_id ) ) {

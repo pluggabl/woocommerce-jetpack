@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways per Product or Category
  *
- * @version 3.1.0
+ * @version 4.1.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,9 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 4.1.0
+	 * @todo    [dev] (maybe) add `$this->do_use_variations_and_variable`
+	 * @todo    [dev] (maybe) `add_filter( 'woocommerce_payment_gateways_settings',  array( $this, 'add_per_category_settings' ), 100 );`
 	 */
 	function __construct() {
 
@@ -27,23 +29,18 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-//			add_filter( 'woocommerce_payment_gateways_settings',  array( $this, 'add_per_category_settings' ), 100 );
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'filter_available_payment_gateways_per_category' ), 100 );
+			$this->do_use_variations = ( 'yes' === get_option( 'wcj_gateways_per_category_use_variations', 'no' ) );
 		}
 	}
 
 	/**
 	 * filter_available_payment_gateways_per_category.
 	 *
-	 * @version 3.1.0
+	 * @version 4.1.0
+	 * @todo    [dev] (maybe) `if ( ! is_checkout() ) { return $available_gateways; }`
 	 */
 	function filter_available_payment_gateways_per_category( $available_gateways ) {
-
-		/*
-		if ( ! is_checkout() ) {
-			return $available_gateways;
-		}
-		*/
 
 		if ( ! isset( WC()->cart ) ) {
 			return $available_gateways;
@@ -114,7 +111,8 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 			if ( ! empty( $products_in ) ) {
 				$do_skip = true;
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					if ( in_array( $values['product_id'], $products_in ) ) {
+					$product_id = ( $this->do_use_variations ? ( ! empty( $values['variation_id'] ) ? $values['variation_id'] : $values['product_id'] ) : $values['product_id'] );
+					if ( in_array( $product_id, $products_in ) ) {
 						// Current gateway is OK
 						$do_skip = false;
 						break;
@@ -134,7 +132,8 @@ class WCJ_Payment_Gateways_Per_Category extends WCJ_Module {
 			if ( ! empty( $products_excl ) ) {
 				$do_skip = false;
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					if ( in_array( $values['product_id'], $products_excl ) ) {
+					$product_id = ( $this->do_use_variations ? ( ! empty( $values['variation_id'] ) ? $values['variation_id'] : $values['product_id'] ) : $values['product_id'] );
+					if ( in_array( $product_id, $products_excl ) ) {
 						// Skip (i.e. hide/unset) current gateway
 						if ( isset( $available_gateways[ $gateway_id ] ) ) {
 							unset( $available_gateways[ $gateway_id ] );

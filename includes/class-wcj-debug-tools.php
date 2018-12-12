@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Debug Tools
  *
- * @version 4.0.2
- * @version 4.0.2
+ * @version 4.1.0
+ * @version 4.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Debug_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
-	 * @version 4.0.2
+	 * @version 4.1.0
+	 * @version 4.1.0
 	 */
 	function __construct() {
 
@@ -39,7 +39,7 @@ class WCJ_Debug_Tools extends WCJ_Module {
 	/**
 	 * create_debug_tools_tool.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 */
 	function create_debug_tools_tool() {
 		// Delete log
@@ -73,7 +73,7 @@ class WCJ_Debug_Tools extends WCJ_Module {
 	/**
 	 * get_system_info_table_array.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.5.7
 	 * @todo    [feature] (maybe) 'DB_NAME', 'DB_USER', 'DB_PASSWORD', 'DB_HOST', 'DB_CHARSET', 'DB_COLLATE'
 	 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Fees and Discounts
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -98,6 +98,14 @@ foreach ( $available_gateways as $key => $gateway ) {
 			'desc'     => __( 'Exclude', 'woocommerce-jetpack' ),
 			'desc_tip' => __( 'This affects "Percent" type fees and "Minimum/Maximum Cart Amount" options.', 'woocommerce-jetpack' ),
 			'id'       => "wcj_gateways_fees_exclude_shipping[{$key}]",
+			'default'  => 'no',
+			'type'     => 'checkbox',
+		),
+		array(
+			'title'    => __( 'Include Taxes', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Include taxes when calculating Total Cart Amount', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'This affects "Percent" type fees and "Minimum/Maximum Cart Amount" options.', 'woocommerce-jetpack' ),
+			'id'       => "wcj_gateways_fees_include_taxes[{$key}]",
 			'default'  => 'no',
 			'type'     => 'checkbox',
 		),

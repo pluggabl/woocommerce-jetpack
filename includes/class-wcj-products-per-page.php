@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products per Page
  *
- * @version 3.8.0
+ * @version 4.1.0
  * @since   2.6.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.0
+	 * @version 4.1.0
 	 * @since   2.6.0
 	 * @todo    (dev) position priority for every hook
 	 * @todo    (dev) post or get
@@ -35,6 +35,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 				add_action( 'init', 'wcj_session_maybe_start' );
 			}
 			add_filter( 'loop_shop_per_page', array( $this, 'set_products_per_page_number' ), PHP_INT_MAX );
+			add_filter( 'option_et_divi', array( $this, 'set_products_per_page_number_on_divi' ), PHP_INT_MAX );
 			$position_hooks = get_option( 'wcj_products_per_page_position', array( 'woocommerce_before_shop_loop' ) );
 			foreach ( $position_hooks as $position_hook ) {
 				add_action( $position_hook, array( $this, 'add_products_per_page_form' ), get_option( 'wcj_products_per_page_position_priority', 40 ) );
@@ -97,6 +98,21 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	 */
 	function set_products_per_page_number( $products_per_page ) {
 		return $this->get_current_products_per_page_number( true );
+	}
+
+	/**
+	 * Sets products per page on DIVI theme.
+	 *
+	 * @version 4.1.0
+	 * @since   4.1.0
+	 *
+	 * @param $option
+	 *
+	 * @return mixed
+	 */
+	function set_products_per_page_number_on_divi( $option ) {
+		$option['divi_woocommerce_archive_num_posts'] = $this->get_current_products_per_page_number( true );
+		return $option;
 	}
 
 	/**

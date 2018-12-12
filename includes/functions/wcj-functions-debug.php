@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Debug
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -12,7 +12,7 @@ if ( ! function_exists( 'wcj_log' ) ) {
 	/**
 	 * wcj_log.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 */
 	function wcj_log( $message = '', $do_var_dump = false ) {
 		if ( ! wcj_is_module_enabled( 'debug_tools' ) || ( 'no' === get_option( 'wcj_logging_enabled', 'no' ) && 'no' === get_option( 'wcj_wc_logging_enabled', 'no' ) ) ) {
@@ -26,7 +26,7 @@ if ( ! function_exists( 'wcj_log' ) ) {
 			$message = print_r( $message, true );
 		}
 		if ( 'yes' === get_option( 'wcj_logging_enabled', 'no' ) ) {
-			update_option( 'wcj_log', date( 'Y-m-d H:i:s' ) . ' ' . esc_url( $_SERVER['REQUEST_URI'] ) . ' [' . $message . ']' . '<br>' . get_option( 'wcj_log', '' ) );
+			update_option( 'wcj_log', '<span style="color:red;">' . date( 'Y-m-d H:i:s' ) . ' ' . esc_url( $_SERVER['REQUEST_URI'] ) . '</span> <span style="color:orange;">[</span>' . $message . '<span style="color:orange;">]</span>' . '<br>' . get_option( 'wcj_log', '' ) );
 		}
 		// WC log
 		if ( 'yes' === get_option( 'wcj_wc_logging_enabled', 'no' ) && function_exists( 'wc_get_logger' ) ) {

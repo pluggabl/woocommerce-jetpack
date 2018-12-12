@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @todo    [feature] (maybe) add editable (product and order) metas
 	 */
 	function __construct() {
@@ -69,8 +69,8 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * set_json_search_limit.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 */
 	function set_json_search_limit( $limit ) {
 		return get_option( 'wcj_product_json_search_limit', 0 );

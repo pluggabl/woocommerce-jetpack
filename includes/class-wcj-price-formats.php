@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price Formats
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.5.2
  * @author  Algoritmika Ltd.
  */
@@ -76,7 +76,7 @@ class WCJ_Price_Formats extends WCJ_Module {
 	/**
 	 * price_format.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.5.2
 	 */
 	function price_format( $args ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.7.0
 	 */
 	function __construct() {
@@ -87,8 +87,8 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Updates checkout.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 */
 	function update_checkout() {
 		if ( ! is_checkout() ) {
@@ -109,8 +109,8 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Recalculates checkout.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 */
 	function recalculate_checkout() {
 		if ( ! is_checkout() ) {

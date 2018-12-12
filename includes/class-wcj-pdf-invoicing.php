@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -162,7 +162,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * bulk_actions_pdfs.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.5.7
 	 * @todo    on `generate` (and maybe other actions) validate user permissions/capabilities - `if ( ! current_user_can( $post_type_object->cap->export_post, $post_id ) ) { wp_die( __( 'You are not allowed to export this post.' ) ); }`
 	 * @todo    add security check - `check_admin_referer( 'bulk-posts' )`

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.9.0
 	 * @todo    maybe rename the module to "Order Quantities" or "Order Product Quantities" or "Product Quantities"?
 	 * @todo    loop (`woocommerce_loop_add_to_cart_link`)
@@ -77,8 +77,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Syncs Quantity input with Add to cart button on loop page.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 */
 	function sync_qty_input_with_add_to_cart_btn_on_loop() {
 		if ( ! is_shop() && ! is_product_category() && ! is_product_tag() && ! is_product_taxonomy() ) {
@@ -118,8 +118,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Handles arguments passed to add to cart loop.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 *
 	 * @param $args
 	 * @param $product

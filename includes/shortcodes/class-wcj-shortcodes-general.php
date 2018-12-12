@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 */
 	function __construct() {
 
@@ -112,8 +112,8 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_post_meta_sum.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 */
 	function wcj_post_meta_sum( $atts ) {
 		if ( '' === $atts['key'] ) {

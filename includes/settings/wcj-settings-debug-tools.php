@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Debug Tools
  *
- * @version 4.0.2
- * @since   4.0.2
+ * @version 4.1.0
+ * @since   4.1.0
  * @author  Algoritmika Ltd.
  */
 

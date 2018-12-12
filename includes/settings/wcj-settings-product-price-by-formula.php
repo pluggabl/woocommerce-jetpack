@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
- * @version 3.9.0
+ * @version 4.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -78,6 +78,14 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_product_price_by_formula_rounding_precision',
 		'default'  => 0,
 		'custom_attributes' => array( 'min' => 0 ),
+	),
+	array(
+		'title'    => __( 'Disable Admin Scope', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable module on Admin scope.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( "Disable if you want to use ‘Product Price by Formula’ module only on Frontend.", 'woocommerce-jetpack' ) . '<br />' . __( 'For example if you use ‘Cost of Goods’ module the profit will be correctly calculated if you leave the box unticked', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_product_price_by_formula_admin_scope',
+		'default'  => 'yes',
 	),
 	array(
 		'type'     => 'sectionend',

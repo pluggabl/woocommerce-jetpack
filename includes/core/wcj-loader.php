@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */

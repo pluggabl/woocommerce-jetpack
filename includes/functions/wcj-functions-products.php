@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Products
  *
- * @version 3.8.0
+ * @version 4.1.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -340,13 +340,15 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 	/**
 	 * wcj_get_products.
 	 *
-	 * @version 3.5.0
+	 * @version 4.1.0
+	 * @todo    [dev] optimize `if ( $variations_only ) { ... }`
+	 * @todo    [dev] maybe use `wc_get_products()` instead of `WP_Query`
 	 */
-	function wcj_get_products( $products = array(), $post_status = 'any', $block_size = 256, $add_variations = false ) {
+	function wcj_get_products( $products = array(), $post_status = 'any', $block_size = 256, $add_variations = false, $variations_only = false ) {
 		$offset = 0;
 		while( true ) {
 			$args = array(
-				'post_type'      => 'product',
+				'post_type'      => ( $add_variations ? array( 'product', 'product_variation' ) : 'product' ),
 				'post_status'    => $post_status,
 				'posts_per_page' => $block_size,
 				'offset'         => $offset,
@@ -359,15 +361,13 @@ if ( ! function_exists( 'wcj_get_products' ) ) {
 				break;
 			}
 			foreach ( $loop->posts as $post_id ) {
-				$products[ $post_id ] = get_the_title( $post_id ) . ' (ID:' . $post_id . ')';
-				if ( $add_variations ) {
+				if ( $variations_only ) {
 					$_product = wc_get_product( $post_id );
 					if ( $_product->is_type( 'variable' ) ) {
-						foreach ( $_product->get_children() as $child_id ) {
-							$products[ $child_id ] = get_the_title( $child_id ) . ' (ID:' . $child_id . ')';
-						}
+						continue;
 					}
 				}
+				$products[ $post_id ] = get_the_title( $post_id ) . ' (ID:' . $post_id . ')';
 			}
 			$offset += $block_size;
 		}

@@ -54,8 +54,8 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Gets currency by country.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 *
 	 * @param $country
 	 *
@@ -70,8 +70,8 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Saves currency on session by country.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 *
 	 * @param $country
 	 */
@@ -259,7 +259,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * get_customer_country_group_id.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @todo    [feature] (maybe) `( 'cart_and_checkout' === get_option( 'wcj_price_by_country_override_scope', 'all' ) && ( is_cart() || is_checkout() ) ) ||`
 	 */
 	function get_customer_country_group_id() {
@@ -316,8 +316,8 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * Gets country group id.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 * @param   $country
 	 *
 	 * @return int

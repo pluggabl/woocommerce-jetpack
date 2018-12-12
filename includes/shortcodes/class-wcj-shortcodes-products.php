@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -699,7 +699,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	 * wcj_product_you_save_percent.
 	 *
 	 * @return  string
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 */
 	function wcj_product_you_save_percent( $atts ) {
 		if ( $this->the_product->is_on_sale() ) {

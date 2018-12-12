@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @todo    (maybe) add settings subsections for each gateway
 	 */
 	function __construct() {
@@ -37,7 +37,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * init_options.
 	 *
-	 * @version 3.8.0
+	 * @version 4.1.0
 	 * @since   3.8.0
 	 */
 	function init_options() {
@@ -52,6 +52,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 			'is_taxable'         => get_option( 'wcj_gateways_fees_is_taxable', array() ),
 			'tax_class_id'       => get_option( 'wcj_gateways_fees_tax_class_id', array() ),
 			'exclude_shipping'   => get_option( 'wcj_gateways_fees_exclude_shipping', array() ),
+			'include_taxes'      => get_option( 'wcj_gateways_fees_include_taxes', array() ),
 			'include_products'   => apply_filters( 'booster_option', array(), get_option( 'wcj_gateways_fees_include_products', array() ) ),
 			'exclude_products'   => apply_filters( 'booster_option', array(), get_option( 'wcj_gateways_fees_exclude_products', array() ) ),
 		);
@@ -66,6 +67,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 			'is_taxable'         => 'no',
 			'tax_class_id'       => '',
 			'exclude_shipping'   => 'no',
+			'include_taxes'      => 'no',
 			'include_products'   => '',
 			'exclude_products'   => '',
 		);
@@ -180,7 +182,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * gateways_fees.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 */
 	function gateways_fees() {
 		global $woocommerce;
@@ -198,6 +200,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				$woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total :
 				$woocommerce->cart->cart_contents_total
 			);
+			$total_in_cart += 'no' === $this->get_option( 'include_taxes', $current_gateway ) ? 0 : $woocommerce->cart->get_subtotal_tax() + $woocommerce->cart->get_shipping_tax();
 			if ( '' != $fee_text && $total_in_cart >= $min_cart_amount  && ( 0 == $max_cart_amount || $total_in_cart <= $max_cart_amount ) && $this->check_cart_products( $current_gateway ) ) {
 				$fee_value = $this->get_option( 'value', $current_gateway );
 				$fee_type  = $this->get_option( 'type', $current_gateway );

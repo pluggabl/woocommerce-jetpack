@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -26,7 +26,7 @@ if ( ! function_exists( 'wcj_get_module_price_hooks_priority' ) ) {
 	/**
 	 * wcj_get_module_price_hooks_priority.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   3.2.2
 	 * @todo    add all corresponding modules
 	 */

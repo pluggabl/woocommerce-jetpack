@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -18,7 +18,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @todo    (maybe) `woocommerce_get_variation_prices_hash`
 	 */
 	function __construct() {

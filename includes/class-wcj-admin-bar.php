@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Bar
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.9.0
 	 * @todo    (maybe) custom user nodes
 	 * @todo    (maybe) optional nodes selection
@@ -339,8 +339,8 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * get_nodes_product_taxonomy.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 * @todo    [dev] hierarchy
 	 * @todo    [dev] count
 	 * @todo    [dev] custom taxonomy
@@ -367,7 +367,7 @@ class WCJ_Admin_Bar extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_bar.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.9.0
 	 * @todo    (maybe) reports > customers > customers > add dates
 	 * @todo    (maybe) reports > taxes > taxes_by_code > add dates

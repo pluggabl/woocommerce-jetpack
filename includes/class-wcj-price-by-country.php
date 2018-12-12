@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Prices and Currencies by Country
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,14 +15,14 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * @var WCJ_Price_by_Country_Core
 	 *
-	 * @since 4.0.2
+	 * @since 4.1.0
 	 */
 	public $core;
 
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 */
 	function __construct() {
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -212,7 +212,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * pre_get_posts.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   3.6.0
 	 * @todo    [dev] maybe move `if ( ! function_exists( 'is_user_logged_in' ) ) {`
 	 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Tax Display
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Tax_Display extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   3.2.4
 	 */
 	function __construct() {
@@ -85,7 +85,7 @@ class WCJ_Tax_Display extends WCJ_Module {
 	/**
 	 * tax_display_by_user_role.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   3.2.0
 	 */
 	function tax_display_by_user_role( $value ) {

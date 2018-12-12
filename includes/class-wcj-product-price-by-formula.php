@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 4.1.0
 	 * @since   2.5.0
 	 * @todo    use WC math library instead of `PHPMathParser`
 	 */
@@ -34,7 +34,11 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 			add_action( 'add_meta_boxes',    array( $this, 'add_meta_box' ) );
 			add_action( 'save_post_product', array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 
-			if ( wcj_is_frontend() || isset( $_GET['wcj_create_products_xml'] ) ) {
+			if (
+				( wcj_is_frontend() && "yes" === get_option( 'wcj_product_price_by_formula_admin_scope', 'yes' ) ) ||
+				( "no" === get_option( 'wcj_product_price_by_formula_admin_scope', 'yes' ) && ( wcj_is_frontend() || is_admin() ) ) ||
+				isset( $_GET['wcj_create_products_xml'] )
+			) {
 				wcj_add_change_price_hooks( $this, wcj_get_module_price_hooks_priority( 'product_price_by_formula' ), false );
 			}
 
@@ -69,8 +73,8 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * Adds product id param on shortcodes.
 	 *
-	 * @version 4.0.2
-	 * @since   4.0.2
+	 * @version 4.1.0
+	 * @since   4.1.0
 	 *
 	 * @param $the_param
 	 * @param $_product
@@ -91,7 +95,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product, $output_errors = false ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Customization
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

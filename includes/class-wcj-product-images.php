@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Images
  *
- * @version 4.0.2
+ * @version 4.1.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -76,7 +76,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * hide_per_product_image_on_archives_start.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.5.2
 	 */
 	function hide_per_product_image_on_archives_start() {
@@ -91,7 +91,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * hide_per_product_image_on_archives_end.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 * @since   2.5.2
 	 */
 	function hide_per_product_image_on_archives_end() {
@@ -121,7 +121,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * product_images_hide_on_archive.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 */
 	function product_images_hide_on_archive() {
 		if (
@@ -142,7 +142,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * product_images_and_thumbnails_hide_on_single.
 	 *
-	 * @version 4.0.2
+	 * @version 4.1.0
 	 */
 	function product_images_and_thumbnails_hide_on_single() {
 		remove_action( 'woocommerce_before_single_product_summary',

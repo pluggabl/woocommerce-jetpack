@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Max Products per User
  *
- * @version 3.5.0
+ * @version 4.1.0
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -55,6 +55,17 @@ return array(
 		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_max_products_per_user_general_options',
+	),
+	array(
+		'title'    => __( 'Order Status', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This sets when (i.e. on which order status) users\' quantities should be updated.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'You can select multiple order status here - quantities will be updated only once, on whichever status is triggered first.', 'woocommerce-jetpack' ) . ' ' .
+			__( 'If no status are selected - "Completed" order status is used.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_max_products_per_user_order_status',
+		'default'  => array( 'wc-completed' ),
+		'options'  => wcj_get_order_statuses( false ),
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
 	),
 	array(
 		'title'    => __( 'Customer Message', 'woocommerce-jetpack' ),
