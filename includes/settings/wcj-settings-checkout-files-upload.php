@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Files Upload
  *
- * @version 3.9.0
+ * @version 4.1.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -313,7 +313,7 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Field', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Replaced values: %field_html%, %button_html%.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_checkout_files_upload_form_template_field',
-		'default'  => '<tr><td style="width:50%;">%field_html%</td><td style="width:50%;">%button_html%</td></tr>',
+		'default'  => '<tr><td style="width:50%;max-width:50vw;">%field_html%</td><td style="width:50%;">%button_html%</td></tr>',
 		'type'     => 'textarea',
 		'css'      => 'width:100%;',
 	),

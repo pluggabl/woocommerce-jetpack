@@ -3,10 +3,9 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2017 Setasign - Jan Slabon (https://www.setasign.com)
+ * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- * @version   2.0.0
- */
+  */
 
 namespace setasign\Fpdi\PdfParser\CrossReference;
 
@@ -39,6 +38,7 @@ class FixedReader extends AbstractReader implements ReaderInterface
      * FixedReader constructor.
      *
      * @param PdfParser $parser
+     * @throws CrossReferenceException
      */
     public function __construct(PdfParser $parser)
     {
@@ -99,7 +99,7 @@ class FixedReader extends AbstractReader implements ReaderInterface
             }
 
             // jump over if line content doesn't match the expected string
-            if (2 !== \sscanf($line, '%d %d', $startObject, $entryCount)) {
+            if (\sscanf($line, '%d %d', $startObject, $entryCount) !== 2) {
                 continue;
             }
 
@@ -137,6 +137,9 @@ class FixedReader extends AbstractReader implements ReaderInterface
             $lastLineStart = $position + $entryCount * 20;
             $this->reader->reset($lastLineStart);
         }
+
+        // reset after the last correct parsed line
+        $this->reader->reset($lastLineStart);
 
         if (\count($subSections) === 0) {
             throw new CrossReferenceException(

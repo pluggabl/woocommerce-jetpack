@@ -3,10 +3,9 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2017 Setasign - Jan Slabon (https://www.setasign.com)
+ * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- * @version   2.0.0
- */
+  */
 
 namespace setasign\Fpdi\PdfParser;
 
@@ -163,7 +162,7 @@ class StreamReader
      */
     public function getBuffer($atOffset = true)
     {
-        if (false === $atOffset) {
+        if ($atOffset === false) {
             return $this->buffer;
         }
 
@@ -184,7 +183,7 @@ class StreamReader
      */
     public function getByte($position = null)
     {
-        $position = (int) (null !== $position ? $position : $this->offset);
+        $position = (int) ($position !== null ? $position : $this->offset);
         if ($position >= $this->bufferLength &&
             (!$this->increaseLength() || $position >= $this->bufferLength)
         ) {
@@ -206,7 +205,7 @@ class StreamReader
      */
     public function readByte($position = null)
     {
-        if (null !== $position) {
+        if ($position !== null) {
             $position = (int) $position;
             // check if needed bytes are available in the current buffer
             if (!($position >= $this->position && $position < $this->position + $this->bufferLength)) {
@@ -243,7 +242,7 @@ class StreamReader
     public function readBytes($length, $position = null)
     {
         $length = (int) $length;
-        if (null !== $position) {
+        if ($position !== null) {
             // check if needed bytes are available in the current buffer
             if (!($position >= $this->position && $position < $this->position + $this->bufferLength)) {
                 $this->reset($position, $length);
@@ -275,7 +274,7 @@ class StreamReader
      */
     public function readLine($length = 1024)
     {
-        if (false === $this->ensureContent()) {
+        if ($this->ensureContent() === false) {
             return false;
         }
 
@@ -372,7 +371,7 @@ class StreamReader
      */
     public function getTotalLength()
     {
-        if (null === $this->totalLength) {
+        if ($this->totalLength === null) {
             $stat = \fstat($this->stream);
             $this->totalLength = $stat['size'];
         }
@@ -394,7 +393,7 @@ class StreamReader
      */
     public function reset($pos = 0, $length = 200)
     {
-        if (null === $pos) {
+        if ($pos === null) {
             $pos = $this->position + $this->offset;
         } elseif ($pos < 0) {
             $pos = \max(0, $this->getTotalLength() + $pos);

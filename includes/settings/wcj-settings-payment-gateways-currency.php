@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Currency Converter
  *
- * @version 4.0.0
+ * @version 4.1.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] maybe make "Advanced: Fix Chosen Payment Method" option enabled by default (or even remove option completely and always perform `$this->fix_chosen_payment_method()`)
@@ -36,11 +36,13 @@ foreach ( $available_gateways as $key => $gateway ) {
 	}
 	$settings = array_merge( $settings, array(
 		array(
-			'title'    => $gateway->title,
+			'title'    => $gateway->get_method_title() . ( $gateway->get_title() != $gateway->get_method_title() ? ' (' . $gateway->get_title() . ')' : '' ),
 			'id'       => 'wcj_gateways_currency_' . $key,
 			'default'  => 'no_changes',
 			'type'     => 'select',
 			'options'  => array_merge( array( 'no_changes' => __( 'No changes', 'woocommerce-jetpack' ) ), wcj_get_woocommerce_currencies_and_symbols() ),
+			'desc'     => '<a href="' . admin_url( 'admin.php?page=wc-settings&tab=checkout&section=' . $key ) . '"' .
+				' style="font-style:normal;text-decoration:none;" title="' . __( 'Go to payment gateway\'s settings', 'woocommerce-jetpack' ) . '">&#8505;</a>',
 		),
 		array(
 			'title'                    => '',

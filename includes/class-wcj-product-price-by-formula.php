@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 4.1.0
+ * @version 4.1.1
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -246,7 +246,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.7.0
+	 * @version 4.1.1
 	 * @since   2.5.0
 	 */
 	function create_meta_box() {
@@ -256,7 +256,9 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 		$the_product = wc_get_product();
 		if ( $this->is_price_by_formula_product( $the_product ) ) {
 			$the_price   = $the_product->get_price();
-			$the_price   = $this->change_price( $the_price, $the_product, true );
+			if ( "yes" === get_option( 'wcj_product_price_by_formula_admin_scope', 'yes' ) ) {
+				$the_price = $this->change_price( $the_price, $the_product, true );
+			}
 			echo '<h4>' . __( 'Final Price Preview', 'woocommerce-jetpack' ) . '</h4>';
 			echo wc_price( $the_price );
 		}

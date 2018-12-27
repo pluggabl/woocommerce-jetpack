@@ -2,10 +2,11 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 3.9.1
+ * @version 4.1.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] maybe set "Strip slashes" option to `yes` by default (or even remove the option completely and always strip slashes)
+ * @todo    [dev] maybe set "Replace Field ID with Field Label" option (i.e. `wcj_product_input_fields_make_nicer_name_enabled`) to `no` by default
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -316,6 +317,8 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Replace Field ID with Field Label', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Please note: %s', 'woocommerce-jetpack' ),
+			__( 'When checked - will disable input fields editing on admin order edit page.', 'woocommerce-jetpack' ) ),
 		'id'       => 'wcj_product_input_fields_make_nicer_name_enabled',
 		'default'  => 'yes',
 		'type'     => 'checkbox',

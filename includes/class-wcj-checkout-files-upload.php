@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 3.9.0
+ * @version 4.1.1
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  */
@@ -707,7 +707,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_the_form.
 	 *
-	 * @version 3.7.0
+	 * @version 4.1.1
 	 * @since   2.5.0
 	 */
 	function get_the_form( $i, $file_name, $order_id = 0 ) {
@@ -747,7 +747,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 				' data-value="' . get_option( 'wcj_checkout_files_upload_label_remove_button_' . $i, __( 'Remove', 'woocommerce-jetpack' ) ) . '">';
 		}
 		$template = get_option( 'wcj_checkout_files_upload_form_template_field',
-			'<tr><td style="width:50%;">%field_html%</td><td style="width:50%;">%button_html%</td></tr>' );
+			'<tr><td style="width:50%;max-width:50vw;">%field_html%</td><td style="width:50%;">%button_html%</td></tr>' );
 		$html .= str_replace(
 			array( '%field_html%', '%button_html%' ),
 			array( $field_html, $button_html ),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 4.1.0
+ * @version 4.1.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.0
+	 * @version 4.1.1
 	 * @since   2.9.0
 	 * @todo    maybe rename the module to "Order Quantities" or "Order Product Quantities" or "Product Quantities"?
 	 * @todo    loop (`woocommerce_loop_add_to_cart_link`)
@@ -66,18 +66,47 @@ class WCJ_Order_Quantities extends WCJ_Module {
 			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_single_item_cart_enabled', 'no' ) ) ) {
 				add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'single_item_cart' ), PHP_INT_MAX, 4 );
 			}
-			// For cart
+			// For cart and `input_value`
 			add_filter( 'woocommerce_quantity_input_args', array( $this, 'set_quantity_input_args' ), PHP_INT_MAX, 2 );
 			// Handle Add to cart button on loop
 			add_filter( 'woocommerce_loop_add_to_cart_args', array( $this, 'handle_wc_loop_add_to_cart_args' ), 10, 2 );
-			add_action( 'wp_footer', array( $this, 'sync_qty_input_with_add_to_cart_btn_on_loop' ) );
+			add_action( 'wp_footer',                         array( $this, 'sync_qty_input_with_add_to_cart_btn_on_loop' ) );
+			add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'replace_quantity_attribute_on_loop_cart_link' ), PHP_INT_MAX, 2 );
+			// Decimal qty
+			if ( 'yes' === get_option( 'wcj_order_quantities_decimal_qty_enabled', 'no' ) ) {
+				add_action( 'init', array( $this, 'float_stock_amount' ), PHP_INT_MAX );
+			}
 		}
+	}
+
+	/**
+	 * float_stock_amount.
+	 *
+	 * @version 4.1.1
+	 * @since   4.1.1
+	 */
+	function float_stock_amount() {
+		remove_filter( 'woocommerce_stock_amount', 'intval' );
+		add_filter(    'woocommerce_stock_amount', 'floatval' );
+	}
+
+	/**
+	 * Replaces quantity attribute on loop cart link.
+	 *
+	 * @version 4.1.1
+	 * @since   4.1.1
+	 */
+	function replace_quantity_attribute_on_loop_cart_link( $html, $product ) {
+		$quantity = $this->get_product_quantity( 'min', $product, 1 );
+		$html     = preg_replace( '/(data\-quantity)=\"[0-9]*\"/i', 'data-quantity="' . $quantity . '"', $html );
+		$html     .= "<script>var wcj_evt = new Event('wcj_add_to_cart_quantity');wcj_evt.prodID=" . $product->get_id() . ";wcj_evt.quantity=" . $quantity . ";window.dispatchEvent(wcj_evt);</script>";
+		return $html;
 	}
 
 	/**
 	 * Syncs Quantity input with Add to cart button on loop page.
 	 *
-	 * @version 4.1.0
+	 * @version 4.1.1
 	 * @since   4.1.0
 	 */
 	function sync_qty_input_with_add_to_cart_btn_on_loop() {
@@ -89,19 +118,23 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				init: function () {
 					var qtyInput = document.querySelectorAll('.quantity .qty');
 					[].forEach.call(qtyInput, function (el) {
-						var productWrapper = el.closest('.products .product');
-						var addToCartBtn = productWrapper.querySelector('.ajax_add_to_cart');
-						var dataProductIDAttr = addToCartBtn.getAttribute('data-product_id');
-						el.addEventListener('change', function() {
-							if(!this.checkValidity()){
-								addToCartBtn.removeAttribute('data-product_id');
-								this.reportValidity();
-							}else{
-								wcj_sqwb.sync(this.value,addToCartBtn);
-								addToCartBtn.setAttribute('data-product_id',dataProductIDAttr);
-							}
-						});
-						wcj_sqwb.sync(el.value,addToCartBtn);
+						if(!el.classList.contains('wcj-quantity')){
+							var productWrapper = el.closest('.products .product');
+							var addToCartBtn = productWrapper.querySelector('.ajax_add_to_cart');
+							var dataProductIDAttr = addToCartBtn.getAttribute('data-product_id');
+							var addToCartQty = addToCartBtn.getAttribute('data-quantity');
+							el.value = addToCartQty;
+							el.addEventListener('change', function() {
+								if(!this.checkValidity()){
+									addToCartBtn.removeAttribute('data-product_id');
+									this.reportValidity();
+								}else{
+									wcj_sqwb.sync(this.value,addToCartBtn);
+									addToCartBtn.setAttribute('data-product_id',dataProductIDAttr);
+								}
+							});
+							el.classList.add('wcj-quantity');
+						}
 					});
 				},
 				sync:function(qty_value,addToCartBtn){
@@ -110,6 +143,9 @@ class WCJ_Order_Quantities extends WCJ_Module {
 			};
 			jQuery(document).ready(function(){
 				wcj_sqwb.init();
+			});
+			window.addEventListener('wcj_add_to_cart_quantity',function(e){
+				 wcj_sqwb.init();
 			});
 		";
 		wc_enqueue_js( $js );
@@ -134,7 +170,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * set_quantity_input_args.
 	 *
-	 * @version 3.7.0
+	 * @version 4.1.1
 	 * @since   3.7.0
 	 */
 	function set_quantity_input_args( $args, $product ) {
@@ -146,6 +182,10 @@ class WCJ_Order_Quantities extends WCJ_Module {
 		}
 		if ( 'yes' === get_option( 'wcj_order_quantities_step_section_enabled', 'no' ) ) {
 			$args['step'] = $this->set_quantity_input_step( $args['step'], $product );
+		}
+		if ( 'disabled' != ( $force_on_single = get_option( 'wcj_order_quantities_force_on_single', 'disabled' ) ) && is_product() ) {
+			$args['input_value'] = ( 'min' === $force_on_single ?
+				$this->set_quantity_input_min( $args['min_value'], $product ) : $this->set_quantity_input_max( $args['max_value'], $product ) );
 		}
 		return $args;
 	}

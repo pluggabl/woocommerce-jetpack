@@ -3,10 +3,9 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2017 Setasign - Jan Slabon (https://www.setasign.com)
+ * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- * @version   2.0.0
- */
+  */
 
 namespace setasign\Fpdi\PdfParser\Filter;
 
@@ -42,7 +41,7 @@ class Flate implements FilterInterface
         if ($this->extensionLoaded()) {
             $oData = $data;
             $data = @((\strlen($data) > 0) ? \gzuncompress($data) : '');
-            if (false === $data) {
+            if ($data === false) {
                 // Try this fallback
                 $tries = 1;
                 while ($tries < 10 && ($data === false || \strlen($data) < (\strlen($oData) - $tries - 1))) {
@@ -50,7 +49,7 @@ class Flate implements FilterInterface
                     $tries++;
                 }
 
-                if (false === $data) {
+                if ($data === false) {
                     throw new FlateException(
                         'Error while decompressing stream.',
                         FlateException::DECOMPRESS_ERROR

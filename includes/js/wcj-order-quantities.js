@@ -1,8 +1,9 @@
 /**
  * wcj-order-quantities.js
  *
- * @version 4.0.0
+ * @version 4.1.1
  * @since   3.2.2
+ * @todo    [dev] (now) re-check `parseFloat` vs `parseInt`
  * @todo    [dev] maybe `jQuery('[name=quantity]').val('0')` on `jQuery.isEmptyObject(product_quantities[variation_id])` (instead of `return`)
  */
 
@@ -21,9 +22,9 @@ function check_qty(){
 		jQuery('[name=quantity]').val(product_quantities[variation_id]['min_qty']);
 	} else if (quantities_options['reset_to_max']){
 		jQuery('[name=quantity]').val(product_quantities[variation_id]['max_qty']);
-	} else if (current_qty < parseInt(product_quantities[variation_id]['min_qty'])){
+	} else if (current_qty < parseFloat(product_quantities[variation_id]['min_qty'])){
 		jQuery('[name=quantity]').val(product_quantities[variation_id]['min_qty']);
-	} else if (current_qty > parseInt(product_quantities[variation_id]['max_qty'])){
+	} else if (current_qty > parseFloat(product_quantities[variation_id]['max_qty'])){
 		jQuery('[name=quantity]').val(product_quantities[variation_id]['max_qty']);
 	}
 }
@@ -39,9 +40,9 @@ function check_qty_no_reset(){
 		return;
 	}
 
-	if (current_qty < parseInt(product_quantities[variation_id]['min_qty'])){
+	if (current_qty < parseFloat(product_quantities[variation_id]['min_qty'])){
 		jQuery('[name=quantity]').val(product_quantities[variation_id]['min_qty']);
-	} else if (current_qty > parseInt(product_quantities[variation_id]['max_qty'])){
+	} else if (current_qty > parseFloat(product_quantities[variation_id]['max_qty'])){
 		jQuery('[name=quantity]').val(product_quantities[variation_id]['max_qty']);
 	}
 }

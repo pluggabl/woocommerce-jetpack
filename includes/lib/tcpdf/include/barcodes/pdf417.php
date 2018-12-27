@@ -740,27 +740,6 @@ class PDF417 {
 	 * @protected
 	 */
 	protected function getErrorCorrectionLevel($ecl, $numcw) {
-		// get maximum correction level
-		$maxecl = 8; // starting error level
-		$maxerrsize = (928 - $numcw); // available codewords for error
-		while ($maxecl > 0) {
-
-			/*
-			 * Booster modification (Algoritmika)
-			 *
-			 * @version 3.4.0
-			 * @since   3.4.0
-			 */
-			if ( version_compare( PHP_VERSION, '7.0.0' ) >= 0 && $ecl < 0 ) {
-				$ecl = 0;
-			}
-
-			$errsize = (2 << $ecl);
-			if ($maxerrsize >= $errsize) {
-				break;
-			}
-			--$maxecl;
-		}
 		// check for automatic levels
 		if (($ecl < 0) OR ($ecl > 8)) {
 			if ($numcw < 41) {
@@ -774,6 +753,16 @@ class PDF417 {
 			} else {
 				$ecl = $maxecl;
 			}
+		}
+		// get maximum correction level
+		$maxecl = 8; // starting error level
+		$maxerrsize = (928 - $numcw); // available codewords for error
+		while ($maxecl > 0) {
+			$errsize = (2 << $ecl);
+			if ($maxerrsize >= $errsize) {
+				break;
+			}
+			--$maxecl;
 		}
 		if ($ecl > $maxecl) {
 			$ecl = $maxecl;

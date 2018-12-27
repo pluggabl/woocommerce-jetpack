@@ -2,12 +2,20 @@
 /**
  * Booster for WooCommerce - Settings - Offer Price
  *
- * @version 3.8.0
+ * @version 4.1.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+$type_options = array(
+	'all_products'                 => __( 'Enable for all products', 'woocommerce-jetpack' ),
+	'empty_prices'                 => __( 'Enable for all products with empty price', 'woocommerce-jetpack' ),
+	'per_product'                  => __( 'Enable per product', 'woocommerce-jetpack' ),
+	'per_category'                 => __( 'Enable per product category', 'woocommerce-jetpack' ),
+	'per_product_and_per_category' => __( 'Enable per product and per product category', 'woocommerce-jetpack' ),
+);
 
 return array(
 	array(
@@ -17,23 +25,18 @@ return array(
 	),
 	array(
 		'title'    => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Possible values: Enable for all products; Enable for all products with empty price; Enable per product; Enable per product category.', 'woocommerce-jetpack' ) . ' ' .
-			__( 'If Enable per product is selected, this will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Possible values: %s.', 'woocommerce-jetpack' ), implode( '; ', $type_options ) ) . ' ' .
+			__( 'If enable per product is selected, this will add new meta box to each product\'s edit page.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_enabled_type',
 		'type'     => 'select',
 		'default'  => 'all_products',
-		'options'  => array(
-			'all_products' => __( 'Enable for all products', 'woocommerce-jetpack' ),
-			'empty_prices' => __( 'Enable for all products with empty price', 'woocommerce-jetpack' ),
-			'per_product'  => __( 'Enable per product', 'woocommerce-jetpack' ),
-			'per_category' => __( 'Enable per product category', 'woocommerce-jetpack' ),
-		),
+		'options'  => $type_options,
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'desc'     => __( 'Product categories', 'woocommerce-jetpack' ) . '<br>' . apply_filters( 'booster_message', '', 'desc' ),
-		'desc_tip' => __( 'Ignored if "Enable per product category" option is not selected above.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Ignored if enable per product category is not selected above.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_offer_price_enabled_cats',
 		'type'     => 'multiselect',
 		'class'    => 'chosen_select',

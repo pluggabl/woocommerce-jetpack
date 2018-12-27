@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Order Min/Max Quantities
  *
- * @version 3.7.0
+ * @version 4.1.1
  * @since   3.2.2
  * @author  Algoritmika Ltd.
  * @todo    test "Set 0 to use global settings. Set -1 to disable"
@@ -25,6 +25,7 @@ if ( $_product->is_type( 'variable' ) ) {
 } else {
 	$products[ $main_product_id ] = '';
 }
+$qty_step_settings = ( 'yes' === get_option( 'wcj_order_quantities_decimal_qty_enabled', 'no' ) ? '0.000001' : '1' );
 $quantities = array();
 foreach ( $products as $product_id => $desc ) {
 	if ( $this->is_min_per_product_enabled ) {
@@ -37,7 +38,7 @@ foreach ( $products as $product_id => $desc ) {
 				'desc'       => $desc,
 				'product_id' => $product_id,
 				'meta_name'  => '_' . 'wcj_order_quantities_min',
-				'custom_attributes' => 'min="-1"',
+				'custom_attributes' => 'min="-1" step="' . $qty_step_settings . '"',
 				'tooltip'    => __( 'Set 0 to use global settings. Set -1 to disable.', 'woocommerce-jetpack' ),
 			),
 		) );
@@ -52,7 +53,7 @@ foreach ( $products as $product_id => $desc ) {
 				'desc'       => $desc,
 				'product_id' => $product_id,
 				'meta_name'  => '_' . 'wcj_order_quantities_max',
-				'custom_attributes' => 'min="-1"',
+				'custom_attributes' => 'min="-1" step="' . $qty_step_settings . '"',
 				'tooltip'    => __( 'Set 0 to use global settings. Set -1 to disable.', 'woocommerce-jetpack' ),
 			),
 		) );
@@ -68,7 +69,7 @@ if ( $this->is_step_per_product_enabled ) {
 			'desc'       => ( $_product->is_type( 'variable' ) ? __( 'All variations', 'woocommerce-jetpack' ) : '' ),
 			'product_id' => $main_product_id,
 			'meta_name'  => '_' . 'wcj_order_quantities_step',
-			'custom_attributes' => 'min="0"',
+			'custom_attributes' => 'min="0" step="' . $qty_step_settings . '"',
 			'tooltip'    => __( 'Set 0 to use global settings.', 'woocommerce-jetpack' ),
 		),
 	) );

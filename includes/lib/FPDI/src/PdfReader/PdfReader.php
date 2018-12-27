@@ -3,19 +3,21 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2017 Setasign - Jan Slabon (https://www.setasign.com)
+ * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- * @version   2.0.0
- */
+  */
 
 namespace setasign\Fpdi\PdfReader;
 
+use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
 use setasign\Fpdi\PdfParser\PdfParser;
+use setasign\Fpdi\PdfParser\PdfParserException;
 use setasign\Fpdi\PdfParser\Type\PdfArray;
 use setasign\Fpdi\PdfParser\Type\PdfDictionary;
 use setasign\Fpdi\PdfParser\Type\PdfIndirectObjectReference;
 use setasign\Fpdi\PdfParser\Type\PdfNumeric;
 use setasign\Fpdi\PdfParser\Type\PdfType;
+use setasign\Fpdi\PdfParser\Type\PdfTypeException;
 
 /**
  * A PDF reader class
@@ -76,6 +78,7 @@ class PdfReader
      * Get the PDF version.
      *
      * @return string
+     * @throws PdfParserException
      */
     public function getPdfVersion()
     {
@@ -86,6 +89,9 @@ class PdfReader
      * Get the page count.
      *
      * @return int
+     * @throws PdfTypeException
+     * @throws CrossReferenceException
+     * @throws PdfParserException
      */
     public function getPageCount()
     {
@@ -106,6 +112,10 @@ class PdfReader
      *
      * @param int $pageNumber
      * @return Page
+     * @throws PdfTypeException
+     * @throws CrossReferenceException
+     * @throws PdfParserException
+     * @throws \InvalidArgumentException
      */
     public function getPage($pageNumber)
     {
@@ -168,6 +178,10 @@ class PdfReader
 
     /**
      * Walk the page tree and resolve all indirect objects of all pages.
+     *
+     * @throws PdfTypeException
+     * @throws CrossReferenceException
+     * @throws PdfParserException
      */
     protected function readPages()
     {

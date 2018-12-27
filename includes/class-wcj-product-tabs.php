@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 3.6.0
+ * @version 4.1.1
  * @author  Algoritmika Ltd.
  */
 
@@ -115,9 +115,38 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	}
 
 	/**
+	 * Gets local title, including from other possible languages when using WPML
+	 *
+	 * @version 4.1.1
+	 * @since   4.1.1
+	 *
+	 * @param $product_id
+	 * @param $option_key
+	 * @param $i
+	 *
+	 * @return mixed
+	 */
+	function get_local_title( $product_id, $option_key, $i ) {
+		$title = get_post_meta( $product_id, '_' . 'wcj_custom_product_tabs_title_' . $option_key, true );
+		if (
+			function_exists( 'icl_object_id' ) &&
+			! empty( $curr_language_product_id = icl_object_id( $product_id, 'product', true ) )
+		) {
+			// Try to get title from wp_options first, like 'wcj_custom_product_tabs_title_local_default_1'
+			$title_option = get_option( 'wcj_custom_product_tabs_title_' . 'local_default_' . $i, true );
+			$title        = ! empty( $title_option ) ? $title_option : $title;
+
+			// Overwrite by post meta if there is any
+			$translated_title = get_post_meta( $curr_language_product_id, '_' . 'wcj_custom_product_tabs_title_' . $option_key, true );
+			$title            = ! empty( $translated_title ) ? $translated_title : $title;
+		}
+		return $title;
+	}
+
+	/**
 	 * add_custom_product_tabs.
 	 *
-	 * @version 3.1.0
+	 * @version 4.1.1
 	 * @since   3.1.0
 	 * @todo    add visibility by user roles
 	 */
@@ -144,7 +173,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 						$link     = get_option( 'wcj_custom_product_tabs_link_'     . $option_key, '' );
 						break;
 					default: // 'local'
-						$title    = get_post_meta( $product_id, '_' . 'wcj_custom_product_tabs_title_'    . $option_key, true );
+						$title = $this->get_local_title( $product_id, $option_key, $i );
 						$content  = get_post_meta( $product_id, '_' . 'wcj_custom_product_tabs_content_'  . $option_key, true );
 						$priority = get_post_meta( $product_id, '_' . 'wcj_custom_product_tabs_priority_' . $option_key, true );
 						$link     = get_post_meta( $product_id, '_' . 'wcj_custom_product_tabs_link_'     . $option_key, true );

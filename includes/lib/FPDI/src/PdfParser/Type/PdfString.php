@@ -3,10 +3,9 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2017 Setasign - Jan Slabon (https://www.setasign.com)
+ * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- * @version   2.0.0
- */
+  */
 
 namespace setasign\Fpdi\PdfParser\Type;
 
@@ -73,6 +72,7 @@ class PdfString extends PdfType
      *
      * @param mixed $string
      * @return self
+     * @throws PdfTypeException
      */
     public static function ensure($string)
     {

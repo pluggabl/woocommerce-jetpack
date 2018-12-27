@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 3.8.0
+ * @version 4.1.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.0
+	 * @version 4.1.1
 	 * @since   2.9.0
 	 * @todo    settings - more info about position priorities, e.g.: __( 'Standard priorities for "Inside single product summary": title - 5, rating - 10, price - 10, excerpt - 20, add to cart - 30, meta - 40, sharing - 50', 'woocommerce-jetpack' )
 	 * @todo    (maybe) css - customizable fonts etc.
@@ -69,7 +69,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 			add_action( 'woocommerce_before_main_content',    array( $this, 'add_offer_price_form' ) );
 			add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
 			add_action( 'init',                               array( $this, 'offer_price' ) );
-			if ( 'per_product' === apply_filters( 'booster_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) ) {
+			if ( in_array( apply_filters( 'booster_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ), array( 'per_product', 'per_product_and_per_category' ) ) ) {
 				add_action( 'add_meta_boxes',                 array( $this, 'add_meta_box' ) );
 				add_action( 'save_post_product',              array( $this, 'save_meta_box' ), PHP_INT_MAX, 2 );
 			}
@@ -223,7 +223,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * is_offer_price_enabled_for_product.
 	 *
-	 * @version 3.7.0
+	 * @version 4.1.1
 	 * @since   2.9.0
 	 */
 	function is_offer_price_enabled_for_product( $product_id ) {
@@ -237,18 +237,20 @@ class WCJ_Offer_Price extends WCJ_Module {
 				return ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_offer_price_enabled', true ) );
 			case 'per_category':
 				return wcj_is_product_term( $product_id, get_option( 'wcj_offer_price_enabled_cats', array() ), 'product_cat' );
+			case 'per_product_and_per_category':
+				return ( 'yes' === get_post_meta( $product_id, '_' . 'wcj_offer_price_enabled', true ) || wcj_is_product_term( $product_id, get_option( 'wcj_offer_price_enabled_cats', array() ), 'product_cat' ) );
 		}
 	}
 
 	/**
 	 * get_wcj_data_array.
 	 *
-	 * @version 2.9.0
+	 * @version 4.1.1
 	 * @since   2.9.0
 	 * @todo    (maybe) rethink `str_replace( '\'', '"', ... )`
 	 */
 	function get_wcj_data_array( $product_id ) {
-		$is_per_product_enabled = ( 'per_product' === apply_filters( 'booster_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ) );
+		$is_per_product_enabled = ( in_array( apply_filters( 'booster_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ), array( 'per_product', 'per_product_and_per_category' ) ) );
 		// Price input - price step
 		$price_step = ( ! $is_per_product_enabled || '' === ( $price_step_per_product = get_post_meta( $product_id, '_' . 'wcj_offer_price_price_step', true ) ) ?
 			get_option( 'wcj_offer_price_price_step', get_option( 'woocommerce_price_num_decimals' ) ) :

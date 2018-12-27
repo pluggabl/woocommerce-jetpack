@@ -3,10 +3,9 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2017 Setasign - Jan Slabon (https://www.setasign.com)
+ * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- * @version   2.0.0
- */
+  */
 
 namespace setasign\Fpdi\PdfParser\Filter;
 
@@ -71,7 +70,7 @@ class Lzw implements FilterInterface
      */
     public function decode($data)
     {
-        if ($data[0] == 0x00 && $data[1] == 0x01) {
+        if ($data[0] === "\x00" && $data[1] === "\x01") {
             throw new LzwException(
                 'LZW flavour not supported.',
                 LzwException::LZW_FLAVOUR_NOT_SUPPORTED
@@ -93,12 +92,12 @@ class Lzw implements FilterInterface
 
         $uncompData = '';
 
-        while (($code = $this->getNextCode()) != 257) {
-            if ($code == 256) {
+        while (($code = $this->getNextCode()) !== 257) {
+            if ($code === 256) {
                 $this->initsTable();
                 $code = $this->getNextCode();
 
-                if ($code == 257) {
+                if ($code === 257) {
                     break;
                 }
 
@@ -154,11 +153,11 @@ class Lzw implements FilterInterface
         // Add this new String to the table
         $this->sTable[$this->tIdx++] = $string;
 
-        if ($this->tIdx == 511) {
+        if ($this->tIdx === 511) {
             $this->bitsToGet = 10;
-        } elseif ($this->tIdx == 1023) {
+        } elseif ($this->tIdx === 1023) {
             $this->bitsToGet = 11;
-        } elseif ($this->tIdx == 2047) {
+        } elseif ($this->tIdx === 2047) {
             $this->bitsToGet = 12;
         }
     }
@@ -170,7 +169,7 @@ class Lzw implements FilterInterface
      */
     protected function getNextCode()
     {
-        if ($this->bytePointer == $this->dataLength) {
+        if ($this->bytePointer === $this->dataLength) {
             return 257;
         }
 

@@ -3,17 +3,19 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2017 Setasign - Jan Slabon (https://www.setasign.com)
+ * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- * @version   2.0.0
- */
+  */
 
 namespace setasign\Fpdi\PdfReader\DataStructure;
 
+use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
 use setasign\Fpdi\PdfParser\PdfParser;
+use setasign\Fpdi\PdfParser\PdfParserException;
 use setasign\Fpdi\PdfParser\Type\PdfArray;
 use setasign\Fpdi\PdfParser\Type\PdfNumeric;
 use setasign\Fpdi\PdfParser\Type\PdfType;
+use setasign\Fpdi\PdfParser\Type\PdfTypeException;
 
 /**
  * Class representing a rectangle
@@ -48,6 +50,9 @@ class Rectangle
      * @param PdfArray|mixed $array
      * @param PdfParser $parser
      * @return Rectangle
+     * @throws PdfTypeException
+     * @throws CrossReferenceException
+     * @throws PdfParserException
      */
     public static function byPdfArray($array, PdfParser $parser)
     {

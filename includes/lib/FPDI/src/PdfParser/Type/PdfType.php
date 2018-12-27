@@ -3,14 +3,15 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2017 Setasign - Jan Slabon (https://www.setasign.com)
+ * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- * @version   2.0.0
- */
+  */
 
 namespace setasign\Fpdi\PdfParser\Type;
 
+use setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException;
 use setasign\Fpdi\PdfParser\PdfParser;
+use setasign\Fpdi\PdfParser\PdfParserException;
 
 /**
  * A class defining a PDF data type
@@ -28,6 +29,8 @@ class PdfType
      * @param PdfParser $parser
      * @param bool $stopAtIndirectObject
      * @return PdfType
+     * @throws CrossReferenceException
+     * @throws PdfParserException
      */
     public static function resolve(PdfType $value, PdfParser $parser, $stopAtIndirectObject = false)
     {

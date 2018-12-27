@@ -2,13 +2,15 @@
 /**
  * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
- * @version 3.7.0
+ * @version 4.1.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) generate settings in loop ( min / max )
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
+$qty_step_settings = ( 'yes' === get_option( 'wcj_order_quantities_decimal_qty_enabled', 'no' ) ? '0.000001' : '1' );
 
 return array(
 	array(
@@ -29,7 +31,7 @@ return array(
 		'id'       => 'wcj_order_quantities_min_cart_total_quantity',
 		'default'  => 0,
 		'type'     => 'number',
-		'custom_attributes' => array( 'min' => 0 ),
+		'custom_attributes' => array( 'min' => 0, 'step' => $qty_step_settings ),
 	),
 	array(
 		'title'    => __( 'Message - Cart Total Quantity', 'woocommerce-jetpack' ),
@@ -46,7 +48,7 @@ return array(
 		'default'  => 0,
 		'type'     => 'number',
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
-		'custom_attributes' => ( '' === apply_filters( 'booster_message', '', 'readonly' ) ? array( 'min' => 0 ) : apply_filters( 'booster_message', '', 'readonly' ) ),
+		'custom_attributes' => ( '' === apply_filters( 'booster_message', '', 'readonly' ) ? array( 'min' => 0, 'step' => $qty_step_settings ) : apply_filters( 'booster_message', '', 'readonly' ) ),
 	),
 	array(
 		'title'    => __( 'Per Item Quantity on Per Product Basis', 'woocommerce-jetpack' ),
@@ -87,7 +89,7 @@ return array(
 		'id'       => 'wcj_order_quantities_max_cart_total_quantity',
 		'default'  => 0,
 		'type'     => 'number',
-		'custom_attributes' => array( 'min' => 0 ),
+		'custom_attributes' => array( 'min' => 0, 'step' => $qty_step_settings ),
 	),
 	array(
 		'title'    => __( 'Message - Cart Total Quantity', 'woocommerce-jetpack' ),
@@ -104,7 +106,7 @@ return array(
 		'default'  => 0,
 		'type'     => 'number',
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
-		'custom_attributes' => ( '' === apply_filters( 'booster_message', '', 'readonly' ) ? array( 'min' => 0 ) : apply_filters( 'booster_message', '', 'readonly' ) ),
+		'custom_attributes' => ( '' === apply_filters( 'booster_message', '', 'readonly' ) ? array( 'min' => 0, 'step' => $qty_step_settings ) : apply_filters( 'booster_message', '', 'readonly' ) ),
 	),
 	array(
 		'title'    => __( 'Per Item Quantity on Per Product Basis', 'woocommerce-jetpack' ),
@@ -133,6 +135,25 @@ return array(
 		'id'       => 'wcj_order_quantities_general_options',
 	),
 	array(
+		'title'    => __( 'Decimal Quantities', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save module\'s settings after enabling this option, so you could enter decimal quantities in step, min and/or max quantity options.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_decimal_qty_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Force Initial Quantity on Single Product Page', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_force_on_single',
+		'default'  => 'disabled',
+		'type'     => 'select',
+		'options'  => array(
+			'disabled' => __( 'Do not force', 'woocommerce-jetpack' ),
+			'min'      => __( 'Force to min', 'woocommerce-jetpack' ),
+			'max'      => __( 'Force to max', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
 		'title'    => __( 'Enable Cart Notices', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_quantities_cart_notice_enabled',
@@ -142,7 +163,7 @@ return array(
 	array(
 		'title'    => __( 'Stop Customer from Seeing Checkout on Wrong Quantities', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Will be redirected to cart page', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Will be redirected to cart page.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_order_quantities_stop_from_seeing_checkout',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -188,7 +209,7 @@ return array(
 		'id'       => 'wcj_order_quantities_step',
 		'default'  => 1,
 		'type'     => 'number',
-		'custom_attributes' => array( 'min' => 1 ),
+		'custom_attributes' => array( 'min' => 0, 'step' => $qty_step_settings ),
 	),
 	array(
 		'title'    => __( 'Per product', 'woocommerce-jetpack' ),

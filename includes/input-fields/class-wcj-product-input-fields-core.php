@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 4.1.0
+ * @version 4.1.1
  * @author  Algoritmika Ltd.
  */
 
@@ -306,7 +306,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * output_custom_input_fields_in_admin_order.
 	 *
-	 * @version 4.1.0
+	 * @version 4.1.1
 	 */
 	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
 		if ( null === $_product ) {
@@ -314,29 +314,27 @@ class WCJ_Product_Input_Fields_Core {
 			return;
 		}
 		echo '<table cellspacing="0" class="display_meta">';
-		$_product_id = wcj_get_product_id_or_variation_parent_id( $_product );
+		$_product_id  = wcj_get_product_id_or_variation_parent_id( $_product );
 		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $_product_id, 1 ) );
 		for ( $i = 1; $i <= $total_number; $i++ ) {
-
-			$the_nice_name = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $_product_id, '' );
-			if ( '' == $the_nice_name ) $the_nice_name = __( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #' . $i;
-
-			$the_value = isset( $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] ) ? $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] : '';
-
-			$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $_product_id, '' );
+			$value = isset( $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] ) ? $item[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ] : '';
+			$type  = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $_product_id, '' );
 			if ( 'file' === $type ) {
-				$the_value = maybe_unserialize( $the_value );
-				if ( isset( $the_value['name'] ) ) {
-					$the_value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $the_value['name'], PATHINFO_EXTENSION ) ) . '">' . $the_value['name'] . '</a>';
+				$value = maybe_unserialize( $value );
+				if ( isset( $value['name'] ) ) {
+					$value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' .
+						$value['name'] . '</a>';
 				}
 			} else {
 				if ( 'no' === get_option( 'wcj_product_input_fields_make_nicer_name_enabled', 'yes' ) ) {
 					continue;
 				}
 			}
-
-			if ( '' != $the_value ) {
-				echo '<tr><th>' . $the_nice_name . ':</th><td>' . $the_value . '</td></tr>';
+			if ( '' != $value ) {
+				if ( '' == ( $nice_name = $this->get_value( 'wcj_product_input_fields_title_' . $this->scope . '_' . $i, $_product_id, '' ) ) ) {
+					$nice_name = __( 'Product Input Field', 'woocommerce-jetpack' ) . ' (' . $this->scope . ') #' . $i;
+				}
+				echo '<tr><th>' . $nice_name . ':</th><td>' . $value . '</td></tr>';
 			}
 		}
 		echo '</table>';

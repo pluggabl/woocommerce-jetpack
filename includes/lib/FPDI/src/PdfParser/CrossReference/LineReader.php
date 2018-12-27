@@ -3,10 +3,9 @@
  * This file is part of FPDI
  *
  * @package   setasign\Fpdi
- * @copyright Copyright (c) 2017 Setasign - Jan Slabon (https://www.setasign.com)
+ * @copyright Copyright (c) 2018 Setasign - Jan Slabon (https://www.setasign.com)
  * @license   http://opensource.org/licenses/mit-license The MIT License
- * @version   2.0.0
- */
+  */
 
 namespace setasign\Fpdi\PdfParser\CrossReference;
 
@@ -34,6 +33,7 @@ class LineReader extends AbstractReader implements ReaderInterface
      * LineReader constructor.
      *
      * @param PdfParser $parser
+     * @throws CrossReferenceException
      */
     public function __construct(PdfParser $parser)
     {
@@ -80,14 +80,14 @@ class LineReader extends AbstractReader implements ReaderInterface
         while (
             ($trailerPos = \strpos($reader->getBuffer(false), 'trailer', \max($bytesPerCycle * $cycles++, 0))) === false
         ) {
-            if (false === $reader->increaseLength($bytesPerCycle)) {
+            if ($reader->increaseLength($bytesPerCycle) === false) {
                 break;
             }
         }
 
-        if (false === $trailerPos) {
+        if ($trailerPos === false) {
             throw new CrossReferenceException(
-                'Unexpected end of cross reference. trailer-keyword not found.',
+                'Unexpected end of cross reference. "trailer"-keyword not found.',
                 CrossReferenceException::NO_TRAILER_FOUND
             );
         }
