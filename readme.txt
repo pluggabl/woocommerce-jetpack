@@ -192,13 +192,14 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.1.1 - 27/12/2018 =
+= 4.1.1 - 29/12/2018 =
+* Feature - PRICES & CURRENCIES - Offer Your Price - Enable - "Enable per product and per product category" option added.
+* Feature - SHIPPING & ORDERS - Maximum Products per User - "Block Add to Cart" option added.
 * Feature - SHIPPING & ORDERS - Order Min/Max Quantities - General Options - "Decimal Quantities" option added.
 * Feature - SHIPPING & ORDERS - Order Min/Max Quantities - General Options - "Force Initial Quantity on Single Product Page" option added.
 * Fix - PRICES & CURRENCIES - Product Price by Formula - Fix final price preview on metabox if 'Disable Admin Scope' option is disabled.
 * Fix - PRODUCTS - Product Tabs - Get tabs title correctly when using WPML plugin.
 * Fix - SHIPPING & ORDERS - Order Min/Max Quantities - Sync quantity input with add to cart button quantity attribute even on infinite scrolling.
-* Dev - PRICES & CURRENCIES - Offer Your Price - Enable - "Enable per product and per product category" option added.
 * Dev - PRODUCTS - Product Input Fields - Minor code refactoring.
 * Dev - PRODUCTS - Product Input Fields - Minor admin settings descriptions update.
 * Dev - CART & CHECKOUT - Checkout Files Upload - Form Template Options - Field - Default value updated (`max-width:50vw;` added).

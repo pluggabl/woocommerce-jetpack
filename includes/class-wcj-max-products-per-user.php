@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 4.1.0
+ * @version 4.1.1
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.0
+	 * @version 4.1.1
 	 * @since   3.5.0
 	 * @todo    (maybe) JS
 	 * @todo    (maybe) zero quantity for "Guest"
@@ -37,6 +37,9 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_max_products_per_user_global_enabled', 'no' ) || 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_max_products_per_user_local_enabled', 'no' ) ) ) {
 				add_action( 'woocommerce_checkout_process', array( $this, 'check_cart_quantities' ), PHP_INT_MAX );
 				add_action( 'woocommerce_before_cart',      array( $this, 'check_cart_quantities' ), PHP_INT_MAX );
+				if ( 'yes' === get_option( 'wcj_max_products_per_user_stop_from_adding_to_cart', 'no' ) ) {
+					add_filter( 'woocommerce_add_to_cart_validation', array( $this, 'validate_on_add_to_cart' ), PHP_INT_MAX, 3 );
+				}
 				if ( 'yes' === get_option( 'wcj_max_products_per_user_stop_from_seeing_checkout', 'no' ) ) {
 					add_action( 'wp', array( $this, 'stop_from_seeing_checkout' ), PHP_INT_MAX );
 				}
@@ -57,6 +60,63 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 			add_action( 'admin_init',     array( $this, 'calculate_data' ) );
 			add_action( 'admin_notices',  array( $this, 'calculate_data_notice' ) );
 		}
+	}
+
+	/**
+	 * validate_on_add_to_cart.
+	 *
+	 * @version 4.1.1
+	 * @since   4.1.1
+	 * @todo    [dev] code refactoring (this function is very similar to `$this->check_quantities()`)
+	 * @todo    [dev] (maybe) recheck `wc_add_notice()` or `wc_print_notice()`
+	 * @todo    [feature] add two additional (i.e. not `wcj_max_products_per_user_message`) separate messages: 1) `( 0 == $currently_in_cart )` and 2) '( 0 != $currently_in_cart )`
+	 * @todo    [feature] add replaced value `%qty_already_in_cart%` (same in `$this->check_quantities()`)
+	 * @todo    [feature] add replaced value `%current_add_to_cart_qty%`
+	 * @todo    [feature] (maybe) add replaced value `%remaining_qty_incl_qty_already_in_cart%`
+	 * @todo    [feature] (maybe) option to choose `wc_add_notice( $message, 'error' );` or `wc_add_notice( $message, 'notice' );`
+	 */
+	function validate_on_add_to_cart( $passed, $product_id, $quantity ) {
+		// Get max quantity (for current product)
+		if ( 0 == ( $max_qty = $this->get_max_qty( $product_id ) ) ) {
+			return $passed; // no max qty set for current product
+		}
+		// Get quantity already bought (for current user / current product)
+		if ( 0 == ( $current_user_id = wcj_get_current_user_id() ) ) {
+			return $passed; // unlogged (i.e. guest) user
+		}
+		$user_already_bought = 0;
+		if ( ( $users_quantities = get_post_meta( $product_id, '_' . 'wcj_max_products_per_user_report', true ) ) && isset( $users_quantities[ $current_user_id ] ) ) {
+			$user_already_bought = $users_quantities[ $current_user_id ];
+		}
+		// Get quantity in cart (for current product)
+		$currently_in_cart = 0;
+		if ( isset( WC()->cart ) ) {
+			$cart_item_quantities = WC()->cart->get_cart_item_quantities();
+			if ( ! empty( $cart_item_quantities ) && is_array( $cart_item_quantities ) ) {
+				foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
+					if ( $_product_id == $product_id ) {
+						$currently_in_cart += $cart_item_quantity;
+					}
+				}
+			}
+		}
+		// Validate
+		if ( ( $currently_in_cart + $user_already_bought + $quantity ) > $max_qty ) {
+			$product = wc_get_product( $product_id );
+			$replaced_values = array(
+				'%max_qty%'             => $max_qty,
+				'%product_title%'       => $product->get_title(),
+				'%qty_already_bought%'  => $user_already_bought,
+				'%remaining_qty%'       => max( ( $max_qty - $user_already_bought ), 0 ),
+			);
+			$message = get_option( 'wcj_max_products_per_user_message',
+				__( 'You can only buy maximum %max_qty% pcs. of %product_title% (you already bought %qty_already_bought% pcs.).', 'woocommerce-jetpack' ) );
+			$message = str_replace( array_keys( $replaced_values ), $replaced_values, $message );
+			wc_add_notice( $message, 'error' );
+			return false;
+		}
+		// Passed
+		return $passed;
 	}
 
 	/**
@@ -235,6 +295,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	 *
 	 * @version 3.5.0
 	 * @since   3.5.0
+	 * @todo    [dev] recheck `$cart_item_quantity` (maybe should be calculated same as `$currently_in_cart` in `$this->validate_on_add_to_cart()`)
 	 */
 	function check_quantities( $add_notices = true ) {
 		$result = true;

@@ -3,7 +3,6 @@
  *
  * @version 4.1.1
  * @since   3.2.2
- * @todo    [dev] (now) re-check `parseFloat` vs `parseInt`
  * @todo    [dev] maybe `jQuery('[name=quantity]').val('0')` on `jQuery.isEmptyObject(product_quantities[variation_id])` (instead of `return`)
  */
 

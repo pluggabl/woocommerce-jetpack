@@ -149,8 +149,8 @@ return array(
 		'type'     => 'select',
 		'options'  => array(
 			'disabled' => __( 'Do not force', 'woocommerce-jetpack' ),
-			'min'      => __( 'Force to min', 'woocommerce-jetpack' ),
-			'max'      => __( 'Force to max', 'woocommerce-jetpack' ),
+			'min'      => __( 'Force to min quantity', 'woocommerce-jetpack' ),
+			'max'      => __( 'Force to max quantity', 'woocommerce-jetpack' ),
 		),
 	),
 	array(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Max Products per User
  *
- * @version 4.1.0
+ * @version 4.1.1
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -74,6 +74,14 @@ return array(
 		'default'  => __( 'You can only buy maximum %max_qty% pcs. of %product_title% (you already bought %qty_already_bought% pcs.).', 'woocommerce-jetpack' ),
 		'type'     => 'custom_textarea',
 		'css'      => 'width:100%;height:100px;',
+	),
+	array(
+		'title'    => __( 'Block Add to Cart', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will stop customer from adding product to cart on exceeded quantities.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_max_products_per_user_stop_from_adding_to_cart',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Block Checkout Page', 'woocommerce-jetpack' ),
