@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 4.1.0
+ * @version 4.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 4.2.0
 	 */
 	function __construct() {
 
@@ -50,6 +50,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'wcj_order_payment_method',
 			'wcj_order_payment_method_transaction_id',
 			'wcj_order_products_meta',
+			'wcj_order_products_terms',
 			'wcj_order_profit',
 			'wcj_order_refunds_table',
 			'wcj_order_remaining_refund_amount',
@@ -859,6 +860,35 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 					return $items[ $item_number ];
 			}
 		}
+	}
+
+	/**
+	 * wcj_order_products_terms.
+	 *
+	 * @version 4.2.0
+	 * @since   4.2.0
+	 * @todo    [dev] (maybe) rename (i.e. make alias) to `[wcj_order_product_terms]` (same for `[wcj_order_products_meta]`, `[wcj_order_items_meta]` etc.)
+	 * @todo    [dev] (maybe) make sorting optional (i.e. `$atts['sort']`)
+	 */
+	function wcj_order_products_terms( $atts ) {
+		if ( '' === $atts['taxonomy'] ) {
+			return '';
+		}
+		$terms = array();
+		$items = $this->the_order->get_items();
+		foreach ( $items as $item_id => $item ) {
+			$product_terms = get_the_terms( $item['product_id'], $atts['taxonomy'] );
+			if ( ! empty( $product_terms ) && ! is_wp_error( $product_terms ) ) {
+				foreach( $product_terms as $product_term ) {
+					$terms[] = $product_term->name;
+				}
+			}
+		}
+		if ( 'yes' === $atts['unique_only'] ) {
+			$terms = array_unique( $terms );
+		}
+		sort( $terms );
+		return ( ! empty( $terms ) ? implode( $atts['sep'], $terms ) : '' );
 	}
 
 	/**

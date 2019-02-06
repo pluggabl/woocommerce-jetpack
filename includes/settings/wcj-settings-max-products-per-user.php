@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Max Products per User
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */

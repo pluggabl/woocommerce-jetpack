@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - HTML Functions
  *
- * @version 4.0.0
+ * @version 4.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -12,7 +12,7 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 	/**
 	 * wcj_get_table_html.
 	 *
-	 * @version 2.5.7
+	 * @version 4.2.0
 	 */
 	function wcj_get_table_html( $data, $args = array() ) {
 		$defaults = array(
@@ -32,7 +32,9 @@ if ( ! function_exists( 'wcj_get_table_html' ) ) {
 		$html .= '<table' . $table_class . $table_style . '>';
 		$html .= '<tbody>';
 		foreach( $data as $row_number => $row ) {
-			$html .= '<tr' . $row_styles . '>';
+			$row_class = 'wcj-row wcj-row' . $row_number;
+			$row_class .= $row_number % 2 == 0 ? ' wcj-row-even' : ' wcj-row-odd';
+			$html .= '<tr' . $row_styles . ' class="'.$row_class.'">';
 			foreach( $row as $column_number => $value ) {
 				$th_or_td = ( ( 0 === $row_number && 'horizontal' === $table_heading_type ) || ( 0 === $column_number && 'vertical' === $table_heading_type ) ) ? 'th' : 'td';
 				$column_class = ( ! empty( $columns_classes ) && isset( $columns_classes[ $column_number ] ) ) ? ' class="' . $columns_classes[ $column_number ] . '"' : '';

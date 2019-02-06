@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Page Settings
  *
- * @version 3.4.3
+ * @version 4.2.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -70,7 +70,7 @@ foreach ( $invoice_types as $invoice_type ) {
 		array(
 			'title'    => __( 'Margin Bottom', 'woocommerce-jetpack' ),
 			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_margin_bottom',
-			'default'  => 0, // PDF_MARGIN_BOTTOM,
+			'default'  => 10, // PDF_MARGIN_BOTTOM,
 			'type'     => 'number',
 		),
 		array(

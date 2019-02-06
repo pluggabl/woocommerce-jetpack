@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Numbers
  *
- * @version 4.0.0
+ * @version 4.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -104,28 +104,67 @@ class WCJ_Order_Numbers extends WCJ_Module {
 	/**
 	 * search_by_custom_number.
 	 *
-	 * @version 2.6.0
+	 * @version 4.2.0
 	 * @since   2.6.0
-	 * @see     https://github.com/pablo-pacheco/wc-booster-search-order-by-custom-number-fix
 	 * @todo    `_wcj_order_number` is used for `sequential` and `hash` only
 	 */
 	function search_by_custom_number( $query ) {
 		if (
 			! is_admin() ||
-			! isset( $query->query ) ||
+			! property_exists( $query, "query" ) ||
 			! isset( $query->query['s'] ) ||
-			false === is_numeric( $query->query['s'] ) ||
-			0 == $query->query['s'] ||
-			'shop_order' !== $query->query['post_type'] ||
-			! $query->query_vars['shop_order_search']
+			empty( $search = trim( $query->query['s'] ) ) ||
+			'shop_order' !== $query->query['post_type']
 		) {
 			return;
 		}
-		$custom_order_id = $query->query['s'];
-		$query->query_vars['post__in'] = array();
-		$query->query['s'] = '';
-		$query->set( 'meta_key', '_wcj_order_number' );
-		$query->set( 'meta_value', $custom_order_id );
+		remove_action( 'pre_get_posts', array( $this, 'search_by_custom_number' ) );
+
+		// Get prefix and suffix options
+		$prefix = do_shortcode( get_option( 'wcj_order_number_prefix', '' ) );
+		$prefix .= date_i18n( get_option( 'wcj_order_number_date_prefix', '' ) );
+		$suffix = do_shortcode( get_option( 'wcj_order_number_suffix', '' ) );
+		$suffix .= date_i18n( get_option( 'wcj_order_number_date_suffix', '' ) );
+
+		// Ignore suffix and prefix from search input
+		$search_no_suffix            = preg_replace( "/\A{$prefix}/i", '', $search );
+		$search_no_suffix_and_prefix = preg_replace( "/{$suffix}\z/i", '', $search_no_suffix );
+		$final_search                = empty( $search_no_suffix_and_prefix ) ? $search : $search_no_suffix_and_prefix;
+
+		// Post Status
+		$post_status = isset( $_GET['post_status'] ) ? $_GET['post_status'] : 'any';
+
+		// Try to search post by '_wcj_order_number' meta key
+		$meta_query_args = array(
+			array(
+				'key'     => '_wcj_order_number',
+				'value'   => $final_search,
+				'compare' => '='
+			)
+		);
+		$search_query = new WP_Query( array(
+			'fields'                 => 'ids',
+			'update_post_meta_cache' => false,
+			'update_post_term_cache' => false,
+			'post_status'            => $post_status,
+			'post_type'              => 'shop_order',
+			'meta_query'             => $meta_query_args
+		) );
+
+		// If found, create the query by meta_key
+		if ( 1 == $search_query->found_posts ) {
+			$query->set( 'post_status', $post_status );
+			$query->set( 's', '' );
+			$query->set( 'post__in', array() );
+			$current_meta_query = empty( $query->get( 'meta_query' ) ) ? array() : $query->get( 'meta_query' );
+			$query->set( 'meta_query', array_merge( $current_meta_query, $meta_query_args ) );
+		} // If not found search by post_id
+		else {
+			$query->set( 'post_status', $post_status );
+			$query->set( 's', '' );
+			$current_post_in = empty( $query->get( 'post__in' ) ) ? array() : $query->get( 'post__in' );
+			$query->set( 'post__in', array_merge( $current_post_in, array( $final_search ) ) );
+		}
 	}
 
 	/**

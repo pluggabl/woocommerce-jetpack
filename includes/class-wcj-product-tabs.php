@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Tabs
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -117,8 +117,8 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * Gets local title, including from other possible languages when using WPML
 	 *
-	 * @version 4.1.1
-	 * @since   4.1.1
+	 * @version 4.2.0
+	 * @since   4.2.0
 	 *
 	 * @param $product_id
 	 * @param $option_key
@@ -146,7 +146,7 @@ class WCJ_Product_Tabs extends WCJ_Module {
 	/**
 	 * add_custom_product_tabs.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 * @since   3.1.0
 	 * @todo    add visibility by user roles
 	 */

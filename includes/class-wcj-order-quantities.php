@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,11 +16,12 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 * @since   2.9.0
 	 * @todo    maybe rename the module to "Order Quantities" or "Order Product Quantities" or "Product Quantities"?
 	 * @todo    loop (`woocommerce_loop_add_to_cart_link`)
 	 * @todo    (maybe) order quantities by user roles
+	 * @todo    [feature] validate (and optionally correct) **on add to cart**
 	 */
 	function __construct() {
 
@@ -31,13 +32,19 @@ class WCJ_Order_Quantities extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-			// Min/max quantities
-			if ( 'yes' === get_option( 'wcj_order_quantities_max_section_enabled', 'no' ) || 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
+			// Validation
+			if (
+				'yes' === get_option( 'wcj_order_quantities_max_section_enabled', 'no' ) || 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ||
+				'yes' === get_option( 'wcj_order_quantities_step_section_enabled', 'no' )
+			) {
 				add_action( 'woocommerce_checkout_process', array( $this, 'check_order_quantities' ) );
 				add_action( 'woocommerce_before_cart',      array( $this, 'check_order_quantities' ) );
 				if ( 'yes' === get_option( 'wcj_order_quantities_stop_from_seeing_checkout', 'no' ) ) {
 					add_action( 'wp', array( $this, 'stop_from_seeing_checkout' ), PHP_INT_MAX );
 				}
+			}
+			// Min/max quantities
+			if ( 'yes' === get_option( 'wcj_order_quantities_max_section_enabled', 'no' ) || 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
 				add_filter( 'woocommerce_available_variation', array( $this, 'set_quantity_input_min_max_variation' ), PHP_INT_MAX, 3 );
 				if ( 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
 					add_filter( 'woocommerce_quantity_input_min', array( $this, 'set_quantity_input_min' ), PHP_INT_MAX, 2 );
@@ -82,8 +89,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * float_stock_amount.
 	 *
-	 * @version 4.1.1
-	 * @since   4.1.1
+	 * @version 4.2.0
+	 * @since   4.2.0
 	 */
 	function float_stock_amount() {
 		remove_filter( 'woocommerce_stock_amount', 'intval' );
@@ -93,8 +100,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Replaces quantity attribute on loop cart link.
 	 *
-	 * @version 4.1.1
-	 * @since   4.1.1
+	 * @version 4.2.0
+	 * @since   4.2.0
 	 */
 	function replace_quantity_attribute_on_loop_cart_link( $html, $product ) {
 		$quantity = $this->get_product_quantity( 'min', $product, 1 );
@@ -106,7 +113,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Syncs Quantity input with Add to cart button on loop page.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 * @since   4.1.0
 	 */
 	function sync_qty_input_with_add_to_cart_btn_on_loop() {
@@ -170,7 +177,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * set_quantity_input_args.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 * @since   3.7.0
 	 */
 	function set_quantity_input_args( $args, $product ) {
@@ -332,7 +339,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * stop_from_seeing_checkout.
 	 *
-	 * @version 3.2.3
+	 * @version 4.2.0
 	 * @since   2.9.0
 	 */
 	function stop_from_seeing_checkout() {
@@ -359,12 +366,18 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				exit;
 			}
 		}
+		if ( 'yes' === get_option( 'wcj_order_quantities_step_section_enabled', 'no' ) ) {
+			if ( ! $this->check_quantities_step( $cart_item_quantities, false, true ) ) {
+				wp_safe_redirect( wc_get_cart_url() );
+				exit;
+			}
+		}
 	}
 
 	/**
 	 * print_message.
 	 *
-	 * @version 2.9.0
+	 * @version 4.2.0
 	 * @since   2.9.0
 	 */
 	function print_message( $message_type, $_is_cart, $required_quantity, $total_quantity, $_product_id = 0 ) {
@@ -410,6 +423,16 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				$message_template = get_option( 'wcj_order_quantities_min_per_item_message',
 					__( 'Minimum allowed quantity for %product_title% is %min_per_item_quantity%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ) );
 				break;
+			case 'step':
+				$_product = wc_get_product( $_product_id );
+				$replaced_values = array(
+					'%required_step%'         => $required_quantity,
+					'%item_quantity%'         => $total_quantity,
+					'%product_title%'         => $_product->get_title(),
+				);
+				$message_template = get_option( 'wcj_order_quantities_step_message',
+					__( 'Required step for %product_title% is %required_step%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ) );
+				break;
 		}
 		$_notice = str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), $message_template );
 		if ( $_is_cart ) {
@@ -420,9 +443,74 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	}
 
 	/**
+	 * check_step.
+	 *
+	 * @version 4.2.0
+	 * @since   4.2.0
+	 */
+	function check_step( $product_id, $product_qty_step, $quantity ) {
+		$min_value = $this->get_product_quantity( 'min', wc_get_product( $product_id ), 0 );
+		if ( 'yes' === get_option( 'wcj_order_quantities_decimal_qty_enabled', 'no' ) ) {
+			$multiplier         = floatval( 1000000 );
+			$_min_value         = intval( round( floatval( $min_value )        * $multiplier ) );
+			$_quantity          = intval( round( floatval( $quantity )         * $multiplier ) );
+			$_product_qty_step  = intval( round( floatval( $product_qty_step ) * $multiplier ) );
+		} else {
+			$_min_value         = $min_value;
+			$_quantity          = $quantity;
+			$_product_qty_step  = $product_qty_step;
+		}
+		$_quantity = $_quantity - $_min_value;
+		$_reminder = $_quantity % $_product_qty_step;
+		return ( 0 == $_reminder );
+	}
+
+	/**
+	 * check_quantities_step.
+	 *
+	 * @version 4.2.0
+	 * @since   4.2.0
+	 */
+	function check_quantities_step( $cart_item_quantities, $_is_cart, $_return ) {
+		if ( 'yes' != get_option( 'wcj_order_quantities_step_additional_validation_enabled', 'no' ) ) {
+			return true;
+		}
+		if ( $this->is_step_per_product_enabled ) {
+			foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
+				if ( '' != ( $step = get_post_meta( $_product_id, '_' . 'wcj_order_quantities_step', true ) ) && 0 != $step ) {
+					if ( ! $this->check_step( $_product_id, $step, $cart_item_quantity ) ) {
+						if ( $_return ) {
+							return false;
+						} else {
+							$this->print_message( 'step', $_is_cart, $step, $cart_item_quantity, $_product_id );
+						}
+					}
+				}
+			}
+		}
+		if ( 0 != ( $step = get_option( 'wcj_order_quantities_step', 1 ) ) ) {
+			foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
+				if ( $this->is_step_per_product_enabled && 0 != get_post_meta( $_product_id, '_' . 'wcj_order_quantities_step', true ) ) {
+					continue;
+				}
+				if ( ! $this->check_step( $_product_id, $step, $cart_item_quantity ) ) {
+					if ( $_return ) {
+						return false;
+					} else {
+						$this->print_message( 'step', $_is_cart, $step, $cart_item_quantity, $_product_id );
+					}
+				}
+			}
+		}
+		if ( $_return ) {
+			return true;
+		}
+	}
+
+	/**
 	 * check_quantities.
 	 *
-	 * @version 3.2.2
+	 * @version 4.2.0
 	 * @since   2.9.0
 	 */
 	function check_quantities( $min_or_max, $cart_item_quantities, $cart_total_quantity, $_is_cart, $_return ) {
@@ -438,7 +526,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				}
 			}
 		}
-		if ( apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity_per_product', 'no' ) ) ) {
+		if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_order_quantities_' . $min_or_max . '_per_item_quantity_per_product', 'no' ) ) ) {
 			foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
 				if ( 0 != ( $max_or_max_per_item_quantity = get_post_meta( $_product_id, '_' . 'wcj_order_quantities_' . $min_or_max, true ) ) ) {
 					if (
@@ -482,7 +570,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * check_order_quantities.
 	 *
-	 * @version 2.9.0
+	 * @version 4.2.0
 	 * @since   2.9.0
 	 */
 	function check_order_quantities() {
@@ -500,6 +588,9 @@ class WCJ_Order_Quantities extends WCJ_Module {
 		}
 		if ( 'yes' === get_option( 'wcj_order_quantities_min_section_enabled', 'no' ) ) {
 			$this->check_quantities( 'min', $cart_item_quantities, $cart_total_quantity, $_is_cart, false );
+		}
+		if ( 'yes' === get_option( 'wcj_order_quantities_step_section_enabled', 'no' ) ) {
+			$this->check_quantities_step( $cart_item_quantities, $_is_cart, false );
 		}
 	}
 

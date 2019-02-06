@@ -463,7 +463,7 @@ if ( ! function_exists( 'wcj_get_the_terms' ) ) {
 	 * wcj_get_the_terms.
 	 *
 	 * @version 2.9.0
-	 * @version 2.9.0
+	 * @since   2.9.0
 	 */
 	function wcj_get_the_terms( $product_id, $taxonomy ) {
 		$result = array();

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 4.1.0
+ * @version 4.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -437,7 +437,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * is_visible.
 	 *
-	 * @version 3.4.0
+	 * @version 4.2.0
 	 * @since   2.6.0
 	 * @todo    add "user roles to include/exclude"
 	 */
@@ -465,18 +465,14 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 		}
 		$categories_in = get_option( 'wcj_checkout_custom_field_categories_in_' . $i );
 		if ( ! empty( $categories_in ) ) {
+			$categories_in_cart = array();
 			foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-				$product_categories = get_the_terms( $values['product_id'], 'product_cat' );
-				if ( empty( $product_categories ) ) {
-					continue;
-				}
-				foreach( $product_categories as $product_category ) {
-					if ( in_array( $product_category->term_id, $categories_in ) ) {
-						return true;
-					}
-				}
+				$product_categories = wp_get_post_terms( $values['product_id'], 'product_cat', array( "fields" => "ids" ) );
+				$categories_in_cart = array_merge( $product_categories, $categories_in_cart );
 			}
-			return false;
+			if ( count( array_intersect( $categories_in, $categories_in_cart ) ) == 0 ) {
+				return false;
+			}
 		}
 
 		// Checking products

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Files Upload
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @since   2.4.5
  * @author  Algoritmika Ltd.
  */
@@ -707,7 +707,7 @@ class WCJ_Checkout_Files_Upload extends WCJ_Module {
 	/**
 	 * get_the_form.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 * @since   2.5.0
 	 */
 	function get_the_form( $i, $file_name, $order_id = 0 ) {

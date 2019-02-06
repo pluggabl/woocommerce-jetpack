@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Currency Converter
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] maybe make "Advanced: Fix Chosen Payment Method" option enabled by default (or even remove option completely and always perform `$this->fix_chosen_payment_method()`)

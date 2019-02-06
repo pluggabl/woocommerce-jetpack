@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 * @since   2.9.0
 	 * @todo    settings - more info about position priorities, e.g.: __( 'Standard priorities for "Inside single product summary": title - 5, rating - 10, price - 10, excerpt - 20, add to cart - 30, meta - 40, sharing - 50', 'woocommerce-jetpack' )
 	 * @todo    (maybe) css - customizable fonts etc.
@@ -223,7 +223,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * is_offer_price_enabled_for_product.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 * @since   2.9.0
 	 */
 	function is_offer_price_enabled_for_product( $product_id ) {
@@ -245,7 +245,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * get_wcj_data_array.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 * @since   2.9.0
 	 * @todo    (maybe) rethink `str_replace( '\'', '"', ... )`
 	 */

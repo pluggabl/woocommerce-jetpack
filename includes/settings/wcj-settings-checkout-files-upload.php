@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Files Upload
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

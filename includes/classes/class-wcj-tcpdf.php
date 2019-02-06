@@ -1,8 +1,8 @@
 <?php
 /**
- * Booster for WooCommerce TCPDF
+ * Booster for WooCommerce - TCPDF
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `Header()`
  */
@@ -11,21 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 if ( ! class_exists( 'WCJ_TCPDF' ) ) :
 
-// TCPDF config: Enable custom config
+// Enable custom TCPDF config
 define( 'K_TCPDF_EXTERNAL_CONFIG', true );
-
-// TCPDF config: Allow to call TCPDF methods using HTML syntax
-define( 'K_TCPDF_CALLS_IN_HTML', true );
-
-// TCPDF config: Path for PDF fonts
-if ( wcj_check_tcpdf_fonts_version( true ) ) {
-	define( 'K_PATH_FONTS', wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/' );
-}
-
-// TCPDF config: Default images directory
-if ( false !== ( $default_images_directory = wcj_get_invoicing_default_images_directory() ) ) {
-	define ( 'K_PATH_IMAGES', $default_images_directory );
-}
+require_once( wcj_plugin_path() . '/includes/lib/tcpdf_config.php' );
 
 // Include TCPDF library
 require_once( wcj_plugin_path() . '/includes/lib/tcpdf/tcpdf.php' );

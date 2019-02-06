@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 3.8.0
+ * @version 4.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -22,7 +22,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * prepare_pdf.
 	 *
-	 * @version 3.4.3
+	 * @version 4.2.0
 	 * @todo    [dev] check `addTTFfont()`
 	 * @todo    [dev] maybe `$pdf->SetAuthor( 'Booster for WooCommerce' )`
 	 * @todo    [dev] maybe `$pdf->setLanguageArray( $l )`
@@ -121,7 +121,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$pdf->SetFooterMargin( get_option( 'wcj_invoicing_' . $invoice_type . '_margin_footer', 10 ) );
 
 		// Set auto page breaks
-		$pdf->SetAutoPageBreak( true, get_option( 'wcj_invoicing_' . $invoice_type . '_margin_bottom', 0 ) );
+		$pdf->SetAutoPageBreak( true, get_option( 'wcj_invoicing_' . $invoice_type . '_margin_bottom', 10 ) );
 
 		// Set image scale factor
 		$pdf->setImageScale( PDF_IMAGE_SCALE_RATIO );

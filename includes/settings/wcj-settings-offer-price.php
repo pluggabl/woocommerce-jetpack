@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Offer Price
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */

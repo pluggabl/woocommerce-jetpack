@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Min/Max Quantities
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) generate settings in loop ( min / max )
@@ -13,6 +13,68 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 $qty_step_settings = ( 'yes' === get_option( 'wcj_order_quantities_decimal_qty_enabled', 'no' ) ? '0.000001' : '1' );
 
 return array(
+	array(
+		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_order_quantities_general_options',
+	),
+	array(
+		'title'    => __( 'Decimal Quantities', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save module\'s settings after enabling this option, so you could enter decimal quantities in step, min and/or max quantity options.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_decimal_qty_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Force Initial Quantity on Single Product Page', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_force_on_single',
+		'default'  => 'disabled',
+		'type'     => 'select',
+		'options'  => array(
+			'disabled' => __( 'Do not force', 'woocommerce-jetpack' ),
+			'min'      => __( 'Force to min quantity', 'woocommerce-jetpack' ),
+			'max'      => __( 'Force to max quantity', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'title'    => __( 'Enable Cart Notices', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_cart_notice_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Stop Customer from Seeing Checkout on Wrong Quantities', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Will be redirected to cart page.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_stop_from_seeing_checkout',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Variable Products', 'woocommerce-jetpack' ),
+		'desc'     => '<br>' . __( 'Action on variation change', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_variable_variation_change',
+		'default'  => 'do_nothing',
+		'type'     => 'select',
+		'options'  => array(
+			'do_nothing'   => __( 'Do nothing', 'woocommerce-jetpack' ),
+			'reset_to_min' => __( 'Reset to min quantity', 'woocommerce-jetpack' ),
+			'reset_to_max' => __( 'Reset to max quantity', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'desc'     => __( 'Force on add to cart', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Force quantity correction on add to cart button click', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_variable_force_on_add_to_cart',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_order_quantities_general_options',
+	),
 	array(
 		'title'    => __( 'Minimum Quantity Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
@@ -130,68 +192,6 @@ return array(
 		'id'       => 'wcj_order_quantities_max_options',
 	),
 	array(
-		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
-		'type'     => 'title',
-		'id'       => 'wcj_order_quantities_general_options',
-	),
-	array(
-		'title'    => __( 'Decimal Quantities', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Save module\'s settings after enabling this option, so you could enter decimal quantities in step, min and/or max quantity options.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_quantities_decimal_qty_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Force Initial Quantity on Single Product Page', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_quantities_force_on_single',
-		'default'  => 'disabled',
-		'type'     => 'select',
-		'options'  => array(
-			'disabled' => __( 'Do not force', 'woocommerce-jetpack' ),
-			'min'      => __( 'Force to min quantity', 'woocommerce-jetpack' ),
-			'max'      => __( 'Force to max quantity', 'woocommerce-jetpack' ),
-		),
-	),
-	array(
-		'title'    => __( 'Enable Cart Notices', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_quantities_cart_notice_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Stop Customer from Seeing Checkout on Wrong Quantities', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Will be redirected to cart page.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_quantities_stop_from_seeing_checkout',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Variable Products', 'woocommerce-jetpack' ),
-		'desc'     => '<br>' . __( 'Action on variation change', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_quantities_variable_variation_change',
-		'default'  => 'do_nothing',
-		'type'     => 'select',
-		'options'  => array(
-			'do_nothing'   => __( 'Do nothing', 'woocommerce-jetpack' ),
-			'reset_to_min' => __( 'Reset to min quantity', 'woocommerce-jetpack' ),
-			'reset_to_max' => __( 'Reset to max quantity', 'woocommerce-jetpack' ),
-		),
-	),
-	array(
-		'desc'     => __( 'Force on add to cart', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Force quantity correction on add to cart button click', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_order_quantities_variable_force_on_add_to_cart',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'type'     => 'sectionend',
-		'id'       => 'wcj_order_quantities_general_options',
-	),
-	array(
 		'title'    => __( 'Quantity Step Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_order_quantities_step_options',
@@ -212,13 +212,28 @@ return array(
 		'custom_attributes' => array( 'min' => 0, 'step' => $qty_step_settings ),
 	),
 	array(
-		'title'    => __( 'Per product', 'woocommerce-jetpack' ),
+		'title'    => __( 'Per Product', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This will add meta box to each product\'s edit page.', 'woocommerce-jetpack' ) . ' ' . apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_order_quantities_step_per_product',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Additional Validation', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_quantities_step_additional_validation_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Message', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%required_step%', '%item_quantity%' ) ),
+		'id'       => 'wcj_order_quantities_step_message',
+		'default'  => __( 'Required step for %product_title% is %required_step%. Your current item quantity is %item_quantity%.', 'woocommerce-jetpack' ),
+		'type'     => 'custom_textarea',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'type'     => 'sectionend',

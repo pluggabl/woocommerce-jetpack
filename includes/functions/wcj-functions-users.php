@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 3.9.0
+ * @version 4.2.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -139,18 +139,29 @@ if ( ! function_exists( 'wcj_get_user_roles' ) ) {
 	/**
 	 * wcj_get_user_roles.
 	 *
-	 * @version 2.5.3
+	 * @version 4.2.0
 	 * @since   2.5.3
 	 */
 	function wcj_get_user_roles() {
 		global $wp_roles;
 		$all_roles = ( isset( $wp_roles ) && is_object( $wp_roles ) ) ? $wp_roles->roles : array();
+		$current_user_roles = array();
+		if ( is_user_logged_in() ) {
+			$user               = wp_get_current_user();
+			$roles              = ( array ) $user->roles;
+			$current_user_roles = array_filter( $all_roles, function ( $k ) use ( $roles ) {
+				return in_array( $k, $roles );
+			}, ARRAY_FILTER_USE_KEY );
+		}
 		$all_roles = apply_filters( 'editable_roles', $all_roles );
 		$all_roles = array_merge( array(
 			'guest' => array(
 				'name'         => __( 'Guest', 'woocommerce-jetpack' ),
 				'capabilities' => array(),
 			) ), $all_roles );
+		if ( ! empty( $current_user_roles ) ) {
+			$all_roles = array_merge( $current_user_roles, $all_roles );
+		}
 		return $all_roles;
 	}
 }

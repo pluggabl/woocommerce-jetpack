@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Max Products per User
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @since   3.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 * @since   3.5.0
 	 * @todo    (maybe) JS
 	 * @todo    (maybe) zero quantity for "Guest"
@@ -65,8 +65,8 @@ class WCJ_Max_products_Per_User extends WCJ_Module {
 	/**
 	 * validate_on_add_to_cart.
 	 *
-	 * @version 4.1.1
-	 * @since   4.1.1
+	 * @version 4.2.0
+	 * @since   4.2.0
 	 * @todo    [dev] code refactoring (this function is very similar to `$this->check_quantities()`)
 	 * @todo    [dev] (maybe) recheck `wc_add_notice()` or `wc_print_notice()`
 	 * @todo    [feature] add two additional (i.e. not `wcj_max_products_per_user_message`) separate messages: 1) `( 0 == $currently_in_cart )` and 2) '( 0 != $currently_in_cart )`

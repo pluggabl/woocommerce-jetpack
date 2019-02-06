@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 4.1.0
+ * @version 4.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -645,11 +645,39 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_purchase_price.
 	 *
-	 * @version 3.2.4
+	 * @version 4.2.0
 	 */
 	function wcj_product_purchase_price( $atts ) {
-		$purchase_price = wc_get_product_purchase_price( wcj_get_product_id( $this->the_product ) );
-		return ( 'yes' === $atts['hide_currency'] ? $purchase_price : wc_price( $purchase_price ) );
+		$atts = array_change_key_case( (array) $atts, CASE_LOWER );
+		$atts = shortcode_atts( array(
+			'search'        => 'min_variation',
+			'hide_currency' => 'no',
+			'format'        => 'yes'
+		), $atts );
+
+		if ( ! $this->the_product->is_type( 'variable' ) ) {
+			$purchase_price = wc_get_product_purchase_price( wcj_get_product_id( $this->the_product ) );
+			return ( 'yes' === $atts['hide_currency'] ? $purchase_price : wc_price( $purchase_price ) );
+		} else {
+			$purchase_price = wc_get_variable_product_purchase_price( wcj_get_product_id( $this->the_product ), $atts );
+			if ( $atts['format'] === 'yes' ) {
+				if ( is_array( $purchase_price ) ) {
+					if ( count( $purchase_price ) == 1 ) {
+						return wc_price( $purchase_price[0] );
+					} else if ( count( $purchase_price ) == 2 ) {
+						return wc_format_price_range( $purchase_price[0], $purchase_price[1] );
+					}
+				} else {
+					return wc_price( $purchase_price );
+				}
+			} else {
+				if ( is_array( $purchase_price ) && count( $purchase_price ) == 1 ) {
+					return $purchase_price[0];
+				} elseif ( ! is_array( $purchase_price ) ) {
+					return $purchase_price;
+				}
+			}
+		}
 	}
 
 	/**

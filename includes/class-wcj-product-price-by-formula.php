@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -246,7 +246,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 * @since   2.5.0
 	 */
 	function create_meta_box() {

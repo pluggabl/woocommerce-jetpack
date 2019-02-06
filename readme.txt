@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.0
-Stable tag: 4.1.0
+Stable tag: 4.2.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,20 +192,39 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.1.1 - 29/12/2018 =
+= 4.2.0 - 06/02/2019 =
 * Feature - PRICES & CURRENCIES - Offer Your Price - Enable - "Enable per product and per product category" option added.
+* Feature - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Advanced: Multicurrency (Currency Switcher) Module" option added (i.e. "Allow price entering in switched currency").
 * Feature - SHIPPING & ORDERS - Maximum Products per User - "Block Add to Cart" option added.
 * Feature - SHIPPING & ORDERS - Order Min/Max Quantities - General Options - "Decimal Quantities" option added.
 * Feature - SHIPPING & ORDERS - Order Min/Max Quantities - General Options - "Force Initial Quantity on Single Product Page" option added.
+* Feature - SHIPPING & ORDERS - Order Min/Max Quantities - Quantity Step Options - "Additional Validation" and "Message" options added.
 * Fix - PRICES & CURRENCIES - Product Price by Formula - Fix final price preview on metabox if 'Disable Admin Scope' option is disabled.
+* Fix - BUTTON & PRICE LABELS - Add to Cart Button Labels - Per Product Type Labels - Fix a possible error when `global $product` is set as a String.
+* Fix - PRODUCTS - Product Addons - Replace ajax content by price instead of html avoiding duplicated content.
+* Fix - PRODUCTS - Product Input Fields - Fix `$item->legacy_values` temporary solution using `woocommerce_checkout_create_order_line_item` hook.
+* Fix - PRODUCTS - Product Input Fields - Fix warning related to YITH Request a Quote plugin.
 * Fix - PRODUCTS - Product Tabs - Get tabs title correctly when using WPML plugin.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Fix "Include Categories" option from interrupting other checkings.
 * Fix - SHIPPING & ORDERS - Order Min/Max Quantities - Sync quantity input with add to cart button quantity attribute even on infinite scrolling.
+* Fix - SHIPPING & ORDERS - Order Min/Max Quantities - "Per Item Quantity on Per Product Basis" checkboxes fixed.
+* Fix - SHIPPING & ORDERS - Order Numbers - Fix Order Admin Search by Custom Number.
+* Fix - SHIPPING & ORDERS - Shipping Methods by Products - Using `continue` in `switch` fixed.
+* Fix - PDF INVOICING & PACKING SLIPS - Page Settings - Set margin bottom as 10 by default.
 * Dev - PRODUCTS - Product Input Fields - Minor code refactoring.
 * Dev - PRODUCTS - Product Input Fields - Minor admin settings descriptions update.
+* Dev - PRODUCTS - Product Input Fields - Add Compatibility with YITH Request a Quote plugin.
 * Dev - CART & CHECKOUT - Checkout Files Upload - Form Template Options - Field - Default value updated (`max-width:50vw;` added).
 * Dev - PAYMENT GATEWAYS - Gateways Currency Converter - Minor admin settings descriptions update.
 * Dev - PDF INVOICING & PACKING SLIPS - TCPDF library updated (from v6.2.13 to v6.2.26).
 * Dev - PDF INVOICING & PACKING SLIPS - FPDI library updated (from v2.0.0 to v2.1.1).
+* Dev - Functions - HTML - `wcj_get_table_html()` - Add `wcj-row-even`, `wcj-row-odd` for even and odd row classes and `wcj-row1` and so on for each row number.
+* Dev - Functions - Price and Currency - Add `wc_get_variable_product_purchase_price()` function to get purchase price from variable products.
+* Dev - Functions - Users - Add current user role to `wcj_get_user_roles()`.
+* Dev - Shortcodes - Orders - `[wcj_order_products_terms]` shortcode added.
+* Dev - Shortcodes - Products - `[wcj_product_purchase_price]` - Get min purchase price from variable product by default instead of zero.
+* Dev - Shortcodes - Products - `[wcj_product_purchase_price]` - `search` parameter added for variable products. Possible values are: `min_variation`, `max_variation`, `all_variations`, `min_max_variations`.
+* Dev - Shortcodes - Products - `[wcj_product_purchase_price]` - `format` parameter added to return purchase prices of variable products as html or raw. Possible values are: `yes`, `no`.
 
 = 4.1.0 - 12/12/2018 =
 * Feature - CART & CHECKOUT - Checkout Customization - Add option to recalculate checkout.

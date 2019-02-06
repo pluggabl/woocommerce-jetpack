@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 4.1.1
+ * @version 4.2.0
  * @author  Algoritmika Ltd.
  */
 
@@ -18,7 +18,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 4.2.0
 	 * @todo    save all info (e.g. label etc.) in order meta
 	 * @todo    add `do_shortcode()` to all applicable options (e.g. "Message on required")
 	 * @todo    add positions: `woocommerce_before_add_to_cart_quantity`, `woocommerce_after_add_to_cart_quantity` (same to all similar modules, search for `woocommerce_before_add_to_cart_button`)
@@ -46,11 +46,16 @@ class WCJ_Product_Input_Fields_Core {
 			}
 			add_filter( 'woocommerce_order_item_name',              array( $this, 'add_product_input_fields_to_order_item_name' ), 100, 2 );
 
+			// Compatibility with YITH Quote plugin
+			add_filter( 'woocommerce_order_item_get_formatted_meta_data', array( $this, 'yith_raq_display_items_on_order' ), 20, 2 );
+			add_filter( 'ywraq_request_quote_view_item_data',             array( $this, 'add_product_input_fields_to_cart_item_display_data' ), PHP_INT_MAX, 2 );
+			add_filter( 'ywraq_add_item',                                 array( $this, 'yith_raq_add_item' ), 10, 2 );
+
 			// Add item meta from cart to order
 			if ( WCJ_IS_WC_VERSION_BELOW_3 ) {
-				add_action( 'woocommerce_add_order_item_meta',      array( $this, 'add_product_input_fields_to_order_item_meta' ), 100, 3 );
+				add_action( 'woocommerce_add_order_item_meta', array( $this, 'add_product_input_fields_to_order_item_meta_old' ), 100, 3 );
 			} else {
-				add_action( 'woocommerce_new_order_item',           array( $this, 'add_product_input_fields_to_order_item_meta_wc3' ), 100, 3 );
+				add_action( 'woocommerce_checkout_create_order_line_item', array( $this, 'add_product_input_fields_to_order_item_meta' ), 100, 4 );
 			}
 
 			// Make nicer name for product input fields in order at backend (shop manager)
@@ -68,6 +73,57 @@ class WCJ_Product_Input_Fields_Core {
 				add_action( 'save_post_product',                    array( $this, 'save_local_product_input_fields_on_product_edit' ), 999, 2 );
 			}
 		}
+	}
+
+	/**
+	 * Adds input fields to YITH Quote plugin when Add to Quote button is pressed
+	 *
+	 * @version 4.2.0
+	 * @since   4.2.0
+	 *
+	 * @param $raq
+	 * @param $product_raq
+	 *
+	 * @return array
+	 */
+	function yith_raq_add_item( $raq, $product_raq ) {
+		$result = array_filter( $product_raq, function ( $key ) {
+			return strpos( $key, 'wcj_product_input_fields' ) !== false;
+		}, ARRAY_FILTER_USE_KEY );
+		if ( ! empty( $result ) ) {
+			$raq = array_merge( $raq, $result );
+		}
+		return $raq;
+	}
+
+	/**
+	 * Displays input fields on order page
+	 *
+	 * @version 4.2.0
+	 * @since   4.2.0
+	 *
+	 * @param $formatted_meta
+	 * @param $order_item
+	 *
+	 * @return array
+	 */
+	function yith_raq_display_items_on_order( $formatted_meta, $order_item ) {
+		$order_id = $order_item->get_order_id();
+		if ( empty( $raq_request = get_post_meta( $order_id, '_raq_request', true ) ) ) {
+			return $formatted_meta;
+		}
+		$raq_content = isset( $raq_request['raq_content'] ) ? $raq_request['raq_content'] : '';
+		if ( ! empty( $raq_content ) ) {
+			reset( $raq_content );
+			$first_key = key( $raq_content );
+			$data      = $this->add_product_input_fields_to_cart_item_display_data( array(), $raq_content[ $first_key ] );
+			if ( is_array( $data ) && $data > 0 ) {
+				foreach ( $data as $inf ) {
+					$formatted_meta[] = (object) array( 'key' => $inf['key'], 'display_key' => $inf['key'], 'display_value' => $inf['value'], 'value' => $inf['value'] );
+				}
+			}
+		}
+		return $formatted_meta;
 	}
 
 	/**
@@ -306,7 +362,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * output_custom_input_fields_in_admin_order.
 	 *
-	 * @version 4.1.1
+	 * @version 4.2.0
 	 */
 	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
 		if ( null === $_product ) {
@@ -322,8 +378,11 @@ class WCJ_Product_Input_Fields_Core {
 			if ( 'file' === $type ) {
 				$value = maybe_unserialize( $value );
 				if ( isset( $value['name'] ) ) {
-					$value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' .
-						$value['name'] . '</a>';
+					if ( isset( $value['wcj_uniqid'] ) ) {
+						$value = '<a href="' . add_query_arg( 'wcj_download_file', $_product->get_id() . '_' . $i . '_' . $value['wcj_uniqid'] . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' . $value['name'] . '</a>';
+					} else {
+						$value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' .$value['name'] . '</a>';
+					}
 				}
 			} else {
 				if ( 'no' === get_option( 'wcj_product_input_fields_make_nicer_name_enabled', 'yes' ) ) {
@@ -781,7 +840,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * add_product_input_fields_to_cart_item_display_data.
 	 *
-	 * @version 3.1.0
+	 * @version 4.2.0
 	 * @since   2.9.0
 	 */
 	function add_product_input_fields_to_cart_item_display_data( $item_data, $item  ) {
@@ -817,6 +876,7 @@ class WCJ_Product_Input_Fields_Core {
 					$item_data[] = array(
 						'key'     => $title,
 						'display' => $value,
+						'value'   => $value,
 					);
 				}
 			}
@@ -825,47 +885,67 @@ class WCJ_Product_Input_Fields_Core {
 	}
 
 	/**
-	 * add_product_input_fields_to_order_item_meta_wc3.
+	 * add_product_input_fields_to_order_item_meta.
 	 *
-	 * @version 3.4.0
-	 * @since   3.4.0
-	 * @todo    this is only a temporary solution: must replace `$item->legacy_values` (check "Bookings" module - `woocommerce_checkout_create_order_line_item` hook)
+	 * @see https://stackoverflow.com/a/49419394/1193038
+	 * @version 4.2.0
+	 * @since   4.2.0
 	 */
-	function add_product_input_fields_to_order_item_meta_wc3( $item_id, $item, $order_id  ) {
-		if ( is_a( $item, 'WC_Order_Item_Product' ) ) {
-			$this->add_product_input_fields_to_order_item_meta( $item_id, $item->legacy_values, null );
-		}
+	function add_product_input_fields_to_order_item_meta($item, $cart_item_key, $values, $order){
+		$this->add_input_fields_to_order_item_meta( $item, '', $values, $cart_item_key );
 	}
 
 	/**
-	 * add_product_input_fields_to_order_item_meta.
+	 * add_product_input_fields_to_order_item_meta_old.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.0
+	 * @since   4.2.0
 	 */
-	function add_product_input_fields_to_order_item_meta( $item_id, $values, $cart_item_key  ) {
-		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
-		for ( $i = 1; $i <= $total_number; $i++ ) {
-			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i , $values ) ) {
-				$type = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $values['product_id'], '' );
-				$input_field_value = $values[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ];
+	function add_product_input_fields_to_order_item_meta_old( $item_id, $values, $cart_item_key  ) {
+		$this->add_input_fields_to_order_item_meta( '', $item_id, $values, $cart_item_key );
+	}
 
+	/**
+	 * @version 4.2.0
+	 * @since   3.4.0
+	 *
+	 * add_input_fields_to_order_item_meta.
+	 *
+	 * @param $item
+	 * @param $item_id
+	 * @param $values
+	 * @param $cart_item_key
+	 *
+	 * @throws Exception
+	 */
+	function add_input_fields_to_order_item_meta( $item, $item_id, $values, $cart_item_key ) {
+		$total_number = apply_filters( 'booster_option', 1, $this->get_value( 'wcj_' . 'product_input_fields' . '_' . $this->scope . '_total_number', $values['product_id'], 1 ) );
+		for ( $i = 1; $i <= $total_number; $i ++ ) {
+			if ( array_key_exists( 'wcj_product_input_fields_' . $this->scope . '_' . $i, $values ) ) {
+				$type              = $this->get_value( 'wcj_product_input_fields_type_' . $this->scope . '_' . $i, $values['product_id'], '' );
+				$input_field_value = $values[ 'wcj_product_input_fields_' . $this->scope . '_' . $i ];
 				if ( 'file' === $type ) {
-					$tmp_name = $input_field_value['tmp_name'];
-					$ext = pathinfo( $input_field_value['name'], PATHINFO_EXTENSION );
-					$name = $item_id . '_' . $i . '.' . $ext;//$input_field_value['name'];
+					$unique_id  = uniqid();
+					$tmp_name   = $input_field_value['tmp_name'];
+					$ext        = pathinfo( $input_field_value['name'], PATHINFO_EXTENSION );
+					$name       = $item->get_product_id() . '_' . $i . '_' . $unique_id . '.' . $ext;//$input_field_value['name'];
 					$upload_dir = wcj_get_wcj_uploads_dir( 'input_fields_uploads' );
 					if ( ! file_exists( $upload_dir ) ) {
 						mkdir( $upload_dir, 0755, true );
 					}
 					$upload_dir_and_name = $upload_dir . '/' . $name;
-					$file_data = file_get_contents( $tmp_name );
+					$file_data           = file_get_contents( $tmp_name );
 					file_put_contents( $upload_dir_and_name, $file_data );
 					unlink( $tmp_name );
-					$input_field_value['tmp_name'] = addslashes( $upload_dir_and_name );
-					$input_field_value['wcj_type'] = 'file';
+					$input_field_value['tmp_name']   = addslashes( $upload_dir_and_name );
+					$input_field_value['wcj_type']   = 'file';
+					$input_field_value['wcj_uniqid'] = $unique_id;
 				}
-
-				wc_add_order_item_meta( $item_id, '_wcj_product_input_fields_' . $this->scope . '_' . $i, $input_field_value );
+				if ( $item ) {
+					$item->update_meta_data( '_wcj_product_input_fields_' . $this->scope . '_' . $i, $input_field_value );
+				} else {
+					wc_add_order_item_meta( $item_id, '_wcj_product_input_fields_' . $this->scope . '_' . $i, $input_field_value );
+				}
 			}
 		}
 	}

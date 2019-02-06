@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 4.1.0
+ * @version 4.2.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -471,15 +471,62 @@ if ( ! function_exists( 'wcj_get_currency_exchange_rate' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wc_get_variable_product_purchase_price' ) ) {
+	/**
+	 * wc_get_product_purchase_price.
+	 *
+	 * @version 4.2.0
+	 * @since   4.2.0
+	 */
+	function wc_get_variable_product_purchase_price( $product_id = 0, $args = array() ) {
+		$product = wc_get_product( $product_id );
+		if ( ! $product || ! $product->is_type( 'variable' ) ) {
+			return 0;
+		}
+		$args = wp_parse_args( $args, array(
+			'search' => 'min_variation' // min_variation | max_variation | all_variations | min_max_variations
+		) );
+
+		// Get children product variation IDs in an array
+		$children_ids    = $product->get_children();
+		$purchase_prices = array();
+		foreach ( $children_ids as $variation_id ) {
+			$purchase_prices[] = wc_get_product_purchase_price( $variation_id );
+		}
+		$final_purchase_prices = array();
+		switch ( $args['search'] ) {
+			case 'min_variation':
+				$final_purchase_prices = array( min( $purchase_prices ) );
+			break;
+			case 'max_variation':
+				$final_purchase_prices = array( max( $purchase_prices ) );
+			break;
+			case 'min_max_variations':
+				$final_purchase_prices[0] = min( $purchase_prices );
+				$final_purchase_prices[1] = max( $purchase_prices );
+			break;
+			case 'all_variations':
+				$final_purchase_prices = $purchase_prices;
+			break;
+		}
+		$final_purchase_prices = array_unique( $final_purchase_prices );
+		return $final_purchase_prices;
+	}
+}
+
 if ( ! function_exists( 'wc_get_product_purchase_price' ) ) {
 	/**
 	 * wc_get_product_purchase_price.
 	 *
-	 * @version 3.2.4
+	 * @version 4.2.0
 	 */
 	function wc_get_product_purchase_price( $product_id = 0 ) {
 		if ( 0 == $product_id ) {
 			$product_id = get_the_ID();
+		}
+		$product = wc_get_product( $product_id );
+		if ( ! $product ) {
+			return 0;
 		}
 		$purchase_price = 0;
 		if ( 'yes' === get_option( 'wcj_purchase_price_enabled', 'yes' ) ) {
@@ -499,6 +546,12 @@ if ( ! function_exists( 'wc_get_product_purchase_price' ) ) {
 			$meta_value = (float) get_post_meta( $product_id, '_' . 'wcj_purchase_price_custom_field_' . $i, true );
 			if ( 0 != $meta_value ) {
 				$purchase_price += ( 'fixed' === get_option( 'wcj_purchase_data_custom_price_field_type_' . $i, 'fixed' ) ) ? $meta_value : $purchase_price * $meta_value / 100.0;
+			}
+		}
+		if ( $product->is_type( 'variable' ) ) {
+			$prices = wc_get_variable_product_purchase_price( $product_id, array( 'search' => 'min_variation' ) );
+			if ( is_array( $prices ) && count( $prices ) > 0 ) {
+				$purchase_price += $prices[0];
 			}
 		}
 		return apply_filters( 'wcj_get_product_purchase_price', $purchase_price, $product_id );

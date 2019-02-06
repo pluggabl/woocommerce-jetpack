@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Products
  *
- * @version 3.9.0
+ * @version 4.2.0
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  */
@@ -81,7 +81,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * check.
 	 *
-	 * @version 3.6.0
+	 * @version 4.2.0
 	 * @since   3.2.0
 	 * @todo    variations in `classes`
 	 * @todo    check for `if ( is_object( $product ) && is_callable( array( $product, 'get_shipping_class_id' ) ) ) { ... }`
@@ -123,7 +123,7 @@ class WCJ_Shipping_By_Products extends WCJ_Module_Shipping_By_Condition {
 						if ( $validate_all_for_include ) {
 							return false;
 						} else {
-							continue;
+							break;
 						}
 					}
 					foreach( $product_terms as $product_term ) {

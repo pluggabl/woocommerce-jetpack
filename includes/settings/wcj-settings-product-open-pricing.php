@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Open Pricing
  *
- * @version 4.1.0
+ * @version 4.2.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
@@ -124,6 +124,16 @@ return array(
 		'id'       => 'wcj_product_open_price_enable_admin_product_list_column',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Advanced: Multicurrency (Currency Switcher) Module', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_open_price_currency_switcher',
+		'default'  => 'shop_currency',
+		'type'     => 'select',
+		'options'  => array(
+			'shop_currency'     => __( 'Allow price entering in default shop currency only', 'woocommerce-jetpack' ),
+			'switched_currency' => __( 'Allow price entering in switched currency', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'title'    => __( 'Advanced: Check for Outputted Data', 'woocommerce-jetpack' ),
