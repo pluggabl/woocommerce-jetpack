@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 3.6.0
+ * @version 4.2.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -114,6 +114,52 @@ if ( ! function_exists( 'wcj_admin_notices_version_updated' ) ) {
 			$message = sprintf( __( '<strong>Booster for WooCommerce</strong> plugin was successfully updated to version <strong>%s</strong>.', 'woocommerce-jetpack' ), WCJ()->version );
 			echo sprintf( '<div class="%1$s"><p>%2$s</p></div>', $class, $message );
 		}
+	}
+}
+
+if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
+	/**
+	 * wcj_get_ajax_settings
+	 *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 *
+	 * @param $values
+	 * @param string $search_type Possible values 'woocommerce_json_search_products', 'woocommerce_json_search_products_and_variations' , 'woocommerce_json_search_categories'
+	 * @param bool $allow_multiple_values
+	 *
+	 * @return array
+	 */
+	function wcj_get_ajax_settings( $values, $allow_multiple_values = false, $search_type = 'woocommerce_json_search_products' ) {
+		$options_raw = get_option( $values['id'], isset( $values['default'] ) ? $values['default'] : '' );
+		$options     = array();
+		$class       = '';
+		if ( $search_type == 'woocommerce_json_search_products' || $search_type == 'woocommerce_json_search_products_and_variations' ) {
+			$class = 'wc-product-search';
+			foreach ( $options_raw as $product_id ) {
+				$product                = wc_get_product( $product_id );
+				$options[ $product_id ] = wp_kses_post( $product->get_formatted_name() );
+			}
+		} elseif ( $search_type == 'woocommerce_json_search_categories' ) {
+			$class = 'wc-category-search';
+			foreach ( $options_raw as $term_id ) {
+				$term                = get_term_by( 'slug', $term_id, 'product_cat' );
+				$options[ $term_id ] = wp_kses_post( $term->name );
+			}
+		}
+		$placeholder = isset( $values['placeholder'] ) ? isset( $values['placeholder'] ) : __( "Search&hellip;", 'woocommerce-jetpack' );
+		return array_merge( $values, array(
+			'custom_attributes' => array(
+				'data-action'      => $search_type,
+				'data-allow_clear' => "true",
+				'aria-hidden'      => "true",
+				'data-placeholder' => $placeholder
+			),
+			'type'              => $allow_multiple_values ? 'multiselect' : 'select',
+			'options'           => $options,
+			'class'             => $class,
+			'remove_class'      => 'wc-enhanced-select'
+		) );
 	}
 }
 

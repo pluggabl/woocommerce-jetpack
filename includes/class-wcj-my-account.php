@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 3.8.0
+ * @version 4.2.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,8 +16,10 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.0
+	 * @version 4.2.1
 	 * @since   2.9.0
+	 * @todo    [dev] Custom Menu Pages: add "Type" option with values: "param" (i.e. as it is now) or "endpoint"
+	 * @todo    [dev] Custom Menu Pages: deprecate "Add Custom Menu Items" (and add "link" value in "Type" options)
 	 */
 	function __construct() {
 
@@ -52,6 +54,13 @@ class WCJ_My_Account extends WCJ_Module {
 			add_filter( 'woocommerce_my_account_my_orders_actions', array( $this, 'maybe_add_my_account_order_actions' ), 10, 2 );
 			add_action( 'wp_footer',                                array( $this, 'maybe_add_js_conformation' ) );
 			add_action( 'init',                                     array( $this, 'process_woocommerce_mark_order_status' ) );
+			// Custom pages
+			if ( 'yes' === get_option( 'wcj_my_account_custom_pages_enabled', 'no' ) ) {
+				add_action( 'woocommerce_account_' . 'page' . '_endpoint', array( $this, 'customize_dashboard' ), PHP_INT_MAX );
+				add_filter( 'the_title',                                   array( $this, 'set_custom_page_title' ), PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_account_menu_items',              array( $this, 'add_custom_page_menu_item' ), PHP_INT_MAX );
+				add_filter( 'woocommerce_get_endpoint_url',                array( $this, 'set_custom_page_url' ), PHP_INT_MAX, 4 );
+			}
 			// Custom info
 			if ( 'yes' === get_option( 'wcj_my_account_custom_info_enabled', 'no' ) ) {
 				$total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_my_account_custom_info_total_number', 1 ) );
@@ -86,6 +95,73 @@ class WCJ_My_Account extends WCJ_Module {
 	}
 
 	/**
+	 * get_custom_pages.
+	 *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 * @todo    [dev] customizable ID (i.e. instead of `sanitize_title( $title[ $i ] )`)
+	 */
+	function get_custom_pages() {
+		if ( isset( $this->custom_pages ) ) {
+			return $this->custom_pages;
+		}
+		$this->custom_pages = array();
+		$title   = get_option( 'wcj_my_account_custom_pages_title', array() );
+		$content = get_option( 'wcj_my_account_custom_pages_content', array() );
+		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_my_account_custom_pages_total_number', 1 ) ); $i++ ) {
+			if ( ! empty( $title[ $i ] ) && ! empty( $content[ $i ] ) ) {
+				$this->custom_pages[ sanitize_title( $title[ $i ] ) ] = array( 'title' => $title[ $i ], 'content' =>  $content[ $i ] );
+			}
+		}
+		return $this->custom_pages;
+	}
+
+	/**
+	 * set_custom_page_title.
+	 *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 */
+	function set_custom_page_title( $title, $id ) {
+		if ( isset( $_GET['section'] ) && $id == get_option( 'woocommerce_myaccount_page_id' ) ) {
+			if ( ! isset( $this->custom_pages ) ) {
+				$this->get_custom_pages();
+			}
+			$endpoint = $_GET['section'];
+			return ( isset( $this->custom_pages[ $endpoint ] ) ? $this->custom_pages[ $endpoint ]['title'] : $title );
+		}
+		return $title;
+	}
+
+	/**
+	 * set_custom_page_url.
+	 *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 * @todo    [dev] (maybe) customizable `section` (e.g. `wcj-section`)
+	 */
+	function set_custom_page_url( $url, $endpoint, $value, $permalink ) {
+		if ( ! isset( $this->custom_pages ) ) {
+			$this->get_custom_pages();
+		}
+		return ( isset( $this->custom_pages[ $endpoint ] ) && ( $myaccount_page_id = get_option( 'woocommerce_myaccount_page_id' ) ) ?
+			add_query_arg( 'section', $endpoint, get_permalink( $myaccount_page_id ) ) : $url );
+	}
+
+	/**
+	 * add_custom_page_menu_item.
+	 *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 */
+	function add_custom_page_menu_item( $items ) {
+		foreach ( $this->get_custom_pages() as $custom_menu_page_id => $custom_menu_page_data ) {
+			$items[ $custom_menu_page_id ] = $custom_menu_page_data['title'];
+		}
+		return $items;
+	}
+
+	/**
 	 * customize_menu_custom_endpoints.
 	 *
 	 * @version 3.8.0
@@ -105,12 +181,32 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * customize_dashboard.
 	 *
-	 * @version 3.8.0
+	 * @version 4.2.1
 	 * @since   3.8.0
 	 * @see     woocommerce/templates/myaccount/dashboard.php
 	 */
 	function customize_dashboard( $value ) {
 
+		// Custom pages
+		if ( 'yes' === get_option( 'wcj_my_account_custom_pages_enabled', 'no' ) ) {
+			if ( isset( $_GET['section'] ) ) {
+				if ( ! isset( $this->custom_pages ) ) {
+					$this->get_custom_pages();
+				}
+				if ( isset( $this->custom_pages[ $_GET['section'] ] ) ) {
+					echo do_shortcode( $this->custom_pages[ $_GET['section'] ]['content'] );
+					return;
+				}
+			}
+			if ( 'no' === get_option( 'wcj_my_account_custom_dashboard_enabled', 'no' ) ) {
+				wc_get_template( 'myaccount/dashboard.php', array(
+					'current_user' => get_user_by( 'id', get_current_user_id() ),
+				) );
+				return;
+			}
+		}
+
+		// Dashboard customization
 		$current_user = get_user_by( 'id', get_current_user_id() );
 
 		if ( '' != ( $custom_content = get_option( 'wcj_my_account_custom_dashboard_content', '' ) ) ) {

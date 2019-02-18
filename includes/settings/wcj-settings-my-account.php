@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - My Account
  *
- * @version 3.8.0
+ * @version 4.2.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -124,6 +124,57 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_my_account_menu_options',
 	),
 ) );
+$settings = array_merge( $settings, array(
+	array(
+		'title'    => __( 'Custom Pages', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_my_account_custom_pages_main_options',
+	),
+	array(
+		'title'    => __( 'Custom Pages', 'woocommerce-jetpack' ),
+		'desc'     => '<strong>' . __( 'Enable section', 'woocommerce-jetpack' ) . '</strong>',
+		'id'       => 'wcj_my_account_custom_pages_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Total Pages', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_my_account_custom_pages_total_number',
+		'default'  => 1,
+		'type'     => 'custom_number',
+		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'readonly' ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_my_account_custom_pages_main_options',
+	),
+) );
+for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_my_account_custom_pages_total_number', 1 ) ); $i++ ) {
+	$settings = array_merge( $settings, array(
+		array(
+			'title'    => __( 'Custom Page', 'woocommerce-jetpack' ) . ' #' . $i,
+			'type'     => 'title',
+			'id'       => "wcj_my_account_custom_pages_options[{$i}]",
+		),
+		array(
+			'title'    => __( 'Title', 'woocommerce-jetpack' ),
+			'type'     => 'text',
+			'id'       => "wcj_my_account_custom_pages_title[{$i}]",
+		),
+		array(
+			'title'    => __( 'Content', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'You can use HTML and/or shortcodes here.', 'woocommerce-jetpack' ),
+			'type'     => 'textarea',
+			'id'       => "wcj_my_account_custom_pages_content[{$i}]",
+			'css'      => 'width:100%;height:100px;',
+		),
+		array(
+			'type'     => 'sectionend',
+			'id'       => "wcj_my_account_custom_pages_options[{$i}]",
+		),
+	) );
+}
 $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Dashboard Customization', 'woocommerce-jetpack' ),

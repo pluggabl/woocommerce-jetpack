@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 4.0.0
+ * @version 4.2.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] maybe should be `abstract` ?
@@ -143,7 +143,7 @@ class WCJ_Module {
 	/**
 	 * maybe_fix_settings.
 	 *
-	 * @version 3.2.1
+	 * @version 4.2.1
 	 * @since   3.2.1
 	 */
 	function maybe_fix_settings( $settings ) {
@@ -152,7 +152,7 @@ class WCJ_Module {
 				if ( isset( $setting['type'] ) && 'select' === $setting['type'] ) {
 					if ( ! isset( $setting['class'] ) || '' === $setting['class'] ) {
 						$setting['class'] = 'wc-enhanced-select';
-					} else {
+					} elseif ( ! isset( $setting['remove_class'] ) || '' === $setting['remove_class'] || true !== strpos( $setting['class'], 'wc-enhanced-select' ) ) {
 						$setting['class'] .= ' ' . 'wc-enhanced-select';
 					}
 				}

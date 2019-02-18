@@ -192,6 +192,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 4.2.1 - 18/02/2019 =
+* Feature - EMAILS & MISC. - My Account - "Custom Menu Pages" section added.
+* Fix - CART & CHECKOUT - EU VAT Number - Default checkout EU VAT number value fixed.
+* Dev - PRODUCTS - Product Info Settings - Replace Product fields on admin by ajax fields.
+* Dev - Functions - Admin - Add `wcj_get_ajax_settings()` making it possible to search products and categories by ajax.
+* Dev - Booster Module - `maybe_fix_settings()` adds 'wc-enhanced-select' class only if 'remove_class' parameter is not present
+
 = 4.2.0 - 06/02/2019 =
 * Feature - PRICES & CURRENCIES - Offer Your Price - Enable - "Enable per product and per product category" option added.
 * Feature - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Advanced: Multicurrency (Currency Switcher) Module" option added (i.e. "Allow price entering in switched currency").
