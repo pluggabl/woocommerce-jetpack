@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Left to Free Shipping
  *
- * @version 3.9.0
+ * @version 4.2.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -116,6 +116,8 @@ return array(
 			'woocommerce_checkout_after_customer_details'   => __( 'After customer details', 'woocommerce-jetpack' ),
 			'woocommerce_checkout_before_order_review'      => __( 'Before order review', 'woocommerce-jetpack' ),
 			'woocommerce_checkout_order_review'             => __( 'Order review', 'woocommerce-jetpack' ),
+			'woocommerce_review_order_before_shipping'      => __( 'Order review: Before shipping', 'woocommerce-jetpack' ),
+			'woocommerce_review_order_after_shipping'       => __( 'Order review: After shipping', 'woocommerce-jetpack' ),
 			'woocommerce_review_order_before_submit'        => __( 'Order review: Payment: Before submit button', 'woocommerce-jetpack' ),
 			'woocommerce_review_order_after_submit'         => __( 'Order review: Payment: After submit button', 'woocommerce-jetpack' ),
 			'woocommerce_checkout_after_order_review'       => __( 'After order review', 'woocommerce-jetpack' ),

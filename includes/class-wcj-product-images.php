@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Images
  *
- * @version 4.1.0
+ * @version 4.2.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 4.2.1
 	 * @todo    add watermarks to images (http://php.net/manual/en/image.examples-watermark.php); Filter: `wp_get_attachment_image_src`.
 	 */
 	function __construct() {
@@ -59,7 +59,40 @@ class WCJ_Product_Images extends WCJ_Module {
 				add_filter( 'woocommerce_placeholder_img_src', array( $this, 'placeholder_img_src' ), PHP_INT_MAX );
 			}
 
+			// Get callbacks from database
+			add_filter( 'wcj_product_images_loop_product_thumbnail_filter', array( $this, 'get_callback_and_priority' ) );
+			add_filter( 'wcj_product_images_cb_loop_product_thumbnail_priority', array( $this, 'get_callback_and_priority' ) );
+			add_filter( 'wcj_product_images_single_product_images_filter', array( $this, 'get_callback_and_priority' ) );
+			add_filter( 'wcj_product_images_single_product_images_filter_priority', array( $this, 'get_callback_and_priority' ) );
 		}
+	}
+
+	/**
+	 * Gets callbacks and priorities from database.
+	 *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 *
+	 * @param $value
+	 *
+	 * @return mixed
+	 */
+	function get_callback_and_priority( $value ) {
+		switch ( current_filter() ) {
+			case 'wcj_product_images_loop_product_thumbnail_filter':
+				$value = get_option( 'wcj_product_images_cb_loop_product_thumbnail', 'woocommerce_template_loop_product_thumbnail' );
+				break;
+			case 'wcj_product_images_loop_product_thumbnail_filter_priority':
+				$value = get_option( 'wcj_product_images_cb_loop_product_thumbnail_priority', 10 );
+				break;
+			case 'wcj_product_images_single_product_images_filter':
+				$value = get_option( 'wcj_product_images_cb_show_product_images', 'woocommerce_show_product_images' );
+				break;
+			case 'wcj_product_images_single_product_images_filter_priority':
+				$value = get_option( 'wcj_product_images_cb_show_product_images_priority', 30 );
+				break;
+		}
+		return $value;
 	}
 
 	/**

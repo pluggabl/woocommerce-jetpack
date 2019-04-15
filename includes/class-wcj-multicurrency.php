@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 4.0.0
+ * @version 4.2.1
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -12,11 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 
 class WCJ_Multicurrency extends WCJ_Module {
-
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.1
 	 * @todo    check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {
@@ -41,7 +40,6 @@ class WCJ_Multicurrency extends WCJ_Module {
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
-
 			$this->price_hooks_priority = wcj_get_module_price_hooks_priority( 'multicurrency' );
 
 			// Session
@@ -66,9 +64,144 @@ class WCJ_Multicurrency extends WCJ_Module {
 	}
 
 	/**
+	 * Handles third party compatibility
+	 *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 */
+	function handle_third_party_compatibility(){
+		// "WooCommerce Smart Coupons" Compatibility
+		add_filter( 'woocommerce_coupon_get_amount', array( $this, 'smart_coupons_get_amount' ), 10, 2 );
+
+		//WooCommerce Price Filter Widget
+		add_action( 'wp_footer', array( $this, 'add_compatibility_with_price_filter_widget' ) );
+		add_action( 'wp_footer', array( $this, 'fix_price_filter_widget_currency_format' ) );
+	}
+
+	/**
+	 * Adds compatibility with WooCommerce Price Filter widget
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 */
+	public function add_compatibility_with_price_filter_widget() {
+		if ( ! is_active_widget( false, false, 'woocommerce_price_filter' ) ) {
+			return;
+		}
+		?>
+		<?php
+		$exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
+		?>
+		<input type="hidden" id="wcj_mc_exchange_rate" value="<?php echo esc_html( $exchange_rate ) ?>"/>
+		<script>
+			var wcj_mc_pf_slider = {
+				slider: null,
+				convert_rate: 1,
+				original_min: 1,
+				original_max: 1,
+				original_values: [],
+				current_min: 1,
+				current_max: 1,
+				current_values: [],
+
+				init(slider, convert_rate) {
+					this.slider = slider;
+					this.convert_rate = convert_rate;
+					this.original_min = jQuery(this.slider).slider("option", "min");
+					this.original_max = jQuery(this.slider).slider("option", "max");
+					this.original_values = jQuery(this.slider).slider("option", "values");
+					this.current_min = this.original_min * this.convert_rate;
+					this.current_max = this.original_max * this.convert_rate;
+					this.current_values = this.original_values.map(function (elem) {
+						return elem * wcj_mc_pf_slider.convert_rate;
+					});
+					this.update_slider();
+				},
+
+				/**
+				 * @see price-slider.js, init_price_filter()
+				 */
+				update_slider() {
+					jQuery(this.slider).slider("destroy");
+					var current_min_price = Math.floor(this.current_min);
+					var current_max_price = Math.ceil(this.current_max);
+
+					jQuery(this.slider).slider({
+						range: true,
+						animate: true,
+						min: current_min_price,
+						max: current_max_price,
+						values: wcj_mc_pf_slider.current_values,
+						create: function () {
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(wcj_mc_pf_slider.current_values[0] / wcj_mc_pf_slider.convert_rate);
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(wcj_mc_pf_slider.current_values[1] / wcj_mc_pf_slider.convert_rate);
+							jQuery(document.body).trigger('price_slider_create', [Math.floor(wcj_mc_pf_slider.current_values[0]), Math.ceil(wcj_mc_pf_slider.current_values[1])]);
+						},
+						slide: function (event, ui) {
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(Math.floor(ui.values[0] / wcj_mc_pf_slider.convert_rate));
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(Math.ceil(ui.values[1] / wcj_mc_pf_slider.convert_rate));
+							jQuery(document.body).trigger('price_slider_slide', [Math.floor(ui.values[0]), Math.ceil(ui.values[1])]);
+						},
+						change: function (event, ui) {
+							jQuery(document.body).trigger('price_slider_change', [Math.floor(ui.values[0]), Math.ceil(ui.values[1])]);
+						}
+					});
+				}
+			};
+			var wcj_mc_pf = {
+				price_filters: null,
+				rate: 1,
+				init: function (price_filters) {
+					this.price_filters = price_filters;
+					this.rate = document.getElementById('wcj_mc_exchange_rate').value;
+					this.update_slider();
+				},
+				update_slider: function () {
+					[].forEach.call(wcj_mc_pf.price_filters, function (el) {
+						wcj_mc_pf_slider.init(el, wcj_mc_pf.rate);
+					});
+				}
+			}
+			document.addEventListener("DOMContentLoaded", function () {
+				var price_filters = document.querySelectorAll('.price_slider.ui-slider');
+				if (price_filters.length) {
+					wcj_mc_pf.init(price_filters);
+				}
+			});
+		</script>
+		<?php
+	}
+
+	/**
+	 * Fixes price filter widget currency format
+	 *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 */
+	public function fix_price_filter_widget_currency_format() {
+		$price_args = apply_filters( 'wc_price_args', array(
+			'ex_tax_label'       => false,
+			'currency'           => '',
+			'decimal_separator'  => wc_get_price_decimal_separator(),
+			'thousand_separator' => wc_get_price_thousand_separator(),
+			'decimals'           => wc_get_price_decimals(),
+			'price_format'       => get_woocommerce_price_format(),
+		) );
+		$symbol     = apply_filters( 'woocommerce_currency_symbol', get_woocommerce_currency_symbol(), get_woocommerce_currency() );
+		wp_localize_script(
+			'wc-price-slider', 'woocommerce_price_slider_params', array(
+				'currency_format_num_decimals' => $price_args['decimals'],
+				'currency_format_symbol'       => $symbol,
+				'currency_format_decimal_sep'  => esc_attr( $price_args['decimal_separator'] ),
+				'currency_format_thousand_sep' => esc_attr( $price_args['thousand_separator'] ),
+				'currency_format'              => esc_attr( str_replace( array( '%1$s', '%2$s' ), array( '%s', '%v' ), $price_args['price_format'] ) ),
+			)
+		);
+	}
+
+	/**
 	 * add_hooks.
 	 *
-	 * @version 3.9.0
+	 * @version 4.2.1
 	 */
 	function add_hooks() {
 		if ( wcj_is_frontend() ) {
@@ -84,7 +217,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 			wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 
 			// "WooCommerce Product Add-ons" plugin
-			add_filter( 'get_product_addons', array( $this, 'change_price_addons' ) );
+			add_filter( 'woocommerce_get_item_data', array( $this, 'get_addons_item_data' ), 20, 2 );
+			add_filter( 'woocommerce_product_addons_option_price_raw', array( $this, 'product_addons_option_price_raw' ), 10, 2 );
+
+			// Third Party Compatibility
+			$this->handle_third_party_compatibility();
 
 			// Additional Price Filters
 			$this->additional_price_filters = get_option( 'wcj_multicurrency_switcher_additional_price_filters', '' );
@@ -101,6 +238,28 @@ class WCJ_Multicurrency extends WCJ_Module {
 	}
 
 	/**
+	 * Converts Smart Coupon currency.
+	 *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 *
+	 * @param $value
+	 * @param $coupon
+	 *
+	 * @return float|int
+	 */
+	function smart_coupons_get_amount( $value, $coupon ) {
+		if (
+			! is_a( $coupon, 'WC_Coupon' ) ||
+			'smart_coupon' !== $coupon->get_discount_type()
+		) {
+			return $value;
+		}
+		$value = $this->change_price( $value, null );
+		return $value;
+	}
+
+	/**
 	 * init.
 	 *
 	 * @version 3.4.5
@@ -114,22 +273,75 @@ class WCJ_Multicurrency extends WCJ_Module {
 	}
 
 	/**
-	 * change_price_addons.
+	 * Converts add-ons plugin prices.
 	 *
-	 * @version 3.1.0
-	 * @since   3.1.0
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 *
+	 * @param $price
+	 * @param $option
+	 *
+	 * @return float|int
 	 */
-	function change_price_addons( $addons ) {
-		foreach ( $addons as $addon_key => $addon ) {
-			if ( isset( $addon['options'] ) ) {
-				foreach ( $addon['options'] as $option_key => $option ) {
-					if ( isset( $option['price'] ) ) {
-						$addons[ $addon_key ]['options'][ $option_key ]['price'] = $this->change_price( $option['price'], null );
+	function product_addons_option_price_raw( $price, $option ) {
+		$price = $this->change_price( $price, null );
+		return $price;
+	}
+
+	/**
+	 * Finds old add-ons fields on cart and replace by correct price.
+	 *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 *
+	 * @param $other_data
+	 * @param $cart_item
+	 *
+	 * @return mixed
+	 */
+	function get_addons_item_data( $other_data, $cart_item ) {
+		if ( ! empty( $cart_item['addons'] ) ) {
+			foreach ( $cart_item['addons'] as $addon ) {
+				$price    = isset( $cart_item['addons_price_before_calc'] ) ? $cart_item['addons_price_before_calc'] : $addon['price'];
+				$name_old = $addon['name'];
+
+				// Get old field name (with wrong currency price)
+				if ( 0 == $addon['price'] ) {
+					$name_old .= '';
+				} elseif ( 'percentage_based' === $addon['price_type'] && 0 == $price ) {
+					$name_old .= '';
+				} elseif ( 'percentage_based' !== $addon['price_type'] && $addon['price'] && apply_filters( 'woocommerce_addons_add_price_to_name', '__return_true' ) ) {
+					$name_old .= ' (' . wc_price( \WC_Product_Addons_Helper::get_product_addon_price_for_display( $addon['price'], $cart_item['data'], true ) ) . ')';
+				} else {
+					$_product = new WC_Product( $cart_item['product_id'] );
+					$_product->set_price( $price * ( $addon['price'] / 100 ) );
+					$name_old .= ' (' . WC()->cart->get_product_price( $_product ) . ')';
+				}
+
+				// Get new field name (with correct currency price)
+				$name_new       = $addon['name'];
+				$addon['price'] = $this->change_price( $addon['price'], null );
+				if ( 0 == $addon['price'] ) {
+					$name_new .= '';
+				} elseif ( 'percentage_based' === $addon['price_type'] && 0 == $price ) {
+					$name_new .= '';
+				} elseif ( 'percentage_based' !== $addon['price_type'] && $addon['price'] && apply_filters( 'woocommerce_addons_add_price_to_name', '__return_true' ) ) {
+					$name_new .= ' (' . wc_price( \WC_Product_Addons_Helper::get_product_addon_price_for_display( $addon['price'], $cart_item['data'], true ) ) . ')';
+				} else {
+					$_product = new WC_Product( $cart_item['product_id'] );
+					$_product->set_price( $price * ( $addon['price'] / 100 ) );
+					$name_new .= ' (' . WC()->cart->get_product_price( $_product ) . ')';
+				}
+
+				// Find old field on cart and replace by correct price
+				foreach ( $other_data as $key => $data ) {
+					if ( $data['name'] == $name_old ) {
+						$other_data[ $key ]['name'] = $name_new;
 					}
 				}
 			}
 		}
-		return $addons;
+		return $other_data;
 	}
 
 	/**
@@ -236,7 +448,6 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 * @version 3.8.0
 	 */
 	function change_price( $price, $_product ) {
-
 		if ( '' === $price ) {
 			return $price;
 		}

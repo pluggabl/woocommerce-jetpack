@@ -1,37 +1,52 @@
 /**
  * Booster for WooCommerce - Variations Radio Buttons
  *
- * @version 2.9.0
+ * @version 4.2.1
  * @author  Algoritmika Ltd.
  */
 
 /**
- * maybe_hide_unavailable.
+ * Finds correspondent WooCommerce dropdown and triggers the 'change' event manually.
+ * That will make WooCommerce itself do the rest, like update image, prices, and so on.
  *
- * @version 2.9.0
- * @since   2.9.0
+ * @version 4.2.1
+ * @since   4.2.1
+ * @param variation_id
  */
-function maybe_hide_unavailable(variation) {
-	if ( ! variation.is_purchasable || ! variation.is_in_stock || ! variation.variation_is_visible ) {
-		jQuery( '.single_add_to_cart_button' ).removeClass( 'wc-variation-selection-needed' ).addClass( 'disabled wc-variation-is-unavailable' );
-		jQuery( '.woocommerce-variation-add-to-cart' ).removeClass( 'woocommerce-variation-add-to-cart-enabled' ).addClass( 'woocommerce-variation-add-to-cart-disabled' );
+function select_wc_dropdown_programmatically(variation_id) {
+	var variations = jQuery("form.variations_form.cart").data('product_variations');
+	var attributes = {};
+	variations.forEach(function (variation, index) {
+		if (variation.variation_id == variation_id) {
+			attributes = variation.attributes;
+		}
+	});
+	if (Object.keys(attributes).length !== 0) {
+		Object.keys(attributes).forEach(function (index) {
+			var select = jQuery("[name*='" + index + "']");
+			var value = attributes[index];
+			if (value != "") {
+				var opt = select.find('option[value="' + value + '"]');
+			} else {
+				var opt = select.find('option[value!=""]').eq(0);
+			}
+			opt.prop('selected', true);
+			select.trigger('change');
+		});
 	}
 }
 
 /**
  * process_variations.
  *
- * @version 2.9.0
+ * @version 4.2.1
  * @since   2.9.0
  */
 function process_variations(variation_id) {
 	var data_product_variations = jQuery.parseJSON(jQuery("form.variations_form.cart").attr('data-product_variations'));
-	data_product_variations.forEach(function(variation){
-		if(variation_id == variation.variation_id){
-			maybe_hide_unavailable(variation);
-			jQuery("form.variations_form.cart").wc_variations_image_update(variation);
-			jQuery("div.woocommerce-variation-price").html(variation.price_html);
-			jQuery("div.woocommerce-variation-availability").html(variation.availability_html);
+	data_product_variations.forEach(function (variation) {
+		if (variation_id == variation.variation_id) {
+			select_wc_dropdown_programmatically(variation_id);
 		}
 	});
 }

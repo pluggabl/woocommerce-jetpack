@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Sorting
  *
- * @version 2.8.0
+ * @version 4.2.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -169,6 +169,33 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'      => 'sectionend',
 		'id'        => 'wcj_sorting_remove_all_options',
+	),
+	array(
+		'title'     => __( 'Restore Default WooCommerce Sorting', 'woocommerce-jetpack' ),
+		'desc'      => __( "Replaces theme's sorting by default WooCommerce sorting", 'woocommerce-jetpack' ),
+		'type'      => 'title',
+		'default'   => 'no',
+		'id'        => 'wcj_sorting_restore_default_sorting_opt',
+	),
+	array(
+		'title'     => __( 'Restore', 'woocommerce-jetpack' ),
+		'desc'      => __( "Restore", 'woocommerce-jetpack' ),
+		'type'      => 'checkbox',
+		'id'        => 'wcj_sorting_restore_default_sorting',
+	),
+	array(
+		'title'     => __( 'Theme', 'woocommerce-jetpack' ),
+		'desc_tip'  => __( "Theme that will have its sorting replaced.", 'woocommerce-jetpack' ),
+		'type'      => 'select',
+		'options'   => array(
+			'avada' => __( 'Avada', 'woocommerce-jetpack' ),
+		),
+		'default'=>'avada',
+		'id'        => 'wcj_sorting_restore_default_sorting_theme',
+	),
+	array(
+		'type'      => 'sectionend',
+		'id'        => 'wcj_sorting_restore_default_sorting_opt',
 	),
 ) );
 return $settings;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 4.2.0
+ * @version 4.2.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] maybe set "Strip slashes" option to `yes` by default (or even remove the option completely and always strip slashes)
@@ -75,7 +75,6 @@ $settings = array(
 	),
 );
 $is_multiselect_products     = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
-$products                    = ( $is_multiselect_products ? wcj_get_products() : false );
 $product_cats                = wcj_get_terms( 'product_cat' );
 $product_tags                = wcj_get_terms( 'product_tag' );
 $options                     = $this->get_global_product_fields_options();
@@ -160,7 +159,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product
 				'default'  => '',
 				'css'      => 'width: 450px;',
 			),
-			$products,
+			'',
 			$is_multiselect_products
 		),
 		wcj_get_settings_as_multiselect_or_text(
@@ -172,7 +171,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_product
 				'default'  => '',
 				'css'      => 'width: 450px;',
 			),
-			$products,
+			'',
 			$is_multiselect_products
 		),
 		array(

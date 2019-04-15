@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - General
  *
- * @version 4.1.0
+ * @version 4.2.1
  * @author  Algoritmika Ltd.
  */
 
@@ -886,12 +886,18 @@ class WCJ_General_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_country_select_drop_down_list.
 	 *
-	 * @version 4.0.0
+	 * @version 4.2.1
 	 */
 	function wcj_country_select_drop_down_list( $atts, $content ) {
 		$form_method           = $atts['form_method'];
 		$select_class          = $atts['class'];
 		$select_style          = $atts['style'];
+		if ( ! isset( $atts['force_display'] ) || ! filter_var( $atts['force_display'], FILTER_VALIDATE_BOOLEAN ) ) {
+			if ( ! wcj_is_module_enabled( 'price_by_country' ) ) {
+				return;
+			}
+		}
+
 		$countries             = wcj_get_countries();
 		$shortcode_countries   = ( empty( $atts['countries'] ) ? array() : array_map( 'trim', explode( ',', $atts['countries'] ) ) );
 		$selected_country      = ( null !== ( $session_value = wcj_session_get( 'wcj-country' ) ) ? $session_value : '' );

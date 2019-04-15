@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 4.2.0
+ * @version 4.2.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.0
+	 * @version 4.2.1
 	 * @since   2.9.0
 	 * @todo    settings - more info about position priorities, e.g.: __( 'Standard priorities for "Inside single product summary": title - 5, rating - 10, price - 10, excerpt - 20, add to cart - 30, meta - 40, sharing - 50', 'woocommerce-jetpack' )
 	 * @todo    (maybe) css - customizable fonts etc.
@@ -66,7 +66,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 					);
 				}
 			}
-			add_action( 'woocommerce_before_main_content',    array( $this, 'add_offer_price_form' ) );
+			add_action( 'wp_footer',                          array( $this, 'add_offer_price_form' ) );
 			add_action( 'wp_enqueue_scripts',                 array( $this, 'enqueue_scripts' ) );
 			add_action( 'init',                               array( $this, 'offer_price' ) );
 			if ( in_array( apply_filters( 'booster_option', 'all_products', get_option( 'wcj_offer_price_enabled_type', 'all_products' ) ), array( 'per_product', 'per_product_and_per_category' ) ) ) {
@@ -409,7 +409,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * offer_price.
 	 *
-	 * @version 2.9.0
+	 * @version 4.2.1
 	 * @since   2.9.0
 	 * @todo    (maybe) separate customer copy email template and subject
 	 * @todo    (maybe) redirect (no notice though)
@@ -422,6 +422,9 @@ class WCJ_Offer_Price extends WCJ_Module {
 		if ( isset( $_POST['wcj-offer-price-submit'] ) ) {
 			$product_id  = $_POST['wcj-offer-price-product-id'];
 			$_product    = wc_get_product( $product_id );
+			if ( ! is_a( $_product, 'WC_Product' ) ) {
+				return;
+			}
 			// Email address
 			$email_address = get_option( 'wcj_offer_price_email_address', '%admin_email%' );
 			if ( '' == $email_address ) {

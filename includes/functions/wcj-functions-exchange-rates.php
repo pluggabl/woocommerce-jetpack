@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 3.9.0
+ * @version 4.2.1
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -125,7 +125,7 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 	/*
 	 * wcj_get_exchange_rate.
 	 *
-	 * @version 3.9.0
+	 * @version 4.2.1
 	 * @since   2.6.0
 	 */
 	function wcj_get_exchange_rate( $currency_from, $currency_to ) {
@@ -156,7 +156,7 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 				break;
 		}
 		$return = apply_filters( 'wcj_currency_exchange_rate', $return, $exchange_rates_server, $currency_from, $currency_to );
-		return ( 'yes' === $calculate_by_invert ) ? round( ( 1 / $return ), 6 ) : $return;
+		return ( 'yes' === $calculate_by_invert && ! empty( $return ) ) ? round( ( 1 / $return ), 6 ) : $return;
 	}
 }
 
@@ -378,13 +378,17 @@ if ( ! function_exists( 'wcj_ecb_get_exchange_rate' ) ) {
 	/*
 	 * wcj_ecb_get_exchange_rate.
 	 *
-	 * @version 2.7.0
+	 * @version 4.2.1
 	 * @since   2.6.0
 	 */
 	function wcj_ecb_get_exchange_rate( $currency_from, $currency_to ) {
 		$final_rate = false;
 		if ( function_exists( 'simplexml_load_file' ) ) {
-			$xml = simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
+			if ( WP_DEBUG === true ) {
+				$xml = simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
+			} else {
+				$xml = @simplexml_load_file( 'http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml' );
+			}
 			if ( isset( $xml->Cube->Cube->Cube ) ) {
 				if ( 'EUR' === $currency_from ) {
 					$EUR_currency_from_rate = 1;

@@ -2,14 +2,13 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 4.1.0
+ * @version 4.2.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-$products     = wcj_get_products();
 $product_cats = wcj_get_terms( 'product_cat' );
 $settings = array(
 	array(
@@ -79,22 +78,18 @@ $settings = array(
 			'fixed'   => __( 'Fixed', 'woocommerce-jetpack' ),
 		),
 	),
-	array(
+	wcj_get_ajax_settings( array(
 		'title'    => __( 'Products to Include', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Leave blank to include all products.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_products_to_include',
-		'default'  => '',
-		'type'     => 'multiselect',
-		'class'    => 'chosen_select',
-		'options'  => $products,
+		'default'  => '' ),
+		true
 	),
-	array(
+	wcj_get_ajax_settings( array(
 		'title'    => __( 'Products to Exclude', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_wholesale_price_products_to_exclude',
-		'default'  => '',
-		'type'     => 'multiselect',
-		'class'    => 'chosen_select',
-		'options'  => $products,
+		'default'  => '' ),
+		true
 	),
 	array(
 		'title'    => __( 'Product Categories to Include', 'woocommerce-jetpack' ),

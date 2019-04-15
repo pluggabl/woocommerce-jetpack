@@ -149,16 +149,17 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 		}
 		$placeholder = isset( $values['placeholder'] ) ? isset( $values['placeholder'] ) : __( "Search&hellip;", 'woocommerce-jetpack' );
 		return array_merge( $values, array(
-			'custom_attributes' => array(
+			'custom_attributes'            => array(
 				'data-action'      => $search_type,
 				'data-allow_clear' => "true",
 				'aria-hidden'      => "true",
+				'data-sortable'    => "true",
 				'data-placeholder' => $placeholder
 			),
-			'type'              => $allow_multiple_values ? 'multiselect' : 'select',
-			'options'           => $options,
-			'class'             => $class,
-			'remove_class'      => 'wc-enhanced-select'
+			'type'                         => $allow_multiple_values ? 'multiselect' : 'select',
+			'options'                      => $options,
+			'class'                        => $class,
+			'ignore_enhanced_select_class' => true
 		) );
 	}
 }
@@ -167,22 +168,28 @@ if ( ! function_exists( 'wcj_get_settings_as_multiselect_or_text' ) ) {
 	/**
 	 * wcj_get_settings_as_multiselect_or_text.
 	 *
-	 * @version 3.1.0
+	 * @version 4.2.1
 	 * @since   2.9.1
 	 */
 	function wcj_get_settings_as_multiselect_or_text( $values, $multiselect_options, $is_multiselect ) {
 		$prev_desc = ( isset( $values['desc'] ) ? $values['desc'] . ' ' : '' );
-		return ( $is_multiselect ?
-			array_merge( $values, array(
-				'type'     => 'multiselect',
-				'class'    => 'chosen_select',
-				'options'  => $multiselect_options,
-			) ) :
-			array_merge( $values, array(
-				'type'     => 'text',
-				'desc'     => $prev_desc . __( 'Enter comma separated list of IDs.', 'woocommerce-jetpack' ),
-			) )
-		);
+
+		if ( $is_multiselect ) {
+			if ( ! empty( $multiselect_options ) ) {
+				return array_merge( $values, array(
+					'type'    => 'multiselect',
+					'class'   => 'chosen_select',
+					'options' => $multiselect_options,
+				) );
+			} else {
+				return wcj_get_ajax_settings( $values, true );
+			}
+		} else {
+			return array_merge( $values, array(
+				'type' => 'text',
+				'desc' => $prev_desc . __( 'Enter comma separated list of IDs.', 'woocommerce-jetpack' ),
+			) );
+		}
 	}
 }
 

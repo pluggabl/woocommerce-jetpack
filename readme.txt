@@ -2,7 +2,7 @@
 Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
-Tested up to: 5.0
+Tested up to: 5.1
 Stable tag: 4.2.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -122,6 +122,7 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Shipping Methods by City or Postcode* - Set shipping cities or postcodes to include/exclude for shipping methods to show up.
 * *Shipping Methods by Current Date/Time* - Set date and/or time to include/exclude for shipping methods to show up.
 * *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for shipping methods to show up.
+* *Shipping Methods by Min/Max Order Quantity* - Set minimum and/or maximum order quantity for shipping methods to show up.
 * *Shipping Methods by Products* - Set products, product categories, tags or shipping classes to include/exclude for shipping methods to show up.
 * *Shipping Methods by Users* - Set user roles, users or membership plans to include/exclude for shipping methods to show up.
 * *Shipping Options* - Hide shipping when free is available. Grant free shipping on per product basis.
@@ -192,12 +193,48 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.2.1 - 18/02/2019 =
+= 4.2.1 - 09/04/2019 =
+* Feature - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Quantity - Initial module release.
 * Feature - EMAILS & MISC. - My Account - "Custom Menu Pages" section added.
-* Fix - CART & CHECKOUT - EU VAT Number - Default checkout EU VAT number value fixed.
-* Dev - PRODUCTS - Product Info Settings - Replace Product fields on admin by ajax fields.
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Fix PHP warning about headers already sent.
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Improve compatibility with Add-ons plugin.
+* Fix - PRICES & CURRENCIES - Offer Your Price - Check if `$_product` really exists on `offer_price()`.
+* Fix - PRICES & CURRENCIES - Replace `woocommerce_before_main_content` hook by `wp_footer` for adding the form on frontend as some themes don't use the original hook.
+* Fix - PRODUCTS - Add to Cart - Fix compatibility between Order Min/Max Quantities and radio buttons for variations.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Fix some special characters (e.g Russian) being wiped out on checkout by using `urldecode()`.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Display field value instead of key when using radio or select as fields.
+* Fix - CART & CHECKOUT - EU VAT Number - Default EU VAT number value on the checkout page fixed.
+* Fix - PAYMENT GATEWAYS - Gateways Currency Converter - Replace commas by periods on `change_price_by_gateway()` avoiding wrong calculations.
+* Fix - PDF INVOICING & PACKING SLIPS - Check if TCPDF class exists before loading it, avoiding possible errors with other plugins.
+* Fix - PDF INVOICING & PACKING SLIPS - Fix Too many redirects when using Generate Invoice from Bulk actions.
+* Fix - PDF INVOICING & PACKING SLIPS - Fix "Failed to load PDF document" in some environments by putting the pdf inside buffer instead of displaying it directly.
+* Fix - Functions - Admin - Make `wcj_get_settings_as_multiselect_or_text()` compatible with `wcj_get_ajax_settings()`.
+* Fix - Functions - Exchange Rates - Fix 'Division by zero' PHP warning.
+* Fix - Functions - Exchange Rates - Ignore warnings from `simplexml_load_file()` depending on WP_DEBUG constant.
+* Fix - Functions - General - `wcj_session_maybe_start()` Improve session detection method.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add compatibility with Smart Coupons plugin.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add compatibility with WooCommerce Price Filter widget.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Add ajax search to Product fields.
+* Dev - PRODUCTS - Add to Cart - Add radio inputs template using `woocommerce_before_variations_form` hook instead of replacing the entire add-to-cart/variable.php.
+* Dev - PRODUCTS - Add to Cart - Change radio buttons for variations mechanism. Now the native WooCommerce dropdown for variations will be on DOM but hidden. That will make some js functions unnecessary like `maybe_hide_unavailable()`.
+* Dev - PRODUCTS - Add to Cart - Add attributes label on top of the radio inputs table.
+* Dev - PRODUCTS - Bookings - Add loader on frontend while ajax is loading.
+* Dev - PRODUCTS - Bookings - Add bookings price beneath dates table instead of replacing prices avoiding possible duplicated prices.
+* Dev - PRODUCTS - Bookings - Add new option to enable/disable the variable product calculation per day.
+* Dev - PRODUCTS - Product Images - Add options to control the callback and priority from some hooks.
+* Dev - PRODUCTS - Product Info Settings - Add ajax search to Product fields.
+* Dev - PRODUCTS - Product Input Fields - Add ajax search to Product fields.
+* Dev - PRODUCTS - Sorting - Add new option to restore default WooCommerce Sorting on Avada theme.
+* Dev - SHIPPING & ORDERS - Left to Free Shipping - Info on Checkout - "Order review: Before shipping" and "Order review: After shipping" positions added.
+* Dev - PDF INVOICING & PACKING SLIPS - Update WordPress filters used to create bulk actions.
+* Dev - PDF INVOICING & PACKING SLIPS - Add security check `check_admin_referer( 'bulk-posts' )` on `bulk_actions_handle()`.
+* Dev - PDF INVOICING & PACKING SLIPS - Tools - Invoices Report - `wcj_pdf_invoicing_report_tool_row` filter added.
 * Dev - Functions - Admin - Add `wcj_get_ajax_settings()` making it possible to search products and categories by ajax.
-* Dev - Booster Module - `maybe_fix_settings()` adds 'wc-enhanced-select' class only if 'remove_class' parameter is not present
+* Dev - Functions - General - Add option to include `read_and_close` parameter to `session_start`.
+* Dev - Functions - General - Sanitize IP Detection methods on `wcj_get_the_ip()`.
+* Dev - Functions - General - Add option to increase control over IP Detection methods.
+* Dev - Booster Module - `maybe_fix_settings()` adds 'wc-enhanced-select' class only if 'remove_class' parameter is not present.
+* Dev - Shortcodes - General - `[wcj_country_select_drop_down_list]` shortcode will be hidden if Prices and Currencies by Country module is not enabled, unless parameter `force_display` have been passed as `true`.
 
 = 4.2.0 - 06/02/2019 =
 * Feature - PRICES & CURRENCIES - Offer Your Price - Enable - "Enable per product and per product category" option added.

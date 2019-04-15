@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sorting
  *
- * @version 2.8.0
+ * @version 4.2.1
  * @author  Algoritmika Ltd.
  */
 
@@ -16,7 +16,7 @@ class WCJ_Sorting extends WCJ_Module {
 	 * WCJ_Sorting Constructor.
 	 *
 	 * @access  public
-	 * @version 2.8.0
+	 * @version 4.2.1
 	 */
 	function __construct() {
 
@@ -54,8 +54,56 @@ class WCJ_Sorting extends WCJ_Module {
 					add_filter( 'woocommerce_catalog_orderby',                 array( $this, 'rearrange_sorting' ), PHP_INT_MAX );
 					add_filter( 'woocommerce_default_catalog_orderby_options', array( $this, 'rearrange_sorting' ), PHP_INT_MAX );
 				}
+
+				// Restore Default WooCommerce Sorting
+				if ( 'yes' === get_option( 'wcj_sorting_restore_default_sorting', 'no' ) ) {
+					$this->restore_default_sorting();
+				}
 			}
 
+		}
+	}
+
+	/**
+	 * Restores default WooCommerce sorting on Avada Theme.
+     *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 */
+	function restore_default_sorting_on_avada() {
+		add_action( 'wp_head', function () {
+			?>
+            <style>
+                form.woocommerce-ordering {
+                    display: inline-block;
+                }
+            </style>
+			<?php
+		} );
+		add_action( 'woocommerce_before_shop_loop', function () {
+			echo '<div class="catalog-ordering fusion-clearfix">';
+		}, 9 );
+		add_action( 'woocommerce_before_shop_loop', function () {
+			echo '</div>';
+		}, 31 );
+		add_action( 'after_setup_theme', function () {
+			global $avada_woocommerce;
+			remove_action( 'pre_get_posts', array( $avada_woocommerce, 'product_ordering' ), 5 );
+		} );
+	}
+
+	/**
+     * Restores default WooCommerce sorting
+     *
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 */
+	function restore_default_sorting() {
+		$theme = get_option( 'wcj_sorting_restore_default_sorting_theme', 'avada' );
+		switch ( $theme ) {
+			case 'avada':
+				$this->restore_default_sorting_on_avada();
+			break;
 		}
 	}
 

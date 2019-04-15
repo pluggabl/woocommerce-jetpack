@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 4.1.0
+ * @version 4.2.1
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.5.0
+	 * @version 4.2.1
 	 */
 	function __construct() {
 
@@ -43,8 +43,8 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 			add_action( 'init', array( $this, 'generate_pdf_on_init' ) );
 
 			// Bulk actions
-			add_action( 'admin_footer-edit.php',  array( $this, 'bulk_actions_pdfs_admin_footer' ) );
-			add_action( 'load-edit.php',          array( $this, 'bulk_actions_pdfs' ) );
+			add_filter( 'bulk_actions-edit-' . 'shop_order', array( $this, 'bulk_actions_register' ) );
+			add_filter( 'handle_bulk_actions-edit-' . 'shop_order', array( $this, 'bulk_actions_handle' ), 10, 3 );
 			add_action( 'admin_notices',          array( $this, 'bulk_actions_pdfs_notices' ) );
 
 			$this->the_pdf_invoicing_report_tool = include_once( 'pdf-invoices/class-wcj-pdf-invoicing-report-tool.php' );
@@ -74,43 +74,30 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	}
 
 	/**
-	 * Add extra bulk action options to generate/download documents.
+	 * Adds extra bulk action options to generate/download documents.
 	 *
-	 * Using Javascript until WordPress core fixes: http://core.trac.wordpress.org/ticket/16031
-	 *
-	 * @see     https://www.skyverge.com/blog/add-custom-bulk-action/
-	 * @version 3.5.0
+	 * @version 4.2.1
 	 * @since   2.5.7
-	 * @todo    add bulk actions in a correct way for newer WP
+	 *
+	 * @param $actions
+	 *
+	 * @return array
 	 */
-	function bulk_actions_pdfs_admin_footer() {
-		global $post_type;
-		if ( 'shop_order' == $post_type ) {
-			$invoice_types = wcj_get_enabled_invoice_types();
-			$actions       = array(
-				'generate' => __( 'Generate', 'woocommerce-jetpack' ),
-				'download' => __( 'Download (Zip)', 'woocommerce-jetpack' ),
-				'merge'    => __( 'Merge (Print)', 'woocommerce-jetpack' ),
-			);
-			$html = '';
-			$html .= '<script type="text/javascript">';
-			foreach ( $actions as $action_id => $action_title ) {
-				foreach ( $invoice_types as $invoice_type ) {
-					$key   = $invoice_type['id'];
-					$title = $invoice_type['title'];
-					$html .= 'jQuery(function() { ';
-					foreach ( array( 'action', 'action2' ) as $action ) {
-						$html .= 'jQuery(\'<option>\').' .
-							'val(\''. $action_id . '_' . $key . '\').' .
-							'text(\'' . $action_title . ' ' . $title . '\').' .
-							'appendTo(\'select[name="' . $action . '"]\'); ';
-					}
-					$html .= '}); ';
-				}
+	function bulk_actions_register( $actions ) {
+		$invoice_types      = wcj_get_enabled_invoice_types();
+		$new_actions_source = array(
+			'generate' => __( 'Generate', 'woocommerce-jetpack' ),
+			'download' => __( 'Download (Zip)', 'woocommerce-jetpack' ),
+			'merge'    => __( 'Merge (Print)', 'woocommerce-jetpack' ),
+		);
+		$new_actions        = array();
+		foreach ( $new_actions_source as $source_key => $source_value ) {
+			foreach ( $invoice_types as $type_key => $type_value ) {
+				$new_actions[ $source_key . '_' . $type_value['id'] ] = $source_value . ' ' . $type_value['title'];
 			}
-			$html .= '</script>';
-			echo $html;
 		}
+		$actions = array_merge( $actions, $new_actions );
+		return $actions;
 	}
 
 	/**
@@ -160,33 +147,34 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	}
 
 	/**
-	 * bulk_actions_pdfs.
+	 * Processes the PDF bulk actions.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.1
 	 * @since   2.5.7
 	 * @todo    on `generate` (and maybe other actions) validate user permissions/capabilities - `if ( ! current_user_can( $post_type_object->cap->export_post, $post_id ) ) { wp_die( __( 'You are not allowed to export this post.' ) ); }`
-	 * @todo    add security check - `check_admin_referer( 'bulk-posts' )`
+	 *
+	 * @param $redirect_to
+	 * @param $action
+	 * @param $post_ids
+	 *
+	 * @return string
 	 */
-	function bulk_actions_pdfs() {
-
-		// Get the action
-		$wp_list_table = _get_list_table( 'WP_Posts_List_Table' );
-		$action        = $wp_list_table->current_action();
+	function bulk_actions_handle( $redirect_to, $action, $post_ids ) {
+		if (
+			false === preg_match( '(generate|download|merge)', $action ) ||
+			false === preg_match( '(invoice|packing_slip|credit_note)', $action ) ||
+			false === check_admin_referer( 'bulk-posts' )
+		) {
+			return $redirect_to;
+		}
 
 		// Validate the action
 		$action_exploded = explode( '_', $action, 2 );
-		if (
-			! isset( $_GET['post'] ) || empty( $action_exploded ) || ! is_array( $action_exploded ) || 2 !== count( $action_exploded ) ||
-			! in_array( $action_exploded[0], array( 'generate', 'download', 'merge' ) )
-		) {
-			return;
-		}
 
 		// Perform the action
-		$post_ids   = $_GET['post'];
 		$the_action = $action_exploded[0];
 		$the_type   = $action_exploded[1];
-		$sendback   = false;
+
 		switch( $the_action ) {
 			case 'generate':
 				$generated = 0;
@@ -196,28 +184,26 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 					}
 				}
 				// Build the redirect url
-				$sendback = add_query_arg(
+				$redirect_to = add_query_arg(
 					array(
-						'post_type'              => 'shop_order',
 						'generated'              => $generated,
 						'generated_type'         => $the_type,
 						'generated_' . $the_type => 1,
 						'ids'                    => join( ',', $post_ids ),
 						'post_status'            => $_GET['post_status'],
 					),
-					$sendback
+					$redirect_to
 				);
 				break;
 			case 'download':
 				if ( '' != ( $result = $this->get_invoices_zip( $the_type, $post_ids ) ) ) {
 					// Build the redirect url
-					$sendback = add_query_arg(
+					$redirect_to = add_query_arg(
 						array(
-							'post_type'          => 'shop_order',
 							'post_status'        => $_GET['post_status'],
 							'wcj_notice'         => $result,
 						),
-						$sendback
+						$redirect_to
 					);
 				}
 				break;
@@ -231,13 +217,12 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				if ( ! empty( $merge_ids ) ) {
 					if ( '' != ( $result = $this->merge_pdfs( $the_type, $merge_ids ) ) ) {
 						// Build the redirect url
-						$sendback = add_query_arg(
+						$redirect_to = add_query_arg(
 							array(
-								'post_type'          => 'shop_order',
 								'post_status'        => $_GET['post_status'],
 								'wcj_notice'         => $result,
 							),
-							$sendback
+							$redirect_to
 						);
 					}
 				}
@@ -245,10 +230,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 			default:
 				return;
 		}
-
-		// Redirect client
-		wp_redirect( esc_url_raw( $sendback ) );
-		exit();
+		return $redirect_to;
 	}
 
 	/**
@@ -455,7 +437,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * generate_pdf_on_init.
 	 *
-	 * @version 2.9.0
+	 * @version 4.2.1
 	 */
 	function generate_pdf_on_init() {
 		// Check if all is OK
@@ -465,7 +447,11 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		// Get PDF
 		$the_invoice = wcj_get_pdf_invoice( $this->order_id, $this->invoice_type_id );
 		$dest = ( true === $this->save_as_pdf ? 'D' : 'I' );
+		ob_clean();
+		ob_flush();
 		$the_invoice->get_pdf( $dest );
+		ob_end_flush();
+		ob_end_clean();
 		die();
 	}
 

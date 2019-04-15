@@ -97,4 +97,40 @@ return array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_images_placeholder_options',
 	),
+	array(
+		'title'    => __( 'Callbacks', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Callback functions used by WooCommerce and the current theme in order to customize images and thumbnails', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_images_cb',
+	),
+	array(
+		'title'    => __( 'Loop Thumbnail', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Used on hook <strong>woocommerce_before_shop_loop_item_title</strong>', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_images_cb_loop_product_thumbnail',
+		'default'  => 'woocommerce_template_loop_product_thumbnail',
+		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Loop Thumbnail Priority', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_images_cb_loop_product_thumbnail_priority',
+		'default'  => 10,
+		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Show Images', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Used on hook <strong>woocommerce_before_single_product_summary</strong>', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_images_cb_show_product_images',
+		'default'  => 'woocommerce_show_product_images',
+		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Show Images Priority', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_images_cb_show_product_images_priority',
+		'default'  => 20,
+		'type'     => 'text',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_images_cb',
+	),
 );

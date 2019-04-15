@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 4.1.0
+ * @version 4.2.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -59,6 +59,22 @@ $settings = array(
 			'standard' => __( 'Standard PHP sessions', 'woocommerce-jetpack' ),
 			'wc'       => __( 'WC sessions', 'woocommerce-jetpack' ),
 		),
+	),
+	array(
+		'title'    => __( 'Read and Close', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable <strong>Read and Close</strong> parameter on <strong>session_start()</strong>.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Requires Session Type option set as Standard PHP Sessions and PHP version >= 7.0', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_general_advanced_session_read_and_close',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'IP Detection', 'woocommerce-jetpack' ),
+		'desc'     => __( 'IP Detection Methods used by some Booster modules when not using IP detection from WooCommerce. Change order for different results.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Default values are:', 'woocommerce-jetpack' ).'<br />'.implode( PHP_EOL, array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' ) ),
+		'id'       => 'wcj_general_advanced_ip_detection',
+		'default'  => implode( PHP_EOL, array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' ) ),
+		'type'     => 'textarea',
 	),
 	array(
 		'title'    => __( 'Datepicker/Weekpicker CSS Loading', 'woocommerce-jetpack' ),

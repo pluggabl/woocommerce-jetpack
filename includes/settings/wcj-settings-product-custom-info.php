@@ -158,19 +158,21 @@ foreach ( $single_or_archive_array as $single_or_archive ) {
 				$product_tags,
 				$is_multiselect_tags
 			),
-			wcj_get_ajax_settings( array(
+			wcj_get_settings_as_multiselect_or_text( array(
 				'title'    => __( 'Products to Include', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_custom_info_products_to_include_' . $single_or_archive . '_' . $i,
-				'default'  => ''),
-				true
+				'default'  => '' ),
+				'',
+				$is_multiselect_products
 			),
-			wcj_get_ajax_settings( array(
+			wcj_get_settings_as_multiselect_or_text( array(
 				'title'    => __( 'Products to Exclude', 'woocommerce-jetpack' ),
 				'desc_tip' => __( 'Leave blank to disable the option.', 'woocommerce-jetpack' ),
 				'id'       => 'wcj_product_custom_info_products_to_exclude_' . $single_or_archive . '_' . $i,
 				'default'  => '' ),
-				true
+				'',
+				$is_multiselect_products
 			),
 			array(
 				'type'     => 'sectionend',

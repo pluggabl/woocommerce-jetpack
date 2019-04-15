@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Bookings
  *
- * @version 3.8.0
+ * @version 4.2.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -86,6 +86,14 @@ return array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_product_bookings_options',
+	),
+	array(
+		'title'    => __( 'Price per Day on Variable Products', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Calculate Variable Products final price per day, according to calendar', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Disable it will make the Variable Product final price be calculated regardless of the chosen days on the calendar', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_bookings_price_per_day_variable_products',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Hide Quantity Selector for Bookings Products', 'woocommerce-jetpack' ),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 4.2.0
+ * @version 4.2.1
  * @author  Algoritmika Ltd.
  */
 
@@ -187,7 +187,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * update_custom_checkout_fields_order_meta.
 	 *
-	 * @version 4.1.0
+	 * @version 4.2.1
 	 */
 	function update_custom_checkout_fields_order_meta( $order_id ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
@@ -212,14 +212,14 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							get_option( 'wcj_checkout_custom_field_checkbox_no_' . $i );
 						update_post_meta( $order_id, '_' . $option_name_checkbox_value, $checkbox_value );
 					} elseif ( 'radio' === $the_type || 'select' === $the_type ) {
-						update_post_meta( $order_id, '_' . $option_name, wc_clean( $_POST[ $option_name ] ) );
+						update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $_POST[ $option_name ] ) ) );
 						$option_name_values = $the_section . '_' . 'wcj_checkout_field_select_options_' . $i;
 						$the_values = get_option( 'wcj_checkout_custom_field_select_options_' . $i );
 						update_post_meta( $order_id, '_' . $option_name_values, $the_values );
 					} elseif ( 'textarea' === $the_type && 'no' === get_option( 'wcj_checkout_custom_fields_textarea_clean', 'yes' ) ) {
-						update_post_meta( $order_id, '_' . $option_name, $_POST[ $option_name ] );
+						update_post_meta( $order_id, '_' . $option_name, urldecode( $_POST[ $option_name ] ) );
 					} else {
-						update_post_meta( $order_id, '_' . $option_name, wc_clean( $_POST[ $option_name ] ) );
+						update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $_POST[ $option_name ] ) ) );
 					}
 				}
 			}
@@ -336,7 +336,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_fields.
 	 *
-	 * @version 2.4.7
+	 * @version 4.2.1
 	 * @todo    converting from before version 2.3.0: section?
 	 * @todo    add alternative way of displaying fields (e.g. new meta box), so we have more control over displaying fields' values (e.g. line breaks)
 	 */
@@ -398,6 +398,13 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 					'wrapper_class' => 'form-field-wide',
 				);
 				if ( isset( $options ) ) {
+					// Displays checkout field value, not the key
+					add_filter( "woocommerce_order_get__{$section}_{$the_key}", function ( $name ) use ( $options ) {
+						if ( isset( $options[ $name ] ) ) {
+							return $options[ $name ];
+						}
+						return $name;
+					} );
 					$fields[ $the_key ]['options'] = $options;
 				}
 			}

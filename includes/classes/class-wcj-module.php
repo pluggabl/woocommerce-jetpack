@@ -150,10 +150,15 @@ class WCJ_Module {
 		if ( ! WCJ_IS_WC_VERSION_BELOW_3_2_0 ) {
 			foreach ( $settings as &$setting ) {
 				if ( isset( $setting['type'] ) && 'select' === $setting['type'] ) {
-					if ( ! isset( $setting['class'] ) || '' === $setting['class'] ) {
-						$setting['class'] = 'wc-enhanced-select';
-					} elseif ( ! isset( $setting['remove_class'] ) || '' === $setting['remove_class'] || true !== strpos( $setting['class'], 'wc-enhanced-select' ) ) {
-						$setting['class'] .= ' ' . 'wc-enhanced-select';
+					if (
+						! isset( $setting['ignore_enhanced_select_class'] ) ||
+						( isset( $setting['ignore_enhanced_select_class'] ) && false === $setting['ignore_enhanced_select_class'] )
+					) {
+						if ( ! isset( $setting['class'] ) || '' === $setting['class'] ) {
+							$setting['class'] = 'wc-enhanced-select';
+						} else {
+							$setting['class'] .= ' ' . 'wc-enhanced-select';
+						}
 					}
 				}
 				if ( isset( $setting['type'] ) && 'text' === $setting['type'] && isset( $setting['class'] ) && 'widefat' === $setting['class'] ) {

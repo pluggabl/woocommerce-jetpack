@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 3.8.0
+ * @version 4.2.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.0
+	 * @version 4.2.1
 	 * @todo    (maybe) move "Display radio buttons instead of drop box for variable products" to new module
 	 * @todo    (maybe) rename to "Add to Cart Button (Options)"
 	 */
@@ -68,7 +68,7 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 			// Variable Add to Cart Template
 			if ( 'yes' === apply_filters( 'booster_option', 'wcj', get_option( 'wcj_add_to_cart_variable_as_radio_enabled', 'no' ) ) ) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_variable_add_to_cart_scripts' ) );
-				add_filter( 'wc_get_template',    array( $this, 'change_variable_add_to_cart_template' ), PHP_INT_MAX, 5 );
+				add_action( 'woocommerce_before_variations_form', array( $this, 'add_variations_radio_buttons_template' ) );
 			}
 
 			// Replace Add to Cart Loop with Single
@@ -318,16 +318,24 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	}
 
 	/**
-	 * change_variable_add_to_cart_template.
-	 *
-	 * @version 2.4.8
-	 * @since   2.4.8
+     * Adds radio buttons template for variations
+	 * @version 4.2.1
+	 * @since   4.2.1
+	 * @see woocommerce_variable_add_to_cart()
 	 */
-	function change_variable_add_to_cart_template( $located, $template_name, $args, $template_path, $default_path ) {
-		if ( 'single-product/add-to-cart/variable.php' == $template_name ) {
-			$located = untrailingslashit( realpath( plugin_dir_path( __FILE__ ) . '/..' ) ) . '/includes/templates/wcj-add-to-cart-variable.php';
-		}
-		return $located;
+	function add_variations_radio_buttons_template() {
+		global $product;
+		$get_variations = count( $product->get_children() ) <= apply_filters( 'woocommerce_ajax_variation_threshold', 30, $product );
+		wc_get_template( 'wcj-radio-for-variations.php', array(
+			'available_variations' => $get_variations ? $product->get_available_variations() : false,
+			'attributes'           => $product->get_variation_attributes(),
+			'selected_attributes'  => $product->get_default_attributes(),
+		), '', WCJ_PLUGIN_PATH . '/includes/templates/' );
+		?>
+		<style>
+			table.variations{display:none}
+		</style>
+		<?php
 	}
 
 	/*

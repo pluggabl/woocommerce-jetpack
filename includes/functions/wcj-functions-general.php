@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 4.0.0
+ * @version 4.2.1
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -308,7 +308,7 @@ if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 	/**
 	 * wcj_session_maybe_start.
 	 *
-	 * @version 3.4.0
+	 * @version 4.2.1
 	 * @since   3.1.0
 	 */
 	function wcj_session_maybe_start() {
@@ -318,9 +318,10 @@ if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 					WC()->session->set_customer_session_cookie( true );
 				}
 				break;
-			default: // 'standard'
-				if ( ! session_id() ) {
-					session_start();
+			default:
+				if ( session_status() == PHP_SESSION_NONE && ! headers_sent() ) {
+					$read_and_close = ( 'yes' === get_option( 'wcj_general_advanced_session_read_and_close', 'no' ) ) && PHP_VERSION_ID > 70000 ? array( 'read_and_close' => true ) : array();
+					session_start( $read_and_close );
 				}
 				break;
 		}
@@ -713,10 +714,10 @@ if ( ! function_exists( 'wcj_get_rates_for_tax_class' ) ) {
 }
 
 if ( ! function_exists( 'wcj_get_select_options' ) ) {
-	/*
+	/**
 	 * wcj_get_select_options()
 	 *
-	 * @version  3.6.0
+	 * @version  4.2.1
 	 * @since    2.3.0
 	 * @return   array
 	 */
@@ -727,7 +728,7 @@ if ( ! function_exists( 'wcj_get_select_options' ) ) {
 		$select_options_raw = array_map( 'trim', explode( PHP_EOL, $select_options_raw ) );
 		$select_options = array();
 		foreach ( $select_options_raw as $select_options_title ) {
-			$select_options_key = ( $do_sanitize ) ? sanitize_title( $select_options_title ) : $select_options_title;
+			$select_options_key = ( $do_sanitize ) ? urldecode( sanitize_title( $select_options_title ) ) : $select_options_title;
 			$select_options[ $select_options_key ] = $select_options_title;
 		}
 		return $select_options;
@@ -735,7 +736,7 @@ if ( ! function_exists( 'wcj_get_select_options' ) ) {
 }
 
 if ( ! function_exists( 'wcj_is_frontend' ) ) {
-	/*
+	/**
 	 * wcj_is_frontend()
 	 *
 	 * @since  4.0.0
@@ -795,16 +796,19 @@ if ( ! function_exists( 'wcj_get_the_ip' ) ) {
 	/**
 	 * wcj_get_the_ip.
 	 *
+	 * @version 4.2.1
 	 * @see http://stackoverflow.com/questions/3003145/how-to-get-the-client-ip-address-in-php
 	 */
-	function wcj_get_the_ip( ) {
-		$ip = null;
-		if ( ! empty( $_SERVER['HTTP_CLIENT_IP'] ) ) {
-			$ip = $_SERVER['HTTP_CLIENT_IP'];
-		} elseif ( ! empty( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
-			$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-		} else {
-			$ip = $_SERVER['REMOTE_ADDR'];
+	function wcj_get_the_ip() {
+		$ip                   = null;
+		$ip_detection_methods = array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' );
+		$ip_detection_methods = 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? explode( PHP_EOL, get_option( 'wcj_general_advanced_ip_detection', implode( PHP_EOL, $ip_detection_methods ) ) ) : $ip_detection_methods;
+		foreach ( $ip_detection_methods as $method ) {
+			if ( empty( $_SERVER[ sanitize_text_field( $method ) ] ) ) {
+				continue;
+			}
+			$ip = sanitize_text_field( wp_unslash( $_SERVER[ sanitize_text_field( $method ) ] ) );
+			break;
 		}
 		return $ip;
 	}

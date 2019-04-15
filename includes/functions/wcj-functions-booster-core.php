@@ -59,7 +59,7 @@ if ( ! function_exists( 'wcj_is_module_enabled' ) ) {
 		if ( 'modules_by_user_roles' != $module_id && wcj_is_module_enabled( 'modules_by_user_roles' ) ) {
 			global $wcj_modules_by_user_roles_data;
 			if ( ! isset( $wcj_modules_by_user_roles_data ) ) {
-				if( ! function_exists( 'wp_get_current_user' ) ) {
+				if ( ! function_exists( 'wp_get_current_user' ) ) {
 					require_once( ABSPATH . 'wp-includes/pluggable.php' );
 				}
 				$current_user = wp_get_current_user();

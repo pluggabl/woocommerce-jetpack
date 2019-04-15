@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - TCPDF
  *
- * @version 4.2.0
+ * @version 4.2.1
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `Header()`
  */
@@ -16,7 +16,9 @@ define( 'K_TCPDF_EXTERNAL_CONFIG', true );
 require_once( wcj_plugin_path() . '/includes/lib/tcpdf_config.php' );
 
 // Include TCPDF library
-require_once( wcj_plugin_path() . '/includes/lib/tcpdf/tcpdf.php' );
+if ( ! class_exists( 'TCPDF' ) ) {
+	require_once( wcj_plugin_path() . '/includes/lib/tcpdf/tcpdf.php' );
+}
 
 class WCJ_TCPDF extends TCPDF {
 

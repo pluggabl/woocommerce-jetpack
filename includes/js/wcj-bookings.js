@@ -1,11 +1,19 @@
 /**
  * wcj-bookings.
  *
- * version 2.8.0
+ * version 4.2.1
  * since   2.5.0
  */
 
 var _ajax_object = ajax_object;
+
+function wcj_hide_loader(){
+	jQuery('.wcj-bookings-price-wrapper').removeClass('loading');
+}
+
+function wcj_show_loader(){
+	jQuery('.wcj-bookings-price-wrapper').addClass('loading');
+}
 
 function change_price() {
 	var date_from = jQuery("input[name='wcj_product_bookings_date_from']").val();
@@ -32,10 +40,12 @@ function change_price() {
 				'date_from': date_from,
 				'date_to': date_to
 			};
+			wcj_show_loader();
+			jQuery('.wcj-bookings-price-wrapper .wcj-value').html('');
 			jQuery.post(_ajax_object.ajax_url, data, function(response) {
 				if ( '' != response ) {
-					jQuery("p[class='price']").css("display", "none");
-					jQuery("p[class='price']").after('<p class="price wcj-price-bookings">'+response+'</p>');
+					jQuery('.wcj-bookings-price-wrapper .wcj-value').html('<p class="price wcj-price-bookings">'+response+'</p>');
+					wcj_hide_loader();
 				}
 			});
 			jQuery("div[name='wcj_bookings_message']").css("display", "none");
@@ -43,12 +53,11 @@ function change_price() {
 		} else {
 			jQuery("div[name='wcj_bookings_message']").css("display", "block");
 			jQuery("div[name='wcj_bookings_message'] p").text(_ajax_object.wrong_dates_message);
-			jQuery("p[class='price wcj-price-bookings']").css("display", "none");
-			jQuery("p[class='price']").css("display", "block");
+			jQuery('.wcj-bookings-price-wrapper .wcj-value').html('');
 		}
 	} else {
+		jQuery('.wcj-bookings-price-wrapper .wcj-value').html('');
 		jQuery("p[class='price wcj-price-bookings']").css("display", "none");
-		jQuery("p[class='price']").css("display", "block");
 	}
 }
 
