@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - TCPDF
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `Header()`
  */

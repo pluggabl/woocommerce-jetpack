@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -280,7 +280,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * add_default_checkout_billing_eu_vat_number.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 */
 	function add_default_checkout_billing_eu_vat_number( $default_value, $field_key ) {
 		if ( '' != ( $eu_vat_number_to_check = wcj_session_get( 'wcj_eu_vat_number_to_check' ) ) ) {

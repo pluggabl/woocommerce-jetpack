@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.9.0
 	 * @todo    [dev] Custom Menu Pages: add "Type" option with values: "param" (i.e. as it is now) or "endpoint"
 	 * @todo    [dev] Custom Menu Pages: deprecate "Add Custom Menu Items" (and add "link" value in "Type" options)
@@ -97,8 +97,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * get_custom_pages.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 * @todo    [dev] customizable ID (i.e. instead of `sanitize_title( $title[ $i ] )`)
 	 */
 	function get_custom_pages() {
@@ -119,8 +119,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * set_custom_page_title.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 */
 	function set_custom_page_title( $title, $id ) {
 		if ( isset( $_GET['section'] ) && $id == get_option( 'woocommerce_myaccount_page_id' ) ) {
@@ -136,8 +136,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * set_custom_page_url.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 * @todo    [dev] (maybe) customizable `section` (e.g. `wcj-section`)
 	 */
 	function set_custom_page_url( $url, $endpoint, $value, $permalink ) {
@@ -151,8 +151,8 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * add_custom_page_menu_item.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 */
 	function add_custom_page_menu_item( $items ) {
 		foreach ( $this->get_custom_pages() as $custom_menu_page_id => $custom_menu_page_data ) {
@@ -181,7 +181,7 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * customize_dashboard.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   3.8.0
 	 * @see     woocommerce/templates/myaccount/dashboard.php
 	 */

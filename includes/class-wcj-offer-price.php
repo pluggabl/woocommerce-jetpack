@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.9.0
 	 * @todo    settings - more info about position priorities, e.g.: __( 'Standard priorities for "Inside single product summary": title - 5, rating - 10, price - 10, excerpt - 20, add to cart - 30, meta - 40, sharing - 50', 'woocommerce-jetpack' )
 	 * @todo    (maybe) css - customizable fonts etc.
@@ -409,7 +409,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * offer_price.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.9.0
 	 * @todo    (maybe) separate customer copy email template and subject
 	 * @todo    (maybe) redirect (no notice though)

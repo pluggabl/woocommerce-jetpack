@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -125,7 +125,7 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 	/*
 	 * wcj_get_exchange_rate.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.6.0
 	 */
 	function wcj_get_exchange_rate( $currency_from, $currency_to ) {
@@ -378,7 +378,7 @@ if ( ! function_exists( 'wcj_ecb_get_exchange_rate' ) ) {
 	/*
 	 * wcj_ecb_get_exchange_rate.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.6.0
 	 */
 	function wcj_ecb_get_exchange_rate( $currency_from, $currency_to ) {

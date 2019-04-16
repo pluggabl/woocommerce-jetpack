@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -121,8 +121,8 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 	/**
 	 * wcj_get_ajax_settings
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 *
 	 * @param $values
 	 * @param string $search_type Possible values 'woocommerce_json_search_products', 'woocommerce_json_search_products_and_variations' , 'woocommerce_json_search_categories'
@@ -168,7 +168,7 @@ if ( ! function_exists( 'wcj_get_settings_as_multiselect_or_text' ) ) {
 	/**
 	 * wcj_get_settings_as_multiselect_or_text.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.9.1
 	 */
 	function wcj_get_settings_as_multiselect_or_text( $values, $multiselect_options, $is_multiselect ) {

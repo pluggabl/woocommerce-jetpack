@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.1
-Stable tag: 4.2.0
+Stable tag: 4.3.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -193,9 +193,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.2.1 - 09/04/2019 =
-* Feature - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Quantity - Initial module release.
-* Feature - EMAILS & MISC. - My Account - "Custom Menu Pages" section added.
+= 4.3.0 - 16/04/2019 =
 * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Fix PHP warning about headers already sent.
 * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Improve compatibility with Add-ons plugin.
 * Fix - PRICES & CURRENCIES - Offer Your Price - Check if `$_product` really exists on `offer_price()`.
@@ -209,6 +207,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Fix - PDF INVOICING & PACKING SLIPS - Fix Too many redirects when using Generate Invoice from Bulk actions.
 * Fix - PDF INVOICING & PACKING SLIPS - Fix "Failed to load PDF document" in some environments by putting the pdf inside buffer instead of displaying it directly.
 * Fix - Functions - Admin - Make `wcj_get_settings_as_multiselect_or_text()` compatible with `wcj_get_ajax_settings()`.
+* Fix - Functions - Booster Core - `wcj_is_module_enabled()` - Checking if it is a REST API call before requiring `pluggable.php`.
 * Fix - Functions - Exchange Rates - Fix 'Division by zero' PHP warning.
 * Fix - Functions - Exchange Rates - Ignore warnings from `simplexml_load_file()` depending on WP_DEBUG constant.
 * Fix - Functions - General - `wcj_session_maybe_start()` Improve session detection method.
@@ -226,9 +225,11 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - PRODUCTS - Product Input Fields - Add ajax search to Product fields.
 * Dev - PRODUCTS - Sorting - Add new option to restore default WooCommerce Sorting on Avada theme.
 * Dev - SHIPPING & ORDERS - Left to Free Shipping - Info on Checkout - "Order review: Before shipping" and "Order review: After shipping" positions added.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Min/Max Order Quantity - Initial module release.
 * Dev - PDF INVOICING & PACKING SLIPS - Update WordPress filters used to create bulk actions.
 * Dev - PDF INVOICING & PACKING SLIPS - Add security check `check_admin_referer( 'bulk-posts' )` on `bulk_actions_handle()`.
 * Dev - PDF INVOICING & PACKING SLIPS - Tools - Invoices Report - `wcj_pdf_invoicing_report_tool_row` filter added.
+* Dev - EMAILS & MISC. - My Account - "Custom Menu Pages" section added.
 * Dev - Functions - Admin - Add `wcj_get_ajax_settings()` making it possible to search products and categories by ajax.
 * Dev - Functions - General - Add option to include `read_and_close` parameter to `session_start`.
 * Dev - Functions - General - Sanitize IP Detection methods on `wcj_get_the_ip()`.

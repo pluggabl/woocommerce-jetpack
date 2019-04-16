@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -308,7 +308,7 @@ if ( ! function_exists( 'wcj_session_maybe_start' ) ) {
 	/**
 	 * wcj_session_maybe_start.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   3.1.0
 	 */
 	function wcj_session_maybe_start() {
@@ -717,7 +717,7 @@ if ( ! function_exists( 'wcj_get_select_options' ) ) {
 	/**
 	 * wcj_get_select_options()
 	 *
-	 * @version  4.2.1
+	 * @version  4.3.0
 	 * @since    2.3.0
 	 * @return   array
 	 */
@@ -796,7 +796,7 @@ if ( ! function_exists( 'wcj_get_the_ip' ) ) {
 	/**
 	 * wcj_get_the_ip.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @see http://stackoverflow.com/questions/3003145/how-to-get-the-client-ip-address-in-php
 	 */
 	function wcj_get_the_ip() {

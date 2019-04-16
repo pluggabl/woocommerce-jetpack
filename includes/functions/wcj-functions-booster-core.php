@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Booster Core
  *
- * @version 3.8.0
+ * @version 4.3.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -47,35 +47,72 @@ if ( ! function_exists( 'wcj_plugin_path' ) ) {
 	}
 }
 
+if ( ! function_exists( 'wcj_is_rest' ) ) {
+	/**
+	 * Checks if the current request is a WP REST API request.
+	 *
+	 * @version 4.3.0
+	 * @since   4.3.0
+	 *
+	 * @author  matzeeable
+	 * @see     https://wordpress.stackexchange.com/a/317041/25264
+	 * @return  boolean
+	 */
+	function wcj_is_rest() {
+		$prefix = rest_get_url_prefix();
+		if (
+			defined( 'REST_REQUEST' ) && REST_REQUEST || // After WP_REST_Request initialisation
+			isset( $_GET['rest_route'] ) && 0 === strpos( trim( $_GET['rest_route'], '\\/' ), $prefix , 0 ) // Support "plain" permalink settings
+		) {
+			return true;
+		}
+		// URL Path begins with wp-json/ (your REST prefix)
+		// Also supports WP installations in subfolders
+		$rest_url    = wp_parse_url( site_url( $prefix ) );
+		$current_url = wp_parse_url( add_query_arg( array() ) );
+		return ( 0 === strpos( $current_url['path'], $rest_url['path'], 0 ) );
+	}
+}
+
+if ( ! function_exists( 'wcj_check_modules_by_user_roles' ) ) {
+	/**
+	 * wcj_check_modules_by_user_roles.
+	 *
+	 * @version 4.3.0
+	 * @since   4.3.0
+	 * @return  boolean
+	 * @todo    [fix] re-implement `wcj_wp_get_current_user()` instead of requiring `pluggable.php`
+	 */
+	function wcj_check_modules_by_user_roles( $module_id ) {
+		global $wcj_modules_by_user_roles_data;
+		if ( ! isset( $wcj_modules_by_user_roles_data ) ) {
+			if ( ! function_exists( 'wp_get_current_user' ) ) {
+				require_once( ABSPATH . 'wp-includes/pluggable.php' );
+			}
+			$current_user = wp_get_current_user();
+			$wcj_modules_by_user_roles_data['role'] = ( isset( $current_user->roles ) && is_array( $current_user->roles ) && ! empty( $current_user->roles ) ?
+				reset( $current_user->roles ) : 'guest' );
+			$wcj_modules_by_user_roles_data['role'] = ( '' != $wcj_modules_by_user_roles_data['role'] ? $wcj_modules_by_user_roles_data['role'] : 'guest' );
+			$wcj_modules_by_user_roles_data['modules_incl'] = get_option( 'wcj_modules_by_user_roles_incl_' . $wcj_modules_by_user_roles_data['role'], '' );
+			$wcj_modules_by_user_roles_data['modules_excl'] = get_option( 'wcj_modules_by_user_roles_excl_' . $wcj_modules_by_user_roles_data['role'], '' );
+		}
+		return (
+			( ! empty( $wcj_modules_by_user_roles_data['modules_incl'] ) && ! in_array( $module_id, $wcj_modules_by_user_roles_data['modules_incl'] ) ) ||
+			( ! empty( $wcj_modules_by_user_roles_data['modules_excl'] ) &&   in_array( $module_id, $wcj_modules_by_user_roles_data['modules_excl'] ) )
+		) ? false : true;
+	}
+}
+
 if ( ! function_exists( 'wcj_is_module_enabled' ) ) {
 	/*
 	 * wcj_is_module_enabled.
 	 *
-	 * @version 3.3.0
+	 * @version 4.3.0
 	 * @since   2.4.0
 	 * @return  boolean
 	 */
 	function wcj_is_module_enabled( $module_id ) {
-		if ( 'modules_by_user_roles' != $module_id && wcj_is_module_enabled( 'modules_by_user_roles' ) ) {
-			global $wcj_modules_by_user_roles_data;
-			if ( ! isset( $wcj_modules_by_user_roles_data ) ) {
-				if ( ! function_exists( 'wp_get_current_user' ) ) {
-					require_once( ABSPATH . 'wp-includes/pluggable.php' );
-				}
-				$current_user = wp_get_current_user();
-				$wcj_modules_by_user_roles_data['role'] = ( isset( $current_user->roles ) && is_array( $current_user->roles ) && ! empty( $current_user->roles ) ?
-					reset( $current_user->roles ) : 'guest' );
-				$wcj_modules_by_user_roles_data['role'] = ( '' != $wcj_modules_by_user_roles_data['role'] ? $wcj_modules_by_user_roles_data['role'] : 'guest' );
-				$wcj_modules_by_user_roles_data['modules_incl'] = get_option( 'wcj_modules_by_user_roles_incl_' . $wcj_modules_by_user_roles_data['role'], '' );
-				$wcj_modules_by_user_roles_data['modules_excl'] = get_option( 'wcj_modules_by_user_roles_excl_' . $wcj_modules_by_user_roles_data['role'], '' );
-			}
-			if ( ! empty( $wcj_modules_by_user_roles_data['modules_incl'] ) && ! in_array( $module_id, $wcj_modules_by_user_roles_data['modules_incl'] ) ) {
-				return false;
-			}
-			if ( ! empty( $wcj_modules_by_user_roles_data['modules_excl'] ) &&   in_array( $module_id, $wcj_modules_by_user_roles_data['modules_excl'] ) ) {
-				return false;
-			}
-		}
-		return ( 'yes' === get_option( 'wcj_' . $module_id . '_enabled', 'no' ) );
+		return ( 'modules_by_user_roles' != $module_id && wcj_is_module_enabled( 'modules_by_user_roles' ) && ! wcj_is_rest() && ! wcj_check_modules_by_user_roles( $module_id ) ?
+			false : ( 'yes' === get_option( 'wcj_' . $module_id . '_enabled', 'no' ) ) );
 	}
 }

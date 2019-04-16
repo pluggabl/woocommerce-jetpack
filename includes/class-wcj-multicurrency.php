@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -12,10 +12,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 
 class WCJ_Multicurrency extends WCJ_Module {
+
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @todo    check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {
@@ -66,24 +67,24 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Handles third party compatibility
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 */
 	function handle_third_party_compatibility(){
 		// "WooCommerce Smart Coupons" Compatibility
 		add_filter( 'woocommerce_coupon_get_amount', array( $this, 'smart_coupons_get_amount' ), 10, 2 );
 
-		//WooCommerce Price Filter Widget
+		// WooCommerce Price Filter Widget
 		add_action( 'wp_footer', array( $this, 'add_compatibility_with_price_filter_widget' ) );
 		add_action( 'wp_footer', array( $this, 'fix_price_filter_widget_currency_format' ) );
 	}
 
 	/**
 	 * Adds compatibility with WooCommerce Price Filter widget
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 */
-	public function add_compatibility_with_price_filter_widget() {
+	function add_compatibility_with_price_filter_widget() {
 		if ( ! is_active_widget( false, false, 'woocommerce_price_filter' ) ) {
 			return;
 		}
@@ -174,10 +175,10 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Fixes price filter widget currency format
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 */
-	public function fix_price_filter_widget_currency_format() {
+	function fix_price_filter_widget_currency_format() {
 		$price_args = apply_filters( 'wc_price_args', array(
 			'ex_tax_label'       => false,
 			'currency'           => '',
@@ -201,7 +202,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 */
 	function add_hooks() {
 		if ( wcj_is_frontend() ) {
@@ -240,8 +241,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Converts Smart Coupon currency.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 *
 	 * @param $value
 	 * @param $coupon
@@ -275,8 +276,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Converts add-ons plugin prices.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 *
 	 * @param $price
 	 * @param $option
@@ -291,8 +292,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Finds old add-ons fields on cart and replace by correct price.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 *
 	 * @param $other_data
 	 * @param $cart_item

@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce Settings - Shipping Methods by Min/Max Order Quantity
  *
- * @version 4.2.1
- * @since   4.2.1
+ * @version 4.3.0
+ * @since   4.3.0
  * @author  Algoritmika Ltd.
  */
 

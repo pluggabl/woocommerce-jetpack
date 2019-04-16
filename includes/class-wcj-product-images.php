@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Images
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @todo    add watermarks to images (http://php.net/manual/en/image.examples-watermark.php); Filter: `wp_get_attachment_image_src`.
 	 */
 	function __construct() {
@@ -70,8 +70,8 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * Gets callbacks and priorities from database.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 *
 	 * @param $value
 	 *

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

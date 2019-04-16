@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Module - Shipping Methods by Min/Max Order Quantity
  *
- * @version 4.2.1
- * @since   4.2.1
+ * @version 4.3.0
+ * @since   4.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -16,8 +16,8 @@ class WCJ_Shipping_By_Order_Qty extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 * @todo    (maybe) add customer messages on cart and checkout pages (if some shipping method is not available)
 	 */
 	function __construct() {
@@ -45,8 +45,8 @@ class WCJ_Shipping_By_Order_Qty extends WCJ_Module {
 	/**
 	 * get_min_max_qty.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 */
 	function get_min_max_qty( $rate, $min_or_max ) {
 		$key = ( $this->use_shipping_instances ? $rate->instance_id : $rate->method_id );
@@ -61,8 +61,8 @@ class WCJ_Shipping_By_Order_Qty extends WCJ_Module {
 	/**
 	 * available_shipping_methods.
 	 *
-	 * @version 4.2.1
-	 * @since   4.2.1
+	 * @version 4.3.0
+	 * @since   4.3.0
 	 * @todo    apply_filters( 'booster_option' )
 	 */
 	function available_shipping_methods( $rates, $package ) {

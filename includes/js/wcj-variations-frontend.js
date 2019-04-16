@@ -1,7 +1,7 @@
 /**
  * Booster for WooCommerce - Variations Radio Buttons
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @author  Algoritmika Ltd.
  */
 
@@ -9,8 +9,8 @@
  * Finds correspondent WooCommerce dropdown and triggers the 'change' event manually.
  * That will make WooCommerce itself do the rest, like update image, prices, and so on.
  *
- * @version 4.2.1
- * @since   4.2.1
+ * @version 4.3.0
+ * @since   4.3.0
  * @param variation_id
  */
 function select_wc_dropdown_programmatically(variation_id) {
@@ -39,7 +39,7 @@ function select_wc_dropdown_programmatically(variation_id) {
 /**
  * process_variations.
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @since   2.9.0
  */
 function process_variations(variation_id) {

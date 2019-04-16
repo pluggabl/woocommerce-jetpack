@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 4.2.1
+ * @version 4.3.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -120,7 +120,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.5.0
 	 * @todo    add "calculating price" progress message
 	 */
@@ -308,7 +308,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
      * Create custom style for bookings product page
      *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.5.0
 	 */
 	function create_custom_style(){
@@ -344,7 +344,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * add_input_fields_to_frontend.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.5.0
 	 * @todo    more options: exclude days (1-31), exact availability dates, mindate, maxdate, firstday, dateformat etc.
 	 */
@@ -383,7 +383,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * add_per_day_label.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.5.0
 	 */
 	function add_per_day_label( $price_html, $_product ) {
@@ -399,7 +399,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 4.2.1
+	 * @version 4.3.0
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product ) {

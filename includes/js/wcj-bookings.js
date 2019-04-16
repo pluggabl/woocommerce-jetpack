@@ -1,7 +1,7 @@
 /**
  * wcj-bookings.
  *
- * version 4.2.1
+ * version 4.3.0
  * since   2.5.0
  */
 
