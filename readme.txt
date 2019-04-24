@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.1
-Stable tag: 4.3.0
+Stable tag: 4.3.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,16 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 4.3.1 - 25/04/2019 =
+* Fix - SHIPPING & ORDERS - Order Quantities - Decimal Quantities - `init` hook priority lowered. This fixes the issue with "PDF Invoicing & Packing Slips" module not displaying decimal quantities.
+* Fix - PDF INVOICING & PACKING SLIPS - Fix "failed to delete buffer" warning when generating pdf.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Create new option to add compatibility with Smart Coupons plugin.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Create new option to add compatibility with WooCommerce Price Filter widget.
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Add option to make module compatible with "Price Filter" widget.
+* Dev - SHIPPING & ORDERS - Order Quantities - Decimal Quantities - Setting float number `pattern` for quantity input.
+* Dev - SHIPPING & ORDERS - Order Quantities - Module renamed from "Order Min/Max Quantities" and description updated.
+* Dev - PDF INVOICING & PACKING SLIPS - Create new option on advanced settings to manage output buffer.
 
 = 4.3.0 - 16/04/2019 =
 * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Fix PHP warning about headers already sent.

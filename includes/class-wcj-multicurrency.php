@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 4.3.0
+ * @version 4.3.1
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -67,16 +67,20 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Handles third party compatibility
 	 *
-	 * @version 4.3.0
+	 * @version 4.3.1
 	 * @since   4.3.0
 	 */
 	function handle_third_party_compatibility(){
 		// "WooCommerce Smart Coupons" Compatibility
-		add_filter( 'woocommerce_coupon_get_amount', array( $this, 'smart_coupons_get_amount' ), 10, 2 );
+		if ( 'yes' === get_option( 'wcj_multicurrency_compatibility_wc_smart_coupons' , 'yes' ) ) {
+			add_filter( 'woocommerce_coupon_get_amount', array( $this, 'smart_coupons_get_amount' ), 10, 2 );
+		}
 
 		// WooCommerce Price Filter Widget
-		add_action( 'wp_footer', array( $this, 'add_compatibility_with_price_filter_widget' ) );
-		add_action( 'wp_footer', array( $this, 'fix_price_filter_widget_currency_format' ) );
+		if ( 'yes' === get_option( 'wcj_multicurrency_compatibility_wc_price_filter' , 'yes' ) ) {
+			add_action( 'wp_footer', array( $this, 'add_compatibility_with_price_filter_widget' ) );
+			add_action( 'wp_footer', array( $this, 'fix_price_filter_widget_currency_format' ) );
+		}
 	}
 
 	/**

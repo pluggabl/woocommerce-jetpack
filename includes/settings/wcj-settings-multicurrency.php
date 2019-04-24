@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 3.9.0
+ * @version 4.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    "pretty prices"
@@ -99,7 +99,39 @@ $settings = array(
 		'class'    => 'widefat',
 	),
 	array(
-		'title'    => __( 'Advanced: Additional Price Filters', 'woocommerce-jetpack' ),
+		'type'     => 'sectionend',
+		'id'       => 'wcj_multicurrency_options',
+	),
+	array(
+		'title'    => __( 'Compatibility', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_multicurrency_compatibility',
+	),
+	array(
+		'title'    => __( 'WooCommerce Smart Coupons', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_compatibility_wc_smart_coupons',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'WooCommerce Price Filter', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_compatibility_wc_price_filter',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_multicurrency_compatibility',
+	),
+	array(
+		'title'    => __( 'Advanced', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_multicurrency_adv',
+	),
+	array(
+		'title'    => __( 'Additional Price Filters', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Add additional price filters here. One per line. Leave blank if not sure.' ),
 		'desc'     => sprintf( __( 'E.g.: %s' ), '<code>' . 'woocommerce_subscriptions_product_price' . '</code>' . ', ' .'<code>' . 'woocommerce_get_price' . '</code>' . '.' ),
 		'id'       => 'wcj_multicurrency_switcher_additional_price_filters',
@@ -108,7 +140,7 @@ $settings = array(
 		'css'      => 'min-width:300px;height:150px;',
 	),
 	array(
-		'title'    => __( 'Advanced: Price Filters Priority', 'woocommerce-jetpack' ),
+		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
 		'id'       => 'wcj_multicurrency_advanced_price_hooks_priority',
 		'default'  => 0,
@@ -116,7 +148,7 @@ $settings = array(
 	),
 	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_multicurrency_options',
+		'id'       => 'wcj_multicurrency_options_adv',
 	),
 	array(
 		'title'    => __( 'Currencies Options', 'woocommerce-jetpack' ),

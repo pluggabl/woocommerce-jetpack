@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 4.2.0
+ * @version 4.3.1
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,18 +16,19 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.2.0
+	 * @version 4.3.1
 	 * @since   2.9.0
-	 * @todo    maybe rename the module to "Order Quantities" or "Order Product Quantities" or "Product Quantities"?
-	 * @todo    loop (`woocommerce_loop_add_to_cart_link`)
-	 * @todo    (maybe) order quantities by user roles
-	 * @todo    [feature] validate (and optionally correct) **on add to cart**
+	 * @todo    [dev] maybe rename the module to "Order Product Quantities" or "Product Quantities"?
+	 * @todo    [dev] loop (`woocommerce_loop_add_to_cart_link`)
+	 * @todo    [dev] apply quantity **step per variation**
+	 * @todo    [dev] (maybe) order quantities by user roles
+	 * @todo    [dev] (maybe) validate (and optionally auto-correct) **on add to cart**
 	 */
 	function __construct() {
 
 		$this->id         = 'order_quantities';
-		$this->short_desc = __( 'Order Min/Max Quantities', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Set min/max product quantities in WooCommerce order.', 'woocommerce-jetpack' );
+		$this->short_desc = __( 'Order Quantities', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Manage product quantities in WooCommerce order: set min, max, step; enable decimal quantities etc.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-order-min-max-quantities';
 		parent::__construct();
 
@@ -81,9 +82,20 @@ class WCJ_Order_Quantities extends WCJ_Module {
 			add_filter( 'woocommerce_loop_add_to_cart_link', array( $this, 'replace_quantity_attribute_on_loop_cart_link' ), PHP_INT_MAX, 2 );
 			// Decimal qty
 			if ( 'yes' === get_option( 'wcj_order_quantities_decimal_qty_enabled', 'no' ) ) {
-				add_action( 'init', array( $this, 'float_stock_amount' ), PHP_INT_MAX );
+				add_action( 'init',                               array( $this, 'float_stock_amount' ) );
+				add_action( 'woocommerce_quantity_input_pattern', array( $this, 'float_quantity_input_pattern' ) );
 			}
 		}
+	}
+
+	/**
+	 * float_quantity_input_pattern.
+	 *
+	 * @version 4.3.1
+	 * @since   4.3.1
+	 */
+	function float_quantity_input_pattern( $pattern ) {
+		return '[0-9.]*';
 	}
 
 	/**
@@ -236,8 +248,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	 *
 	 * @version 3.2.3
 	 * @since   3.2.2
-	 * @todo    `force_on_add_to_cart` for simple products
-	 * @todo    make this optional?
+	 * @todo    [dev] `force_on_add_to_cart` for simple products
+	 * @todo    [dev] make this optional?
 	 */
 	function enqueue_script() {
 		$_product = wc_get_product();

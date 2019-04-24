@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 3.9.0
+ * @version 4.3.1
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) create "Tools (Options)" submodule
@@ -83,6 +83,13 @@ return array(
 		'desc_tip' => __( 'Please note that attaching invoices to emails and generating invoices report zip will stop working, if you enable this checkbox.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Disable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_disable_save_sys_temp_dir', // mislabelled, should be `wcj_invoicing_advanced_disable_save_sys_temp_dir`
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Prevent Output Buffer', 'woocommerce-jetpack' ),
+		'desc' => __( 'Returns the content of output buffering instead of displaying it', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_general_advanced_disable_output_buffer',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

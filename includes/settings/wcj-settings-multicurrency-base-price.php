@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
- * @version 3.9.0
+ * @version 4.3.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `if ( isset( $all_currencies[ $currency_from ] ) ) { unset( $all_currencies[ $currency_from ] ); }`
@@ -56,7 +56,16 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Advanced: Save Calculated Products Prices', 'woocommerce-jetpack' ),
+		'type'     => 'sectionend',
+		'id'       => 'wcj_multicurrency_base_price_options',
+	),
+	array(
+		'title'    => __( 'Advanced', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_multicurrency_base_price_advanced',
+	),
+	array(
+		'title'    => __( 'Save Calculated Products Prices', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins.', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_base_price_save_prices',
@@ -64,13 +73,19 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Advanced: Price Filters Priority', 'woocommerce-jetpack' ),
+		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
 		'id'       => 'wcj_multicurrency_base_price_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',
 	),
 	array(
+		'title'    => __( 'Price Filter Compatibility', 'woocommerce-jetpack' ),
+		'desc' => __( 'Add compatibility with WooCommerce Price Filter Widget' ),
+		'id'       => 'wcj_multicurrency_base_price_advanced_price_filter_comp',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_multicurrency_base_price_options',
 	),
