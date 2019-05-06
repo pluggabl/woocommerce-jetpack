@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
- * @version 4.3.1
+ * @version 4.3.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `if ( isset( $all_currencies[ $currency_from ] ) ) { unset( $all_currencies[ $currency_from ] ); }`
@@ -74,18 +74,27 @@ $settings = array(
 	),
 	array(
 		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.','woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_base_price_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',
 	),
 	array(
-		'title'    => __( 'Price Filter Compatibility', 'woocommerce-jetpack' ),
-		'desc' => __( 'Add compatibility with WooCommerce Price Filter Widget' ),
+		'title'    => __( 'WooCommerce Price Filter Compatibility', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add compatibility with WooCommerce Price Filter Widget','woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_base_price_advanced_price_filter_comp',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-	),array(
+	),
+	array(
+		'title'    => __( 'Third Party Price Filter Compatibility', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Add compatibility with Third Party Price Filter Widgets','woocommerce-jetpack' ),
+		'desc_tip' => __( 'Requires WooCommerce Price Filter Compatibility option enabled','woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_base_price_advanced_price_filter_comp_tp',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_multicurrency_base_price_options',
 	),

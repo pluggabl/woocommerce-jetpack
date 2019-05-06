@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 4.2.0
+ * @version 4.3.2
  * @author  Algoritmika Ltd.
  */
 
@@ -532,12 +532,6 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$total_fees_tax = 0;
 		$the_fees = $this->the_order->get_fees();
 		foreach ( $the_fees as $the_fee ) {
-			/* $taxes = maybe_unserialize( $the_fee['line_tax_data'] );
-			if ( ! empty( $taxes ) && is_array( $taxes ) && isset( $taxes['total'] ) && is_array( $taxes['total'] ) ) {
-				foreach ( $taxes['total'] as $tax ) {
-					$total_fees_tax += $tax;
-				}
-			} */
 			$total_fees_tax += $this->the_order->get_line_tax( $the_fee );
 		}
 		return $this->wcj_price_shortcode( $total_fees_tax, $atts );
@@ -555,12 +549,6 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		$the_fees = $this->the_order->get_fees();
 		foreach ( $the_fees as $the_fee ) {
 			$total_fees += $the_fee['line_total'];
-			/* $taxes = maybe_unserialize( $the_fee['line_tax_data'] );
-			if ( ! empty( $taxes ) && is_array( $taxes ) && isset( $taxes['total'] ) && is_array( $taxes['total'] ) ) {
-				foreach ( $taxes['total'] as $tax ) {
-					$total_fees += $tax;
-				}
-			} */
 			$total_fees += $this->the_order->get_line_tax( $the_fee );
 		}
 		return $this->wcj_price_shortcode( $total_fees, $atts );
@@ -660,7 +648,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_order_total
 	 *
-	 * @version 2.5.7
+	 * @version 4.3.2
 	 * @since   2.5.7
 	 */
 	function get_order_total( $atts, $param ) {
@@ -672,16 +660,16 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			if ( $_product ) {
 				switch ( $param ) {
 					case 'width':
-						$total += ( $item['qty'] * $_product->get_width() );
+						$total += ( $item['qty'] * floatval( $_product->get_width() ) );
 						break;
 					case 'height':
-						$total += ( $item['qty'] * $_product->get_height() );
+						$total += ( $item['qty'] * floatval( $_product->get_height() ) );
 						break;
 					case 'length':
-						$total += ( $item['qty'] * $_product->get_length() );
+						$total += ( $item['qty'] * floatval( $_product->get_length() ) );
 						break;
 					case 'weight':
-						$total += ( $item['qty'] * $_product->get_weight() );
+						$total += ( $item['qty'] * floatval( $_product->get_weight() ) );
 						break;
 				}
 			}

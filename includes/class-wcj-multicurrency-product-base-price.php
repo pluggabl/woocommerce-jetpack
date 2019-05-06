@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 4.3.1
+ * @version 4.3.2
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -48,7 +48,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Adds Compatibility with WooCommerce Price Filter Widget.
 		 *
-		 * @version 4.3.1
+		 * @version 4.3.2
 		 * @since   4.3.1
 		 */
 		function handle_price_filter_widget_compatibility() {
@@ -59,7 +59,36 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 			add_action( 'updated_option', array( $this, 'update_products_base_price_on_exchange_rate_change' ), 10, 3 );
 			add_action( 'updated_post_meta', array( $this, 'handle_price_filter_compatibility_flag_on_base_price_update' ), 10, 4 );
 			add_action( 'updated_post_meta', array( $this, 'handle_price_filter_compatibility_flag_on_base_price_currency_update' ), 10, 4 );
-			add_filter( 'woocommerce_price_filter_sql', array($this,'change_woocommerce_price_filter_sql'));
+			add_filter( 'woocommerce_price_filter_sql', array( $this, 'change_woocommerce_price_filter_sql' ) );
+
+			// Compatibility with third party price filters
+			if ( 'yes' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp_tp', 'no' ) ) {
+				add_filter( 'query', array( $this, 'change_third_party_price_filter_sql' ) );
+				add_filter( 'prdctfltr_meta_query', array( $this, 'add_base_price_on_product_meta_query' ) );
+			}
+		}
+
+		/**
+		 * Changes the sql from third party price filters comparing with the same sql from WooCommerce price filter.
+		 * This is only necessary due to some third party plugin not use the 'woocommerce_price_filter_sql' hook
+		 *
+		 * @version 4.3.2
+		 * @since   4.3.2
+		 *
+		 * @see WC_Widget_Price_Filter::get_filtered_price()
+		 * @param $sql
+		 *
+		 * @return string
+		 */
+		public function change_third_party_price_filter_sql( $sql ) {
+			if (
+				is_admin() ||
+				( false === strpos( $sql, "SELECT min( FLOOR( price_meta.meta_value ) ) as min_price" ) && false === strpos( $sql, "max( CEILING( price_meta.meta_value ) ) as max_price" ) )
+			) {
+				return $sql;
+			}
+			$sql = $this->change_woocommerce_price_filter_sql( $sql );
+			return $sql;
 		}
 
 		/**
@@ -67,7 +96,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * All in all, it creates the min and max from '_price' meta, and from '_wcj_multicurrency_base_price' if there is the '_wcj_multicurrency_base_price_comp_pf' meta
 		 *
-		 * @version 4.3.1
+		 * @version 4.3.2
 		 * @since   4.3.1
 		 *
 		 * @see WC_Widget_Price_Filter::get_filtered_price()
@@ -76,9 +105,15 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @return string
 		 */
 		function change_woocommerce_price_filter_sql($sql){
-			if ( 'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ) {
+			if (
+				is_admin() ||
+				( ! is_shop() && ! is_product_taxonomy() ) ||
+				! wc()->query->get_main_query()->post_count ||
+				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' )
+			) {
 				return $sql;
 			}
+
 			global $wpdb;
 			$args       = wc()->query->get_main_query()->query_vars;
 			$tax_query  = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
@@ -322,7 +357,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Updates '_wcj_multicurrency_base_price' meta.
 		 *
-		 * @version 4.3.1
+		 * @version 4.3.2
 		 * @since   4.3.1
 		 *
 		 * @param $product
@@ -337,19 +372,13 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 			if ( ! is_a( $product, 'WC_Product' ) ) {
 				return false;
 			}
-			$multicurrency_base_price_currency = get_post_meta( $product->get_id(), '_' . 'wcj_multicurrency_base_price_currency', true );
-			if ( $multicurrency_base_price_currency === get_option( 'woocommerce_currency' ) ) {
-				update_post_meta( $product->get_id(), '_wcj_multicurrency_base_price', get_post_meta( $product->get_id(), '_price', true ) );
-				return false;
-			}
 			if ( ! $price ) {
-				$price = get_post_meta( $product->get_id(), '_price', true );
-				if ( 1 != ( $currency_exchange_rate = wcj_get_currency_exchange_rate_product_base_currency( $multicurrency_base_price_currency ) ) ) {
-					$price = $price / $currency_exchange_rate;
-					if ( 'yes' === get_option( 'wcj_multicurrency_base_price_round_enabled', 'no' ) ) {
-						$price = round( $price, get_option( 'wcj_multicurrency_rounding_precision', absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) ) );
-					}
-				}
+				$price = $this->change_price( $product->get_price(), $product );
+				/*if ( $product->is_taxable() ) {
+					$price = $this->change_price( wc_get_price_including_tax( $product ), $product );
+				} else {
+					$price = $this->change_price( $product->get_price(), $product );
+				}*/
 			}
 			update_post_meta( $product->get_id(), '_wcj_multicurrency_base_price', $price );
 			return true;

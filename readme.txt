@@ -193,6 +193,13 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 4.3.2 - 06/05/2019 =
+* Fix - Shortcodes - Orders - "A non-numeric value encountered..." notice fixed in `[wcj_order_total_width]`, `[wcj_order_total_height]`, `[wcj_order_total_length]`, `[wcj_order_total_weight]` shortcodes.
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Improve compatibility with "Price Filter" widget.
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Add option to make it compatible with third party "Price Filter" widgets.
+* Dev - Functions - Exchange Rates - Update Free Currency Converter API to v6 and read API key from settings.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Add option to set API key for Free Currency Converter API server.
+
 = 4.3.1 - 25/04/2019 =
 * Fix - SHIPPING & ORDERS - Order Quantities - Decimal Quantities - `init` hook priority lowered. This fixes the issue with "PDF Invoicing & Packing Slips" module not displaying decimal quantities.
 * Fix - PDF INVOICING & PACKING SLIPS - Fix "failed to delete buffer" warning when generating pdf.

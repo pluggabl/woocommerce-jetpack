@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 4.3.0
+ * @version 4.3.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -187,12 +187,18 @@ if ( ! function_exists( 'wcj_currencyconverterapi_get_exchange_rate' ) ) {
 	/*
 	 * wcj_currencyconverterapi_get_exchange_rate.
 	 *
-	 * @version 3.9.0
+	 * @version 4.3.2
 	 * @since   3.9.0
 	 */
 	function wcj_currencyconverterapi_get_exchange_rate( $currency_from, $currency_to ) {
-		$pair     = $currency_from . '_' . $currency_to;
-		$url      = 'https://free.currencyconverterapi.com/api/v5/convert?q=' . $pair . '&compact=y';
+		$pair    = $currency_from . '_' . $currency_to;
+		$url     = 'https://free.currencyconverterapi.com/api/v6/convert?q=' . $pair . '&compact=y';
+		$api_key = get_option( 'wcj_currency_exchange_api_key_fccapi' );
+		if ( ! empty( $api_key ) ) {
+			$url = add_query_arg( array(
+				'apiKey' => $api_key
+			), $url );
+		}
 		$response = wcj_get_currency_exchange_rates_url_response( $url );
 		if ( $response ) {
 			return ( ! empty( $response->{$pair}->val ) ? $response->{$pair}->val : false );
@@ -491,7 +497,7 @@ if ( ! function_exists( 'wcj_currencyconverterapi_io_get_exchange_rate_average' 
 	/*
 	 * wcj_currencyconverterapi_io_get_exchange_rate_average.
 	 *
-	 * @version 3.9.0
+	 * @version 4.3.2
 	 * @since   3.9.0
 	 * @return  false or rate
 	 */
@@ -501,7 +507,13 @@ if ( ! function_exists( 'wcj_currencyconverterapi_io_get_exchange_rate_average' 
 		$average_rate_counter  = 0;
 		$date_ranges           = wcj_get_date_ranges( $start_date, $end_date, 8 );
 		foreach ( $date_ranges as $range ) {
-			$url       = 'https://free.currencyconverterapi.com/api/v6/convert?q=' . $pair . '&compact=ultra&date=' . $range['start_date'] . '&endDate=' . $range['end_date'];
+			$url     = 'https://free.currencyconverterapi.com/api/v6/convert?q=' . $pair . '&compact=ultra&date=' . $range['start_date'] . '&endDate=' . $range['end_date'];
+			$api_key = get_option( 'wcj_currency_exchange_api_key_fccapi' );
+			if ( ! empty( $api_key ) ) {
+				$url = add_query_arg( array(
+					'apiKey' => $api_key
+				), $url );
+			}
 			$response  = wcj_get_currency_exchange_rates_url_response( $url );
 			if ( $response && ! empty( $response->{$pair} ) ) {
 				$response = ( array ) $response->{$pair};
