@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product MSRP
  *
- * @version 3.6.0
+ * @version 4.3.2
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -100,6 +100,22 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_msrp_admin_options',
+	),
+	array(
+		'title'    => __( 'Compatibility', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_payment_msrp_comp',
+	),
+	array(
+		'title'    => __( 'Multicurrency', 'woocommerce-jetpack'),
+		'desc'     => __( 'Enable compatibility with Multicurrency module', 'woocommerce-jetpack'),
+		'id'       => 'wcj_payment_msrp_comp_mc',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_payment_msrp_comp',
 	),
 ) );
 return $settings;

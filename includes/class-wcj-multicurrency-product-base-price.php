@@ -373,12 +373,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 				return false;
 			}
 			if ( ! $price ) {
-				$price = $this->change_price( $product->get_price(), $product );
-				/*if ( $product->is_taxable() ) {
-					$price = $this->change_price( wc_get_price_including_tax( $product ), $product );
-				} else {
-					$price = $this->change_price( $product->get_price(), $product );
-				}*/
+				$price = $this->change_price( get_post_meta( $product->get_id(), '_price', true ), $product );
 			}
 			update_post_meta( $product->get_id(), '_wcj_multicurrency_base_price', $price );
 			return true;

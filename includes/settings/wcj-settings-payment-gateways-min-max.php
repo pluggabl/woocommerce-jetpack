@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Min/Max Amounts
  *
- * @version 2.8.0
+ * @version 4.3.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    checkout notices - add %diff_amount% and %total_in_cart% replaced values (wc_has_notice won't work then?, probably will need to use wc_clear_notices)
@@ -60,6 +60,22 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_payment_gateways_min_max_general_options',
+	),
+	array(
+		'title'    => __( 'Compatibility', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_payment_gateways_min_max_comp',
+	),
+	array(
+		'title'    => __( 'Multicurrency', 'woocommerce-jetpack'),
+		'desc'     => __( 'Enable compatibility with Multicurrency module', 'woocommerce-jetpack'),
+		'id'       => 'wcj_payment_gateways_min_max_comp_mc',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_payment_gateways_min_max_comp',
 	),
 	array(
 		'title'    => __( 'Payment Gateways', 'woocommerce-jetpack' ),

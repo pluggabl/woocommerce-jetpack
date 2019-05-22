@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product MSRP
  *
- * @version 4.1.0
+ * @version 4.3.2
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 4.3.2
 	 * @since   3.6.0
 	 * @todo    (maybe) option to change `_wcj_msrp` meta key
 	 * @todo    (maybe) REST API
@@ -49,8 +49,33 @@ class WCJ_Product_MSRP extends WCJ_Module {
 			}
 			// Display
 			add_filter( 'woocommerce_get_price_html', array( $this, 'display' ), PHP_INT_MAX, 2 );
+
+			// Make _wcj_msrp compatible with other modules or third party plugins
+			add_filter( 'wcj_product_msrp', array( $this, 'make_wcj_msrp_price_compatible_with_3rd_party' ), 10, 2 );
 		}
 
+	}
+
+	/**
+	 * Add compatibility between third party modules / plugins and _wcj_msrp
+	 *
+	 * @version 4.3.2
+	 * @since   4.3.2
+	 *
+	 * @param $price
+	 * @param $product
+	 *
+	 * @return mixed
+	 */
+	function make_wcj_msrp_price_compatible_with_3rd_party( $price, $product ) {
+		if ( 'yes' !== get_option( 'wcj_payment_msrp_comp_mc', 'no' ) ) {
+			return $price;
+		}
+		$module = 'multicurrency';
+		if ( wcj_is_module_enabled( $module ) ) {
+			$price = WCJ()->modules[ $module ]->change_price( $price, null );
+		}
+		return $price;
 	}
 
 	/**

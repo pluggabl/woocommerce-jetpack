@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 3.5.1
+ * @version 4.3.2
  * @author  Algoritmika Ltd.
  */
 
@@ -442,7 +442,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_cell.
 	 *
-	 * @version 3.5.1
+	 * @version 4.3.2
 	 * @since   3.2.0
 	 * @todo    do we need `pa_` replacement?
 	 * @todo    "WooCommerce TM Extra Product Options" plugin options: this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency)
@@ -724,6 +724,13 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 
 			case 'product_id':
 				return ( ! is_object( $the_product ) ) ? '' : $the_product->get_id();
+
+			case 'product_shipping_class':
+				return ( ! is_object( $the_product ) ) ? '' :
+					( '' != ( $shipping_class = $the_product->get_shipping_class() ) || ! isset( $column_param ) || '' == $column_param ? $shipping_class : $column_param );
+
+			case 'product_shipping_class_id':
+				return ( ! is_object( $the_product ) ) ? '' : $the_product->get_shipping_class_id();
 
 			case 'item_product_id':
 				return ( true === $item['is_custom'] ) ? '' : $item['product_id'];

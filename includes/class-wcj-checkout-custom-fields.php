@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 4.3.0
+ * @version 4.3.2
  * @author  Algoritmika Ltd.
  */
 
@@ -28,8 +28,8 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_checkout_fields',                         array( $this, 'add_custom_checkout_fields' ), PHP_INT_MAX );
-			add_action( 'woocommerce_admin_billing_fields',                    array( $this, 'add_custom_billing_fields_to_admin_order_display' ), PHP_INT_MAX );
-			add_action( 'woocommerce_admin_shipping_fields',                   array( $this, 'add_custom_shipping_fields_to_admin_order_display' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_admin_billing_fields',                    array( $this, 'add_custom_billing_fields_to_admin_order_display' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_admin_shipping_fields',                   array( $this, 'add_custom_shipping_fields_to_admin_order_display' ), PHP_INT_MAX );
 			add_action( 'woocommerce_admin_order_data_after_shipping_address', array( $this, 'add_custom_order_and_account_fields_to_admin_order_display' ), PHP_INT_MAX );
 			if ( 'yes' === get_option( 'wcj_checkout_custom_fields_add_to_order_received', 'yes' ) ) {
 				add_action( 'woocommerce_order_details_after_order_table',     array( $this, 'add_custom_fields_to_view_order_and_thankyou_pages' ), PHP_INT_MAX );
@@ -336,7 +336,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * add_woocommerce_admin_fields.
 	 *
-	 * @version 4.3.0
+	 * @version 4.3.2
 	 * @todo    converting from before version 2.3.0: section?
 	 * @todo    add alternative way of displaying fields (e.g. new meta box), so we have more control over displaying fields' values (e.g. line breaks)
 	 */
@@ -388,24 +388,25 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 						update_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, $the_meta['label'] );
 					}
 				}
-				$fields[ $the_key ] = array(
-					'type'  => $the_type,
-					'label' => ( '' != get_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, true ) ) ?
-						get_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, true ) :
-						get_option( 'wcj_checkout_custom_field_label_' . $i ),
-					'show'  => true,
-					'class' => $the_class,
-					'wrapper_class' => 'form-field-wide',
-				);
-				if ( isset( $options ) ) {
-					// Displays checkout field value, not the key
-					add_filter( "woocommerce_order_get__{$section}_{$the_key}", function ( $name ) use ( $options ) {
-						if ( isset( $options[ $name ] ) ) {
-							return $options[ $name ];
-						}
-						return $name;
-					} );
-					$fields[ $the_key ]['options'] = $options;
+				if ( ! isset( $_POST[ '_' . $section . '_' . $the_key ] ) ) {
+					$fields[ $the_key ] = array(
+						'type'          => $the_type,
+						'label'         => ( '' != get_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, true ) ) ?
+							get_post_meta( get_the_ID(), '_' . $section . '_' . $the_key_label, true ) :
+							get_option( 'wcj_checkout_custom_field_label_' . $i ),
+						'show'          => true,
+						'class'         => $the_class,
+						'wrapper_class' => 'form-field-wide',
+					);
+					if ( isset( $options ) ) {
+						add_filter( "woocommerce_order_get__{$section}_{$the_key}", function ( $name ) use ( $options ) {
+							if ( isset( $options[ $name ] ) ) {
+								return $options[ $name ];
+							}
+							return $name;
+						} );
+						$fields[ $the_key ]['options'] = $options;
+					}
 				}
 			}
 		}

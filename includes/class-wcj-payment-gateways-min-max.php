@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Min/Max Amounts
  *
- * @version 3.2.3
+ * @version 4.3.2
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -35,7 +35,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 3.2.3
+	 * @version 4.3.2
 	 * @since   2.4.1
 	 * @todo    (maybe) `wc_clear_notices()`
 	 */
@@ -53,6 +53,15 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 		foreach ( $_available_gateways as $key => $gateway ) {
 			$min = get_option( 'wcj_payment_gateways_min_' . $key, 0 );
 			$max = get_option( 'wcj_payment_gateways_max_' . $key, 0 );
+
+			// Compatibility with other modules
+			if ( 'yes' === get_option( 'wcj_payment_gateways_min_max_comp_mc', 'no' ) ) {
+				if ( wcj_is_module_enabled( 'multicurrency' ) ) {
+					$min = WCJ()->modules['multicurrency']->change_price( $min, null );
+					$max = WCJ()->modules['multicurrency']->change_price( $max, null );
+				}
+			}
+
 			if ( $min != 0 && $total_in_cart < $min ) {
 				$notices[] = str_replace( array( '%gateway_title%', '%min_amount%' ), array( $gateway->title, wc_price( $min ) ), $notices_template_min );
 				unset( $_available_gateways[ $key ] );

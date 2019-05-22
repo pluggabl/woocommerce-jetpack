@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 3.9.0
+ * @version 4.3.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 4.3.2
 	 * @since   2.8.0
 	 */
 	function __construct() {
@@ -34,6 +34,28 @@ class WCJ_Email_Verification extends WCJ_Module {
 			add_action( 'user_register',                     array( $this, 'reset_and_mail_activation_link' ),                  PHP_INT_MAX );
 			add_filter( 'manage_users_columns',              array( $this, 'add_verified_email_column' ) );
 			add_filter( 'manage_users_custom_column',        array( $this, 'render_verified_email_column' ), 10, 3 );
+			add_action( 'set_current_user',                  array( $this, 'prevent_user_login') );
+		}
+	}
+
+	/**
+	 * Prevents user login.
+	 *
+	 * @version 4.3.2
+	 * @since   4.3.2
+	 */
+	function prevent_user_login() {
+		global $current_user;
+		if (
+			'yes' === get_option( 'wcj_emails_verification_prevent_user_login', 'no' ) &&
+			0 != $current_user->ID
+		) {
+			setup_userdata( $current_user->ID );
+			$user_data = get_userdata( $current_user->ID );
+			$response  = $this->check_if_user_email_is_verified( $user_data );
+			if ( is_wp_error( $response ) ) {
+				wp_logout();
+			}
 		}
 	}
 

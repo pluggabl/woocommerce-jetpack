@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 4.3.1
+ * @version 4.3.2
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.1
+	 * @version 4.3.2
 	 * @since   2.9.0
 	 * @todo    [dev] maybe rename the module to "Order Product Quantities" or "Product Quantities"?
 	 * @todo    [dev] loop (`woocommerce_loop_add_to_cart_link`)
@@ -85,7 +85,28 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				add_action( 'init',                               array( $this, 'float_stock_amount' ) );
 				add_action( 'woocommerce_quantity_input_pattern', array( $this, 'float_quantity_input_pattern' ) );
 			}
+
+			// Prevent outdated min/max Quantity Options
+			add_action( 'woocommerce_update_product', array( $this, 'prevent_outdated_min_max' ), 10 );
 		}
+	}
+
+	/**
+	 * Prevents outdated min/max Quantity options.
+	 *
+	 * @version 4.3.2
+	 * @since   4.3.2
+	 * @param $product_id
+	 */
+	function prevent_outdated_min_max( $product_id ) {
+		$product = wc_get_product( $product_id );
+		if (
+			! $product->is_type( 'variable' ) ||
+			isset( $_POST['_wcj_order_quantities_min'] )
+		) {
+			return;
+		}
+		delete_post_meta( $product_id, '_wcj_order_quantities_min' );
 	}
 
 	/**

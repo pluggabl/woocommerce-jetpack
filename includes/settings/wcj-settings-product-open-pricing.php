@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Open Pricing
  *
- * @version 4.2.0
+ * @version 4.3.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
@@ -142,6 +142,26 @@ return array(
 		'id'       => 'wcj_product_open_price_check_for_outputted_data',
 		'default'  => 'yes',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Advanced: Price Changes', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable open pricing for products with "Price Changes"', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Try enabling this checkbox, if you are having compatibility issues with other plugins.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_open_price_check_for_product_changes_price',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Product Bundles', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'For "WPC Product Bundles for WooCommerce" plugin.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_open_price_woosb_product_bundles_divide',
+		'default'  => 'no',
+		'type'     => 'select',
+		'options'  => array(
+			'no'             => __( 'No not divide', 'woocommerce-jetpack' ),
+			'yes'            => __( 'Divide by number of products in a bundle', 'woocommerce-jetpack' ),
+			'proportionally' => __( 'Divide proportionally to the original price', 'woocommerce-jetpack' ),
+		),
 	),
 	array(
 		'type'     => 'sectionend',

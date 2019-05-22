@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Email Verification
  *
- * @version 3.9.0
+ * @version 4.3.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -37,6 +37,14 @@ return array(
 		'type'     => 'checkbox',
 		'id'       => 'wcj_emails_verification_redirect_on_success', // mislabelled - should be `wcj_emails_verification_login_on_success`
 		'default'  => 'yes',
+	),
+	array(
+		'title'    => __( 'Prevent User Login Globally', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable if users are logged in automattically when they should not, like after registration on checkout', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_emails_verification_prevent_user_login',
+		'default'  => 'no',
 	),
 	array(
 		'title'    => __( 'Redirect User After Successful Verification to Custom URL', 'woocommerce-jetpack' ),

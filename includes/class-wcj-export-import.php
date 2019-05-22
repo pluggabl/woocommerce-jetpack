@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 3.0.0
+ * @version 4.3.2
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  */
@@ -219,8 +219,9 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_date_fields.
 	 *
-	 * @version 3.0.0
+	 * @version 4.3.2
 	 * @since   3.0.0
+	 * @todo    [dev] maybe make `$dateformat` optional
 	 * @todo    [dev] mark current (i.e. active) link (if exists)
 	 */
 	function export_date_fields( $tool_id ) {
@@ -238,13 +239,14 @@ class WCJ_Export_Import extends WCJ_Module {
 			$predefined_ranges[] = '<a href="' . $link . '">' . $range_data['title'] . '</a>';
 		}
 		$predefined_ranges = implode( ' | ', $predefined_ranges );
+		$dateformat        = ' dateformat="yy-mm-dd"';
 		$date_input_fields = '<form method="get" action="">' .
 			'<input type="hidden" name="page" value="wcj-tools">' .
 			'<input type="hidden" name="tab" value="export_' . $tool_id . '">' .
 			'<strong>' . __( 'Custom:', 'woocommerce-jetpack' ) . '</strong>' . ' ' .
-			'<input name="start_date" id="start_date" type="text" display="date" value="' . $current_start_date . '">' .
+			'<input name="start_date" id="start_date" type="text" display="date"' . $dateformat . ' value="' . $current_start_date . '">' .
 			'<strong>' . ' - ' . '</strong>' .
-			'<input name="end_date" id="end_date" type="text" display="date" value="' . $current_end_date . '">' .
+			'<input name="end_date" id="end_date" type="text" display="date"' . $dateformat . ' value="' . $current_end_date . '">' .
 			' ' .
 			'<button class="button-primary" name="range" id="range" type="submit" value="custom">' . __( 'Go', 'woocommerce-jetpack' ) . '</button>' .
 		'</form>';

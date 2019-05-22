@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 4.2.0
+ * @version 4.3.2
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -286,11 +286,21 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * get_open_price.
 	 *
-	 * @version 4.1.0
+	 * @version 4.3.2
 	 * @since   2.4.8
 	 */
 	function get_open_price( $price, $_product ) {
 		if ( $this->is_open_price_product( $_product ) && isset( $_product->wcj_open_price ) ) {
+			if ( 'WC_Product_Woosb' === get_class( $_product ) ) {
+				// "WPC Product Bundles for WooCommerce" plugin
+				return $price;
+			}
+			if ( 'yes' === get_option( 'wcj_product_open_price_check_for_product_changes_price', 'no' ) ) {
+				$product_changes = $_product->get_changes();
+				if ( ! empty( $product_changes ) && isset( $product_changes['price'] ) ) {
+					return $price;
+				}
+			}
 			$price = $_product->wcj_open_price;
 			// Multicurrency (Currency Switcher) module
 			if ( WCJ()->modules['multicurrency']->is_enabled() ) {
@@ -347,13 +357,37 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_open_price_to_cart_item_data.
 	 *
-	 * @version 4.2.0
+	 * @version 4.3.2
 	 * @since   2.4.8
 	 * @todo    [dev] (maybe) better conversion for Currency Switcher module (i.e. include rounding)
 	 */
 	function add_open_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 		if ( isset( $_POST['wcj_open_price'] ) ) {
 			$cart_item_data['wcj_open_price'] = $_POST['wcj_open_price'];
+			if ( 'no' != ( $product_bundles_divide = get_option( 'wcj_product_open_price_woosb_product_bundles_divide', 'no' ) ) ) {
+				// "WPC Product Bundles for WooCommerce" plugin
+				if ( ! empty( $cart_item_data['woosb_parent_id'] ) ) {
+					$parent_product = wc_get_product( $cart_item_data['woosb_parent_id'] );
+					if ( 'WC_Product_Woosb' == get_class( $parent_product ) ) {
+						if ( 'yes' === $product_bundles_divide ) {
+							$total_products_in_bundle = count( $parent_product->get_items() );
+							if ( $total_products_in_bundle ) {
+								$qty = ( ! empty( $cart_item_data['woosb_qty'] ) ? $cart_item_data['woosb_qty'] : 1 );
+								$cart_item_data['wcj_open_price'] = $cart_item_data['wcj_open_price'] / $total_products_in_bundle / $qty;
+							}
+						} else { // 'proportionally'
+							$total_original_price = 0;
+							foreach ( $parent_product->get_items() as $child ) {
+								$total_original_price += get_post_meta( $child['id'], '_price', true );
+							}
+							if ( 0 != $total_original_price ) {
+								$qty = ( ! empty( $cart_item_data['woosb_qty'] ) ? $cart_item_data['woosb_qty'] : 1 );
+								$cart_item_data['wcj_open_price'] = $cart_item_data['wcj_open_price'] * $cart_item_data['woosb_price'] / $total_original_price / $qty;
+							}
+						}
+					}
+				}
+			}
 			if ( 'switched_currency' === get_option( 'wcj_product_open_price_currency_switcher', 'shop_currency' ) ) {
 				// Multicurrency (Currency Switcher) module
 				if ( WCJ()->modules['multicurrency']->is_enabled() ) {

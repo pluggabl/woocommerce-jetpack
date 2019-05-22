@@ -2,7 +2,7 @@
 Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
-Tested up to: 5.1
+Tested up to: 5.2
 Stable tag: 4.3.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -193,12 +193,22 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.3.2 - 06/05/2019 =
+= 4.3.2 - 22/05/2019 =
 * Fix - Shortcodes - Orders - "A non-numeric value encountered..." notice fixed in `[wcj_order_total_width]`, `[wcj_order_total_height]`, `[wcj_order_total_length]`, `[wcj_order_total_weight]` shortcodes.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Fix problem where select and radio fields values are lost on order status change.
+* Fix - SHIPPING & ORDERS - Order Quantities - Fix problem preventing `_wcj_order_quantities_min` meta from being saved on variable products.
+* Dev - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Create option to add compatibility with Multicurrency module.
 * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Improve compatibility with "Price Filter" widget.
 * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Add option to make it compatible with third party "Price Filter" widgets.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Advanced: Price Changes" option added.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Compatibility with "WPC Product Bundles for WooCommerce" plugin added (and "Product Bundles" option added).
+* Dev - PRODUCTS - Product MSRP - Create option to add compatibility with Multicurrency module.
 * Dev - Functions - Exchange Rates - Update Free Currency Converter API to v6 and read API key from settings.
 * Dev - PRICES & CURRENCIES - Currency Exchange Rates - Add option to set API key for Free Currency Converter API server.
+* Dev - EMAILS & MISC. - Email Verification - Create new option preventing users from login in any situation. It is necessary to fix automatic login in some cases, like after registration on checkout.
+* Dev - EMAILS & MISC. - Export - Forcing date format in datepicker to `yy-mm-dd`.
+* Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `product_shipping_class` and `product_shipping_class_id` columns added.
+* Tested up to: 5.2.
 
 = 4.3.1 - 25/04/2019 =
 * Fix - SHIPPING & ORDERS - Order Quantities - Decimal Quantities - `init` hook priority lowered. This fixes the issue with "PDF Invoicing & Packing Slips" module not displaying decimal quantities.
