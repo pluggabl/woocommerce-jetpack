@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 4.3.1
+ * @version 4.4.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    "pretty prices"
@@ -119,6 +119,14 @@ $settings = array(
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_compatibility_wc_price_filter',
 		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'WooCommerce Import', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This option fixes WooCommerce Import Tool preventing it from converting some uppercase meta to lowercase', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_compatibility_wc_import',
+		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 4.0.0
+ * @version 4.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -101,7 +101,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 3.9.0
+	 * @version 4.4.0
 	 */
 	function add_hooks() {
 
@@ -124,6 +124,35 @@ class WCJ_Price_by_Country_Core {
 			add_filter( 'woocommerce_product_query_meta_query',  array( $this, 'price_filter_meta_query' ), PHP_INT_MAX, 2 );
 			add_filter( 'woocommerce_get_catalog_ordering_args', array( $this, 'sorting_by_price_fix' ), PHP_INT_MAX );
 		}
+
+		// Price Format
+		if ( wcj_is_frontend() ) {
+			if ( 'wc_get_price_to_display' === get_option( 'wcj_price_by_country_price_format_method', 'get_price' ) ) {
+				add_filter( 'woocommerce_get_price_including_tax', array( $this, 'format_price_after_including_excluding_tax' ), PHP_INT_MAX, 3 );
+				add_filter( 'woocommerce_get_price_excluding_tax', array( $this, 'format_price_after_including_excluding_tax' ), PHP_INT_MAX, 3 );
+			}
+		}
+	}
+
+	/**
+	 * format_price_after_including_excluding_tax.
+	 *
+	 * @version 4.4.0
+	 * @since   4.4.0
+	 *
+	 * @param $return_price
+	 * @param $qty
+	 * @param $product
+	 *
+	 * @return float|int
+	 */
+	function format_price_after_including_excluding_tax( $return_price, $qty, $product ) {
+		$precision    = get_option( 'woocommerce_price_num_decimals', 2 );
+		$return_price = wcj_price_by_country_rounding( $return_price, $precision );
+		if ( 'yes' === get_option( 'wcj_price_by_country_make_pretty', 'no' ) && $return_price >= 0.5 && $precision > 0 ) {
+			$return_price = wcj_price_by_country_pretty_price( $return_price, $precision );
+		}
+		return $return_price;
 	}
 
 	/**

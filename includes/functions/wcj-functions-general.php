@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 4.3.0
+ * @version 4.4.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -821,5 +821,32 @@ if ( ! function_exists( 'wcj_get_shortcodes_list' ) ) {
 	function wcj_get_shortcodes_list() {
 		$the_array = apply_filters( 'wcj_shortcodes_list', array() );
 		return implode( ', ', $the_array )/*  . ' (' . count( $the_array ) . ')' */;
+	}
+}
+
+if ( ! function_exists( 'wcj_get_cart_item_quantities' ) ) {
+	/**
+	 * Gets cart items quantities, with correct variation id, where native function from WooCommerce fails getting only the parent id if Manage Stock option is enabled.
+	 *
+	 * @see WC_Cart::get_cart_item_quantities();
+	 *
+	 * @version 4.4.0
+	 * @since   4.4.0
+	 * @return  array
+	 */
+	function wcj_get_cart_item_quantities() {
+		$quantities = array();
+
+		foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
+			$product = $values['data'];
+			if ( 'variation' == $product->get_type() ) {
+				$product_id = ( 0 != $values['variation_id'] ? $values['variation_id'] : $values['parent_id'] );
+			} else {
+				$product_id = $values['product_id'];
+			}
+			$quantities[ $product_id ] = isset( $quantities[ $product->get_stock_managed_by_id() ] ) ? $quantities[ $product->get_stock_managed_by_id() ] + $values['quantity'] : $values['quantity'];
+		}
+
+		return $quantities;
 	}
 }

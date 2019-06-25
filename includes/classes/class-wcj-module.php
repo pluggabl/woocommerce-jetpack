@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 4.3.0
+ * @version 4.4.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] maybe should be `abstract` ?
@@ -24,7 +24,7 @@ class WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 4.4.0
 	 */
 	function __construct( $type = 'module' ) {
 		add_filter( 'wcj_settings_sections',     array( $this, 'settings_section' ) );
@@ -33,8 +33,16 @@ class WCJ_Module {
 		if ( 'module' === $this->type ) {
 			$this->parent_id = '';
 		}
-		add_action( 'init', array( $this, 'add_settings' ) );
-		add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
+
+		if ( 'no' === get_option( 'wcj_load_modules_on_init', 'no' ) ) {
+			add_action( 'init', array( $this, 'add_settings' ) );
+			add_action( 'init', array( $this, 'reset_settings' ), PHP_INT_MAX );
+		} else {
+			if ( 'init' === current_filter() ) {
+				$this->add_settings();
+				$this->reset_settings();
+			}
+		}
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 3.9.0
+ * @version 4.4.0
  * @since   2.5.6
  * @author  Algoritmika Ltd.
  */
@@ -28,7 +28,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * Init settings
 	 *
-	 * @version 3.8.0
+	 * @version 4.4.0
 	 * @since   2.5.6
 	 * @access  public
 	 * @return  void
@@ -63,14 +63,16 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 
 		// Add weight table rows
 		if ( apply_filters( 'wcj_custom_shipping_do_add_table_rows', true, $this ) ) {
-			add_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) );
+			if ( ! has_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) ) ) {
+				add_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) );
+			}
 		}
 	}
 
 	/**
 	 * add_table_rows.
 	 *
-	 * @version 3.9.0
+	 * @version 4.4.0
 	 * @since   2.6.0
 	 */
 	function add_table_rows( $instance_form_fields ) {
@@ -98,6 +100,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 					) );
 				}
 			}
+			remove_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) );
 		}
 		return $instance_form_fields;
 	}

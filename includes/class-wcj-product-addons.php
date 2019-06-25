@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 4.2.0
+ * @version 4.4.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names)
@@ -454,14 +454,14 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 2.7.0
+	 * @version 4.4.0
 	 * @since   2.5.3
 	 */
 	function change_price( $price, $_product ) {
 		$addons = $this->get_product_addons( wcj_get_product_id_or_variation_parent_id( $_product ) );
 		foreach ( $addons as $addon ) {
 			if ( isset( $_product->{$addon['price_key']} ) ) {
-				$price += $_product->{$addon['price_key']};
+				$price += $this->maybe_convert_currency( $_product->{$addon['price_key']}, $_product );
 			}
 		}
 		return $price;

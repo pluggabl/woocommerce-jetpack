@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 3.9.0
+ * @version 4.4.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -153,14 +153,23 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Advanced: Price Filters Priority', 'woocommerce-jetpack' ),
+		'type'     => 'sectionend',
+		'id'       => 'wcj_price_by_country_options',
+	),
+	array(
+		'title'    => __( 'Advanced', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_price_by_country_country_advanced',
+	),
+	array(
+		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
 		'id'       => 'wcj_price_by_country_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',
 	),
 	array(
-		'title'    => __( 'Advanced: User IP Detection Method', 'woocommerce-jetpack' ),
+		'title'    => __( 'User IP Detection Method', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_country_ip_detection_method',
 		'default'  => 'wc',
 		'type'     => 'select',
@@ -170,8 +179,19 @@ $settings = array(
 		),
 	),
 	array(
+		'title'    => __( 'Price Format Method', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'The moment "Pretty Price" and "Rounding" will be applied' ),
+		'id'       => 'wcj_price_by_country_price_format_method',
+		'default'  => 'get_price',
+		'type'     => 'select',
+		'options'  => array(
+			'get_price'               => __( 'get_price()', 'woocommerce-jetpack' ),
+			'wc_get_price_to_display' => __( 'wc_get_price_to_display()', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_price_by_country_options',
+		'id'       => 'wcj_price_by_country_country_advanced',
 	),
 	array(
 		'title'    => __( 'Country Groups', 'woocommerce-jetpack' ),

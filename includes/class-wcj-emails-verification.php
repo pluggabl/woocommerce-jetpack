@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Email Verification
  *
- * @version 4.3.2
+ * @version 4.4.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.2
+	 * @version 4.4.0
 	 * @since   2.8.0
 	 */
 	function __construct() {
@@ -41,8 +41,8 @@ class WCJ_Email_Verification extends WCJ_Module {
 	/**
 	 * Prevents user login.
 	 *
-	 * @version 4.3.2
-	 * @since   4.3.2
+	 * @version 4.4.0
+	 * @since   4.4.0
 	 */
 	function prevent_user_login() {
 		global $current_user;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 4.3.2
+ * @version 4.4.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -48,7 +48,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Adds Compatibility with WooCommerce Price Filter Widget.
 		 *
-		 * @version 4.3.2
+		 * @version 4.4.0
 		 * @since   4.3.1
 		 */
 		function handle_price_filter_widget_compatibility() {
@@ -72,8 +72,8 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * Changes the sql from third party price filters comparing with the same sql from WooCommerce price filter.
 		 * This is only necessary due to some third party plugin not use the 'woocommerce_price_filter_sql' hook
 		 *
-		 * @version 4.3.2
-		 * @since   4.3.2
+		 * @version 4.4.0
+		 * @since   4.4.0
 		 *
 		 * @see WC_Widget_Price_Filter::get_filtered_price()
 		 * @param $sql
@@ -96,7 +96,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * All in all, it creates the min and max from '_price' meta, and from '_wcj_multicurrency_base_price' if there is the '_wcj_multicurrency_base_price_comp_pf' meta
 		 *
-		 * @version 4.3.2
+		 * @version 4.4.0
 		 * @since   4.3.1
 		 *
 		 * @see WC_Widget_Price_Filter::get_filtered_price()
@@ -357,7 +357,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Updates '_wcj_multicurrency_base_price' meta.
 		 *
-		 * @version 4.3.2
+		 * @version 4.4.0
 		 * @since   4.3.1
 		 *
 		 * @param $product

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings
  *
- * @version 4.1.0
+ * @version 4.4.0
  * @since   1.0.0
  * @author  Algoritmika Ltd.
  */
@@ -470,6 +470,13 @@ class WC_Settings_Jetpack extends WC_Settings_Page {
 				'desc'    => __( 'Choose if you want Booster\'s options to be autoloaded when calling add_option. After saving this option, you need to Reset all Booster\'s settings. Leave default value (i.e. Enabled) if not sure.', 'woocommerce-jetpack' ),
 				'id'      => 'wcj_autoload_options',
 				'default' => 'yes',
+			),
+			array(
+				'title'   => __( 'Load Modules on Init Hook', 'woocommerce-jetpack' ),
+				'type'    => 'checkbox',
+				'desc'    => __( 'Choose if you want to load Booster Modules on Init hook.', 'woocommerce-jetpack' ).' '.__( 'It will load the locale appropriately if users change it from the profile page.', 'woocommerce-jetpack' ),
+				'id'      => 'wcj_load_modules_on_init',
+				'default' => 'no',
 			),
 			array(
 				'title'   => __( 'Use List Instead of Comma Separated Text for Products in Settings', 'woocommerce-jetpack' ),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Offer Price
  *
- * @version 4.2.0
+ * @version 4.4.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -43,6 +43,14 @@ return array(
 		'default'  => array(),
 		'options'  => wcj_get_terms( 'product_cat' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Exclude', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Out of stock', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Excludes out of stock products.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_exclude_out_of_stock',
+		'type'     => 'checkbox',
+		'default'  => 'no',
 	),
 	array(
 		'id'       => 'wcj_offer_price_general_options',
@@ -325,7 +333,7 @@ return array(
 	),
 	array(
 		'title'    => __( 'Email Template', 'woocommerce-jetpack' ),
-		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%offered_price%', '%customer_name%', '%customer_email%', '%customer_message%' ) ),
+		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%offered_price%', '%customer_name%', '%customer_email%', '%customer_message%', '%user_ip%', '%user_agent%' ) ),
 		'id'       => 'wcj_offer_price_email_template',
 		'type'     => 'custom_textarea',
 		'default'  =>
@@ -337,6 +345,23 @@ return array(
 	),
 	array(
 		'id'       => 'wcj_offer_price_email_options',
+		'type'     => 'sectionend',
+	),
+	array(
+		'title'    => __( 'Admin Options', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_admin_options',
+		'type'     => 'title',
+	),
+	array(
+		'title'    => __( 'Offer Price History Meta Box Columns', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_offer_price_admin_meta_box_columns',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'default'  => array( 'date', 'offered_price', 'customer_message', 'customer_name', 'customer_email', 'customer_id', 'user_ip', 'sent_to' ),
+		'options'  => $this->get_admin_meta_box_columns(),
+	),
+	array(
+		'id'       => 'wcj_offer_price_admin_options',
 		'type'     => 'sectionend',
 	),
 );

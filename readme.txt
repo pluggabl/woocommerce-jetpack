@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.2
-Stable tag: 4.3.1
+Stable tag: 4.4.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -112,9 +112,9 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Left to Free Shipping* - Display "left to free shipping" info.
 * *Maximum Products per User* - Limit number of items your (logged) customers can buy.
 * *Order Custom Statuses* - Custom statuses for WooCommerce orders.
-* *Order Min/Max Quantities* - Set min/max product quantities in WooCommerce order.
 * *Order Minimum Amount* - Minimum order amount (optionally by user role).
 * *Order Numbers* - Sequential order numbering, custom order number prefix, suffix and number width.
+* *Order Quantities* - Manage product quantities in WooCommerce order: set min, max, step; enable decimal quantities etc.
 * *Orders* - Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.
 * *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page.
 * *Shipping Descriptions* - Add descriptions to shipping methods on frontend.
@@ -193,21 +193,39 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.3.2 - 22/05/2019 =
-* Fix - Shortcodes - Orders - "A non-numeric value encountered..." notice fixed in `[wcj_order_total_width]`, `[wcj_order_total_height]`, `[wcj_order_total_length]`, `[wcj_order_total_weight]` shortcodes.
+= 4.4.0 - 24/06/2019 =
+* Fix - PRODUCTS - Product Addons - Add price with correct currency value on `change_price()` function using `maybe_convert_currency()`.
+* Fix - PRODUCTS - Product Input Fields - Fix URL on variable uploaded files.
+* Fix - PRODUCTS - Product Input Fields - Check if order is null on `add_files_to_email_attachments()`.
+* Fix - PRODUCTS - Product MSRP - Improve section detection on `display()` function, i.e if it's on "single" or "archive".
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Fix problem where select and radio fields values are lost on order status change.
+* Fix - SHIPPING & ORDERS - Custom Shipping - Check if add_table_rows() isn't getting called multiple times.
+* Fix - SHIPPING & ORDERS - Custom Shipping - Fix module for "Load Modules on Init Hook" option.
 * Fix - SHIPPING & ORDERS - Order Quantities - Fix problem preventing `_wcj_order_quantities_min` meta from being saved on variable products.
-* Dev - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Create option to add compatibility with Multicurrency module.
+* Fix - SHIPPING & ORDERS - Order Quantities - Fix problem where Quantity steps is checked against parent variation id instead of variation id.
+* Fix - SHIPPING & ORDERS - Order Quantities - Check `_wcj_order_quantities_step` from parent id if variation doesn't have the `_wcj_order_quantities_step` meta.
+* Fix - Shortcodes - Orders - "A non-numeric value encountered..." notice fixed in `[wcj_order_total_width]`, `[wcj_order_total_height]`, `[wcj_order_total_length]`, `[wcj_order_total_weight]` shortcodes.
+* Fix - Functions - Admin - Check if object is from `WC_Product` class on `wcj_get_ajax_settings()`.
+* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Add option to set API key for Free Currency Converter API server.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add new option to make it compatible with WooCommerce import tool, preventing it from converting some uppercase meta to lowercase.
 * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Improve compatibility with "Price Filter" widget.
 * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Add option to make it compatible with third party "Price Filter" widgets.
+* Dev - PRICES & CURRENCIES - Offer Your Price - Exclude - "Out of stock" option added.
+* Dev - PRICES & CURRENCIES - Offer Your Price - Now collecting more customer's data: User IP (`%user_ip%`) and User Agent (`%user_agent%`).
+* Dev - PRICES & CURRENCIES - Offer Your Price - "Offer Price History Meta Box Columns" option added.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Add option "Price Format Method" to control the moment the "Rounding" and "Pretty Prices" will be applied.
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - "Advanced: Price Changes" option added.
 * Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Compatibility with "WPC Product Bundles for WooCommerce" plugin added (and "Product Bundles" option added).
 * Dev - PRODUCTS - Product MSRP - Create option to add compatibility with Multicurrency module.
-* Dev - Functions - Exchange Rates - Update Free Currency Converter API to v6 and read API key from settings.
-* Dev - PRICES & CURRENCIES - Currency Exchange Rates - Add option to set API key for Free Currency Converter API server.
+* Dev - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Create option to add compatibility with Multicurrency module.
 * Dev - EMAILS & MISC. - Email Verification - Create new option preventing users from login in any situation. It is necessary to fix automatic login in some cases, like after registration on checkout.
 * Dev - EMAILS & MISC. - Export - Forcing date format in datepicker to `yy-mm-dd`.
+* Dev - Dashboard - Manage Settings - "Load Modules on Init Hook" option added. It will load the locale appropriately if users change it from the profile page.
+* Dev - Shortcodes - Add possibility for multiple `location` and `not_location` attributes with comma values, like location="US, CA, NZ, AU".
 * Dev - Shortcodes - Orders - `[wcj_order_items_table]` - `product_shipping_class` and `product_shipping_class_id` columns added.
+* Dev - Functions - Exchange Rates - Update Free Currency Converter API to v6 and read API key from settings.
+* Dev - Functions - General - Add `wcj_get_cart_item_quantities()` to get cart items quantities, with correct variation id, where native function from WooCommerce fails getting only the parent id if Manage Stock option is enabled.
+* Dev - Functions - Price and Currency - Create `wcj_price_by_country_pretty_price()` and `wcj_price_by_country_rounding()` functions.
 * Tested up to: 5.2.
 
 = 4.3.1 - 25/04/2019 =
@@ -217,7 +235,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Create new option to add compatibility with WooCommerce Price Filter widget.
 * Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Add option to make module compatible with "Price Filter" widget.
 * Dev - SHIPPING & ORDERS - Order Quantities - Decimal Quantities - Setting float number `pattern` for quantity input.
-* Dev - SHIPPING & ORDERS - Order Quantities - Module renamed from "Order Min/Max Quantities" and description updated.
+* Dev - SHIPPING & ORDERS - Order Quantities - Module renamed (was "Order Min/Max Quantities") and description updated.
 * Dev - PDF INVOICING & PACKING SLIPS - Create new option on advanced settings to manage output buffer.
 
 = 4.3.0 - 16/04/2019 =

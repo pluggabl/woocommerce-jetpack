@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Shipping
  *
- * @version 3.4.0
+ * @version 4.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Shipping extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 4.4.0
 	 * @todo    (maybe) deprecated "Custom Shipping (Legacy - without Shipping Zones)" - hide when disabled
 	 */
 	function __construct() {
@@ -29,11 +29,19 @@ class WCJ_Shipping extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			// Custom Shipping (Legacy - without Shipping Zones)
-			add_action( 'init', array( $this, 'init_wc_shipping_wcj_custom_class' ) );
+			if ( 'init' === current_filter() ) {
+				$this->init_wc_shipping_wcj_custom_class();
+			} else {
+				add_action( 'init', array( $this, 'init_wc_shipping_wcj_custom_class' ) );
+			}
 
 			// Custom Shipping
 			if ( 'yes' === get_option( 'wcj_shipping_custom_shipping_w_zones_enabled', 'no' ) ) {
-				add_action( 'init', array( $this, 'init_wc_shipping_wcj_custom_w_zones_class' ) );
+				if ( 'init' === current_filter() ) {
+					$this->init_wc_shipping_wcj_custom_w_zones_class();
+				} else {
+					add_action( 'init', array( $this, 'init_wc_shipping_wcj_custom_w_zones_class' ) );
+				}
 			}
 		}
 	}

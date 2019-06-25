@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Min/Max Quantities
  *
- * @version 4.3.2
+ * @version 4.4.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.2
+	 * @version 4.4.0
 	 * @since   2.9.0
 	 * @todo    [dev] maybe rename the module to "Order Product Quantities" or "Product Quantities"?
 	 * @todo    [dev] loop (`woocommerce_loop_add_to_cart_link`)
@@ -94,8 +94,8 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * Prevents outdated min/max Quantity options.
 	 *
-	 * @version 4.3.2
-	 * @since   4.3.2
+	 * @version 4.4.0
+	 * @since   4.4.0
 	 * @param $product_id
 	 */
 	function prevent_outdated_min_max( $product_id ) {
@@ -372,7 +372,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * stop_from_seeing_checkout.
 	 *
-	 * @version 4.2.0
+	 * @version 4.4.0
 	 * @since   2.9.0
 	 */
 	function stop_from_seeing_checkout() {
@@ -382,7 +382,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 		if ( ! is_checkout() ) {
 			return;
 		}
-		$cart_item_quantities = WC()->cart->get_cart_item_quantities();
+		$cart_item_quantities = wcj_get_cart_item_quantities();
 		if ( empty( $cart_item_quantities ) || ! is_array( $cart_item_quantities ) ) {
 			return;
 		}
@@ -501,7 +501,7 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * check_quantities_step.
 	 *
-	 * @version 4.2.0
+	 * @version 4.4.0
 	 * @since   4.2.0
 	 */
 	function check_quantities_step( $cart_item_quantities, $_is_cart, $_return ) {
@@ -510,7 +510,17 @@ class WCJ_Order_Quantities extends WCJ_Module {
 		}
 		if ( $this->is_step_per_product_enabled ) {
 			foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
-				if ( '' != ( $step = get_post_meta( $_product_id, '_' . 'wcj_order_quantities_step', true ) ) && 0 != $step ) {
+				$step    = get_post_meta( $_product_id, '_' . 'wcj_order_quantities_step', true );
+				$product = empty( $step ) ? wc_get_product( $_product_id ) : null;
+				if (
+					empty( $step ) &&
+					$product &&
+					$product->get_type() == 'variation' &&
+					! empty( $product->get_parent_id() )
+				) {
+					$step = get_post_meta( $product->get_parent_id(), '_' . 'wcj_order_quantities_step', true );
+				}
+				if ( '' != $step && 0 != $step ) {
 					if ( ! $this->check_step( $_product_id, $step, $cart_item_quantity ) ) {
 						if ( $_return ) {
 							return false;
@@ -521,7 +531,10 @@ class WCJ_Order_Quantities extends WCJ_Module {
 				}
 			}
 		}
-		if ( 0 != ( $step = get_option( 'wcj_order_quantities_step', 1 ) ) ) {
+		if (
+			empty( $step ) &&
+			0 != ( $step = get_option( 'wcj_order_quantities_step', 1 ) )
+		) {
 			foreach ( $cart_item_quantities as $_product_id => $cart_item_quantity ) {
 				if ( $this->is_step_per_product_enabled && 0 != get_post_meta( $_product_id, '_' . 'wcj_order_quantities_step', true ) ) {
 					continue;
@@ -603,14 +616,14 @@ class WCJ_Order_Quantities extends WCJ_Module {
 	/**
 	 * check_order_quantities.
 	 *
-	 * @version 4.2.0
+	 * @version 4.4.0
 	 * @since   2.9.0
 	 */
 	function check_order_quantities() {
 		if ( ! isset( WC()->cart ) ) {
 			return;
 		}
-		$cart_item_quantities = WC()->cart->get_cart_item_quantities();
+		$cart_item_quantities = wcj_get_cart_item_quantities();
 		if ( empty( $cart_item_quantities ) || ! is_array( $cart_item_quantities ) ) {
 			return;
 		}

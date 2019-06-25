@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 4.3.1
+ * @version 4.4.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -67,7 +67,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Handles third party compatibility
 	 *
-	 * @version 4.3.1
+	 * @version 4.4.0
 	 * @since   4.3.0
 	 */
 	function handle_third_party_compatibility(){
@@ -81,6 +81,48 @@ class WCJ_Multicurrency extends WCJ_Module {
 			add_action( 'wp_footer', array( $this, 'add_compatibility_with_price_filter_widget' ) );
 			add_action( 'wp_footer', array( $this, 'fix_price_filter_widget_currency_format' ) );
 		}
+
+		// Fix WooCommerce Import
+		if ( 'yes' === get_option( 'wcj_multicurrency_compatibility_wc_import' , 'no' ) ) {
+			add_filter( 'woocommerce_product_importer_parsed_data', array( $this, 'fix_wc_product_import' ), 10, 2 );
+		}
+	}
+
+	/**
+	 * Fixes WooCommerce import.
+	 *
+	 * For now it converts '_wcj_%price%_{currency}' meta with lowercase currency to uppercase.
+	 *
+	 * @version 4.4.0
+	 * @since   4.4.0
+	 *
+	 * @param $parsed_data
+	 * @param $raw_data
+	 *
+	 * @return mixed
+	 */
+	function fix_wc_product_import( $parsed_data, $raw_data ) {
+		// Gets values
+		$multicurrency_values = array_filter( $parsed_data['meta_data'], function ( $value ) {
+			return preg_match( '/^_wcj_.+price.*_[a-z]{2,3}$/', $value['key'] );
+		} );
+
+		// Changes lowercase currency to uppercase
+		$modified_values = array_map( function ( $value ) {
+			$str             = $value['key'];
+			$last_underscore = strrpos( $str, '_' );
+			$before          = substr( $str, 0, $last_underscore );
+			$currency        = substr( $str, $last_underscore + 1 );
+			$value['key']    = $before . '_' . strtoupper( $currency );
+			return $value;
+		}, $multicurrency_values );
+
+		// Applies changes to the main data
+		foreach ( $modified_values as $i => $value ) {
+			$parsed_data['meta_data'][ $i ]['key'] = $value['key'];
+		}
+
+		return $parsed_data;
 	}
 
 	/**

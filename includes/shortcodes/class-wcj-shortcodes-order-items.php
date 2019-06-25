@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 4.3.2
+ * @version 4.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -442,7 +442,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_cell.
 	 *
-	 * @version 4.3.2
+	 * @version 4.4.0
 	 * @since   3.2.0
 	 * @todo    do we need `pa_` replacement?
 	 * @todo    "WooCommerce TM Extra Product Options" plugin options: this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency)

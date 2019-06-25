@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 4.3.2
+ * @version 4.4.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -286,7 +286,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * get_open_price.
 	 *
-	 * @version 4.3.2
+	 * @version 4.4.0
 	 * @since   2.4.8
 	 */
 	function get_open_price( $price, $_product ) {
@@ -357,7 +357,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_open_price_to_cart_item_data.
 	 *
-	 * @version 4.3.2
+	 * @version 4.4.0
 	 * @since   2.4.8
 	 * @todo    [dev] (maybe) better conversion for Currency Switcher module (i.e. include rounding)
 	 */

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product MSRP
  *
- * @version 4.3.2
+ * @version 4.4.0
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.2
+	 * @version 4.4.0
 	 * @since   3.6.0
 	 * @todo    (maybe) option to change `_wcj_msrp` meta key
 	 * @todo    (maybe) REST API
@@ -59,8 +59,8 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * Add compatibility between third party modules / plugins and _wcj_msrp
 	 *
-	 * @version 4.3.2
-	 * @since   4.3.2
+	 * @version 4.4.0
+	 * @since   4.4.0
 	 *
 	 * @param $price
 	 * @param $product
@@ -139,13 +139,13 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	/**
 	 * display.
 	 *
-	 * @version 4.1.0
+	 * @version 4.4.0
 	 * @since   3.6.0
 	 * @todo    (maybe) multicurrency
 	 * @todo    (feature) (maybe) variable product's msrp: add another option to enter MSRP directly for the whole variable product, instead of taking first variation's MSRP
 	 */
 	function display( $price_html, $product ) {
-		$section_id = ( is_product() ? 'single' : 'archives' );
+		$section_id = empty( get_queried_object_id() ) || get_queried_object_id() != wcj_get_product_id( $product ) ? 'archives' : 'single';
 		$display    = get_option( 'wcj_product_msrp_display_on_' . $section_id, 'show' );
 		if ( 'hide' == $display ) {
 			return $price_html;

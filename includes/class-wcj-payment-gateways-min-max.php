@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Min/Max Amounts
  *
- * @version 4.3.2
+ * @version 4.4.0
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -35,7 +35,7 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 4.3.2
+	 * @version 4.4.0
 	 * @since   2.4.1
 	 * @todo    (maybe) `wc_clear_notices()`
 	 */

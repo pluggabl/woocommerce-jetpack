@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Loader
  *
- * @version 4.1.0
+ * @version 4.4.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -27,7 +27,13 @@ if ( ! defined( 'WCJ_PLUGIN_PATH' ) ) {
 }
 
 // Set up localisation
-load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( WCJ_PLUGIN_FILE ) ) . '/langs/' );
+if ( 'no' === get_option( 'wcj_load_modules_on_init', 'no' ) ) {
+	load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( WCJ_PLUGIN_FILE ) ) . '/langs/' );
+} else {
+	add_action( 'init', function () {
+		load_plugin_textdomain( 'woocommerce-jetpack', false, dirname( plugin_basename( WCJ_PLUGIN_FILE ) ) . '/langs/' );
+	}, 9 );
+}
 
 // Include required core files used in admin and on the frontend
 
@@ -62,20 +68,38 @@ require_once( WCJ_PLUGIN_PATH . '/includes/widgets/class-wcj-widget-country-swit
 require_once( WCJ_PLUGIN_PATH . '/includes/widgets/class-wcj-widget-left-to-free-shipping.php' );
 require_once( WCJ_PLUGIN_PATH . '/includes/widgets/class-wcj-widget-selector.php' );
 
-// Modules and Submodules
-require_once( 'wcj-modules.php' );
-
-// Add and Manage options
-require_once( 'wcj-options.php' );
-
-// Admin
-require_once( 'class-wcj-admin.php' );
-
 // Scripts
 require_once( 'class-wcj-scripts.php' );
 
-// Settings manager
-require_once( WCJ_PLUGIN_PATH . '/includes/admin/class-wcj-settings-manager.php' );
+// Modules and Submodules
+if ( 'no' === get_option( 'wcj_load_modules_on_init', 'no' ) ) {
+	require_once( 'wcj-modules.php' );
 
-// Loaded action
-do_action( 'wcj_loaded' );
+	// Add and Manage options
+	require_once( 'wcj-options.php' );
+
+	// Admin
+	require_once( 'class-wcj-admin.php' );
+
+	// Settings manager
+	require_once( WCJ_PLUGIN_PATH . '/includes/admin/class-wcj-settings-manager.php' );
+
+	// Loaded action
+	do_action( 'wcj_loaded' );
+} else {
+	add_action( 'init', function () {
+		require_once( 'wcj-modules.php' );
+
+		// Add and Manage options
+		require_once( 'wcj-options.php' );
+
+		// Admin
+		require_once( 'class-wcj-admin.php' );
+
+		// Settings manager
+		require_once( WCJ_PLUGIN_PATH . '/includes/admin/class-wcj-settings-manager.php' );
+
+		// Loaded action
+		do_action( 'wcj_loaded' );
+	}, 10 );
+}

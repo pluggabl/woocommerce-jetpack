@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Export
  *
- * @version 4.3.2
+ * @version 4.4.0
  * @since   2.5.4
  * @author  Algoritmika Ltd.
  */
@@ -219,7 +219,7 @@ class WCJ_Export_Import extends WCJ_Module {
 	/**
 	 * export_date_fields.
 	 *
-	 * @version 4.3.2
+	 * @version 4.4.0
 	 * @since   3.0.0
 	 * @todo    [dev] maybe make `$dateformat` optional
 	 * @todo    [dev] mark current (i.e. active) link (if exists)

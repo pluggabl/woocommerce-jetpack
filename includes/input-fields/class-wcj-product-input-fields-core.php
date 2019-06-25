@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Product Input Fields - Core
  *
- * @version 4.2.0
+ * @version 4.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -308,10 +308,14 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * add_files_to_email_attachments.
 	 *
-	 * @version 2.8.0
+	 * @version 4.4.0
 	 * @since   2.5.0
 	 */
 	function add_files_to_email_attachments( $attachments, $status, $order ) {
+		if ( is_null( $order ) ) {
+			return $attachments;
+		}
+
 		if (
 			( 'new_order'                 === $status && 'yes' === get_option( 'wcj_product_input_fields_attach_to_admin_new_order',           'yes' ) ) ||
 			( 'customer_processing_order' === $status && 'yes' === get_option( 'wcj_product_input_fields_attach_to_customer_processing_order', 'yes' ) )
@@ -362,7 +366,7 @@ class WCJ_Product_Input_Fields_Core {
 	/**
 	 * output_custom_input_fields_in_admin_order.
 	 *
-	 * @version 4.2.0
+	 * @version 4.4.0
 	 */
 	function output_custom_input_fields_in_admin_order( $item_id, $item, $_product ) {
 		if ( null === $_product ) {
@@ -379,7 +383,7 @@ class WCJ_Product_Input_Fields_Core {
 				$value = maybe_unserialize( $value );
 				if ( isset( $value['name'] ) ) {
 					if ( isset( $value['wcj_uniqid'] ) ) {
-						$value = '<a href="' . add_query_arg( 'wcj_download_file', $_product->get_id() . '_' . $i . '_' . $value['wcj_uniqid'] . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' . $value['name'] . '</a>';
+						$value = '<a href="' . add_query_arg( 'wcj_download_file', $_product_id . '_' . $i . '_' . $value['wcj_uniqid'] . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' . $value['name'] . '</a>';
 					} else {
 						$value = '<a href="' . add_query_arg( 'wcj_download_file', $item_id . '_' . $i . '.' . pathinfo( $value['name'], PATHINFO_EXTENSION ) ) . '">' .$value['name'] . '</a>';
 					}

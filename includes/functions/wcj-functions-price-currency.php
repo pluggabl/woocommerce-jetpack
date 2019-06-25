@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 4.2.0
+ * @version 4.4.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -203,7 +203,7 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 	/**
 	 * wcj_price_by_country.
 	 *
-	 * @version 3.6.0
+	 * @version 4.4.0
 	 * @since   2.5.3
 	 */
 	function wcj_price_by_country( $price, $product, $group_id, $the_current_filter = '' ) {
@@ -281,35 +281,78 @@ if ( ! function_exists( 'wcj_price_by_country' ) ) {
 
 		if ( ! $is_price_modified ) {
 			// Globally
+			$precision             = get_option( 'woocommerce_price_num_decimals', 2 );
+			$rounding              = get_option( 'wcj_price_by_country_rounding', 'none' );
 			$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
-//			if ( 1 != $country_exchange_rate ) {
-				$modified_price = $price * $country_exchange_rate;
-				$rounding = get_option( 'wcj_price_by_country_rounding', 'none' );
-				$precision = get_option( 'woocommerce_price_num_decimals', 2 );
-				switch ( $rounding ) {
-					case 'round':
-						$modified_price = round( $modified_price );
-						break;
-					case 'floor':
-						$modified_price = floor( $modified_price );
-						break;
-					case 'ceil':
-						$modified_price = ceil( $modified_price );
-						break;
-					default: // case 'none':
-						$modified_price = round( $modified_price, $precision ); // $modified_price
-						break;
+			$modified_price        = $price * $country_exchange_rate;
+			$is_price_modified     = true;
+
+			if ( 'get_price' === get_option( 'wcj_price_by_country_price_format_method', 'get_price' ) ) {
+				$modified_price = wcj_price_by_country_rounding( $modified_price, $precision, $rounding );
+				if ( 'yes' === get_option( 'wcj_price_by_country_make_pretty', 'no' ) && $modified_price >= 0.5 && $precision > 0 ) {
+					$modified_price = wcj_price_by_country_pretty_price( $modified_price, $precision );
 				}
-				$is_price_modified = true;
-//			}
-			if ( 'yes' === get_option( 'wcj_price_by_country_make_pretty', 'no' ) && $modified_price >= 0.5 && $precision > 0 ) {
-				$modified_price = round( $modified_price ) - ( get_option( 'wcj_price_by_country_make_pretty_min_amount_multiplier', 1 ) / pow( 10, $precision ) );
 			}
 		}
 
 		return ( $is_price_modified ) ? $modified_price : $price;
 	}
 }
+
+if ( ! function_exists( 'wcj_price_by_country_pretty_price' ) ) {
+	/**
+	 * wcj_price_by_country_pretty_price.
+	 *
+	 * @version 4.4.0
+	 * @since   4.4.0
+	 *
+	 * @param $price
+	 * @param int $multiplier
+	 * @param int $precision
+	 *
+	 * @return float|int
+	 */
+	function wcj_price_by_country_pretty_price( $price, $precision = - 1, $multiplier = - 1 ) {
+		$precision  = - 1 === $precision ? get_option( 'woocommerce_price_num_decimals', 2 ) : $precision;
+		$multiplier = - 1 === $multiplier ? get_option( 'wcj_price_by_country_make_pretty_min_amount_multiplier', 1 ) : $multiplier;
+		return round( $price ) - ( $multiplier / pow( 10, $precision ) );
+	}
+}
+
+if ( ! function_exists( 'wcj_price_by_country_rounding' ) ) {
+	/**
+	 * wcj_price_by_country_rounding.
+	 *
+	 * @version 4.4.0
+	 * @since   4.4.0
+	 *
+	 * @param $price
+	 * @param int $precision
+	 * @param string $rounding
+	 *
+	 * @return float
+	 */
+	function wcj_price_by_country_rounding( $price, $precision = - 1, $rounding = '' ) {
+		$rounding  = empty( $rounding ) ? get_option( 'wcj_price_by_country_rounding', 'none' ) : $rounding;
+		$precision = - 1 === $precision ? get_option( 'woocommerce_price_num_decimals', 2 ) : $precision;
+		switch ( $rounding ) {
+			case 'round':
+				$modified_price = round( $price );
+				break;
+			case 'floor':
+				$modified_price = floor( $price );
+				break;
+			case 'ceil':
+				$modified_price = ceil( $price );
+				break;
+			default: // case 'none':
+				$modified_price = round( $price, $precision ); // $modified_price
+				break;
+		}
+		return $modified_price;
+	}
+}
+
 
 if ( ! function_exists( 'wcj_update_products_price_by_country_for_single_product' ) ) {
 	/**

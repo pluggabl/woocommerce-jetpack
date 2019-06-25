@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 3.5.0
+ * @version 4.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -57,7 +57,7 @@ class WCJ_Shortcodes {
 	/**
 	 * wcj_shortcode.
 	 *
-	 * @version 3.5.0
+	 * @version 4.4.0
 	 * @todo    `time` - weekly, e.g. 8:00-19:59;8:00-19:59;8:00-19:59;8:00-19:59;8:00-9:59,12:00-17:59;-;-;
 	 * @todo    (maybe) - `return $atts['on_empty'];` everywhere instead of `return '';`
 	 * @todo    (maybe) - add `$atts['function']` and `$atts['function_args']` - if set, will be run on shortcode's result
@@ -169,10 +169,23 @@ class WCJ_Shortcodes {
 		}
 
 		// Check if location is ok
-		if ( '' != $atts['location'] && 'all' != $atts['location'] && $atts['location'] != $this->wcj_get_user_location() ) {
+		if (
+			'' != $atts['location'] &&
+			'all' != $atts['location'] &&
+			(
+				false === strpos( $atts['location'], ',' ) && $atts['location'] != $this->wcj_get_user_location() ||
+				false !== strpos( $atts['location'], ',' ) && ! in_array( $this->wcj_get_user_location(), array_map( 'trim', explode( ',', $atts['location'] ) ) )
+			)
+		) {
 			return '';
 		}
-		if ( '' != $atts['not_location'] && $atts['not_location'] === $this->wcj_get_user_location() ) {
+		if (
+			'' != $atts['not_location'] &&
+			(
+				false === strpos( $atts['not_location'], ',' ) && $atts['not_location'] === $this->wcj_get_user_location() ||
+				false !== strpos( $atts['not_location'], ',' ) && in_array( $this->wcj_get_user_location(), array_map( 'trim', explode( ',', $atts['not_location'] ) ) )
+			)
+		) {
 			return '';
 		}
 

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 4.3.0
+ * @version 4.4.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -154,38 +154,81 @@ class WCJ_Offer_Price extends WCJ_Module {
 	}
 
 	/**
+	 * get_admin_meta_box_columns.
+	 *
+	 * @version 4.4.0
+	 * @since   4.4.0
+	 */
+	function get_admin_meta_box_columns() {
+		return array(
+			'date'             => __( 'Date', 'woocommerce-jetpack' ),
+			'offered_price'    => __( 'Price', 'woocommerce-jetpack' ),
+			'customer_message' => __( 'Message', 'woocommerce-jetpack' ),
+			'customer_name'    => __( 'Name', 'woocommerce-jetpack' ),
+			'customer_email'   => __( 'Email', 'woocommerce-jetpack' ),
+			'customer_id'      => __( 'Customer ID', 'woocommerce-jetpack' ),
+			'user_ip'          => __( 'User IP', 'woocommerce-jetpack' ),
+			'user_agent'       => __( 'User Agent', 'woocommerce-jetpack' ),
+			'sent_to'          => __( 'Sent to', 'woocommerce-jetpack' ),
+		);
+	}
+
+	/**
 	 * create_offer_price_history_meta_box.
 	 *
-	 * @version 2.9.0
+	 * @version 4.4.0
 	 * @since   2.9.0
 	 */
 	function create_offer_price_history_meta_box() {
 		if ( '' == ( $price_offers = get_post_meta( get_the_ID(), '_' . 'wcj_price_offers', true ) ) ) {
 			echo '<em>' . __( 'No price offers yet.', 'woocommerce-jetpack' ) . '</em>';
 		} else {
-			$average_offers = array();
-			$table_data = array();
-			$table_data[] = array(
-				__( 'Date', 'woocommerce-jetpack' ),
-				__( 'Price', 'woocommerce-jetpack' ),
-				__( 'Message', 'woocommerce-jetpack' ),
-				__( 'Name', 'woocommerce-jetpack' ),
-				__( 'Email', 'woocommerce-jetpack' ),
-				__( 'Customer ID', 'woocommerce-jetpack' ),
-				__( 'Sent to', 'woocommerce-jetpack' ),
-			);
+			$average_offers       = array();
+			$all_columns          = $this->get_admin_meta_box_columns();
+			$selected_columns     = get_option( 'wcj_offer_price_admin_meta_box_columns',
+				array( 'date', 'offered_price', 'customer_message', 'customer_name', 'customer_email', 'customer_id', 'user_ip', 'sent_to' ) );
+			$table_data           = array();
+			$header               = array();
+			foreach ( $selected_columns as $selected_column ) {
+				$header[] = $all_columns[ $selected_column ];
+			}
+			$table_data[]         = $header;
 			$date_ant_time_format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
-			$price_offers = array_reverse( $price_offers );
+			$price_offers         = array_reverse( $price_offers );
 			foreach ( $price_offers as $price_offer ) {
-				$table_data[] = array(
-					date_i18n( $date_ant_time_format, $price_offer['offer_timestamp'] ),
-					wc_price( $price_offer['offered_price'], array( 'currency' => $price_offer['currency_code'] ) ),
-					$price_offer['customer_message'],
-					$price_offer['customer_name'],
-					$price_offer['customer_email'],
-					$price_offer['customer_id'],
-					$price_offer['sent_to'] . ( 'yes' === $price_offer['copy_to_customer'] ? '<br>' . $price_offer['customer_email'] : '' ),
-				);
+				$row = array();
+				foreach ( $selected_columns as $selected_column ) {
+					switch ( $selected_column ) {
+						case 'date':
+							$row[] = date_i18n( $date_ant_time_format, $price_offer['offer_timestamp'] );
+							break;
+						case 'offered_price':
+							$row[] = wc_price( $price_offer['offered_price'], array( 'currency' => $price_offer['currency_code'] ) );
+							break;
+						case 'customer_message':
+							$row[] = $price_offer['customer_message'];
+							break;
+						case 'customer_name':
+							$row[] = $price_offer['customer_name'];
+							break;
+						case 'customer_email':
+							$row[] = $price_offer['customer_email'];
+							break;
+						case 'customer_id':
+							$row[] = $price_offer['customer_id'];
+							break;
+						case 'user_ip':
+							$row[] = ( isset( $price_offer['user_ip'] ) ? $price_offer['user_ip'] : '' );
+							break;
+						case 'user_agent':
+							$row[] = ( isset( $price_offer['user_agent'] ) ? $price_offer['user_agent'] : '' );
+							break;
+						case 'sent_to':
+							$row[] = $price_offer['sent_to'] . ( 'yes' === $price_offer['copy_to_customer'] ? '<br>' . $price_offer['customer_email'] : '' );
+							break;
+					}
+				}
+				$table_data[] = $row;
 				if ( ! isset( $average_offers[ $price_offer['currency_code'] ] ) ) {
 					$average_offers[ $price_offer['currency_code'] ] = array( 'total_offers' => 0, 'offers_sum' => 0 );
 				}
@@ -378,15 +421,32 @@ class WCJ_Offer_Price extends WCJ_Module {
 	}
 
 	/**
+	 * is_offer_price_excluded_for_product.
+	 *
+	 * @version 4.4.0
+	 * @since   4.4.0
+	 * @todo    [dev] add more conditions to exclude (i.e. not only "out of stock")
+	 */
+	function is_offer_price_excluded_for_product( $product_id ) {
+		if ( 'yes' === get_option( 'wcj_offer_price_exclude_out_of_stock', 'no' ) ) {
+			$product = wc_get_product( $product_id );
+			if ( ! $product->is_in_stock() ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * add_offer_price_button.
 	 *
-	 * @version 3.0.0
+	 * @version 4.4.0
 	 * @since   2.9.0
 	 */
 	function add_offer_price_button() {
 		$product_id = get_the_ID();
 		// Check if enabled for current product
-		if ( ! $this->is_offer_price_enabled_for_product( $product_id ) ) {
+		if ( ! $this->is_offer_price_enabled_for_product( $product_id ) || $this->is_offer_price_excluded_for_product( $product_id ) ) {
 			return;
 		}
 		// The button
@@ -409,7 +469,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * offer_price.
 	 *
-	 * @version 4.3.0
+	 * @version 4.4.0
 	 * @since   2.9.0
 	 * @todo    (maybe) separate customer copy email template and subject
 	 * @todo    (maybe) redirect (no notice though)
@@ -452,6 +512,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'customer_name'    => $_POST['wcj-offer-price-customer-name'],
 				'customer_email'   => $_POST['wcj-offer-price-customer-email'],
 				'customer_id'      => $_POST['wcj-offer-price-customer-id'],
+				'user_ip'          => $_SERVER['REMOTE_ADDR'],
+				'user_agent'       => $_SERVER['HTTP_USER_AGENT'],
 				'copy_to_customer' => ( isset( $_POST['wcj-offer-price-customer-copy'] ) ? $_POST['wcj-offer-price-customer-copy'] : 'no' ),
 				'sent_to'          => $email_address,
 			);
@@ -468,6 +530,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 				'%customer_message%' => $price_offer['customer_message'],
 				'%customer_name%'    => $price_offer['customer_name'],
 				'%customer_email%'   => $price_offer['customer_email'],
+				'%user_ip%'          => $price_offer['user_ip'],
+				'%user_agent%'       => $price_offer['user_agent'],
 			);
 			$email_content = str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), $email_template );
 			// Email subject and headers

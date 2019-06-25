@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Email Verification
  *
- * @version 4.3.2
+ * @version 4.4.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

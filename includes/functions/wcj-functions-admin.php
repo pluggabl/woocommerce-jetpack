@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 4.3.0
+ * @version 4.4.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -121,7 +121,7 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 	/**
 	 * wcj_get_ajax_settings
 	 *
-	 * @version 4.3.0
+	 * @version 4.4.0
 	 * @since   4.3.0
 	 *
 	 * @param $values
@@ -137,8 +137,10 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 		if ( $search_type == 'woocommerce_json_search_products' || $search_type == 'woocommerce_json_search_products_and_variations' ) {
 			$class = 'wc-product-search';
 			foreach ( $options_raw as $product_id ) {
-				$product                = wc_get_product( $product_id );
-				$options[ $product_id ] = wp_kses_post( $product->get_formatted_name() );
+				$product = wc_get_product( $product_id );
+				if ( is_a( $product, 'WC_Product' ) ) {
+					$options[ $product_id ] = wp_kses_post( $product->get_formatted_name() );
+				}
 			}
 		} elseif ( $search_type == 'woocommerce_json_search_categories' ) {
 			$class = 'wc-category-search';

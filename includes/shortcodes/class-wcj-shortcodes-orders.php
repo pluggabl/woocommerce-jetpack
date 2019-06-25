@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 4.3.2
+ * @version 4.4.0
  * @author  Algoritmika Ltd.
  */
 
@@ -648,7 +648,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_order_total
 	 *
-	 * @version 4.3.2
+	 * @version 4.4.0
 	 * @since   2.5.7
 	 */
 	function get_order_total( $atts, $param ) {
