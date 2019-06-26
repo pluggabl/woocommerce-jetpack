@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 4.4.0
+ * @version 4.4.1
  * @since   2.5.6
  * @author  Algoritmika Ltd.
  */
@@ -72,7 +72,7 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 	/**
 	 * add_table_rows.
 	 *
-	 * @version 4.4.0
+	 * @version 4.4.1
 	 * @since   2.6.0
 	 */
 	function add_table_rows( $instance_form_fields ) {
@@ -100,7 +100,6 @@ class WC_Shipping_WCJ_Custom_W_Zones extends WC_Shipping_Method {
 					) );
 				}
 			}
-			remove_filter( 'woocommerce_shipping_instance_form_fields_' . $this->id, array( $this, 'add_table_rows' ) );
 		}
 		return $instance_form_fields;
 	}

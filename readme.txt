@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.2
-Stable tag: 4.4.0
+Stable tag: 4.4.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,9 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 4.4.1 - 26/06/2019 =
+* Fix - SHIPPING & ORDERS - Custom Shipping - Fix missing custom shipping settings.
 
 = 4.4.0 - 24/06/2019 =
 * Fix - PRODUCTS - Product Addons - Add price with correct currency value on `change_price()` function using `maybe_convert_currency()`.
