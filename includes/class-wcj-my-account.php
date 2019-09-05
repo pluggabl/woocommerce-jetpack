@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 4.3.0
+ * @version 4.5.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.0
+	 * @version 4.5.0
 	 * @since   2.9.0
 	 * @todo    [dev] Custom Menu Pages: add "Type" option with values: "param" (i.e. as it is now) or "endpoint"
 	 * @todo    [dev] Custom Menu Pages: deprecate "Add Custom Menu Items" (and add "link" value in "Type" options)
@@ -57,7 +57,7 @@ class WCJ_My_Account extends WCJ_Module {
 			// Custom pages
 			if ( 'yes' === get_option( 'wcj_my_account_custom_pages_enabled', 'no' ) ) {
 				add_action( 'woocommerce_account_' . 'page' . '_endpoint', array( $this, 'customize_dashboard' ), PHP_INT_MAX );
-				add_filter( 'the_title',                                   array( $this, 'set_custom_page_title' ), PHP_INT_MAX, 2 );
+				add_filter( 'the_title',                                   array( $this, 'set_custom_page_title' ), PHP_INT_MAX );
 				add_filter( 'woocommerce_account_menu_items',              array( $this, 'add_custom_page_menu_item' ), PHP_INT_MAX );
 				add_filter( 'woocommerce_get_endpoint_url',                array( $this, 'set_custom_page_url' ), PHP_INT_MAX, 4 );
 			}
@@ -119,17 +119,24 @@ class WCJ_My_Account extends WCJ_Module {
 	/**
 	 * set_custom_page_title.
 	 *
-	 * @version 4.3.0
+	 * @version 4.5.0
 	 * @since   4.3.0
 	 */
-	function set_custom_page_title( $title, $id ) {
-		if ( isset( $_GET['section'] ) && $id == get_option( 'woocommerce_myaccount_page_id' ) ) {
-			if ( ! isset( $this->custom_pages ) ) {
-				$this->get_custom_pages();
-			}
-			$endpoint = $_GET['section'];
-			return ( isset( $this->custom_pages[ $endpoint ] ) ? $this->custom_pages[ $endpoint ]['title'] : $title );
+	function set_custom_page_title( $title ) {
+		if (
+			! isset( $_GET['section'] ) ||
+			is_admin() ||
+			! in_the_loop() ||
+			! is_account_page()
+		) {
+			return $title;
 		}
+		if ( ! isset( $this->custom_pages ) ) {
+			$this->get_custom_pages();
+		}
+		$endpoint = $_GET['section'];
+		return ( isset( $this->custom_pages[ $endpoint ] ) ? $this->custom_pages[ $endpoint ]['title'] : $title );
+
 		return $title;
 	}
 

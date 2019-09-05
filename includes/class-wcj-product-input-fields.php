@@ -15,7 +15,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.1.0
+	 * @version 4.5.0
 	 * @todo    (maybe) option to change local and global fields order (i.e. output local fields before the global)
 	 */
 	function __construct() {
@@ -41,7 +41,47 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 				add_action( 'init',               array( $this, 'register_scripts' ) );
 			}
+
+			add_action( 'wp_head',               array( $this, 'preserve_linebreaks_frontend' ) );
+			add_action( 'admin_head',               array( $this, 'preserve_linebreaks_admin' ) );
 		}
+	}
+
+	/**
+	 * preserve_linebreaks_admin.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 */
+	function preserve_linebreaks_admin() {
+		if ( 'yes' !== get_option( 'wcj_product_input_fields_admin_linebreaks', 'no' ) ) {
+			return;
+		}
+		?>
+		<style>
+			#woocommerce-order-items .woocommerce_order_items_wrapper table.woocommerce_order_items table.display_meta tr td, #woocommerce-order-items .woocommerce_order_items_wrapper table.woocommerce_order_items table.meta tr td
+			{white-space: pre-wrap;}
+		</style>
+		<?php
+	}
+
+	/**
+	 * preserve_linebreaks_frontend.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 */
+	function preserve_linebreaks_frontend() {
+		if ( 'yes' !== get_option( 'wcj_product_input_fields_frontend_linebreaks', 'no' ) ) {
+			return;
+		}
+		?>
+		<style>
+			.woocommerce-cart-form__cart-item.cart_item .product-name dl dd,
+			.woocommerce-checkout-review-order-table .product-name dl dd
+			{white-space: pre-wrap;}
+		</style>
+		<?php
 	}
 
 	/**

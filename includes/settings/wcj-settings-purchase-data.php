@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Cost Price
  *
- * @version 3.6.0
+ * @version 4.5.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    add options to set fields and column titles
@@ -37,6 +37,17 @@ $settings = array(
 		'id'        => 'wcj_purchase_price_affiliate_commission_enabled',
 		'default'   => 'no',
 		'type'      => 'checkbox',
+	),
+	array(
+		'title'     => __( 'Profit Percentage Type', 'woocommerce-jetpack' ),
+		'desc_tip'  => __( 'Example:', 'woocommerce-jetpack' ).'<br />'.__( 'Selling: $3.000 | Buying: $1.000', 'woocommerce-jetpack' ).'<br />'.__( 'Margin: 66% | Markup: $200%', 'woocommerce-jetpack' ),
+		'id'        => 'wcj_purchase_price_profit_percentage_type',
+		'default'   => 'markup',
+		'options'   => array(
+			'margin'   => __( 'Margin', 'woocommerce-jetpack' ),
+			'markup'   => __( 'Markup', 'woocommerce-jetpack' ),
+		),
+		'type'      => 'select',
 	),
 	array(
 		'type'      => 'sectionend',

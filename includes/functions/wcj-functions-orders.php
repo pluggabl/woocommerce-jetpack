@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Orders
  *
- * @version 3.4.0
+ * @version 4.5.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -212,6 +212,46 @@ if ( ! function_exists( 'wcj_order_get_payment_method' ) ) {
 		} else {
 			return ( method_exists( $_order, 'get_payment_method' ) ? $_order->get_payment_method() : null );
 		}
+	}
+}
+
+if ( ! function_exists( 'wcj_get_order_fees_total' ) ) {
+	/**
+	 * wcj_get_order_fees_total.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param $_order
+	 *
+	 * @return int
+	 */
+	function wcj_get_order_fees_total( $_order ) {
+		$fees_total = 0;
+		foreach ( $_order->get_fees() as $fee ) {
+			$fees_total += $fee->get_total();
+		}
+		return $fees_total;
+	}
+}
+
+if ( ! function_exists( 'wcj_get_order_fees_total_tax' ) ) {
+	/**
+	 * wcj_get_order_fees_total_tax.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param $_order
+	 *
+	 * @return int
+	 */
+	function wcj_get_order_fees_total_tax( $_order ) {
+		$fees_total = 0;
+		foreach ( $_order->get_fees() as $fee ) {
+			$fees_total += $fee->get_total_tax();
+		}
+		return $fees_total;
 	}
 }
 

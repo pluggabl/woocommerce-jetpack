@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - WPML
  *
- * @version 3.8.0
+ * @version 4.5.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -29,6 +29,14 @@ $settings = array(
 		'type'     => 'checkbox',
 		'id'       => 'wcj_wpml_use_translation_product_id',
 		'default'  => 'yes',
+	),
+	array(
+		'title'    => __( 'Auto Switch Booster Currency', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( "Try to automatically switch Booster currency according to WPML. It's necessary to enable MultiCurrency module", 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'id'       => 'wcj_wpml_switch_booster_currency',
+		'default'  => 'no',
 	),
 	array(
 		'type'     => 'sectionend',

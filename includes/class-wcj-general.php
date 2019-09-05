@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - General
  *
- * @version 4.1.0
+ * @version 4.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_General extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.0
+	 * @version 4.5.0
 	 * @todo    [dev] maybe expand `$this->desc` (e.g.: Custom roles tool, shortcodes in WordPress text widgets etc.)
 	 */
 	function __construct() {
@@ -78,6 +78,13 @@ class WCJ_General extends WCJ_Module {
 			if ( wcj_is_booster_role_changer_enabled() ) {
 				add_action( 'admin_bar_menu', array( $this, 'add_user_role_changer' ), PHP_INT_MAX );
 				add_action( 'init',           array( $this, 'change_user_role_meta' ) );
+			}
+
+			// Try to overwrite WooCommerce IP detection
+			if ( 'yes' === get_option( 'wcj_general_overwrite_wc_ip', 'no' ) ) {
+				if ( isset( $_SERVER['REMOTE_ADDR'] ) ) {
+					$_SERVER['HTTP_X_REAL_IP'] = wcj_get_the_ip();
+				}
 			}
 
 		}

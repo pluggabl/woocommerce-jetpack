@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 4.4.0
+ * @version 4.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.2
+	 * @version 4.5.0
 	 * @todo    (maybe) check if `'wcj_checkout_custom_field_customer_meta_fields_' . $i` option should affect `add_default_checkout_custom_fields`
 	 */
 	function __construct() {
@@ -50,6 +50,9 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 			}
 			// select2 script
 			add_action( 'wp_enqueue_scripts',                                  array( $this, 'maybe_enqueue_scripts' ) );
+
+			// Update checkout fields from admin edit order
+			add_action( 'save_post_shop_order',                                array( $this, 'update_custom_checkout_fields_order_meta' ) );
 		}
 	}
 
@@ -187,7 +190,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * update_custom_checkout_fields_order_meta.
 	 *
-	 * @version 4.3.0
+	 * @version 4.5.0
 	 */
 	function update_custom_checkout_fields_order_meta( $order_id ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
@@ -195,16 +198,18 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				if ( ! $this->is_visible( $i ) ) {
 					continue;
 				}
-				$the_section = get_option( 'wcj_checkout_custom_field_section_' . $i );
-				$the_type = get_option( 'wcj_checkout_custom_field_type_' . $i );
+				$the_section       = get_option( 'wcj_checkout_custom_field_section_' . $i );
+				$the_type          = get_option( 'wcj_checkout_custom_field_type_' . $i );
 				$option_name       = $the_section . '_' . 'wcj_checkout_field_'       . $i;
 				$option_name_label = $the_section . '_' . 'wcj_checkout_field_label_' . $i;
 				$option_name_type  = $the_section . '_' . 'wcj_checkout_field_type_'  . $i;
-				if ( ! empty( $_POST[ $option_name ] ) || 'checkbox' === $the_type ) {
+				$post_value        = isset( $_POST[ $option_name ] ) ? $_POST[ $option_name ] : '';
+				$post_value        = empty( $post_value ) && isset( $_POST[ '_'. $option_name ] ) ? $_POST[ '_'. $option_name ] : $post_value;
+				if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
 					update_post_meta( $order_id, '_' . $option_name_type,  $the_type );
 					update_post_meta( $order_id, '_' . $option_name_label, get_option( 'wcj_checkout_custom_field_label_' . $i ) );
 					if ( 'checkbox' === $the_type ) {
-						$the_value = ( isset( $_POST[ $option_name ] ) ) ? 1 : 0;
+						$the_value = ! empty( $post_value ) ? 1 : 0;
 						update_post_meta( $order_id, '_' . $option_name, $the_value );
 						$option_name_checkbox_value  = $the_section . '_' . 'wcj_checkout_field_checkbox_value_' . $i;
 						$checkbox_value = ( 1 == $the_value ) ?
@@ -212,14 +217,14 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 							get_option( 'wcj_checkout_custom_field_checkbox_no_' . $i );
 						update_post_meta( $order_id, '_' . $option_name_checkbox_value, $checkbox_value );
 					} elseif ( 'radio' === $the_type || 'select' === $the_type ) {
-						update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $_POST[ $option_name ] ) ) );
+						update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
 						$option_name_values = $the_section . '_' . 'wcj_checkout_field_select_options_' . $i;
 						$the_values = get_option( 'wcj_checkout_custom_field_select_options_' . $i );
 						update_post_meta( $order_id, '_' . $option_name_values, $the_values );
 					} elseif ( 'textarea' === $the_type && 'no' === get_option( 'wcj_checkout_custom_fields_textarea_clean', 'yes' ) ) {
-						update_post_meta( $order_id, '_' . $option_name, urldecode( $_POST[ $option_name ] ) );
+						update_post_meta( $order_id, '_' . $option_name, urldecode( $post_value ) );
 					} else {
-						update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $_POST[ $option_name ] ) ) );
+						update_post_meta( $order_id, '_' . $option_name, wc_clean( urldecode( $post_value ) ) );
 					}
 				}
 			}

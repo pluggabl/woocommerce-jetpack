@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Modules
  *
- * @version 4.3.0
+ * @version 4.5.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -95,7 +95,6 @@ $wcj_module_files = array(
 	'class-wcj-order-custom-statuses.php',
 	'class-wcj-order-quantities.php',
 	'class-wcj-max-products-per-user.php',
-	'class-wcj-pdf-invoicing.php',
 	'class-wcj-emails.php',
 	'class-wcj-email-options.php',
 	'class-wcj-emails-verification.php',
@@ -135,6 +134,7 @@ $wcj_module_files = array(
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-emails.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-display.php',
 	'pdf-invoices/submodules/class-wcj-pdf-invoicing-advanced.php',
+	'class-wcj-pdf-invoicing.php',
 );
 
 $this->modules = array();

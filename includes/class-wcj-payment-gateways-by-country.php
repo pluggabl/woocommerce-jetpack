@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Payment Gateways by Country
  *
- * @version 4.0.0
+ * @version 4.5.0
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -34,7 +34,7 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 	/**
 	 * get_location.
 	 *
-	 * @version 3.9.0
+	 * @version 4.5.0
 	 * @since   3.4.0
 	 * @todo    on `WCJ_IS_WC_VERSION_BELOW_3` recheck if `get_shipping_country()` and `get_shipping_state()` work correctly
 	 */
@@ -60,11 +60,11 @@ class WCJ_Payment_Gateways_By_Country extends WCJ_Module {
 				}
 			case 'postcode':
 				$postcodes_type = get_option( 'wcj_gateways_by_location_postcodes_type', 'billing' );
-				switch( $postcodes_type ) {
+				switch ( $postcodes_type ) {
 					case 'shipping':
-						return ( ! empty( $_REQUEST['s_postcode'] ) ? strtoupper( $_REQUEST['s_postcode'] ) : strtoupper( WC()->countries->get_base_postcode() ) );
+						return ( ! empty( $_REQUEST['s_postcode'] ) ? strtoupper( $_REQUEST['s_postcode'] ) : ( ! empty( $_REQUEST['shipping_postcode'] ) ? strtoupper( $_REQUEST['shipping_postcode'] ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
 					default: // 'billing'
-						return ( ! empty( $_REQUEST['postcode'] )   ? strtoupper( $_REQUEST['postcode'] )   : strtoupper( WC()->countries->get_base_postcode() ) );
+						return ( ! empty( $_REQUEST['postcode'] ) ? strtoupper( $_REQUEST['postcode'] ) : ( ! empty( $_REQUEST['billing_postcode'] ) ? strtoupper( $_REQUEST['billing_postcode'] ) : strtoupper( WC()->countries->get_base_postcode() ) ) );
 				}
 		}
 	}

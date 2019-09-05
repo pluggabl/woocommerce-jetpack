@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 4.4.0
+ * @version 4.5.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -14,9 +14,14 @@ if ( ! class_exists( 'WCJ_Multicurrency' ) ) :
 class WCJ_Multicurrency extends WCJ_Module {
 
 	/**
+	 * @var WCJ_Multicurrency_Price_Updater
+	 */
+	protected $bkg_process_price_updater;
+
+	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.0
+	 * @version 4.5.0
 	 * @todo    check if we can just always execute `init()` on `init` hook
 	 */
 	function __construct() {
@@ -61,13 +66,32 @@ class WCJ_Multicurrency extends WCJ_Module {
 			if ( is_admin() ) {
 				include_once( 'reports/class-wcj-currency-reports.php' );
 			}
+
+			if ( 'init' === current_filter() ) {
+				$this->init_bkg_process_class();
+			} else {
+				add_action( 'plugins_loaded', array( $this, 'init_bkg_process_class' ) );
+			}
+		}
+	}
+
+	/**
+	 * init_bkg_process_class.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 */
+	function init_bkg_process_class() {
+		if ( 'yes' === get_option( 'wcj_multicurrency_update_prices_on_exch_update', 'no' ) ) {
+			require_once( wcj_plugin_path() . '/includes/background-process/class-wcj-multicurrency-price-updater.php' );
+			$this->bkg_process_price_updater = new WCJ_Multicurrency_Price_Updater();
 		}
 	}
 
 	/**
 	 * Handles third party compatibility
 	 *
-	 * @version 4.4.0
+	 * @version 4.5.0
 	 * @since   4.3.0
 	 */
 	function handle_third_party_compatibility(){
@@ -76,16 +100,223 @@ class WCJ_Multicurrency extends WCJ_Module {
 			add_filter( 'woocommerce_coupon_get_amount', array( $this, 'smart_coupons_get_amount' ), 10, 2 );
 		}
 
+		// WooCommerce Coupons
+		add_action( 'woocommerce_coupon_get_discount_amount', array( $this, 'fix_wc_coupon_currency' ), 10, 5 );
+
 		// WooCommerce Price Filter Widget
-		if ( 'yes' === get_option( 'wcj_multicurrency_compatibility_wc_price_filter' , 'yes' ) ) {
+		if ( 'yes' === get_option( 'wcj_multicurrency_compatibility_wc_price_filter' , 'no' ) ) {
 			add_action( 'wp_footer', array( $this, 'add_compatibility_with_price_filter_widget' ) );
 			add_action( 'wp_footer', array( $this, 'fix_price_filter_widget_currency_format' ) );
+			add_filter( 'woocommerce_price_filter_sql', array( $this, 'get_price_filter_sql_compatible' ), 10, 3 );
+			add_filter( 'posts_clauses', array( $this, 'posts_clauses_price_filter_compatible' ), 11, 2 );
+			add_filter( 'woocommerce_price_filter_widget_step', function ( $step ) {
+				$step = 1;
+				return $step;
+			} );
+		}
+
+		// Sort by Price
+		if ( 'yes' === get_option( 'wcj_multicurrency_compatibility_price_sorting_per_product', 'no' ) ) {
+			add_filter( 'woocommerce_get_catalog_ordering_args', array( $this, 'handle_per_product_opt_with_sort_by_price' ), 29, 3 );
 		}
 
 		// Fix WooCommerce Import
 		if ( 'yes' === get_option( 'wcj_multicurrency_compatibility_wc_import' , 'no' ) ) {
 			add_filter( 'woocommerce_product_importer_parsed_data', array( $this, 'fix_wc_product_import' ), 10, 2 );
 		}
+	}
+
+	/**
+	 * fix_wc_coupon_currency.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param $amount
+	 * @param $discount
+	 * @param $cart_item
+	 * @param $single
+	 * @param $wc_coupon
+	 *
+	 * @return float|int
+	 */
+	function fix_wc_coupon_currency( $amount, $discount, $cart_item, $single, $wc_coupon ) {
+		if (
+			'yes' !== get_option( 'wcj_multicurrency_compatibility_wc_coupons', 'no' ) ||
+			'fixed_cart' !== $wc_coupon->get_discount_type()
+		) {
+			return $amount;
+		}
+		$amount = $this->change_price( $amount, null );
+
+		return $amount;
+	}
+
+	/**
+	 * Fixes sort by price when `wcj_multicurrency_per_product_enabled` is enabled.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param $args
+	 * @param $orderby
+	 * @param $order
+	 *
+	 * @return mixed
+	 */
+	function handle_per_product_opt_with_sort_by_price( $args, $orderby, $order ) {
+		if (
+			$orderby != 'price' ||
+			is_admin() ||
+            ! is_main_query() ||
+			'no' === get_option( 'wcj_multicurrency_per_product_enabled', 'no' ) ||
+			get_option( 'woocommerce_currency' ) === $this->get_current_currency_code() ||
+			1 === $this->get_currency_exchange_rate( $this->get_current_currency_code()
+			)
+		) {
+			return $args;
+		}
+		$order = 'DESC' === $order ? $order : 'ASC';
+		add_filter( 'posts_clauses', function ( $clauses ) use ( $order ) {
+			global $wpdb;
+			if (
+				false === strpos( $clauses['orderby'], 'wc_product_meta_lookup.max_price DESC' ) &&
+				false === strpos( $clauses['orderby'], 'wc_product_meta_lookup.min_price ASC' )
+			) {
+				return $clauses;
+			}
+			$current_currency_code = $this->get_current_currency_code();
+			$exchange_rate         = $this->get_currency_exchange_rate( $current_currency_code );
+
+			$min_max_join = "LEFT JOIN {$wpdb->postmeta} AS pm on pm.post_id = {$wpdb->posts}.ID AND (pm.meta_key IN ('_wcj_multicurrency_per_product_min_price_{$current_currency_code}','_wcj_multicurrency_per_product_max_price_{$current_currency_code}') and pm.meta_value!='')";
+			if ( false === strpos( $clauses['join'], $min_max_join ) ) {
+				$clauses['join'] .= " {$min_max_join} ";
+			}
+			if ( 'DESC' === $order ) {
+				$clauses['fields'] .= ", CAST(IFNULL(MAX(cast(pm.meta_value as signed))/{$exchange_rate},max_price) AS signed) AS wcj_price ";
+			} else {
+				$clauses['fields'] .= ", CAST(IFNULL(MIN(cast(pm.meta_value as signed))/{$exchange_rate},min_price) AS signed) AS wcj_price  ";
+			}
+			$clauses['orderby'] = " wcj_price {$order}, wc_product_meta_lookup.product_id {$order} ";
+
+			return $clauses;
+		}, 99 );
+		return $args;
+	}
+
+	/**
+	 * Makes Price Filter Widget filter correct products if Per product option `wcj_multicurrency_per_product_enabled` is enabled.
+	 *
+	 * First it removes products witch `_wcj_multicurrency_per_product_regular_price_{$current_currency_code}` meta don't match min and max.
+	 * Then it adds products witch `_wcj_multicurrency_per_product_regular_price_{$current_currency_code}` meta match min and max.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @see WC_Query::price_filter_post_clauses()
+	 *
+	 * @param $args
+	 * @param $query
+	 *
+	 * @return mixed
+	 */
+	function posts_clauses_price_filter_compatible( $args, $query ) {
+		if (
+			is_admin() ||
+			'no' === get_option( 'wcj_multicurrency_per_product_enabled', 'no' ) ||
+			get_option( 'woocommerce_currency' ) === $this->get_current_currency_code() ||
+			1 === $this->get_currency_exchange_rate( $this->get_current_currency_code() ) ||
+			! isset( $args['where'] ) ||
+			(
+				false === strpos( $args['where'], 'wc_product_meta_lookup.min_price >=' ) &&
+				false === strpos( $args['where'], 'wc_product_meta_lookup.max_price <=' )
+			)
+		) {
+			return $args;
+		}
+
+		global $wpdb;
+		$current_currency_code = $this->get_current_currency_code();
+		$exchange_rate         = $this->get_currency_exchange_rate( $current_currency_code );
+
+		$min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
+		$max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX;
+		$min_max_join = "LEFT JOIN {$wpdb->postmeta} AS pm on pm.post_id = {$wpdb->posts}.ID AND (pm.meta_key IN ('_wcj_multicurrency_per_product_min_price_{$current_currency_code}','_wcj_multicurrency_per_product_max_price_{$current_currency_code}') and pm.meta_value!='')";
+		if ( false === strpos( $args['join'], $min_max_join ) ) {
+			$args['join']   .= " {$min_max_join} ";
+		}
+		$args['fields'] .= ", CAST(IFNULL(MIN(cast(pm.meta_value as signed))/{$exchange_rate},min_price) AS signed) AS wcj_min_price ";
+		$args['fields'] .= ", CAST(IFNULL(MAX(cast(pm.meta_value as signed))/{$exchange_rate},max_price) AS signed) AS wcj_max_price ";
+		$args['where']   = preg_replace( '/and wc_product_meta_lookup.min_price >= \d.* and wc_product_meta_lookup.max_price <= \d.*\s/i', '', $args['where'] );
+		$args['groupby'] .= " having wcj_min_price >= $min_price AND wcj_min_price <= $max_price ";
+		return $args;
+	}
+
+	/**
+	 * Makes Price Filter Widget show correct min and max values if Per product option `wcj_multicurrency_per_product_enabled` is enabled.
+	 *
+	 * It works comparing min and max values from "_wcj_multicurrency_per_product_regular_price_{currency_code}" meta as well as min and max price from wc_product_meta_lookup
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @see WC_Widget_Price_Filter::get_filtered_price()
+	 *
+	 * @param $sql
+	 *
+	 * @return mixed
+	 */
+	function get_price_filter_sql_compatible( $sql, $meta_query_sql, $tax_query_sql ) {
+		if (
+			is_admin() ||
+			'no' === get_option( 'wcj_multicurrency_per_product_enabled', 'no' ) ||
+			get_option( 'woocommerce_currency' ) === $this->get_current_currency_code() ||
+			1 === $this->get_currency_exchange_rate( $this->get_current_currency_code() )
+		) {
+			return $sql;
+		}
+
+		global $wpdb;
+		$current_currency_code = $this->get_current_currency_code();
+		$exchange_rate         = $this->get_currency_exchange_rate( $current_currency_code );
+		$args       = WC()->query->get_main_query()->query_vars;
+		$tax_query  = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
+		$meta_query = isset( $args['meta_query'] ) ? $args['meta_query'] : array();
+
+		if ( ! is_post_type_archive( 'product' ) && ! empty( $args['taxonomy'] ) && ! empty( $args['term'] ) ) {
+			$tax_query[] = array(
+				'taxonomy' => $args['taxonomy'],
+				'terms'    => array( $args['term'] ),
+				'field'    => 'slug',
+			);
+		}
+
+		foreach ( $meta_query + $tax_query as $key => $query ) {
+			if ( ! empty( $query['price_filter'] ) || ! empty( $query['rating_filter'] ) ) {
+				unset( $meta_query[ $key ] );
+			}
+		}
+
+		$search     = WC_Query::get_main_search_query_sql();
+		$search_query_sql = $search ? ' AND ' . $search : '';
+
+		$sql = "
+		    SELECT min(wcj_min_price) as min_price, max(wcj_max_price) as max_price	
+	        FROM(		
+                SELECT cast(IFNULL(MIN(cast(pm.meta_value as signed))/{$exchange_rate},min_price) as signed) AS wcj_min_price, cast(IFNULL(MAX(cast(pm.meta_value as signed))/{$exchange_rate},max_price) as signed) AS wcj_max_price
+                FROM {$wpdb->wc_product_meta_lookup}                
+                LEFT JOIN {$wpdb->postmeta} AS pm on pm.post_id = product_id AND (pm.meta_key IN ('_wcj_multicurrency_per_product_min_price_{$current_currency_code}','_wcj_multicurrency_per_product_max_price_{$current_currency_code}') and pm.meta_value!='')
+                WHERE product_id IN (
+                    SELECT ID FROM {$wpdb->posts}
+                    " . $tax_query_sql['join'] . $meta_query_sql['join'] . "
+                    WHERE {$wpdb->posts}.post_type IN ('" . implode( "','", array_map( 'esc_sql', apply_filters( 'woocommerce_price_filter_post_type', array( 'product' ) ) ) ) . "')
+                    AND {$wpdb->posts}.post_status = 'publish'				
+                    " . $tax_query_sql['where'] . $meta_query_sql['where'] . $search_query_sql . '
+                )
+                group by product_id
+            ) as wcj_min_max_price
+			';
+		return $sql;
 	}
 
 	/**
@@ -126,8 +357,11 @@ class WCJ_Multicurrency extends WCJ_Module {
 	}
 
 	/**
-	 * Adds compatibility with WooCommerce Price Filter widget
-	 * @version 4.3.0
+	 * Adds compatibility with WooCommerce Price Filter widget.
+     *
+     * @see price-slider.js, init_price_filter()
+     *
+	 * @version 4.5.0
 	 * @since   4.3.0
 	 */
 	function add_compatibility_with_price_filter_widget() {
@@ -137,9 +371,12 @@ class WCJ_Multicurrency extends WCJ_Module {
 		?>
 		<?php
 		$exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() );
+		if ( $exchange_rate == 1 ) {
+			return;
+		}
 		?>
 		<input type="hidden" id="wcj_mc_exchange_rate" value="<?php echo esc_html( $exchange_rate ) ?>"/>
-		<script>
+        <script>
 			var wcj_mc_pf_slider = {
 				slider: null,
 				convert_rate: 1,
@@ -149,24 +386,28 @@ class WCJ_Multicurrency extends WCJ_Module {
 				current_min: 1,
 				current_max: 1,
 				current_values: [],
+				step: 1,
 
-				init(slider, convert_rate) {
+				init(slider, convert_rate, step) {
+					this.step = step;
 					this.slider = slider;
 					this.convert_rate = convert_rate;
 					this.original_min = jQuery(this.slider).slider("option", "min");
 					this.original_max = jQuery(this.slider).slider("option", "max");
+					if (this.original_min > jQuery(this.slider).parent().find('#min_price').val()) {
+						jQuery(this.slider).parent().find('#min_price').attr('value', this.original_min);
+					}
+					if (this.original_max < jQuery(this.slider).parent().find('#max_price').val()) {
+						jQuery(this.slider).parent().find('#max_price').attr('value', this.original_max);
+					}
 					this.original_values = jQuery(this.slider).slider("option", "values");
 					this.current_min = this.original_min * this.convert_rate;
 					this.current_max = this.original_max * this.convert_rate;
-					this.current_values = this.original_values.map(function (elem) {
-						return elem * wcj_mc_pf_slider.convert_rate;
-					});
+					this.current_values[0] = jQuery(this.slider).parent().find('#min_price').val() * wcj_mc_pf_slider.convert_rate;
+					this.current_values[1] = jQuery(this.slider).parent().find('#max_price').val() * wcj_mc_pf_slider.convert_rate;
 					this.update_slider();
 				},
 
-				/**
-				 * @see price-slider.js, init_price_filter()
-				 */
 				update_slider() {
 					jQuery(this.slider).slider("destroy");
 					var current_min_price = Math.floor(this.current_min);
@@ -177,19 +418,22 @@ class WCJ_Multicurrency extends WCJ_Module {
 						animate: true,
 						min: current_min_price,
 						max: current_max_price,
+						step: parseFloat(this.step),
 						values: wcj_mc_pf_slider.current_values,
 						create: function () {
-							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(wcj_mc_pf_slider.current_values[0] / wcj_mc_pf_slider.convert_rate);
-							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(wcj_mc_pf_slider.current_values[1] / wcj_mc_pf_slider.convert_rate);
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(Math.floor(wcj_mc_pf_slider.current_values[0] / wcj_mc_pf_slider.convert_rate));
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(Math.ceil(wcj_mc_pf_slider.current_values[1] / wcj_mc_pf_slider.convert_rate));
 							jQuery(document.body).trigger('price_slider_create', [Math.floor(wcj_mc_pf_slider.current_values[0]), Math.ceil(wcj_mc_pf_slider.current_values[1])]);
 						},
 						slide: function (event, ui) {
 							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(Math.floor(ui.values[0] / wcj_mc_pf_slider.convert_rate));
 							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(Math.ceil(ui.values[1] / wcj_mc_pf_slider.convert_rate));
-							jQuery(document.body).trigger('price_slider_slide', [Math.floor(ui.values[0]), Math.ceil(ui.values[1])]);
+							var the_min = ui.values[0] == Math.round(wcj_mc_pf_slider.current_values[0]) ? Math.floor(wcj_mc_pf_slider.current_values[0]) : ui.values[0];
+							var the_max = ui.values[1] == Math.round(wcj_mc_pf_slider.current_values[1]) ? Math.ceil(wcj_mc_pf_slider.current_values[1]) : ui.values[1];
+							jQuery(document.body).trigger('price_slider_slide', [the_min, the_max]);
 						},
 						change: function (event, ui) {
-							jQuery(document.body).trigger('price_slider_change', [Math.floor(ui.values[0]), Math.ceil(ui.values[1])]);
+							jQuery(document.body).trigger('price_slider_change', [ui.values[0], ui.values[1]]);
 						}
 					});
 				}
@@ -197,6 +441,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 			var wcj_mc_pf = {
 				price_filters: null,
 				rate: 1,
+				step: 1,
 				init: function (price_filters) {
 					this.price_filters = price_filters;
 					this.rate = document.getElementById('wcj_mc_exchange_rate').value;
@@ -204,7 +449,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 				},
 				update_slider: function () {
 					[].forEach.call(wcj_mc_pf.price_filters, function (el) {
-						wcj_mc_pf_slider.init(el, wcj_mc_pf.rate);
+						wcj_mc_pf_slider.init(el, wcj_mc_pf.rate, wcj_mc_pf.step);
 					});
 				}
 			}
@@ -214,7 +459,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 					wcj_mc_pf.init(price_filters);
 				}
 			});
-		</script>
+        </script>
 		<?php
 	}
 
@@ -281,6 +526,133 @@ class WCJ_Multicurrency extends WCJ_Module {
 				$this->additional_price_filters = array();
 			}
 
+		} else {
+			// Saves min and max price when product is updated
+			add_action( 'woocommerce_update_product', function ( $post_id ) {
+				if ( 'no' === get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ) ) {
+					return;
+				}
+				$this->save_min_max_prices_per_product( $post_id );
+			}, 99 );
+
+			// Saves min and max price when exchange rate changes
+			add_action( 'updated_option', array( $this, 'update_min_max_prices_on_exchange_rate_change' ), 10, 3 );
+		}
+	}
+
+	/**
+	 * Updates min and max prices on exchange rate change.
+	 *
+	 * The update is done with background process.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param $option_name
+	 * @param $old_value
+	 * @param $option_value
+	 */
+	function update_min_max_prices_on_exchange_rate_change( $option_name, $old_value, $option_value ) {
+		if (
+			'no' === get_option( 'wcj_multicurrency_update_prices_on_exch_update', 'no' ) ||
+			'no' === get_option( 'wcj_multicurrency_per_product_enabled', 'yes' ) ||
+			false === strpos( $option_name, 'wcj_multicurrency_exchange_rate_' )
+		) {
+			return;
+		}
+		$currency_number = substr( $option_name, strrpos( $option_name, '_' ) + 1 );
+		$currency        = get_option( 'wcj_multicurrency_currency_' . $currency_number );
+		$product_ids     = $this->get_products_by_per_product_currency( $currency );
+		if ( is_array( $product_ids ) && count( $product_ids ) > 0 ) {
+			$this->bkg_process_price_updater->cancel_process();
+			foreach ( $product_ids as $post_id ) {
+				$this->bkg_process_price_updater->push_to_queue( array( 'id' => $post_id, 'currency' => $currency ) );
+			}
+			$this->bkg_process_price_updater->save()->dispatch();
+		}
+	}
+
+	/**
+	 * Gets all products, or products with variations containing meta '_wcj_multicurrency_per_product_regular_price_{currency}' or '_wcj_multicurrency_per_product_sale_price_{currency}'.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param $currency
+	 *
+	 * @return array
+	 */
+	function get_products_by_per_product_currency( $currency ) {
+		if ( empty( $currency ) ) {
+			$currency = get_option( 'woocommerce_currency' );
+		}
+
+		global $wpdb;
+		$product_ids = $wpdb->get_col( "
+          SELECT p.ID
+          FROM {$wpdb->posts} AS p
+          LEFT JOIN {$wpdb->posts} AS p2 ON p.ID = p2.ID OR (p2.post_parent = p.ID AND p2.post_type='product_variation')
+          LEFT JOIN {$wpdb->postmeta} AS pm ON (p2.ID = pm.post_id) AND (pm.meta_key IN ('_wcj_multicurrency_per_product_regular_price_{$currency}','_wcj_multicurrency_per_product_sale_price_{$currency}') AND pm.meta_value!='')
+          WHERE p.post_status = 'publish' AND p.post_type IN ('product')
+          AND pm.meta_value != 'null'
+          GROUP BY p.ID
+        ");
+
+		return $product_ids;
+	}
+
+	/**
+	 * Updates min and max prices.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param $post_id
+	 * @param string $currency_code_param
+	 */
+	function save_min_max_prices_per_product( $post_id, $currency_code_param = '' ) {
+		$product  = wc_get_product( $post_id );
+		$products = array();
+		if ( $product->is_type( 'variable' ) ) {
+			$available_variations = $product->get_variation_prices()['price'];
+			foreach ( $available_variations as $variation_id => $price ) {
+				$products[ $variation_id ] = $price;
+			}
+		} else {
+			$products[ $post_id ] = $product->get_price();
+		}
+		if ( empty( $currency_code_param ) ) {
+			$total_number = apply_filters( 'booster_option', 2, get_option( 'wcj_multicurrency_total_number', 2 ) );
+		} else {
+			$total_number = 1;
+		}
+
+		$per_product_prices = array();
+		for ( $i = 1; $i <= $total_number; $i ++ ) {
+			$currency_code = empty( $currency_code_param ) ? get_option( 'wcj_multicurrency_currency_' . $i ) : $currency_code_param;
+			$exchange_rate = $this->get_currency_exchange_rate( $currency_code );
+		    foreach ( $products as $product_id => $original_price ) {
+				// Regular Price
+			    if ( isset( $_POST["wcj_multicurrency_per_product_regular_price_{$currency_code}_{$product_id}"] ) ) {
+				    $regular_price = $_POST["wcj_multicurrency_per_product_regular_price_{$currency_code}_{$product_id}"];
+			    } else {
+				    $regular_price = get_post_meta( $product_id, '_wcj_multicurrency_per_product_regular_price_' . $currency_code, true );
+			    }
+
+				// Sale Price
+				if ( isset( $_POST["wcj_multicurrency_per_product_sale_price_{$currency_code}_{$product_id}"] ) ) {
+					$sale_price = $_POST["wcj_multicurrency_per_product_sale_price_{$currency_code}_{$product_id}"];
+				} else {
+					$sale_price = get_post_meta( $product_id, '_wcj_multicurrency_per_product_sale_price_' . $currency_code, true );
+				}
+				$prices = array_filter( array( $regular_price, $sale_price ) );
+				$price  = count( $prices ) > 0 ? min( $prices ) : $original_price * $exchange_rate;
+				$per_product_prices[ $currency_code ][ $product_id ] = $price;
+			}
+		}
+		foreach ( $per_product_prices as $currency => $values ) {
+			update_post_meta( $post_id, '_wcj_multicurrency_per_product_min_price_' . $currency, min( $values ) );
+			update_post_meta( $post_id, '_wcj_multicurrency_per_product_max_price_' . $currency, max( $values ) );
 		}
 	}
 
@@ -492,7 +864,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.8.0
+	 * @version 4.5.0
 	 */
 	function change_price( $price, $_product ) {
 		if ( '' === $price ) {
@@ -532,7 +904,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 		// Global
 		if ( 1 != ( $currency_exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() ) ) ) {
-			$price = $price * $currency_exchange_rate;
+			$price = (float) $price * (float) $currency_exchange_rate;
 			switch ( get_option( 'wcj_multicurrency_rounding', 'no_round' ) ) {
 				case 'round':
 					$price = round( $price, get_option( 'wcj_multicurrency_rounding_precision', absint( get_option( 'woocommerce_price_num_decimals', 2 ) ) ) );

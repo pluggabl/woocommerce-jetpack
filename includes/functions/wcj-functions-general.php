@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 4.4.0
+ * @version 4.5.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -796,13 +796,13 @@ if ( ! function_exists( 'wcj_get_the_ip' ) ) {
 	/**
 	 * wcj_get_the_ip.
 	 *
-	 * @version 4.3.0
+	 * @version 4.5.0
 	 * @see http://stackoverflow.com/questions/3003145/how-to-get-the-client-ip-address-in-php
 	 */
 	function wcj_get_the_ip() {
 		$ip                   = null;
 		$ip_detection_methods = array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' );
-		$ip_detection_methods = 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? explode( PHP_EOL, get_option( 'wcj_general_advanced_ip_detection', implode( PHP_EOL, $ip_detection_methods ) ) ) : $ip_detection_methods;
+		$ip_detection_methods = 'yes' === get_option( 'wcj_general_enabled', 'no' ) ? explode( PHP_EOL, get_option( 'wcj_general_advanced_ip_detection', implode( PHP_EOL, array( 'REMOTE_ADDR', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR' ) ) ) ) : $ip_detection_methods;
 		foreach ( $ip_detection_methods as $method ) {
 			if ( empty( $_SERVER[ sanitize_text_field( $method ) ] ) ) {
 				continue;

@@ -248,7 +248,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * @param $old_value
 		 * @param $option_value
 		 */
-		function update_products_base_price_on_exchange_rate_change( $option_name, $old_value, $option_value){
+		function update_products_base_price_on_exchange_rate_change( $option_name, $old_value, $option_value ){
 			if (
 				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
 				false === strpos( $option_name, 'wcj_multicurrency_base_price_exchange_rate_' )

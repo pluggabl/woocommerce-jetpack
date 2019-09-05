@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - PDF Invoicing
  *
- * @version 4.3.1
+ * @version 4.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.3.0
+	 * @version 4.5.0
 	 */
 	function __construct() {
 
@@ -38,9 +38,13 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 		) );
 
 		if ( $this->is_enabled() ) {
-
-			add_action( 'init', array( $this, 'catch_args' ) );
-			add_action( 'init', array( $this, 'generate_pdf_on_init' ) );
+			if ( 'init' === current_filter() ) {
+				$this->catch_args();
+				$this->generate_pdf_on_init();
+			} else {
+				add_action( 'init', array( $this, 'catch_args' ) );
+				add_action( 'init', array( $this, 'generate_pdf_on_init' ) );
+			}
 
 			// Bulk actions
 			add_filter( 'bulk_actions-edit-' . 'shop_order', array( $this, 'bulk_actions_register' ) );
@@ -149,7 +153,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 	/**
 	 * Processes the PDF bulk actions.
 	 *
-	 * @version 4.3.0
+	 * @version 4.5.0
 	 * @since   2.5.7
 	 * @todo    on `generate` (and maybe other actions) validate user permissions/capabilities - `if ( ! current_user_can( $post_type_object->cap->export_post, $post_id ) ) { wp_die( __( 'You are not allowed to export this post.' ) ); }`
 	 *
@@ -228,7 +232,7 @@ class WCJ_PDF_Invoicing extends WCJ_Module {
 				}
 				break;
 			default:
-				return;
+				return $redirect_to;
 		}
 		return $redirect_to;
 	}

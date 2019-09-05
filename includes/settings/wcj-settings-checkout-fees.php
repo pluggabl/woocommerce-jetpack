@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Fees
  *
- * @version 3.8.0
+ * @version 4.5.0
  * @since   3.7.0
  * @author  Algoritmika Ltd.
  */
@@ -29,6 +29,12 @@ $settings = array(
 	),
 );
 $total_number = apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_fees_total_number', 1 ) );
+$fees_titles = get_option( 'wcj_checkout_fees_data_titles', array() );
+$fees = array();
+for ( $i = 1; $i <= $total_number; $i ++ ) {
+	$fees[ $i ] = $fees_titles[ $i ];
+}
+
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$settings = array_merge( $settings, array(
 		array(
@@ -40,6 +46,13 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'title'    => __( 'Enable/Disable', 'woocommerce-jetpack' ),
 			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 			'id'       => "wcj_checkout_fees_data_enabled[$i]",
+			'default'  => 'yes',
+			'type'     => 'checkbox',
+		),
+		array(
+			'title'    => __( 'Taxable', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'id'       => "wcj_checkout_fees_data_taxable[$i]",
 			'default'  => 'yes',
 			'type'     => 'checkbox',
 		),
@@ -67,11 +80,19 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'custom_attributes' => array( 'step' => 0.000001 ),
 		),
 		array(
-			'title'    => __( 'Taxable', 'woocommerce-jetpack' ),
-			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-			'id'       => "wcj_checkout_fees_data_taxable[$i]",
-			'default'  => 'yes',
-			'type'     => 'checkbox',
+			'title'             => __( 'Cart Min', 'woocommerce-jetpack' ),
+			'desc_tip'          => __( 'Cart minimum amount', 'woocommerce-jetpack' ),
+			'id'                => "wcj_checkout_fees_cart_min_amount[$i]",
+			'default'           => 1,
+			'type'              => 'number',
+			'custom_attributes' => array( 'min' => 1 )
+		),
+		array(
+			'title'             => __( 'Cart Max', 'woocommerce-jetpack' ),
+			'desc_tip'          => __( 'Cart maximum amount.', 'woocommerce-jetpack' ) . '<br />' . __( 'Zero or empty values will not be considered', 'woocommerce-jetpack' ),
+			'id'                => "wcj_checkout_fees_cart_max_amount[$i]",
+			'default'           => '',
+			'type'              => 'number',
 		),
 		array(
 			'title'    => __( 'Checkout Field', 'woocommerce-jetpack' ),
@@ -80,6 +101,24 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'id'       => "wcj_checkout_fees_data_checkout_fields[$i]",
 			'default'  => '',
 			'type'     => 'text',
+		),
+		array(
+			'title'    => __( 'Overlap', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'If valid, will overlap other fee', 'woocommerce-jetpack' ),
+			'id'       => "wcj_checkout_fees_overlap[$i]",
+			'type'     => 'multiselect',
+			'class'    => 'chosen_select',
+			'default'  => '',
+			'options'  => array_filter( $fees, function ( $fee_id ) use ( $i ) {
+				return $i != $fee_id;
+			}, ARRAY_FILTER_USE_KEY )
+		),
+		array(
+			'title'    => __( 'Priority', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'The higher the number the higher the priority.', 'woocommerce-jetpack' ).'<br />'.__( 'Will mostly make sense for overlapping.', 'woocommerce-jetpack' ),
+			'id'       => "wcj_checkout_fees_priority[$i]",
+			'type'     => 'number',
+			'default'  => 0,
 		),
 		array(
 			'type'     => 'sectionend',

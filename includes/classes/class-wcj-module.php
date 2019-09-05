@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 4.4.0
+ * @version 4.5.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] maybe should be `abstract` ?
@@ -20,6 +20,25 @@ class WCJ_Module {
 	public $parent_id; // for `submodule` only
 	public $type;      // `module` or `submodule`
 	public $link;
+	public $options = array();
+
+	/**
+	 * Gets an option from database or from the class itself for performance reasons.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param $option_name
+	 * @param null $default
+	 *
+	 * @return mixed
+	 */
+	function get_option( $option_name, $default = null ){
+		if ( ! isset( $this->options[ $option_name ] ) ) {
+			$this->options[ $option_name ] = get_option( $option_name, $default );
+		}
+		return $this->options[ $option_name ];
+	}
 
 	/**
 	 * Constructor.

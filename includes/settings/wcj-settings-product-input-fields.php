@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Input Fields
  *
- * @version 4.3.0
+ * @version 4.5.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] maybe set "Strip slashes" option to `yes` by default (or even remove the option completely and always strip slashes)
@@ -278,6 +278,14 @@ $settings = array_merge( $settings, array(
 		'css'      => 'width:50%;min-width:300px;',
 	),
 	array(
+		'title'    => __( 'Preserve Line Breaks', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Preserves line breaks on frontend, making some inputs like textarea more legible', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_input_fields_frontend_linebreaks',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_product_input_fields_frontend_view_options',
 	),
@@ -320,6 +328,14 @@ $settings = array_merge( $settings, array(
 			__( 'When checked - will disable input fields editing on admin order edit page.', 'woocommerce-jetpack' ) ),
 		'id'       => 'wcj_product_input_fields_make_nicer_name_enabled',
 		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Preserve Line Breaks', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Preserves line breaks on admin, making some inputs like textarea more legible', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_input_fields_admin_linebreaks',
+		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(

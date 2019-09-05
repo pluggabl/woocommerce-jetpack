@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 4.0.0
+ * @version 4.5.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -178,6 +178,14 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Enable AJAX on Single Product Page', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_addons_ajax_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Ignore Strikethrough Price', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Ignore Strikethrough Price', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'If a product has both regular and sale prices, only the sale price will be updated on AJAX. The regular price will be ignored', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_ajax_ignore_st_price',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

@@ -80,7 +80,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	 * @since   3.8.0
 	 * @todo    (dev) maybe move this to `WCJ_Module`
 	 */
-	function get_option( $option, $key, $default = false ) {
+	function wcj_get_option( $option, $key, $default = false ) {
 		return ( isset( $this->options[ $option ][ $key ] ) ? $this->options[ $option ][ $key ] : ( isset( $this->defaults[ $option ] ) ? $this->defaults[ $option ] : $default ) );
 	}
 
@@ -155,7 +155,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	 * @todo    add product cats and tags
 	 */
 	function check_cart_products( $gateway ) {
-		$include_products = $this->get_option( 'include_products', $gateway );
+		$include_products = $this->wcj_get_option( 'include_products', $gateway );
 		if ( ! empty( $include_products ) ) {
 			$passed = false;
 			foreach ( WC()->cart->get_cart() as $item ) {
@@ -168,7 +168,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 				return false;
 			}
 		}
-		$exclude_products = $this->get_option( 'exclude_products', $gateway );
+		$exclude_products = $this->wcj_get_option( 'exclude_products', $gateway );
 		if ( ! empty( $exclude_products ) ) {
 			foreach ( WC()->cart->get_cart() as $item ) {
 				if ( in_array( $item['product_id'], $exclude_products ) ) {
@@ -188,22 +188,22 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 		global $woocommerce;
 		$current_gateway = $this->get_current_gateway();
 		if ( '' != $current_gateway ) {
-			$fee_text        = do_shortcode( $this->get_option( 'text', $current_gateway ) );
-			$min_cart_amount = $this->get_option( 'min_cart_amount', $current_gateway );
-			$max_cart_amount = $this->get_option( 'max_cart_amount', $current_gateway );
+			$fee_text        = do_shortcode( $this->wcj_get_option( 'text', $current_gateway ) );
+			$min_cart_amount = $this->wcj_get_option( 'min_cart_amount', $current_gateway );
+			$max_cart_amount = $this->wcj_get_option( 'max_cart_amount', $current_gateway );
 			// Multicurrency (Currency Switcher) module
 			if ( WCJ()->modules['multicurrency']->is_enabled() ) {
 				$min_cart_amount = WCJ()->modules['multicurrency']->change_price( $min_cart_amount, null );
 				$max_cart_amount = WCJ()->modules['multicurrency']->change_price( $max_cart_amount, null );
 			}
-			$total_in_cart = ( 'no' === $this->get_option( 'exclude_shipping', $current_gateway ) ?
+			$total_in_cart = ( 'no' === $this->wcj_get_option( 'exclude_shipping', $current_gateway ) ?
 				$woocommerce->cart->cart_contents_total + $woocommerce->cart->shipping_total :
 				$woocommerce->cart->cart_contents_total
 			);
-			$total_in_cart += 'no' === $this->get_option( 'include_taxes', $current_gateway ) ? 0 : $woocommerce->cart->get_subtotal_tax() + $woocommerce->cart->get_shipping_tax();
+			$total_in_cart += 'no' === $this->wcj_get_option( 'include_taxes', $current_gateway ) ? 0 : $woocommerce->cart->get_subtotal_tax() + $woocommerce->cart->get_shipping_tax();
 			if ( '' != $fee_text && $total_in_cart >= $min_cart_amount  && ( 0 == $max_cart_amount || $total_in_cart <= $max_cart_amount ) && $this->check_cart_products( $current_gateway ) ) {
-				$fee_value = $this->get_option( 'value', $current_gateway );
-				$fee_type  = $this->get_option( 'type', $current_gateway );
+				$fee_value = $this->wcj_get_option( 'value', $current_gateway );
+				$fee_type  = $this->wcj_get_option( 'type', $current_gateway );
 				$final_fee_to_add = 0;
 				switch ( $fee_type ) {
 					case 'fixed':
@@ -215,16 +215,16 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 						break;
 					case 'percent':
 						$final_fee_to_add = ( $fee_value / 100 ) * $total_in_cart;
-						if ( 'yes' === $this->get_option( 'round', $current_gateway ) ) {
-							$final_fee_to_add = round( $final_fee_to_add, $this->get_option( 'round_precision', $current_gateway ) );
+						if ( 'yes' === $this->wcj_get_option( 'round', $current_gateway ) ) {
+							$final_fee_to_add = round( $final_fee_to_add, $this->wcj_get_option( 'round_precision', $current_gateway ) );
 						}
 						break;
 				}
 				if ( 0 != $final_fee_to_add ) {
-					$taxable = ( 'yes' === $this->get_option( 'is_taxable', $current_gateway ) );
+					$taxable = ( 'yes' === $this->wcj_get_option( 'is_taxable', $current_gateway ) );
 					$tax_class_name = '';
 					if ( $taxable ) {
-						$tax_class_id = $this->get_option( 'tax_class_id', $current_gateway );
+						$tax_class_id = $this->wcj_get_option( 'tax_class_id', $current_gateway );
 						$tax_class_names = array_merge( array( '', ), WC_Tax::get_tax_classes() );
 						$tax_class_name = $tax_class_names[ $tax_class_id ];
 					}

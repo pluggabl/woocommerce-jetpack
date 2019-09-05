@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.2
-Stable tag: 4.4.1
+Stable tag: 4.5.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,44 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 4.5.0 - 05/09/2019 =
+* Fix - Core - `WCJ_Modules` - Change the order some submodules are loaded to make it compatible with "Load Modules on Init Hook" option.
+* Fix - EMAILS & MISC. - My Account - Fix custom page title on my account page changing the my account title on wp nav menu.
+* Fix - EMAILS & MISC. - My Account - Fix compatibility problem with PublishPress plugin regarding `the_title` filter.
+* Fix - PDF INVOICING & PACKING SLIPS - Email Options - Fix attachments not getting sent via email due to unsuccessful WP_Order class checking.
+* Fix - PDF INVOICING & PACKING SLIPS - Make module compatible with "Load Modules on Init Hook" option.
+* Fix - PDF INVOICING & PACKING SLIPS - Fix empty return on `bulk_actions_handle()`.
+* Fix - Plugin update checker - Fix PHP warning 'strpos(): Non-string needles will be interpreted as strings in the future'.
+* Fix - PAYMENT GATEWAYS - Gateways by Country, State or Postcode - Fix "Invalid payment method" error when using the postcodes option.
+* Fix - PRODUCTS - Product Visibility by User Role - Fix search on ajax.
+* Fix - PRODUCTS - Product Addons - Replace old method for setting price by correct one on `woocommerce_add_cart_item` and `woocommerce_get_cart_item_from_session`.
+* Fix - PRODUCTS - Product Addons - Format order metadata properly.
+* Fix - PRODUCTS - Product Addons - Fix "A non well formed numeric value" php warning on `price_change_ajax()`.
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Fix Price Filter Widget step on Compatibility option.
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Fix "A non well formed numeric value" php warning on `change_price()`.
+* Fix - SHIPPING & ORDERS - Custom Shipping - Improve performance of Custom Shipping Zones.
+* Fix - Shortcodes - Orders - `[wcj_order_refunds_table]` - `columns` - `refund_title` param fixed.
+* Dev - Core - `WCJ_Module` - Create `get_option()` method to get an option from database or from the class itself for performance reasons.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Allow fields to be updated from order admin edit page.
+* Dev - CART & CHECKOUT - Checkout Fees - Add Overlap field.
+* Dev - CART & CHECKOUT - Checkout Fees - Add Cart Min field.
+* Dev - CART & CHECKOUT - Checkout Fees - Add Cart Max field.
+* Dev - CART & CHECKOUT - Checkout Fees - Add Priority field.
+* Dev - EMAILS & MISC. - Booster WPML - General Options - Add new option 'Auto Switch Booster Currency' to automatically switch Booster currency according to WPML.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Price Filter Widget Compatibility now works with `wcj_multicurrency_per_product_enabled` option enabled.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Change `wcj_multicurrency_compatibility_wc_price_filter` option default value from 'yes' to 'no'
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Create new option to make the "Sort By Price" work with `wcj_multicurrency_per_product_enabled` option enabled.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Create new option to save min and max prices on currency rate update via background processing.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add new compatibility option with native WooCommerce coupons.
+* Dev - PRODUCTS - Cost of Goods - Price Fields - Add 'Profit Percentage Type' option to choose between 'Margin' and 'Markup' values.
+* Dev - PRODUCTS - Product Addons - Add option to ignore strike-through price on AJAX update. If a product has both regular and sale prices, only the sale price will be updated on AJAX. The regular price will be ignored.
+* Dev - PRODUCTS - Product Input Fields - Add option to preserve line breaks on admin and frontend.
+* Dev - Shortcodes - Orders - `[wcj_order_refunds_table]` - `columns` - `refund_date` param added.
+* Dev - Orders Shortcodes - Add param `plus_fees` for `[wcj_order_subtotal_plus_shipping]` shortcode.
+* Dev - Functions - Orders - Add `wcj_get_order_fees_total()` and `wcj_get_order_fees_total_tax()`.
+* Dev - Functions - General - Add option to overwrite WooCommerce IP detection method by Booster.
+* Tweak - Functions - General - Change default options from `wcj_general_advanced_ip_detection` on `wcj_get_the_ip()` function to 'REMOTE_ADDR', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR'.
 
 = 4.4.1 - 26/06/2019 =
 * Fix - SHIPPING & ORDERS - Custom Shipping - Fix missing custom shipping settings.

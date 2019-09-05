@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Cost of Goods (formerly Product Cost Price)
  *
- * @version 3.9.0
+ * @version 4.5.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -234,7 +234,7 @@ class WCJ_Purchase_Data extends WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 2.7.0
+	 * @version 4.5.0
 	 * @since   2.4.5
 	 * @todo    (maybe) min_profit
 	 */
@@ -266,7 +266,11 @@ class WCJ_Purchase_Data extends WCJ_Module {
 					$table_data[] = array( __( 'Selling', 'woocommerce-jetpack' ), wc_price( $the_price ) );
 					$table_data[] = array( __( 'Buying', 'woocommerce-jetpack' ),  wc_price( $purchase_price ) );
 					$table_data[] = array( __( 'Profit', 'woocommerce-jetpack' ),  wc_price( $the_profit )
-						. sprintf( ' (%0.2f %%)', ( $the_profit / $purchase_price * 100 ) ) );
+						. sprintf( ' (%0.2f %%)', ( $this->get_profit_percentage(array(
+							'profit'         => $the_profit,
+							'purchase_price' => $purchase_price,
+							'selling_price'  => $the_price
+						)) ) ) );
 					$html = '';
 					$html .= '<h5>' . __( 'Report', 'woocommerce-jetpack' ) . $desc . '</h5>';
 					$html .= wcj_get_table_html( $table_data, array(
@@ -279,6 +283,30 @@ class WCJ_Purchase_Data extends WCJ_Module {
 				}
 			}
 		}
+	}
+
+	/**
+	 * get_profit_percentage.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param array $args
+	 *
+	 * @return float|int
+	 */
+	function get_profit_percentage( $args = array() ) {
+		$args  = wp_parse_args( $args, array(
+			'percentage_type' => get_option( 'wcj_purchase_price_profit_percentage_type', 'markup' ),
+			'profit'          => null,
+			'selling_price'   => null,
+			'purchase_price'  => null,
+		) );
+		$price = $args['purchase_price'];
+		if ( 'margin' === $args['percentage_type'] ) {
+			$price = $args['selling_price'];
+		}
+		return ( $args['profit'] / $price * 100 );
 	}
 
 }

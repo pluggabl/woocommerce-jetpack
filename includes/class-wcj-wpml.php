@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 3.8.0
+ * @version 4.5.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -31,9 +31,29 @@ class WCJ_WPML extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_wpml_config_xml_auto_regenerate', 'no' ) ) {
 				add_action( 'wcj_version_updated', array( $this, 'create_wpml_xml_file' ) );
 			}
+			add_action( 'wcml_switch_currency', array( $this, 'switch_currency' ) );
 		}
 
 		$this->notice = '';
+	}
+
+	/**
+	 * Set Booster currency based on WPML currency
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param $currency
+	 */
+	function switch_currency( $currency ) {
+		if (
+			'no' === get_option( 'wcj_wpml_switch_booster_currency', 'no' ) ||
+			! WCJ()->modules['multicurrency']->is_enabled()
+		) {
+			return;
+		}
+		wcj_session_maybe_start();
+		wcj_session_set( 'wcj-currency', $currency );
 	}
 
 	/**

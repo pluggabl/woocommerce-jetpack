@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 4.4.0
+ * @version 4.5.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names)
@@ -71,6 +71,8 @@ class WCJ_Product_Addons extends WCJ_Module {
 				if ( 'yes' === get_option( 'wcj_product_addons_hide_on_admin_order_page', 'no' ) ) {
 					add_filter( 'woocommerce_hidden_order_itemmeta', array( $this, 'hide_addons_in_admin_order' ), PHP_INT_MAX );
 				}
+				// Format meta on admin order
+				add_filter( 'woocommerce_order_item_get_formatted_meta_data', array( $this, 'format_meta_data' ), 20, 2 );
 			}
 			// Addons quantity
 			$qty_triggers = get_option( 'wcj_product_addons_qty_decrease_triggers', '' );
@@ -88,6 +90,42 @@ class WCJ_Product_Addons extends WCJ_Module {
 				}
 			}
 		}
+	}
+
+	/**
+	 * format_meta_data.
+	 *
+	 * @version 4.5.0
+	 * @since   4.5.0
+	 *
+	 * @param $meta_data
+	 * @param $item
+	 *
+	 * @return mixed
+	 */
+	function format_meta_data( $meta_data, $item ) {
+		if ( ! is_a( $item, 'WC_Order_Item_Product' ) ) {
+			return $meta_data;
+		}
+		$addons  = $this->get_product_addons( $item->get_product_id() );
+		$product = $item->get_product_id();
+		foreach ( $addons as $addon ) {
+			$label_key_search = wp_list_filter( $meta_data, array( 'key' => '_' . $addon['label_key'] ) );
+			$price_key_search = wp_list_filter( $meta_data, array( 'key' => '_' . $addon['price_key'] ) );
+			if ( count( $label_key_search ) > 0 ) {
+				reset( $label_key_search );
+				reset( $price_key_search );
+				$label_key   = key( $label_key_search );
+				$price_key   = key( $price_key_search );
+				$addon_price = $this->maybe_convert_currency( $meta_data[ $price_key ]->value, $product );
+				$final_price = wc_price( $addon_price );
+				// Change metadata values
+				$meta_data[ $label_key ]->display_key   = $meta_data[ $label_key ]->value;
+				$meta_data[ $label_key ]->display_value = $final_price;
+				unset( $meta_data[ $price_key ] );
+			}
+		}
+		return $meta_data;
 	}
 
 	/**
@@ -226,7 +264,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 4.2.0
+	 * @version 4.5.0
 	 * @since   2.5.3
 	 */
 	function price_change_ajax( $param ) {
@@ -240,14 +278,14 @@ class WCJ_Product_Addons extends WCJ_Module {
 		foreach ( $addons as $addon ) {
 			if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
 				if ( ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) || ( 'text' == $addon['type'] && '' != $_POST[ $addon['checkbox_key'] ] ) ) {
-					$the_addons_price += $addon['price_value'];
+					$the_addons_price += (float) $addon['price_value'];
 				} elseif ( 'radio' === $addon['type'] || 'select' === $addon['type'] ) {
 					$labels = $this->clean_and_explode( PHP_EOL, $addon['label_value'] );
 					$prices = $this->clean_and_explode( PHP_EOL, $addon['price_value'] );
 					if ( count( $labels ) === count( $prices ) ) {
 						foreach ( $labels as $i => $label ) {
 							if ( $_POST[ $addon['checkbox_key'] ] == sanitize_title( $label ) ) {
-								$the_addons_price += $prices[ $i ];
+								$the_addons_price += (float) $prices[ $i ];
 								break;
 							}
 						}
@@ -268,7 +306,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 2.8.0
+	 * @version 4.5.0
 	 * @since   2.5.3
 	 */
 	function enqueue_scripts() {
@@ -281,6 +319,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 				wp_localize_script( 'wcj-product-addons', 'ajax_object', array(
 					'ajax_url'                      => admin_url( 'admin-ajax.php' ),
 					'product_id'                    => get_the_ID(),
+					'ignore_strikethrough_price'    => get_option( 'wcj_product_addons_ajax_ignore_st_price', 'no' ),
 					'is_variable_with_single_price' => $is_variable_with_single_price,
 				) );
 			}
@@ -470,15 +509,22 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item.
 	 *
-	 * @version 2.8.0
+	 * @version 4.5.0
 	 * @since   2.5.3
 	 */
 	function add_addons_price_to_cart_item( $cart_item_data, $cart_item_key ) {
 		$addons = $this->get_product_addons( ( WCJ_IS_WC_VERSION_BELOW_3 ? $cart_item_data['data']->product_id : wcj_get_product_id_or_variation_parent_id( $cart_item_data['data'] ) ) );
 		foreach ( $addons as $addon ) {
 			if ( isset( $cart_item_data[ $addon['price_key'] ] ) ) {
-				$cart_item_data['data']->{$addon['price_key']} = $cart_item_data[ $addon['price_key'] ];
+				if ( ! isset( $cart_item_data['wcj_pa_extra_price'] ) ) {
+					$cart_item_data['wcj_pa_extra_price'] = 0;
+				}
+				$cart_item_data['wcj_pa_extra_price'] += (float) $cart_item_data[ $addon['price_key'] ];
 			}
+		}
+		if ( isset( $cart_item_data['wcj_pa_extra_price'] ) ) {
+			$cart_item_data['wcj_pa_total_extra_price'] = $cart_item_data['data']->get_data()['price'] + $cart_item_data['wcj_pa_extra_price'];
+			$cart_item_data['data']->set_price( $cart_item_data['wcj_pa_total_extra_price'] );
 		}
 		return $cart_item_data;
 	}
@@ -486,15 +532,12 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_cart_item_addons_price_from_session.
 	 *
-	 * @version 2.5.6
+	 * @version 4.5.0
 	 * @since   2.5.3
 	 */
 	function get_cart_item_addons_price_from_session( $item, $values, $addon ) {
-		$addons = $this->get_product_addons( $item['product_id'] );
-		foreach ( $addons as $addon ) {
-			if ( array_key_exists( $addon['price_key'], $values ) ) {
-				$item['data']->{$addon['price_key']} = $values[ $addon['price_key'] ];
-			}
+		if ( array_key_exists( 'wcj_pa_total_extra_price', $item ) ) {
+			$item['data']->set_price( $item['wcj_pa_total_extra_price'] );
 		}
 		return $item;
 	}

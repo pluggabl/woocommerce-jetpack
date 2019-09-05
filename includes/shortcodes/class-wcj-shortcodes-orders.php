@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 4.4.0
+ * @version 4.5.0
  * @author  Algoritmika Ltd.
  */
 
@@ -307,8 +307,9 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_refunds_table.
 	 *
-	 * @version 3.1.2
+	 * @version 4.5.0
 	 * @since   3.1.0
+	 * @see     woocommerce/includes/admin/meta-boxes/views/html-order-refund.php for refund_title
 	 * @todo    add `refund_items_or_reason_or_title` column
 	 * @todo    add `refund_items_quantities` column (`$_item->get_quantity()`)
 	 * @todo    check `$atts['columns']` etc. before starting
@@ -327,7 +328,15 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 						$cell = $i;
 						break;
 					case 'refund_title':
-						$cell = $_refund->get_post_title();
+						$cell = sprintf(
+						/* translators: 1: refund id 2: refund date */
+							esc_html__( 'Refund #%1$s - %2$s', 'woocommerce' ),
+							esc_html( $_refund->get_id() ),
+							esc_html( wc_format_datetime( $_refund->get_date_created(), get_option( 'date_format' ) . ', ' . get_option( 'time_format' ) ) )
+						);
+						break;
+					case 'refund_date':
+						$cell = esc_html( wc_format_datetime( $_refund->get_date_created(), get_option( 'date_format' ) . ', ' . get_option( 'time_format' ) ) );
 						break;
 					case 'refund_reason':
 						$cell = $_refund->get_reason();
@@ -1191,11 +1200,17 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 
 	/**
 	 * wcj_order_subtotal_plus_shipping.
+	 *
+	 * @version 4.5.0
 	 */
 	function wcj_order_subtotal_plus_shipping( $atts ) {
 		$the_subtotal = $this->the_order->get_subtotal();
 		$the_shipping = $this->the_order->get_total_shipping();
-		return $this->wcj_price_shortcode( $the_subtotal + $the_shipping, $atts );
+		$fees_total   = 0;
+		if ( isset( $atts['plus_fees'] ) && true === filter_var( $atts['plus_fees'], FILTER_VALIDATE_BOOLEAN ) ) {
+			$fees_total = wcj_get_order_fees_total( $this->the_order );
+		}
+		return $this->wcj_price_shortcode( $the_subtotal + $the_shipping + $fees_total, $atts );
 	}
 
 	/**

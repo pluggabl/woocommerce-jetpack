@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 4.4.0
+ * @version 4.5.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    "pretty prices"
@@ -108,6 +108,14 @@ $settings = array(
 		'id'       => 'wcj_multicurrency_compatibility',
 	),
 	array(
+		'title'    => __( 'WooCommerce Coupons', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'When a fixed coupon is used its value changes according to the current currency', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_compatibility_wc_coupons',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'title'    => __( 'WooCommerce Smart Coupons', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_compatibility_wc_smart_coupons',
@@ -117,14 +125,23 @@ $settings = array(
 	array(
 		'title'    => __( 'WooCommerce Price Filter', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Adds Compatibility with Price Filter widget', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_compatibility_wc_price_filter',
-		'default'  => 'yes',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Price Sorting with Per Product', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Fixes Price Sorting if Per Product option is enabled', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_compatibility_price_sorting_per_product',
+		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'WooCommerce Import', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'This option fixes WooCommerce Import Tool preventing it from converting some uppercase meta to lowercase', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Fixes WooCommerce Import Tool preventing it from converting some uppercase meta to lowercase', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_compatibility_wc_import',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -153,6 +170,14 @@ $settings = array(
 		'id'       => 'wcj_multicurrency_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',
+	),
+	array(
+		'title'    => __( 'Save Prices on Exchange Update', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Save min and max prices on exchange rate update, via background processing.', 'woocommerce-jetpack' ) . '<br />' . __( 'All products with "per product" options registered related to the currency will be affected.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_update_prices_on_exch_update',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',

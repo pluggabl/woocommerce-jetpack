@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - General
  *
- * @version 4.3.0
+ * @version 4.5.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -37,6 +37,31 @@ $settings = array(
 		'id'       => 'wcj_general_shortcodes_options',
 	),
 	array(
+		'title'    => __( 'Ip Detection', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_general_ip',
+	),
+	array(
+		'title'    => __( 'Overwrite WooCommerce IP Detection', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Try to overwrite WooCommerce IP detection', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'The "HTTP_X_REAL_IP" param on $_SERVER variable will be replaced by IP detected from Booster', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_general_overwrite_wc_ip',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Detection Methods', 'woocommerce-jetpack' ),
+		'desc'     => __( 'IP Detection Methods used by some Booster modules when not using IP detection from WooCommerce. Change order for different results.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Default values are:', 'woocommerce-jetpack' ).'<br />'.implode( PHP_EOL, array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' ) ),
+		'id'       => 'wcj_general_advanced_ip_detection',
+		'default'  => implode( PHP_EOL, array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' ) ),
+		'type'     => 'textarea',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_general_ip',
+	),
+	array(
 		'title'    => __( 'Advanced Options', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_general_advanced_options',
@@ -67,14 +92,6 @@ $settings = array(
 		'id'       => 'wcj_general_advanced_session_read_and_close',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'IP Detection', 'woocommerce-jetpack' ),
-		'desc'     => __( 'IP Detection Methods used by some Booster modules when not using IP detection from WooCommerce. Change order for different results.', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Default values are:', 'woocommerce-jetpack' ).'<br />'.implode( PHP_EOL, array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' ) ),
-		'id'       => 'wcj_general_advanced_ip_detection',
-		'default'  => implode( PHP_EOL, array( 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR', 'REMOTE_ADDR' ) ),
-		'type'     => 'textarea',
 	),
 	array(
 		'title'    => __( 'Datepicker/Weekpicker CSS Loading', 'woocommerce-jetpack' ),
