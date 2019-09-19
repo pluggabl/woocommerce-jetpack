@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.2
-Stable tag: 4.5.0
+Stable tag: 4.5.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,10 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 4.5.1 - 18/09/2019 =
+* Fix - PRODUCTS - Product Input Fields - Improve 'Line Break' style on frontend.
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Fix 'Call to a member function get_cart() on null' on order status update.
 
 = 4.5.0 - 05/09/2019 =
 * Fix - Core - `WCJ_Modules` - Change the order some submodules are loaded to make it compatible with "Load Modules on Init Hook" option.

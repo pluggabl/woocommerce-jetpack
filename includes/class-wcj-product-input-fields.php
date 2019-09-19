@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 3.1.0
+ * @version 4.5.1
  * @author  Algoritmika Ltd.
  */
 
@@ -68,7 +68,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * preserve_linebreaks_frontend.
 	 *
-	 * @version 4.5.0
+	 * @version 4.5.1
 	 * @since   4.5.0
 	 */
 	function preserve_linebreaks_frontend() {
@@ -76,11 +76,16 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 			return;
 		}
 		?>
-		<style>
-			.woocommerce-cart-form__cart-item.cart_item .product-name dl dd,
-			.woocommerce-checkout-review-order-table .product-name dl dd
-			{white-space: pre-wrap;}
-		</style>
+        <style>
+            .woocommerce-cart-form__cart-item.cart_item .product-name dl dd,
+            .woocommerce-checkout-review-order-table .product-name dl dd {
+                white-space: pre-wrap !important;
+            }
+            .woocommerce-cart-form__cart-item.cart_item .product-name dt,
+            .woocommerce-checkout-review-order-table .product-name dt {
+                display: block;
+            }
+        </style>
 		<?php
 	}
 

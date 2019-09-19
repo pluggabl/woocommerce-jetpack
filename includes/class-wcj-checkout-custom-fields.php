@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 4.5.0
+ * @version 4.5.1
  * @author  Algoritmika Ltd.
  */
 
@@ -190,12 +190,12 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * update_custom_checkout_fields_order_meta.
 	 *
-	 * @version 4.5.0
+	 * @version 4.5.1
 	 */
 	function update_custom_checkout_fields_order_meta( $order_id ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
 			if ( 'yes' === get_option( 'wcj_checkout_custom_field_enabled_' . $i ) ) {
-				if ( ! $this->is_visible( $i ) ) {
+				if ( 'woocommerce_checkout_update_order_meta' === current_filter() && ! $this->is_visible( $i ) ) {
 					continue;
 				}
 				$the_section       = get_option( 'wcj_checkout_custom_field_section_' . $i );
