@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 4.5.0
+ * @version 4.5.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    "pretty prices"
@@ -147,6 +147,14 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'WPC Product Bundles', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">WPC Product Bundles</a> plugin', 'woocommerce-jetpack' ), 'https://wordpress.org/plugins/woo-product-bundle/' ),
+		'id'       => 'wcj_multicurrency_compatibility_wpc_product_bundle',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_multicurrency_compatibility',
 	),
@@ -176,6 +184,14 @@ $settings = array(
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Save min and max prices on exchange rate update, via background processing.', 'woocommerce-jetpack' ) . '<br />' . __( 'All products with "per product" options registered related to the currency will be affected.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_update_prices_on_exch_update',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Save Calculated Products Prices', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_multicurrency_multicurrency_save_prices',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

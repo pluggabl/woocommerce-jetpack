@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Addons
  *
- * @version 3.7.0
+ * @version 4.5.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -70,7 +70,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 		),
 		array(
 			'title'    => __( 'Price(s)', 'woocommerce-jetpack' ),
-			'tooltip'  => __( 'For radio and select enter one value per line.', 'woocommerce-jetpack' ),
+			'tooltip'  => __( 'For radio and select enter one value per line.', 'woocommerce-jetpack' ) . '<br /><br />' . __( "You can use the % symbol to set a percentage of product's price, like 10%", 'woocommerce-jetpack' ),
 			'name'     => 'wcj_product_addons_per_product_price_' . $i,
 			'default'  => 0,
 			'type'     => 'textarea',

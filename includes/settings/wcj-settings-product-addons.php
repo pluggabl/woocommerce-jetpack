@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 4.5.0
+ * @version 4.5.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -104,7 +104,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 		),
 		array(
 			'desc'     => __( 'Price(s)', 'woocommerce-jetpack' ),
-			'desc_tip' => __( 'For radio and select enter one value per line.', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'For radio and select enter one value per line.', 'woocommerce-jetpack' ) . '<br /><br />' . __( "You can use the % symbol to set a percentage of product's price, like 10%", 'woocommerce-jetpack' ),
 			'id'       => 'wcj_product_addons_all_products_price_' . $i,
 			'default'  => 0,
 			'type'     => 'textarea',
@@ -268,6 +268,14 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Frontend Templates', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_product_addons_template_options',
+	),
+	array(
+		'title'    => __( 'Hide Percentage Price', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Hide', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Hide percentage price when % is set on prices', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_template_hide_percentage_price',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Each Addon - Title', 'woocommerce-jetpack' ),

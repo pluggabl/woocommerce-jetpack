@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 3.6.0
+ * @version 4.5.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -17,7 +17,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 4.5.2
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -46,7 +46,88 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			add_action( 'admin_notices',           array( $this, 'admin_notices' ) );
 			// Admin settings - "copy price" buttons
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_script' ) );
+			add_filter( 'woocommerce_hide_invisible_variations', array( $this, 'show_empty_price_variations' ) );
+			add_action('woocommerce_before_single_variation',array($this,'remove_single_variation_hooks'));
+			add_action('wcj_before_get_terms',array($this,'remove_wpml_functions_before_get_terms'));
+			add_action('wcj_after_get_terms',array($this,'remove_wpml_functions_after_get_terms'));
 		}
+	}
+
+	/**
+	 * remove_wpml_functions_before_get_terms.
+	 *
+	 * @see https://wpml.org/forums/topic/get-all-terms-of-all-languages-outside-loop/
+	 * 
+	 * @version 4.5.2
+	 * @since   4.5.2
+	 */
+	function remove_wpml_functions_before_get_terms() {
+		if ( 'no' === get_option( 'wcj_price_by_user_role_wpml_get_terms_all_lang', 'no' ) ) {
+			return;
+		}
+		// remove WPML term filters
+		global $sitepress;
+		remove_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ) );
+		remove_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
+		remove_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ) );
+	}
+
+	/**
+	 * remove_wpml_functions_after_get_terms
+	 *
+	 * @see http://support.themeblvd.com/forums/topic/wpml-sitepress-php-error-on-backend-due-to-layout-builder/
+	 *
+	 * @version 4.5.2
+	 * @since   4.5.2
+	 */
+	function remove_wpml_functions_after_get_terms() {
+		if ( 'no' === get_option( 'wcj_price_by_user_role_wpml_get_terms_all_lang', 'no' ) ) {
+			return;
+		}
+		// restore WPML term filters
+		global $sitepress;
+		add_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ), 10, 3 );
+		add_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
+		add_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ), 10, 2 );
+	}
+
+	/**
+	 * remove_single_variation_hooks.
+	 *
+	 * @version 4.5.2
+	 * @since   4.5.2
+	 */
+	function remove_single_variation_hooks() {
+		global $product;
+		if ( ! empty( $product->get_price() ) ) {
+			return;
+		}
+		if ( 'yes' === get_option( 'wcj_price_by_user_role_remove_single_variation', 'no' ) ) {
+			remove_action( 'woocommerce_single_variation', 'woocommerce_single_variation', apply_filters( 'wcj_remove_single_variation_priority', 10 ) );
+		}
+		if ( 'yes' === get_option( 'wcj_price_by_user_role_remove_add_to_cart_btn', 'no' ) ) {
+			remove_action( 'woocommerce_single_variation', 'woocommerce_single_variation_add_to_cart_button', apply_filters( 'wcj_remove_single_variation_add_to_cart_button_priority', 20 ) );
+		}
+	}
+
+	/**
+	 * show_empty_price_variations.
+	 *
+	 * @version 4.5.2
+	 * @since   4.5.2
+	 *
+	 * @param $hide
+	 *
+	 * @return bool
+	 */
+	function show_empty_price_variations( $hide ) {
+		if (
+			'no' === get_option( 'wcj_price_by_user_role_show_empty_price_variations', 'no' )
+		) {
+			return $hide;
+		}
+		$hide = false;
+		return $hide;
 	}
 
 	/**

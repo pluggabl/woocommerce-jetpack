@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 4.2.0
+ * @version 4.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -857,7 +857,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 4.0.0
+	 * @version 4.5.2
 	 * @todo    (maybe) `if ( 'yes' === $atts['add_percent_row'] )` for 'fixed' or 'price_directly'; `if ( 'yes' === $atts['add_discount_row'] )` for 'percent' or 'price_directly'
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
@@ -887,16 +887,18 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 
 		$wholesale_price_levels = array();
 		if ( wcj_is_product_wholesale_enabled_per_product( $product_id ) ) {
-			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) ); $i++ ) {
+			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) ); $i ++ ) {
 				$level_qty                = get_post_meta( $product_id, '_' . 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, true );
 				$discount                 = get_post_meta( $product_id, '_' . 'wcj_wholesale_price_level_discount' . $role_option_name_addon . '_' . $i, true );
-				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => $discount, );
+				$discount                 = ! empty( $discount ) ? $discount : 0;
+				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => (float) $discount, );
 			}
 		} else {
 			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_wholesale_price_levels_number' . $role_option_name_addon, 1 ) ); $i++ ) {
 				$level_qty                = get_option( 'wcj_wholesale_price_level_min_qty' . $role_option_name_addon . '_' . $i, PHP_INT_MAX );
 				$discount                 = get_option( 'wcj_wholesale_price_level_discount_percent' . $role_option_name_addon . '_' . $i, 0 );
-				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => $discount, );
+				$discount                 = ! empty( $discount ) ? $discount : 0;
+				$wholesale_price_levels[] = array( 'quantity' => $level_qty, 'discount' => (float) $discount, );
 			}
 		}
 
@@ -949,6 +951,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				// Simple etc.
 				$the_price = wcj_get_product_display_price( $this->the_product );
 				$the_price = apply_filters( 'wcj_product_wholesale_price_table_price_before', $the_price, $this->the_product );
+				$the_price = empty( $the_price ) ? 0 : $the_price;
 				$the_price_original = $the_price;
 				if ( 'price_directly' === $discount_type ) {
 					$the_price = $wholesale_price_level['discount'];

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 4.5.0
+ * @version 4.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -98,7 +98,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 4.1.0
+	 * @version 4.5.2
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -142,6 +142,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'color'                       => 'black',
 			'currency'                    => '',
 			'doc_type'                    => 'invoice',
+			'show_label'                  => true
 		), $atts );
 
 		return $modified_atts;
@@ -1163,17 +1164,19 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_taxes_html.
 	 *
-	 * @version 2.5.3
+	 * @version 4.5.2
 	 * @since   2.5.3
 	 */
 	function wcj_order_taxes_html( $atts ) {
 		$order_taxes = $this->the_order->get_taxes();
-		$taxes_html = '';
+		$taxes_html  = '';
 		foreach ( $order_taxes as $order_tax ) {
-			$taxes_html .= ( isset( $order_tax['label'] ) ) ? $order_tax['label'] . ': ' : '';
-			$amount = 0;
-			$amount += ( isset( $order_tax['tax_amount'] ) ) ? $order_tax['tax_amount'] : 0;
-			$amount += ( isset( $order_tax['shipping_tax_amount'] ) ) ? $order_tax['shipping_tax_amount'] : 0;
+			if ( true === filter_var( $atts['show_label'], FILTER_VALIDATE_BOOLEAN ) ) {
+				$taxes_html .= ( isset( $order_tax['label'] ) ) ? $order_tax['label'] . ': ' : '';
+			}
+			$amount     = 0;
+			$amount     += ( isset( $order_tax['tax_amount'] ) ) ? $order_tax['tax_amount'] : 0;
+			$amount     += ( isset( $order_tax['shipping_tax_amount'] ) ) ? $order_tax['shipping_tax_amount'] : 0;
 			$taxes_html .= $this->wcj_price_shortcode( $amount, $atts ) . '<br>';
 		}
 		return $taxes_html;

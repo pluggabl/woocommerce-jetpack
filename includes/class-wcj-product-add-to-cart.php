@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Add To Cart
  *
- * @version 4.3.0
+ * @version 4.5.2
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -318,8 +318,8 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 	}
 
 	/**
-     * Adds radio buttons template for variations
-	 * @version 4.3.0
+	 * Adds radio buttons template for variations
+	 * @version 4.5.2
 	 * @since   4.3.0
 	 * @see woocommerce_variable_add_to_cart()
 	 */

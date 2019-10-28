@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 4.5.0
+ * @version 4.5.2
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -848,5 +848,57 @@ if ( ! function_exists( 'wcj_get_cart_item_quantities' ) ) {
 		}
 
 		return $quantities;
+	}
+}
+
+if ( ! function_exists( 'wcj_remove_class_filter' ) ) {
+	/**
+	 * Remove filter added with a callback to a class without access.
+	 *
+	 * @see https://gist.github.com/tripflex/c6518efc1753cf2392559866b4bd1a53
+	 *
+	 * @version 4.5.2
+	 * @since   4.5.2
+	 *
+	 * @param $tag
+	 * @param string $class_name
+	 * @param string $method_name
+	 * @param int $priority
+	 *
+	 * @return bool
+	 */
+	function wcj_remove_class_filter( $tag, $class_name = '', $method_name = '', $priority = 10 ) {
+		global $wp_filter;
+		$is_hook_removed = false;
+		if ( ! empty( $wp_filter[ $tag ]->callbacks[ $priority ] ) ) {
+			$methods     = wp_list_pluck( $wp_filter[ $tag ]->callbacks[ $priority ], 'function' );
+			$found_hooks = ! empty( $methods ) ? wp_list_filter( $methods, array( 1 => $method_name ) ) : array();
+			foreach ( $found_hooks as $hook_key => $hook ) {
+				if ( ! empty( $hook[0] ) && is_object( $hook[0] ) && get_class( $hook[0] ) === $class_name ) {
+					$wp_filter[ $tag ]->remove_filter( $tag, $hook, $priority );
+					$is_hook_removed = true;
+				}
+			}
+		}
+		return $is_hook_removed;
+	}
+}
+
+if ( ! function_exists( 'wcj_remove_class_filter' ) ) {
+	/**
+	 * Remove action added with a callback to a class without access.
+	 *
+	 * @see https://gist.github.com/tripflex/c6518efc1753cf2392559866b4bd1a53
+	 *
+	 * @version 4.5.2
+	 * @since   4.5.2
+	 *
+	 * @param $tag
+	 * @param string $class_name
+	 * @param string $method_name
+	 * @param int $priority
+	 */
+	function wcj_remove_class_action( $tag, $class_name = '', $method_name = '', $priority = 10 ) {
+		wcj_remove_class_filter( $tag, $class_name, $method_name, $priority );
 	}
 }

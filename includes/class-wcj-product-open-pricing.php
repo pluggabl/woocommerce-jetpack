@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 4.4.0
+ * @version 4.5.2
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.0
+	 * @version 4.5.2
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -58,6 +58,13 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column_open_pricing' ), PHP_INT_MAX );
 			}
 			$this->shop_currency = get_option( 'woocommerce_currency' );
+
+			// WPC Product Bundles plugin
+			add_action( 'woocommerce_init', function () {
+				if ( 'yes' === get_option( 'wcj_product_open_price_woosb_product_bundles_remove_atc', 'no' ) ) {
+					wcj_remove_class_filter( 'woocommerce_add_to_cart', 'WPcleverWoosb', 'woosb_add_to_cart' );
+				}
+			}, 99 );
 		}
 	}
 
@@ -90,14 +97,14 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * maybe_convert_price_currency.
 	 *
-	 * @version 4.2.0
+	 * @version 4.5.2
 	 * @since   4.2.0
 	 */
-	function maybe_convert_price_currency( $price ) {
+	function maybe_convert_price_currency( $price, $product = null ) {
 		if ( 'switched_currency' === get_option( 'wcj_product_open_price_currency_switcher', 'shop_currency' ) ) {
 			// Multicurrency (Currency Switcher) module
 			if ( WCJ()->modules['multicurrency']->is_enabled() ) {
-				$price = WCJ()->modules['multicurrency']->change_price( $price, null );
+				$price = WCJ()->modules['multicurrency']->change_price( $price, $product );
 			}
 		}
 		return $price;
@@ -117,16 +124,17 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_price_info_to_loop.
 	 *
-	 * @version 4.2.0
+	 * @version 4.5.2
 	 * @since   2.8.0
 	 */
 	function add_price_info_to_loop() {
 		$_product_id = get_the_ID();
+		$product     = wc_get_product( $_product_id );
 		if ( $this->is_open_price_product( $_product_id ) ) {
 			$replaceable_values = array(
-				'%default_price%' => $this->wc_price_shop_currency( $this->maybe_convert_price_currency( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_default_price', true ) ) ),
-				'%min_price%'     => $this->wc_price_shop_currency( $this->maybe_convert_price_currency( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_min_price', true ) ) ),
-				'%max_price%'     => $this->wc_price_shop_currency( $this->maybe_convert_price_currency( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_max_price', true ) ) ),
+				'%default_price%' => $this->wc_price_shop_currency( $this->maybe_convert_price_currency( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_default_price', true ), $product ) ),
+				'%min_price%'     => $this->wc_price_shop_currency( $this->maybe_convert_price_currency( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_min_price', true ), $product ) ),
+				'%max_price%'     => $this->wc_price_shop_currency( $this->maybe_convert_price_currency( get_post_meta( $_product_id, '_' . 'wcj_product_open_price_max_price', true ), $product ) ),
 			);
 			echo wcj_handle_replacements( $replaceable_values, $this->loop_price_info_template );
 		}
@@ -286,12 +294,12 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * get_open_price.
 	 *
-	 * @version 4.4.0
+	 * @version 4.5.2
 	 * @since   2.4.8
 	 */
 	function get_open_price( $price, $_product ) {
 		if ( $this->is_open_price_product( $_product ) && isset( $_product->wcj_open_price ) ) {
-			if ( 'WC_Product_Woosb' === get_class( $_product ) ) {
+			if ( 'no' === get_option( 'wcj_product_open_price_woosb_product_bundles_replace_prices', 'no' ) && 'WC_Product_Woosb' === get_class( $_product ) ) {
 				// "WPC Product Bundles for WooCommerce" plugin
 				return $price;
 			}

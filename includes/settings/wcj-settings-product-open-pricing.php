@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Open Pricing
  *
- * @version 4.4.0
+ * @version 4.5.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
@@ -152,8 +152,33 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_open_price_options',
+	),
+	array(
 		'title'    => __( 'Product Bundles', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'For "WPC Product Bundles for WooCommerce" plugin.', 'woocommerce-jetpack' ),
+		'desc'     => sprintf( __( 'For <a href="%s">"WPC Product Bundles for WooCommerce"</a> plugin.', 'woocommerce-jetpack' ), 'https://wordpress.org/plugins/woo-product-bundle/' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_open_price_woosb_product_bundles',
+	),
+	array(
+		'title'    => __( 'Remove "add to cart" hook', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Remove', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Try to remove "add to cart" hook from Product Bundles', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_open_price_woosb_product_bundles_remove_atc',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Replace Prices', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Replace', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Try to replace Product Bundles prices', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_open_price_woosb_product_bundles_replace_prices',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Product Bundles', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_open_price_woosb_product_bundles_divide',
 		'default'  => 'no',
 		'type'     => 'select',
@@ -165,6 +190,6 @@ return array(
 	),
 	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_product_open_price_options',
+		'id'       => 'wcj_product_open_price_woosb_product_bundles',
 	),
 );

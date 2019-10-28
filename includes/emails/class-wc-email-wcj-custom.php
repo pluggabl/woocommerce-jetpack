@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 4.1.0
+ * @version 4.5.2
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -105,17 +105,17 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * trigger.
 	 *
-	 * @version 4.1.0
+	 * @version 4.5.2
 	 */
-	function trigger( $order_id ) {
+	function trigger( $object_id ) {
 
 		if ( ! $this->is_enabled() ) {
 			return;
 		}
 
-		if ( $order_id ) {
+		if ( $object_id ) {
 
-			$this->object = wc_get_order( $order_id ); // must be `object` as it's named so in parent class (`WC_Email`). E.g. for attachments.
+			$this->object = wc_get_order( $object_id ); // must be `object` as it's named so in parent class (`WC_Email`). E.g. for attachments.
 
 			if ( 'woocommerce_checkout_order_processed_notification' === current_filter() ) {
 				// Check status
@@ -135,28 +135,33 @@ class WC_Email_WCJ_Custom extends WC_Email {
 				}
 			}
 
-			if ( $this->customer_email ) {
-				$this->recipient = wcj_get_order_billing_email( $this->object );
-			} elseif ( false !== strpos( $this->recipient, '%customer%' ) ) {
-				$this->recipient = str_replace( '%customer%', wcj_get_order_billing_email( $this->object ), $this->recipient );
+			if ( 'woocommerce_created_customer_notification' === current_filter() ) {
+				$user            = get_user_by( 'ID', $object_id );
+				$this->recipient = $user->user_email;
+			} else {
+				if ( $this->customer_email ) {
+					$this->recipient = wcj_get_order_billing_email( $this->object );
+				} elseif ( false !== strpos( $this->recipient, '%customer%' ) ) {
+					$this->recipient = str_replace( '%customer%', wcj_get_order_billing_email( $this->object ), $this->recipient );
+				}
+
+				$this->find['order-date']   = '{order_date}';
+				$this->find['order-number'] = '{order_number}';
+
+				$this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( wcj_get_order_date( $this->object ) ) );
+				$this->replace['order-number'] = $this->object->get_order_number();
+
+				global $post;
+				$post = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->object->post : get_post( $object_id ) );
+				setup_postdata( $post );
+				$_GET['order_id'] = $object_id;
 			}
-
-			$this->find['order-date']      = '{order_date}';
-			$this->find['order-number']    = '{order_number}';
-
-			$this->replace['order-date']   = date_i18n( wc_date_format(), strtotime( wcj_get_order_date( $this->object ) ) );
-			$this->replace['order-number'] = $this->object->get_order_number();
-
-			global $post;
-			$post = ( WCJ_IS_WC_VERSION_BELOW_3 ? $this->object->post : get_post( $order_id ) );
-			setup_postdata( $post );
-			$_GET['order_id'] = $order_id;
 		}
 
 		$this->recipient = do_shortcode( $this->recipient );
 
 		if ( ! $this->get_recipient() ) {
-			if ( $order_id ) {
+			if ( $object_id ) {
 				wp_reset_postdata();
 			}
 			return;
@@ -164,7 +169,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 
 		$this->send( $this->get_recipient(), do_shortcode( $this->get_subject() ), do_shortcode( $this->get_content() ), $this->get_headers(), $this->get_attachments() );
 
-		if ( $order_id ) {
+		if ( $object_id ) {
 			wp_reset_postdata();
 		}
 	}

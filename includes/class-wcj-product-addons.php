@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 4.5.0
+ * @version 4.5.2
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names)
@@ -13,6 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 if ( ! class_exists( 'WCJ_Product_Addons' ) ) :
 
 class WCJ_Product_Addons extends WCJ_Module {
+
 
 	/**
 	 * Constructor.
@@ -29,6 +30,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$this->short_desc = __( 'Product Addons', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Add (paid/free/discount) addons to products.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-addons';
+
 		parent::__construct();
 
 		if ( $this->is_enabled() ) {
@@ -264,7 +266,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 4.5.0
+	 * @version 4.5.2
 	 * @since   2.5.3
 	 */
 	function price_change_ajax( $param ) {
@@ -276,12 +278,13 @@ class WCJ_Product_Addons extends WCJ_Module {
 		$addons = $this->get_product_addons( $parent_product_id );
 		$the_addons_price = 0;
 		foreach ( $addons as $addon ) {
+			$price_value = $this->replace_price_template_vars( $addon['price_value'], $_POST['product_id'] );
 			if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
 				if ( ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) || ( 'text' == $addon['type'] && '' != $_POST[ $addon['checkbox_key'] ] ) ) {
-					$the_addons_price += (float) $addon['price_value'];
+					$the_addons_price += (float) $price_value;
 				} elseif ( 'radio' === $addon['type'] || 'select' === $addon['type'] ) {
 					$labels = $this->clean_and_explode( PHP_EOL, $addon['label_value'] );
-					$prices = $this->clean_and_explode( PHP_EOL, $addon['price_value'] );
+					$prices = $this->clean_and_explode( PHP_EOL, $price_value );
 					if ( count( $labels ) === count( $prices ) ) {
 						foreach ( $labels as $i => $label ) {
 							if ( $_POST[ $addon['checkbox_key'] ] == sanitize_title( $label ) ) {
@@ -416,6 +419,34 @@ class WCJ_Product_Addons extends WCJ_Module {
 	}
 
 	/**
+	 * Replaces template vars on price, like % or any other possibility.
+	 *
+	 * If it doesn't have any template var, just return the price.
+	 *
+	 * @version 4.5.2
+	 * @since   4.5.2
+	 *
+	 * @param $price_value
+	 * @param $product_id
+	 *
+	 * @return string
+	 */
+	function replace_price_template_vars( $price_value, $product_id ) {
+		if ( preg_match_all( '/\d+%/m', $price_value, $matches ) > 0 ) {
+			$product_price     = get_post_meta( $product_id, '_price', true );
+			$new_prices        = array();
+			$preg_replace_find = array();
+			foreach ( $matches[0] as $match ) {
+				$preg_replace_find[] = '/' . $match . '/';
+				$percent_value       = preg_replace( '/\%/', '', $match );
+				$new_prices[]        = $product_price * ( $percent_value / 100 );
+			}
+			$price_value = preg_replace( $preg_replace_find, $new_prices, $price_value );
+		}
+		return $price_value;
+	}
+
+	/**
 	 * add_info_to_order_item_meta_wc3.
 	 *
 	 * @version 3.4.0
@@ -545,21 +576,22 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item_data.
 	 *
-	 * @version 3.7.0
+	 * @version 4.5.2
 	 * @since   2.5.3
 	 */
 	function add_addons_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 		$addons = $this->get_product_addons( $product_id );
 		foreach ( $addons as $addon ) {
+			$price_value = $this->replace_price_template_vars( $addon['price_value'], $variation_id ? $variation_id : $product_id );
 			if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
 				if ( ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) || ( 'text' == $addon['type'] && '' != $_POST[ $addon['checkbox_key'] ] ) ) {
-					$cart_item_data[ $addon['price_key'] ] = $addon['price_value'];
+					$cart_item_data[ $addon['price_key'] ] = $price_value;
 					$cart_item_data[ $addon['label_key'] ] = $addon['label_value'];
 					if ( 'text' == $addon['type'] ) {
 						$cart_item_data[ $addon['label_key'] ] .= ' (' . $_POST[ $addon['checkbox_key'] ] . ')';
 					}
 				} elseif ( 'radio' === $addon['type'] || 'select' === $addon['type'] ) {
-					$prices = $this->clean_and_explode( PHP_EOL, $addon['price_value'] );
+					$prices = $this->clean_and_explode( PHP_EOL, $price_value );
 					$labels = $this->clean_and_explode( PHP_EOL, $addon['label_value'] );
 					if ( count( $labels ) === count( $prices ) ) {
 						foreach ( $labels as $i => $label ) {
@@ -579,7 +611,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 4.0.0
+	 * @version 4.5.2
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {
@@ -611,7 +643,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 						'%addon_input%'   => '<input type="checkbox" id="' . $addon['checkbox_key'] . '" class="' . $addon['class'] . '" name="' . $addon['checkbox_key'] . '"' . $is_checked . $is_required . '>',
 						'%addon_id%'      => $addon['checkbox_key'],
 						'%addon_label%'   => $addon['label_value'],
-						'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $addon['price_value'], $_product ) ) ),
+						'%addon_price%'   => $this->format_addon_price( $addon['price_value'], $_product ),
 						'%addon_tooltip%' => $maybe_tooltip,
 					), get_option( 'wcj_product_addons_template_type_checkbox',
 						'<p>%addon_input% <label for="%addon_id%">%addon_label% (%addon_price%)</label>%addon_tooltip%</p>' ) );
@@ -624,7 +656,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 						'%addon_input%'   => '<input type="text" id="' . $addon['checkbox_key'] . '" class="' . $addon['class'] . '" name="' . $addon['checkbox_key'] . '" placeholder="' . $addon['placeholder'] . '" value="' . $default_value . '"' . $is_required . '>',
 						'%addon_id%'      => $addon['checkbox_key'],
 						'%addon_label%'   => $addon['label_value'],
-						'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $addon['price_value'], $_product ) ) ),
+						'%addon_price%'   => $this->format_addon_price( $addon['price_value'], $_product ),
 						'%addon_tooltip%' => $maybe_tooltip,
 					), get_option( 'wcj_product_addons_template_type_text',
 						'<p><label for="%addon_id%">%addon_label% (%addon_price%)</label> %addon_input%%addon_tooltip%</p>' ) );
@@ -655,14 +687,14 @@ class WCJ_Product_Addons extends WCJ_Module {
 									'%addon_input%'   => '<input type="radio" id="' . $addon['checkbox_key'] . '-' . $label . '" class="' . $addon['class'] . '" name="' . $addon['checkbox_key'] . '" value="' . $label . '"' . $is_checked . $is_required . '>',
 									'%addon_id%'      => $addon['checkbox_key'] . '-' . $label,
 									'%addon_label%'   => $labels[ $i ],
-									'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ], $_product ) ) ),
+									'%addon_price%'   => $this->format_addon_price( $prices[ $i ], $_product ),
 									'%addon_tooltip%' => $maybe_tooltip,
 								), get_option( 'wcj_product_addons_template_type_radio',
 									'<p>%addon_input% <label for="%addon_id%">%addon_label% (%addon_price%)</label>%addon_tooltip%</p>' ) );
 						} else {
 							$select_option = wcj_handle_replacements( array(
 									'%addon_label%'   => $labels[ $i ],
-									'%addon_price%'   => wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $prices[ $i ], $_product ) ) ),
+									'%addon_price%'   => $this->format_addon_price( $prices[ $i ], $_product ),
 								), get_option( 'wcj_product_addons_template_type_select_option', '%addon_label% (%addon_price%)' ) );
 							$select_options .= '<option value="' . $label . '"' . $is_checked . '>' . $select_option . '</option>';
 						}
@@ -684,10 +716,56 @@ class WCJ_Product_Addons extends WCJ_Module {
 		}
 		// Output
 		if ( ! empty( $html ) ) {
-			echo wcj_handle_replacements( array(
+			$html = wcj_handle_replacements( array(
 					'%addons_html%' => $html,
 				), get_option( 'wcj_product_addons_template_final', '<div id="wcj_product_addons">%addons_html%</div>' ) );
+			echo $this->remove_empty_parenthesis($html);
 			$this->are_addons_displayed = true;
+		}
+	}
+
+	/**
+	 * remove_empty_parenthesis.
+	 *
+	 * @version 4.5.2
+	 * @since   4.5.2
+	 *
+	 * @param $html
+	 *
+	 * @return string
+	 */
+	function remove_empty_parenthesis( $html ) {
+		return preg_replace( '/\(\)/', '', $html );
+	}
+
+	/**
+	 * Formats the addon price.
+	 *
+	 * @version 4.5.2
+	 * @since   4.5.2
+	 *
+	 * @param $_product
+	 * @param $price
+	 *
+	 * @return string
+	 */
+	function format_addon_price( $price, $_product ) {
+		$show_raw_price = false;
+		if ( preg_match_all( '/\d+%/m', $price ) > 0 ) {
+			if ( is_a( $_product, 'WC_Product_Simple' ) ) {
+				$price = $this->replace_price_template_vars( $price, $_product->get_id() );
+			} else {
+				$show_raw_price = true;
+			}
+		}
+		if ( $show_raw_price ) {
+			if ( 'yes' === get_option( 'wcj_product_addons_template_hide_percentage_price', 'yes' ) ) {
+				return '';
+			} else {
+				return $price;
+			}
+		} else {
+			return wc_price( wcj_get_product_display_price( $_product, $this->maybe_convert_currency( $price, $_product ) ) );
 		}
 	}
 

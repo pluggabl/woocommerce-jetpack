@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Customization
  *
- * @version 4.1.0
+ * @version 4.5.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -32,6 +32,45 @@ return array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Ignore on Admin', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Ignores restriction on admin', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_restrict_countries_by_customer_ip_ignore_admin',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Restrict By Customer\'s Billing Country', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Restricts based on Customer\'s Billing Country, ignoring other restrictions', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_restrict_countries_by_user_billing_country',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Restrict based on a YITH manual order', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Enable if you are creating a manual order using "YITH WooCommerce Request a Quote" plugin and selecting the billing country manually', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_restrict_countries_based_on_yith_raq',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Conditions', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'The restriction will work only if some condition is true.', 'woocommerce-jetpack' ).'<br /> '.__( 'Leave it empty if you want to restrict countries everywhere.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_checkout_restrict_countries_by_customer_ip_conditions',
+		'default'  => 'no',
+		'type'     => 'multiselect',
+		'class'    => 'chosen_select',
+		'options'  => array(
+			'is_cart'     => __( 'Is Cart', 'popup-notices-for-woocommerce' ),
+			'is_checkout' => __( 'Is Checkout', 'popup-notices-for-woocommerce' ),
+		)
 	),
 	array(
 		'type'     => 'sectionend',

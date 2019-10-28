@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 4.5.0
+ * @version 4.5.2
  * @since   2.5.6
  * @author  Algoritmika Ltd.
  */
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * Init settings
 		 *
-		 * @version 4.5.0
+		 * @version 4.5.2
 		 * @since   2.5.6
 		 * @access  public
 		 * @return  void
@@ -58,6 +58,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 			$this->max_weight                 = $this->get_option( 'max_weight' );
 			$this->type                       = $this->get_option( 'type' );
 			$this->apply_formula              = apply_filters( 'booster_option', 'no', $this->get_option( 'apply_formula' ) );
+			$this->cost_rounding              = apply_filters( 'booster_option', 'no_round', $this->get_option( 'cost_rounding', 'no_round' ) );
 			$this->weight_table_total_rows    = $this->get_option( 'weight_table_total_rows' );
 
 			// Save settings in admin
@@ -80,7 +81,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * sanitize_settings.
 		 *
-		 * @version 4.5.0
+		 * @version 4.5.2
 		 * @since   4.5.0
 		 *
 		 * @param $settings
@@ -89,7 +90,21 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		 * @return
 		 */
 		function sanitize_settings( $settings, $shipping_method ) {
-			$settings = array_filter( $settings );
+			$settings       = array_filter( $settings );
+			$total_rows     = $settings['weight_table_total_rows'];
+			$keys_to_remove = array();
+			foreach ( $settings as $key => $value ) {
+				if (
+					preg_match( '/(?<=row_)\d+/m', $key, $results ) &&
+					$results[0] > $total_rows
+				) {
+					$keys_to_remove[] = $key;
+				}
+			}
+			// Remove keys greater then 'total rows' amount
+			if ( count( $keys_to_remove ) > 0 ) {
+				$settings = array_diff_key( $settings, array_flip( $keys_to_remove ) );
+			}
 			return $settings;
 		}
 
@@ -158,7 +173,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * Initialise Settings Form Fields
 		 *
-		 * @version 3.9.0
+		 * @version 4.5.2
 		 * @since   2.5.6
 		 */
 		function init_instance_form_fields() {
@@ -197,6 +212,19 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 					'default'     => 0,
 					'desc_tip'    => true,
 					'css'         => 'width:100%',
+				),
+				'cost_rounding' => array(
+					'title'       => __( 'Cost Rounding', 'woocommerce-jetpack' ),
+					'desc_tip'    => __( 'How the final cost will be rounded.', 'woocommerce-jetpack' ),
+					'css'         => 'width:100%',
+					'default'     => 'no_round',
+					'type'        => 'select',
+					'options'     => array(
+						'no_round'   => __( 'No rounding', 'woocommerce-jetpack' ),
+						'round'      => __( 'Round', 'woocommerce-jetpack' ),
+						'round_up'   => __( 'Round up', 'woocommerce-jetpack' ),
+						'round_down' => __( 'Round down', 'woocommerce-jetpack' ),
+					),
 				),
 				'min_weight' => array(
 					'title'       => __( 'Min Weight', 'woocommerce' ),
@@ -305,7 +333,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * calculate_shipping function.
 		 *
-		 * @version 3.4.0
+		 * @version 4.5.2
 		 * @since   2.5.6
 		 * @access  public
 		 * @param   mixed $package
@@ -335,6 +363,20 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 				'cost'     => $this->maybe_apply_formula( $cost ),
 				'calc_tax' => 'per_order',
 			);
+
+			// Rounding
+			switch ( $this->cost_rounding ) {
+				case 'round':
+					$rate['cost'] = round( $rate['cost'], wc_get_rounding_precision() );
+					break;
+				case 'round_up':
+					$rate['cost'] = ceil( $rate['cost'] );
+					break;
+				case 'round_down':
+					$rate['cost'] = floor( $rate['cost'] );
+					break;
+			}
+
 			// Register the rate
 			$this->add_rate( $rate );
 		}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price based on User Role
  *
- * @version 3.8.0
+ * @version 4.5.2
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -66,17 +66,26 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Advanced: Price Filters Priority', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
-		'id'       => 'wcj_price_by_user_role_advanced_price_hooks_priority',
-		'default'  => 0,
-		'type'     => 'number',
+		'title'    => __( 'Show Empty Price Variations', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Show', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Show "empty price" variations. This will also hide out of stock messages.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_show_empty_price_variations',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( 'Advanced: Price Changes', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Disable price based on user role for products with "Price Changes"', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Try enabling this checkbox, if you are having compatibility issues with other plugins.', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_price_by_user_role_check_for_product_changes_price',
+		'title'    => __( 'Remove Empty Price Variation Callback', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Remove', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Remove "woocommerce_single_variation" callback from "woocommerce_single_variation" hook on "empty price" variations.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_remove_single_variation',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Remove Empty Price Add to Cart Button Callback', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Remove', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Remove "woocommerce_single_variation_add_to_cart_button" callback from "woocommerce_single_variation" hook on "empty price" variations.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_remove_add_to_cart_btn',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
@@ -84,6 +93,41 @@ $settings = array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_price_by_user_role_options',
 	),
+
+	array(
+		'title'    => __( 'Advanced', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_price_by_user_role_options_adv',
+	),
+	array(
+		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
+		'id'       => 'wcj_price_by_user_role_advanced_price_hooks_priority',
+		'default'  => 0,
+		'type'     => 'number',
+	),
+	array(
+		'title'    => __( 'Price Changes', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Disable price based on user role for products with "Price Changes"', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Try enabling this checkbox, if you are having compatibility issues with other plugins.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_check_for_product_changes_price',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'WPML: Get Terms in All Languages', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Get tags and taxonomies in all languages', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_user_role_wpml_get_terms_all_lang',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_price_by_user_role_options_adv',
+	),
+
+
 	array(
 		'title'    => __( 'Roles & Multipliers', 'woocommerce-jetpack' ),
 		'type'     => 'title',
@@ -136,6 +180,8 @@ $taxonomies = array(
 		'option_id' => 'tag',
 	),
 );
+
+do_action('wcj_before_get_terms');
 foreach ( $taxonomies as $taxonomy ) {
 	$product_taxonomies_options = array();
 	$product_taxonomies = get_terms( $taxonomy['id'], 'orderby=name&hide_empty=0' );
@@ -192,4 +238,6 @@ foreach ( $taxonomies as $taxonomy ) {
 		),
 	) );
 }
+do_action('wcj_after_get_terms');
+
 return $settings;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 4.3.0
+ * @version 4.5.2
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -306,40 +306,41 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	}
 
 	/**
-     * Create custom style for bookings product page
-     *
-	 * @version 4.3.0
+	 * Create custom style for bookings product page
+	 *
+	 * @version 4.5.2
 	 * @since   2.5.0
 	 */
-	function create_custom_style(){
-	    ?>
-        <style>
-            .wcj-loader {
-                display:none;
-                border: 4px solid #f3f3f3;
-                border-radius: 50%;
-                border-top: 4px solid #999999;
-                width: 25px;height: 25px;
-                -webkit-animation: spin 1s linear infinite; animation: spin 1s linear infinite;
-            }
-            /* Safari */
-            @-webkit-keyframes spin {
-                0% { -webkit-transform: rotate(0deg); }
-                100% { -webkit-transform: rotate(360deg); }
-            }
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-            .wcj-bookings-price-wrapper{
-                margin-bottom:25px;
-            }
-            .wcj-bookings-price-wrapper.loading .wcj-loader{
-                display:block;
-            }
-        </style>
-        <?php
-    }
+	function create_custom_style() {
+		?>
+		<style>
+			.wcj-loader {
+				display: none;
+				border: 4px solid #f3f3f3;
+				border-radius: 50%;
+				border-top: 4px solid #999999;
+				width: 25px;
+				height: 25px;
+				-webkit-animation: spin 1s linear infinite;
+				animation: spin 1s linear infinite;
+			}
+
+			/* Safari */
+			@-webkit-keyframes spin {
+				0% { -webkit-transform: rotate(0deg); }
+				100% { -webkit-transform: rotate(360deg); }
+			}
+
+			@keyframes spin {
+				0% { transform: rotate(0deg); }
+				100% { transform: rotate(360deg); }
+			}
+
+			.wcj-bookings-price-wrapper { margin-bottom: 25px; }
+			.wcj-bookings-price-wrapper.loading .wcj-loader { display: block; }
+		</style>
+		<?php
+	}
 
 	/**
 	 * add_input_fields_to_frontend.

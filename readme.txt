@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.2
-Stable tag: 4.5.1
+Stable tag: 4.5.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,37 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 4.5.2 - 28/10/2019 =
+* Fix indentation by replacing spaces by tabs on SQL, comments, or when there is pure HTML, <script> or <style> tags.
+* Fix - CART & CHECKOUT - EU VAT Number - Fix `wcj_validate_vat_no_soap()` function with correct api_url.
+* Fix - EMAILS & MISC. - Custom Emails - Fix fatal error when trying to send custom emails using 'Created Customer Notification' trigger.
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Replace cast by +0 technique on some queries to get the whole price.
+* Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Fix wrong price on loop.
+* Fix - Shortcodes - Products - `[wcj_product_wholesale_price_table]` Fix "A non-numeric value encountered" PHP warning.
+* Dev - CART & CHECKOUT - Checkout Customization - Add option to ignore restriction on admin.
+* Dev - CART & CHECKOUT - Checkout Customization - Add option to restrict countries based on a manual order from the "YITH WooCommerce Request a Quote" plugin having the billing country selected manually.
+* Dev - CART & CHECKOUT - Checkout Customization - Add option to restrict countries based on Customer's Billing Country, ignoring other restrictions.
+* Dev - CART & CHECKOUT - Checkout Customization - Add option to restrict countries based on conditions, like `is_cart()` and `is_checkout()`.
+* Dev - CART & CHECKOUT - EU VAT Number - Add option to read meta from '_vat_number' meta trying to add compatibility with the plugin EU VAT Number.
+* Dev - CART & CHECKOUT - EU VAT Number - Add option to exempt VAT on cart page.
+* Dev - CART & CHECKOUT - EU VAT Number - Add option to exempt VAT by checking previously registered EU VAT numbers from customers.
+* Dev - CART & CHECKOUT - EU VAT Number - Improve `wcj_validate_eu_vat_number()` function by adding `wcj_eu_vat_number_to_check` and `echo` parameters.
+* Dev - Functions - General - Add functions to remove filters and actions added with callbacks to classes without access.
+* Dev - PAYMENT GATEWAYS - Gateways per Product or Category - Allow looking for products in the order too besides cart, making it work even on My Account > Checkout > order-pay pages.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Advanced: Saved Calculated Products Prices" option added.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add compatibility with "WPC Product Bundles for WooCommerce" plugin.
+* Dev - PRICES & CURRENCIES - Price by User Role - Add option to show empty price variations.
+* Dev - PRICES & CURRENCIES - Price by User Role - Add option to remove "woocommerce_single_variation_add_to_cart_button" callback on empty price variations.
+* Dev - PRICES & CURRENCIES - Price by User Role - Add option to remove "woocommerce_single_variation" callback on empty price variations.
+* Dev - PRICES & CURRENCIES - Price by User Role - Add option to get product tags and categories in all languages when using WPML.
+* Dev - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Add two new compatibility options with 'WPC Product Bundles for WooCommerce' plugin.
+* Dev - PRODUCTS - Product Addons - Add option to use the % symbol to set a percentage of product's price, like 10%.
+* Dev - PRODUCTS - Product Addons - Add option to hide the percentage price on frontend. Parenthesis will be removed in that case preventing from being displayed empty.
+* Dev - PRODUCTS - Tax Display - Allow `tax_display_by_user_role()` to search on multiple roles.
+* Dev - SHIPPING & ORDERS - Custom Shipping - Remove rules greater than the Total Rows amount.
+* Dev - SHIPPING & ORDERS - Custom Shipping - Add 'Cost Rounding' option.
+* Dev - Shortcodes - Orders - `[wcj_order_taxes_html]` - Add parameter `show_label`.
 
 = 4.5.1 - 18/09/2019 =
 * Fix - PRODUCTS - Product Input Fields - Improve 'Line Break' style on frontend.

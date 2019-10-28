@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 4.1.0
+ * @version 4.5.2
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -135,15 +135,58 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	}
 
 	/**
+	 * Checks if conditions are valid in order for the country restriction to work.
+	 *
+	 * @version 4.5.2
+	 * @since   4.5.2
+	 *
+	 * @return bool
+	 */
+	function are_conditions_valid() {
+		$valid      = false;
+		$conditions = $this->get_option( 'wcj_checkout_restrict_countries_by_customer_ip_conditions', array() );
+		foreach ( $conditions as $key => $condition ) {
+			$function = $condition;
+			$valid    = $function();
+			if ( $valid ) {
+				break;
+			}
+		}
+		return $valid;
+	}
+
+	/**
 	 * restrict_countries_by_customer_ip.
 	 *
-	 * @version 3.4.0
+	 * @version 4.5.2
 	 * @since   3.4.0
 	 * @todo    (maybe) handle case when `wcj_get_country_by_ip()` returns empty string
 	 * @todo    (maybe) for shipping countries - filter `woocommerce_ship_to_countries` option
 	 */
 	function restrict_countries_by_customer_ip( $countries ) {
+		if (
+			( 'yes' === $this->get_option( 'wcj_checkout_restrict_countries_by_customer_ip_ignore_admin', 'no' ) && is_admin() ) ||
+			( ! empty( $this->get_option( 'wcj_checkout_restrict_countries_by_customer_ip_conditions', array() ) ) && ! $this->are_conditions_valid() )
+		) {
+			return $countries;
+		}
 		$user_country = wcj_get_country_by_ip();
+
+		// Get country from 'billing_country' user meta
+		if (
+			'yes' === get_option( 'wcj_checkout_restrict_countries_by_user_billing_country', 'no' ) &&
+			0 != ( $user_id = get_current_user_id() )
+		) {
+			$user_country = ! empty( $user_billing_country = get_user_meta( $user_id, 'billing_country', true ) ) ? $user_billing_country : wcj_get_country_by_ip();
+		}
+
+		// Get country from a manual order ID created by YITH Request a Quote plugin
+		if ( 'yes' === get_option( 'wcj_checkout_restrict_countries_based_on_yith_raq', 'no' ) && class_exists( 'YITH_Request_Quote' ) ) {
+			$yith_order_id = WC()->session->get( 'order_awaiting_payment' );
+			if ( ! empty( $yith_order_id ) ) {
+				$user_country = ! empty( $order_billing_country = get_post_meta( $yith_order_id, '_billing_country', true ) ) ? $order_billing_country : wcj_get_country_by_ip();
+			}
+		}
 		return array( $user_country => wcj_get_country_name_by_code( $user_country ) );
 	}
 

@@ -104,6 +104,22 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'Exempt VAT on Cart', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Yes', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Exempts VAT even on Cart page.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_eu_vat_number_disable_for_valid_on_cart',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Exempt VAT by Customer\'s EU VAT', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Yes', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Exempts VAT by checking previously registered EU VAT numbers from customers.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_eu_vat_number_disable_for_valid_by_user_vat',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'title'    => __( 'Preserve VAT in Base Country', 'woocommerce-jetpack' ),
 		'desc_tip' => sprintf( __( 'This will validate the VAT, but won\'t exempt VAT for base country VAT numbers. Base (i.e. store) country is set in %s.', 'woocommerce-jetpack' ),
 			'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=general' ) . '">' . __( 'WooCommerce > Settings > General', 'woocommerce-jetpack' ) . '</a>' ) . '<br>' .
@@ -211,6 +227,14 @@ $settings = array(
 		'id'       => 'wcj_eu_vat_number_advanced_skip_countries',
 		'default'  => '',
 		'type'     => 'text',
+	),
+	array(
+		'title'    => __( "Read '_vat_number' meta", 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf(__( "Try to add compatibility with <a href='%s' target='_blank'>EU VAT Number</a> plugin, reading meta from '_vat_number' meta", 'woocommerce-jetpack' ),'https://woocommerce.com/products/eu-vat-number/'),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_eu_vat_number_read_vat_number_meta',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',

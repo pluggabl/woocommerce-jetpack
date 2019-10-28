@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 4.5.1
+ * @version 4.5.2
  * @author  Algoritmika Ltd.
  */
 
@@ -50,7 +50,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * preserve_linebreaks_admin.
 	 *
-	 * @version 4.5.0
+	 * @version 4.5.2
 	 * @since   4.5.0
 	 */
 	function preserve_linebreaks_admin() {
@@ -59,8 +59,9 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 		}
 		?>
 		<style>
-			#woocommerce-order-items .woocommerce_order_items_wrapper table.woocommerce_order_items table.display_meta tr td, #woocommerce-order-items .woocommerce_order_items_wrapper table.woocommerce_order_items table.meta tr td
-			{white-space: pre-wrap;}
+			#woocommerce-order-items .woocommerce_order_items_wrapper table.woocommerce_order_items table.display_meta tr td, #woocommerce-order-items .woocommerce_order_items_wrapper table.woocommerce_order_items table.meta tr td {
+				white-space: pre-wrap;
+			}
 		</style>
 		<?php
 	}
@@ -68,7 +69,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * preserve_linebreaks_frontend.
 	 *
-	 * @version 4.5.1
+	 * @version 4.5.2
 	 * @since   4.5.0
 	 */
 	function preserve_linebreaks_frontend() {
@@ -76,16 +77,17 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 			return;
 		}
 		?>
-        <style>
-            .woocommerce-cart-form__cart-item.cart_item .product-name dl dd,
-            .woocommerce-checkout-review-order-table .product-name dl dd {
-                white-space: pre-wrap !important;
-            }
-            .woocommerce-cart-form__cart-item.cart_item .product-name dt,
-            .woocommerce-checkout-review-order-table .product-name dt {
-                display: block;
-            }
-        </style>
+		<style>
+			.woocommerce-cart-form__cart-item.cart_item .product-name dl dd,
+			.woocommerce-checkout-review-order-table .product-name dl dd {
+				white-space: pre-wrap !important;
+			}
+
+			.woocommerce-cart-form__cart-item.cart_item .product-name dt,
+			.woocommerce-checkout-review-order-table .product-name dt {
+				display: block;
+			}
+		</style>
 		<?php
 	}
 
