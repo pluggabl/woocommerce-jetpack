@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -17,7 +17,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -58,8 +58,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 *
 	 * @see https://wpml.org/forums/topic/get-all-terms-of-all-languages-outside-loop/
 	 * 
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 */
 	function remove_wpml_functions_before_get_terms() {
 		if ( 'no' === get_option( 'wcj_price_by_user_role_wpml_get_terms_all_lang', 'no' ) ) {
@@ -77,8 +77,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	 *
 	 * @see http://support.themeblvd.com/forums/topic/wpml-sitepress-php-error-on-backend-due-to-layout-builder/
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 */
 	function remove_wpml_functions_after_get_terms() {
 		if ( 'no' === get_option( 'wcj_price_by_user_role_wpml_get_terms_all_lang', 'no' ) ) {
@@ -94,8 +94,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * remove_single_variation_hooks.
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 */
 	function remove_single_variation_hooks() {
 		global $product;
@@ -113,8 +113,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * show_empty_price_variations.
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @param $hide
 	 *

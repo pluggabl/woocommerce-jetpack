@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -105,7 +105,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * trigger.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 */
 	function trigger( $object_id ) {
 

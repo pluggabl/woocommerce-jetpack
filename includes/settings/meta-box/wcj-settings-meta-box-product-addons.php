@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Addons
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */

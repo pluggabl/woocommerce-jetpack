@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Input Fields
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -50,7 +50,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * preserve_linebreaks_admin.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   4.5.0
 	 */
 	function preserve_linebreaks_admin() {
@@ -69,7 +69,7 @@ class WCJ_Product_Input_Fields extends WCJ_Module {
 	/**
 	 * preserve_linebreaks_frontend.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   4.5.0
 	 */
 	function preserve_linebreaks_frontend() {

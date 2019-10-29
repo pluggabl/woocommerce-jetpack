@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -91,7 +91,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Handles third party compatibility
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   4.3.0
 	 */
 	function handle_third_party_compatibility(){
@@ -162,7 +162,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Fixes sort by price when `wcj_multicurrency_per_product_enabled` is enabled.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   4.5.0
 	 *
 	 * @param $args
@@ -217,7 +217,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 * First it removes products witch `_wcj_multicurrency_per_product_regular_price_{$current_currency_code}` meta don't match min and max.
 	 * Then it adds products witch `_wcj_multicurrency_per_product_regular_price_{$current_currency_code}` meta match min and max.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   4.5.0
 	 *
 	 * @see WC_Query::price_filter_post_clauses()
@@ -264,7 +264,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 *
 	 * It works comparing min and max values from "_wcj_multicurrency_per_product_regular_price_{currency_code}" meta as well as min and max price from wc_product_meta_lookup
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   4.5.0
 	 *
 	 * @see WC_Widget_Price_Filter::get_filtered_price()
@@ -368,7 +368,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 *
 	 * @see price-slider.js, init_price_filter()
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   4.3.0
 	 */
 	function add_compatibility_with_price_filter_widget() {
@@ -582,7 +582,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Gets all products, or products with variations containing meta '_wcj_multicurrency_per_product_regular_price_{currency}' or '_wcj_multicurrency_per_product_sale_price_{currency}'.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   4.5.0
 	 *
 	 * @param $currency
@@ -870,8 +870,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 	/**
 	 * Saves price so it won't be necessary to calculate it multiple times.
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @param $price
 	 * @param $product_id
@@ -884,7 +884,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 */
 	function change_price( $price, $_product ) {
 		if ( '' === $price ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Customization
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -137,8 +137,8 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * Checks if conditions are valid in order for the country restriction to work.
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @return bool
 	 */
@@ -158,7 +158,7 @@ class WCJ_Checkout_Customization extends WCJ_Module {
 	/**
 	 * restrict_countries_by_customer_ip.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   3.4.0
 	 * @todo    (maybe) handle case when `wcj_get_country_by_ip()` returns empty string
 	 * @todo    (maybe) for shipping countries - filter `woocommerce_ship_to_countries` option

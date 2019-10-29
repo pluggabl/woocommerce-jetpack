@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -857,8 +857,8 @@ if ( ! function_exists( 'wcj_remove_class_filter' ) ) {
 	 *
 	 * @see https://gist.github.com/tripflex/c6518efc1753cf2392559866b4bd1a53
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @param $tag
 	 * @param string $class_name
@@ -890,8 +890,8 @@ if ( ! function_exists( 'wcj_remove_class_filter' ) ) {
 	 *
 	 * @see https://gist.github.com/tripflex/c6518efc1753cf2392559866b4bd1a53
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @param $tag
 	 * @param string $class_name

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Sorting
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @author  Algoritmika Ltd.
  */
 
@@ -67,7 +67,7 @@ class WCJ_Sorting extends WCJ_Module {
 	/**
 	 * Restores default WooCommerce sorting on Avada Theme.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   4.3.0
 	 */
 	function restore_default_sorting_on_avada() {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shipping - Custom Shipping with Shipping Zones
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.5.6
  * @author  Algoritmika Ltd.
  */
@@ -31,7 +31,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * Init settings
 		 *
-		 * @version 4.5.2
+		 * @version 4.6.0
 		 * @since   2.5.6
 		 * @access  public
 		 * @return  void
@@ -81,7 +81,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * sanitize_settings.
 		 *
-		 * @version 4.5.2
+		 * @version 4.6.0
 		 * @since   4.5.0
 		 *
 		 * @param $settings
@@ -173,7 +173,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * Initialise Settings Form Fields
 		 *
-		 * @version 4.5.2
+		 * @version 4.6.0
 		 * @since   2.5.6
 		 */
 		function init_instance_form_fields() {
@@ -333,7 +333,7 @@ if ( ! class_exists( 'WC_Shipping_WCJ_Custom_W_Zones' ) ) :
 		/**
 		 * calculate_shipping function.
 		 *
-		 * @version 4.5.2
+		 * @version 4.6.0
 		 * @since   2.5.6
 		 * @access  public
 		 * @param   mixed $package

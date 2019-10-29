@@ -2,7 +2,7 @@
 /**
  * Variable product add to cart - radio inputs
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */

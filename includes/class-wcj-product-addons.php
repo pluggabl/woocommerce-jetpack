@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names)
@@ -266,7 +266,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * price_change_ajax.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   2.5.3
 	 */
 	function price_change_ajax( $param ) {
@@ -423,8 +423,8 @@ class WCJ_Product_Addons extends WCJ_Module {
 	 *
 	 * If it doesn't have any template var, just return the price.
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @param $price_value
 	 * @param $product_id
@@ -576,7 +576,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item_data.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   2.5.3
 	 */
 	function add_addons_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
@@ -611,7 +611,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_to_frontend.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   2.5.3
 	 */
 	function add_addons_to_frontend() {
@@ -727,8 +727,8 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * remove_empty_parenthesis.
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @param $html
 	 *
@@ -741,8 +741,8 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Formats the addon price.
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @param $_product
 	 * @param $price

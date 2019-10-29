@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Bookings
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -308,7 +308,7 @@ class WCJ_Product_Bookings extends WCJ_Module {
 	/**
 	 * Create custom style for bookings product page
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   2.5.0
 	 */
 	function create_custom_style() {

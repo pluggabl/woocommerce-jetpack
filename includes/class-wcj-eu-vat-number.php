@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @todo    [feature] add option to add "Verify" button to frontend
 	 */
 	function __construct() {
@@ -75,8 +75,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * maybe_recalculate_tax_totals.
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @see https://gist.github.com/TimBHowe/fe9418b9224d8b8cb339
 	 * @param $total
@@ -94,8 +94,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * maybe_remove_tax_totals.
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @see https://gist.github.com/TimBHowe/fe9418b9224d8b8cb339
 	 * @param $tax_totals
@@ -383,7 +383,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * wcj_validate_eu_vat_number.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 */
 	function wcj_validate_eu_vat_number( $param ) {
 		$param         = wp_parse_args( $param, array(
@@ -430,8 +430,8 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * need_to_exclude_vat.
 	 *
-	 * @version 4.5.2
-	 * @since   4.5.2
+	 * @version 4.6.0
+	 * @since   4.6.0
 	 *
 	 * @return bool
 	 */
@@ -474,7 +474,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * maybe_exclude_vat.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 */
 	function maybe_exclude_vat() {
 		if ( $this->need_to_exclude_vat() ) {
@@ -514,7 +514,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * add_billing_eu_vat_number_field_to_admin_order_display.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 */
 	function add_billing_eu_vat_number_field_to_admin_order_display( $fields ) {
 		$vat_number = '';

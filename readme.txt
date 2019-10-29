@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.2
-Stable tag: 4.5.2
+Stable tag: 4.6.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -193,7 +193,7 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
-= 4.5.2 - 28/10/2019 =
+= 4.6.0 - 29/10/2019 =
 * Fix indentation by replacing spaces by tabs on SQL, comments, or when there is pure HTML, <script> or <style> tags.
 * Fix - CART & CHECKOUT - EU VAT Number - Fix `wcj_validate_vat_no_soap()` function with correct api_url.
 * Fix - EMAILS & MISC. - Custom Emails - Fix fatal error when trying to send custom emails using 'Created Customer Notification' trigger.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Open Pricing
  *
- * @version 4.5.2
+ * @version 4.6.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   2.4.8
 	 */
 	function __construct() {
@@ -97,7 +97,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * maybe_convert_price_currency.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   4.2.0
 	 */
 	function maybe_convert_price_currency( $price, $product = null ) {
@@ -124,7 +124,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * add_price_info_to_loop.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   2.8.0
 	 */
 	function add_price_info_to_loop() {
@@ -294,7 +294,7 @@ class WCJ_Product_Open_Pricing extends WCJ_Module {
 	/**
 	 * get_open_price.
 	 *
-	 * @version 4.5.2
+	 * @version 4.6.0
 	 * @since   2.4.8
 	 */
 	function get_open_price( $price, $_product ) {
