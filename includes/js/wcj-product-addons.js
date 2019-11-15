@@ -1,7 +1,7 @@
 /**
  * wcj-product-addons.
  *
- * @version 4.5.0
+ * @version 4.6.1
  * @since   2.5.3
  * @todo    `text` type - update price not only on change, but on each pressed key
  * @todo    fix the issue with custom price labels module
@@ -70,6 +70,64 @@ jQuery(document).ready(function() {
 	jQuery("[name^='wcj_product_all_products_addons_'], [name^='wcj_product_per_product_addons_']").each( function () {
 		jQuery(this).change( change_price );
 	});
+
+	// Handle "Enable by Variation" option
+	function handle_enable_by_variation() {
+		sanitize_variation_addon_fields_array();
+		var addon_pattern = 'wcj_product_per_product_addons_';
+		function hide_variation_addon_fields() {
+			for (i = 0; i < _ajax_object.enable_by_variation.length; i++) {
+				if (Array.isArray(_ajax_object.enable_by_variation[i])) {
+					var addons = jQuery('input[name="' + addon_pattern + (i + 1) + '"],label[for*="' + addon_pattern + (i + 1) + '"],*[class*="' + addon_pattern + (i + 1) + '"]');
+					addons.each(function () {
+						if (jQuery(this).is('[required]')) {
+							jQuery(this).removeAttr('required');
+							jQuery(this).attr('data-required', true);
+						}
+					});
+					addons.hide();
+				}
+			}
+		}
+		function show_addon_field_by_variation_id(variation_id) {
+			hide_variation_addon_fields();
+			for (i = 0; i < _ajax_object.enable_by_variation.length; i++) {
+				if (Array.isArray(_ajax_object.enable_by_variation[i]) && _ajax_object.enable_by_variation[i].indexOf(parseInt(variation_id)) != -1) {
+					var addons = jQuery('input[name="' + addon_pattern + (i + 1) + '"],label[for*="' + addon_pattern + (i + 1) + '"],*[class*="' + addon_pattern + (i + 1) + '"]');
+					addons.each(function() {
+						if(jQuery(this).is('[data-required]')){
+							jQuery(this).attr('required','required');
+						}
+					});
+					addons.show();
+				}
+			}
+		}
+		function sanitize_variation_addon_fields_array(){
+			if (Array.isArray(_ajax_object.enable_by_variation)) {
+				_ajax_object.enable_by_variation = _ajax_object.enable_by_variation.map(function (e) {
+					if (Array.isArray(e)) {
+						e = e.map(function (e) {
+							e = parseInt(e);
+							return e;
+						});
+					}
+					return e;
+				});
+			}
+		}
+		if (Array.isArray(_ajax_object.enable_by_variation)) {
+			hide_variation_addon_fields();
+		}
+		jQuery(document).on('found_variation', 'form.cart', function (event, variation) {
+			var variation_id = variation.variation_id;
+			if (Array.isArray(_ajax_object.enable_by_variation)) {
+				show_addon_field_by_variation_id(variation_id);
+			}
+		});
+	}
+	handle_enable_by_variation();
+
 });
 
 jQuery(document.body).on('change','.variations select',change_price);

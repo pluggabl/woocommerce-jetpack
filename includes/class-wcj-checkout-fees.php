@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Fees
  *
- * @version 4.5.0
+ * @version 4.6.1
  * @since   3.7.0
  * @author  Algoritmika Ltd.
  */
@@ -58,7 +58,7 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	/**
 	 * Validate fee without considering overlapping.
 	 *
-	 * @version 4.5.0
+	 * @version 4.6.1
 	 * @since   4.5.0
 	 *
 	 * @param $fee_id
@@ -79,10 +79,18 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 			return false;
 		}
 
-		// Check cart amount
+		// Check cart quantity
 		if (
 			$cart->get_cart_contents_count() < $fees[ $fee_id ]['cart_min'] ||
 			( $fees[ $fee_id ]['cart_max'] > 0 && $cart->get_cart_contents_count() > $fees[ $fee_id ]['cart_max'] )
+		) {
+			return false;
+		}
+
+		// Check cart total
+		if (
+			$cart->get_cart_contents_total() < $fees[ $fee_id ]['cart_min_total'] ||
+			( ! empty( $fees[ $fee_id ]['cart_max_total'] ) && $fees[ $fee_id ]['cart_max_total'] > 0 && $cart->get_cart_contents_total() > $fees[ $fee_id ]['cart_max_total'] )
 		) {
 			return false;
 		}
@@ -126,7 +134,7 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 	/**
 	 * Get Fees.
 	 *
-	 * @version 4.5.0
+	 * @version 4.6.1
 	 * @since   4.5.0
 	 *
 	 * @param bool $only_enabled
@@ -140,7 +148,9 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 		$types           = $this->get_option( 'wcj_checkout_fees_data_types', array() );
 		$values          = $this->get_option( 'wcj_checkout_fees_data_values', array() );
 		$cart_min        = $this->get_option( 'wcj_checkout_fees_cart_min_amount', array() );
+		$cart_min_total  = $this->get_option( 'wcj_checkout_fees_cart_min_total_amount', array() );
 		$cart_max        = $this->get_option( 'wcj_checkout_fees_cart_max_amount', array() );
+		$cart_max_total  = $this->get_option( 'wcj_checkout_fees_cart_max_total_amount', array() );
 		$taxable         = $this->get_option( 'wcj_checkout_fees_data_taxable', array() );
 		$checkout_fields = $this->get_option( 'wcj_checkout_fees_data_values', array() );
 		$enabled         = $this->get_option( 'wcj_checkout_fees_data_enabled', array() );
@@ -159,7 +169,9 @@ class WCJ_Checkout_Fees extends WCJ_Module {
 			$fees[ $i ] = array(
 				'enabled'        => $enabled,
 				'cart_min'       => isset( $cart_min[ $i ] ) ? $cart_min[ $i ] : 1,
+				'cart_min_total' => isset( $cart_min_total[ $i ] ) ? $cart_min_total[ $i ] : 0,
 				'cart_max'       => isset( $cart_max[ $i ] ) ? $cart_max[ $i ] : 0,
+				'cart_max_total' => isset( $cart_max_total[ $i ] ) ? $cart_max_total[ $i ] : '',
 				'title'          => isset( $titles[ $i ] ) ? $titles[ $i ] : '',
 				'type'           => isset( $types[ $i ] ) ? $types[ $i ] : 'fixed',
 				'value'          => isset( $values[ $i ] ) ? $values[ $i ] : 0,

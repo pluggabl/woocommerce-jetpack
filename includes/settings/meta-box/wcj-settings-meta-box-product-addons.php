@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Addons
  *
- * @version 4.6.0
+ * @version 4.6.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -28,6 +28,44 @@ $options = array(
 		'title'      => __( 'Product Addons Total Number', 'woocommerce-jetpack' ),
 	),
 );
+
+if ( ! function_exists( 'wcj_get_product_addons_enable_by_variation_option' ) ) {
+	/**
+	 * wcj_get_product_addons_enable_by_variation_option.
+	 *
+	 * @version 4.6.1
+	 * @since   4.6.1
+	 */
+	function wcj_get_product_addons_enable_by_variation_option( $index ) {
+		if (
+			empty( $post_id = get_the_ID() ) ||
+			! is_a( $product = wc_get_product( $post_id ), 'WC_Product_Variable' )
+		) {
+			return false;
+		}
+		$variations             = $product->get_available_variations();
+		$variations_options     = wp_list_pluck( $variations, 'variation_id', 'variation_id' );
+		$custom_attributes_data = apply_filters( 'booster_message', '', 'disabled' );
+		$custom_attributes      = array();
+		if ( is_array( $custom_attributes_data ) ) {
+			foreach ( $custom_attributes_data as $attribute => $attribute_value ) {
+				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+			}
+		}
+		return array(
+			'name'              => 'wcj_product_addons_per_product_enable_by_variation_' . $index,
+			'type'              => 'select',
+			'multiple'          => true,
+			'tooltip'           => apply_filters( 'booster_message', '', 'desc' ),
+			'css'               => 'width:100%',
+			'class'             => 'chosen_select',
+			'options'           => $variations_options,
+			'custom_attributes' => implode( ' ', $custom_attributes ),
+			'title'             => __( 'Enable by Variation', 'woocommerce-jetpack' ),
+		);
+	}
+}
+
 $total_number = get_post_meta( get_the_ID(), '_' . 'wcj_product_addons_per_product_total_number', true );
 for ( $i = 1; $i <= $total_number; $i++ ) {
 	$options = array_merge( $options, array(
@@ -40,7 +78,7 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 				'yes' => __( 'Yes', 'woocommerce-jetpack' ),
 				'no'  => __( 'No', 'woocommerce-jetpack' ),
 			),
-		),
+		),wcj_get_product_addons_enable_by_variation_option($i),
 		array(
 			'title'    => __( 'Type', 'woocommerce-jetpack' ),
 			'name'     => 'wcj_product_addons_per_product_type_' . $i,

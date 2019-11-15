@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping Calculator
  *
- * @version 2.8.0
+ * @version 4.6.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -44,7 +44,7 @@ return array(
 		'type'     => 'checkbox',
 	),
 	array(
-		'title'    => __( '', 'woocommerce-jetpack' ),
+		'title'    => '',
 		'desc'     => __( 'Calculate Shipping button', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'When "Force Block Open" options is enabled, set Calculate Shipping button options.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_shipping_calculator_enable_force_block_open_button',

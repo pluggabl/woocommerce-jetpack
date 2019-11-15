@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by Country
  *
- * @version 3.6.0
+ * @version 4.6.1
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 4.6.1
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -31,6 +31,28 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 
 		parent::__construct();
 
+		if ( $this->is_enabled() ) {
+			add_filter( 'woocommerce_checkout_update_order_review_expired', array( $this, 'update_order_review_expired' ) );
+		}
+
+	}
+
+	/**
+	 * update_order_review_expired.
+	 *
+	 * @version 4.6.1
+	 * @since   4.6.1
+	 *
+	 * @param $update
+	 *
+	 * @return bool
+	 */
+	function update_order_review_expired( $update ) {
+		if ( 'yes' !== get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) ) {
+			return $update;
+		}
+		$update = false;
+		return $update;
 	}
 
 	/**
@@ -47,7 +69,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 	/**
 	 * get_check_option.
 	 *
-	 * @version 3.6.0
+	 * @version 4.6.1
 	 * @since   3.6.0
 	 */
 	function get_check_option() {
@@ -55,13 +77,20 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 			if ( '' == wcj_session_get( 'wcj_selected_country' ) ) {
 				$country = wcj_get_country_by_ip();
 				wcj_session_set( 'wcj_selected_country', $country );
-				return $country;
+				$check_option = $country;
 			} else {
-				return wcj_session_get( 'wcj_selected_country' );
+				$check_option = wcj_session_get( 'wcj_selected_country' );
 			}
 		} else {
-			return wcj_get_country_by_ip();
+			$check_option = wcj_get_country_by_ip();
 		}
+		if ( 'yes' === get_option( 'wcj_product_by_country_selection_billing_country_overwrite', 'no' ) ) {
+			$billing_country = ! empty( $_REQUEST['country'] ) ? $_REQUEST['country'] : '';
+			if ( ! empty( $billing_country ) ) {
+				$check_option = $billing_country;
+			}
+		}
+		return $check_option;
 	}
 
 	/**
@@ -133,6 +162,14 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 				),
 				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 				'css'      => 'min-width:250px;',
+			),
+			array(
+				'title'    => __( 'Overwrite by Billing Country', 'woocommerce-jetpack' ),
+				'desc_tip' => __( 'Tries to overwrite Country by User Billing Country on Checkout Page.', 'woocommerce-jetpack' ),
+				'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+				'id'       => 'wcj_product_by_country_selection_billing_country_overwrite',
+				'default'  => 'no',
+				'type'     => 'checkbox',
 			),
 			array(
 				'type'     => 'sectionend',

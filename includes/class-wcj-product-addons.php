@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 4.6.0
+ * @version 4.6.1
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names)
@@ -18,7 +18,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.9.0
+	 * @version 4.6.1
 	 * @since   2.5.3
 	 * @todo    (maybe) add "in progress" ajax message
 	 * @todo    (maybe) for variable products - show addons only if variation is selected (e.g. move to addons from `woocommerce_before_add_to_cart_button` to variation description)
@@ -56,7 +56,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 				add_filter( 'woocommerce_add_cart_item_data',             array( $this, 'add_addons_price_to_cart_item_data' ), PHP_INT_MAX, 3 );
 				add_filter( 'woocommerce_add_cart_item',                  array( $this, 'add_addons_price_to_cart_item' ), PHP_INT_MAX, 2 );
 				add_filter( 'woocommerce_get_cart_item_from_session',     array( $this, 'get_cart_item_addons_price_from_session' ), PHP_INT_MAX, 3 );
-				add_filter( 'woocommerce_add_to_cart_validation',         array( $this, 'validate_on_add_to_cart' ), PHP_INT_MAX, 2 );
+				add_filter( 'woocommerce_add_to_cart_validation',         array( $this, 'validate_on_add_to_cart' ), PHP_INT_MAX, 4 );
 				// Prices
 				add_filter( WCJ_PRODUCT_GET_PRICE_FILTER,                 array( $this, 'change_price' ), wcj_get_module_price_hooks_priority( 'product_addons' ), 2 );
 				add_filter( 'woocommerce_product_variation_get_price',    array( $this, 'change_price' ), wcj_get_module_price_hooks_priority( 'product_addons' ), 2 );
@@ -198,12 +198,23 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * validate_on_add_to_cart.
 	 *
-	 * @version 2.5.5
+	 * @version 4.6.1
 	 * @since   2.5.5
 	 */
-	function validate_on_add_to_cart( $passed, $product_id ) {
+	function validate_on_add_to_cart( $passed, $product_id, $quantity ) {
+		if ( 4 === count( $args = func_get_args() ) ) {
+			$variation_id = $args[3];
+		}
 		$addons = $this->get_product_addons( $product_id );
 		foreach ( $addons as $addon ) {
+			// Prevents validation on addons if not in "enable by variation" option
+			if (
+				! empty( $variation_id ) &&
+				! empty( $addon['enable_by_variation'] ) &&
+				! in_array( $variation_id, $addon['enable_by_variation'] )
+			) {
+				continue;
+			}
 			if ( 'yes' === $addon['is_required'] ) {
 				if ( ! isset( $_POST[ $addon['checkbox_key'] ] ) ) {
 					wc_add_notice( __( 'Some of the required addons are not selected!', 'woocommerce-jetpack' ), 'error' );
@@ -309,17 +320,19 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 4.5.0
+	 * @version 4.6.1
 	 * @since   2.5.3
 	 */
 	function enqueue_scripts() {
 		if ( is_product() ) {
-			$the_product = wc_get_product();
-			$addons = $this->get_product_addons( wcj_get_product_id_or_variation_parent_id( $the_product ) );
+			$the_product         = wc_get_product();
+			$addons              = $this->get_product_addons( wcj_get_product_id_or_variation_parent_id( $the_product ) );
+			$enable_by_variation = wp_list_pluck( $addons, 'enable_by_variation' );
 			if ( ! empty( $addons ) ) {
 				$is_variable_with_single_price = ( $the_product->is_type( 'variable' ) && ( $the_product->get_variation_price( 'min' ) == $the_product->get_variation_price( 'max' ) ) );
-				wp_enqueue_script(  'wcj-product-addons', wcj_plugin_url() . '/includes/js/wcj-product-addons.js', array(), WCJ()->version, true );
+				wp_enqueue_script( 'wcj-product-addons', wcj_plugin_url() . '/includes/js/wcj-product-addons.js', array(), WCJ()->version, true );
 				wp_localize_script( 'wcj-product-addons', 'ajax_object', array(
+					'enable_by_variation'           => $enable_by_variation,
 					'ajax_url'                      => admin_url( 'admin-ajax.php' ),
 					'product_id'                    => get_the_ID(),
 					'ignore_strikethrough_price'    => get_option( 'wcj_product_addons_ajax_ignore_st_price', 'no' ),
@@ -348,7 +361,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * get_product_addons.
 	 *
-	 * @version 3.6.0
+	 * @version 4.6.1
 	 * @since   2.5.3
 	 * @todo    (maybe) `checkbox_key` is mislabelled, should be `key` (or maybe `value_key`)
 	 */
@@ -368,6 +381,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 					$addons[] = array(
 //						'scope'        => 'all_products',
 //						'index'        => $i,
+						'enable_by_variation' => '',
 						'checkbox_key' => 'wcj_product_all_products_addons_' . $i,
 						'price_key'    => 'wcj_product_all_products_addons_price_' . $i,
 						'label_key'    => 'wcj_product_all_products_addons_label_' . $i,
@@ -397,19 +411,20 @@ class WCJ_Product_Addons extends WCJ_Module {
 						$addons[] = array(
 //							'scope'        => 'per_product',
 //							'index'        => $i,
-							'checkbox_key' => 'wcj_product_per_product_addons_' . $i,
-							'price_key'    => 'wcj_product_per_product_addons_price_' . $i,
-							'label_key'    => 'wcj_product_per_product_addons_label_' . $i,
-							'price_value'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_price_' . $i, true ),
-							'label_value'  => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_label_' . $i, true ) ),
-							'title'        => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_title_' . $i, true ) ),
-							'placeholder'  => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_placeholder_' . $i, true ) ),
-							'class'        => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_class_' . $i, true ),
-							'tooltip'      => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_tooltip_' . $i, true ) ),
-							'type'         => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_type_' . $i, true ),
-							'default'      => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_default_' . $i, true ),
-							'is_required'  => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_required_' . $i, true ),
-							'qty'          => $qty,
+							'enable_by_variation' => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_enable_by_variation_' . $i, true ),
+							'checkbox_key'        => 'wcj_product_per_product_addons_' . $i,
+							'price_key'           => 'wcj_product_per_product_addons_price_' . $i,
+							'label_key'           => 'wcj_product_per_product_addons_label_' . $i,
+							'price_value'         => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_price_' . $i, true ),
+							'label_value'         => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_label_' . $i, true ) ),
+							'title'               => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_title_' . $i, true ) ),
+							'placeholder'         => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_placeholder_' . $i, true ) ),
+							'class'               => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_class_' . $i, true ),
+							'tooltip'             => do_shortcode( get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_tooltip_' . $i, true ) ),
+							'type'                => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_type_' . $i, true ),
+							'default'             => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_default_' . $i, true ),
+							'is_required'         => get_post_meta( $product_id, '_' . 'wcj_product_addons_per_product_required_' . $i, true ),
+							'qty'                 => $qty,
 						);
 					}
 				}
@@ -576,12 +591,20 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item_data.
 	 *
-	 * @version 4.6.0
+	 * @version 4.6.1
 	 * @since   2.5.3
 	 */
 	function add_addons_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
 		$addons = $this->get_product_addons( $product_id );
 		foreach ( $addons as $addon ) {
+			// Prevents adding addons to cart if not in "enable by variation" option
+			if (
+				! empty( $variation_id ) &&
+				! empty( $addon['enable_by_variation'] ) &&
+				! in_array( $variation_id, $addon['enable_by_variation'] )
+			) {
+				continue;
+			}
 			$price_value = $this->replace_price_template_vars( $addon['price_value'], $variation_id ? $variation_id : $product_id );
 			if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
 				if ( ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) || ( 'text' == $addon['type'] && '' != $_POST[ $addon['checkbox_key'] ] ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Fees
  *
- * @version 4.5.0
+ * @version 4.6.1
  * @since   3.7.0
  * @author  Algoritmika Ltd.
  */
@@ -80,19 +80,36 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'custom_attributes' => array( 'step' => 0.000001 ),
 		),
 		array(
-			'title'             => __( 'Cart Min', 'woocommerce-jetpack' ),
-			'desc_tip'          => __( 'Cart minimum amount', 'woocommerce-jetpack' ),
+			'title'             => __( 'Cart Minimum Quantity', 'woocommerce-jetpack' ),
+			'desc_tip'          => __( 'Minimum amount of items in cart.', 'woocommerce-jetpack' ),
 			'id'                => "wcj_checkout_fees_cart_min_amount[$i]",
 			'default'           => 1,
 			'type'              => 'number',
 			'custom_attributes' => array( 'min' => 1 )
 		),
 		array(
-			'title'             => __( 'Cart Max', 'woocommerce-jetpack' ),
-			'desc_tip'          => __( 'Cart maximum amount.', 'woocommerce-jetpack' ) . '<br />' . __( 'Zero or empty values will not be considered', 'woocommerce-jetpack' ),
+			'title'             => __( 'Cart Maximum Quantity', 'woocommerce-jetpack' ),
+			'desc_tip'          => __( 'Maximum amount of items in cart.', 'woocommerce-jetpack' ) . '<br />' . __( 'Zero or empty values will not be considered', 'woocommerce-jetpack' ),
 			'id'                => "wcj_checkout_fees_cart_max_amount[$i]",
 			'default'           => '',
 			'type'              => 'number',
+		),
+		array(
+			'title'             => __( 'Cart Minimum Total', 'woocommerce-jetpack' ),
+			'desc_tip'          => __( 'Minimum total amount in cart.', 'woocommerce-jetpack' ),
+			'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+			'id'                => "wcj_checkout_fees_cart_min_total_amount[$i]",
+			'default'           => 0,
+			'type'              => 'number',
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		),
+		array(
+			'title'             => __( 'Cart Maximum Total', 'woocommerce-jetpack' ),
+			'desc_tip'          => __( 'Maximum total amount in cart.', 'woocommerce-jetpack' ),
+			'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+			'id'                => "wcj_checkout_fees_cart_max_total_amount[$i]",
+			'type'              => 'number',
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		),
 		array(
 			'title'    => __( 'Checkout Field', 'woocommerce-jetpack' ),

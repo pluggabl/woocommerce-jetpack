@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Add to Cart
  *
- * @version 3.9.0
+ * @version 4.6.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -55,7 +55,7 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_add_to_
 		),
 		array(
 			'desc'     => __( 'categories', 'woocommerce-jetpack' ),
-			'desc_tip' => __( '', 'woocommerce-jetpack' ),
+			'desc_tip' => '',
 			'id'       => 'wcj_add_to_cart_per_category_ids_group_' . $i,
 			'default'  => '',
 			'type'     => 'multiselect',

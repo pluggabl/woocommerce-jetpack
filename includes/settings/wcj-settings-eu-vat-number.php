@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - EU VAT Number
  *
- * @version 3.2.2
+ * @version 4.6.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default value for "wcj_eu_vat_number_add_progress_text" to "yes"
@@ -110,6 +110,14 @@ $settings = array(
 		'id'       => 'wcj_eu_vat_number_disable_for_valid_on_cart',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Show VAT field for EU countries only', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Yes', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_eu_vat_number_show_vat_field_for_eu_only',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
 	array(
 		'title'    => __( 'Exempt VAT by Customer\'s EU VAT', 'woocommerce-jetpack' ),
@@ -230,7 +238,7 @@ $settings = array(
 	),
 	array(
 		'title'    => __( "Read '_vat_number' meta", 'woocommerce-jetpack' ),
-		'desc_tip' => sprintf(__( "Try to add compatibility with <a href='%s' target='_blank'>EU VAT Number</a> plugin, reading meta from '_vat_number' meta", 'woocommerce-jetpack' ),'https://woocommerce.com/products/eu-vat-number/'),
+		'desc_tip' => sprintf(__( "Try to add compatibility with <a href='%s' target='_blank'>EU VAT Number</a> plugin, reading meta from '_vat_number'.", 'woocommerce-jetpack' ),'https://woocommerce.com/products/eu-vat-number/'),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_eu_vat_number_read_vat_number_meta',
 		'default'  => 'no',

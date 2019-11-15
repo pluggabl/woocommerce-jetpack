@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 4.5.1
+ * @version 4.6.1
  * @author  Algoritmika Ltd.
  */
 
@@ -190,7 +190,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * update_custom_checkout_fields_order_meta.
 	 *
-	 * @version 4.5.1
+	 * @version 4.6.1
 	 */
 	function update_custom_checkout_fields_order_meta( $order_id ) {
 		for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_checkout_custom_fields_total_number', 1 ) ); $i++ ) {
@@ -203,8 +203,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 				$option_name       = $the_section . '_' . 'wcj_checkout_field_'       . $i;
 				$option_name_label = $the_section . '_' . 'wcj_checkout_field_label_' . $i;
 				$option_name_type  = $the_section . '_' . 'wcj_checkout_field_type_'  . $i;
-				$post_value        = isset( $_POST[ $option_name ] ) ? $_POST[ $option_name ] : '';
-				$post_value        = empty( $post_value ) && isset( $_POST[ '_'. $option_name ] ) ? $_POST[ '_'. $option_name ] : $post_value;
+				$post_value        = isset( $_POST[ $option_name ] ) ? $_POST[ $option_name ] : ( isset( $_POST[ '_' . $option_name ] ) ? $_POST[ '_' . $option_name ] : get_post_meta( $order_id, '_' . $option_name, true ) );
 				if ( ! empty( $post_value ) || 'checkbox' === $the_type ) {
 					update_post_meta( $order_id, '_' . $option_name_type,  $the_type );
 					update_post_meta( $order_id, '_' . $option_name_label, get_option( 'wcj_checkout_custom_field_label_' . $i ) );

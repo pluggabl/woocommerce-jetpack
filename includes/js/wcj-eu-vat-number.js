@@ -1,7 +1,7 @@
 /**
  * eu-vat-number.
  *
- * @version 2.7.0
+ * @version 4.6.1
  */
 
 var _ajax_object = ajax_object;
@@ -48,12 +48,12 @@ jQuery( function( $ ) {
 				url: _ajax_object.ajax_url,
 				data: data,
 				success: function(response) {
-					if ('1'==response) {
+					if ('1'==response.result) {
 						$vatParagraph.addClass('woocommerce-validated');
 						if ('yes'==_ajax_object.add_progress_text) {
 							$progressText.text(_ajax_object.progress_text_valid);
 						}
-					} else if ('0'==response) {
+					} else if ('0'==response.result) {
 						$vatParagraph.addClass('woocommerce-invalid');
 						if ('yes'==_ajax_object.add_progress_text) {
 							$progressText.text(_ajax_object.progress_text_not_valid);
@@ -82,4 +82,27 @@ jQuery( function( $ ) {
 			$('body').trigger('update_checkout');
 		}
 	};
+
+	// Show VAT Field for EU countries only
+	var vatFieldContainer = jQuery('#billing_eu_vat_number_field');
+	var vatFieldWrapper = $vatInput.parent();
+	var vatField = null;
+	function showVATFieldForEUOnly(e){
+		var targetField = jQuery(e.target);
+		var selectedCountry = targetField.val();
+		if(_ajax_object.eu_countries.indexOf(selectedCountry) != -1){
+			if(vatField){
+				vatFieldWrapper.append(vatField);
+				vatFieldContainer.slideDown(400);
+			}
+		}else{
+			vatFieldContainer.slideUp(500,function(){
+				vatField = $vatInput.detach();
+			});
+		}
+	}
+	if('yes'==_ajax_object.show_vat_field_for_eu_only){
+		jQuery('#billing_country').on('change',showVATFieldForEUOnly);
+		jQuery('#billing_country').change();
+	}
 });

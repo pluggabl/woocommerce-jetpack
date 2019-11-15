@@ -2,8 +2,8 @@
 Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
-Tested up to: 5.2
-Stable tag: 4.6.0
+Tested up to: 5.3
+Stable tag: 4.6.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -193,12 +193,29 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 4.6.1 - 15/11/2019 =
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Preserve checkbox field value when updating order status.
+* Fix - CART & CHECKOUT - EU VAT Number - Check if EU VAT number is valid during 'woocommerce_after_checkout_validation' hook instead of trying to get the result from session.
+* Fix - CART & CHECKOUT - EU VAT Number - Fix possible white space in `wcj_validate_eu_vat_number()` response from ajax by using wp_send_json().
+* Fix - EMAILS & MISC. - Custom Emails - Fix bug when sending email to multiple orders at the same time using the bulk editor and when there were multiple recipients including %customer%.
+* Fix - Core - `WCJ_Modules` - Also check if Meta-box option is an array.
+* Fix - SHIPPING & ORDERS - Replace empty translation text with only empty text due to POT file update.
+* Fix - PRODUCTS - Add to Cart - Replace empty translation text with only empty text due to POT file update.
+* Dev - CART & CHECKOUT - Checkout Fees - Change "Cart Min" and "Max" options to "Cart Minimum" and "Maximum Quantity".
+* Dev - CART & CHECKOUT - Checkout Fees - Create "Cart Minimum" and "Maximum Total" options as Plus features.
+* Dev - CART & CHECKOUT - EU VAT Number - Add new option to show VAT field for EU countries only.
+* Dev - PRODUCTS - Product Addons - Add option to show addon fields by variation.
+* Dev - PRODUCTS - Product Visibility by Country - Add new option to overwrite country by User Billing Country on Checkout Page.
+* Dev - PRODUCTS - Product Visibility by Country - Prevents calling `update_order_review_expired()` if "Overwrite by Billing Country" option is enabled.
+* Tested up to: 5.3.
+* WC tested up to: 3.8.
+
 = 4.6.0 - 29/10/2019 =
-* Fix indentation by replacing spaces by tabs on SQL, comments, or when there is pure HTML, <script> or <style> tags.
 * Fix - CART & CHECKOUT - EU VAT Number - Fix `wcj_validate_vat_no_soap()` function with correct api_url.
 * Fix - EMAILS & MISC. - Custom Emails - Fix fatal error when trying to send custom emails using 'Created Customer Notification' trigger.
 * Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Replace cast by +0 technique on some queries to get the whole price.
 * Fix - PRICES & CURRENCIES - Product Open Pricing (Name Your Price) - Fix wrong price on loop.
+* Fix - Fix indentation by replacing spaces by tabs on SQL, comments, or when there is pure HTML, `<script>` or `<style>` tags.
 * Fix - Shortcodes - Products - `[wcj_product_wholesale_price_table]` Fix "A non-numeric value encountered" PHP warning.
 * Dev - CART & CHECKOUT - Checkout Customization - Add option to ignore restriction on admin.
 * Dev - CART & CHECKOUT - Checkout Customization - Add option to restrict countries based on a manual order from the "YITH WooCommerce Request a Quote" plugin having the billing country selected manually.
@@ -208,7 +225,6 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - CART & CHECKOUT - EU VAT Number - Add option to exempt VAT on cart page.
 * Dev - CART & CHECKOUT - EU VAT Number - Add option to exempt VAT by checking previously registered EU VAT numbers from customers.
 * Dev - CART & CHECKOUT - EU VAT Number - Improve `wcj_validate_eu_vat_number()` function by adding `wcj_eu_vat_number_to_check` and `echo` parameters.
-* Dev - Functions - General - Add functions to remove filters and actions added with callbacks to classes without access.
 * Dev - PAYMENT GATEWAYS - Gateways per Product or Category - Allow looking for products in the order too besides cart, making it work even on My Account > Checkout > order-pay pages.
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - "Advanced: Saved Calculated Products Prices" option added.
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add compatibility with "WPC Product Bundles for WooCommerce" plugin.
@@ -222,11 +238,12 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - PRODUCTS - Tax Display - Allow `tax_display_by_user_role()` to search on multiple roles.
 * Dev - SHIPPING & ORDERS - Custom Shipping - Remove rules greater than the Total Rows amount.
 * Dev - SHIPPING & ORDERS - Custom Shipping - Add 'Cost Rounding' option.
+* Dev - Functions - General - Add functions to remove filters and actions added with callbacks to classes without access.
 * Dev - Shortcodes - Orders - `[wcj_order_taxes_html]` - Add parameter `show_label`.
 
 = 4.5.1 - 18/09/2019 =
-* Fix - PRODUCTS - Product Input Fields - Improve 'Line Break' style on frontend.
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Fix 'Call to a member function get_cart() on null' on order status update.
+* Fix - PRODUCTS - Product Input Fields - Improve 'Line Break' style on frontend.
 
 = 4.5.0 - 05/09/2019 =
 * Fix - Core - `WCJ_Modules` - Change the order some submodules are loaded to make it compatible with "Load Modules on Init Hook" option.
@@ -264,7 +281,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - Orders Shortcodes - Add param `plus_fees` for `[wcj_order_subtotal_plus_shipping]` shortcode.
 * Dev - Functions - Orders - Add `wcj_get_order_fees_total()` and `wcj_get_order_fees_total_tax()`.
 * Dev - Functions - General - Add option to overwrite WooCommerce IP detection method by Booster.
-* Tweak - Functions - General - Change default options from `wcj_general_advanced_ip_detection` on `wcj_get_the_ip()` function to 'REMOTE_ADDR', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR'.
+* Dev - Functions - General - Change default options from `wcj_general_advanced_ip_detection` on `wcj_get_the_ip()` function to 'REMOTE_ADDR', 'HTTP_CLIENT_IP', 'HTTP_X_FORWARDED_FOR'.
 
 = 4.4.1 - 26/06/2019 =
 * Fix - SHIPPING & ORDERS - Custom Shipping - Fix missing custom shipping settings.

@@ -4,7 +4,7 @@
  *
  * An email sent to recipient list when selected triggers are called.
  *
- * @version 4.6.0
+ * @version 4.6.1
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  * @extends WC_Email
@@ -21,12 +21,13 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * Constructor
 	 *
-	 * @version 3.2.4
+	 * @version 4.6.1
 	 */
 	function __construct( $id = 1 ) {
 
 		$this->id               = 'wcj_custom' . '_' . $id;
 		$this->customer_email   = ( '%customer%' === $this->get_option( 'recipient' ) );
+		$this->original_recipient = $this->get_option( 'recipient' );
 		$this->title            = get_option( 'wcj_emails_custom_emails_admin_title_' . $id, __( 'Custom', 'woocommerce-jetpack' ) . ' #' . $id );
 		$this->description      = __( 'Custom emails are sent to the recipient list when selected triggers are called.', 'woocommerce-jetpack' );
 
@@ -105,7 +106,7 @@ class WC_Email_WCJ_Custom extends WC_Email {
 	/**
 	 * trigger.
 	 *
-	 * @version 4.6.0
+	 * @version 4.6.1
 	 */
 	function trigger( $object_id ) {
 
@@ -141,8 +142,8 @@ class WC_Email_WCJ_Custom extends WC_Email {
 			} else {
 				if ( $this->customer_email ) {
 					$this->recipient = wcj_get_order_billing_email( $this->object );
-				} elseif ( false !== strpos( $this->recipient, '%customer%' ) ) {
-					$this->recipient = str_replace( '%customer%', wcj_get_order_billing_email( $this->object ), $this->recipient );
+				} elseif ( false !== strpos( $this->original_recipient, '%customer%' ) ) {
+					$this->recipient = str_replace( '%customer%', wcj_get_order_billing_email( $this->object ), $this->original_recipient );
 				}
 
 				$this->find['order-date']   = '{order_date}';

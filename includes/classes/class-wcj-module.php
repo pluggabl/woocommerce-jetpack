@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 4.5.0
+ * @version 4.6.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] maybe should be `abstract` ?
@@ -349,7 +349,7 @@ class WCJ_Module {
 			}
 			$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
 			if ( $is_enabled ) {
-				$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : $option['default'];
+				$option_value  = ( isset( $_POST[ $option['name'] ] ) ) ? $_POST[ $option['name'] ] : ( isset( $option['default'] ) ? $option['default'] : '' );
 				$the_post_id   = ( isset( $option['product_id'] )     ) ? $option['product_id']     : $post_id;
 				$the_meta_name = ( isset( $option['meta_name'] ) )      ? $option['meta_name']      : '_' . $option['name'];
 				if ( isset( $option['convert'] ) && 'from_date_to_timestamp' === $option['convert'] ) {
@@ -389,7 +389,7 @@ class WCJ_Module {
 	/**
 	 * create_meta_box.
 	 *
-	 * @version 3.3.0
+	 * @version 4.6.1
 	 * @todo    `placeholder` for textarea
 	 * @todo    `class` for all types (now only for select)
 	 * @todo    `show_value` for all types (now only for multiple select)
@@ -401,7 +401,7 @@ class WCJ_Module {
 		$html .= '<table class="widefat striped">';
 		foreach ( $this->get_meta_box_options() as $option ) {
 			$is_enabled = ( isset( $option['enabled'] ) && 'no' === $option['enabled'] ) ? false : true;
-			if ( $is_enabled ) {
+			if ( is_array( $option ) && $is_enabled ) {
 				if ( 'title' === $option['type'] ) {
 					$html .= '<tr>';
 					$html .= '<th colspan="3" style="' . ( isset( $option['css'] ) ? $option['css'] : 'text-align:left;font-weight:bold;' ) . '">' . $option['title'] . '</th>';
