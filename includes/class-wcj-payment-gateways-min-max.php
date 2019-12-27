@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Min/Max Amounts
  *
- * @version 4.4.0
+ * @version 4.7.0
  * @since   2.4.1
  * @author  Algoritmika Ltd.
  */
@@ -14,9 +14,16 @@ if ( ! class_exists( 'WCJ_Payment_Gateways_Min_Max' ) ) :
 class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 
 	/**
+	 * @version 4.7.0
+	 *
+	 * @var array
+	 */
+	private $notices = array();
+
+	/**
 	 * Constructor.
 	 *
-	 * @version 2.8.0
+	 * @version 4.7.0
 	 * @since   2.4.1
 	 */
 	function __construct() {
@@ -29,27 +36,56 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 
 		if ( $this->is_enabled() ) {
 			add_filter( 'woocommerce_available_payment_gateways', array( $this, 'available_payment_gateways' ), PHP_INT_MAX, 1 );
+			add_filter( 'woocommerce_before_checkout_form', array( $this, 'add_notices' ), 1 );
 		}
 	}
 
 	/**
-	 * available_payment_gateways.
+	 * add_notices.
 	 *
-	 * @version 4.4.0
-	 * @since   2.4.1
-	 * @todo    (maybe) `wc_clear_notices()`
+	 * @version 4.7.0
+	 * @since   4.7.0
 	 */
-	function available_payment_gateways( $_available_gateways ) {
+	function add_notices() {
+		if ( ! function_exists( 'WC' ) ) {
+			return;
+		}
+		WC()->payment_gateways->get_available_payment_gateways();
+		$notices = $this->notices;
+		if ( function_exists( 'is_checkout' ) && is_checkout() && 'yes' === get_option( 'wcj_payment_gateways_min_max_notices_enable', 'yes' ) && ! empty( $notices ) ) {
+			$notice_type = get_option( 'wcj_payment_gateways_min_max_notices_type', 'notice' );
+			foreach ( $notices as $notice ) {
+				if ( ! wc_has_notice( $notice, $notice_type ) ) {
+					wc_add_notice( $notice, $notice_type );
+				}
+			}
+		}
+	}
+
+	/**
+	 * remove_payment_gateways.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @param $_available_gateways
+	 *
+	 * @return array
+	 */
+	function remove_payment_gateways( $_available_gateways ) {
 		if ( ! function_exists( 'WC' ) || ! isset( WC()->cart ) ) {
-			return $_available_gateways;
+			return array(
+				'gateways' => $_available_gateways,
+				'notices'  => null,
+			);
 		}
 		$total_in_cart = WC()->cart->cart_contents_total;
 		if ( 'no' === get_option( 'wcj_payment_gateways_min_max_exclude_shipping', 'no' ) ) {
 			$total_in_cart += WC()->cart->shipping_total;
 		}
-		$notices = array();
-		$notices_template_min = get_option( 'wcj_payment_gateways_min_max_notices_template_min', __( 'Minimum amount for %gateway_title% is %min_amount%', 'woocommerce-jetpack') );
-		$notices_template_max = get_option( 'wcj_payment_gateways_min_max_notices_template_max', __( 'Maximum amount for %gateway_title% is %max_amount%', 'woocommerce-jetpack') );
+		$notices              = array();
+		$notices_template_min = get_option( 'wcj_payment_gateways_min_max_notices_template_min', __( 'Minimum amount for %gateway_title% is %min_amount%', 'woocommerce-jetpack' ) );
+		$notices_template_max = get_option( 'wcj_payment_gateways_min_max_notices_template_max', __( 'Maximum amount for %gateway_title% is %max_amount%', 'woocommerce-jetpack' ) );
 		foreach ( $_available_gateways as $key => $gateway ) {
 			$min = get_option( 'wcj_payment_gateways_min_' . $key, 0 );
 			$max = get_option( 'wcj_payment_gateways_max_' . $key, 0 );
@@ -73,14 +109,23 @@ class WCJ_Payment_Gateways_Min_Max extends WCJ_Module {
 				continue;
 			}
 		}
-		if ( function_exists( 'is_checkout' ) && is_checkout() && 'yes' === get_option( 'wcj_payment_gateways_min_max_notices_enable', 'yes' ) && ! empty( $notices ) ) {
-			$notice_type = get_option( 'wcj_payment_gateways_min_max_notices_type', 'notice' );
-			foreach ( $notices as $notice ) {
-				if ( ! wc_has_notice( $notice, $notice_type ) ) {
-					wc_add_notice( $notice, $notice_type );
-				}
-			}
-		}
+		return array(
+			'gateways' => $_available_gateways,
+			'notices'  => $notices,
+		);
+	}
+
+	/**
+	 * available_payment_gateways.
+	 *
+	 * @version 4.7.0
+	 * @since   2.4.1
+	 * @todo    (maybe) `wc_clear_notices()`
+	 */
+	function available_payment_gateways( $_available_gateways ) {
+		$remove_response     = $this->remove_payment_gateways( $_available_gateways );
+		$_available_gateways = $remove_response['gateways'];
+		$this->notices = $remove_response['notices'];
 		return $_available_gateways;
 	}
 

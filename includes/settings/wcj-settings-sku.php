@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - SKU
  *
- * @version 3.7.0
+ * @version 4.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    deprecate `wcj_sku_prefix` and `wcj_sku_suffix` (as user can now add it directly to "Template")
@@ -27,9 +27,10 @@ $settings = array(
 			'product_id' => __( 'From product ID', 'woocommerce-jetpack' ),
 			'sequential' => __( 'Sequential', 'woocommerce-jetpack' ),
 			'hash_crc32' => __( 'Pseudorandom - Hash (max 10 digits)', 'woocommerce-jetpack' ),
+			'hashids'    => __( 'Hashids - Advanced options', 'woocommerce-jetpack' ),
 		),
 		'desc_tip' => __( 'Number generation method.', 'woocommerce-jetpack' ) . ' ' .
-			__( 'Possible values: from product ID, sequential or pseudorandom.', 'woocommerce-jetpack' ),
+		              __( 'Possible values: from product ID, sequential, pseudorandom or Hashids.', 'woocommerce-jetpack' ) . '<br />' . __( 'If using Hashids please take a look at Hashids options below.', 'woocommerce-jetpack' ),
 		'desc'     => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 	),
@@ -143,6 +144,39 @@ $settings = array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_sku_format_options',
 	),
+	array(
+		'title'    => __( 'Hashids options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_sku_hashids_options',
+	),
+	array(
+		'title'    => __( 'Salt', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'A random string that will make your SKUs really unique.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_sku_hashids_salt',
+		'default'  => get_option( 'wcj_sku_hashids_salt_default', '' ),
+		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'Numbers of characters in SKU', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_sku_hashids_sku_length',
+		'default'  => 6,
+		'type'     => 'number',
+	),
+	array(
+		'title'    => __( 'SKU Format', 'woocommerce-jetpack' ),
+		'type'     => 'select',
+		'options'  => array(
+			'only_numbers'             => __( 'Only Numbers, e.g.: 836237', 'woocommerce-jetpack' ),
+			'only_letters'             => __( 'Only Letters, e.g.: HFuAbQ', 'woocommerce-jetpack' ),
+			'letters_and_numbers'      => __( 'Letters and Numbers, e.g.: 8a3M19 ', 'woocommerce-jetpack' ),
+		),
+		'default'  => 'letters_and_numbers',
+		'id'       => 'wcj_sku_hashids_sku_format',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_sku_hashids_options',
+	)
 );
 $settings = array_merge( $settings, array(
 	array(
@@ -214,9 +248,17 @@ $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'Automatically Generate SKU for New Products', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Alternatively you can use Autogenerate SKUs tool.', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Alternatively you can use Autogenerate SKUs tool.', 'woocommerce-jetpack' ) . '<br />' . __( 'If you want to generate SKU for variations, please try "Automatically Generate SKU for Variations on Product Save" option.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_sku_new_products_generate_enabled',
 		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Automatically Generate SKU for Variations on Product Save', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Once enabled it\'s recommended to be used with "Generate SKUs Only for Products with Empty SKU" option or else the SKUs will be replaced on product save.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_sku_generate_on_save',
+		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(

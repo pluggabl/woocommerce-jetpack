@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Cities
  *
- * @version 4.0.0
+ * @version 4.7.0
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -51,7 +51,7 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * check.
 	 *
-	 * @version 4.0.0
+	 * @version 4.7.0
 	 * @since   3.6.0
 	 * @todo    `$_REQUEST['city']` (i.e. billing city)
 	 * @todo    `get_base_city()` - do we really need this?
@@ -63,7 +63,7 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 				$values        = array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) );
 				return in_array( $customer_city, $values );
 			case 'postcodes':
-				$customer_postcode   = strtoupper( isset( $_REQUEST['s_postcode'] ) ? $_REQUEST['s_postcode'] : WC()->countries->get_base_postcode() );
+				$customer_postcode = strtoupper( isset( $_REQUEST['s_postcode'] ) ? $_REQUEST['s_postcode'] : ( ! empty( $customer_shipping_postcode = WC()->customer->get_shipping_postcode() ) ? $customer_shipping_postcode : WC()->countries->get_base_postcode() ) );
 				$postcodes           = array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) );
 				return wcj_check_postcode( $customer_postcode, $postcodes );
 		}

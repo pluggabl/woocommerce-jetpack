@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - EU VAT
  *
- * @version 4.6.0
+ * @version 4.7.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -53,16 +53,22 @@ if ( ! function_exists( 'wcj_validate_vat_soap' ) ) {
 	/**
 	 * wcj_validate_vat_soap.
 	 *
-	 * @version 2.9.0
+	 * @version 4.7.0
 	 * @return  mixed: bool on successful checking (can be true or false), null otherwise
 	 */
 	function wcj_validate_vat_soap( $country_code, $vat_number ) {
 		try {
 			if ( class_exists( 'SoapClient' ) ) {
-				$client = new SoapClient(
-					'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl',
-					array( 'exceptions' => true )
+				$opts   = array(
+					'http' => array(
+						'user_agent' => 'PHPSoapClient'
+					)
 				);
+				$client = new SoapClient( 'http://ec.europa.eu/taxation_customs/vies/checkVatService.wsdl', array(
+					'exceptions'     => true,
+					'stream_context' => stream_context_create( $opts ),
+					'cache_wsdl'     => WSDL_CACHE_NONE
+				) );
 				$result = $client->checkVat( array(
 					'countryCode' => $country_code,
 					'vatNumber'   => $vat_number,
@@ -71,7 +77,7 @@ if ( ! function_exists( 'wcj_validate_vat_soap' ) ) {
 			} else {
 				return null;
 			}
-		} catch( Exception $exception ) {
+		} catch ( Exception $exception ) {
 			return null;
 		}
 	}

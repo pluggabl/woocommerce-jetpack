@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 4.6.0
+ * @version 4.7.0
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -17,7 +17,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.6.0
+	 * @version 4.7.0
 	 * @since   2.5.0
 	 */
 	function __construct() {
@@ -47,48 +47,8 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			// Admin settings - "copy price" buttons
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_script' ) );
 			add_filter( 'woocommerce_hide_invisible_variations', array( $this, 'show_empty_price_variations' ) );
-			add_action('woocommerce_before_single_variation',array($this,'remove_single_variation_hooks'));
-			add_action('wcj_before_get_terms',array($this,'remove_wpml_functions_before_get_terms'));
-			add_action('wcj_after_get_terms',array($this,'remove_wpml_functions_after_get_terms'));
+			add_action( 'woocommerce_before_single_variation', array( $this, 'remove_single_variation_hooks' ) );
 		}
-	}
-
-	/**
-	 * remove_wpml_functions_before_get_terms.
-	 *
-	 * @see https://wpml.org/forums/topic/get-all-terms-of-all-languages-outside-loop/
-	 * 
-	 * @version 4.6.0
-	 * @since   4.6.0
-	 */
-	function remove_wpml_functions_before_get_terms() {
-		if ( 'no' === get_option( 'wcj_price_by_user_role_wpml_get_terms_all_lang', 'no' ) ) {
-			return;
-		}
-		// remove WPML term filters
-		global $sitepress;
-		remove_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ) );
-		remove_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
-		remove_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ) );
-	}
-
-	/**
-	 * remove_wpml_functions_after_get_terms
-	 *
-	 * @see http://support.themeblvd.com/forums/topic/wpml-sitepress-php-error-on-backend-due-to-layout-builder/
-	 *
-	 * @version 4.6.0
-	 * @since   4.6.0
-	 */
-	function remove_wpml_functions_after_get_terms() {
-		if ( 'no' === get_option( 'wcj_price_by_user_role_wpml_get_terms_all_lang', 'no' ) ) {
-			return;
-		}
-		// restore WPML term filters
-		global $sitepress;
-		add_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ), 10, 3 );
-		add_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
-		add_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ), 10, 2 );
 	}
 
 	/**

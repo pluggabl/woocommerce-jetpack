@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Shipping
  *
- * @version 4.5.0
+ * @version 4.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -58,11 +58,14 @@ if ( ! class_exists( 'WCJ_Shipping' ) ) :
 		/*
 		 * add_wc_shipping_wcj_custom_class.
 		 *
-		 * @version 2.8.0
+		 * @version 4.7.0
 		 */
 		function add_wc_shipping_wcj_custom_class( $methods ) {
 			$total_number = get_option( 'wcj_shipping_custom_shipping_total_number', 1 );
-			for ( $i = 1; $i <= $total_number; $i++ ) {
+			if ( ! class_exists( 'WC_Shipping_WCJ_Custom_Template' ) ) {
+				$this->init_template_class();
+			}
+			for ( $i = 1; $i <= $total_number; $i ++ ) {
 				$the_method = new WC_Shipping_WCJ_Custom_Template();
 				$the_method->init( $i );
 				$methods[ $the_method->id ] = $the_method;

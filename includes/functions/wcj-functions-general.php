@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 4.6.0
+ * @version 4.7.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -900,5 +900,64 @@ if ( ! function_exists( 'wcj_remove_class_filter' ) ) {
 	 */
 	function wcj_remove_class_action( $tag, $class_name = '', $method_name = '', $priority = 10 ) {
 		wcj_remove_class_filter( $tag, $class_name, $method_name, $priority );
+	}
+}
+
+if ( ! function_exists( 'wcj_get_data_attributes_html' ) ) {
+	/**
+	 * Get custom data attributes.
+	 *
+	 * Passing an associative array like ['param_a'="value_a"] will return a multiple data parameters like data-param_a="value_a".
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @param  array $data Field data.
+	 *
+	 * @return string
+	 */
+	function wcj_get_data_attributes_html( $data ) {
+		$custom_attributes = array();
+		if ( ! empty( $data ) && is_array( $data ) ) {
+			foreach ( $data as $attribute => $attribute_value ) {
+				$custom_attributes[] = 'data-' . esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+			}
+		}
+		return implode( ' ', $custom_attributes );
+	}
+}
+
+if ( ! function_exists( 'wcj_remove_wpml_terms_filters' ) ) {
+	/**
+	 * wcj_remove_wpml_terms_filters.
+	 *
+	 * @see https://wpml.org/forums/topic/get-all-terms-of-all-languages-outside-loop/
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 */
+	function wcj_remove_wpml_terms_filters() {
+		global $sitepress;
+		remove_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ) );
+		remove_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
+		remove_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ) );
+	}
+}
+
+if ( ! function_exists( 'wcj_add_wpml_terms_filters' ) ) {
+	/**
+	 * wcj_add_wpml_terms_filters.
+	 *
+	 * @see http://support.themeblvd.com/forums/topic/wpml-sitepress-php-error-on-backend-due-to-layout-builder/
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 */
+	function wcj_add_wpml_terms_filters() {
+		// restore WPML term filters
+		global $sitepress;
+		add_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ), 10, 3 );
+		add_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
+		add_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ), 10, 2 );
 	}
 }

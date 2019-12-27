@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.3
-Stable tag: 4.6.1
+Stable tag: 4.7.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -193,14 +193,46 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 4.7.0 - 27/12/2019 =
+* Fix - CART & CHECKOUT - Checkout Custom Fields - Preserve select field value when editing the order from admin.
+* Fix - CART & CHECKOUT - EU VAT Number - Set the user agent explicitly, trying to avoid possible SoapClient errors.
+* Fix - PAYMENT GATEWAYS - Gateways Min/Max Amounts - Notices keep being displayed after order is placed.
+* Fix - PRODUCTS - Product Availability by Date - Fix wrong availabilities on non English languages by setting a default number format of 'm/d/Y' on 'wcj_product_by_date_direct_date' option and by improving description.
+* Fix - PRODUCTS - Product Availability by Date - Fix wrong availabilities on non English languages by setting the date properly according to 'wcj_product_by_date_direct_date_format' option and timezone.
+* Fix - PRODUCTS - Products per Page - Sanitize 'wcj_products_per_page' param.
+* Fix - PRODUCTS - SKU - Sort variations in ascending order on `get_all_variations()` for better results with 'Variable Products Variations' option.
+* Fix - SHIPPING & ORDERS - Custom Shipping - Fix possible Fatal error "Class 'WC_Shipping_WCJ_Custom_Template' not found".
+* Fix - Classes - `WCJ_Module_Product_By_Condition` - `pre_get_posts` - Disables pre_get_posts query when exporting products.
+* Dev - PAYMENT GATEWAYS - Custom Gateways - `update_custom_payment_gateways_fields_order_meta()` now also expects an array as an input value.
+* Dev - PAYMENT GATEWAYS - Custom Gateways - Add 'name_array' as parameter on description replace preventing possible duplicated input fields names.
+* Dev - PDF INVOICING & PACKING SLIPS - Advanced - Add option to set Internal Encoding with `mb_internal_encoding()`.
+* Dev - PRICES & CURRENCIES - Global Discount - Add 'WPML: Get Products in All Languages' option.
+* Dev - PRICES & CURRENCIES - Global Discount - Add 'WPML: Get Terms in All Languages' option.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Add 'WPML: Get Products in All Languages' option.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Add 'WPML: Get Terms in All Languages' option.
+* Dev - SHIPPING & ORDERS - Shipping by Cities - Improve postcode detection trying to read it from `WC()->customer->get_shipping_postcode` too.
+* Dev - PRODUCTS - Product Addons - Add option to export and import '_wcj_product_addons_per_product_enable_by_variation_%' meta.
+* Dev - PRODUCTS - Products per Page - Add option to control form method by POST or GET.
+* Dev - PRODUCTS - SKU - Add option to automatically generate SKU for variations on product save.
+* Dev - PRODUCTS - SKU - Add option to generate SKU using Hashids library.
+* Dev - PRODUCTS - SKU - Add option to manage the numbers of characters on SKU using Hashids.
+* Dev - PRODUCTS - SKU - Add option to control SKU format with numbers or letters using Hashids.
+* Dev - `WCJ_Module` - Get products in all languages from ajax product search, if corresponding WPML option is enabled.
+* Dev - `WCJ_Module` - Move `remove_wpml_functions_before_get_terms` and `restore_wpml_functions_after_get_terms` from 'Price based on User Role' module making it more flexible to be appliable to any module.
+* Dev - Shortcodes - `[wcj_input_field]` Add 'data_attributes' param.
+* Dev - Shortcodes - `[wcj_input_field]` Add 'name_array' param, allowing the input name to be set as an array. e.g. `[wcj_input_field name_array="parent" name="test"]` -> `<input name="parent[test][value]" />`.
+* Dev - Functions - General - Create `wcj_get_data_attributes_html()` function allowing to create a multiple data parameters like `data-param_a='value_a'` when receiving a associative array.
+* Dev - Functions - Date and Time - Add `wcj_timezone()` function to get timezone. `wp_timezone()` already does it but as it was introduced only on version 5.3.0 this was a safer option.
+* Dev - Classes - `WCJ_Module_Product_By_Condition` - `pre_get_posts` - Add 'wcj_product_by_condition_pre_get_posts_validation' filter to setup when the query should be disabled.
+
 = 4.6.1 - 15/11/2019 =
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Preserve checkbox field value when updating order status.
 * Fix - CART & CHECKOUT - EU VAT Number - Check if EU VAT number is valid during 'woocommerce_after_checkout_validation' hook instead of trying to get the result from session.
 * Fix - CART & CHECKOUT - EU VAT Number - Fix possible white space in `wcj_validate_eu_vat_number()` response from ajax by using wp_send_json().
 * Fix - EMAILS & MISC. - Custom Emails - Fix bug when sending email to multiple orders at the same time using the bulk editor and when there were multiple recipients including %customer%.
-* Fix - Core - `WCJ_Modules` - Also check if Meta-box option is an array.
 * Fix - SHIPPING & ORDERS - Replace empty translation text with only empty text due to POT file update.
 * Fix - PRODUCTS - Add to Cart - Replace empty translation text with only empty text due to POT file update.
+* Fix - Core - `WCJ_Modules` - Also check if Meta-box option is an array.
 * Dev - CART & CHECKOUT - Checkout Fees - Change "Cart Min" and "Max" options to "Cart Minimum" and "Maximum Quantity".
 * Dev - CART & CHECKOUT - Checkout Fees - Create "Cart Minimum" and "Maximum Total" options as Plus features.
 * Dev - CART & CHECKOUT - EU VAT Number - Add new option to show VAT field for EU countries only.

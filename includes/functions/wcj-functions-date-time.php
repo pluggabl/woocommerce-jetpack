@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Date and Time
  *
- * @version 3.9.0
+ * @version 4.7.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -232,5 +232,33 @@ if ( ! function_exists( 'wcj_date_format_php_to_js' ) ) {
 			}
 		}
 		return $jqueryui_format;
+	}
+}
+
+if ( ! function_exists( 'wcj_timezone' ) ) {
+	/**
+	 * wcj_timezone.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @return DateTimeZone
+	 */
+	function wcj_timezone() {
+		global $wp_version;
+		if ( version_compare( $wp_version, '5.3.0', '>=' ) ) {
+			return wp_timezone();
+		}
+		$timezone = get_option( 'timezone_string' );
+		if ( ! $timezone ) {
+			$offset   = (float) get_option( 'gmt_offset' );
+			$hours    = (int) $offset;
+			$minutes  = ( $offset - $hours );
+			$sign     = ( $offset < 0 ) ? '-' : '+';
+			$abs_hour = abs( $hours );
+			$abs_mins = abs( $minutes * 60 );
+			$timezone = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
+		}
+		return new DateTimeZone( $timezone );
 	}
 }

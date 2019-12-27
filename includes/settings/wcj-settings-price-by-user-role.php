@@ -2,13 +2,12 @@
 /**
  * Booster for WooCommerce - Settings - Price based on User Role
  *
- * @version 4.6.0
+ * @version 4.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
-
 $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -114,20 +113,11 @@ $settings = array(
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
-	array(
-		'title'    => __( 'WPML: Get Terms in All Languages', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'Get tags and taxonomies in all languages', 'woocommerce-jetpack' ),
-		'id'       => 'wcj_price_by_user_role_wpml_get_terms_all_lang',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
+	$this->get_wpml_terms_in_all_languages_setting(),
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_price_by_user_role_options_adv',
 	),
-
-
 	array(
 		'title'    => __( 'Roles & Multipliers', 'woocommerce-jetpack' ),
 		'type'     => 'title',
@@ -181,7 +171,7 @@ $taxonomies = array(
 	),
 );
 
-do_action('wcj_before_get_terms');
+do_action( 'wcj_before_get_terms', $this->id );
 foreach ( $taxonomies as $taxonomy ) {
 	$product_taxonomies_options = array();
 	$product_taxonomies = get_terms( $taxonomy['id'], 'orderby=name&hide_empty=0' );
@@ -238,6 +228,6 @@ foreach ( $taxonomies as $taxonomy ) {
 		),
 	) );
 }
-do_action('wcj_after_get_terms');
+do_action('wcj_after_get_terms', $this->id );
 
 return $settings;

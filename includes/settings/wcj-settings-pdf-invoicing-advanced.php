@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 4.3.1
+ * @version 4.7.0
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) create "Tools (Options)" submodule
@@ -92,6 +92,13 @@ return array(
 		'id'       => 'wcj_general_advanced_disable_output_buffer',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Internal Encoding', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Sets internal character encoding.', 'woocommerce-jetpack' ).'<br />'.__( 'e.g: UTF-8, iso-8859-1', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_general_advanced_mb_internal_encoding',
+		'default'  => '',
+		'type'     => 'text',
 	),
 	array(
 		'type'     => 'sectionend',

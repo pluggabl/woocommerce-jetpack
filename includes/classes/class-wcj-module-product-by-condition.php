@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 4.5.0
+ * @version 4.7.0
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.6.0
+	 * @version 4.7.0
 	 * @since   3.6.0
 	 */
 	function __construct( $type = 'module' ) {
@@ -61,7 +61,28 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 				add_filter( 'manage_edit-product_columns',        array( $this, 'add_product_columns' ),   PHP_INT_MAX );
 				add_action( 'manage_product_posts_custom_column', array( $this, 'render_product_column' ), PHP_INT_MAX );
 			}
+
+			// Disable pre_get_posts query when exporting products
+			add_filter( 'wcj_product_by_condition_pre_get_posts_validation', array( $this, 'disable_pre_get_posts_on_export' ) );
 		}
+	}
+
+	/**
+	 * Disables pre_get_posts query when exporting products.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 */
+	function disable_pre_get_posts_on_export( $validation ) {
+		if (
+			! isset( $_REQUEST['action'] ) ||
+			'woocommerce_do_ajax_product_export' !== $_REQUEST['action']
+		) {
+			return $validation;
+		}
+		$validation = false;
+		return $validation;
 	}
 
 	/**
@@ -212,12 +233,15 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * pre_get_posts.
 	 *
-	 * @version 4.5.0
+	 * @version 4.7.0
 	 * @since   3.6.0
 	 * @todo    [dev] maybe move `if ( ! function_exists( 'is_user_logged_in' ) ) {`
 	 */
 	function pre_get_posts( $query ) {
-		if ( is_admin() && ! wp_doing_ajax() ) {
+		if (
+			( is_admin() && ! wp_doing_ajax() ) ||
+			false === apply_filters( 'wcj_product_by_condition_pre_get_posts_validation', true, $this, $query )
+		) {
 			return;
 		}
 		if ( ! function_exists( 'is_user_logged_in' ) ) {

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Custom Gateways
  *
- * @version 3.3.0
+ * @version 4.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -122,7 +122,7 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 	/**
 	 * update_custom_payment_gateways_fields_order_meta.
 	 *
-	 * @version 2.5.2
+	 * @version 4.7.0
 	 * @since   2.5.2
 	 */
 	function update_custom_payment_gateways_fields_order_meta( $order_id, $posted ) {
@@ -131,11 +131,24 @@ class WCJ_Payment_Gateways extends WCJ_Module {
 			$input_fields = array();
 			foreach ( $_POST as $key => $value ) {
 				if ( 'wcj_input_field_' === substr( $key, 0, 16 ) ) {
-					if ( isset( $_POST[ 'for_' . $key ] ) && $payment_method === $_POST[ 'for_' . $key ] ) {
-						if ( isset( $_POST[ 'label_for_' . $key ] ) ) {
-							$input_fields[ $_POST[ 'label_for_' . $key ] ] = $value;
-						} else {
-							$input_fields[ substr( $key, 16 ) ] = $value;
+					if ( ! is_array( $value ) ) {
+						if ( isset( $_POST[ 'for_' . $key ] ) && $payment_method === $_POST[ 'for_' . $key ] ) {
+							if ( isset( $_POST[ 'label_for_' . $key ] ) ) {
+								$input_fields[ $_POST[ 'label_for_' . $key ] ] = $value;
+							} else {
+								$input_fields[ substr( $key, 16 ) ] = $value;
+							}
+						}
+					} else {
+						if ( $payment_method === substr( $key, 16 ) ) {
+							foreach ( $value as $input_name => $input_value ) {
+								$label_value = isset( $input_value['label'] ) ? $input_value['label'] : '';
+								if ( ! empty( $label_value ) ) {
+									$input_fields[ $label_value ] = $input_value['value'];
+								} else {
+									$input_fields[ $input_name ] = $input_value['value'];
+								}
+							}
 						}
 					}
 				}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Availability by Date
  *
- * @version 3.6.0
+ * @version 4.7.0
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  * @todo    (maybe) Direct Date: all products
@@ -30,8 +30,9 @@ $settings = array(
 		'default'  => '',
 		'type'     => 'date',
 		'tooltip'  => __( 'Fill this if you want to set one date from which the product will be available.', 'woocommerce-jetpack' ) . ' ' .
-			__( 'If this field is filled in, monthly settings fields are ignored.', 'woocommerce-jetpack' ),
-		'custom_attributes' => ( '' != ( $format = get_option( 'wcj_product_by_date_direct_date_format', '' ) ) ?
+			__( 'If this field is filled in, monthly settings fields are ignored.', 'woocommerce-jetpack' ) . '<br /><br />' .
+			__( 'If you are not using english, please set some numeric format like m/d/Y on "Direct Date Admin Input Date Format" option', 'woocommerce-jetpack' ),
+		'custom_attributes' => ( '' != ( $format = get_option( 'wcj_product_by_date_direct_date_format', 'm/d/Y' ) ) ?
 			'dateformat="' . wcj_date_format_php_to_js( $format ) . '"' : '' ),
 	),
 );

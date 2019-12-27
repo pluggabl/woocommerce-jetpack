@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 4.2.0
+ * @version 4.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 if ( ! class_exists( 'WCJ_PDF_Invoice' ) ) :
 
 class WCJ_PDF_Invoice extends WCJ_Invoice {
+
+	private $original_internal_coding = '';
 
 	/**
 	 * Constructor.
@@ -176,19 +178,23 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	 *
 	 * Gets invoice content HTML.
 	 *
-	 * @version 3.6.0
+	 * @version 4.7.0
 	 * @since   3.5.0
 	 * @todo    [dev] pass other params (billing_country, payment_method) as global (same as user_id) instead of $_GET
 	 * @todo    [fix] `force_balance_tags()` - there are some bugs and performance issues, see http://wordpress.stackexchange.com/questions/89121/why-doesnt-default-wordpress-page-view-use-force-balance-tags
 	 */
 	function get_html( $order_id, $pdf ) {
+		$this->original_internal_coding = mb_internal_encoding();
+		if ( ! empty( $internal_encoding = get_option( 'wcj_general_advanced_mb_internal_encoding', '' ) ) ) {
+			mb_internal_encoding( $internal_encoding );
+		}
 		$_GET['order_id'] = $order_id;
-		$the_order = wc_get_order( $order_id );
+		$the_order        = wc_get_order( $order_id );
 		if ( ! isset( $_GET['billing_country'] ) ) {
 			$_GET['billing_country'] = ( WCJ_IS_WC_VERSION_BELOW_3 ? $the_order->billing_country : $the_order->get_billing_country() );
 		}
 		if ( ! isset( $_GET['payment_method'] ) ) {
-			$_GET['payment_method']  = wcj_order_get_payment_method( $the_order );
+			$_GET['payment_method'] = wcj_order_get_payment_method( $the_order );
 		}
 		global $wcj_pdf_invoice_data;
 		if ( ! isset( $wcj_pdf_invoice_data['user_id'] ) ) {
@@ -197,7 +203,9 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 		$html = do_shortcode( get_option( 'wcj_invoicing_' . $this->invoice_type . '_template',
 			WCJ()->modules['pdf_invoicing_templates']->get_default_template( $this->invoice_type ) ) );
 		$html = $this->maybe_replace_tcpdf_method_params( $html, $pdf );
-		return force_balance_tags( $html );
+		$html = force_balance_tags( $html );
+		mb_internal_encoding( $this->original_internal_coding );
+		return $html;
 	}
 
 	/**

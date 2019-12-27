@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Products per Page
  *
- * @version 4.1.0
+ * @version 4.7.0
  * @since   2.6.0
  * @author  Algoritmika Ltd.
  */
@@ -46,7 +46,7 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * add_products_per_page_form.
 	 *
-	 * @version 3.8.0
+	 * @version 4.7.0
 	 * @since   2.5.3
 	 */
 	function add_products_per_page_form() {
@@ -77,10 +77,10 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 			}
 		}
 		$select_form .= '</select>';
-
+		$form_method = get_option( 'wcj_products_per_page_form_method', 'post' );
 		$html = '';
 		$html .= get_option( 'wcj_products_per_page_text_before', '<div class="clearfix"></div><div>' );
-		$html .= '<form action="' . esc_url( remove_query_arg( 'paged' ) ) . '" method="POST">';
+		$html .= '<form action="' . esc_url( remove_query_arg( 'paged' ) ) . '" method="' . $form_method . '">';
 		$_text = get_option( 'wcj_products_per_page_text',
 			__( 'Products <strong>%from% - %to%</strong> from <strong>%total%</strong>. Products on page %select_form%', 'woocommerce-jetpack' ) );
 		$html .= str_replace( array( '%from%', '%to%', '%total%', '%select_form%' ), array( $products_from, $products_to, $products_total, $select_form ), $_text );
@@ -118,15 +118,15 @@ class WCJ_Products_Per_Page extends WCJ_Module {
 	/**
 	 * get_current_products_per_page_number.
 	 *
-	 * @version 3.8.0
+	 * @version 4.7.0
 	 * @since   3.8.0
 	 */
 	function get_current_products_per_page_number( $do_save ) {
-		if ( isset( $_REQUEST['wcj_products_per_page'] ) ) {
+		if ( isset( $_REQUEST['wcj_products_per_page'] ) && ! empty( $_REQUEST['wcj_products_per_page'] ) ) {
 			if ( $do_save ) {
-				$this->save_products_per_page_number( $_REQUEST['wcj_products_per_page'] );
+				$this->save_products_per_page_number( intval( sanitize_text_field( $_REQUEST['wcj_products_per_page'] ) ) );
 			}
-			return $_REQUEST['wcj_products_per_page'];
+			return intval( sanitize_text_field( $_REQUEST['wcj_products_per_page'] ) );
 		} elseif ( $products_per_page = $this->get_saved_products_per_page_number() ) {
 			return $products_per_page;
 		} else {

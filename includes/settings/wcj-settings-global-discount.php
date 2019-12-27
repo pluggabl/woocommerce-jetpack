@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Global Discount
  *
- * @version 4.0.0
+ * @version 4.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -10,9 +10,14 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $is_multiselect_products     = ( 'yes' === get_option( 'wcj_list_for_products', 'yes' ) );
-$products                    = ( $is_multiselect_products ? wcj_get_products() : false );
-$product_cats                = wcj_get_terms( 'product_cat' );
-$product_tags                = wcj_get_terms( 'product_tag' );
+
+do_action( 'wcj_before_get_terms', $this->id );
+do_action( 'wcj_before_get_products', $this->id );
+$products     = ( $is_multiselect_products ? wcj_get_products() : false );
+do_action( 'wcj_after_get_products', $this->id );
+$product_cats = wcj_get_terms( 'product_cat' );
+$product_tags = wcj_get_terms( 'product_tag' );
+do_action( 'wcj_after_get_terms', $this->id );
 
 $settings = array(
 	array(
@@ -191,6 +196,8 @@ $settings = array_merge( $settings, array(
 		'default'  => 0,
 		'type'     => 'number',
 	),
+	$this->get_wpml_terms_in_all_languages_setting(),
+	$this->get_wpml_products_in_all_languages_setting(),
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_global_discount_advanced_options',

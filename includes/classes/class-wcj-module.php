@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 4.6.1
+ * @version 4.7.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    [dev] maybe should be `abstract` ?
@@ -62,6 +62,157 @@ class WCJ_Module {
 				$this->reset_settings();
 			}
 		}
+
+		// Handle WPML hooks
+		if ( $this->is_enabled() ) {
+			add_action( 'wcj_before_get_terms', array( $this, 'remove_wpml_functions_before_get_terms' ) );
+			add_action( 'wcj_after_get_terms', array( $this, 'restore_wpml_functions_after_get_terms' ) );
+			add_action( 'wcj_before_get_products', array( $this, 'add_wpml_args_on_get_products' ) );
+			add_action( 'wcj_after_get_products', array( $this, 'restore_wpml_args_on_get_products' ) );
+			add_action( 'admin_init', array( $this, 'remove_wpml_hooks' ) );
+		}
+	}
+
+	/**
+	 * remove_wpml_hooks.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 */
+	function remove_wpml_hooks() {
+		if ( 'no' === get_option( 'wcj_' . $this->id . '_wpml_get_products_all_lang', 'no' ) ) {
+			return;
+		}
+
+		// Remove a WPML filter that filters products by language
+		wcj_remove_class_filter( 'woocommerce_json_search_found_products', 'WCML_Products', 'filter_wc_searched_products_on_admin' );
+	}
+
+	/**
+	 * restore_wpml_args_on_get_products.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @param null $module_id
+	 */
+	function restore_wpml_args_on_get_products( $module_id = null ){
+		if ( 'no' === get_option( 'wcj_' . $this->id . '_wpml_get_products_all_lang', 'no' ) ) {
+			return;
+		}
+		remove_action( 'pre_get_posts', array( $this, 'suppress_filters' ) );
+	}
+
+	/**
+	 * add_wpml_args_on_get_products.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * It's necessary to take 2 steps:
+	 * 1. Add `do_action('wcj_before_get_products', $this->id )` before get_product, wcj_get_products, or wp_query.
+	 * 2. Add a setting using `$this->get_wpml_products_in_all_languages_setting()`
+	 *
+	 * @param null $module_id
+	 */
+	function add_wpml_args_on_get_products( $module_id = null ) {
+		if ( 'no' === get_option( 'wcj_' . $this->id . '_wpml_get_products_all_lang', 'no' ) ) {
+			return;
+		}
+		add_action( 'pre_get_posts', array( $this, 'suppress_filters' ) );
+	}
+
+	/**
+	 * suppress_filters.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @param $query
+	 */
+	function suppress_filters( $query ) {
+		$query->query_vars['suppress_filters'] = true;
+	}
+
+	/**
+	 * get_wpml_terms_in_all_languages_setting.
+	 *
+	 * @see WCJ_Module::remove_wpml_functions_before_get_terms().
+	 * @see WCJ_Module::restore_wpml_args_on_get_products().
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @return array
+	 */
+	function get_wpml_terms_in_all_languages_setting() {
+		return array(
+			'title'    => __( 'WPML: Get Terms in All Languages', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Get tags and taxonomies in all languages', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_' . $this->id . '_wpml_get_terms_all_lang',
+			'default'  => 'no',
+			'type'     => 'checkbox',
+		);
+	}
+
+	/**
+	 * get_wpml_products_in_all_languages_setting.
+	 *
+	 * @see WCJ_Module::add_wpml_args_on_get_products().
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @return array
+	 */
+	function get_wpml_products_in_all_languages_setting() {
+		return array(
+			'title'    => __( 'WPML: Get Products in All Languages', 'woocommerce-jetpack' ),
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Get products in all languages', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_' . $this->id . '_wpml_get_products_all_lang',
+			'default'  => 'no',
+			'type'     => 'checkbox',
+		);
+	}
+
+	/**
+	 * remove_wpml_functions_before_get_terms.
+	 *
+	 * It's necessary to take 2 steps:
+	 * 1. Add `do_action('wcj_before_get_terms', $this->id )` before get_terms.
+	 * 2. Add a setting using `$this->get_wpml_terms_in_all_languages_setting()`
+	 *
+	 * @see "settings/wcj-settings-global-discount.php"
+	 *
+	 * @version 4.7.0
+	 * @since   4.6.0
+	 */
+	function remove_wpml_functions_before_get_terms( $module_id = null ) {
+		if ( 'no' === get_option( 'wcj_' . $this->id . '_wpml_get_terms_all_lang', 'no' ) ) {
+			return;
+		}
+		wcj_remove_wpml_terms_filters();
+	}
+
+	/**
+	 * restore_wpml_functions_after_get_terms
+	 *
+	 * It's necessary to take 2 steps:
+	 * 1. Add `do_action('wcj_after_get_terms', $this->id )` after get_terms.
+	 * 2. Add a setting using `$this->get_wpml_terms_in_all_languages_setting()`
+	 *
+	 * @see "settings/wcj-settings-global-discount.php"
+	 *
+	 * @version 4.7.0
+	 * @since   4.6.0
+	 */
+	function restore_wpml_functions_after_get_terms( $module_id = null ) {
+		if ( 'no' === get_option( 'wcj_' . $this->id . '_wpml_get_terms_all_lang', 'no' ) ) {
+			return;
+		}
+		wcj_add_wpml_terms_filters();
 	}
 
 	/**

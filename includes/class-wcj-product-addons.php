@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 4.6.1
+ * @version 4.7.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names)
@@ -18,7 +18,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.6.1
+	 * @version 4.7.0
 	 * @since   2.5.3
 	 * @todo    (maybe) add "in progress" ajax message
 	 * @todo    (maybe) for variable products - show addons only if variation is selected (e.g. move to addons from `woocommerce_before_add_to_cart_button` to variation description)
@@ -91,7 +91,70 @@ class WCJ_Product_Addons extends WCJ_Module {
 					add_action( $qty_trigger, array( $this, 'maybe_reduce_addons_qty' ) );
 				}
 			}
+
+			// Export and import '_wcj_product_addons_per_product_enable_by_variation_%' meta
+			add_filter( 'woocommerce_product_export_meta_value', array( $this, 'export_enable_by_variation_meta' ), 10, 4 );
+			add_filter( 'woocommerce_product_importer_parsed_data', array( $this, 'import_enable_by_variation_meta' ), 10, 2 );
 		}
+	}
+
+	/**
+	 * import_enable_by_variation_meta.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @param $data
+	 * @param $raw_data
+	 *
+	 * @return mixed
+	 */
+	function import_enable_by_variation_meta( $data, $raw_data ) {
+		if (
+			'no' === get_option( 'wcj_product_addons_enable_by_variation_export_import', 'no' ) ||
+			! isset( $data['meta_data'] ) ||
+			empty( $data['meta_data'] )
+		) {
+			return $data;
+		}
+		$meta_data_key = - 1;
+		foreach ( $data['meta_data'] as $key => $meta_data ) {
+			if ( false !== strpos( $meta_data['key'], '_wcj_product_addons_per_product_enable_by_variation_' ) ) {
+				$meta_data_key = $key;
+				break;
+			}
+		}
+		if ( - 1 != $meta_data_key ) {
+			$new_value = array_filter( preg_split( "/\r\n|\n|\r/", $data['meta_data'][ $meta_data_key ]['value'] ) );
+			if ( ! empty( $new_value ) ) {
+				$data['meta_data'][ $meta_data_key ]['value'] = $new_value;
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * export_enable_by_variation_meta.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @param $value
+	 * @param $meta
+	 * @param $product
+	 * @param $row
+	 *
+	 * @return string
+	 */
+	function export_enable_by_variation_meta( $value, $meta, $product, $row ) {
+		if (
+			'no' === get_option( 'wcj_product_addons_enable_by_variation_export_import', 'no' ) ||
+			false === strpos( $meta->get_data()['key'], '_wcj_product_addons_per_product_enable_by_variation_' )
+		) {
+			return $value;
+		}
+		$value = implode( "\n", $value );
+		return $value;
 	}
 
 	/**

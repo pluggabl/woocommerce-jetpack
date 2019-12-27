@@ -2,14 +2,17 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 4.3.0
+ * @version 4.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
+do_action( 'wcj_before_get_products', $this->id );
+do_action( 'wcj_before_get_terms', $this->id );
 $product_cats = wcj_get_terms( 'product_cat' );
+
 $settings = array(
 	array(
 		'title'    => __( 'Options', 'woocommerce-jetpack' ),
@@ -123,6 +126,8 @@ $settings = array(
 		'default'  => 0,
 		'type'     => 'number',
 	),
+	$this->get_wpml_terms_in_all_languages_setting(),
+	$this->get_wpml_products_in_all_languages_setting(),
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_wholesale_price_general_options',
@@ -229,4 +234,6 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_wholesale_price_by_user_role_options',
 	),
 ) );
+do_action( 'wcj_after_get_products', $this->id );
+do_action( 'wcj_after_get_terms', $this->id );
 return $settings;

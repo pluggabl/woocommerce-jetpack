@@ -72,6 +72,16 @@ return array(
 		'css'      => 'width:100%',
 	),
 	array(
+		'title'    => __( 'Form Method', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_products_per_page_form_method',
+		'default'  => 'post',
+		'type'     => 'select',
+		'options'  => array(
+			'post'  => __( 'POST', 'woocommerce-jetpack' ),
+			'get' => __( 'GET', 'woocommerce-jetpack' ),
+		)
+	),
+	array(
 		'title'    => __( 'Saving Method', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_products_per_page_saving_method',
 		'default'  => 'cookie',

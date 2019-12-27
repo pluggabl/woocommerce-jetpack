@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Custom Payment Gateway
  *
- * @version 3.9.0
+ * @version 4.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -337,7 +337,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				/**
 				 * init.
 				 *
-				 * @version 3.9.0
+				 * @version 4.7.0
 				 */
 				function init( $id_count ) {
 					$this->id                       = ( 1 === $id_count ) ? 'jetpack_custom_gateway' : 'jetpack_custom_gateway_' . $id_count;
@@ -351,7 +351,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 					$this->init_settings();
 					// Define user set variables
 					$this->title                    = $this->get_option( 'title' );
-					$this->description              = do_shortcode( str_replace( '[wcj_input_field', '[wcj_input_field attach_to="' . $this->id . '"',
+					$this->description              = do_shortcode( str_replace( '[wcj_input_field', '[wcj_input_field name_array="' . $this->id . '" attach_to="' . $this->id . '"',
 						$this->get_option( 'description' ) ) );
 					$this->instructions             = $this->get_option( 'instructions', '' );
 					$this->instructions_in_email    = $this->get_option( 'instructions_in_email', '' );

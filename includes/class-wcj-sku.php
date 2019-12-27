@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - SKU
  *
- * @version 3.7.0
+ * @version 4.7.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.4.0
+	 * @version 4.7.0
 	 */
 	function __construct() {
 
@@ -61,7 +61,86 @@ class WCJ_SKU extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_sku_disabled', 'no' ) ) {
 				add_filter( 'wc_product_sku_enabled', '__return_false', PHP_INT_MAX );
 			}
+			// Generate sku on product save
+			add_action( 'save_post_product', array( $this, 'set_new_sku_on_save' ), PHP_INT_MAX );
+
+			// Generate default hashids lib salt
+			add_action( 'wcj_loaded', array( $this, 'generate_default_hashids_salt' ) );
 		}
+	}
+
+	/**
+	 * generate_default_hashids_salt.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 */
+	function generate_default_hashids_salt(){
+		if (
+			isset( $_GET['page'] )    && 'wc-settings' === $_GET['page'] &&
+			isset( $_GET['tab'] )     && 'jetpack'     === $_GET['tab'] &&
+			isset( $_GET['wcj-cat'] ) && 'products'    === $_GET['wcj-cat'] &&
+			isset( $_GET['section'] ) && 'sku'         === $_GET['section']
+		) {
+			if ( empty( get_option( 'wcj_sku_hashids_salt_default', '' ) ) ) {
+				$length        = 24;
+				$random_string = substr( str_shuffle( str_repeat( $x = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil( $length / strlen( $x ) ) ) ), 1, $length );
+				update_option( 'wcj_sku_hashids_salt_default', $random_string );
+			}
+		}
+	}
+
+	/**
+	 * load_hashids_lib.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @return Hashids\Hashids
+	 */
+	function get_hashids_lib() {
+		if (
+			! is_admin() ||
+			'hashids' !== apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) )
+		) {
+			return;
+		}
+		if ( empty( $this->hashids ) ) {
+			require_once( wcj_plugin_path() . '/includes/lib/hashids/src/Hashids.php' );
+			$sku_format      = get_option( 'wcj_sku_hashids_sku_format', 'letters_and_numbers' );
+			$characters_case = get_option( 'wcj_sku_characters_case', 'original' );
+			$letters         = 'original' == $characters_case ? 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ' : ( 'lower' == $characters_case ? 'abcdefghijklmnopqrstuvwxyz' : 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' );
+			switch ( $sku_format ) {
+				case 'only_numbers':
+					$alphabet = '1234567890';
+					break;
+				case 'only_letters':
+					$alphabet = $letters;
+					break;
+				default:
+					$alphabet = $letters . '1234567890';
+					break;
+			}
+			$this->hashids = new Hashids\Hashids( get_option( 'wcj_sku_hashids_salt', get_option( 'wcj_sku_hashids_salt_default', '' ) ), get_option( 'wcj_sku_hashids_sku_length', 6 ), $alphabet );
+		}
+		return $this->hashids;
+	}
+
+	/**
+	 * set_new_sku_on_save.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @param $post_id
+	 */
+	function set_new_sku_on_save( $post_id ) {
+		if ( 'no' === get_option( 'wcj_sku_generate_on_save', 'no' ) ) {
+			return;
+		}
+		$this->maybe_get_sequential_counters();
+		$this->set_sku_with_variable( $post_id, false );
+		$this->maybe_save_sequential_counters();
 	}
 
 	/**
@@ -132,7 +211,7 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * get_all_variations.
 	 *
-	 * @version 2.9.0
+	 * @version 4.7.0
 	 * @since   2.4.8
 	 */
 	function get_all_variations( $_product ) {
@@ -142,6 +221,9 @@ class WCJ_SKU extends WCJ_Module {
 				$all_variations[] = $_product->get_available_variation( $variation );
 			}
 		}
+		usort( $all_variations, function ( $a, $b ) {
+			return $a['variation_id'] - $b['variation_id'];
+		} );
 		return $all_variations;
 	}
 
@@ -171,26 +253,13 @@ class WCJ_SKU extends WCJ_Module {
 	/**
 	 * set_sku_with_variable.
 	 *
-	 * @version 3.6.0
+	 * @version 4.7.0
 	 * @todo    `as_variable_with_suffix` - handle cases with more than 26 variations
 	 */
 	function set_sku_with_variable( $product_id, $is_preview ) {
-
-		switch ( apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-			case 'sequential':
-				$sku_number = $this->get_sequential_counter( $product_id );
-				break;
-			case 'hash_crc32':
-				$sku_number = sprintf( "%u", crc32( $product_id ) );
-				break;
-			default: // 'product_id'
-				$sku_number = $product_id;
-				break;
-		}
-
-		$product = wc_get_product( $product_id );
-
-		$this->set_sku( $product_id, $sku_number, '', $is_preview, $product_id, $product );
+		$product    = wc_get_product( $product_id );
+		$sku_object = $this->generate_sku( $product_id, '', $product_id, $product );
+		$this->set_sku( $product_id, $sku_object, $is_preview );
 
 		// Handling variable products
 		$variation_handling = apply_filters( 'booster_option', 'as_variable', get_option( 'wcj_sku_variations_handling', 'as_variable' ) );
@@ -198,31 +267,50 @@ class WCJ_SKU extends WCJ_Module {
 			$variations = $this->get_all_variations( $product );
 			if ( 'as_variable' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
-					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id, wc_get_product( $variation['variation_id'] ) );
+					$sku_object = $this->generate_sku( $variation['variation_id'], '', $product_id, wc_get_product( $variation['variation_id'] ) );
+					$this->set_sku( $variation['variation_id'], $sku_object, $is_preview );
 				}
 			} elseif ( 'as_variation' === $variation_handling ) {
 				foreach ( $variations as $variation ) {
-					if ( 'sequential' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-						$sku_number = $this->get_sequential_counter( $product_id );
-					} elseif ( 'hash_crc32' === apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
-						$sku_number = sprintf( "%u", crc32( $variation['variation_id'] ) );
-					} else { // if 'product_id'
-						$sku_number = $variation['variation_id'];
-					}
-					$this->set_sku( $variation['variation_id'], $sku_number, '', $is_preview, $product_id, wc_get_product( $variation['variation_id'] ) );
+					$sku_object = $this->generate_sku( $variation['variation_id'], '', $product_id, wc_get_product( $variation['variation_id'] ), false );
+					$this->set_sku( $variation['variation_id'], $sku_object, $is_preview );
 				}
-			}
-			else if ( 'as_variable_with_suffix' === $variation_handling ) {
+			} else if ( 'as_variable_with_suffix' === $variation_handling ) {
 				$variation_suffixes = 'abcdefghijklmnopqrstuvwxyz';
-				$abc = 0;
+				$abc                = 0;
 				foreach ( $variations as $variation ) {
-					$this->set_sku( $variation['variation_id'], $sku_number, $variation_suffixes[ $abc++ ], $is_preview, $product_id, wc_get_product( $variation['variation_id'] ) );
+					$suffix                       = $variation_suffixes[ $abc ++ ];
+					$sku_object                   = $this->generate_sku( $variation['variation_id'], $suffix, $product_id, wc_get_product( $variation['variation_id'] ) );
+					$variation_id                 = $variation['variation_id'];
+					$variations_excluding_current = array_filter( $variations, function ( $v ) use ( $variation_id ) {
+						return $variation_id == $v['variation_id']  ? false : true;
+					} );
+					if ( $this->has_sku_been_used_in_variations( $sku_object['sku'], $variations_excluding_current ) ) {
+						$sku_object = $this->generate_sku( $variation['variation_id'], $suffix . '_' . sprintf( "%u", crc32( $variation['variation_id'] ) ), $product_id, wc_get_product( $variation['variation_id'] ) );
+					}
+					$this->set_sku( $variation['variation_id'], $sku_object, $is_preview );
 					if ( 26 == $abc ) {
 						$abc = 0;
 					}
 				}
 			}
 		}
+	}
+
+	/**
+	 * has_sku_been_used_in_variations.
+	 *
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @param $sku
+	 * @param $variations
+	 *
+	 * @return bool
+	 */
+	function has_sku_been_used_in_variations( $sku, $variations ) {
+		$variations_skus = wp_list_pluck( $variations, 'sku' );
+		return in_array( $sku, $variations_skus );
 	}
 
 	/**
@@ -300,15 +388,34 @@ class WCJ_SKU extends WCJ_Module {
 	}
 
 	/**
-	 * set_sku.
+	 * generate_sku.
 	 *
-	 * @version 3.7.0
-	 * @todo    deprecate `{prefix}` and `{suffix}`
-	 * @todo    `{tag_prefix}`, `{tag_suffix}`
-	 * @todo    (maybe) remove some "replaced values" that can be replaced by Booster products shortcodes, e.g.: `[wcj_product_slug]` (and update description in settings)
-	 * @todo    (maybe) add option to disable shortcodes processing
+	 * @version 4.7.0
+	 * @since   4.7.0
+	 *
+	 * @param $product_id
+	 * @param $variation_suffix
+	 * @param $parent_product_id
+	 * @param $_product
+	 * @param boolean $get_sku_from_parent
+	 *
+	 * @return mixed|string
 	 */
-	function set_sku( $product_id, $sku_number, $variation_suffix, $is_preview, $parent_product_id, $_product ) {
+	function generate_sku( $product_id, $variation_suffix, $parent_product_id, $_product, $get_sku_from_parent = true ) {
+		switch ( apply_filters( 'booster_option', 'product_id', get_option( 'wcj_sku_number_generation', 'product_id' ) ) ) {
+			case 'sequential':
+				$sku_number = $this->get_sequential_counter( $parent_product_id );
+				break;
+			case 'hash_crc32':
+				$sku_number = sprintf( "%u", crc32( $get_sku_from_parent ? $parent_product_id : $product_id ) );
+				break;
+			case 'hashids':
+				$sku_number = $this->get_hashids_lib()->encode( $get_sku_from_parent ? $parent_product_id : $product_id );
+				break;
+			default: // 'product_id'
+				$sku_number = $get_sku_from_parent ? $parent_product_id : $product_id;
+				break;
+		}
 
 		$format_template = get_option( 'wcj_sku_template',
 			'{category_prefix}{prefix}{sku_number}{suffix}{category_suffix}{variation_suffix}' );
@@ -321,7 +428,7 @@ class WCJ_SKU extends WCJ_Module {
 
 		$parent_product = wc_get_product( $parent_product_id );
 
-		$old_sku = $_product->get_sku();
+		$old_sku = get_post_meta( $product_id, '_sku', true );
 		$do_generate_new_sku = ( 'no' === get_option( 'wcj_sku_generate_only_for_empty_sku', 'no' ) || '' === $old_sku );
 
 		// {category_prefix} & {category_suffix}
@@ -375,7 +482,7 @@ class WCJ_SKU extends WCJ_Module {
 		}
 
 		$replace_values = array(
-			'{parent_sku}'                   => $parent_product->get_sku(),
+			'{parent_sku}'                   => empty( $parent_sku = get_post_meta( $parent_product_id, '_sku', true ) ) ? $parent_product->get_sku() : $parent_sku,
 			'{product_slug}'                 => $_product->get_slug(),
 			'{product_slug_acronym}'         => $product_slug_acronym,
 			'{parent_product_slug}'          => $parent_product->get_slug(),
@@ -398,11 +505,35 @@ class WCJ_SKU extends WCJ_Module {
 			$the_sku = $old_sku;
 		}
 
+		return array(
+			'sku'                 => $the_sku,
+			'old_sku'             => $old_sku,
+			'product_cat'         => $product_cat,
+			'product'             => $_product,
+			'do_generate_new_sku' => $do_generate_new_sku
+		);
+	}
+
+	/**
+	 * set_sku.
+	 *
+	 * @version 4.7.0
+	 * @todo    deprecate `{prefix}` and `{suffix}`
+	 * @todo    `{tag_prefix}`, `{tag_suffix}`
+	 * @todo    (maybe) remove some "replaced values" that can be replaced by Booster products shortcodes, e.g.: `[wcj_product_slug]` (and update description in settings)
+	 * @todo    (maybe) add option to disable shortcodes processing
+	 */
+	function set_sku( $product_id, $sku_object, $is_preview ) {
+		$old_sku             = $sku_object['old_sku'];
+		$the_sku             = $sku_object['sku'];
+		$product_cat         = $sku_object['product_cat'];
+		$product             = $sku_object['product'];
+		$do_generate_new_sku = $sku_object['do_generate_new_sku'];
 		if ( $is_preview ) {
 			$this->preview_buffer .= '<tr>' .
 				'<td>' . $this->product_counter++ . '</td>' .
 				'<td>' . $product_id              . '</td>' .
-				'<td>' . $_product->get_title()   . '</td>' .
+				'<td>' . $product->get_title()   . '</td>' .
 				'<td>' . $product_cat             . '</td>' .
 				'<td>' . $the_sku                 . '</td>' .
 				'<td>' . $old_sku                 . '</td>' .

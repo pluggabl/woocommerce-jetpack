@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 4.6.0
+ * @version 4.7.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -223,7 +223,16 @@ $settings = array_merge( $settings, array(
 		'type'     => 'number',
 	),
 	array(
-		'title'    => __( 'Advanced: Apply Price Filter', 'woocommerce-jetpack' ),
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_addons_options',
+	),
+	array(
+		'title'    => __( 'Advanced', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_addons_advanced_options',
+	),
+	array(
+		'title'    => __( 'Apply Price Filter', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_addons_apply_price_filters',
 		'default'  => 'by_module',
 		'type'     => 'select',
@@ -246,14 +255,14 @@ $settings = array_merge( $settings, array(
 		),
 	),
 	array(
-		'title'    => __( 'Advanced: Price Filters Priority', 'woocommerce-jetpack' ),
+		'title'    => __( 'Price Filters Priority', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Priority for all module\'s price filters. Set to zero to use default priority.' ),
 		'id'       => 'wcj_product_addons_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',
 	),
 	array(
-		'title'    => __( 'Advanced: Check for Outputted Data', 'woocommerce-jetpack' ),
+		'title'    => __( 'Check for Outputted Data', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Ensures that data outputted only once. Enable this if you see data outputted on frontend twice. Disable if you see no data outputted.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_product_addons_check_for_outputted_data',
@@ -261,8 +270,16 @@ $settings = array_merge( $settings, array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'    => __( 'Export and Import "Enable by Variation"', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Exports/Imports "Enable by Variation" meta when using WooCommerce product Exporter/Importer', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_addons_enable_by_variation_export_import',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_product_addons_options',
+		'id'       => 'wcj_product_addons_advanced_options',
 	),
 	array(
 		'title'    => __( 'Frontend Templates', 'woocommerce-jetpack' ),
