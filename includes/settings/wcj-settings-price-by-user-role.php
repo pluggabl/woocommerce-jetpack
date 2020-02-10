@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Price based on User Role
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -85,6 +85,15 @@ $settings = array(
 		'desc'     => __( 'Remove', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Remove "woocommerce_single_variation_add_to_cart_button" callback from "woocommerce_single_variation" hook on "empty price" variations.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_user_role_remove_add_to_cart_btn',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Check Child Categories', 'woocommerce-jetpack' ),
+		'desc'     => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip' => __( 'Enable to also consider the child categories.', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'id'       => 'wcj_price_by_user_role_check_child_categories',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

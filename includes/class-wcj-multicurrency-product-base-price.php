@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 4.4.0
+ * @version 4.7.1
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -198,7 +198,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 * Adds compatibility with price filter adding '_wcj_multicurrency_base_price' on product meta query.
 		 * It only compares products with '_wcj_multicurrency_base_price_comp_pf' meta
 		 *
-		 * @version 4.3.1
+		 * @version 4.7.1
 		 * @since   4.3.1
 		 *
 		 * @param $query
@@ -212,6 +212,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 			) {
 				return $query;
 			}
+			wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'price_filter_post_clauses' );
 			$price_filter                              = $price_filter_wcj = $query['price_filter'];
 			$price_filter_wcj['key']                   = '_wcj_multicurrency_base_price';
 			$price_filter_wcj['wcj_mcpb_price_filter'] = 1;

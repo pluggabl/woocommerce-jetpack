@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Template Editor
  *
- * @version 4.0.0
+ * @version 4.7.1
  * @since   3.9.0
  * @author  Algoritmika Ltd.
  */
@@ -74,21 +74,56 @@ class WCJ_Template_Editor extends WCJ_Module {
 	}
 
 	/**
+	 * Gets path by template.
+	 *
+	 * @version 4.7.1
+	 * @since   4.7.1
+	 *
+	 * @param $template
+	 *
+	 * @return int|string
+	 */
+	function get_path_by_template( $template ) {
+		$templates_by_path = get_option( 'wcj_template_editor_templates_by_path', array() );
+		foreach ( $templates_by_path as $path => $templates ) {
+			if ( in_array( $template, $templates ) ) {
+				return $path;
+			}
+		}
+		return '';
+	}
+
+	/**
+	 * Gets paths from 'wcj_template_editor_paths' option
+	 *
+	 * @version 4.7.1
+	 * @since   4.7.1
+	 *
+	 * @return array
+	 */
+	function get_paths() {
+		$paths_arr = explode( "\n", str_replace( "\r", "", get_option( 'wcj_template_editor_paths', '/woocommerce/templates/' ) ) );
+		return array_map( function ( $path ) {
+			return trailingslashit( str_replace( '\\', '/', WP_PLUGIN_DIR . $path ) );
+		}, $paths_arr );
+	}
+
+	/**
 	 * scan_templates.
 	 *
-	 * @version 3.9.0
+	 * @version 4.7.1
 	 * @since   3.9.0
 	 * @todo    [dev] (maybe) optimize
 	 */
-	function scan_templates( $dir, &$results = array() ) {
+	function scan_templates( $dir, $original_path, &$results = array() ) {
 		$files = scandir( $dir );
-		foreach( $files as $key => $value ) {
+		foreach ( $files as $key => $value ) {
 			$path = realpath( $dir . DIRECTORY_SEPARATOR . $value );
-			if( ! is_dir( $path ) ) {
-				$template = str_replace( $this->templates_path, '', str_replace( '\\', '/', $path ) );
+			if ( ! is_dir( $path ) ) {
+				$template             = str_replace( $original_path, '', str_replace( '\\', '/', $path ) );
 				$results[ $template ] = $template;
 			} elseif ( '.' != $value && '..' != $value ) {
-				$this->scan_templates( $path, $results );
+				$this->scan_templates( $path, $original_path, $results );
 			}
 		}
 		return $results;

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways by User Role
  *
- * @version 2.8.0
+ * @version 4.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -10,6 +10,24 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $settings = array(
+	array(
+		'title' => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'  => 'title',
+		'id'    => 'wcj_payment_gateways_by_user_role_general_options',
+	),
+	array(
+		'title'    => __( 'Multiple Role Checking', 'woocommerce-jetpack' ),
+		'type'     => 'checkbox',
+		'default'  => 'no',
+		'desc_tip' => __( 'Enable if you have some plugin that allows users with multiple roles like "User Role Editor".', 'woocommerce-jetpack' ),
+		'desc'     => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'id'       => 'wcj_payment_gateways_by_user_role_multi_role_check',
+	),
+	array(
+		'type'  => 'sectionend',
+		'id'    => 'wcj_payment_gateways_by_user_role_general_options',
+	),
 	array(
 		'title' => __( 'Payment Gateways', 'woocommerce-jetpack' ),
 		'type'  => 'title',

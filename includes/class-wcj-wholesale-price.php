@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 4.1.0
+ * @version 4.7.1
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  * @todo    per variation
@@ -142,7 +142,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * get_discount_by_quantity.
 	 *
-	 * @version 2.5.5
+	 * @version 4.7.1
 	 */
 	private function get_discount_by_quantity( $quantity, $product_id ) {
 
@@ -160,7 +160,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 		}
 
 		// Get discount
-		$max_qty_level = 1;
+		$max_qty_level = get_option( 'wcj_wholesale_price_max_qty_level', 1 );
 		$discount      = 0;
 		if ( wcj_is_product_wholesale_enabled_per_product( $product_id ) ) {
 			for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_post_meta( $product_id, '_' . 'wcj_wholesale_price_levels_number' . $role_option_name_addon, true ) ); $i++ ) {

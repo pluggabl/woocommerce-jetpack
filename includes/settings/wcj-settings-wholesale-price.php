@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -146,6 +146,13 @@ $settings = array(
 		'custom_attributes' => array_merge(
 			is_array( apply_filters( 'booster_message', '', 'readonly' ) ) ? apply_filters( 'booster_message', '', 'readonly' ) : array(),
 			array('step' => '1', 'min' => '1', ) ),
+		'css'      => 'width:100px;',
+	),
+	array(
+		'title'    => __( 'Default Max Qty Level', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_wholesale_price_max_qty_level',
+		'default'  => 1,
+		'type'     => 'number',
 		'css'      => 'width:100px;',
 	),
 );

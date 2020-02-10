@@ -3,13 +3,13 @@
 Plugin Name: Booster for WooCommerce
 Plugin URI: https://booster.io
 Description: Supercharge your WooCommerce site with these awesome powerful features. More than 100 modules. All in one WooCommerce plugin.
-Version: 4.7.0
+Version: 4.7.1
 Author: Algoritmika Ltd
 Author URI: https://booster.io
 Text Domain: woocommerce-jetpack
 Domain Path: /langs
 Copyright: © 2019 Algoritmika Ltd.
-WC tested up to: 3.8
+WC tested up to: 3.9
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
@@ -57,7 +57,7 @@ final class WC_Jetpack {
 	 * @var   string
 	 * @since 2.4.7
 	 */
-	public $version = '4.7.0';
+	public $version = '4.7.1';
 
 	/**
 	 * @var WC_Jetpack The single instance of the class

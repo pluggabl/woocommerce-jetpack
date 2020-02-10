@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.1
 	 * @since   3.6.0
 	 */
 	function __construct( $type = 'module' ) {
@@ -64,7 +64,130 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 
 			// Disable pre_get_posts query when exporting products
 			add_filter( 'wcj_product_by_condition_pre_get_posts_validation', array( $this, 'disable_pre_get_posts_on_export' ) );
+
+			// Regenerate invisible products transient
+			add_action( 'save_meta_box_' . $this->id, array( $this, 'regenerate_invisible_products_transient' ) );
+			add_action( 'save_bulk_and_quick_edit_fields_' . $this->id, array( $this, 'regenerate_invisible_products_transient' ) );
 		}
+	}
+
+	/**
+	 * get_invisible_products_ids.
+	 *
+	 * @version 4.7.1
+	 * @since   4.7.1
+	 *
+	 * @param null $params
+	 *
+	 * @return array
+	 */
+	function get_invisible_products_ids( $params = null ) {
+		$params             = wp_parse_args( $params, array(
+			'option_to_check'               => $this->get_check_option(),
+			'invisible_products_query_args' => $this->get_invisible_products_query_args()
+		) );
+		$option_to_check    = $params['option_to_check'];
+		$args               = $params['invisible_products_query_args'];
+		$transient_name     = 'wcj_' . $this->id . '_' . md5( serialize( $args ) . '_' . serialize( $option_to_check ) );
+		$invisible_products = get_transient( $transient_name );
+		if ( false === $invisible_products ) {
+			$invisible_products = array();
+			$loop               = new WP_Query( $args );
+			foreach ( $loop->posts as $product_id ) {
+				if ( ! $this->is_product_visible( $product_id, $option_to_check ) ) {
+					$invisible_products[] = $product_id;
+				}
+			}
+			set_transient( $transient_name, $invisible_products, YEAR_IN_SECONDS );
+		}
+		return $invisible_products;
+	}
+
+	/**
+	 * get_invisible_products_query_args.
+	 *
+	 * @version 4.7.1
+	 * @since   4.7.1
+	 *
+	 * @return array
+	 */
+	function get_invisible_products_query_args() {
+		$meta_query = array();
+		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+			$meta_query[] = array(
+				'key'     => '_' . 'wcj_' . $this->id . '_visible',
+				'value'   => '',
+				'compare' => '!=',
+			);
+		}
+		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
+			$meta_query[] = array(
+				'key'     => '_' . 'wcj_' . $this->id . '_invisible',
+				'value'   => '',
+				'compare' => '!=',
+			);
+		}
+		if ( count( $meta_query ) > 1 ) {
+			$meta_query['relation'] = 'OR';
+		}
+		$args = array(
+			'post_type'      => 'product',
+			'posts_per_page' => - 1,
+			'fields'         => 'ids',
+			'meta_query'     => $meta_query,
+		);
+		return $args;
+	}
+
+	/**
+	 * delete_invisible_products_transient.
+	 *
+	 * @version 4.7.1
+	 * @since   4.7.1
+	 *
+	 * @param null $params
+	 */
+	function delete_invisible_products_transient( $params = null ) {
+		$params = wp_parse_args( $params, array(
+			'remove_method'                 => 'all_roles', // current_user_roles | all_roles
+			'option_to_check'               => $this->get_check_option(),
+			'invisible_products_query_args' => $this->get_invisible_products_query_args()
+		) );
+		if ( 'current_user_roles' === $params['remove_method'] ) {
+			$option_to_check = $params['option_to_check'];
+			$args            = $params['invisible_products_query_args'];
+			$transient_name  = 'wcj_' . $this->id . '_' . md5( serialize( $args ) . '_' . serialize( $option_to_check ) );
+			delete_transient( $transient_name );
+		} elseif ( 'all_roles' === $params['remove_method'] ) {
+			global $wpdb;
+			$sql = "delete from wp_options where option_name REGEXP %s";
+			$wpdb->query( $wpdb->prepare( $sql, '^_transient_' . 'wcj_' . $this->id ) );
+		}
+	}
+
+	/**
+	 * regenerate_invisible_products_transient.
+	 *
+	 * @version 4.7.1
+	 * @since   4.7.1
+	 */
+	function regenerate_invisible_products_transient() {
+		$this->delete_invisible_products_transient();
+		$this->get_invisible_products_ids();
+	}
+
+	/**
+	 * save_meta_box.
+	 *
+	 * @version 4.7.1
+	 * @since   4.7.1
+	 *
+	 * @param $post_id
+	 * @param $__post
+	 */
+	function save_meta_box( $post_id, $__post ) {
+		parent::save_meta_box( $post_id, $__post );
+		do_action( 'save_meta_box_' . $this->id, $post_id, $__post );
 	}
 
 	/**
@@ -202,6 +325,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 				update_post_meta( $post_id, '_' . 'wcj_' . $this->id . '_invisible', $_REQUEST[ 'wcj_' . $this->id . '_invisible' ] );
 			}
 		}
+		do_action( 'save_bulk_and_quick_edit_fields_' . $this->id, $post_id, $post );
 		return $post_id;
 	}
 
@@ -233,7 +357,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * pre_get_posts.
 	 *
-	 * @version 4.7.0
+	 * @version 4.7.1
 	 * @since   3.6.0
 	 * @todo    [dev] maybe move `if ( ! function_exists( 'is_user_logged_in' ) ) {`
 	 */
@@ -248,40 +372,10 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 			require_once( ABSPATH . 'wp-includes/pluggable.php' );
 		}
 		remove_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
-		$option_to_check = $this->get_check_option();
-		$post__not_in    = $query->get( 'post__not_in' );
-		$meta_query      = array();
-		if ( 'invisible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
-			$meta_query[] = array(
-				'key'     => '_' . 'wcj_' . $this->id . '_visible',
-				'value'   => '',
-				'compare' => '!=',
-			);
-		}
-		if ( 'visible' != apply_filters( 'booster_option', 'visible', get_option( 'wcj_' . $this->id . '_visibility_method', 'visible' ) ) ) {
-			$meta_query[] = array(
-				'key'     => '_' . 'wcj_' . $this->id . '_invisible',
-				'value'   => '',
-				'compare' => '!=',
-			);
-		}
-		if ( count( $meta_query ) > 1 ) {
-			$meta_query['relation'] = 'OR';
-		}
-		$args = array(
-			'post_type'      => 'product',
-			'posts_per_page' => -1,
-			'fields'         => 'ids',
-			'meta_query'     => $meta_query,
-			'post__not_in'   => $post__not_in,
-		);
-		$loop = new WP_Query( $args );
-		foreach ( $loop->posts as $product_id ) {
-			if ( ! $this->is_product_visible( $product_id, $option_to_check ) ) {
-				$post__not_in[] = $product_id;
-			}
-		}
-		$query->set( 'post__not_in', $post__not_in );
+		$invisible_products = $this->get_invisible_products_ids();
+		$post__not_in       = $query->get( 'post__not_in' );
+		$post__not_in       = empty( $post__not_in ) ? array() : $post__not_in;
+		$query->set( 'post__not_in', array_unique( array_merge( $post__not_in, $invisible_products ) ) );
 		add_action( 'pre_get_posts', array( $this, 'pre_get_posts' ) );
 	}
 

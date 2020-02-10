@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Price based on User Role
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @since   2.5.0
  * @author  Algoritmika Ltd.
  * @todo    Fix "Make Empty Price" option for variable products
@@ -248,7 +248,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 3.6.0
+	 * @version 4.7.1
 	 * @since   2.5.0
 	 * @todo    (maybe) add "enable compound multipliers" option
 	 * @todo    (maybe) check for `( '' === $price )` only once, at the beginning of the function (instead of comparing before each `return`)
@@ -348,12 +348,18 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			if ( ! empty( $product_categories ) ) {
 				foreach ( $product_categories as $product_category ) {
 					foreach ( $categories as $category ) {
-						if ( $product_category->term_id == $category ) {
+						if (
+							$product_category->term_id == $category ||
+							(
+								'yes' === get_option( 'wcj_price_by_user_role_check_child_categories', 'no' ) &&
+								term_is_ancestor_of( $category, $product_category->term_id, 'product_cat' )
+							)
+						) {
 							if ( 'yes' === get_option( 'wcj_price_by_user_role_cat_empty_price_' . $category . '_' . $current_user_role, 'no' ) ) {
 								return '';
 							}
 							if ( ( $koef_category = get_option( 'wcj_price_by_user_role_cat_' . $category . '_' . $current_user_role, -1 ) ) >= 0 ) {
-								return ( '' === $price ) ? $price : $price * $koef_category;
+								return ( '' === $price ) ? $price : $price * (float) $koef_category;
 							}
 						}
 					}
@@ -373,7 +379,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 								return '';
 							}
 							if ( ( $koef_tag = get_option( 'wcj_price_by_user_role_tag_' . $tag . '_' . $current_user_role, -1 ) ) >= 0 ) {
-								return ( '' === $price ) ? $price : $price * $koef_tag;
+								return ( '' === $price ) ? $price : $price * (float) $koef_tag;
 							}
 						}
 					}
@@ -386,7 +392,7 @@ class WCJ_Price_By_User_Role extends WCJ_Module {
 			return '';
 		}
 		if ( 1 != ( $koef = get_option( 'wcj_price_by_user_role_' . $current_user_role, 1 ) ) ) {
-			return ( '' === $price ) ? $price : $price * $koef;
+			return ( '' === $price ) ? $price : $price * (float) $koef;
 		}
 
 		// No changes

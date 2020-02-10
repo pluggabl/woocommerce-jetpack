@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Custom Payment Gateway
  *
- * @version 4.7.0
+ * @version 4.7.1
  * @author  Algoritmika Ltd.
  */
 
@@ -270,9 +270,13 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 
 				/**
 				 * Output for the order received page.
+				 *
+				 * @version 4.7.1
+				 *
 				 */
-				function thankyou_page() {
+				function thankyou_page( $order_id ) {
 					if ( $this->instructions ) {
+						$this->instructions = str_replace( '[wcj_order_meta', '[wcj_order_meta order_id="' . $order_id . '" ', $this->instructions );
 						echo do_shortcode( wpautop( wptexturize( $this->instructions ) ) );
 					}
 				}

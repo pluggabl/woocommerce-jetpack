@@ -418,7 +418,7 @@ msgstr ""
 #: includes/settings/wcj-settings-payment-gateways-by-country.php:55
 #: includes/settings/wcj-settings-payment-gateways-by-currency.php:14
 #: includes/settings/wcj-settings-payment-gateways-by-shipping.php:37
-#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:14
+#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:32
 #: includes/settings/wcj-settings-payment-gateways-currency.php:15
 #: includes/settings/wcj-settings-payment-gateways-min-max.php:81
 #: includes/settings/wcj-settings-reports.php:118
@@ -1709,7 +1709,7 @@ msgstr ""
 msgid "Validation failed. Please try again."
 msgstr ""
 
-#: includes/class-wcj-eu-vat-number.php:505
+#: includes/class-wcj-eu-vat-number.php:509
 #: includes/settings/wcj-settings-eu-vat-number.php:83
 msgid "<strong>EU VAT Number</strong> is not valid."
 msgstr ""
@@ -2610,11 +2610,11 @@ msgstr ""
 msgid "Set \"enable for shipping methods\" for payment gateways."
 msgstr ""
 
-#: includes/class-wcj-payment-gateways-by-user-role.php:25
+#: includes/class-wcj-payment-gateways-by-user-role.php:24
 msgid "Gateways by User Role"
 msgstr ""
 
-#: includes/class-wcj-payment-gateways-by-user-role.php:26
+#: includes/class-wcj-payment-gateways-by-user-role.php:25
 msgid "Set user roles to include/exclude for payment gateways to show up."
 msgstr ""
 
@@ -2956,6 +2956,7 @@ msgstr ""
 #: includes/settings/wcj-settings-orders.php:80
 #: includes/settings/wcj-settings-orders.php:105
 #: includes/settings/wcj-settings-payment-gateways-by-shipping.php:23
+#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:23
 #: includes/settings/wcj-settings-payment-gateways-currency.php:95
 #: includes/settings/wcj-settings-payment-gateways-fees.php:67
 #: includes/settings/wcj-settings-payment-gateways-fees.php:83
@@ -2965,6 +2966,7 @@ msgstr ""
 #: includes/settings/wcj-settings-pdf-invoicing-footer.php:23
 #: includes/settings/wcj-settings-pdf-invoicing-header.php:24
 #: includes/settings/wcj-settings-pdf-invoicing-numbering.php:23
+#: includes/settings/wcj-settings-pdf-invoicing-page.php:96
 #: includes/settings/wcj-settings-pdf-invoicing-styling.php:73
 #: includes/settings/wcj-settings-price-by-country.php:70
 #: includes/settings/wcj-settings-price-by-country.php:90
@@ -2973,6 +2975,7 @@ msgstr ""
 #: includes/settings/wcj-settings-price-by-country.php:142
 #: includes/settings/wcj-settings-price-by-user-role.php:19
 #: includes/settings/wcj-settings-price-by-user-role.php:46
+#: includes/settings/wcj-settings-price-by-user-role.php:93
 #: includes/settings/wcj-settings-price-formats.php:21
 #: includes/settings/wcj-settings-price-labels.php:23
 #: includes/settings/wcj-settings-product-add-to-cart.php:25
@@ -4048,7 +4051,7 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-product-add-to-cart.php:43
 #: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:19
 #: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:79
-#: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:155
+#: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:154
 #: includes/settings/meta-box/wcj-settings-meta-box-product-bookings.php:20
 #: includes/settings/meta-box/wcj-settings-meta-box-product-images.php:35
 #: includes/settings/meta-box/wcj-settings-meta-box-product-images.php:45
@@ -4078,7 +4081,7 @@ msgstr ""
 #: includes/settings/meta-box/wcj-settings-meta-box-product-add-to-cart.php:42
 #: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:18
 #: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:78
-#: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:154
+#: includes/settings/meta-box/wcj-settings-meta-box-product-addons.php:155
 #: includes/settings/meta-box/wcj-settings-meta-box-product-bookings.php:19
 #: includes/settings/meta-box/wcj-settings-meta-box-product-images.php:34
 #: includes/settings/meta-box/wcj-settings-meta-box-product-images.php:44
@@ -4515,7 +4518,7 @@ msgstr ""
 #: includes/class-wcj-shipping-by-user-role.php:33
 #: includes/settings/wcj-settings-multicurrency.php:261
 #: includes/settings/wcj-settings-order-min-amount.php:104
-#: includes/settings/wcj-settings-price-by-user-role.php:124
+#: includes/settings/wcj-settings-price-by-user-role.php:133
 #, php-format
 msgid ""
 "Custom roles can be added via \"Add/Manage Custom Roles\" tool in Booster's "
@@ -4843,16 +4846,16 @@ msgstr ""
 msgid "File wpml-config.xml successfully regenerated!"
 msgstr ""
 
-#: includes/classes/class-wcj-module-product-by-condition.php:137
+#: includes/classes/class-wcj-module-product-by-condition.php:260
 msgid "— No change —"
 msgstr ""
 
-#: includes/classes/class-wcj-module-product-by-condition.php:144
+#: includes/classes/class-wcj-module-product-by-condition.php:267
 #: includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php:29
 msgid "Visible"
 msgstr ""
 
-#: includes/classes/class-wcj-module-product-by-condition.php:153
+#: includes/classes/class-wcj-module-product-by-condition.php:276
 #: includes/settings/meta-box/wcj-settings-meta-box-product-by-condition.php:41
 msgid "Invisible"
 msgstr ""
@@ -4942,13 +4945,13 @@ msgstr ""
 msgid "Company Name"
 msgstr ""
 
-#: includes/classes/class-wcj-pdf-invoice.php:259
+#: includes/classes/class-wcj-pdf-invoice.php:261
 #: includes/functions/wcj-functions-general.php:145
 #: includes/pdf-invoices/class-wcj-pdf-invoicing-report-tool.php:245
 msgid "Unexpected error"
 msgstr ""
 
-#: includes/classes/class-wcj-shortcodes.php:109
+#: includes/classes/class-wcj-shortcodes.php:127
 #: includes/shortcodes/class-wcj-shortcodes-general.php:517
 #, php-format
 msgid "\"%s\" module is not enabled!"
@@ -7127,12 +7130,12 @@ msgstr ""
 msgid "Optional. Leave blank to use default URL."
 msgstr ""
 
-#: includes/gateways/class-wc-gateway-wcj-custom.php:346
+#: includes/gateways/class-wc-gateway-wcj-custom.php:350
 #: includes/settings/wcj-settings-payment-gateways.php:38
 msgid "Custom Gateway"
 msgstr ""
 
-#: includes/gateways/class-wc-gateway-wcj-custom.php:347
+#: includes/gateways/class-wc-gateway-wcj-custom.php:351
 msgid "Booster for WooCommerce: Custom Payment Gateway"
 msgstr ""
 
@@ -7616,7 +7619,7 @@ msgstr ""
 #: includes/settings/wcj-settings-multicurrency.php:162
 #: includes/settings/wcj-settings-order-min-amount.php:69
 #: includes/settings/wcj-settings-price-by-country.php:160
-#: includes/settings/wcj-settings-price-by-user-role.php:97
+#: includes/settings/wcj-settings-price-by-user-role.php:106
 #: includes/settings/wcj-settings-product-addons.php:230
 msgid "Advanced"
 msgstr ""
@@ -7749,7 +7752,7 @@ msgid "Styling"
 msgstr ""
 
 #: includes/pdf-invoices/submodules/class-wcj-pdf-invoicing-templates.php:23
-#: includes/settings/wcj-settings-template-editor.php:20
+#: includes/settings/wcj-settings-template-editor.php:44
 msgid "Templates"
 msgstr ""
 
@@ -8300,8 +8303,8 @@ msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-multicurrency.php:63
 #: includes/settings/meta-box/wcj-settings-meta-box-price-by-user-role.php:136
-#: includes/settings/wcj-settings-price-by-user-role.php:146
-#: includes/settings/wcj-settings-price-by-user-role.php:215
+#: includes/settings/wcj-settings-price-by-user-role.php:155
+#: includes/settings/wcj-settings-price-by-user-role.php:224
 msgid "Make Empty Price"
 msgstr ""
 
@@ -8447,7 +8450,7 @@ msgstr ""
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:84
 #: includes/settings/wcj-settings-pdf-invoicing-advanced.php:123
 #: includes/settings/wcj-settings-price-by-user-role.php:55
-#: includes/settings/wcj-settings-price-by-user-role.php:130
+#: includes/settings/wcj-settings-price-by-user-role.php:139
 #: includes/settings/wcj-settings-product-add-to-cart.php:131
 #: includes/settings/wcj-settings-product-open-pricing.php:95
 #: includes/settings/wcj-settings-sku.php:325
@@ -8753,10 +8756,10 @@ msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:72
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:108
-#: includes/settings/wcj-settings-wholesale-price.php:163
-#: includes/settings/wcj-settings-wholesale-price.php:164
-#: includes/settings/wcj-settings-wholesale-price.php:220
-#: includes/settings/wcj-settings-wholesale-price.php:221
+#: includes/settings/wcj-settings-wholesale-price.php:170
+#: includes/settings/wcj-settings-wholesale-price.php:171
+#: includes/settings/wcj-settings-wholesale-price.php:227
+#: includes/settings/wcj-settings-wholesale-price.php:228
 msgid "Discount"
 msgstr ""
 
@@ -9265,7 +9268,7 @@ msgid "Default columns order"
 msgstr ""
 
 #: includes/settings/wcj-settings-admin-products-list.php:27
-#: includes/settings/wcj-settings-price-by-user-role.php:191
+#: includes/settings/wcj-settings-price-by-user-role.php:200
 #: includes/settings/wcj-settings-shipping.php:51
 msgid ""
 "Save module's settings after changing this option to see new settings fields."
@@ -9529,6 +9532,7 @@ msgstr ""
 #: includes/settings/wcj-settings-order-quantities.php:17
 #: includes/settings/wcj-settings-payment-gateways-by-country.php:15
 #: includes/settings/wcj-settings-payment-gateways-by-shipping.php:17
+#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:14
 #: includes/settings/wcj-settings-payment-gateways-min-max.php:15
 #: includes/settings/wcj-settings-payment-gateways-per-category.php:19
 #: includes/settings/wcj-settings-price-formats.php:15
@@ -9537,6 +9541,7 @@ msgstr ""
 #: includes/settings/wcj-settings-shipping-by-order-amount.php:15
 #: includes/settings/wcj-settings-shipping-by-order-qty.php:15
 #: includes/settings/wcj-settings-shipping-time.php:25
+#: includes/settings/wcj-settings-template-editor.php:27
 #: includes/settings/wcj-settings-wpml.php:22
 msgid "General Options"
 msgstr ""
@@ -11272,7 +11277,7 @@ msgid "Add Product Info to Item Name"
 msgstr ""
 
 #: includes/settings/wcj-settings-email-options.php:26
-#: includes/settings/wcj-settings-template-editor.php:43
+#: includes/settings/wcj-settings-template-editor.php:67
 #: includes/settings/wcj-settings-track-users.php:26
 msgid "Info"
 msgstr ""
@@ -12133,7 +12138,7 @@ msgstr ""
 #: includes/settings/wcj-settings-multicurrency-base-price.php:76
 #: includes/settings/wcj-settings-multicurrency.php:176
 #: includes/settings/wcj-settings-price-by-country.php:165
-#: includes/settings/wcj-settings-price-by-user-role.php:102
+#: includes/settings/wcj-settings-price-by-user-role.php:111
 #: includes/settings/wcj-settings-product-addons.php:258
 #: includes/settings/wcj-settings-product-price-by-formula.php:100
 msgid "Price Filters Priority"
@@ -12143,7 +12148,7 @@ msgstr ""
 #: includes/settings/wcj-settings-multicurrency-base-price.php:77
 #: includes/settings/wcj-settings-multicurrency.php:177
 #: includes/settings/wcj-settings-price-by-country.php:166
-#: includes/settings/wcj-settings-price-by-user-role.php:103
+#: includes/settings/wcj-settings-price-by-user-role.php:112
 #: includes/settings/wcj-settings-product-addons.php:259
 #: includes/settings/wcj-settings-product-price-by-formula.php:101
 #: includes/settings/wcj-settings-wholesale-price.php:124
@@ -12591,7 +12596,7 @@ msgid "Roles"
 msgstr ""
 
 #: includes/settings/wcj-settings-multicurrency.php:267
-#: includes/settings/wcj-settings-wholesale-price.php:185
+#: includes/settings/wcj-settings-wholesale-price.php:192
 msgid "Save settings after you change this option. Leave blank to disable."
 msgstr ""
 
@@ -13722,7 +13727,7 @@ msgid "Exclude Postcodes (one per line)"
 msgstr ""
 
 #: includes/settings/wcj-settings-payment-gateways-by-currency.php:16
-#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:16
+#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:34
 #: includes/settings/wcj-settings-shipping-by-condition.php:43
 msgid "Leave empty to disable."
 msgstr ""
@@ -13768,7 +13773,17 @@ msgid ""
 "Leave blank to enable for all methods."
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:17
+#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:19
+msgid "Multiple Role Checking"
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:22
+msgid ""
+"Enable if you have some plugin that allows users with multiple roles like "
+"\"User Role Editor\"."
+msgstr ""
+
+#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:35
 #: includes/settings/wcj-settings-product-by-user.php:79
 #, php-format
 msgid ""
@@ -13776,11 +13791,11 @@ msgid ""
 "<a href=\"%s\">General</a> module"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:40
+#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:58
 msgid "Include User Roles"
 msgstr ""
 
-#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:51
+#: includes/settings/wcj-settings-payment-gateways-by-user-role.php:69
 msgid "Exclude User Roles"
 msgstr ""
 
@@ -14514,6 +14529,20 @@ msgid ""
 "option in %s."
 msgstr ""
 
+#: includes/settings/wcj-settings-pdf-invoicing-page.php:92
+msgid "Parse Background Image URL"
+msgstr ""
+
+#: includes/settings/wcj-settings-pdf-invoicing-page.php:97
+msgid "Converts the Background Image URL to its local path."
+msgstr ""
+
+#: includes/settings/wcj-settings-pdf-invoicing-page.php:97
+msgid ""
+"If you are experiencing issues with displaying background image, please try "
+"to disable this option"
+msgstr ""
+
 #: includes/settings/wcj-settings-pdf-invoicing-styling.php:19
 #: includes/settings/wcj-settings-pdf-invoicing-styling.php:37
 msgid "Font Family"
@@ -14871,15 +14900,23 @@ msgid ""
 "\"woocommerce_single_variation\" hook on \"empty price\" variations."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:109
+#: includes/settings/wcj-settings-price-by-user-role.php:92
+msgid "Check Child Categories"
+msgstr ""
+
+#: includes/settings/wcj-settings-price-by-user-role.php:94
+msgid "Enable to also consider the child categories."
+msgstr ""
+
+#: includes/settings/wcj-settings-price-by-user-role.php:118
 msgid "Price Changes"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:110
+#: includes/settings/wcj-settings-price-by-user-role.php:119
 msgid "Disable price based on user role for products with \"Price Changes\""
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:111
+#: includes/settings/wcj-settings-price-by-user-role.php:120
 #: includes/settings/wcj-settings-product-open-pricing.php:149
 #: includes/settings/wcj-settings-wholesale-price.php:117
 msgid ""
@@ -14887,28 +14924,28 @@ msgid ""
 "other plugins."
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:122
+#: includes/settings/wcj-settings-price-by-user-role.php:131
 msgid "Roles & Multipliers"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:129
+#: includes/settings/wcj-settings-price-by-user-role.php:138
 msgid "Disable Price based on User Role for Products on Sale"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:161
+#: includes/settings/wcj-settings-price-by-user-role.php:170
 msgid "Products Categories"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:167
+#: includes/settings/wcj-settings-price-by-user-role.php:176
 msgid "Products Tags"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:185
+#: includes/settings/wcj-settings-price-by-user-role.php:194
 #, php-format
 msgid "Price based on User Role by %s"
 msgstr ""
 
-#: includes/settings/wcj-settings-price-by-user-role.php:208
+#: includes/settings/wcj-settings-price-by-user-role.php:217
 msgid ""
 "Multiplier is ignored if set to negative number (e.g.: -1). Global "
 "multiplier will be used instead."
@@ -18356,19 +18393,27 @@ msgstr ""
 msgid "Setup how taxes will be applied during cart and checkout."
 msgstr ""
 
-#: includes/settings/wcj-settings-template-editor.php:25
+#: includes/settings/wcj-settings-template-editor.php:32
+msgid "Paths"
+msgstr ""
+
+#: includes/settings/wcj-settings-template-editor.php:37
+msgid "One path per line relative to: "
+msgstr ""
+
+#: includes/settings/wcj-settings-template-editor.php:49
 msgid "Templates to Edit"
 msgstr ""
 
-#: includes/settings/wcj-settings-template-editor.php:26
+#: includes/settings/wcj-settings-template-editor.php:50
 msgid "Save changes after you set this option to see new options fields."
 msgstr ""
 
-#: includes/settings/wcj-settings-template-editor.php:45
+#: includes/settings/wcj-settings-template-editor.php:69
 msgid "Default template path"
 msgstr ""
 
-#: includes/settings/wcj-settings-template-editor.php:46
+#: includes/settings/wcj-settings-template-editor.php:70
 msgid "Replaced template path"
 msgstr ""
 
@@ -18596,32 +18641,36 @@ msgid "Wholesale Levels Options"
 msgstr ""
 
 #: includes/settings/wcj-settings-wholesale-price.php:141
-#: includes/settings/wcj-settings-wholesale-price.php:198
+#: includes/settings/wcj-settings-wholesale-price.php:205
 msgid "Number of Levels"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:155
-#: includes/settings/wcj-settings-wholesale-price.php:212
+#: includes/settings/wcj-settings-wholesale-price.php:152
+msgid "Default Max Qty Level"
+msgstr ""
+
+#: includes/settings/wcj-settings-wholesale-price.php:162
+#: includes/settings/wcj-settings-wholesale-price.php:219
 msgid "Min Quantity"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:156
-#: includes/settings/wcj-settings-wholesale-price.php:213
+#: includes/settings/wcj-settings-wholesale-price.php:163
+#: includes/settings/wcj-settings-wholesale-price.php:220
 msgid "Minimum quantity to apply discount"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:178
+#: includes/settings/wcj-settings-wholesale-price.php:185
 msgid "Additional User Roles Options"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:180
+#: includes/settings/wcj-settings-wholesale-price.php:187
 msgid ""
 "If you want to set different wholesale pricing options for different user "
 "roles, fill this section. Please note that you can also use Booster's "
 "\"Price based on User Role\" module without filling this section."
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:184
+#: includes/settings/wcj-settings-wholesale-price.php:191
 msgid "User Roles Settings"
 msgstr ""
 

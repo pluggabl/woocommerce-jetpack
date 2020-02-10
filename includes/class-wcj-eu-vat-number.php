@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 4.6.1
+ * @version 4.7.1
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.6.0
+	 * @version 4.7.1
 	 * @todo    [feature] add option to add "Verify" button to frontend
 	 */
 	function __construct() {
@@ -41,7 +41,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 			add_action( 'wp_enqueue_scripts',                          array( $this, 'enqueue_scripts' ) );
 			add_action( 'wp_ajax_wcj_validate_eu_vat_number',          array( $this, 'wcj_validate_eu_vat_number' ) );
 			add_action( 'wp_ajax_nopriv_wcj_validate_eu_vat_number',   array( $this, 'wcj_validate_eu_vat_number' ) );
-			add_filter( 'init',                                        array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX );
+			add_filter( 'wp',                                          array( $this, 'maybe_exclude_vat' ), PHP_INT_MAX );
 			add_filter( 'woocommerce_cart_tax_totals',                 array( $this, 'maybe_remove_tax_totals' ), 1 );
 			add_filter( 'woocommerce_calculated_total',                array( $this, 'maybe_recalculate_tax_totals' ), 1, 2 );
 			add_action( 'woocommerce_after_checkout_validation',       array( $this, 'checkout_validate_vat' ), PHP_INT_MAX );
@@ -431,14 +431,18 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * need_to_exclude_vat.
 	 *
-	 * @version 4.6.0
+	 * @version 4.7.1
 	 * @since   4.6.0
 	 *
 	 * @return bool
 	 */
 	function need_to_exclude_vat() {
 		if (
-			( is_checkout() || is_cart() || defined( 'WOOCOMMERCE_CHECKOUT' ) || defined( 'WOOCOMMERCE_CART' ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) &&
+			(
+				( function_exists( 'is_checkout' ) && is_checkout() ) ||
+				( function_exists( 'is_cart' ) && is_cart() ) ||
+				defined( 'WOOCOMMERCE_CHECKOUT' ) || defined( 'WOOCOMMERCE_CART' ) || ( defined( 'DOING_AJAX' ) && DOING_AJAX )
+			) &&
 			! empty( WC()->customer ) &&
 			'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) &&
 			'yes' === get_option( 'wcj_eu_vat_number_disable_for_valid', 'yes' ) &&
@@ -465,7 +469,7 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 				return false;
 			}
 		} else {
-			if ( ! empty( WC()->customer ) ) {
+			if ( ! function_exists( 'WC' ) || ! empty( WC()->customer ) ) {
 				return false;
 			}
 		}

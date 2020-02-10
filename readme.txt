@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.3
-Stable tag: 4.7.0
+Stable tag: 4.7.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,22 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 4.7.1 - 10/02/2020 =
+* Feature - EMAILS & MISC. - Template Editor - Add option to set custom `/woocommerce/` folder among other paths from other possible plugins.
+* Fix - CART & CHECKOUT - EU VAT Number - Fix possible errors like "Call to Undefined WooCommerce functions".
+* Fix - PRICES & CURRENCIES - PHP Warning: Fix "A non-numeric value encountered".
+* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Fix possible missing products with 'WooCommerce Price Filter Compatibility' option enabled by removing the 'wc_product_meta_lookup' table comparison.
+* Fix - PRODUCTS - Product by Condition - Improve performance by setting invisible products on transient.
+* Fix - PRODUCTS - Product Addons - Fix products getting "Required" with no reason.
+* Fix - SHIPPING & ORDERS - Custom Shipping - Fix possible Fatal error "Class 'WC_Shipping_WCJ_Custom_W_Zones' not found".
+* Dev - PAYMENT GATEWAYS - Custom Gateways - Add 'order_id' shortcode param automatically to a possible `[wcj_order_meta]` shortcode added to 'instructions'.
+* Dev - PAYMENT GATEWAYS - Gateways by User Role - Add 'Multiple Role Checking' option on pro version.
+* Dev - PDF Invoicing - Page Settings - Add option to enable/disable background image url parsing.
+* Dev - PRICES & CURRENCIES - Price by User Role - Add option to check for child categories.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Add 'Default Max Qty Level' option to fix compatibility issues with decimal quantities when using plugins like 'Product Quantity' for instance.
+* Dev - Shortcodes - Add 'result_key' param to all shortcodes with the purpose of filtering a possible array result displaying only a key from it.
+* WC tested up to: 3.9
 
 = 4.7.0 - 27/12/2019 =
 * Fix - CART & CHECKOUT - Checkout Custom Fields - Preserve select field value when editing the order from admin.

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes
  *
- * @version 4.4.0
+ * @version 4.7.1
  * @author  Algoritmika Ltd.
  */
 
@@ -13,6 +13,8 @@ if ( ! class_exists( 'WCJ_Shortcodes' ) ) :
 class WCJ_Shortcodes {
 
 	/**
+	 * @version 4.7.1
+	 *
 	 * Constructor.
 	 */
 	function __construct() {
@@ -22,6 +24,22 @@ class WCJ_Shortcodes {
 		}
 
 		add_filter( 'wcj_shortcodes_list', array( $this, 'add_shortcodes_to_the_list' ) );
+		add_filter( 'wcj_shortcode_result', array( $this, 'add_result_key_param_to_shortcode_result' ), 10, 4 );
+	}
+
+	/**
+	 * add_result_key_param_to_shortcode_result.
+	 *
+	 * @version 4.7.1
+	 * @since   4.7.1
+	 *
+	 * @return mixed
+	 */
+	function add_result_key_param_to_shortcode_result( $result, $atts, $content, $shortcode ) {
+		if ( is_array( $result ) && isset( $atts['result_key'] ) && ! empty( $atts['result_key'] ) ) {
+			$result = $result[ $atts['result_key'] ];
+		}
+		return $result;
 	}
 
 	/**
@@ -283,6 +301,8 @@ class WCJ_Shortcodes {
 		}
 		return $atts['on_empty'];
 	}
+
+
 
 	/**
 	 * extra_check.

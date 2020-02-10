@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Page Settings
  *
- * @version 4.2.0
+ * @version 4.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -87,6 +87,14 @@ foreach ( $invoice_types as $invoice_type ) {
 					'</a>' ),
 			'desc_tip' => __( 'Leave blank to disable', 'woocommerce-jetpack' ),
 			'class'    => 'widefat',
+		),
+		array(
+			'title'    => __( 'Parse Background Image URL', 'woocommerce-jetpack' ),
+			'id'       => 'wcj_invoicing_' . $invoice_type['id'] . '_background_image_parse',
+			'default'  => 'yes',
+			'type'     => 'checkbox',
+			'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+			'desc_tip' => __( 'Converts the Background Image URL to its local path.', 'woocommerce-jetpack' ) . '<br>' .__( 'If you are experiencing issues with displaying background image, please try to disable this option', 'woocommerce-jetpack' ),
 		),
 		array(
 			'type'     => 'sectionend',

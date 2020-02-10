@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways by User Role
  *
- * @version 3.2.2
+ * @version 4.7.1
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  */
@@ -20,7 +20,6 @@ class WCJ_Payment_Gateways_By_User_Role extends WCJ_Module {
 	 * @since   2.5.3
 	 */
 	function __construct() {
-
 		$this->id         = 'payment_gateways_by_user_role';
 		$this->short_desc = __( 'Gateways by User Role', 'woocommerce-jetpack' );
 		$this->desc       = __( 'Set user roles to include/exclude for payment gateways to show up.', 'woocommerce-jetpack' );
@@ -35,19 +34,19 @@ class WCJ_Payment_Gateways_By_User_Role extends WCJ_Module {
 	/**
 	 * available_payment_gateways.
 	 *
-	 * @version 3.0.0
+	 * @version 4.7.1
 	 * @since   2.5.3
 	 */
 	function available_payment_gateways( $_available_gateways ) {
-		$customer_role = wcj_get_current_user_first_role();
+		$customer_roles = 'no' === ( $multi_role_check = get_option( 'wcj_payment_gateways_by_user_role_multi_role_check', 'no' ) ) ? array( wcj_get_current_user_first_role() ) : wcj_get_current_user_all_roles();
 		foreach ( $_available_gateways as $key => $gateway ) {
 			$include_roles = get_option( 'wcj_gateways_user_roles_include_' . $key, '' );
-			if ( ! empty( $include_roles ) && ! in_array( $customer_role, $include_roles ) ) {
+			if ( ! empty( $include_roles ) && ! array_intersect( $customer_roles, $include_roles ) ) {
 				unset( $_available_gateways[ $key ] );
 				continue;
 			}
 			$exclude_roles = get_option( 'wcj_gateways_user_roles_exclude_' . $key, '' );
-			if ( ! empty( $exclude_roles ) && in_array( $customer_role, $exclude_roles ) ) {
+			if ( ! empty( $exclude_roles ) && array_intersect( $customer_roles, $exclude_roles ) ) {
 				unset( $_available_gateways[ $key ] );
 				continue;
 			}

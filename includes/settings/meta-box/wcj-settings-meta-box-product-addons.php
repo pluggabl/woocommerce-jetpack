@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product Addons
  *
- * @version 4.6.1
+ * @version 4.7.1
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -151,8 +151,8 @@ for ( $i = 1; $i <= $total_number; $i++ ) {
 			'default'  => 'no',
 			'type'     => 'select',
 			'options'  => array(
-				'yes' => __( 'Yes', 'woocommerce-jetpack' ),
 				'no'  => __( 'No', 'woocommerce-jetpack' ),
+				'yes' => __( 'Yes', 'woocommerce-jetpack' ),
 			),
 		),
 		array(
