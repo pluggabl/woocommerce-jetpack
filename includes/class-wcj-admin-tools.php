@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 4.1.0
+ * @version 4.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -63,7 +63,33 @@ class WCJ_Admin_Tools extends WCJ_Module {
 			if ( 0 != get_option( 'wcj_product_json_search_limit', 0 ) ) {
 				add_filter( 'woocommerce_json_search_limit', array( $this, 'set_json_search_limit' ) );
 			}
+			// Enable interface by user role
+			add_filter( 'wcj_can_create_admin_interface', array( $this, 'enable_interface_by_user_roles' ) );
 		}
+	}
+
+	/**
+	 * enable_interface_by_user_roles.
+	 *
+	 * @version 4.8.0
+	 * @since   4.8.0
+	 *
+	 * @param $allowed
+	 *
+	 * @return bool
+	 */
+	function enable_interface_by_user_roles( $allowed ) {
+		if ( empty( $disabled_roles = get_option( 'wcj_admin_tools_enable_interface_by_role', array() ) ) ) {
+			return $allowed;
+		}
+		$current_user_roles = wcj_get_current_user_all_roles();
+		if (
+			! in_array( 'administrator', $current_user_roles ) &&
+			! array_intersect( $disabled_roles, $current_user_roles )
+		) {
+			$allowed = false;
+		}
+		return $allowed;
 	}
 
 	/**

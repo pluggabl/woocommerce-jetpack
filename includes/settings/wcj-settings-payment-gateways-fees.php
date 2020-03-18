@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Gateways Fees and Discounts
  *
- * @version 4.1.0
+ * @version 4.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -10,7 +10,26 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $products           = wcj_get_products();
-$settings           = array();
+$settings           = array(
+	array(
+		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => "wcj_gateways_fees",
+	),
+	array(
+		'title'             => __( 'Force Default Payment Gateway', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip'          => sprintf( __( 'Pre-sets the default available payment gateway on cart and checkout pages.' ) . '<br />' . __( 'The chosen payment will be the first one from the <a href="%s">Payments</a> page', 'woocommerce-jetpack' ), admin_url( 'admin.php?page=wc-settings&tab=checkout' ) ),
+		'type'              => 'checkbox',
+		'default'           => 'no',
+		'id'                => "wcj_gateways_fees_force_default_payment_gateway",
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => "wcj_gateways_fees",
+	),
+);
 $available_gateways = WC()->payment_gateways->payment_gateways();
 foreach ( $available_gateways as $key => $gateway ) {
 	$settings = array_merge( $settings, array(

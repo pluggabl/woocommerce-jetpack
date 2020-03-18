@@ -2,8 +2,8 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 4.1.0
- * @since   2.8.0
+ * @version 4.8.0
+ * @since   2.7.2
  * @author  Algoritmika Ltd.
  */
 
@@ -40,6 +40,17 @@ return array(
 		'id'       => 'wcj_admin_tools_suppress_admin_notices',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'             => __( 'Enable Interface By User Roles', 'woocommerce-jetpack' ),
+		'desc_tip'          => __( 'The interface can\'t be disabled for The Administrator role.', 'woocommerce-jetpack' ) . '<br /><br />' . __( 'Leave it empty to enable the interface for all the roles.', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Disables the whole Booster admin interface for not selected roles.', 'woocommerce-jetpack' ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'id'                => 'wcj_admin_tools_enable_interface_by_role',
+		'default'           => '',
+		'type'              => 'multiselect',
+		'class'             => 'chosen_select',
+		'options'           => wcj_get_user_roles_options(),
 	),
 	array(
 		'type'     => 'sectionend',

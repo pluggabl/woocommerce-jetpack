@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Core - Admin
  *
- * @version 3.5.3
+ * @version 4.8.0
  * @since   3.2.4
  * @author  Algoritmika Ltd.
  */
@@ -16,18 +16,21 @@ class WCJ_Admin {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.2.4
+	 * @version 4.8.0
 	 * @since   3.2.4
 	 */
 	function __construct() {
 		if ( is_admin() ) {
 			add_filter( 'booster_message',                                           'wcj_get_plus_message', 100, 3 );
-			add_filter( 'woocommerce_get_settings_pages',                            array( $this, 'add_wcj_settings_tab' ), 1 );
-			add_filter( 'plugin_action_links_' . plugin_basename( WCJ_PLUGIN_FILE ), array( $this, 'action_links' ) );
-			add_action( 'admin_menu',                                                array( $this, 'booster_menu' ), 100 );
-			add_filter( 'admin_footer_text',                                         array( $this, 'admin_footer_text' ), 2 );
-			if ( 'woocommerce-jetpack.php' === basename( WCJ_PLUGIN_FILE ) ) {
-				add_action( 'admin_notices',                                         array( $this, 'check_plus_version' ) );
+
+			if ( apply_filters( 'wcj_can_create_admin_interface', true ) ) {
+				add_filter( 'woocommerce_get_settings_pages',                            array( $this, 'add_wcj_settings_tab' ), 1 );
+				add_filter( 'plugin_action_links_' . plugin_basename( WCJ_PLUGIN_FILE ), array( $this, 'action_links' ) );
+				add_action( 'admin_menu',                                                array( $this, 'booster_menu' ), 100 );
+				add_filter( 'admin_footer_text',                                         array( $this, 'admin_footer_text' ), 2 );
+				if ( 'woocommerce-jetpack.php' === basename( WCJ_PLUGIN_FILE ) ) {
+					add_action( 'admin_notices',                                         array( $this, 'check_plus_version' ) );
+				}
 			}
 		}
 	}

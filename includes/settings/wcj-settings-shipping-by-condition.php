@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping by Condition
  *
- * @version 4.0.0
+ * @version 4.8.0
  * @since   3.2.1
  * @author  Algoritmika Ltd.
  * @todo    [dev] hide settings for the disabled subsection
@@ -15,6 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 $use_shipping_instances = ( 'yes' === get_option( 'wcj_' . $this->id . '_use_shipping_instance', 'no' ) );
 $shipping_methods       = ( $use_shipping_instances ? wcj_get_shipping_methods_instances( true ) : WC()->shipping()->load_shipping_methods() );
 $settings = array();
+
+// Multiple Roles Option
+$check_multiple_roles_option = array(
+	'title'    => __( 'Multiple Role Checking', 'woocommerce-jetpack' ),
+	'type'     => 'checkbox',
+	'default'  => 'no',
+	'desc_tip' => __( 'Enable if you have some plugin that allows users with multiple roles like "User Role Editor".', 'woocommerce-jetpack' ),
+	'desc'     => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+	'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	'id'       => 'wcj_' . $this->id . '_check_multiple_roles',
+);
+
 $settings = array_merge( $settings, array(
 	array(
 		'title'    => __( 'General Options', 'woocommerce-jetpack' ),
@@ -30,11 +42,13 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_' . $this->id . '_use_shipping_instance',
 		'default'  => 'no',
 	),
+	$this->add_multiple_roles_option() ? $check_multiple_roles_option : array(),
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_' . $this->id . '_general_options',
 	),
 ) );
+
 foreach ( $this->condition_options as $options_id => $options_data ) {
 	$settings = array_merge( $settings, array(
 		array(

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
- * @version 4.7.0
+ * @version 4.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.5.0
+	 * @version 4.8.0
 	 * @todo    (maybe) check if `'wcj_checkout_custom_field_customer_meta_fields_' . $i` option should affect `add_default_checkout_custom_fields`
 	 */
 	function __construct() {
@@ -53,6 +53,9 @@ class WCJ_Checkout_Custom_Fields extends WCJ_Module {
 
 			// Update checkout fields from admin edit order
 			add_action( 'save_post_shop_order',                                array( $this, 'update_custom_checkout_fields_order_meta' ) );
+
+			// Update checkout fields from admin on a subscription order
+			add_action( 'save_post_shop_subscription',                         array( $this, 'update_custom_checkout_fields_order_meta' ) );
 		}
 	}
 

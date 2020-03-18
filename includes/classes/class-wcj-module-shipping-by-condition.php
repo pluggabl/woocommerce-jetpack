@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Condition
  *
- * @version 4.0.0
+ * @version 4.8.0
  * @since   3.2.0
  * @author  Algoritmika Ltd.
  */
@@ -25,6 +25,18 @@ abstract class WCJ_Module_Shipping_By_Condition extends WCJ_Module {
 			$this->use_shipping_instances = ( 'yes' === get_option( 'wcj_' . $this->id . '_use_shipping_instance', 'no' ) );
 			add_filter( 'woocommerce_package_rates', array( $this, 'available_shipping_methods' ), wcj_get_woocommerce_package_rates_module_filter_priority( $this->id ) , 2 );
 		}
+	}
+
+	/**
+	 * check_multiple_roles.
+	 *
+	 * @version 4.8.0
+	 * @since   4.8.0
+	 *
+	 * @return bool
+	 */
+	function add_multiple_roles_option(){
+		return false;
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by User Role
  *
- * @version 3.6.0
+ * @version 4.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -52,19 +52,31 @@ class WCJ_Shipping_By_User_Role extends WCJ_Module_Shipping_By_Condition {
 	}
 
 	/**
+	 * check_multiple_roles.
+	 *
+	 * @version 4.8.0
+	 * @since   4.8.0
+	 *
+	 * @return bool
+	 */
+	public function add_multiple_roles_option() {
+		return true;
+	}
+
+	/**
 	 * check.
 	 *
-	 * @version 3.6.0
+	 * @version 4.8.0
 	 * @since   3.2.0
 	 * @todo    use `$package` (and in this case update `wcj_get_left_to_free_shipping()`)
 	 */
 	function check( $options_id, $user_roles_or_ids_or_membership_plans, $include_or_exclude, $package ) {
 		switch( $options_id ) {
 			case 'user_roles':
-				if ( ! isset( $this->customer_role ) ) {
-					$this->customer_role = wcj_get_current_user_first_role();
+				if ( empty( $this->customer_roles ) ) {
+					$this->customer_roles = 'no' === ( $multi_role_check = get_option( 'wcj_' . $this->id . '_check_multiple_roles', 'no' ) ) ? array( wcj_get_current_user_first_role() ) : wcj_get_current_user_all_roles();
 				}
-				return in_array( $this->customer_role, $user_roles_or_ids_or_membership_plans );
+				return count( array_intersect( $this->customer_roles, $user_roles_or_ids_or_membership_plans ) ) > 0;
 			case 'user_id':
 				if ( ! isset( $this->user_id ) ) {
 					$this->user_id = get_current_user_id();

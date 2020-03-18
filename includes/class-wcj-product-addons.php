@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 4.7.0
+ * @version 4.8.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names)
@@ -101,7 +101,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * import_enable_by_variation_meta.
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.0
 	 * @since   4.7.0
 	 *
 	 * @param $data
@@ -117,17 +117,12 @@ class WCJ_Product_Addons extends WCJ_Module {
 		) {
 			return $data;
 		}
-		$meta_data_key = - 1;
 		foreach ( $data['meta_data'] as $key => $meta_data ) {
 			if ( false !== strpos( $meta_data['key'], '_wcj_product_addons_per_product_enable_by_variation_' ) ) {
-				$meta_data_key = $key;
-				break;
-			}
-		}
-		if ( - 1 != $meta_data_key ) {
-			$new_value = array_filter( preg_split( "/\r\n|\n|\r/", $data['meta_data'][ $meta_data_key ]['value'] ) );
-			if ( ! empty( $new_value ) ) {
-				$data['meta_data'][ $meta_data_key ]['value'] = $new_value;
+				$new_value = array_filter( preg_split( "/\n|\r\n?/", $data['meta_data'][ $key ]['value'] ) );
+				if ( ! empty( $new_value ) ) {
+					$data['meta_data'][ $key ]['value'] = $new_value;
+				}
 			}
 		}
 		return $data;
@@ -136,7 +131,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * export_enable_by_variation_meta.
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.0
 	 * @since   4.7.0
 	 *
 	 * @param $value
@@ -153,7 +148,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 		) {
 			return $value;
 		}
-		$value = implode( "\n", $value );
+		$value = implode( "\n", (array) $value );
 		return $value;
 	}
 
@@ -557,7 +552,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * Adds info to order details (and emails).
 	 *
-	 * @version 3.8.0
+	 * @version 4.8.0
 	 * @since   2.5.3
 	 */
 	function add_info_to_order_item_name( $name, $item, $is_cart = false ) {
@@ -577,8 +572,8 @@ class WCJ_Product_Addons extends WCJ_Module {
 			if ( isset( $item[ $addon['price_key'] ] ) ) {
 				$addon_price = ( $is_cart ) ? $this->maybe_convert_currency( $item[ $addon['price_key'] ], $_product ) : $item[ $addon['price_key'] ];
 				$addons_info .= str_replace(
-					array( '%addon_label%', '%addon_price%' ),
-					array( $item[ $addon['label_key'] ], wc_price( wcj_get_product_display_price( $_product, $addon_price ) ) ),
+					array( '%addon_label%', '%addon_price%', '%addon_title%' ),
+					array( $item[ $addon['label_key'] ], wc_price( wcj_get_product_display_price( $_product, $addon_price ) ), $addon['title'] ),
 					$item_format
 				);
 			}

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - My Account
  *
- * @version 4.3.0
+ * @version 4.8.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -161,6 +161,14 @@ for ( $i = 1; $i <= apply_filters( 'booster_option', 1, get_option( 'wcj_my_acco
 			'title'    => __( 'Title', 'woocommerce-jetpack' ),
 			'type'     => 'text',
 			'id'       => "wcj_my_account_custom_pages_title[{$i}]",
+		),
+		array(
+			'title'             => __( 'Endpoint', 'woocommerce-jetpack' ),
+			'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+			'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+			'desc_tip'          => __( 'The Custom Page url, after /my-account/', 'woocommerce-jetpack' ) . '<br /><br />' . sprintf( __( 'If empty, it will be added "?section=your-page" after /my-account/', 'woocommerce-jetpack' ) ),
+			'type'              => 'text',
+			'id'                => "wcj_my_account_custom_pages_endpoint[{$i}]",
 		),
 		array(
 			'title'    => __( 'Content', 'woocommerce-jetpack' ),

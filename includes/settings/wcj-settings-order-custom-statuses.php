@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Settings - Order Custom Statuses
  *
- * @version 4.0.0
+ * @version 4.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -46,6 +46,16 @@ return array(
 		'desc_tip' => __( 'By default orders with custom statuses are not editable (same like with standard WooCommerce Completed status). If you wish to make custom status orders editable, enable the checkbox here.', 'woocommerce-jetpack' ) . ' ' .
 			apply_filters( 'booster_message', '', 'desc' ),
 		'id'       => 'wcj_orders_custom_statuses_is_order_editable',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'title'    => __( 'Remove Status Prefix', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Removes the <code>wc-</code> prefix from custom statuses.', 'woocommerce-jetpack' ) . ' ' . __( 'Enable it if you can\'t see the orders or the statuses.', 'woocommerce-jetpack' ) . ' ' .
+		              apply_filters( 'booster_message', '', 'desc' ),
+		'id'       => 'wcj_orders_custom_statuses_remove_prefix',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),

@@ -3,7 +3,7 @@ Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.3
-Stable tag: 4.7.1
+Stable tag: 4.8.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,26 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 4.8.0 - 18/03/2020 =
+* Fix - Functions - General - Fix php warning if WPML isn't active and 'WPML: Get Terms in All Languages' is enabled.
+* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Remove "Third Party Price Filter Compatibility" option.
+* Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Fix Compatibility with Price Filter widget.
+* Fix - PRICES & CURRENCIES - Fix "WooCommerce Price Filter Compatibility" option.
+* Fix - PRODUCTS - Product Availability by Date - Fix wrong availabilities by always creating the date with `DateTime::createFromFormat`.
+* Fix - PRODUCTS - Product Addons - Fix warning when exporting '_wcj_product_addons_per_product_enable_by_variation_%' meta.
+* Fix - PRODUCTS - Product Addons - Fix wrong '_wcj_product_addons_per_product_enable_by_variation_%' meta value after import.
+* Fix - SHIPPING & ORDERS - Order Custom Statuses - Add compatibility with "Load Modules on Init Hook" option.
+* Dev - CART & CHECKOUT - Checkout Custom Fields - Update fields on admin for subscription orders.
+* Dev - EMAILS & MISC. - Admin Tools - Add 'Enable Interface By User Roles' option allowing to disable the whole Booster admin interface for not selected roles.
+* Dev - EMAILS & MISC. - My Account - Add 'Endpoint' option to Custom Pages as a plus feature.
+* Dev - PAYMENT GATEWAYS - Gateways Fees and Discounts - Add 'Force Default Payment Gateway' option allowing to pre-set the default available payment gateway on cart and checkout pages.
+* Dev - PRICES & CURRENCIES - Global Discount - Add 'Compatibility With Products Shortcode' option, allowing the on_sale attribute to work.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Add new compatibility option with native WooCommerce coupons.
+* Dev - PRODUCTS - Product Addons - Add `%addon_title%` template variable on Each Addon from Cart Template.
+* Dev - SHIPPING & ORDERS - Order Custom Statuses - Add "Remove Status Prefix" option added.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Users - Add 'Multiple Role Checking' option for plus version.
+* WC tested up to: 4.0
 
 = 4.7.1 - 10/02/2020 =
 * Feature - EMAILS & MISC. - Template Editor - Add option to set custom `/woocommerce/` folder among other paths from other possible plugins.

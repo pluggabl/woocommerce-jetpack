@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Gateways Fees and Discounts
  *
- * @version 4.1.0
+ * @version 4.8.0
  * @since   2.2.2
  * @author  Algoritmika Ltd.
  */
@@ -129,20 +129,41 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 	/**
 	 * get_current_gateway.
 	 *
-	 * @version 3.3.0
+	 * @version 4.8.0
 	 * @since   3.3.0
 	 */
 	function get_current_gateway() {
+		$gateway = '';
+
 		if ( isset( $_GET['wc-api'] ) && 'WC_Gateway_PayPal_Express_AngellEYE' === $_GET['wc-api'] ) {
-			return 'paypal_express'; // PayPal for WooCommerce (By Angell EYE)
+			$gateway = 'paypal_express'; // PayPal for WooCommerce (By Angell EYE)
 		} elseif (
 			( isset( $_GET['wc-ajax'] ) && 'wc_ppec_generate_cart' === $_GET['wc-ajax'] ) ||
 			( isset( $_GET['startcheckout'] ) && 'true' === $_GET['startcheckout'] )
 		) {
-			return 'ppec_paypal'; // WooCommerce PayPal Express Checkout Payment Gateway (By WooCommerce)
+			$gateway = 'ppec_paypal'; // WooCommerce PayPal Express Checkout Payment Gateway (By WooCommerce)
 		} else {
-			return WC()->session->chosen_payment_method;
+			$gateway = WC()->session->get( 'chosen_payment_method' );
 		}
+
+		// Pre-sets the default available payment gateway on cart and checkout pages.
+		if (
+			empty( $gateway ) &&
+			'yes' === get_option( 'wcj_gateways_fees_force_default_payment_gateway', 'no' ) &&
+			( is_checkout() || is_cart() )
+		) {
+			$gateways = WC()->payment_gateways->get_available_payment_gateways();
+			if ( $gateways ) {
+				foreach ( $gateways as $gateway ) {
+					if ( 'yes' === $gateway->enabled ) {
+						WC()->session->set( 'chosen_payment_method', $gateway->id );
+						$gateway = WC()->session->get( 'chosen_payment_method' );
+						break;
+					}
+				}
+			}
+		}
+		return $gateway;
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 4.4.0
+ * @version 4.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -155,6 +155,23 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_price_by_country_options',
+	),
+	array(
+		'title'    => __( 'Compatibility', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_price_by_country_compatibility',
+	),
+	array(
+		'title'    => __( 'WooCommerce Coupons', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'When a fixed coupon is used its value changes according to the current currency', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_country_compatibility_wc_coupons',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_price_by_country_compatibility',
 	),
 	array(
 		'title'    => __( 'Advanced', 'woocommerce-jetpack' ),

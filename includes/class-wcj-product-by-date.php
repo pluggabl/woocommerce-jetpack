@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Availability by Date
  *
- * @version 4.7.0
+ * @version 4.8.0
  * @since   2.9.1
  * @author  Algoritmika Ltd.
  */
@@ -147,21 +147,18 @@ class WCJ_Product_By_Date extends WCJ_Module {
 	/**
 	 * check_is_purchasable_by_date.
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.0
 	 * @since   2.9.1
 	 * @todo    validate `wcj_product_by_date_` option before checking (or even better earlier, when option is saved by admin)
 	 */
 	function check_is_purchasable_by_date( $purchasable, $_product ) {
 		if ( $purchasable ) {
 			if ( false !== ( $direct_date = $this->maybe_get_direct_date( wcj_get_product_id_or_variation_parent_id( $_product ) ) ) ) {
-				$timestamp = strtotime( $direct_date );
-				if ( false === $timestamp ) {
-					$date = DateTime::createFromFormat( get_option( 'wcj_product_by_date_direct_date_format', 'm/d/Y' ), $direct_date, wcj_timezone() );
-					if ( false === $date ) {
-						return false;
-					}
-					$timestamp = $date->getTimestamp();
+				$date = DateTime::createFromFormat( get_option( 'wcj_product_by_date_direct_date_format', 'm/d/Y' ), $direct_date, wcj_timezone() );
+				if ( false === $date ) {
+					return false;
 				}
+				$timestamp = $date->getTimestamp();
 				return ( $this->time_now >= $timestamp );
 			} else {
 				$_date = $this->get_product_availability_this_month( $_product );

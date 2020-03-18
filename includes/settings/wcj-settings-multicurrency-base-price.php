@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
- * @version 4.4.0
+ * @version 4.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `if ( isset( $all_currencies[ $currency_from ] ) ) { unset( $all_currencies[ $currency_from ] ); }`
@@ -83,14 +83,6 @@ $settings = array(
 		'title'    => __( 'WooCommerce Price Filter Compatibility', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Add compatibility with WooCommerce Price Filter Widget','woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_base_price_advanced_price_filter_comp',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
-		'title'    => __( 'Third Party Price Filter Compatibility', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Add compatibility with Third Party Price Filter Widgets','woocommerce-jetpack' ),
-		'desc_tip' => __( 'Requires WooCommerce Price Filter Compatibility option enabled','woocommerce-jetpack' ),
-		'id'       => 'wcj_multicurrency_base_price_advanced_price_filter_comp_tp',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),

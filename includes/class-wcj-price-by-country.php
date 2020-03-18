@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Prices and Currencies by Country
  *
- * @version 4.1.0
+ * @version 4.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -22,7 +22,7 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.0
+	 * @version 4.8.0
 	 */
 	function __construct() {
 
@@ -74,6 +74,9 @@ class WCJ_Price_By_Country extends WCJ_Module {
 					add_action( 'woocommerce_ajax_save_product_variations', array( $this, 'update_products_price_by_country_product_saved_ajax' ), PHP_INT_MAX, 1 );
 				}
 			}
+
+			// Coupons Compatibility
+			add_filter( 'woocommerce_coupon_get_discount_amount', array( $this, 'fix_wc_coupon_currency' ), 10, 5 );
 		}
 
 		// Price Filter Widget
@@ -84,6 +87,35 @@ class WCJ_Price_By_Country extends WCJ_Module {
 		if ( is_admin() ) {
 			include_once( 'price-by-country/class-wcj-price-by-country-group-generator.php' );
 		}
+	}
+
+	/**
+	 * fix_wc_coupon_currency.
+	 *
+	 * @version 4.8.0
+	 * @since   4.8.0
+	 *
+	 * @param $amount
+	 * @param $discount
+	 * @param $cart_item
+	 * @param $single
+	 * @param $wc_coupon
+	 *
+	 * @return float|int
+	 */
+	function fix_wc_coupon_currency( $amount, $discount, $cart_item, $single, $wc_coupon ) {
+		if (
+			'yes' !== get_option( 'wcj_price_by_country_compatibility_wc_coupons', 'no' ) ||
+			'fixed_cart' !== $wc_coupon->get_discount_type()
+		) {
+			return $amount;
+		}
+
+		if ( ! empty( $this->core ) ) {
+			$amount = $this->core->change_price( $amount, null );
+		}
+
+		return $amount;
 	}
 
 	/**

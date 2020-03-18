@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Global Discount
  *
- * @version 4.7.0
+ * @version 4.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -180,6 +180,14 @@ $settings = array_merge( $settings, array(
 		'title'    => __( 'Advanced Settings', 'woocommerce-jetpack' ),
 		'type'     => 'title',
 		'id'       => 'wcj_global_discount_advanced_options',
+	),
+	array(
+		'title'    => __( 'Compatibility With Products Shortcode', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This will add compatibility with [products] shortcode that try to get sale products, like [products on_sale="true"]', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_global_discount_products_shortcode_compatibility',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Global Discount in Admin', 'woocommerce-jetpack' ),

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Addons
  *
- * @version 4.7.0
+ * @version 4.8.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) add `woocommerce_payment_complete` to `$qty_triggers` (also maybe add this trigger to "PDF Invoicing" module)
@@ -368,7 +368,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'title'    => __( 'Each Addon', 'woocommerce-jetpack' ),
-		'desc'     => wcj_message_replaced_values( array( '%addon_label%', '%addon_price%' ) ),
+		'desc'     => wcj_message_replaced_values( array( '%addon_label%', '%addon_price%', '%addon_title%' ) ),
 		'id'       => 'wcj_product_addons_cart_format_each_addon',
 		'default'  => '<dt>%addon_label%:</dt><dd>%addon_price%</dd>',
 		'type'     => 'textarea',
@@ -399,7 +399,7 @@ $settings = array_merge( $settings, array(
 	),
 	array(
 		'title'    => __( 'Each Addon', 'woocommerce-jetpack' ),
-		'desc'     => wcj_message_replaced_values( array( '%addon_label%', '%addon_price%' ) ),
+		'desc'     => wcj_message_replaced_values( array( '%addon_label%', '%addon_price%', '%addon_title%' ) ),
 		'id'       => 'wcj_product_addons_order_details_format_each_addon',
 		'default'  => '&nbsp;| %addon_label%: %addon_price%',
 		'type'     => 'textarea',

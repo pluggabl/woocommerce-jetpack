@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - General
  *
- * @version 4.7.0
+ * @version 4.8.0
  * @author  Algoritmika Ltd.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
@@ -884,7 +884,7 @@ if ( ! function_exists( 'wcj_remove_class_filter' ) ) {
 	}
 }
 
-if ( ! function_exists( 'wcj_remove_class_filter' ) ) {
+if ( ! function_exists( 'wcj_remove_class_action' ) ) {
 	/**
 	 * Remove action added with a callback to a class without access.
 	 *
@@ -933,11 +933,14 @@ if ( ! function_exists( 'wcj_remove_wpml_terms_filters' ) ) {
 	 *
 	 * @see https://wpml.org/forums/topic/get-all-terms-of-all-languages-outside-loop/
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.0
 	 * @since   4.7.0
 	 */
 	function wcj_remove_wpml_terms_filters() {
 		global $sitepress;
+		if ( ! $sitepress ) {
+			return;
+		}
 		remove_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ) );
 		remove_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
 		remove_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ) );
@@ -950,12 +953,15 @@ if ( ! function_exists( 'wcj_add_wpml_terms_filters' ) ) {
 	 *
 	 * @see http://support.themeblvd.com/forums/topic/wpml-sitepress-php-error-on-backend-due-to-layout-builder/
 	 *
-	 * @version 4.7.0
+	 * @version 4.8.0
 	 * @since   4.7.0
 	 */
 	function wcj_add_wpml_terms_filters() {
 		// restore WPML term filters
 		global $sitepress;
+		if ( ! $sitepress ) {
+			return;
+		}
 		add_filter( 'terms_clauses', array( $sitepress, 'terms_clauses' ), 10, 3 );
 		add_filter( 'get_term', array( $sitepress, 'get_term_adjust_id' ) );
 		add_filter( 'get_terms_args', array( $sitepress, 'get_terms_args_filter' ), 10, 2 );

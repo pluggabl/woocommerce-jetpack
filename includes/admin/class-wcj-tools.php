@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Tools
  *
- * @version 3.5.3
+ * @version 4.8.0
  * @author  Algoritmika Ltd.
  */
 
@@ -17,24 +17,28 @@ class WCJ_Tools {
 	 */
 	function __construct() {
 		if ( is_admin() ) {
-			add_action( 'admin_menu', array( $this, 'add_wcj_tools' ), 100 );
+			if ( apply_filters( 'wcj_can_create_admin_interface', true ) ) {
+				add_action( 'admin_menu', array( $this, 'add_wcj_tools' ), 100 );
+			}
 		}
 	}
 
 	/**
 	 * add_wcj_tools.
 	 *
-	 * @version 3.5.3
+	 * @version 4.8.0
 	 */
 	function add_wcj_tools() {
-		add_submenu_page(
-			'woocommerce',
-			__( 'Booster for WooCommerce Tools', 'woocommerce-jetpack' ),
-			__( 'Booster Tools', 'woocommerce-jetpack' ),
-			( 'yes' === get_option( 'wcj_' . 'admin_tools' . '_enabled', 'no' ) && 'yes' === get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
-			'wcj-tools',
-			array( $this, 'create_tools_page' )
-		);
+		if ( apply_filters( 'wcj_can_create_admin_interface', true ) ) {
+			add_submenu_page(
+				'woocommerce',
+				__( 'Booster for WooCommerce Tools', 'woocommerce-jetpack' ),
+				__( 'Booster Tools', 'woocommerce-jetpack' ),
+				( 'yes' === get_option( 'wcj_' . 'admin_tools' . '_enabled', 'no' ) && 'yes' === get_option( 'wcj_admin_tools_show_menus_to_admin_only', 'no' ) ? 'manage_options' : 'manage_woocommerce' ),
+				'wcj-tools',
+				array( $this, 'create_tools_page' )
+			);
+		}
 	}
 
 	/**

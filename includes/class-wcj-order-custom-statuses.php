@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Custom Statuses
  *
- * @version 4.0.0
+ * @version 4.8.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.0.0
+	 * @version 4.8.0
 	 * @todo    [feature] add options to change icon and icon's color for all statuses (i.e. not only custom)
 	 * @todo    [dev] maybe rename module to "Custom Order Statuses"
 	 */
@@ -38,8 +38,12 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 		if ( $this->is_enabled() ) {
 
 			// Core
-			add_filter( 'wc_order_statuses',                  array( $this, 'add_custom_statuses_to_filter' ), PHP_INT_MAX );
-			add_action( 'init',                               array( $this, 'register_custom_post_statuses' ) );
+			add_filter( 'wc_order_statuses', array( $this, 'add_custom_statuses_to_filter' ), PHP_INT_MAX );
+			if ( 'no' === get_option( 'wcj_load_modules_on_init', 'no' ) ) {
+				add_action( 'init', array( $this, 'register_custom_post_statuses' ) );
+			} else {
+				$this->register_custom_post_statuses();
+			}
 
 			// CSS
 			add_action( 'admin_head',                         array( $this, 'hook_statuses_icons_css' ) );
@@ -101,7 +105,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 		} else {
 			if ( $cut_prefix ) {
 				$orders_custom_statuses_no_prefix = array();
-				foreach( $orders_custom_statuses as $status => $status_name ) {
+				foreach ( $orders_custom_statuses as $status => $status_name ) {
 					$orders_custom_statuses_no_prefix[ substr( $status, 3 ) ] = $status_name;
 				}
 				return $orders_custom_statuses_no_prefix;
@@ -309,11 +313,11 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 	/**
 	 * register_custom_post_statuses.
 	 *
-	 * @version 3.2.2
+	 * @version 4.8.0
 	 */
 	function register_custom_post_statuses() {
-		$custom_statuses = $this->get_custom_order_statuses();
-		foreach ( $custom_statuses as $slug => $label )
+		$custom_statuses = $this->get_custom_order_statuses( $this->cut_prefix() );
+		foreach ( $custom_statuses as $slug => $label ) {
 			register_post_status( $slug, array(
 				'label'                     => $label,
 				'public'                    => true,
@@ -322,15 +326,39 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 				'show_in_admin_status_list' => true,
 				'label_count'               => _n_noop( $label . ' <span class="count">(%s)</span>', $label . ' <span class="count">(%s)</span>' ),
 			) );
+		}
+	}
+
+	/**
+	 * cut_prefix.
+	 *
+	 * @version 4.8.0
+	 * @since   4.8.0
+	 *
+	 * @return mixed
+	 */
+	function cut_prefix() {
+		return filter_var( get_option( 'wcj_orders_custom_statuses_remove_prefix', 'no' ), FILTER_VALIDATE_BOOLEAN );
 	}
 
 	/**
 	 * add_custom_statuses_to_filter.
 	 *
-	 * @version 3.2.2
+	 * @version 4.8.0
+	 *
+	 * @todo Check if there is a way to output the Status Label and not its slug when using the option "Remove Status Prefix", because `wc_get_order_status_name()` has issues when there is no prefix.
 	 */
 	function add_custom_statuses_to_filter( $order_statuses ) {
-		return array_merge( ( '' == $order_statuses ? array() : $order_statuses ), $this->get_custom_order_statuses() );
+		if (
+			function_exists('get_current_screen') &&
+			! empty( $screen = get_current_screen() ) &&
+			'edit-shop_order' === $screen->id
+		) {
+			$custom_order_statuses = $this->get_custom_order_statuses( $this->cut_prefix() );
+		} else {
+			$custom_order_statuses = $this->get_custom_order_statuses();
+		}
+		return array_merge( ( '' == $order_statuses ? array() : $order_statuses ), $custom_order_statuses );
 	}
 
 	/**

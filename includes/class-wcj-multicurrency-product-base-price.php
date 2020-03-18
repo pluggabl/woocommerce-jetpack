@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 4.7.1
+ * @version 4.8.0
  * @since   2.4.8
  * @author  Algoritmika Ltd.
  */
@@ -48,47 +48,109 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Adds Compatibility with WooCommerce Price Filter Widget.
 		 *
-		 * @version 4.4.0
+		 * @version 4.8.0
 		 * @since   4.3.1
 		 */
 		function handle_price_filter_widget_compatibility() {
 			add_action( 'updated_post_meta', array( $this, 'update_base_price_meta_on_price_update' ), 10, 3 );
 			add_action( 'updated_post_meta', array( $this, 'update_base_price_meta_on_base_price_currency_update' ), 10, 3 );
 			add_action( 'added_post_meta', array( $this, 'update_base_price_meta_on_base_price_currency_update' ), 10, 3 );
-			add_filter( 'woocommerce_product_query_meta_query', array( $this, 'add_base_price_on_product_meta_query' ) );
 			add_action( 'updated_option', array( $this, 'update_products_base_price_on_exchange_rate_change' ), 10, 3 );
 			add_action( 'updated_post_meta', array( $this, 'handle_price_filter_compatibility_flag_on_base_price_update' ), 10, 4 );
 			add_action( 'updated_post_meta', array( $this, 'handle_price_filter_compatibility_flag_on_base_price_currency_update' ), 10, 4 );
 			add_filter( 'woocommerce_price_filter_sql', array( $this, 'change_woocommerce_price_filter_sql' ) );
-
-			// Compatibility with third party price filters
-			if ( 'yes' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp_tp', 'no' ) ) {
-				add_filter( 'query', array( $this, 'change_third_party_price_filter_sql' ) );
-				add_filter( 'prdctfltr_meta_query', array( $this, 'add_base_price_on_product_meta_query' ) );
-			}
+			add_action( 'woocommerce_product_query', array( $this, 'modify_default_price_filter_hook' ), PHP_INT_MAX );
 		}
 
 		/**
-		 * Changes the sql from third party price filters comparing with the same sql from WooCommerce price filter.
-		 * This is only necessary due to some third party plugin not use the 'woocommerce_price_filter_sql' hook
+		 * modify_default_price_filter_hook.
 		 *
-		 * @version 4.4.0
-		 * @since   4.4.0
+		 * @version 4.8.0
+		 * @since 4.8.0
 		 *
-		 * @see WC_Widget_Price_Filter::get_filtered_price()
-		 * @param $sql
+		 * @param $query
 		 *
-		 * @return string
+		 * @return mixed
 		 */
-		public function change_third_party_price_filter_sql( $sql ) {
+		function modify_default_price_filter_hook( $query ) {
 			if (
-				is_admin() ||
-				( false === strpos( $sql, "SELECT min( FLOOR( price_meta.meta_value ) ) as min_price" ) && false === strpos( $sql, "max( CEILING( price_meta.meta_value ) ) as max_price" ) )
+				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
+				! isset( $_GET['min_price'] ) ||
+				! isset( $_GET['max_price'] )
 			) {
-				return $sql;
+				return $query;
 			}
-			$sql = $this->change_woocommerce_price_filter_sql( $sql );
-			return $sql;
+
+			// Remove Price Filter Meta Query
+			$meta_query = $query->get( 'meta_query' );
+			$meta_query = empty( $meta_query ) ? array() : $meta_query;
+			foreach ( $meta_query as $key => $value ) {
+				if ( is_array( $value ) ) {
+					if ( isset( $value['price_filter'] ) ) {
+						unset( $meta_query[ $key ]['price_filter'] );
+					}
+				}
+			}
+			$query->set( 'meta_query', $meta_query );
+
+			// Remove Price Filter Hooks
+			wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'price_filter_post_clauses' );
+
+			// Remove Price Filter hooks from "Product Filter for WooCommerce" plugin
+			if ( class_exists( 'XforWC_Product_Filters_Frontend' ) ) {
+				remove_filter( 'posts_clauses', 'XforWC_Product_Filters_Frontend::price_filter_post_clauses', 10, 2 );
+			}
+
+			// Add Price Filter Hook
+			add_filter( 'posts_clauses', array( $this, 'price_filter_post_clauses' ), 10, 2 );
+		}
+
+		/**
+		 * price_filter_post_clauses.
+		 *
+		 * @version 4.8.0
+		 * @since 4.8.0
+		 *
+		 * @see WC_Query::price_filter_post_clauses
+		 *
+		 * @param $args
+		 * @param $wp_query
+		 *
+		 * @return mixed
+		 */
+		function price_filter_post_clauses( $args, $wp_query ) {
+			global $wpdb;
+			if ( ! $wp_query->is_main_query() || ( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) ) {
+				return $args;
+			}
+			$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0; // WPCS: input var ok, CSRF ok.
+			$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX; // WPCS: input var ok, CSRF ok.
+			if ( wc_tax_enabled() && 'incl' === get_option( 'woocommerce_tax_display_shop' ) && ! wc_prices_include_tax() ) {
+				$tax_class = apply_filters( 'woocommerce_price_filter_widget_tax_class', '' ); // Uses standard tax class.
+				$tax_rates = WC_Tax::get_rates( $tax_class );
+				if ( $tax_rates ) {
+					$current_min_price -= WC_Tax::get_tax_total( WC_Tax::calc_inclusive_tax( $current_min_price, $tax_rates ) );
+					$current_max_price -= WC_Tax::get_tax_total( WC_Tax::calc_inclusive_tax( $current_max_price, $tax_rates ) );
+				}
+			}
+			$args['where'] .= $wpdb->prepare(
+				"
+						AND {$wpdb->posts}.ID IN (
+							SELECT p.ID
+							FROM {$wpdb->posts} as p
+							LEFT JOIN {$wpdb->postmeta} as pm ON p.ID = pm.post_id AND pm.meta_key = '_wcj_multicurrency_base_price'
+							LEFT JOIN {$wpdb->postmeta} as pm2 ON (pm2.post_id=p.ID) AND (pm2.meta_key = '_price')
+							WHERE p.post_type = 'product' AND p.post_status = 'publish'
+							AND ( (pm.meta_value <= %f AND pm.meta_value >= %f) OR (pm2.meta_value <= %f AND pm2.meta_value >= %f) )
+							GROUP BY p.ID
+						)
+						 ",
+				$current_max_price,
+				$current_min_price,
+				$current_max_price,
+				$current_min_price
+			);
+			return $args;
 		}
 
 		/**
@@ -96,7 +158,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 *
 		 * All in all, it creates the min and max from '_price' meta, and from '_wcj_multicurrency_base_price' if there is the '_wcj_multicurrency_base_price_comp_pf' meta
 		 *
-		 * @version 4.4.0
+		 * @version 4.8.0
 		 * @since   4.3.1
 		 *
 		 * @see WC_Widget_Price_Filter::get_filtered_price()
@@ -108,7 +170,6 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 			if (
 				is_admin() ||
 				( ! is_shop() && ! is_product_taxonomy() ) ||
-				! wc()->query->get_main_query()->post_count ||
 				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' )
 			) {
 				return $sql;
@@ -192,51 +253,6 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 				return;
 			}
 			$this->update_wcj_multicurrency_base_price_meta( $product );
-		}
-
-		/**
-		 * Adds compatibility with price filter adding '_wcj_multicurrency_base_price' on product meta query.
-		 * It only compares products with '_wcj_multicurrency_base_price_comp_pf' meta
-		 *
-		 * @version 4.7.1
-		 * @since   4.3.1
-		 *
-		 * @param $query
-		 *
-		 * @return mixed
-		 */
-		function add_base_price_on_product_meta_query( $query ) {
-			if (
-				! isset( $query['price_filter'] ) || empty( $query['price_filter'] ) ||
-				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' )
-			) {
-				return $query;
-			}
-			wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'price_filter_post_clauses' );
-			$price_filter                              = $price_filter_wcj = $query['price_filter'];
-			$price_filter_wcj['key']                   = '_wcj_multicurrency_base_price';
-			$price_filter_wcj['wcj_mcpb_price_filter'] = 1;
-			unset( $query['price_filter'] );
-			$query['price_filter'] = array(
-				'relation' => 'OR',
-				array(
-					'relation' => 'AND',
-					$price_filter,
-					array(
-						'key'     => '_wcj_multicurrency_base_price_comp_pf',
-						'compare' => 'NOT EXISTS',
-					)
-				),
-				array(
-					'relation' => 'AND',
-					$price_filter_wcj,
-					array(
-						'key'     => '_wcj_multicurrency_base_price_comp_pf',
-						'compare' => 'EXISTS',
-					)
-				)
-			);
-			return $query;
 		}
 
 		/**
