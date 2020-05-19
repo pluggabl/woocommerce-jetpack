@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Admin Tools
  *
- * @version 4.8.0
+ * @version 4.9.0
  * @since   2.7.2
  * @author  Algoritmika Ltd.
  */
@@ -114,5 +114,25 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_admin_tools_products_options',
+	),
+	array(
+		'title'    => __( 'Users Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_admin_tools_users_options',
+	),
+	array(
+		'title'             => __( 'Shop Manager Editable Roles', 'woocommerce-jetpack' ),
+		'desc_tip'          => __( 'Changes the roles the Shop Manager role can edit.', 'woocommerce-jetpack' ),
+		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'id'                => 'wcj_admin_tools_shop_manager_editable_roles',
+		'default'           => apply_filters( 'woocommerce_shop_manager_editable_roles', array( 'customer' ) ),
+		'type'              => 'multiselect',
+		'class'             => 'chosen_select',
+		'options'           => wcj_get_user_roles_options(),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_admin_tools_users_options',
 	),
 );

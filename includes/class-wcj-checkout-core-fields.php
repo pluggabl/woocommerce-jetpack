@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Checkout Core Fields
  *
- * @version 3.6.0
+ * @version 4.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -137,7 +137,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * custom_override_checkout_fields.
 	 *
-	 * @version 3.6.0
+	 * @version 4.9.0
 	 * @todo    add "per products", "per products tags"
 	 * @todo    (maybe) fix - priority seems to not affect tab order (same in Checkout Custom Fields module)
 	 * @todo    (maybe) enable if was not enabled by default, i.e. `! isset( $checkout_fields[ $section ][ $field ] )`
@@ -161,7 +161,7 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 					'exclude_categories' => apply_filters( 'booster_option', '', get_option( 'wcj_checkout_fields_' . $field . '_' . 'cats_excl', '' ) ),
 					'include_tags'       => '',
 					'exclude_tags'       => '',
-				) )
+				), get_option( 'wcj_checkout_core_fields_checking_relation', 'all' ) )
 			) {
 				unset( $checkout_fields[ $section ][ $field ] );
 				continue;
@@ -207,23 +207,40 @@ class WCJ_Checkout_Core_Fields extends WCJ_Module {
 	/**
 	 * is_visible.
 	 *
-	 * @version 3.4.0
+	 * @version 4.9.0
 	 * @since   3.4.0
 	 * @todo    (maybe) save `$this->cart_product_ids` array (instead of calling `WC()->cart->get_cart()` for each field)
+	 *
+	 * @param $args
+	 * @param string $relation
+	 *
+	 * @return bool
 	 */
-	function is_visible( $args ) {
+	function is_visible( $args, $relation = 'and' ) {
+		$relation  = strtolower( $relation );
+		$all_empty = true;
 		foreach ( $args as $arg ) {
 			if ( ! empty( $arg ) ) {
+				$all_empty = false;
 				// At least one arg is filled - checking products in cart
 				foreach ( WC()->cart->get_cart() as $cart_item_key => $values ) {
-					if ( ! wcj_is_enabled_for_product( $values['product_id'], $args ) ) {
-						return false;
+					if ( 'and' === $relation ) {
+						if ( ! wcj_is_enabled_for_product( $values['product_id'], $args ) ) {
+							return false;
+						}
+					} elseif ( 'or' === $relation ) {
+						if ( wcj_is_enabled_for_product( $values['product_id'], $args ) ) {
+							return true;
+						}
 					}
 				}
 				break;
 			}
 		}
-		return true;
+		if ( $all_empty ) {
+			return true;
+		}
+		return 'and' === $relation ? true : false;
 	}
 
 	/**

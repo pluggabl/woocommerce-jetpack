@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Admin Tools
  *
- * @version 4.8.0
+ * @version 4.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -15,7 +15,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.1.0
+	 * @version 4.9.0
 	 * @todo    [feature] (maybe) add editable (product and order) metas
 	 */
 	function __construct() {
@@ -65,7 +65,27 @@ class WCJ_Admin_Tools extends WCJ_Module {
 			}
 			// Enable interface by user role
 			add_filter( 'wcj_can_create_admin_interface', array( $this, 'enable_interface_by_user_roles' ) );
+			// Shop Manager Editable Roles
+			add_filter( 'woocommerce_shop_manager_editable_roles', array( $this, 'change_shop_manager_editable_roles' ) );
 		}
+	}
+
+	/**
+	 * change_shop_manager_editable_roles.
+	 *
+	 * @see wc_modify_editable_roles()
+	 *
+	 * @version 4.9.0
+	 * @since   4.9.0
+	 *
+	 * @param $roles
+	 *
+	 * @return mixed
+	 */
+	function change_shop_manager_editable_roles( $roles ) {
+		remove_filter( 'woocommerce_shop_manager_editable_roles', array( $this, 'change_shop_manager_editable_roles' ) );
+		$roles = get_option( 'wcj_admin_tools_shop_manager_editable_roles', apply_filters( 'woocommerce_shop_manager_editable_roles', array( 'customer' ) ) );
+		return $roles;
 	}
 
 	/**

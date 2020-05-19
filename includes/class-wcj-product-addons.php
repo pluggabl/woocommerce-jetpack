@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Addons
  *
- * @version 4.8.0
+ * @version 4.9.0
  * @since   2.5.3
  * @author  Algoritmika Ltd.
  * @todo    admin order view (names)
@@ -256,7 +256,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * validate_on_add_to_cart.
 	 *
-	 * @version 4.6.1
+	 * @version 4.9.0
 	 * @since   2.5.5
 	 */
 	function validate_on_add_to_cart( $passed, $product_id, $quantity ) {
@@ -274,7 +274,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 				continue;
 			}
 			if ( 'yes' === $addon['is_required'] ) {
-				if ( ! isset( $_POST[ $addon['checkbox_key'] ] ) ) {
+				if ( ! isset( $_POST[ $addon['checkbox_key'] ] ) && empty( $addon['default'] ) ) {
 					wc_add_notice( __( 'Some of the required addons are not selected!', 'woocommerce-jetpack' ), 'error' );
 					return false;
 				}
@@ -649,7 +649,7 @@ class WCJ_Product_Addons extends WCJ_Module {
 	/**
 	 * add_addons_price_to_cart_item_data.
 	 *
-	 * @version 4.6.1
+	 * @version 4.9.0
 	 * @since   2.5.3
 	 */
 	function add_addons_price_to_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
@@ -664,19 +664,23 @@ class WCJ_Product_Addons extends WCJ_Module {
 				continue;
 			}
 			$price_value = $this->replace_price_template_vars( $addon['price_value'], $variation_id ? $variation_id : $product_id );
-			if ( isset( $_POST[ $addon['checkbox_key'] ] ) ) {
-				if ( ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) || ( 'text' == $addon['type'] && '' != $_POST[ $addon['checkbox_key'] ] ) ) {
+			if (
+				isset( $_POST[ $addon['checkbox_key'] ] ) ||
+				! empty( $addon['default'] )
+			) {
+				$checkbox_key = isset( $_POST[ $addon['checkbox_key'] ] ) ? $_POST[ $addon['checkbox_key'] ] : ( ! empty( $addon['default'] ) ? $addon['default'] : null );
+				if ( ( 'checkbox' === $addon['type'] || '' == $addon['type'] ) || ( 'text' == $addon['type'] && '' != $checkbox_key ) ) {
 					$cart_item_data[ $addon['price_key'] ] = $price_value;
 					$cart_item_data[ $addon['label_key'] ] = $addon['label_value'];
 					if ( 'text' == $addon['type'] ) {
-						$cart_item_data[ $addon['label_key'] ] .= ' (' . $_POST[ $addon['checkbox_key'] ] . ')';
+						$cart_item_data[ $addon['label_key'] ] .= ' (' . $checkbox_key . ')';
 					}
 				} elseif ( 'radio' === $addon['type'] || 'select' === $addon['type'] ) {
 					$prices = $this->clean_and_explode( PHP_EOL, $price_value );
 					$labels = $this->clean_and_explode( PHP_EOL, $addon['label_value'] );
 					if ( count( $labels ) === count( $prices ) ) {
 						foreach ( $labels as $i => $label ) {
-							if ( $_POST[ $addon['checkbox_key'] ] == sanitize_title( $label ) ) {
+							if ( $checkbox_key == sanitize_title( $label ) ) {
 								$cart_item_data[ $addon['price_key'] ] = $prices[ $i ];
 								$cart_item_data[ $addon['label_key'] ] = $labels[ $i ];
 								break;

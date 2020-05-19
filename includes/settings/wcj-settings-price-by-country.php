@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 4.8.0
+ * @version 4.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -170,6 +170,15 @@ $settings = array(
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'             => __( 'Woo Discount Rules', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">Woo Discount Rules</a> plugin.', 'woocommerce-jetpack' ), 'https://www.flycart.org/products/wordpress/woocommerce-discount-rules' ).'<br />'. sprintf( __( 'If it doesn\'t work properly try to enable <a href="%s">redirect to the cart page after successful addition</a> option', 'woocommerce-jetpack' ), admin_url( 'admin.php?page=wc-settings&tab=products' ) ),
+		'id'                => 'wcj_price_by_country_compatibility_woo_discount_rules',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_price_by_country_compatibility',
 	),
@@ -205,6 +214,14 @@ $settings = array(
 			'get_price'               => __( 'get_price()', 'woocommerce-jetpack' ),
 			'wc_get_price_to_display' => __( 'wc_get_price_to_display()', 'woocommerce-jetpack' ),
 		),
+	),
+	array(
+		'title'    => __( 'Save Calculated Products Prices', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_price_by_country_save_prices',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',

@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 4.6.0
+ * @version 4.9.0
  * @since   2.4.3
  * @author  Algoritmika Ltd.
  */
@@ -91,7 +91,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Handles third party compatibility
 	 *
-	 * @version 4.6.0
+	 * @version 4.9.0
 	 * @since   4.3.0
 	 */
 	function handle_third_party_compatibility(){
@@ -101,6 +101,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 		}
 
 		// WooCommerce Coupons
+		add_filter( 'woocommerce_coupon_is_valid', array( $this, 'check_woocommerce_coupon_min_max_amount' ), 10, 3 );
 		add_action( 'woocommerce_coupon_get_discount_amount', array( $this, 'fix_wc_coupon_currency' ), 10, 5 );
 
 		// WooCommerce Price Filter Widget
@@ -131,6 +132,137 @@ class WCJ_Multicurrency extends WCJ_Module {
 				wcj_remove_class_filter( 'woocommerce_add_to_cart', 'WPcleverWoosb', 'woosb_add_to_cart' );
 			}
 		}, 99 );
+
+		// WooCommerce Tree Table Rate Shipping (https://tablerateshipping.com/)
+		$this->wc_tree_table_rate_shipping_compatibility();
+
+		// Flexible Shipping plugin https://flexibleshipping.com/
+		add_filter( 'flexible_shipping_value_in_currency', array( $this, 'flexible_shipping_compatibility' ) );
+	}
+
+	/**
+	 * wcj_multicurrency_compatibility_flexible_shipping.
+	 *
+	 * @see https://flexibleshipping.com
+	 *
+	 * @version 4.9.0
+	 * @since   4.9.0
+	 *
+	 */
+	function flexible_shipping_compatibility( $value ) {
+		if ( 'yes' !== get_option( 'wcj_multicurrency_compatibility_flexible_shipping', 'no' ) ) {
+			return $value;
+		}
+		$value *= $this->get_currency_exchange_rate( $this->get_current_currency_code() );
+		return $value;
+	}
+
+	/**
+	 * wc_tree_table_rate_shipping_compatibility.
+	 *
+	 * @see https://tablerateshipping.com/
+	 *
+	 * @version 4.9.0
+	 * @since   4.9.0
+	 */
+	function wc_tree_table_rate_shipping_compatibility() {
+		$shipping_instance_max = apply_filters( 'wcj_multicurrency_compatibility_wc_ttrs_instances', 90 );
+		for ( $i = 1; $i <= $shipping_instance_max; $i ++ ) {
+			add_filter( 'option_' . 'woocommerce_tree_table_rate_' . $i . '_settings', array( $this, 'convert_wc_tree_table_rate_settings' ) );
+		}
+	}
+
+	/**
+	 * get_wc_tree_table_rate_settings.
+	 *
+	 * @version 4.9.0
+	 * @since   4.9.0
+	 *
+	 * @param $option
+	 *
+	 * @return mixed
+	 */
+	function convert_wc_tree_table_rate_settings( $option ) {
+		if ( 'no' === get_option( 'wcj_multicurrency_compatibility_wc_ttrs', 'no' ) ) {
+			return $option;
+		}
+		$rule           = json_decode( $option['rule'] );
+		$modified_rule  = $this->recursively_convert_wc_tree_settings( $rule, array(
+			'change_keys'   => array( 'value', 'min', 'max' ),
+			'exchange_rate' => $this->get_currency_exchange_rate( $this->get_current_currency_code() )
+		) );
+		$option['rule'] = json_encode( $modified_rule );
+		return $option;
+	}
+
+	/**
+	 * recursively_convert_wc_tree_settings.
+	 *
+	 * @version 4.9.0
+	 * @since   4.9.0
+	 *
+	 * @param $array
+	 * @param null $args
+	 *
+	 * @return array
+	 */
+	function recursively_convert_wc_tree_settings( $array, $args = null ) {
+		$args          = wp_parse_args( $args, array(
+			'change_keys'   => array(),
+			'exchange_rate' => 1,
+		) );
+		$change_keys   = $args['change_keys'];
+		$exchange_rate = $args['exchange_rate'];
+		foreach ( $array as $key => $value ) {
+			$array_test = is_array( $array ) ? $array : get_object_vars( $array );
+			if (
+				in_array( $key, $change_keys ) &&
+				( isset( $array_test['condition'] ) && ( 'price' == $array_test['condition'] ) )
+			) {
+				if ( is_array( $array ) ) {
+					if ( ! empty( $value ) && is_numeric( $value ) ) {
+						$array[ $key ] = $value * $exchange_rate;
+					}
+				} elseif ( is_a( $array, 'stdClass' ) ) {
+					if ( ! empty( $value ) && is_numeric( $value ) ) {
+						$array->$key = $value * $exchange_rate;
+					}
+				}
+			}
+			if ( is_array( $value ) || is_a( $value, 'stdClass' ) ) {
+				$this->recursively_convert_wc_tree_settings( $value, $args );
+			}
+		}
+		return $array;
+	}
+
+	/**
+	 * @version 4.9.0
+	 * @since   4.9.0
+	 *
+	 * @param $valid
+	 * @param WC_Coupon $coupon
+	 * @param WC_Discounts $wc_discounts
+	 *
+	 * @return bool
+	 * @throws Exception
+	 */
+	function check_woocommerce_coupon_min_max_amount( $valid, WC_Coupon $coupon, WC_Discounts $wc_discounts ) {
+		if ( 'yes' !== get_option( 'wcj_multicurrency_compatibility_wc_coupons', 'no' ) ) {
+			return $valid;
+		}
+		remove_filter( 'woocommerce_coupon_is_valid', array( $this, 'check_woocommerce_coupon_min_max_amount' ), 10 );
+		if ( ! empty( $minimum_amount = $coupon->get_minimum_amount() ) ) {
+			$coupon->set_minimum_amount( $this->change_price( $minimum_amount, null ) );
+		}
+		if ( ! empty( $maximum_amount = $coupon->get_maximum_amount() ) ) {
+			$coupon->set_maximum_amount( $this->change_price( $maximum_amount, null ) );
+		}
+		$is_coupon_valid = $wc_discounts->is_coupon_valid( $coupon );
+		if ( is_wp_error( $is_coupon_valid ) ) {
+			return false;
+		}
+		return $valid;
 	}
 
 	/**
@@ -884,7 +1016,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price.
 	 *
-	 * @version 4.6.0
+	 * @version 4.9.0
 	 */
 	function change_price( $price, $_product ) {
 		if ( '' === $price ) {
@@ -920,8 +1052,12 @@ class WCJ_Multicurrency extends WCJ_Module {
 					$this->save_price( $price, $_product_id, $_current_filter );
 					return $price;
 				} elseif ( WCJ_PRODUCT_GET_PRICE_FILTER == $_current_filter || 'woocommerce_variation_prices_price' == $_current_filter || 'woocommerce_product_variation_get_price' == $_current_filter || in_array( $_current_filter, $this->additional_price_filters ) ) {
-					$sale_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
-					$price = ( '' != $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
+					if ( $_product->is_on_sale() ) {
+						$sale_price_per_product = get_post_meta( $_product_id, '_' . 'wcj_multicurrency_per_product_sale_price_' . $this->get_current_currency_code(), true );
+						$price                  = ( '' != $sale_price_per_product && $sale_price_per_product < $regular_price_per_product ) ? $sale_price_per_product : $regular_price_per_product;
+					} else {
+						$price = $regular_price_per_product;
+					}
 					$this->save_price( $price, $_product_id, $_current_filter );
 					return $price;
 				} elseif ( WCJ_PRODUCT_GET_REGULAR_PRICE_FILTER == $_current_filter || 'woocommerce_variation_prices_regular_price' == $_current_filter || 'woocommerce_product_variation_get_regular_price' == $_current_filter ) {
@@ -998,10 +1134,13 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * change_price_shipping.
 	 *
-	 * @version 3.2.0
+	 * @version 4.9.0
 	 */
 	function change_price_shipping( $package_rates, $package ) {
-		if ( $this->do_revert() ) {
+		if (
+			$this->do_revert() ||
+			'no' === get_option( 'wcj_multicurrency_convert_shipping_values', 'yes' )
+		) {
 			return $package_rates;
 		}
 		$currency_exchange_rate = $this->get_currency_exchange_rate( $this->get_current_currency_code() );

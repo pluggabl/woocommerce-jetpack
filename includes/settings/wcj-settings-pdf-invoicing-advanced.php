@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - PDF Invoicing - Advanced
  *
- * @version 4.7.0
+ * @version 4.9.0
  * @since   3.3.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) create "Tools (Options)" submodule
@@ -98,6 +98,22 @@ return array(
 		'desc_tip' => __( 'Sets internal character encoding.', 'woocommerce-jetpack' ).'<br />'.__( 'e.g: UTF-8, iso-8859-1', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_general_advanced_mb_internal_encoding',
 		'default'  => '',
+		'type'     => 'text',
+	),
+	array(
+		'title'    => __( 'WooCommerce Extra Product Options on Item Name', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => sprintf( __( 'Displays some info from <a href="%s" target="_blank">WooCommerce Extra Product Options</a> on <code>item_name</code> parameter from <code>wcj_order_items_table</code>.', 'woocommerce-jetpack' ), 'https://codecanyon.net/item/woocommerce-extra-product-options/7908619' ).'<br />'.__( 'Probably you\'ll want it disabled and use the <code>item_meta</code> parameter instead.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_general_advanced_wcepo_enable',
+		'default'  => 'yes',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'    => __( 'Item Meta Separator', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Separator used on <code>item_meta</code> parameter from <code>wcj_order_items_table</code>', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_general_item_meta_separator',
+		'wcj_raw'  => true,
+		'default'  => ', ',
 		'type'     => 'text',
 	),
 	array(

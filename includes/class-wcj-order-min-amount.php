@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Order Minimum Amount
  *
- * @version 4.1.0
+ * @version 4.9.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  * @todo    order max amount
@@ -13,6 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 if ( ! class_exists( 'WCJ_Order_Min_Amount' ) ) :
 
 class WCJ_Order_Min_Amount extends WCJ_Module {
+
+	private $yith_gift_card_discount = 0;
 
 	/**
 	 * Constructor.
@@ -36,7 +38,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * add_order_minimum_amount_hooks.
 	 *
-	 * @version 2.6.0
+	 * @version 4.9.0
 	 * @since   2.5.3
 	 * @todo    (maybe) `template_redirect` instead of `wp`
 	 */
@@ -59,6 +61,20 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 				add_action( 'wp', array( $this, 'stop_from_seeing_checkout' ), 100 );
 			}
 		}
+		add_action( 'yith_ywgc_apply_gift_card_discount_after_cart_total', array( $this, 'get_yith_gift_cards_discount' ), 10, 2 );
+	}
+
+	/**
+	 * get_yith_gift_cards_discount
+	 *
+	 * @version 4.9.0
+	 * @since   4.9.0
+	 *
+	 * @param $cart
+	 * @param $discount
+	 */
+	function get_yith_gift_cards_discount( $cart, $discount ) {
+		$this->yith_gift_card_discount = $discount;
 	}
 
 	/**
@@ -93,7 +109,7 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 	/**
 	 * get_cart_total_for_minimal_order_amount.
 	 *
-	 * @version 3.2.4
+	 * @version 4.9.0
 	 * @since   2.5.5
 	 */
 	function get_cart_total_for_minimal_order_amount() {
@@ -109,6 +125,9 @@ class WCJ_Order_Min_Amount extends WCJ_Module {
 		}
 		if ( 'yes' === get_option( 'wcj_order_minimum_amount_exclude_discounts', 'no' ) ) {
 			$cart_total += ( WC()->cart->get_cart_discount_total() + WC()->cart->get_cart_discount_tax_total() );
+		}
+		if ('yes' === get_option( 'wcj_order_minimum_amount_exclude_yith_gift_card_discount', 'no' ) ) {
+			$cart_total += $this->yith_gift_card_discount;
 		}
 		return $cart_total;
 	}

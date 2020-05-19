@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 4.7.1
+ * @version 4.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -20,6 +20,15 @@ $settings = array(
 		'desc'     => sprintf( __( 'If you want to display prices table on frontend, use %s shortcode.', 'woocommerce-jetpack' ),
 			'<code>[wcj_product_wholesale_price_table]</code>' ),
 		'id'       => 'wcj_wholesale_price_general_options',
+	),
+	array(
+		'title'    => __( 'Price Table Format', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'The title format from <code>[wcj_product_wholesale_price_table]</code> shortcode.', 'woocommerce-jetpack' ),
+		'desc'     => wcj_message_replaced_values( array( '%level_min_qty%' ) ),
+		'id'       => 'wcj_wholesale_price_table_sc_title_format',
+		'default'  => 'from %level_min_qty% pcs.',
+		'type'     => 'text',
+		'css'      => 'width:100%;',
 	),
 	array(
 		'title'    => __( 'Enable per Product', 'woocommerce-jetpack' ),
@@ -131,6 +140,29 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_wholesale_price_general_options',
+	),
+	array(
+		'title'    => __( 'Template Variables', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'desc'     => __( 'Options regarding template variables', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_wholesale_price_template_vars',
+	),
+	array(
+		'title'             => __( 'Discount Value - Fixed Discount Totals', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_wholesale_price_template_vars_discount_value_fdt',
+		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip'          => __( 'Defines how the <code>%discount_value%</code> will calculate the totals when the fixed discount is in use.', 'woocommerce-jetpack' ),
+		'default'           => 'do_not_consider_qty',
+		'type'              => 'select',
+		'options'           => array(
+			'do_not_consider_qty' => __( 'Do not consider quantity', 'woocommerce-jetpack' ),
+			'consider_qty'        => __( 'Consider quantity', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_wholesale_price_template_vars',
 	),
 	array(
 		'title'    => __( 'Wholesale Levels Options', 'woocommerce-jetpack' ),

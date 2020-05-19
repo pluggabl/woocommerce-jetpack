@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Checkout Core Fields
  *
- * @version 3.6.0
+ * @version 4.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -46,6 +46,19 @@ $settings = array(
 		'type'     => 'checkbox',
 		'id'       => 'wcj_checkout_core_fields_force_sort_by_priority',
 		'default'  => 'no',
+	),
+	array(
+		'title'    => __( 'Checking Relation', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Use <code>Or</code> if you need that at least one condition is valid. e.g.: At least one product from a specific category is in cart. Use <code>All</code> if you need that all conditions are valid.', 'woocommerce-jetpack' ),
+		'type'     => 'select',
+		'id'       => 'wcj_checkout_core_fields_checking_relation',
+		'options'  => array(
+			'and' => __( 'And', 'woocommerce-jetpack' ),
+			'or'  => __( 'Or', 'woocommerce-jetpack' ),
+		),
+		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'default'  => 'and',
 	),
 	array(
 		'type'     => 'sectionend',

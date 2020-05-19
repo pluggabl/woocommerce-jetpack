@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Date and Time
  *
- * @version 4.7.0
+ * @version 4.9.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -260,5 +260,34 @@ if ( ! function_exists( 'wcj_timezone' ) ) {
 			$timezone = sprintf( '%s%02d:%02d', $sign, $abs_hour, $abs_mins );
 		}
 		return new DateTimeZone( $timezone );
+	}
+}
+
+if ( ! function_exists( 'wcj_pretty_utc_date' ) ) {
+	/**
+	 * Formats dates taking into consideration configured language, timezone, and date format.
+	 *
+	 * @see https://wordpress.stackexchange.com/a/339190/25264
+	 *
+	 * @version 4.9.0
+	 * @since   4.9.0
+	 *
+	 * @param string $utc_date
+	 * @param null $format
+	 *
+	 * @return string
+	 */
+	function wcj_pretty_utc_date( string $utc_date, $format = null ) {
+		if ( ! preg_match( '/^\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d$/', $utc_date ) ) {
+			throw new InvalidArgumentException( "Expected argument to be in YYYY-MM-DD hh:mm:ss format" );
+		}
+		$date_in_local_timezone         = get_date_from_gmt( $utc_date );
+		$seconds_since_local_1_jan_1970 =
+			( new DateTime( $date_in_local_timezone, new DateTimeZone( 'UTC' ) ) )
+				->getTimestamp();
+		if ( empty( $format ) ) {
+			$format = get_option( 'date_format' ) . ' ' . get_option( 'time_format' );
+		}
+		return date_i18n( $format, $seconds_since_local_1_jan_1970 );
 	}
 }

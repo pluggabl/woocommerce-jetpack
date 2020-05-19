@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Users
  *
- * @version 4.2.0
+ * @version 4.9.0
  * @since   2.7.0
  * @author  Algoritmika Ltd.
  */
@@ -139,11 +139,14 @@ if ( ! function_exists( 'wcj_get_user_roles' ) ) {
 	/**
 	 * wcj_get_user_roles.
 	 *
-	 * @version 4.2.0
+	 * @version 4.9.0
 	 * @since   2.5.3
 	 */
-	function wcj_get_user_roles() {
+	function wcj_get_user_roles( $args = null ) {
 		global $wp_roles;
+		$args = wp_parse_args( $args, array(
+			'skip_editable_roles_filter' => false
+		) );
 		$all_roles = ( isset( $wp_roles ) && is_object( $wp_roles ) ) ? $wp_roles->roles : array();
 		$current_user_roles = array();
 		if ( is_user_logged_in() ) {
@@ -153,7 +156,9 @@ if ( ! function_exists( 'wcj_get_user_roles' ) ) {
 				return in_array( $k, $roles );
 			}, ARRAY_FILTER_USE_KEY );
 		}
-		$all_roles = apply_filters( 'editable_roles', $all_roles );
+		if ( ! $args['skip_editable_roles_filter'] ) {
+			$all_roles = apply_filters( 'editable_roles', $all_roles );
+		}
 		$all_roles = array_merge( array(
 			'guest' => array(
 				'name'         => __( 'Guest', 'woocommerce-jetpack' ),
@@ -170,13 +175,18 @@ if ( ! function_exists( 'wcj_get_user_roles_options' ) ) {
 	/**
 	 * wcj_get_user_roles_options.
 	 *
-	 * @version 2.5.3
+	 * @version 4.9.0
 	 * @since   2.5.3
 	 */
-	function wcj_get_user_roles_options() {
+	function wcj_get_user_roles_options( $args = null ) {
 		global $wp_roles;
+		$args = wp_parse_args( $args, array(
+			'skip_editable_roles_filter' => false
+		) );
 		$all_roles = ( isset( $wp_roles ) && is_object( $wp_roles ) ) ? $wp_roles->roles : array();
-		$all_roles = apply_filters( 'editable_roles', $all_roles );
+		if ( ! $args['skip_editable_roles_filter'] ) {
+			$all_roles = apply_filters( 'editable_roles', $all_roles );
+		}
 		$all_roles = array_merge( array(
 			'guest' => array(
 				'name'         => __( 'Guest', 'woocommerce-jetpack' ),

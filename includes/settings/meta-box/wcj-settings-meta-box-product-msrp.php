@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings Meta Box - Product MSRP
  *
- * @version 3.6.0
+ * @version 4.9.0
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  * @todo    (maybe) `wcj_product_msrp_variable_as_simple_enabled`
@@ -16,6 +16,8 @@ if ( ! $_product ) {
 	return array();
 }
 $products = array();
+$options = array();
+
 if ( $_product->is_type( 'variable' ) && 'no' === get_option( 'wcj_product_msrp_variable_as_simple_enabled', 'no' ) ) {
 	$available_variations = $_product->get_available_variations();
 	foreach ( $available_variations as $variation ) {
@@ -26,7 +28,18 @@ if ( $_product->is_type( 'variable' ) && 'no' === get_option( 'wcj_product_msrp_
 	$products[ $main_product_id ] = '';
 }
 
-$options = array();
+// Archive Page Field
+if ( 'yes' === get_option( 'wcj_product_msrp_archive_page_field', 'no' ) ) {
+	$options[] = array(
+		'name'       => 'wcj_msrp_archive_' . $main_product_id,
+		'default'    => 0,
+		'type'       => 'price',
+		'title'      => __( 'MSRP - Archive', 'woocommerce-jetpack' ) . ' (' . get_woocommerce_currency_symbol() . ')',
+		'product_id' => $main_product_id,
+		'meta_name'  => '_' . 'wcj_msrp_archive',
+	);
+}
+
 foreach ( $products as $product_id => $desc ) {
 	$options[] = array(
 		'name'       => 'wcj_msrp_' . $product_id,

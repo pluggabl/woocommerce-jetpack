@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - EU VAT Number
  *
- * @version 4.6.1
+ * @version 4.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  * @todo    set default value for "wcj_eu_vat_number_add_progress_text" to "yes"
@@ -218,6 +218,28 @@ $settings = array(
 		'id'       => 'wcj_eu_vat_number_add_order_edit_metabox',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'             => __( 'Restrictive Loading', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enqueues module scripts on some conditions.', 'woocommerce-jetpack' ) . '<br />' . __( 'Probably the best options are <code>Is Cart</code> and <code>Is Checkout</code>', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => __( 'Leave it empty to load it in all situations.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_eu_vat_number_restrictive_loading',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'default'           => '',
+		'class'             => 'chosen_select',
+		'options'           => array(
+			'is_woocommerce'      => __( 'Is WooCommerce', 'woocommerce-jetpack' ),
+			'is_shop'             => __( 'Is Shop', 'woocommerce-jetpack' ),
+			'is_product_category' => __( 'Is Product Category', 'woocommerce-jetpack' ),
+			'is_product_tag'      => __( 'Is Product Tag', 'woocommerce-jetpack' ),
+			'is_product'          => __( 'Is Product', 'woocommerce-jetpack' ),
+			'is_cart'             => __( 'Is Cart', 'woocommerce-jetpack' ),
+			'is_checkout'         => __( 'Is Checkout', 'woocommerce-jetpack' ),
+			'is_account_page'     => __( 'Is Account Page', 'woocommerce-jetpack' ),
+			'is_wc_endpoint_url'  => __( 'Is WC Endpoint URL', 'woocommerce-jetpack' ),
+			'is_ajax'             => __( 'Is AJAX', 'woocommerce-jetpack' ),
+		),
+		'type'              => 'multiselect',
 	),
 	array(
 		'type'     => 'sectionend',

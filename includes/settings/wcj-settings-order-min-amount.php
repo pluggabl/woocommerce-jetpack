@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Minimum Amount
  *
- * @version 3.2.4
+ * @version 4.9.0
  * @since   2.8.0
  * @author  Algoritmika Ltd.
  */
@@ -37,6 +37,14 @@ $settings = array(
 		'id'       => 'wcj_order_minimum_amount_exclude_discounts',
 		'default'  => 'no',
 		'type'     => 'checkbox',
+	),
+	array(
+		'title'             => __( 'Exclude Discounts from Yith Gift Cards', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Exclude', 'woocommerce-jetpack' ) : $message,
+		'id'                => 'wcj_order_minimum_amount_exclude_yith_gift_card_discount',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'default'           => 'no',
+		'type'              => 'checkbox',
 	),
 	array(
 		'title'    => __( 'Error message', 'woocommerce-jetpack' ),

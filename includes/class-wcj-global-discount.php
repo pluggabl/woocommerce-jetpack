@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Global Discount
  *
- * @version 4.8.0
+ * @version 4.9.0
  * @since   2.5.7
  * @author  Algoritmika Ltd.
  */
@@ -409,12 +409,14 @@ class WCJ_Global_Discount extends WCJ_Module {
 	/**
 	 * get_variation_prices_hash.
 	 *
-	 * @version 4.8.0
+	 * @version 4.9.0
 	 * @since   2.5.7
 	 */
 	function get_variation_prices_hash( $price_hash, $_product, $display ) {
-		$options                                      = $this->get_global_discount_options();
-		$price_hash['wcj_global_discount_price_hash'] = $options;
+		$options = $this->get_global_discount_options();
+		if ( is_array( $price_hash ) ) {
+			$price_hash['wcj_global_discount_price_hash'] = $options;
+		}
 		return $price_hash;
 	}
 

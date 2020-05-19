@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Products
  *
- * @version 4.6.0
+ * @version 4.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -857,7 +857,7 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_product_wholesale_price_table.
 	 *
-	 * @version 4.6.0
+	 * @version 4.9.0
 	 * @todo    (maybe) `if ( 'yes' === $atts['add_percent_row'] )` for 'fixed' or 'price_directly'; `if ( 'yes' === $atts['add_discount_row'] )` for 'percent' or 'price_directly'
 	 */
 	function wcj_product_wholesale_price_table( $atts ) {
@@ -969,12 +969,13 @@ class WCJ_Products_Shortcodes extends WCJ_Shortcodes {
 				}
 			}
 
+
 			$level_max_qty = ( isset( $wholesale_price_levels[ $i + 1 ]['quantity'] ) ) ?
 				$atts['before_level_max_qty'] . ( $wholesale_price_levels[ $i + 1 ]['quantity'] - 1 ) : $atts['last_level_max_qty'];
 			$data_qty[] = str_replace(
 				array( '%level_qty%', '%level_min_qty%', '%level_max_qty%' ), // %level_qty% is deprecated
 				array( $wholesale_price_level['quantity'], $wholesale_price_level['quantity'], $level_max_qty ),
-				$atts['heading_format']
+				get_option( 'wcj_wholesale_price_table_sc_title_format', 'from %level_min_qty% pcs.' )
 			);
 			if ( 'yes' === $atts['add_price_row'] ) {
 				$data_price[] = str_replace( array( '%old_price%', '%price%' ), array( $the_price_original, $the_price ), $atts['price_row_format'] );

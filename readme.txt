@@ -2,8 +2,8 @@
 Contributors: algoritmika, anbinder, debugeris, karzin
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
-Tested up to: 5.3
-Stable tag: 4.8.0
+Tested up to: 5.4
+Stable tag: 4.9.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -193,14 +193,48 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 4.9.0 - 19/05/2020 =
+* Fix - CART & CHECKOUT - EU VAT Number - Add 'Restrictive Loading' option allowing to enqueue the module scripts on some conditions.
+* Fix - CART & CHECKOUT - Avoid possible cURL error on site-health by starting session only on frontend.
+* Fix - EMAILS & MISC. - Booster WPML - General Options - Improve 'Auto Switch Booster Currency' option using the `wcml_client_currency` filter to get the currency as well.
+* Fix - PAYMENT GATEWAYS - Custom Gateways - Add compatibility with "Load Modules on Init Hook" option.
+* Fix - PRICES & CURRENCIES - Global Discount - Fix possible php warning: Illegal string offset `wcj_global_discount_price_hash`.
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Get per product regular price instead of sale price when scheduled sale price is not valid.
+* Fix - PRICES & CURRENCIES - Wholesale Price - Display the `[wcj_product_wholesale_price_table]` shortcode only to products that really need the module.
+* Fix - PRODUCTS - Product Addons - Add Addon field to cart using its default value when the product is not on `$_POST`.
+* Fix - SHIPPING & ORDERS - Shipping by Cities - Improve city detection by also getting it when customer changes city.
+* Dev - CART & CHECKOUT - Checkout Core Fields - Add 'Checking Relation' option as a Plus feature, allowing to check only one condition to be true or all of them.
+* Dev - EMAILS & MISC. - Admin Tools - Add 'Shop Manager Editable Roles' option allowing to change the roles the Shop Manager role can edit.
+* Dev - PAYMENT GATEWAYS - Custom Gateways - Minimum order amount - Add option allowing to exclude Discounts from Yith Gift Cards on plus version.
+* Dev - PDF INVOICING & PACKING SLIPS - Create option allowing to choose to display some meta from 'WooCommerce Extra Product Options' on `item_name` paramater from `wcj_order_items_table` shortcode.
+* Dev - PDF INVOICING & PACKING SLIPS - Create option allowing to choose the separator from `item_meta` parameter from `wcj_order_items_table`.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Add 'Price Table Format' option allowing to setup the title from `[wcj_product_wholesale_price_table]` shortcode.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add compatibility option with WooCommerce Coupons regarding min and max amount values.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add 'Convert Shipping Values' option.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add Compatibility option with 'WooCommerce Tree Table Rate Shipping' plugin.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add `wcj_multicurrency_compatibility_wc_ttrs_instances` filter.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add Compatibility option with 'Flexible Shipping' plugin.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Add compatibility option with 'Woo Discount Rules' plugin.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Add option 'Advanced: Saved Calculated Products Prices'.
+* Dev - PRODUCTS - Product Visibility by Country - Make the Country Switcher widget change the currency from the module.
+* Dev - PRODUCTS - Product Visibility by User Role - Add option to ignore the `editable_roles` filter allowing for example the `shop_manager` to see all roles.
+* Dev - PRODUCTS - Product MSRP - Add 'Treat Variable Products as Simple Products' option.
+* Dev - PRODUCTS - Product MSRP - Add 'Archive Field' option allowing to register a value that will be displayed only on archive.
+* Dev - PRODUCTS - Product MSRP - Add formula options for %you_save% and %you_save_percent% template variables.
+* Dev - SHIPPING & ORDERS - Shipping Methods by Users - Replace "Shipping Methods by Users" options by ajax settings.
+* Dev - Functions - Admin - Allow `wcj_get_ajax_settings()` searching customers by ajax passing `woocommerce_json_search_customers` on `$search_type` parameter.
+* Dev - Functions - Date Time - Add `wcj_pretty_utc_date()` function that takes into consideration configured language, timezone, and date format.
+* Tested up to: 5.4.
+* WC tested up to: 4.1
+
 = 4.8.0 - 18/03/2020 =
 * Fix - Functions - General - Fix php warning if WPML isn't active and 'WPML: Get Terms in All Languages' is enabled.
 * Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Remove "Third Party Price Filter Compatibility" option.
 * Fix - PRICES & CURRENCIES - Multicurrency Product Base Price - Fix Compatibility with Price Filter widget.
 * Fix - PRICES & CURRENCIES - Fix "WooCommerce Price Filter Compatibility" option.
 * Fix - PRODUCTS - Product Availability by Date - Fix wrong availabilities by always creating the date with `DateTime::createFromFormat`.
-* Fix - PRODUCTS - Product Addons - Fix warning when exporting '_wcj_product_addons_per_product_enable_by_variation_%' meta.
-* Fix - PRODUCTS - Product Addons - Fix wrong '_wcj_product_addons_per_product_enable_by_variation_%' meta value after import.
+* Fix - PRODUCTS - Product Addons - Fix warning when exporting `_wcj_product_addons_per_product_enable_by_variation_%` meta.
+* Fix - PRODUCTS - Product Addons - Fix wrong `_wcj_product_addons_per_product_enable_by_variation_%` meta value after import.
 * Fix - SHIPPING & ORDERS - Order Custom Statuses - Add compatibility with "Load Modules on Init Hook" option.
 * Dev - CART & CHECKOUT - Checkout Custom Fields - Update fields on admin for subscription orders.
 * Dev - EMAILS & MISC. - Admin Tools - Add 'Enable Interface By User Roles' option allowing to disable the whole Booster admin interface for not selected roles.

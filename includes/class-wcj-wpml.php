@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 4.5.0
+ * @version 4.9.0
  * @since   2.2.0
  * @author  Algoritmika Ltd.
  */
@@ -16,7 +16,7 @@ class WCJ_WPML extends WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 3.8.0
+	 * @version 4.9.0
 	 */
 	function __construct() {
 
@@ -32,6 +32,10 @@ class WCJ_WPML extends WCJ_Module {
 				add_action( 'wcj_version_updated', array( $this, 'create_wpml_xml_file' ) );
 			}
 			add_action( 'wcml_switch_currency', array( $this, 'switch_currency' ) );
+			add_filter( 'wcml_client_currency', function ( $currency ) {
+				$this->switch_currency( $currency );
+				return $currency;
+			} );
 		}
 
 		$this->notice = '';

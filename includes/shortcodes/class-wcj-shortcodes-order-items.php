@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Order Items
  *
- * @version 4.4.0
+ * @version 4.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -442,7 +442,7 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * get_cell.
 	 *
-	 * @version 4.4.0
+	 * @version 4.9.0
 	 * @since   3.2.0
 	 * @todo    do we need `pa_` replacement?
 	 * @todo    "WooCommerce TM Extra Product Options" plugin options: this will show options prices in shop's default currency only (must use 'price_per_currency' to show prices in order's currency)
@@ -504,28 +504,30 @@ class WCJ_Order_Items_Shortcodes extends WCJ_Shortcodes {
 						$the_item_title .= '</div>';
 					}
 					// "WooCommerce TM Extra Product Options" plugin options
-					$tmcartepo_data = ( WCJ_IS_WC_VERSION_BELOW_3 ?
-						( isset( $item['tmcartepo_data'] ) ? maybe_unserialize( $item['tmcartepo_data'] ) : '' ) :
-						$item->get_meta( '_tmcartepo_data' )
-					);
-					if ( ! empty( $tmcartepo_data ) ) {
-						$options_prices = array();
-						foreach ( $tmcartepo_data as $option ) {
-							$option_info = '';
-							if ( isset( $option['name'] ) && '' != $option['name'] ) {
-								$option_info .= $option['name'] . ': ';
+					if ( 'yes' === get_option( 'wcj_general_advanced_wcepo_enable', 'yes' ) ) {
+						$tmcartepo_data = ( WCJ_IS_WC_VERSION_BELOW_3 ?
+							( isset( $item['tmcartepo_data'] ) ? maybe_unserialize( $item['tmcartepo_data'] ) : '' ) :
+							$item->get_meta( '_tmcartepo_data' )
+						);
+						if ( ! empty( $tmcartepo_data ) ) {
+							$options_prices = array();
+							foreach ( $tmcartepo_data as $option ) {
+								$option_info = '';
+								if ( isset( $option['name'] ) && '' != $option['name'] ) {
+									$option_info .= $option['name'] . ': ';
+								}
+								if ( isset( $option['value'] ) && '' != $option['value'] ) {
+									$option_info .= $option['value'];
+								}
+								if ( isset( $option['price'] ) && 'yes' === $atts['wc_extra_product_options_show_price'] ) {
+									$option_info .= ( $option['price'] > 0 ) ? ' +' . wc_price( $option['price'] ) : ' ' . wc_price( $option['price'] );
+								}
+								if ( '' != $option_info ) {
+									$options_prices[] = $option_info;
+								}
 							}
-							if ( isset( $option['value'] ) && '' != $option['value'] ) {
-								$option_info .= $option['value'];
-							}
-							if ( isset( $option['price'] ) && 'yes' === $atts['wc_extra_product_options_show_price'] ) {
-								$option_info .= ( $option['price'] > 0 ) ? ' +' . wc_price( $option['price'] ) : ' ' . wc_price( $option['price'] );
-							}
-							if ( '' != $option_info ) {
-								$options_prices[] = $option_info;
-							}
+							$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">' . implode( '<br>', $options_prices ) . '</div>';
 						}
-						$the_item_title .= '<div style="' . $atts['style_item_name_variation'] . '">' . implode( '<br>', $options_prices ) . '</div>';
 					}
 					return $the_item_title;
 				}

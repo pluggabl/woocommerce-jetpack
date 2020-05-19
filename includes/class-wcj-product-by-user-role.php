@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Visibility by User Role
  *
- * @version 3.6.0
+ * @version 4.9.0
  * @since   2.5.5
  * @author  Algoritmika Ltd.
  */
@@ -34,13 +34,45 @@ class WCJ_Product_By_User_Role extends WCJ_Module_Product_By_Condition {
 	}
 
 	/**
+	 * maybe_add_extra_settings.
+	 *
+	 * @version 4.9.0
+	 * @since   4.9.0
+	 *
+	 * @return array
+	 */
+	public function maybe_add_extra_settings() {
+		return array(
+			array(
+				'title' => __( 'User Options', 'woocommerce-jetpack' ),
+				'type'  => 'title',
+				'id'    => 'wcj_' . $this->id . '_user_options',
+			),
+			array(
+				'title'             => __( 'Skip Editable Roles Filter', 'woocommerce-jetpack' ),
+				'desc_tip'          => __( 'Ignores <code>editable_roles</code> filter on admin.', 'woocommerce-jetpack' ) . '<br />' . sprintf( __( 'Enable this option for example if the shop manager can\'t see some role but only if you\'ve already tried the <strong>Shop Manager Editable Roles</strong> on <a href="%s">Admin Tools</a> module.', 'woocommerce-jetpack' ), admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=emails_and_misc&section=admin_tools' ) ),
+				'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+				'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+				'id'                => 'wcj_' . $this->id . '_user_options_skip_editable_roles',
+				'default'           => 'no',
+				'type'              => 'checkbox',
+			),
+			array(
+				'type' => 'sectionend',
+				'id'   => 'wcj_' . $this->id . '_user_options',
+			),
+		);
+	}
+
+	/**
 	 * get_options_list.
 	 *
-	 * @version 3.6.0
+	 * @version 4.9.0
 	 * @since   3.6.0
 	 */
 	function get_options_list() {
-		return wcj_get_user_roles_options();
+		$user_roles_options_args = 'no' === get_option( 'wcj_' . $this->id . '_user_options_skip_editable_roles', 'no' ) ? null : array( 'skip_editable_roles_filter' => true );
+		return wcj_get_user_roles_options( $user_roles_options_args );
 	}
 
 	/**

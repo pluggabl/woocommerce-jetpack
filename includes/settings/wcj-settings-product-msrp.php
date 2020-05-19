@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product MSRP
  *
- * @version 4.4.0
+ * @version 4.9.0
  * @since   3.6.0
  * @author  Algoritmika Ltd.
  */
@@ -116,6 +116,58 @@ $settings = array_merge( $settings, array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_payment_msrp_comp',
+	),
+	array(
+		'title'    => __( 'Other Options', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_msrp_other_options',
+	),
+	array(
+		'title'    => __( 'Treat Variable Products as Simple Products', 'woocommerce-jetpack'),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack'),
+		'id'       => 'wcj_product_msrp_variable_as_simple_enabled',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
+		'title'             => __( 'Archive Field', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip'          => __( 'Adds a MSRP field that will be displayed on the product archive.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_product_msrp_archive_page_field',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_msrp_other_options',
+	),
+	array(
+		'title'    => __( 'Template Variable Formulas', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_product_msrp_template_variables_formulas',
+	),
+	array(
+		'title'             => __( 'You Save', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Variable: ', 'woocommerce-jetpack' ) . '<code>%you_save%</code><br />' . wcj_message_replaced_values( array( '%msrp%', '%product_price%' ) ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip'          => __( '%you_save%', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_product_msrp_formula_you_save',
+		'default'           => '%msrp% - %product_price%',
+		'type'              => 'text',
+	),
+	array(
+		'title'             => __( 'You Save Percent', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Variable: ', 'woocommerce-jetpack' ) . '<code>%you_save_percent%</code><br />' . wcj_message_replaced_values( array( '%msrp%', '%product_price%' ) ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip'          => __( '%you_save_percent%', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_product_msrp_formula_you_save_percent',
+		'default'           => '(%msrp% - %product_price%) / %msrp% * 100',
+		'type'              => 'text',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_product_msrp_template_variables_formulas',
 	),
 ) );
 return $settings;

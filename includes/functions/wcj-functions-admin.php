@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Admin
  *
- * @version 4.4.0
+ * @version 4.9.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -121,11 +121,11 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 	/**
 	 * wcj_get_ajax_settings
 	 *
-	 * @version 4.4.0
+	 * @version 4.9.0
 	 * @since   4.3.0
 	 *
 	 * @param $values
-	 * @param string $search_type Possible values 'woocommerce_json_search_products', 'woocommerce_json_search_products_and_variations' , 'woocommerce_json_search_categories'
+	 * @param string $search_type Possible values 'woocommerce_json_search_products', 'woocommerce_json_search_products_and_variations' , 'woocommerce_json_search_categories', 'woocommerce_json_search_customers'
 	 * @param bool $allow_multiple_values
 	 *
 	 * @return array
@@ -147,6 +147,12 @@ if ( ! function_exists( 'wcj_get_ajax_settings' ) ) {
 			foreach ( $options_raw as $term_id ) {
 				$term                = get_term_by( 'slug', $term_id, 'product_cat' );
 				$options[ $term_id ] = wp_kses_post( $term->name );
+			}
+		} elseif ( $search_type == 'woocommerce_json_search_customers' ) {
+			$class = 'wc-customer-search';
+			foreach ( $options_raw as $term_id ) {
+				$user                = get_user_by( 'id', $term_id );
+				$options[ $term_id ] = wp_kses_post( $user->display_name );
 			}
 		}
 		$placeholder = isset( $values['placeholder'] ) ? isset( $values['placeholder'] ) : __( "Search&hellip;", 'woocommerce-jetpack' );

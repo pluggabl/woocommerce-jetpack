@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Orders
  *
- * @version 4.5.0
+ * @version 4.9.0
  * @since   2.9.0
  * @author  Algoritmika Ltd.
  */
@@ -108,7 +108,7 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 	 *
 	 * from woocommerce\includes\admin\meta-boxes\views\html-order-item-meta.php
 	 *
-	 * @version 3.2.4
+	 * @version 4.9.0
 	 * @since   2.5.9
 	 */
 	function wcj_get_order_item_meta_info( $item_id, $item, $_order, $exclude_wcj_meta = false, $_product = null, $exclude_meta = array() ) {
@@ -170,7 +170,7 @@ if ( ! function_exists( 'wcj_get_order_item_meta_info' ) ) {
 				}
 				$meta_info[] = wp_kses_post( rawurldecode( $_meta_key ) ) . ': ' . wp_kses_post( rawurldecode( $_meta_value ) );
 			}
-			$meta_info = implode( ', ', $meta_info );
+			$meta_info = implode( get_option( 'wcj_general_item_meta_separator', ', ' ), $meta_info );
 		}
 		return $meta_info;
 	}

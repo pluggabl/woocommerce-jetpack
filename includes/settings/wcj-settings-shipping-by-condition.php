@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Shipping by Condition
  *
- * @version 4.8.0
+ * @version 4.9.0
  * @since   3.2.1
  * @author  Algoritmika Ltd.
  * @todo    [dev] hide settings for the disabled subsection
@@ -84,31 +84,55 @@ foreach ( $this->condition_options as $options_id => $options_data ) {
 		}
 		$include_id = 'wcj_shipping_' . $options_id . '_include_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
 		$exclude_id = 'wcj_shipping_' . $options_id . '_exclude_' . ( $use_shipping_instances ? 'instance_' . $method['shipping_method_instance_id'] : $method->id );
-		$settings = array_merge( $settings, array(
-			array(
-				'title'     => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title'] : $method->get_method_title() ),
-				'desc_tip'  => $desc_tip,
-				'desc'      => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $include_id ),
-				'id'        => $include_id,
-				'default'   => '',
-				'type'      => $type,
-				'class'     => $class,
-				'css'       => $css,
-				'options'   => $options,
-				'custom_attributes' => $custom_attributes,
-			),
-			array(
-				'desc_tip'  => $desc_tip,
-				'desc'      => '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $exclude_id ),
-				'id'        => $exclude_id,
-				'default'   => '',
-				'type'      => $type,
-				'class'     => $class,
-				'css'       => $css,
-				'options'   => $options,
-				'custom_attributes' => $custom_attributes,
-			),
-		) );
+
+		if ( 'user_id' === $options_id ) {
+			$settings = array_merge( $settings, array(
+				wcj_get_ajax_settings( array(
+					'title'             => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title'] : $method->get_method_title() ),
+					'desc_tip'          => $desc_tip,
+					'desc'              => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $include_id ),
+					'id'                => $include_id,
+					'default'           => '',
+					'css'               => $css,
+					'custom_attributes' => $custom_attributes,
+				),true, 'woocommerce_json_search_customers' ),
+				wcj_get_ajax_settings( array(
+					'desc_tip'          => $desc_tip,
+					'desc'              => '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $exclude_id ),
+					'id'                => $exclude_id,
+					'default'           => '',
+					'css'               => $css,
+					'custom_attributes' => $custom_attributes,
+				),true,'woocommerce_json_search_customers' ),
+			) );
+		} else {
+			$settings = array_merge( $settings, array(
+				array(
+					'title'             => ( $use_shipping_instances ? $method['zone_name'] . ': ' . $method['shipping_method_title'] : $method->get_method_title() ),
+					'desc_tip'          => $desc_tip,
+					'desc'              => '<br>' . sprintf( __( 'Include %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $include_id ),
+					'id'                => $include_id,
+					'default'           => '',
+					'type'              => $type,
+					'class'             => $class,
+					'css'               => $css,
+					'options'           => $options,
+					'custom_attributes' => $custom_attributes,
+				),
+				array(
+					'desc_tip'          => $desc_tip,
+					'desc'              => '<br>' . sprintf( __( 'Exclude %s', 'woocommerce-jetpack' ), $options_data['title'] ) . $this->get_extra_option_desc( $exclude_id ),
+					'id'                => $exclude_id,
+					'default'           => '',
+					'type'              => $type,
+					'class'             => $class,
+					'css'               => $css,
+					'options'           => $options,
+					'custom_attributes' => $custom_attributes,
+				),
+			) );
+		}
+
 	}
 	$settings = array_merge( $settings, array(
 		array(

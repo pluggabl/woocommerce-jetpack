@@ -2,11 +2,9 @@
 /**
  * Booster for WooCommerce - Custom Payment Gateway
  *
- * @version 4.7.1
+ * @version 4.9.0
  * @author  Algoritmika Ltd.
  */
-
-add_action( 'plugins_loaded', 'init_wc_gateway_wcj_custom_class' );
 
 if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 
@@ -377,6 +375,7 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 				 * Constructor.
 				 */
 				function __construct() {
+
 				}
 			}
 
@@ -397,4 +396,10 @@ if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {
 			add_filter( 'woocommerce_payment_gateways', 'add_wc_gateway_wcj_custom_classes' );
 		}
 	}
+}
+
+if ( 'no' === get_option( 'wcj_load_modules_on_init', 'no' ) ) {
+	add_action( 'plugins_loaded', 'init_wc_gateway_wcj_custom_class' );
+} else {
+	init_wc_gateway_wcj_custom_class();
 }

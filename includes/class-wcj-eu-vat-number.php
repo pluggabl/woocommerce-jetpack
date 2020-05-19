@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - EU VAT Number
  *
- * @version 4.7.1
+ * @version 4.9.0
  * @since   2.3.9
  * @author  Algoritmika Ltd.
  */
@@ -347,9 +347,12 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	/**
 	 * start_session.
 	 *
-	 * @version 3.4.0
+	 * @version 4.9.0
 	 */
 	function start_session() {
+		if ( is_admin() ) {
+			return;
+		}
 		wcj_session_maybe_start();
 		$args = array();
 		if ( isset( $_POST['post_data'] ) ) {
@@ -362,24 +365,48 @@ class WCJ_EU_VAT_Number extends WCJ_Module {
 	}
 
 	/**
+	 * restrictive_loading_valid.
+	 *
+	 * @version 4.9.0
+	 * @since   4.9.0
+	 *
+	 * @return bool
+	 */
+	function restrictive_loading_valid() {
+		if ( empty( $restrictive_loading_conditions = get_option( 'wcj_eu_vat_number_restrictive_loading', array() ) ) ) {
+			return true;
+		}
+		foreach ( $restrictive_loading_conditions as $condition ) {
+			if ( $condition() ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * enqueue_scripts.
 	 *
-	 * @version 4.6.1
+	 * @version 4.9.0
 	 */
 	function enqueue_scripts() {
-		if ( 'yes' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) ) {
-			wp_enqueue_script( 'wcj-eu-vat-number', wcj_plugin_url() . '/includes/js/wcj-eu-vat-number.js', array(), WCJ()->version, true );
-			wp_localize_script( 'wcj-eu-vat-number', 'ajax_object', array(
-				'ajax_url'                        => admin_url( 'admin-ajax.php' ),
-				'eu_countries'                    => wcj_get_european_union_countries(),
-				'show_vat_field_for_eu_only'      => get_option( 'wcj_eu_vat_number_show_vat_field_for_eu_only', 'no' ),
-				'add_progress_text'               => get_option( 'wcj_eu_vat_number_add_progress_text', 'no' ),
-				'progress_text_validating'        => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_validating',        __( 'Validating VAT. Please wait...', 'woocommerce-jetpack' ) ) ),
-				'progress_text_valid'             => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_valid',             __( 'VAT is valid.', 'woocommerce-jetpack' ) ) ),
-				'progress_text_not_valid'         => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_not_valid',         __( 'VAT is not valid.', 'woocommerce-jetpack' ) ) ),
-				'progress_text_validation_failed' => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_validation_failed', __( 'Validation failed. Please try again.', 'woocommerce-jetpack' ) ) ),
-			) );
+		if (
+			'no' === get_option( 'wcj_eu_vat_number_validate', 'yes' ) ||
+			! $this->restrictive_loading_valid()
+		) {
+			return;
 		}
+		wp_enqueue_script( 'wcj-eu-vat-number', wcj_plugin_url() . '/includes/js/wcj-eu-vat-number.js', array(), WCJ()->version, true );
+		wp_localize_script( 'wcj-eu-vat-number', 'ajax_object', array(
+			'ajax_url'                        => admin_url( 'admin-ajax.php' ),
+			'eu_countries'                    => wcj_get_european_union_countries(),
+			'show_vat_field_for_eu_only'      => get_option( 'wcj_eu_vat_number_show_vat_field_for_eu_only', 'no' ),
+			'add_progress_text'               => get_option( 'wcj_eu_vat_number_add_progress_text', 'no' ),
+			'progress_text_validating'        => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_validating', __( 'Validating VAT. Please wait...', 'woocommerce-jetpack' ) ) ),
+			'progress_text_valid'             => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_valid', __( 'VAT is valid.', 'woocommerce-jetpack' ) ) ),
+			'progress_text_not_valid'         => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_not_valid', __( 'VAT is not valid.', 'woocommerce-jetpack' ) ) ),
+			'progress_text_validation_failed' => do_shortcode( get_option( 'wcj_eu_vat_number_progress_text_validation_failed', __( 'Validation failed. Please try again.', 'woocommerce-jetpack' ) ) ),
+		) );
 	}
 
 	/**

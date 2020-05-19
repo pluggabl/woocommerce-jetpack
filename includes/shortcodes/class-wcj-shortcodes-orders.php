@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Shortcodes - Orders
  *
- * @version 4.6.0
+ * @version 4.9.0
  * @author  Algoritmika Ltd.
  */
 
@@ -1048,10 +1048,11 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_order_time.
 	 *
-	 * @version 3.1.0
+	 * @version 4.9.0
 	 */
 	function wcj_order_time( $atts ) {
-		return date_i18n( $atts['time_format'], strtotime( wcj_get_order_date( $this->the_order ) ) );
+		$order_date = wcj_get_order_date( $this->the_order )->format( 'Y-m-d H:i:s' );
+		return wcj_pretty_utc_date( $order_date, $atts['time_format'] );
 	}
 
 	/**
