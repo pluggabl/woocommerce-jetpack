@@ -162,7 +162,7 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 = More =
 * Visit the [Booster for WooCommerce plugin page](https://booster.io/).
 * [Compare free and Plus version](https://booster.io/booster-woocommerce-free-vs-plus/).
-* If you wish to contribute - please visit [Booster for WooCommerce GitHub repository](https://github.com/algoritmika/woocommerce-jetpack).
+* If you wish to contribute - please visit [Booster for WooCommerce GitHub repository](https://github.com/pluggabl/woocommerce-jetpack/).
 
 == Installation ==
 
