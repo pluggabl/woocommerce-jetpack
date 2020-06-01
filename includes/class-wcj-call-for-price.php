@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Module - Call for Price
  *
  * @version 3.2.4
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // exit if accessed directly

@@ -2,9 +2,9 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 4.9.0
+ * @version 5.0.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    "pretty prices"
  */
 
@@ -117,6 +117,14 @@ $settings = array(
 		'id'       => 'wcj_multicurrency_compatibility',
 	),
 	array(
+		'title'    => __( 'Prices and Currencies by Country Module', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'Switches currency according to country.', 'woocommerce-jetpack' ) . '<br />' . sprintf( __( 'Once Enabled, please set all the currency values from the <a href="%s">Country</a> module as 1. The MultiCurrency module values will be used instead.', 'woocommerce-jetpack' ), admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=price_by_country' ) ),
+		'id'       => 'wcj_multicurrency_compatibility_price_by_country_module',
+		'default'  => 'no',
+		'type'     => 'checkbox',
+	),
+	array(
 		'title'    => __( 'WooCommerce Fixed Coupons', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'When a fixed coupon is used its value changes according to the current currency.', 'woocommerce-jetpack' ),
@@ -187,6 +195,15 @@ $settings = array(
 		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
 		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">Flexible Shipping</a> plugin.', 'woocommerce-jetpack' ), 'https://flexibleshipping.com/' ),
 		'id'                => 'wcj_multicurrency_compatibility_flexible_shipping',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
+		'title'             => __( 'Pricing Deals Plugin', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">Pricing Deals</a> plugin.', 'woocommerce-jetpack' ), 'https://www.varktech.com/woocommerce/woocommerce-dynamic-pricing-discounts-pro/' ),
+		'id'                => 'wcj_multicurrency_compatibility_pricing_deals',
 		'default'           => 'no',
 		'type'              => 'checkbox',
 	),

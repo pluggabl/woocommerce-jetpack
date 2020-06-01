@@ -6,7 +6,7 @@
  *
  * @version 4.6.1
  * @since   2.3.9
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @extends WC_Email
  */
 

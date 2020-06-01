@@ -3,7 +3,7 @@
  * Booster for WooCommerce - PDF Invoicing - Footer
  *
  * @version 2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

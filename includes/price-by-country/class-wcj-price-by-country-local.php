@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Price by Country - Local
  *
  * @version 4.0.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) remove this and leave only standard meta box option (i.e. only `'meta_box' === get_option( 'wcj_price_by_country_local_options_style', 'inline' )`)
  */
 

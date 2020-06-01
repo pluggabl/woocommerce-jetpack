@@ -1,0 +1,1654 @@
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2020-05-20 17:40+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Loco https://localise.biz/\n"
+"Language: pt_BR\n"
+"Project-Id-Version: Plugins - Booster for WooCommerce - Development (trunk)\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-05-20 17:40+0000\n"
+"Last-Translator: \n"
+"Language-Team: Português do Brasil\n"
+"X-Loco-Version: 2.3.4; wp-5.3.3"
+
+msgid "%s ago"
+msgstr "%s atrás"
+
+msgid "&#197;land Islands"
+msgstr "Ilhas &#197;land"
+
+msgid "Documentation"
+msgstr "Documentação"
+
+msgid "Dominica"
+msgstr "Domínica"
+
+msgid "Dominican Republic"
+msgstr "República Dominicana"
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Download CSV"
+msgstr "Baixar aquivo CSV"
+
+msgid "Download XML"
+msgstr "Baixar XML"
+
+msgid "Downloadable"
+msgstr "Baixável/Download"
+
+msgid "Drop down"
+msgstr "Lista suspensa"
+
+msgid "Ecuador"
+msgstr "Equador"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Edit Product"
+msgstr "Editar produto"
+
+msgid "Egypt"
+msgstr "Egito"
+
+msgid "El Salvador"
+msgstr "El Salvador"
+
+msgid "Email"
+msgstr "E-mail"
+
+msgid "Email Options"
+msgstr "Opções de e-mail"
+
+msgid "Email type"
+msgstr "Tipo de e-mail"
+
+msgid "Emails"
+msgstr "E-mails"
+
+msgid "Empty"
+msgstr "Vazio"
+
+msgid "Enable"
+msgstr "Habilitar"
+
+msgid "Enable for shipping methods"
+msgstr "Habilitar para meios de envio"
+
+msgid "Enable for virtual orders"
+msgstr "Habilitar para pedidos virtuais"
+
+msgid "Enable this email notification"
+msgstr "Habilitar essa notificação de e-mail"
+
+msgid ""
+"Enable this option if you are not going to use SKUs in your shop at all."
+msgstr "Ative esta opção se você não vai usar SKUs em sua loja."
+
+msgid "Enable/Disable"
+msgstr "Habilitar/Desabilitar"
+
+msgid "Enabled"
+msgstr "Habilitado"
+
+msgid "Enables sequential number generation by category."
+msgstr "Ativar geração de sequência numérica por categoria."
+
+msgid "End Date"
+msgstr "Data final"
+
+msgid "Enter full URL with http(s)."
+msgstr "Informe o URL completo com http(s)."
+
+msgid ""
+"Enter recipients (comma separated) for this email. Defaults to <code>"
+"%s</code>."
+msgstr ""
+"Informe os destinatários desse e-mail (separados por vírgula). O padrão é "
+"<code>%s</code>."
+
+msgid "Equatorial Guinea"
+msgstr "Guiné Equatorial"
+
+msgid "Eritrea"
+msgstr "Eritréia"
+
+msgid "Error"
+msgstr "Erro"
+
+msgid "Error message"
+msgstr "Mensagem de erro"
+
+msgid "Estonia"
+msgstr "Estônia"
+
+msgid "Ethiopia"
+msgstr "Etiópia"
+
+msgid "Exclude"
+msgstr "Excluir"
+
+msgid "Exclude Categories"
+msgstr "Excluir categorias"
+
+msgid "Export"
+msgstr "Exportar"
+
+msgid "Export Options"
+msgstr "Exportar opções"
+
+msgid "Export Orders Items"
+msgstr "Exportar itens dos pedidos"
+
+msgid "Export Orders Items."
+msgstr "Exportar itens dos pedidos."
+
+msgid "Export Products"
+msgstr "Exportar produtos"
+
+msgid "Export Products."
+msgstr "Exportar produtos."
+
+msgid "External product"
+msgstr "Produto externo"
+
+msgid "Falkland Islands"
+msgstr "Ilhas Malvinas"
+
+msgid "Faroe Islands"
+msgstr "Ilhas Faroé"
+
+msgid "Featured"
+msgstr "Destacado"
+
+msgid "Field"
+msgstr "Campo"
+
+msgid "Field Label"
+msgstr "Rótulo do campo"
+
+msgid "Fiji"
+msgstr "Fiji"
+
+msgid "File"
+msgstr "Arquivo"
+
+msgid "File is too big!"
+msgstr "O arquivo é grande demais!"
+
+msgid "File: Max size"
+msgstr "Arquivo: Tamanho máximo"
+
+msgid "Filter"
+msgstr "Filtrar"
+
+msgid "Filter products"
+msgstr "Filtrar produtos"
+
+msgid "Finland"
+msgstr "Finlândia"
+
+msgid "First"
+msgstr "Primeiro"
+
+msgid "First Name"
+msgstr "Nome"
+
+msgid "Fixed"
+msgstr "Fixo"
+
+msgid "Font Family"
+msgstr "Família da fonte"
+
+msgid "Font Size"
+msgstr "Tamanho da fonte"
+
+msgid "Footer"
+msgstr "Rodapé"
+
+msgid "Format"
+msgstr "Formato"
+
+msgid "France"
+msgstr "França"
+
+msgid "Free!"
+msgstr "Grátis!"
+
+msgid "French Guiana"
+msgstr "Guiana Francesa"
+
+msgid "French Polynesia"
+msgstr "Polinésia Francesa"
+
+msgid "French Southern Territories"
+msgstr "Territórios Franceses do Sul"
+
+msgid "Friday"
+msgstr "Sexta-feira"
+
+msgid "Full Row"
+msgstr "Linha completa"
+
+msgid "Gabon"
+msgstr "Gabão"
+
+msgid "Gambia"
+msgstr "Gâmbia"
+
+msgid "General"
+msgstr "Geral"
+
+msgid "General Options"
+msgstr "Opções gerais"
+
+msgid "Generate"
+msgstr "Gerar"
+
+msgid "Generate SKUs Only for Products with Empty SKU"
+msgstr "Gerar REF apenas para produtos sem REF"
+
+msgid "Georgia"
+msgstr "Geórgia"
+
+msgid "Germany"
+msgstr "Alemanha"
+
+msgid "Ghana"
+msgstr "Gana"
+
+msgid "Gibraltar"
+msgstr "Gibraltar"
+
+msgid "Global Discount"
+msgstr "Desconto global - Loco"
+
+msgid "Goal"
+msgstr "Objetivo"
+
+msgid "Greece"
+msgstr "Grécia"
+
+msgid "Greenland"
+msgstr "Gronelândia"
+
+msgid "Grenada"
+msgstr "Granada"
+
+msgid "Group"
+msgstr "Grupo"
+
+msgid "Grouped product"
+msgstr "Produto agrupado"
+
+msgid "Guadeloupe"
+msgstr "Guadalupe"
+
+msgid "Guatemala"
+msgstr "Guatemala"
+
+msgid "Guernsey"
+msgstr "Guernsey"
+
+msgid "Guest"
+msgstr "Visitante"
+
+msgid "Guinea"
+msgstr "Guinea"
+
+msgid "Guinea-Bissau"
+msgstr "Guiné-Bissau"
+
+msgid "Guyana"
+msgstr "Guiana"
+
+msgid "HTML"
+msgstr "HTML"
+
+msgid "HTML info."
+msgstr "Informações em HTML"
+
+msgid "HTML template"
+msgstr "Modelo em HTML"
+
+msgid "Haiti"
+msgstr "Haiti"
+
+msgid "Header"
+msgstr "Cabeçalho"
+
+msgid "Header Image"
+msgstr "Imagem de cabeçalho"
+
+msgid "Header Text"
+msgstr "Texto do cabeçalho"
+
+msgid "Header Text Color"
+msgstr "Cor do texto do cabeçalho"
+
+msgid "Heard Island and McDonald Islands"
+msgstr "Ilhas Heard e McDonald"
+
+msgid "Height"
+msgstr "Altura"
+
+msgid "Hide"
+msgstr "Esconder"
+
+msgid "Hide all addons"
+msgstr "Esconder todos os complementos"
+
+msgid "Homepage"
+msgstr "Página inicial"
+
+msgid "Honduras"
+msgstr "Honduras"
+
+msgid "Hong Kong"
+msgstr "Hong Kong"
+
+msgid "Hungary"
+msgstr "Hungria"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Iceland"
+msgstr "Islândia"
+
+msgid "Icon"
+msgstr "Ícone"
+
+msgid "Icon Code"
+msgstr "Código do ícone"
+
+msgid "Icon Position"
+msgstr "Posição do ícone"
+
+msgid "Icon Style"
+msgstr "Estilo do ícone"
+
+msgid "Icon Visibility"
+msgstr "Visibilidade do ícone"
+
+msgid "If redirect to custom local URL is selected, set URL here."
+msgstr ""
+"Se o redirecionamento para URL local personalizado for selecionado, "
+"configure o URL aqui."
+
+msgid ""
+"If you like <strong>Booster for WooCommerce</strong> please leave us a %s "
+"rating. Thank you, we couldn't have done it without you!"
+msgstr ""
+"Se você gosta do <strong>Booster for WooCommerce</strong> deixe-nos uma "
+"avaliação de %s. Obrigado, nós não teríamos conseguido sem você!"
+
+msgid "Image"
+msgstr "Imagem"
+
+msgid "Image URL"
+msgstr "URL da imagem"
+
+msgid "Image on Archives"
+msgstr "Imagem nos arquivos"
+
+msgid "Image on Single"
+msgstr "Imagem na página individual"
+
+msgid "Import"
+msgstr "Importar"
+
+msgid "India"
+msgstr "Índia"
+
+msgid "Indonesia"
+msgstr "Indonésia"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Instructions"
+msgstr "Instruções"
+
+msgid "Instructions that will be added to the thank you page."
+msgstr "Instruções que serão adicionados à página de agradecimento."
+
+msgid "Invoice"
+msgstr "Fatura"
+
+msgid "Iran"
+msgstr "Irã"
+
+msgid "Iraq"
+msgstr "Iraque"
+
+msgid "Isle of Man"
+msgstr "Ilha de Man"
+
+msgid "Israel"
+msgstr "Israel"
+
+msgid "Italy"
+msgstr "Itália"
+
+msgid "Item Name"
+msgstr "Nome do item"
+
+msgid "Ivory Coast"
+msgstr "Costa do Marfim"
+
+msgid "Jamaica"
+msgstr "Jamaica"
+
+msgid "Japan"
+msgstr "Japão"
+
+msgid "Jersey"
+msgstr "Jersey"
+
+msgid "Jordan"
+msgstr "Jordânia"
+
+msgid "Kazakhstan"
+msgstr "Cazaquistão"
+
+msgid "Kenya"
+msgstr "Quênia"
+
+msgid "Kiribati"
+msgstr "Quiribáti"
+
+msgid "Kuwait"
+msgstr "Kuwait"
+
+msgid "Kyrgyzstan"
+msgstr "Quirguistão"
+
+msgid "Label"
+msgstr "Rótulo"
+
+msgid "Labels"
+msgstr "Rótulos"
+
+msgid "Landscape"
+msgstr "Paisagem"
+
+msgid "Laos"
+msgstr "Laos"
+
+msgid "Last"
+msgstr "Último"
+
+msgid "Last Name"
+msgstr "Sobrenome"
+
+msgid "Last Sale"
+msgstr "Última venda"
+
+msgid "Latvia"
+msgstr "Letônia"
+
+msgid "Leave zero to disable."
+msgstr "Deixe 0 para desativar."
+
+msgid "Lebanon"
+msgstr "Líbano"
+
+msgid "Left"
+msgstr "À esquerda"
+
+msgid "Left with space"
+msgstr "À esquerda com espaço"
+
+msgid "Length"
+msgstr "Comprimento"
+
+msgid "Lesotho"
+msgstr "Lesoto"
+
+msgid "Level"
+msgstr "Nível"
+
+msgid "Liberia"
+msgstr "Libéria"
+
+msgid "Libya"
+msgstr "Líbia"
+
+msgid "Liechtenstein"
+msgstr "Liechtenstein"
+
+msgid "Link Text"
+msgstr "Texto do link"
+
+msgid "Link list"
+msgstr "Lista de links"
+
+msgid "Lithuania"
+msgstr "Lituânia"
+
+msgid "Log"
+msgstr "Registro"
+
+msgid "Log."
+msgstr "Registro."
+
+msgid "Login"
+msgstr "Login"
+
+msgid "Low stock notification"
+msgstr "Notificação de estoque baixo"
+
+msgid "Luxembourg"
+msgstr "Luxemburgo"
+
+msgid "Macao S.A.R., China"
+msgstr "Macau"
+
+msgid "Macedonia"
+msgstr "Macedônia"
+
+msgid "Madagascar"
+msgstr "Madagáscar"
+
+msgid "Make Font Shadowed"
+msgstr "Tornar a fonte sombreada"
+
+msgid "Malawi"
+msgstr "Malavi"
+
+msgid "Malaysia"
+msgstr "Malásia"
+
+msgid "Maldives"
+msgstr "Maldivas"
+
+msgid "Mali"
+msgstr "Mali"
+
+msgid "Malta"
+msgstr "Malta"
+
+msgid "Manage Settings"
+msgstr "Gerenciar configurações"
+
+msgid "Manage Stock"
+msgstr "Gerenciar estoque"
+
+msgid "Margin Bottom"
+msgstr "Margem inferior"
+
+msgid "Margin Left"
+msgstr "Margem esquerda"
+
+msgid "Margin Right"
+msgstr "Margem direita"
+
+msgid "Margin Top"
+msgstr "Margem superior"
+
+msgid "Mark"
+msgstr "Marco"
+
+msgid "Marshall Islands"
+msgstr "Ilhas Marshall"
+
+msgid "Martinique"
+msgstr "Martinica"
+
+msgid "Mauritania"
+msgstr "Mauritânia"
+
+msgid "Mauritius"
+msgstr "Maurícia"
+
+msgid "Max"
+msgstr "Máx"
+
+msgid "Max Price"
+msgstr "Preço máximo"
+
+msgid "Mayotte"
+msgstr "Maiote"
+
+msgid "Message"
+msgstr "Mensagem"
+
+msgid "Meta Key"
+msgstr "Chave de metadados"
+
+msgid "Meta Value"
+msgstr "Valor de metadados"
+
+msgid "Meta Value (Numeric)"
+msgstr "Valor de metadados (numérico)"
+
+msgid "Mexico"
+msgstr "México"
+
+msgid "Micronesia"
+msgstr "Micronésia"
+
+msgid "Min"
+msgstr "Min"
+
+msgid "Min Price"
+msgstr "Preço mínimo"
+
+msgid "Modified"
+msgstr "Modificado"
+
+msgid "Module"
+msgstr "Módulo"
+
+msgid "Moldova"
+msgstr "Moldávia"
+
+msgid "Monaco"
+msgstr "Mônaco"
+
+msgid "Monday"
+msgstr "Segunda-feira"
+
+msgid "Mongolia"
+msgstr "Mongólia"
+
+msgid "Montenegro"
+msgstr "Montenegro"
+
+msgid "Month"
+msgstr "Mês"
+
+msgid "Montserrat"
+msgstr "Monserrate"
+
+msgid "More Options"
+msgstr "Mais opções"
+
+msgid "Morocco"
+msgstr "Marrocos"
+
+msgid "Mozambique"
+msgstr "Moçambique"
+
+msgid "Multiselect"
+msgstr "Multiseleção"
+
+msgid "Myanmar"
+msgstr "Mianmar"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "Namibia"
+msgstr "Namíbia"
+
+msgid "Nauru"
+msgstr "Nauru"
+
+msgid "Nepal"
+msgstr "República Democrática Federal do Nepal"
+
+msgid "Netherlands"
+msgstr "Países Baixos"
+
+msgid "Netherlands Antilles"
+msgstr "Antilhas Holandesas"
+
+msgid "New Caledonia"
+msgstr "Nova discussão"
+
+msgid "New Zealand"
+msgstr "Nova Zelândia"
+
+msgid "Nicaragua"
+msgstr "Nicarágua"
+
+msgid "Niger"
+msgstr "Níger"
+
+msgid "Nigeria"
+msgstr "Nigéria"
+
+msgid "Niue"
+msgstr "Niue"
+
+msgid "No"
+msgstr "Não"
+
+msgid "No Override"
+msgstr "Não substituir"
+
+msgid "No customers found."
+msgstr "Nenhum cliente foi encontrado."
+
+msgid "No files uploaded."
+msgstr "Nenhum arquivo enviado."
+
+msgid "None"
+msgstr "Nenhum"
+
+msgid "Norfolk Island"
+msgstr "Ilha Norfolk"
+
+msgid "North Korea"
+msgstr "Coréia do Norte"
+
+msgid "Norway"
+msgstr "Noruega"
+
+msgid "Not Completed"
+msgstr "Incompleto"
+
+msgid "Not checked"
+msgstr "Não marcado"
+
+msgid "Notice"
+msgstr "Aviso"
+
+msgid "Number"
+msgstr "Número"
+
+msgid "Number Generation"
+msgstr "Geração de números"
+
+msgid "Number of Decimals"
+msgstr "Número de casas decimais"
+
+msgid "Old SKU"
+msgstr "REF antiga"
+
+msgid "Oman"
+msgstr "Omã"
+
+msgid "Once Weekly"
+msgstr "Semanalmente"
+
+msgid "Optional. Leave blank to use default URL."
+msgstr "Opcional. Deixe em branco para usar o URL padrão."
+
+msgid "Options"
+msgstr "Opções"
+
+msgid "Order"
+msgstr "Ordem"
+
+msgid "Order ID"
+msgstr "ID do pedido"
+
+msgid "Order Items"
+msgstr "Ordem dos itens"
+
+msgid "Order Notes"
+msgstr "Obs. do pedido"
+
+msgid "Order Number"
+msgstr "Número do pedido"
+
+msgid "Order Status"
+msgstr "Status do pedido"
+
+msgid "Order Statuses"
+msgstr "Status do pedido"
+
+msgid "Order Total"
+msgstr "Total do pedido"
+
+msgid "Order Total Tax"
+msgstr "Imposto total do pedido"
+
+msgid "Order by"
+msgstr "Ordenar por"
+
+msgid "Orders"
+msgstr "Pedidos"
+
+msgid "Other product"
+msgstr "Outro produto"
+
+msgid "PDF Invoicing"
+msgstr "Fatura em PDF"
+
+msgid "PHP Memory Limit"
+msgstr "Limite de memória no PHP"
+
+msgid "PHP Time Limit"
+msgstr "Limite de tempo PHP"
+
+msgid "PRODUCTS to hide this field"
+msgstr "PRODUTOS para esconder este campo"
+
+msgid "Packing Slip"
+msgstr "Etiqueta da embalagem"
+
+msgid "Page Settings"
+msgstr "Configurações da página"
+
+msgid "Pakistan"
+msgstr "Paquistão"
+
+msgid "Palestinian Territory"
+msgstr "Território Palestino"
+
+msgid "Panama"
+msgstr "Panamá"
+
+msgid "Papua New Guinea"
+msgstr "Papua-Nova Guiné"
+
+msgid "Paraguay"
+msgstr "Paraguai"
+
+msgid "Parent Product ID"
+msgstr "ID do produto ascendente"
+
+msgid "Password"
+msgstr "Senha"
+
+msgid "PayPal Email"
+msgstr "E-mail no PayPal"
+
+msgid "Payment Gateways"
+msgstr "Gateways de Pagamento"
+
+msgid "Payment method description that the customer will see on your checkout."
+msgstr ""
+"Descrição da forma de pagamento que o cliente verá na finalização da compra."
+
+msgid "Percent"
+msgstr "Percentual"
+
+msgid "Period"
+msgstr "Ponto"
+
+msgid "Peru"
+msgstr "Peru"
+
+msgid "Philippines"
+msgstr "Filipinas"
+
+msgid "Phone"
+msgstr "Telefone"
+
+msgid "Pitcairn"
+msgstr "Ilhas Pitcairn"
+
+msgid "Placeholder"
+msgstr "Demarcador"
+
+msgid "Plain text template"
+msgstr "Modelo em texto simples"
+
+msgid "Poland"
+msgstr "Polônia"
+
+msgid "Portrait"
+msgstr "Retrato"
+
+msgid "Portugal"
+msgstr "Portugal"
+
+msgid "Position"
+msgstr "Posição"
+
+msgid "Prefix"
+msgstr "Prefixo"
+
+msgid ""
+"Press \"Save changes\" and reload the page after you change this number."
+msgstr ""
+"Pressione \"Salvar alterações\" e regarregue a página depois de alterar este "
+"número."
+
+msgid "Preview SKUs"
+msgstr "Prévia das REFs"
+
+msgid "Price"
+msgstr "Preço"
+
+msgid "Price Excluding Tax"
+msgstr "Preço sem impostos"
+
+msgid "Price Including Tax"
+msgstr "Preço com impostos"
+
+msgctxt "Price range: from-to"
+msgid "%1$s&ndash;%2$s"
+msgstr "%1$s&ndash;%2$s"
+
+msgid "Product"
+msgstr "Produto"
+
+msgid "Product ID"
+msgstr "ID do produto"
+
+msgid "Product Images"
+msgstr "Imagens do produto"
+
+msgid "Product Info"
+msgstr "Informações do produto"
+
+msgid "Product Listings"
+msgstr "Listagens de produtos"
+
+msgid "Product Meta"
+msgstr "Metadados do produto"
+
+msgid "Product Status"
+msgstr "Status do produto"
+
+msgid "Product Tabs"
+msgstr "Abas do produto"
+
+msgid "Product cost (purchase) price"
+msgstr "Preço de custo (compra) do produto"
+
+msgid "Product on backorder notification"
+msgstr "Notificação de produto encomendado"
+
+msgid "Products"
+msgstr "Produtos"
+
+msgid "Products XML"
+msgstr "Produtos em XML"
+
+msgid "Purchase info"
+msgstr "Informação de compra"
+
+msgid "Qatar"
+msgstr "Qatar"
+
+msgid "Radio"
+msgstr "Botões de rádio"
+
+msgid "Radio Buttons"
+msgstr "Botões de rádio"
+
+msgid "Random"
+msgstr "Aleatório"
+
+msgid "Rate"
+msgstr "Avalie"
+
+msgid "Rating Count"
+msgstr "Contagem de avaliações"
+
+msgid "Read more"
+msgstr "Leia mais"
+
+msgid "Recipient(s)"
+msgstr "Destinatário(s)"
+
+msgid "Refunds"
+msgstr "Reembolsos"
+
+msgid "Registered"
+msgstr "Registrado"
+
+msgid "Regular Price"
+msgstr "Preço normal"
+
+msgid "Related Products"
+msgstr "Produtos relacionados"
+
+msgid "Remove"
+msgstr "Excluir"
+
+msgid "Remove Icon"
+msgstr "Remover ícone"
+
+msgid "Replace Image on Archive"
+msgstr "Substituir imagem no arquivo"
+
+msgid ""
+"Replace image on archive pages with custom HTML. Leave blank to disable."
+msgstr ""
+"Substitua a imagem nas páginas de arquivo por HTML personalizado. Deixe em "
+"branco para desabilitar."
+
+msgid "Report"
+msgstr "Denunciar"
+
+msgid "Reports"
+msgstr "Relatórios"
+
+msgid "Reports Settings"
+msgstr "Configurações de relatórios"
+
+msgid "Republic of Ireland"
+msgstr "República da Irlanda"
+
+msgid "Required"
+msgstr "Obrigatório"
+
+msgid "Reset"
+msgstr "Redefinir"
+
+msgid "Reset Settings"
+msgstr "Redefinir as configurações"
+
+msgid "Reset settings"
+msgstr "Redefinir as configurações"
+
+msgid "Reunion"
+msgstr "Reunião"
+
+msgid "Right"
+msgstr "Á direita"
+
+msgid "Right with space"
+msgstr "À direita com espaço"
+
+msgid "Roles"
+msgstr "Funções"
+
+msgid "Romania"
+msgstr "Romênia"
+
+msgid "Round"
+msgstr "Arredondado"
+
+msgid "Rounding"
+msgstr "Arredondamento"
+
+msgid "Russia"
+msgstr "Rússia"
+
+msgid "Rwanda"
+msgstr "Ruanda"
+
+msgid "S&atilde;o Tom&eacute; and Pr&iacute;ncipe"
+msgstr "São Tomé e Príncipe"
+
+msgid "SKU"
+msgstr "REF"
+
+msgid "SKU Format Options"
+msgstr "Opções de formato de REF"
+
+msgid "SKU prefix."
+msgstr "Prefixo SKU"
+
+msgid "SKU suffix."
+msgstr "Sufixo SKU."
+
+msgid "SKU template."
+msgstr "Modelo SKU."
+
+msgid "Saint Barth&eacute;lemy"
+msgstr "São Bartolomeu"
+
+msgid "Saint Helena"
+msgstr "Santa Helena"
+
+msgid "Saint Kitts and Nevis"
+msgstr "São Cristóvão e Nevis"
+
+msgid "Saint Lucia"
+msgstr "Santa Lúcia"
+
+msgid "Saint Martin (Dutch part)"
+msgstr "Saint Martin (parte Holandesa)"
+
+msgid "Saint Martin (French part)"
+msgstr "Ilha de São Martinho (República Francesa)"
+
+msgid "Saint Pierre and Miquelon"
+msgstr "Saint-Pierre e Miquelon"
+
+msgid "Saint Vincent and the Grenadines"
+msgstr "São Vicente e Grenadinas"
+
+msgid "Sale Price"
+msgstr "Preço de oferta"
+
+msgid "Sale!"
+msgstr "Oferta!"
+
+msgid "San Marino"
+msgstr "São Marinho"
+
+msgid "Saturday"
+msgstr "Sábado"
+
+msgid "Saudi Arabia"
+msgstr "Arábia Saudita"
+
+msgid "Save"
+msgstr "Salvar"
+
+msgid "Save changes"
+msgstr "Salvar alterações"
+
+msgid "Select"
+msgstr "Selecionar"
+
+msgid "Select All"
+msgstr "Selecionar todos"
+
+msgid "Select Options"
+msgstr "Selecionar opções"
+
+msgid "Select a country&hellip;"
+msgstr "Selecione o país&hellip;"
+
+msgid "Select shipping methods"
+msgstr "Selecione os meios de envio"
+
+msgid "Seller"
+msgstr "Vendedor"
+
+msgid "Send to Admin"
+msgstr "Enviar ao administrador"
+
+msgid "Senegal"
+msgstr "Senegal"
+
+msgid "Serbia"
+msgstr "Sérvia"
+
+msgid "Set SKUs"
+msgstr "Definir REFs"
+
+msgid "Settings"
+msgstr "Configurações"
+
+msgid "Seychelles"
+msgstr "Seicheles"
+
+msgid "Shipping"
+msgstr "Frete"
+
+msgid "Shipping & Orders"
+msgstr "Frete e pedidos"
+
+msgid "Shipping Address 2"
+msgstr "Endereço de entrega 2"
+
+msgid "Shipping City"
+msgstr "Entrega: Cidade"
+
+msgid "Shipping Class"
+msgstr "Classe de entrega"
+
+msgid "Shipping Country"
+msgstr "Entrega: País"
+
+msgid "Shipping First Name"
+msgstr "Entrega: Nome"
+
+msgid "Shipping Last Name"
+msgstr "Entrega: Sobrenome"
+
+msgid "Shipping State"
+msgstr "Entrega: Estado"
+
+msgid "Short Description"
+msgstr "Descrição curta"
+
+msgid "Show"
+msgstr "Mostrar"
+
+msgid "Sierra Leone"
+msgstr "Serra Leoa"
+
+msgid "Simple product"
+msgstr "Produto simples"
+
+msgid "Singapore"
+msgstr "Singapora"
+
+msgid "Slovakia"
+msgstr "Eslováquia"
+
+msgid "Slovenia"
+msgstr "Eslovênia"
+
+msgid "Slug"
+msgstr "Slug"
+
+msgid "Sold Individually"
+msgstr "Vender individualmente"
+
+msgid "Solomon Islands"
+msgstr "Ilhas Salomão"
+
+msgid "Somalia"
+msgstr "Somália"
+
+msgid "Sort SKUs as numbers instead of as texts"
+msgstr "Ordenar REFs como números ao invés de textos"
+
+msgid "Sort by Name"
+msgstr "Ordenar por nome"
+
+msgid "Sort by SKU"
+msgstr "Ordenar por REF"
+
+msgid "Sort by SKU: high to low"
+msgstr "Ordenar por REF: menor para maior"
+
+msgid "Sort by SKU: low to high"
+msgstr "Ordenar por REF: menor para maior"
+
+msgid "Sort by average rating"
+msgstr "Ordenar por avaliação"
+
+msgid "Sort by newness"
+msgstr "Ordenar por mais novos"
+
+msgid "Sort by popularity"
+msgstr "Ordenar por popularidade"
+
+msgid "Sort by price: high to low"
+msgstr "Ordenar por preço: maior para menor"
+
+msgid "Sort by price: low to high"
+msgstr "Ordenar por preço: menor para maior"
+
+msgid "Sort by stock quantity"
+msgstr "Ordenar por quantidade em estoque"
+
+msgid "Sort by stock quantity: high to low"
+msgstr "Ordenar por estoque: maior para menor"
+
+msgid "Sort by stock quantity: low to high"
+msgstr "Ordenar por estoque: menor para maior"
+
+msgid "Sort by title: A to Z"
+msgstr "Ordenar por título: A-Z"
+
+msgid "Sort by title: Z to A"
+msgstr "Ordenar por título: Z-A"
+
+msgid "Sorting"
+msgstr "Ordenação"
+
+msgid "South Africa"
+msgstr "África do Sul"
+
+msgid "South Georgia/Sandwich Islands"
+msgstr "Ilhas Geórgia do Sul e Sandwich do Sul"
+
+msgid "South Korea"
+msgstr "Coréia do Sul"
+
+msgid "South Sudan"
+msgstr "Sudão do Sul"
+
+msgid "Spain"
+msgstr "Espanha"
+
+msgid "Sri Lanka"
+msgstr "Sri Lanka"
+
+msgid "Standard"
+msgstr "Padrão"
+
+msgid "Standard Rate"
+msgstr "Taxa padrão"
+
+msgid "Start Date"
+msgstr "Data de Início"
+
+msgid "State"
+msgstr "Estado"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Statuses"
+msgstr "Status"
+
+msgid "Stock"
+msgstr "Estoque"
+
+msgid "Stock Quantity"
+msgstr "Quantidade em estoque"
+
+msgid "Styling"
+msgstr "Estilo"
+
+msgid "Subject"
+msgstr "Assunto"
+
+msgid "Success"
+msgstr "Sucesso"
+
+msgid "Sudan"
+msgstr "Sudão"
+
+msgid "Suffix"
+msgstr "Sufixo"
+
+msgid "Sunday"
+msgstr "Domingo"
+
+msgid "Suriname"
+msgstr "Suriname"
+
+msgid "Svalbard and Jan Mayen"
+msgstr "Svalbard e Jan Mayen"
+
+msgid "Swaziland"
+msgstr "Suazilândia"
+
+msgid "Sweden"
+msgstr "Suécia"
+
+msgid "Switzerland"
+msgstr "Suiça"
+
+msgid "Syria"
+msgstr "Síria"
+
+msgid "System Info"
+msgstr "Informações do sistema"
+
+msgid "TAGS to hide this field"
+msgstr "TAGS para esconder este campo"
+
+msgid "Tags"
+msgstr "Tags"
+
+msgid "Taiwan"
+msgstr "Taiwan (Ilha Formosa)"
+
+msgid "Tajikistan"
+msgstr "Tajiquirstão"
+
+msgid "Tanzania"
+msgstr "Tanzânia"
+
+msgid "Tax Class"
+msgstr "Classe de impostos"
+
+msgid "Tax Status"
+msgstr "Status dos impostos"
+
+msgid "Taxable"
+msgstr "Tributável"
+
+msgid "Taxes"
+msgstr "Impostos"
+
+msgid "Templates"
+msgstr "Modelos"
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Textarea"
+msgstr "Área de texto"
+
+msgid "Thailand"
+msgstr "Tailândia"
+
+msgid ""
+"This controls the email subject line. Leave blank to use the default subject:"
+" <code>%s</code>."
+msgstr ""
+"Isso controla a linha de assunto do e-mail. Deixe em branco para utilizar o "
+"assunto padrão: <code>%s</code>."
+
+msgid ""
+"This controls the main heading contained within the email notification. "
+"Leave blank to use the default heading: <code>%s</code>."
+msgstr ""
+"Isso controla o cabeçalho do conteúdo dentro do e-mail de notificação. Deixe "
+"em branco para utilizar o cabeçalho padrão: <code>%s</code>."
+
+msgid "This controls the title which the user sees during checkout."
+msgstr ""
+"Isto controla o título que o usuário vê durante a finalização da compra."
+
+msgid ""
+"This may help if you are going to use Autogenerate SKUs tool, but don't want "
+"to change your existing SKUs."
+msgstr ""
+"Isso pode ajudar se você vai usar a ferramenta Auto Generate SKUs, mas não "
+"deseja alterar suas SKUs existentes."
+
+msgid "This product is currently out of stock and unavailable."
+msgstr "Este produto não está disponível no momento."
+
+msgid "This section lets you add custom shipping method."
+msgstr "Esta seção permite que você adicione método de envio personalizado."
+
+msgid "Thousand Separator"
+msgstr "Separador de milhares"
+
+msgid "Thumbnails on Single"
+msgstr "Miniatura na página individual"
+
+msgid "Thursday"
+msgstr "Quinta-feira"
+
+msgid "Timepicker"
+msgstr "Seletor de hora"
+
+msgid "Timor-Leste"
+msgstr "Timor-Leste"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Title is required!"
+msgstr "O título é obrigatório!"
+
+msgid ""
+"To hide this field if at least one product of selected category is in cart, "
+"enter categories here. Leave blank to show for all products."
+msgstr ""
+"Para esconder este campo se ao menos um produto da categoria selecionada "
+"estiver no carrinho, digite as tags aqui. Deixe em branco para mostrar todos "
+"os produtos."
+
+msgid "Togo"
+msgstr "Togo"
+
+msgid "Tokelau"
+msgstr "Tokelau"
+
+msgid "Tonga"
+msgstr "Tonga"
+
+msgid "Tool"
+msgstr "Ferramenta"
+
+msgid "Tools"
+msgstr "Ferramentas"
+
+msgid "Top Countries"
+msgstr "Países principais"
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Total Modules:"
+msgstr "Módulos totais:"
+
+msgid "Total Spent"
+msgstr "Total gasto"
+
+msgid "Total customers"
+msgstr "Total de clientes"
+
+msgid "Totals"
+msgstr "Totais"
+
+msgid "Trinidad and Tobago"
+msgstr "Trinidade e Tobago"
+
+msgid "Tuesday"
+msgstr "Terça-feira"
+
+msgid "Tunisia"
+msgstr "Tunísia"
+
+msgid "Turkey"
+msgstr "Turquia"
+
+msgid "Turkmenistan"
+msgstr "Turcomenistão"
+
+msgid "Turks and Caicos Islands"
+msgstr "Ilhas Turcas e Caicos"
+
+msgid "Tuvalu"
+msgstr "Tuvalu"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "URL:"
+msgstr "URL:"
+
+msgid "Uganda"
+msgstr "Uganda"
+
+msgid "Ukraine"
+msgstr "Ucrânia"
+
+msgid "United Arab Emirates"
+msgstr "Emirados Árabes Unidos"
+
+msgid "United Kingdom (UK)"
+msgstr "Reino Unido (UK)"
+
+msgid "United States (US)"
+msgstr "Estados Unidos (US)"
+
+msgid "Update Totals"
+msgstr "Atualizar totais"
+
+msgid "Upload"
+msgstr "Fazer upload"
+
+msgid "Uruguay"
+msgstr "Uruguai"
+
+msgid "Uzbekistan"
+msgstr "Usbequistão"
+
+msgid "Value"
+msgstr "Valor"
+
+msgid "Vanuatu"
+msgstr "Vanuatu"
+
+msgid "Variable product"
+msgstr "Produto variável"
+
+msgid "Variation"
+msgstr "Variação"
+
+msgid "Variations"
+msgstr "Variações"
+
+msgid "Vatican"
+msgstr "Vaticano"
+
+msgid "Venezuela"
+msgstr "Venezuela"
+
+msgid "Version"
+msgstr "Versão"
+
+msgid "Vietnam"
+msgstr "Vietnã"
+
+msgid "View"
+msgstr "Ver"
+
+msgid "View report"
+msgstr "Ver relatório"
+
+msgid "Virtual"
+msgstr "Virtual"
+
+msgid "Visibility"
+msgstr "Visibilidade"
+
+msgid "Visit"
+msgstr "Visitar"
+
+msgid "Wallis and Futuna"
+msgstr "Wallis e Futuna"
+
+msgid "Wednesday"
+msgstr "Quarta-feira"
+
+msgid "Weight"
+msgstr "Peso"
+
+msgid "Western Sahara"
+msgstr "Sara Ocidental"
+
+msgid "Western Samoa"
+msgstr "Samoa Ocidental"
+
+msgid "Wide"
+msgstr "Largo"
+
+msgid "Width"
+msgstr "Largura"
+
+msgid "WooCommerce"
+msgstr "WooCommerce"
+
+msgid "WooCommerce > Settings > Shipping"
+msgstr "WooCommerce > Configurações > Entrega"
+
+msgid "Year"
+msgstr "Ano"
+
+msgid "Yemen"
+msgstr "Iémen"
+
+msgid "Yes"
+msgstr "Sim"
+
+msgid "Zambia"
+msgstr "Zâmbia"
+
+msgid "Zimbabwe"
+msgstr "Zimbábue"
+
+msgid "[wcj_product_sku before=\"SKU: \"]"
+msgstr "[wcj_product_sku before=\"REF: \"]"
+
+msgid "by IP"
+msgstr "por IP"
+
+msgid "categories"
+msgstr "categorias"
+
+msgid "class"
+msgstr "classe"
+
+msgid "days"
+msgstr "dias"
+
+msgid "disabled"
+msgstr "desabilitado"
+
+msgid "enabled"
+msgstr "habilitado"
+
+msgid "label"
+msgstr "rótulo"
+
+msgid "placeholder"
+msgstr "demarcador"
+
+msgid "required"
+msgstr "obrigatório"

@@ -4,7 +4,7 @@
  *
  * @version 4.4.0
  * @since   2.5.4
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly

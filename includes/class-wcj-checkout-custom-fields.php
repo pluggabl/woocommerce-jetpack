@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Module - Checkout Custom Fields
  *
  * @version 4.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

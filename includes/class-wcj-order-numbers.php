@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Module - Order Numbers
  *
  * @version 4.2.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly

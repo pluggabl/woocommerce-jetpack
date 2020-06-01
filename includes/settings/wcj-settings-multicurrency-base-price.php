@@ -2,9 +2,9 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency Product Base Price
  *
- * @version 4.8.0
+ * @version 5.0.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) `if ( isset( $all_currencies[ $currency_from ] ) ) { unset( $all_currencies[ $currency_from ] ); }`
  */
 
@@ -80,15 +80,34 @@ $settings = array(
 		'type'     => 'number',
 	),
 	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_multicurrency_base_price_advanced',
+	),
+	array(
+		'title'    => __( 'Compatibility', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_multicurrency_base_price_currencies_options',
+	),
+	array(
 		'title'    => __( 'WooCommerce Price Filter Compatibility', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Add compatibility with WooCommerce Price Filter Widget','woocommerce-jetpack' ),
+		'desc'     => __( 'Enable','woocommerce-jetpack' ),
+		'desc_tip' => __( 'Adds compatibility with WooCommerce Price Filter Widget','woocommerce-jetpack' ),
 		'id'       => 'wcj_multicurrency_base_price_advanced_price_filter_comp',
 		'default'  => 'no',
 		'type'     => 'checkbox',
 	),
 	array(
+		'title'             => __( 'WooCommerce Price Sorting', 'woocommerce-jetpack' ),
+		'desc_tip'          => __( 'Adds compatibility with WooCommerce Price Sorting', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'id'                => 'wcj_multicurrency_base_price_comp_wc_price_sorting',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
 		'type'     => 'sectionend',
-		'id'       => 'wcj_multicurrency_base_price_options',
+		'id'       => 'wcj_multicurrency_base_price_compatibility',
 	),
 	array(
 		'title'    => __( 'Currencies Options', 'woocommerce-jetpack' ),

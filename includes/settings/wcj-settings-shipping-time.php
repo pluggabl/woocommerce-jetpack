@@ -4,7 +4,7 @@
  *
  * @version 3.5.1
  * @since   3.5.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    estimated date calculation
  * @todo    add e.g.: "... order before 2 PM to receive"
  * @todo    check for `WC()` etc. to exist

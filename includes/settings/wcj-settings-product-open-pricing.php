@@ -4,7 +4,7 @@
  *
  * @version 4.6.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    set default for "wcj_product_open_price_enable_js_validation" to "yes"
  * @todo    (maybe) `$positions` - add `woocommerce_before_add_to_cart_quantity` and `woocommerce_after_add_to_cart_quantity` (on `! WCJ_IS_WC_VERSION_BELOW_3` and also recheck "Grouped product add to cart" template)
  * @todo    (maybe) `$positions` - add "Frontend Position Priority" option

@@ -3,7 +3,7 @@
  * Booster for WooCommerce Invoice
  *
  * @version 3.5.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

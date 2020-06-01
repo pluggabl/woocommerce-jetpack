@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Functions - HTML Functions
  *
  * @version 4.2.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

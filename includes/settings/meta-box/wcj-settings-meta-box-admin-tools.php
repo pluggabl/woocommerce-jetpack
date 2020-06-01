@@ -4,7 +4,7 @@
  *
  * @version 3.5.0
  * @since   3.3.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    [dev] (maybe) sort `$products` with available variations listed at the top
  */
 

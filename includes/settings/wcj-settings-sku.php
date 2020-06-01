@@ -4,7 +4,7 @@
  *
  * @version 4.7.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    deprecate `wcj_sku_prefix` and `wcj_sku_suffix` (as user can now add it directly to "Template")
  * @todo    tags (check SKU plugin); template: '{category_prefix}{tag_prefix}{prefix}{sku_number}{suffix}{tag_suffix}{category_suffix}{variation_suffix}'
  * @todo    add "Sequential Number Generation - By Category" to SKU plugin

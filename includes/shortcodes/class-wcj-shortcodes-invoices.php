@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Shortcodes - Invoices
  *
  * @version 2.7.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

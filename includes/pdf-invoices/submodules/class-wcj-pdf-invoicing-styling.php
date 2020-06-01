@@ -3,7 +3,7 @@
  * Booster for WooCommerce - PDF Invoicing - Styling
  *
  * @version 3.1.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

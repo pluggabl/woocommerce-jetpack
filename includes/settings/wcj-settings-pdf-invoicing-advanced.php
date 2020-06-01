@@ -4,7 +4,7 @@
  *
  * @version 4.9.0
  * @since   3.3.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) create "Tools (Options)" submodule
  * @todo    (maybe) remove `tcpdf_default` option in `wcj_invoicing_general_header_images_path`
  */

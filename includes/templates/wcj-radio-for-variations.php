@@ -4,7 +4,7 @@
  *
  * @version 4.6.0
  * @since   2.4.8
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 global $product;

@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Module - Sorting
  *
  * @version 4.6.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly

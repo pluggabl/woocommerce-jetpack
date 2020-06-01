@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Functions - General
  *
  * @version 4.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    add `wcj_add_actions()` and `wcj_add_filters()`
  */
 

@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Product Input Fields - Core
  *
  * @version 4.4.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

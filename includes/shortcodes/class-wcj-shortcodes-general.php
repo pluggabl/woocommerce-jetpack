@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Shortcodes - General
  *
  * @version 4.3.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

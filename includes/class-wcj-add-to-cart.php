@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Module - Add to Cart
  *
  * @version 3.3.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly

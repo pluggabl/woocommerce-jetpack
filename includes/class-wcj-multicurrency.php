@@ -2,9 +2,9 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 4.9.0
+ * @version 5.0.0
  * @since   2.4.3
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -91,10 +91,10 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Handles third party compatibility
 	 *
-	 * @version 4.9.0
+	 * @version 5.0.0
 	 * @since   4.3.0
 	 */
-	function handle_third_party_compatibility(){
+	function handle_compatibility(){
 		// "WooCommerce Smart Coupons" Compatibility
 		if ( 'yes' === get_option( 'wcj_multicurrency_compatibility_wc_smart_coupons' , 'yes' ) ) {
 			add_filter( 'woocommerce_coupon_get_amount', array( $this, 'smart_coupons_get_amount' ), 10, 2 );
@@ -138,6 +138,55 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 		// Flexible Shipping plugin https://flexibleshipping.com/
 		add_filter( 'flexible_shipping_value_in_currency', array( $this, 'flexible_shipping_compatibility' ) );
+
+		// Compatibility with Price by Country module
+		add_action( 'wcj_price_by_country_set_country', array( $this, 'change_currency_by_country' ), 10, 2 );
+
+		// Compatibility with Pricing Deals
+		add_filter( 'option_' . 'vtprd_rules_set', array( $this, 'convert_pricing_deals_settings' ) );
+	}
+
+	/**
+	 * convert_pricing_deals_settings.
+	 *
+	 * @version 5.0.0
+	 * @since   5.0.0
+	 *
+	 * @param $option
+	 *
+	 * @return mixed
+	 */
+	function convert_pricing_deals_settings( $option ) {
+		if ( 'no' === get_option( 'wcj_multicurrency_compatibility_pricing_deals', 'no' ) ) {
+			return $option;
+		}
+		foreach ( $option as $key => $value ) {
+			foreach ( $value->rule_deal_info as $deal_info_key => $deal_info_value ) {
+				if ( 'currency' === $deal_info_value['buy_amt_type'] ) {
+					$option[ $key ]->rule_deal_info[ $deal_info_key ]['buy_amt_count'] *= $this->get_currency_exchange_rate( $this->get_current_currency_code() );
+				}
+			}
+		}
+		return $option;
+	}
+
+	/**
+	 * change_currency_by_country.
+	 *
+	 * @version 5.0.0
+	 * @since   5.0.0
+	 *
+	 * @param $country
+	 * @param $currency
+	 */
+	function change_currency_by_country( $country, $currency ) {
+		if (
+			empty( $currency ) ||
+			'no' === get_option( 'wcj_multicurrency_compatibility_price_by_country_module', 'no' )
+		) {
+			return;
+		}
+		wcj_session_set( 'wcj-currency', $currency );
 	}
 
 	/**
@@ -632,7 +681,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 4.3.0
+	 * @version 5.0.0
 	 */
 	function add_hooks() {
 		if ( wcj_is_frontend() ) {
@@ -651,8 +700,8 @@ class WCJ_Multicurrency extends WCJ_Module {
 			add_filter( 'woocommerce_get_item_data', array( $this, 'get_addons_item_data' ), 20, 2 );
 			add_filter( 'woocommerce_product_addons_option_price_raw', array( $this, 'product_addons_option_price_raw' ), 10, 2 );
 
-			// Third Party Compatibility
-			$this->handle_third_party_compatibility();
+			// Handle Compatibility
+			$this->handle_compatibility();
 
 			// Additional Price Filters
 			$this->additional_price_filters = get_option( 'wcj_multicurrency_switcher_additional_price_filters', '' );

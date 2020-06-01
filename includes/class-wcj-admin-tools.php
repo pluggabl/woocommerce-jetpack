@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Module - Admin Tools
  *
  * @version 4.9.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

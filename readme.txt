@@ -1,9 +1,9 @@
 === Booster for WooCommerce ===
-Contributors: algoritmika, anbinder, debugeris, karzin
+Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.4
-Stable tag: 4.9.0
+Stable tag: 5.0.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -193,6 +193,15 @@ You can see the differences between versions in this [table](https://booster.io/
 
 == Changelog ==
 
+= 5.0.0 - 01/06/2020 =
+* Fix - PRICES & CURRENCIES - Wholesale Price - Consider `heading_format` param from `[wcj_product_wholesale_price_table]` on Heading Format option.
+* Fix - PRICES & CURRENCIES - Wholesale Price - Change 'Price Table Format' option to 'Table Heading Format'
+* Dev - PDF INVOICING & PACKING SLIPS - TCPDF library updated (from v6.2.26 to v6.3.0).
+* Dev - PRICES & CURRENCIES - Multicurrency Product Base Price - Add 'WooCommerce Price Sorting' compatibility option.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Add 'Discount Value - Price Directly Totals' option allowing to define how the `%discount_value%` will calculate the totals when the 'price directly' is in use.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add compatibility with 'Prices and Currencies by Country' module.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add compatibility with 'Pricing Deals' plugin.
+
 = 4.9.0 - 19/05/2020 =
 * Fix - CART & CHECKOUT - EU VAT Number - Add 'Restrictive Loading' option allowing to enqueue the module scripts on some conditions.
 * Fix - CART & CHECKOUT - Avoid possible cURL error on site-health by starting session only on frontend.
@@ -209,6 +218,7 @@ You can see the differences between versions in this [table](https://booster.io/
 * Dev - PDF INVOICING & PACKING SLIPS - Create option allowing to choose to display some meta from 'WooCommerce Extra Product Options' on `item_name` paramater from `wcj_order_items_table` shortcode.
 * Dev - PDF INVOICING & PACKING SLIPS - Create option allowing to choose the separator from `item_meta` parameter from `wcj_order_items_table`.
 * Dev - PRICES & CURRENCIES - Wholesale Price - Add 'Price Table Format' option allowing to setup the title from `[wcj_product_wholesale_price_table]` shortcode.
+* Dev - PRICES & CURRENCIES - Wholesale Price - Add 'Discount Value - Fixed Discount Totals' option allowing to define how the `%discount_value%` will calculate the totals when the fixed discount is in use.
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add compatibility option with WooCommerce Coupons regarding min and max amount values.
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add 'Convert Shipping Values' option.
 * Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Add Compatibility option with 'WooCommerce Tree Table Rate Shipping' plugin.

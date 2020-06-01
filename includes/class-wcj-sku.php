@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Module - SKU
  *
  * @version 4.7.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

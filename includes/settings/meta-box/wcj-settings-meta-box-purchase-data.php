@@ -4,7 +4,7 @@
  *
  * @version 2.8.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    wcj_purchase_price_currency
  */
 

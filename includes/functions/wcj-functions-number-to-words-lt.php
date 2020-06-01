@@ -4,7 +4,7 @@
  *
  * @version 2.5.9
  * @since   2.5.9
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! function_exists( 'convert_number_to_words_lt' ) ) {

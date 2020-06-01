@@ -4,7 +4,7 @@
  *
  * @version 3.6.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) add "Save all settings" buttons to each document type
  */
 

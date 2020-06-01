@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Functions - Numbers to Words - BG
  *
  * @version 2.5.9
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! function_exists( 'convert_number_to_words_bg' ) ) {

@@ -4,7 +4,7 @@
  *
  * @version 3.8.0
  * @since   3.2.4
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (dev) move version updated stuff to another file
  * @todo    (maybe) this only loads Enable, Tools and Reset settings for each module
  */

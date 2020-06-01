@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Module - Product Info V1 (Deprecated)
  *
  * @version 2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @deprecated
  */
 

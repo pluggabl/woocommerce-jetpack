@@ -4,7 +4,7 @@
  *
  * @version 4.9.0
  * @since   3.2.1
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    [dev] hide settings for the disabled subsection
  */
 

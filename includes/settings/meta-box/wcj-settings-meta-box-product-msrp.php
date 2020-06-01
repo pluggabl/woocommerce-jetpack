@@ -4,7 +4,7 @@
  *
  * @version 4.9.0
  * @since   3.6.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) `wcj_product_msrp_variable_as_simple_enabled`
  */
 

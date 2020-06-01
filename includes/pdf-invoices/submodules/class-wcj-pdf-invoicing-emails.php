@@ -3,7 +3,7 @@
  * Booster for WooCommerce - PDF Invoicing - Email Options
  *
  * @version 4.5.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

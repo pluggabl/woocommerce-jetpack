@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Module - Related Products
  *
  * @version 4.1.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -238,7 +238,7 @@ class WCJ_Related_Products extends WCJ_Module {
 	 */
 	function related_products_query_wc3( $_query, $product_id ) {
 		//////////////////////////////////////////////////////////////////////
-		// Algoritmika
+		// Pluggabl
 		if ( 'yes' === get_option( 'wcj_product_info_related_products_hide', 'no' ) ) {
 			$include_ids = false;
 		} else {
@@ -281,7 +281,7 @@ class WCJ_Related_Products extends WCJ_Module {
 		$query['where'] .= " AND p.post_type = 'product'";
 		$query['where'] .= " AND p.ID NOT IN ( {$exclude_ids} )";
 		//////////////////////////////////////////////////////////////////////
-		// Algoritmika
+		// Pluggabl
 		if ( ! is_array( $include_ids ) && $include_ids ) {
 			$query['where'] .= " AND p.ID IN ( {$include_ids} )";
 		}

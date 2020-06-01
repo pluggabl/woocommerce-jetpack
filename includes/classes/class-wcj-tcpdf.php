@@ -3,7 +3,7 @@
  * Booster for WooCommerce - TCPDF
  *
  * @version 4.3.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) `Header()`
  */
 

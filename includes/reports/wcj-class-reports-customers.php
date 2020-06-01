@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Reports - Customers
  *
  * @version 3.3.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

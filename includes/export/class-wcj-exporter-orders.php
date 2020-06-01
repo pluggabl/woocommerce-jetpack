@@ -4,7 +4,7 @@
  *
  * @version 3.2.1
  * @since   2.5.9
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    filter export by date
  */
 

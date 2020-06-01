@@ -3,7 +3,7 @@
  * Booster for WooCommerce - PDF Invoicing - Renumerate Tool
  *
  * @version 3.2.2
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

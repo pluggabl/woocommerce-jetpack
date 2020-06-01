@@ -4,7 +4,7 @@
  *
  * @version 4.2.0
  * @since   4.2.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 /**
@@ -40,7 +40,7 @@ define ('PDF_HEADER_TITLE', 'TCPDF Example');
 /**
  * Header description string.
  */
-define ('PDF_HEADER_STRING', "Booster for WooCommerce\nbooster.io"); // Algoritmika: was `"by Nicola Asuni - Tecnick.com\nwww.tcpdf.org"`
+define ('PDF_HEADER_STRING', "Booster for WooCommerce\nbooster.io"); // Pluggabl: was `"by Nicola Asuni - Tecnick.com\nwww.tcpdf.org"`
 
 /**
  * Document unit of measure [pt=point, mm=millimeter, cm=centimeter, in=inch].
@@ -136,7 +136,7 @@ define('K_THAI_TOPCHARS', true);
  * If true allows to call TCPDF methods using HTML syntax
  * IMPORTANT: For security reason, disable this feature if you are printing user HTML content.
  */
-define('K_TCPDF_CALLS_IN_HTML', true); // Algoritmika: was `false`
+define('K_TCPDF_CALLS_IN_HTML', true); // Pluggabl: was `false`
 
 /**
  * If true and PHP version is greater than 5, then the Error() method throw new exception instead of terminating the execution.
@@ -152,12 +152,12 @@ define('K_TIMEZONE', 'UTC');
  * Path for PDF fonts
  */
 if ( wcj_check_tcpdf_fonts_version( true ) ) {
-	define( 'K_PATH_FONTS', wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/' ); // Algoritmika
+	define( 'K_PATH_FONTS', wcj_get_wcj_uploads_dir( 'tcpdf_fonts' ) . '/' ); // Pluggabl
 }
 
 /**
  * Default images directory
  */
 if ( false !== ( $default_images_directory = wcj_get_invoicing_default_images_directory() ) ) {
-	define ( 'K_PATH_IMAGES', $default_images_directory ); // Algoritmika
+	define ( 'K_PATH_IMAGES', $default_images_directory ); // Pluggabl
 }

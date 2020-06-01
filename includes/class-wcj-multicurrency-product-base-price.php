@@ -2,9 +2,9 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency Product Base Price
  *
- * @version 4.8.0
+ * @version 5.0.0
  * @since   2.4.8
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;
@@ -16,7 +16,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Constructor.
 		 *
-		 * @version 4.3.1
+		 * @version 5.0.0
 		 * @since   2.4.8
 		 */
 		function __construct() {
@@ -42,7 +42,38 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 
 				// Compatibility with WooCommerce Price Filter Widget
 				$this->handle_price_filter_widget_compatibility();
+
+				// Compatibility with WooCommerce Ordering
+				$this->handle_wc_price_sorting();
 			}
+		}
+
+		/**
+		 * handle_wc_ordering.
+		 *
+		 * @version 5.0.0
+		 * @since   5.0.0
+		 */
+		function handle_wc_price_sorting() {
+			add_filter( 'woocommerce_get_catalog_ordering_args', function ( $args, $orderby, $order ) {
+				if (
+					'no' === get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ||
+					is_admin()
+				) {
+					return $args;
+				}
+				add_filter( 'posts_clauses', function ( $args ) use ( $order ) {
+					if ( false === strpos( $args['orderby'], 'wc_product_meta_lookup' ) ) {
+						return $args;
+					}
+					$order_sql = 'DESC' === $order ? 'DESC' : 'ASC';
+					global $wpdb;
+					$args['join']    .= " LEFT JOIN {$wpdb->postmeta} AS pm ON ({$wpdb->posts}.ID = pm.post_id and pm.meta_key='_wcj_multicurrency_base_price')";
+					$args['orderby'] = " pm.meta_value + 0 {$order_sql}, wc_product_meta_lookup.product_id {$order_sql} ";
+					return $args;
+				} );
+				return $args;
+			}, 10, 3 );
 		}
 
 		/**
@@ -214,7 +245,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Updates '_wcj_multicurrency_base_price' when '_wcj_multicurrency_base_price_currency' changes.
 		 *
-		 * @version 4.3.1
+		 * @version 5.0.0
 		 * @since   4.3.1
 		 *
 		 * @param $meta_id
@@ -223,7 +254,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		function update_base_price_meta_on_base_price_currency_update( $meta_id, $object_id, $meta_key ) {
 			if (
-				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
+				( 'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
 				! function_exists( 'wc_get_product' ) ||
 				'_wcj_multicurrency_base_price_currency' !== $meta_key ||
 				! is_a( $product = wc_get_product( $object_id ), 'WC_Product' )
@@ -236,7 +267,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Updates '_wcj_multicurrency_base_price' when '_price' meta is updated.
 		 *
-		 * @version 4.3.1
+		 * @version 5.0.0
 		 * @since   4.3.1
 		 *
 		 * @param $meta_id
@@ -245,7 +276,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		function update_base_price_meta_on_price_update( $meta_id, $object_id, $meta_key ){
 			if (
-				'no' === get_option('wcj_multicurrency_base_price_advanced_price_filter_comp') ||
+				( 'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
 				! function_exists( 'wc_get_product' ) ||
 				'_price' !== $meta_key ||
 				! is_a( $product = wc_get_product( $object_id ), 'WC_Product' )
@@ -258,7 +289,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		/**
 		 * Updates '_wcj_multicurrency_base_price' meta on products by currency when exchange rate changes inside 'Multicurrency Product Base Price' module.
 		 *
-		 * @version 4.3.1
+		 * @version 5.0.0
 		 * @since   4.3.1
 		 *
 		 * @param $option_name
@@ -267,7 +298,7 @@ if ( ! class_exists( 'WCJ_Multicurrency_Base_Price' ) ) :
 		 */
 		function update_products_base_price_on_exchange_rate_change( $option_name, $old_value, $option_value ){
 			if (
-				'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp', 'no' ) ||
+				( 'no' === get_option( 'wcj_multicurrency_base_price_advanced_price_filter_comp' ) && 'no' === get_option( 'wcj_multicurrency_base_price_comp_wc_price_sorting', 'no' ) ) ||
 				false === strpos( $option_name, 'wcj_multicurrency_base_price_exchange_rate_' )
 			) {
 				return;

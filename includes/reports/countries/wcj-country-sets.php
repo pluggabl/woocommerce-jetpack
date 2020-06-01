@@ -3,7 +3,7 @@
  * Booster for WooCommerce Country Sets
  *
  * @version 3.3.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    recheck if all countries are included in sets; recheck for overlapping sets
  * @todo    move to `wcj-functions-country.php`
  * @todo    use in "Price by Country" module for automatic group creation

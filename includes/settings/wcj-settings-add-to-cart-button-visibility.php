@@ -4,7 +4,7 @@
  *
  * @version 3.9.0
  * @since   3.3.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    "Per Tag"
  */
 

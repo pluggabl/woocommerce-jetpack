@@ -4,7 +4,7 @@
  *
  * @version 4.9.0
  * @since   2.5.7
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    order max amount
  */
 

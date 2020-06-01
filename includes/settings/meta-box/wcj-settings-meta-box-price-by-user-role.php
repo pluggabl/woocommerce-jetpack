@@ -4,7 +4,7 @@
  *
  * @version 3.6.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) add option to disable "Copy to ..." buttons
  * @todo    (maybe) "Copy to ..." for "Make Empty Price"
  */

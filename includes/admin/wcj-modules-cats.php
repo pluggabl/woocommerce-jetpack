@@ -4,7 +4,7 @@
  *
  * @version 4.3.0
  * @since   2.2.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) split "Shipping & Orders", "Cart & Checkout", "Products", "Prices & Currencies" etc.
  */
 

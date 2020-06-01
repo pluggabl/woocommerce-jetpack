@@ -4,7 +4,7 @@
  *
  * @version 4.2.0
  * @since   2.9.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) generate settings in loop ( min / max )
  */
 

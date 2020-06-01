@@ -4,7 +4,7 @@
  *
  * @version 4.9.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    set default value for "wcj_eu_vat_number_add_progress_text" to "yes"
  */
 

@@ -4,7 +4,7 @@
  *
  * @version 4.9.0
  * @since   2.5.3
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    admin order view (names)
  */
 

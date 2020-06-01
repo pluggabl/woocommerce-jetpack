@@ -4,7 +4,7 @@
  *
  * @version 3.9.0
  * @since   2.5.7
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    create all files at once (manually and synchronize update)
  */
 

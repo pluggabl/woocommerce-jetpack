@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Functions - Country
  *
  * @version 3.9.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! function_exists( 'wcj_maybe_add_european_union_countries' ) ) {

@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Custom Payment Gateway
  *
  * @version 4.9.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! function_exists( 'init_wc_gateway_wcj_custom_class' ) ) {

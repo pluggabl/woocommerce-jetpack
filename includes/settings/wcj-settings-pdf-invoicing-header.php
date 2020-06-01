@@ -4,7 +4,7 @@
  *
  * @version 3.4.2
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) add info on `<img>` in "Header Image" description
  */
 

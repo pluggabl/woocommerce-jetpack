@@ -3,7 +3,7 @@
  * Booster for WooCommerce Add to Cart per Product
  *
  * @version 2.7.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

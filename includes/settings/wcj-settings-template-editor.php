@@ -4,7 +4,7 @@
  *
  * @version 4.7.1
  * @since   3.9.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    [dev] (maybe) always use `DIRECTORY_SEPARATOR` (instead of '\\' and '/')
  * @todo    [dev] default template: check if `$default_template_path` exists before calling `file_get_contents()`
  * @todo    [feature] (maybe) option to set custom `/woocommerce/` folder

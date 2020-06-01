@@ -2,7 +2,7 @@
  * Booster for WooCommerce - Variations Radio Buttons
  *
  * @version 4.3.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 /**

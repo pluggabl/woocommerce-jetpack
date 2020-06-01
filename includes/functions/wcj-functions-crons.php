@@ -4,7 +4,7 @@
  *
  * @version 3.2.4
  * @since   3.2.4
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    use all functions where applicable
  */
 

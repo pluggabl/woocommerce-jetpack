@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Exchange Rates - Crons
  *
  * @version 3.4.5
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit;

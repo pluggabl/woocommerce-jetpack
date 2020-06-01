@@ -1438,7 +1438,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-custom-php.php:32
-#: includes/settings/wcj-settings-multicurrency.php:205
+#: includes/settings/wcj-settings-multicurrency.php:222
 #: includes/settings/wcj-settings-offer-price.php:84
 #, php-format
 msgid "E.g.: %s"
@@ -2927,19 +2927,23 @@ msgstr ""
 #: includes/settings/wcj-settings-multicurrency-base-price.php:38
 #: includes/settings/wcj-settings-multicurrency-base-price.php:53
 #: includes/settings/wcj-settings-multicurrency-base-price.php:70
+#: includes/settings/wcj-settings-multicurrency-base-price.php:93
+#: includes/settings/wcj-settings-multicurrency-base-price.php:102
 #: includes/settings/wcj-settings-multicurrency.php:39
 #: includes/settings/wcj-settings-multicurrency.php:103
 #: includes/settings/wcj-settings-multicurrency.php:121
-#: includes/settings/wcj-settings-multicurrency.php:130
+#: includes/settings/wcj-settings-multicurrency.php:129
 #: includes/settings/wcj-settings-multicurrency.php:138
-#: includes/settings/wcj-settings-multicurrency.php:145
+#: includes/settings/wcj-settings-multicurrency.php:146
 #: includes/settings/wcj-settings-multicurrency.php:153
 #: includes/settings/wcj-settings-multicurrency.php:161
 #: includes/settings/wcj-settings-multicurrency.php:169
-#: includes/settings/wcj-settings-multicurrency.php:178
-#: includes/settings/wcj-settings-multicurrency.php:187
-#: includes/settings/wcj-settings-multicurrency.php:220
-#: includes/settings/wcj-settings-multicurrency.php:229
+#: includes/settings/wcj-settings-multicurrency.php:177
+#: includes/settings/wcj-settings-multicurrency.php:186
+#: includes/settings/wcj-settings-multicurrency.php:195
+#: includes/settings/wcj-settings-multicurrency.php:204
+#: includes/settings/wcj-settings-multicurrency.php:237
+#: includes/settings/wcj-settings-multicurrency.php:246
 #: includes/settings/wcj-settings-my-account.php:29
 #: includes/settings/wcj-settings-my-account.php:87
 #: includes/settings/wcj-settings-my-account.php:104
@@ -4551,7 +4555,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-shipping-by-user-role.php:33
-#: includes/settings/wcj-settings-multicurrency.php:297
+#: includes/settings/wcj-settings-multicurrency.php:314
 #: includes/settings/wcj-settings-order-min-amount.php:112
 #: includes/settings/wcj-settings-price-by-user-role.php:133
 #, php-format
@@ -7651,7 +7655,7 @@ msgstr ""
 #: includes/settings/wcj-settings-add-to-cart-button-visibility.php:36
 #: includes/settings/wcj-settings-add-to-cart-button-visibility.php:62
 #: includes/settings/wcj-settings-multicurrency-base-price.php:63
-#: includes/settings/wcj-settings-multicurrency.php:198
+#: includes/settings/wcj-settings-multicurrency.php:215
 #: includes/settings/wcj-settings-order-min-amount.php:77
 #: includes/settings/wcj-settings-price-by-country.php:186
 #: includes/settings/wcj-settings-price-by-user-role.php:106
@@ -8795,10 +8799,10 @@ msgstr ""
 
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:72
 #: includes/settings/meta-box/wcj-settings-meta-box-wholesale-price.php:108
-#: includes/settings/wcj-settings-wholesale-price.php:202
-#: includes/settings/wcj-settings-wholesale-price.php:203
-#: includes/settings/wcj-settings-wholesale-price.php:259
-#: includes/settings/wcj-settings-wholesale-price.php:260
+#: includes/settings/wcj-settings-wholesale-price.php:215
+#: includes/settings/wcj-settings-wholesale-price.php:216
+#: includes/settings/wcj-settings-wholesale-price.php:272
+#: includes/settings/wcj-settings-wholesale-price.php:273
 msgid "Discount"
 msgstr ""
 
@@ -11096,8 +11100,8 @@ msgstr ""
 
 #: includes/settings/wcj-settings-currency-external-products.php:20
 #: includes/settings/wcj-settings-currency-per-product.php:180
-#: includes/settings/wcj-settings-multicurrency-base-price.php:123
-#: includes/settings/wcj-settings-multicurrency.php:270
+#: includes/settings/wcj-settings-multicurrency-base-price.php:142
+#: includes/settings/wcj-settings-multicurrency.php:287
 #: includes/settings/wcj-settings-price-by-country.php:311
 #: includes/settings/wcj-settings-price-formats.php:59
 msgid "Currency"
@@ -11202,8 +11206,8 @@ msgid "Currency Exchange Rates module"
 msgstr ""
 
 #: includes/settings/wcj-settings-currency-per-product.php:138
-#: includes/settings/wcj-settings-multicurrency-base-price.php:94
-#: includes/settings/wcj-settings-multicurrency.php:239
+#: includes/settings/wcj-settings-multicurrency-base-price.php:113
+#: includes/settings/wcj-settings-multicurrency.php:256
 msgid "Currencies Options"
 msgstr ""
 
@@ -11215,8 +11219,8 @@ msgid ""
 msgstr ""
 
 #: includes/settings/wcj-settings-currency-per-product.php:144
-#: includes/settings/wcj-settings-multicurrency-base-price.php:99
-#: includes/settings/wcj-settings-multicurrency.php:245
+#: includes/settings/wcj-settings-multicurrency-base-price.php:118
+#: includes/settings/wcj-settings-multicurrency.php:262
 msgid "Total Currencies"
 msgstr ""
 
@@ -11234,7 +11238,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-currency-per-product.php:257
 #: includes/settings/wcj-settings-multicurrency-base-price.php:69
-#: includes/settings/wcj-settings-multicurrency.php:228
+#: includes/settings/wcj-settings-multicurrency.php:245
 #: includes/settings/wcj-settings-price-by-country.php:220
 msgid ""
 "This may help if you are experiencing compatibility issues with other "
@@ -12286,7 +12290,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-global-discount.php:201
 #: includes/settings/wcj-settings-multicurrency-base-price.php:76
-#: includes/settings/wcj-settings-multicurrency.php:212
+#: includes/settings/wcj-settings-multicurrency.php:229
 #: includes/settings/wcj-settings-price-by-country.php:191
 #: includes/settings/wcj-settings-price-by-user-role.php:111
 #: includes/settings/wcj-settings-product-addons.php:258
@@ -12296,7 +12300,7 @@ msgstr ""
 
 #: includes/settings/wcj-settings-global-discount.php:202
 #: includes/settings/wcj-settings-multicurrency-base-price.php:77
-#: includes/settings/wcj-settings-multicurrency.php:213
+#: includes/settings/wcj-settings-multicurrency.php:230
 #: includes/settings/wcj-settings-price-by-country.php:192
 #: includes/settings/wcj-settings-price-by-user-role.php:112
 #: includes/settings/wcj-settings-product-addons.php:259
@@ -12516,17 +12520,33 @@ msgid "Convert Product Prices in Admin Products List"
 msgstr ""
 
 #: includes/settings/wcj-settings-multicurrency-base-price.php:68
-#: includes/settings/wcj-settings-multicurrency.php:227
+#: includes/settings/wcj-settings-multicurrency.php:244
 #: includes/settings/wcj-settings-price-by-country.php:219
 msgid "Save Calculated Products Prices"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency-base-price.php:83
+#: includes/settings/wcj-settings-multicurrency-base-price.php:87
+#: includes/settings/wcj-settings-multicurrency.php:115
+#: includes/settings/wcj-settings-payment-gateways-min-max.php:65
+#: includes/settings/wcj-settings-price-by-country.php:160
+#: includes/settings/wcj-settings-product-msrp.php:105
+msgid "Compatibility"
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency-base-price.php:92
 msgid "WooCommerce Price Filter Compatibility"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency-base-price.php:84
-msgid "Add compatibility with WooCommerce Price Filter Widget"
+#: includes/settings/wcj-settings-multicurrency-base-price.php:94
+msgid "Adds compatibility with WooCommerce Price Filter Widget"
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency-base-price.php:100
+msgid "WooCommerce Price Sorting"
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency-base-price.php:101
+msgid "Adds compatibility with WooCommerce Price Sorting"
 msgstr ""
 
 #: includes/settings/wcj-settings-multicurrency.php:23
@@ -12642,144 +12662,164 @@ msgid ""
 "Disable it if you have some other plugin already converting it like WPML."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:115
-#: includes/settings/wcj-settings-payment-gateways-min-max.php:65
-#: includes/settings/wcj-settings-price-by-country.php:160
-#: includes/settings/wcj-settings-product-msrp.php:105
-msgid "Compatibility"
-msgstr ""
-
 #: includes/settings/wcj-settings-multicurrency.php:120
-msgid "WooCommerce Fixed Coupons"
+msgid "Prices and Currencies by Country Module"
 msgstr ""
 
 #: includes/settings/wcj-settings-multicurrency.php:122
+msgid "Switches currency according to country."
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency.php:122
+#, php-format
+msgid ""
+"Once Enabled, please set all the currency values from the <a href=\"%s"
+"\">Country</a> module as 1. The MultiCurrency module values will be used "
+"instead."
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency.php:128
+msgid "WooCommerce Fixed Coupons"
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency.php:130
 msgid ""
 "When a fixed coupon is used its value changes according to the current "
 "currency."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:128
+#: includes/settings/wcj-settings-multicurrency.php:136
 msgid "WooCommerce Coupons - Min & Max amount"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:131
+#: includes/settings/wcj-settings-multicurrency.php:139
 msgid "Converts min and max amount values from WooCommerce coupons."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:137
+#: includes/settings/wcj-settings-multicurrency.php:145
 msgid "WooCommerce Smart Coupons"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:144
+#: includes/settings/wcj-settings-multicurrency.php:152
 msgid "WooCommerce Price Filter"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:146
+#: includes/settings/wcj-settings-multicurrency.php:154
 msgid "Adds Compatibility with Price Filter widget."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:152
+#: includes/settings/wcj-settings-multicurrency.php:160
 msgid "Price Sorting with Per Product"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:154
+#: includes/settings/wcj-settings-multicurrency.php:162
 msgid "Fixes Price Sorting if Per Product option is enabled."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:160
+#: includes/settings/wcj-settings-multicurrency.php:168
 msgid "WooCommerce Import"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:162
+#: includes/settings/wcj-settings-multicurrency.php:170
 msgid ""
 "Fixes WooCommerce Import Tool preventing it from converting some uppercase "
 "meta to lowercase."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:168
+#: includes/settings/wcj-settings-multicurrency.php:176
 msgid "WPC Product Bundles"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:170
+#: includes/settings/wcj-settings-multicurrency.php:178
 #, php-format
 msgid ""
 "Adds compatibility with <a href=\"%s\" target=\"_blank\">WPC Product "
 "Bundles</a> plugin."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:176
+#: includes/settings/wcj-settings-multicurrency.php:184
 msgid "WooCommerce Tree Table Rate Shipping"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:179
+#: includes/settings/wcj-settings-multicurrency.php:187
 #, php-format
 msgid ""
 "Adds compatibility with <a href=\"%s\" target=\"_blank\">WooCommerce Tree "
 "Table Rate Shipping</a> plugin."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:185
+#: includes/settings/wcj-settings-multicurrency.php:193
 msgid "Flexible Shipping"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:188
+#: includes/settings/wcj-settings-multicurrency.php:196
 #, php-format
 msgid ""
 "Adds compatibility with <a href=\"%s\" target=\"_blank\">Flexible Shipping</"
 "a> plugin."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:203
+#: includes/settings/wcj-settings-multicurrency.php:202
+msgid "Pricing Deals Plugin"
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency.php:205
+#, php-format
+msgid ""
+"Adds compatibility with <a href=\"%s\" target=\"_blank\">Pricing Deals</a> "
+"plugin."
+msgstr ""
+
+#: includes/settings/wcj-settings-multicurrency.php:220
 msgid "Additional Price Filters"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:204
+#: includes/settings/wcj-settings-multicurrency.php:221
 msgid ""
 "Add additional price filters here. One per line. Leave blank if not sure."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:219
+#: includes/settings/wcj-settings-multicurrency.php:236
 msgid "Save Prices on Exchange Update"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:221
+#: includes/settings/wcj-settings-multicurrency.php:238
 msgid ""
 "Save min and max prices on exchange rate update, via background processing."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:221
+#: includes/settings/wcj-settings-multicurrency.php:238
 msgid ""
 "All products with \"per product\" options registered related to the currency "
 "will be affected."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:241
+#: includes/settings/wcj-settings-multicurrency.php:258
 msgid ""
 "One currency probably should be set to current (original) shop currency with "
 "an exchange rate of 1."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:246
+#: includes/settings/wcj-settings-multicurrency.php:263
 msgid ""
 "Press Save changes after setting this option, so new settings fields will be "
 "added."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:295
+#: includes/settings/wcj-settings-multicurrency.php:312
 msgid "Role Defaults"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:302
+#: includes/settings/wcj-settings-multicurrency.php:319
 msgid "Roles"
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:303
-#: includes/settings/wcj-settings-wholesale-price.php:224
+#: includes/settings/wcj-settings-multicurrency.php:320
+#: includes/settings/wcj-settings-wholesale-price.php:237
 msgid "Save settings after you change this option. Leave blank to disable."
 msgstr ""
 
-#: includes/settings/wcj-settings-multicurrency.php:326
+#: includes/settings/wcj-settings-multicurrency.php:343
 msgid "No default currency"
 msgstr ""
 
@@ -18905,13 +18945,14 @@ msgid "If you want to display prices table on frontend, use %s shortcode."
 msgstr ""
 
 #: includes/settings/wcj-settings-wholesale-price.php:25
-msgid "Price Table Format"
+msgid "Table Heading Format"
 msgstr ""
 
 #: includes/settings/wcj-settings-wholesale-price.php:26
 msgid ""
-"The title format from <code>[wcj_product_wholesale_price_table]</code> "
-"shortcode."
+"The <code>heading_format</code> param from "
+"<code>[wcj_product_wholesale_price_table]</code> shortcode will replace this "
+"value as long it's different from the default."
 msgstr ""
 
 #: includes/settings/wcj-settings-wholesale-price.php:34
@@ -18987,48 +19028,60 @@ msgid ""
 msgstr ""
 
 #: includes/settings/wcj-settings-wholesale-price.php:159
+#: includes/settings/wcj-settings-wholesale-price.php:172
 msgid "Do not consider quantity"
 msgstr ""
 
 #: includes/settings/wcj-settings-wholesale-price.php:160
+#: includes/settings/wcj-settings-wholesale-price.php:173
 msgid "Consider quantity"
 msgstr ""
 
+#: includes/settings/wcj-settings-wholesale-price.php:164
+msgid "Discount Value - Price Directly Totals"
+msgstr ""
+
 #: includes/settings/wcj-settings-wholesale-price.php:168
+msgid ""
+"Defines how the <code>%discount_value%</code> will calculate the totals when "
+"the price directly is in use."
+msgstr ""
+
+#: includes/settings/wcj-settings-wholesale-price.php:181
 msgid "Wholesale Levels Options"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:173
-#: includes/settings/wcj-settings-wholesale-price.php:237
+#: includes/settings/wcj-settings-wholesale-price.php:186
+#: includes/settings/wcj-settings-wholesale-price.php:250
 msgid "Number of Levels"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:184
+#: includes/settings/wcj-settings-wholesale-price.php:197
 msgid "Default Max Qty Level"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:194
-#: includes/settings/wcj-settings-wholesale-price.php:251
+#: includes/settings/wcj-settings-wholesale-price.php:207
+#: includes/settings/wcj-settings-wholesale-price.php:264
 msgid "Min Quantity"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:195
-#: includes/settings/wcj-settings-wholesale-price.php:252
+#: includes/settings/wcj-settings-wholesale-price.php:208
+#: includes/settings/wcj-settings-wholesale-price.php:265
 msgid "Minimum quantity to apply discount"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:217
+#: includes/settings/wcj-settings-wholesale-price.php:230
 msgid "Additional User Roles Options"
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:219
+#: includes/settings/wcj-settings-wholesale-price.php:232
 msgid ""
 "If you want to set different wholesale pricing options for different user "
 "roles, fill this section. Please note that you can also use Booster's "
 "\"Price based on User Role\" module without filling this section."
 msgstr ""
 
-#: includes/settings/wcj-settings-wholesale-price.php:223
+#: includes/settings/wcj-settings-wholesale-price.php:236
 msgid "User Roles Settings"
 msgstr ""
 
@@ -19274,6 +19327,10 @@ msgstr ""
 
 #: includes/shortcodes/class-wcj-shortcodes-products.php:562
 msgid "In stock"
+msgstr ""
+
+#: includes/shortcodes/class-wcj-shortcodes-products.php:973
+msgid "from %level_min_qty% pcs."
 msgstr ""
 
 #: includes/templates/wcj-radio-for-variations.php:16

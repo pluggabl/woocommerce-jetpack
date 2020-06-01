@@ -3,7 +3,7 @@
  * Booster for WooCommerce - Functions - Invoicing
  *
  * @version 3.6.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! function_exists( 'wcj_get_invoicing_temp_dir' ) ) {

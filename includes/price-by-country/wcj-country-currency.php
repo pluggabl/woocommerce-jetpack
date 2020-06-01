@@ -3,7 +3,7 @@
  * Booster for WooCommerce Country Currency functions
  *
  * @version 3.9.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    maybe move this to `functions` folder
  */
 

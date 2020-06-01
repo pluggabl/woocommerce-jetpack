@@ -4,7 +4,7 @@
  *
  * @version 3.5.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    change `textarea` to `readonly`
  */
 

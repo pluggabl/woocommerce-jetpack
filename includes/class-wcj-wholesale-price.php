@@ -2,9 +2,9 @@
 /**
  * Booster for WooCommerce - Module - Wholesale Price
  *
- * @version 4.9.0
+ * @version 5.0.0
  * @since   2.2.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    per variation
  * @todo    sort discounts table by quantity (asc) before using
  */
@@ -95,7 +95,7 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 	/**
 	 * add_discount_info_to_cart_page.
 	 *
-	 * @version 4.9.0
+	 * @version 5.0.0
 	 */
 	function add_discount_info_to_cart_page( $price_html, $cart_item, $cart_item_key ) {
 
@@ -113,7 +113,8 @@ class WCJ_Wholesale_Price extends WCJ_Module {
 						$saved_wcj_wholesale_price = $_product->wcj_wholesale_price;
 						unset( $_product->wcj_wholesale_price );
 					}
-					$discount = wc_price( $this->get_price_for_cart( ( $_product->get_price() - $discount ), $_product ) );
+					$price = 'do_not_consider_qty' === get_option( 'wcj_wholesale_price_template_vars_discount_value_pdt', 'do_not_consider_qty' ) ? $_product->get_price() - $discount : ( $_product->get_price() - $discount ) * $the_quantity;
+					$discount = wc_price( $this->get_price_for_cart( $price, $_product ) );
 					if ( false !== $saved_wcj_wholesale_price ) {
 						$_product->wcj_wholesale_price = $saved_wcj_wholesale_price;
 					}

@@ -4,7 +4,7 @@
  *
  * @version 3.2.1
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    add "Additional Export Fields" for "Customers from Orders" and (maybe) "Customers"
  */
 

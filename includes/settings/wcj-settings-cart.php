@@ -4,7 +4,7 @@
  *
  * @version 3.3.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) 'Hide "Note: Shipping and taxes are estimated..." message on Cart page' - `wcj_cart_hide_shipping_and_taxes_estimated_message`
  */
 

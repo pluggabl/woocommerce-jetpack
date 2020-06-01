@@ -4,7 +4,7 @@
  *
  * @version 3.9.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) add `desc_tip` to `wcj_price_formats_general_trim_zeros`
  */
 

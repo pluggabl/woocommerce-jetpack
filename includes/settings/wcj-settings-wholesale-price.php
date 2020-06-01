@@ -2,9 +2,9 @@
 /**
  * Booster for WooCommerce - Settings - Wholesale Price
  *
- * @version 4.9.0
+ * @version 5.0.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -22,8 +22,8 @@ $settings = array(
 		'id'       => 'wcj_wholesale_price_general_options',
 	),
 	array(
-		'title'    => __( 'Price Table Format', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'The title format from <code>[wcj_product_wholesale_price_table]</code> shortcode.', 'woocommerce-jetpack' ),
+		'title'    => __( 'Table Heading Format', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'The <code>heading_format</code> param from <code>[wcj_product_wholesale_price_table]</code> shortcode will replace this value as long it\'s different from the default.', 'woocommerce-jetpack' ),
 		'desc'     => wcj_message_replaced_values( array( '%level_min_qty%' ) ),
 		'id'       => 'wcj_wholesale_price_table_sc_title_format',
 		'default'  => 'from %level_min_qty% pcs.',
@@ -153,6 +153,19 @@ $settings = array(
 		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc_tip'          => __( 'Defines how the <code>%discount_value%</code> will calculate the totals when the fixed discount is in use.', 'woocommerce-jetpack' ),
+		'default'           => 'do_not_consider_qty',
+		'type'              => 'select',
+		'options'           => array(
+			'do_not_consider_qty' => __( 'Do not consider quantity', 'woocommerce-jetpack' ),
+			'consider_qty'        => __( 'Consider quantity', 'woocommerce-jetpack' ),
+		),
+	),
+	array(
+		'title'             => __( 'Discount Value - Price Directly Totals', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_wholesale_price_template_vars_discount_value_pdt',
+		'desc'              => apply_filters( 'booster_message', '', 'desc' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip'          => __( 'Defines how the <code>%discount_value%</code> will calculate the totals when the price directly is in use.', 'woocommerce-jetpack' ),
 		'default'           => 'do_not_consider_qty',
 		'type'              => 'select',
 		'options'           => array(

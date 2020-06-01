@@ -4,7 +4,7 @@
  *
  * @version 4.5.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    add options to set fields and column titles
  */
 

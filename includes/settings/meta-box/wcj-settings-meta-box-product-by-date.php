@@ -4,7 +4,7 @@
  *
  * @version 4.7.0
  * @since   2.9.1
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    (maybe) Direct Date: all products
  * @todo    (maybe) Direct Date: option to disable months in admin product edit page
  * @todo    (maybe) Direct Date: add time also

@@ -4,7 +4,7 @@
  *
  * @version 3.3.0
  * @since   2.8.0
- * @author  Algoritmika Ltd.
+ * @author  Pluggabl LLC.
  * @todo    [dev] clean up
  */
 
