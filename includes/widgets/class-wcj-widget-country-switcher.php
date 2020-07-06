@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Widget - Country Switcher
  *
- * @version 3.1.0
+ * @version 5.1.0
  * @since   2.4.8
  * @author  Pluggabl LLC.
  */
@@ -33,7 +33,7 @@ class WCJ_Widget_Country_Switcher extends WCJ_Widget {
 	/**
 	 * get_content.
 	 *
-	 * @version 3.1.0
+	 * @version 5.1.0
 	 * @since   3.1.0
 	 */
 	function get_content( $instance ) {
@@ -45,14 +45,16 @@ class WCJ_Widget_Country_Switcher extends WCJ_Widget {
 			if ( ! isset( $instance['replace_with_currency'] ) ) {
 				$instance['replace_with_currency'] = 'no';
 			}
-			return do_shortcode( '[wcj_country_select_drop_down_list countries="' . $instance['countries'] . '" replace_with_currency="' . $instance['replace_with_currency'] . '"]' );
+			return do_shortcode( '[wcj_country_select_drop_down_list' .
+				' form_method="' . ( ! empty( $instance['form_method'] ) ? $instance['form_method'] : 'post' ) . '"' .
+				' countries="' . $instance['countries'] . '" replace_with_currency="' . $instance['replace_with_currency'] . '"]' );
 		}
 	}
 
 	/**
 	 * get_options.
 	 *
-	 * @version 3.1.0
+	 * @version 5.1.0
 	 * @since   3.1.0
 	 * @todo    (maybe) `switcher_type`
 	 */
@@ -82,6 +84,18 @@ class WCJ_Widget_Country_Switcher extends WCJ_Widget {
 					'no'  => __( 'No', 'woocommerce-jetpack' ),
 					'yes' => __( 'Yes', 'woocommerce-jetpack' ),
 				),
+			),
+			array(
+				'title'    => __( 'Form Method', 'woocommerce-jetpack' ),
+				'desc'     => '* ' . __( 'HTML form method for "Drop down" and "Radio list" types.', 'woocommerce-jetpack' ),
+				'id'       => 'form_method',
+				'default'  => 'post',
+				'type'     => 'select',
+				'options'  => array(
+					'post'  => __( 'Post', 'woocommerce-jetpack' ),
+					'get'   => __( 'Get', 'woocommerce-jetpack' ),
+				),
+				'class'    => 'widefat',
 			),
 		);
 	}

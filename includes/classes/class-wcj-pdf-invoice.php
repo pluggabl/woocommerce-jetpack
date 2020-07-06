@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce PDF Invoice
  *
- * @version 4.7.1
+ * @version 5.1.0
  * @author  Pluggabl LLC.
  */
 
@@ -213,7 +213,7 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 	/**
 	 * get_pdf.
 	 *
-	 * @version 3.8.0
+	 * @version 5.1.0
 	 * @todo    [dev] (maybe) `die()` on success
 	 */
 	function get_pdf( $dest ) {
@@ -249,7 +249,9 @@ class WCJ_PDF_Invoice extends WCJ_Invoice {
 				if ( ! file_put_contents( $file_path, $result_pdf ) ) {
 					return null;
 				}
-				header( "Content-Length: " . filesize( $file_path ) );
+				if ( apply_filters( 'wcj_invoicing_header_content_length', true ) ) {
+					header( "Content-Length: " . filesize( $file_path ) );
+				}
 				flush(); // this doesn't really matter.
 				if ( false !== ( $fp = fopen( $file_path, "r" ) ) ) {
 					while ( ! feof( $fp ) ) {

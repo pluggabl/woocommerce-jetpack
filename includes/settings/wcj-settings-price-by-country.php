@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Prices and Currencies by Country
  *
- * @version 4.9.0
+ * @version 5.1.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -129,15 +129,6 @@ $settings = array(
 		'options'  => wcj_get_user_roles_options(),
 	),
 	array(
-		'title'    => __( 'Price Filter Widget and Sorting by Price Support', 'woocommerce-jetpack' ),
-		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => '<a href="' . add_query_arg( 'recalculate_price_filter_products_prices', '1', remove_query_arg( array( 'wcj_generate_country_groups' ) ) ) . '">' .
-			__( 'Recalculate price filter widget and sorting by price product prices', 'woocommerce-jetpack' ) . '</a>',
-		'id'       => 'wcj_price_by_country_price_filter_widget_support_enabled',
-		'default'  => 'no',
-		'type'     => 'checkbox',
-	),
-	array(
 		'title'    => __( 'Add Countries Flags Images to Select Drop-Down Box', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'If you are using [wcj_country_select_drop_down_list] shortcode or "Booster: Country Switcher" widget, this will add country flags to these select boxes.', 'woocommerce-jetpack' ),
@@ -162,9 +153,28 @@ $settings = array(
 		'id'       => 'wcj_price_by_country_compatibility',
 	),
 	array(
+		'title'             => __( 'Price Filter Widget and Sorting by Price Support', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip'          => '<a href="' . add_query_arg( 'recalculate_price_filter_products_prices', '1', remove_query_arg( array( 'wcj_generate_country_groups' ) ) ) . '">' .
+		                       __( 'Recalculate price filter widget and sorting by price product prices.', 'woocommerce-jetpack' ) . '</a>',
+		'id'                => 'wcj_price_by_country_price_filter_widget_support_enabled',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
+		'title'             => __( 'Free Shipping', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc_tip'          => __( 'Converts minimum amount from WooCommerce Free Shipping native method.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_price_by_country_compatibility_free_shipping',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
 		'title'    => __( 'WooCommerce Coupons', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
-		'desc_tip' => __( 'When a fixed coupon is used its value changes according to the current currency', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'When a fixed coupon is used its value changes according to the current currency.', 'woocommerce-jetpack' ),
 		'id'       => 'wcj_price_by_country_compatibility_wc_coupons',
 		'default'  => 'no',
 		'type'     => 'checkbox',
@@ -173,7 +183,7 @@ $settings = array(
 		'title'             => __( 'Woo Discount Rules', 'woocommerce-jetpack' ),
 		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
 		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
-		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">Woo Discount Rules</a> plugin.', 'woocommerce-jetpack' ), 'https://www.flycart.org/products/wordpress/woocommerce-discount-rules' ).'<br />'. sprintf( __( 'If it doesn\'t work properly try to enable <a href="%s">redirect to the cart page after successful addition</a> option', 'woocommerce-jetpack' ), admin_url( 'admin.php?page=wc-settings&tab=products' ) ),
+		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">Woo Discount Rules</a> plugin.', 'woocommerce-jetpack' ), 'https://www.flycart.org/products/wordpress/woocommerce-discount-rules' ).'<br />'. sprintf( __( 'If it doesn\'t work properly try to enable <a href="%s">redirect to the cart page after successful addition</a> option.', 'woocommerce-jetpack' ), admin_url( 'admin.php?page=wc-settings&tab=products' ) ),
 		'id'                => 'wcj_price_by_country_compatibility_woo_discount_rules',
 		'default'           => 'no',
 		'type'              => 'checkbox',

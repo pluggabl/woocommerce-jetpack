@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Minimum Amount
  *
- * @version 4.9.0
+ * @version 5.1.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -104,6 +104,25 @@ $settings = array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_order_minimum_amount_options',
+	),
+	array(
+		'title'    => __( 'Compatibility', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'desc'     => __( 'Compatibility with other modules or plugins.', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_order_minimum_compatibility',
+	),
+	array(
+		'title'             => __( 'WooCommerce Multilingual', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">WooCommerce Multilingual</a> plugin.', 'woocommerce-jetpack' ), 'http://wpml.org/documentation/related-projects/woocommerce-multilingual/' ),
+		'id'                => 'wcj_order_minimum_compatibility_wpml_multilingual',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_order_minimum_compatibility',
 	),
 	array(
 		'title'    => __( 'Order Minimum Amount by User Role', 'woocommerce-jetpack' ),

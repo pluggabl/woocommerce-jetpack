@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Module
  *
- * @version 4.7.0
+ * @version 5.1.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  * @todo    [dev] maybe should be `abstract` ?
@@ -43,7 +43,7 @@ class WCJ_Module {
 	/**
 	 * Constructor.
 	 *
-	 * @version 4.4.0
+	 * @version 5.1.0
 	 */
 	function __construct( $type = 'module' ) {
 		add_filter( 'wcj_settings_sections',     array( $this, 'settings_section' ) );
@@ -71,6 +71,29 @@ class WCJ_Module {
 			add_action( 'wcj_after_get_products', array( $this, 'restore_wpml_args_on_get_products' ) );
 			add_action( 'admin_init', array( $this, 'remove_wpml_hooks' ) );
 		}
+
+		// Handle Price Functions
+		add_filter( 'wc_price', array( $this, 'handle_price' ), 10, 4 );
+	}
+
+	/**
+	 * handle_price.
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 *
+	 * @param $return
+	 * @param $price
+	 * @param $args
+	 * @param $unformatted_price
+	 *
+	 * @return mixed
+	 */
+	function handle_price( $return, $price, $args, $unformatted_price ) {
+		if ( isset( $args['add_html_on_price'] ) && ! filter_var( $args['add_html_on_price'], FILTER_VALIDATE_BOOLEAN ) ) {
+			$return = $price;
+		}
+		return $return;
 	}
 
 	/**

@@ -3,7 +3,7 @@ Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.4
-Stable tag: 5.0.0
+Stable tag: 5.1.0
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,30 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 5.1.0 - 06/07/2020 =
+* Fix - CART & CHECKOUT - EU VAT Number - Force accessing the VAT validation url on english version to avoid possible errors.
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Improve compatibility with 'Pricing Deals' plugin.
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Remove compatibility option with 'Prices and Currencies by Country' module.
+* Fix - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Improve compatibility option with 'WooCommerce Tree Table Rate Shipping' plugin.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Fix compatibility option with 'Price Filter Widget and Sorting by Price'.
+* Fix - PRICES & CURRENCIES - Prices and Currencies by Country - Save `_wcj_price_by_country_$group_id` meta regardless of the 'Product Basis' option.
+* Fix - PRODUCTS - Product Images - Fix 'Replace Image on Single' option.
+* Fix - SHIPPING & ORDERS - Shipping by Cities - Improve city detection by also getting it when product quantity changes.
+* Dev - EMAILS & MISC. - Export - Add `wcj_export_validation` filter with 3 parameters: `boolean`, `'object_type'`, `$object`.
+* Dev - EMAILS & MISC. - Export - Add 'Smart Formatting' option to handle special characters as commas and quotes, formatting fields according to RFC4180 specification.
+* Dev - EMAILS & MISC. - Booster WPML - General Options - Add 'Synchronize Metas' option allowing to synchronize some Booster metas between products in different languages.
+* Dev - PDF INVOICING & PACKING SLIPS - Add `wcj_invoicing_header_content_length` filter allowing to add/remove the Content-Length header from the invoice.
+* Dev - PRICES & CURRENCIES - Offer Your Price - Email Options - Add `%product_edit_link%` template variable.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Add compatibility option with WooCommerce Free Shipping method.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Improve performance running price update with a background process.
+* Dev - PRICES & CURRENCIES - Prices and Currencies by Country - Widget - Add option to control form method by POST or GET.
+* Dev - PRODUCTS - Product MSRP - Add 'Archive Detection Method' option allowing better control to detect the archive template.
+* Dev - SHIPPING & ORDERS - Order Minimum Amount - Add compatibility option with "WooCommerce Multilingual" plugin.
+* Dev - SHIPPING & ORDERS - Order Numbers - Add compatibility option with WPNotif plugin.
+* Dev - Shortcodes - Orders - Add `add_html_on_price` param.
+* Dev - Functions - Price and Currency - Add `add_html_on_price` param allowing to return the price without the html.
+* WC tested up to: 4.2
 
 = 5.0.0 - 01/06/2020 =
 * Fix - PRICES & CURRENCIES - Wholesale Price - Consider `heading_format` param from `[wcj_product_wholesale_price_table]` on Heading Format option.

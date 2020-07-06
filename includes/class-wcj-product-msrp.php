@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product MSRP
  *
- * @version 4.9.0
+ * @version 5.1.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
  */
@@ -153,15 +153,33 @@ class WCJ_Product_MSRP extends WCJ_Module {
 	}
 
 	/**
+	 * get_section_id_by_template_path.
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 *
+	 * @param $template
+	 *
+	 * @return string
+	 */
+	function get_section_id_by_template_path( $template ) {
+		$archive_detection_method = $this->get_option( 'wcj_product_msrp_archive_detection_method', 'loop' );
+		$archive_detection_method = array_values( array_filter( explode( PHP_EOL, $archive_detection_method ) ) );
+		return count( array_filter( $archive_detection_method, function ( $item ) use ( $template ) {
+			return strpos( $template, $item ) !== false;
+		} ) ) == 0 && is_singular() ? 'single' : 'archives';
+	}
+
+	/**
 	 * display.
 	 *
-	 * @version 4.9.0
+	 * @version 5.1.0
 	 * @since   3.6.0
 	 * @todo    (maybe) multicurrency
 	 * @todo    (feature) (maybe) variable product's msrp: add another option to enter MSRP directly for the whole variable product, instead of taking first variation's MSRP
 	 */
 	function display( $price_html, $product ) {
-		$section_id = false !== strpos( $this->current_template_path, 'loop' ) ? 'archives' : 'single';
+		$section_id = $this->get_section_id_by_template_path( $this->current_template_path );
 		$display    = get_option( 'wcj_product_msrp_display_on_' . $section_id, 'show' );
 		if ( 'hide' == $display ) {
 			return $price_html;

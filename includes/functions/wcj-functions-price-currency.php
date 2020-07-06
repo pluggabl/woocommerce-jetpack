@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Price and Currency
  *
- * @version 4.4.0
+ * @version 5.1.0
  * @since   2.7.0
  * @author  Pluggabl LLC.
  */
@@ -406,12 +406,14 @@ if ( ! function_exists( 'wcj_update_products_price_by_country' ) ) {
 	/**
 	 * wcj_update_products_price_by_country - all products.
 	 *
-	 * @version 4.0.0
+	 * @version 5.1.0
 	 * @since   2.5.3
 	 */
 	function wcj_update_products_price_by_country() {
 		$offset     = 0;
 		$block_size = 512;
+		$bkg_process = WCJ()->modules['price_by_country']->bkg_process_price_updater;
+		$bkg_process->cancel_process();
 		while( true ) {
 			$args = array(
 				'post_type'      => 'product',
@@ -427,10 +429,11 @@ if ( ! function_exists( 'wcj_update_products_price_by_country' ) ) {
 				break;
 			}
 			foreach ( $loop->posts as $product_id ) {
-				wcj_update_products_price_by_country_for_single_product( $product_id );
+				$bkg_process->push_to_queue( array( 'id' => $product_id ) );
 			}
 			$offset += $block_size;
 		}
+		$bkg_process->save()->dispatch();
 	}
 }
 
@@ -620,8 +623,24 @@ if ( ! function_exists( 'wcj_get_woocommerce_currencies_and_symbols' ) ) {
 if ( ! function_exists( 'wcj_price' ) ) {
 	/**
 	 * wcj_price.
+	 *
+	 * @version 5.1.0
+	 *
+	 * @param $price
+	 * @param $currency
+	 * @param $hide_currency
+	 * @param null $args
+	 *
+	 * @return string
 	 */
-	function wcj_price( $price, $currency, $hide_currency ) {
-		return ( 'yes' === $hide_currency ) ? wc_price( $price, array( 'currency' => 'DISABLED' ) ) : wc_price( $price, array( 'currency' => $currency ) );
+	function wcj_price( $price, $currency, $hide_currency, $args = null ) {
+		$args = wp_parse_args( $args, array(
+			'currency'          => 'DISABLED',
+			'add_html_on_price' => true
+		) );
+		if ( 'yes' !== $hide_currency ) {
+			$args['currency'] = $currency;
+		}
+		return wc_price( $price, $args );
 	}
 }

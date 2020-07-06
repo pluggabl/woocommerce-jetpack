@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Prices and Currencies by Country
  *
- * @version 4.8.0
+ * @version 5.1.0
  * @author  Pluggabl LLC.
  */
 
@@ -20,9 +20,14 @@ class WCJ_Price_By_Country extends WCJ_Module {
 	public $core;
 
 	/**
+	 * @var WCJ_Price_By_Country_Updater
+	 */
+	public $bkg_process_price_updater;
+
+	/**
 	 * Constructor.
 	 *
-	 * @version 4.8.0
+	 * @version 5.1.0
 	 */
 	function __construct() {
 
@@ -69,14 +74,19 @@ class WCJ_Price_By_Country extends WCJ_Module {
 
 			// Price Filter Widget
 			if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
-				if ( 'yes' === get_option( 'wcj_price_by_country_local_enabled', 'yes' ) ) {
-					add_action( 'save_post_product', array( $this, 'update_products_price_by_country_product_saved' ), PHP_INT_MAX, 2 );
-					add_action( 'woocommerce_ajax_save_product_variations', array( $this, 'update_products_price_by_country_product_saved_ajax' ), PHP_INT_MAX, 1 );
-				}
+				add_action( 'save_post_product', array( $this, 'update_products_price_by_country_product_saved' ), PHP_INT_MAX, 2 );
+				add_action( 'woocommerce_ajax_save_product_variations', array( $this, 'update_products_price_by_country_product_saved_ajax' ), PHP_INT_MAX, 1 );
 			}
 
 			// Coupons Compatibility
 			add_filter( 'woocommerce_coupon_get_discount_amount', array( $this, 'fix_wc_coupon_currency' ), 10, 5 );
+
+			// Bkg Process
+			if ( 'init' === current_filter() ) {
+				$this->init_bkg_process_class();
+			} else {
+				add_action( 'plugins_loaded', array( $this, 'init_bkg_process_class' ) );
+			}
 		}
 
 		// Price Filter Widget
@@ -87,6 +97,17 @@ class WCJ_Price_By_Country extends WCJ_Module {
 		if ( is_admin() ) {
 			include_once( 'price-by-country/class-wcj-price-by-country-group-generator.php' );
 		}
+	}
+
+	/**
+	 * init_bkg_process_class.
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 */
+	function init_bkg_process_class() {
+		require_once( wcj_plugin_path() . '/includes/background-process/class-wcj-price-by-country-updater.php' );
+		$this->bkg_process_price_updater = new WCJ_Price_By_Country_Updater();
 	}
 
 	/**

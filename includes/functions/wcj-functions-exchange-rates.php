@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Functions - Exchange Rates
  *
- * @version 4.4.0
+ * @version 5.1.0
  * @since   2.7.0
  * @author  Pluggabl LLC.
  */
@@ -125,10 +125,13 @@ if ( ! function_exists( 'wcj_get_exchange_rate' ) ) {
 	/*
 	 * wcj_get_exchange_rate.
 	 *
-	 * @version 4.3.0
+	 * @version 5.1.0
 	 * @since   2.6.0
 	 */
 	function wcj_get_exchange_rate( $currency_from, $currency_to ) {
+		if ( $currency_from == $currency_to ) {
+			return 1;
+		}
 		$exchange_rates_server = wcj_get_currency_exchange_rate_server( $currency_from, $currency_to );
 		if ( 'yes' === ( $calculate_by_invert = get_option( 'wcj_currency_exchange_rates_calculate_by_invert', 'no' ) ) ) {
 			$_currency_to  = $currency_to;

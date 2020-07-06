@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - WPML
  *
- * @version 4.5.0
+ * @version 5.1.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -37,6 +37,15 @@ $settings = array(
 		'type'     => 'checkbox',
 		'id'       => 'wcj_wpml_switch_booster_currency',
 		'default'  => 'no',
+	),
+	array(
+		'title'             => __( 'Synchronize Metas', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => __( "Try to automatically synchronize some Booster metas between products on different languages.", 'woocommerce-jetpack' ),
+		'type'              => 'checkbox',
+		'id'                => 'wcj_wpml_sync_metas',
+		'default'           => 'no',
 	),
 	array(
 		'type'     => 'sectionend',

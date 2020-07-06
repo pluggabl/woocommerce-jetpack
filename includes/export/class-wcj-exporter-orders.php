@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce Exporter Orders
  *
- * @version 3.2.1
+ * @version 5.1.0
  * @since   2.5.9
  * @author  Pluggabl LLC.
  * @todo    filter export by date
@@ -186,7 +186,7 @@ class WCJ_Exporter_Orders {
 	/**
 	 * export_orders.
 	 *
-	 * @version 3.0.0
+	 * @version 5.1.0
 	 * @since   2.4.8
 	 * @todo    (maybe) metainfo as separate column
 	 */
@@ -229,6 +229,9 @@ class WCJ_Exporter_Orders {
 			}
 			foreach ( $loop_orders->posts as $order_id ) {
 				$order = wc_get_order( $order_id );
+				if ( ! apply_filters( 'wcj_export_validation', true, 'order', $order ) ) {
+					continue;
+				}
 
 				if ( isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' != $_POST['wcj_filter_by_order_billing_country'] ) {
 					if ( $order->billing_country != $_POST['wcj_filter_by_order_billing_country'] ) {
@@ -301,7 +304,7 @@ class WCJ_Exporter_Orders {
 	/**
 	 * export_orders_items.
 	 *
-	 * @version 3.2.1
+	 * @version 5.1.0
 	 * @since   2.5.9
 	 */
 	function export_orders_items( $fields_helper ) {
@@ -343,6 +346,9 @@ class WCJ_Exporter_Orders {
 			}
 			foreach ( $loop_orders->posts as $order_id ) {
 				$order = wc_get_order( $order_id );
+				if ( ! apply_filters( 'wcj_export_validation', true, 'order', $order ) ) {
+					continue;
+				}
 
 				if ( isset( $_POST['wcj_filter_by_order_billing_country'] ) && '' != $_POST['wcj_filter_by_order_billing_country'] ) {
 					if ( $order->billing_country != $_POST['wcj_filter_by_order_billing_country'] ) {
@@ -351,6 +357,9 @@ class WCJ_Exporter_Orders {
 				}
 
 				foreach ( $order->get_items() as $item_id => $item ) {
+					if ( ! apply_filters( 'wcj_export_validation', true, 'order_item', $item ) ) {
+						continue;
+					}
 
 					$row = $this->get_export_orders_row( $fields_ids, $order_id, $order, null, null, $item, $item_id );
 

@@ -98,7 +98,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * add_extra_atts.
 	 *
-	 * @version 4.6.0
+	 * @version 5.1.0
 	 */
 	function add_extra_atts( $atts ) {
 		$modified_atts = array_merge( array(
@@ -108,6 +108,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 			'date_format'                 => get_option( 'date_format' ),
 			'time_format'                 => get_option( 'time_format' ),
 			'hide_if_zero'                => 'no',
+			'add_html_on_price'           => true,
 			'field_id'                    => '',
 			'name'                        => '',
 			'round_by_line'               => 'no',
@@ -201,7 +202,7 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 	/**
 	 * wcj_price_shortcode.
 	 *
-	 * @version 3.3.0
+	 * @version 5.1.0
 	 */
 	private function wcj_price_shortcode( $raw_price, $atts ) {
 		if ( 'yes' === $atts['hide_if_zero'] && 0 == $raw_price ) {
@@ -209,13 +210,13 @@ class WCJ_Orders_Shortcodes extends WCJ_Shortcodes {
 		} else {
 			$order_currency = wcj_get_order_currency( $this->the_order );
 			if ( '' === $atts['currency'] ) {
-				return wcj_price( $raw_price, $order_currency, $atts['hide_currency'] );
+				return wcj_price( $raw_price, $order_currency, $atts['hide_currency'], $atts );
 			} else {
 				$convert_to_currency = $atts['currency'];
 				if ( '%shop_currency%' === $convert_to_currency ) {
 					$convert_to_currency = get_option( 'woocommerce_currency' );
 				}
-				return wcj_price( $raw_price * wcj_get_saved_exchange_rate( $order_currency, $convert_to_currency ), $convert_to_currency, $atts['hide_currency'] );
+				return wcj_price( $raw_price * wcj_get_saved_exchange_rate( $order_currency, $convert_to_currency ), $convert_to_currency, $atts['hide_currency'], $atts );
 			}
 		}
 	}

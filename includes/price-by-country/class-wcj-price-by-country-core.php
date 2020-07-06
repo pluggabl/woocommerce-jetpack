@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Price by Country - Core
  *
- * @version 5.0.0
+ * @version 5.1.0
  * @author  Pluggabl LLC.
  */
 
@@ -101,7 +101,7 @@ class WCJ_Price_by_Country_Core {
 	/**
 	 * add_hooks.
 	 *
-	 * @version 4.4.0
+	 * @version 5.1.0
 	 */
 	function add_hooks() {
 
@@ -120,9 +120,25 @@ class WCJ_Price_by_Country_Core {
 
 		// Price Filter Widget
 		if ( 'yes' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' ) ) {
-			add_filter( 'woocommerce_price_filter_meta_keys',    array( $this, 'price_filter_meta_keys' ), PHP_INT_MAX, 1 );
-			add_filter( 'woocommerce_product_query_meta_query',  array( $this, 'price_filter_meta_query' ), PHP_INT_MAX, 2 );
-			add_filter( 'woocommerce_get_catalog_ordering_args', array( $this, 'sorting_by_price_fix' ), PHP_INT_MAX );
+			add_filter( 'woocommerce_product_query_meta_query', array( $this, 'price_filter_meta_query' ), PHP_INT_MAX, 2 );
+			add_filter( 'woocommerce_price_filter_sql', array( $this, 'woocommerce_price_filter_sql' ), 10, 3 );
+			add_action( 'wp_footer', array( $this, 'add_compatibility_with_price_filter_widget' ) );
+			add_filter( 'posts_clauses', array( $this, 'price_filter_post_clauses' ), 10, 2 );
+			add_filter( 'posts_clauses', array( $this, 'price_filter_post_clauses_sort' ), 10, 2 );
+			add_action( 'woocommerce_product_query', function ( $query ) {
+				$group_id              = $this->get_customer_country_group_id();
+				$country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
+				if ( 1 == (float) $country_exchange_rate ) {
+					return;
+				}
+				wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'order_by_price_asc_post_clauses' );
+				wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'order_by_price_desc_post_clauses' );
+				wcj_remove_class_filter( 'posts_clauses', 'WC_Query', 'price_filter_post_clauses' );
+			} );
+			add_filter( 'woocommerce_price_filter_widget_step', function ( $step ) {
+				$step = 1;
+				return $step;
+			} );
 		}
 
 		// Price Format
@@ -132,6 +148,313 @@ class WCJ_Price_by_Country_Core {
 				add_filter( 'woocommerce_get_price_excluding_tax', array( $this, 'format_price_after_including_excluding_tax' ), PHP_INT_MAX, 3 );
 			}
 		}
+
+		// Free Shipping
+		add_filter( 'woocommerce_shipping_free_shipping_instance_option', array( $this, 'convert_free_shipping_min_amount' ), 10, 3 );
+		add_filter( 'woocommerce_shipping_free_shipping_option', array( $this, 'convert_free_shipping_min_amount' ), 10, 3 );
+	}
+
+	/**
+	 * convert_free_shipping_min_amount.
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 *
+	 * @param $option
+	 * @param $key
+	 * @param $method
+	 *
+	 * @return mixed
+	 */
+	function convert_free_shipping_min_amount( $option, $key, $method ) {
+		if (
+			'no' === get_option( 'wcj_price_by_country_compatibility_free_shipping', 'no' )
+			|| 'min_amount' !== $key
+			|| ! is_numeric( $option )
+			|| 0 === (float) $option
+		) {
+			return $option;
+		}
+		$option = $this->change_price( $option, null );
+		return $option;
+	}
+
+	/**
+	 * append_price_filter_post_meta_join.
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 *
+	 * @param $sql
+	 * @param $country_group_id
+	 *
+	 * @return string
+	 */
+	private function append_price_filter_post_meta_join( $sql, $country_group_id ) {
+		global $wpdb;
+		if ( ! strstr( $sql, 'postmeta AS pm' ) ) {
+			$join = $this->get_price_filter_post_meta_join( $country_group_id );
+			$sql  .= " {$join} ";
+		}
+		return $sql;
+	}
+
+	/**
+	 * get_price_filter_post_meta_join.
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 *
+	 * @param $country_group_id
+	 *
+	 * @return string
+	 */
+	private function get_price_filter_post_meta_join( $country_group_id ) {
+		global $wpdb;
+		return "LEFT JOIN {$wpdb->postmeta} AS pm ON $wpdb->posts.ID = pm.post_id AND pm.meta_key='_wcj_price_by_country_{$country_group_id}'";
+	}
+
+	/**
+	 * price_filter_post_clauses_sort.
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 *
+	 * @param $args
+	 * @param $wp_query
+	 *
+	 * @return mixed
+	 */
+	function price_filter_post_clauses_sort( $args, $wp_query ) {
+		if (
+			! $wp_query->is_main_query() ||
+			'price' !== $wp_query->get( 'orderby' ) ||
+			empty( $group_id = $this->get_customer_country_group_id() ) ||
+			1 == (float) ( $country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 ) )
+		) {
+			return $args;
+		}
+		global $wpdb;
+		$order            = $wp_query->get( 'order' );
+		$original_orderby = $args['orderby'];
+		if ( 'desc' === strtolower( $order ) ) {
+			$args['orderby'] = 'MIN(pm.meta_value+0)+0 DESC';
+		} else {
+			$args['orderby'] = 'MAX(pm.meta_value+0)+0 ASC';
+		}
+		$args['orderby'] = ! empty( $original_orderby ) ? $args['orderby'] . ', ' . $original_orderby : $args['orderby'];
+		$args['join'] = $this->append_price_filter_post_meta_join( $args['join'], $group_id );
+		return $args;
+	}
+
+	/**
+	 * price_filter_post_clauses.
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 *
+	 * @see WC_Query::price_filter_post_clauses()
+	 *
+	 * @param $args
+	 * @param $wp_query
+	 *
+	 * @return mixed
+	 */
+	function price_filter_post_clauses( $args, $wp_query ) {
+		global $wpdb;
+		if (
+			! $wp_query->is_main_query() ||
+			( ! isset( $_GET['max_price'] ) && ! isset( $_GET['min_price'] ) ) ||
+			empty( $group_id = $this->get_customer_country_group_id() ) ||
+			1 == (float) ( $country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 ) )
+		) {
+			return $args;
+		}
+		$current_min_price = isset( $_GET['min_price'] ) ? floatval( wp_unslash( $_GET['min_price'] ) ) : 0;
+		$current_max_price = isset( $_GET['max_price'] ) ? floatval( wp_unslash( $_GET['max_price'] ) ) : PHP_INT_MAX;
+		if ( wc_tax_enabled() && 'incl' === get_option( 'woocommerce_tax_display_shop' ) && ! wc_prices_include_tax() ) {
+			$tax_class = apply_filters( 'woocommerce_price_filter_widget_tax_class', '' );
+			$tax_rates = WC_Tax::get_rates( $tax_class );
+			if ( $tax_rates ) {
+				$current_min_price -= WC_Tax::get_tax_total( WC_Tax::calc_inclusive_tax( $current_min_price, $tax_rates ) );
+				$current_max_price -= WC_Tax::get_tax_total( WC_Tax::calc_inclusive_tax( $current_max_price, $tax_rates ) );
+			}
+		}
+		$current_min_price *= $country_exchange_rate;
+		$current_max_price *= $country_exchange_rate;
+		$args['fields']    .= ', MIN(pm.meta_value+0) AS wcj_min_price, MAX(pm.meta_value+0) AS wcj_max_price';
+		$args['join']      = $this->append_price_filter_post_meta_join( $args['join'], $group_id );
+		$args['groupby']   .= $wpdb->prepare( " HAVING wcj_min_price >= %f AND wcj_max_price <= %f", $current_min_price, $current_max_price );
+		return $args;
+	}
+
+	/**
+	 * Adds compatibility with WooCommerce Price Filter widget.
+	 *
+	 * @see price-slider.js->init_price_filter()
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 */
+	function add_compatibility_with_price_filter_widget() {
+		if (
+			! is_active_widget( false, false, 'woocommerce_price_filter' )
+			|| 'no' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' )
+		) {
+			return;
+		}
+		?>
+		<?php
+		$group_id = $this->get_customer_country_group_id();
+		$exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 );
+		if ( $exchange_rate == 1 ) {
+			return;
+		}
+		?>
+		<input type="hidden" id="wcj_mc_exchange_rate" value="<?php echo esc_html( $exchange_rate ) ?>"/>
+		<script>
+			var wcj_mc_pf_slider = {
+				slider: null,
+				convert_rate: 1,
+				original_min: 1,
+				original_max: 1,
+				original_values: [],
+				current_min: 1,
+				current_max: 1,
+				current_values: [],
+				step: 1,
+				init(slider, convert_rate, step) {
+					this.step = step;
+					this.slider = slider;
+					this.convert_rate = convert_rate;
+					this.original_min = jQuery(this.slider).slider("option", "min");
+					this.original_max = jQuery(this.slider).slider("option", "max");
+					this.original_values = jQuery(this.slider).slider("option", "values");
+					this.current_min = this.original_min;
+					this.current_max = this.original_max;
+					this.current_values[0] = jQuery(this.slider).parent().find('#min_price').val();
+					this.current_values[1] = jQuery(this.slider).parent().find('#max_price').val();
+					if (
+						jQuery(this.slider).parent().find('#min_price').val() != this.original_min ||
+						jQuery(this.slider).parent().find('#max_price').val() != this.original_max
+					) {
+						this.current_values[0] *= wcj_mc_pf_slider.convert_rate;
+						this.current_values[1] *= wcj_mc_pf_slider.convert_rate;
+					}
+					this.update_slider();
+				},
+				update_slider() {
+					jQuery(this.slider).slider("destroy");
+					var current_min_price = Math.floor(this.current_min);
+					var current_max_price = Math.ceil(this.current_max);
+					jQuery(this.slider).slider({
+						range: true,
+						animate: true,
+						min: current_min_price,
+						max: current_max_price,
+						step: parseFloat(this.step),
+						values: wcj_mc_pf_slider.current_values,
+						create: function () {
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(Math.floor(wcj_mc_pf_slider.current_values[0] / wcj_mc_pf_slider.convert_rate));
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(Math.ceil(wcj_mc_pf_slider.current_values[1] / wcj_mc_pf_slider.convert_rate));
+							jQuery(document.body).trigger('price_slider_create', [Math.floor(wcj_mc_pf_slider.current_values[0]), Math.ceil(wcj_mc_pf_slider.current_values[1])]);
+						},
+						slide: function (event, ui) {
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #min_price').val(Math.floor(ui.values[0] / wcj_mc_pf_slider.convert_rate));
+							jQuery(wcj_mc_pf_slider.slider).parent().find('.price_slider_amount #max_price').val(Math.ceil(ui.values[1] / wcj_mc_pf_slider.convert_rate));
+							var the_min = ui.values[0] == Math.round(wcj_mc_pf_slider.current_values[0]) ? Math.floor(wcj_mc_pf_slider.current_values[0]) : ui.values[0];
+							var the_max = ui.values[1] == Math.round(wcj_mc_pf_slider.current_values[1]) ? Math.ceil(wcj_mc_pf_slider.current_values[1]) : ui.values[1];
+							jQuery(document.body).trigger('price_slider_slide', [the_min, the_max]);
+						},
+						change: function (event, ui) {
+							jQuery(document.body).trigger('price_slider_change', [ui.values[0], ui.values[1]]);
+						}
+					});
+				}
+			};
+			var wcj_mc_pf = {
+				price_filters: null,
+				rate: 1,
+				step: 1,
+				init: function (price_filters) {
+					this.price_filters = price_filters;
+					this.rate = document.getElementById('wcj_mc_exchange_rate').value;
+					this.update_slider();
+				},
+				update_slider: function () {
+					[].forEach.call(wcj_mc_pf.price_filters, function (el) {
+						wcj_mc_pf_slider.init(el, wcj_mc_pf.rate, wcj_mc_pf.step);
+					});
+				}
+			}
+			document.addEventListener("DOMContentLoaded", function () {
+				var price_filters = document.querySelectorAll('.price_slider.ui-slider');
+				if (price_filters.length) {
+					wcj_mc_pf.init(price_filters);
+				}
+			});
+		</script>
+		<?php
+	}
+
+	/**
+	 * woocommerce_price_filter_sql.
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 *
+	 * @see WC_Widget_Price_Filter::get_filtered_price()
+	 *
+	 * @param $sql
+	 * @param $meta_query_sql
+	 * @param $tax_query_sql
+	 *
+	 * @return string
+	 */
+	function woocommerce_price_filter_sql( $sql, $meta_query_sql, $tax_query_sql){
+		if (
+			is_admin()
+			|| 'no' === get_option( 'wcj_price_by_country_price_filter_widget_support_enabled', 'no' )
+			|| empty( $group_id = $this->get_customer_country_group_id() )
+			|| 1 == (float) ( $country_exchange_rate = get_option( 'wcj_price_by_country_exchange_rate_group_' . $group_id, 1 ) )
+		) {
+			return $sql;
+		}
+
+		global $wpdb;
+		$args                  = WC()->query->get_main_query()->query_vars;
+		$tax_query             = isset( $args['tax_query'] ) ? $args['tax_query'] : array();
+		$meta_query            = isset( $args['meta_query'] ) ? $args['meta_query'] : array();
+
+		if ( ! is_post_type_archive( 'product' ) && ! empty( $args['taxonomy'] ) && ! empty( $args['term'] ) ) {
+			$tax_query[] = array(
+				'taxonomy' => $args['taxonomy'],
+				'terms'    => array( $args['term'] ),
+				'field'    => 'slug',
+			);
+		}
+
+		foreach ( $meta_query + $tax_query as $key => $query ) {
+			if ( ! empty( $query['price_filter'] ) || ! empty( $query['rating_filter'] ) ) {
+				unset( $meta_query[ $key ] );
+			}
+		}
+
+		$search     = WC_Query::get_main_search_query_sql();
+		$search_query_sql = $search ? ' AND ' . $search : '';
+		$sql = "
+			SELECT IFNULL(MIN(pm.meta_value+0),min_price) AS min_price, IFNULL(MAX(pm.meta_value+0),max_price) AS max_price			
+			FROM {$wpdb->wc_product_meta_lookup}
+			LEFT JOIN {$wpdb->postmeta} AS pm ON (pm.post_id = product_id AND pm.meta_key='_wcj_price_by_country_{$group_id}')
+			WHERE product_id IN (
+				SELECT ID FROM {$wpdb->posts}
+				" . $tax_query_sql['join'] . $meta_query_sql['join'] . "
+				WHERE {$wpdb->posts}.post_type IN ('" . implode( "','", array_map( 'esc_sql', apply_filters( 'woocommerce_price_filter_post_type', array( 'product' ) ) ) ) . "')
+				AND {$wpdb->posts}.post_status = 'publish'
+				" . $tax_query_sql['where'] . $meta_query_sql['where'] . $search_query_sql . '
+			)';
+
+		return $sql;
 	}
 
 	/**
@@ -167,30 +490,6 @@ class WCJ_Price_by_Country_Core {
 		wp_enqueue_script( 'wcj-wcj-wSelect',   wcj_plugin_url() . '/includes/js/wcj-wSelect.js', array(), false, true );
 	}
 
-	/*
-	 * sorting_by_price_fix.
-	 *
-	 * @version 2.7.0
-	 * @since   2.5.6
-	 */
-	function sorting_by_price_fix( $args ) {
-		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
-			// Get ordering from query string
-			$orderby_value = ( WCJ_IS_WC_VERSION_BELOW_3 ?
-				( isset( $_GET['orderby'] ) ? woocommerce_clean( $_GET['orderby'] ) : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) ) ) :
-				( isset( $_GET['orderby'] ) ? wc_clean( $_GET['orderby'] )          : apply_filters( 'woocommerce_default_catalog_orderby', get_option( 'woocommerce_default_catalog_orderby' ) ) )
-			);
-			// Get orderby arg from string
-			$orderby_value = explode( '-', $orderby_value );
-			$orderby       = esc_attr( $orderby_value[0] );
-			$orderby       = strtolower( $orderby );
-			if ( 'price' == $orderby ) {
-				$args['meta_key'] = '_' . 'wcj_price_by_country_' . $group_id;
-			}
-		}
-		return $args;
-	}
-
 	/**
 	 * price_filter_meta_query.
 	 *
@@ -206,19 +505,6 @@ class WCJ_Price_by_Country_Core {
 			}
 		}
 		return $meta_query;
-	}
-
-	/**
-	 * price_filter_meta_keys.
-	 *
-	 * @version 2.5.3
-	 * @since   2.5.3
-	 */
-	function price_filter_meta_keys( $keys ) {
-		if ( null != ( $group_id = $this->get_customer_country_group_id() ) ) {
-			$keys = array( '_' . 'wcj_price_by_country_' . $group_id );
-		}
-		return $keys;
 	}
 
 	/**

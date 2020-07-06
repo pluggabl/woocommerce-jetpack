@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Export
  *
- * @version 3.2.1
+ * @version 5.1.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    add "Additional Export Fields" for "Customers from Orders" and (maybe) "Customers"
@@ -21,6 +21,15 @@ $settings = array(
 		'id'       => 'wcj_export_csv_separator',
 		'default'  => ',',
 		'type'     => 'text',
+	),
+	array(
+		'title'             => __( 'Smart Formatting', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'id'                => 'wcj_export_csv_smart_formatting',
+		'desc_tip'          => sprintf( __( 'Tries to handle special characters as commas and quotes, formatting fields according to <a href="%s">RFC4180</a>', 'woocommerce-jetpack' ), 'https://tools.ietf.org/html/rfc4180' ),
+		'default'           => 'no',
+		'type'              => 'checkbox',
 	),
 	array(
 		'title'    => __( 'UTF-8 BOM', 'woocommerce-jetpack' ),

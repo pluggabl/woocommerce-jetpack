@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product MSRP
  *
- * @version 4.9.0
+ * @version 5.1.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
  */
@@ -137,6 +137,13 @@ $settings = array_merge( $settings, array(
 		'id'                => 'wcj_product_msrp_archive_page_field',
 		'default'           => 'no',
 		'type'              => 'checkbox',
+	),
+	array(
+		'title'             => __( 'Archive Detection Method', 'woocommerce-jetpack' ),
+		'desc_tip'          => __( 'Template strings used to detect the loop.', 'woocommerce-jetpack' ).'<br />'.__( 'Use 1 string per line.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_product_msrp_archive_detection_method',
+		'default'           => 'loop',
+		'type'              => 'textarea',
 	),
 	array(
 		'type'     => 'sectionend',

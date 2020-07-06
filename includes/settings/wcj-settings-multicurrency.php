@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Multicurrency (Currency Switcher)
  *
- * @version 5.0.0
+ * @version 5.1.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    "pretty prices"
@@ -116,14 +116,14 @@ $settings = array(
 		'type'     => 'title',
 		'id'       => 'wcj_multicurrency_compatibility',
 	),
-	array(
+	/*array(
 		'title'    => __( 'Prices and Currencies by Country Module', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
 		'desc_tip' => __( 'Switches currency according to country.', 'woocommerce-jetpack' ) . '<br />' . sprintf( __( 'Once Enabled, please set all the currency values from the <a href="%s">Country</a> module as 1. The MultiCurrency module values will be used instead.', 'woocommerce-jetpack' ), admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=prices_and_currencies&section=price_by_country' ) ),
 		'id'       => 'wcj_multicurrency_compatibility_price_by_country_module',
 		'default'  => 'no',
 		'type'     => 'checkbox',
-	),
+	),*/
 	array(
 		'title'    => __( 'WooCommerce Fixed Coupons', 'woocommerce-jetpack' ),
 		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),

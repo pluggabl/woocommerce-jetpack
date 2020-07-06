@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Images
  *
- * @version 4.3.0
+ * @version 5.1.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  */
@@ -221,12 +221,12 @@ class WCJ_Product_Images extends WCJ_Module {
 	/**
 	 * customize_single_product_image_or_thumbnail_html_wc3.
 	 *
-	 * @version 2.8.0
+	 * @version 5.1.0
 	 * @since   2.8.0
 	 */
 	function customize_single_product_image_or_thumbnail_html_wc3( $html, $attachment_id ) {
 		$post_id = get_the_ID();
-		return ( get_post_thumbnail_id( $post_id ) === $attachment_id ?
+		return ( (int) get_post_thumbnail_id( $post_id ) === (int) $attachment_id ?
 			$this->customize_single_product_image_html( $html, $post_id ) :
 			$this->customize_single_product_image_thumbnail_html( $html )
 		);

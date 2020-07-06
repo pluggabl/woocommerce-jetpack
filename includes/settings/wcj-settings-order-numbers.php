@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Order Numbers
  *
- * @version 3.5.0
+ * @version 5.1.0
  * @since   2.8.0
  * @author  Pluggabl LLC.
  * @todo    (maybe) add `wcj_order_number_counter_previous_order_date` as `hidden` field (for proper module reset)
@@ -135,6 +135,24 @@ return array(
 	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_order_numbers_options',
+	),
+	array(
+		'title'    => __( 'Compatibility', 'woocommerce-jetpack' ),
+		'type'     => 'title',
+		'id'       => 'wcj_order_numbers_compatibility',
+	),
+	array(
+		'title'             => __( 'WPNotif', 'woocommerce-jetpack' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">WPNotif: WordPress SMS & WhatsApp Notifications</a> plugin fixing the <code>{{wc-tracking-link}}</code> variable.', 'woocommerce-jetpack' ), 'https://wpnotif.unitedover.com/' ),
+		'id'                => 'wcj_order_numbers_compatibility_wpnotif',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+	),
+	array(
+		'type'     => 'sectionend',
+		'id'       => 'wcj_order_numbers_compatibility',
 	),
 	array(
 		'title'    => __( 'Orders Renumerate Tool Options', 'woocommerce-jetpack' ),

@@ -151,9 +151,38 @@ class WCJ_Export_Import extends WCJ_Module {
 	}
 
 	/**
+	 * smart_format_fields.
+	 *
+	 * @see https://stackoverflow.com/a/4617967/1193038
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 *
+	 * @param $row
+	 *
+	 * @return array
+	 */
+	function smart_format_fields( $row ) {
+		if ( 'no' === get_option( 'wcj_export_csv_smart_formatting', 'no' ) ) {
+			return $row;
+		}
+		$row = array_map( function ( $item ) {
+			$item = str_replace( '"', '""', $item );
+			if (
+				false !== strpos( $item, '"' )
+				|| false !== strpos( $item, ',' )
+			) {
+				$item = '"' . $item . '"';
+			}
+			return $item;
+		}, $row );
+		return $row;
+	}
+
+	/**
 	 * export_csv.
 	 *
-	 * @version 2.5.9
+	 * @version 5.1.0
 	 * @since   2.4.8
 	 */
 	function export_csv() {
@@ -162,6 +191,7 @@ class WCJ_Export_Import extends WCJ_Module {
 			if ( is_array( $data ) ) {
 				$csv = '';
 				foreach ( $data as $row ) {
+					$row = $this->smart_format_fields( $row );
 					$csv .= implode( get_option( 'wcj_export_csv_separator', ',' ), $row ) . PHP_EOL;
 				}
 				if ( 'yes' === get_option( 'wcj_export_csv_add_utf_8_bom', 'yes' ) ) {

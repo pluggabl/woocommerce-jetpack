@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Shipping by Cities
  *
- * @version 4.9.0
+ * @version 5.1.0
  * @since   3.6.0
  * @author  Pluggabl LLC.
  */
@@ -51,7 +51,7 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 	/**
 	 * check.
 	 *
-	 * @version 4.9.0
+	 * @version 5.1.0
 	 * @since   3.6.0
 	 * @todo    `$_REQUEST['city']` (i.e. billing city)
 	 * @todo    `get_base_city()` - do we really need this?
@@ -59,7 +59,7 @@ class WCJ_Shipping_By_Cities extends WCJ_Module_Shipping_By_Condition {
 	function check( $options_id, $values, $include_or_exclude, $package ) {
 		switch ( $options_id ) {
 			case 'cities':
-				$customer_city = strtoupper( isset( $_REQUEST['s_city'] ) ? $_REQUEST['s_city'] : ( isset ( $_REQUEST['calc_shipping_city'] ) ? $_REQUEST['calc_shipping_city'] : ( ! empty( $user_city = WC()->customer->get_billing_city() ) ? $user_city : WC()->countries->get_base_city() ) ) );
+				$customer_city = strtoupper( isset( $_REQUEST['s_city'] ) ? $_REQUEST['s_city'] : ( isset ( $_REQUEST['calc_shipping_city'] ) ? $_REQUEST['calc_shipping_city'] : ( ! empty( $user_city = WC()->customer->get_shipping_city() ) ? $user_city : WC()->countries->get_base_city() ) ) );
 				$values        = array_map( 'strtoupper', array_map( 'trim', explode( PHP_EOL, $values ) ) );
 				return in_array( $customer_city, $values );
 			case 'postcodes':

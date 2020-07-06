@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Offer Price
  *
- * @version 4.4.0
+ * @version 5.1.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -333,11 +333,11 @@ return array(
 	),
 	array(
 		'title'    => __( 'Email Template', 'woocommerce-jetpack' ),
-		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%offered_price%', '%customer_name%', '%customer_email%', '%customer_message%', '%user_ip%', '%user_agent%' ) ),
+		'desc'     => wcj_message_replaced_values( array( '%product_title%', '%product_edit_link%', '%offered_price%', '%customer_name%', '%customer_email%', '%customer_message%', '%user_ip%', '%user_agent%' ) ),
 		'id'       => 'wcj_offer_price_email_template',
 		'type'     => 'custom_textarea',
 		'default'  =>
-			sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '%product_title%' ) . '<br>' . PHP_EOL .
+			sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '<a href="%product_edit_link%">%product_title%</a>' ) . '<br>' . PHP_EOL .
 			sprintf( __( 'Offered price: %s', 'woocommerce-jetpack' ), '%offered_price%' ) . '<br>' . PHP_EOL .
 			sprintf( __( 'From: %s %s', 'woocommerce-jetpack' ),       '%customer_name%', '%customer_email%' ) . '<br>' . PHP_EOL .
 			sprintf( __( 'Message: %s', 'woocommerce-jetpack' ),       '%customer_message%' ),

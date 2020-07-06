@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - WPML
  *
- * @version 4.9.0
+ * @version 5.1.0
  * @since   2.2.0
  * @author  Pluggabl LLC.
  */
@@ -14,9 +14,14 @@ if ( ! class_exists( 'WCJ_WPML' ) ) :
 class WCJ_WPML extends WCJ_Module {
 
 	/**
+	 * @var WCJ_WPML_Meta_Sync
+	 */
+	protected $bkg_process_meta_sync;
+
+	/**
 	 * Constructor.
 	 *
-	 * @version 4.9.0
+	 * @version 5.1.0
 	 */
 	function __construct() {
 
@@ -31,25 +36,69 @@ class WCJ_WPML extends WCJ_Module {
 			if ( 'yes' === get_option( 'wcj_wpml_config_xml_auto_regenerate', 'no' ) ) {
 				add_action( 'wcj_version_updated', array( $this, 'create_wpml_xml_file' ) );
 			}
-			add_action( 'wcml_switch_currency', array( $this, 'switch_currency' ) );
+			add_action( 'wcml_switch_currency', array( $this, 'switch_currency_using_multicurrency' ) );
 			add_filter( 'wcml_client_currency', function ( $currency ) {
-				$this->switch_currency( $currency );
+				$this->switch_currency_using_multicurrency( $currency );
 				return $currency;
 			} );
+
+			// WPML Meta Synchronizer
+			add_action( 'updated_postmeta', array( $this, 'update_meta_on_correspondent_language_product' ), 10, 4 );
 		}
 
 		$this->notice = '';
 	}
 
 	/**
+	 * update_meta_on_correspondent_language_product.
+	 *
+	 * @version 5.1.0
+	 * @since   5.1.0
+	 *
+	 * @param $meta_id
+	 * @param $object_id
+	 * @param $meta_key
+	 * @param $meta_value
+	 */
+	function update_meta_on_correspondent_language_product( $meta_id, $object_id, $meta_key, $meta_value ) {
+		$allowed_metas_like = array( '_wcj_price_by_country_' );
+		if (
+			'no' === get_option( 'wcj_wpml_sync_metas', 'no' )
+			|| ( 'product' != get_post_type( $object_id ) && 'product_variation' != get_post_type( $object_id ) )
+			|| count( array_filter( $allowed_metas_like, function ( $item ) use ( $meta_key ) {
+				return strpos( $meta_key, $item ) !== false;
+			} ) ) == 0
+		) {
+			return;
+		}
+		$current_lang   = apply_filters( 'wpml_current_language', null );
+		$languages      = apply_filters( 'wpml_active_languages', null );
+		$wpml_post_info = apply_filters( 'wpml_post_language_details', null, $object_id );
+		if (
+			empty( $wpml_post_info )
+			|| ! isset( $wpml_post_info['language_code'] )
+			|| $current_lang != $wpml_post_info['language_code']
+		) {
+			return;
+		}
+		unset( $languages[ $current_lang ] );
+		foreach ( $languages as $language ) {
+			$translated_post_id = apply_filters( 'wpml_object_id', $object_id, 'post', false, $language['code'] );
+			if ( ! empty( $translated_post_id ) && $translated_post_id != $object_id ) {
+				update_post_meta( $translated_post_id, $meta_key, $meta_value );
+			}
+		}
+	}
+
+	/**
 	 * Set Booster currency based on WPML currency
 	 *
-	 * @version 4.5.0
+	 * @version 5.1.0
 	 * @since   4.5.0
 	 *
 	 * @param $currency
 	 */
-	function switch_currency( $currency ) {
+	function switch_currency_using_multicurrency( $currency ) {
 		if (
 			'no' === get_option( 'wcj_wpml_switch_booster_currency', 'no' ) ||
 			! WCJ()->modules['multicurrency']->is_enabled()

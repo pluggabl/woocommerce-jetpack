@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Offer Price
  *
- * @version 4.4.0
+ * @version 5.1.0
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -469,7 +469,7 @@ class WCJ_Offer_Price extends WCJ_Module {
 	/**
 	 * offer_price.
 	 *
-	 * @version 4.4.0
+	 * @version 5.1.0
 	 * @since   2.9.0
 	 * @todo    (maybe) separate customer copy email template and subject
 	 * @todo    (maybe) redirect (no notice though)
@@ -504,34 +504,36 @@ class WCJ_Offer_Price extends WCJ_Module {
 			}
 			// Price offer array
 			$price_offer = array(
-				'offer_timestamp'  => current_time( 'timestamp' ),
-				'product_title'    => $_product->get_title(),
-				'offered_price'    => $_POST['wcj-offer-price-price'],
-				'currency_code'    => get_woocommerce_currency(),
-				'customer_message' => $_POST['wcj-offer-price-message'],
-				'customer_name'    => $_POST['wcj-offer-price-customer-name'],
-				'customer_email'   => $_POST['wcj-offer-price-customer-email'],
-				'customer_id'      => $_POST['wcj-offer-price-customer-id'],
-				'user_ip'          => $_SERVER['REMOTE_ADDR'],
-				'user_agent'       => $_SERVER['HTTP_USER_AGENT'],
-				'copy_to_customer' => ( isset( $_POST['wcj-offer-price-customer-copy'] ) ? $_POST['wcj-offer-price-customer-copy'] : 'no' ),
-				'sent_to'          => $email_address,
+				'offer_timestamp'   => current_time( 'timestamp' ),
+				'product_title'     => $_product->get_title(),
+				'product_edit_link' => get_edit_post_link( $_product->get_id() ),
+				'offered_price'     => $_POST['wcj-offer-price-price'],
+				'currency_code'     => get_woocommerce_currency(),
+				'customer_message'  => $_POST['wcj-offer-price-message'],
+				'customer_name'     => $_POST['wcj-offer-price-customer-name'],
+				'customer_email'    => $_POST['wcj-offer-price-customer-email'],
+				'customer_id'       => $_POST['wcj-offer-price-customer-id'],
+				'user_ip'           => $_SERVER['REMOTE_ADDR'],
+				'user_agent'        => $_SERVER['HTTP_USER_AGENT'],
+				'copy_to_customer'  => ( isset( $_POST['wcj-offer-price-customer-copy'] ) ? $_POST['wcj-offer-price-customer-copy'] : 'no' ),
+				'sent_to'           => $email_address,
 			);
 			// Email content
 			$email_template = get_option( 'wcj_offer_price_email_template',
-				sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '%product_title%' ) . '<br>' . PHP_EOL .
+				sprintf( __( 'Product: %s', 'woocommerce-jetpack' ),       '<a href="%product_edit_link%">%product_title%</a>' ) . '<br>' . PHP_EOL .
 				sprintf( __( 'Offered price: %s', 'woocommerce-jetpack' ), '%offered_price%' ) . '<br>' . PHP_EOL .
 				sprintf( __( 'From: %s %s', 'woocommerce-jetpack' ),       '%customer_name%', '%customer_email%' ) . '<br>' . PHP_EOL .
 				sprintf( __( 'Message: %s', 'woocommerce-jetpack' ),       '%customer_message%' )
 			);
 			$replaced_values = array(
-				'%product_title%'    => $price_offer['product_title'],
-				'%offered_price%'    => wc_price( $price_offer['offered_price'] ),
-				'%customer_message%' => $price_offer['customer_message'],
-				'%customer_name%'    => $price_offer['customer_name'],
-				'%customer_email%'   => $price_offer['customer_email'],
-				'%user_ip%'          => $price_offer['user_ip'],
-				'%user_agent%'       => $price_offer['user_agent'],
+				'%product_title%'     => $price_offer['product_title'],
+				'%product_edit_link%' => $price_offer['product_edit_link'],
+				'%offered_price%'     => wc_price( $price_offer['offered_price'] ),
+				'%customer_message%'  => $price_offer['customer_message'],
+				'%customer_name%'     => $price_offer['customer_name'],
+				'%customer_email%'    => $price_offer['customer_email'],
+				'%user_ip%'           => $price_offer['user_ip'],
+				'%user_agent%'        => $price_offer['user_agent'],
 			);
 			$email_content = str_replace( array_keys( $replaced_values ), array_values( $replaced_values ), $email_template );
 			// Email subject and headers
