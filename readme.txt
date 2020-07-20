@@ -3,7 +3,7 @@ Contributors: anbinder, karzin, pluggabl
 Tags: woocommerce, booster for woocommerce, woocommerce jetpack
 Requires at least: 4.4
 Tested up to: 5.4
-Stable tag: 5.1.0
+Stable tag: 5.1.1
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -192,6 +192,14 @@ You can see the differences between versions in this [table](https://booster.io/
 8. Booster for WooCommerce - Emails & Misc.
 
 == Changelog ==
+
+= 5.1.1 - 20/07/2020 =
+* Fix - EMAILS & MISC. - My Account - Improve custom menu order algorithm.
+* Fix - PRODUCTS - Product by Condition - Fix static database table name.
+* Fix - PRODUCTS - Product MSRP - Improve 'Archive Detection Method' option using the `wc_get_template_part` hook besides the `woocommerce_before_template_part`.
+* Dev - PRICES & CURRENCIES - Multicurrency (Currency Switcher) - Improves compatibility with 'Product Add-Ons' plugin and leave it as Booster Plus feature.
+* Dev - PRICES & CURRENCIES - Product Price by Formula - Create 'Save Calculated Products Prices' option trying to avoid duplicated calculation.
+* WC tested up to: 4.3
 
 = 5.1.0 - 06/07/2020 =
 * Fix - CART & CHECKOUT - EU VAT Number - Force accessing the VAT validation url on english version to avoid possible errors.

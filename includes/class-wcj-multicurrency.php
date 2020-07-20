@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Multicurrency (Currency Switcher)
  *
- * @version 5.1.0
+ * @version 5.1.1
  * @since   2.4.3
  * @author  Pluggabl LLC.
  */
@@ -144,6 +144,33 @@ class WCJ_Multicurrency extends WCJ_Module {
 
 		// Compatibility with Pricing Deals
 		add_filter( 'option_' . 'vtprd_rules_set', array( $this, 'convert_pricing_deals_settings' ) );
+
+		// "WooCommerce Product Add-ons" plugin
+		add_filter( 'woocommerce_get_item_data', array( $this, 'get_addons_item_data' ), 20, 2 );
+		add_filter( 'woocommerce_product_addons_option_price_raw', array( $this, 'product_addons_option_price_raw' ), 10, 2 );
+		add_filter( 'woocommerce_product_addons_price_raw', array( $this, 'product_addons_price_raw' ), 10, 2 );
+	}
+
+	/**
+	 * product_addons_price_raw.
+	 *
+	 * @version 5.1.1
+	 * @since   5.1.1
+	 *
+	 * @param $price
+	 * @param $addon
+	 *
+	 * @return mixed|string
+	 */
+	function product_addons_price_raw( $price, $addon ) {
+		if (
+			'no' === get_option( 'wcj_multicurrency_compatibility_product_addons', 'no' )
+			|| ( 'quantity_based' != $addon['price_type'] && 'flat_fee' != $addon['price_type'] )
+		) {
+			return $price;
+		}
+		$price = $this->change_price( $price, null );
+		return $price;
 	}
 
 	/**
@@ -705,10 +732,6 @@ class WCJ_Multicurrency extends WCJ_Module {
 			// Add "Change Price" hooks
 			wcj_add_change_price_hooks( $this, $this->price_hooks_priority );
 
-			// "WooCommerce Product Add-ons" plugin
-			add_filter( 'woocommerce_get_item_data', array( $this, 'get_addons_item_data' ), 20, 2 );
-			add_filter( 'woocommerce_product_addons_option_price_raw', array( $this, 'product_addons_option_price_raw' ), 10, 2 );
-
 			// Handle Compatibility
 			$this->handle_compatibility();
 
@@ -900,6 +923,9 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 * @return float|int
 	 */
 	function product_addons_option_price_raw( $price, $option ) {
+		if ( 'no' === get_option( 'wcj_multicurrency_compatibility_product_addons', 'no' ) ) {
+			return $price;
+		}
 		$price = $this->change_price( $price, null );
 		return $price;
 	}
@@ -907,7 +933,7 @@ class WCJ_Multicurrency extends WCJ_Module {
 	/**
 	 * Finds old add-ons fields on cart and replace by correct price.
 	 *
-	 * @version 4.3.0
+	 * @version 5.1.1
 	 * @since   4.3.0
 	 *
 	 * @param $other_data
@@ -916,6 +942,9 @@ class WCJ_Multicurrency extends WCJ_Module {
 	 * @return mixed
 	 */
 	function get_addons_item_data( $other_data, $cart_item ) {
+		if ( 'no' === get_option( 'wcj_multicurrency_compatibility_product_addons', 'no' ) ) {
+			return $other_data;
+		}
 		if ( ! empty( $cart_item['addons'] ) ) {
 			foreach ( $cart_item['addons'] as $addon ) {
 				$price    = isset( $cart_item['addons_price_before_calc'] ) ? $cart_item['addons_price_before_calc'] : $addon['price'];

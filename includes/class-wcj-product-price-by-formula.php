@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product Price by Formula
  *
- * @version 4.2.0
+ * @version 5.1.1
  * @since   2.5.0
  * @author  Pluggabl LLC.
  */
@@ -93,14 +93,62 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 	}
 
 	/**
+	 * save_price.
+	 *
+	 * @version 5.1.1
+	 * @since   5.1.1
+	 *
+	 * @param $product_id
+	 * @param $price
+	 *
+	 * @return bool
+	 */
+	function save_price( $product_id, $price ) {
+		if ( 'no' === $this->get_option( 'wcj_product_price_by_formula_save_prices', 'no' ) ) {
+			return false;
+		}
+		$filter = current_filter();
+		if ( '' == $filter ) {
+			$filter = 'wcj_filter__none';
+		}
+		WCJ()->modules['product_price_by_formula']->calculated_products_prices[ $product_id ][ $filter ] = $price;
+	}
+
+	/**
+	 * @version 5.1.1
+	 * @since   5.1.1
+	 *
+	 * @param $product_id
+	 *
+	 * @return bool
+	 */
+	function get_saved_price( $product_id ) {
+		if ( 'no' === $this->get_option( 'wcj_product_price_by_formula_save_prices', 'no' ) ) {
+			return false;
+		}
+		$filter = current_filter();
+		if ( '' == $filter ) {
+			$filter = 'wcj_filter__none';
+		}
+		if ( isset( WCJ()->modules['product_price_by_formula']->calculated_products_prices[ $product_id ][ $filter ] ) ) {
+			return WCJ()->modules['product_price_by_formula']->calculated_products_prices[ $product_id ][ $filter ];
+		}
+		return false;
+	}
+
+	/**
 	 * change_price.
 	 *
-	 * @version 4.1.0
+	 * @version 5.1.1
 	 * @since   2.5.0
 	 */
 	function change_price( $price, $_product, $output_errors = false ) {
 		if ( $this->is_price_by_formula_product( $_product ) && '' != $price ) {
 			$_product_id = wcj_get_product_id_or_variation_parent_id( $_product );
+			$saved_price = $this->get_saved_price( $_product_id );
+			if ( false !== $saved_price ) {
+				return $saved_price;
+			}
 			$is_per_product = ( 'per_product' === get_post_meta( $_product_id, '_' . 'wcj_product_price_by_formula_calculation', true ) );
 			$the_formula = ( $is_per_product )
 				? get_post_meta( $_product_id, '_' . 'wcj_product_price_by_formula_eval', true )
@@ -113,7 +161,9 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 				if ( $total_params > 0 ) {
 					$the_current_filter = current_filter();
 					if ( 'woocommerce_get_price_including_tax' == $the_current_filter || 'woocommerce_get_price_excluding_tax' == $the_current_filter ) {
-						return wcj_get_product_display_price( $_product );
+						$price = wcj_get_product_display_price( $_product );
+						$this->save_price( $_product_id, $price );
+						return $price;
 					}
 					$math = new WCJ_Math();
 					$math->registerVariable( 'x', $price );
@@ -139,6 +189,7 @@ class WCJ_Product_Price_by_Formula extends WCJ_Module {
 					if ( 'no_rounding' != $this->rounding ) {
 						$price = wcj_round( $price, $this->rounding_precision, $this->rounding );
 					}
+					$this->save_price( $_product_id, $price );
 				}
 			}
 		}

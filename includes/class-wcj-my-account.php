@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - My Account
  *
- * @version 4.8.0
+ * @version 5.1.1
  * @since   2.9.0
  * @author  Pluggabl LLC.
  */
@@ -361,7 +361,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 		/**
 		 * customize_menu.
 		 *
-		 * @version 3.8.0
+		 * @version 5.1.1
 		 * @since   3.8.0
 		 * @todo    (maybe) option to disable menu
 		 */
@@ -372,17 +372,6 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 					$items[ $item_id ] = $menu_titles[ $item_id ];
 				}
 			}
-			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_my_account_menu_order_customize_enabled', 'no' ) ) ) {
-				$menu_order    = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order', $this->menu_order_default ) ) );
-				$modified_menu = array();
-				foreach ( $menu_order as $item_id ) {
-					if ( isset( $items[ $item_id ] ) ) {
-						$modified_menu[ $item_id ] = $items[ $item_id ];
-						unset( $items[ $item_id ] );
-					}
-				}
-				$items = array_merge( $modified_menu, $items );
-			}
 			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_my_account_menu_order_custom_items_enabled', 'no' ) ) ) {
 				$custom_items = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order_custom_items', '' ) ) );
 				foreach ( $custom_items as $custom_item ) {
@@ -391,6 +380,14 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 						$items[ $parts[0] ] = $parts[1];
 					}
 				}
+			}
+			if ( 'yes' === apply_filters( 'booster_option', 'no', get_option( 'wcj_my_account_menu_order_customize_enabled', 'no' ) ) ) {
+				$menu_order = array_map( 'trim', explode( PHP_EOL, get_option( 'wcj_my_account_menu_order', $this->menu_order_default ) ) );
+				$menu_order = array_map( 'strtolower', $menu_order );
+				$menu_order = array_filter( $menu_order, function ( $item ) use ( $items ) {
+					return in_array( $item, array_keys( $items ) );
+				} );
+				$items = array_merge( array_flip( $menu_order ), $items );
 			}
 			return $items;
 		}

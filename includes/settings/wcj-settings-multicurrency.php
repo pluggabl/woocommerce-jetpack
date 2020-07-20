@@ -208,6 +208,15 @@ $settings = array(
 		'type'              => 'checkbox',
 	),
 	array(
+		'title'             => __( 'Product Add-Ons Plugin', 'woocommerce-jetpack' ),
+		'custom_attributes' => apply_filters( 'booster_message', '', 'disabled' ),
+		'desc'              => empty( $message = apply_filters( 'booster_message', '', 'desc' ) ) ? __( 'Enable', 'woocommerce-jetpack' ) : $message,
+		'desc_tip'          => sprintf( __( 'Adds compatibility with <a href="%s" target="_blank">Product Add-Ons</a> plugin.', 'woocommerce-jetpack' ), 'https://woocommerce.com/products/product-add-ons/' ) . '<br />' . __( 'Only works with <code>Multicurrency on per Product Basis</code> option disabled.', 'woocommerce-jetpack' ),
+		'id'                => 'wcj_multicurrency_compatibility_product_addons',
+		'default'           => 'no',
+		'type'              => 'checkbox',
+	),
+	array(
 		'type'     => 'sectionend',
 		'id'       => 'wcj_multicurrency_compatibility',
 	),

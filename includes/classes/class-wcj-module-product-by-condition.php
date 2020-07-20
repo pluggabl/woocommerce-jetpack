@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Module - Product by Condition
  *
- * @version 4.7.1
+ * @version 5.1.1
  * @since   3.6.0
  * @author  Pluggabl LLC.
  */
@@ -142,7 +142,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 	/**
 	 * delete_invisible_products_transient.
 	 *
-	 * @version 4.7.1
+	 * @version 5.1.1
 	 * @since   4.7.1
 	 *
 	 * @param null $params
@@ -160,7 +160,7 @@ abstract class WCJ_Module_Product_By_Condition extends WCJ_Module {
 			delete_transient( $transient_name );
 		} elseif ( 'all_roles' === $params['remove_method'] ) {
 			global $wpdb;
-			$sql = "delete from wp_options where option_name REGEXP %s";
+			$sql = "delete from {$wpdb->options} where option_name REGEXP %s";
 			$wpdb->query( $wpdb->prepare( $sql, '^_transient_' . 'wcj_' . $this->id ) );
 		}
 	}

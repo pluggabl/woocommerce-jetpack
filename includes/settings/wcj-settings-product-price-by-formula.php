@@ -2,7 +2,7 @@
 /**
  * Booster for WooCommerce - Settings - Product Price by Formula
  *
- * @version 4.1.0
+ * @version 5.1.1
  * @since   2.8.0
  * @author  Pluggabl LLC.
  */
@@ -102,6 +102,14 @@ $settings = array_merge( $settings, array(
 		'id'       => 'wcj_product_price_by_formula_advanced_price_hooks_priority',
 		'default'  => 0,
 		'type'     => 'number',
+	),
+	array(
+		'title'    => __( 'Save Calculated Products Prices', 'woocommerce-jetpack' ),
+		'desc_tip' => __( 'This may help if you are experiencing compatibility issues with other plugins.', 'woocommerce-jetpack' ),
+		'desc'     => __( 'Enable', 'woocommerce-jetpack' ),
+		'id'       => 'wcj_product_price_by_formula_save_prices',
+		'default'  => 'no',
+		'type'     => 'checkbox',
 	),
 	array(
 		'type'     => 'sectionend',
