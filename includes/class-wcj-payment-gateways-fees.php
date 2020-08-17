@@ -23,7 +23,7 @@ class WCJ_Payment_Gateways_Fees extends WCJ_Module {
 
 		$this->id         = 'payment_gateways_fees';
 		$this->short_desc = __( 'Gateways Fees and Discounts', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Enable extra fees or discounts for payment gateways. Force Default Payment Gateway (Pro). Apply fees depending on specific products (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Enable extra fees or discounts for payment gateways. Force Default Payment Gateway (Plus). Apply fees depending on specific products (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Enable extra fees or discounts for payment gateways.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-payment-gateways-fees-and-discounts';
 		parent::__construct();

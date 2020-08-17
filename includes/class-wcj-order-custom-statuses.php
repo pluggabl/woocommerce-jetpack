@@ -24,7 +24,7 @@ class WCJ_Order_Custom_Statuses extends WCJ_Module {
 
 		$this->id         = 'order_custom_statuses';
 		$this->short_desc = __( 'Order Custom Statuses', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Custom statuses for WooCommerce orders. Make Custom Status Orders Editable (Pro). Add Custom Statuses to Admin Order List Action Buttons (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Custom statuses for WooCommerce orders. Make Custom Status Orders Editable (Plus). Add Custom Statuses to Admin Order List Action Buttons (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Custom statuses for WooCommerce orders.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-order-custom-statuses';
 		parent::__construct();

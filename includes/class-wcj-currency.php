@@ -25,7 +25,7 @@ class WCJ_Currencies extends WCJ_Module {
 
 		$this->id         = 'currency';
 		$this->short_desc = __( 'Currencies', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add all world currencies and cryptocurrencies to your store; change currency symbol (Pro); add custom currencies (1 allowed in free version).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add all world currencies and cryptocurrencies to your store; change currency symbol (Plus); add custom currencies (1 allowed in free version).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Add all world currencies and cryptocurrencies to your store; change currency symbol; add custom currencies.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-all-currencies';
 		parent::__construct();

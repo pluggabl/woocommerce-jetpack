@@ -23,7 +23,7 @@ class WCJ_URL_Coupons extends WCJ_Module {
 
 		$this->id         = 'url_coupons';
 		$this->short_desc = __( 'URL Coupons', 'woocommerce-jetpack' );
-		$this->desc       = __( 'WooCommerce URL coupons. Redirect after coupon has been applied (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'WooCommerce URL coupons. Redirect after coupon has been applied (Plus).', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-url-coupons';
 		parent::__construct();
 

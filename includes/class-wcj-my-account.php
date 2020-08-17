@@ -25,7 +25,7 @@ if ( ! class_exists( 'WCJ_My_Account' ) ) :
 
 			$this->id         = 'my_account';
 			$this->short_desc = __( 'My Account', 'woocommerce-jetpack' );
-			$this->desc       = __( 'WooCommerce "My Account" page customization. Customize Menu Order (Pro). Add Custom Menu Items (Pro). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).', 'woocommerce-jetpack' );
+			$this->desc       = __( 'WooCommerce "My Account" page customization. Customize Menu Order (Plus). Add Custom Menu Items (Plus). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).', 'woocommerce-jetpack' );
 			$this->desc_pro   = __( 'WooCommerce "My Account" page customization.', 'woocommerce-jetpack' );
 			$this->link_slug  = 'woocommerce-my-account';
 			parent::__construct();

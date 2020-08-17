@@ -860,7 +860,7 @@ msgstr ""
 #: includes/class-wcj-admin-tools.php:25
 msgid ""
 "Booster for WooCommerce general back-end tools. Enable interface by user "
-"roles (Pro). Custom shop manager editable roles (Pro)."
+"roles (Plus). Custom shop manager editable roles (Plus)."
 msgstr ""
 
 #: includes/class-wcj-admin-tools.php:26
@@ -930,7 +930,7 @@ msgid "Breadcrumbs"
 msgstr ""
 
 #: includes/class-wcj-breadcrumbs.php:29
-msgid "Customize WooCommerce breadcrumbs. Hide breadcrumbs (Pro)."
+msgid "Customize WooCommerce breadcrumbs. Hide breadcrumbs (Plus)."
 msgstr ""
 
 #: includes/class-wcj-breadcrumbs.php:30
@@ -942,7 +942,7 @@ msgid "Call for Price"
 msgstr ""
 
 #: includes/class-wcj-call-for-price.php:26
-msgid "Create any custom price label for all products with empty price (Pro)."
+msgid "Create any custom price label for all products with empty price (Plus)."
 msgstr ""
 
 #: includes/class-wcj-call-for-price.php:27
@@ -986,7 +986,7 @@ msgstr ""
 #: includes/class-wcj-checkout-core-fields.php:26
 msgid ""
 "Customize core checkout fields. Disable/enable fields, set required, change "
-"labels and/or placeholders; Setup fields by category (Pro)"
+"labels and/or placeholders; Setup fields by category (Plus)"
 msgstr ""
 
 #: includes/class-wcj-checkout-core-fields.php:27
@@ -1027,7 +1027,7 @@ msgstr ""
 
 #: includes/class-wcj-checkout-customization.php:26
 msgid ""
-"Customize WooCommerce checkout - restrict countries by customer's IP (Pro); "
+"Customize WooCommerce checkout - restrict countries by customer's IP (Plus); "
 "hide \"Order Again\" button; disable selected fields on checkout for logged "
 "users and more (Custom fields available in Pro)."
 msgstr ""
@@ -1185,8 +1185,8 @@ msgstr ""
 
 #: includes/class-wcj-coupon-by-user-role.php:28
 msgid ""
-"Coupons by user roles. Invalidate per Coupon (Pro). Custom coupon invalid "
-"messages (Pro)"
+"Coupons by user roles. Invalidate per Coupon (Plus). Custom coupon invalid "
+"messages (Plus)"
 msgstr ""
 
 #: includes/class-wcj-coupon-by-user-role.php:29
@@ -1233,9 +1233,9 @@ msgstr ""
 
 #: includes/class-wcj-cross-sells.php:32
 msgid ""
-"Customize cross-sells products display. Global Cross-sells (Pro); Exclude "
-"\"Not in Stock\" Products (Pro); Replace Cart Products with Cross-sells "
-"(Pro)."
+"Customize cross-sells products display. Global Cross-sells (Plus); Exclude "
+"\"Not in Stock\" Products (Plus); Replace Cart Products with Cross-sells "
+"(Plus)."
 msgstr ""
 
 #: includes/class-wcj-cross-sells.php:33
@@ -1372,7 +1372,7 @@ msgstr ""
 #: includes/class-wcj-currency.php:28
 msgid ""
 "Add all world currencies and cryptocurrencies to your store; change currency "
-"symbol (Pro); add custom currencies (1 allowed in free version)."
+"symbol (Plus); add custom currencies (1 allowed in free version)."
 msgstr ""
 
 #: includes/class-wcj-currency.php:29
@@ -1644,7 +1644,7 @@ msgstr ""
 #: includes/class-wcj-emails-verification.php:26
 msgid ""
 "Add WooCommerce email verification. Customize verification email subject, "
-"content and template (Pro)."
+"content and template (Plus)."
 msgstr ""
 
 #: includes/class-wcj-emails-verification.php:27
@@ -1764,8 +1764,8 @@ msgstr ""
 #: includes/class-wcj-empty-cart-button.php:26
 msgid ""
 "Add (and customize) \"Empty Cart\" button to the cart and checkout pages. "
-"Customize empty cart button text (Pro). Different button positions on the "
-"cart page (Pro)."
+"Customize empty cart button text (Plus). Different button positions on the "
+"cart page (Plus)."
 msgstr ""
 
 #: includes/class-wcj-empty-cart-button.php:27
@@ -1784,8 +1784,8 @@ msgstr ""
 msgid ""
 "Collect and validate EU VAT numbers on the checkout. Automatically disable "
 "VAT for valid numbers. Add all EU countries VAT standard rates to "
-"WooCommerce. Show VAT field for EU countries only (Pro). Check for IP "
-"Location Country  (Pro)"
+"WooCommerce. Show VAT field for EU countries only (Plus). Check for IP "
+"Location Country  (Plus)"
 msgstr ""
 
 #: includes/class-wcj-eu-vat-number.php:27
@@ -2278,8 +2278,8 @@ msgstr ""
 
 #: includes/class-wcj-my-account.php:28
 msgid ""
-"WooCommerce \"My Account\" page customization. Customize Menu Order (Pro). "
-"Add Custom Menu Items (Pro). Custom Pages (1 allowed in free version). "
+"WooCommerce \"My Account\" page customization. Customize Menu Order (Plus). "
+"Add Custom Menu Items (Plus). Custom Pages (1 allowed in free version). "
 "Custom Info Blocks (1 allowed in free version)."
 msgstr ""
 
@@ -2360,12 +2360,12 @@ msgstr ""
 
 #: includes/class-wcj-offer-price.php:37
 msgid ""
-"Let your customers to suggest their price for products (Available for all "
-"the products in free version)."
+"Let your customers suggest their price for products (Available for all the "
+"products in free version)."
 msgstr ""
 
 #: includes/class-wcj-offer-price.php:38
-msgid "Let your customers to suggest their price for products."
+msgid "Let your customers suggest their price for products."
 msgstr ""
 
 #: includes/class-wcj-offer-price.php:149
@@ -2595,7 +2595,7 @@ msgstr ""
 #: includes/class-wcj-order-custom-statuses.php:27
 msgid ""
 "Custom statuses for WooCommerce orders. Make Custom Status Orders Editable "
-"(Pro). Add Custom Statuses to Admin Order List Action Buttons (Pro)."
+"(Plus). Add Custom Statuses to Admin Order List Action Buttons (Plus)."
 msgstr ""
 
 #: includes/class-wcj-order-custom-statuses.php:28
@@ -2665,7 +2665,7 @@ msgstr ""
 msgid ""
 "Sequential order numbering, custom order number prefix, suffix and number "
 "width. Prefix Options (Order Number Custom Prefix available in free "
-"version). Sufix options (Pro). "
+"version). Suffix options (Plus). "
 msgstr ""
 
 #: includes/class-wcj-order-numbers.php:27
@@ -2757,7 +2757,7 @@ msgstr ""
 #: includes/class-wcj-orders.php:27
 msgid ""
 "Orders auto-complete; admin order currency; admin order navigation; bulk "
-"regenerate download permissions for orders (Pro)."
+"regenerate download permissions for orders (Plus)."
 msgstr ""
 
 #: includes/class-wcj-orders.php:28
@@ -2834,7 +2834,7 @@ msgstr ""
 #: includes/class-wcj-payment-gateways-currency.php:26
 msgid ""
 "Currency converter for payment gateways. Update exchange rates automatically "
-"(Pro)."
+"(Plus)."
 msgstr ""
 
 #: includes/class-wcj-payment-gateways-currency.php:27
@@ -2848,7 +2848,7 @@ msgstr ""
 #: includes/class-wcj-payment-gateways-fees.php:26
 msgid ""
 "Enable extra fees or discounts for payment gateways. Force Default Payment "
-"Gateway (Pro). Apply fees depending on specific products (Pro)."
+"Gateway (Plus). Apply fees depending on specific products (Plus)."
 msgstr ""
 
 #: includes/class-wcj-payment-gateways-fees.php:27
@@ -2926,8 +2926,8 @@ msgstr ""
 
 #: includes/class-wcj-pdf-invoicing.php:25
 msgid ""
-"Invoices, Proforma Invoices (Pro), Credit Notes (Pro) and Packing Slips "
-"(Pro)."
+"Invoices, Proforma Invoices (Plus), Credit Notes (Plus) and Packing Slips "
+"(Plus)."
 msgstr ""
 
 #: includes/class-wcj-pdf-invoicing.php:26
@@ -3028,7 +3028,7 @@ msgstr ""
 #: includes/class-wcj-price-by-user-role.php:27
 msgid ""
 "Display products prices by user roles. Price based on User Role by Products "
-"Categories or Tags (Pro)."
+"Categories or Tags (Plus)."
 msgstr ""
 
 #: includes/class-wcj-price-by-user-role.php:28
@@ -3406,7 +3406,7 @@ msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:28
 msgid ""
-"Set any local url to redirect to on Add to Cart (Per product not allowed in "
+"Set any local URL to redirect to on Add to Cart (Per product not allowed in "
 "free version)."
 msgstr ""
 
@@ -3416,7 +3416,7 @@ msgid "Automatically add to cart on product visit."
 msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:30
-msgid "Display radio buttons instead of drop box for variable products (Pro)."
+msgid "Display radio buttons instead of drop box for variable products (Plus)."
 msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:31
@@ -3426,7 +3426,7 @@ msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:32
 #: includes/class-wcj-product-add-to-cart.php:40
-msgid "Open external products on add to cart in new window."
+msgid "Open external products on the add to cart in the new window."
 msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:33
@@ -3436,11 +3436,11 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:34
-msgid "Customize Add to Cart messages (Pro)."
+msgid "Customize Add to Cart messages (Plus)."
 msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:36
-msgid "Set any local url to redirect to on Add to Cart."
+msgid "Set any local URL to redirect to on Add to Cart."
 msgstr ""
 
 #: includes/class-wcj-product-add-to-cart.php:38
@@ -3782,8 +3782,8 @@ msgstr ""
 
 #: includes/class-wcj-product-by-country.php:26
 msgid ""
-"Display products by customer's country. User Country Selection Method (Pro); "
-"Admin country list options (Pro); Visibility method options (Pro)."
+"Display products by customer's country. User Country Selection Method "
+"(Plus); Admin country list options (Plus); Visibility method options (Plus)."
 msgstr ""
 
 #: includes/class-wcj-product-by-country.php:27
@@ -3937,7 +3937,7 @@ msgstr ""
 
 #: includes/class-wcj-product-by-user-role.php:26
 msgid ""
-"Display products by customer's user role. Visibility method options (Pro)"
+"Display products by customer's user role. Visibility method options (Plus)"
 msgstr ""
 
 #: includes/class-wcj-product-by-user-role.php:27
@@ -3982,12 +3982,12 @@ msgstr ""
 
 #: includes/class-wcj-product-by-user.php:27
 msgid ""
-"Let users add new products from frontend. Image additional field (Pro). "
+"Let users add new products from the frontend. Image additional field (Plus). "
 "Custom Taxonomies (1 allowed in free version)."
 msgstr ""
 
 #: includes/class-wcj-product-by-user.php:28
-msgid "Let users add new products from frontend."
+msgid "Let users add new products from the frontend."
 msgstr ""
 
 #: includes/class-wcj-product-by-user.php:30
@@ -4658,7 +4658,7 @@ msgstr ""
 #: includes/class-wcj-related-products.php:39
 msgid ""
 "Change displayed related products number, columns, order; relate by tag, "
-"category, product attribute or manually on per product basis (Pro). Hide "
+"category, product attribute or manually on per product basis (Plus). Hide "
 "related products completely."
 msgstr ""
 
@@ -4737,8 +4737,8 @@ msgstr ""
 
 #: includes/class-wcj-sale-flash.php:29
 msgid ""
-"Customize products sale flash. Per product (Pro); Per category (Pro); Per "
-"tag (Pro)."
+"Customize products sale flash. Per product (Plus); Per category (Plus); Per "
+"tag (Plus)."
 msgstr ""
 
 #: includes/class-wcj-sale-flash.php:30
@@ -5022,7 +5022,7 @@ msgstr ""
 #: includes/class-wcj-shipping-calculator.php:24
 msgid ""
 "Customize WooCommerce shipping calculator on cart page. Calculate shipping "
-"sabel (Pro). Update totals label (Pro)."
+"label (Plus). Update totals label (Plus)."
 msgstr ""
 
 #: includes/class-wcj-shipping-calculator.php:25
@@ -5036,7 +5036,7 @@ msgstr ""
 #: includes/class-wcj-shipping-description.php:26
 msgid ""
 "Add descriptions to shipping methods on frontend. Description visibility "
-"(Pro). Description position (Pro)."
+"(Plus). Description position (Plus)."
 msgstr ""
 
 #: includes/class-wcj-shipping-description.php:27
@@ -5048,7 +5048,7 @@ msgid "Shipping Icons"
 msgstr ""
 
 #: includes/class-wcj-shipping-icons.php:26
-msgid "Add icons to shipping methods on frontend. Icon Visibility (Pro)"
+msgid "Add icons to shipping methods on frontend. Icon Visibility (Plus)"
 msgstr ""
 
 #: includes/class-wcj-shipping-icons.php:27
@@ -5145,8 +5145,8 @@ msgstr ""
 #: includes/class-wcj-sku.php:24
 msgid ""
 "Generate SKUs automatically. Search by SKU on frontend. Number Generation "
-"Method (Pro); Sequential Number Generation (Pro); Variable Products "
-"Variations (Pro)."
+"Method (Plus); Sequential Number Generation (Plus); Variable Products "
+"Variations (Plus)."
 msgstr ""
 
 #: includes/class-wcj-sku.php:25
@@ -5197,8 +5197,8 @@ msgstr ""
 
 #: includes/class-wcj-sorting.php:25
 msgid ""
-"Add more sorting options; rename or remove default sorting options (Pro); "
-"rearrange sorting options on frontend. Sort SKUs as numbers (Pro)"
+"Add more sorting options; rename or remove default sorting options (Plus); "
+"rearrange sorting options on frontend. Sort SKUs as numbers (Plus)"
 msgstr ""
 
 #: includes/class-wcj-sorting.php:26
@@ -5233,8 +5233,8 @@ msgstr ""
 
 #: includes/class-wcj-stock.php:28
 msgid ""
-"Products stock display management. Custom Stock HTML (Pro). Remove Stock "
-"Display (Pro)."
+"Products stock display management. Custom Stock HTML (Plus). Remove Stock "
+"Display (Plus)."
 msgstr ""
 
 #: includes/class-wcj-stock.php:29
@@ -5262,7 +5262,7 @@ msgid "User Tracking"
 msgstr ""
 
 #: includes/class-wcj-track-users.php:27
-msgid "Track your users in WooCommerce. Track Orders (Pro)."
+msgid "Track your users in WooCommerce. Track Orders (Plus)."
 msgstr ""
 
 #: includes/class-wcj-track-users.php:28
@@ -5344,7 +5344,7 @@ msgid ""
 msgstr ""
 
 #: includes/class-wcj-upsells.php:31
-msgid "Customize upsells products display. Global upsells (Pro)."
+msgid "Customize upsells products display. Global upsells (Plus)."
 msgstr ""
 
 #: includes/class-wcj-upsells.php:32
@@ -5356,7 +5356,7 @@ msgid "URL Coupons"
 msgstr ""
 
 #: includes/class-wcj-url-coupons.php:26
-msgid "WooCommerce URL coupons. Redirect after coupon has been applied (Pro)."
+msgid "WooCommerce URL coupons. Redirect after coupon has been applied (Plus)."
 msgstr ""
 
 #: includes/class-wcj-wholesale-price.php:27

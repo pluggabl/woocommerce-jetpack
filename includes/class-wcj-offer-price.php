@@ -34,8 +34,8 @@ class WCJ_Offer_Price extends WCJ_Module {
 
 		$this->id         = 'offer_price';
 		$this->short_desc = __( 'Offer Your Price', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Let your customers to suggest their price for products (Available for all the products in free version).', 'woocommerce-jetpack' );
-		$this->desc_pro   = __( 'Let your customers to suggest their price for products.', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Let your customers suggest their price for products (Available for all the products in free version).', 'woocommerce-jetpack' );
+		$this->desc_pro   = __( 'Let your customers suggest their price for products.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-offer-your-product-price';
 		parent::__construct();
 

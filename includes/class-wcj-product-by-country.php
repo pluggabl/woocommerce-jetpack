@@ -23,7 +23,7 @@ class WCJ_Product_By_Country extends WCJ_Module_Product_By_Condition {
 
 		$this->id         = 'product_by_country';
 		$this->short_desc = __( 'Product Visibility by Country', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Display products by customer\'s country. User Country Selection Method (Pro); Admin country list options (Pro); Visibility method options (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Display products by customer\'s country. User Country Selection Method (Plus); Admin country list options (Plus); Visibility method options (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Display products by customer\'s country.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-visibility-by-country';
 		$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Visibility by Country" meta box to each product\'s edit page.', 'woocommerce-jetpack' );

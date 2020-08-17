@@ -18,16 +18,16 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 **Prices & Currencies**
 
 * *Bulk Price Converter* - Multiply all products prices by set value.
-* *Currencies* - Add all world currencies and cryptocurrencies to your store; change currency symbol (Pro); add custom currencies (1 allowed in free version).
+* *Currencies* - Add all world currencies and cryptocurrencies to your store; change currency symbol (Plus); add custom currencies (1 allowed in free version).
 * *Currency Exchange Rates* - Automatic currency exchange rates for WooCommerce (1 allowed in free version).
 * *Currency for External Products* - Set different currency for external products.
 * *Currency per Product* - Display prices for products in different currencies (1 currency allowed in free version).
 * *Global Discount* - Add global discount to all products (1 discount group allowed in free version).
 * *Multicurrency (Currency Switcher)* - Add multiple currencies (currency switcher) to WooCommerce (2 currencies allowed in free version).
 * *Multicurrency Product Base Price* - Enter prices for products in different currencies (1 currency allowed in free version).
-* *Offer Your Price* - Let your customers to suggest their price for products (Available for all the products in free version).
+* *Offer Your Price* - Let your customers suggest their price for products (Available for all the products in free version).
 * *Price Formats* - Set different price formats for different currencies (1 price format allowed in free version). Set general price format options.
-* *Price based on User Role* - Display products prices by user roles. Price based on User Role by Products Categories or Tags (Pro).
+* *Price based on User Role* - Display products prices by user roles. Price based on User Role by Products Categories or Tags (Plus).
 * *Prices and Currencies by Country* - Change product price and currency automatically by customer's country (1 country group allowed in free version).
 * *Product Open Pricing (Name Your Price)* - Let your store customers enter price for the product manually.
 * *Product Price by Formula* - Set formula for automatic product price calculation (Available per product in free version).
@@ -36,19 +36,19 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 **Button & Price Labels**
 
 * *Add to Cart Button Labels* - Change text for Add to Cart button by product type, by product category or for individual products (1 category group allowed in free version).
-* *Call for Price* - Create any custom price label for all products with empty price (Pro).
+* *Call for Price* - Create any custom price label for all products with empty price (Plus).
 * *Custom Price Labels* - Create any custom price label for any product (Just a few positions allowed in free version).
 * *Free Price Labels* - Set free price labels (Variable products allowed in Pro).
 * *More Button Labels* - Set "Place order" button label.
 
 **Products**
 
-* *Add to Cart* - Set any local url to redirect to on Add to Cart (Per product not allowed in free version). Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products (Pro). Disable quantity input. Open external products on add to cart in new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages (Pro).
+* *Add to Cart* - Set any local URL to redirect to on Add to Cart (Per product not allowed in free version). Automatically add to cart on product visit. Display radio buttons instead of drop box for variable products (Plus). Disable quantity input. Open external products on the add to cart in the new window. Replace Add to Cart button on archives with button from single product pages. Customize Add to Cart messages (Plus).
 * *Add to Cart Button Visibility* - Enable/disable Add to Cart button globally or on per product basis.
 * *Admin Products List* - Customize admin products list (1 custom column allowed in free).
 * *Bookings* - Add bookings products to WooCommerce.
 * *Cost of Goods* - Save product purchase costs data for admin reports (1 custom field allowed in free version).
-* *Cross-sells* - Customize cross-sells products display. Global Cross-sells (Pro); Exclude "Not in Stock" Products (Pro); Replace Cart Products with Cross-sells (Pro).
+* *Cross-sells* - Customize cross-sells products display. Global Cross-sells (Plus); Exclude "Not in Stock" Products (Plus); Replace Cart Products with Cross-sells (Plus).
 * *Crowdfunding* - Add crowdfunding products to WooCommerce.
 * *Product Addons* - Add (paid/free/discount) addons to products (1 addon allowed in free version).
 * *Product Availability by Date* - Set product availability by date (Custom frontend messages available in Pro).
@@ -61,41 +61,41 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Product Listings* - Change display options for shop and category pages: show/hide categories count (Hide subcategories count on category pages allowed in Pro), exclude categories, show/hide empty categories.
 * *Product MSRP* - Save and display product MSRP in WooCommerce (Custom template available in Pro).
 * *Product Tabs* - Add custom product tabs - globally or per product. Customize or completely remove WooCommerce default product tabs (1 custom tab allowed in free version).
-* *Product Visibility by Country* - Display products by customer's country. User Country Selection Method (Pro); Admin country list options (Pro); Visibility method options (Pro).
-* *Product Visibility by User Role* - Display products by customer's user role. Visibility method options (Pro)
+* *Product Visibility by Country* - Display products by customer's country. User Country Selection Method (Plus); Admin country list options (Plus); Visibility method options (Plus).
+* *Product Visibility by User Role* - Display products by customer's user role. Visibility method options (Plus)
 * *Products XML Feeds* - Products XML feeds (1 file allowed in free version.).
 * *Products per Page* - Add "products per page" selector to WooCommerce (Select options available in Pro).
-* *Related Products* - Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Pro). Hide related products completely.
-* *SKU* - Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Pro); Sequential Number Generation (Pro); Variable Products Variations (Pro).
-* *Sale Flash* - Customize products sale flash. Per product (Pro); Per category (Pro); Per tag (Pro).
-* *Sorting* - Add more sorting options; rename or remove default sorting options (Pro); rearrange sorting options on frontend. Sort SKUs as numbers (Pro)
-* *Stock* - Products stock display management. Custom Stock HTML (Pro). Remove Stock Display (Pro).
+* *Related Products* - Change displayed related products number, columns, order; relate by tag, category, product attribute or manually on per product basis (Plus). Hide related products completely.
+* *SKU* - Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Plus); Sequential Number Generation (Plus); Variable Products Variations (Plus).
+* *Sale Flash* - Customize products sale flash. Per product (Plus); Per category (Plus); Per tag (Plus).
+* *Sorting* - Add more sorting options; rename or remove default sorting options (Plus); rearrange sorting options on frontend. Sort SKUs as numbers (Plus)
+* *Stock* - Products stock display management. Custom Stock HTML (Plus). Remove Stock Display (Plus).
 * *Tax Display* - Customize WooCommerce tax display.
-* *Upsells* - Customize upsells products display. Global upsells (Pro).
-* *User Products* - Let users add new products from frontend. Image additional field (Pro). Custom Taxonomies (1 allowed in free version).
+* *Upsells* - Customize upsells products display. Global upsells (Plus).
+* *User Products* - Let users add new products from the frontend. Image additional field (Plus). Custom Taxonomies (1 allowed in free version).
 
 **Cart & Checkout**
 
 * *Cart Custom Info* - Add custom info to the cart page (1 cart block allowed in free version).
 * *Cart Customization* - Customize WooCommerce cart - hide coupon field; item remove link; change empty cart "Return to shop" button text.
-* *Checkout Core Fields* - Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Pro)
+* *Checkout Core Fields* - Customize core checkout fields. Disable/enable fields, set required, change labels and/or placeholders; Setup fields by category (Plus)
 * *Checkout Custom Fields* - Add custom fields to the checkout page (1 field allowed in free version).
 * *Checkout Custom Info* - Add custom info to the checkout page (1 block allowed in free version).
-* *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP (Pro); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Pro).
+* *Checkout Customization* - Customize WooCommerce checkout - restrict countries by customer's IP (Plus); hide "Order Again" button; disable selected fields on checkout for logged users and more (Custom fields available in Pro).
 * *Checkout Fees* - Add fees to WooCommerce cart & checkout (1 fee allowed in free version).
 * *Checkout Files Upload* - Let customers upload files on (or after) the checkout (1 file allowed in free version).
 * *Coupon Code Generator* - Coupon code generator (Multiple generation algorithms available in Pro).
-* *Coupon by User Role* - Coupons by user roles. Invalidate per Coupon (Pro). Custom coupon invalid messages (Pro)
-* *EU VAT Number* - Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Pro). Check for IP Location Country  (Pro)
-* *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Pro). Different button positions on the cart page (Pro).
+* *Coupon by User Role* - Coupons by user roles. Invalidate per Coupon (Plus). Custom coupon invalid messages (Plus)
+* *EU VAT Number* - Collect and validate EU VAT numbers on the checkout. Automatically disable VAT for valid numbers. Add all EU countries VAT standard rates to WooCommerce. Show VAT field for EU countries only (Plus). Check for IP Location Country  (Plus)
+* *Empty Cart Button* - Add (and customize) "Empty Cart" button to the cart and checkout pages. Customize empty cart button text (Plus). Different button positions on the cart page (Plus).
 * *Mini Cart Custom Info* - Add custom info to the mini cart widget (1 block allowed in free version).
-* *URL Coupons* - WooCommerce URL coupons. Redirect after coupon has been applied (Pro).
+* *URL Coupons* - WooCommerce URL coupons. Redirect after coupon has been applied (Plus).
 
 **Payment Gateways**
 
 * *Custom Gateways* - Add multiple custom payment gateways to WooCommerce (1 custom gateway allowed in free version).
-* *Gateways Currency Converter* - Currency converter for payment gateways. Update exchange rates automatically (Pro).
-* *Gateways Fees and Discounts* - Enable extra fees or discounts for payment gateways. Force Default Payment Gateway (Pro). Apply fees depending on specific products (Pro).
+* *Gateways Currency Converter* - Currency converter for payment gateways. Update exchange rates automatically (Plus).
+* *Gateways Fees and Discounts* - Enable extra fees or discounts for payment gateways. Force Default Payment Gateway (Plus). Apply fees depending on specific products (Plus).
 * *Gateways Icons* - Change or completely remove icons (images) for any (default or custom) payment gateway.
 * *Gateways Min/Max Amounts* - Add min/max amounts for payment gateways to show up (Only Direct bank transfer allowed in free version).
 * *Gateways by Country, State or Postcode* - Set countries, states or postcodes to include/exclude for payment gateways to show up.
@@ -111,14 +111,14 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 * *Custom Shipping* - Add multiple custom shipping methods to WooCommerce.
 * *Left to Free Shipping* - Display "left to free shipping" info.
 * *Maximum Products per User* - Limit number of items your (logged) customers can buy (Free version allows to limit globally).
-* *Order Custom Statuses* - Custom statuses for WooCommerce orders. Make Custom Status Orders Editable (Pro). Add Custom Statuses to Admin Order List Action Buttons (Pro).
+* *Order Custom Statuses* - Custom statuses for WooCommerce orders. Make Custom Status Orders Editable (Plus). Add Custom Statuses to Admin Order List Action Buttons (Plus).
 * *Order Minimum Amount* - Minimum order amount. Order Minimum Amount by User Role (Administrator, Guest and Customer available in free version).
-* *Order Numbers* - Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Sufix options (Pro). 
+* *Order Numbers* - Sequential order numbering, custom order number prefix, suffix and number width. Prefix Options (Order Number Custom Prefix available in free version). Suffix options (Plus). 
 * *Order Quantities* - Manage product quantities in WooCommerce order: set min, max, step; enable decimal quantities etc.
-* *Orders* - Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Pro).
-* *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page. Calculate shipping sabel (Pro). Update totals label (Pro).
-* *Shipping Descriptions* - Add descriptions to shipping methods on frontend. Description visibility (Pro). Description position (Pro).
-* *Shipping Icons* - Add icons to shipping methods on frontend. Icon Visibility (Pro)
+* *Orders* - Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Plus).
+* *Shipping Calculator* - Customize WooCommerce shipping calculator on cart page. Calculate shipping label (Plus). Update totals label (Plus).
+* *Shipping Descriptions* - Add descriptions to shipping methods on frontend. Description visibility (Plus). Description position (Plus).
+* *Shipping Icons* - Add icons to shipping methods on frontend. Icon Visibility (Plus)
 * *Shipping Methods by City or Postcode* - Set shipping cities or postcodes to include/exclude for shipping methods to show up. (Free shipping available in Pro).
 * *Shipping Methods by Current Date/Time* - Set date and/or time to include/exclude for shipping methods to show up. (Free shipping available in Pro).
 * *Shipping Methods by Min/Max Order Amount* - Set minimum and/or maximum order amount for shipping methods to show up (Local pickup available in Pro).
@@ -130,29 +130,29 @@ Booster for WooCommerce is a WordPress WooCommerce plugin that supercharges your
 
 **PDF Invoicing & Packing Slips**
 
-* *PDF Invoicing* - Invoices, Proforma Invoices (Pro), Credit Notes (Pro) and Packing Slips (Pro).
+* *PDF Invoicing* - Invoices, Proforma Invoices (Plus), Credit Notes (Plus) and Packing Slips (Plus).
 
 **Emails & Misc.**
 
 * *Admin Bar* - WooCommerce admin bar.
-* *Admin Tools* - Booster for WooCommerce general back-end tools. Enable interface by user roles (Pro). Custom shop manager editable roles (Pro).
+* *Admin Tools* - Booster for WooCommerce general back-end tools. Enable interface by user roles (Plus). Custom shop manager editable roles (Plus).
 * *Booster WPML* - Booster for WooCommerce basic WPML support.
-* *Breadcrumbs* - Customize WooCommerce breadcrumbs. Hide breadcrumbs (Pro).
+* *Breadcrumbs* - Customize WooCommerce breadcrumbs. Hide breadcrumbs (Plus).
 * *Custom CSS* - Separate custom CSS for front and back end. Per product CSS.
 * *Custom Emails* - Add custom emails to WooCommerce (1 custom email allowed in free version).
 * *Custom JS* - Separate custom JS for front and back end.
 * *Custom PHP* - Custom PHP tool.
 * *Debug Tools* - Booster for WooCommerce debug and log tools.
 * *Email Options* - WooCommerce email options. E.g.: add another email recipient(s) to all WooCommerce emails.
-* *Email Verification* - Add WooCommerce email verification. Customize verification email subject, content and template (Pro).
+* *Email Verification* - Add WooCommerce email verification. Customize verification email subject, content and template (Plus).
 * *Export* - WooCommerce export tools. Additional export fields (1 field allowed in free version).
 * *General* - Booster for WooCommerce general front-end tools.
 * *Modules By User Roles* - Enable/disable Booster for WooCommerce modules by user roles.
-* *My Account* - WooCommerce "My Account" page customization. Customize Menu Order (Pro). Add Custom Menu Items (Pro). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).
+* *My Account* - WooCommerce "My Account" page customization. Customize Menu Order (Plus). Add Custom Menu Items (Plus). Custom Pages (1 allowed in free version). Custom Info Blocks (1 allowed in free version).
 * *Old Slugs* - Remove old products slugs.
 * *Reports* - Stock, sales, customers etc. reports.
 * *Template Editor* - WooCommerce template editor.
-* *User Tracking* - Track your users in WooCommerce. Track Orders (Pro).
+* *User Tracking* - Track your users in WooCommerce. Track Orders (Plus).
 
 = Feedback =
 * We are open to your suggestions and feedback - thank you for using or trying out one of our plugins!

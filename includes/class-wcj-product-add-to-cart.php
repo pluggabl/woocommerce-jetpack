@@ -25,19 +25,19 @@ class WCJ_Product_Add_To_Cart extends WCJ_Module {
 		$this->id         = 'product_add_to_cart';
 		$this->short_desc = __( 'Add to Cart', 'woocommerce-jetpack' );
 		// Desc
-		$this->desc = __( 'Set any local url to redirect to on Add to Cart (Per product not allowed in free version).', 'woocommerce-jetpack' )
+		$this->desc = __( 'Set any local URL to redirect to on Add to Cart (Per product not allowed in free version).', 'woocommerce-jetpack' )
 		              . ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
-		              . ' ' . __( 'Display radio buttons instead of drop box for variable products (Pro).', 'woocommerce-jetpack' )
+		              . ' ' . __( 'Display radio buttons instead of drop box for variable products (Plus).', 'woocommerce-jetpack' )
 		              . ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
-		              . ' ' . __( 'Open external products on add to cart in new window.', 'woocommerce-jetpack' )
+		              . ' ' . __( 'Open external products on the add to cart in the new window.', 'woocommerce-jetpack' )
 		              . ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' )
-		              . ' ' . __( 'Customize Add to Cart messages (Pro).', 'woocommerce-jetpack' );
+		              . ' ' . __( 'Customize Add to Cart messages (Plus).', 'woocommerce-jetpack' );
 		// Desc Pro
-		$this->desc_pro  = __( 'Set any local url to redirect to on Add to Cart.', 'woocommerce-jetpack' )
+		$this->desc_pro  = __( 'Set any local URL to redirect to on Add to Cart.', 'woocommerce-jetpack' )
 		                   . ' ' . __( 'Automatically add to cart on product visit.', 'woocommerce-jetpack' )
 		                   . ' ' . __( 'Display radio buttons instead of drop box for variable products.', 'woocommerce-jetpack' )
 		                   . ' ' . __( 'Disable quantity input.', 'woocommerce-jetpack' )
-		                   . ' ' . __( 'Open external products on add to cart in new window.', 'woocommerce-jetpack' )
+		                   . ' ' . __( 'Open external products on the add to cart in the new window.', 'woocommerce-jetpack' )
 		                   . ' ' . __( 'Replace Add to Cart button on archives with button from single product pages.', 'woocommerce-jetpack' )
 		                   . ' ' . __( 'Customize Add to Cart messages.', 'woocommerce-jetpack' );
 		$this->link_slug = 'woocommerce-product-add-to-cart';

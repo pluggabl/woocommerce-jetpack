@@ -23,7 +23,7 @@ class WCJ_Product_By_User_Role extends WCJ_Module_Product_By_Condition {
 
 		$this->id         = 'product_by_user_role';
 		$this->short_desc = __( 'Product Visibility by User Role', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Display products by customer\'s user role. Visibility method options (Pro)', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Display products by customer\'s user role. Visibility method options (Plus)', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Display products by customer\'s user role.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-product-visibility-by-user-role';
 		$this->extra_desc = __( 'When enabled, module will add new "Booster: Product Visibility by User Role" meta box to each product\'s edit page.', 'woocommerce-jetpack' );

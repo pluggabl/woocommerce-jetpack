@@ -21,7 +21,7 @@ class WCJ_SKU extends WCJ_Module {
 
 		$this->id         = 'sku';
 		$this->short_desc = __( 'SKU', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Pro); Sequential Number Generation (Pro); Variable Products Variations (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Generate SKUs automatically. Search by SKU on frontend. Number Generation Method (Plus); Sequential Number Generation (Plus); Variable Products Variations (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Generate SKUs automatically. Search by SKU on frontend.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-sku';
 		parent::__construct();

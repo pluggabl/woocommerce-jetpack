@@ -25,7 +25,7 @@ class WCJ_Coupon_By_User_Role extends WCJ_Module {
 
 		$this->id         = 'coupon_by_user_role';
 		$this->short_desc = __( 'Coupon by User Role', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Coupons by user roles. Invalidate per Coupon (Pro). Custom coupon invalid messages (Pro)', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Coupons by user roles. Invalidate per Coupon (Plus). Custom coupon invalid messages (Plus)', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Coupons by user roles.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-coupon-by-user-role';
 		parent::__construct();

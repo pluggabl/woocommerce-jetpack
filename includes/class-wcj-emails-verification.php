@@ -23,7 +23,7 @@ class WCJ_Email_Verification extends WCJ_Module {
 
 		$this->id         = 'emails_verification';
 		$this->short_desc = __( 'Email Verification', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add WooCommerce email verification. Customize verification email subject, content and template (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add WooCommerce email verification. Customize verification email subject, content and template (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Add WooCommerce email verification.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-email-verification';
 		parent::__construct();

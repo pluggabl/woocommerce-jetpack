@@ -22,7 +22,7 @@ class WCJ_Admin_Tools extends WCJ_Module {
 
 		$this->id         = 'admin_tools';
 		$this->short_desc = __( 'Admin Tools', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Booster for WooCommerce general back-end tools. Enable interface by user roles (Pro). Custom shop manager editable roles (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Booster for WooCommerce general back-end tools. Enable interface by user roles (Plus). Custom shop manager editable roles (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Booster for WooCommerce general back-end tools.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-booster-admin-tools';
 		parent::__construct();

@@ -23,7 +23,7 @@ class WCJ_Shipping_Icons extends WCJ_Module {
 
 		$this->id         = 'shipping_icons';
 		$this->short_desc = __( 'Shipping Icons', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add icons to shipping methods on frontend. Icon Visibility (Pro)', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add icons to shipping methods on frontend. Icon Visibility (Plus)', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Add icons to shipping methods on frontend.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-icons';
 		parent::__construct();

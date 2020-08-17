@@ -23,7 +23,7 @@ class WCJ_Shipping_Descriptions extends WCJ_Module {
 
 		$this->id         = 'shipping_description';
 		$this->short_desc = __( 'Shipping Descriptions', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Add descriptions to shipping methods on frontend. Description visibility (Pro). Description position (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Add descriptions to shipping methods on frontend. Description visibility (Plus). Description position (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Add descriptions to shipping methods on frontend.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-shipping-descriptions';
 		parent::__construct();

@@ -26,7 +26,7 @@ class WCJ_Breadcrumbs extends WCJ_Module {
 
 		$this->id         = 'breadcrumbs';
 		$this->short_desc = __( 'Breadcrumbs', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Customize WooCommerce breadcrumbs. Hide breadcrumbs (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize WooCommerce breadcrumbs. Hide breadcrumbs (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Customize WooCommerce breadcrumbs.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-breadcrumbs';
 		parent::__construct();

@@ -29,7 +29,7 @@ class WCJ_Cross_Sells extends WCJ_Module {
 				'<code>[wcj_cross_sell_display]</code>',
 				'<a href="' . admin_url( 'admin.php?page=wc-settings&tab=jetpack&wcj-cat=cart_and_checkout&section=checkout_custom_info' ) . '">' .
 					__( 'Checkout Custom Info', 'woocommerce-jetpack' ) . '</a>' );
-		$this->desc       = __( 'Customize cross-sells products display. Global Cross-sells (Pro); Exclude "Not in Stock" Products (Pro); Replace Cart Products with Cross-sells (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Customize cross-sells products display. Global Cross-sells (Plus); Exclude "Not in Stock" Products (Plus); Replace Cart Products with Cross-sells (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Customize cross-sells products display. Global Cross-sells; Exclude "Not in Stock" Products; Replace Cart Products with Cross-sells.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-cross-sells';
 		parent::__construct();

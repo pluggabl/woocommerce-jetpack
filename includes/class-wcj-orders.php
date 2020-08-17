@@ -24,7 +24,7 @@ class WCJ_Orders extends WCJ_Module {
 
 		$this->id         = 'orders';
 		$this->short_desc = __( 'Orders', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Orders auto-complete; admin order currency; admin order navigation; bulk regenerate download permissions for orders.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-orders';
 		parent::__construct();

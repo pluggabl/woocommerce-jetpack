@@ -24,7 +24,7 @@ class WCJ_User_Tracking extends WCJ_Module {
 
 		$this->id         = 'track_users';
 		$this->short_desc = __( 'User Tracking', 'woocommerce-jetpack' );
-		$this->desc       = __( 'Track your users in WooCommerce. Track Orders (Pro).', 'woocommerce-jetpack' );
+		$this->desc       = __( 'Track your users in WooCommerce. Track Orders (Plus).', 'woocommerce-jetpack' );
 		$this->desc_pro   = __( 'Track your users in WooCommerce.', 'woocommerce-jetpack' );
 		$this->link_slug  = 'woocommerce-user-tracking';
 		parent::__construct();
